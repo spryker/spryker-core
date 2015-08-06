@@ -6,9 +6,9 @@ function SprykerAjaxCallbacks() {
     /* HTML success code */
     self.codeSuccess = 200;
 
-    /* Alerted object, display alerts with model from bootstrap */
-    self.alerter = new SprykerAlert();
-
+    /**
+     * @type {SprykerAjax}
+     */
     self.spyAj = new SprykerAjax();
 
     /**
@@ -33,6 +33,7 @@ function SprykerAjaxCallbacks() {
 
     /**
      * @param ajaxResponse
+     * @returns {ajaxReponse}
      */
     self.categoryDisplayNodeTree = function(ajaxResponse){
         $('#category-node-tree').removeClass('hidden');
@@ -42,16 +43,14 @@ function SprykerAjaxCallbacks() {
                 'data' : ajaxResponse.data
             }
         });
-        self.spyAj.getCategoryAttributes(ajaxResponse.idCategory);
-        self.spyAj.getCategoryUrls(ajaxResponse.idCategory);
+        return ajaxResponse;
     }
 
     /**
-     *
      * @param ajaxResponse
      */
     self.categoryDisplayAttributes = function(ajaxResponse){
-        $('#attributes-table').removeClass('hidden');
+        $('#category-tabs').removeClass('hidden');
         $('#category-attributes').html(ajaxResponse);
     }
 
@@ -59,8 +58,17 @@ function SprykerAjaxCallbacks() {
      * @param ajaxResponse
      */
     self.categoryDisplayUrls = function(ajaxResponse){
-        $('#url-table').removeClass('hidden');
+        $('#category-tabs').removeClass('hidden');
         $('#category-urls').html(ajaxResponse);
+        closeLoaderBar();
+    }
+
+    /**
+     * @param ajaxResponse
+     */
+    self.categoryDisplayProducts = function(ajaxResponse){
+        $('#category-tabs').removeClass('hidden');
+        $('#category-products').html(ajaxResponse);
         closeLoaderBar();
     }
 }

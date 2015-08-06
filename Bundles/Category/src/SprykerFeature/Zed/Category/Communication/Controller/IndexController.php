@@ -4,12 +4,15 @@ namespace SprykerFeature\Zed\Category\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Category\Communication\Table\CategoryAttributeTable;
+use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 class IndexController extends AbstractController
 {
+
+    const PARAM_ID_CATEGORY = 'id-category';
 
     /**
      * @return array
@@ -46,9 +49,9 @@ class IndexController extends AbstractController
      */
     public function nodeAction(Request $request)
     {
-        $idCategory = $request->get('id');
+        $idCategory = $request->get(self::PARAM_ID_CATEGORY);
 
-        $children = $this->getCategoryChildrenByCategoryId($idCategory);
+        $children = $this->getCategoryChildrenByIdCategory($idCategory);
 
         return $this->jsonResponse([
             'code' => Response::HTTP_OK,
@@ -68,10 +71,10 @@ class IndexController extends AbstractController
 
         $idCategory = $this->getFacade()->getCategoryNodeIdentifier(
             trim($categoryName),
-            $this->getDependencyContainer()->getCurrentLocale()
+            $this->getDependencyContainer()->createCurrentLocale()
         );
 
-        $children = $this->getCategoryChildrenByCategoryId($idCategory);
+        $children = $this->getCategoryChildrenByIdCategory($idCategory);
 
         return $this->jsonResponse([
             'code' => Response::HTTP_OK,
@@ -85,12 +88,12 @@ class IndexController extends AbstractController
      *
      * @return array
      */
-    private function getCategoryChildrenByCategoryId($idCategory)
+    private function getCategoryChildrenByIdCategory($idCategory)
     {
         return $this->getFacade()
-            ->getNodeTreeForJsDisplay(
+            ->getTreeNodeChildrenByIdCategoryAndLocale(
                 $idCategory,
-                $this->getDependencyContainer()->getCurrentLocale()
+                $this->getDependencyContainer()->createCurrentLocale()
             )
         ;
     }
@@ -102,15 +105,14 @@ class IndexController extends AbstractController
      */
     public function attributesAction(Request $request)
     {
-        $idCategory = $request->get('id');
+        $idCategory = $request->get(self::PARAM_ID_CATEGORY);
 
         /* @var CategoryAttributeTable $table */
         $table = $this->getDependencyContainer()
             ->createCategoryAttributeTable($idCategory)
         ;
 
-        $tableData['table'] = $table->fetchData();
-        $tableData['table']['header'] = $table->getConfiguration()->getHeader();
+        $tableData = $this->getTableArrayFormat($table);
 
         return $this->viewResponse($tableData);
     }
@@ -122,16 +124,30 @@ class IndexController extends AbstractController
      */
     public function urlsAction(Request $request)
     {
-        $idCategory = $request->get('id');
+        $idCategory = $request->get(self::PARAM_ID_CATEGORY);
 
         $table = $this->getDependencyContainer()
             ->createUrlTable($idCategory)
         ;
 
-        $tableData['table'] = $table->fetchData();
-        $tableData['table']['header'] = $table->getConfiguration()->getHeader();
+        $tableData = $this->getTableArrayFormat($table);
 
         return $this->viewResponse($tableData);
+    }
+
+    /**
+     * @param AbstractTable $table
+     *
+     * @return array
+     */
+    private function getTableArrayFormat(AbstractTable $table)
+    {
+        $tableData = [
+            'table' => $table->fetchData(),
+        ];
+        $tableData['table']['header'] = $table->getConfiguration()->getHeader();
+
+        return $tableData;
     }
 
 }

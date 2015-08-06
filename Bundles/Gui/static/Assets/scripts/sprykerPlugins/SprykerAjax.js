@@ -55,25 +55,15 @@ function SprykerAjax() {
 
     self.getCategoryTreeByCategoryId = function(idCategory) {
         var options = {
-            id: idCategory
+            'id-category': idCategory
         };
-        showLoaderBar();
         self.setUrl('/category/index/node').ajaxSubmit(options, 'categoryDisplayNodeTree');
-    }
-
-    self.getCategoryTreeByCategoryName = function(categoryName) {
-        var options = {
-            'category-name': categoryName
-        };
-        showLoaderBar();
-        self.setUrl('/category/index/node-by-name').ajaxSubmit(options, 'categoryDisplayNodeTree');
     }
 
     self.getCategoryAttributes = function(idCategory) {
         var options = {
-            id: idCategory
-        }
-        showLoaderBar();
+            'id-category': idCategory
+        };
         self
             .setUrl('/category/index/attributes')
             .setDataType('html')
@@ -83,13 +73,23 @@ function SprykerAjax() {
 
     self.getCategoryUrls = function(idCategory) {
         var options = {
-            id: idCategory
-        }
-        showLoaderBar();
+            'id-category': idCategory
+        };
         self
             .setUrl('/category/index/urls')
             .setDataType('html')
             .ajaxSubmit(options, 'categoryDisplayUrls')
+        ;
+    }
+
+    self.getCategoryProducts = function(idCategory) {
+        var options = {
+            'id-category': idCategory
+        };
+        self
+            .setUrl('/category/index/products')
+            .setDataType('html')
+            .ajaxSubmit(options, 'categoryDisplayProducts')
         ;
     }
 }

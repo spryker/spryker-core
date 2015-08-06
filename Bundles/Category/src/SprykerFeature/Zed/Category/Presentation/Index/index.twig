@@ -33,29 +33,24 @@
 
     {% endembed %}
 
-    {% embed '@Gui/Partials/widget.twig' with {
-    widget_title: 'Attributes of the selected category',
-    row_class: 'hidden',
-    row_id: 'attributes-table'
-    } %}
-
-        {% block widget_content %}
-            <div id="category-attributes">-attributes-</div>
-        {% endblock %}
-
-    {% endembed %}
-
-    {% embed '@Gui/Partials/widget.twig' with {
-    widget_title: 'Urls for the selected category node',
-    row_class: 'hidden',
-    row_id: 'url-table'
-    } %}
-
-        {% block widget_content %}
-            <div id="category-urls"></div>
-        {% endblock %}
-
-    {% endembed %}
+    <div class="tabs-container hidden" id="category-tabs">
+        <ul class="nav nav-tabs">
+            <li class="active"><a data-toggle="tab" href="#tab-attributes"> Attributes</a></li>
+            <li class=""><a data-toggle="tab" href="#tab-urls">Urls</a></li>
+        </ul>
+        <div class="tab-content">
+            <div id="tab-attributes" class="tab-pane active">
+                <div class="panel-body">
+                    <div id="category-attributes"></div>
+                </div>
+            </div>
+            <div id="tab-urls" class="tab-pane">
+                <div class="panel-body">
+                    <div id="category-urls"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 {% endblock %}
 
