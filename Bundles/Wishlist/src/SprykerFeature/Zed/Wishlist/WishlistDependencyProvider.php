@@ -15,9 +15,9 @@ use SprykerFeature\Zed\Wishlist\Business\Operator\Remove;
 
 class WishlistDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const PRODUCT_FACADE = 'product_facade';
-    const PRE_SAVE_PLUGINS = 'pre_save_plugins';
-    const POST_SAVE_PLUGINS = 'post_save_plugins';
+    const FACADE_PRODUCT = 'facade product';
+    const PRE_SAVE_PLUGINS = 'pre save plugins';
+    const POST_SAVE_PLUGINS = 'post save plugins';
 
     /**
      * @param Container $container
@@ -26,7 +26,7 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::PRODUCT_FACADE] = function (Container $container) {
+        $container[static::FACADE_PRODUCT] = function (Container $container) {
             return $container->getLocator()->product()->facade();
         };
 
@@ -47,7 +47,7 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return array
      */
-    public function preSavePlugins(Container $container)
+    protected function preSavePlugins(Container $container)
     {
         return [
             Add::OPERATION_NAME => [],
@@ -62,7 +62,7 @@ class WishlistDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return array
      */
-    public function postSavePlugins(Container $container)
+    protected function postSavePlugins(Container $container)
     {
         return [
             Add::OPERATION_NAME => [],

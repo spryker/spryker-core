@@ -78,7 +78,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     /**
      * @return WishlistInterface
      */
-    public function getCustomerWishlist()
+    public function getWishlist()
     {
         $wishlistItems = $this->getSession()->getWishlist();
         $this->getStorage()->expandProductDetails($wishlistItems);
@@ -108,17 +108,17 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * @param ItemInterface     $wishlistItem
+     * @param ItemInterface     $wishlistItemTransfer
      *
      * @return WishlistChangeTransfer
      */
-    protected function createChangeTransfer(ItemInterface $wishlistItem)
+    protected function createChangeTransfer(ItemInterface $wishlistItemTransfer)
     {
-        $wishlist = $this->getSession()->getWishlist();
+        $wishlistTransfer = $this->getSession()->getWishlist();
 
         $wishlistChange = new WishlistChangeTransfer();
-        $wishlistChange->setWishlist($wishlist);
-        $wishlistChange->addItem($wishlistItem);
+        $wishlistChange->setWishlist($wishlistTransfer);
+        $wishlistChange->addItem($wishlistItemTransfer);
         $customerTransfer = $this->getCustomerTransfer();
         if (null !== $customerTransfer) {
             $wishlistChange->setCustomer($customerTransfer);
@@ -132,11 +132,10 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
      */
     protected function getCustomerTransfer()
     {
-        $customerClient = $this->getDependencyContainer()->getCustomerClient();
+        $customerClient = $this->getDependencyContainer()->createCustomerClient();
         $customerTransfer = $customerClient->getCustomer();
         return $customerTransfer;
     }
-
 
     /**
      * @return Session\WishlistSessionInterface

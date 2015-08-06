@@ -49,9 +49,9 @@ abstract class AbstractOperator
      */
     public function executeOperation()
     {
-        $this->preSave($this->wishlistChange);
+        $this->preSave($this->wishlistChange->getItems());
         $wishlist = $this->applyOperation($this->wishlistChange);
-        $this->postSave($wishlist);
+        $this->postSave($this->wishlistChange->getItems());
 
         return $wishlist;
     }

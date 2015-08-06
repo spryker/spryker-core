@@ -125,8 +125,7 @@
     "phpunit/phpunit": "~3.7.0",
     "codeception/codeception": "*",
     "fzaninotto/faker": "1.4.*",
-    "codeception/remote-debug": "*",
-    "phpspec/phpspec": "^2.2"
+    "codeception/remote-debug": "*"
   },
   "minimum-stability": "stable",
   "prefer-stable": true,

@@ -44,7 +44,7 @@ interface WishlistClientInterface
     /**
      * @return WishlistInterface
      */
-    public function getCustomerWishlist();
+    public function getWishlist();
 
     /**
      * @return WishlistInterface

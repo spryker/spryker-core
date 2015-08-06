@@ -5,12 +5,12 @@
 
 namespace SprykerFeature\Zed\Wishlist\Dependency;
 
-use Generated\Shared\Wishlist\WishlistChangeInterface;
+use Generated\Shared\Wishlist\ItemInterface;
 
 interface PreSavePluginInterface
 {
     /**
-     * @param WishlistChangeInterface $wishlist
+     * @param ItemInterface[] $items
      */
-    public function trigger(WishlistChangeInterface $wishlist);
+    public function trigger(\ArrayObject $items);
 }

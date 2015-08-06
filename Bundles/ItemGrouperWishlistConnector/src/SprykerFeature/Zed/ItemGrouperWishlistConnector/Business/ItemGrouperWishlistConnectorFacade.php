@@ -16,12 +16,12 @@ use Generated\Shared\ItemGrouper\GroupableContainerInterface;
 class ItemGrouperWishlistConnectorFacade extends AbstractFacade
 {
     /**
-     * @param GroupableContainerInterface $orderItems
+     * @param GroupableContainerInterface $items
      *
      * @return GroupableContainerInterface
      */
-    public function groupOrderItems(GroupableContainerInterface $orderItems)
+    public function groupOrderItems(GroupableContainerInterface $items)
     {
-        return $this->getDependencyContainer()->createItemGrouperFacade()->groupItemsByKey($orderItems);
+        return $this->getDependencyContainer()->createItemGrouperFacade()->groupItemsByKey($items);
     }
 }

@@ -17,7 +17,7 @@ interface WishlistQueryContainerInterface
      *
      * @return SpyWishlistItemQuery
      */
-    public function filterCustomerWishlistByProductId($idWishlist, $idProduct);
+    public function queryCustomerWishlistByProductId($idWishlist, $idProduct);
 
     /**
      * @param integer $idWishlist
@@ -25,25 +25,16 @@ interface WishlistQueryContainerInterface
      *
      * @return SpyWishlistItemQuery
      */
-    public function filterCustomerWishlistByGroupKey($idWishlist, $groupKey);
+    public function queryCustomerWishlistByGroupKey($idWishlist, $groupKey);
 
     /**
      * @return SpyWishlistItemQuery
      */
-    public function getWishlistItemQuery();
+    public function queryWishlistItem();
 
     /**
      * @return SpyWishlistQuery
      */
-    public function getWishlistQuery();
+    public function queryWishlist();
 
-    /**
-     * @return SpyWishlist
-     */
-    public function getSpyWishlist();
-
-    /**
-     * @return SpyWishlistItem
-     */
-    public function getSpyWishlistItem();
 }

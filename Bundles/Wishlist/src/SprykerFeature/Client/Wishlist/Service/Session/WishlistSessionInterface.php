@@ -14,9 +14,9 @@ interface WishlistSessionInterface
     public function getWishlist();
 
     /**
-     * @param WishlistInterface $cartTransfer
+     * @param WishlistInterface $wishlist
      *
      * @return $this
      */
-    public function setWishlist(WishlistInterface $cartTransfer);
+    public function setWishlist(WishlistInterface $wishlist);
 }

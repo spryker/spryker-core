@@ -50,15 +50,15 @@ class WishlistDependencyContainer extends AbstractServiceDependencyContainer
     {
         return $this->getFactory()->createStorageWishlistStorage(
             $this->getProvidedDependency(WishlistDependencyProvider::STORAGE),
-            $this->getProvidedDependency(WishlistDependencyProvider::PRODUCT_CLIENT)
+            $this->getProvidedDependency(WishlistDependencyProvider::CLIENT_PRODUCT)
         );
     }
 
     /**
      * @return CustomerClientInterface
      */
-    public function getCustomerClient()
+    public function createCustomerClient()
     {
-        return $this->getProvidedDependency(WishlistDependencyProvider::CUSTOMER_CLIENT);
+        return $this->getProvidedDependency(WishlistDependencyProvider::CLIENT_CUSTOMER);
     }
 }

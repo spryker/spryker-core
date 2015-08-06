@@ -54,7 +54,7 @@ class ProductDependencyContainer extends AbstractServiceDependencyContainer
      */
     public function getLocaleClient()
     {
-        return $this->getProvidedDependency(ProductDependencyProvider::LOCALE_CLIENT);
+        return $this->getProvidedDependency(ProductDependencyProvider::CLIENT_LOCALE);
     }
 
 }

@@ -41,18 +41,18 @@ class Customer
     public function getWishlist()
     {
         $wishlist = $this->wishlistQueryContainer
-            ->getWishlistQuery()
+            ->queryWishlist()
             ->findOneByFkCustomer($this->customerTransfer->getIdCustomer());
 
         $wishlistTransfer = new WishlistTransfer();
-        foreach ($wishlist->getSpyWishlistItems() as $spyWishlistItem) {
+        foreach ($wishlist->getSpyWishlistItems() as $wishlistItemEntity) {
             $wishlistItemTransfer = new ItemTransfer();
-            $spyProduct = $spyWishlistItem->getSpyProduct();
-            $wishlistItemTransfer->setGroupKey($spyWishlistItem->getGroupKey())
-                ->setAddedAt($spyWishlistItem->getAddedAt())
-                ->setIdAbstractProduct($spyWishlistItem->getFkAbstractProduct())
-                ->setSku($spyProduct->getSku())
-                ->setQuantity($spyWishlistItem->getQuantity());
+            $productEntity = $wishlistItemEntity->getSpyProduct();
+            $wishlistItemTransfer->setGroupKey($wishlistItemEntity->getGroupKey())
+                ->setAddedAt($wishlistItemEntity->getAddedAt())
+                ->setIdAbstractProduct($wishlistItemEntity->getFkAbstractProduct())
+                ->setSku($productEntity->getSku())
+                ->setQuantity($wishlistItemEntity->getQuantity());
 
             $wishlistTransfer->addItem($wishlistItemTransfer);
         }

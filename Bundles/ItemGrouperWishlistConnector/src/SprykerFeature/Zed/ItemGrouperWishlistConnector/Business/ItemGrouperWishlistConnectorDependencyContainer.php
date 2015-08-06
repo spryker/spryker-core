@@ -21,7 +21,7 @@ class ItemGrouperWishlistConnectorDependencyContainer extends AbstractBusinessDe
      */
     public function createItemGrouperFacade()
     {
-        return $this->getProvidedDependency(ItemGrouperWishlistConnectorDependencyProvider::ITEM_GROUPER_FACADE);
+        return $this->getProvidedDependency(ItemGrouperWishlistConnectorDependencyProvider::FACADE_ITEM_GROUPER);
     }
 
 }

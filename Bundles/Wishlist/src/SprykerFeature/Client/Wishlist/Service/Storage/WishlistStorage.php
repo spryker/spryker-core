@@ -46,11 +46,6 @@ class WishlistStorage implements WishlistStorageInterface
                 ->productClient
                 ->getAbstractProductFromStorageByIdForCurrentLocale($item->getIdAbstractProduct());
 
-            $abstractProduct = new AbstractProductTransfer();
-            $abstractProduct->setSku($productData['abstract_sku']);
-            $abstractProduct->setAttributes($productData['abstract_attributes']);
-            $abstractProduct->setIsActive($productData['available']);
-
             foreach ($productData['concrete_products'] as $product) {
                 if ($product['sku'] !== $item->getSku()) {
                     continue;
@@ -61,8 +56,6 @@ class WishlistStorage implements WishlistStorageInterface
                 $concreteProduct->setAttributes($product['attributes']);
                 $item->setConcreteProduct($concreteProduct);
             }
-
-            $item->setAbstractProduct($abstractProduct);
         }
     }
 }

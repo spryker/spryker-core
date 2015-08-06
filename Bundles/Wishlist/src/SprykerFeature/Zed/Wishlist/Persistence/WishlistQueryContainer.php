@@ -9,8 +9,6 @@ namespace SprykerFeature\Zed\Wishlist\Persistence;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\Map\SpyWishlistItemTableMap;
-use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlist;
-use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistItem;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistItemQuery;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistQuery;
 
@@ -22,7 +20,7 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
      *
      * @return SpyWishlistItemQuery
      */
-    public function filterCustomerWishlistByProductId($idWishlist, $idProduct)
+    public function queryCustomerWishlistByProductId($idWishlist, $idProduct)
     {
         $criteria = new Criteria();
         $criteria->add(SpyWishlistItemTableMap::COL_FK_WISHLIST, $idWishlist)
@@ -37,7 +35,7 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
      *
      * @return SpyWishlistItemQuery
      */
-    public function filterCustomerWishlistByGroupKey($idWishlist, $groupKey)
+    public function queryCustomerWishlistByGroupKey($idWishlist, $groupKey)
     {
         $criteria = new Criteria();
         $criteria->add(SpyWishlistItemTableMap::COL_FK_WISHLIST, $idWishlist);
@@ -49,7 +47,7 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
     /**
      * @return SpyWishlistItemQuery
      */
-    public function getWishlistItemQuery()
+    public function queryWishlistItem()
     {
         return SpyWishlistItemQuery::create();
     }
@@ -57,24 +55,8 @@ class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQ
     /**
      * @return SpyWishlistQuery
      */
-    public function getWishlistQuery()
+    public function queryWishlist()
     {
         return SpyWishlistQuery::create();
-    }
-
-    /**
-     * @return SpyWishlist
-     */
-    public function getSpyWishlist()
-    {
-        return new SpyWishlist();
-    }
-
-    /**
-     * @return SpyWishlistItem
-     */
-    public function getSpyWishlistItem()
-    {
-        return new SpyWishlistItem();
     }
 }

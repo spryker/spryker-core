@@ -16,7 +16,7 @@ class InMemory implements StorageInterface
     /**
      * @var ProductFacade
      */
-    protected $productFacade;
+    protected $facadeProduct;
 
     /**
      * @var WishlistInterface
@@ -25,11 +25,11 @@ class InMemory implements StorageInterface
 
     /**
      * @param WishlistInterface $wishlist
-     * @param ProductFacade     $productFacade
+     * @param ProductFacade     $facadeProduct
      */
-    public function __construct(WishlistInterface $wishlist, ProductFacade $productFacade)
+    public function __construct(WishlistInterface $wishlist, ProductFacade $facadeProduct)
     {
-        $this->productFacade = $productFacade;
+        $this->facadeProduct = $facadeProduct;
         $this->wishlist = $wishlist;
     }
 
@@ -48,7 +48,7 @@ class InMemory implements StorageInterface
                 $existingItem = $this->wishlist->getItems()[$key];
                 $existingItem->setQuantity($wishlistItem->getQuantity() + $existingItem->getQuantity());
             } else {
-                $concreteProduct = $this->productFacade->getConcreteProduct($wishlistItem->getSku());
+                $concreteProduct = $this->facadeProduct->getConcreteProduct($wishlistItem->getSku());
                 $wishlistItem->setIdAbstractProduct($concreteProduct->getIdAbstractProduct());
                 $this->wishlist->addItem($wishlistItem);
             }
@@ -66,7 +66,12 @@ class InMemory implements StorageInterface
     {
         $wishlistIndex = $this->createIndex();
         foreach ($wishlistChange->getItems() as $key => $wishlistItem) {
-            $this->reduceTransferItem($wishlistIndex, $wishlistItem);
+
+            if (isset($wishlistIndex[$wishlistItem->getGroupKey()])) {
+                $this->decreaseItem($wishlistIndex[$wishlistItem->getGroupKey()], $wishlistItem);
+            } else {
+                $this->decreaseByProductIdentifier($wishlistIndex, $wishlistItem);
+            }
         }
 
         return $this->wishlist;
@@ -94,24 +99,13 @@ class InMemory implements StorageInterface
 
     /**
      * @param array         $wishlistIndex
-     * @param ItemInterface $wishlistItem
+     * @param ItemInterface $itemToChange
      */
-    protected function reduceTransferItem(array $wishlistIndex, ItemInterface $wishlistItem)
+    protected function decreaseByProductIdentifier(array $wishlistIndex, ItemInterface $itemToChange)
     {
-        if (isset($wishlistIndex[$wishlistItem->getGroupKey()])) {
-            $this->decreaseExistingItem($wishlistIndex[$wishlistItem->getGroupKey()], $wishlistItem);
-        } else {
-            $this->decreaseByProductIdentifier($wishlistItem);
-        }
-    }
-
-    /**
-     * @param ItemInterface $wishlistItem
-     */
-    protected function decreaseByProductIdentifier(ItemInterface $wishlistItem)
-    {
-        foreach ($this->wishlist->getItems() as $key => $existingItem) {
-            if ($existingItem->getSku() === $wishlistItem->getSku()) {
+        foreach ($this->wishlist->getItems() as $key => $item) {
+            if ($item->getSku() === $itemToChange->getSku()) {
+                $this->decreaseItem($wishlistIndex[$item->getGroupKey()], $itemToChange);
                 return;
             }
         }
@@ -121,7 +115,7 @@ class InMemory implements StorageInterface
      * @param integer       $index
      * @param ItemInterface $itemToChange
      */
-    protected function decreaseExistingItem($index, ItemInterface $itemToChange)
+    protected function decreaseItem($index, ItemInterface $itemToChange)
     {
         $existingItems = $this->wishlist->getItems();
         $existingItem = $existingItems[$index];

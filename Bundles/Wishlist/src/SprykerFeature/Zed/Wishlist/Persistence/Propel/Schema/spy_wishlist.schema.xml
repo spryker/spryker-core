@@ -20,16 +20,16 @@
 
     <table name="spy_wishlist_item" phpName="SpyWishlistItem">
         <column name="id_wishlist_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_product" required="false" type="INTEGER" />
+        <column name="fk_wishlist" required="true" type="INTEGER" />
         <column name="quantity" required="true" type="INTEGER" />
         <column name="added_at" required="true" type="TIMESTAMP" />
-        <column name="fk_wishlist" required="true" type="INTEGER" />
         <column name="group_key" required="false" type="VARCHAR" />
 
         <foreign-key foreignTable="spy_wishlist" phpName="SpyWishlist">
             <reference foreign="id_wishlist" local="fk_wishlist"/>
         </foreign-key>
 
-        <column name="fk_product" required="false" type="INTEGER" />
         <foreign-key foreignTable="spy_product">
             <reference foreign="id_product" local="fk_product"/>
         </foreign-key>

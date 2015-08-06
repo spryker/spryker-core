@@ -115,7 +115,7 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
             $this->createCustomer($wishlistChange->getCustomer()),
             $wishlistChange->getWishlist(),
             $wishlistChange->getCustomer(),
-            $this->getProvidedDependency(WishlistDependencyProvider::PRODUCT_FACADE)
+            $this->getProvidedDependency(WishlistDependencyProvider::FACADE_PRODUCT)
         );
     }
 
@@ -128,7 +128,7 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createStorageInMemory(
             $wishlistChange->getWishlist(),
-            $this->getProvidedDependency(WishlistDependencyProvider::PRODUCT_FACADE)
+            $this->getProvidedDependency(WishlistDependencyProvider::FACADE_PRODUCT)
         );
     }
 

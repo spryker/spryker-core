@@ -6,18 +6,17 @@
 namespace SprykerFeature\Zed\Wishlist\Communication\Plugin;
 
 use Generated\Shared\Wishlist\ItemInterface;
-use Generated\Shared\Wishlist\WishlistChangeInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Wishlist\Dependency\PreSavePluginInterface;
 
 class PreSaveSkuGroupKeyPlugin extends AbstractPlugin implements PreSavePluginInterface
 {
     /**
-     * @param WishlistChangeInterface $wishlist
+     * @param ItemInterface[] $items
      */
-    public function trigger(WishlistChangeInterface $wishlist)
+    public function trigger(\ArrayObject $items)
     {
-        foreach ($wishlist->getItems() as $item) {
+        foreach ($items as $item) {
             $item->setGroupKey($this->buildGroupKey($item));
         }
     }

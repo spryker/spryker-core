@@ -15,7 +15,7 @@ class ProductClient extends AbstractClient implements ProductClientInterface
 {
 
     /**
-     * @param integer $idAbstractProduct
+     * @param int $idAbstractProduct
      * @return array
      */
     public function getAbstractProductFromStorageByIdForCurrentLocale($idAbstractProduct)

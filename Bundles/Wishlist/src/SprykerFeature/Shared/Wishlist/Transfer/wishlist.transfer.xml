@@ -21,7 +21,6 @@
         <property name="sku" type="string" />
         <property name="groupKey" type="string" />
         <property name="options" type="ProductOptions[]" singular="option" />
-        <property name="abstractProduct" type="AbstractProduct" />
         <property name="concreteProduct" type="ConcreteProduct" />
     </transfer>
 </transfers>

@@ -10,7 +10,7 @@ use Generated\Shared\Wishlist\WishlistInterface;
 interface PostSavePluginInterface
 {
     /**
-     * @param WishlistInterface $wishlist
+     * @param ItemInterface[] $items
      */
-    public function trigger(WishlistInterface $wishlist);
+    public function trigger(\ArrayObject $items);
 }
