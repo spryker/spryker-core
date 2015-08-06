@@ -14,9 +14,11 @@ use Symfony\Component\Yaml\Yaml;
 class GlossaryInstaller extends AbstractInstaller
 {
 
-    private $glossaryFacade;
+    protected $glossaryFacade;
 
-    private $paths;
+    protected $paths;
+
+    protected $yamlParser;
 
     /**
      * @param GlossaryFacade $glossaryFacade
@@ -26,6 +28,7 @@ class GlossaryInstaller extends AbstractInstaller
     {
         $this->glossaryFacade = $glossaryFacade;
         $this->paths = $paths;
+        $this->yamlParser = new Yaml();
     }
 
 
@@ -52,9 +55,7 @@ class GlossaryInstaller extends AbstractInstaller
      */
     protected function parseYamlFile($filePath)
     {
-        $yamlParser = new Yaml();
-
-        return $yamlParser->parse(file_get_contents($filePath));
+        return $this->yamlParser->parse(file_get_contents($filePath));
     }
 
     /**
