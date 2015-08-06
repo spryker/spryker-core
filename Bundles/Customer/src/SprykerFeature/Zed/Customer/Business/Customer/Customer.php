@@ -142,9 +142,22 @@ class Customer
 
         $customer = new SpyCustomer();
         $customer->setCustomerReference($this->customerReferenceGenerator->generateCustomerReference($customerTransfer));
-        $customer->setPassword($customerTransfer->getPassword());
+
         $customer->setEmail($customerTransfer->getEmail());
+        $customer->setPassword($customerTransfer->getPassword());
+
+        $customer->setSalutation($customerTransfer->getSalutation());
+
+        $customer->setFirstName($customerTransfer->getFirstName());
+        $customer->setLastName($customerTransfer->getLastName());
+
+        $customer->setGender($customerTransfer->getGender());
+
+        $customer->setDateOfBirth($customerTransfer->getDateOfBirth());
+        $customer->setCompany($customerTransfer->getCompany());
+
         $customer->setRegistrationKey($this->generateKey());
+
         $customer->save();
 
         $customerTransfer->setIdCustomer($customer->getPrimaryKey());
