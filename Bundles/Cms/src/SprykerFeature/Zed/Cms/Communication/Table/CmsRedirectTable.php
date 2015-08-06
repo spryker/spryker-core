@@ -54,6 +54,9 @@ class CmsRedirectTable extends AbstractTable
             CmsQueryContainer::TO_URL => 'to_url',
         ]);
 
+        $config->setUrl('redirectTable');
+        $config->setPageLength(5);
+
         return $config;
     }
 

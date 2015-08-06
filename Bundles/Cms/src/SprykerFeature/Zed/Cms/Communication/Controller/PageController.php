@@ -25,34 +25,6 @@ class PageController extends AbstractController
     const REDIRECT_ADDRESS = '/cms/glossary/';
 
     /**
-     *
-     * @return array
-     */
-    public function indexAction()
-    {
-
-        $table = $this->getDependencyContainer()
-            ->createCmsPageTable()
-        ;
-
-        return [
-            'pages' => $table->render(),
-        ];
-    }
-
-    /**
-     * @return JsonResponse
-     */
-    public function tableAction()
-    {
-        $table = $this->getDependencyContainer()
-            ->createCmsPageTable()
-        ;
-
-        return $this->jsonResponse($table->fetchData());
-    }
-
-    /**
      * @return array
      */
     public function addAction()
@@ -120,7 +92,8 @@ class PageController extends AbstractController
                 ->findOne()
             ;
 
-            $urlTransfer = (new UrlTransfer())->fromArray($spyUrl->toArray(), true);
+            $urlTransfer = new UrlTransfer();
+            $urlTransfer = $urlTransfer->fromArray($spyUrl->toArray(), true);
 
             $urlTransfer->setFkPage($pageTransfer->getIdCmsPage());
             $urlTransfer->setResourceId($spyUrl->getResourceId());

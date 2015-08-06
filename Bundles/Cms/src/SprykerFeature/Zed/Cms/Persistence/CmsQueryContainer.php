@@ -257,8 +257,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     public function queryPageWithTemplatesAndUrlByPageId($idCmsPage)
     {
         return $this->queryPages()
-            ->leftJoinCmsTemplate(null, Criteria::LEFT_JOIN)
-            ->leftJoinSpyUrl(null, Criteria::LEFT_JOIN)
+            ->leftJoinCmsTemplate()
+            ->leftJoinSpyUrl()
             ->withColumn(self::TEMPLATE_NAME)
             ->withColumn(self::URL)
             ->withColumn(self::ID_URL, 'idUrl')

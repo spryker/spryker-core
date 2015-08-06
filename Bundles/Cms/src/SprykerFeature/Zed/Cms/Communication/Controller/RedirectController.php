@@ -24,34 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
 class RedirectController extends AbstractController
 {
 
-    const REDIRECT_ADDRESS = '/cms/redirect/';
-
-    /**
-     *
-     * @return array
-     */
-    public function indexAction()
-    {
-        $table = $this->getDependencyContainer()
-            ->createCmsRedirectTable()
-        ;
-
-        return [
-            'urls' => $table->render(),
-        ];
-    }
-
-    /**
-     * @return JsonResponse
-     */
-    public function tableAction()
-    {
-        $table = $this->getDependencyContainer()
-            ->createCmsRedirectTable()
-        ;
-
-        return $this->jsonResponse($table->fetchData());
-    }
+    const REDIRECT_ADDRESS = '/cms/';
 
     /**
      * @return array

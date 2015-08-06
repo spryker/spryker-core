@@ -243,11 +243,17 @@ class GlossaryController extends AbstractController
     private function findTemplatePlaceholders($tempFile)
     {
         $placeholderMap = [];
-        $fileContent = file_get_contents($tempFile);
-        preg_match_all('/<!-- CMS_PLACEHOLDER : "[a-zA-Z0-9]*" -->/', $fileContent, $cmsPlaceholderLine);
-        preg_match_all('/"([^"]+)"/', implode(' ', $cmsPlaceholderLine[0]), $placeholderMap);
 
-        return $placeholderMap[1];
+        if (file_exists($tempFile)) {
+            $fileContent = file_get_contents($tempFile);
+
+            preg_match_all('/<!-- CMS_PLACEHOLDER : "[a-zA-Z0-9]*" -->/', $fileContent, $cmsPlaceholderLine);
+            preg_match_all('/"([^"]+)"/', implode(' ', $cmsPlaceholderLine[0]), $placeholderMap);
+
+            return $placeholderMap[1];
+        }
+
+        return $placeholderMap;
     }
 
     /**
