@@ -24,6 +24,7 @@ use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountry;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
 use SprykerFeature\Zed\Oms\OmsConfig;
+use SprykerFeature\Zed\Oms\OmsDependencyProvider;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
@@ -96,16 +97,7 @@ class CheckoutFacadeTest extends Test
             ];
         };
 
-        $omsFacade = new OmsFacade(new Factory('Oms'), $locator);
-        $omsFacade->setExternalDependencies(new Container());
-        $omsFacade->setOwnQueryContainer(
-            new OmsQueryContainer(
-                new \SprykerEngine\Zed\Kernel\Persistence\Factory('Oms'),
-                $locator
-            )
-        );
-
-        $container[CheckoutDependencyProvider::FACADE_OMS] = function (Container $container) {
+        $container[CheckoutDependencyProvider::FACADE_OMS] = function(Container $container) {
             return $container->getLocator()->oms()->facade();
         };
 
@@ -247,7 +239,7 @@ class CheckoutFacadeTest extends Test
         $this->assertNotNull($orderItem2);
 
         $this->assertNotEquals(OmsConfig::INITIAL_STATUS, $orderItem1->getState()->getName());
-        $this->assertEquals('ship', $orderItem2->getState()->getName());
+        $this->assertEquals('request to pay sent', $orderItem2->getState()->getName());
     }
 
     /**
