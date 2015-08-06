@@ -27,7 +27,7 @@ class CheckoutFacade extends AbstractFacade
             ->getDependencyContainer()
             ->createCheckoutWorkflow()
             ->requestCheckout($checkoutRequest)
-            ;
+        ;
     }
 
 }
