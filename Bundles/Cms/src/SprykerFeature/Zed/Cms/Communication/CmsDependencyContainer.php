@@ -137,25 +137,22 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     }
 
     /**
-     * @param string $formType
      * @param int $idPage
      * @param int $idMapping
      * @param array $placeholder
+     * @param CmsFacade $cmsFacade
      *
      * @return CmsGlossaryForm
      */
-    public function createCmsGlossaryForm($idPage, $idMapping = null, $placeholder = null)
+    public function createCmsGlossaryForm($idPage, $idMapping = null, $placeholder = null, $cmsFacade)
     {
-        $glossaryQuery = null;
 
-        if (intval($idMapping) > 0) {
-            $glossaryQuery = $this->getQueryContainer()
-                ->queryGlossaryKeyMappingWithKeyById($idMapping)
-            ;
-        }
+        $glossaryQuery = $this->getQueryContainer()
+            ->queryGlossaryKeyMappingWithKeyById($idMapping)
+        ;
 
         return $this->getFactory()
-            ->createFormCmsGlossaryForm($glossaryQuery, $idPage, $idMapping, $placeholder)
+            ->createFormCmsGlossaryForm($glossaryQuery, $idPage, $idMapping, $placeholder, $cmsFacade)
             ;
     }
 }

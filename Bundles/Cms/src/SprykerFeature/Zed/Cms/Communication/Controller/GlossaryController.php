@@ -113,7 +113,7 @@ class GlossaryController extends AbstractController
         $placeholder = $request->get('placeholder');
 
         $form = $this->getDependencyContainer()
-            ->createCmsGlossaryForm($idPage, null, $placeholder)
+            ->createCmsGlossaryForm($idPage, null, $placeholder, $this->getFacade())
         ;
 
         $form->handleRequest();
@@ -155,7 +155,7 @@ class GlossaryController extends AbstractController
         $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
 
         $form = $this->getDependencyContainer()
-            ->createCmsGlossaryForm($idPage, $idMapping)
+            ->createCmsGlossaryForm($idPage, $idMapping, null, $this->getFacade())
         ;
 
         $form->handleRequest();
@@ -273,5 +273,9 @@ class GlossaryController extends AbstractController
         $physicalAddress = APPLICATION_ROOT_DIR . '/src/' . $config->get(SystemConfig::PROJECT_NAMESPACE) . '/Yves/Cms/Theme/' . $config->get(YvesConfig::YVES_THEME) . $templatePath;
 
         return $physicalAddress;
+    }
+
+    private function getGlossaryFacade(){
+
     }
 }
