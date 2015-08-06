@@ -100,7 +100,7 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
 
         $pageUrlByIdQuery = null;
 
-        if (intval($idPage) > 0) {
+        if (!is_null($idPage)) {
             $pageUrlByIdQuery = $this->getQueryContainer()
                 ->queryPageWithTemplatesAndUrlByPageId($idPage)
             ;

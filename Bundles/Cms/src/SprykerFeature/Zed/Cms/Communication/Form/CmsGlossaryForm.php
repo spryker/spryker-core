@@ -131,7 +131,7 @@ class CmsGlossaryForm extends AbstractForm
             $formItems[self::PLACEHOLDER] = $this->placeholder;
         }
 
-        if (intval($this->idMapping) > 0) {
+        if (!is_null($this->idMapping)) {
             $glossaryMapping = $this->glossaryByIdQuery->findOne();
 
             if ($glossaryMapping) {
