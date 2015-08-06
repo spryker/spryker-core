@@ -190,6 +190,7 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param int $idAbstractProduct
      * @param LocaleTransfer $locale
+     * @deprecated Use hasAbstractProductAttributes() instead.
      *
      * @throws AbstractProductAttributesExistException
      */
