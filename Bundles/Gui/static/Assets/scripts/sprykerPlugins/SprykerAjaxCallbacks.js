@@ -61,5 +61,6 @@ function SprykerAjaxCallbacks() {
     self.categoryDisplayUrls = function(ajaxResponse){
         $('#url-table').removeClass('hidden');
         $('#category-urls').html(ajaxResponse);
+        closeLoaderBar();
     }
 }

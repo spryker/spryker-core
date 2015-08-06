@@ -7,4 +7,9 @@ $(document).ready(function() {
         var idCategory = $(this).children('td:first').text();
         spyAj.getCategoryTreeByCategoryId(idCategory);
     });
+
+    $('#jstree-container').on('click', '.jstree-anchor', function(){
+        var categoryName = $(this).contents()[1].data;
+        spyAj.getCategoryTreeByCategoryName(categoryName);
+    });
 });

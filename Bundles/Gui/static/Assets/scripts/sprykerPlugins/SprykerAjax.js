@@ -57,15 +57,25 @@ function SprykerAjax() {
         var options = {
             id: idCategory
         };
-        self.setUrl('/category/list/node').ajaxSubmit(options, 'categoryDisplayNodeTree');
+        showLoaderBar();
+        self.setUrl('/category/index/node').ajaxSubmit(options, 'categoryDisplayNodeTree');
+    }
+
+    self.getCategoryTreeByCategoryName = function(categoryName) {
+        var options = {
+            'category-name': categoryName
+        };
+        showLoaderBar();
+        self.setUrl('/category/index/node-by-name').ajaxSubmit(options, 'categoryDisplayNodeTree');
     }
 
     self.getCategoryAttributes = function(idCategory) {
         var options = {
             id: idCategory
         }
+        showLoaderBar();
         self
-            .setUrl('/category/list/attributes')
+            .setUrl('/category/index/attributes')
             .setDataType('html')
             .ajaxSubmit(options, 'categoryDisplayAttributes')
         ;
@@ -75,8 +85,9 @@ function SprykerAjax() {
         var options = {
             id: idCategory
         }
+        showLoaderBar();
         self
-            .setUrl('/category/list/urls')
+            .setUrl('/category/index/urls')
             .setDataType('html')
             .ajaxSubmit(options, 'categoryDisplayUrls')
         ;

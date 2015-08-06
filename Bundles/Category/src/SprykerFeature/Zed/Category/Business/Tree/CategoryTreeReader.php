@@ -321,12 +321,12 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
         $children = [];
         $children['state'] = [
             'opened' => true,
-            'selected' => true,
         ];
 
         foreach ($categories as $item) {
             if ($item['parent'] == '#') {
                 $children['text'] = $item['text'];
+                $children['state']['selected'] = ($idCategory == $item['id']);
             } else {
                 $children['children'][] = $item['text'];
 

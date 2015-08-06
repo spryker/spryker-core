@@ -6,69 +6,68 @@
 
 {% block content %}
 
+
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Root nodes listing' } %}
 
         {% block widget_content %}
 
-            {{ rootNodeTable | raw }}
+            {{ rootCategories | raw }}
+
+            <div class="progress hidden" id="category-loader">
+                <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+            </div>
 
         {% endblock %}
 
     {% endembed %}
 
     {% embed '@Gui/Partials/widget.twig' with {
-        widget_title: 'Category node tree',
-        row_class: 'hidden',
-        row_id: 'category-node-tree'
+    widget_title: 'Category node tree',
+    row_class: 'hidden',
+    row_id: 'category-node-tree'
     } %}
 
         {% block widget_content %}
-
-            <div id="jstree_category"></div>
-
+            <div id="jstree-container"></div>
         {% endblock %}
 
     {% endembed %}
 
     {% embed '@Gui/Partials/widget.twig' with {
-        widget_title: 'Attributes of the selected category',
-        row_class: 'hidden',
-        row_id: 'attributes-table'
+    widget_title: 'Attributes of the selected category',
+    row_class: 'hidden',
+    row_id: 'attributes-table'
     } %}
 
         {% block widget_content %}
-            {#{ categoryAttributeTable.tableId }#}
-            {{ categoryAttributeTable | raw }}
-
+            <div id="category-attributes">-attributes-</div>
         {% endblock %}
 
     {% endembed %}
 
     {% embed '@Gui/Partials/widget.twig' with {
-        widget_title: 'Urls for the selected category node',
-        row_class: 'hidden',
-        row_id: 'url-table'
+    widget_title: 'Urls for the selected category node',
+    row_class: 'hidden',
+    row_id: 'url-table'
     } %}
 
         {% block widget_content %}
-
-            {{ categoryUrlTable | raw }}
-
+            <div id="category-urls"></div>
         {% endblock %}
 
     {% endembed %}
-    
+
 {% endblock %}
 
 {% block head_css %}
     {{ parent() }}
-    {#<link rel="stylesheet" href=""/>#}
+    <link rel="stylesheet" href="/bundles/Gui/styles/plugins/jsTree/style.min.css">
 {% endblock %}
 
 {% block footer_js %}
     {{ parent() }}
     <script src="/bundles/Gui/scripts/plugins/jsTree/jstree.min.js"></script>
-    <script src="/bundles/Gui/scripts/category.jsTree.js"></script>
+    <script src="/bundles/Gui/scripts/category.js"></script>
 {% endblock %}
 
 

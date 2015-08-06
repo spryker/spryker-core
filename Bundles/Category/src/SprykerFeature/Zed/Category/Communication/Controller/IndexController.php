@@ -1,45 +1,27 @@
 <?php
 
-/**
- * (c) Spryker Systems GmbH copyright protected.
- */
-
 namespace SprykerFeature\Zed\Category\Communication\Controller;
 
-use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\NodeTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Category\Business\CategoryFacade;
-use SprykerFeature\Zed\Category\Communication\CategoryDependencyContainer;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use SprykerFeature\Zed\Category\Communication\Table\CategoryAttributeTable;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
-/**
- * @method CategoryDependencyContainer getDependencyContainer()
- * @method CategoryFacade getFacade()
- */
 class IndexController extends AbstractController
 {
+
     /**
      * @return array
      */
     public function indexAction()
     {
-        $rootNodeTable = $this->getDependencyContainer()
+        $rootCategories = $this->getDependencyContainer()
             ->createRootNodeTable()
-        ;
-        $categoryAttributeTable = $this->getDependencyContainer()
-            ->createCategoryAttributeTable(null)
-        ;
-
-        $urlTable = $this->getDependencyContainer()
-            ->createUrlTable(null)
         ;
 
         return $this->viewResponse([
-            'rootNodeTable' => $rootNodeTable->render(),
-            'categoryAttributeTable' => $categoryAttributeTable->render(),
-            'categoryUrlTable' => $urlTable->render(),
+            'rootCategories' => $rootCategories->render(),
         ]);
     }
 
@@ -62,15 +44,17 @@ class IndexController extends AbstractController
      *
      * @return JsonResponse
      */
-    public function categoryAttributeTableAction(Request $request)
+    public function nodeAction(Request $request)
     {
-       $table = $this->getDependencyContainer()
-                ->createCategoryAttributeTable($request->get('id_node'))
-       ;
+        $idCategory = $request->get('id');
 
-        return $this->jsonResponse(
-            $table->fetchData()
-        );
+        $children = $this->getCategoryChildrenByCategoryId($idCategory);
+
+        return $this->jsonResponse([
+            'code' => Response::HTTP_OK,
+            'data' => $children,
+            'idCategory' => $idCategory,
+        ]);
     }
 
     /**
@@ -78,108 +62,76 @@ class IndexController extends AbstractController
      *
      * @return JsonResponse
      */
-    public function urlTableAction(Request $request)
+    public function nodeByNameAction(Request $request)
     {
-        $table = $this->getDependencyContainer()
-            ->createUrlTable($request->get('id_node'))
-        ;
+        $categoryName = $request->request->get('category-name');
 
-        return $this->jsonResponse(
-            $table->fetchData()
+        $idCategory = $this->getFacade()->getCategoryNodeIdentifier(
+            trim($categoryName),
+            $this->getDependencyContainer()->getCurrentLocale()
         );
+
+        $children = $this->getCategoryChildrenByCategoryId($idCategory);
+
+        return $this->jsonResponse([
+            'code' => Response::HTTP_OK,
+            'data' => $children,
+            'idCategory' => $idCategory,
+        ]);
     }
 
     /**
-     * @param Request $request
+     * @param int $idCategory
      *
-     * @return int
+     * @return array
      */
-    public function addCategoryAction(Request $request)
-    {
-        $name = $request->get('name');
-        $idParent = $request->get('idParent');
-        $categoryTransfer = new CategoryTransfer();
-        $categoryTransfer->setName($name);
-        $idCategory = $this->getFacade()
-            ->createCategory(
-                $categoryTransfer,
-                $this->getDependencyContainer()
-                    ->getCurrentLocale()
-            );
-        $nodeTransfer = new NodeTransfer();
-        $nodeTransfer->setFkCategory($idCategory);
-        $nodeTransfer->setFkParentCategoryNode($idParent);
-        $this->getFacade()
-            ->createCategoryNode(
-                $nodeTransfer,
-                $this->getDependencyContainer()
-                    ->getCurrentLocale()
-            );
-
-        return $idCategory;
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return bool
-     */
-    public function deleteCategoryAction(Request $request)
+    private function getCategoryChildrenByCategoryId($idCategory)
     {
         return $this->getFacade()
-            ->deleteCategoryByNodeId(
-                $request->get('id'),
-                $this->getDependencyContainer()
-                    ->getCurrentLocale()
-            );
-    }
-
-    /**
-     * for lazy loading the nodes
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function getChildrenAction(Request $request)
-    {
-        return $this->jsonResponse(
-            $this->getFacade()
-                ->getChildren(
-                    $request->get('id'),
-                    $this->getDependencyContainer()
-                        ->getCurrentLocale()
-                )
-        );
+            ->getNodeTreeForJsDisplay(
+                $idCategory,
+                $this->getDependencyContainer()->getCurrentLocale()
+            )
+        ;
     }
 
     /**
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return array
      */
-    public function getTreeNodesAction(Request $request)
+    public function attributesAction(Request $request)
     {
-        $tree = $this->getFacade()
-            ->getTree(
-                $request->get('id_category'),
-                $this->getDependencyContainer()
-                ->getCurrentLocale()
-            );
+        $idCategory = $request->get('id');
 
-        return $this->jsonResponse($tree);
+        /* @var CategoryAttributeTable $table */
+        $table = $this->getDependencyContainer()
+            ->createCategoryAttributeTable($idCategory)
+        ;
+
+        $tableData['table'] = $table->fetchData();
+        $tableData['table']['header'] = $table->getConfiguration()->getHeader();
+
+        return $this->viewResponse($tableData);
     }
 
     /**
-     * @return JsonResponse
+     * @param Request $request
+     *
+     * @return array
      */
-    public function renderAction()
+    public function urlsAction(Request $request)
     {
-        $categoryFacade = $this->getFacade();
+        $idCategory = $request->get('id');
 
-        return $this->streamedResponse(
-            function () use ($categoryFacade) {
-                echo $categoryFacade->renderCategoryTreeVisual();
-            }
-        );
+        $table = $this->getDependencyContainer()
+            ->createUrlTable($idCategory)
+        ;
+
+        $tableData['table'] = $table->fetchData();
+        $tableData['table']['header'] = $table->getConfiguration()->getHeader();
+
+        return $this->viewResponse($tableData);
     }
+
 }
