@@ -14,6 +14,7 @@ use SprykerFeature\Shared\Library\Currency\CurrencyManager;
 
 class OrdersTable extends AbstractTable
 {
+
     const URL = 'Url';
 
     /**

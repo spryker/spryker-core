@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -29,4 +30,5 @@ class RandomNumberGenerator implements RandomNumberGeneratorInterface
     {
         return rand($this->min, $this->max);
     }
+
 }

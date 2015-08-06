@@ -42,4 +42,5 @@ interface SalesQueryContainerInterface
      * @return SpySalesOrderItemQuery
      */
     public function querySalesOrderItem();
+
 }

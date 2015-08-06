@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -21,7 +22,6 @@ use SprykerFeature\Zed\Country\Persistence\CountryQueryContainer;
 use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountry;
 use SprykerFeature\Zed\Oms\OmsConfig;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
-use SprykerFeature\Zed\Oms\Persistence\Propel\Base\SpyOmsOrderProcessQuery;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStateQuery;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcess;
 use SprykerFeature\Zed\Sales\Business\SalesFacade;

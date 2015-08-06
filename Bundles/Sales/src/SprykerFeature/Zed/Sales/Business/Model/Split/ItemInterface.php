@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -8,12 +9,15 @@ use Generated\Shared\Sales\ItemSplitResponseInterface;
 
 interface ItemInterface
 {
+
     /**
-     * @param integer $idSalesOrderItem
-     * @param integer $quantityToSplit
+     * @param int $idSalesOrderItem
+     * @param int $quantityToSplit
+     *
+     * @throws \Exception
      *
      * @return ItemSplitResponseInterface
-     * @throws \Exception
      */
     public function split($idSalesOrderItem, $quantityToSplit);
+
 }

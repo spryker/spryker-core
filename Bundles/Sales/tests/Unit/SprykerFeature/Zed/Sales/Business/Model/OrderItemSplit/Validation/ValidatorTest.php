@@ -13,8 +13,8 @@ use SprykerFeature\Zed\Sales\Persistence;
 
 class ValidatorTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
-     * @return void
      */
     public function testInvalidQuantity()
     {
@@ -29,7 +29,6 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return void
      */
     public function testValidateIsProductBundled()
     {
@@ -45,7 +44,6 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return void
      */
     public function testValidateIsDiscounted()
     {
@@ -64,7 +62,6 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return void
      */
     public function testValidateIsOptionDiscounted()
     {
@@ -90,7 +87,6 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return void
      */
     public function testValidOrderItem()
     {
@@ -122,4 +118,5 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
 
         return $spySalesOrderItem;
     }
+
 }

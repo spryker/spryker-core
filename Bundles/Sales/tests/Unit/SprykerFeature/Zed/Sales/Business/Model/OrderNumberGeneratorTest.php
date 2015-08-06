@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,10 +16,10 @@ class OrderNumberGeneratorTest extends \PHPUnit_Framework_TestCase
      */
     protected function createMockOrderSequence()
     {
-        $randomNumberGenerator = new RandomNumberGenerator(1,1);
+        $randomNumberGenerator = new RandomNumberGenerator(1, 1);
 
         $orderSequence = $this->getMockBuilder('SprykerFeature\Zed\Sales\Business\Model\OrderSequence')
-            ->setConstructorArgs([$randomNumberGenerator,1000])
+            ->setConstructorArgs([$randomNumberGenerator, 1000])
             ->setMethods(['generate'])
             ->getMock()
         ;
@@ -70,4 +71,5 @@ class OrderNumberGeneratorTest extends \PHPUnit_Framework_TestCase
         $orderReference = $this->createDevelopmentOrderReferenceGenerator()->generateOrderReference($transferOrder);
         $this->assertTrue(substr($orderReference, 0, strlen('D-TEST-')) === 'D-TEST-');
     }
+
 }

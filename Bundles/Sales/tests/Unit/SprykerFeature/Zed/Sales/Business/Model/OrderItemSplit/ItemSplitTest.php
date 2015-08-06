@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemOption;
 
 class ItemSplitTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @var array
      */
@@ -20,7 +22,7 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
         'quantity',
         'created_at',
         'updated_at',
-        'group_key'
+        'group_key',
 
     ];
 
@@ -30,7 +32,7 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
     private $notCopiedOrderItemOptionFields = [
         'created_at',
         'updated_at',
-        'fk_sales_order_item'
+        'fk_sales_order_item',
     ];
 
     public function testIsOrderItemDataCopied()
@@ -65,7 +67,7 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
         $options = $spySalesOrderItem->getOptions();
 
         foreach ($options as $option) {
-             $oldOption =  $this->filterOutNotCopiedFields(
+             $oldOption = $this->filterOutNotCopiedFields(
                  $option->toArray(),
                  $this->notCopiedOrderItemOptionFields
              );
@@ -77,7 +79,6 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
              $this->assertEquals($oldOption, $copyOfOptions);
         }
     }
-
 
     /**
      * @return OrderItem
@@ -232,10 +233,12 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
 
         return $spySalesOrderItem;
     }
+
 }
 
 trait SpyTrait
 {
+
     /**
      * @var SpySalesOrderItem
      */
@@ -260,15 +263,19 @@ trait SpyTrait
     {
         return $this->propelModelCopy;
     }
+
 }
 
 class OrderItemSpy extends SpySalesOrderItem
 {
+
     use SpyTrait;
+
 }
 
 class OrderItemOptionSpy extends SpySalesOrderItemOption
 {
-    use SpyTrait;
-}
 
+    use SpyTrait;
+
+}

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,12 +11,12 @@ use Symfony\Component\Validator\Constraints;
 
 class OrderItemSplitForm extends AbstractForm
 {
+
     const QUANTITY = 'quantity';
     const ID_ORDER_ITEM = 'id_order_item';
     const ID_ORDER = 'id_order';
     const VALIDATE_MESSAGE_NUMERIC = 'Please provide numeric value.';
     const VALIDATION_MESSAGE_QUANTITY = 'Please provide quantity.';
-
 
     /**
      * Prepares form
@@ -30,13 +31,13 @@ class OrderItemSplitForm extends AbstractForm
                 'label' => 'Quantity',
                 'constraints' => [
                     new Constraints\NotBlank([
-                        'message' => self::VALIDATION_MESSAGE_QUANTITY
+                        'message' => self::VALIDATION_MESSAGE_QUANTITY,
                     ]),
                     new Constraints\Regex([
                         'pattern' => '/^\d+$/',
-                        'message' => self::VALIDATE_MESSAGE_NUMERIC
-                    ])
-                ]
+                        'message' => self::VALIDATE_MESSAGE_NUMERIC,
+                    ]),
+                ],
             ]
         )
             ->addHidden(self::ID_ORDER_ITEM)
@@ -53,4 +54,5 @@ class OrderItemSplitForm extends AbstractForm
     {
         return [];
     }
+
 }

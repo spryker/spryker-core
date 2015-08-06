@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -91,4 +92,5 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
 
         return $ts;
     }
+
 }

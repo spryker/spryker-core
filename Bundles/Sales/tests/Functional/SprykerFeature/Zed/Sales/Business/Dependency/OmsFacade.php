@@ -18,4 +18,5 @@ class OmsFacade extends SprykerOmsFacade implements SalesToOmsInterface
     {
         return 'CheckoutTest01';
     }
+
 }
