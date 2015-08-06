@@ -8,6 +8,7 @@ namespace SprykerFeature\Client\Wishlist\Service;
 
 
 use Generated\Shared\Customer\CustomerInterface;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Generated\Shared\Wishlist\ItemInterface;
 use Generated\Shared\Wishlist\WishlistInterface;

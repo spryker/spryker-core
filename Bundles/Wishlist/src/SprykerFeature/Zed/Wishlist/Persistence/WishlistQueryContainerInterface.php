@@ -4,8 +4,6 @@
  */
 namespace SprykerFeature\Zed\Wishlist\Persistence;
 
-use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlist;
-use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistItem;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistItemQuery;
 use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistQuery;
 

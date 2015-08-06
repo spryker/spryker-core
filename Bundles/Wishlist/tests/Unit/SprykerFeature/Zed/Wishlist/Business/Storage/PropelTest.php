@@ -61,12 +61,8 @@ class PropelTest extends \PHPUnit_Framework_TestCase
         $sypWishlist->setFkCustomer(1);
 
         $spyWishlistItem = new WishlistItemSpy();
-
-        $spyWishlistContainerMock = $this->getWishlistQueryContainerMock($sypWishlist);
-        $spyWishlistContainerMock
-            ->expects($this->any())
-            ->method('getSpyWishlistItem')
-            ->will($this->returnValue($spyWishlistItem));
+        $spyWishlistItem->setQuantity(0);
+        $spyWishlistContainerMock = $this->getWishlistQueryContainerMock($sypWishlist, $spyWishlistItem);
 
         $propelStorage = new Propel(
             $spyWishlistContainerMock,
@@ -85,9 +81,6 @@ class PropelTest extends \PHPUnit_Framework_TestCase
         $propelStorage->addItems($wishlistChange);
 
         $this->assertEquals(1, $spyWishlistItem->getQuantity());
-        $this->assertEquals(1, $spyWishlistItem->getFkAbstractProduct());
-        $this->assertEquals(1, $spyWishlistItem->getFkProduct());
-        $this->assertEquals(123, $spyWishlistItem->getGroupKey());
     }
 
     public function testReduceQuantity()
@@ -182,7 +175,7 @@ class PropelTest extends \PHPUnit_Framework_TestCase
 
         $wishlistQueryContainerMock
             ->expects($this->any())
-            ->method('getWishlistQuery')
+            ->method('queryWishlist')
             ->will($this->returnValue($spyWishlistQueryMock));
 
         $spyWishlistItemQueryMock = $this->getSpyWishlistItemQueryMock();
@@ -193,11 +186,11 @@ class PropelTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($wishlistItemSpy));
 
         $wishlistQueryContainerMock->expects($this->any())
-            ->method('filterCustomerWishlistByGroupKey')
+            ->method('queryCustomerWishlistByGroupKey')
             ->will($this->returnValue($spyWishlistItemQueryMock));
 
         $wishlistQueryContainerMock->expects($this->any())
-            ->method('filterCustomerWishlistByProductId')
+            ->method('queryCustomerWishlistByProductId')
             ->will($this->returnValue($spyWishlistItemQueryMock));
 
         return $wishlistQueryContainerMock;

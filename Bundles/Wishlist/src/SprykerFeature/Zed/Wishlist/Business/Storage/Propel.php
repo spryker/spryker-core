@@ -116,7 +116,7 @@ class Propel implements StorageInterface
             }
 
             $quantityDifference = $wishlistItemEntity->getQuantity() - $wishlistItemTransfer->getQuantity();
-            if ($quantityDifference <= 1 || $wishlistItemTransfer->getQuantity() === 0) {
+            if ($quantityDifference <= 0) {
                 $wishlistItemEntity->delete();
             } else {
                 $wishlistItemEntity->setQuantity($quantityDifference);
@@ -161,13 +161,10 @@ class Propel implements StorageInterface
         $idWishlist,
         ConcreteProductInterface $concreteProductTransfer
     ) {
-
         $wishlistItemEntity = new SpyWishlistItem();
         $wishlistItemEntity->setGroupKey($wishlistItemTransfer->getGroupKey());
-
         $wishlistItemEntity->setFkProduct($concreteProductTransfer->getIdConcreteProduct());
         $wishlistItemEntity->setFkAbstractProduct($concreteProductTransfer->getIdAbstractProduct());
-
         $wishlistItemEntity->setFkWishlist($idWishlist);
         $wishlistItemEntity->setQuantity($wishlistItemTransfer->getQuantity());
         $wishlistItemEntity->setAddedAt(new \DateTime());
@@ -208,11 +205,11 @@ class Propel implements StorageInterface
      */
     protected function createWishlistEntity($idCustomer)
     {
-        $spyWishlist = new SpyWishlist();
-        $spyWishlist->setFkCustomer($idCustomer);
-        $spyWishlist->save();
+        $wishlistEntity = new SpyWishlist();
+        $wishlistEntity->setFkCustomer($idCustomer);
+        $wishlistEntity->save();
 
-        return $spyWishlist;
+        return $wishlistEntity;
     }
 
     /**
