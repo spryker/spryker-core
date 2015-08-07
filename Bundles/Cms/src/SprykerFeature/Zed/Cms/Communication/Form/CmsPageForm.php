@@ -2,11 +2,11 @@
 
 namespace SprykerFeature\Zed\Cms\Communication\Form;
 
-use Pyz\Zed\Url\Business\UrlFacade;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPageQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use SprykerFeature\Zed\Url\Business\UrlFacade;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -19,7 +19,7 @@ class CmsPageForm extends AbstractForm
     const ADD = 'add';
     const UPDATE = 'update';
     const ID_CMS_PAGE = 'idCmsPage';
-    const TEMPLATE_NAME = 'fkTemplate';
+    const FK_TEMPLATE = 'fkTemplate';
     const ID_URL = 'idUrl';
     const URL = 'url';
     const CURRENT_TEMPLATE = 'cur_temp';
@@ -103,7 +103,7 @@ class CmsPageForm extends AbstractForm
         return $this->addHidden(self::ID_CMS_PAGE)
             ->addHidden(CmsQueryContainer::ID_URL)
             ->addHidden(self::CURRENT_TEMPLATE)
-            ->addChoice(self::TEMPLATE_NAME, [
+            ->addChoice(self::FK_TEMPLATE, [
                 'label' => 'Template',
                 'choices' => $this->getTemplateList(),
             ])
@@ -140,7 +140,7 @@ class CmsPageForm extends AbstractForm
 
             return [
                 self::ID_CMS_PAGE => $pageUrlTemplate->getIdCmsPage(),
-                self::TEMPLATE_NAME => $pageUrlTemplate->getFkTemplate(),
+                self::FK_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
                 self::URL => $pageUrlTemplate->getUrl(),
                 self::CURRENT_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
                 self::IS_ACTIVE => $pageUrlTemplate->getIsActive(),

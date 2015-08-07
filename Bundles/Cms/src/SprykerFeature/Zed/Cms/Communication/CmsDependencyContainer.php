@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Cms\Communication;
 use Generated\Zed\Ide\FactoryAutoCompletion\CmsCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Cms\CmsDependencyProvider;
-use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 
 /**
@@ -19,16 +18,12 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**
-     * @param Request $request
      *
      * @return mixed
      */
-    public function createCmsGrid(Request $request)
+    public function createCmsGrid()
     {
-        return $this->getFactory()
-            ->createGridCmsGrid($this->getQueryContainer()
-                ->queryPagesWithTemplates(), $request)
-            ;
+        return $this->getFactory();
     }
 
     /**
@@ -74,18 +69,18 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
      * @param int $idPage
      * @param int $fkLocale
      * @param array $placeholders
+     * @param array $searchArray
      *
      * @return CmsGlossaryTable
      */
-    public function createCmsGlossaryTable($idPage, $fkLocale, $placeholders = null)
+    public function createCmsGlossaryTable($idPage, $fkLocale, array $placeholders = null, array $searchArray = null)
     {
-
         $glossaryQuery = $this->getQueryContainer()
             ->queryGlossaryKeyMappingsWithKeyByPageId($idPage, $fkLocale)
         ;
 
         return $this->getFactory()
-            ->createTableCmsGlossaryTable($glossaryQuery, $idPage, $placeholders)
+            ->createTableCmsGlossaryTable($glossaryQuery, $idPage, $placeholders, $searchArray)
             ;
     }
 
@@ -102,7 +97,7 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
 
         if (!is_null($idPage)) {
             $pageUrlByIdQuery = $this->getQueryContainer()
-                ->queryPageWithTemplatesAndUrlByPageId($idPage)
+                ->queryPageWithTemplatesAndUrlByIdPage($idPage)
             ;
         }
 
@@ -110,7 +105,7 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
             ->queryTemplates()
         ;
 
-        $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::URL_BUNDLE);
+        $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
 
         return $this->getFactory()
             ->createFormCmsPageForm($templateQuery, $pageUrlByIdQuery, $formType, $idPage, $urlFacade)
@@ -129,7 +124,7 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
             ->queryUrlByIdWithRedirect($idUrl)
         ;
 
-        $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::URL_BUNDLE);
+        $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
 
         return $this->getFactory()
             ->createFormCmsRedirectForm($queryUrlById, $formType, $urlFacade)
@@ -154,6 +149,16 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
         return $this->getFactory()
             ->createFormCmsGlossaryForm($glossaryMappingByIdQuery, $idPage, $idMapping, $placeholder, $cmsFacade)
             ;
+    }
+
+    /**
+     * @param string $templateRelativePath
+     *
+     * @return string
+     */
+    public function getTemplateRealPath($templateRelativePath)
+    {
+        return $this->getConfig()->getTemplateRealPath($templateRelativePath);
     }
 
 }

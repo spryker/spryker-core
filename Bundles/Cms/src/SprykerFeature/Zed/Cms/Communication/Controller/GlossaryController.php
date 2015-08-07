@@ -8,19 +8,14 @@ namespace SprykerFeature\Zed\Cms\Communication\Controller;
 
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
-use Pyz\Zed\Cms\CmsDependencyProvider;
-use SprykerEngine\Shared\Config;
-use SprykerFeature\Shared\System\SystemConfig;
-use SprykerFeature\Shared\Yves\YvesConfig;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
+use SprykerFeature\Zed\Cms\CmsDependencyProvider;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsGlossaryForm;
 use SprykerFeature\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use SprykerFeature\Zed\Cms\Communication\Table\CmsPageTable;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
-use Functional\SprykerFeature\Zed\Glossary\Mock\LocaleFacade;
-use Pyz\Zed\Cms\Communication\CmsDependencyContainer;
 
 /**
  * @method CmsDependencyContainer getDependencyContainer()
@@ -40,8 +35,8 @@ class GlossaryController extends AbstractController
     public function indexAction(Request $request)
     {
         $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
-        $spyPageUrl = $this->getQueryContainer()
-            ->queryPageWithTemplatesAndUrlByPageId($idPage)
+        $pageUrl = $this->getQueryContainer()
+            ->queryPageWithTemplatesAndUrlByIdPage($idPage)
             ->findOne()
         ;
 
@@ -56,7 +51,7 @@ class GlossaryController extends AbstractController
         return [
             'keyMaps' => $table->render(),
             'idPage' => $idPage,
-            'url' => $spyPageUrl->getUrl(),
+            'url' => $pageUrl->getUrl(),
         ];
     }
 
@@ -73,29 +68,20 @@ class GlossaryController extends AbstractController
             ->getCurrentLocale()
         ;
 
-        $spyPageUrl = $this->getQueryContainer()
-            ->queryPageWithTemplatesAndUrlByPageId($idPage)
+        $pageUrl = $this->getQueryContainer()
+            ->queryPageWithTemplatesAndUrlByIdPage($idPage)
             ->findOne()
         ;
 
-        $pageUrlArray = $spyPageUrl->toArray();
-        $tempFile = $this->getTemplatePhysicalAddress($pageUrlArray[CmsQueryContainer::TEMPLATE_PATH]);
+        $pageUrlArray = $pageUrl->toArray();
+        $tempFile = $this->getDependencyContainer()
+            ->getTemplateRealPath($pageUrlArray[CmsQueryContainer::TEMPLATE_PATH])
+        ;
+
         $placeholders = $this->findTemplatePlaceholders($tempFile);
 
-        $searchArray = $request->get('search');
-
-        if (isset($searchArray['value']) && !empty($searchArray['value'])) {
-            $foundPlaceholders = [];
-            foreach ($placeholders as $place) {
-                if (stripos($place, $searchArray['value']) !== false) {
-                    $foundPlaceholders[] = $place;
-                }
-            }
-            $placeholders = $foundPlaceholders;
-        }
-
         $table = $this->getDependencyContainer()
-            ->createCmsGlossaryTable($idPage, $localeTransfer->getIdLocale(), $placeholders)
+            ->createCmsGlossaryTable($idPage, $localeTransfer->getIdLocale(), $placeholders, $request->get('search'))
         ;
 
         return $this->jsonResponse($table->fetchData());
@@ -123,12 +109,15 @@ class GlossaryController extends AbstractController
             $data = $form->getData();
 
             $pageKeyMappingTransfer = (new PageKeyMappingTransfer())->fromArray($data, true);
-            $spyGlossaryKey = $this->getQueryContainer()
+
+            //@todo new CMS_FACADE_API
+
+            $glossaryKey = $this->getQueryContainer()
                 ->queryKey($data[CmsGlossaryForm::GLOSSARY_KEY])
                 ->findOne()
             ;
 
-            $pageKeyMappingTransfer->setFkGlossaryKey($spyGlossaryKey->getIdGlossaryKey());
+            $pageKeyMappingTransfer->setFkGlossaryKey($glossaryKey->getIdGlossaryKey());
 
             $this->getFacade()
                 ->savePageKeyMapping($pageKeyMappingTransfer)
@@ -165,11 +154,13 @@ class GlossaryController extends AbstractController
             $data = $form->getData();
 
             $pageKeyMappingTransfer = (new PageKeyMappingTransfer())->fromArray($data, true);
-            $spyGlossaryKey = $this->getQueryContainer()
+
+            //@todo new CMS_FACADE_API
+            $glossaryKey = $this->getQueryContainer()
                 ->queryKey($data[CmsGlossaryForm::GLOSSARY_KEY])
                 ->findOne()
             ;
-            $pageKeyMappingTransfer->setFkGlossaryKey($spyGlossaryKey->getIdGlossaryKey());
+            $pageKeyMappingTransfer->setFkGlossaryKey($glossaryKey->getIdGlossaryKey());
 
             $this->getFacade()
                 ->savePageKeyMapping($pageKeyMappingTransfer)
@@ -215,7 +206,7 @@ class GlossaryController extends AbstractController
     private function getLocaleFacade()
     {
         return $this->getDependencyContainer()
-            ->getProvidedDependency(CmsDependencyProvider::LOCALE_BUNDLE)
+            ->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE)
             ;
     }
 
@@ -224,11 +215,11 @@ class GlossaryController extends AbstractController
      */
     private function touchActivePage($idPage)
     {
-        $spyPage = $this->getQueryContainer()
+        $page = $this->getQueryContainer()
             ->queryPageById($idPage)
             ->findOne()
         ;
-        $pageTransfer = (new PageTransfer())->fromArray($spyPage->toArray());
+        $pageTransfer = (new PageTransfer())->fromArray($page->toArray());
 
         $this->getFacade()
             ->touchPageActive($pageTransfer)
@@ -255,21 +246,4 @@ class GlossaryController extends AbstractController
 
         return $placeholderMap;
     }
-
-    /**
-     * @param string $templatePath
-     *
-     * @throws \Exception
-     *
-     * @return string
-     */
-    private function getTemplatePhysicalAddress($templatePath)
-    {
-        $config = Config::getInstance();
-        $templatePath = substr($templatePath, 4);
-        $physicalAddress = APPLICATION_ROOT_DIR . '/src/' . $config->get(SystemConfig::PROJECT_NAMESPACE) . '/Yves/Cms/Theme/' . $config->get(YvesConfig::YVES_THEME) . $templatePath;
-
-        return $physicalAddress;
-    }
-
 }

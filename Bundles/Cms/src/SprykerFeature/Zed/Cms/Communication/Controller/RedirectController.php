@@ -41,6 +41,7 @@ class RedirectController extends AbstractController
         if ($form->isValid()) {
             $data = $form->getData();
 
+            //@todo new CMS_FACADE_API
             $redirectTransfer = $this->getUrlFacade()
                 ->createRedirect($data[CmsRedirectForm::TO_URL])
             ;
@@ -84,17 +85,18 @@ class RedirectController extends AbstractController
         if ($form->isValid()) {
             $data = $form->getData();
 
-            $spyUrl = $this->getQueryContainer()
+            //@todo new CMS_FACADE_API
+            $url = $this->getQueryContainer()
                 ->queryUrlByIdWithRedirect($idUrl)
                 ->findOne()
             ;
-            //todo check the resource type
-            if ($spyUrl) {
-                $urlTransfer = (new UrlTransfer())->fromArray($spyUrl->toArray(), true);
+            // @todo check the resource type
+            if ($url) {
+                $urlTransfer = (new UrlTransfer())->fromArray($url->toArray(), true);
                 $urlTransfer->setUrl($data[CmsRedirectForm::FROM_URL]);
-                $urlTransfer->setFkRedirect($spyUrl->getFkResourceRedirect());
-                $urlTransfer->setResourceId($spyUrl->getResourceId());
-                $urlTransfer->setResourceType($spyUrl->getResourceType());
+                $urlTransfer->setFkRedirect($url->getFkResourceRedirect());
+                $urlTransfer->setResourceId($url->getResourceId());
+                $urlTransfer->setResourceType($url->getResourceType());
                 $urlTransfer = $this->getUrlFacade()
                     ->saveUrl($urlTransfer)
                 ;
@@ -102,11 +104,11 @@ class RedirectController extends AbstractController
                     ->touchUrlActive($urlTransfer->getIdUrl())
                 ;
 
-                $spyRedirect = $this->getQueryContainer()
-                    ->queryRedirectById($spyUrl->getFkResourceRedirect())
+                $redirect = $this->getQueryContainer()
+                    ->queryRedirectById($url->getFkResourceRedirect())
                     ->findOne()
                 ;
-                $redirectTransfer = (new RedirectTransfer())->fromArray($spyRedirect->toArray());
+                $redirectTransfer = (new RedirectTransfer())->fromArray($redirect->toArray());
                 $redirectTransfer->setToUrl($data[CmsRedirectForm::TO_URL]);
                 $redirectTransfer = $this->getUrlFacade()
                     ->saveRedirect($redirectTransfer)
@@ -130,7 +132,7 @@ class RedirectController extends AbstractController
     private function getUrlFacade()
     {
         return $this->getDependencyContainer()
-            ->getProvidedDependency(CmsDependencyProvider::URL_BUNDLE)
+            ->getProvidedDependency(CmsDependencyProvider::FACADE_URL)
             ;
     }
 
@@ -140,8 +142,8 @@ class RedirectController extends AbstractController
     private function getLocaleFacade()
     {
         return $this->getDependencyContainer()
-            ->getProvidedDependency(CmsDependencyProvider::LOCALE_BUNDLE)
-            ;
+            ->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE)
+        ;
     }
 
 }

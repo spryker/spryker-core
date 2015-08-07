@@ -12,8 +12,8 @@ use SprykerEngine\Zed\Kernel\Container;
 class CmsDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const URL_BUNDLE = 'url_bundle';
-    const LOCALE_BUNDLE = 'locale_bundle';
+    const FACADE_URL = 'facade_url';
+    const FACADE_LOCALE = 'facade_locale';
 
     const URL_QUERY_CONTAINER = 'url_query_container';
     const GLOSSARY_QUERY_CONTAINER = 'glossary_query_container';
@@ -25,11 +25,11 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::URL_BUNDLE] = function (Container $container) {
+        $container[self::FACADE_URL] = function (Container $container) {
             return $container->getLocator()->url()->facade();
         };
 
-        $container[self::LOCALE_BUNDLE] = function (Container $container) {
+        $container[self::FACADE_LOCALE] = function (Container $container) {
             return $container->getLocator()->locale()->facade();
         };
 

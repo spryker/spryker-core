@@ -102,12 +102,12 @@ class CmsRedirectForm extends AbstractForm
      */
     protected function populateFormFields()
     {
-        $spyUrl = $this->urlByIdQuery->findOne();
+        $url = $this->urlByIdQuery->findOne();
 
-        if ($spyUrl) {
+        if ($url) {
             return [
-                self::FROM_URL => $spyUrl->getUrl(),
-                self::TO_URL => $spyUrl->getToUrl(),
+                self::FROM_URL => $url->getUrl(),
+                self::TO_URL => $url->getToUrl(),
             ];
         }
     }

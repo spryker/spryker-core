@@ -37,16 +37,23 @@ class CmsGlossaryTable extends AbstractTable
     protected $idPage;
 
     /**
+     * @var array
+     */
+    protected $searchArray;
+
+    /**
      * @param SpyCmsGlossaryKeyMappingQuery $glossaryQuery
      * @param int $idPage
      * @param array $placeholders
      * @param SpyCmsGlossaryKeyMappingQuery $glossaryQuery
+     * @param array $searchArray
      */
-    public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryQuery, $idPage, $placeholders = null)
+    public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryQuery, $idPage, array $placeholders = null, array $searchArray = null)
     {
         $this->glossaryQuery = $glossaryQuery;
         $this->idPage = $idPage;
         $this->placeholders = $placeholders;
+        $this->searchArray = $searchArray;
     }
 
     /**
@@ -74,7 +81,7 @@ class CmsGlossaryTable extends AbstractTable
             CmsQueryContainer::TRANS => SpyGlossaryTranslationTableMap::COL_VALUE,
         ]);
 
-        $config->setUrl(sprintf('table?' . CmsPageTable::REQUEST_ID_PAGE . '=%d', $this->idPage));
+        $config->setUrl('table?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $this->idPage);
 
         return $config;
     }
@@ -86,6 +93,10 @@ class CmsGlossaryTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
+        if (isset($this->searchArray['value']) && !empty($this->searchArray['value'])) {
+            $this->placeholders = $this->findPlaceholders($this->searchArray);
+        }
+
         $query = $this->glossaryQuery;
         $queryResults = $this->runQuery($query, $config);
 
@@ -105,18 +116,7 @@ class CmsGlossaryTable extends AbstractTable
 
         unset($queryResults);
 
-        foreach ($this->placeholders as $place) {
-
-            if (!in_array($place, $mappedPlaceholders)) {
-                $results[] = [
-                    SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING => null,
-                    SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER => $place,
-                    CmsQueryContainer::KEY => null,
-                    CmsQueryContainer::TRANS => null,
-                    self::ACTIONS => $this->buildPlaceholderLinks($place),
-                ];
-            }
-        }
+        $results = $this->addExtractedPlaceholders($mappedPlaceholders, $results);
 
         return $results;
     }
@@ -145,6 +145,47 @@ class CmsGlossaryTable extends AbstractTable
     private function buildPlaceholderLinks($placeholder)
     {
         return '<a href="/cms/glossary/add/?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $this->idPage . '&placeholder=' . $placeholder . '" class="btn btn-xs btn-white">Add Glossary</a>';
+    }
+
+    /**
+     * @param array $mappedPlaceholders
+     * @param array $results
+     *
+     * @return array
+     */
+    protected function addExtractedPlaceholders(array $mappedPlaceholders, array $results)
+    {
+        foreach ($this->placeholders as $place) {
+
+            if (!in_array($place, $mappedPlaceholders)) {
+                $results[] = [
+                    SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING => null,
+                    SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER => $place,
+                    CmsQueryContainer::KEY => null,
+                    CmsQueryContainer::TRANS => null,
+                    self::ACTIONS => $this->buildPlaceholderLinks($place),
+                ];
+            }
+        }
+
+        return $results;
+    }
+
+    /**
+     * @param $searchItems
+     *
+     * @return array
+     */
+    private function findPlaceholders($searchItems)
+    {
+        $foundPlaceholders = [];
+            foreach ($this->placeholders as $place) {
+                if (stripos($place, $searchItems['value']) !== false) {
+                    $foundPlaceholders[] = $place;
+                }
+            }
+
+        return $foundPlaceholders;
     }
 
 }

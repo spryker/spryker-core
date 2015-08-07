@@ -42,6 +42,8 @@ class PageController extends AbstractController
             $pageTransfer = new PageTransfer();
             $pageTransfer->fromArray($data, true);
 
+
+            // @todo SAVE_PAGE_URL CMS_FACADE_API
             $pageTransfer = $this->getFacade()
                 ->savePage($pageTransfer)
             ;
@@ -54,7 +56,9 @@ class PageController extends AbstractController
                 ->touchUrlActive($urlTransfer->getIdUrl())
             ;
 
-            return $this->redirectResponse(self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage());
+            $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
+
+            return $this->redirectResponse($redirectUrl);
         }
 
         return $this->viewResponse([
@@ -84,21 +88,23 @@ class PageController extends AbstractController
             $pageTransfer = new PageTransfer();
             $pageTransfer->fromArray($data, true);
 
+
+            // @todo SAVE_PAGE_URL CMS_FACADE_API
             $pageTransfer = $this->getFacade()
                 ->savePage($pageTransfer)
             ;
 
-            $spyUrl = $this->getQueryContainer()
+            $url = $this->getQueryContainer()
                 ->queryUrlById($data['id_url'])
                 ->findOne()
             ;
 
             $urlTransfer = new UrlTransfer();
-            $urlTransfer = $urlTransfer->fromArray($spyUrl->toArray(), true);
+            $urlTransfer = $urlTransfer->fromArray($url->toArray(), true);
 
             $urlTransfer->setFkPage($pageTransfer->getIdCmsPage());
-            $urlTransfer->setResourceId($spyUrl->getResourceId());
-            $urlTransfer->setResourceType($spyUrl->getResourceType());
+            $urlTransfer->setResourceId($url->getResourceId());
+            $urlTransfer->setResourceType($url->getResourceType());
 
             if (intval($data['cur_temp']) !== intval($data['fkTemplate'])) {
                 $this->deleteMappedGlossary($idPage);
@@ -114,7 +120,9 @@ class PageController extends AbstractController
                 ->touchUrlActive($urlTransfer->getIdUrl())
             ;
 
-            return $this->redirectResponse(self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage());
+            $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
+
+            return $this->redirectResponse($redirectUrl);
         }
 
         return $this->viewResponse([
@@ -128,12 +136,13 @@ class PageController extends AbstractController
     private function getUrlFacade()
     {
         return $this->getDependencyContainer()
-            ->getProvidedDependency(CmsDependencyProvider::URL_BUNDLE)
+            ->getProvidedDependency(CmsDependencyProvider::FACADE_URL)
             ;
     }
 
     private function deleteMappedGlossary($idPage)
     {
+        //@todo DeleteMappedGlossary CMS_FACADE_API
         $mappedGlossaries = $this->getQueryContainer()
             ->queryGlossaryKeyMappingsByPageId($idPage)
             ->find()
