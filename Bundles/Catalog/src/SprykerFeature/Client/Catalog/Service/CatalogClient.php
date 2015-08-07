@@ -42,7 +42,7 @@ class CatalogClient extends AbstractClient
     }
 
     /**
-     * @return \Pyz\Client\Catalog\Model\FacetConfig
+     * @return Model\FacetConfig
      */
     public function createFacetConfig()
     {
