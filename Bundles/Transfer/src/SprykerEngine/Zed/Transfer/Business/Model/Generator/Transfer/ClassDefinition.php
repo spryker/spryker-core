@@ -395,7 +395,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function buildGetMethod(array $property)
     {
-        $propertyName = $this->getPropertyName($property, 'get');
+        $propertyName = $this->getPropertyName($property);
         $methodName = 'get' . ucfirst($propertyName);
         $method = [
             'name' => $methodName,
