@@ -80,6 +80,7 @@ class OrderManager
      * @param OrderTransfer $orderTransfer
      *
      * @throws PropelException
+     *
      * @return SpySalesOrder
      */
     protected function saveOrderEntity(OrderTransfer $orderTransfer)

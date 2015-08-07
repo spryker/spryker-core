@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,11 +10,12 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 
 class Calculator implements CalculatorInterface
 {
+
     /**
      * @param SpySalesOrderItem $salesOrderItem
-     * @param integer $quantity
+     * @param int $quantity
      *
-     * @return integer
+     * @return int
      */
     public function calculateQuantityAmountLeft(SpySalesOrderItem $salesOrderItem, $quantity)
     {

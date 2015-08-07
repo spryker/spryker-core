@@ -13,6 +13,7 @@ use SprykerFeature\Zed\Sales\Communication\Exception\FormNotFoundException;
 
 class Collection
 {
+
     const SPLIT_SUBMIT_URL = '/sales/order-item-split/split';
     const FORM_NOT_FOUND_MESSAGE = 'Form with "%d" is not set.';
 
@@ -44,7 +45,7 @@ class Collection
                 ->setOptions(['action' => self::SPLIT_SUBMIT_URL])
                 ->setData([
                     OrderItemSplitForm::ID_ORDER_ITEM => $orderItem->getIdSalesOrderItem(),
-                    OrderItemSplitForm::ID_ORDER => $orderItem->getFkSalesOrder()
+                    OrderItemSplitForm::ID_ORDER => $orderItem->getFkSalesOrder(),
                  ])
                ;
 
@@ -63,10 +64,11 @@ class Collection
     }
 
     /**
-     * @param integer $formIndexId
+     * @param int $formIndexId
+     *
+     * @throws FormNotFoundException
      *
      * @return OrderItemSplitForm
-     * @throws FormNotFoundException
      */
     public function getById($formIndexId)
     {
@@ -78,7 +80,7 @@ class Collection
     }
 
     /**
-     * @param integer $idFormIndex
+     * @param int $idFormIndex
      *
      * @return bool
      */
@@ -86,4 +88,5 @@ class Collection
     {
         return isset($this->forms[$idFormIndex]);
     }
+
 }

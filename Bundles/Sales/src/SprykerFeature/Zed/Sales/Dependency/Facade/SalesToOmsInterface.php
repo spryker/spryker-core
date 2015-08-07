@@ -27,4 +27,5 @@ interface SalesToOmsInterface
      * @return string
      */
     public function selectProcess(OrderTransfer $transferOrder);
+
 }

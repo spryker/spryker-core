@@ -59,6 +59,7 @@ class SalesConfig extends AbstractBundleConfig
 
     /**
      * @deprecated
+     *
      * @return array
      */
     public function getOrderIncrementKeys()
@@ -68,6 +69,7 @@ class SalesConfig extends AbstractBundleConfig
 
     /**
      * @deprecated
+     *
      * @return array
      */
     public function getOrderIncrementPrefix()
@@ -77,6 +79,7 @@ class SalesConfig extends AbstractBundleConfig
 
     /**
      * @deprecated
+     *
      * @return int
      */
     public function getOrderIncrementDigits()
@@ -137,5 +140,5 @@ class SalesConfig extends AbstractBundleConfig
     {
         return 42;
     }
-    
+
 }

@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\OrderItemsTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SalesAddressTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Zed\Sales\Communication\Form\AddressForm;
-use SprykerFeature\Zed\Sales\Communication\Form\CustomerForm;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 
@@ -105,8 +103,8 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
-     * @param integer $idSalesOrderItem
-     * @param integer $quantity
+     * @param int $idSalesOrderItem
+     * @param int $quantity
      *
      * @return ItemSplitResponseInterface
      */
@@ -142,4 +140,5 @@ class SalesFacade extends AbstractFacade
             ->updateOrderAddress($addressesTransfer, $idAddress)
         ;
     }
+
 }

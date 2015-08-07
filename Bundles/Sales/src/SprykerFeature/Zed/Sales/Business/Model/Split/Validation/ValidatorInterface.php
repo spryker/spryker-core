@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -8,9 +9,10 @@ use SprykerFeature\Zed\Sales\Persistence;
 
 interface ValidatorInterface
 {
+
     /**
      * @param Persistence\Propel\SpySalesOrderItem $salesOrderItem
-     * @param integer                              $quantityToSplit
+     * @param int                              $quantityToSplit
      *
      * @return bool
      */
@@ -20,4 +22,5 @@ interface ValidatorInterface
      * @return array
      */
     public function getMessages();
+
 }

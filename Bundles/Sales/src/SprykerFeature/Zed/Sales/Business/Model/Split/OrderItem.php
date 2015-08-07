@@ -57,11 +57,12 @@ class OrderItem implements ItemInterface
     }
 
     /**
-     * @param integer $idSalesOrderItem
-     * @param integer $quantityToSplit
+     * @param int $idSalesOrderItem
+     * @param int $quantityToSplit
+     *
+     * @throws \Exception
      *
      * @return ItemSplitResponseInterface
-     * @throws \Exception
      */
     public function split($idSalesOrderItem, $quantityToSplit)
     {
@@ -117,7 +118,7 @@ class OrderItem implements ItemInterface
 
     /**
      * @param SpySalesOrderItem $salesOrderItem
-     * @param integer $quantity
+     * @param int $quantity
      */
     protected function copy(SpySalesOrderItem $salesOrderItem, $quantity)
     {
@@ -130,7 +131,7 @@ class OrderItem implements ItemInterface
 
     /**
      * @param SpySalesOrderItem $salesOrderItem
-     * @param integer $quantity
+     * @param int $quantity
      *
      * @return SpySalesOrderItem
      */
@@ -169,7 +170,7 @@ class OrderItem implements ItemInterface
 
     /**
      * @param SpySalesOrderItem $salesOrderItem
-     * @param integer $quantity
+     * @param int $quantity
      */
     protected function updateParentQuantity(SpySalesOrderItem $salesOrderItem, $quantity)
     {
@@ -178,4 +179,5 @@ class OrderItem implements ItemInterface
         $salesOrderItem->setQuantity($quantityAmountLeft);
         $salesOrderItem->save($this->getConnection());
     }
+
 }
