@@ -59,6 +59,16 @@ interface SystemConfig extends ConfigInterface
     const ZED_MYSQL_PORT = 'ZED_MYSQL_PORT';
 
     /**
+     * Database
+     */
+    const ZED_DB_ENGINE = 'ZED_DB_ENGINE';
+    const ZED_DB_USERNAME = 'ZED_DB_USERNAME';
+    const ZED_DB_PASSWORD = 'ZED_DB_PASSWORD';
+    const ZED_DB_DATABASE = 'ZED_DB_DATABASE';
+    const ZED_DB_HOST = 'ZED_DB_HOST';
+    const ZED_DB_PORT = 'ZED_DB_PORT';
+
+    /**
      * RabbitMQ
      */
     const ZED_RABBITMQ_USERNAME = 'ZED_RABBITMQ_USERNAME';
