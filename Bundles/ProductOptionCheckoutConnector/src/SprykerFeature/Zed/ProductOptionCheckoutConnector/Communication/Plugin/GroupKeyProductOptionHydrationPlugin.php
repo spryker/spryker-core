@@ -56,8 +56,8 @@ class GroupKeyProductOptionHydrationPlugin extends AbstractPlugin implements Che
     {
         usort(
             $options,
-            function (ProductOptionInterface $a, ProductOptionInterface $b) {
-                return ($a->getIdOptionValueUsage() < $b->getIdOptionValueUsage()) ? -1 : 1;
+            function (ProductOptionInterface $productOption, ProductOptionInterface $productOption) {
+                return ($productOption->getIdOptionValueUsage() < $productOption->getIdOptionValueUsage()) ? -1 : 1;
             }
         );
 
