@@ -141,10 +141,12 @@ class Customer
         }
 
         $customer = new SpyCustomer();
+
+        $customer->fromArray($customerTransfer->toArray());
+
         $customer->setCustomerReference($this->customerReferenceGenerator->generateCustomerReference($customerTransfer));
-        $customer->setPassword($customerTransfer->getPassword());
-        $customer->setEmail($customerTransfer->getEmail());
         $customer->setRegistrationKey($this->generateKey());
+
         $customer->save();
 
         $customerTransfer->setIdCustomer($customer->getPrimaryKey());
