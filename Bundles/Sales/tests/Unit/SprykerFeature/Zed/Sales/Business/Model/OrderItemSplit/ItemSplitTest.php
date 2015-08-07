@@ -5,7 +5,7 @@
 
 namespace Unit\SprykerFeature\Zed\Sales\Business\Model\OrderItemSplit\Validation;
 
-use SprykerFeature\Zed\Sales\Business\Model\Split\Item;
+use SprykerFeature\Zed\Sales\Business\Model\Split\OrderItem;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemOption;
 
@@ -46,7 +46,7 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
         $createdCopy = $spySalesOrderItem->getCreatedCopy();
         $this->assertEquals(1, $createdCopy->getQuantity());
         $this->assertEquals(4, $spySalesOrderItem->getQuantity());
-        $this->assertEquals(Item::SPLIT_MARKER . $spySalesOrderItem->getGroupKey(), $createdCopy->getGroupKey());
+        $this->assertEquals(OrderItem::SPLIT_MARKER . $spySalesOrderItem->getGroupKey(), $createdCopy->getGroupKey());
 
         $oldSalesOrderItemArray = $spySalesOrderItem->toArray();
         $copyofItemSalesOrderItemArray = $createdCopy->toArray();
@@ -110,7 +110,7 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
             ->method('calculateQuantityAmountLeft')
             ->will($this->returnValue($quantityForOld));
 
-        $itemSplit = new Item($validatorMock, $salesQueryContainerMock, $calculatorMock);
+        $itemSplit = new OrderItem($validatorMock, $salesQueryContainerMock, $calculatorMock);
         $itemSplit->setDatabaseConnection($databaseConnectionMock);
 
         return $itemSplit;
