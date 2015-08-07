@@ -1,11 +1,15 @@
 'use strict';
 
 function SprykerAjaxCallbacks() {
-    /* HTML success code */
-    var codeSuccess = 200;
+    var self = this;
 
-    /* Alerted object, display alerts with model from bootstrap */
-    this.alerter = new SprykerAlert();
+    /* HTML success code */
+    self.codeSuccess = 200;
+
+    /**
+     * @type {SprykerAjax}
+     */
+    self.spyAj = new SprykerAjax();
 
     /**
      * Response:
@@ -19,11 +23,52 @@ function SprykerAjaxCallbacks() {
      * </code>
      * @param ajaxResponse
      */
-    this.changeStatusMarkInGrid = function(ajaxResponse){
-        if (ajaxResponse.code == codeSuccess) {
+    self.changeStatusMarkInGrid = function(ajaxResponse){
+        if (ajaxResponse.code == self.codeSuccess) {
             $('#active-' + ajaxResponse.id).prop('checked', ajaxResponse.newStatus);
         } else {
-            this.alerter.error(ajaxResponse.message);
+            self.alerter.error(ajaxResponse.message);
         }
+    }
+
+    /**
+     * @param ajaxResponse
+     * @returns {ajaxReponse}
+     */
+    self.categoryDisplayNodeTree = function(ajaxResponse){
+        $('#category-node-tree').removeClass('hidden');
+        $('#jstree-container').html('<div id="jstree-category"></div>');
+        $('#jstree-category').jstree({
+            'core' : {
+                'data' : ajaxResponse.data
+            }
+        });
+        return ajaxResponse;
+    }
+
+    /**
+     * @param ajaxResponse
+     */
+    self.categoryDisplayAttributes = function(ajaxResponse){
+        $('#category-tabs').removeClass('hidden');
+        $('#category-attributes').html(ajaxResponse);
+    }
+
+    /**
+     * @param ajaxResponse
+     */
+    self.categoryDisplayUrls = function(ajaxResponse){
+        $('#category-tabs').removeClass('hidden');
+        $('#category-urls').html(ajaxResponse);
+        closeLoaderBar();
+    }
+
+    /**
+     * @param ajaxResponse
+     */
+    self.categoryDisplayProducts = function(ajaxResponse){
+        $('#category-tabs').removeClass('hidden');
+        $('#category-products').html(ajaxResponse);
+        closeLoaderBar();
     }
 }
