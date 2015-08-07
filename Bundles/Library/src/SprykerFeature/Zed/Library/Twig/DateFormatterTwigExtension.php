@@ -64,7 +64,7 @@ class DateFormatterTwigExtension extends \Twig_Extension
     }
 
     /**
-     * @param $date
+     * @param string $date
      *
      * @return string
      */
@@ -74,7 +74,7 @@ class DateFormatterTwigExtension extends \Twig_Extension
     }
 
     /**
-     * @param $date
+     * @param string $date
      *
      * @return string
      */
@@ -84,7 +84,7 @@ class DateFormatterTwigExtension extends \Twig_Extension
     }
 
     /**
-     * @param $date
+     * @param string $date
      *
      * @return string
      */

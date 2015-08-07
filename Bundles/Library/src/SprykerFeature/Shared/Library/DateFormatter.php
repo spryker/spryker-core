@@ -7,10 +7,24 @@ namespace SprykerFeature\Shared\Library;
 
 class DateFormatter
 {
+    const DEFAULT_TIMEZONE = 'UTC';
     const DATE_FORMAT_SHORT = 'short';
     const DATE_FORMAT_MEDIUM = 'medium';
     const DATE_FORMAT_RFC = 'rfc';
     const DATE_FORMAT_DATETIME = 'datetime';
+
+    /**
+     * @var string
+     */
+    private $timeZone;
+
+    /**
+     * @param string $timeZone
+     */
+    public function __construct($timeZone = self::DEFAULT_TIMEZONE)
+    {
+        $this->timeZone = new \DateTimeZone($timeZone);
+    }
 
     /**
      * @param string $date
@@ -91,7 +105,7 @@ class DateFormatter
         }
 
         if (!($date instanceof \DateTime)) {
-            $date = new \DateTime($date);
+            $date = new \DateTime($date, $this->timeZone);
         }
 
         return $date->format($context->dateFormat[$dateFormat]);
