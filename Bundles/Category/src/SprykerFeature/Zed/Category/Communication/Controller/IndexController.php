@@ -84,21 +84,6 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param int $idCategory
-     *
-     * @return array
-     */
-    private function getCategoryChildrenByIdCategory($idCategory)
-    {
-        return $this->getFacade()
-            ->getTreeNodeChildrenByIdCategoryAndLocale(
-                $idCategory,
-                $this->getDependencyContainer()->createCurrentLocale()
-            )
-        ;
-    }
-
-    /**
      * @param Request $request
      *
      * @return array
@@ -140,7 +125,7 @@ class IndexController extends AbstractController
      *
      * @return array
      */
-    private function getTableArrayFormat(AbstractTable $table)
+    protected function getTableArrayFormat(AbstractTable $table)
     {
         $tableData = [
             'table' => $table->fetchData(),
@@ -148,6 +133,21 @@ class IndexController extends AbstractController
         $tableData['table']['header'] = $table->getConfiguration()->getHeader();
 
         return $tableData;
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return array
+     */
+    protected function getCategoryChildrenByIdCategory($idCategory)
+    {
+        return $this->getFacade()
+            ->getTreeNodeChildrenByIdCategoryAndLocale(
+                $idCategory,
+                $this->getDependencyContainer()->createCurrentLocale()
+            )
+            ;
     }
 
 }
