@@ -12,6 +12,7 @@ use SprykerFeature\Client\Product\ProductDependencyProvider;
 use SprykerFeature\Client\Product\Service\Storage\ProductStorageInterface;
 use SprykerFeature\Client\Storage\Service\StorageClientInterface;
 use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
+use SprykerEngine\Client\Locale\Service\LocaleClient;
 
 /**
  * @method ProductService getFactory()
@@ -46,6 +47,14 @@ class ProductDependencyContainer extends AbstractServiceDependencyContainer
     private function getKeyBuilder()
     {
         return $this->getFactory()->createKeyBuilderProductResourceKeyBuilder();
+    }
+
+    /**
+     * @return LocaleClient
+     */
+    public function getLocaleClient()
+    {
+        return $this->getProvidedDependency(ProductDependencyProvider::CLIENT_LOCALE);
     }
 
 }

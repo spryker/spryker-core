@@ -15,8 +15,21 @@ class ProductClient extends AbstractClient implements ProductClientInterface
 {
 
     /**
-     * @param $idAbstractProduct
-     * @param $locale (e.g. 'de_DE')
+     * @param int $idAbstractProduct
+     * @return array
+     */
+    public function getAbstractProductFromStorageByIdForCurrentLocale($idAbstractProduct)
+    {
+        $locale = $this->getDependencyContainer()->getLocaleClient()->getCurrentLocale();
+        $productStorage = $this->getDependencyContainer()->createProductStorage($locale);
+        $product = $productStorage->getAbstractProductFromStorageById($idAbstractProduct);
+        return $product;
+    }
+
+    /**
+     * @param int    $idAbstractProduct
+     * @param string $locale
+     *
      * @return array
      */
     public function getAbstractProductFromStorageById($idAbstractProduct, $locale)
