@@ -1,4 +1,0 @@
-<h1 class="lumberjack__query lumberjack__query_{command}">
-  <a href="#/{hash}">{query}</a>
-</h1>
-<div class="lumberjack__result"></div>
