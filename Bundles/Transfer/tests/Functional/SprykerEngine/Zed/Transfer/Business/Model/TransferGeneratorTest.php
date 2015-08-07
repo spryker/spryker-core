@@ -119,6 +119,7 @@ class TransferGeneratorTest extends Test
         $loader = new TransferDefinitionLoader($normalizer, $sourceDirectories);
         $definitionBuilder = new TransferInterfaceDefinitionBuilder(
             $loader,
+            new TransferDefinitionMerger(),
             new InterfaceDefinition()
         );
 
