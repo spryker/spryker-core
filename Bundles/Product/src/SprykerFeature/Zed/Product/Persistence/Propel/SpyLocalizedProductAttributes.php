@@ -19,5 +19,4 @@ use SprykerFeature\Zed\Product\Persistence\Propel\Base\SpyLocalizedProductAttrib
  */
 class SpyLocalizedProductAttributes extends BaseSpyLocalizedProductAttributes
 {
-
 }
