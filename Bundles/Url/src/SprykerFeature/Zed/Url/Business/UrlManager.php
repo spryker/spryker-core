@@ -240,6 +240,19 @@ class UrlManager implements UrlManagerInterface
     /**
      * @param UrlTransfer $url
      *
+     * @return UrlTransfer
+     */
+    public function saveUrlAndTouch(UrlTransfer $url)
+    {
+        $urlTransfer  = $this->saveUrl($url);
+        $this->touchUrlActive($url->getIdUrl());
+
+        return $urlTransfer;
+    }
+
+    /**
+     * @param UrlTransfer $url
+     *
      * @throws UrlExistsException
      * @throws \Exception
      * @throws PropelException

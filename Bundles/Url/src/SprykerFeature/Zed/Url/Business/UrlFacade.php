@@ -151,6 +151,20 @@ class UrlFacade extends AbstractFacade
     }
 
     /**
+     * @param string $toUrl
+     * @param int $status
+     *
+     * @return RedirectTransfer
+     */
+    public function createRedirectAndTouch($toUrl, $status = 303)
+    {
+        $redirectManager = $this->getDependencyContainer()->getRedirectManager();
+        $redirectTransfer = $redirectManager->createRedirectAndTouch($toUrl, $status);
+
+        return $redirectTransfer;
+    }
+
+    /**
      * @param string $url
      * @param LocaleTransfer $locale
      * @param int $idRedirect
@@ -165,6 +179,20 @@ class UrlFacade extends AbstractFacade
         $redirectManager = $this->getDependencyContainer()->getRedirectManager();
 
         return $redirectManager->createRedirectUrl($url, $locale, $idRedirect);
+    }
+
+    /**
+     * @param string $url
+     * @param LocaleTransfer $locale
+     * @param int $idRedirect
+     *
+     * @return UrlTransfer
+     */
+    public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idRedirect)
+    {
+        $redirectManager = $this->getDependencyContainer()->getRedirectManager();
+
+        return $redirectManager->saveRedirectUrlAndTouch($url, $locale, $idRedirect);
     }
 
     /**
@@ -187,6 +215,30 @@ class UrlFacade extends AbstractFacade
         $redirectManager = $this->getDependencyContainer()->getRedirectManager();
 
         $redirectManager->touchRedirectActive($redirect);
+    }
+
+    /**
+     * @param UrlTransfer $url
+     *
+     * @return UrlTransfer
+     */
+    public function saveUrlAndTouch(UrlTransfer $url)
+    {
+        $urlManager = $this->getDependencyContainer()->getUrlManager();
+
+        return $urlManager->saveUrlAndTouch($url);
+    }
+
+    /**
+     * @param RedirectTransfer $redirect
+     *
+     * @return RedirectTransfer
+     */
+    public function saveRedirectAndTouch(RedirectTransfer $redirect)
+    {
+        $redirectManager = $this->getDependencyContainer()->getRedirectManager();
+
+        return $redirectManager->saveRedirectAndTouch($redirect);
     }
 
 }

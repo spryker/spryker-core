@@ -41,22 +41,10 @@ class RedirectController extends AbstractController
         if ($form->isValid()) {
             $data = $form->getData();
 
-            //@todo new CMS_FACADE_API
-            $redirectTransfer = $this->getUrlFacade()
-                ->createRedirect($data[CmsRedirectForm::TO_URL])
-            ;
-            $this->getUrlFacade()
-                ->touchRedirectActive($redirectTransfer)
-            ;
+            $redirectTransfer = $this->getUrlFacade()->createRedirectAndTouch($data[CmsRedirectForm::TO_URL]);
 
-            $localeTransfer = $this->getLocaleFacade()
-                ->getCurrentLocale()
-            ;
-            $urlTransfer = $this->getUrlFacade()
-                ->createRedirectUrl($data[CmsRedirectForm::FROM_URL], $localeTransfer, $redirectTransfer->getIdRedirect())
-            ;
-            $this->getUrlFacade()
-                ->touchUrlActive($urlTransfer->getIdUrl())
+            $this->getUrlFacade()->saveRedirectUrlAndTouch($data[CmsRedirectForm::FROM_URL], $this->getLocaleFacade()
+                ->getCurrentLocale(), $redirectTransfer->getIdRedirect())
             ;
 
             return $this->redirectResponse(self::REDIRECT_ADDRESS);
@@ -84,38 +72,17 @@ class RedirectController extends AbstractController
 
         if ($form->isValid()) {
             $data = $form->getData();
+            $url = $this->getQueryContainer()->queryUrlByIdWithRedirect($idUrl)->findOne();
 
-            //@todo new CMS_FACADE_API
-            $url = $this->getQueryContainer()
-                ->queryUrlByIdWithRedirect($idUrl)
-                ->findOne()
-            ;
-            // @todo check the resource type
             if ($url) {
-                $urlTransfer = (new UrlTransfer())->fromArray($url->toArray(), true);
-                $urlTransfer->setUrl($data[CmsRedirectForm::FROM_URL]);
-                $urlTransfer->setFkRedirect($url->getFkResourceRedirect());
-                $urlTransfer->setResourceId($url->getResourceId());
-                $urlTransfer->setResourceType($url->getResourceType());
-                $urlTransfer = $this->getUrlFacade()
-                    ->saveUrl($urlTransfer)
-                ;
-                $this->getUrlFacade()
-                    ->touchUrlActive($urlTransfer->getIdUrl())
-                ;
+                $urlTransfer = $this->createUrlTransfer($url, $data);
+                $this->getUrlFacade()->saveUrlAndTouch($urlTransfer);
 
-                $redirect = $this->getQueryContainer()
-                    ->queryRedirectById($url->getFkResourceRedirect())
-                    ->findOne()
-                ;
-                $redirectTransfer = (new RedirectTransfer())->fromArray($redirect->toArray());
-                $redirectTransfer->setToUrl($data[CmsRedirectForm::TO_URL]);
-                $redirectTransfer = $this->getUrlFacade()
-                    ->saveRedirect($redirectTransfer)
-                ;
-                $this->getUrlFacade()
-                    ->touchRedirectActive($redirectTransfer)
-                ;
+                $redirect = $this->getQueryContainer()->queryRedirectById($url->getFkResourceRedirect())->findOne();
+                $redirectTransfer = $this->createRedirectTransfer($redirect, $data);
+
+                $this->getUrlFacade()->saveRedirectAndTouch($redirectTransfer);
+
             }
 
             return $this->redirectResponse(self::REDIRECT_ADDRESS);
@@ -143,7 +110,38 @@ class RedirectController extends AbstractController
     {
         return $this->getDependencyContainer()
             ->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE)
-        ;
+            ;
+    }
+
+    /**
+     * @param $url
+     * @param $data
+     *
+     * @return $this
+     */
+    private function createUrlTransfer($url, $data)
+    {
+        $urlTransfer = (new UrlTransfer())->fromArray($url->toArray(), true);
+        $urlTransfer->setUrl($data[CmsRedirectForm::FROM_URL]);
+        $urlTransfer->setFkRedirect($url->getFkResourceRedirect());
+        $urlTransfer->setResourceId($url->getResourceId());
+        $urlTransfer->setResourceType($url->getResourceType());
+
+        return $urlTransfer;
+    }
+
+    /**
+     * @param $redirect
+     * @param $data
+     *
+     * @return $this
+     */
+    private function createRedirectTransfer($redirect, $data)
+    {
+        $redirectTransfer = (new RedirectTransfer())->fromArray($redirect->toArray());
+        $redirectTransfer->setToUrl($data[CmsRedirectForm::TO_URL]);
+
+        return $redirectTransfer;
     }
 
 }
