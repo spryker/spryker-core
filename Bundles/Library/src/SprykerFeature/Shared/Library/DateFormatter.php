@@ -9,7 +9,6 @@ use SprykerFeature\Shared\Library\Exception\UnsupportedDateFormatException;
 
 class DateFormatter
 {
-    const DEFAULT_TIMEZONE = 'UTC';
     const DATE_FORMAT_SHORT = 'short';
     const DATE_FORMAT_MEDIUM = 'medium';
     const DATE_FORMAT_RFC = 'rfc';
