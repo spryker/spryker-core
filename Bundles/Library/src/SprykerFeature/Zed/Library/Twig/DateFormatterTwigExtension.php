@@ -65,50 +65,46 @@ class DateFormatterTwigExtension extends \Twig_Extension
 
     /**
      * @param string $date
-     * @param string|null $context
      * @param string|null $timezone
      *
      * @return string
      */
-    public function formatDateShort($date, $context = null, $timezone = null)
+    public function formatDateShort($date, $timezone = null)
     {
-        return $this->dateFormatter->dateShort($date, $context, $this->convertDateTimeZone($timezone));
+        return $this->dateFormatter->dateShort($date, $this->convertDateTimeZone($timezone));
     }
 
     /**
      * @param string $date
-     * @param string|null $context
      * @param string|null $timezone
      *
      * @return string
      */
-    public function formatDateMedium($date, $context = null, $timezone = null)
+    public function formatDateMedium($date, $timezone = null)
     {
-        return $this->dateFormatter->dateMedium($date, $context, $this->convertDateTimeZone($timezone));
+        return $this->dateFormatter->dateMedium($date, $this->convertDateTimeZone($timezone));
     }
 
     /**
      * @param string $date
-     * @param string|null $context
      * @param string|null $timezone
      *
      * @return string
      */
-    public function formatDateRFC($date, $context = null, $timezone = null)
+    public function formatDateRFC($date, $timezone = null)
     {
-        return $this->dateFormatter->dateRFC($date, $context, $this->convertDateTimeZone($timezone));
+        return $this->dateFormatter->dateRFC($date, $this->convertDateTimeZone($timezone));
     }
 
     /**
      * @param string $date
-     * @param string|null $context
      * @param string|null $timezone
      *
      * @return string
      */
-    public function formatDateTime($date, $context = null, $timezone = null)
+    public function formatDateTime($date, $timezone = null)
     {
-        return $this->dateFormatter->dateTime($date, $context, $this->convertDateTimeZone($timezone));
+        return $this->dateFormatter->dateTime($date, $this->convertDateTimeZone($timezone));
     }
 
     /**
@@ -118,7 +114,7 @@ class DateFormatterTwigExtension extends \Twig_Extension
      */
     private function convertDateTimeZone($timezone = null)
     {
-        if ($timezone !== null) {
+        if (null !== $timezone) {
             return new \DateTimeZone($timezone);
         }
 

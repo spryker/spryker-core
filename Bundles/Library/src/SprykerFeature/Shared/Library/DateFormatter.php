@@ -15,73 +15,79 @@ class DateFormatter
     const DATE_FORMAT_DATETIME = 'datetime';
 
     /**
-     * @param string $date
-     * @param \SprykerFeature_Shared_Library_Context|string|null $context
-     * @param \DateTimeZone $timezone
-     *
-     * @return string
+     * @var Context
      */
-    public function dateShort($date, $context = null, \DateTimeZone $timezone = null)
+    private $context;
+
+    /**
+     * @param Context $context
+     */
+    public function __construct(Context $context)
     {
-        return $this->formatDate($date, self::DATE_FORMAT_SHORT, $context, $timezone);
+        $this->context = $context;
     }
 
     /**
      * @param string $date
-     * @param \SprykerFeature_Shared_Library_Context|string|null $context
      * @param \DateTimeZone $timezone
      *
      * @return string
      */
-    public function dateMedium($date, $context = null, \DateTimeZone $timezone = null)
+    public function dateShort($date, \DateTimeZone $timezone = null)
     {
-        return $this->formatDate($date, self::DATE_FORMAT_MEDIUM, $context, $timezone);
+        return $this->formatDate($date, self::DATE_FORMAT_SHORT, $timezone);
     }
 
     /**
      * @param string $date
-     * @param \SprykerFeature_Shared_Library_Context|string|null $context
      * @param \DateTimeZone $timezone
      *
      * @return string
      */
-    public function dateRFC($date, $context = null, \DateTimeZone $timezone = null)
+    public function dateMedium($date, \DateTimeZone $timezone = null)
     {
-        return $this->formatDate($date, self::DATE_FORMAT_RFC, $context, $timezone);
+        return $this->formatDate($date, self::DATE_FORMAT_MEDIUM, $timezone);
     }
 
     /**
      * @param string $date
-     * @param \SprykerFeature_Shared_Library_Context|string|null $context
      * @param \DateTimeZone $timezone
      *
      * @return string
      */
-    public function dateTime($date, $context = null, \DateTimeZone $timezone = null)
+    public function dateRFC($date, \DateTimeZone $timezone = null)
     {
-        return $this->formatDate($date, self::DATE_FORMAT_DATETIME, $context, $timezone);
+        return $this->formatDate($date, self::DATE_FORMAT_RFC, $timezone);
+    }
+
+    /**
+     * @param string $date
+     * @param \DateTimeZone $timezone
+     *
+     * @return string
+     */
+    public function dateTime($date, \DateTimeZone $timezone = null)
+    {
+        return $this->formatDate($date, self::DATE_FORMAT_DATETIME, $timezone);
     }
 
     /**
      * @param \DateTime|string $date
      * @param string $dateFormat
-     * @param \SprykerFeature_Shared_Library_Context|string|null $context
      * @param \DateTimeZone $timezone
      *
      * @throws \SprykerFeature\Shared\Library\Exception\UnsupportedDateFormatException
      *
      * @return string
      */
-    protected function formatDate($date, $dateFormat, $context = null, \DateTimeZone $timezone = null)
+    protected function formatDate($date, $dateFormat, \DateTimeZone $timezone = null)
     {
-        $context = $this->getContext($context);
-
-        if (!isset($context->dateFormat[$dateFormat])) {
+        if (!isset($this->context->dateFormat[$dateFormat])) {
             throw new UnsupportedDateFormatException(sprintf('Unsupported date format: %s', $dateFormat));
         }
 
-        if ($timezone === null) {
-            return $context->dateTimeConvertTo($date, $context->dateFormat[$dateFormat]);
+        if (null === $timezone) {
+            return $this->context->dateTimeConvertTo($date, $this->context->dateFormat[$dateFormat]);
         }
 
         if (!($date instanceof \DateTime)) {
@@ -90,17 +96,7 @@ class DateFormatter
             $date->setTimezone($timezone);
         }
 
-        return $date->format($context->dateFormat[$dateFormat]);
-    }
-
-    /**
-     * @param \SprykerFeature_Shared_Library_Context|string $context
-     *
-     * @return \SprykerFeature_Shared_Library_Context
-     */
-    protected function getContext($context)
-    {
-        return \SprykerFeature_Shared_Library_Context::getInstance($context);
+        return $date->format($this->context->dateFormat[$dateFormat]);
     }
 
 }
