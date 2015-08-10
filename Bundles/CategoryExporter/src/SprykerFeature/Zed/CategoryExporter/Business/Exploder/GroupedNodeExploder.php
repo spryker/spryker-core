@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\CategoryExporter\Business\Exploder;
 
-use SprykerFeature\Zed\CategoryExporter\Business\CategoryNodeKeyInterface;
+use SprykerFeature\Shared\CategoryExporter\Business\CategoryNodeKeyInterface;
 
 class GroupedNodeExploder implements GroupedNodeExploderInterface
 {

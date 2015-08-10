@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\CategoryExporter\Business\Formatter;
 
-use SprykerFeature\Zed\CategoryExporter\Business\CategoryNodeKeyInterface;
+use SprykerFeature\Shared\CategoryExporter\Business\CategoryNodeKeyInterface;
 use SprykerFeature\Zed\CategoryExporter\Business\Exploder\GroupedNodeExploderInterface;
 
 class CategoryNodeFormatter implements CategoryNodeFormatterInterface
