@@ -17,6 +17,8 @@ use SprykerEngine\Zed\Kernel\Container;
 class QueryContainerLocator extends AbstractLocator
 {
 
+    const PROPEL_CONNECTION = 'propel connection';
+
     /**
      * @var string
      */
@@ -40,18 +42,15 @@ class QueryContainerLocator extends AbstractLocator
         try {
             // TODO Make singleton because of performance
             $bundleConfigLocator = new BundleDependencyProviderLocator();
-
             $bundleBuilder = $bundleConfigLocator->locate($bundle, $locator);
             $container = new Container();
-            $container['propel connection'] = function () use ($locator) {
+            $container[self::PROPEL_CONNECTION] = function () use ($locator) {
                 /** @var $locator AutoCompletion */
-                $locator->propel()->pluginConnection()->get();
+                return $locator->propel()->pluginConnection()->get();
             };
-
             $bundleBuilder->providePersistenceLayerDependencies($container);
             $queryContainer->setContainer($container);
             $queryContainer->setExternalDependencies($container);
-
         } catch (ClassNotFoundException $e) {
             // TODO remove try-catch when all bundles have a DependencyProvider
             \SprykerFeature_Shared_Library_Log::log($bundle, 'builder_missing.log');
