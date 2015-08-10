@@ -34,6 +34,9 @@ class CategoryNodeFormatter implements CategoryNodeFormatterInterface
     {
         $categoryUrls = explode(',', $categoryNode['category_urls']);
 
+        /**
+         * @todo: Replace "Constant Interface" with a CategoryNode representation object or a Transfer object.
+         */
         return [
             CategoryNodeKeyInterface::NODE_ID => $categoryNode[CategoryNodeKeyInterface::NODE_ID],
             CategoryNodeKeyInterface::NAME => $categoryNode['category_name'],
