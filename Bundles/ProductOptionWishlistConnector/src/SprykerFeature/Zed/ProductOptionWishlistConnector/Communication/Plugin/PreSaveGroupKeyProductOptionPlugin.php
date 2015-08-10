@@ -3,41 +3,38 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\ProductOptionCartConnector\Business\Model;
+namespace SprykerFeature\Zed\ProductOptionWishlistConnector\Communication\Plugin;
 
-use Generated\Shared\Cart\ChangeInterface;
+use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use Generated\Shared\ProductOption\ProductOptionInterface;
 use Generated\Shared\ProductOptionCartConnector\ItemInterface;
+use SprykerFeature\Zed\Wishlist\Dependency\PreSavePluginInterface;
 
-class GroupKeyExpander
+class PreSaveGroupKeyProductOptionPlugin extends AbstractPlugin implements PreSavePluginInterface
 {
     /**
-     * @param ChangeInterface $change
-     *
-     * @return ChangeInterface
+     * @param \ArrayObject $items
      */
-    public function expand(ChangeInterface $change)
+    public function trigger(\ArrayObject $items)
     {
-        foreach ($change->getItems() as $item) {
+        foreach ($items as $item) {
             $item->setGroupKey($this->buildGroupKey($item));
         }
-
-        return $change;
     }
-    
+
     /**
-     * @param ItemInterface $cartItem
+     * @param ItemInterface $item
      *
      * @return string
      */
-    protected function buildGroupKey(ItemInterface $cartItem)
+    protected function buildGroupKey(ItemInterface $item)
     {
-        $currentGroupKey = $cartItem->getGroupKey();
-        if (empty($cartItem->getProductOptions())) {
+        $currentGroupKey = $item->getGroupKey();
+        if (empty($item->getProductOptions())) {
             return $currentGroupKey;
         }
 
-        $sortedProductOptions = $this->sortOptions((array) $cartItem->getProductOptions());
+        $sortedProductOptions = $this->sortOptions((array) $item->getProductOptions());
         $optionGroupKey = $this->combineOptionParts($sortedProductOptions);
 
         if (empty($optionGroupKey)) {
@@ -48,7 +45,7 @@ class GroupKeyExpander
     }
 
     /**
-     * @param array $options
+     * @param ProductOptionInterface[] $options
      *
      * @return array
      */
@@ -65,7 +62,7 @@ class GroupKeyExpander
     }
 
     /**
-     * @param array $sortedProductOptions
+     * @param ProductOptionInterface[] $sortedProductOptions
      *
      * @return string
      */
@@ -77,4 +74,6 @@ class GroupKeyExpander
         }
         return implode('-', $groupKeyPart);
     }
+
+
 }
