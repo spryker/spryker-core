@@ -171,7 +171,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 
         $properties = $classDefinition->getProperties();
         $givenProperty = $properties['property1'];
-        $expectedProperty = $this->getProperty('property1', 'Type[]', null, '\ArrayObject');
+        $expectedProperty = $this->getProperty('property1', 'Type[]', null, '\ArrayObject|TypeTransfer[]');
         $this->assertEquals($expectedProperty, $givenProperty);
     }
 
@@ -235,7 +235,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 
         $methods = $classDefinition->getMethods();
         $given = $methods['setProperty1'];
-        $expected = $this->getMethod('setProperty1', 'property1', '\\ArrayObject', null, '\\ArrayObject');
+        $expected = $this->getMethod('setProperty1', 'property1', '\\ArrayObject|TypeTransfer[]', null, '\\ArrayObject');
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperty1'];
@@ -261,7 +261,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 
         $methods = $classDefinition->getMethods();
         $given = $methods['setProperties'];
-        $expected = $this->getMethod('setProperties', 'properties', '\\ArrayObject', null, '\\ArrayObject');
+        $expected = $this->getMethod('setProperties', 'properties', '\\ArrayObject|TypeTransfer[]', null, '\\ArrayObject');
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperties'];

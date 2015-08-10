@@ -20,8 +20,6 @@ use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsag
 use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
 use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSetQuery;
-use Propel\Runtime\Connection\ConnectionInterface;
-use Propel\Runtime\Propel;
 
 /**
  * @method ProductOptionPersistence getFactory()
@@ -546,13 +544,4 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
 
         return $statement->fetch(\PDO::FETCH_COLUMN);
     }
-
-    /**
-     * @return ConnectionInterface
-     */
-    private function getConnection()
-    {
-        return Propel::getConnection();
-    }
-
 }

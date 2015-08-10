@@ -8,24 +8,22 @@ namespace SprykerFeature\Zed\Discount\Business\Writer;
 
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
+use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 
-/**
- * Class AbstractCrudManager
- */
 abstract class AbstractWriter
 {
 
     /**
-     * @var LocatorLocatorInterface
+     * @var DiscountQueryContainerInterface
      */
-    protected $locator;
+    private $queryContainer;
 
     /**
-     * @param LocatorLocatorInterface $locator
+     * @param DiscountQueryContainerInterface $queryContainer
      */
-    public function __construct(LocatorLocatorInterface $locator)
+    public function __construct(DiscountQueryContainerInterface $queryContainer)
     {
-        $this->locator = $locator;
+        $this->queryContainer = $queryContainer;
     }
 
     /**
@@ -33,7 +31,7 @@ abstract class AbstractWriter
      */
     protected function getQueryContainer()
     {
-        return $this->locator->discount()->queryContainer();
+        return $this->queryContainer;
     }
 
 }

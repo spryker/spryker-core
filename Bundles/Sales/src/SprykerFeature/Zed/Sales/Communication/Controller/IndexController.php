@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Sales\Communication\Controller;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Sales\Communication\SalesDependencyContainer;
 use Symfony\Component\HttpFoundation\Request;
-use SprykerFeature\Zed\Sales\Communication\Table\OrdersTable;
 
 /**
  * @method SalesDependencyContainer getDependencyContainer()

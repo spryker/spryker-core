@@ -1,0 +1,13 @@
+{
+  "name": "spryker/wishlist",
+  "autoload": {
+    "psr-0": {
+      "SprykerFeature": "src/"
+    }
+  },
+  "require": {
+  },
+  "require-dev": {
+    "phpspec/phpspec": "~2.0"
+  }
+}

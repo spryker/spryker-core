@@ -104,6 +104,7 @@ class TransferDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createModelGeneratorTransferInterfaceTransferInterfaceDefinitionBuilder(
             $this->createLoader(),
+            $this->getFactory()->createModelGeneratorTransferDefinitionMerger(),
             $this->getFactory()->createModelGeneratorTransferInterfaceInterfaceDefinition()
         );
     }

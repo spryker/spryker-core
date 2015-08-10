@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Sales\Business;
 use Generated\Zed\Ide\FactoryAutoCompletion\SalesBusiness;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Sales\Business\Model;
 use SprykerFeature\Zed\Sales\Business\Model\CommentManager;
 use SprykerFeature\Zed\Sales\Business\Model\OrderDetailsManager;
 use SprykerFeature\Zed\Sales\Business\Model\Split\ItemInterface;

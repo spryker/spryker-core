@@ -11,7 +11,6 @@ use SprykerFeature\Zed\Sales\Communication\SalesDependencyContainer;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Sales\Business\SalesFacade;
-use SprykerFeature\Zed\Sales\Communication\Form;
 
 /**
  * @method SalesDependencyContainer getDependencyContainer()
@@ -57,15 +56,15 @@ class DetailsController extends AbstractController
         }
 
         return [
-            'idOrder'            => $idOrder,
-            'orderDetails'       => $orderEntity,
-            'orderItems'         => $orderItems,
-            'events'             => $events,
-            'allEvents'          => $allEvents,
-            'expenses'           => $expenses,
-            'billingAddress'     => $billingAddress,
-            'shippingAddress'    => $shippingAddress,
-            'orderItemSplitFormCollection' => $orderItemSplitFormCollection->create()
+            'idOrder' => $idOrder,
+            'orderDetails' => $orderEntity,
+            'orderItems' => $orderItems,
+            'events' => $events,
+            'allEvents' => $allEvents,
+            'expenses' => $expenses,
+            'billingAddress' => $billingAddress,
+            'shippingAddress' => $shippingAddress,
+            'orderItemSplitFormCollection' => $orderItemSplitFormCollection->create(),
         ];
     }
 

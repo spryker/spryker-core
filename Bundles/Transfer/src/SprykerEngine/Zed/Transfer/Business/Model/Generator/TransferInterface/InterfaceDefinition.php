@@ -194,7 +194,7 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
         }
 
         if ($this->isCollection($property)) {
-            return '\ArrayObject';
+            return '\ArrayObject|' . $property['type'];
         }
 
         return $property['type'];
@@ -212,7 +212,7 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
         }
 
         if ($this->isCollection($property)) {
-            return '\ArrayObject';
+            return '\ArrayObject|' . $property['type'];
         }
 
         return $property['type'];

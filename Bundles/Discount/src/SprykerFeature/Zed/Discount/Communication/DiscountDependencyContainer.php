@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Discount\Communication;
 use Generated\Zed\Ide\FactoryAutoCompletion\DiscountCommunication;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\DiscountDependencyProvider;
+use SprykerFeature\Zed\Discount\Communication\Table\DiscountVoucherTable;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use Symfony\Component\HttpFoundation\Request;
@@ -58,6 +59,16 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
         $poolQuery = $this->getQueryContainer()->queryDiscountVoucherPool();
 
         return $this->getFactory()->createTableVoucherPoolTable($poolQuery);
+    }
+
+    /**
+     * @return DiscountVoucherTable
+     */
+    public function createDiscountVoucherTable()
+    {
+        $discountVoucherQuery = $this->getQueryContainer()->queryDiscountVoucher();
+
+        return $this->getFactory()->createTableDiscountVoucherTable($discountVoucherQuery);
     }
 
     /**

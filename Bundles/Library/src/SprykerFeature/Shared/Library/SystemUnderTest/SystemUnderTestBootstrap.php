@@ -6,13 +6,15 @@
 
 namespace SprykerFeature\Shared\Library\SystemUnderTest;
 
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerFeature\Shared\Library\Application\TestEnvironment;
-use SprykerFeature\Shared\Library\Application\Environment;
+// @todo Pyz not allowed in vendor
 use Pyz\Yves\Application\Communication\YvesBootstrap;
 use Pyz\Zed\Application\Communication\ZedBootstrap;
+
 use ReflectionObject;
+use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Yves\Kernel\Locator;
+use SprykerFeature\Shared\Library\Application\Environment;
+use SprykerFeature\Shared\Library\Application\TestEnvironment;
 
 class SystemUnderTestBootstrap
 {

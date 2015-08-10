@@ -73,6 +73,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $taxSets = $totalsTransfer->getTaxTotal()->getTaxSets();
 
         $this->assertEquals(231, $taxSets[0]->getAmount());
+        $this->assertEquals(30, $taxSets[0]->getEffectiveRate());
     }
 
     public function testTaxCalculatedForOrderWithMultipleOrderItemsAndMultipleTaxSets()
@@ -128,7 +129,9 @@ class TaxTest extends \PHPUnit_Framework_TestCase
 
         $this->assertCount(2, $groupedTaxSets);
         $this->assertEquals(335, $groupedTaxSets[0]->getAmount());
+        $this->assertEquals(30, $groupedTaxSets[0]->getEffectiveRate());
         $this->assertEquals(231, $groupedTaxSets[1]->getAmount());
+        $this->assertEquals(30, $groupedTaxSets[0]->getEffectiveRate());
     }
 
     public function testCalculateTaxOnExpenses()
@@ -180,6 +183,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $groupedTaxSets = $totalsTransfer->getTaxTotal()->getTaxSets();
         $this->assertCount(1, $groupedTaxSets);
         $this->assertEquals(693, $groupedTaxSets[0]->getAmount());
+        $this->assertEquals(30, $groupedTaxSets[0]->getEffectiveRate());
     }
 
     public function testCalculateTaxOnProductOption()
@@ -217,11 +221,13 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $orderItemOptionTaxSet = $itemTransfer->getProductOptions()[0]->getTaxSet();
 
         $this->assertEquals(231, $orderItemTaxSet->getAmount());
+        $this->assertEquals(30, $orderItemTaxSet->getEffectiveRate());
         $this->assertEquals(231, $orderItemOptionTaxSet->getAmount());
 
         $groupedTaxSets = $totalsTransfer->getTaxTotal()->getTaxSets();
         $this->assertCount(1, $groupedTaxSets);
         $this->assertEquals(462, $groupedTaxSets[0]->getAmount());
+        $this->assertEquals(30, $orderItemTaxSet->getEffectiveRate());
     }
 
     /**

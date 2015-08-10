@@ -1,16 +1,18 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Unit\SprykerFeature\Zed\Sales\Business\Model\OrderItemSplit\Validation;
 
-use SprykerFeature\Zed\Sales\Business\Model\Split\Item;
+use SprykerFeature\Zed\Sales\Business\Model\Split\OrderItem;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemOption;
 
 class ItemSplitTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @var array
      */
@@ -20,7 +22,7 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
         'quantity',
         'created_at',
         'updated_at',
-        'group_key'
+        'group_key',
 
     ];
 
@@ -30,7 +32,7 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
     private $notCopiedOrderItemOptionFields = [
         'created_at',
         'updated_at',
-        'fk_sales_order_item'
+        'fk_sales_order_item',
     ];
 
     public function testIsOrderItemDataCopied()
@@ -46,7 +48,7 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
         $createdCopy = $spySalesOrderItem->getCreatedCopy();
         $this->assertEquals(1, $createdCopy->getQuantity());
         $this->assertEquals(4, $spySalesOrderItem->getQuantity());
-        $this->assertEquals(Item::SPLIT_MARKER . $spySalesOrderItem->getGroupKey(), $createdCopy->getGroupKey());
+        $this->assertEquals(OrderItem::SPLIT_MARKER . $spySalesOrderItem->getGroupKey(), $createdCopy->getGroupKey());
 
         $oldSalesOrderItemArray = $spySalesOrderItem->toArray();
         $copyofItemSalesOrderItemArray = $createdCopy->toArray();
@@ -65,7 +67,7 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
         $options = $spySalesOrderItem->getOptions();
 
         foreach ($options as $option) {
-             $oldOption =  $this->filterOutNotCopiedFields(
+             $oldOption = $this->filterOutNotCopiedFields(
                  $option->toArray(),
                  $this->notCopiedOrderItemOptionFields
              );
@@ -77,7 +79,6 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
              $this->assertEquals($oldOption, $copyOfOptions);
         }
     }
-
 
     /**
      * @return OrderItem
@@ -110,7 +111,7 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
             ->method('calculateQuantityAmountLeft')
             ->will($this->returnValue($quantityForOld));
 
-        $itemSplit = new Item($validatorMock, $salesQueryContainerMock, $calculatorMock);
+        $itemSplit = new OrderItem($validatorMock, $salesQueryContainerMock, $calculatorMock);
         $itemSplit->setDatabaseConnection($databaseConnectionMock);
 
         return $itemSplit;
@@ -214,28 +215,30 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
         $spySalesOrderItem->setPriceToPay(125);
 
         $spySalesOrderItemOption = new OrderItemOptionSpy();
-        $spySalesOrderItemOption->setName('X');
+        $spySalesOrderItemOption->setLabelOptionType('X');
+        $spySalesOrderItemOption->setLabelOptionValue('Y');
         $spySalesOrderItemOption->setGrossPrice(5);
         $spySalesOrderItemOption->setPriceToPay(15);
-        $spySalesOrderItemOption->setDescription('descr');
 
         $spySalesOrderItem->addOption($spySalesOrderItemOption);
 
         $spySalesOrderItemOption = new OrderItemOptionSpy();
-        $spySalesOrderItemOption->setName('XXL');
+        $spySalesOrderItemOption->setLabelOptionType('XX');
+        $spySalesOrderItemOption->setLabelOptionValue('YY');
         $spySalesOrderItemOption->setGrossPrice(30);
         $spySalesOrderItemOption->setPriceToPay(35);
-        $spySalesOrderItemOption->setDescription('descr');
         $spySalesOrderItemOption->setTaxPercentage(15);
 
         $spySalesOrderItem->addOption($spySalesOrderItemOption);
 
         return $spySalesOrderItem;
     }
+
 }
 
 trait SpyTrait
 {
+
     /**
      * @var SpySalesOrderItem
      */
@@ -260,15 +263,19 @@ trait SpyTrait
     {
         return $this->propelModelCopy;
     }
+
 }
 
 class OrderItemSpy extends SpySalesOrderItem
 {
+
     use SpyTrait;
+
 }
 
 class OrderItemOptionSpy extends SpySalesOrderItemOption
 {
-    use SpyTrait;
-}
 
+    use SpyTrait;
+
+}

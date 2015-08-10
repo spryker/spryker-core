@@ -11,6 +11,7 @@ use SprykerFeature\Zed\Sales\Persistence;
 
 class CalculatorTest extends \PHPUnit_Framework_TestCase
 {
+
     public function testCalculateAmountLeft()
     {
         $calculator = new Calculator();
@@ -21,4 +22,5 @@ class CalculatorTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(1, $quantityAmountLeft);
     }
+
 }

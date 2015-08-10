@@ -1,0 +1,4 @@
+bootstrap: phpspec.bootstrap.php
+suites:
+    whishlist_suite:
+        src_path: ./../src

@@ -15,18 +15,13 @@ class DiscountDecisionRuleWriter extends AbstractWriter
 {
 
     /**
-     * @var AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @param DecisionRuleTransfer $discountDecisionRuleTransfer
      *
-     * @return mixed
+     * @return SpyDiscountDecisionRule
      */
     public function create(DecisionRuleTransfer $discountDecisionRuleTransfer)
     {
-        $discountDecisionRuleEntity = $this->locator->discount()->entitySpyDiscountDecisionRule();
+        $discountDecisionRuleEntity = new SpyDiscountDecisionRule();
         $discountDecisionRuleEntity->fromArray($discountDecisionRuleTransfer->toArray());
         $discountDecisionRuleEntity->save();
 
@@ -38,7 +33,7 @@ class DiscountDecisionRuleWriter extends AbstractWriter
      *
      * @throws PropelException
      *
-     * @return array|mixed|SpyDiscountDecisionRule
+     * @return SpyDiscountDecisionRule
      */
     public function update(DecisionRuleTransfer $discountDecisionRuleTransfer)
     {
@@ -46,7 +41,8 @@ class DiscountDecisionRuleWriter extends AbstractWriter
         $queryContainer = $this->getQueryContainer();
         $discountDecisionRuleEntity = $queryContainer
             ->queryDiscountDecisionRule()
-            ->findPk($discountDecisionRuleTransfer->getIdDiscountDecisionRule());
+            ->findPk($discountDecisionRuleTransfer->getIdDiscountDecisionRule())
+        ;
         $discountDecisionRuleEntity->fromArray($discountDecisionRuleTransfer->toArray());
         $discountDecisionRuleEntity->save();
 

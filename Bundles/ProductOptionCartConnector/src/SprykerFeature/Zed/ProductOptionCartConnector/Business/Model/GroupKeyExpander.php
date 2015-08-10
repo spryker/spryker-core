@@ -56,8 +56,8 @@ class GroupKeyExpander
     {
         usort(
             $options,
-            function (ProductOptionInterface $a, ProductOptionInterface $b) {
-                return ($a->getIdOptionValueUsage() < $b->getIdOptionValueUsage()) ? -1 : 1;
+            function (ProductOptionInterface $productOptionLeft, ProductOptionInterface $productOptionRight) {
+                return ($productOptionLeft->getIdOptionValueUsage() < $productOptionRight->getIdOptionValueUsage()) ? -1 : 1;
             }
         );
 

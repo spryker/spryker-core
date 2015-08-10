@@ -1,9 +1,0 @@
-.field.textselect {
-	@extend %field-default;
-
-	@extend %field-label-assembly;
-	@extend %field-input-textselect-assembly;
-	@extend %field-message-assembly;
-
-	@include h(null, top, null, 47px, $_xSpacing);
-}

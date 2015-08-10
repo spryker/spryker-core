@@ -41,7 +41,7 @@ interface CatFaceInterface extends TransferInterface
     public function getItem();
 
     /**
-     * @param \ArrayObject $items
+     * @param \ArrayObject|ItemTransfer[] $items
      *
      * @return $this
      */

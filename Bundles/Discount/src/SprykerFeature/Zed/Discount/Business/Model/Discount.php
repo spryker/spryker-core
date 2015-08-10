@@ -8,12 +8,14 @@ namespace SprykerFeature\Zed\Discount\Business\Model;
 
 use Generated\Shared\Discount\OrderInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
+use SprykerFeature\Zed\Discount\Business\Distributor\DistributorInterface;
 use SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule\AbstractDecisionRule;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
+use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
 
@@ -24,7 +26,7 @@ class Discount
     const KEY_ERRORS = 'errors';
 
     /**
-     * @var DiscountQueryContainer
+     * @var DiscountQueryContainerInterface
      */
     protected $queryContainer;
 
@@ -34,8 +36,6 @@ class Discount
     protected $decisionRule;
 
     /**
-     * @ var OrderInterface
-     *
      * @var CalculableInterface
      */
     protected $discountContainer;
@@ -66,8 +66,6 @@ class Discount
     protected $distributor;
 
     /**
-     * @ param OrderInterface $discountContainer
-     *
      * @param CalculableInterface $discountContainer
      * @param DiscountQueryContainer $queryContainer
      * @param DecisionRuleInterface $decisionRule
@@ -76,7 +74,6 @@ class Discount
      * @param DistributorInterface $distributor
      */
     public function __construct(
-        //OrderInterface $discountContainer,
         CalculableInterface $discountContainer,
         DiscountQueryContainer $queryContainer,
         DecisionRuleInterface $decisionRule,

@@ -10,6 +10,7 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 
 class Validator implements ValidatorInterface
 {
+
     /**
      * @var array
      */
@@ -17,7 +18,7 @@ class Validator implements ValidatorInterface
 
     /**
      * @param SpySalesOrderItem $salesOrderItem
-     * @param integer                              $quantityToSplit
+     * @param int                              $quantityToSplit
      *
      * @return bool
      */
@@ -41,7 +42,7 @@ class Validator implements ValidatorInterface
 
     /**
      * @param SpySalesOrderItem $salesOrderItem
-     * @param integer                              $quantityToSplit
+     * @param int                              $quantityToSplit
      *
      * @return bool
      */
@@ -105,4 +106,5 @@ class Validator implements ValidatorInterface
 
         return false;
     }
+
 }

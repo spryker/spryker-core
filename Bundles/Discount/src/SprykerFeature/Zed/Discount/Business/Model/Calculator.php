@@ -7,12 +7,12 @@
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount as DiscountEntity;
-use SprykerFeature\Zed\Discount\Business\DiscountSettingsInterface;
+use SprykerFeature\Zed\Discount\Business\Distributor\DistributorInterface;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
+use SprykerFeature\Zed\Discount\DiscountConfigInterface;
 use Generated\Shared\Discount\OrderInterface;
 
-class Calculator implements
-    CalculatorInterface
+class Calculator implements CalculatorInterface
 {
 
     const KEY_DISCOUNT_ENTITY = 'entity';
@@ -25,20 +25,18 @@ class Calculator implements
     protected $calculatedDiscounts = [];
 
     /**
-     * @param DiscountEntity[] $discounts
-     * @ param OrderInterface $container
+     * @param SpyDiscount[] $discounts
      *
      * @param CalculableInterface $container
-     * @param DiscountSettingsInterface $settings
+     * @param DiscountConfigInterface $settings
      * @param DistributorInterface $distributor
      *
-     * @return DiscountEntity[]
+     * @return SpyDiscount[]
      */
     public function calculate(
         array $discounts,
-        //OrderInterface $container,
         CalculableInterface $container,
-        DiscountSettingsInterface $settings,
+        DiscountConfigInterface $settings,
         DistributorInterface $distributor
     ) {
         $discountableObjects = [];
@@ -120,7 +118,7 @@ class Calculator implements
     /**
      * @param array $discount
      *
-     * @return DiscountEntity
+     * @return SpyDiscount
      */
     protected function getDiscountEntity(array $discount)
     {

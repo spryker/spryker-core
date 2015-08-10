@@ -1,9 +1,0 @@
-.spy-layout.plain {
-	@extend %font-default;
-	@extend %layout-container-default;
-
-	@extend %copy-default-assembly;
-	@extend %element-default-assembly;
-
-	padding:0 $_xSpacing;
-}

@@ -196,7 +196,7 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($this->isCollection($property)) {
-            return '\ArrayObject';
+            return '\ArrayObject|' . $property['type'];
         }
 
         return $property['type'];
@@ -214,7 +214,7 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         if ($this->isCollection($property)) {
-            return '\ArrayObject';
+            return '\ArrayObject|' . $property['type'];
         }
 
         return $property['type'];
@@ -395,7 +395,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function buildGetMethod(array $property)
     {
-        $propertyName = $this->getPropertyName($property, 'get');
+        $propertyName = $this->getPropertyName($property);
         $methodName = 'get' . ucfirst($propertyName);
         $method = [
             'name' => $methodName,

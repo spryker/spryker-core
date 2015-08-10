@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -89,4 +90,5 @@ class OrderSequence implements OrderSequenceInterface
 
         return $sequence;
     }
+
 }

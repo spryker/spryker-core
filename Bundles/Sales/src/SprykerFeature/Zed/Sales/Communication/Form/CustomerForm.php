@@ -2,7 +2,6 @@
 
 namespace SprykerFeature\Zed\Sales\Communication\Form;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Sales\Persistence\Propel\Base\SpySalesOrderQuery;
 use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;

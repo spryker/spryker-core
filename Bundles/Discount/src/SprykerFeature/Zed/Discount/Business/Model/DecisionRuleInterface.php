@@ -16,7 +16,6 @@ interface DecisionRuleInterface
 
     /**
      * @param SpyDiscount $discountEntity
-     * @ param OrderInterface $discountableContainer
      *
      * @param CalculableInterface $discountableContainer
      * @param DiscountDecisionRulePluginInterface[] $decisionRulePlugins
@@ -25,7 +24,6 @@ interface DecisionRuleInterface
      */
     public function evaluate(
         SpyDiscount $discountEntity,
-        //OrderInterface $discountableContainer,
         CalculableInterface $discountableContainer,
         array $decisionRulePlugins
     );

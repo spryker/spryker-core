@@ -17,7 +17,6 @@ class DecisionRuleEngine implements DecisionRuleInterface
 
     /**
      * @param SpyDiscount $discountEntity
-     * @ param OrderInterface $discountableContainer
      *
      * @param CalculableInterface $discountableContainer
      * @param DiscountDecisionRulePluginInterface[] $decisionRulePlugins
@@ -26,7 +25,6 @@ class DecisionRuleEngine implements DecisionRuleInterface
      */
     public function evaluate(
         SpyDiscount $discountEntity,
-        //OrderInterface $discountableContainer,
         CalculableInterface $discountableContainer,
         array $decisionRulePlugins
     ) {

@@ -170,7 +170,10 @@ class ProductManager implements ProductManagerInterface
 
         foreach ($abstractProductTransfer->getLocalizedAttributes() as $localizedAttributes) {
             $locale = $localizedAttributes->getLocale();
-            $this->checkAbstractProductAttributesDoNotExist($idAbstractProduct, $locale);
+            //$this->checkAbstractProductAttributesDoNotExist($idAbstractProduct, $locale);
+            if ($this->hasAbstractProductAttributes($idAbstractProduct, $locale)) {
+                continue;
+            }
             $encodedAttributes = $this->encodeAttributes($localizedAttributes->getAttributes());
 
             $abstractProductAttributesEntity = new SpyLocalizedAbstractProductAttributes();
@@ -187,6 +190,7 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param int $idAbstractProduct
      * @param LocaleTransfer $locale
+     * @deprecated Use hasAbstractProductAttributes() instead.
      *
      * @throws AbstractProductAttributesExistException
      */

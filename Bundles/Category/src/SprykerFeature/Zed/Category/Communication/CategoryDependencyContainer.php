@@ -30,7 +30,7 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
     /**
      * @return LocaleTransfer
      */
-    public function getCurrentLocale()
+    public function createCurrentLocale()
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_LOCALE)
             ->getCurrentLocale()
@@ -79,7 +79,7 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
         $categoryQueryContainer = $this->getQueryContainer();
         $categoryAttributesQuery = $categoryQueryContainer->queryAttributeByCategoryIdAndLocale(
             $categoryNode->getFkCategory(),
-            $this->getCurrentLocale()->getIdLocale()
+            $this->createCurrentLocale()->getIdLocale()
         );
 
         return $this->getFactory()->createTableCategoryAttributeTable($categoryAttributesQuery);

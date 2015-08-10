@@ -24,16 +24,21 @@ abstract class AbstractController
 {
 
     const DEPENDENCY_CONTAINER = 'DependencyContainer';
+    
+    /**
+     * @var AutoCompletion
+     */
+    protected $locator;
+
+    /**
+     * @var Factory
+     */
+    protected $factory;
 
     /**
      * @var Application
      */
     private $app;
-
-    /**
-     * @var AutoCompletion
-     */
-    protected $locator;
 
     /**
      * @var AbstractDependencyContainer
@@ -49,10 +54,19 @@ abstract class AbstractController
     {
         $this->app = $app;
         $this->locator = $locator;
+        $this->factory = $factory;
 
         if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
             $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator);
         }
+    }
+
+    /**
+     * @return Factory
+     */
+    public function getFactory()
+    {
+        return $this->factory;
     }
 
     /**
@@ -149,15 +163,6 @@ abstract class AbstractController
     }
 
     /**
-     * @return MessengerInterface
-     */
-    private function getMessenger()
-    {
-        return;
-        //return $this->getTwig()->getExtension('TwigMessengerPlugin')->getMessenger();
-    }
-
-    /**
      * @param $message
      *
      * @throws \ErrorException
@@ -241,6 +246,17 @@ abstract class AbstractController
     }
 
     /**
+     * @return bool
+     */
+    protected function hasUser()
+    {
+        $securityContext = $this->getSecurityContext();
+        $token = $securityContext->getToken();
+
+        return is_null($token);
+    }
+
+    /**
      * @throws \LogicException
      *
      * @return mixed
@@ -256,14 +272,16 @@ abstract class AbstractController
     }
 
     /**
-     * @return bool
+     * @return string
      */
-    protected function hasUser()
+    protected function getUsername()
     {
-        $securityContext = $this->getSecurityContext();
-        $token = $securityContext->getToken();
+        $user = $this->getUser();
+        if (is_string($user)) {
+            return $user;
+        }
 
-        return is_null($token);
+        return $user->getUsername();
     }
 
     /**
@@ -278,19 +296,6 @@ abstract class AbstractController
         }
 
         return $token->getUser();
-    }
-
-    /**
-     * @return string
-     */
-    protected function getUsername()
-    {
-        $user = $this->getUser();
-        if (is_string($user)) {
-            return $user;
-        }
-
-        return $user->getUsername();
     }
 
     /**
@@ -321,6 +326,15 @@ abstract class AbstractController
     }
 
     /**
+     * @return MessengerInterface
+     */
+    private function getMessenger()
+    {
+        return;
+        //return $this->getTwig()->getExtension('TwigMessengerPlugin')->getMessenger();
+    }
+
+    /**
      * @throws \LogicException
      *
      * @return \Twig_Environment
@@ -334,5 +348,6 @@ abstract class AbstractController
 
         return $twig;
     }
+
 
 }

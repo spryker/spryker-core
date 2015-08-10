@@ -10,8 +10,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SalesAddressTransfer;
 use SprykerFeature\Zed\Library\Copy;
 use SprykerFeature\Zed\Oms\Business\OmsFacade;
-use SprykerFeature\Zed\Sales\Communication\Form\AddressForm;
-use SprykerFeature\Zed\Sales\Communication\Form\CustomerForm;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 

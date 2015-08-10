@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,6 +17,7 @@ use SprykerFeature\Zed\Sales\Communication\Form\OrderItemSplitForm;
  */
 class OrderItemSplitController extends AbstractController
 {
+
     const SALES_ORDER_DETAIL_URL = '/sales/details?id-sales-order=%d';
     const SPLIT_SUCCESS_MESSAGE = 'Order item with "%d" was successfully split.';
 
@@ -35,5 +37,5 @@ class OrderItemSplitController extends AbstractController
 
         return $this->redirectResponse(sprintf(self::SALES_ORDER_DETAIL_URL, $data[OrderItemSplitForm::ID_ORDER]));
     }
-}
 
+}

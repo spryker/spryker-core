@@ -10,7 +10,7 @@
 
     <table name="spy_shipment_carrier" phpName="SpyShipmentCarrier" identifierQuoting="true">
         <column name="id_shipment_carrier" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="glossary_key_name" type="INTEGER" required="true" />
+        <column name="glossary_key_name" size="255" type="VARCHAR" />
         <column name="name" required="true" size="255" type="VARCHAR" />
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
 

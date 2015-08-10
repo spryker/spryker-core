@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
+use Generated\Shared\Locale\LocaleInterface;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -304,4 +305,21 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
 
         return $tree;
     }
+
+    /**
+     * @param int $idCategory
+     * @param LocaleInterface $locale
+     *
+     * @return array
+     */
+    public function getTreeNodeChildren($idCategory, LocaleInterface $locale)
+    {
+        $categories = $this->getTree(
+            $idCategory,
+            $locale
+        );
+
+        return $categories;
+    }
+
 }

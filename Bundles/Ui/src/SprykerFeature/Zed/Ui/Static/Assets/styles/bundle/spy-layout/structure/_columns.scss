@@ -1,7 +1,0 @@
-.spy-layout.text-columns {
-	@include pre(column-width, $_wMinCopy);
-	@include pre(column-gap, ($_xGutter * 2.0));
-	@include pre(column-rule, 1px solid $_rgbSpyBotticelli);
-	@include pre(column-count, auto);
-	@include pre(column-fill, balance);
-}

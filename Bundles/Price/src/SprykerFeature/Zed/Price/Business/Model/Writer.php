@@ -135,14 +135,17 @@ class Writer implements WriterInterface
             ->setPriceType($priceType)
             ->setPrice($transferPriceProduct->getPrice())
         ;
+
+        $idAbstractProduct = $this->reader->getAbstractProductIdBySku($transferPriceProduct->getSkuAbstractProduct());
+
         if ($this->reader->hasConcreteProduct($transferPriceProduct->getSkuProduct())) {
             $productEntity->setFkProduct($this->reader->getConcreteProductIdBySku($transferPriceProduct->getSkuProduct()));
         } else {
-            $productEntity->setFkAbstractProduct($this->reader->getAbstractProductIdBySku($transferPriceProduct->getSkuProduct()));
+            $productEntity->setFkAbstractProduct($idAbstractProduct);
         }
 
         $productEntity->save();
-        $this->insertTouchRecord(self::TOUCH_PRODUCT, $productEntity->getIdPriceProduct());
+        $this->insertTouchRecord(self::TOUCH_PRODUCT, $idAbstractProduct);
 
         return $productEntity;
     }

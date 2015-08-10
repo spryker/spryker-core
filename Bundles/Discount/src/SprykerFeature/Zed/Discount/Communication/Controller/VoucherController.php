@@ -10,9 +10,13 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 
 /**
  * @method DiscountDependencyContainer getDependencyContainer()
+ * @method DiscountFacade getFacade()
  */
 class VoucherController extends AbstractController
 {
@@ -40,16 +44,41 @@ class VoucherController extends AbstractController
 
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function statusAction(Request $request)
+    {
+        $discountId = $request->request->get('id');
+        $response = $this->getFacade()->toggleDiscountActiveStatus($discountId);
+
+        return $this->jsonResponse($response);
+    }
+
+    /**
+     * @return array
+     */
     public function indexAction()
     {
+        $table = $this->getDependencyContainer()->createDiscountVoucherTable();
+
+        return [
+            'vouchers' => $table->render(),
+        ];
     }
 
-    public function categoryAction()
+    /**
+     * @return JsonResponse
+     */
+    public function tableAction()
     {
-    }
+        $table = $this->getDependencyContainer()->createDiscountVoucherTable();
 
-    public function poolAction()
-    {
+        return $this->jsonResponse(
+            $table->fetchData()
+        );
     }
 
 }

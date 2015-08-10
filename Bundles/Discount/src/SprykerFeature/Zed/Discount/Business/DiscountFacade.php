@@ -22,6 +22,7 @@ use SprykerEngine\Zed\Kernel\Business\ModelResult;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule as DecisionRule;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method DiscountDependencyContainer getDependencyContainer()
@@ -30,12 +31,11 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 {
 
     /**
-     * @param OrderInterface $container
+     * @param CalculableInterface $container
      *
      * @return SpyDiscount[]
      */
     public function calculateDiscounts(CalculableInterface $container)
-    //public function calculateDiscounts(OrderInterface $container)
     {
         return $this->getDependencyContainer()->getDiscount($container)->calculate();
     }
@@ -52,14 +52,12 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * @ param OrderInterface $container
      * @param CalculableInterface $container
      * @param DecisionRule $decisionRule
      *
      * @return $this|ModelResult
      */
     public function isMinimumCartSubtotalReached(CalculableInterface $container, DecisionRule $decisionRule)
-    //public function isMinimumCartSubtotalReached(OrderInterface $container, DecisionRule $decisionRule)
     {
         return $this->getDependencyContainer()
             ->getDecisionRuleMinimumCartSubtotal()
@@ -148,6 +146,22 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
+     * @param int $idDiscountVoucher
+     *
+     * @return array
+     */
+    public function toggleDiscountActiveStatus($idDiscountVoucher)
+    {
+        $response = $this->getDependencyContainer()->getDiscountVoucherWriter()->toggleActiveStatus($idDiscountVoucher);
+
+        return [
+            'code' => Response::HTTP_OK,
+            'id' => $response->getIdDiscountVoucher(),
+            'newStaus' => $response->getIsActive(),
+        ];
+    }
+
+    /**
      * @param DecisionRuleTransfer $discountDecisionRuleTransfer
      *
      * @return SpyDiscountDecisionRule
@@ -215,7 +229,8 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     public function createDiscountVoucherPoolCategory(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
     {
         return $this->getDependencyContainer()->getDiscountVoucherPoolCategoryWriter()
-            ->create($discountVoucherPoolCategoryTransfer);
+            ->create($discountVoucherPoolCategoryTransfer)
+        ;
     }
 
     /**
@@ -253,37 +268,31 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * @ param OrderInterface $container
      * @param CalculableInterface $container
      *
      * @return array
      */
     public function getDiscountableItems(CalculableInterface $container)
-    //public function getDiscountableItems(OrderInterface $container)
     {
         return $this->getDependencyContainer()->getItemCollector()->collect($container);
     }
 
     /**
-     * @ param OrderInterface $container
      * @param CalculableInterface $container
      *
      * @return OrderInterface[]
      */
     public function getDiscountableItemExpenses(CalculableInterface $container)
-    //public function getDiscountableItemExpenses(OrderInterface $container)
     {
         return $this->getDependencyContainer()->getItemExpenseCollector()->collect($container);
     }
 
     /**
-     * @ param OrderInterface $container
      * @param CalculableInterface $container
      *
      * @return OrderInterface[]
      */
     public function getDiscountableOrderExpenses(CalculableInterface $container)
-    //public function getDiscountableOrderExpenses(OrderInterface $container)
     {
         return $this->getDependencyContainer()->getOrderExpenseCollector()->collect($container);
     }
