@@ -113,7 +113,6 @@ class CmsPageForm extends AbstractForm
      */
     protected function getTemplateList()
     {
-
         $templates = $this->templateQuery->find();
 
         $result = [];
