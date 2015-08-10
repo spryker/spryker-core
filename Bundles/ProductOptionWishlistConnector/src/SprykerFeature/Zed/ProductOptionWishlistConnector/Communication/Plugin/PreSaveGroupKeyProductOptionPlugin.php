@@ -70,6 +70,9 @@ class PreSaveGroupKeyProductOptionPlugin extends AbstractPlugin implements PreSa
     {
         $groupKeyPart = [];
         foreach ($sortedProductOptions as $option) {
+            if (empty($option->getIdOptionValueUsage())) {
+                continue;
+            }
             $groupKeyPart[] = $option->getIdOptionValueUsage();
         }
         return implode('-', $groupKeyPart);

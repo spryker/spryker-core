@@ -89,7 +89,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     {
         $itemTransfer = $this->mergeCartItems(
             $itemTransfer,
-            $this->getItemBySkuAndGroupKey($itemTransfer->getSku())
+            $this->findItem($itemTransfer)
         );
 
         $changeTransfer = $this->prepareCartChange($itemTransfer);
@@ -99,28 +99,25 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param int  $identifier
-     * @param string $groupKey
+     * @param ItemInterface  $itemToFind
      *
      * @return ItemInterface
      */
-    protected function getItemBySkuAndGroupKey($identifier, $groupKey = null)
+    protected function findItem(ItemInterface $itemToFind)
     {
         $cartTransfer = $this->getCart();
 
         foreach ($cartTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getSku() === $identifier &&
-                $itemTransfer->getGroupKey() == $groupKey
-            ) {
-                $existingItemTransfer = clone $itemTransfer;
-                $existingItemTransfer->setGroupKey(null);
-                return $existingItemTransfer;
+            if ($itemTransfer->getSku() === $itemToFind->getSku()) {
+                $matchingItemTransfer = clone $itemTransfer;  //@todo is clone still needed?
+                return $matchingItemTransfer;
             }
         }
 
-        throw new \InvalidArgumentException('No item with identifier "' . $identifier . '" found in cart');
+        throw new \InvalidArgumentException(
+            sprintf('No item with sku "%s" found in cart.', $itemToFind->getSku())
+        );
     }
-
 
     /**
      * @param ItemInterface $itemTransfer
@@ -134,7 +131,7 @@ class CartClient extends AbstractClient implements CartClientInterface
             return $this->removeItem($itemTransfer);
         }
 
-        $itemTransfer = $this->getItemBySkuAndGroupKey($itemTransfer->getSku());
+        $itemTransfer = $this->findItem($itemTransfer);
         if ($itemTransfer->getQuantity() > $quantity) {
             return $this->decreaseItemQuantity($itemTransfer, $quantity);
         } else {
@@ -200,7 +197,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @return ChangeTransfer
      */
-    private function prepareCartChange(ItemInterface $itemTransfer)
+    protected function prepareCartChange(ItemInterface $itemTransfer)
     {
         $changeTransfer = $this->createCartChange();
         $changeTransfer->addItem($itemTransfer);
@@ -259,7 +256,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     {
         $itemTransfer = $this->mergeCartItems(
             $itemTransfer,
-            $this->getItemBySkuAndGroupKey($itemTransfer->getSku())
+            $this->findItem($itemTransfer)
         );
 
         $itemTransfer->setQuantity($quantity);
