@@ -73,7 +73,7 @@ interface GlossaryKeyMappingManagerInterface
      *
      * @return bool
      */
-    public function deleteGlossariesByIdPage($idPage);
+    public function deleteGlossaryKeysByIdPage($idPage);
 
     /**
      * @param int $idPage

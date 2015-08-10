@@ -72,7 +72,7 @@ class PageController extends AbstractController
             $pageTransfer = $this->getFacade()->savePage($pageTransfer);
 
             if (intval($data['cur_temp']) !== intval($data['fkTemplate'])) {
-                $this->getFacade()->deleteGlossariesByIdPage($idPage);
+                $this->getFacade()->deleteGlossaryKeysByIdPage($idPage);
             }
 
             $urlTransfer = $this->createUrlTransfer($data['id_url'], $pageTransfer, $data);

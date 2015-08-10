@@ -327,7 +327,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return bool
      */
-    public function deleteGlossariesByIdPage($idPage)
+    public function deleteGlossaryKeysByIdPage($idPage)
     {
         $mappedGlossaries = $this->cmsQueryContainer
             ->queryGlossaryKeyMappingsByPageId($idPage)

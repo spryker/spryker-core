@@ -18,17 +18,6 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**
-     * @return CmsQueryContainer
-     */
-    public function getQueryContainer()
-    {
-        return $this->getLocator()
-            ->cms()
-            ->queryContainer()
-            ;
-    }
-
-    /**
      * @return CmsPageTable
      */
     public function createCmsPageTable()

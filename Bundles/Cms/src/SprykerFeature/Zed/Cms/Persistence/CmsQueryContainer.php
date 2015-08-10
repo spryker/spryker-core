@@ -10,12 +10,15 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Cms\CmsDependencyProvider;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsPageForm;
+use SprykerFeature\Zed\Cms\Persistence\Propel\Map\SpyCmsPageTableMap;
+use SprykerFeature\Zed\Cms\Persistence\Propel\Map\SpyCmsTemplateTableMap;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPageQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsGlossaryKeyMappingQuery;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryKeyTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKeyQuery;
+use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
 
 class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContainerInterface
 {
@@ -258,10 +261,10 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
         return $this->queryPages()
             ->leftJoinCmsTemplate()
             ->leftJoinSpyUrl()
-            ->withColumn(self::TEMPLATE_NAME)
-            ->withColumn(self::URL)
-            ->withColumn(self::ID_URL, 'idUrl')
-            ->withColumn(self::TEMPLATE_PATH)
+            ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, self::TEMPLATE_NAME)
+            ->withColumn(SpyUrlTableMap::COL_URL, self::URL)
+            ->withColumn(SpyUrlTableMap::COL_ID_URL, 'idUrl')
+            ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_PATH, self::TEMPLATE_PATH)
             ->withColumn(CmsPageForm::IS_ACTIVE)
             ->filterByIdCmsPage($idCmsPage)
             ;

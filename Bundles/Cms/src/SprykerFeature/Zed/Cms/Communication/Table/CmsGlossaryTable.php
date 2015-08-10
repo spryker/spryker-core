@@ -126,7 +126,7 @@ class CmsGlossaryTable extends AbstractTable
      *
      * @return string
      */
-    private function buildLinks($item)
+    private function buildLinks(array $item)
     {
         $mappingParam = self::REQUEST_ID_MAPPING . '=' . $item[SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING];
         $pageParam = CmsPageTable::REQUEST_ID_PAGE . '=' . $this->idPage;
@@ -176,7 +176,7 @@ class CmsGlossaryTable extends AbstractTable
      *
      * @return array
      */
-    private function findPlaceholders($searchItems)
+    private function findPlaceholders(array $searchItems)
     {
         $foundPlaceholders = [];
             foreach ($this->placeholders as $place) {

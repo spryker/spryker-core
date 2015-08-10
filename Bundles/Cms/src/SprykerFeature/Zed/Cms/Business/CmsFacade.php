@@ -234,11 +234,11 @@ class CmsFacade extends AbstractFacade
      *
      * @return bool
      */
-    public function deleteGlossariesByIdPage($idPage)
+    public function deleteGlossaryKeysByIdPage($idPage)
     {
         $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
 
-        return $glossaryKeyMappingManager->deleteGlossariesByIdPage($idPage);
+        return $glossaryKeyMappingManager->deleteGlossaryKeysByIdPage($idPage);
     }
 
 }
