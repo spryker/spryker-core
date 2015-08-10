@@ -5,6 +5,8 @@
 
 namespace SprykerFeature\Shared\Library;
 
+use SprykerFeature\Shared\Library\Exception\UnsupportedDateFormatException;
+
 class DateFormatter
 {
     const DEFAULT_TIMEZONE = 'UTC';
@@ -14,98 +16,79 @@ class DateFormatter
     const DATE_FORMAT_DATETIME = 'datetime';
 
     /**
-     * @var string
+     * @param string $date
+     * @param \SprykerFeature_Shared_Library_Context|string|null $context
+     * @param \DateTimeZone $timezone
+     *
+     * @return string
      */
-    private $timeZone;
-
-    /**
-     * @param string $timeZone
-     */
-    public function __construct($timeZone = self::DEFAULT_TIMEZONE)
+    public function dateShort($date, $context = null, \DateTimeZone $timezone = null)
     {
-        $this->timeZone = new \DateTimeZone($timeZone);
+        return $this->formatDate($date, self::DATE_FORMAT_SHORT, $context, $timezone);
     }
 
     /**
      * @param string $date
      * @param \SprykerFeature_Shared_Library_Context|string|null $context
-     * @param bool $convertTz should date/time be converted to context's timezone
-     *
-     * @throws \Exception
+     * @param \DateTimeZone $timezone
      *
      * @return string
      */
-    public function dateShort($date, $context = null, $convertTz = true)
+    public function dateMedium($date, $context = null, \DateTimeZone $timezone = null)
     {
-        return $this->formatDate($date, self::DATE_FORMAT_SHORT, $context, $convertTz);
+        return $this->formatDate($date, self::DATE_FORMAT_MEDIUM, $context, $timezone);
     }
 
     /**
      * @param string $date
      * @param \SprykerFeature_Shared_Library_Context|string|null $context
-     * @param bool $convertTz should date/time be converted to context's timezone
-     *
-     * @throws \Exception
+     * @param \DateTimeZone $timezone
      *
      * @return string
      */
-    public function dateMedium($date, $context = null, $convertTz = true)
+    public function dateRFC($date, $context = null, \DateTimeZone $timezone = null)
     {
-        return $this->formatDate($date, self::DATE_FORMAT_MEDIUM, $context, $convertTz);
+        return $this->formatDate($date, self::DATE_FORMAT_RFC, $context, $timezone);
     }
 
     /**
      * @param string $date
      * @param \SprykerFeature_Shared_Library_Context|string|null $context
-     * @param bool $convertTz should date/time be converted to context's timezone
-     *
-     * @throws \Exception
+     * @param \DateTimeZone $timezone
      *
      * @return string
      */
-    public function dateRFC($date, $context = null, $convertTz = true)
+    public function dateTime($date, $context = null, \DateTimeZone $timezone = null)
     {
-        return $this->formatDate($date, self::DATE_FORMAT_RFC, $context, $convertTz);
-    }
-
-    /**
-     * @param string $date
-     * @param \SprykerFeature_Shared_Library_Context|string|null $context
-     * @param bool $convertTz should date/time be converted to context's timezone
-     *
-     * @throws \Exception
-     *
-     * @return string
-     */
-    public function dateTime($date, $context = null, $convertTz = true)
-    {
-        return $this->formatDate($date, self::DATE_FORMAT_DATETIME, $context, $convertTz);
+        return $this->formatDate($date, self::DATE_FORMAT_DATETIME, $context, $timezone);
     }
 
     /**
      * @param \DateTime|string $date
      * @param string $dateFormat
      * @param \SprykerFeature_Shared_Library_Context|string|null $context
-     * @param bool $convertTz
+     * @param \DateTimeZone $timezone
      *
-     * @throws \Exception
+     * @throws \SprykerFeature\Shared\Library\Exception\UnsupportedDateFormatException
      *
      * @return string
      */
-    protected function formatDate($date, $dateFormat, $context = null, $convertTz = true)
+    protected function formatDate($date, $dateFormat, $context = null, \DateTimeZone $timezone = null)
     {
         $context = $this->getContext($context);
 
         if (!isset($context->dateFormat[$dateFormat])) {
-            throw new \Exception('Unsupported date format: ' . $dateFormat);
+            throw new UnsupportedDateFormatException(sprintf('Unsupported date format: %s', $dateFormat));
         }
 
-        if ($convertTz) {
+        if ($timezone === null) {
             return $context->dateTimeConvertTo($date, $context->dateFormat[$dateFormat]);
         }
 
         if (!($date instanceof \DateTime)) {
-            $date = new \DateTime($date, $this->timeZone);
+            $date = new \DateTime($date, $timezone);
+        } else {
+            $date->setTimezone($timezone);
         }
 
         return $date->format($context->dateFormat[$dateFormat]);
@@ -113,8 +96,6 @@ class DateFormatter
 
     /**
      * @param \SprykerFeature_Shared_Library_Context|string $context
-     *
-     * @throws \Exception
      *
      * @return \SprykerFeature_Shared_Library_Context
      */

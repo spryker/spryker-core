@@ -65,41 +65,63 @@ class DateFormatterTwigExtension extends \Twig_Extension
 
     /**
      * @param string $date
+     * @param string|null $context
+     * @param string|null $timezone
      *
      * @return string
      */
-    public function formatDateShort($date)
+    public function formatDateShort($date, $context = null, $timezone = null)
     {
-        return $this->dateFormatter->dateShort($date);
+        return $this->dateFormatter->dateShort($date, $context, $this->convertDateTimeZone($timezone));
     }
 
     /**
      * @param string $date
+     * @param string|null $context
+     * @param string|null $timezone
      *
      * @return string
      */
-    public function formatDateMedium($date)
+    public function formatDateMedium($date, $context = null, $timezone = null)
     {
-        return $this->dateFormatter->dateMedium($date);
+        return $this->dateFormatter->dateMedium($date, $context, $this->convertDateTimeZone($timezone));
     }
 
     /**
      * @param string $date
+     * @param string|null $context
+     * @param string|null $timezone
      *
      * @return string
      */
-    public function formatDateRFC($date)
+    public function formatDateRFC($date, $context = null, $timezone = null)
     {
-        return $this->dateFormatter->dateRFC($date);
+        return $this->dateFormatter->dateRFC($date, $context, $this->convertDateTimeZone($timezone));
     }
 
     /**
      * @param string $date
+     * @param string|null $context
+     * @param string|null $timezone
      *
      * @return string
      */
-    public function formatDateTime($date)
+    public function formatDateTime($date, $context = null, $timezone = null)
     {
-        return $this->dateFormatter->dateTime($date);
+        return $this->dateFormatter->dateTime($date, $context, $this->convertDateTimeZone($timezone));
+    }
+
+    /**
+     * @param string|null $timezone
+     *
+     * @return \DateTimeZone|null
+     */
+    private function convertDateTimeZone($timezone = null)
+    {
+        if ($timezone !== null) {
+            return new \DateTimeZone($timezone);
+        }
+
+        return null;
     }
 }
