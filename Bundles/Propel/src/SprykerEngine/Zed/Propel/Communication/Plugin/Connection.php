@@ -24,8 +24,6 @@ class Connection extends AbstractPlugin
     {
         $connection = Propel::getConnection();
 
-        echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($connection) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
-
         return $connection;
     }
 }
