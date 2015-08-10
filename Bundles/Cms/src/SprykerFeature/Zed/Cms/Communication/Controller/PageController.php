@@ -65,7 +65,6 @@ class PageController extends AbstractController
         ;
 
         $form->handleRequest();
-
         if ($form->isValid()) {
             $data = $form->getData();
 

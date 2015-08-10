@@ -24,7 +24,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class GlossaryController extends AbstractController
 {
-
     const REDIRECT_ADDRESS = '/cms/glossary/';
 
     /**
@@ -135,7 +134,6 @@ class GlossaryController extends AbstractController
         ;
 
         $form->handleRequest();
-
         if ($form->isValid()) {
             $data = $form->getData();
 

@@ -14,8 +14,8 @@ use SprykerFeature\Zed\Cms\CmsDependencyProvider;
 use SprykerFeature\Zed\Cms\Communication\CmsDependencyContainer;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsRedirectForm;
 use SprykerFeature\Zed\Cms\Communication\Table\CmsRedirectTable;
-use SprykerFeature\Zed\Url\Business\UrlFacade;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
+use SprykerFeature\Zed\Url\Business\UrlFacade;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
