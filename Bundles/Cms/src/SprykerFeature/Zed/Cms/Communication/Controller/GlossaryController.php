@@ -108,22 +108,8 @@ class GlossaryController extends AbstractController
         if ($form->isValid()) {
             $data = $form->getData();
 
-            $pageKeyMappingTransfer = (new PageKeyMappingTransfer())->fromArray($data, true);
-
-            //@todo new CMS_FACADE_API
-
-            $glossaryKey = $this->getQueryContainer()
-                ->queryKey($data[CmsGlossaryForm::GLOSSARY_KEY])
-                ->findOne()
-            ;
-
-            $pageKeyMappingTransfer->setFkGlossaryKey($glossaryKey->getIdGlossaryKey());
-
-            $this->getFacade()
-                ->savePageKeyMapping($pageKeyMappingTransfer)
-            ;
-
-            $this->touchActivePage($idPage);
+            $pageKeyMappingTransfer = $this->createKeyMappingTransfer($data);
+            $this->getFacade()->savePageKeyMappingAndTouch($pageKeyMappingTransfer);
 
             return $this->redirectResponse(self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $idPage);
         }
@@ -153,20 +139,8 @@ class GlossaryController extends AbstractController
         if ($form->isValid()) {
             $data = $form->getData();
 
-            $pageKeyMappingTransfer = (new PageKeyMappingTransfer())->fromArray($data, true);
-
-            //@todo new CMS_FACADE_API
-            $glossaryKey = $this->getQueryContainer()
-                ->queryKey($data[CmsGlossaryForm::GLOSSARY_KEY])
-                ->findOne()
-            ;
-            $pageKeyMappingTransfer->setFkGlossaryKey($glossaryKey->getIdGlossaryKey());
-
-            $this->getFacade()
-                ->savePageKeyMapping($pageKeyMappingTransfer)
-            ;
-
-            $this->touchActivePage($idPage);
+            $pageKeyMappingTransfer = $this->createKeyMappingTransfer($data);
+            $this->getFacade()->savePageKeyMappingAndTouch($pageKeyMappingTransfer);
 
             return $this->redirectResponse(self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $idPage);
         }
@@ -184,7 +158,6 @@ class GlossaryController extends AbstractController
      */
     public function deleteAction(Request $request)
     {
-        // @todo Popup confirmation is needed.
         $idMapping = $request->get(CmsGlossaryTable::REQUEST_ID_MAPPING);
         $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
 
@@ -211,22 +184,6 @@ class GlossaryController extends AbstractController
     }
 
     /**
-     * @param $idPage
-     */
-    private function touchActivePage($idPage)
-    {
-        $page = $this->getQueryContainer()
-            ->queryPageById($idPage)
-            ->findOne()
-        ;
-        $pageTransfer = (new PageTransfer())->fromArray($page->toArray());
-
-        $this->getFacade()
-            ->touchPageActive($pageTransfer)
-        ;
-    }
-
-    /**
      * @param string $tempFile
      *
      * @return array
@@ -245,5 +202,24 @@ class GlossaryController extends AbstractController
         }
 
         return $placeholderMap;
+    }
+
+    /**
+     * @param $data
+     *
+     * @return $this
+     */
+    private function createKeyMappingTransfer($data)
+    {
+        $pageKeyMappingTransfer = (new PageKeyMappingTransfer())->fromArray($data, true);
+
+        $glossaryKey = $this->getQueryContainer()
+            ->queryKey($data[CmsGlossaryForm::GLOSSARY_KEY])
+            ->findOne()
+        ;
+
+        $pageKeyMappingTransfer->setFkGlossaryKey($glossaryKey->getIdGlossaryKey());
+
+        return $pageKeyMappingTransfer;
     }
 }

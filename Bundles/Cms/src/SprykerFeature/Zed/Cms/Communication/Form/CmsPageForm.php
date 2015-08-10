@@ -2,15 +2,13 @@
 
 namespace SprykerFeature\Zed\Cms\Communication\Form;
 
+use SprykerFeature\Zed\Cms\Communication\Form\Constraint\CmsConstraint;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPageQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Url\Business\UrlFacade;
 use Symfony\Component\Validator\Constraints\Callback;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContext;
 
 class CmsPageForm extends AbstractForm
@@ -73,11 +71,7 @@ class CmsPageForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-        $urlConstraints = [
-            new Required(),
-            new NotBlank(),
-            new Length(['max' => 256]),
-        ];
+        $urlConstraints = CmsConstraint::getMandatoryConstraints();
 
         if (self::ADD === $this->formType) {
             $urlConstraints[] = new Callback([

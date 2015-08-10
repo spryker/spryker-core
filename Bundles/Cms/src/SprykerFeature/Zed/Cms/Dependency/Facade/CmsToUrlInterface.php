@@ -25,4 +25,10 @@ interface CmsToUrlInterface
      */
     public function createUrlForCurrentLocale($url, $resourceType, $idResource);
 
+    /**
+     * @param int $idUrl
+     *
+     */
+    public function touchUrlActive($idUrl);
+
 }

@@ -3,12 +3,10 @@
 namespace SprykerFeature\Zed\Cms\Communication\Form;
 
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
+use SprykerFeature\Zed\Cms\Communication\Form\Constraint\CmsConstraint;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Validator\Constraints\Callback;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContext;
 
 class CmsGlossaryForm extends AbstractForm
@@ -67,11 +65,7 @@ class CmsGlossaryForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-        $placeholderConstraints = [
-            new Required(),
-            new NotBlank(),
-            new Length(['max' => 256]),
-        ];
+        $placeholderConstraints = CmsConstraint::getMandatoryConstraints();
 
         if (!isset($this->idMapping)) {
             $placeholderConstraints[] = new Callback([

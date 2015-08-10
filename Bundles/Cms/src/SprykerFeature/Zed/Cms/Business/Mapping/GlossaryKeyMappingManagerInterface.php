@@ -41,6 +41,13 @@ interface GlossaryKeyMappingManagerInterface
     public function savePageKeyMapping(PageKeyMappingTransfer $pageKeyMapping);
 
     /**
+     * @param PageKeyMappingTransfer $pageKeyMapping
+     *
+     * @return PageKeyMappingTransfer
+     */
+    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMapping);
+
+    /**
      * @param PageTransfer $page
      * @param string $placeholder
      * @param string $value
@@ -60,6 +67,13 @@ interface GlossaryKeyMappingManagerInterface
      * @return bool
      */
     public function deletePageKeyMapping(PageTransfer $page, $placeholder);
+
+    /**
+     * @param int $idPage
+     *
+     * @return bool
+     */
+    public function deleteGlossariesByIdPage($idPage);
 
     /**
      * @param int $idPage

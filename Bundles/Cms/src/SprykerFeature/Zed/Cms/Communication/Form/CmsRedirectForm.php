@@ -2,13 +2,11 @@
 
 namespace SprykerFeature\Zed\Cms\Communication\Form;
 
+use SprykerFeature\Zed\Cms\Communication\Form\Constraint\CmsConstraint;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Url\Business\UrlFacade;
 use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
 use Symfony\Component\Validator\Constraints\Callback;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Context\ExecutionContext;
 
 class CmsRedirectForm extends AbstractForm
@@ -57,11 +55,7 @@ class CmsRedirectForm extends AbstractForm
     protected function buildFormFields()
     {
 
-        $urlConstraints = [
-            new Required(),
-            new NotBlank(),
-            new Length(['max' => 256]),
-        ];
+        $urlConstraints = CmsConstraint::getMandatoryConstraints();
 
         if (self::ADD === $this->formType) {
             $urlConstraints[] = new Callback([
@@ -88,11 +82,7 @@ class CmsRedirectForm extends AbstractForm
             ->addText(self::FROM_URL, $urlParams)
             ->addText(self::TO_URL, [
                 'label' => 'To URL',
-                'constraints' => [
-                    new Required(),
-                    new NotBlank(),
-                    new Length(['max' => 256]),
-                ],
+                'constraints' => CmsConstraint::getMandatoryConstraints(),
             ])
             ;
     }

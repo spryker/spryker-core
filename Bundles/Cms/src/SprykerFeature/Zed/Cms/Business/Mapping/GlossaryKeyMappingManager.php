@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use SprykerFeature\Zed\Cms\Business\Exception\MappingAmbiguousException;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
+use SprykerFeature\Zed\Cms\Business\Page\PageManagerInterface;
 use SprykerFeature\Zed\Cms\Business\Template\TemplateManagerInterface;
 use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
@@ -42,6 +43,11 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     protected $templateManager;
 
     /**
+     * @var PageManagerInterface
+     */
+    protected $pageManager;
+
+    /**
      * @var AutoCompletion
      */
     protected $locator;
@@ -50,17 +56,20 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      * @param CmsToGlossaryInterface $glossaryFacade
      * @param CmsQueryContainerInterface $cmsQueryContainer
      * @param TemplateManagerInterface $templateManager
+     * @param PageManagerInterface $pageManager
      * @param LocatorLocatorInterface $locator
      */
     public function __construct(
         CmsToGlossaryInterface $glossaryFacade,
         CmsQueryContainerInterface $cmsQueryContainer,
         TemplateManagerInterface $templateManager,
+        PageManagerInterface $pageManager,
         LocatorLocatorInterface $locator
     ) {
         $this->glossaryFacade = $glossaryFacade;
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->templateManager = $templateManager;
+        $this->pageManager = $pageManager;
         $this->locator = $locator;
     }
 
@@ -118,6 +127,21 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
         } else {
             return $this->updatePageKeyMapping($pageKeyMapping);
         }
+    }
+
+    /**
+     * @param PageKeyMappingTransfer $pageKeyMapping
+     *
+     * @return PageKeyMappingTransfer
+     */
+    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMapping)
+    {
+        $pageKeyMappingTransfer = $this->savePageKeyMapping($pageKeyMapping);
+
+        $pageTransfer = (new PageTransfer())->setIdCmsPage($pageKeyMappingTransfer->getFkPage());
+        $this->pageManager->touchPageActive($pageTransfer);
+
+        return $pageKeyMappingTransfer;
     }
 
     /**
@@ -294,6 +318,27 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     {
         $mappingQuery = $this->cmsQueryContainer->queryGlossaryKeyMapping($page->getIdCmsPage(), $placeholder);
         $mappingQuery->delete();
+
+        return true;
+    }
+
+    /**
+     * @param int $idPage
+     *
+     * @return bool
+     */
+    public function deleteGlossariesByIdPage($idPage)
+    {
+        $mappedGlossaries = $this->cmsQueryContainer
+            ->queryGlossaryKeyMappingsByPageId($idPage)
+            ->find()
+        ;
+
+        $pageTransfer = (new PageTransfer())->setIdCmsPage($idPage);
+
+        foreach ($mappedGlossaries->getData() as $glossaryMapping) {
+            $this->deletePageKeyMapping($pageTransfer, $glossaryMapping->getPlaceholder());
+        }
 
         return true;
     }

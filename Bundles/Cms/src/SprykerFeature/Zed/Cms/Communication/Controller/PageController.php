@@ -38,24 +38,9 @@ class PageController extends AbstractController
 
         if ($form->isValid()) {
             $data = $form->getData();
+            $pageTransfer = $this->createPageTransfer($data);
 
-            $pageTransfer = new PageTransfer();
-            $pageTransfer->fromArray($data, true);
-
-
-            // @todo SAVE_PAGE_URL CMS_FACADE_API
-            $pageTransfer = $this->getFacade()
-                ->savePage($pageTransfer)
-            ;
-
-            $urlTransfer = $this->getFacade()
-                ->createPageUrl($pageTransfer, $data[CmsPageForm::URL])
-            ;
-
-            $this->getUrlFacade()
-                ->touchUrlActive($urlTransfer->getIdUrl())
-            ;
-
+            $this->getFacade()->savePageUrlAndTouch($pageTransfer,$data[CmsPageForm::URL]);
             $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 
             return $this->redirectResponse($redirectUrl);
@@ -73,7 +58,6 @@ class PageController extends AbstractController
      */
     public function editAction(Request $request)
     {
-
         $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
 
         $form = $this->getDependencyContainer()
@@ -85,40 +69,15 @@ class PageController extends AbstractController
         if ($form->isValid()) {
             $data = $form->getData();
 
-            $pageTransfer = new PageTransfer();
-            $pageTransfer->fromArray($data, true);
-
-
-            // @todo SAVE_PAGE_URL CMS_FACADE_API
-            $pageTransfer = $this->getFacade()
-                ->savePage($pageTransfer)
-            ;
-
-            $url = $this->getQueryContainer()
-                ->queryUrlById($data['id_url'])
-                ->findOne()
-            ;
-
-            $urlTransfer = new UrlTransfer();
-            $urlTransfer = $urlTransfer->fromArray($url->toArray(), true);
-
-            $urlTransfer->setFkPage($pageTransfer->getIdCmsPage());
-            $urlTransfer->setResourceId($url->getResourceId());
-            $urlTransfer->setResourceType($url->getResourceType());
+            $pageTransfer = $this->createPageTransfer($data);
+            $pageTransfer = $this->getFacade()->savePage($pageTransfer);
 
             if (intval($data['cur_temp']) !== intval($data['fkTemplate'])) {
-                $this->deleteMappedGlossary($idPage);
+                $this->getFacade()->deleteGlossariesByIdPage($idPage);
             }
 
-            $urlTransfer->setUrl($data['url']);
-
-            $urlTransfer = $this->getUrlFacade()
-                ->saveUrl($urlTransfer)
-            ;
-
-            $this->getUrlFacade()
-                ->touchUrlActive($urlTransfer->getIdUrl())
-            ;
+            $urlTransfer = $this->createUrlTransfer($data['id_url'], $pageTransfer, $data);
+            $this->getUrlFacade()->saveUrlAndTouch($urlTransfer);
 
             $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 
@@ -140,19 +99,38 @@ class PageController extends AbstractController
             ;
     }
 
-    private function deleteMappedGlossary($idPage)
+    /**
+     * @param $data
+     *
+     * @return PageTransfer
+     */
+    private function createPageTransfer($data)
     {
-        //@todo DeleteMappedGlossary CMS_FACADE_API
-        $mappedGlossaries = $this->getQueryContainer()
-            ->queryGlossaryKeyMappingsByPageId($idPage)
-            ->find()
-        ;
-        $pageTransfer = (new PageTransfer())->setIdCmsPage($idPage);
-        foreach ($mappedGlossaries->getData() as $glossaryMapping) {
-            $this->getFacade()
-                ->deletePageKeyMapping($pageTransfer, $glossaryMapping->getPlaceholder())
-            ;
-        }
+        $pageTransfer = new PageTransfer();
+        $pageTransfer->fromArray($data, true);
+
+        return $pageTransfer;
     }
 
+    /**
+     * @param int $idUrl
+     * @param PageTransfer $pageTransfer
+     * @param array $data
+     *
+     * @return UrlTransfer
+     */
+    private function createUrlTransfer($idUrl, $pageTransfer,array $data)
+    {
+        $url = $this->getQueryContainer()->queryUrlById($idUrl)->findOne();
+
+        $urlTransfer = new UrlTransfer();
+
+        $urlTransfer = $urlTransfer->fromArray($url->toArray(), true);
+        $urlTransfer->setFkPage($pageTransfer->getIdCmsPage());
+        $urlTransfer->setResourceId($url->getResourceId());
+        $urlTransfer->setResourceType($url->getResourceType());
+        $urlTransfer->setUrl($data['url']);
+
+        return $urlTransfer;
+    }
 }
