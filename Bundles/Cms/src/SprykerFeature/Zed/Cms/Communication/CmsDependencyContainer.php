@@ -18,15 +18,6 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**
-     *
-     * @return mixed
-     */
-    public function createCmsGrid()
-    {
-        return $this->getFactory();
-    }
-
-    /**
      * @return CmsQueryContainer
      */
     public function getQueryContainer()

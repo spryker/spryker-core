@@ -222,4 +222,5 @@ class GlossaryController extends AbstractController
 
         return $pageKeyMappingTransfer;
     }
+
 }

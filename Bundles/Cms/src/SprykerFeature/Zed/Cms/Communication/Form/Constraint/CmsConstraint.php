@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,6 +12,7 @@ use Symfony\Component\Validator\Constraints\Required;
 
 class CmsConstraint
 {
+
     public static function getMandatoryConstraints()
     {
         return [

@@ -27,7 +27,6 @@ interface CmsToUrlInterface
 
     /**
      * @param int $idUrl
-     *
      */
     public function touchUrlActive($idUrl);
 

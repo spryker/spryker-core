@@ -4,6 +4,7 @@ namespace SprykerFeature\Zed\Cms\Communication\Form;
 
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
 use SprykerFeature\Zed\Cms\Communication\Form\Constraint\CmsConstraint;
+use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsGlossaryKeyMappingQuery;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -43,7 +44,7 @@ class CmsGlossaryForm extends AbstractForm
     protected $cmsFacade;
 
     /**
-     * @param Mixed $glossaryByIdQuery
+     * @param SpyCmsGlossaryKeyMappingQuery $glossaryByIdQuery
      * @param int $idPage
      * @param int $idMapping
      * @param array $placeholder
@@ -51,7 +52,7 @@ class CmsGlossaryForm extends AbstractForm
      * @param GlossaryFacade $glossaryFacade
      */
 
-    public function __construct($glossaryByIdQuery, $idPage, $idMapping, $placeholder, CmsFacade $cmsFacade)
+    public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryByIdQuery, $idPage, $idMapping, $placeholder, CmsFacade $cmsFacade)
     {
         $this->glossaryByIdQuery = $glossaryByIdQuery;
         $this->idPage = $idPage;

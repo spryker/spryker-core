@@ -40,7 +40,7 @@ class PageController extends AbstractController
             $data = $form->getData();
             $pageTransfer = $this->createPageTransfer($data);
 
-            $this->getFacade()->savePageUrlAndTouch($pageTransfer,$data[CmsPageForm::URL]);
+            $this->getFacade()->savePageUrlAndTouch($pageTransfer, $data[CmsPageForm::URL]);
             $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 
             return $this->redirectResponse($redirectUrl);
@@ -119,7 +119,7 @@ class PageController extends AbstractController
      *
      * @return UrlTransfer
      */
-    private function createUrlTransfer($idUrl, $pageTransfer,array $data)
+    private function createUrlTransfer($idUrl, $pageTransfer, array $data)
     {
         $url = $this->getQueryContainer()->queryUrlById($idUrl)->findOne();
 
@@ -133,4 +133,5 @@ class PageController extends AbstractController
 
         return $urlTransfer;
     }
+
 }
