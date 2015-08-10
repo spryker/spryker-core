@@ -28,7 +28,7 @@ class ShipmentFacade extends AbstractFacade
     public function createCarrier(ShipmentCarrierTransfer $carrierTransfer)
     {
         $carrierModel = $this->getDependencyContainer()
-            ->createCarrierModel()
+            ->createCarrier()
         ;
 
         return $carrierModel->create($carrierTransfer);
@@ -42,7 +42,7 @@ class ShipmentFacade extends AbstractFacade
     public function createMethod(ShipmentMethodTransfer $methodTransfer)
     {
         $methodModel = $this->getDependencyContainer()
-            ->createMethodModel()
+            ->createMethod()
         ;
 
         return $methodModel->create($methodTransfer);
@@ -56,7 +56,7 @@ class ShipmentFacade extends AbstractFacade
     public function getAvailableMethods(CartInterface $cartTransfer)
     {
         $methodModel = $this->getDependencyContainer()
-            ->createMethodModel()
+            ->createMethod()
         ;
 
         return $methodModel->getAvailableMethods($cartTransfer);
@@ -70,7 +70,7 @@ class ShipmentFacade extends AbstractFacade
     public function hasMethod($idMethod)
     {
         $methodModel = $this->getDependencyContainer()
-            ->createMethodModel()
+            ->createMethod()
         ;
 
         return $methodModel->hasMethod($idMethod);
@@ -84,7 +84,7 @@ class ShipmentFacade extends AbstractFacade
     public function deleteMethod($idMethod)
     {
         $methodModel = $this->getDependencyContainer()
-            ->createMethodModel()
+            ->createMethod()
         ;
 
         return $methodModel->deleteMethod($idMethod);
@@ -98,7 +98,7 @@ class ShipmentFacade extends AbstractFacade
     public function updateMethod(ShipmentMethodTransfer $methodTransfer)
     {
         $methodModel = $this->getDependencyContainer()
-            ->createMethodModel()
+            ->createMethod()
         ;
 
         return $methodModel->updateMethod($methodTransfer);
