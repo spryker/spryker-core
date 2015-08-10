@@ -6,6 +6,7 @@
 
 namespace SprykerEngine\Zed\Kernel\Persistence;
 
+use Propel\Runtime\Connection\ConnectionInterface;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\DependencyContainer\DependencyContainerInterface;
@@ -15,6 +16,7 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
 {
 
     const DEPENDENCY_CONTAINER = 'DependencyContainer';
+    const PROPEL_CONNECTION = 'propel connection';
 
     /**
      * @var DependencyContainerInterface
@@ -61,7 +63,9 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     {
         $dependencyContainer = $this->getDependencyContainer();
         if (isset($dependencyContainer)) {
-            $this->getDependencyContainer()->setContainer($container);
+            $this->getDependencyContainer()
+                ->setContainer($container)
+            ;
         }
     }
 
@@ -101,4 +105,11 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
         return $this->dependencyContainer;
     }
 
+    /**
+     * @return ConnectionInterface
+     */
+    public function getConnection()
+    {
+        return $this->getProvidedDependency(self::PROPEL_CONNECTION);
+    }
 }
