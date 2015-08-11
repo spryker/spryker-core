@@ -60,6 +60,11 @@ class ProductManager implements ProductManagerInterface
     protected $localeFacade;
 
     /**
+     * @var array
+     */
+    protected $concreteProductsBySkuCache = [];
+
+    /**
      * @param ProductQueryContainerInterface $productQueryContainer
      * @param ProductToTouchInterface $touchFacade
      * @param ProductToUrlInterface $urlFacade
@@ -84,9 +89,13 @@ class ProductManager implements ProductManagerInterface
      */
     public function hasAbstractProduct($sku)
     {
-        $abstractProductQuery = $this->productQueryContainer->queryAbstractProductBySku($sku);
+        if (!isset($this->concreteProductsBySkuCache[$sku]['abstractCount'])) {
+            $abstractProductQuery = $this->productQueryContainer->queryAbstractProductBySku($sku);
 
-        return $abstractProductQuery->count() > 0;
+            $this->concreteProductsBySkuCache[$sku]['abstractCount'] = $abstractProductQuery->count();
+        }
+
+        return $this->concreteProductsBySkuCache[$sku]['abstractCount'] > 0;
     }
 
     /**
@@ -128,18 +137,22 @@ class ProductManager implements ProductManagerInterface
      */
     public function getAbstractProductIdBySku($sku)
     {
-        $abstractProduct = $this->productQueryContainer->queryAbstractProductBySku($sku)->findOne();
+        if (!isset($this->concreteProductsBySkuCache[$sku]['abstractProduct'])) {
+            $abstractProduct = $this->productQueryContainer->queryAbstractProductBySku($sku)->findOne();
 
-        if (!$abstractProduct) {
-            throw new MissingProductException(
-                sprintf(
-                    'Tried to retrieve an abstract product with sku %s, but it does not exist.',
-                    $sku
-                )
-            );
+            if (!$abstractProduct) {
+                throw new MissingProductException(
+                    sprintf(
+                        'Tried to retrieve an abstract product with sku %s, but it does not exist.',
+                        $sku
+                    )
+                );
+            }
+
+            $this->concreteProductsBySkuCache[$sku]['abstractProduct'] = $abstractProduct;
         }
 
-        return $abstractProduct->getPrimaryKey();
+        return $this->concreteProductsBySkuCache[$sku]['abstractProduct']->getPrimaryKey();
     }
 
     /**
@@ -280,9 +293,13 @@ class ProductManager implements ProductManagerInterface
      */
     public function hasConcreteProduct($sku)
     {
-        $query = $this->productQueryContainer->queryConcreteProductBySku($sku);
+        if (!isset($this->concreteProductsBySkuCache[$sku]['concreteCount'])) {
+            $query = $this->productQueryContainer->queryConcreteProductBySku($sku);
 
-        return $query->count() > 0;
+            $this->concreteProductsBySkuCache[$sku]['concreteCount'] = $query->count();
+        }
+
+        return $this->concreteProductsBySkuCache[$sku]['concreteCount'] > 0;
     }
 
     /**
@@ -294,18 +311,22 @@ class ProductManager implements ProductManagerInterface
      */
     public function getConcreteProductIdBySku($sku)
     {
-        $concreteProduct = $this->productQueryContainer->queryConcreteProductBySku($sku)->findOne();
+        if (!isset($this->concreteProductsBySkuCache[$sku]['concreteProduct'])) {
+            $concreteProduct = $this->productQueryContainer->queryConcreteProductBySku($sku)->findOne();
 
-        if (!$concreteProduct) {
-            throw new MissingProductException(
-                sprintf(
-                    'Tried to retrieve a concrete product with sku %s, but it does not exist',
-                    $sku
-                )
-            );
+            if (!$concreteProduct) {
+                throw new MissingProductException(
+                    sprintf(
+                        'Tried to retrieve a concrete product with sku %s, but it does not exist',
+                        $sku
+                    )
+                );
+            }
+
+            $this->concreteProductsBySkuCache[$sku]['concreteProduct'] = $concreteProduct;
         }
 
-        return $concreteProduct->getPrimaryKey();
+        return $this->concreteProductsBySkuCache[$sku]['concreteProduct']->getPrimaryKey();
     }
 
     /**

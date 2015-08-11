@@ -13,6 +13,7 @@ use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
 
 class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryContainerInterface
 {
+    const TOUCH_ENTRY_QUERY_KEY = 'search touch entry';
 
     /**
      * @param string $itemType
@@ -37,6 +38,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     {
         $query = SpyTouchQuery::create();
         $query
+            ->setQueryKey(self::TOUCH_ENTRY_QUERY_KEY)
             ->filterByItemType($itemType)
             ->filterByItemId($itemId);
 

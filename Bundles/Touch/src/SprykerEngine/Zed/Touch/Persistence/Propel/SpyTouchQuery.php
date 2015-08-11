@@ -19,5 +19,23 @@ use SprykerEngine\Zed\Touch\Persistence\Propel\Base\SpyTouchQuery as BaseSpyTouc
  */
 class SpyTouchQuery extends BaseSpyTouchQuery
 {
+    /**
+     * @var array
+     */
+    protected static $cache = [];
 
+    public function cacheContains($key)
+    {
+        return isset(self::$cache[$key]);
+    }
+
+    public function cacheFetch($key)
+    {
+        return self::$cache[$key];
+    }
+
+    public function cacheStore($key, $value, $lifetime = 3600)
+    {
+        self::$cache[$key] = $value;
+    }
 } // SpyTouchQuery
