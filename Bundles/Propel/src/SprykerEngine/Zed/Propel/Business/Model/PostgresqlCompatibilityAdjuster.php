@@ -21,6 +21,9 @@ class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjuster
      */
     protected $schemaFinder;
 
+    /**
+     * @param PropelSchemaFinderInterface $schemaFinder
+     */
     public function __construct(PropelSchemaFinderInterface $schemaFinder)
     {
         $this->schemaFinder = $schemaFinder;
@@ -44,7 +47,7 @@ class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjuster
     }
 
     /**
-     * @return mixed
+     * @return void
      */
     public function addMissingFunctions()
     {
@@ -79,6 +82,11 @@ class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjuster
         ");
     }
 
+    /**
+     * @param DOMDocument $dom
+     *
+     * @return int
+     */
     protected function adjustForNamedIndices(DOMDocument $dom)
     {
         $xpath = new DOMXPath($dom);
@@ -93,6 +101,11 @@ class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjuster
         return $domChanged;
     }
 
+    /**
+     * @param DOMDocument $dom
+     *
+     * @return int
+     */
     protected function adjustForIdMethodParameter(DOMDocument $dom)
     {
         $xpath = new DOMXPath($dom);
@@ -115,6 +128,11 @@ class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjuster
         return $domChanged;
     }
 
+    /**
+     * @param SplFileInfo $file
+     *
+     * @return DOMDocument
+     */
     protected function createDomDocumentFromFile(SplFileInfo $file)
     {
         $dom = new DOMDocument('1.0', 'UTF-8');
