@@ -93,6 +93,23 @@ class RedirectManager implements RedirectManagerInterface
     }
 
     /**
+     * @param string $toUrl
+     * @param int $status
+     *
+     * @return RedirectTransfer
+     */
+    public function createRedirectAndTouch($toUrl, $status = 301)
+    {
+        $redirect = $this->createRedirect($toUrl, $status);
+
+        $redirectTransfer = $this->convertRedirectEntityToTransfer($redirect);
+        $this->touchRedirectActive($redirectTransfer);
+
+        return $redirectTransfer;
+
+    }
+
+    /**
      * @param SpyRedirect $redirectEntity
      *
      * @return RedirectTransfer
@@ -119,6 +136,19 @@ class RedirectManager implements RedirectManagerInterface
         } else {
             return $this->updateRedirectFromTransfer($redirect);
         }
+    }
+
+    /**
+     * @param RedirectTransfer $redirect
+     *
+     * @return RedirectTransfer
+     */
+    public function saveRedirectAndTouch(RedirectTransfer $redirect)
+    {
+        $redirectTransfer = $this->saveRedirect($redirect);
+        $this->touchRedirectActive($redirectTransfer);
+
+        return $redirectTransfer;
     }
 
     /**
@@ -216,6 +246,21 @@ class RedirectManager implements RedirectManagerInterface
         $urlEntity = $this->urlManager->createUrl($url, $locale, 'redirect', $idRedirect);
 
         return $this->urlManager->convertUrlEntityToTransfer($urlEntity);
+    }
+
+    /**
+     * @param string $url
+     * @param LocaleTransfer $locale
+     * @param int $idRedirect
+     *
+     * @return UrlTransfer
+     */
+    public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idRedirect)
+    {
+        $urlTransfer  = $this->createRedirectUrl($url, $locale, $idRedirect);
+        $this->urlManager->touchUrlActive($urlTransfer->getIdUrl());
+
+        return $urlTransfer;
     }
 
     /**

@@ -61,4 +61,12 @@ interface PageManagerInterface
      */
     public function createPageUrl(PageTransfer $page, $url);
 
+    /**
+     * @param PageTransfer $page
+     * @param string $url
+     *
+     * @return UrlTransfer
+     */
+    public function savePageUrlAndTouch(PageTransfer $page, $url);
+
 }

@@ -32,6 +32,14 @@ interface RedirectManagerInterface
     public function createRedirect($toUrl, $status = 301);
 
     /**
+     * @param string $toUrl
+     * @param int $status
+     *
+     * @return redirectTransfer
+     */
+    public function createRedirectAndTouch($toUrl, $status = 301);
+
+    /**
      * @param SpyRedirect $redirectEntity
      *
      * @return RedirectTransfer
@@ -50,6 +58,13 @@ interface RedirectManagerInterface
 
     /**
      * @param RedirectTransfer $redirect
+     *
+     * @return RedirectTransfer
+     */
+    public function saveRedirectAndTouch(RedirectTransfer $redirect);
+
+    /**
+     * @param RedirectTransfer $redirect
      */
     public function touchRedirectActive(RedirectTransfer $redirect);
 
@@ -64,5 +79,14 @@ interface RedirectManagerInterface
      * @return UrlTransfer
      */
     public function createRedirectUrl($url, LocaleTransfer $locale, $idRedirect);
+
+    /**
+     * @param string $url
+     * @param LocaleTransfer $locale
+     * @param int $idRedirect
+     *
+     * @return UrlTransfer
+     */
+    public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idRedirect);
 
 }

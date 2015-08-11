@@ -1,0 +1,25 @@
+{% extends '@Application/Layout/layout.twig' %}
+
+{% block content %}
+
+    <h4>
+        Page URL : [<b> <a href="http://www.de.spryker.dev{{ url }}" target="_blank">{{ url }}</a> </b>]
+    </h4>
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Page glossary mapping' } %}
+
+        {% block widget_header_content %}
+
+            <a href="/cms/" class="btn btn-sm btn-default">{{ 'Back to CMS' | trans }}</a>
+
+        {% endblock %}
+
+        {% block widget_content %}
+
+            {{ keyMaps | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

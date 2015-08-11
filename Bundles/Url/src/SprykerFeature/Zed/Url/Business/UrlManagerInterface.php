@@ -45,6 +45,13 @@ interface UrlManagerInterface
     public function saveUrl(UrlTransfer $url);
 
     /**
+     * @param UrlTransfer $url
+     *
+     * @return UrlTransfer
+     */
+    public function saveUrlAndTouch(UrlTransfer $url);
+
+    /**
      * @param string $url
      *
      * @return bool

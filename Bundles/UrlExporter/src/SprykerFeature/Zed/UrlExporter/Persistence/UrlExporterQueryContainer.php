@@ -32,7 +32,7 @@ class UrlExporterQueryContainer extends AbstractQueryContainer implements UrlExp
 
         $expandableQuery->addJoin(
             SpyRedirectTableMap::COL_ID_REDIRECT,
-            SpyUrlTableMap::COL_FK_RESOURCE_REDIRECT_ID,
+            SpyUrlTableMap::COL_FK_RESOURCE_REDIRECT,
             Criteria::INNER_JOIN
         );
 

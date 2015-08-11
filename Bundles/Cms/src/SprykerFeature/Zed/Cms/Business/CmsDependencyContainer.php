@@ -65,6 +65,7 @@ class CmsDependencyContainer extends AbstractBusinessDependencyContainer
             $this->getGlossaryFacade(),
             $this->getCmsQueryContainer(),
             $this->getTemplateManager(),
+            $this->getPageManager(),
             $this->getLocator()
         );
     }

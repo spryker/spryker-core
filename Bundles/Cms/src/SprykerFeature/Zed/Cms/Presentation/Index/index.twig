@@ -1,49 +1,37 @@
 {% extends '@Application/Layout/layout.twig' %}
 
 {% block content %}
-    <section
-            class="spy-layout compact"
-            spy-app="spyGrid, spyForm"
-            ng-controller="GridController"
-            ng-strict-di
-            src="/cms/grid/pagesGrid"
-            name="grid"
-            on="{ form_success : 'update' }"
-            ng-class="{ query : queryActive }"
-            >
 
-        <h3>{{ "cms.index" | trans }}</h3>
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'CMS page' } %}
 
-        <div spy-grid-pages="pages" labels="{ items : 'Show items %n', pages : 'Page %n of %m' }"></div>
+                {% block widget_header_content %}
 
-        <table class="spy-grid spy-interactive">
-            <thead>
-            <tr>
-                <th spy-grid-head="columns['id_cms_page']" label="Page ID"></th>
-                <th spy-grid-head="columns['fk_template']" label="Template"></th>
-                <th spy-grid-head="columns['valid_from']" label="Valid From"></th>
-                <th spy-grid-head="columns['valid_to']" label="Valid To"></th>
-                <th spy-grid-head="columns['is_active']" label="Active"></th>
-            </tr>
-            </thead>
+                        <a class="btn btn-sm btn-primary" href="/cms/page/add/">{{ 'Add CMS Page' | trans }}</a>
 
-            <tbody>
-            <tr ng-repeat="row in rows">
-                <td>{[{ row.id_cms_page }]}</td>
-                <td>{[{ row.template_name }]}: {[{ row.template_path }]}</td>
-                <td><a class="cell" href="/customer/profile?id={[{ row.id_customer }]}">{[{ row.valid_from }]}</a></td>
-                <td>{[{ row.valid_to }]}</td>
-                <td>{[{ row.is_active }]}</td>
-            </tr>
-            <tr ng-if="!rows.length">
-                <td colspan="4">{{ "grid.no.results" | trans }}</td>
-            </tr>
-            </tbody>
-        </table>
+                {% endblock %}
 
-        <div spy-grid-pages="pages" labels="{ items : 'Show items %n', pages : 'Page %n of %m' }"></div>
+                {% block widget_content %}
 
-        </div>
+                        {{ pages | raw }}
 
-    </section>
+                {% endblock %}
+
+        {% endembed %}
+
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'CMS Redirect' } %}
+
+                {% block widget_header_content %}
+
+                        <a class="btn btn-sm btn-primary" href="/cms/redirect/add/">{{ 'Add CMS Redirect' | trans }}</a>
+
+                {% endblock %}
+
+                {% block widget_content %}
+
+                        {{ redirects | raw }}
+
+                {% endblock %}
+
+        {% endembed %}
+
 {% endblock %}
