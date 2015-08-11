@@ -1,31 +1,25 @@
 <?xml version="1.0"?>
-<database name="zed"
-          defaultIdMethod="native"
-          defaultPhpNamingMethod="underscore"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
-          namespace="SprykerFeature\Zed\Oms\Persistence\Propel"
-          package="vendor.spryker.spryker.Bundles.Oms.src.SprykerFeature.Zed.Oms.Persistence.Propel">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" defaultIdMethod="native" defaultPhpNamingMethod="underscore" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" namespace="SprykerFeature\Zed\Oms\Persistence\Propel" package="vendor.spryker.spryker.Bundles.Oms.src.SprykerFeature.Zed.Oms.Persistence.Propel">
 
     <table name="spy_oms_transition_log" phpName="SpyOmsTransitionLog">
-        <column name="id_oms_transition_log" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
-        <column name="fk_sales_order_item" type="INTEGER" required="true" />
-        <column name="fk_sales_order" type="INTEGER" required="true" />
+        <column name="id_oms_transition_log" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_sales_order_item" type="INTEGER" required="true"/>
+        <column name="fk_sales_order" type="INTEGER" required="true"/>
 
-        <column name="locked" type="BOOLEAN" required="false" />
+        <column name="locked" type="BOOLEAN" required="false"/>
         <column name="fk_oms_order_process" type="INTEGER" required="false"/>
         <column name="event" required="false" size="100" type="VARCHAR"/>
-        <column name="hostname" type="VARCHAR" size="128" required="true" />
-        <column name="module" type="VARCHAR" size="128" required="true" />
-        <column name="controller" type="VARCHAR" size="128" required="true" />
-        <column name="action" type="VARCHAR" size="128" required="true" />
-        <column name="params" type="ARRAY" required="true" />
-        <column name="source_state" type="VARCHAR" size="128" required="false" />
-        <column name="target_state" type="VARCHAR" size="128" required="false" />
-        <column name="commands" type="ARRAY" required="false" />
-        <column name="conditions" type="ARRAY" required="false" />
-        <column name="error" type="BOOLEAN" required="false" />
-        <column name="error_message" type="VARCHAR" size="1024" required="false" />
+        <column name="hostname" type="VARCHAR" size="128" required="true"/>
+        <column name="module" type="VARCHAR" size="128" required="true"/>
+        <column name="controller" type="VARCHAR" size="128" required="true"/>
+        <column name="action" type="VARCHAR" size="128" required="true"/>
+        <column name="params" type="ARRAY" required="true"/>
+        <column name="source_state" type="VARCHAR" size="128" required="false"/>
+        <column name="target_state" type="VARCHAR" size="128" required="false"/>
+        <column name="commands" type="ARRAY" required="false"/>
+        <column name="conditions" type="ARRAY" required="false"/>
+        <column name="error" type="BOOLEAN" required="false"/>
+        <column name="error_message" type="VARCHAR" size="1024" required="false"/>
 
         <behavior name="timestampable"/>
 
@@ -38,10 +32,10 @@
         <foreign-key foreignTable="spy_oms_order_process" phpName="Process" refPhpName="TransitionLog">
             <reference local="fk_oms_order_process" foreign="id_oms_order_process"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_oms_transition_log_pk_seq"/></table>
 
     <table name="spy_oms_order_process" phpName="SpyOmsOrderProcess">
-        <column name="id_oms_order_process" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="id_oms_order_process" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
 
         <behavior name="timestampable"/>
@@ -49,24 +43,24 @@
         <unique>
             <unique-column name="name"/>
         </unique>
-    </table>
+    <id-method-parameter value="spy_oms_order_process_pk_seq"/></table>
 
     <table name="spy_oms_order_item_state" phpName="SpyOmsOrderItemState">
-        <column name="id_oms_order_item_state" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="id_oms_order_item_state" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
 
-        <column name="name" type="VARCHAR" size="255" required="true" />
+        <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="description" type="VARCHAR" size="255" required="false" default="NULL"/>
 
 
         <unique>
             <unique-column name="name"/>
         </unique>
-    </table>
+    <id-method-parameter value="spy_oms_order_item_state_pk_seq"/></table>
 
     <table name="spy_oms_order_item_state_history" phpName="SpyOmsOrderItemStateHistory">
-        <column name="id_oms_order_item_state_history" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
-        <column name="fk_sales_order_item" type="INTEGER" required="true" />
-        <column name="fk_oms_order_item_state" type="INTEGER" required="true" />
+        <column name="id_oms_order_item_state_history" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_sales_order_item" type="INTEGER" required="true"/>
+        <column name="fk_oms_order_item_state" type="INTEGER" required="true"/>
 
         <behavior name="timestampable"/>
 
@@ -77,15 +71,15 @@
         <foreign-key foreignTable="spy_oms_order_item_state" phpName="State" refPhpName="StateHistory">
             <reference local="fk_oms_order_item_state" foreign="id_oms_order_item_state"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_oms_order_item_state_history_pk_seq"/></table>
 
     <table name="spy_oms_event_timeout" phpName="SpyOmsEventTimeout">
-        <column name="id_oms_event_timeout" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
-        <column name="fk_sales_order_item" type="INTEGER" required="true" />
-        <column name="fk_oms_order_item_state" type="INTEGER" required="true" />
+        <column name="id_oms_event_timeout" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_sales_order_item" type="INTEGER" required="true"/>
+        <column name="fk_oms_order_item_state" type="INTEGER" required="true"/>
 
-        <column name="timeout" type="TIMESTAMP" required="true" />
-        <column name="event" type="VARCHAR" size="255" required="true" />
+        <column name="timeout" type="TIMESTAMP" required="true"/>
+        <column name="event" type="VARCHAR" size="255" required="true"/>
 
         <foreign-key foreignTable="spy_sales_order_item" phpName="OrderItem" refPhpName="EventTimeout">
             <reference local="fk_sales_order_item" foreign="id_sales_order_item"/>
@@ -102,9 +96,9 @@
         </unique>
 
         <index>
-            <index-column name="timeout" />
+            <index-column name="timeout"/>
         </index>
 
-    </table>
+    <id-method-parameter value="spy_oms_event_timeout_pk_seq"/></table>
 
 </database>

@@ -1,7 +1,4 @@
 <?php
-/**
- * (c) Spryker Systems GmbH copyright protected
- */
 
 namespace SprykerFeature\Zed\Product\Persistence\Propel;
 
@@ -20,4 +17,4 @@ use SprykerFeature\Zed\Product\Persistence\Propel\Base\SpyLocalizedAbstractProdu
 class SpyLocalizedAbstractProductAttributesQuery extends BaseSpyLocalizedAbstractProductAttributesQuery
 {
 
-} // SpyLocalizedAbstractProductAttributesQuery
+}

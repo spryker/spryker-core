@@ -28,6 +28,7 @@ class ReaderTest extends Test
     const DUMMY_TAX_RATE1_PERCENTAGE = 2.5;
     const DUMMY_TAX_RATE2_NAME = 'Regional';
     const DUMMY_TAX_RATE2_PERCENTAGE = 10;
+    const NON_EXISTENT_ID = 999999999;
 
     /**
      * @var TaxFacade
@@ -95,13 +96,13 @@ class ReaderTest extends Test
     public function testExceptionRaisedIfAttemptingToFetchNonExistentTaxRate()
     {
         $this->setExpectedException('SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException');
-        $this->taxFacade->getTaxSet(9999999999);
+        $this->taxFacade->getTaxSet(self::NON_EXISTENT_ID);
     }
 
     public function testExceptionRaisedIfAttemptingToFetchNonExistentTaxSet()
     {
         $this->setExpectedException('SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException');
-        $this->taxFacade->getTaxRate(9999999999);
+        $this->taxFacade->getTaxRate(self::NON_EXISTENT_ID);
     }
 
     private function loadFixtures()

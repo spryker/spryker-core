@@ -28,21 +28,71 @@ class CreateDatabaseConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->info('Create database');
-        $con = new \PDO(
-            'mysql:host='
-            . Config::get(SystemConfig::ZED_MYSQL_HOST)
-            . ';port=' . Config::get(SystemConfig::ZED_MYSQL_PORT),
-            Config::get(SystemConfig::ZED_MYSQL_USERNAME),
-            Config::get(SystemConfig::ZED_MYSQL_PASSWORD)
+        $this->info('Creating Database');
+
+        if (Config::get(SystemConfig::ZED_DB_ENGINE) === 'pgsql') {
+            $this->createPostgresDatabaseIfNotExists();
+        } else {
+            $this->createMysqlDatabaseIfNotExists();
+        }
+    }
+
+    /**
+     * @throws \Exception
+     * @todo no sudo, vagrant user is missing for pgsql
+     */
+    private function createPostgresDatabaseIfNotExists()
+    {
+        $databaseExists = $this->existsPostgresDatabase();
+        if (!$databaseExists) {
+            $createDatabaseCommand = 'sudo createdb '  . Config::get(SystemConfig::ZED_DB_DATABASE) . ' -E UTF8 -T template0';
+            $process = new Process($createDatabaseCommand);
+            $process->run();
+
+            if (!$process->isSuccessful()) {
+                throw new \RuntimeException($process->getErrorOutput());
+            }
+        }
+    }
+
+    /**
+     * @throws \Exception
+     * @return bool
+     *
+     * @todo no sudo, vagrant user is missing for pgsql
+     */
+    private function existsPostgresDatabase()
+    {
+        $databaseExistsCommand = 'echo -n "$(sudo psql -lqt | cut -d \| -f 1 | grep -w ' . Config::get(SystemConfig::ZED_DB_DATABASE) . ' | wc -l)"';
+        $process = new Process($databaseExistsCommand);
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            throw new \RuntimeException($process->getErrorOutput());
+        }
+
+        return $process->getOutput();
+    }
+
+    /**
+     * @throws \Exception
+     */
+    private function createMysqlDatabaseIfNotExists()
+    {
+        $connection = new \PDO(
+            Config::get(SystemConfig::ZED_DB_ENGINE)
+            . ':host='
+            . Config::get(SystemConfig::ZED_DB_HOST)
+            . ';port=' . Config::get(SystemConfig::ZED_DB_PORT),
+            Config::get(SystemConfig::ZED_DB_USERNAME),
+            Config::get(SystemConfig::ZED_DB_PASSWORD)
         );
 
-        $q = 'CREATE DATABASE IF NOT EXISTS ' . Config::get(SystemConfig::ZED_MYSQL_DATABASE) . ' CHARACTER SET "utf8"';
-        $con->exec($q);
+        $query = 'CREATE DATABASE IF NOT EXISTS ' . Config::get(SystemConfig::ZED_DB_DATABASE) . ' CHARACTER SET "utf8"';
+        $connection->exec($query);
     }
 
 }

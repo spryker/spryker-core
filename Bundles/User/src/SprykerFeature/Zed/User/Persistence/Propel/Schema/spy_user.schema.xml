@@ -1,12 +1,5 @@
 <?xml version="1.0"?>
-<database name="zed"
-          defaultIdMethod="native"
-          defaultPhpNamingMethod="underscore"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
-          namespace="SprykerFeature\Zed\User\Persistence\Propel"
-          namespaceAutoPackage="false"
-          package="vendor.spryker.spryker.Bundles.User.src.SprykerFeature.Zed.User.Persistence.Propel">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" defaultIdMethod="native" defaultPhpNamingMethod="underscore" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" namespace="SprykerFeature\Zed\User\Persistence\Propel" namespaceAutoPackage="false" package="vendor.spryker.spryker.Bundles.User.src.SprykerFeature.Zed.User.Persistence.Propel">
 
     <table name="spy_user" idMethod="native" phpName="SpyUser">
         <column name="id_user" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
@@ -14,12 +7,12 @@
         <column name="last_name" required="true" size="255" type="VARCHAR"/>
         <column name="username" required="true" size="45" type="VARCHAR"/>
         <column name="password" required="true" size="255" type="VARCHAR"/>
-        <column name="status" required="true" size="10" type="ENUM" valueSet="active,blocked,deleted" defaultValue="active" />
+        <column name="status" required="true" size="10" type="ENUM" valueSet="active,blocked,deleted" defaultValue="active"/>
         <unique>
             <unique-column name="username"/>
         </unique>
         <behavior name="timestampable"/>
         <behavior name="archivable"/>
-    </table>
+    <id-method-parameter value="spy_user_pk_seq"/></table>
 
 </database>

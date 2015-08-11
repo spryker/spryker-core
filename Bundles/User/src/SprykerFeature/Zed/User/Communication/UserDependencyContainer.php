@@ -57,7 +57,7 @@ class UserDependencyContainer extends AbstractCommunicationDependencyContainer
      *
      * @return mixed
      */
-    public function getUserGrid(Request $request)
+    public function createUserGrid(Request $request)
     {
         $queryContainer = $this->getQueryContainer();
         $users = $queryContainer->queryUsersAndGroup();

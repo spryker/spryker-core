@@ -1,18 +1,13 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          name="zed"
-          defaultIdMethod="native"
-          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
-          namespace="SprykerFeature\Zed\SearchPage\Persistence\Propel"
-          package="vendor.spryker.spryker.Bundles.SearchPage.src.SprykerFeature.Zed.SearchPage.Persistence.Propel">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" defaultIdMethod="native" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" namespace="SprykerFeature\Zed\SearchPage\Persistence\Propel" package="vendor.spryker.spryker.Bundles.SearchPage.src.SprykerFeature.Zed.SearchPage.Persistence.Propel">
 
     <table name="spy_search_page_element" phpName="SpySearchPageElement">
 
-        <column name="id_search_page_element" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="id_search_page_element" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="element_key" type="VARCHAR" required="true"/>
-        <column name="is_element_active" type="BOOLEAN" required="true" default="false" />
-        <column name="fk_search_document_attribute" type="INTEGER" required="true" />
-        <column name="fk_search_page_element_template" type="INTEGER" required="true" />
+        <column name="is_element_active" type="BOOLEAN" required="true" default="false"/>
+        <column name="fk_search_document_attribute" type="INTEGER" required="true"/>
+        <column name="fk_search_page_element_template" type="INTEGER" required="true"/>
 
         <foreign-key foreignTable="spy_search_document_attribute" phpName="DocumentAttribute">
             <reference foreign="id_search_document_attribute" local="fk_search_document_attribute"/>
@@ -26,19 +21,19 @@
             <unique-column name="element_key"/>
         </unique>
 
-    </table>
+    <id-method-parameter value="spy_search_page_element_pk_seq"/></table>
 
     <table name="spy_search_document_attribute" phpName="SpySearchDocumentAttribute">
 
         <column name="id_search_document_attribute" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="attribute_name" type="VARCHAR" required="true"/>
-        <column name="attribute_type" type="VARCHAR" required="true" />
+        <column name="attribute_type" type="VARCHAR" required="true"/>
 
         <unique>
             <unique-column name="attribute_name"/>
         </unique>
 
-    </table>
+    <id-method-parameter value="spy_search_document_attribute_pk_seq"/></table>
 
     <table name="spy_search_page_element_template" phpName="SpySearchPageElementTemplate">
 
@@ -49,6 +44,6 @@
             <unique-column name="template_name"/>
         </unique>
 
-    </table>
+    <id-method-parameter value="spy_search_page_element_template_pk_seq"/></table>
 
 </database>

@@ -1,30 +1,24 @@
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          name="zed"
-          defaultIdMethod="native"
-          defaultPhpNamingMethod="underscore"
-          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
-          identifierQuoting="true"
-          namespace="SprykerFeature\Zed\Wishlist\Persistence\Propel"
-          package="vendor.spryker.spryker.Bundles.Wishlist.src.SprykerFeature.Zed.Wishlist.Persistence.Propel">
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" defaultIdMethod="native" defaultPhpNamingMethod="underscore" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" identifierQuoting="true" namespace="SprykerFeature\Zed\Wishlist\Persistence\Propel" package="vendor.spryker.spryker.Bundles.Wishlist.src.SprykerFeature.Zed.Wishlist.Persistence.Propel">
 
     <table name="spy_wishlist" phpName="SpyWishlist">
         <column name="id_wishlist" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_customer" required="true" type="INTEGER" />
+        <column name="fk_customer" required="true" type="INTEGER"/>
         <unique>
             <unique-column name="fk_customer"/>
         </unique>
         <foreign-key foreignTable="spy_customer">
             <reference local="fk_customer" foreign="id_customer"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_wishlist_pk_seq"/></table>
 
     <table name="spy_wishlist_item" phpName="SpyWishlistItem">
         <column name="id_wishlist_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_product" required="false" type="INTEGER" />
-        <column name="fk_wishlist" required="true" type="INTEGER" />
-        <column name="quantity" required="true" type="INTEGER" />
-        <column name="added_at" required="true" type="TIMESTAMP" />
-        <column name="group_key" required="false" type="VARCHAR" />
+        <column name="fk_product" required="false" type="INTEGER"/>
+        <column name="fk_wishlist" required="true" type="INTEGER"/>
+        <column name="quantity" required="true" type="INTEGER"/>
+        <column name="added_at" required="true" type="TIMESTAMP"/>
+        <column name="group_key" required="false" type="VARCHAR"/>
 
         <foreign-key foreignTable="spy_wishlist" phpName="SpyWishlist">
             <reference foreign="id_wishlist" local="fk_wishlist"/>
@@ -34,11 +28,11 @@
             <reference foreign="id_product" local="fk_product"/>
         </foreign-key>
 
-        <column name="fk_abstract_product" required="true" type="INTEGER" />
+        <column name="fk_abstract_product" required="true" type="INTEGER"/>
         <foreign-key foreignTable="spy_abstract_product">
             <reference foreign="id_abstract_product" local="fk_abstract_product"/>
         </foreign-key>
 
-    </table>
+    <id-method-parameter value="spy_wishlist_item_pk_seq"/></table>
 
 </database>

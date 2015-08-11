@@ -101,15 +101,17 @@ class TranslationManager implements TranslationManagerInterface
      * @param LocaleTransfer $locale
      * @param string $glossaryKey
      * @param string $value
+     * @param bool $isActive
      *
      * @return TranslationTransfer
      */
-    private function createTranslationTransfer(LocaleTransfer $locale, $glossaryKey, $value)
+    private function createTranslationTransfer(LocaleTransfer $locale, $glossaryKey, $value, $isActive = true)
     {
         $translationTransfer = new TranslationTransfer();
         $translationTransfer->setValue($value);
         $translationTransfer->setFkGlossaryKey($glossaryKey);
         $translationTransfer->setFkLocale($locale->getIdLocale());
+        $translationTransfer->setIsActive($isActive);
 
         return $translationTransfer;
     }

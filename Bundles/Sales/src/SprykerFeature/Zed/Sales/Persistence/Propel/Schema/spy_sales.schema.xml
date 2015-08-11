@@ -1,14 +1,8 @@
 <?xml version="1.0"?>
-<database name="zed"
-          defaultIdMethod="native"
-          defaultPhpNamingMethod="underscore"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
-          namespace="SprykerFeature\Zed\Sales\Persistence\Propel"
-          package="vendor.spryker.spryker.Bundles.Sales.src.SprykerFeature.Zed.Sales.Persistence.Propel">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" defaultIdMethod="native" defaultPhpNamingMethod="underscore" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" namespace="SprykerFeature\Zed\Sales\Persistence\Propel" package="vendor.spryker.spryker.Bundles.Sales.src.SprykerFeature.Zed.Sales.Persistence.Propel">
 
     <table name="spy_sales_order_address" phpName="SpySalesOrderAddress">
-        <column name="id_sales_order_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="id_sales_order_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_country" type="INTEGER" required="true"/>
         <column name="fk_region" type="INTEGER"/>
 
@@ -38,15 +32,15 @@
         <foreign-key foreignTable="spy_region" phpName="Region" refPhpName="SalesOrderAddress">
             <reference local="fk_region" foreign="id_region"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_sales_order_address_pk_seq"/></table>
 
     <table name="spy_sales_order_address_history" phpName="SpySalesOrderAddressHistory">
-        <column name="id_sales_order_address_history" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="id_sales_order_address_history" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_country" type="INTEGER" required="true"/>
         <column name="fk_region" type="INTEGER"/>
         <column name="fk_sales_order_address" type="INTEGER" required="true"/>
 
-        <column name="is_billing" type="BOOLEAN" default="0" />
+        <column name="is_billing" type="BOOLEAN" default="0"/>
         <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr"/>
         <column name="first_name" required="true" size="100" type="VARCHAR"/>
         <column name="middle_name" required="false" size="100" type="VARCHAR"/>
@@ -75,10 +69,10 @@
         <foreign-key foreignTable="spy_region" phpName="Region" refPhpName="SalesOrderAddressHistory">
             <reference local="fk_region" foreign="id_region"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_sales_order_address_history_pk_seq"/></table>
 
     <table name="spy_sales_order" phpName="SpySalesOrder">
-        <column name="id_sales_order" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="id_sales_order" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order_address_billing" type="INTEGER" required="true"/>
         <column name="fk_sales_order_address_shipping" type="INTEGER" required="true"/>
 
@@ -102,16 +96,16 @@
         <unique>
             <unique-column name="order_reference"/>
         </unique>
-    </table>
+    <id-method-parameter value="spy_sales_order_pk_seq"/></table>
 
     <table name="spy_sales_order_item" phpName="SpySalesOrderItem">
-        <column name="id_sales_order_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="id_sales_order_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
         <column name="fk_oms_order_item_state" type="INTEGER" required="true"/>
         <column name="fk_oms_order_process" type="INTEGER" required="false"/>
         <column name="fk_sales_order_item_bundle" type="INTEGER" required="false"/>
 
-        <column name="last_state_change" type="TIMESTAMP" required="true" defaultExpr="CURRENT_TIMESTAMP" />
+        <column name="last_state_change" type="TIMESTAMP" required="true" defaultExpr="CURRENT_TIMESTAMP"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
         <column name="gross_price" type="INTEGER" required="true" description="/price for one unit including tax, without shipping, coupons/"/>
@@ -135,44 +129,44 @@
             <reference local="fk_sales_order_item_bundle" foreign="id_sales_order_item_bundle"/>
         </foreign-key>
         <index>
-        	<index-column name="sku" />
+        	<index-column name="sku"/>
         </index>
-    </table>
+    <id-method-parameter value="spy_sales_order_item_pk_seq"/></table>
 
     <table name="spy_sales_order_item_option" phpName="SpySalesOrderItemOption">
-        <column name="id_sales_order_item_option" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
-        <column name="fk_sales_order_item" type="INTEGER" required="true" />
-        <column name="label_option_type" type="VARCHAR" required="true" />
-        <column name="label_option_value" type="VARCHAR" required="true" />
-        <column name="gross_price" type="INTEGER" required="true" default="0" />
-        <column name="price_to_pay" type="INTEGER" required="true" default="0" />
-        <column name="tax_percentage" type="INTEGER" required="true" default="0" />
-        <column name="tax_amount" type="INTEGER" required="true" default="0" />
+        <column name="id_sales_order_item_option" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_sales_order_item" type="INTEGER" required="true"/>
+        <column name="label_option_type" type="VARCHAR" required="true"/>
+        <column name="label_option_value" type="VARCHAR" required="true"/>
+        <column name="gross_price" type="INTEGER" required="true" default="0"/>
+        <column name="price_to_pay" type="INTEGER" required="true" default="0"/>
+        <column name="tax_percentage" type="INTEGER" required="true" default="0"/>
+        <column name="tax_amount" type="INTEGER" required="true" default="0"/>
 
         <behavior name="timestampable"/>
 
         <foreign-key foreignTable="spy_sales_order_item" phpName="OrderItem" refPhpName="Option">
             <reference local="fk_sales_order_item" foreign="id_sales_order_item"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_sales_order_item_option_pk_seq"/></table>
 
     <table name="spy_sales_order_note" phpName="SpySalesOrderNote">
-        <column name="id_sales_order_note" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="id_sales_order_note" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
 
         <column name="message" type="VARCHAR" size="255" required="true"/>
         <column name="command" type="VARCHAR" size="255" required="true"/>
-        <column name="success" type="BOOLEAN" required="true" />
+        <column name="success" type="BOOLEAN" required="true"/>
 
         <behavior name="timestampable"/>
 
         <foreign-key foreignTable="spy_sales_order" phpName="Order" refPhpName="Note">
             <reference local="fk_sales_order" foreign="id_sales_order"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_sales_order_note_pk_seq"/></table>
 
     <table name="spy_sales_order_comment" phpName="SpySalesOrderComment">
-        <column name="id_sales_order_comment" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="id_sales_order_comment" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
 
         <column name="username" type="VARCHAR" required="false" default="NULL"/>
@@ -183,16 +177,16 @@
         <foreign-key foreignTable="spy_sales_order" phpName="Order" refPhpName="OrderComment">
             <reference local="fk_sales_order" foreign="id_sales_order"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_sales_order_comment_pk_seq"/></table>
 
     <table name="spy_sales_expense" phpName="SpySalesExpense">
         <column name="id_sales_expense" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="false" default="NULL"/>
         <column name="type" type="VARCHAR" size="150"/>
         <column name="name" type="VARCHAR" size="255"/>
-        <column name="gross_price" type="INTEGER" required="true" />
-        <column name="price_to_pay" type="INTEGER" required="true" />
-        <column name="tax_percentage" type="INTEGER" required="false" />
+        <column name="gross_price" type="INTEGER" required="true"/>
+        <column name="price_to_pay" type="INTEGER" required="true"/>
+        <column name="tax_percentage" type="INTEGER" required="false"/>
 
         <behavior name="timestampable"/>
 
@@ -203,10 +197,10 @@
             <unique-column name="fk_sales_order"/>
             <unique-column name="type"/>
         </unique>
-    </table>
+    <id-method-parameter value="spy_sales_expense_pk_seq"/></table>
 
     <table name="spy_sales_discount" phpName="SpySalesDiscount">
-        <column name="id_sales_discount" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="id_sales_discount" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" type="INTEGER" required="false"/>
         <column name="fk_sales_order_item" type="INTEGER" required="false"/>
         <column name="fk_sales_expense" type="INTEGER" required="false"/>
@@ -237,10 +231,10 @@
         <foreign-key foreignTable="spy_sales_order_item_option" phpName="Option" refPhpName="Discount">
             <reference local="fk_sales_order_item_option" foreign="id_sales_order_item_option"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_sales_discount_pk_seq"/></table>
 
     <table name="spy_sales_discount_code" phpName="SpySalesDiscountCode">
-        <column name="id_sales_discount_code" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="id_sales_discount_code" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_discount" type="INTEGER" required="true"/>
 
         <column name="code" type="VARCHAR" size="255" required="true"/>
@@ -254,42 +248,42 @@
         <foreign-key foreignTable="spy_sales_discount" phpName="Discount" refPhpName="DiscountCode">
             <reference local="fk_sales_discount" foreign="id_sales_discount"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_sales_discount_code_pk_seq"/></table>
 
     <table name="spy_sales_order_item_bundle" phpName="SpySalesOrderItemBundle">
-        <column name="id_sales_order_item_bundle" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="id_sales_order_item_bundle" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
         <column name="gross_price" type="INTEGER" required="true" description="/price for one unit including tax, without shipping, coupons/"/>
         <column name="price_to_pay" type="INTEGER" required="true" description="/value that the customer has to pay./"/>
         <column name="tax_percentage" type="DECIMAL" size="8" scale="4" required="false"/>
-        <column name="bundle_type" type="CHAR" sqlType="ENUM('NonSplitBundle','SplitBundle')" required="true" />
+        <column name="bundle_type" type="ENUM" valueSet="NonSplitBundle, SplitBundle" required="true"/>
         <behavior name="timestampable"/>
-    </table>
+    <id-method-parameter value="spy_sales_order_item_bundle_pk_seq"/></table>
 
 
     <table name="spy_sales_order_item_bundle_item" phpName="SpySalesOrderItemBundleItem">
-        <column name="id_sales_order_item_bundle_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
-        <column name="fk_sales_order_item_bundle" required="true" type="INTEGER" />
+        <column name="id_sales_order_item_bundle_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_sales_order_item_bundle" required="true" type="INTEGER"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
         <column name="gross_price" type="INTEGER" required="true"/>
         <column name="tax_percentage" type="DECIMAL" size="8" scale="4" required="false"/>
-        <column name="variety" type="CHAR" sqlType="ENUM('Single','Config','Simple','Bundle')" required="true" />
+        <column name="variety" type="ENUM" valueSet="Single, Config, Simple, Bundle" required="true"/>
         <behavior name="timestampable"/>
         <foreign-key foreignTable="spy_sales_order_item_bundle" phpName="SalesOrderItemBundle" refPhpName="SalesOrderItemBundleItem">
             <reference local="fk_sales_order_item_bundle" foreign="id_sales_order_item_bundle"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_sales_order_item_bundle_item_pk_seq"/></table>
 
     <table name="spy_sales_order_number_sequence" phpName="SpySalesOrderNumberSequence">
-        <column name="id_sales_order_number_sequence" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
-        <column name="name" type="VARCHAR" size="255" required="true" />
-        <column name="current_id" type="INTEGER" required="true" />
+        <column name="id_sales_order_number_sequence" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true"/>
+        <column name="current_id" type="INTEGER" required="true"/>
         <unique>
-            <unique-column name="name" />
+            <unique-column name="name"/>
         </unique>
-    </table>
+    <id-method-parameter value="spy_sales_order_number_sequence_pk_seq"/></table>
 
 
 </database>

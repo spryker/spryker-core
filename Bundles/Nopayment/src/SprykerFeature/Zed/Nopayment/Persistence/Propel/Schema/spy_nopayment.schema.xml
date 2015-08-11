@@ -1,19 +1,13 @@
 <?xml version="1.0"?>
-<database name="zed"
-          defaultIdMethod="native"
-          defaultPhpNamingMethod="underscore"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
-          namespace="SprykerFeature\Zed\Nopayment\Persistence\Propel"
-          package="vendor.spryker.spryker.Bundles.Nopayment.src.SprykerFeature.Zed.Nopayment.Persistence.Propel">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" defaultIdMethod="native" defaultPhpNamingMethod="underscore" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" namespace="SprykerFeature\Zed\Nopayment\Persistence\Propel" package="vendor.spryker.spryker.Bundles.Nopayment.src.SprykerFeature.Zed.Nopayment.Persistence.Propel">
 
     <table name="spy_nopayment_paid" phpName="SpyNopaymentPaid">
-        <column name="id_nopayment_paid" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
-        <column name="fk_sales_order_item" type="INTEGER" required="true" />
-        <behavior name="timestampable" />
+        <column name="id_nopayment_paid" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_sales_order_item" type="INTEGER" required="true"/>
+        <behavior name="timestampable"/>
         <foreign-key foreignTable="spy_sales_order_item" phpName="OrderItem" refPhpName="Nopayment">
-            <reference local="fk_sales_order_item" foreign="id_sales_order_item" />
+            <reference local="fk_sales_order_item" foreign="id_sales_order_item"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_nopayment_paid_pk_seq"/></table>
 
 </database>

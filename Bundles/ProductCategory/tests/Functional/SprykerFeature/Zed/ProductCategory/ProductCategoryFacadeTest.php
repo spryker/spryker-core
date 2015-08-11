@@ -84,7 +84,6 @@ class ProductCategoryFacadeTest extends AbstractFunctionalTest
      */
     public function testCreateAttributeTypeCreatesAndReturnsId()
     {
-        $this->eraseUrlsAndCategories();
         $abstractSku = 'AnAbstractTestProduct';
         $concreteSku = 'ATestProduct';
         $categoryName = 'ATestCategory';
@@ -107,6 +106,7 @@ class ProductCategoryFacadeTest extends AbstractFunctionalTest
         $concreteProductTransfer->setSku($concreteSku);
         $concreteProductTransfer->setAttributes([]);
         $concreteProductTransfer->addLocalizedAttributes($localizedAttributes);
+        $concreteProductTransfer->setIsActive(true);
         $this->productFacade->createConcreteProduct($concreteProductTransfer, $idAbstractProduct);
 
         $categoryTransfer = new CategoryTransfer();
@@ -126,17 +126,6 @@ class ProductCategoryFacadeTest extends AbstractFunctionalTest
                 $locale
             )
         );
-    }
-
-    protected function eraseUrlsAndCategories()
-    {
-        Propel::getConnection()->query('SET foreign_key_checks = 0;');
-        SpyUrlQuery::create()->deleteAll();
-        SpyCategoryClosureTableQuery::create()->deleteAll();
-        SpyCategoryAttributeQuery::create()->deleteAll();
-        SpyCategoryNodeQuery::create()->deleteAll();
-        SpyCategoryQuery::create()->deleteAll();
-        Propel::getConnection()->query('SET foreign_key_checks = 1;');
     }
 
 }
