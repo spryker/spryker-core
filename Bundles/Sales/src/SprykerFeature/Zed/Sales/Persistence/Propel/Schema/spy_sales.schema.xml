@@ -263,7 +263,7 @@
         <column name="gross_price" type="INTEGER" required="true" description="/price for one unit including tax, without shipping, coupons/"/>
         <column name="price_to_pay" type="INTEGER" required="true" description="/value that the customer has to pay./"/>
         <column name="tax_percentage" type="DECIMAL" size="8" scale="4" required="false"/>
-        <column name="bundle_type" type="CHAR" sqlType="ENUM('NonSplitBundle','SplitBundle')" required="true" />
+        <column name="bundle_type" type="ENUM" valueSet="NonSplitBundle, SplitBundle" required="true" />
         <behavior name="timestampable"/>
     </table>
 
@@ -275,7 +275,7 @@
         <column name="sku" type="VARCHAR" size="255" required="true"/>
         <column name="gross_price" type="INTEGER" required="true"/>
         <column name="tax_percentage" type="DECIMAL" size="8" scale="4" required="false"/>
-        <column name="variety" type="CHAR" sqlType="ENUM('Single','Config','Simple','Bundle')" required="true" />
+        <column name="variety" type="ENUM" valueSet="Single, Config, Simple, Bundle" required="true" />
         <behavior name="timestampable"/>
         <foreign-key foreignTable="spy_sales_order_item_bundle" phpName="SalesOrderItemBundle" refPhpName="SalesOrderItemBundleItem">
             <reference local="fk_sales_order_item_bundle" foreign="id_sales_order_item_bundle"/>
