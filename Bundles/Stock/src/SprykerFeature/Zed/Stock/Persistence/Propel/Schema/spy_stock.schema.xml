@@ -1,40 +1,34 @@
 <?xml version="1.0"?>
-<database name="zed"
-          defaultIdMethod="native"
-          defaultPhpNamingMethod="underscore"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
-          namespace="SprykerFeature\Zed\Stock\Persistence\Propel"
-          package="vendor.spryker.spryker.Bundles.Stock.src.SprykerFeature.Zed.Stock.Persistence.Propel">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" defaultIdMethod="native" defaultPhpNamingMethod="underscore" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" namespace="SprykerFeature\Zed\Stock\Persistence\Propel" package="vendor.spryker.spryker.Bundles.Stock.src.SprykerFeature.Zed.Stock.Persistence.Propel">
 
     <table name="spy_stock" phpName="SpyStock">
-        <column name="id_stock" type="INTEGER" primaryKey="true" autoIncrement="true" />
-        <column name="name" type="VARCHAR" size="255" required="true" />
+        <column name="id_stock" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true"/>
 
         <unique>
-            <unique-column name="name" />
+            <unique-column name="name"/>
         </unique>
-    </table>
+    <id-method-parameter value="spy_stock_pk_seq"/></table>
 
     <table name="spy_stock_product" phpName="SpyStockProduct">
-        <column name="id_stock_product" type="INTEGER" required="true" primaryKey="true" autoIncrement="true" />
-        <column name="fk_product" type="INTEGER" required="true" />
-        <column name="fk_stock" type="INTEGER" required="true" />
-        <column name="quantity" type="INTEGER" defaultValue="0" />
-        <column name="is_never_out_of_stock" type="BOOLEAN" defaultValue="false" />
+        <column name="id_stock_product" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_product" type="INTEGER" required="true"/>
+        <column name="fk_stock" type="INTEGER" required="true"/>
+        <column name="quantity" type="INTEGER" defaultValue="0"/>
+        <column name="is_never_out_of_stock" type="BOOLEAN" defaultValue="false"/>
 
         <foreign-key foreignTable="spy_product" phpName="SpyProduct" refPhpName="StockProduct">
-            <reference local="fk_product" foreign="id_product" />
+            <reference local="fk_product" foreign="id_product"/>
         </foreign-key>
 
         <foreign-key foreignTable="spy_stock" phpName="Stock" refPhpName="StockProduct">
-            <reference local="fk_stock" foreign="id_stock" />
+            <reference local="fk_stock" foreign="id_stock"/>
         </foreign-key>
 
         <unique>
-            <unique-column name="fk_stock" />
-            <unique-column name="fk_product" />
+            <unique-column name="fk_stock"/>
+            <unique-column name="fk_product"/>
         </unique>
-    </table>
+    <id-method-parameter value="spy_stock_product_pk_seq"/></table>
 
 </database>

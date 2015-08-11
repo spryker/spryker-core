@@ -1,16 +1,10 @@
 <?xml version="1.0"?>
-<database name="zed"
-          defaultIdMethod="native"
-          defaultPhpNamingMethod="underscore"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
-          namespace="SprykerFeature\Zed\Customer\Persistence\Propel"
-          package="vendor.spryker.spryker.Bundles.Customer.src.SprykerFeature.Zed.Customer.Persistence.Propel">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" defaultIdMethod="native" defaultPhpNamingMethod="underscore" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" namespace="SprykerFeature\Zed\Customer\Persistence\Propel" package="vendor.spryker.spryker.Bundles.Customer.src.SprykerFeature.Zed.Customer.Persistence.Propel">
 
 
     <table name="spy_customer" idMethod="native" phpName="SpyCustomer">
-        <column name="id_customer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
-        <column name="customer_reference" required="true" type="VARCHAR" size="255" />
+        <column name="id_customer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="customer_reference" required="true" type="VARCHAR" size="255"/>
         <column name="email" required="true" size="255" type="VARCHAR"/>
         <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr"/>
         <column name="first_name" size="100" type="VARCHAR"/>
@@ -18,12 +12,12 @@
         <column name="company" size="100" type="VARCHAR"/>
         <column name="gender" type="ENUM" valueSet="Male, Female"/>
         <column name="date_of_birth" type="DATE" default="NULL"/>
-        <column name="password" default="null" size="255" type="VARCHAR" />
+        <column name="password" default="null" size="255" type="VARCHAR"/>
         <column name="restore_password_key" size="150" type="VARCHAR" default="NULL"/>
         <column name="restore_password_date" type="TIMESTAMP" default="NULL"/>
-        <column name="registered" type="DATE" default="NULL" />
+        <column name="registered" type="DATE" default="NULL"/>
         <column name="registration_key" size="150" type="VARCHAR" default="NULL"/>
-        <column name="default_billing_address" type="INTEGER" />
+        <column name="default_billing_address" type="INTEGER"/>
         <column name="default_shipping_address" type="INTEGER"/>
         <behavior name="timestampable"/>
         <behavior name="archivable"/>
@@ -36,13 +30,13 @@
         <foreign-key foreignTable="spy_customer_address" phpName="ShippingAddress" refPhpName="CustomerShippingAddress">
             <reference foreign="id_customer_address" local="default_shipping_address"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_customer_pk_seq"/></table>
 
     <table name="spy_customer_address" idMethod="native" phpName="SpyCustomerAddress">
-        <column name="id_customer_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="id_customer_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_customer" required="true" type="INTEGER"/>
         <column name="fk_country" type="INTEGER" required="true"/>
-        <column name="fk_region" type="INTEGER" />
+        <column name="fk_region" type="INTEGER"/>
 
         <column name="salutation" type="ENUM" valueSet="Mr, Mrs, Dr, "/>
         <column name="first_name" required="true" size="100" type="VARCHAR"/>
@@ -73,14 +67,14 @@
         <behavior name="timestampable"/>
         <behavior name="archivable"/>
 
-    </table>
+    <id-method-parameter value="spy_customer_address_pk_seq"/></table>
 
     <table name="spy_customer_number_sequence" phpName="SpyCustomerNumberSequence">
-        <column name="id_customer_number_sequence" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
-        <column name="name" type="VARCHAR" size="255" required="true" />
-        <column name="current_id" type="INTEGER" required="true" />
+        <column name="id_customer_number_sequence" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true"/>
+        <column name="current_id" type="INTEGER" required="true"/>
         <unique>
-            <unique-column name="name" />
+            <unique-column name="name"/>
         </unique>
-    </table>
+    <id-method-parameter value="spy_customer_number_sequence_pk_seq"/></table>
 </database>

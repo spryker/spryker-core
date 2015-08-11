@@ -1,17 +1,10 @@
 <?xml version="1.0"?>
-<database name="zed"
-          namespace="SprykerFeature\Zed\Distributor\Persistence\Propel"
-          namespaceAutoPackage="false"
-          package="vendor.spryker.spryker.Bundles.Distributor.src.SprykerFeature.Zed.Distributor.Persistence.Propel"
-          defaultIdMethod="native"
-          defaultPhpNamingMethod="underscore"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="SprykerFeature\Zed\Distributor\Persistence\Propel" namespaceAutoPackage="false" package="vendor.spryker.spryker.Bundles.Distributor.src.SprykerFeature.Zed.Distributor.Persistence.Propel" defaultIdMethod="native" defaultPhpNamingMethod="underscore" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd">
 
     <table name="spy_distributor_item" phpName="SpyDistributorItem">
         <column name="id_distributor_item" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="touched" type="TIMESTAMP" required="true" />
-        <column name="fk_item_type" type="integer" primaryKey="true" />
+        <column name="touched" type="TIMESTAMP" required="true"/>
+        <column name="fk_item_type" type="integer" primaryKey="true"/>
 
         <foreign-key foreignTable="spy_distributor_item_type">
             <reference local="fk_item_type" foreign="id_distributor_item_type" phpName="Type" refPhpName="Item"/>
@@ -21,21 +14,21 @@
             <index-column name="touched"/>
         </index>
 
-    </table>
+    <id-method-parameter value="spy_distributor_item_pk_seq"/></table>
 
     <table name="spy_distributor_receiver" phpName="SpyDistributorReceiver">
-        <column name="id_distributor_receiver" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="id_distributor_receiver" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="receiver_key" type="VARCHAR" size="255" required="true"/>
 
         <unique>
             <unique-column name="receiver_key"/>
         </unique>
 
-    </table>
+    <id-method-parameter value="spy_distributor_receiver_pk_seq"/></table>
 
     <table name="spy_distributor_item_type" phpName="SpyDistributorItemType">
         <column name="id_distributor_item_type" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="type_key" type="VARCHAR" size="255" required="true" />
+        <column name="type_key" type="VARCHAR" size="255" required="true"/>
         <column name="last_distribution" required="true" type="TIMESTAMP"/>
 
         <unique>
@@ -46,6 +39,6 @@
             <index-column name="last_distribution"/>
         </index>
 
-    </table>
+    <id-method-parameter value="spy_distributor_item_type_pk_seq"/></table>
 
 </database>

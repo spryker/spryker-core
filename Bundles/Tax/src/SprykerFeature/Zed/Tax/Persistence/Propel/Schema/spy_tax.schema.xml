@@ -1,33 +1,27 @@
 <?xml version="1.0"?>
-<database name="zed"
-          defaultIdMethod="native"
-          defaultPhpNamingMethod="underscore"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
-          namespace="SprykerFeature\Zed\Tax\Persistence\Propel"
-          package="vendor.spryker.spryker.Bundles.Tax.src.SprykerFeature.Zed.Tax.Persistence.Propel">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" defaultIdMethod="native" defaultPhpNamingMethod="underscore" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" namespace="SprykerFeature\Zed\Tax\Persistence\Propel" package="vendor.spryker.spryker.Bundles.Tax.src.SprykerFeature.Zed.Tax.Persistence.Propel">
 
     <table name="spy_tax_set" idMethod="native" allowPkInsert="true" phpName="SpyTaxSet">
-        <column name="id_tax_set" type="INTEGER" primaryKey="true" autoIncrement="true" />
-        <column name="name" type="VARCHAR" size="255" required="true" />
-    </table>
+        <column name="id_tax_set" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true"/>
+    <id-method-parameter value="spy_tax_set_pk_seq"/></table>
 
     <table name="spy_tax_rate" idMethod="native" allowPkInsert="true" phpName="SpyTaxRate">
-        <column name="id_tax_rate" type="INTEGER" primaryKey="true" autoIncrement="true" />
-        <column name="name" type="VARCHAR" size="255" required="true" />
-        <column name="rate" type="FLOAT" size="4" scale="2" required="true" />
-    </table>
+        <column name="id_tax_rate" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true"/>
+        <column name="rate" type="FLOAT" size="4" scale="2" required="true"/>
+    <id-method-parameter value="spy_tax_rate_pk_seq"/></table>
 
     <table name="spy_tax_set_tax" isCrossRef="true">
-        <column name="fk_tax_set" type="integer" primaryKey="true" />
-        <column name="fk_tax_rate" type="integer" primaryKey="true" />
+        <column name="fk_tax_set" type="integer" primaryKey="true"/>
+        <column name="fk_tax_rate" type="integer" primaryKey="true"/>
 
         <foreign-key foreignTable="spy_tax_set" onDelete="CASCADE">
-            <reference local="fk_tax_set" foreign="id_tax_set" />
+            <reference local="fk_tax_set" foreign="id_tax_set"/>
         </foreign-key>
 
         <foreign-key foreignTable="spy_tax_rate">
-            <reference local="fk_tax_rate" foreign="id_tax_rate" />
+            <reference local="fk_tax_rate" foreign="id_tax_rate"/>
         </foreign-key>
     </table>
 

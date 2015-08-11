@@ -1,17 +1,12 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          name="zed"
-          defaultIdMethod="native"
-          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
-          namespace="SprykerEngine\Zed\Touch\Persistence\Propel"
-          package="vendor.spryker.spryker.Bundles.Touch.src.SprykerEngine.Zed.Touch.Persistence.Propel">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" defaultIdMethod="native" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" namespace="SprykerEngine\Zed\Touch\Persistence\Propel" package="vendor.spryker.spryker.Bundles.Touch.src.SprykerEngine.Zed.Touch.Persistence.Propel">
 
     <table name="spy_touch" phpName="SpyTouch">
         <column name="id_touch" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="item_type" type="VARCHAR" size="255" required="true" />
-        <column name="item_event" type="ENUM" valueSet="active, inactive, deleted" required="true" />
-        <column name="item_id" type="INTEGER" required="true" />
-        <column name="touched" type="TIMESTAMP" required="true" />
+        <column name="item_type" type="VARCHAR" size="255" required="true"/>
+        <column name="item_event" type="ENUM" valueSet="active, inactive, deleted" required="true"/>
+        <column name="item_id" type="INTEGER" required="true"/>
+        <column name="touched" type="TIMESTAMP" required="true"/>
         <unique>
             <unique-column name="item_id"/>
             <unique-column name="item_type"/>
@@ -28,5 +23,5 @@
         <index>
             <index-column name="item_event"/>
         </index>
-    </table>
+    <id-method-parameter value="spy_touch_pk_seq"/></table>
 </database>

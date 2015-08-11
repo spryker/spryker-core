@@ -1,26 +1,20 @@
 <?xml version="1.0"?>
-<database name="zed"
-          defaultIdMethod="native"
-          defaultPhpNamingMethod="underscore"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
-          namespace="SprykerFeature\Zed\Category\Persistence\Propel"
-          package="vendor.spryker.spryker.Bundles.Category.src.SprykerFeature.Zed.Category.Persistence.Propel">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" defaultIdMethod="native" defaultPhpNamingMethod="underscore" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" namespace="SprykerFeature\Zed\Category\Persistence\Propel" package="vendor.spryker.spryker.Bundles.Category.src.SprykerFeature.Zed.Category.Persistence.Propel">
 
     <table name="spy_category" idMethod="native" phpName="SpyCategory">
-        <column name="id_category" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
-        <column name="is_active" default="true" type="BOOLEAN" />
-    </table>
+        <column name="id_category" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="is_active" default="true" type="BOOLEAN"/>
+    <id-method-parameter value="spy_category_pk_seq"/></table>
 
     <table name="spy_category_attribute" idMethod="native" phpName="SpyCategoryAttribute">
-        <column name="id_category_attribute" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
-        <column name="fk_category" required="true" type="INTEGER" />
-        <column name="name" type="VARCHAR" size="255" required="true" />
-        <column name="fk_locale" required="true" type="INTEGER" />
-        <column name="meta_title" required="false" type="LONGVARCHAR" />
-        <column name="meta_description" required="false" type="LONGVARCHAR" />
-        <column name="meta_keywords" required="false" type="LONGVARCHAR" />
-        <column name="category_image_name" required="false" type="VARCHAR" size="255" />
+        <column name="id_category_attribute" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_category" required="true" type="INTEGER"/>
+        <column name="name" type="VARCHAR" size="255" required="true"/>
+        <column name="fk_locale" required="true" type="INTEGER"/>
+        <column name="meta_title" required="false" type="LONGVARCHAR"/>
+        <column name="meta_description" required="false" type="LONGVARCHAR"/>
+        <column name="meta_keywords" required="false" type="LONGVARCHAR"/>
+        <column name="category_image_name" required="false" type="VARCHAR" size="255"/>
 
         <behavior name="timestampable"/>
 
@@ -31,13 +25,13 @@
         <foreign-key foreignTable="spy_category" phpName="Category" refPhpName="Attribute">
             <reference foreign="id_category" local="fk_category"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_category_attribute_pk_seq"/></table>
 
     <table name="spy_category_node" idMethod="native" phpName="SpyCategoryNode">
-        <column name="id_category_node" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
-        <column name="fk_category" required="true" type="INTEGER" />
-        <column name="fk_parent_category_node" required="false" type="INTEGER" default="NULL" />
-        <column name="is_root" type="BOOLEAN" default="false" />
+        <column name="id_category_node" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_category" required="true" type="INTEGER"/>
+        <column name="fk_parent_category_node" required="false" type="INTEGER" default="NULL"/>
+        <column name="is_root" type="BOOLEAN" default="false"/>
 
         <foreign-key foreignTable="spy_category_node" phpName="ParentCategoryNode" refPhpName="Node">
             <reference foreign="id_category_node" local="fk_parent_category_node"/>
@@ -47,13 +41,13 @@
             <reference foreign="id_category" local="fk_category"/>
         </foreign-key>
 
-    </table>
+    <id-method-parameter value="spy_category_node_pk_seq"/></table>
 
     <table name="spy_category_closure_table" idMethod="native" phpName="SpyCategoryClosureTable">
-        <column name="id_category_closure_table" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
-        <column name="fk_category_node" required="true" type="INTEGER" />
-        <column name="fk_category_node_descendant" required="true" type="INTEGER" />
-        <column name="depth" required="true" type="INTEGER" />
+        <column name="id_category_closure_table" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_category_node" required="true" type="INTEGER"/>
+        <column name="fk_category_node_descendant" required="true" type="INTEGER"/>
+        <column name="depth" required="true" type="INTEGER"/>
 
         <foreign-key foreignTable="spy_category_node" phpName="Node" refPhpName="ClosureTable">
             <reference foreign="id_category_node" local="fk_category_node"/>
@@ -62,5 +56,5 @@
         <foreign-key foreignTable="spy_category_node" phpName="DescendantNode" refPhpName="Descendant">
             <reference foreign="id_category_node" local="fk_category_node_descendant"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_category_closure_table_pk_seq"/></table>
 </database>
