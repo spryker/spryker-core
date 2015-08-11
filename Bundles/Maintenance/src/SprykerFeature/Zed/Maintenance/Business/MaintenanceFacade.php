@@ -65,6 +65,7 @@ class MaintenanceFacade extends AbstractFacade
     }
 
     /**
+     * @todo move this to propel bundle
      * @return bool
      */
     public function cleanPropelMigration()
