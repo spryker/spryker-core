@@ -7,6 +7,9 @@
 namespace Functional\SprykerFeature\Zed\Cms;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\CmsTemplateTransfer;
+use Generated\Shared\Transfer\PageKeyMappingTransfer;
+use Generated\Shared\Transfer\PageTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Container;
@@ -99,8 +102,9 @@ class CmsFacadeTest extends Test
 
         $template = $this->cmsFacade->createTemplate('AUsedTemplateName', 'AUsedTemplatePath');
 
-        $page = new \Generated\Shared\Transfer\PageTransfer();
+        $page = new PageTransfer();
         $page->setFkTemplate($template->getIdCmsTemplate());
+        $page->setIsActive(true);
 
         $pageCountBeforeCreation = $pageQuery->count();
         $page = $this->cmsFacade->savePage($page);
@@ -119,18 +123,19 @@ class CmsFacadeTest extends Test
         $template1 = $this->cmsFacade->createTemplate('AnotherUsedTemplateName', 'AnotherUsedTemplatePath');
         $template2 = $this->cmsFacade->createTemplate('YetAnotherUsedTemplateName', 'YetAnotherUsedTemplatePath');
 
-        $page = new \Generated\Shared\Transfer\PageTransfer();
+        $page = new PageTransfer();
         $page->setFkTemplate($template1->getIdCmsTemplate());
+        $page->setIsActive(true);
 
         $page = $this->cmsFacade->savePage($page);
 
-        $pageQuery = $this->cmsQueryContainer->queryPageById($page->getIdCmsPage());
-        $this->assertEquals($template1->getIdCmsTemplate(), $pageQuery->findOne()->getFkTemplate());
+        $pageEntity = $this->cmsQueryContainer->queryPageById($page->getIdCmsPage())->findOne();
+        $this->assertEquals($template1->getIdCmsTemplate(), $pageEntity->getFkTemplate());
 
         $page->setFkTemplate($template2->getIdCmsTemplate());
         $this->cmsFacade->savePage($page);
 
-        $this->assertEquals($template2->getIdCmsTemplate(), $pageQuery->findOne()->getFkTemplate());
+        $this->assertEquals($template2->getIdCmsTemplate(), $pageEntity->getFkTemplate());
     }
 
     /**
@@ -138,7 +143,7 @@ class CmsFacadeTest extends Test
      */
     public function testSaveTemplateInsertsAndReturnsSomethingOnCreate()
     {
-        $template = new \Generated\Shared\Transfer\CmsTemplateTransfer();
+        $template = new CmsTemplateTransfer();
         $template->setTemplateName('WhatARandomName');
         $template->setTemplatePath('WhatARandomPath');
 
@@ -158,7 +163,7 @@ class CmsFacadeTest extends Test
      */
     public function testSaveTemplateUpdatesSomething()
     {
-        $template = new \Generated\Shared\Transfer\CmsTemplateTransfer();
+        $template = new CmsTemplateTransfer();
         $template->setTemplateName('WhatARandomName');
         $template->setTemplatePath('WhatARandomPath2');
         $template = $this->cmsFacade->saveTemplate($template);
@@ -183,11 +188,12 @@ class CmsFacadeTest extends Test
         $glossaryKeyId = $this->glossaryFacade->createKey('AHopefullyNotYetExistingKey');
         $template = $this->cmsFacade->createTemplate('ANotExistingTemplateName', 'ANotYetExistingTemplatePath');
 
-        $page = new \Generated\Shared\Transfer\PageTransfer();
+        $page = new PageTransfer();
         $page->setFkTemplate($template->getIdCmsTemplate());
+        $page->setIsActive(true);
         $page = $this->cmsFacade->savePage($page);
 
-        $pageKeyMapping = new \Generated\Shared\Transfer\PageKeyMappingTransfer();
+        $pageKeyMapping = new PageKeyMappingTransfer();
         $pageKeyMapping->setFkGlossaryKey($glossaryKeyId);
         $pageKeyMapping->setFkPage($page->getIdCmsPage());
         $pageKeyMapping->setPlaceholder('SomePlaceholderName');
@@ -210,11 +216,12 @@ class CmsFacadeTest extends Test
         $glossaryKeyId2 = $this->glossaryFacade->createKey('AHopefullyNotYetExistingKey3');
         $template = $this->cmsFacade->createTemplate('ANotExistingTemplateName2', 'ANotYetExistingTemplatePath2');
 
-        $page = new \Generated\Shared\Transfer\PageTransfer();
+        $page = new PageTransfer();
         $page->setFkTemplate($template->getIdCmsTemplate());
+        $page->setIsActive(true);
         $page = $this->cmsFacade->savePage($page);
 
-        $pageKeyMapping = new \Generated\Shared\Transfer\PageKeyMappingTransfer();
+        $pageKeyMapping = new PageKeyMappingTransfer();
         $pageKeyMapping->setFkGlossaryKey($glossaryKeyId1);
         $pageKeyMapping->setFkPage($page->getIdCmsPage());
         $pageKeyMapping->setPlaceholder('SomePlaceholderName');
@@ -241,8 +248,9 @@ class CmsFacadeTest extends Test
 
         $template = $this->cmsFacade->createTemplate('APlaceholderTemplate', 'APlaceholderTemplatePath');
 
-        $page = new \Generated\Shared\Transfer\PageTransfer();
+        $page = new PageTransfer();
         $page->setFkTemplate($template->getIdCmsTemplate());
+        $page->setIsActive(true);
 
         $page = $this->cmsFacade->savePage($page);
 
@@ -267,8 +275,9 @@ class CmsFacadeTest extends Test
     {
         $template = $this->cmsFacade->createTemplate('APlaceholderTemplate2', 'APlaceholderTemplatePath2');
 
-        $page = new \Generated\Shared\Transfer\PageTransfer();
+        $page = new PageTransfer();
         $page->setFkTemplate($template->getIdCmsTemplate());
+        $page->setIsActive(true);
 
         $page = $this->cmsFacade->savePage($page);
         $this->cmsFacade->addPlaceholderText($page, 'Placeholder1', 'A Placeholder Translation');
