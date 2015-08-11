@@ -8,8 +8,8 @@ namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerAddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
+use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method CustomerFacade getFacade()
@@ -70,12 +70,31 @@ class GatewayController extends AbstractGatewayController
      */
     public function deleteAction(CustomerTransfer $customerTransfer)
     {
-        $success = $this->getFacade()
+        $result = $this->getFacade()
             ->deleteCustomer($customerTransfer)
         ;
-        $this->setSuccess($success);
+        $this->setSuccess($result);
 
         return;
+    }
+
+    /**
+     * @param CustomerTransfer $customerTransfer
+     */
+    public function loginAction(CustomerTransfer $customerTransfer)
+    {
+        $isLoggedIn = $this->getFacade()
+            ->loginCustomer($customerTransfer)
+        ;
+
+        $result = new CustomerTransfer();
+        if (true === $isLoggedIn) {
+            $result = $this->getFacade()->getCustomer($customerTransfer);
+        }
+
+        $this->setSuccess($isLoggedIn);
+
+        return $result;
     }
 
     /**
@@ -85,9 +104,11 @@ class GatewayController extends AbstractGatewayController
      */
     public function customerAction(CustomerTransfer $customerTransfer)
     {
-        return $this->getFacade()
+        $result = $this->getFacade()
             ->getCustomer($customerTransfer)
-            ;
+        ;
+
+        return $result;
     }
 
     /**
@@ -176,7 +197,9 @@ class GatewayController extends AbstractGatewayController
      */
     public function defaultBillingAddressAction(CustomerAddressTransfer $addressTransfer)
     {
-        $success = $this->getFacade()->setDefaultBillingAddress($addressTransfer);
+        $success = $this->getFacade()
+            ->setDefaultBillingAddress($addressTransfer)
+        ;
         $this->setSuccess($success);
 
         return $addressTransfer;
@@ -189,7 +212,9 @@ class GatewayController extends AbstractGatewayController
      */
     public function defaultShippingAddressAction(CustomerAddressTransfer $addressTransfer)
     {
-        $success = $this->getFacade()->setDefaultShippingAddress($addressTransfer);
+        $success = $this->getFacade()
+            ->setDefaultShippingAddress($addressTransfer)
+        ;
         $this->setSuccess($success);
 
         return $addressTransfer;

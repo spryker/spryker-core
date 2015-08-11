@@ -12,6 +12,12 @@ use SprykerFeature\Client\ZedRequest\Service\Client\Response;
 
 interface CustomerStubInterface
 {
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return CustomerTransfer
+     */
+    public function login(CustomerInterface $customerTransfer);
 
     /**
      * @param CustomerInterface $customerTransfer
