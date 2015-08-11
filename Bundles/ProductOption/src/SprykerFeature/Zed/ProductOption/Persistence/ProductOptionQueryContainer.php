@@ -415,13 +415,13 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         $sql =
             'SELECT
-            fk_product_option_value_usage_b AS valueUsageId,
+            fk_product_option_value_usage_b AS "valueUsageId",
             operator
             FROM spy_product_option_value_usage_constraint AS constraintA
             WHERE constraintA.fk_product_option_value_usage_a = :idValueUsage
             UNION ALL
             SELECT
-            fk_product_option_value_usage_a AS valueUsageId,
+            fk_product_option_value_usage_a AS "valueUsageId",
             operator
             FROM spy_product_option_value_usage_constraint AS constraintB
             WHERE constraintB.fk_product_option_value_usage_b = :idValueUsage
