@@ -28,8 +28,6 @@ class CreateDatabaseConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     *
-     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -79,6 +77,9 @@ class CreateDatabaseConsole extends Console
         return $process->getOutput();
     }
 
+    /**
+     * @throws \Exception
+     */
     private function createMysqlDatabaseIfNotExists()
     {
         $connection = new \PDO(
