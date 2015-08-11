@@ -25,7 +25,7 @@ use Symfony\Component\HttpFoundation\Request;
 class GlossaryFacadeTest extends Test
 {
 
-    const GLOSSARY_KEY = 'key';
+    const GLOSSARY_KEY = 'glossary_key';
 
     /**
      * @var SpyGlossaryKeyQuery
