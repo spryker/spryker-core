@@ -307,17 +307,6 @@ class CategoryExporterPluginTest extends AbstractFunctionalTest
         );
     }
 
-    protected function eraseUrlsAndCategories()
-    {
-//        Propel::getConnection()->query('SET foreign_key_checks = 0;');
-//        SpyUrlQuery::create()->deleteAll();
-//        SpyCategoryClosureTableQuery::create()->deleteAll();
-//        SpyCategoryAttributeQuery::create()->deleteAll();
-//        SpyCategoryNodeQuery::create()->deleteAll();
-//        SpyCategoryQuery::create()->deleteAll();
-//        Propel::getConnection()->query('SET foreign_key_checks = 1;');
-    }
-
     /**
      * @param string $name
      *
