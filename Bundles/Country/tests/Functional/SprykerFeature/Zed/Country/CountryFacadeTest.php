@@ -17,6 +17,7 @@ use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
 use SprykerFeature\Zed\Country\Persistence\Propel\Map\SpyCountryTableMap;
 use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
 use Symfony\Component\Config\Definition\Exception\Exception;
+use SprykerEngine\Zed\Kernel\Persistence\Factory;
 
 /**
  * @group Country
@@ -46,7 +47,7 @@ class CountryFacadeTest extends AbstractFunctionalTest
         parent::setUp();
         $this->locator = Locator::getInstance();
         $this->countryFacade = $this->getFacade();
-        $this->countryQueryContainer = new CountryQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Country'), $this->locator);
+        $this->countryQueryContainer = new CountryQueryContainer(new Factory('Country'), $this->locator);
     }
 
     /**
