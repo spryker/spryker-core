@@ -32,17 +32,7 @@ class CreateDatabaseConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->info('Create database');
-        $con = new \PDO(
-            'mysql:host='
-            . Config::get(SystemConfig::ZED_MYSQL_HOST)
-            . ';port=' . Config::get(SystemConfig::ZED_MYSQL_PORT),
-            Config::get(SystemConfig::ZED_MYSQL_USERNAME),
-            Config::get(SystemConfig::ZED_MYSQL_PASSWORD)
-        );
-
-        $q = 'CREATE DATABASE IF NOT EXISTS ' . Config::get(SystemConfig::ZED_MYSQL_DATABASE) . ' CHARACTER SET "utf8"';
-        $con->exec($q);
+        $this->info('Postgresql database has to be created beforehand');
     }
 
 }
