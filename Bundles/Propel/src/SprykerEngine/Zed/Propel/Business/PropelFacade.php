@@ -23,4 +23,8 @@ class PropelFacade extends AbstractFacade
         $this->getDependencyContainer()->createModelSchema()->copy();
     }
 
+    public function adjustPropelSchemaFilesForPostgresql() {
+        $this->getDependencyContainer()->createPostgresqlCompatibilityAdjuster()->adjustSchemaFiles();
+    }
+
 }
