@@ -59,16 +59,6 @@ class UserQueryContainer extends AbstractQueryContainer
     {
         $query = $this->getDependencyContainer()->createUserQuery();
 
-        /*
-         * @todo this is the query that should be used
-         */
-        $sql = '
-        SELECT u.id_user, u.username, GROUP_CONCAT(g.name)
-        FROM spy_user u
-        LEFT JOIN spy_acl_user_has_group AS h ON (u.id_user=h.fk_user_user)
-        LEFT JOIN spy_acl_group AS g ON (g.id_acl_group = h.fk_acl_group);
-        ';
-
         return $query;
     }
 

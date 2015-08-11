@@ -5,6 +5,7 @@
 
 namespace SprykerFeature\Zed\Stock\Persistence\Propel;
 
+use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Stock\Persistence\Propel\Base\SpyStockProduct as BaseSpyStockProduct;
 use SprykerFeature\Zed\Stock\Persistence\Propel\Map\SpyStockProductTableMap;
 use Propel\Runtime\Propel;
@@ -23,60 +24,22 @@ class SpyStockProduct extends BaseSpyStockProduct
 {
 
     /**
-     * If new just decrement value in entity
-     * otherwise execute atomar query and reload entity
      * @param int $amount
+     * @throws PropelException
      */
     public function decrement($amount = 1)
     {
-        if ($this->isNew()) {
-            $this->setQuantity($this->getQuantity()-$amount);
-            $this->save();
-        } else {
-            $con = Propel::getConnection();
-            $statement = $con->prepare(
-                'UPDATE '
-                . SpyStockProductTableMap::TABLE_NAME
-                . ' SET ' . SpyStockProductTableMap::COL_QUANTITY . '='
-                . SpyStockProductTableMap::COL_QUANTITY . '-:quantity WHERE '
-                . SpyStockProductTableMap::COL_ID_STOCK_PRODUCT . '=:id_stock_product'
-            );
-
-            $idStockProduct = $this->getIdStockProduct();
-            $statement->bindParam(':quantity', $amount, \PDO::PARAM_INT);
-            $statement->bindParam(':id_stock_product', $idStockProduct, \PDO::PARAM_INT);
-            $statement->execute();
-            $statement->closeCursor();
-            $this->reload();
-        }
+        $this->setQuantity($this->getQuantity() - $amount);
+        $this->save();
     }
 
     /**
-     * If new just increment value in entity
-     * otherwise execute atomar query and reload entity
      * @param int $amount
+     * @throws PropelException
      */
     public function increment($amount = 1)
     {
-        if ($this->isNew()) {
-            $this->setQuantity($this->getQuantity()+$amount);
-            $this->save();
-        } else {
-            $con = Propel::getConnection();
-            $statement = $con->prepare(
-                'UPDATE ' . SpyStockProductTableMap::TABLE_NAME
-                . ' SET ' . SpyStockProductTableMap::COL_QUANTITY . '='
-                . SpyStockProductTableMap::COL_QUANTITY . '+:quantity WHERE '
-                . SpyStockProductTableMap::COL_ID_STOCK_PRODUCT . '=:id_stock_product'
-            );
-
-            $idStockProduct = $this->getIdStockProduct();
-            $statement->bindParam(':quantity', $amount, \PDO::PARAM_INT);
-            $statement->bindParam(':id_stock_product', $idStockProduct, \PDO::PARAM_INT);
-            $statement->execute();
-            $statement->closeCursor();
-            $this->reload();
-        }
-
+        $this->setQuantity($this->getQuantity() + $amount);
+        $this->save();
     }
 } // SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockProduct

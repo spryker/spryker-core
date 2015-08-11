@@ -110,7 +110,8 @@ class ProductCategoryFrontendExporterPluginTest extends Test
 
     public function testProductsWithCategoryNodes()
     {
-        $this->eraseUrlsAndCategories();
+        $this->markTestSkipped('This test was using a mechanism to truncate tables, this is wrong in tests');
+
         $this->createAttributeType();
         $idAbstractProduct = $this->createAbstractProductWithVariant('TestSku', 'TestProductName', $this->locale);
         $this->urlFacade->createUrl('/some-url', $this->locale, 'abstract_product', $idAbstractProduct);
@@ -186,17 +187,6 @@ class ProductCategoryFrontendExporterPluginTest extends Test
                 ],
             ]
         );
-    }
-
-    protected function eraseUrlsAndCategories()
-    {
-        Propel::getConnection()->query('SET foreign_key_checks = 0;');
-        SpyUrlQuery::create()->deleteAll();
-        SpyCategoryClosureTableQuery::create()->deleteAll();
-        SpyCategoryAttributeQuery::create()->deleteAll();
-        SpyCategoryNodeQuery::create()->deleteAll();
-        SpyCategoryQuery::create()->deleteAll();
-        Propel::getConnection()->query('SET foreign_key_checks = 1;');
     }
 
     protected function createAttributeType()

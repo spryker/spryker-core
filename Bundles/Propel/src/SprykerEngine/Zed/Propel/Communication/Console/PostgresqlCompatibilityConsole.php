@@ -5,24 +5,25 @@
 
 namespace SprykerEngine\Zed\Propel\Communication\Console;
 
-use SprykerEngine\Zed\Propel\Business\PropelFacade;
+use SprykerEngine\Shared\Config;
+use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Finder\Finder;
+use SprykerEngine\Zed\Propel\Business\PropelFacade;
 
 /**
  * @method PropelFacade getFacade()
  */
-class SchemaCopyConsole extends Console
+class PostgresqlCompatibilityConsole extends Console
 {
 
-    const COMMAND_NAME = 'setup:propel:schema:copy';
+    const COMMAND_NAME = 'setup:propel:pg-sql-compat';
 
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
-        $this->setDescription('Copy schema files from packages to generated folder');
+        $this->setDescription('Adjust Propel-XML schema files to work with PostgreSQL');
 
         parent::configure();
     }
@@ -30,12 +31,15 @@ class SchemaCopyConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
-     *
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getFacade()->cleanPropelSchemaDirectory();
-        $this->getFacade()->copySchemaFilesToTargetDirectory();
+        if(Config::get(SystemConfig::ZED_DB_ENGINE) == 'pgsql') {
+            $this->info('Adjust propel config for PostgreSQL and missing functions (group_concat)');
+            $this->getFacade()->adjustPropelSchemaFilesForPostgresql();
+            $this->getFacade()->adjustPostgresqlFunctions();
+        }
     }
+
 }

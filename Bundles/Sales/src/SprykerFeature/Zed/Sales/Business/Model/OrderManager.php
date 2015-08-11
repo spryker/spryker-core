@@ -7,10 +7,10 @@
 namespace SprykerFeature\Zed\Sales\Business\Model;
 
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SalesAddressTransfer;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use SprykerFeature\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
@@ -36,8 +36,11 @@ class OrderManager
      */
     protected $orderReferenceGenerator;
 
-    public function __construct(SalesToCountryInterface $countryFacade, SalesToOmsInterface $omsFacade, OrderReferenceGeneratorInterface $orderReferenceGenerator)
-    {
+    public function __construct(
+        SalesToCountryInterface $countryFacade,
+        SalesToOmsInterface $omsFacade,
+        OrderReferenceGeneratorInterface $orderReferenceGenerator
+    ) {
         $this->countryFacade = $countryFacade;
         $this->omsFacade = $omsFacade;
         $this->orderReferenceGenerator = $orderReferenceGenerator;
@@ -158,7 +161,8 @@ class OrderManager
         }
 
         $addressEntity = new SpySalesOrderAddress();
-        $addressEntity->setFkCountry($this->countryFacade->getIdCountryByIso2Code($address->getIso2Code()))
+        $addressEntity
+            ->setFkCountry($this->countryFacade->getIdCountryByIso2Code($address->getIso2Code()))
             ->setFirstName($address->getFirstName())
             ->setLastName($address->getLastName())
             ->setAddress1($address->getAddress1())

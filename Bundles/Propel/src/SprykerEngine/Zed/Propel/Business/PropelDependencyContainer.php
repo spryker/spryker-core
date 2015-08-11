@@ -9,6 +9,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\PropelBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerEngine\Zed\Propel\Business\Model\DirectoryRemoverInterface;
 use SprykerEngine\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface;
+use SprykerEngine\Zed\Propel\Business\Model\PostgresqlCompatibilityAdjusterInterface;
 use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaFinderInterface;
 use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaInterface;
 use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaMergerInterface;
@@ -87,6 +88,16 @@ class PropelDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createModelDirectoryRemover(
             $this->getConfig()->getSchemaDirectory()
+        );
+    }
+
+    /**
+     * @return PostgresqlCompatibilityAdjusterInterface
+     */
+    public function createPostgresqlCompatibilityAdjuster()
+    {
+        return $this->getFactory()->createModelPostgresqlCompatibilityAdjuster(
+            $this->createSchemaFinder()
         );
     }
 

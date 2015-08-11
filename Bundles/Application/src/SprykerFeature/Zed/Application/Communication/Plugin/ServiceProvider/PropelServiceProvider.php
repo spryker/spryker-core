@@ -37,7 +37,7 @@ class PropelServiceProvider implements ServiceProviderInterface
 
         /** @var StandardServiceContainer $serviceContainer */
         $serviceContainer = Propel::getServiceContainer();
-        $serviceContainer->setAdapterClass('zed', 'mysql');
+        $serviceContainer->setAdapterClass('zed', Config::get(SystemConfig::ZED_DB_ENGINE));
         $serviceContainer->setConnectionManager('zed', $manager);
         $serviceContainer->setDefaultDatasource('zed');
 
@@ -52,11 +52,9 @@ class PropelServiceProvider implements ServiceProviderInterface
     private function getConfig()
     {
         $propelConfig = Config::get(SystemConfig::PROPEL)['database']['connections']['default'];
-        $propelConfig['user'] = Config::get(SystemConfig::ZED_MYSQL_USERNAME);
-        $propelConfig['password'] = Config::get(SystemConfig::ZED_MYSQL_PASSWORD);
-        $propelConfig['dsn'] = 'mysql:host=' . Config::get(SystemConfig::ZED_MYSQL_HOST)
-            . ';dbname=' . Config::get(SystemConfig::ZED_MYSQL_DATABASE)
-        ;
+        $propelConfig['user'] = Config::get(SystemConfig::ZED_DB_USERNAME);
+        $propelConfig['password'] = Config::get(SystemConfig::ZED_DB_PASSWORD);
+        $propelConfig['dsn'] = Config::get(SystemConfig::PROPEL)['database']['connections']['default']['dsn'];
 
         return $propelConfig;
     }

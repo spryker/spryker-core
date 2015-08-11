@@ -1,12 +1,30 @@
 <?php
 
-namespace Functional\SprykerFeature\Zed\ProductOption\Persistence;
-
-use Propel\Runtime\Propel;
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
+
+namespace Functional\SprykerFeature\Zed\ProductOption\Persistence;
+
+use Propel\Runtime\Propel;
+use SprykerEngine\Zed\Locale\Persistence\Propel\SpyLocale;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionConfigurationPreset;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionConfigurationPresetValue;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionType;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeTranslation;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsage;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageExclusion;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValue;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValuePrice;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueTranslation;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsage;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageConstraint;
+use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRate;
+use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
+use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSetTax;
+
 class DbFixturesLoader
 {
 
@@ -18,233 +36,297 @@ class DbFixturesLoader
         $ids = [];
         $dbConnection = Propel::getConnection();
 
-        $dbConnection
-            ->prepare("INSERT INTO spy_tax_rate (name, rate) VALUES ('Foo', 10)")
-            ->execute();
-        $ids['idTaxRate1'] = $dbConnection->lastInsertId();
+        $taxRateEntity = new SpyTaxRate();
+        $taxRateEntity->setRate(10)
+            ->setName('Foo');
+        $taxRateEntity->save();
+        $ids['idTaxRate1'] = $taxRateEntity->getIdTaxRate();
 
-        $dbConnection
-            ->prepare("INSERT INTO spy_tax_rate (name, rate) VALUES ('Bar', 5)")
-            ->execute();
-        $ids['idTaxRate2'] = $dbConnection->lastInsertId();
+        $taxRateEntity = new SpyTaxRate();
+        $taxRateEntity->setRate(5)
+            ->setName('Bar');
+        $taxRateEntity->save();
+        $ids['idTaxRate2'] = $taxRateEntity->getIdTaxRate();
 
-        $dbConnection
-            ->prepare("INSERT INTO spy_tax_set (name) VALUES ('Baz')")
-            ->execute();
-        $ids['idTaxSet'] = $dbConnection->lastInsertId();
+        $taxSetEntity = new SpyTaxSet();
+        $taxSetEntity->setName('Baz');
+        $taxSetEntity->save();
+        $ids['idTaxSet'] = $taxSetEntity->getIdTaxSet();
 
-        $dbConnection
-            ->prepare("INSERT INTO spy_tax_set_tax (fk_tax_set, fk_tax_rate) VALUES ({$ids['idTaxSet']}, {$ids['idTaxRate1']}), ({$ids['idTaxSet']}, {$ids['idTaxRate2']})")
-            ->execute();
+        $taxSetTaxEntity = new SpyTaxSetTax();
+        $taxSetTaxEntity->setFkTaxSet($ids['idTaxSet'])
+            ->setFkTaxRate($ids['idTaxRate1']);
+        $taxSetTaxEntity->save();
 
-        $dbConnection
-            ->prepare("INSERT INTO spy_abstract_product (sku, fk_tax_set, attributes) VALUES ('ABC123', {$ids['idTaxSet']}, '{}')")
-            ->execute();
-        $ids['idAbstractProduct'] = $dbConnection->lastInsertId();
+        $taxSetTaxEntity = new SpyTaxSetTax();
+        $taxSetTaxEntity->setFkTaxSet($ids['idTaxSet'])
+            ->setFkTaxRate($ids['idTaxRate2']);
+        $taxSetTaxEntity->save();
 
-        $dbConnection
-            ->prepare("INSERT INTO spy_product (sku, fk_abstract_product, attributes) VALUES ('DEF456', {$ids['idAbstractProduct']}, '{}')")
-            ->execute();
-        $ids['idConcreteProduct'] = $dbConnection->lastInsertId();
 
-        $dbConnection
-            ->prepare('INSERT INTO spy_product_option_type (fk_tax_set) VALUES (NULL)')
-            ->execute();
-        $ids['idTypeColor'] = $dbConnection->lastInsertId();
+        $abstractProductEntity = new SpyAbstractProduct();
+        $abstractProductEntity->setSku('ABC123')
+            ->setFkTaxSet($ids['idTaxSet'])
+            ->setAttributes('{}')
+        ;
+        $abstractProductEntity->save();
+        $ids['idAbstractProduct'] = $abstractProductEntity->getIdAbstractProduct();
 
-        $dbConnection
-            ->prepare("INSERT INTO spy_product_option_type (fk_tax_set) VALUES ({$ids['idTaxSet']})")
-            ->execute();
-        $ids['idTypeSize'] = $dbConnection->lastInsertId();
+        $productEntity = new SpyProduct();
+        $productEntity->setSku('DEF456')
+            ->setFkAbstractProduct($ids['idAbstractProduct'])
+            ->setAttributes('{}')
+        ;
+        $productEntity->save();
+        $ids['idConcreteProduct'] = $productEntity->getIdProduct();
 
-        $dbConnection
-            ->prepare("INSERT INTO spy_product_option_value (fk_product_option_type) VALUES ({$ids['idTypeColor']})")
-            ->execute();
-        $ids['idValueRed'] = $dbConnection->lastInsertId();
+        $productOptionTypeEntity = new SpyProductOptionType();
+        $productOptionTypeEntity->save();
+        $ids['idTypeColor'] = $productOptionTypeEntity->getIdProductOptionType();
 
-        $dbConnection
-            ->prepare("INSERT INTO spy_product_option_value (fk_product_option_type) VALUES ({$ids['idTypeColor']})")
-            ->execute();
-        $ids['idValueBlue'] = $dbConnection->lastInsertId();
+        $productOptionTypeEntity = new SpyProductOptionType();
+        $productOptionTypeEntity->setFkTaxSet($ids['idTaxSet']);
+        $productOptionTypeEntity->save();
+        $ids['idTypeSize'] = $productOptionTypeEntity->getIdProductOptionType();
 
-        $dbConnection
-            ->prepare("INSERT INTO spy_product_option_value (fk_product_option_type) VALUES ({$ids['idTypeColor']})")
-            ->execute();
-        $ids['idValueGreen'] = $dbConnection->lastInsertId();
+        $productOptionValueEntity = new SpyProductOptionValue();
+        $productOptionValueEntity->setFkProductOptionType($ids['idTypeColor']);
+        $productOptionValueEntity->save();
+        $ids['idValueRed'] = $productOptionValueEntity->getIdProductOptionValue();
 
-        $dbConnection
-            ->prepare("INSERT INTO spy_product_option_value (fk_product_option_type) VALUES ({$ids['idTypeColor']})")
-            ->execute();
-        $ids['idValueYellow'] = $dbConnection->lastInsertId();
+        $productOptionValueEntity = new SpyProductOptionValue();
+        $productOptionValueEntity->setFkProductOptionType($ids['idTypeColor']);
+        $productOptionValueEntity->save();
+        $ids['idValueBlue'] = $productOptionValueEntity->getIdProductOptionValue();
 
-        $dbConnection
-            ->prepare('INSERT INTO spy_product_option_value_price (price) VALUES (199)')
-            ->execute();
-        $ids['idPriceLarge'] = $dbConnection->lastInsertId();
+        $productOptionValueEntity = new SpyProductOptionValue();
+        $productOptionValueEntity->setFkProductOptionType($ids['idTypeColor']);
+        $productOptionValueEntity->save();
+        $ids['idValueGreen'] = $productOptionValueEntity->getIdProductOptionValue();
 
-        $dbConnection
-            ->prepare("INSERT INTO spy_product_option_value (fk_product_option_type, fk_product_option_value_price) VALUES ({$ids['idTypeSize']}, {$ids['idPriceLarge']})")
-            ->execute();
-        $ids['idValueLarge'] = $dbConnection->lastInsertId();
+        $productOptionValueEntity = new SpyProductOptionValue();
+        $productOptionValueEntity->setFkProductOptionType($ids['idTypeColor']);
+        $productOptionValueEntity->save();
+        $ids['idValueYellow'] = $productOptionValueEntity->getIdProductOptionValue();
 
-        $dbConnection
-            ->prepare("INSERT INTO spy_product_option_value (fk_product_option_type) VALUES ({$ids['idTypeSize']})")
-            ->execute();
-        $ids['idValueSmall'] = $dbConnection->lastInsertId();
+        $productOptionValuePriceEntity = new SpyProductOptionValuePrice();
+        $productOptionValuePriceEntity->setPrice(199);
+        $productOptionValuePriceEntity->save();
+        $ids['idPriceLarge'] = $productOptionValuePriceEntity->getIdProductOptionValuePrice();
 
-        $dbConnection
-            ->prepare("INSERT INTO spy_product_option_value (fk_product_option_type) VALUES ({$ids['idTypeSize']})")
-            ->execute();
-        $ids['idValueMedium'] = $dbConnection->lastInsertId();
+        $productOptionValueEntity = new SpyProductOptionValue();
+        $productOptionValueEntity->setFkProductOptionType($ids['idTypeSize'])
+            ->setFkProductOptionValuePrice($ids['idPriceLarge'])
+        ;
+        $productOptionValueEntity->save();
+        $ids['idValueLarge'] = $productOptionValueEntity->getIdProductOptionValue();
 
-        $dbConnection
-            ->prepare("INSERT INTO spy_product_option_value (fk_product_option_type) VALUES ({$ids['idTypeSize']})")
-            ->execute();
-        $ids['idValueXSmall'] = $dbConnection->lastInsertId();
+        $productOptionValueEntity = new SpyProductOptionValue();
+        $productOptionValueEntity->setFkProductOptionType($ids['idTypeSize']);
+        $productOptionValueEntity->save();
+        $ids['idValueSmall'] = $productOptionValueEntity->getIdProductOptionValue();
 
-        $dbConnection
-            ->prepare("INSERT INTO spy_locale (locale_name) VALUES ('xx_XX')")
-            ->execute();
-        $ids['idLocale'] = $dbConnection->lastInsertId();
+        $productOptionValueEntity = new SpyProductOptionValue();
+        $productOptionValueEntity->setFkProductOptionType($ids['idTypeSize']);
+        $productOptionValueEntity->save();
+        $ids['idValueMedium'] = $productOptionValueEntity->getIdProductOptionValue();
 
-        $dbConnection
-            ->prepare(
-                "INSERT INTO spy_product_option_type_translation (name, fk_locale, fk_product_option_type)
-                 VALUES
-                     ('Size', {$ids['idLocale']}, {$ids['idTypeSize']}),
-                     ('Color', {$ids['idLocale']}, {$ids['idTypeColor']})"
-            )
-            ->execute();
+        $productOptionValueEntity = new SpyProductOptionValue();
+        $productOptionValueEntity->setFkProductOptionType($ids['idTypeSize']);
+        $productOptionValueEntity->save();
+        $ids['idValueXSmall'] = $productOptionValueEntity->getIdProductOptionValue();
 
-        $dbConnection
-            ->prepare(
-                "INSERT INTO spy_product_option_value_translation (name, fk_locale, fk_product_option_value)
-                 VALUES
-                     ('Blue', {$ids['idLocale']}, {$ids['idValueBlue']}),
-                     ('Red', {$ids['idLocale']}, {$ids['idValueRed']}),
-                     ('Yellow', {$ids['idLocale']}, {$ids['idValueYellow']}),
-                     ('Green', {$ids['idLocale']}, {$ids['idValueGreen']}),
-                     ('Large', {$ids['idLocale']}, {$ids['idValueLarge']}),
-                     ('Medium', {$ids['idLocale']}, {$ids['idValueMedium']}),
-                     ('Small', {$ids['idLocale']}, {$ids['idValueSmall']}),
-                     ('Extra Small', {$ids['idLocale']}, {$ids['idValueXSmall']})"
-            )
-            ->execute();
+        $localeEntity = new SpyLocale();
+        $localeEntity->setLocaleName('xx_XX');
+        $localeEntity->save();
+        $ids['idLocale'] = $localeEntity->getIdLocale();
 
-        $dbConnection
-            ->prepare(
-                "INSERT INTO spy_product_option_type_usage (is_optional, sequence, fk_product, fk_product_option_type)
-                 VALUES (0, 1, {$ids['idConcreteProduct']}, {$ids['idTypeColor']})"
-            )
-            ->execute();
-        $ids['idUsageColor'] = $dbConnection->lastInsertId();
+        $productOptionTypeTranslationEntity = new SpyProductOptionTypeTranslation();
+        $productOptionTypeTranslationEntity->setName('Size')
+            ->setFkLocale($ids['idLocale'])
+            ->setFkProductOptionType($ids['idTypeSize'])
+        ;
+        $productOptionTypeTranslationEntity->save();
 
-        $dbConnection
-            ->prepare(
-                "INSERT INTO spy_product_option_type_usage (is_optional, sequence, fk_product, fk_product_option_type)
-                 VALUES (0, 1, {$ids['idConcreteProduct']}, {$ids['idTypeSize']})"
-            )
-            ->execute();
-        $ids['idUsageSize'] = $dbConnection->lastInsertId();
+        $productOptionTypeTranslationEntity = new SpyProductOptionTypeTranslation();
+        $productOptionTypeTranslationEntity->setName('Color')
+            ->setFkLocale($ids['idLocale'])
+            ->setFkProductOptionType($ids['idTypeColor'])
+        ;
+        $productOptionTypeTranslationEntity->save();
 
-        $dbConnection
-            ->prepare(
-                "INSERT INTO spy_product_option_value_usage (sequence, fk_product_option_value, fk_product_option_type_usage)
-                 VALUES (1, {$ids['idValueBlue']}, {$ids['idUsageColor']})"
-            )
-            ->execute();
-        $ids['idUsageBlue'] = $dbConnection->lastInsertId();
+        $data = [
+            'Blue' => $ids['idValueBlue'],
+            'Red' => $ids['idValueRed'],
+            'Yellow' => $ids['idValueYellow'],
+            'Green' => $ids['idValueGreen'],
+            'Large' => $ids['idValueLarge'],
+            'Medium' => $ids['idValueMedium'],
+            'Small' => $ids['idValueSmall'],
+            'Extra' => $ids['idValueXSmall'],
+        ];
 
-        $dbConnection
-            ->prepare(
-                "INSERT INTO spy_product_option_value_usage (sequence, fk_product_option_value, fk_product_option_type_usage)
-                 VALUES (2, {$ids['idValueRed']}, {$ids['idUsageColor']})"
-            )
-            ->execute();
-        $ids['idUsageRed'] = $dbConnection->lastInsertId();
+        foreach ($data as $name => $fkProductOptionValue) {
+            $productOptionValueTranslationEntity = new SpyProductOptionValueTranslation();
+            $productOptionValueTranslationEntity->setName($name)
+                ->setFkLocale($ids['idLocale'])
+                ->setFkProductOptionValue($fkProductOptionValue)
+            ;
+            $productOptionValueTranslationEntity->save();
+        }
 
-        $dbConnection
-            ->prepare(
-                "INSERT INTO spy_product_option_value_usage (sequence, fk_product_option_value, fk_product_option_type_usage)
-                 VALUES (3, {$ids['idValueYellow']}, {$ids['idUsageColor']})"
-            )
-            ->execute();
-        $ids['idUsageYellow'] = $dbConnection->lastInsertId();
+        $productOptionTypeUsageEntity = new SpyProductOptionTypeUsage();
+        $productOptionTypeUsageEntity->setIsOptional(0)
+            ->setSequence(1)
+            ->setFkProduct($ids['idConcreteProduct'])
+            ->setFkProductOptionType($ids['idTypeColor'])
+        ;
+        $productOptionTypeUsageEntity->save();
+        $ids['idUsageColor'] = $productOptionTypeUsageEntity->getIdProductOptionTypeUsage();
 
-        $dbConnection
-            ->prepare(
-                "INSERT INTO spy_product_option_value_usage (sequence, fk_product_option_value, fk_product_option_type_usage)
-                 VALUES (4, {$ids['idValueGreen']}, {$ids['idUsageColor']})"
-            )
-            ->execute();
-        $ids['idUsageGreen'] = $dbConnection->lastInsertId();
+        $productOptionTypeUsageEntity = new SpyProductOptionTypeUsage();
+        $productOptionTypeUsageEntity->setIsOptional(0)
+            ->setSequence(1)
+            ->setFkProduct($ids['idConcreteProduct'])
+            ->setFkProductOptionType($ids['idTypeSize'])
+        ;
+        $productOptionTypeUsageEntity->save();
+        $ids['idUsageSize'] = $productOptionTypeUsageEntity->getIdProductOptionTypeUsage();
 
-        $dbConnection
-            ->prepare(
-                "INSERT INTO spy_product_option_value_usage (sequence, fk_product_option_value, fk_product_option_type_usage)
-                 VALUES (1, {$ids['idValueLarge']}, {$ids['idUsageSize']})"
-            )
-            ->execute();
-        $ids['idUsageLarge'] = $dbConnection->lastInsertId();
+        $productOptionValueUsageEntity = new SpyProductOptionValueUsage();
+        $productOptionValueUsageEntity->setSequence(1)
+            ->setFkProductOptionValue($ids['idValueBlue'])
+            ->setFkProductOptionTypeUsage($ids['idUsageColor'])
+        ;
+        $productOptionValueUsageEntity->save();
+        $ids['idUsageBlue'] = $productOptionValueUsageEntity->getIdProductOptionValueUsage();
 
-        $dbConnection
-            ->prepare(
-                "INSERT INTO spy_product_option_value_usage (sequence, fk_product_option_value, fk_product_option_type_usage)
-                 VALUES (2, {$ids['idValueMedium']}, {$ids['idUsageSize']})"
-            )
-            ->execute();
-        $ids['idUsageMedium'] = $dbConnection->lastInsertId();
+        $productOptionValueUsageEntity = new SpyProductOptionValueUsage();
+        $productOptionValueUsageEntity->setSequence(2)
+            ->setFkProductOptionValue($ids['idValueRed'])
+            ->setFkProductOptionTypeUsage($ids['idUsageColor'])
+        ;
+        $productOptionValueUsageEntity->save();
+        $ids['idUsageRed'] = $productOptionValueUsageEntity->getIdProductOptionValueUsage();
 
-        $dbConnection
-            ->prepare(
-                "INSERT INTO spy_product_option_value_usage (sequence, fk_product_option_value, fk_product_option_type_usage)
-                 VALUES (3, {$ids['idValueSmall']}, {$ids['idUsageSize']})"
-            )
-            ->execute();
-        $ids['idUsageSmall'] = $dbConnection->lastInsertId();
+        $productOptionValueUsageEntity = new SpyProductOptionValueUsage();
+        $productOptionValueUsageEntity->setSequence(3)
+            ->setFkProductOptionValue($ids['idValueYellow'])
+            ->setFkProductOptionTypeUsage($ids['idUsageColor'])
+        ;
+        $productOptionValueUsageEntity->save();
+        $ids['idUsageYellow'] = $productOptionValueUsageEntity->getIdProductOptionValueUsage();
 
-        $dbConnection
-            ->prepare(
-                "INSERT INTO spy_product_option_value_usage (sequence, fk_product_option_value, fk_product_option_type_usage)
-                 VALUES (4, {$ids['idValueXSmall']}, {$ids['idUsageSize']})"
-            )
-            ->execute();
-        $ids['idUsageXSmall'] = $dbConnection->lastInsertId();
+        $productOptionValueUsageEntity = new SpyProductOptionValueUsage();
+        $productOptionValueUsageEntity->setSequence(4)
+            ->setFkProductOptionValue($ids['idValueGreen'])
+            ->setFkProductOptionTypeUsage($ids['idUsageColor'])
+        ;
+        $productOptionValueUsageEntity->save();
+        $ids['idUsageGreen'] = $productOptionValueUsageEntity->getIdProductOptionValueUsage();
 
-        $dbConnection
-            ->prepare("INSERT INTO spy_product_option_type_usage_exclusion (fk_product_option_type_usage_a, fk_product_option_type_usage_b)
-                       VALUES ({$ids['idUsageColor']}, {$ids['idUsageSize']})")
-            ->execute();
+        $productOptionValueUsageEntity = new SpyProductOptionValueUsage();
+        $productOptionValueUsageEntity->setSequence(1)
+            ->setFkProductOptionValue($ids['idValueLarge'])
+            ->setFkProductOptionTypeUsage($ids['idUsageSize'])
+        ;
+        $productOptionValueUsageEntity->save();
+        $ids['idUsageLarge'] = $productOptionValueUsageEntity->getIdProductOptionValueUsage();
 
-        $dbConnection
-            ->prepare("INSERT INTO spy_product_option_value_usage_constraint (fk_product_option_value_usage_a, fk_product_option_value_usage_b, operator)
-                       VALUES
-                           ({$ids['idUsageBlue']}, {$ids['idUsageSmall']}, 'NOT'),
-                           ({$ids['idUsageRed']}, {$ids['idUsageMedium']}, 'ALWAYS'),
-                           ({$ids['idUsageGreen']}, {$ids['idUsageSmall']}, 'ALLOW'),
-                           ({$ids['idUsageGreen']}, {$ids['idUsageLarge']}, 'ALLOW')"
-            )
-            ->execute();
+        $productOptionValueUsageEntity = new SpyProductOptionValueUsage();
+        $productOptionValueUsageEntity->setSequence(2)
+            ->setFkProductOptionValue($ids['idValueMedium'])
+            ->setFkProductOptionTypeUsage($ids['idUsageSize'])
+        ;
+        $productOptionValueUsageEntity->save();
+        $ids['idUsageMedium'] = $productOptionValueUsageEntity->getIdProductOptionValueUsage();
 
-        $dbConnection
-            ->prepare("INSERT INTO spy_product_option_configuration_preset (is_default, sequence, fk_product) VALUES (1, 1, {$ids['idConcreteProduct']})")
-            ->execute();
-        $ids['idConfigPresetA'] = $dbConnection->lastInsertId();
+        $productOptionValueUsageEntity = new SpyProductOptionValueUsage();
+        $productOptionValueUsageEntity->setSequence(3)
+            ->setFkProductOptionValue($ids['idValueSmall'])
+            ->setFkProductOptionTypeUsage($ids['idUsageSize'])
+        ;
+        $productOptionValueUsageEntity->save();
+        $ids['idUsageSmall'] = $productOptionValueUsageEntity->getIdProductOptionValueUsage();
 
-        $dbConnection
-            ->prepare("INSERT INTO spy_product_option_configuration_preset (is_default, sequence, fk_product) VALUES (0, 2, {$ids['idConcreteProduct']})")
-            ->execute();
-        $ids['idConfigPresetB'] = $dbConnection->lastInsertId();
+        $productOptionValueUsageEntity = new SpyProductOptionValueUsage();
+        $productOptionValueUsageEntity->setSequence(4)
+            ->setFkProductOptionValue($ids['idValueXSmall'])
+            ->setFkProductOptionTypeUsage($ids['idUsageSize'])
+        ;
+        $productOptionValueUsageEntity->save();
+        $ids['idUsageXSmall'] = $productOptionValueUsageEntity->getIdProductOptionValueUsage();
 
-        $dbConnection
-            ->prepare("INSERT INTO spy_product_option_configuration_preset_value (fk_product_option_configuration_preset, fk_product_option_value_usage)
-                       VALUES
-                           ({$ids['idConfigPresetA']}, {$ids['idUsageRed']}),
-                           ({$ids['idConfigPresetA']}, {$ids['idUsageMedium']}),
-                           ({$ids['idConfigPresetB']}, {$ids['idUsageGreen']}),
-                           ({$ids['idConfigPresetB']}, {$ids['idUsageLarge']})"
-            )
-            ->execute();
+        $productOptionTypeUsageExclusionEntity = new SpyProductOptionTypeUsageExclusion();
+        $productOptionTypeUsageExclusionEntity->setFkProductOptionTypeUsageA($ids['idUsageColor'])
+            ->setFkProductOptionTypeUsageB($ids['idUsageSize'])
+        ;
+        $productOptionTypeUsageExclusionEntity->save();
+
+        $productOptionValueUsageConstraintEntity = new SpyProductOptionValueUsageConstraint();
+        $productOptionValueUsageConstraintEntity
+            ->setFkProductOptionValueUsageA($ids['idUsageBlue'])
+            ->setFkProductOptionValueUsageB($ids['idUsageSmall'])
+            ->setOperator('NOT')
+        ;
+        $productOptionValueUsageConstraintEntity->save();
+
+        $productOptionValueUsageConstraintEntity = new SpyProductOptionValueUsageConstraint();
+        $productOptionValueUsageConstraintEntity
+            ->setFkProductOptionValueUsageA($ids['idUsageRed'])
+            ->setFkProductOptionValueUsageB($ids['idUsageMedium'])
+            ->setOperator('ALWAYS')
+        ;
+        $productOptionValueUsageConstraintEntity->save();
+
+        $productOptionValueUsageConstraintEntity = new SpyProductOptionValueUsageConstraint();
+        $productOptionValueUsageConstraintEntity
+            ->setFkProductOptionValueUsageA($ids['idUsageGreen'])
+            ->setFkProductOptionValueUsageB($ids['idUsageSmall'])
+            ->setOperator('ALLOW')
+        ;
+
+        $productOptionValueUsageConstraintEntity->save();
+
+        $productOptionValueUsageConstraintEntity = new SpyProductOptionValueUsageConstraint();
+        $productOptionValueUsageConstraintEntity
+            ->setFkProductOptionValueUsageA($ids['idUsageGreen'])
+            ->setFkProductOptionValueUsageB($ids['idUsageLarge'])
+            ->setOperator('ALLOW')
+        ;
+        $productOptionValueUsageConstraintEntity->save();
+
+        $productOptionConfigurationPresetEntity = new SpyProductOptionConfigurationPreset();
+        $productOptionConfigurationPresetEntity->setIsDefault(true)
+            ->setSequence(1)
+            ->setFkProduct($ids['idConcreteProduct'])
+        ;
+        $productOptionConfigurationPresetEntity->save();
+        $ids['idConfigPresetA'] = $productOptionConfigurationPresetEntity->getIdProductOptionConfigurationPreset();
+
+        $productOptionConfigurationPresetEntity = new SpyProductOptionConfigurationPreset();
+        $productOptionConfigurationPresetEntity->setIsDefault(false)
+            ->setSequence(2)
+            ->setFkProduct($ids['idConcreteProduct'])
+        ;
+        $productOptionConfigurationPresetEntity->save();
+        $ids['idConfigPresetB'] = $productOptionConfigurationPresetEntity->getIdProductOptionConfigurationPreset();
+
+        $data = [
+            $ids['idUsageRed'] => $ids['idConfigPresetA'],
+            $ids['idUsageMedium'] => $ids['idConfigPresetA'],
+            $ids['idUsageGreen'] => $ids['idConfigPresetB'],
+            $ids['idUsageLarge'] => $ids['idConfigPresetB'],
+        ];
+
+        foreach ($data as $fkProductOptionValueUsage => $fkProductOptionConfigurationPreset) {
+            $productOptionConfigurationPresetValueEntity = new SpyProductOptionConfigurationPresetValue();
+            $productOptionConfigurationPresetValueEntity
+                ->setFkProductOptionConfigurationPreset($fkProductOptionConfigurationPreset)
+                ->setFkProductOptionValueUsage($fkProductOptionValueUsage)
+            ;
+            $productOptionConfigurationPresetValueEntity->save();
+        }
 
         return $ids;
     }

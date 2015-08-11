@@ -1,12 +1,5 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          name="zed"
-          defaultIdMethod="native"
-          defaultPhpNamingMethod="underscore"
-          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
-          identifierQuoting="true"
-          namespace="SprykerFeature\Zed\Payone\Persistence\Propel"
-          package="vendor.spryker.spryker.Bundles.Payone.src.SprykerFeature.Zed.Payone.Persistence.Propel">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" defaultIdMethod="native" defaultPhpNamingMethod="underscore" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" identifierQuoting="true" namespace="SprykerFeature\Zed\Payone\Persistence\Propel" package="vendor.spryker.spryker.Bundles.Payone.src.SprykerFeature.Zed.Payone.Persistence.Propel">
 
 
     <table name="spy_payment_payone" phpName="SpyPaymentPayone" identifierQuoting="true">
@@ -21,22 +14,21 @@
             <reference foreign="id_sales_order" local="fk_sales_order"/>
         </foreign-key>
 
-        <behavior name="timestampable" />
-    </table>
+        <behavior name="timestampable"/>
+    <id-method-parameter value="spy_payment_payone_pk_seq"/></table>
 
     <table name="spy_payment_payone_details" phpName="SpyPaymentPayoneDetails" identifierQuoting="true">
         <column name="id_payment_payone_details" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_payment_payone" required="true" type="INTEGER"/>
 
-        <column name="pseudocardpan" required="false" type="VARCHAR"
-                comment="Payone generated pseudocardpan instead of actual credit card data"/>
+        <column name="pseudocardpan" required="false" type="VARCHAR" comment="Payone generated pseudocardpan instead of actual credit card data"/>
 
         <foreign-key foreignTable="spy_payment_payone" phpName="SpyPaymentPayone" refPhpName="SpyPaymentPayoneDetails">
             <reference foreign="id_payment_payone" local="fk_payment_payone"/>
         </foreign-key>
 
-        <behavior name="timestampable" />
-    </table>
+        <behavior name="timestampable"/>
+    <id-method-parameter value="spy_payment_payone_details_pk_seq"/></table>
 
     <table name="spy_payment_payone_api_log" phpName="SpyPaymentPayoneApiLog" identifierQuoting="true">
 
@@ -61,15 +53,15 @@
             <reference foreign="id_payment_payone" local="fk_payment_payone"/>
         </foreign-key>
 
-        <behavior name="timestampable" />
-    </table>
+        <behavior name="timestampable"/>
+    <id-method-parameter value="spy_payment_payone_api_log_pk_seq"/></table>
 
     <table name="spy_payment_payone_transaction_status_log" phpName="SpyPaymentPayoneTransactionStatusLog" identifierQuoting="true">
 
         <column name="id_payment_payone_transaction_status_log" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="fk_payment_payone"  required="true" type="INTEGER" />
+        <column name="fk_payment_payone" required="true" type="INTEGER"/>
 
-        <column name="transaction_id" required="false" type="INTEGER" comment="payone txid" />
+        <column name="transaction_id" required="false" type="INTEGER" comment="payone txid"/>
         <column name="reference_id" required="false" type="INTEGER" comment="payone txid"/>
         <column name="mode" required="false" type="VARCHAR"/>
 
@@ -84,14 +76,14 @@
         <column name="receivable" required="false" type="INTEGER"/>
 
         <index>
-            <index-column name="transaction_id" />
+            <index-column name="transaction_id"/>
         </index>
 
         <foreign-key foreignTable="spy_payment_payone" phpName="SpyPaymentPayone" refPhpName="SpyPaymentPayoneTransactionStatusLog">
             <reference foreign="id_payment_payone" local="fk_payment_payone"/>
         </foreign-key>
 
-        <behavior name="timestampable" />
-    </table>
+        <behavior name="timestampable"/>
+    <id-method-parameter value="spy_payment_payone_transaction_status_log_pk_seq"/></table>
 
 </database>

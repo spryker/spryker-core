@@ -87,7 +87,7 @@ class CategoryExporterPluginTest extends AbstractFunctionalTest
 
     public function testNavigationExporter()
     {
-        $this->eraseUrlsAndCategories();
+        $this->markTestSkipped('This test was using a mechanism to truncate tables, this is wrong in tests');
 
         $idToysCategory = $this->categoryFacade->createCategory(
             $this->createCategoryTransfer('Toys1'),
@@ -222,7 +222,7 @@ class CategoryExporterPluginTest extends AbstractFunctionalTest
 
     public function testCategoryExport()
     {
-        $this->eraseUrlsAndCategories();
+        $this->markTestSkipped('This test was using a mechanism to truncate tables, this is wrong in tests');
 
         $idRootCategory = $this->categoryFacade->createCategory(
             $this->createCategoryTransfer('RootCategory'),
@@ -305,17 +305,6 @@ class CategoryExporterPluginTest extends AbstractFunctionalTest
                     ],
             ]
         );
-    }
-
-    protected function eraseUrlsAndCategories()
-    {
-        Propel::getConnection()->query('SET foreign_key_checks = 0;');
-        SpyUrlQuery::create()->deleteAll();
-        SpyCategoryClosureTableQuery::create()->deleteAll();
-        SpyCategoryAttributeQuery::create()->deleteAll();
-        SpyCategoryNodeQuery::create()->deleteAll();
-        SpyCategoryQuery::create()->deleteAll();
-        Propel::getConnection()->query('SET foreign_key_checks = 1;');
     }
 
     /**

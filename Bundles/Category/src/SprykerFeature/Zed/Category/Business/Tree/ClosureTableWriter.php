@@ -12,6 +12,7 @@ use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryClosureTableTa
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTable;
+use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTableQuery;
 
 class ClosureTableWriter implements ClosureTableWriterInterface
 {
@@ -79,18 +80,22 @@ class ClosureTableWriter implements ClosureTableWriterInterface
      */
     protected function persistNode($nodeId, $parentId)
     {
-        $connection = Propel::getConnection();
-        $queryString = 'INSERT INTO %1$s (%2$s, %3$s, %4$s) ';
-        $queryString .= 'SELECT %2$s, ?, (%4$s + 1) FROM %1$s WHERE %3$s = ? UNION ALL SELECT ?, ?, 0';
-        $query = sprintf(
-            $queryString,
-            SpyCategoryClosureTableTableMap::TABLE_NAME,
-            SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE,
-            SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT,
-            SpyCategoryClosureTableTableMap::COL_DEPTH
-        );
-        $statement = $connection->prepare((string) $query);
-        $statement->execute([$nodeId, $parentId, $nodeId, $nodeId]);
+        $closureQuery= new SpyCategoryClosureTableQuery();
+        $nodes = $closureQuery->findByFkCategoryNodeDescendant($parentId);
+
+        foreach($nodes as $node) {
+            $entity = new SpyCategoryClosureTable();
+            $entity->setFkCategoryNode($node->getFkCategoryNode());
+            $entity->setFkCategoryNodeDescendant($nodeId);
+            $entity->setDepth($node->getDepth() + 1);
+            $entity->save();
+        }
+
+        $entity = new SpyCategoryClosureTable();
+        $entity->setFkCategoryNode($nodeId);
+        $entity->setFkCategoryNodeDescendant($nodeId);
+        $entity->setDepth(0);
+        $entity->save();
     }
 
 }

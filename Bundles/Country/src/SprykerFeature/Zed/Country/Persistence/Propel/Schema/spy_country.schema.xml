@@ -1,11 +1,5 @@
 <?xml version="1.0"?>
-<database name="zed"
-          defaultIdMethod="native"
-          defaultPhpNamingMethod="underscore"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
-          namespace="SprykerFeature\Zed\Country\Persistence\Propel"
-          package="vendor.spryker.spryker.Bundles.Country.src.SprykerFeature.Zed.Country.Persistence.Propel">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" defaultIdMethod="native" defaultPhpNamingMethod="underscore" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" namespace="SprykerFeature\Zed\Country\Persistence\Propel" package="vendor.spryker.spryker.Bundles.Country.src.SprykerFeature.Zed.Country.Persistence.Propel">
 
     <table name="spy_country" phpName="SpyCountry">
         <column name="id_country" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
@@ -21,7 +15,7 @@
         <unique>
             <unique-column name="iso3_code"/>
         </unique>
-    </table>
+    <id-method-parameter value="spy_country_pk_seq"/></table>
 
     <table name="spy_region" phpName="SpyRegion">
         <column name="id_region" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
@@ -37,6 +31,6 @@
         <foreign-key foreignTable="spy_country" phpName="SpyCountry">
             <reference local="fk_country" foreign="id_country"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_region_pk_seq"/></table>
 
 </database>

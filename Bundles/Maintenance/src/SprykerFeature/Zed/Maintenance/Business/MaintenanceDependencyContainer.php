@@ -17,6 +17,7 @@ use SprykerFeature\Zed\Maintenance\Business\Dependency\Manager;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackageFinder;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter;
+use SprykerFeature\Zed\Maintenance\Business\Model\PropelMigrationCleanerInterface;
 use SprykerFeature\Zed\Maintenance\MaintenanceConfig;
 use Symfony\Component\Process\Process;
 
@@ -144,4 +145,18 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
         );
     }
 
+    /**
+     * @return PropelMigrationCleanerInterface
+     */
+    public function createPropelMigrationCleaner()
+    {
+        return $this->getFactory()->createModelPropelMigrationCleaner(
+            $this->createPropelBaseFolderFinder()
+        );
+    }
+
+    public function createPropelBaseFolderFinder()
+    {
+        return $this->getFactory()->createModelPropelBaseFolderFinder($this->getConfig()->getPathToSpryker());
+    }
 }

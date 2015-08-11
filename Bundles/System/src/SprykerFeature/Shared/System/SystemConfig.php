@@ -50,14 +50,34 @@ interface SystemConfig extends ConfigInterface
     const ZED_SSL_EXCLUDED = 'ZED_SSL_EXCLUDED';
 
     /**
-     * Database
+     * Database - DB
+     */
+
+    /**
+     * @deprecated
      */
     const ZED_MYSQL_USERNAME = 'ZED_MYSQL_USERNAME';
-    const ZED_MYSQL_PASSWORD = 'ZED_MYSQL_PASSWORD';
-    const ZED_MYSQL_DATABASE = 'ZED_MYSQL_DATABASE';
-    const ZED_MYSQL_HOST = 'ZED_MYSQL_HOST';
-    const ZED_MYSQL_PORT = 'ZED_MYSQL_PORT';
 
+    /**
+     * @deprecated
+     */
+    const ZED_MYSQL_PASSWORD = 'ZED_MYSQL_PASSWORD';
+
+    /**
+     * @deprecated
+     */
+    const ZED_MYSQL_DATABASE = 'ZED_MYSQL_DATABASE';
+
+    /**
+     * @deprecated
+     */
+    const ZED_MYSQL_HOST = 'ZED_MYSQL_HOST';
+
+    /**
+     * @deprecated
+     */
+    const ZED_MYSQL_PORT = 'ZED_MYSQL_PORT';
+    
     /**
      * Database
      */

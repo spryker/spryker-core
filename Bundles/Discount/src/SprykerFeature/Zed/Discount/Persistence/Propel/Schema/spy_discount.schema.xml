@@ -1,24 +1,17 @@
 <?xml version="1.0"?>
-<database name="zed"
-          namespace="SprykerFeature\Zed\Discount\Persistence\Propel"
-          namespaceAutoPackage="false"
-          package="vendor.spryker.spryker.Bundles.Discount.src.SprykerFeature.Zed.Discount.Persistence.Propel"
-          defaultIdMethod="native"
-          defaultPhpNamingMethod="underscore"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="SprykerFeature\Zed\Discount\Persistence\Propel" namespaceAutoPackage="false" package="vendor.spryker.spryker.Bundles.Discount.src.SprykerFeature.Zed.Discount.Persistence.Propel" defaultIdMethod="native" defaultPhpNamingMethod="underscore" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd">
 
     <table name="spy_discount" phpName="SpyDiscount">
-        <column name="id_discount" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
-        <column name="fk_discount_voucher_pool" type="INTEGER" required="false" />
+        <column name="id_discount" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_discount_voucher_pool" type="INTEGER" required="false"/>
         <column name="display_name" type="VARCHAR" size="255" required="true"/>
         <column name="description" type="VARCHAR" size="1024"/>
-        <column name="amount" type="FLOAT" required="true" />
-        <column name="type" type="ENUM" valueSet="fixed, percent" />
+        <column name="amount" type="FLOAT" required="true"/>
+        <column name="type" type="ENUM" valueSet="fixed, percent"/>
         <column name="calculator_plugin" type="VARCHAR" size="255"/>
         <column name="collector_plugin" type="VARCHAR" size="255" required="true"/>
-        <column name="is_privileged" type="BOOLEAN" default="false" />
-        <column name="is_active" type="BOOLEAN" default="false" />
+        <column name="is_privileged" type="BOOLEAN" default="false"/>
+        <column name="is_active" type="BOOLEAN" default="false"/>
         <column name="valid_from" type="TIMESTAMP" required="false"/>
         <column name="valid_to" type="TIMESTAMP" required="false"/>
 
@@ -27,11 +20,11 @@
         <foreign-key foreignTable="spy_discount_voucher_pool" phpName="VoucherPool" refPhpName="Discount">
             <reference local="fk_discount_voucher_pool" foreign="id_discount_voucher_pool"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_discount_pk_seq"/></table>
 
     <table name="spy_discount_decision_rule" phpName="SpyDiscountDecisionRule">
-        <column name="id_discount_decision_rule" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
-        <column name="fk_discount" type="INTEGER" required="false" />
+        <column name="id_discount_decision_rule" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_discount" type="INTEGER" required="false"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="decision_rule_plugin" type="VARCHAR" size="255" required="true"/>
         <column name="value" type="VARCHAR" size="255" required="true"/>
@@ -41,28 +34,28 @@
         <foreign-key foreignTable="spy_discount" phpName="Discount" refPhpName="DecisionRule">
             <reference local="fk_discount" foreign="id_discount"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_discount_decision_rule_pk_seq"/></table>
 
     <table name="spy_discount_voucher_pool" phpName="SpyDiscountVoucherPool">
-        <column name="id_discount_voucher_pool" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
-        <column name="fk_discount_voucher_pool_category" type="INTEGER" required="false" />
+        <column name="id_discount_voucher_pool" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_discount_voucher_pool_category" type="INTEGER" required="false"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="template" type="VARCHAR" size="255" required="false"/>
-        <column name="is_active" type="BOOLEAN" default="false" />
-        <column name="is_infinitely_usable" type="BOOLEAN" default="false" />
+        <column name="is_active" type="BOOLEAN" default="false"/>
+        <column name="is_infinitely_usable" type="BOOLEAN" default="false"/>
 
         <behavior name="timestampable"/>
 
         <foreign-key foreignTable="spy_discount_voucher_pool_category" phpName="VoucherPoolCategory" refPhpName="DiscountVoucherPool">
             <reference local="fk_discount_voucher_pool_category" foreign="id_discount_voucher_pool_category"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_discount_voucher_pool_pk_seq"/></table>
 
     <table name="spy_discount_voucher" phpName="SpyDiscountVoucher">
-        <column name="id_discount_voucher" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
-        <column name="fk_discount_voucher_pool" type="INTEGER" required="false" />
+        <column name="id_discount_voucher" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_discount_voucher_pool" type="INTEGER" required="false"/>
         <column name="code" type="VARCHAR" size="255" required="true"/>
-        <column name="is_active" type="BOOLEAN" default="false" />
+        <column name="is_active" type="BOOLEAN" default="false"/>
 
         <behavior name="timestampable"/>
 
@@ -73,12 +66,12 @@
         <foreign-key foreignTable="spy_discount_voucher_pool" phpName="VoucherPool" refPhpName="DiscountVoucher">
             <reference local="fk_discount_voucher_pool" foreign="id_discount_voucher_pool"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_discount_voucher_pk_seq"/></table>
 
     <table name="spy_discount_voucher_pool_category" phpName="SpyDiscountVoucherPoolCategory">
-        <column name="id_discount_voucher_pool_category" required="true" type="INTEGER" autoIncrement="true" primaryKey="true" />
+        <column name="id_discount_voucher_pool_category" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
 
         <behavior name="timestampable"/>
-    </table>
+    <id-method-parameter value="spy_discount_voucher_pool_category_pk_seq"/></table>
 </database>

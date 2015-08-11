@@ -1,25 +1,18 @@
 <?xml version="1.0"?>
-<database name="zed"
-          defaultIdMethod="native"
-          defaultPhpNamingMethod="underscore"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
-          namespace="SprykerFeature\Zed\Product\Persistence\Propel"
-          identifierQuoting="true"
-          package="vendor.spryker.spryker.Bundles.Product.src.SprykerFeature.Zed.Product.Persistence.Propel">
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" defaultIdMethod="native" defaultPhpNamingMethod="underscore" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" namespace="SprykerFeature\Zed\Product\Persistence\Propel" identifierQuoting="true" package="vendor.spryker.spryker.Bundles.Product.src.SprykerFeature.Zed.Product.Persistence.Propel">
 
     <table name="spy_abstract_product" idMethod="native" allowPkInsert="true" phpName="SpyAbstractProduct">
         <column name="id_abstract_product" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="sku" required="true" type="VARCHAR" size="255"/>
         <column name="attributes" required="true" type="LONGVARCHAR"/>
-        <column name="fk_tax_set" type="INTEGER" required="false" />
+        <column name="fk_tax_set" type="INTEGER" required="false"/>
         <foreign-key foreignTable="spy_tax_set">
-            <reference local="fk_tax_set" foreign="id_tax_set" />
+            <reference local="fk_tax_set" foreign="id_tax_set"/>
         </foreign-key>
         <unique>
             <unique-column name="sku"/>
         </unique>
-    </table>
+    <id-method-parameter value="spy_abstract_product_pk_seq"/></table>
 
     <table name="spy_abstract_product_localized_attributes" idMethod="native" allowPkInsert="true" phpName="SpyLocalizedAbstractProductAttributes" identifierQuoting="true">
         <column name="id_abstract_attributes" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
@@ -37,7 +30,7 @@
             <unique-column name="fk_abstract_product"/>
             <unique-column name="fk_locale"/>
         </unique>
-    </table>
+    <id-method-parameter value="spy_abstract_product_localized_attributes_pk_seq"/></table>
 
     <table name="spy_product" idMethod="native" allowPkInsert="true" phpName="SpyProduct" identifierQuoting="true">
         <column name="id_product" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
@@ -51,7 +44,7 @@
         <foreign-key foreignTable="spy_abstract_product">
             <reference local="fk_abstract_product" foreign="id_abstract_product"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_product_pk_seq"/></table>
 
     <table name="spy_product_localized_attributes" idMethod="native" allowPkInsert="true" phpName="SpyLocalizedProductAttributes" identifierQuoting="true">
         <column name="id_attributes" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
@@ -70,7 +63,7 @@
             <unique-column name="fk_product"/>
             <unique-column name="fk_locale"/>
         </unique>
-    </table>
+    <id-method-parameter value="spy_product_localized_attributes_pk_seq"/></table>
 
     <table name="spy_product_to_bundle" identifierQuoting="true">
         <column name="fk_product" type="INTEGER" required="true" primaryKey="true"/>
@@ -79,7 +72,7 @@
             <reference local="fk_product" foreign="id_product"/>
         </foreign-key>
         <foreign-key foreignTable="spy_product" phpName="BundleProduct" refPhpName="BundleProduct">
-            <reference local="fk_related_product" foreign="id_product" />
+            <reference local="fk_related_product" foreign="id_product"/>
         </foreign-key>
     </table>
 
@@ -91,7 +84,7 @@
         <foreign-key foreignTable="spy_attribute_type">
             <reference local="fk_type" foreign="id_type"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_attributes_metadata_pk_seq"/></table>
     <table name="spy_attribute_type" idMethod="native" allowPkInsert="true" phpName="SpyProductAttributeType" identifierQuoting="true">
         <column name="id_type" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" type="VARCHAR" required="true"/>
@@ -100,11 +93,11 @@
         <foreign-key foreignTable="spy_attribute_type">
             <reference local="fk_parent_type" foreign="id_type"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_attribute_type_pk_seq"/></table>
 
     <table name="spy_attribute_type_value" idMethod="native" allowPkInsert="true" phpName="SpyTypeValue" identifierQuoting="true">
         <column name="id" autoIncrement="true" primaryKey="true" type="INTEGER"/>
-        <column name="fk_type" type="INTEGER" required="true" />
+        <column name="fk_type" type="INTEGER" required="true"/>
         <column name="key" type="VARCHAR" required="true"/>
         <column name="value" type="VARCHAR" required="true"/>
         <column name="fk_locale" type="INTEGER" required="false"/>
@@ -116,5 +109,5 @@
             <unique-column name="fk_type"/>
             <unique-column name="key"/>
         </unique>
-    </table>
+    <id-method-parameter value="spy_attribute_type_value_pk_seq"/></table>
 </database>

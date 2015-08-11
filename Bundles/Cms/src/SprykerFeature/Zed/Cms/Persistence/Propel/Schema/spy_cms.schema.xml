@@ -1,37 +1,35 @@
 <?xml version="1.0"?>
-<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-          name="zed"
-          defaultIdMethod="native"
-          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed"
+          defaultIdMethod="native" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
           namespace="SprykerFeature\Zed\Cms\Persistence\Propel"
           package="vendor.spryker.spryker.Bundles.Cms.src.SprykerFeature.Zed.Cms.Persistence.Propel">
 
     <table name="spy_cms_template" phpName="SpyCmsTemplate">
         <column name="id_cms_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="template_name" type="VARCHAR" size="255" required="true" />
-        <column name="template_path" type="VARCHAR" size="255" required="true" />
+        <column name="template_name" type="VARCHAR" size="255" required="true"/>
+        <column name="template_path" type="VARCHAR" size="255" required="true"/>
         <unique>
             <unique-column name="template_path"/>
         </unique>
         <index>
             <index-column name="template_path"/>
         </index>
-    </table>
+    <id-method-parameter value="spy_cms_template_pk_seq"/></table>
 
     <table name="spy_cms_page" phpName="SpyCmsPage">
         <column name="id_cms_page" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_template" type="INTEGER" required="true"/>
-        <column name="validFrom" type="TIMESTAMP" required="false" />
-        <column name="validTo" type="TIMESTAMP" required="false" />
-        <column name="is_active" type="BOOLEAN" required="true" default="true" />
+        <column name="valid_from" type="TIMESTAMP" required="false"/>
+        <column name="valid_to" type="TIMESTAMP" required="false"/>
+        <column name="is_active" type="BOOLEAN" required="true" default="true"/>
         <foreign-key foreignTable="spy_cms_template" phpName="CmsTemplate" onDelete="CASCADE">
             <reference foreign="id_cms_template" local="fk_template"/>
         </foreign-key>
-    </table>
+    <id-method-parameter value="spy_cms_page_pk_seq"/></table>
 
     <table name="spy_cms_glossary_key_mapping" phpName="SpyCmsGlossaryKeyMapping">
         <column name="id_cms_glossary_key_mapping" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="fk_page" type="INTEGER" required="true" />
+        <column name="fk_page" type="INTEGER" required="true"/>
         <column name="fk_glossary_key" type="INTEGER" required="true"/>
         <column name="placeholder" type="VARCHAR" required="true"/>
         <foreign-key foreignTable="spy_cms_page" phpName="CmsPage" onDelete="CASCADE">
@@ -48,5 +46,5 @@
             <index-column name="fk_page"/>
             <index-column name="placeholder"/>
         </index>
-    </table>
+    <id-method-parameter value="spy_cms_glossary_key_mapping_pk_seq"/></table>
 </database>
