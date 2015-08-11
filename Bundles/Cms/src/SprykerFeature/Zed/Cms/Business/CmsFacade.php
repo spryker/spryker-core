@@ -93,6 +93,18 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
+     * @param PageKeyMappingTransfer $pageKeyMapping
+     *
+     * @return PageKeyMappingTransfer
+     */
+    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMapping)
+    {
+        $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
+
+        return $glossaryKeyMappingManager->savePageKeyMappingAndTouch($pageKeyMapping);
+    }
+
+    /**
      * @param int $idPage
      * @param string $placeholder
      *
@@ -202,6 +214,31 @@ class CmsFacade extends AbstractFacade
     {
         $pageManager = $this->getDependencyContainer()->getPageManager();
         $pageManager->touchPageActive($page);
+    }
+
+    /**
+     * @param PageTransfer $page
+     * @param string $url
+     *
+     * @return UrlTransfer
+     */
+    public function savePageUrlAndTouch(PageTransfer $page, $url)
+    {
+        $pageManager = $this->getDependencyContainer()->getPageManager();
+
+        return $pageManager->savePageUrlAndTouch($page, $url);
+    }
+
+    /**
+     * @param int $idPage
+     *
+     * @return bool
+     */
+    public function deleteGlossaryKeysByIdPage($idPage)
+    {
+        $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
+
+        return $glossaryKeyMappingManager->deleteGlossaryKeysByIdPage($idPage);
     }
 
 }

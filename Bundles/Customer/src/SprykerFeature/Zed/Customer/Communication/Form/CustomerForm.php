@@ -70,8 +70,8 @@ class CustomerForm extends AbstractForm
             $emailConstraints[] = new Callback([
                 'methods' => [
                     function ($email, ExecutionContext $context) {
-                        if ($this->getCustomerFacade()
-                            ->hasEmail($email)
+                        if ($this->customerQuery->findByEmail($email)
+                                ->count() > 0
                         ) {
                             $context->addViolation('Email is already used');
                         }
@@ -216,17 +216,6 @@ class CustomerForm extends AbstractForm
         }
 
         return $result;
-    }
-
-    /**
-     * @return CustomerFacade
-     */
-    protected function getCustomerFacade()
-    {
-        return $this->getLocator()
-            ->customer()
-            ->facade()
-            ;
     }
 
 }

@@ -15,7 +15,6 @@ use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 /**
  * @method CustomerCommunication getFactory()
  * @method CustomerQueryContainerInterface getQueryContainer()
- * @method CustomerDependencyContainer getDependencyContainer()
  * @method CustomerFacade getFacade()
  */
 class AddController extends AbstractController
