@@ -36,8 +36,9 @@ class PostgresqlCompatibilityConsole extends Console
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         if(Config::get(SystemConfig::ZED_DB_ENGINE) == 'pgsql') {
-            $this->info('Adjust propel config for PostgreSQL');
+            $this->info('Adjust propel config for PostgreSQL and missing functions (group_concat)');
             $this->getFacade()->adjustPropelSchemaFilesForPostgresql();
+            $this->getFacade()->adjustPostgresqlFunctions();
         }
     }
 

@@ -8,6 +8,10 @@ namespace SprykerEngine\Zed\Propel\Business\Model;
 use DOMDocument;
 use DOMXPath;
 use Symfony\Component\Finder\SplFileInfo;
+use SprykerEngine\Shared\Config;
+use SprykerFeature\Shared\System\SystemConfig;
+use Propel\Runtime\Propel;
+
 
 class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjusterInterface
 {
@@ -34,10 +38,45 @@ class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjuster
             $domChanged += $this->adjustForIdMethodParameter($dom);
             $domChanged += $this->adjustForNamedIndices($dom);
             if ($domChanged > 0) {
-                echo "Writing to " . $file;
                 $dom->save($file);
             }
         }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function addMissingFunctions()
+    {
+
+        $connection = Propel::getConnection();
+
+        $connection->exec("
+            CREATE OR REPLACE FUNCTION text_add(
+                IN  p_current text,
+                IN  p_next    anyelement,
+                OUT o_result  text )
+            RETURNS text AS \$BODY$
+            DECLARE
+
+            BEGIN
+                -- select row
+                o_result := CASE WHEN p_current IS NULL THEN p_next::text
+                                 WHEN p_next IS NULL THEN p_current::text
+                                 ELSE coalesce( p_current, '' ) || ',' || coalesce( p_next::text, '' ) END;
+            END;
+            \$BODY$
+            LANGUAGE plpgsql COST 1;
+
+            DROP AGGREGATE IF EXISTS group_concat( anyelement );
+
+            CREATE AGGREGATE group_concat( anyelement )
+            (
+                sfunc = text_add,
+                stype = text
+            );
+
+        ");
     }
 
     protected function adjustForNamedIndices(DOMDocument $dom)

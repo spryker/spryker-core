@@ -13,4 +13,9 @@ interface PostgresqlCompatibilityAdjusterInterface
      */
     public function adjustSchemaFiles();
 
+    /**
+     * @return mixed
+     */
+    public function addMissingFunctions();
+
 }
