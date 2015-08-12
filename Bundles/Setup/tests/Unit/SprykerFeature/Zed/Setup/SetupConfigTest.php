@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Unit\SprykerFeature\Zed\Setup\Business\Model;
+namespace Unit\SprykerFeature\Zed\Setup;
 
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -51,6 +51,11 @@ class SetupConfigTest extends \PHPUnit_Framework_TestCase
     public function testGetGeneratedDirectoryShouldReturnPathToGeneratedFiles()
     {
         $this->assertTrue(is_dir($this->getConfig()->getGeneratedDirectory()));
+    }
+
+    public function testGetSetupInstallCommandNamesMustReturnArray()
+    {
+        $this->assertInternalType('array', $this->getConfig()->getSetupInstallCommandNames());
     }
 
 }

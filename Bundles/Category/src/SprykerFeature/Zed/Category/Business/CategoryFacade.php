@@ -90,14 +90,15 @@ class CategoryFacade extends AbstractFacade
     /**
      * @param NodeTransfer $categoryNode
      * @param LocaleTransfer $locale
+     * @param bool $createUrlPath
      *
-     * @return int $nodeId
+     * @return int
      */
-    public function createCategoryNode(NodeTransfer $categoryNode, LocaleTransfer $locale)
+    public function createCategoryNode(NodeTransfer $categoryNode, LocaleTransfer $locale, $createUrlPath = true)
     {
         return $this->getDependencyContainer()
             ->createCategoryTreeWriter()
-            ->createCategoryNode($categoryNode, $locale)
+            ->createCategoryNode($categoryNode, $locale, $createUrlPath)
         ;
     }
 
