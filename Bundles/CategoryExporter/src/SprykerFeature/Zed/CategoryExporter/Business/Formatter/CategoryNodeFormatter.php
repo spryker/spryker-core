@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\CategoryExporter\Business\Formatter;
 
+use SprykerFeature\Shared\CategoryExporter\Business\CategoryNodeKeyInterface;
 use SprykerFeature\Zed\CategoryExporter\Business\Exploder\GroupedNodeExploderInterface;
 
 class CategoryNodeFormatter implements CategoryNodeFormatterInterface
@@ -33,18 +34,21 @@ class CategoryNodeFormatter implements CategoryNodeFormatterInterface
     {
         $categoryUrls = explode(',', $categoryNode['category_urls']);
 
+        /**
+         * @todo: Replace "Constant Interface" with a CategoryNode representation object or a Transfer object.
+         */
         return [
-            'node_id' => $categoryNode['node_id'],
-            'name' => $categoryNode['category_name'],
-            'url' => $categoryUrls[0],
-            'image' => $categoryNode['category_image_name'],
-            'children' => $this->nodeExploder->explodeGroupedNodes(
+            CategoryNodeKeyInterface::NODE_ID => $categoryNode[CategoryNodeKeyInterface::NODE_ID],
+            CategoryNodeKeyInterface::NAME => $categoryNode['category_name'],
+            CategoryNodeKeyInterface::URL => $categoryUrls[0],
+            CategoryNodeKeyInterface::IMAGE => $categoryNode['category_image_name'],
+            CategoryNodeKeyInterface::CHILDREN => $this->nodeExploder->explodeGroupedNodes(
                 $categoryNode,
                 'category_child_ids',
                 'category_child_names',
                 'category_child_urls'
             ),
-            'parents' => $this->nodeExploder->explodeGroupedNodes(
+            CategoryNodeKeyInterface::PARENTS => $this->nodeExploder->explodeGroupedNodes(
                 $categoryNode,
                 'category_parent_ids',
                 'category_parent_names',

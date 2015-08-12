@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\CategoryExporter\Business\Exploder;
 
+use SprykerFeature\Shared\CategoryExporter\Business\CategoryNodeKeyInterface;
+
 class GroupedNodeExploder implements GroupedNodeExploderInterface
 {
 
@@ -28,9 +30,9 @@ class GroupedNodeExploder implements GroupedNodeExploderInterface
         $urls = explode(',', $data[$urlsField]);
         $nodes = [];
         foreach ($ids as $key => $id) {
-            $nodes[$id]['node_id'] = $id;
-            $nodes[$id]['name'] = $names[$key];
-            $nodes[$id]['url'] = $urls[$key];
+            $nodes[$id][CategoryNodeKeyInterface::NODE_ID] = $id;
+            $nodes[$id][CategoryNodeKeyInterface::NAME] = $names[$key];
+            $nodes[$id][CategoryNodeKeyInterface::URL] = $urls[$key];
         }
 
         return $nodes;
