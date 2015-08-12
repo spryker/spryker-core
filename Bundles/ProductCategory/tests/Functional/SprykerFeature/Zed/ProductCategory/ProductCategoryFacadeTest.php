@@ -30,6 +30,12 @@ use Propel\Runtime\Propel;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
 
+/**
+ * @group SprykerFeature
+ * @group Zed
+ * @group ProductCategory
+ * @group ProductCategoryFacade
+ */
 class ProductCategoryFacadeTest extends AbstractFunctionalTest
 {
 
@@ -116,7 +122,7 @@ class ProductCategoryFacadeTest extends AbstractFunctionalTest
         $categoryNodeTransfer = new NodeTransfer();
         $categoryNodeTransfer->setFkCategory($idCategory);
         $categoryNodeTransfer->setIsRoot(true);
-        $this->categoryFacade->createCategoryNode($categoryNodeTransfer, $locale);
+        $this->categoryFacade->createCategoryNode($categoryNodeTransfer, $locale, false);
         $this->productCategoryFacade->createProductCategoryMapping($abstractSku, $categoryName, $locale);
 
         $this->assertTrue(

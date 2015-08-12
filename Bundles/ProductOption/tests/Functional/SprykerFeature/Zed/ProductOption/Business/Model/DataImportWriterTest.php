@@ -64,7 +64,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
 
         $result = SpyProductOptionTypeQuery::create()->findByImportKey('SHADE');
 
-        $this->assertEquals(1, $result->count(), 'Failed assetting that method is idempotent');
+        $this->assertEquals(1, $result->count(), 'Failed asserting that method is idempotent');
         $this->assertEquals('SHADE', $result[0]->getImportKey());
         $this->assertEquals('Shade', $result[0]->getSpyProductOptionTypeTranslations()[0]->getName());
     }
@@ -137,7 +137,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
             ->filterByFkProduct($product->getIdProduct())
             ->find();
 
-        $this->assertEquals(1, $result->count(), 'Failed assetting that method is idempotent');
+        $this->assertEquals(1, $result->count(), 'Failed asserting that method is idempotent');
 
         $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
     }
@@ -157,7 +157,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
             ->filterByFkProductOptionValue($optionType->getSpyProductOptionValues()[0]->getIdProductOptionValue())
             ->find();
 
-        $this->assertEquals(1, $result->count(), 'Failed assetting that method is idempotent');
+        $this->assertEquals(1, $result->count(), 'Failed asserting that method is idempotent');
 
         $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
     }
@@ -180,7 +180,7 @@ class DataImportWriterTest extends AbstractFunctionalTest
             ->filterByFkProductOptionTypeUsageB($productOptionFitting->getIdProductOptionTypeUsage())
             ->find();
 
-        $this->assertEquals(1, $result->count(), 'Failed assetting that method is idempotent');
+        $this->assertEquals(1, $result->count(), 'Failed asserting that method is idempotent');
 
         $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
     }
