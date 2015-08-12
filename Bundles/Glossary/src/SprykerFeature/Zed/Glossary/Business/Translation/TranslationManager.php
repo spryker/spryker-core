@@ -8,10 +8,8 @@ namespace SprykerFeature\Zed\Glossary\Business\Translation;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
 use Propel\Runtime\Exception\PropelException;
-use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
-use SprykerEngine\Zed\Locale\Persistence\Propel\SpyLocaleQuery;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
 use SprykerFeature\Zed\Glossary\Business\Exception\TranslationExistsException;
@@ -90,7 +88,7 @@ class TranslationManager implements TranslationManagerInterface
                 $locale = $this->localeFacade->getLocale($availableLocales[$localeId]);
                 $translationTransfer = $this->createTranslationTransfer($locale, $glossaryKey, $formData[self::LOCALE_PREFIX . $locale->getIdLocale()]);
 
-                $this->saveTranslation($translationTransfer);
+                $this->saveAndTouchTranslation($translationTransfer);
             }
         }
 
@@ -364,20 +362,26 @@ class TranslationManager implements TranslationManagerInterface
      * @throws MissingLocaleException
      * @throws TranslationExistsException
      * @throws MissingTranslationException
+     * @throws \Exception
      */
     public function saveAndTouchTranslation(TranslationTransfer $transferTranslation)
     {
-        if (is_null($transferTranslation->getIdGlossaryTranslation())) {
-            $translationEntity = $this->createAndTouchTranslationFromTransfer($transferTranslation);
-            $transferTranslation->setIdGlossaryTranslation($translationEntity->getIdGlossaryTranslation());
+        Propel::getConnection()->beginTransaction();
 
-            return $transferTranslation;
-        } else {
-            $translationEntity = $this->getTranslationFromTransfer($transferTranslation);
-            $this->doUpdateAndTouchTranslation($translationEntity);
+        try {
+            $transferTranslationNew = $this->saveTranslation($transferTranslation);
 
-            return $transferTranslation;
+            if ($transferTranslationNew->getIsActive()) {
+                $this->insertActiveTouchRecord($transferTranslationNew->getIdGlossaryTranslation());
+            }
+
+            Propel::getConnection()->commit();
+        } catch (\Exception $e) {
+            Propel::getConnection()->rollBack();
+            throw $e;
         }
+
+        return $transferTranslation;
     }
 
     /**
