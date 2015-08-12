@@ -369,10 +369,10 @@ class TranslationManager implements TranslationManagerInterface
         Propel::getConnection()->beginTransaction();
 
         try {
-            $transferTranslationNew = $this->saveTranslation($transferTranslation);
+            $transferTranslation = $this->saveTranslation($transferTranslation);
 
-            if ($transferTranslationNew->getIsActive()) {
-                $this->insertActiveTouchRecord($transferTranslationNew->getIdGlossaryTranslation());
+            if ($transferTranslation->getIsActive()) {
+                $this->insertActiveTouchRecord($transferTranslation->getIdGlossaryTranslation());
             }
 
             Propel::getConnection()->commit();
