@@ -82,7 +82,7 @@ class DateFormatter
      */
     protected function formatDate($date, $dateFormat, \DateTimeZone $timezone = null)
     {
-        if (!isset($this->context->dateFormat[$dateFormat])) {
+        if (!array_key_exists($dateFormat, $this->context->dateFormat)) {
             throw new UnsupportedDateFormatException(sprintf('Unsupported date format: %s', $dateFormat));
         }
 
