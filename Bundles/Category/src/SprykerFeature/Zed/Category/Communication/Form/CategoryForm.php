@@ -6,108 +6,92 @@
 
 namespace SprykerFeature\Zed\Category\Communication\Form;
 
-use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Zed\Ide\FactoryAutoCompletion\CategoryCommunication;
-use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
-use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Constraints as Assert;
+use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategory;
+use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
+use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryQuery;
+use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CategoryForm extends AbstractForm
 {
 
     const NAME = 'name';
-    const IS_ACTIVE = 'is_active';
-    const ID_CATEGORY = 'id_category';
+    const CATEGORY = 'id_category';
+    const SUBMIT = 'submit';
 
     /**
-     * @var FactoryInterface|CategoryCommunication
+     * @var SpyCategoryQuery
      */
-    protected $factory;
+    protected $categoryQuery;
 
     /**
-     * @var LocaleTransfer
+     * @param SpyCategoryQuery $categoryQuery
      */
-    protected $locale;
+    public function __construct(SpyCategoryQuery $categoryQuery)
+    {
+        $this->categoryQuery = $categoryQuery;
+    }
 
     /**
-     * @param Request $request
-     * @param FactoryInterface $factory
-     * @param LocaleTransfer $locale
-     * @param QueryContainerInterface $queryContainer
+     * @return CategoryForm
      */
-    public function __construct(
-        Request $request,
-        FactoryInterface $factory,
-        LocaleTransfer $locale,
-        QueryContainerInterface $queryContainer = null
-    ) {
-        parent::__construct($request, $queryContainer);
-        $this->factory = $factory;
-        $this->locale = $locale;
+    protected function buildFormFields()
+    {
+        return $this->addText(self::NAME, [
+            'constraints' => [
+                new NotBlank(),
+            ],
+        ])
+            ->addChoice(self::CATEGORY, [
+                'label' => 'Parent',
+                'placeholder' => '-select-',
+                'choices' => $this->getTreeForSelect(),
+            ])
+            ;
     }
 
     /**
      * @return array
      */
-    protected function getDefaultData()
+    protected function getTreeForSelect()
     {
-        if ($this->getIdCategory()) {
-            return [
-                self::ID_CATEGORY => $this->getIdCategory(),
-                self::NAME => $this->stateContainer->getRequestValue(self::NAME),
-                self::IS_ACTIVE => $this->stateContainer->getRequestValue(self::IS_ACTIVE),
-            ];
-        }
-
         return [
-            self::IS_ACTIVE => true,
+            SpyCustomerTableMap::COL_SALUTATION_MR => SpyCustomerTableMap::COL_SALUTATION_MR,
+            SpyCustomerTableMap::COL_SALUTATION_MRS => SpyCustomerTableMap::COL_SALUTATION_MRS,
+            SpyCustomerTableMap::COL_SALUTATION_DR => SpyCustomerTableMap::COL_SALUTATION_DR,
         ];
     }
 
-    public function addFormFields()
-    {
-        $this->addField(self::ID_CATEGORY);
-        $this->addField(self::NAME)
-            ->setConstraints(
-                [
-                    new Assert\Type([
-                        'type' => 'string',
-                    ]),
-                    new Assert\NotBlank(),
-                    $this->factory->createConstraintCategoryNameExists(
-                        $this->queryContainer,
-                        $this->getIdCategory(),
-                        $this->getLocale()
-                    ),
-                ]
-            );
-
-        $this->addField(self::IS_ACTIVE)
-            ->setConstraints(
-                [
-                    new Assert\Type(
-                        ['type' => 'boolean']
-                    ),
-                ]
-            );
-    }
-
     /**
-     * @return int
+     * @return array
      */
-    protected function getIdCategory()
+    protected function populateFormFields()
     {
-        return $this->stateContainer->getRequestValue(self::ID_CATEGORY);
-    }
+        $result = [
+            self::CATEGORY => null,
+            self::NAME => '',
+        ];
 
-    /**
-     * @return LocaleTransfer
-     */
-    protected function getLocale()
-    {
-        return $this->locale;
+        /**
+         * @var SpyCategory $category
+         */
+        $category = $this->categoryQuery->innerJoinAttribute()
+            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name') //does ze join
+            ->findOne()
+        ;
+
+        //dump($category->toArray());
+        if ($category) {
+            $category = $category->toArray();
+            $result = [
+                self::CATEGORY => $category[self::CATEGORY],
+                self::NAME => $category[self::NAME]
+            ];
+        }
+
+        return $result;
     }
 
 }
