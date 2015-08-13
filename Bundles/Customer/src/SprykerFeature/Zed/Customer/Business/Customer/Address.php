@@ -64,7 +64,10 @@ class Address
 
         $entity = new SpyCustomerAddress();
         $entity->fromArray($addressTransfer->toArray());
-        $entity->setFkCountry($this->getCustomerCountryId());
+
+        $fkCountry = $this->retrieveFkCountry($addressTransfer);
+        $entity->setFkCountry($fkCountry);
+
         $entity->setCustomer($customer);
         $entity->save();
 
@@ -428,6 +431,27 @@ class Address
         $entity->delete();
 
         return $oldAddressTransfer;
+    }
+
+    /**
+     * @param CustomerAddressTransfer $addressTransfer
+     * @return int
+     * @throws CountryNotFoundException
+     */
+    protected function retrieveFkCountry(CustomerAddressTransfer $addressTransfer)
+    {
+        $fkCountry = $addressTransfer->getFkCountry();
+        if (empty($fkCountry)) {
+            $iso2Code = $addressTransfer->getIso2Code();
+            if (false === empty($iso2Code)) {
+                $fkCountry = $this->countryFacade->getIdCountryByIso2Code($iso2Code);
+                return $fkCountry;
+            } else {
+                $fkCountry = $this->getCustomerCountryId();
+                return $fkCountry;
+            }
+        }
+        return $fkCountry;
     }
 
 }
