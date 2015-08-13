@@ -66,6 +66,9 @@ interface CustomerClientInterface
      */
     public function login(CustomerInterface $customerTransfer);
 
+    /**
+     * @return bool
+     */
     public function logout();
 
     /**

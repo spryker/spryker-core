@@ -118,11 +118,21 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      */
     public function login(CustomerInterface $customerTransfer)
     {
-        return $this->getDependencyContainer()->createZedCustomerStub()->login($customerTransfer);
+        $result = $this->getDependencyContainer()->createZedCustomerStub()->login($customerTransfer);
+
+        if ($result instanceof CustomerInterface) {
+            $email = $result->getEmail();
+
+            if (!empty($email)) {
+                $this->setCustomer($result);
+            }
+        }
+
+        return $result;
     }
 
     /**
-     * @return mixed
+     * @return bool
      */
     public function logout()
     {

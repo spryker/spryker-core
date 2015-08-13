@@ -26,7 +26,7 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()
             ->registerCustomer($customerTransfer)
-            ;
+        ;
     }
 
     /**
@@ -38,7 +38,7 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()
             ->confirmRegistration($customerTransfer)
-            ;
+        ;
     }
 
     /**
@@ -50,7 +50,7 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()
             ->forgotPassword($customerTransfer)
-            ;
+        ;
     }
 
     /**
@@ -62,7 +62,7 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()
             ->restorePassword($customerTransfer)
-            ;
+        ;
     }
 
     /**

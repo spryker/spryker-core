@@ -83,7 +83,7 @@ class SecurityServiceProvider extends AbstractPlugin implements
             ],
 
             [
-                '^/customer/(register|login|forgot-password|set-password)',
+                '^/customer/(register|login|status|profile)',
                 'IS_AUTHENTICATED_ANONYMOUSLY',
             ],
             [

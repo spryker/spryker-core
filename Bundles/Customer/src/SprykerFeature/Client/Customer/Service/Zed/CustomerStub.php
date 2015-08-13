@@ -17,9 +17,6 @@ use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
 class CustomerStub implements CustomerStubInterface
 {
-
-    const COST_OF_CRYPT = 12;
-
     /**
      * @var ZedRequestClient
      */
@@ -110,13 +107,6 @@ class CustomerStub implements CustomerStubInterface
      */
     public function register(CustomerInterface $customerTransfer)
     {
-        $encoder = new BCryptPasswordEncoder(self::COST_OF_CRYPT);
-        $password = $encoder->encodePassword($customerTransfer->getPassword(), '');
-
-        // @todo: replace constant with query
-        $customerTransfer->setFkCustomerGroup(2);
-        $customerTransfer->setPassword($password);
-
         return $this->zedStub->call('/customer/gateway/register', $customerTransfer);
     }
 
@@ -127,11 +117,6 @@ class CustomerStub implements CustomerStubInterface
      */
     public function restorePassword(CustomerInterface $customerTransfer)
     {
-        $encoder = new BCryptPasswordEncoder(self::COST_OF_CRYPT);
-        $password = $encoder->encodePassword($customerTransfer->getPassword(), '');
-
-        $customerTransfer->setPassword($password);
-
         return $this->zedStub->call('/customer/gateway/restore-password', $customerTransfer);
     }
 
