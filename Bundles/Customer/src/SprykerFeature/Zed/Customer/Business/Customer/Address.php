@@ -119,17 +119,20 @@ class Address
     {
         $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
 
-        $entity = $this->queryContainer->queryAddressForCustomer($addressTransfer->getIdCustomerAddress(), $customer->getEmail())
-            ->findOne()
-        ;
+        $entity = $this->queryContainer->queryAddressForCustomer(
+            $addressTransfer->getIdCustomerAddress(),
+            $customer->getEmail())
+            ->findOne();
 
         if (!$entity) {
             throw new AddressNotFoundException();
         }
 
+        $fkCountry = $this->retrieveFkCountry($addressTransfer);
+
         $entity->fromArray($addressTransfer->toArray());
         $entity->setCustomer($customer);
-        $entity->setFkCountry($this->getCustomerCountryId());
+        $entity->setFkCountry($fkCountry);
         $entity->save();
 
         return $this->entityToTransfer($entity);
