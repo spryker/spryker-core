@@ -9,29 +9,29 @@
                     {% for orderItem in orderItems %}
                         <tr>
                             <th>{{ orderItem.name }}</th>
-                            <td>{{ orderItem.GrossPrice | currency  }}</td>
+                            <td class="text-right">{{ orderItem.GrossPrice | currency  }}</td>
                             <td>{{ 'gross price per item' | trans }}</td>
                         </tr>
                         {% for orderItemOption in orderItem.options %}
                             <tr>
-                                <td>&nbsp;&nbsp;&nbsp;{{ orderItemOption.LabelOptionType }}</td>
-                                <td> + {{ orderItemOption.PriceToPay | currency  }}</td>
+                                <td> + {{ orderItemOption.LabelOptionType }}</td>
+                                <td class="text-right">{{ orderItemOption.PriceToPay | currency  }}</td>
                                 <td>{{ 'option price' | trans }}</td>
                             </tr>
                         {% endfor %}
                         <tr>
                             <th>&nbsp;</th>
-                            <td>&nbsp;&nbsp;&nbsp;{{ orderItem.Quantity }} x {{ orderItem.PriceToPay | currency  }}</td>
+                            <td class="text-right">{{ orderItem.Quantity }} x {{ orderItem.PriceToPay | currency  }}</td>
                             <td>{{ 'price to pay' | trans }}</td>
                         </tr>
                     {% endfor %}
                     <tr>
                         <th>{{ 'Sub total' | trans }}</th>
-                        <td>{{ orderDetails.subTotal | currency  }}</td>
+                        <td class="text-right">{{ orderDetails.subTotal | currency  }}</td>
                     </tr>
                     <tr>
                         <th>{{ 'Grand total' | trans }}</th>
-                        <td>{{ orderDetails.grandTotal | currency  }}</td>
+                        <td class="text-right">{{ orderDetails.grandTotal | currency  }}</td>
                     </tr>
                 </table>
 
