@@ -12,8 +12,6 @@ interface ReaderInterface
     /**
      * @param mixed $inputData
      *
-     * @throws Exception\SourceNotReadableException
-     *
      * @return Input
      */
     public function read($inputData);

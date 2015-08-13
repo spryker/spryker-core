@@ -10,7 +10,7 @@ use SprykerFeature\Zed\Distributor\Persistence\Propel\Map\SpyDistributorItemType
 use SprykerFeature\Zed\Distributor\Persistence\Propel\Map\SpyDistributorReceiverTableMap;
 use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemQuery;
 use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery;
-use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
+use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 
 /**
  * @method DistributorPersistence getFactory()

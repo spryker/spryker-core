@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\SearchPage\Communication\Form;
 
-use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
+use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 use SprykerFeature\Zed\SearchPage\Persistence\SearchPageQueryContainer;
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 use Symfony\Component\Validator\Constraints;

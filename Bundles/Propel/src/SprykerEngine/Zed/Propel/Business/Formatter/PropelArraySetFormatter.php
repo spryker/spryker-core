@@ -1,9 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Library\Propel\Formatter;
+namespace SprykerEngine\Zed\Propel\Business\Formatter;
 
 use Propel\Runtime\ActiveQuery\BaseModelCriteria;
 use Propel\Runtime\DataFetcher\DataFetcherInterface;

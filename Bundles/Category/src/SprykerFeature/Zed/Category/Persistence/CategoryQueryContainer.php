@@ -15,7 +15,7 @@ use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTableQuery;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNodeQuery;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryQuery;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
+use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\ActiveQuery\Join;

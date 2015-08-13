@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Library\Import\Reader;
 
 use SprykerFeature\Zed\Library\Import\Input;
 use SprykerFeature\Zed\Library\Import\ReaderInterface;
-use SprykerFeature\Zed\Library\Import\Exception;
 
 class CsvFileReader implements ReaderInterface
 {
@@ -43,28 +42,26 @@ class CsvFileReader implements ReaderInterface
     /**
      * @param mixed $filepath
      *
-     * @throws Exception\SourceNotReadableException
-     *
      * @return Input
      */
     public function read($filepath)
     {
         if (!is_string($filepath)) {
-            throw new Exception\SourceNotReadableException('This is not a valid filename.');
+            throw new \RuntimeException('This is not a valid filename.');
         }
 
         if (!stream_is_local($filepath)) {
-            throw new Exception\SourceNotReadableException(sprintf('This is not a local file "%s".', $filepath));
+            throw new \RuntimeException(sprintf('This is not a local file "%s".', $filepath));
         }
 
         if (!file_exists($filepath)) {
-            throw new Exception\SourceNotReadableException(sprintf('File "%s" not found.', $filepath));
+            throw new \RuntimeException(sprintf('File "%s" not found.', $filepath));
         }
 
         try {
             $file = new \SplFileObject($filepath, 'rb');
         } catch (\RuntimeException $e) {
-            throw new Exception\SourceNotReadableException(sprintf('Error opening file "%s".', $filepath), 0, $e);
+            throw new \RuntimeException(sprintf('Error opening file "%s".', $filepath), 0, $e);
         }
 
         $file->setFlags(\SplFileObject::READ_CSV | \SplFileObject::SKIP_EMPTY);
@@ -83,7 +80,7 @@ class CsvFileReader implements ReaderInterface
             }
 
             if (count($headerRow) !== count($row)) {
-                throw new Exception\SourceNotReadableException('Some rows contain different count of fields than the header.');
+                throw new \RuntimeException('Some rows contain different count of fields than the header.');
             }
 
             $data[] = array_combine($headerRow, $row);

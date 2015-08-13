@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryCommunication;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
-use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
+use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints;
