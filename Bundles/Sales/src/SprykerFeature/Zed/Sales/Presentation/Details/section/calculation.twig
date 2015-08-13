@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col-md-4">
+
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Calculation' } %}
+
+            {% block widget_content %}
+
+                <table class="footable table table-stripped toggle-arrow-tiny">
+                    {% for orderItem in orderItems %}
+                        <tr>
+                            <th>{{ orderItem.name }}</th>
+                            <td>{{ orderItem.Quantity }} x {{ orderItem.GrossPrice | currency  }}</td>
+                        </tr>
+                        {% for orderItemOption in orderItem.options %}
+                            <tr>
+                                <td> {{ 'Option:' | trans }} {{ orderItemOption.LabelOptionType }}</td>
+                                <td> + {{ orderItemOption.PriceToPay | currency  }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% endfor %}
+                    <tr>
+                        <th>{{ 'Sub total' | trans }}</th>
+                        <td>{{ orderDetails.subTotal | currency  }}</td>
+                    </tr>
+                    <tr>
+                        <th>{{ 'Grand total' | trans }}</th>
+                        <td>{{ orderDetails.grandTotal | currency  }}</td>
+                    </tr>
+                </table>
+
+            {% endblock %}
+
+        {% endembed %}
+
+    </div>
+</div>
