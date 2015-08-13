@@ -27,6 +27,8 @@ use Symfony\Component\HttpFoundation\Request;
 class CategoryDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
+    protected $currentLocale;
+    
     /**
      * @return LocaleTransfer
      */
@@ -35,6 +37,15 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
         return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_LOCALE)
             ->getCurrentLocale()
         ;
+    }
+    
+    public function getCurrentLocale()
+    {
+        if (null === $this->currentLocale) {
+            $this->currentLocale = $this->createCurrentLocale();
+        }
+        
+        return $this->currentLocale;
     }
 
     /**
@@ -107,16 +118,24 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
      *
      * @return CategoryForm
      */
-    public function createCategoryForm(Request $request)
+    public function createCategoryForm($category_id)
     {
         $locale = $this->getCurrentLocale();
 
-        return $this->getFactory()->createFormCategoryForm(
+        $categoryQuery = $this->getQueryContainer()->queryCategoryById($category_id);
+
+        return $this->getFactory()->createFormCategoryForm($categoryQuery);
+
+        //createFormCategoryForm(\Symfony\Component\HttpFoundation\Request $request,
+        // \SprykerEngine\Shared\Kernel\Factory\FactoryInterface $factory,
+        // \Generated\Shared\Transfer\LocaleTransfer $locale,
+        // \SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface $queryContainer = null)
+/*        return $this->getFactory()->createFormCategoryForm(
             $request,
             $this->getFactory(),
             $locale,
             $this->getQueryContainer()
-        );
+        );*/
     }
 
     /**

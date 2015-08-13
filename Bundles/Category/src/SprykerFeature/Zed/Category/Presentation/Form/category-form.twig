@@ -1,31 +1,27 @@
-<spy-layer>
+{% extends '@Gui/Layout/layout.twig' %}
 
-    <form
-            class="spy-layout sparse"
-            ng-controller="FormController"
-            src="/category/form/category"
-            channel="category"
-            name="category-form"
-            >
-        <h3 ng-if="create">Create Category</h3>
-        <h3 ng-if="!create">Edit Category</h3>
+{% set widget_title = 'Customer details' %}
 
-        <div spy-input-text="field.name" options="{ label : 'Category Name' }"></div>
-        <div spy-input-switch="field.is_active" options="{ label : 'Is active' }"></div>
+{% block head_title widget_title | trans %}
 
-        <button ng-if="create"
-                class="button default"
-                type="submit"
-                ng-disabled="query"
-                ng-click="update()">
-            Create
-        </button>
+{% block content %}
 
-        <div ng-if="!create">
-            <button class="button cancel" type="button" ng-disabled="query" ng-click="abort()">Cancel</button>
-            <button class="button default" type="submit" ng-disabled="query" ng-click="update()">Update</button>
-        </div>
+    {% embed '@Gui/Partials/widget.twig' %}
 
-    </form>
+        {% block widget_header_content %}
+            <a class="btn btn-primary" href="/sales/details/?id-sales-order={{ idOrder }}">{{ 'View Order' | trans }}</a>
+        {% endblock %}
 
-</spy-layer>
+        {% block widget_content %}
+
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+
+            <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+            {{ form_end(form) }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
