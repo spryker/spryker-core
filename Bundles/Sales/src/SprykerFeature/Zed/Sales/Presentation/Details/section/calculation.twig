@@ -1,5 +1,5 @@
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
 
         {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Calculation' } %}
 
@@ -9,14 +9,21 @@
                     {% for orderItem in orderItems %}
                         <tr>
                             <th>{{ orderItem.name }}</th>
-                            <td>{{ orderItem.Quantity }} x {{ orderItem.GrossPrice | currency  }}</td>
+                            <td>{{ orderItem.GrossPrice | currency  }}</td>
+                            <td>{{ 'gross price per item' | trans }}</td>
                         </tr>
                         {% for orderItemOption in orderItem.options %}
                             <tr>
-                                <td> {{ 'Option:' | trans }} {{ orderItemOption.LabelOptionType }}</td>
+                                <td>&nbsp;&nbsp;&nbsp;{{ orderItemOption.LabelOptionType }}</td>
                                 <td> + {{ orderItemOption.PriceToPay | currency  }}</td>
+                                <td>{{ 'option price' | trans }}</td>
                             </tr>
                         {% endfor %}
+                        <tr>
+                            <th>&nbsp;</th>
+                            <td>&nbsp;&nbsp;&nbsp;{{ orderItem.Quantity }} x {{ orderItem.PriceToPay | currency  }}</td>
+                            <td>{{ 'price to pay' | trans }}</td>
+                        </tr>
                     {% endfor %}
                     <tr>
                         <th>{{ 'Sub total' | trans }}</th>
