@@ -55,13 +55,17 @@ class CmsPageForm extends AbstractForm
     protected $constraints;
 
     /**
+     * @var string
+     */
+    protected $pageUrl;
+
+    /**
      * @param SpyCmsTemplateQuery $templateQuery
      * @param SpyCmsPageQuery $pageUrlByIdQuery
      * @param UrlFacade $urlFacade
      * @param CmsConstraint $constraints
      * @param string $formType
-     * @param int $idPage
-     */
+     * @param int $idPage     */
 
     public function __construct(SpyCmsTemplateQuery $templateQuery, SpyCmsPageQuery $pageUrlByIdQuery, UrlFacade $urlFacade, CmsConstraint $constraints, $formType, $idPage)
     {
@@ -80,26 +84,15 @@ class CmsPageForm extends AbstractForm
     {
         $urlConstraints = $this->constraints->getMandatoryConstraints();
 
-        if (self::ADD === $this->formType) {
-            $urlConstraints[] = new Callback([
-                'methods' => [
-                    function ($url, ExecutionContext $context) {
-                        if ($this->urlFacade->hasUrl($url)) {
-                            $context->addViolation('Url is already used');
-                        }
-                    },
-                ],
-            ]);
-        }
-
-        $urlParams = [
-            'label' => 'URL',
-            'constraints' => $urlConstraints,
-        ];
-
-        if (self::UPDATE === $this->formType) {
-            $urlParams['disabled'] = 'disabled';
-        }
+        $urlConstraints[] = new Callback([
+            'methods' => [
+                function ($url, ExecutionContext $context) {
+                    if ($this->urlFacade->hasUrl($url) && $this->pageUrl !== $url) {
+                        $context->addViolation('Url is already used');
+                    }
+                },
+            ],
+        ]);
 
         return $this->addHidden(self::ID_CMS_PAGE)
             ->addHidden(CmsQueryContainer::ID_URL)
@@ -108,7 +101,10 @@ class CmsPageForm extends AbstractForm
                 'label' => 'Template',
                 'choices' => $this->getTemplateList(),
             ])
-            ->addText(self::URL, $urlParams)
+            ->addText(self::URL, [
+                'label' => 'URL',
+                'constraints' => $urlConstraints,
+            ])
             ->addCheckbox(self::IS_ACTIVE, [
                 'label' => 'Active',
             ])
@@ -135,8 +131,10 @@ class CmsPageForm extends AbstractForm
      */
     protected function populateFormFields()
     {
-        if ($this->idPage) {
+        if (null !== $this->idPage) {
             $pageUrlTemplate = $this->pageUrlByIdQuery->findOne();
+
+            $this->pageUrl = $pageUrlTemplate->getUrl();
 
             return [
                 self::ID_CMS_PAGE => $pageUrlTemplate->getIdCmsPage(),

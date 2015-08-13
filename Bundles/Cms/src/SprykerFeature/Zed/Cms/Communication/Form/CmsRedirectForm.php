@@ -43,6 +43,11 @@ class CmsRedirectForm extends AbstractForm
     protected $constraints;
 
     /**
+     * @var string
+     */
+    protected $redirectUrl;
+
+    /**
      * @param string $type
      */
 
@@ -67,29 +72,21 @@ class CmsRedirectForm extends AbstractForm
     {
         $urlConstraints = $this->constraints->getMandatoryConstraints();
 
-        if (self::ADD === $this->formType) {
-            $urlConstraints[] = new Callback([
-                'methods' => [
-                    function ($url, ExecutionContext $context) {
-                        if ($this->urlFacade->hasUrl($url)) {
-                            $context->addViolation('Url is already used');
-                        }
-                    },
-                ],
-            ]);
-        }
-
-        $urlParams = [
-            'label' => 'URL',
-            'constraints' => $urlConstraints,
-        ];
-
-        if (self::UPDATE === $this->formType) {
-            $urlParams['disabled'] = 'disabled';
-        }
+        $urlConstraints[] = new Callback([
+            'methods' => [
+                function ($url, ExecutionContext $context) {
+                    if ($this->urlFacade->hasUrl($url) && $this->redirectUrl !== $url) {
+                        $context->addViolation('Url is already used');
+                    }
+                },
+            ],
+        ]);
 
         return $this->addHidden(self::ID_REDIRECT)
-            ->addText(self::FROM_URL, $urlParams)
+            ->addText(self::FROM_URL, [
+                'label' => 'URL',
+                'constraints' => $urlConstraints,
+            ])
             ->addText(self::TO_URL, [
                 'label' => 'To URL',
                 'constraints' => $this->constraints->getMandatoryConstraints(),
@@ -104,11 +101,14 @@ class CmsRedirectForm extends AbstractForm
     {
         $url = $this->urlByIdQuery->findOne();
 
-        if ($url) {
+        if (isset($url)) {
+            $this->redirectUrl = $url->getUrl();
+
             return [
                 self::FROM_URL => $url->getUrl(),
                 self::TO_URL => $url->getToUrl(),
             ];
         }
     }
+
 }

@@ -17,6 +17,9 @@ class CmsGlossaryForm extends AbstractForm
     const PLACEHOLDER = 'placeholder';
     const GLOSSARY_KEY = 'glossary_key';
     const ID_KEY_MAPPING = 'idCmsGlossaryKeyMapping';
+    const SEARCH_OPTION = 'search_option';
+    const GLOSSARY_TITLE = 'Glossary';
+    const FULLTEXT_SEARCH = 'Full text';
 
     /**
      * @var SpyCmsGlossaryKeyMappingQuery
@@ -110,9 +113,14 @@ class CmsGlossaryForm extends AbstractForm
         return $this->addHidden(self::FK_PAGE)
             ->addHidden(self::ID_KEY_MAPPING)
             ->addText(self::PLACEHOLDER, $placeholderParams)
-            ->addAutosuggest(self::GLOSSARY_KEY, [
-                'label' => 'Glossary Key',
-                'url' => '/glossary/key/suggest',
+            ->addChoice(self::SEARCH_OPTION, [
+                'label' => 'Search Type',
+                'choices' => [
+                    self::GLOSSARY_TITLE,
+                    self::FULLTEXT_SEARCH,
+                ],
+            ])
+            ->addText(self::GLOSSARY_KEY, [
                 'constraints' => $keyConstraints,
             ])
             ;

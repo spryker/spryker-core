@@ -93,7 +93,7 @@ class CmsRedirectTable extends AbstractTable
     private function buildLinks($item)
     {
         $result = '<a href="/cms/redirect/edit/?' . self::REQUEST_ID_URL . '=' . $item[SpyUrlTableMap::COL_ID_URL] . '" class="btn btn-xs btn-white">Edit</a>&nbsp;
-                   <a href="/cms/redirect/delete/?' . self::REQUEST_ID_URL . '=' . $item[SpyUrlTableMap::COL_ID_URL] . '" class="btn btn-xs btn-white">Delete</a>';
+                   <a class="btn btn-xs btn-white">Delete</a>';
 
         return $result;
     }

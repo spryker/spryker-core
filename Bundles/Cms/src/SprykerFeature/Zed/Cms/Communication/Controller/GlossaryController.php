@@ -29,6 +29,7 @@ class GlossaryController extends AbstractController
 {
 
     const REDIRECT_ADDRESS = '/cms/glossary/';
+    const SEARCH_LIMIT = 10;
     const TYPE = 'type';
 
     /**
@@ -228,9 +229,59 @@ class GlossaryController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function searchAction(Request $request)
+    {
+        $value = $request->get('value');
+        $key = $request->get('key');
+
+        $searchedItems = $this->searchGlossaryKeysAndTranslations($value, $key);
+
+        $result = [];
+        foreach ($searchedItems as $trans) {
+            $result[] = [
+                'key' => $trans->getLabel(),
+                'value' => $trans->getValue(),
+            ];
+        }
+
+        return $this->jsonResponse($result);
+    }
+
+    /**
+     * @param string $value
+     * @param string $key
+     *
+     * @return array
+     */
+    private function searchGlossaryKeysAndTranslations($value, $key)
+    {
+        $searchedItems = [];
+        if (null !== $value) {
+            $searchedItems = $this->getQueryContainer()
+                ->queryTranslationWithKeyByValue($value)
+                ->limit(self::SEARCH_LIMIT)
+                ->find()
+            ;
+            return $searchedItems;
+        } else if (null !== $key) {
+            $searchedItems = $this->getQueryContainer()
+                ->queryKeyWithTranslationByKey($key)
+                ->limit(self::SEARCH_LIMIT)
+                ->find()
+            ;
+        }
+        return $searchedItems;
+    }
+
+
+    /**
      * @param array $data
      *
-     * @return $this
+     * @return PageKeyMappingTransfer
      */
     private function createKeyMappingTransfer(array $data)
     {
