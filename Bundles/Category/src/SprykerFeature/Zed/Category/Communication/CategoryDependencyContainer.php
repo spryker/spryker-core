@@ -114,28 +114,15 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
-     * @param Request $request
+     * @param $category_id
      *
      * @return CategoryForm
      */
     public function createCategoryForm($category_id)
     {
-        $locale = $this->getCurrentLocale();
-
         $categoryQuery = $this->getQueryContainer()->queryCategoryById($category_id);
 
         return $this->getFactory()->createFormCategoryForm($categoryQuery);
-
-        //createFormCategoryForm(\Symfony\Component\HttpFoundation\Request $request,
-        // \SprykerEngine\Shared\Kernel\Factory\FactoryInterface $factory,
-        // \Generated\Shared\Transfer\LocaleTransfer $locale,
-        // \SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface $queryContainer = null)
-/*        return $this->getFactory()->createFormCategoryForm(
-            $request,
-            $this->getFactory(),
-            $locale,
-            $this->getQueryContainer()
-        );*/
     }
 
     /**
