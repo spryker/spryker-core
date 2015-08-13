@@ -6,12 +6,13 @@
 
 namespace SprykerFeature\Zed\Category\Communication\Form;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryQuery;
-use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
-use Symfony\Component\Validator\Constraints\Email;
+use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CategoryForm extends AbstractForm
@@ -27,11 +28,23 @@ class CategoryForm extends AbstractForm
     protected $categoryQuery;
 
     /**
+     * @var CategoryQueryContainer
+     */
+    protected $categoryQueryContainer;
+
+    /**
+     * @var LocaleTransfer
+     */
+    protected $locale;
+
+    /**
      * @param SpyCategoryQuery $categoryQuery
      */
-    public function __construct(SpyCategoryQuery $categoryQuery)
+    public function __construct(SpyCategoryQuery $categoryQuery, CategoryQueryContainer $categoryQueryContainer, LocaleTransfer $locale)
     {
         $this->categoryQuery = $categoryQuery;
+        $this->categoryQueryContainer = $categoryQueryContainer;
+        $this->locale = $locale;
     }
 
     /**
@@ -47,7 +60,7 @@ class CategoryForm extends AbstractForm
             ->addChoice(self::CATEGORY, [
                 'label' => 'Parent',
                 'placeholder' => '-select-',
-                'choices' => $this->getTreeForSelect(),
+                'choices' => $this->getCategories(),
             ])
             ;
     }
@@ -55,12 +68,41 @@ class CategoryForm extends AbstractForm
     /**
      * @return array
      */
-    protected function getTreeForSelect()
+    protected function getCategories()
+    {
+        $categories = $this->categoryQueryContainer
+            ->queryCategory($this->locale->getIdLocale())
+            ->setFormatter(new PropelArraySetFormatter())
+            ->find()
+        ;
+
+        $data = [];
+        foreach ($categories as $category) {
+            $data[] = $this->formatOption(
+                (int) $category['id_category'],
+                $category['name']
+            );
+        }
+
+        if (empty($data)) {
+            $data[] = $this->formatOption('', '');
+        }
+
+        return $data;
+    }
+
+
+    /**
+     * @param string $option
+     * @param string $label
+     *
+     * @return array
+     */
+    protected function formatOption($option, $label)
     {
         return [
-            SpyCustomerTableMap::COL_SALUTATION_MR => SpyCustomerTableMap::COL_SALUTATION_MR,
-            SpyCustomerTableMap::COL_SALUTATION_MRS => SpyCustomerTableMap::COL_SALUTATION_MRS,
-            SpyCustomerTableMap::COL_SALUTATION_DR => SpyCustomerTableMap::COL_SALUTATION_DR,
+            'value' => $option,
+            'label' => $label,
         ];
     }
 

@@ -121,8 +121,12 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
     public function createCategoryForm($category_id)
     {
         $categoryQuery = $this->getQueryContainer()->queryCategoryById($category_id);
-
-        return $this->getFactory()->createFormCategoryForm($categoryQuery);
+        
+        return $this->getFactory()->createFormCategoryForm(
+            $categoryQuery,
+            $this->getQueryContainer(),
+            $this->getCurrentLocale()
+        );
     }
 
     /**
