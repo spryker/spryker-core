@@ -6,7 +6,7 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
-class AddController extends AbstractController
+class EditController extends AbstractController
 {
 
     const PARAM_ID_CATEGORY = 'id-category';
@@ -17,7 +17,7 @@ class AddController extends AbstractController
     public function indexAction(Request $request)
     {
         $idCategory = $request->get(self::PARAM_ID_CATEGORY);
-
+        
         /**
          * @var \Symfony\Component\Form\Form $form
          */
@@ -28,11 +28,10 @@ class AddController extends AbstractController
 
         if ($form->isValid()) {
             $categoryTransfer = (new CategoryTransfer())->fromArray($form->getData(), true);
-            die(dump($categoryTransfer));
             $this->getFacade()
                 ->updateCategory($categoryTransfer, $idCategory)
             ;
-
+            
             return $this->redirectResponse('/category/');
         }
 

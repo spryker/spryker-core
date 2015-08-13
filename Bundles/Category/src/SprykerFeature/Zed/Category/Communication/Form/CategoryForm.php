@@ -19,7 +19,8 @@ class CategoryForm extends AbstractForm
 {
 
     const NAME = 'name';
-    const CATEGORY = 'id_category';
+    const PK_CATEGORY = 'id_product_category';
+    const FK_CATEGORY_NODE = 'fk_category_node';
     const SUBMIT = 'submit';
 
     /**
@@ -57,10 +58,11 @@ class CategoryForm extends AbstractForm
                 new NotBlank(),
             ],
         ])
-            ->addChoice(self::CATEGORY, [
+            ->addChoice(self::FK_CATEGORY_NODE, [
                 'label' => 'Parent',
                 'placeholder' => '-select-',
                 'choices' => $this->getCategories(),
+                'data' => 1
             ])
             ;
     }
@@ -112,7 +114,7 @@ class CategoryForm extends AbstractForm
     protected function populateFormFields()
     {
         $result = [
-            self::CATEGORY => null,
+            self::FK_CATEGORY_NODE => null,
             self::NAME => '',
         ];
 
@@ -120,15 +122,18 @@ class CategoryForm extends AbstractForm
          * @var SpyCategory $category
          */
         $category = $this->categoryQuery->innerJoinAttribute()
-            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name') //does ze join
+            //->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::FK_CATEGORY_NODE)
+            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::NAME)
             ->findOne()
         ;
 
         //dump($category->toArray());
         if ($category) {
             $category = $category->toArray();
+            die(dump($category));
             $result = [
-                self::CATEGORY => $category[self::CATEGORY],
+                self::PK_CATEGORY => $category[self::PK_CATEGORY],
+                self::FK_CATEGORY_NODE => $category[self::FK_CATEGORY_NODE],
                 self::NAME => $category[self::NAME]
             ];
         }

@@ -1,0 +1,41 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Category' %}
+{% block body_class %}spy-page{% endblock %}
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_header_content %}
+            <a class="btn btn-primary" href="sss">sdfasdf</a>
+        {% endblock %}
+
+        {% block widget_content %}
+
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+
+            <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+            {{ form_end(form) }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/bundles/Gui/styles/plugins/jsTree/style.min.css">
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script src="/bundles/Gui/scripts/plugins/jsTree/jstree.min.js"></script>
+    <script src="/bundles/Gui/scripts/category.js"></script>
+{% endblock %}
+
+
