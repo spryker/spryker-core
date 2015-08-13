@@ -21,7 +21,7 @@ class CategoryForm extends AbstractForm
 {
 
     const NAME = 'name';
-    const PK_CATEGORY = 'id_product_category';
+    const PK_CATEGORY = 'id_category';
     const FK_CATEGORY_NODE = 'fk_category_node';
     const FK_PARENT_CATEGORY_NODE = 'fk_parent_category_node';
     const SUBMIT = 'submit';
@@ -133,10 +133,10 @@ class CategoryForm extends AbstractForm
 
         if ($category) {
             $category = $category->toArray();
-            die(dump($category));
+            
             $result = [
                 self::PK_CATEGORY => $category[self::PK_CATEGORY],
-                self::FK_CATEGORY_NODE => $category[self::FK_CATEGORY_NODE],
+                self::FK_PARENT_CATEGORY_NODE => $category[self::FK_PARENT_CATEGORY_NODE],
                 self::NAME => $category[self::NAME]
             ];
         }

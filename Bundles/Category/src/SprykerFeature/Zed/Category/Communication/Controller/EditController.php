@@ -6,6 +6,10 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @method \SprykerFeature\Zed\Category\Business\CategoryFacade getFacade()
+ * @method \SprykerFeature\Zed\Category\Communication\CategoryDependencyContainer getDependencyContainer()
+ */
 class EditController extends AbstractController
 {
 
@@ -27,9 +31,10 @@ class EditController extends AbstractController
         $form->handleRequest();
 
         if ($form->isValid()) {
+            $locale = $this->getDependencyContainer()->createCurrentLocale();
             $categoryTransfer = (new CategoryTransfer())->fromArray($form->getData(), true);
             $this->getFacade()
-                ->updateCategory($categoryTransfer, $idCategory)
+                ->updateCategory($categoryTransfer, $locale)
             ;
             
             return $this->redirectResponse('/category/');
