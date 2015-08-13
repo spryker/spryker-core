@@ -445,10 +445,8 @@ class Address
             $iso2Code = $addressTransfer->getIso2Code();
             if (false === empty($iso2Code)) {
                 $fkCountry = $this->countryFacade->getIdCountryByIso2Code($iso2Code);
-                return $fkCountry;
             } else {
                 $fkCountry = $this->getCustomerCountryId();
-                return $fkCountry;
             }
         }
         return $fkCountry;
