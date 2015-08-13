@@ -109,7 +109,7 @@
     "symfony/yaml": ">=2.3",
     "symfony-cmf/routing": "~1.0",
 
-    "twig/twig": "~1.15.0",
+    "twig/twig": "~1.20",
 
     "zendframework/zend-code": "~2.3.6",
     "zendframework/zend-config": "~2.3.0",
