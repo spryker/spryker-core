@@ -9,7 +9,9 @@ namespace SprykerFeature\Zed\Category\Communication\Form;
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategory;
+use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategoryNode;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
+use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryQuery;
 use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
@@ -21,6 +23,7 @@ class CategoryForm extends AbstractForm
     const NAME = 'name';
     const PK_CATEGORY = 'id_product_category';
     const FK_CATEGORY_NODE = 'fk_category_node';
+    const FK_PARENT_CATEGORY_NODE = 'fk_parent_category_node';
     const SUBMIT = 'submit';
 
     /**
@@ -58,7 +61,7 @@ class CategoryForm extends AbstractForm
                 new NotBlank(),
             ],
         ])
-            ->addChoice(self::FK_CATEGORY_NODE, [
+            ->addChoice(self::FK_PARENT_CATEGORY_NODE, [
                 'label' => 'Parent',
                 'placeholder' => '-select-',
                 'choices' => $this->getCategories(),
@@ -122,12 +125,12 @@ class CategoryForm extends AbstractForm
          * @var SpyCategory $category
          */
         $category = $this->categoryQuery->innerJoinAttribute()
-            //->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::FK_CATEGORY_NODE)
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::NAME)
+            ->innerJoinNode()
+            ->withColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE, self::FK_PARENT_CATEGORY_NODE)
             ->findOne()
         ;
 
-        //dump($category->toArray());
         if ($category) {
             $category = $category->toArray();
             die(dump($category));
