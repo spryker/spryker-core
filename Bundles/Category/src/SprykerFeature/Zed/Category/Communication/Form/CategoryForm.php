@@ -65,7 +65,10 @@ class CategoryForm extends AbstractForm
             ->addChoice(self::FK_PARENT_CATEGORY_NODE, [
                 'label' => 'Parent',
                 'placeholder' => '-select-',
-                'choices' => $this->getCategories()
+                'choices' => $this->getCategories(),
+                'constraints' => [
+                    new NotBlank(),
+                ],
             ])
             ->addHidden(self::PK_CATEGORY_NODE)
             ;
