@@ -32,9 +32,15 @@ class CategoryFormEdit extends CategoryFormAdd
                 new NotBlank(),
             ],
         ])
-            ->addText(self::ATTRIBUTE_META_TITLE)
-            ->addTextarea(self::ATTRIBUTE_META_DESCRIPTION)
-            ->addTextarea(self::ATTRIBUTE_META_KEYWORDS)
+            ->addText(self::ATTRIBUTE_META_TITLE, [
+                'label' => 'Meta Title',
+            ])
+            ->addTextarea(self::ATTRIBUTE_META_DESCRIPTION, [
+                'label' => 'Meta Description',
+            ])
+            ->addTextarea(self::ATTRIBUTE_META_KEYWORDS, [
+                'label' => 'Meta Keywords',
+            ])
             ->addChoice(self::FK_PARENT_CATEGORY_NODE, [
                 'label' => 'Parent',
                 'placeholder' => '-select-',
