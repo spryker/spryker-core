@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Category\Communication\Form;
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategory;
-use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategoryNode;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
@@ -17,14 +16,13 @@ use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryQuery;
 use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class CategoryForm extends AbstractForm
+class CategoryFormAdd extends AbstractForm
 {
 
     const NAME = 'name';
     const PK_CATEGORY = 'id_category';
     const PK_CATEGORY_NODE = 'id_category_node';
     const FK_PARENT_CATEGORY_NODE = 'fk_parent_category_node';
-    const SUBMIT = 'submit';
 
     /**
      * @var SpyCategoryQuery
@@ -53,7 +51,7 @@ class CategoryForm extends AbstractForm
     }
 
     /**
-     * @return CategoryForm
+     * @return CategoryFormAdd
      */
     protected function buildFormFields()
     {

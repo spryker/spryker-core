@@ -27,13 +27,15 @@ class EditController extends AbstractController
          * @var \Symfony\Component\Form\Form $form
          */
         $form = $this->getDependencyContainer()
-            ->createCategoryForm($idCategory)
+            ->createCategoryFormEdit($idCategory)
         ;
         $form->handleRequest();
 
         if ($form->isValid()) {
             $locale = $this->getDependencyContainer()->createCurrentLocale();
+            
             $categoryTransfer = (new CategoryTransfer())->fromArray($form->getData(), true);
+            
             $this->getFacade()
                 ->updateCategory($categoryTransfer, $locale)
             ;

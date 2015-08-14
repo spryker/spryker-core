@@ -58,6 +58,10 @@ class CategoryWriter implements CategoryWriterInterface
     {
         $attributeEntity = $this->getAttributeEntity($category->getIdCategory(), $locale);
         $attributeEntity->setName($category->getName());
+        $attributeEntity->setMetaTitle($category->getMetaTitle());
+        $attributeEntity->setMetaDescription($category->getMetaDescription());
+        $attributeEntity->setMetaKeywords($category->getMetaKeywords());
+        $attributeEntity->setCategoryImageName($category->getCategoryImageName());
         $attributeEntity->save();
 
         $this->saveCategory($category);

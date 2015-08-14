@@ -26,7 +26,7 @@ class AddController extends AbstractController
          * @var \Symfony\Component\Form\Form $form
          */
         $form = $this->getDependencyContainer()
-            ->createCategoryForm(null)
+            ->createCategoryFormAdd(null)
         ;
         $form->handleRequest();
 
