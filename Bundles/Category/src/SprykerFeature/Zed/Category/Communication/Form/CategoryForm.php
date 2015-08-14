@@ -22,7 +22,7 @@ class CategoryForm extends AbstractForm
 
     const NAME = 'name';
     const PK_CATEGORY = 'id_category';
-    const FK_CATEGORY_NODE = 'fk_category_node';
+    const PK_CATEGORY_NODE = 'id_category_node';
     const FK_PARENT_CATEGORY_NODE = 'fk_parent_category_node';
     const SUBMIT = 'submit';
 
@@ -40,6 +40,7 @@ class CategoryForm extends AbstractForm
      * @var LocaleTransfer
      */
     protected $locale;
+    
 
     /**
      * @param SpyCategoryQuery $categoryQuery
@@ -64,9 +65,9 @@ class CategoryForm extends AbstractForm
             ->addChoice(self::FK_PARENT_CATEGORY_NODE, [
                 'label' => 'Parent',
                 'placeholder' => '-select-',
-                'choices' => $this->getCategories(),
-                'data' => 1
+                'choices' => $this->getCategories()
             ])
+            ->addHidden(self::PK_CATEGORY_NODE)
             ;
     }
 
@@ -83,14 +84,7 @@ class CategoryForm extends AbstractForm
 
         $data = [];
         foreach ($categories as $category) {
-            $data[] = $this->formatOption(
-                (int) $category['id_category'],
-                $category['name']
-            );
-        }
-
-        if (empty($data)) {
-            $data[] = $this->formatOption('', '');
+            $data[$category['id_category']] = $category['name'];
         }
 
         return $data;
@@ -98,26 +92,14 @@ class CategoryForm extends AbstractForm
 
 
     /**
-     * @param string $option
-     * @param string $label
-     *
-     * @return array
-     */
-    protected function formatOption($option, $label)
-    {
-        return [
-            'value' => $option,
-            'label' => $label,
-        ];
-    }
-
-    /**
      * @return array
      */
     protected function populateFormFields()
     {
         $result = [
-            self::FK_CATEGORY_NODE => null,
+            self::PK_CATEGORY => null,
+            self::PK_CATEGORY_NODE => null,
+            self::FK_PARENT_CATEGORY_NODE => null,
             self::NAME => '',
         ];
 
@@ -128,6 +110,7 @@ class CategoryForm extends AbstractForm
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::NAME)
             ->innerJoinNode()
             ->withColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE, self::FK_PARENT_CATEGORY_NODE)
+            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, self::PK_CATEGORY_NODE)
             ->findOne()
         ;
 
@@ -136,6 +119,7 @@ class CategoryForm extends AbstractForm
             
             $result = [
                 self::PK_CATEGORY => $category[self::PK_CATEGORY],
+                self::PK_CATEGORY_NODE => $category[self::PK_CATEGORY_NODE],
                 self::FK_PARENT_CATEGORY_NODE => $category[self::FK_PARENT_CATEGORY_NODE],
                 self::NAME => $category[self::NAME]
             ];

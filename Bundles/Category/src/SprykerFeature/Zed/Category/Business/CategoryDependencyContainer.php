@@ -80,7 +80,7 @@ class CategoryDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return NodeWriterInterface
      */
-    protected function createNodeWriter()
+    public function createNodeWriter()
     {
         return $this->getFactory()->createTreeNodeWriter(
             $this->getQueryContainer()

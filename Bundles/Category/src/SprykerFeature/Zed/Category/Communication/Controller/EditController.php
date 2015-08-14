@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Category\Communication\Controller;
 
 use Generated\Shared\Transfer\CategoryTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -35,6 +36,11 @@ class EditController extends AbstractController
             $categoryTransfer = (new CategoryTransfer())->fromArray($form->getData(), true);
             $this->getFacade()
                 ->updateCategory($categoryTransfer, $locale)
+            ;
+
+            $categoryNodeTransfer = (new NodeTransfer())->fromArray($form->getData(), true);
+            $this->getFacade()
+                ->updateNodeNodeSoFuckingConfusing($categoryNodeTransfer)
             ;
             
             return $this->redirectResponse('/category/');
