@@ -17,12 +17,12 @@ class PriceCartConnectorFacade extends AbstractFacade
 
     /**
      * @param ChangeInterface $change
-     *
+     * @param null $grossPriceType
      * @return ChangeInterface
      */
-    public function addGrossPriceToItems(ChangeInterface $change)
+    public function addGrossPriceToItems(ChangeInterface $change, $grossPriceType = null)
     {
-        return $this->getDependencyContainer()->createPriceManager()->addGrossPriceToItems($change);
+        return $this->getDependencyContainer()->createPriceManager($grossPriceType)->addGrossPriceToItems($change);
     }
 
 }
