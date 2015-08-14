@@ -177,7 +177,7 @@ class OrderManager
         foreach ($item->getProductOptions() as $productOption) {
             $optionEntity = new SpySalesOrderItemOption();
 
-            $optionEntity->fromArray($item->toArray());
+            $optionEntity->fromArray($productOption->toArray());
 
             $optionEntity->setFkSalesOrderItem($item->getIdSalesOrderItem());
             $optionEntity->setTaxPercentage($productOption->getTaxSet()

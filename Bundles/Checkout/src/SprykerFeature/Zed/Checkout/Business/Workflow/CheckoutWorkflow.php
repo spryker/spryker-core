@@ -159,9 +159,10 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
             }
         } catch (\Exception $e) {
             Propel::getConnection()->rollBack();
+
             $error = new CheckoutErrorTransfer();
             $error
-                ->setMessage('Es ist ein Fehler aufgetreten: ' . $e->getMessage())
+                ->setMessage('Error: ' . $e->getMessage())
                 ->setErrorCode(CheckoutConfig::ERROR_CODE_UNKNOWN_ERROR)
             ;
 
