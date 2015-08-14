@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Cms\Communication\Controller;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use SprykerFeature\Shared\Cms\CmsConfig;
@@ -18,6 +19,9 @@ use SprykerFeature\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use SprykerFeature\Zed\Cms\Communication\Table\CmsPageTable;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlock;
+use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPage;
+use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPageQuery;
+use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -31,6 +35,8 @@ class GlossaryController extends AbstractController
     const REDIRECT_ADDRESS = '/cms/glossary/';
     const SEARCH_LIMIT = 10;
     const TYPE = 'type';
+    const LOCALE = 'locale_';
+    const ID_FORM = 'id-form';
 
     /**
      * @param Request $request

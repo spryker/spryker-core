@@ -18,8 +18,10 @@ class CmsGlossaryForm extends AbstractForm
     const GLOSSARY_KEY = 'glossary_key';
     const ID_KEY_MAPPING = 'idCmsGlossaryKeyMapping';
     const SEARCH_OPTION = 'search_option';
-    const GLOSSARY_TITLE = 'Glossary';
+    const GLOSSARY_NEW = 'New glossary';
+    const GLOSSARY_FIND = 'Find glossary';
     const FULLTEXT_SEARCH = 'Full text';
+    const TRANSLATION = 'translation';
 
     /**
      * @var SpyCmsGlossaryKeyMappingQuery
@@ -89,26 +91,13 @@ class CmsGlossaryForm extends AbstractForm
             ]);
         }
 
-        $keyConstraints[] = new Callback([
-            'methods' => [
-                function ($key, ExecutionContext $context) {
-                    if (!$this->glossaryByIdQuery->useGlossaryKeyQuery()
-                        ->findOneByKey($key)
-                    ) {
-                        $context->addViolation('Key does not exist.');
-                    }
-                },
-            ],
-        ]);
-
         $placeholderParams = [
             'label' => 'Placeholder',
             'constraints' => $placeholderConstraints,
         ];
 
-        if (intval($this->idMapping) > 0) {
-            $placeholderParams['disabled'] = 'disabled';
-        }
+
+        $placeholderParams['disabled'] = 'disabled';
 
         return $this->addHidden(self::FK_PAGE)
             ->addHidden(self::ID_KEY_MAPPING)
@@ -116,12 +105,17 @@ class CmsGlossaryForm extends AbstractForm
             ->addChoice(self::SEARCH_OPTION, [
                 'label' => 'Search Type',
                 'choices' => [
-                    self::GLOSSARY_TITLE,
+                    self::GLOSSARY_NEW,
+                    self::GLOSSARY_FIND,
                     self::FULLTEXT_SEARCH,
                 ],
             ])
             ->addText(self::GLOSSARY_KEY, [
-                'constraints' => $keyConstraints,
+                'constraints' => CmsConstraint::getRequiredConstraints(),
+            ])
+            ->addTextarea(self::TRANSLATION,[
+                'label' => 'Content',
+                'constraints' => CmsConstraint::getRequiredConstraints(),
             ])
             ;
     }
@@ -146,6 +140,7 @@ class CmsGlossaryForm extends AbstractForm
             if ($glossaryMapping) {
                 $formItems[self::PLACEHOLDER] = $glossaryMapping->getPlaceholder();
                 $formItems[self::GLOSSARY_KEY] = $glossaryMapping->getKeyname();
+                $formItems[self::TRANSLATION] = $glossaryMapping->getTrans();
             }
         }
 

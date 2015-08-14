@@ -91,7 +91,7 @@ class CmsPageTable extends AbstractTable
      */
     private function buildLinks($item)
     {
-        $result = '<a href="/cms/glossary/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE] . '" class="btn btn-xs btn-white">Edit glossaries</a>&nbsp;
+        $result = '<a href="/cms/glossary/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE] . '" class="btn btn-xs btn-white">Edit placeholders</a>&nbsp;
         <a href="/cms/page/edit/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE] . '" class="btn btn-xs btn-white">Edit page</a>';
 
         return $result;

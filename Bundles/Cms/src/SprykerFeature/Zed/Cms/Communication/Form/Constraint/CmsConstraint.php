@@ -24,4 +24,13 @@ class CmsConstraint
             new Length(['max' => 256]),
         ];
     }
+
+    public static function getRequiredConstraints()
+    {
+        return [
+            new Required(),
+            new NotBlank(),
+        ];
+    }
+
 }

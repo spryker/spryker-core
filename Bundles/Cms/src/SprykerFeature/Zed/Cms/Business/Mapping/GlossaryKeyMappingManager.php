@@ -343,7 +343,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     protected function convertMappingEntityToTransfer(SpyCmsGlossaryKeyMapping $mappingEntity)
     {
         $mappingTransfer = new PageKeyMappingTransfer();
-        $mappingTransfer->fromArray($mappingEntity->toArray());
+        $mappingTransfer->fromArray($mappingEntity->toArray(), true);
 
         return $mappingTransfer;
     }
