@@ -31,7 +31,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     /**
      * @return CartSessionInterface
      */
-    private function getSession()
+    protected function getSession()
     {
         return $this->getDependencyContainer()->createSession();
     }
@@ -75,7 +75,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     /**
      * @return CartStubInterface
      */
-    private function getZedStub()
+    protected function getZedStub()
     {
         return $this->getDependencyContainer()->createZedStub();
     }
@@ -89,7 +89,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     {
         $itemTransfer = $this->mergeCartItems(
             $itemTransfer,
-            $this->getItemByIdentifier($itemTransfer->getSku())
+            $this->getItemBySkuAndGroupKey($itemTransfer->getSku())
         );
 
         $changeTransfer = $this->prepareCartChange($itemTransfer);
@@ -99,18 +99,19 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param int $identifier
-     *
-     * @throws \InvalidArgumentException
+     * @param int  $identifier
+     * @param string $groupKey
      *
      * @return ItemInterface
      */
-    private function getItemByIdentifier($identifier)
+    protected function getItemBySkuAndGroupKey($identifier, $groupKey = null)
     {
         $cartTransfer = $this->getCart();
 
         foreach ($cartTransfer->getItems() as $itemTransfer) {
-            if ($itemTransfer->getSku() === $identifier) {
+            if ($itemTransfer->getSku() === $identifier &&
+                $itemTransfer->getGroupKey() == $groupKey
+            ) {
                 $existingItemTransfer = clone $itemTransfer;
                 $existingItemTransfer->setGroupKey(null);
                 return $existingItemTransfer;
@@ -119,6 +120,7 @@ class CartClient extends AbstractClient implements CartClientInterface
 
         throw new \InvalidArgumentException('No item with identifier "' . $identifier . '" found in cart');
     }
+
 
     /**
      * @param ItemInterface $itemTransfer
@@ -132,7 +134,7 @@ class CartClient extends AbstractClient implements CartClientInterface
             return $this->removeItem($itemTransfer);
         }
 
-        $itemTransfer = $this->getItemByIdentifier($itemTransfer->getSku());
+        $itemTransfer = $this->getItemBySkuAndGroupKey($itemTransfer->getSku());
         if ($itemTransfer->getQuantity() > $quantity) {
             return $this->decreaseItemQuantity($itemTransfer, $quantity);
         } else {
@@ -184,7 +186,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     /**
      * @return ChangeTransfer
      */
-    private function createCartChange()
+    protected function createCartChange()
     {
         $cartTransfer = $this->getCart();
         $changeTransfer = new ChangeTransfer();
@@ -253,11 +255,11 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @return ChangeTransfer
      */
-    private function createChangeTransferWithAdjustedQuantity(ItemInterface $itemTransfer, $quantity)
+    protected function createChangeTransferWithAdjustedQuantity(ItemInterface $itemTransfer, $quantity)
     {
         $itemTransfer = $this->mergeCartItems(
             $itemTransfer,
-            $this->getItemByIdentifier($itemTransfer->getSku())
+            $this->getItemBySkuAndGroupKey($itemTransfer->getSku())
         );
 
         $itemTransfer->setQuantity($quantity);
@@ -270,7 +272,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @return CartInterface
      */
-    private function handleCartResponse(CartInterface $cartTransfer)
+    protected function handleCartResponse(CartInterface $cartTransfer)
     {
         $this->getSession()->setCart($cartTransfer);
 
@@ -283,7 +285,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      *
      * @return ItemInterface
      */
-    private function mergeCartItems(ItemInterface $newItemTransfer, ItemInterface $oldItemByIdentifier)
+    protected function mergeCartItems(ItemInterface $newItemTransfer, ItemInterface $oldItemByIdentifier)
     {
         $newItemTransfer->fromArray(
             $oldItemByIdentifier->toArray()
