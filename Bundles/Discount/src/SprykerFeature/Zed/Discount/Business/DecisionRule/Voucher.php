@@ -61,4 +61,37 @@ class Voucher
         return $result;
     }
 
+
+    /**
+     * @param string $code
+     *
+     * @return ModelResult
+     */
+    public function isCodeUsable($code)
+    {
+        $result = new ModelResult();
+
+        $voucher = $this->discountQueryContainer
+            ->queryVoucher($code)
+            ->findOne();
+
+        if (!$voucher) {
+            return $result->addError(self::REASON_VOUCHER_CODE_NOT_AVAILABLE);
+        }
+
+        if (!$voucher->getIsActive()) {
+            return $result->addError(self::REASON_VOUCHER_CODE_NOT_AVAILABLE);
+        }
+
+        if (!$voucherPool = $voucher->getVoucherPool()) {
+            return $result->addError(self::REASON_VOUCHER_CODE_NOT_AVAILABLE);
+        }
+
+        if (!$voucherPool->getIsActive()) {
+            return $result->addError(self::REASON_VOUCHER_CODE_NOT_AVAILABLE);
+        }
+
+        return $result;
+    }
+
 }
