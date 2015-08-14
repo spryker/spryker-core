@@ -161,16 +161,8 @@ class OrderManager
         }
 
         $addressEntity = new SpySalesOrderAddress();
-        $addressEntity
-            ->setFkCountry($this->countryFacade->getIdCountryByIso2Code($address->getIso2Code()))
-            ->setFirstName($address->getFirstName())
-            ->setLastName($address->getLastName())
-            ->setAddress1($address->getAddress1())
-            ->setAddress2($address->getAddress2())
-            ->setAddress3($address->getAddress3())
-            ->setCity($address->getCity())
-            ->setZipCode($address->getZipCode())
-        ;
+        $addressEntity->fromArray($address->toArray());
+        $addressEntity->setFkCountry($this->countryFacade->getIdCountryByIso2Code($address->getIso2Code()));
 
         $addressEntity->save();
         $address->setIdSalesOrderAddress($addressEntity->getIdSalesOrderAddress());
