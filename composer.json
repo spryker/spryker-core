@@ -42,7 +42,6 @@
     "spryker/product-exporter": "self.version",
     "spryker/product-image": "self.version",
     "spryker/product-search": "self.version",
-    "spryker/product-search-availability-connector": "self.version",
     "spryker/redirect": "self.version",
     "spryker/redirect-exporter": "self.version",
     "spryker/sales": "self.version",
