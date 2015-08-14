@@ -17,7 +17,7 @@ interface CustomerStubInterface
      *
      * @return CustomerTransfer
      */
-    public function login(CustomerInterface $customerTransfer);
+    public function getCustomerByEmailAndPassword(CustomerInterface $customerTransfer);
 
     /**
      * @param CustomerInterface $customerTransfer

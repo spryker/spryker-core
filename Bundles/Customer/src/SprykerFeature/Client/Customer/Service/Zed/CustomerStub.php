@@ -9,11 +9,9 @@ namespace SprykerFeature\Client\Customer\Service\Zed;
 use Generated\Shared\Customer\CustomerAddressInterface;
 use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Transfer\CustomerAddressTransfer;
-use Generated\Shared\Transfer\CustomerGroupTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Client\ZedRequest\Service\Client\Response;
 use SprykerFeature\Client\ZedRequest\Service\ZedRequestClient;
-use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
 class CustomerStub implements CustomerStubInterface
 {
@@ -95,9 +93,9 @@ class CustomerStub implements CustomerStubInterface
      *
      * @return CustomerTransfer
      */
-    public function login(CustomerInterface $customerTransfer)
+    public function getCustomerByEmailAndPassword(CustomerInterface $customerTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/login', $customerTransfer);
+        return $this->zedStub->call('/customer/gateway/get-customer-by-email-and-password', $customerTransfer);
     }
 
     /**

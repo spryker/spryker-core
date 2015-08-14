@@ -242,11 +242,11 @@ class CustomerFacade extends AbstractFacade
      *
      * @return bool
      */
-    public function loginCustomer(CustomerTransfer $customerTransfer)
+    public function tryAuthorizeCustomerByEmailAndPassword(CustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()
             ->createCustomer()
-            ->login($customerTransfer)
+            ->tryAuthorizeCustomerByEmailAndPassword($customerTransfer)
         ;
     }
 

@@ -64,7 +64,7 @@ interface CustomerClientInterface
      *
      * @return CustomerInterface
      */
-    public function login(CustomerInterface $customerTransfer);
+    public function getCustomerByEmailAndPassword(CustomerInterface $customerTransfer);
 
     /**
      * @return bool

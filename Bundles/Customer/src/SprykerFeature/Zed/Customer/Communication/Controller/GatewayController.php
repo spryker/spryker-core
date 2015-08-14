@@ -81,18 +81,18 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param CustomerTransfer $customerTransfer
      */
-    public function loginAction(CustomerTransfer $customerTransfer)
+    public function getCustomerByEmailAndPasswordAction(CustomerTransfer $customerTransfer)
     {
-        $isLoggedIn = $this->getFacade()
-            ->loginCustomer($customerTransfer)
+        $isAuthorized = $this->getFacade()
+            ->tryAuthorizeCustomerByEmailAndPassword($customerTransfer)
         ;
 
         $result = new CustomerTransfer();
-        if (true === $isLoggedIn) {
+        if (true === $isAuthorized) {
             $result = $this->getFacade()->getCustomer($customerTransfer);
         }
 
-        $this->setSuccess($isLoggedIn);
+        $this->setSuccess($isAuthorized);
 
         return $result;
     }
@@ -118,10 +118,10 @@ class GatewayController extends AbstractGatewayController
      */
     public function updateAction(CustomerTransfer $customerTransfer)
     {
-        $success = $this->getFacade()
+        $result = $this->getFacade()
             ->updateCustomer($customerTransfer)
         ;
-        $this->setSuccess($success);
+        $this->setSuccess($result);
 
         return $customerTransfer;
     }
@@ -136,7 +136,7 @@ class GatewayController extends AbstractGatewayController
         $addressTransfer = $this->getFacade()
             ->getAddress($addressTransfer)
         ;
-        if (true === is_null($addressTransfer)) {
+        if (null === $addressTransfer) {
             $this->setSuccess(false);
 
             return;
@@ -152,10 +152,10 @@ class GatewayController extends AbstractGatewayController
      */
     public function updateAddressAction(CustomerAddressTransfer $addressTransfer)
     {
-        $success = $this->getFacade()
+        $result = $this->getFacade()
             ->updateAddress($addressTransfer)
         ;
-        $this->setSuccess($success);
+        $this->setSuccess($result);
 
         return $addressTransfer;
     }
@@ -182,10 +182,10 @@ class GatewayController extends AbstractGatewayController
      */
     public function deleteAddressAction(CustomerAddressTransfer $addressTransfer)
     {
-        $success = $this->getFacade()
+        $result = $this->getFacade()
             ->deleteAddress($addressTransfer)
         ;
-        $this->setSuccess($success);
+        $this->setSuccess($result);
 
         return $addressTransfer;
     }
@@ -197,10 +197,10 @@ class GatewayController extends AbstractGatewayController
      */
     public function defaultBillingAddressAction(CustomerAddressTransfer $addressTransfer)
     {
-        $success = $this->getFacade()
+        $result = $this->getFacade()
             ->setDefaultBillingAddress($addressTransfer)
         ;
-        $this->setSuccess($success);
+        $this->setSuccess($result);
 
         return $addressTransfer;
     }
@@ -212,10 +212,10 @@ class GatewayController extends AbstractGatewayController
      */
     public function defaultShippingAddressAction(CustomerAddressTransfer $addressTransfer)
     {
-        $success = $this->getFacade()
+        $result = $this->getFacade()
             ->setDefaultShippingAddress($addressTransfer)
         ;
-        $this->setSuccess($success);
+        $this->setSuccess($result);
 
         return $addressTransfer;
     }
