@@ -15,7 +15,7 @@ class ExportSearch extends AbstractApplicationCheckStep
      */
     public function run()
     {
-        $command = 'vendor/bin/console frontend-exporter:export-search';
+        $command = 'vendor/bin/console collector:search:export';
 
         $this->info('Run ' . $command);
 
