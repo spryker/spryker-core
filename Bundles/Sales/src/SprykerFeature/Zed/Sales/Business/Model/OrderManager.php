@@ -7,10 +7,10 @@
 namespace SprykerFeature\Zed\Sales\Business\Model;
 
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SalesAddressTransfer;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
-use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use SprykerFeature\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
@@ -90,6 +90,9 @@ class OrderManager
     {
         $orderEntity = new SpySalesOrder();
 
+        // catch-all save; this includes an optional fk_customer
+        $orderEntity->fromArray($orderTransfer->toArray());
+
         $orderEntity->setOrderReference($this->orderReferenceGenerator->generateOrderReference($orderTransfer));
 
         $orderEntity->setBillingAddress($this->saveAddressTransfer($orderTransfer->getBillingAddress()));
@@ -101,10 +104,6 @@ class OrderManager
         $orderEntity->setSubtotal($orderTransfer->getTotals()
             ->getSubtotal())
         ;
-
-        $orderEntity->setEmail($orderTransfer->getEmail());
-        $orderEntity->setFirstName($orderTransfer->getFirstName());
-        $orderEntity->setLastName($orderTransfer->getLastName());
 
         $orderEntity->setOrderReference($this->orderReferenceGenerator->generateOrderReference($orderTransfer));
 
@@ -126,13 +125,10 @@ class OrderManager
             $quantity = !is_null($item->getQuantity()) ? $item->getQuantity() : 1;
 
             $itemEntity = new SpySalesOrderItem();
-            $itemEntity->setName($item->getName());
 
-            $itemEntity->setSku($item->getSku());
-            $itemEntity->setGrossPrice($item->getGrossPrice());
-            $itemEntity->setPriceToPay($item->getPriceToPay());
+            $itemEntity->fromArray($item->toArray());
+
             $itemEntity->setQuantity($quantity);
-            $itemEntity->setGroupKey($item->getGroupKey());
 
             $itemEntity->setFkSalesOrder($orderEntity->getIdSalesOrder());
             $itemEntity->setFkOmsOrderItemState($this->omsFacade->getInitialStateEntity()
@@ -141,7 +137,10 @@ class OrderManager
 
             $itemEntity->setProcess($orderProcess);
 
+            $itemEntity->setTaxPercentage($item->getTaxSet()->getEffectiveRate());
+
             $itemEntity->save();
+
             $item->setIdSalesOrderItem($itemEntity->getIdSalesOrderItem());
 
             // @todo: Illegal direct dependency on ProductOption
@@ -178,17 +177,15 @@ class OrderManager
         foreach ($item->getProductOptions() as $productOption) {
             $optionEntity = new SpySalesOrderItemOption();
 
+            $optionEntity->fromArray($item->toArray());
+
             $optionEntity->setFkSalesOrderItem($item->getIdSalesOrderItem());
-            $optionEntity->setLabelOptionType($productOption->getLabelOptionType());
-            $optionEntity->setLabelOptionValue($productOption->getLabelOptionValue());
-            $optionEntity->setGrossPrice($productOption->getGrossPrice());
-            $optionEntity->setPriceToPay($productOption->getPriceToPay());
             $optionEntity->setTaxPercentage($productOption->getTaxSet()
-                ->getEffectiveRate())
-            ;
+                ->getEffectiveRate());
+
+            // TODO remove
             $optionEntity->setTaxAmount($productOption->getTaxSet()
-                ->getAmount())
-            ;
+                ->getAmount());
 
             $optionEntity->save();
         }
