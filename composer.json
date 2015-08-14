@@ -39,7 +39,6 @@
     "spryker/price-cart-connector": "self.version",
     "spryker/product": "self.version",
     "spryker/product-category": "self.version",
-    "spryker/product-category-search": "self.version",
     "spryker/product-exporter": "self.version",
     "spryker/product-image": "self.version",
     "spryker/product-search": "self.version",
