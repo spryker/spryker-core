@@ -67,9 +67,6 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
             $this->createBatchResultModel()
         );
 
-        $keyValueExporter->setStandardChunkSize($config->getStandardChunkSize());
-        $keyValueExporter->setChunkSizeTypeMap($config->getChunkSizeTypeMap());
-
         foreach ($config->getStorageCollectors() as $touchItemType => $collectorPlugin) {
             $keyValueExporter->addCollectorPlugin($touchItemType, $collectorPlugin);
         }
@@ -179,10 +176,6 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
             $this->createFailedResultModel(),
             $this->createBatchResultModel()
         );
-
-        $searchExporter->setStandardChunkSize($config->getStandardChunkSize());
-        $searchExporter->setChunkSizeTypeMap($config->getChunkSizeTypeMap());
-
 
         foreach ($config->getSearchCollectors() as $touchItemType => $collectorPlugin) {
             $searchExporter->addCollectorPlugin($touchItemType, $collectorPlugin);

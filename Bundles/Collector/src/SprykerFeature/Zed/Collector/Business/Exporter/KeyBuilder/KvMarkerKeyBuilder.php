@@ -13,6 +13,7 @@ class KvMarkerKeyBuilder implements KeyBuilderInterface
 {
 
     use KeyBuilderTrait;
+
     /**
      * @param string $data
      *

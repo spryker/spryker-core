@@ -13,7 +13,7 @@ class UrlMatcher implements UrlMatcherInterface
 {
 
     /**
-     * @var
+     * @var KeyBuilderInterface
      */
     protected $urlKeyBuilder;
 

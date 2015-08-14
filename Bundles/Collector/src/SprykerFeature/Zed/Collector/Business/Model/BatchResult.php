@@ -27,22 +27,6 @@ class BatchResult implements BatchResultInterface
     protected $fetchedCount = 0;
 
     /**
-     * @return int
-     */
-    public function getFetchedCount()
-    {
-        return $this->fetchedCount;
-    }
-
-    /**
-     * @param int $fetchedCount
-     */
-    public function setFetchedCount($fetchedCount)
-    {
-        $this->fetchedCount = (int) $fetchedCount;
-    }
-
-    /**
      * @var int
      */
     protected $successCount = 0;
@@ -66,6 +50,22 @@ class BatchResult implements BatchResultInterface
      * @var string
      */
     protected $processedLocale = '';
+
+    /**
+     * @return int
+     */
+    public function getFetchedCount()
+    {
+        return $this->fetchedCount;
+    }
+
+    /**
+     * @param int $fetchedCount
+     */
+    public function setFetchedCount($fetchedCount)
+    {
+        $this->fetchedCount = (int) $fetchedCount;
+    }
 
     /**
      * @return int
