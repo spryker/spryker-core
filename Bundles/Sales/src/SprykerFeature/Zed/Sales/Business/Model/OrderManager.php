@@ -183,10 +183,6 @@ class OrderManager
             $optionEntity->setTaxPercentage($productOption->getTaxSet()
                 ->getEffectiveRate());
 
-            // TODO remove
-            $optionEntity->setTaxAmount($productOption->getTaxSet()
-                ->getAmount());
-
             $optionEntity->save();
         }
     }
