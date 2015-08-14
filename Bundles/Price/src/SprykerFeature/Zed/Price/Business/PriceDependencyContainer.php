@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Price\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\PriceBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use SprykerFeature\Zed\Price\Business\Model\BulkWriterInterface;
 use SprykerFeature\Zed\Price\Persistence\PriceQueryContainer;
 use SprykerFeature\Zed\Price\Business\Model\WriterInterface;
 use SprykerFeature\Zed\Price\Business\Model\ReaderInterface;
@@ -57,6 +58,20 @@ class PriceDependencyContainer extends AbstractBusinessDependencyContainer
     public function getWriterModel()
     {
         return $this->getFactory()->createModelWriter(
+            $this->getLocator(),
+            $this->getQueryContainer(),
+            $this->getReaderModel(),
+            $this->getTouchFacade(),
+            $this->getConfig()
+        );
+    }
+
+    /**
+     * @return BulkWriterInterface
+     */
+    public function getBulkWriterModel()
+    {
+        return $this->getFactory()->createModelBulkWriter(
             $this->getLocator(),
             $this->getQueryContainer(),
             $this->getReaderModel(),

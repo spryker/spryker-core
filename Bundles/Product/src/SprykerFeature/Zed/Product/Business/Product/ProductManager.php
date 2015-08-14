@@ -60,14 +60,14 @@ class ProductManager implements ProductManagerInterface
     protected $localeFacade;
 
     /**
-     * @var array
+     * @var SpyAbstractProduct[]
      */
-    protected $productsBySkuCache = [
-        'abstractProduct' => [],
-        'abstractCount' => [],
-        'concreteProduct' => [],
-        'concreteCount' => [],
-    ];
+    protected $abstractProductsBySkuCache = [];
+
+    /**
+     * @var SpyProduct[]
+     */
+    protected $concreteProductsBySkuCache = [];
 
     /**
      * @param ProductQueryContainerInterface $productQueryContainer
@@ -94,6 +94,7 @@ class ProductManager implements ProductManagerInterface
      */
     public function hasAbstractProduct($sku)
     {
+        // @todo this is very expensive when used in iterations!
         $abstractProductQuery = $this->productQueryContainer->queryAbstractProductBySku($sku);
 
         return $abstractProductQuery->count() > 0;
@@ -137,7 +138,7 @@ class ProductManager implements ProductManagerInterface
      */
     public function getAbstractProductIdBySku($sku)
     {
-        if (!isset($this->productsBySkuCache['abstractProduct'][$sku])) {
+        if (!isset($this->abstractProductsBySkuCache[$sku])) {
             $abstractProduct = $this->productQueryContainer->queryAbstractProductBySku($sku)->findOne();
 
             if (!$abstractProduct) {
@@ -149,10 +150,10 @@ class ProductManager implements ProductManagerInterface
                 );
             }
 
-            $this->productsBySkuCache['abstractProduct'][$sku] = $abstractProduct;
+            $this->abstractProductsBySkuCache[$sku] = $abstractProduct;
         }
 
-        return $this->productsBySkuCache['abstractProduct'][$sku]->getPrimaryKey();
+        return $this->abstractProductsBySkuCache[$sku]->getPrimaryKey();
     }
 
     /**
@@ -293,6 +294,7 @@ class ProductManager implements ProductManagerInterface
      */
     public function hasConcreteProduct($sku)
     {
+        // @todo this is very expensive when used in iterations!
         return $this->productQueryContainer->queryConcreteProductBySku($sku)->count() > 0;
     }
 
@@ -305,7 +307,7 @@ class ProductManager implements ProductManagerInterface
      */
     public function getConcreteProductIdBySku($sku)
     {
-        if (!isset($this->productsBySkuCache['concreteProduct'][$sku])) {
+        if (!isset($this->concreteProductsBySkuCache[$sku])) {
             $concreteProduct = $this->productQueryContainer->queryConcreteProductBySku($sku)->findOne();
 
             if (!$concreteProduct) {
@@ -317,10 +319,10 @@ class ProductManager implements ProductManagerInterface
                 );
             }
 
-            $this->productsBySkuCache['concreteProduct'][$sku] = $concreteProduct;
+            $this->concreteProductsBySkuCache[$sku] = $concreteProduct;
         }
 
-        return $this->productsBySkuCache['concreteProduct'][$sku]->getPrimaryKey();
+        return $this->concreteProductsBySkuCache[$sku]->getPrimaryKey();
     }
 
     /**
