@@ -8,13 +8,12 @@ namespace SprykerFeature\Zed\SearchPage\Communication\Plugin;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\Collector\Dependency\Plugin\DataProcessorPluginInterface;
 use SprykerFeature\Zed\SearchPage\Communication\SearchPageDependencyContainer;
 
 /**
  * @method SearchPageDependencyContainer getDependencyContainer()
  */
-class SearchPageConfigProcessorPlugin extends AbstractPlugin implements DataProcessorPluginInterface
+class SearchPageConfigProcessorPlugin extends AbstractPlugin
 {
 
     /**

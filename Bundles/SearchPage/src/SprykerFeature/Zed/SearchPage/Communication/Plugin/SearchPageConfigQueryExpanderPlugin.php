@@ -9,13 +9,12 @@ namespace SprykerFeature\Zed\SearchPage\Communication\Plugin;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\Collector\Dependency\Plugin\QueryExpanderPluginInterface;
 use SprykerFeature\Zed\SearchPage\Communication\SearchPageDependencyContainer;
 
 /**
  * @method SearchPageDependencyContainer getDependencyContainer()
  */
-class SearchPageConfigQueryExpanderPlugin extends AbstractPlugin implements QueryExpanderPluginInterface
+class SearchPageConfigQueryExpanderPlugin extends AbstractPlugin
 {
 
     /**
