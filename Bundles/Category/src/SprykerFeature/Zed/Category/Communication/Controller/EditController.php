@@ -42,7 +42,7 @@ class EditController extends AbstractController
 
             $categoryNodeTransfer = (new NodeTransfer())->fromArray($form->getData(), true);
             $this->getFacade()
-                ->updateNodeNodeSoFuckingConfusing($categoryNodeTransfer)
+                ->updateNodeWithTreeWriter($categoryNodeTransfer)
             ;
             
             return $this->redirectResponse('/category/');

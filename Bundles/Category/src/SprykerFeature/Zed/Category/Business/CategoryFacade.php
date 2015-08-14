@@ -105,7 +105,7 @@ class CategoryFacade extends AbstractFacade
     /**
      * @param NodeTransfer $categoryNode
      */
-    public function updateNodeNodeSoFuckingConfusing(NodeTransfer $categoryNode)
+    public function updateNodeWithTreeWriter(NodeTransfer $categoryNode)
     {
         $this->getDependencyContainer()
             ->createNodeWriter()
