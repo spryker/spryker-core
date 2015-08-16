@@ -98,12 +98,13 @@ class Writer implements WriterInterface
             !$this->isPriceTypeExistingForAbstractProduct($transferPriceProduct)
             && !$this->isPriceTypeExistingForConcreteProduct($transferPriceProduct)
         ) {
-            $this->loadProductIdsForPriceProductTransfer($transferPriceProduct);
+            $this->loadAbstractProductIdForPriceProductTransfer($transferPriceProduct);
+            $this->loadConcreteProductIdForPriceProductTransfer($transferPriceProduct);
 
             $entity = $this->locator->price()->entitySpyPriceProduct();
             $newPrice = $this->savePriceProductEntity($transferPriceProduct, $entity);
 
-            $this->insertTouchRecord(self::TOUCH_PRODUCT, $transferPriceProduct->getIdAbstractProduct());
+            $this->insertTouchRecord(self::TOUCH_PRODUCT, $transferPriceProduct->getIdProduct());
 
             return $newPrice;
         }
@@ -123,12 +124,13 @@ class Writer implements WriterInterface
             !$this->isPriceTypeExistingForConcreteProduct($transferPriceProduct)
             && !$this->isPriceTypeExistingForAbstractProduct($transferPriceProduct)
         ) {
-            $this->loadProductIdsForPriceProductTransfer($transferPriceProduct);
+            $this->loadAbstractProductIdForPriceProductTransfer($transferPriceProduct);
+            $this->loadConcreteProductIdForPriceProductTransfer($transferPriceProduct);
 
             $priceProductEntity = $this->getPriceProductById($transferPriceProduct->getIdPriceProduct());
             $this->savePriceProductEntity($transferPriceProduct, $priceProductEntity);
 
-            $this->insertTouchRecord(self::TOUCH_PRODUCT, $transferPriceProduct->getIdAbstractProduct());
+            $this->insertTouchRecord(self::TOUCH_PRODUCT, $transferPriceProduct->getIdProduct());
         } else {
             throw new \Exception('This couple product price type is already set');
         }
@@ -137,15 +139,20 @@ class Writer implements WriterInterface
     /**
      * @param PriceProductTransfer $transferPriceProduct
      */
-    protected function loadProductIdsForPriceProductTransfer(PriceProductTransfer $transferPriceProduct)
+    protected function loadAbstractProductIdForPriceProductTransfer(PriceProductTransfer $transferPriceProduct)
     {
         if (null === $transferPriceProduct->getIdAbstractProduct()) {
-            // @todo getSkuAbstractProduct() returns null so there won't be abstract product...
-//            $transferPriceProduct->setIdAbstractProduct(
-//                $this->reader->getAbstractProductIdBySku($transferPriceProduct->getSkuAbstractProduct())
-//            );
+            $transferPriceProduct->setIdAbstractProduct(
+                $this->reader->getAbstractProductIdBySku($transferPriceProduct->getSkuAbstractProduct())
+            );
         }
+    }
 
+    /**
+     * @param PriceProductTransfer $transferPriceProduct
+     */
+    protected function loadConcreteProductIdForPriceProductTransfer(PriceProductTransfer $transferPriceProduct)
+    {
         if (
             null === $transferPriceProduct->getIdProduct() &&
             $this->reader->hasConcreteProduct($transferPriceProduct->getSkuProduct())
@@ -173,7 +180,6 @@ class Writer implements WriterInterface
         if ($transferPriceProduct->getIdProduct()) {
             $priceProductEntity->setFkProduct($transferPriceProduct->getIdProduct());
         } else {
-            // @todo this is probably broken, because currently we dont know the abstract product id
             $priceProductEntity->setFkAbstractProduct($transferPriceProduct->getIdAbstractProduct());
         }
 

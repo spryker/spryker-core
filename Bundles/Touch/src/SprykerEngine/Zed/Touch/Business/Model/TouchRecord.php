@@ -13,6 +13,7 @@ use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 class TouchRecord implements TouchRecordInterface
 {
+    const BULK_UPDATE_CHUNK_SIZE = 250;
 
     /**
      * @var TouchQueryContainerInterface
@@ -62,9 +63,13 @@ class TouchRecord implements TouchRecordInterface
      */
     public function bulkUpdateTouchRecords($itemType, $itemEvent, array $itemIds = [])
     {
-        $touchQuery = $this->touchQueryContainer->queryTouchEntries($itemType, $itemEvent, $itemIds);
-        // $todo: This is probably not working...
-        $a = $touchQuery->update(['Touched' => new DateTime()]);
-        return $a;
+        $updated = 0;
+        $itemIdChunks = array_chunk($itemIds, self::BULK_UPDATE_CHUNK_SIZE);
+        foreach ($itemIdChunks as $itemIdChunk) {
+            $touchQuery = $this->touchQueryContainer->queryTouchEntries($itemType, $itemEvent, $itemIdChunk);
+            $updated += $touchQuery->update(['Touched' => new DateTime()]);
+        }
+
+        return $updated;
     }
 }

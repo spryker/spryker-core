@@ -26,12 +26,13 @@ class BulkWriter extends Writer implements BulkWriterInterface
     {
         $transferPriceProduct = $this->setPriceType($transferPriceProduct);
 
-        $this->loadProductIdsForPriceProductTransfer($transferPriceProduct);
+        $this->loadAbstractProductIdForPriceProductTransfer($transferPriceProduct);
+        $this->loadConcreteProductIdForPriceProductTransfer($transferPriceProduct);
 
         $entity = $this->locator->price()->entitySpyPriceProduct();
         $newPrice = $this->savePriceProductEntity($transferPriceProduct, $entity);
 
-        $this->addRecordToTouch(self::TOUCH_PRODUCT, $transferPriceProduct->getIdAbstractProduct());
+        $this->addRecordToTouch(self::TOUCH_PRODUCT, $transferPriceProduct->getIdProduct());
 
         return $newPrice;
     }
@@ -45,12 +46,13 @@ class BulkWriter extends Writer implements BulkWriterInterface
     {
         $transferPriceProduct = $this->setPriceType($transferPriceProduct);
 
-        $this->loadProductIdsForPriceProductTransfer($transferPriceProduct);
+        $this->loadAbstractProductIdForPriceProductTransfer($transferPriceProduct);
+        $this->loadConcreteProductIdForPriceProductTransfer($transferPriceProduct);
 
         $priceProductEntity = $this->getPriceProductById($transferPriceProduct->getIdPriceProduct());
         $this->savePriceProductEntity($transferPriceProduct, $priceProductEntity);
 
-        $this->addRecordToTouch(self::TOUCH_PRODUCT, $transferPriceProduct->getIdAbstractProduct());
+        $this->addRecordToTouch(self::TOUCH_PRODUCT, $transferPriceProduct->getIdProduct());
     }
 
     /**
@@ -66,7 +68,8 @@ class BulkWriter extends Writer implements BulkWriterInterface
     {
         foreach ($this->recordsToTouch as $itemType => $itemIds) {
             $this->touchFacade->bulkTouchActive($itemType, $itemIds);
-            unset($this->recordsToTouch[$itemType]);
         }
+        $this->recordsToTouch = [];
     }
+
 }
