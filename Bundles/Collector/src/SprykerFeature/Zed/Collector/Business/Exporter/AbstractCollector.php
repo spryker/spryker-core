@@ -109,7 +109,6 @@ abstract class AbstractCollector implements ExporterInterface
         return $this->finishExport($result, $type);
     }
 
-
     /**
      * @param BatchResultInterface $batchResult
      * @param string $type
@@ -124,7 +123,6 @@ abstract class AbstractCollector implements ExporterInterface
 
         return $batchResult;
     }
-
 
     /**
      * @return AbstractFormatter
