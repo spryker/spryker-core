@@ -40,6 +40,8 @@ class AddController extends AbstractController
             $facade = $this->getFacade();
             $facade->saveGlossaryKeyTranslations($data);
 
+            $this->addSuccessMessage('Saved entry to glossary.');
+
             return $this->redirectResponse('/glossary/');
         }
 

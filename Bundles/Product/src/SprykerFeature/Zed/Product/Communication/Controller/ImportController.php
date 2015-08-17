@@ -36,7 +36,7 @@ class ImportController extends AbstractController
                 ProductImportForm::FORM_ELEMENT_IMPORT_FILE_NAME
             );
             $result = $this->facadeProduct->importProductsFromFile($uploadedFile);
-            $this->addMessageSuccess(
+            $this->addSuccessMessage(
                 sprintf(
                     'Uploaded: %d' . PHP_EOL . 'Successful: %d' . PHP_EOL . 'Failed:    %d',
                     $result->getTotalCount(),
@@ -46,7 +46,7 @@ class ImportController extends AbstractController
             );
         } else {
             // TODO addError only except strings getErrorMessages returns an array
-//            $this->addMessageError($importForm->getErrorMessages());
+//            $this->addErrorMessage($importForm->getErrorMessages());
         }
 
         return $this->redirectResponse('/product/import');
