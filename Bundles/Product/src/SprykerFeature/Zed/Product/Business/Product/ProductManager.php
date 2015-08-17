@@ -94,7 +94,6 @@ class ProductManager implements ProductManagerInterface
      */
     public function hasAbstractProduct($sku)
     {
-        // @todo this is very expensive when used in iterations!
         $abstractProductQuery = $this->productQueryContainer->queryAbstractProductBySku($sku);
 
         return $abstractProductQuery->count() > 0;
@@ -294,7 +293,6 @@ class ProductManager implements ProductManagerInterface
      */
     public function hasConcreteProduct($sku)
     {
-        // @todo this is very expensive when used in iterations!
         return $this->productQueryContainer->queryConcreteProductBySku($sku)->count() > 0;
     }
 
@@ -505,6 +503,8 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param string $concreteSku
      *
+     * @throws MissingProductException
+     *
      * @return ConcreteProductInterface
      */
     public function getConcreteProduct($concreteSku)
@@ -542,7 +542,7 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param ConcreteProductInterface $productTransfer
+     * @param ConcreteProductInterface $concreteProductTransfer
      */
     private function addTaxesToProductTransfer(ConcreteProductInterface $concreteProductTransfer)
     {
