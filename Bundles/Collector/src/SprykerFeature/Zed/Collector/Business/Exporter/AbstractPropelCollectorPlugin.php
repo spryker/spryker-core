@@ -11,7 +11,7 @@ use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
 
-abstract class AbstractPropelCollectorPlugin extends AbstractCollector
+abstract class AbstractPropelCollectorPlugin
 {
 
     /**

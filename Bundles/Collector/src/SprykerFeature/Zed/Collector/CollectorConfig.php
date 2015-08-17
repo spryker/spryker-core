@@ -13,16 +13,6 @@ use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 class CollectorConfig extends AbstractBundleConfig
 {
 
-    public function getSearchCollectors()
-    {
-        return [];
-    }
-
-    public function getStorageCollectors()
-    {
-        return [];
-    }
-
     /**
      * @return string
      */

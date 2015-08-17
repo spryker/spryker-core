@@ -18,6 +18,10 @@ class CollectorDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_LOCALE = 'locale_facade';
 
+    const SEARCH_PLUGINS = 'search_plugins';
+
+    const STORAGE_PLUGINS = 'storage_plugins';
+
     /**
      * @var Container
      *

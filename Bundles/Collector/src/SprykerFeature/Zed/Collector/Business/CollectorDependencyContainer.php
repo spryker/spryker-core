@@ -57,8 +57,6 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createKeyValueExporter()
     {
-        $config = $this->getConfig();
-
         $keyValueExporter = $this->getFactory()->createExporterKeyValueCollector(
             $this->createTouchQueryContainer(),
             $this->createKeyValueWriter(),
@@ -67,7 +65,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
             $this->createBatchResultModel()
         );
 
-        foreach ($config->getStorageCollectors() as $touchItemType => $collectorPlugin) {
+        foreach ($this->getProvidedDependency(CollectorDependencyProvider::STORAGE_PLUGINS) as $touchItemType => $collectorPlugin) {
             $keyValueExporter->addCollectorPlugin($touchItemType, $collectorPlugin);
         }
 
@@ -177,7 +175,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
             $this->createBatchResultModel()
         );
 
-        foreach ($config->getSearchCollectors() as $touchItemType => $collectorPlugin) {
+        foreach ($this->getProvidedDependency(CollectorDependencyProvider::SEARCH_PLUGINS) as $touchItemType => $collectorPlugin) {
             $searchExporter->addCollectorPlugin($touchItemType, $collectorPlugin);
         }
 
