@@ -11,13 +11,13 @@ use Generated\Zed\Ide\FactoryAutoCompletion\CategoryCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Category\CategoryDependencyProvider;
 use SprykerFeature\Zed\Category\Communication\Form\CategoryFormAdd;
+use SprykerFeature\Zed\Category\Communication\Form\CategoryFormEdit;
 use SprykerFeature\Zed\Category\Communication\Form\CategoryNodeForm;
 use SprykerFeature\Zed\Category\Communication\Grid\CategoryGrid;
 use SprykerFeature\Zed\Category\Communication\Table\CategoryAttributeTable;
 use SprykerFeature\Zed\Category\Communication\Table\RootNodeTable;
 use SprykerFeature\Zed\Category\Communication\Table\UrlTable;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryAttributeQuery;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -118,28 +118,24 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createCategoryFormAdd()
     {
-        $categoryQuery = $this->getQueryContainer()->queryCategoryById(null);
-        
         return $this->getFactory()->createFormCategoryFormAdd(
-            $categoryQuery,
             $this->getQueryContainer(),
-            $this->getCurrentLocale()
+            $this->getCurrentLocale(),
+            null
         );
     }
 
     /**
-     * @param $category_id
+     * @param int $category_id
      *
-     * @return CategoryFormAdd
+     * @return CategoryFormEdit
      */
     public function createCategoryFormEdit($category_id)
     {
-        $categoryQuery = $this->getQueryContainer()->queryCategoryById($category_id);
-
         return $this->getFactory()->createFormCategoryFormEdit(
-            $categoryQuery,
             $this->getQueryContainer(),
-            $this->getCurrentLocale()
+            $this->getCurrentLocale(),
+            $category_id
         );
     }
 

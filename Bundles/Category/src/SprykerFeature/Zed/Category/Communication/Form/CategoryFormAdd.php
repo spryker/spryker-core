@@ -12,7 +12,6 @@ use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryQuery;
 use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -25,11 +24,6 @@ class CategoryFormAdd extends AbstractForm
     const FK_PARENT_CATEGORY_NODE = 'fk_parent_category_node';
 
     /**
-     * @var SpyCategoryQuery
-     */
-    protected $categoryQuery;
-
-    /**
      * @var CategoryQueryContainer
      */
     protected $categoryQueryContainer;
@@ -38,16 +32,22 @@ class CategoryFormAdd extends AbstractForm
      * @var LocaleTransfer
      */
     protected $locale;
-    
 
     /**
-     * @param SpyCategoryQuery $categoryQuery
+     * @var int
      */
-    public function __construct(SpyCategoryQuery $categoryQuery, CategoryQueryContainer $categoryQueryContainer, LocaleTransfer $locale)
+    protected $category_id;
+
+    /**
+     * @param CategoryQueryContainer $categoryQueryContainer
+     * @param LocaleTransfer $locale
+     * @param int $category_id
+     */
+    public function __construct(CategoryQueryContainer $categoryQueryContainer, LocaleTransfer $locale, $category_id)
     {
-        $this->categoryQuery = $categoryQuery;
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->locale = $locale;
+        $this->category_id = $category_id;
     }
 
     /**
@@ -60,13 +60,12 @@ class CategoryFormAdd extends AbstractForm
                 new NotBlank(),
             ],
         ])
-            ->addChoice(self::FK_PARENT_CATEGORY_NODE, [
+            ->addSelect2ComboBox(self::FK_PARENT_CATEGORY_NODE, [
                 'label' => 'Parent',
-                'placeholder' => '-select-',
                 'choices' => $this->getCategories(),
                 'constraints' => [
                     new NotBlank(),
-                ],
+                ]
             ])
             ->addHidden(self::PK_CATEGORY_NODE)
             ;
@@ -77,8 +76,7 @@ class CategoryFormAdd extends AbstractForm
      */
     protected function getCategories()
     {
-        $categories = $this->categoryQueryContainer
-            ->queryCategory($this->locale->getIdLocale())
+        $categories = $this->categoryQueryContainer->queryCategory($this->locale->getIdLocale())
             ->setFormatter(new PropelArraySetFormatter())
             ->find()
         ;
@@ -91,23 +89,18 @@ class CategoryFormAdd extends AbstractForm
         return $data;
     }
 
-
     /**
      * @return array
      */
     protected function populateFormFields()
     {
-        $result = [
-            self::PK_CATEGORY => null,
-            self::PK_CATEGORY_NODE => null,
-            self::FK_PARENT_CATEGORY_NODE => null,
-            self::NAME => '',
-        ];
-
+        $fields = $this->getDefaultFormFields();
         /**
          * @var SpyCategory $category
          */
-        $category = $this->categoryQuery->innerJoinAttribute()
+        
+        $category = $this->categoryQueryContainer->queryCategoryById($this->category_id)
+            ->innerJoinAttribute()
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::NAME)
             ->innerJoinNode()
             ->withColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE, self::FK_PARENT_CATEGORY_NODE)
@@ -117,16 +110,29 @@ class CategoryFormAdd extends AbstractForm
 
         if ($category) {
             $category = $category->toArray();
-            
-            $result = [
+
+            $fields = [
                 self::PK_CATEGORY => $category[self::PK_CATEGORY],
                 self::PK_CATEGORY_NODE => $category[self::PK_CATEGORY_NODE],
                 self::FK_PARENT_CATEGORY_NODE => $category[self::FK_PARENT_CATEGORY_NODE],
-                self::NAME => $category[self::NAME]
+                self::NAME => $category[self::NAME],
             ];
         }
 
-        return $result;
+        return $fields;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getDefaultFormFields()
+    {
+        return [
+            self::PK_CATEGORY => null,
+            self::PK_CATEGORY_NODE => null,
+            self::FK_PARENT_CATEGORY_NODE => null,
+            self::NAME => ''
+        ];
     }
 
 }

@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Category\Communication\Form;
 use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
-use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CategoryFormEdit extends CategoryFormAdd
@@ -20,8 +19,7 @@ class CategoryFormEdit extends CategoryFormAdd
     const ATTRIBUTE_META_KEYWORDS = 'meta_keywords';
     const ATTRIBUTE_CATEGORY_IMAGE_NAME = 'category_image_nam';
     const CATEGORY_IS_ACTIVE = 'is_active';
-    
-    
+
     /**
      * @return CategoryFormAdd
      */
@@ -41,59 +39,29 @@ class CategoryFormEdit extends CategoryFormAdd
             ->addTextarea(self::ATTRIBUTE_META_KEYWORDS, [
                 'label' => 'Meta Keywords',
             ])
-            ->addChoice(self::FK_PARENT_CATEGORY_NODE, [
+            ->addSelect2ComboBox(self::FK_PARENT_CATEGORY_NODE, [
                 'label' => 'Parent',
-                'placeholder' => '-select-',
                 'choices' => $this->getCategories(),
                 'constraints' => [
                     new NotBlank(),
-                ],
+                ]
             ])
             ->addHidden(self::PK_CATEGORY_NODE)
             ;
     }
-
-    /**
-     * @return array
-     */
-    protected function getCategories()
-    {
-        $categories = $this->categoryQueryContainer
-            ->queryCategory($this->locale->getIdLocale())
-            ->setFormatter(new PropelArraySetFormatter())
-            ->find()
-        ;
-
-        $data = [];
-        foreach ($categories as $category) {
-            $data[$category['id_category']] = $category['name'];
-        }
-
-        return $data;
-    }
-
-
+    
     /**
      * @return array
      */
     protected function populateFormFields()
     {
-        $result = [
-            self::PK_CATEGORY => null,
-            self::PK_CATEGORY_NODE => null,
-            self::FK_PARENT_CATEGORY_NODE => null,
-            self::NAME => '',
-            self::ATTRIBUTE_META_TITLE => '',
-            self::ATTRIBUTE_META_DESCRIPTION => '',
-            self::ATTRIBUTE_META_KEYWORDS => '',
-            self::ATTRIBUTE_CATEGORY_IMAGE_NAME => '',
-            self::CATEGORY_IS_ACTIVE => ''
-        ];
+        $fields = $this->getDefaultFormFields();
 
         /**
          * @var SpyCategory $category
          */
-        $category = $this->categoryQuery->innerJoinAttribute()
+        $category = $this->categoryQueryContainer->queryCategoryById($this->category_id)
+            ->innerJoinAttribute()
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::NAME)
             ->withColumn(SpyCategoryAttributeTableMap::COL_META_TITLE, self::ATTRIBUTE_META_TITLE)
             ->withColumn(SpyCategoryAttributeTableMap::COL_META_DESCRIPTION, self::ATTRIBUTE_META_DESCRIPTION)
@@ -104,11 +72,11 @@ class CategoryFormEdit extends CategoryFormAdd
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, self::PK_CATEGORY_NODE)
             ->findOne()
         ;
-
+        
         if ($category) {
             $category = $category->toArray();
-            
-            $result = [
+
+            $fields = [
                 self::PK_CATEGORY => $category[self::PK_CATEGORY],
                 self::PK_CATEGORY_NODE => $category[self::PK_CATEGORY_NODE],
                 self::FK_PARENT_CATEGORY_NODE => $category[self::FK_PARENT_CATEGORY_NODE],
@@ -117,11 +85,28 @@ class CategoryFormEdit extends CategoryFormAdd
                 self::ATTRIBUTE_META_DESCRIPTION => $category[self::ATTRIBUTE_META_DESCRIPTION],
                 self::ATTRIBUTE_META_KEYWORDS => $category[self::ATTRIBUTE_META_KEYWORDS],
                 self::ATTRIBUTE_CATEGORY_IMAGE_NAME => $category[self::ATTRIBUTE_CATEGORY_IMAGE_NAME],
-                self::CATEGORY_IS_ACTIVE => $category[self::CATEGORY_IS_ACTIVE]
+                self::CATEGORY_IS_ACTIVE => $category[self::CATEGORY_IS_ACTIVE],
             ];
         }
 
-        return $result;
+        return $fields;
+    }
+
+
+    /**
+     * @return array
+     */
+    protected function getDefaultFormFields()
+    {
+        $fields = parent::getDefaultFormFields();
+
+        return array_merge($fields, [
+            self::ATTRIBUTE_META_TITLE => '',
+            self::ATTRIBUTE_META_DESCRIPTION => '',
+            self::ATTRIBUTE_META_KEYWORDS => '',
+            self::ATTRIBUTE_CATEGORY_IMAGE_NAME => '',
+            self::CATEGORY_IS_ACTIVE => ''
+        ]);
     }
 
 }

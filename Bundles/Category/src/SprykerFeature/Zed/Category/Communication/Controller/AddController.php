@@ -5,41 +5,53 @@ namespace SprykerFeature\Zed\Category\Communication\Controller;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\Category\Business\CategoryFacade;
+use SprykerFeature\Zed\Category\Communication\CategoryDependencyContainer;
+use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * @method \SprykerFeature\Zed\Category\Business\CategoryFacade getFacade()
- * @method \SprykerFeature\Zed\Category\Communication\CategoryDependencyContainer getDependencyContainer()
+ * @method CategoryFacade getFacade()
+ * @method CategoryDependencyContainer getDependencyContainer()
  */
 class AddController extends AbstractController
 {
 
     const PARAM_ID_CATEGORY = 'id-category';
 
-
     /**
-     * @return array
+     * @param Request $request
+     *
+     * @return array|RedirectResponse
      */
     public function indexAction(Request $request)
     {
         /**
-         * @var \Symfony\Component\Form\Form $form
+         * @var Form $form
          */
         $form = $this->getDependencyContainer()
-            ->createCategoryFormAdd(null)
+            ->createCategoryFormAdd()
         ;
         $form->handleRequest();
 
         if ($form->isValid()) {
-            $locale = $this->getDependencyContainer()->createCurrentLocale();
-            $categoryTransfer = (new CategoryTransfer())->fromArray($form->getData(), true);
+            $locale = $this->getDependencyContainer()
+                ->createCurrentLocale()
+            ;
+
+            $categoryTransfer = (new CategoryTransfer())
+                ->fromArray($form->getData(), true);
+
             $idCategory = $this->getFacade()
                 ->createCategory($categoryTransfer, $locale)
             ;
 
-            $categoryNodeTransfer = (new NodeTransfer())->fromArray($form->getData(), true);
+            $categoryNodeTransfer = (new NodeTransfer())
+                ->fromArray($form->getData(), true);
+
             $categoryNodeTransfer->setFkCategory($idCategory);
-            
+
             $this->getFacade()
                 ->createCategoryNode($categoryNodeTransfer, $locale)
             ;
@@ -48,7 +60,7 @@ class AddController extends AbstractController
         }
 
         return $this->viewResponse([
-            self::PARAM_ID_CATEGORY => null,
+            'idCategory' => null,
             'form' => $form->createView(),
         ]);
     }

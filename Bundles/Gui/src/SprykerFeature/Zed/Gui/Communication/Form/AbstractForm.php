@@ -10,6 +10,7 @@ use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Gui\Communication\Form\Type\AutosuggestType;
+use SprykerFeature\Zed\Gui\Communication\Form\Type\Select2ComboBoxType;
 use SprykerFeature\Zed\Gui\Communication\Form\Type\SelectType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\Form\FormErrorIterator;
@@ -644,6 +645,21 @@ abstract class AbstractForm
     {
         $this->add($name, new SelectType(), $options);
 
+        return $this;
+    }
+
+    /**
+     * Select2 default combobox styling, see https://select2.github.io/examples.html
+     * 
+     * @param string $name
+     * @param array $options
+     *
+     * @return $this
+     */
+    public function addSelect2ComboBox($name, $options = [])
+    {
+        $this->add($name, new Select2ComboBoxType(), $options);
+        
         return $this;
     }
 

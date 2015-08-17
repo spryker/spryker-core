@@ -1,7 +1,9 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Category' %}
-{% block body_class %}spy-page{% endblock %}
+{% set widget_title = 'Category Edit' %}
+{% block head_title -%}
+    {{ widget_title | trans }} : {{ idCategory }}
+{%- endblock %}
 {% block section_title %}{{ widget_title }}{% endblock %}
 
 
@@ -20,5 +22,11 @@
         {% endblock %}
 
     {% endembed %}
-
+    
 {% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/bundles/Gui/styles/select2.min.css">
+{% endblock %}
+
