@@ -191,11 +191,18 @@ abstract class AbstractController
      *
      * @return $this
      */
-    protected function addMessageSuccess($message)
+    protected function addSuccessMessage($message)
     {
-        $this->getMessenger()->success($message);
+        $this->getLocator()->flashMessenger()->facade()->addSuccessMessage($message); // TODO call verstecken, in __construct übergeben
+    }
 
-        return $this;
+    /**
+     * TODO
+     * @return AutoCompletion
+     */
+    protected function getLocator()
+    {
+        return Locator::getInstance();
     }
 
     /**
@@ -205,9 +212,9 @@ abstract class AbstractController
      *
      * @return $this
      */
-    protected function addMessageWarning($message)
+    protected function addInfoMessage($message)
     {
-        $this->getMessenger()->warning($message);
+        $this->getLocator()->flashMessenger()->facade()->addInfoMessage($message); // TODO call verstecken, in __construct übergeben
 
         return $this;
     }
@@ -219,9 +226,9 @@ abstract class AbstractController
      *
      * @return $this
      */
-    protected function addMessageError($message)
+    protected function addErrorMessage($message)
     {
-        $this->getMessenger()->error($message);
+        $this->getLocator()->flashMessenger()->facade()->addErrorMessage($message); // TODO call verstecken, in __construct übergeben
 
         return $this;
     }

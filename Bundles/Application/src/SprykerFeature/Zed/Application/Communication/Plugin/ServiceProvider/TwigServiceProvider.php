@@ -48,8 +48,8 @@ class TwigServiceProvider extends SilexTwigServiceProvider
                     APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s' . $storeName . '/Presentation/',
                     APPLICATION_SOURCE_DIR . '/' . $namespace . '/Zed/%s/Presentation/',
 
-                    APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/%1$s/src/SprykerFeature/Zed/%1$s' . $storeName . '/Presentation/',
                     APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/%1$s/src/SprykerFeature/Zed/%1$s/Presentation/',
+                    APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/%1$s/src/SprykerEngine/Zed/%1$s/Presentation/',
                 ]
             );
         });
