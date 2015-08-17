@@ -63,7 +63,7 @@ class EditController extends AbstractController
 
         return $this->viewResponse([
             'idCategory' => $idCategory,
-            'form' => $form->createView(),
+            'form' => $form->createView()
         ]);
     }
 

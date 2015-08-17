@@ -1,8 +1,15 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Category Add' %}
+{% if widget_title is not defined %}
+    {% set widget_title = 'Category Add' %}
+{% endif %}
+
+{% if idCategory is not defined %}
+    {% set idCategory = 0 %}
+{% endif %}
+
 {% block head_title -%}
-    {{ widget_title | trans }}
+    {{ widget_title | trans }} {% if idCategory > 0 %} : {{ idCategory }} {% endif %}
 {%- endblock %}
 {% block section_title %}{{ widget_title }}{% endblock %}
 
