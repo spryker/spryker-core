@@ -81,6 +81,7 @@ class CartOrderHydrator implements CartOrderHydratorInterface
         $orderItem->setPriceToPay($cartItem->getPriceToPay());
         $orderItem->setSku($cartItem->getSku());
         $orderItem->setName($cartItem->getName());
+        $orderItem->setTaxSet($cartItem->getTaxSet());
 
         return $orderItem;
     }
