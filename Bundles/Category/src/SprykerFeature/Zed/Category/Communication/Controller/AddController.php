@@ -41,14 +41,16 @@ class AddController extends AbstractController
             ;
 
             $categoryTransfer = (new CategoryTransfer())
-                ->fromArray($form->getData(), true);
+                ->fromArray($form->getData(), true)
+            ;
 
             $idCategory = $this->getFacade()
                 ->createCategory($categoryTransfer, $locale)
             ;
 
             $categoryNodeTransfer = (new NodeTransfer())
-                ->fromArray($form->getData(), true);
+                ->fromArray($form->getData(), true)
+            ;
 
             $categoryNodeTransfer->setFkCategory($idCategory);
 
@@ -60,7 +62,6 @@ class AddController extends AbstractController
         }
 
         return $this->viewResponse([
-            'idCategory' => null,
             'form' => $form->createView(),
         ]);
     }

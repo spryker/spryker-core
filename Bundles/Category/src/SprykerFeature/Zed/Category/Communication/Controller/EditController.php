@@ -43,14 +43,16 @@ class EditController extends AbstractController
             ;
 
             $categoryTransfer = (new CategoryTransfer())
-                ->fromArray($form->getData(), true);
+                ->fromArray($form->getData(), true)
+            ;
             
             $this->getFacade()
                 ->updateCategory($categoryTransfer, $locale)
             ;
 
             $categoryNodeTransfer = (new NodeTransfer())
-                ->fromArray($form->getData(), true);
+                ->fromArray($form->getData(), true)
+            ;
 
             $this->getFacade()
                 ->updateNodeWithTreeWriter($categoryNodeTransfer)

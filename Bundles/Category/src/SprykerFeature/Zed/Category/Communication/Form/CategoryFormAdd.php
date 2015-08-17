@@ -36,18 +36,18 @@ class CategoryFormAdd extends AbstractForm
     /**
      * @var int
      */
-    protected $category_id;
+    protected $idCategory;
 
     /**
      * @param CategoryQueryContainer $categoryQueryContainer
      * @param LocaleTransfer $locale
-     * @param int $category_id
+     * @param int $idCategory
      */
-    public function __construct(CategoryQueryContainer $categoryQueryContainer, LocaleTransfer $locale, $category_id)
+    public function __construct(CategoryQueryContainer $categoryQueryContainer, LocaleTransfer $locale, $idCategory)
     {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->locale = $locale;
-        $this->category_id = $category_id;
+        $this->idCategory = $idCategory;
     }
 
     /**
@@ -83,7 +83,7 @@ class CategoryFormAdd extends AbstractForm
 
         $data = [];
         foreach ($categories as $category) {
-            $data[$category['id_category']] = $category['name'];
+            $data[$category[self::PK_CATEGORY]] = $category[self::NAME];
         }
 
         return $data;
@@ -99,7 +99,7 @@ class CategoryFormAdd extends AbstractForm
          * @var SpyCategory $category
          */
         
-        $category = $this->categoryQueryContainer->queryCategoryById($this->category_id)
+        $category = $this->categoryQueryContainer->queryCategoryById($this->idCategory)
             ->innerJoinAttribute()
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::NAME)
             ->innerJoinNode()

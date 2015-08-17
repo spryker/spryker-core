@@ -60,7 +60,7 @@ class CategoryFormEdit extends CategoryFormAdd
         /**
          * @var SpyCategory $category
          */
-        $category = $this->categoryQueryContainer->queryCategoryById($this->category_id)
+        $category = $this->categoryQueryContainer->queryCategoryById($this->idCategory)
             ->innerJoinAttribute()
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::NAME)
             ->withColumn(SpyCategoryAttributeTableMap::COL_META_TITLE, self::ATTRIBUTE_META_TITLE)
