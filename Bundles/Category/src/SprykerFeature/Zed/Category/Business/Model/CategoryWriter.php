@@ -57,16 +57,10 @@ class CategoryWriter implements CategoryWriterInterface
     public function update(CategoryInterface $category, LocaleTransfer $locale)
     {
         $attributeEntity = $this->getAttributeEntity($category->getIdCategory(), $locale);
-        $attributeEntity->setName($category->getName());
-        $attributeEntity->setMetaTitle($category->getMetaTitle());
-        $attributeEntity->setMetaDescription($category->getMetaDescription());
-        $attributeEntity->setMetaKeywords($category->getMetaKeywords());
-        $attributeEntity->setCategoryImageName($category->getCategoryImageName());
+        $attributeEntity->fromArray($category->toArray());
         $attributeEntity->save();
 
-        $this->saveCategory($category);
-
-        return $attributeEntity->getIdCategoryAttribute();
+        return $this->saveCategory($category);
     }
 
     /**
