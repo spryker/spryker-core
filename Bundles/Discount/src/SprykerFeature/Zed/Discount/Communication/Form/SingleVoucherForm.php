@@ -6,10 +6,10 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
-class VoucherForm extends AbstractForm
+class SingleVoucherForm extends AbstractForm
 {
 
-    const FIELD_POOL = 'pool';
+    const FIELD_NUMBER = 'pool';
 
     /**
      * @var SpyDiscountVoucherPoolQuery
@@ -32,7 +32,7 @@ class VoucherForm extends AbstractForm
     protected function buildFormFields()
     {
         $this
-            ->addChoice(self::FIELD_POOL, [
+            ->addChoice(self::FIELD_NUMBER, [
                 'label' => 'Pool',
                 'placeholder' => 'Select one',
                 'choices' => $this->getPools(),

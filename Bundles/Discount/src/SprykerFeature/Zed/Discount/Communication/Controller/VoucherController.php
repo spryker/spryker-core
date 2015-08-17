@@ -8,6 +8,8 @@ namespace SprykerFeature\Zed\Discount\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
+use SprykerFeature\Zed\Discount\Communication\Form\MultipleVouchersForm;
+use SprykerFeature\Zed\Discount\Communication\Form\SingleVoucherForm;
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -26,9 +28,9 @@ class VoucherController extends AbstractController
     /**
      * @return array|RedirectResponse
      */
-    public function createAction()
+    public function createSingleAction()
     {
-        $form = $this->getDependencyContainer()->createFormVoucherForm();
+        $form = $this->getDependencyContainer()->createFormSingleVoucherForm();
         $form->handleRequest();
 
         if ($form->isValid()) {
@@ -41,7 +43,27 @@ class VoucherController extends AbstractController
         return [
             'form' => $form->createView(),
         ];
+    }
 
+    public function createMultipleAction()
+    {
+        $form = $this->getDependencyContainer()->createFormMultipleVouchersForm();
+        $form->handleRequest();
+
+        if ($form->isValid()) {
+            $formData = $form->getData();
+            $this->getFacade()->createVoucherCodes(
+                $formData[MultipleVouchersForm::FIELD_NUMBER],
+                $formData[SingleVoucherForm::FIELD_POOL],
+                false
+            );
+
+            return $this->redirectResponse('/discount/voucher');
+        }
+
+        return [
+            'form' => $form->createView(),
+        ];
     }
 
     /**
