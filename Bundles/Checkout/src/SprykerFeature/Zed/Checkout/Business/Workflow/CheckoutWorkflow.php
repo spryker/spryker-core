@@ -89,7 +89,8 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         $orderTransfer = $this->getOrderTransfer();
 
         $this->hydrateOrder($orderTransfer, $checkoutRequest);
-        $this->doSaveOrder($orderTransfer, $checkoutResponse);
+        $orderTransfer = $this->doSaveOrder($orderTransfer, $checkoutResponse);
+        $checkoutResponse->setOrder($orderTransfer);
 
         if ($this->hasErrors($checkoutResponse)) {
             return $checkoutResponse;
