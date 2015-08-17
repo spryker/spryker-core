@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Application\Communication\Controller;
 use Generated\Zed\Ide\AutoCompletion;
 use Silex\Application;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
+use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
@@ -53,6 +54,11 @@ abstract class AbstractController
     private $queryContainer;
 
     /**
+     * @var FlashMessengerFacade
+     */
+    private $flashMessengerFacade;
+
+    /**
      * @param Application $application
      * @param Factory $factory
      * @param Locator $locator
@@ -62,17 +68,11 @@ abstract class AbstractController
         $this->application = $application;
         $this->locator = $locator;
 
+        $this->flashMessengerFacade = $this->locator->flashMessenger()->facade();
+
         if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
             $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator);
         }
-    }
-
-    /**
-     * @return MessengerInterface
-     */
-    private function getMessenger()
-    {
-        return $this->getTwig()->getExtension(self::TWIG_MESSENGER_PLUGIN)->getMessenger();
     }
 
     /**
@@ -193,16 +193,7 @@ abstract class AbstractController
      */
     protected function addSuccessMessage($message)
     {
-        $this->getLocator()->flashMessenger()->facade()->addSuccessMessage($message); // TODO call verstecken, in __construct übergeben
-    }
-
-    /**
-     * TODO
-     * @return AutoCompletion
-     */
-    protected function getLocator()
-    {
-        return Locator::getInstance();
+        $this->flashMessengerFacade->addSuccessMessage($message); 
     }
 
     /**
@@ -214,7 +205,7 @@ abstract class AbstractController
      */
     protected function addInfoMessage($message)
     {
-        $this->getLocator()->flashMessenger()->facade()->addInfoMessage($message); // TODO call verstecken, in __construct übergeben
+        $this->flashMessengerFacade->addInfoMessage($message); 
 
         return $this;
     }
@@ -228,7 +219,7 @@ abstract class AbstractController
      */
     protected function addErrorMessage($message)
     {
-        $this->getLocator()->flashMessenger()->facade()->addErrorMessage($message); // TODO call verstecken, in __construct übergeben
+        $this->flashMessengerFacade->addErrorMessage($message); 
 
         return $this;
     }
