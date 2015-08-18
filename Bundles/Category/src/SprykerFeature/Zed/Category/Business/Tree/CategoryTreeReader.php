@@ -284,11 +284,9 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
             $children = $this->getChildren($node->getIdCategoryNode(), $localeTransfer);
         }
         if ($isRoot){
-            $parentId = '#';
-            $nodeOpened = true;
+            $parentId = 0;
         } else {
             $parentId = $node->getIdCategoryNode();
-            $nodeOpened = false;
         }
         foreach ($children as $child) {
             $tree[] = [
@@ -296,7 +294,6 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
                 'id_category' => $child->getFkCategory(),
                 'parent' => $parentId,
                 'text'   => $child->getCategory()->getAttributes()->getFirst()->getName(),
-                'state'  => ['opened' => $nodeOpened],
             ];
             if ($child->countDescendants() > 0) {
                 $tree = array_merge($tree, $this->getTreeNodesRecursively($child, $localeTransfer));

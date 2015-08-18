@@ -7,7 +7,5 @@ $(document).ready(function() {
         showLoaderBar();
         var idCategory = $(this).children('td:first').text();
         spyAj.getCategoryTreeByCategoryId(idCategory);
-        spyAj.getCategoryAttributes(idCategory);
-        spyAj.getCategoryUrls(idCategory);
     });
 });

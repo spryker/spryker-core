@@ -51,11 +51,11 @@ class IndexController extends AbstractController
     {
         $idCategory = $request->get(self::PARAM_ID_CATEGORY);
 
-        $children = $this->getCategoryChildrenByIdCategory($idCategory);
+        $categories = $this->getCategoryChildrenByIdCategory($idCategory);
 
-        return $this->jsonResponse([
+        return $this->viewResponse([
             'code' => Response::HTTP_OK,
-            'data' => $children,
+            'categories' => $categories,
             'idCategory' => $idCategory,
         ]);
     }

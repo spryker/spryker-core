@@ -15,7 +15,7 @@ function SprykerAjax() {
     self.setUrl = function(newUrl){
         self.url = newUrl;
         return self;
-    }
+    };
 
     /**
      * @param newDataType
@@ -24,7 +24,7 @@ function SprykerAjax() {
     self.setDataType = function(newDataType){
         self.dataType = newDataType;
         return self;
-    }
+    };
 
     /**
      * makes Ajax call and then call a callback function with the response as parameter
@@ -43,7 +43,7 @@ function SprykerAjax() {
             var call = new SprykerAjaxCallbacks();
             return call[callbackFunction](response);
         });
-    }
+    };
 
     /* change active  */
     self.changeActiveStatus = function(elementId) {
@@ -51,45 +51,13 @@ function SprykerAjax() {
             id: elementId
         };
         self.ajaxSubmit(options, 'changeStatusMarkInGrid');
-    }
+    };
 
     self.getCategoryTreeByCategoryId = function(idCategory) {
         var options = {
             'id-category': idCategory
         };
-        self.setUrl('/category/index/node').ajaxSubmit(options, 'categoryDisplayNodeTree');
-    }
+        self.setUrl('/category/index/node').setDataType('html').ajaxSubmit(options, 'categoryDisplayNodeTree');
+    };
 
-    self.getCategoryAttributes = function(idCategory) {
-        var options = {
-            'id-category': idCategory
-        };
-        self
-            .setUrl('/category/index/attributes')
-            .setDataType('html')
-            .ajaxSubmit(options, 'categoryDisplayAttributes')
-        ;
-    }
-
-    self.getCategoryUrls = function(idCategory) {
-        var options = {
-            'id-category': idCategory
-        };
-        self
-            .setUrl('/category/index/urls')
-            .setDataType('html')
-            .ajaxSubmit(options, 'categoryDisplayUrls')
-        ;
-    }
-
-    self.getCategoryProducts = function(idCategory) {
-        var options = {
-            'id-category': idCategory
-        };
-        self
-            .setUrl('/category/index/products')
-            .setDataType('html')
-            .ajaxSubmit(options, 'categoryDisplayProducts')
-        ;
-    }
 }
