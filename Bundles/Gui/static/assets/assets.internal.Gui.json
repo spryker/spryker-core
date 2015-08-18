@@ -1,0 +1,19 @@
+[{
+    "priority": 10,
+    "assets": {
+        "js": [
+            "/js/spryker.js",
+            "/js/fixHeight.js",
+            "/js/category.helpers.js",
+            "/js/SprykerAjax.js",
+            "/js/SprykerAjaxCallback.js",
+            "/js/SprykerAlert.js"
+        ],
+        "css": [
+            "/scss/spryker.scss",
+            "/scss/sprites.scss"
+        ],
+        "images": [],
+        "fonts": []
+    }
+}]
