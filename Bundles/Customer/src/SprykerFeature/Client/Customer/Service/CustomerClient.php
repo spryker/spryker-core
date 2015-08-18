@@ -123,7 +123,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
         if ($result instanceof CustomerInterface) {
             $idCustomer = $result->getIdCustomer();
 
-            if (null !== $idCustomer)) {
+            if (null !== $idCustomer) {
                 // inject customer info in session if customer with email and password exists
                 $this->setCustomer($result);
             }
