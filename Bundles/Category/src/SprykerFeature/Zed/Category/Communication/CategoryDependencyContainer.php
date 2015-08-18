@@ -129,16 +129,16 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
-     * @param int $category_id
+     * @param int $idCategory
      *
      * @return CategoryFormEdit
      */
-    public function createCategoryFormEdit($category_id)
+    public function createCategoryFormEdit($idCategory)
     {
         return $this->getFactory()->createFormCategoryFormEdit(
             $this->getQueryContainer(),
             $this->getCurrentLocale(),
-            $category_id
+            $idCategory
         );
     }
 

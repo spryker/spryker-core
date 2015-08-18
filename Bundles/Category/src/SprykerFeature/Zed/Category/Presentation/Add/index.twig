@@ -4,6 +4,10 @@
     {% set widget_title = 'Category Add' %}
 {% endif %}
 
+{% if submit_title is not defined %}
+    {% set submit_title = 'Add' %}
+{% endif %}
+
 {% if idCategory is not defined %}
     {% set idCategory = 0 %}
 {% endif %}
@@ -23,7 +27,7 @@
             {{ form_start(form) }}
             {{ form_widget(form) }}
 
-            <input type="submit" class="btn btn-primary" value="{{ 'Add' | trans }}" />
+            <input type="submit" class="btn btn-primary" value="{{ submit_title | trans }}" />
             {{ form_end(form) }}
 
         {% endblock %}
