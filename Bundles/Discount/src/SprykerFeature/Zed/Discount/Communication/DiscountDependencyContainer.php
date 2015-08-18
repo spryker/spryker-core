@@ -24,13 +24,15 @@ use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
 class DiscountDependencyContainer extends AbstractCommunicationDependencyContainer
 {
     /**
+     * @param bool $allowMultiple
+     *
      * @return VoucherForm
      */
-    public function createFormVoucherForm()
+    public function createVoucherForm($allowMultiple=false)
     {
         $poolQuery = $this->getQueryContainer()->queryDiscountVoucherPool();
 
-        return $this->getFactory()->createFormVoucherForm($poolQuery);
+        return $this->getFactory()->createFormVoucherForm($poolQuery, $allowMultiple);
     }
 
     /**
