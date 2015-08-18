@@ -5,9 +5,8 @@
 
 namespace SprykerFeature\Client\Product\Service\Storage;
 
-use Generated\Shared\Transfer\AbstractProductTransfer;
 use SprykerFeature\Client\Storage\Service\StorageClientInterface;
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
+use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
 class ProductStorage implements ProductStorageInterface
 {
@@ -28,11 +27,6 @@ class ProductStorage implements ProductStorageInterface
     private $locale;
 
     /**
-     * @var array
-     */
-    private $translations = [];
-
-    /**
      * @param StorageClientInterface $storage
      * @param KeyBuilderInterface $keyBuilder
      * @param string $localeName
@@ -48,6 +42,7 @@ class ProductStorage implements ProductStorageInterface
     {
         $key = $this->keyBuilder->generateKey($idAbstractProduct, $this->locale);
         $product = $this->storage->get($key);
+
         return $product;
     }
 

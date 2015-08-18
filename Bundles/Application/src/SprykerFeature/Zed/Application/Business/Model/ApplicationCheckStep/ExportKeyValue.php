@@ -15,7 +15,7 @@ class ExportKeyValue extends AbstractApplicationCheckStep
      */
     public function run()
     {
-        $command = 'vendor/bin/console frontend-exporter:export-key-value';
+        $command = 'vendor/bin/console collector:storage:export';
 
         $this->info('Run ' . $command);
 
