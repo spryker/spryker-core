@@ -22,39 +22,25 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      *
      * @return CustomerInterface
      */
-    public function registerCustomer(CustomerInterface $customerTransfer)
-    {
-        return $this->getDependencyContainer()->createZedCustomerStub()->register($customerTransfer);
-    }
-
-    /**
-     * @param CustomerInterface $customerTransfer
-     *
-     * @return CustomerInterface
-     */
     public function confirmRegistration(CustomerInterface $customerTransfer)
     {
-        return $this->getDependencyContainer()->createZedCustomerStub()->confirmRegistration($customerTransfer);
+        return $this->getDependencyContainer()
+            ->createZedCustomerStub()
+            ->confirmRegistration($customerTransfer)
+        ;
     }
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerAddressInterface $addressTransfer
      *
-     * @return CustomerInterface
+     * @return CustomerAddressInterface
      */
-    public function forgotPassword(CustomerInterface $customerTransfer)
+    public function createAddress(CustomerAddressInterface $addressTransfer)
     {
-        return $this->getDependencyContainer()->createZedCustomerStub()->forgotPassword($customerTransfer);
-    }
-
-    /**
-     * @param CustomerInterface $customerTransfer
-     *
-     * @return CustomerInterface
-     */
-    public function restorePassword(CustomerInterface $customerTransfer)
-    {
-        return $this->getDependencyContainer()->createZedCustomerStub()->restorePassword($customerTransfer);
+        return $this->getDependencyContainer()
+            ->createZedCustomerStub()
+            ->createAddress($addressTransfer)
+        ;
     }
 
     /**
@@ -64,17 +50,10 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      */
     public function deleteCustomer(CustomerInterface $customerTransfer)
     {
-        return $this->getDependencyContainer()->createZedCustomerStub()->delete($customerTransfer);
-    }
-
-    /**
-     * @return CustomerInterface
-     */
-    public function getCustomer()
-    {
-        $customerTransfer = $this->getDependencyContainer()->createSessionCustomerSession()->getCustomer();
-
-        return $customerTransfer;
+        return $this->getDependencyContainer()
+            ->createZedCustomerStub()
+            ->delete($customerTransfer)
+        ;
     }
 
     /**
@@ -82,9 +61,36 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      *
      * @return CustomerInterface
      */
-    public function setCustomer(CustomerInterface $customerTransfer)
+    public function forgotPassword(CustomerInterface $customerTransfer)
     {
-        $customerTransfer = $this->getDependencyContainer()->createSessionCustomerSession()->setCustomer($customerTransfer);
+        return $this->getDependencyContainer()
+            ->createZedCustomerStub()
+            ->forgotPassword($customerTransfer)
+        ;
+    }
+
+    /**
+     * @param CustomerAddressInterface $addressTransfer
+     *
+     * @return CustomerAddressInterface
+     */
+    public function getAddress(CustomerAddressInterface $addressTransfer)
+    {
+        return $this->getDependencyContainer()
+            ->createZedCustomerStub()
+            ->getAddress($addressTransfer)
+        ;
+    }
+
+    /**
+     * @return CustomerInterface
+     */
+    public function getCustomer()
+    {
+        $customerTransfer = $this->getDependencyContainer()
+            ->createSessionCustomerSession()
+            ->getCustomer()
+        ;
 
         return $customerTransfer;
     }
@@ -96,7 +102,10 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      */
     public function getCustomerByEmail(CustomerInterface $customerTransfer)
     {
-        $customerTransfer = $this->getDependencyContainer()->createZedCustomerStub()->get($customerTransfer);
+        $customerTransfer = $this->getDependencyContainer()
+            ->createZedCustomerStub()
+            ->get($customerTransfer)
+        ;
 
         return $customerTransfer;
     }
@@ -104,11 +113,21 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     /**
      * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerInterface
+     * @return bool
      */
-    public function updateCustomer(CustomerInterface $customerTransfer)
+    public function hasCustomerWithEmailAndPassword(CustomerInterface $customerTransfer)
     {
-        return $this->getDependencyContainer()->createZedCustomerStub()->update($customerTransfer);
+        $result = $this->getDependencyContainer()
+            ->createZedCustomerStub()
+            ->hasCustomerWithEmailAndPassword($customerTransfer)
+        ;
+
+        $hasCustomer = $result->getHasCustomer();
+        if (true === $hasCustomer) {
+            $this->setCustomer($result->getCustomerTransfer());
+        }
+
+        return $hasCustomer;
     }
 
     /**
@@ -116,28 +135,14 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      *
      * @return CustomerInterface
      */
-    public function getCustomerByEmailAndPassword(CustomerInterface $customerTransfer)
+    public function setCustomer(CustomerInterface $customerTransfer)
     {
-        $result = $this->getDependencyContainer()->createZedCustomerStub()->getCustomerByEmailAndPassword($customerTransfer);
+        $customerTransfer = $this->getDependencyContainer()
+            ->createSessionCustomerSession()
+            ->setCustomer($customerTransfer)
+        ;
 
-        if ($result instanceof CustomerInterface) {
-            $idCustomer = $result->getIdCustomer();
-
-            if (null !== $idCustomer) {
-                // inject customer info in session if customer with email and password exists
-                $this->setCustomer($result);
-            }
-        }
-
-        return $result;
-    }
-
-    /**
-     * @return bool
-     */
-    public function logout()
-    {
-        return $this->getDependencyContainer()->createSessionCustomerSession()->logout();
+        return $customerTransfer;
     }
 
     /**
@@ -145,17 +150,60 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      */
     public function isLoggedIn()
     {
-        return $this->getDependencyContainer()->createSessionCustomerSession()->hasCustomer();
+        return $this->getDependencyContainer()
+            ->createSessionCustomerSession()
+            ->hasCustomer()
+        ;
     }
 
     /**
-     * @param CustomerAddressInterface $addressTransfer
+     * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerAddressInterface
+     * @return CustomerTransfer
      */
-    public function getAddress(CustomerAddressInterface $addressTransfer)
+    public function login(CustomerInterface $customerTransfer)
     {
-        return $this->getDependencyContainer()->createZedCustomerStub()->getAddress($addressTransfer);
+        return $this->getDependencyContainer()
+            ->createZedCustomerStub()
+            ->login($customerTransfer)
+        ;
+    }
+
+    /**
+     * @return bool
+     */
+    public function logout()
+    {
+        return $this->getDependencyContainer()
+            ->createSessionCustomerSession()
+            ->logout()
+        ;
+    }
+
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return CustomerInterface
+     */
+    public function registerCustomer(CustomerInterface $customerTransfer)
+    {
+        return $this->getDependencyContainer()
+            ->createZedCustomerStub()
+            ->register($customerTransfer)
+        ;
+    }
+
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return CustomerInterface
+     */
+    public function restorePassword(CustomerInterface $customerTransfer)
+    {
+        return $this->getDependencyContainer()
+            ->createZedCustomerStub()
+            ->restorePassword($customerTransfer)
+        ;
     }
 
     /**
@@ -165,17 +213,23 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      */
     public function updateAddress(CustomerAddressInterface $addressTransfer)
     {
-        return $this->getDependencyContainer()->createZedCustomerStub()->updateAddress($addressTransfer);
+        return $this->getDependencyContainer()
+            ->createZedCustomerStub()
+            ->updateAddress($addressTransfer)
+        ;
     }
 
     /**
-     * @param CustomerAddressInterface $addressTransfer
+     * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerAddressInterface
+     * @return CustomerInterface
      */
-    public function createAddress(CustomerAddressInterface $addressTransfer)
+    public function updateCustomer(CustomerInterface $customerTransfer)
     {
-        return $this->getDependencyContainer()->createZedCustomerStub()->createAddress($addressTransfer);
+        return $this->getDependencyContainer()
+            ->createZedCustomerStub()
+            ->update($customerTransfer)
+        ;
     }
 
     /**
@@ -185,7 +239,10 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      */
     public function deleteAddress(CustomerAddressInterface $addressTransfer)
     {
-        return $this->getDependencyContainer()->createZedCustomerStub()->deleteAddress($addressTransfer);
+        return $this->getDependencyContainer()
+            ->createZedCustomerStub()
+            ->deleteAddress($addressTransfer)
+        ;
     }
 
     /**
@@ -195,7 +252,10 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      */
     public function setDefaultShippingAddress(CustomerAddressInterface $addressTransfer)
     {
-        return $this->getDependencyContainer()->createZedCustomerStub()->setDefaultShippingAddress($addressTransfer);
+        return $this->getDependencyContainer()
+            ->createZedCustomerStub()
+            ->setDefaultShippingAddress($addressTransfer)
+        ;
     }
 
     /**
@@ -205,7 +265,9 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      */
     public function setDefaultBillingAddress(CustomerAddressInterface $addressTransfer)
     {
-        return $this->getDependencyContainer()->createZedCustomerStub()->setDefaultBillingAddress($addressTransfer);
+        return $this->getDependencyContainer()
+            ->createZedCustomerStub()
+            ->setDefaultBillingAddress($addressTransfer)
+        ;
     }
-
 }

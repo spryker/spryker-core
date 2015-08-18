@@ -9,6 +9,7 @@ namespace SprykerFeature\Client\Customer\Service\Zed;
 use Generated\Shared\Customer\CustomerAddressInterface;
 use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Client\ZedRequest\Service\Client\Response;
 use SprykerFeature\Client\ZedRequest\Service\ZedRequestClient;
@@ -91,11 +92,11 @@ class CustomerStub implements CustomerStubInterface
     /**
      * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerResponseTransfer
      */
-    public function getCustomerByEmailAndPassword(CustomerInterface $customerTransfer)
+    public function hasCustomerWithEmailAndPassword(CustomerInterface $customerTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/get-customer-by-email-and-password', $customerTransfer);
+        return $this->zedStub->call('/customer/gateway/has-customer-with-email-and-password', $customerTransfer);
     }
 
     /**

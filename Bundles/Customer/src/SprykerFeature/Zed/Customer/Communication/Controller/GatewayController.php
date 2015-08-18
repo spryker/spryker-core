@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
@@ -81,16 +82,18 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param CustomerTransfer $customerTransfer
      */
-    public function getCustomerByEmailAndPasswordAction(CustomerTransfer $customerTransfer)
+    public function hasCustomerWithEmailAndPasswordAction(CustomerTransfer $customerTransfer)
     {
         $isAuthorized = $this->getFacade()
             ->tryAuthorizeCustomerByEmailAndPassword($customerTransfer)
         ;
 
-        $result = new CustomerTransfer();
+        $result = new CustomerResponseTransfer();
         if (true === $isAuthorized) {
-            $result = $this->getFacade()->getCustomer($customerTransfer);
+            $result->setCustomerTransfer($this->getFacade()->getCustomer($customerTransfer));
         }
+
+        $result->setHasCustomer($isAuthorized);
 
         $this->setSuccess($isAuthorized);
 

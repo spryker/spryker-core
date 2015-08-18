@@ -8,6 +8,7 @@ namespace SprykerFeature\Client\Customer\Service;
 
 use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Customer\CustomerAddressInterface;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerClientInterface
 {
@@ -62,9 +63,16 @@ interface CustomerClientInterface
     /**
      * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerInterface
+     * @return CustomerTransfer
      */
-    public function getCustomerByEmailAndPassword(CustomerInterface $customerTransfer);
+    public function login(CustomerInterface $customerTransfer);
+
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return bool
+     */
+    public function hasCustomerWithEmailAndPassword(CustomerInterface $customerTransfer);
 
     /**
      * @return bool
