@@ -40,21 +40,14 @@ class CategoryFormAdd extends AbstractForm
     protected $idCategory;
 
     /**
-     * @var FlashMessengerFacade
-     */
-    protected $flashMessengerFacade;
-
-    /**
      * @param CategoryQueryContainer $categoryQueryContainer
      * @param LocaleTransfer $locale
-     * @param FlashMessengerFacade $FlashMessengerFacade
      * @param int $idCategory
      */
-    public function __construct(CategoryQueryContainer $categoryQueryContainer, LocaleTransfer $locale, FlashMessengerFacade $FlashMessengerFacade, $idCategory)
+    public function __construct(CategoryQueryContainer $categoryQueryContainer, LocaleTransfer $locale, $idCategory)
     {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->locale = $locale;
-        $this->flashMessengerFacade = $FlashMessengerFacade;
         $this->idCategory = $idCategory;
     }
 

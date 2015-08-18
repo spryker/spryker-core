@@ -124,23 +124,21 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
         return $this->getFactory()->createFormCategoryFormAdd(
             $this->getQueryContainer(),
             $this->getCurrentLocale(),
-            $this->getFlashMessengerFacade(),
             null
         );
     }
 
     /**
-     * @param int $category_id
+     * @param int $idCategory
      *
      * @return CategoryFormEdit
      */
-    public function createCategoryFormEdit($category_id)
+    public function createCategoryFormEdit($idCategory)
     {
         return $this->getFactory()->createFormCategoryFormEdit(
             $this->getQueryContainer(),
             $this->getCurrentLocale(),
-            $this->getFlashMessengerFacade(),
-            $category_id
+            $idCategory
         );
     }
 
@@ -174,15 +172,6 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
             $locale,
             $this->getQueryContainer()
         );
-    }
-
-    /**
-     * @return mixed
-     * @throws \ErrorException
-     */
-    public function getFlashMessengerFacade()
-    {
-        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_FLASH_MESSENGER);
     }
 
 }

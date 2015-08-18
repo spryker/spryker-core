@@ -31,10 +31,11 @@ class EditController extends AbstractController
     {
         $idCategory = $request->get(self::PARAM_ID_CATEGORY);
 
-        $categoryExists = $this->getQueryContainer()->queryCategoryById($idCategory)->findOne();
+        $categoryExists = $this->getQueryContainer()->queryCategoryById($idCategory)->count() > 0;
+        
         if (!$categoryExists) {
-            $this->getDependencyContainer()->getFlashMessengerFacade()->addErrorMessage('The category you are trying to edit does not exist.');
-            return new RedirectResponse('/category/');
+            $this->addErrorMessage('The category you are trying to edit does not exist.');
+            return new RedirectResponse('/category');
         }
 
         /**
@@ -66,9 +67,9 @@ class EditController extends AbstractController
                 ->updateNodeWithTreeWriter($categoryNodeTransfer)
             ;
 
-            $this->getDependencyContainer()->getFlashMessengerFacade()->addSuccessMessage('The category was saved successfully.');
+            $this->addSuccessMessage('The category was saved successfully.');
             
-            return $this->redirectResponse('/category/');
+            return $this->redirectResponse('/category');
         }
 
         return $this->viewResponse([
