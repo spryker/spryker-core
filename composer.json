@@ -3,7 +3,6 @@
   "replace": {
     "spryker/acl": "self.version",
     "spryker/application": "self.version",
-    "spryker/assets": "self.version",
     "spryker/auth": "self.version",
     "spryker/availability": "self.version",
     "spryker/availability-cart-connector": "self.version",
