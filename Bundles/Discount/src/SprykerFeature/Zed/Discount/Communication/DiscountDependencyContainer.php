@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolCategoryTable;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolTable;
 use SprykerFeature\Zed\Discount\Communication\Form\PoolCategoryForm;
-use SprykerFeature\Zed\Discount\Communication\Form\SingleVoucherForm;
+use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
 
 /**
  * @method DiscountCommunication getFactory()
@@ -24,20 +24,15 @@ use SprykerFeature\Zed\Discount\Communication\Form\SingleVoucherForm;
 class DiscountDependencyContainer extends AbstractCommunicationDependencyContainer
 {
     /**
-     * @return SingleVoucherForm
+     * @param bool $allowMultiple
+     *
+     * @return VoucherForm
      */
-    public function createFormSingleVoucherForm()
+    public function createVoucherForm($allowMultiple=false)
     {
         $poolQuery = $this->getQueryContainer()->queryDiscountVoucherPool();
 
-        return $this->getFactory()->createFormSingleVoucherForm($poolQuery);
-    }
-
-    public function createFormMultipleVouchersForm()
-    {
-        $poolQuery = $this->getQueryContainer()->queryDiscountVoucherPool();
-
-        return $this->getFactory()->createFormMultipleVouchersForm($poolQuery);
+        return $this->getFactory()->createFormVoucherForm($poolQuery, $allowMultiple);
     }
 
     /**

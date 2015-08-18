@@ -8,8 +8,6 @@ namespace SprykerFeature\Zed\Discount\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
-use SprykerFeature\Zed\Discount\Communication\Form\MultipleVouchersForm;
-use SprykerFeature\Zed\Discount\Communication\Form\SingleVoucherForm;
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -30,12 +28,12 @@ class VoucherController extends AbstractController
      */
     public function createSingleAction()
     {
-        $form = $this->getDependencyContainer()->createFormSingleVoucherForm();
+        $form = $this->getDependencyContainer()->createVoucherForm();
         $form->handleRequest();
 
         if ($form->isValid()) {
             $formData = $form->getData();
-            $this->getFacade()->createVoucherCodes(self::NR_VOUCHERS, $formData[SingleVoucherForm::FIELD_POOL], false);
+            $this->getFacade()->createVoucherCodes(self::NR_VOUCHERS, $formData[VoucherForm::FIELD_POOL], false);
 
             return $this->redirectResponse('/discount/voucher');
         }
@@ -45,16 +43,19 @@ class VoucherController extends AbstractController
         ];
     }
 
+    /**
+     * @return array|RedirectResponse
+     */
     public function createMultipleAction()
     {
-        $form = $this->getDependencyContainer()->createFormMultipleVouchersForm();
+        $form = $this->getDependencyContainer()->createVoucherForm(true);
         $form->handleRequest();
 
         if ($form->isValid()) {
             $formData = $form->getData();
             $this->getFacade()->createVoucherCodes(
-                $formData[MultipleVouchersForm::FIELD_NUMBER],
-                $formData[SingleVoucherForm::FIELD_POOL],
+                $formData[VoucherForm::FIELD_NUMBER],
+                $formData[VoucherForm::FIELD_POOL],
                 false
             );
 
