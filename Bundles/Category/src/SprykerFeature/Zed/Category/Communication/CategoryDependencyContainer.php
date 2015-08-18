@@ -10,14 +10,14 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Category\CategoryDependencyProvider;
-use SprykerFeature\Zed\Category\Communication\Form\CategoryForm;
+use SprykerFeature\Zed\Category\Communication\Form\CategoryFormAdd;
+use SprykerFeature\Zed\Category\Communication\Form\CategoryFormEdit;
 use SprykerFeature\Zed\Category\Communication\Form\CategoryNodeForm;
 use SprykerFeature\Zed\Category\Communication\Grid\CategoryGrid;
 use SprykerFeature\Zed\Category\Communication\Table\CategoryAttributeTable;
 use SprykerFeature\Zed\Category\Communication\Table\RootNodeTable;
 use SprykerFeature\Zed\Category\Communication\Table\UrlTable;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryAttributeQuery;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -27,6 +27,8 @@ use Symfony\Component\HttpFoundation\Request;
 class CategoryDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
+    protected $currentLocale;
+    
     /**
      * @return LocaleTransfer
      */
@@ -35,6 +37,18 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
         return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_LOCALE)
             ->getCurrentLocale()
         ;
+    }
+
+    /**
+     * @return LocaleTransfer
+     */
+    public function getCurrentLocale()
+    {
+        if (null === $this->currentLocale) {
+            $this->currentLocale = $this->createCurrentLocale();
+        }
+        
+        return $this->currentLocale;
     }
 
     /**
@@ -103,19 +117,28 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
-     * @param Request $request
-     *
-     * @return CategoryForm
+     * @return CategoryFormAdd
      */
-    public function createCategoryForm(Request $request)
+    public function createCategoryFormAdd()
     {
-        $locale = $this->getCurrentLocale();
+        return $this->getFactory()->createFormCategoryFormAdd(
+            $this->getQueryContainer(),
+            $this->getCurrentLocale(),
+            null
+        );
+    }
 
-        return $this->getFactory()->createFormCategoryForm(
-            $request,
-            $this->getFactory(),
-            $locale,
-            $this->getQueryContainer()
+    /**
+     * @param int $category_id
+     *
+     * @return CategoryFormEdit
+     */
+    public function createCategoryFormEdit($category_id)
+    {
+        return $this->getFactory()->createFormCategoryFormEdit(
+            $this->getQueryContainer(),
+            $this->getCurrentLocale(),
+            $category_id
         );
     }
 

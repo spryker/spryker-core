@@ -19,6 +19,9 @@ $(document).ready(function() {
         });
     });
 
+    /** see https://select2.github.io/examples.html **/
+    $('.spryker-form-select2combobox').select2();
+
     /** trigger change status active|inactive with an ajax call when click on checkbox */
     $('.gui-table-data').on('click', '.active-checkbox', function(){
         var elementId = $(this).attr('id').replace('active-', '');
