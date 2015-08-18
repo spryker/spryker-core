@@ -17,6 +17,12 @@ use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeExc
 
 class CategoryTreeReader implements CategoryTreeReaderInterface
 {
+
+    const ID = 'id';
+    const ID_CATEGORY = 'id_category';
+    const PARENT = 'parent';
+    const TEXT = 'text';
+
     /**
      * @var CategoryQueryContainer
      */
@@ -288,10 +294,10 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
         }
         foreach ($children as $child) {
             $tree[] = [
-                'id'     => $child->getIdCategoryNode(),
-                'id_category' => $child->getFkCategory(),
-                'parent' => $parentId,
-                'text'   => $child->getCategory()->getAttributes()->getFirst()->getName(),
+                static::ID => $child->getIdCategoryNode(),
+                static::ID_CATEGORY => $child->getFkCategory(),
+                static::PARENT => $parentId,
+                static::TEXT => $child->getCategory()->getAttributes()->getFirst()->getName(),
             ];
             if ($child->countDescendants() > 0) {
                 $tree = array_merge($tree, $this->getTreeNodesRecursively($child, $localeTransfer));
