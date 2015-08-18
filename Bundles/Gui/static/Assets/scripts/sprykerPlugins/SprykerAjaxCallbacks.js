@@ -39,6 +39,6 @@ function SprykerAjaxCallbacks() {
     self.categoryDisplayNodeTree = function(ajaxResponse){
         $('#category-node-tree').removeClass('hidden');
         $('#categories-list').html(ajaxResponse);
-        return ajaxResponse;
+        closeLoaderBar();
     };
 }

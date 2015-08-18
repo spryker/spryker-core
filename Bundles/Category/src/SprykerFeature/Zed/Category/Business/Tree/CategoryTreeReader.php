@@ -250,22 +250,20 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param LocaleTransfer $localeTransfer
      *
-     * @return SpyCategoryNode[]
+     * @return array
      */
     public function getTree($idCategory, LocaleTransfer $localeTransfer)
     {
-        $rootNodes = $this->getRootNodes();
-        foreach ($rootNodes as $rootNode) {
-            if ($rootNode->getFkCategory() === $idCategory){
-                return $this->getTreeNodesRecursively($rootNode, $localeTransfer, true);
-            }
+        $nodes = $this->getNodesByIdCategory($idCategory);
+        $categoryNodes = $nodes->getData();
+        if ($categoryNodes) {
+            return $this->getTreeNodesRecursively($categoryNodes[0], $localeTransfer, true);
         }
-        $tree = $this->getTreeNodesRecursively(null, $localeTransfer, true);
 
-        return $tree;
+        return $this->getTreeNodesRecursively(null, $localeTransfer, true);
     }
 
     /**
@@ -273,7 +271,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
      * @param LocaleTransfer $localeTransfer
      * @param bool $isRoot
      *
-     * @return SpyCategoryNode[]
+     * @return array
      */
     private function getTreeNodesRecursively(SpyCategoryNode $node = null, LocaleTransfer $localeTransfer, $isRoot = false)
     {

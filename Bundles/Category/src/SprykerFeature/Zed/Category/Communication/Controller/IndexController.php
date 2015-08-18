@@ -147,7 +147,7 @@ class IndexController extends AbstractController
                 $idCategory,
                 $this->getDependencyContainer()->createCurrentLocale()
             )
-            ;
+        ;
     }
 
 }
