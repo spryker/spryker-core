@@ -35,7 +35,7 @@ class VoucherController extends AbstractController
 
         if ($form->isValid()) {
             $formData = $form->getData();
-            $this->getFacade()->createVoucherCodes(self::NR_VOUCHERS, $formData[VoucherForm::FIELD_POOL], false);
+            $this->getFacade()->createVoucherCodes(self::NR_VOUCHERS, $formData[SingleVoucherForm::FIELD_POOL], false);
 
             return $this->redirectResponse('/discount/voucher');
         }

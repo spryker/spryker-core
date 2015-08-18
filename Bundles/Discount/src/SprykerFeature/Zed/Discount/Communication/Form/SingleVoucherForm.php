@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 class SingleVoucherForm extends AbstractForm
 {
 
-    const FIELD_NUMBER = 'pool';
+    const FIELD_POOL = 'pool';
 
     /**
      * @var SpyDiscountVoucherPoolQuery
@@ -32,7 +32,7 @@ class SingleVoucherForm extends AbstractForm
     protected function buildFormFields()
     {
         $this
-            ->addChoice(self::FIELD_NUMBER, [
+            ->addChoice(static::FIELD_POOL, [
                 'label' => 'Pool',
                 'placeholder' => 'Select one',
                 'choices' => $this->getPools(),

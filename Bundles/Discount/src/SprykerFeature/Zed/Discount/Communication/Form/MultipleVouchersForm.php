@@ -9,6 +9,7 @@ class MultipleVouchersForm extends SingleVoucherForm
 {
 
     const FIELD_NUMBER = 'number';
+    const MINIMUM_VOUCHERS_TO_GENERATE = 2;
 
     /**
      * Prepares form
@@ -18,7 +19,7 @@ class MultipleVouchersForm extends SingleVoucherForm
     protected function buildFormFields()
     {
         $this
-            ->addText(self::FIELD_NUMBER, [
+            ->addText(static::FIELD_NUMBER, [
                 'label' => 'Number',
                 'constraints' => [
                     new NotBlank(),
@@ -38,7 +39,7 @@ class MultipleVouchersForm extends SingleVoucherForm
     protected function populateFormFields()
     {
         return [
-            self::FIELD_NUMBER => 2,
+            static::FIELD_NUMBER => static::MINIMUM_VOUCHERS_TO_GENERATE,
         ];
     }
 
