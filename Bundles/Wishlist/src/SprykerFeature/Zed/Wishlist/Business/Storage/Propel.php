@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Wishlist\Business\Storage;
 use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Product\ConcreteProductInterface;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Wishlist\ItemInterface;
 use Generated\Shared\Wishlist\WishlistChangeInterface;
 use Generated\Shared\Wishlist\WishlistInterface;
@@ -87,8 +88,7 @@ class Propel implements StorageInterface
                     $concreteProductTransfer
                 );
             } else {
-                $wishlistItemEntity->setQuantity($wishlistItemEntity->getQuantity() + $wishlistItemTransfer->getQuantity());
-                $wishlistItemEntity->save();
+                $this->updateWishlistItem($wishlistItemEntity, $wishlistItemTransfer);
             }
         }
 
@@ -117,7 +117,7 @@ class Propel implements StorageInterface
 
             $quantityDifference = $wishlistItemEntity->getQuantity() - $wishlistItemTransfer->getQuantity();
             if ($quantityDifference <= 0) {
-                $wishlistItemEntity->delete();
+                $this->deleteWishlistItem($wishlistItemEntity);
             } else {
                 $wishlistItemEntity->setQuantity($quantityDifference);
                 $wishlistItemEntity->save();
@@ -154,7 +154,7 @@ class Propel implements StorageInterface
      * @param integer       $idWishlist
      * @param ConcreteProductInterface $concreteProductTransfer
      *
-     * @return int
+     * @return SpyWishlistItem
      */
     protected function createNewWishlistItem(
         ItemInterface $wishlistItemTransfer,
@@ -168,8 +168,9 @@ class Propel implements StorageInterface
         $wishlistItemEntity->setFkWishlist($idWishlist);
         $wishlistItemEntity->setQuantity($wishlistItemTransfer->getQuantity());
         $wishlistItemEntity->setAddedAt(new \DateTime());
+        $wishlistItemEntity->save();
 
-        return $wishlistItemEntity->save();
+        return $wishlistItemEntity;
     }
 
     /**
@@ -224,6 +225,24 @@ class Propel implements StorageInterface
             ->findOneByFkCustomer($idCustomer);
 
         return $wishlistEntity;
+    }
+
+    /**
+     * @param SpyWishlistItem $wishlistItemEntity
+     */
+    protected function deleteWishlistItem(SpyWishlistItem $wishlistItemEntity)
+    {
+        $wishlistItemEntity->delete();
+    }
+
+    /**
+     * @param SpyWishlistItem $wishlistItemEntity
+     * @param ItemTransfer $wishlistItemTransfer
+     */
+    protected function updateWishlistItem(SpyWishlistItem $wishlistItemEntity, ItemTransfer $wishlistItemTransfer)
+    {
+        $wishlistItemEntity->setQuantity($wishlistItemEntity->getQuantity() + $wishlistItemTransfer->getQuantity());
+        $wishlistItemEntity->save();
     }
 
 }

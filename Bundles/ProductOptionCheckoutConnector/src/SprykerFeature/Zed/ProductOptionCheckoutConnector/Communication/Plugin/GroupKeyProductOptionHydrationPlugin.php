@@ -73,6 +73,10 @@ class GroupKeyProductOptionHydrationPlugin extends AbstractPlugin implements Che
     {
         $groupKeyPart = [];
         foreach ($sortedProductOptions as $option) {
+            if (empty($option->getIdOptionValueUsage())) {
+                continue;
+            }
+
             $groupKeyPart[] = $option->getIdOptionValueUsage();
         }
         return implode('-', $groupKeyPart);

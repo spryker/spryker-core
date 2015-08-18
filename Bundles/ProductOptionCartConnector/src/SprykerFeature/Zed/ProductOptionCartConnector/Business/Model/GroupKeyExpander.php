@@ -65,7 +65,7 @@ class GroupKeyExpander
     }
 
     /**
-     * @param array $sortedProductOptions
+     * @param ProductOptionInterface[] $sortedProductOptions
      *
      * @return string
      */
@@ -73,6 +73,9 @@ class GroupKeyExpander
     {
         $groupKeyPart = [];
         foreach ($sortedProductOptions as $option) {
+            if (empty($option->getIdOptionValueUsage())) {
+                continue;
+            }
             $groupKeyPart[] = $option->getIdOptionValueUsage();
         }
         return implode('-', $groupKeyPart);
