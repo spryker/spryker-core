@@ -58,6 +58,8 @@ class AddController extends AbstractController
                 ->createCategoryNode($categoryNodeTransfer, $locale)
             ;
 
+            $this->getDependencyContainer()->getFlashMessengerFacade()->addSuccessMessage('The category was added successfully.');
+
             return $this->redirectResponse('/category/');
         }
 

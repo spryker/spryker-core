@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Category\Communication\Form;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
@@ -39,14 +40,21 @@ class CategoryFormAdd extends AbstractForm
     protected $idCategory;
 
     /**
+     * @var FlashMessengerFacade
+     */
+    protected $flashMessengerFacade;
+
+    /**
      * @param CategoryQueryContainer $categoryQueryContainer
      * @param LocaleTransfer $locale
+     * @param FlashMessengerFacade $FlashMessengerFacade
      * @param int $idCategory
      */
-    public function __construct(CategoryQueryContainer $categoryQueryContainer, LocaleTransfer $locale, $idCategory)
+    public function __construct(CategoryQueryContainer $categoryQueryContainer, LocaleTransfer $locale, FlashMessengerFacade $FlashMessengerFacade, $idCategory)
     {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->locale = $locale;
+        $this->flashMessengerFacade = $FlashMessengerFacade;
         $this->idCategory = $idCategory;
     }
 

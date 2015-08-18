@@ -7,6 +7,7 @@ use Generated\Shared\Transfer\NodeTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerFeature\Zed\Category\Communication\CategoryDependencyContainer;
+use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -14,6 +15,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 /**
  * @method CategoryFacade getFacade()
  * @method CategoryDependencyContainer getDependencyContainer()
+ * @method CategoryQueryContainer getQueryContainer()
  */
 class EditController extends AbstractController
 {
@@ -28,6 +30,12 @@ class EditController extends AbstractController
     public function indexAction(Request $request)
     {
         $idCategory = $request->get(self::PARAM_ID_CATEGORY);
+
+        $categoryExists = $this->getQueryContainer()->queryCategoryById($idCategory)->findOne();
+        if (!$categoryExists) {
+            $this->getDependencyContainer()->getFlashMessengerFacade()->addErrorMessage('The category you are trying to edit does not exist.');
+            return new RedirectResponse('/category/');
+        }
 
         /**
          * @var Form $form
@@ -58,6 +66,8 @@ class EditController extends AbstractController
                 ->updateNodeWithTreeWriter($categoryNodeTransfer)
             ;
 
+            $this->getDependencyContainer()->getFlashMessengerFacade()->addSuccessMessage('The category was saved successfully.');
+            
             return $this->redirectResponse('/category/');
         }
 

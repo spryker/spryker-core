@@ -6,14 +6,12 @@
 
 namespace SprykerFeature\Zed\Category\Persistence;
 
-use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategoryAttribute;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryClosureTableTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryAttributeQuery;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTableQuery;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNodeQuery;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryQuery;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
