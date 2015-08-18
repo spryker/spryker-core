@@ -33,6 +33,10 @@
         <property name="shipmentDeliveryTime" type="int" />
     </transfer>
 
+    <transfer name="Cart">
+        <property name="shipmentMethod" type="ShipmentMethod" />
+    </transfer>
+
     <transfer name="CheckoutRequest">
         <property name="shipmentMethodId" type="int" />
         <property name="shipmentMethod" type="ShipmentMethod" singular="shipmentMethod" />

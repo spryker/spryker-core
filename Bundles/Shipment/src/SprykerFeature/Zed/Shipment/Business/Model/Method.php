@@ -192,19 +192,19 @@ class Method
      * @param SpyShipmentMethod $method
      * @param CartInterface $cartTransfer
      *
-     * @return int|null
+     * @return string
      */
     private function getDeliveryTime(SpyShipmentMethod $method, CartInterface $cartTransfer)
     {
-        $time = null;
+        $timeString = '';
 
         $deliveryTimePlugins = $this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS];
         if (array_key_exists($method->getDeliveryTimePlugin(), $deliveryTimePlugins)) {
             /** @var ShipmentMethodDeliveryTimePluginInterface $deliveryTimePlugin */
             $deliveryTimePlugin = $deliveryTimePlugins[$method->getDeliveryTimePlugin()];
-            $time = $deliveryTimePlugin->getTime($cartTransfer);
+            $timeString = $deliveryTimePlugin->getTime($cartTransfer);
         }
 
-        return $time;
+        return $timeString;
     }
 }
