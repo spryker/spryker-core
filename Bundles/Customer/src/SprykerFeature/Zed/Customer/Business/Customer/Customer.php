@@ -281,6 +281,9 @@ class Customer
     }
 
     /**
+     * FIXME KSP-430 @spryker: this fails since the function encryptPassword() cannot be found!
+     * //$customerTransfer = $this->encryptPassword($customerTransfer);
+     *
      * @param CustomerInterface $customerTransfer
      *
      * @throws PropelException
@@ -292,15 +295,9 @@ class Customer
     public function update(CustomerInterface $customerTransfer)
     {
         $customer = $this->getCustomer($customerTransfer);
-        $customer->setFirstName($customerTransfer->getFirstName());
-        $customer->setLastName($customerTransfer->getLastName());
-        $customer->setCompany($customerTransfer->getCompany());
-        $customer->setDateOfBirth($customerTransfer->getDateOfBirth());
-        $customer->setSalutation($customerTransfer->getSalutation());
-        $customer->setGender($customerTransfer->getGender());
-        $customer->save();
-
-        return true;
+        $customer->fromArray($customerTransfer->toArray());
+        $changedRows = $customer->save();
+        return ($changedRows>0);
     }
 
     /**

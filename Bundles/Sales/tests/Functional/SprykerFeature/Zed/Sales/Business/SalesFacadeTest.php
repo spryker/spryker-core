@@ -274,7 +274,6 @@ class SalesFacadeTest extends Test
         $this->assertEquals(1000, $optionEntity->getGrossPrice());
         $this->assertEquals(1000, $optionEntity->getPriceToPay());
         $this->assertEquals(20, $optionEntity->getTaxPercentage());
-        $this->assertEquals(231, $optionEntity->getTaxAmount());
     }
 
     public function testSaveOrderAttachesProcessToItem()
