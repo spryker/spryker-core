@@ -486,7 +486,7 @@ class ProductManager implements ProductManagerInterface
 
         $abstractProduct = $concreteProduct->getSpyAbstractProduct();
 
-        $effectiveTaxRate = 0.0;
+        $effectiveTaxRate = 0;
 
         $taxSetEntity = $abstractProduct->getSpyTaxSet();
         if (null === $taxSetEntity) {
