@@ -35,10 +35,10 @@ class RunnerConsole extends Console
      * @var array
      */
     protected $commands = [
-        self::OPTION_TASK_BUILD_ALL => 'spy-install',
-        self::OPTION_TASK_BUILD_CORE => 'spy-install-core',
-        self::OPTION_TASK_BUILD_ZED => 'spy-task-zed dist',
-        self::OPTION_TASK_BUILD_YVES => 'spy-task-yves dist',
+        self::OPTION_TASK_BUILD_ALL => 'spy-setup all',
+        self::OPTION_TASK_BUILD_CORE => 'spy-setup core',
+        self::OPTION_TASK_BUILD_ZED => 'spy-setup zed',
+        self::OPTION_TASK_BUILD_YVES => 'spy-setup yves',
     ];
 
     /**
