@@ -81,7 +81,7 @@ interface TranslationManagerInterface
     public function updateAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
 
     /**
-     * @param TranslationTransfer $transferTranslation
+     * @param TranslationTransfer $translationTransfer
      *
      * @return TranslationTransfer
      * @throws MissingKeyException
@@ -89,7 +89,7 @@ interface TranslationManagerInterface
      * @throws TranslationExistsException
      * @throws MissingTranslationException
      */
-    public function saveTranslation(TranslationTransfer $transferTranslation);
+    public function saveTranslation(TranslationTransfer $translationTransfer);
 
     /**
      * @param TranslationTransfer $transferTranslation

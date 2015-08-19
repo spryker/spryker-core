@@ -198,15 +198,15 @@ class GlossaryFacade extends AbstractFacade
     }
 
     /**
-     * @param array $formData
+     * @param array $keyTranslationTransfer
      *
      * @return bool
      */
-    public function saveGlossaryKeyTranslations(KeyTranslationTransfer $formData)
+    public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer)
     {
         $translationManager = $this->getDependencyContainer()->createTranslationManager();
 
-        return $translationManager->saveGlossaryKeyTranslations($formData);
+        return $translationManager->saveGlossaryKeyTranslations($keyTranslationTransfer);
     }
 
     /**

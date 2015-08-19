@@ -19,6 +19,8 @@ use Generated\Shared\Transfer\KeyTranslationTransfer;
 class EditController extends AbstractController
 {
 
+    const FORM_UPDATE_TYPE = 'update';
+
     /**
      * @return array
      */
@@ -29,7 +31,7 @@ class EditController extends AbstractController
         ;
 
         $glossaryForm = $this->getDependencyContainer()
-            ->createTranslationForm($availableLocales, 'update')
+            ->createTranslationForm($availableLocales, self::FORM_UPDATE_TYPE)
         ;
 
         $glossaryForm->handleRequest();
@@ -37,11 +39,13 @@ class EditController extends AbstractController
         if ($glossaryForm->isValid()) {
             $data = $glossaryForm->getData();
 
-            $transfer = new KeyTranslationTransfer();
-            $transfer->fromArray($data, true);
+            $keyTranslationTransfer = new KeyTranslationTransfer();
+            $keyTranslationTransfer->fromArray($data, true);
 
             $facade = $this->getFacade();
-            $facade->saveGlossaryKeyTranslations($transfer);
+            $facade->saveGlossaryKeyTranslations($keyTranslationTransfer);
+
+            $this->addSuccessMessage('Saved entry to glossary.');
 
             return $this->redirectResponse('/glossary/');
         }
