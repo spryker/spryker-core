@@ -43,7 +43,6 @@ class ProfileController extends AbstractController
         $form = $this->getDependencyContainer()
             ->createCustomerForm($request)
         ;
-        $form->init();
 
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setIdCustomer($idCustomer);
