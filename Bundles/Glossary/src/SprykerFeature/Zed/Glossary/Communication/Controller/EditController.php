@@ -30,12 +30,15 @@ class EditController extends AbstractController
         $glossaryForm = $this->getDependencyContainer()
             ->createTranslationForm($availableLocales, 'update')
         ;
-        $glossaryForm->init();
 
         $glossaryForm->handleRequest();
 
         if ($glossaryForm->isValid()) {
             $data = $glossaryForm->getData();
+
+            echo '<pre>';
+            print_r($data);
+            die;
 
             $facade = $this->getFacade();
             $facade->saveGlossaryKeyTranslations($data);

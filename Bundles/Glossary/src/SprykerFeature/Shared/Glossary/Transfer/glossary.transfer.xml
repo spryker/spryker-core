@@ -11,16 +11,9 @@
         <property name="isActive" type="bool" />
     </transfer>
 
-    <transfer name="GlosssaryKey">
-        <property name="idGlossaryKey" type="int"></property>
-        <property name="key" type="string"></property>
-        <property name="isActive" type="bool"></property>
-    </transfer>
-
-    <transfer name="TranslationCollection">
-        <property name="TranslationKeys" type="GlossaryKey[]" singular="TranslationKey"></property>
-        <property name="TranslationValues" type="Translation[]" singular="TranslationValue"></property>
+    <transfer name="GlosssaryKeyTranslation">
+        <property name="glossaryKey" type="int"></property>
+        <property name="locales" type="array"></property>
     </transfer>
 
 </transfers>
-
