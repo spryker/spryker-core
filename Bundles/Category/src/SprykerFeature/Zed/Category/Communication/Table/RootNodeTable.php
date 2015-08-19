@@ -13,7 +13,7 @@ use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
 class RootNodeTable extends AbstractTable
 {
-    const TABLE_IDENTIFIER = 'root_node_table';
+    const TABLE_IDENTIFIER = 'root-node-table';
 
     /**
      * @param SpyCategoryAttributeQuery $categoryAttributeQuery

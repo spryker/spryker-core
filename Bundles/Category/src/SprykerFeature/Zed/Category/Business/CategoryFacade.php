@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Category\Business;
 
+use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeFormatter;
 use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeFormat;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
@@ -223,7 +224,10 @@ class CategoryFacade extends AbstractFacade
             )
         ;
 
-        return CategoryTreeFormat::formatForJsTreePlugin($categories, $idCategory);
+        return $this->getDependencyContainer()
+            ->createCategoryTreeStructure($categories)
+            ->getCategoryTree()
+        ;
     }
 
 }
