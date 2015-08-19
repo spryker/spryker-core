@@ -6,14 +6,16 @@
 
 namespace SprykerFeature\Zed\Customer\Business\Customer;
 
-use DateTime;
-use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Customer\CustomerAddressInterface;
+use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Exception\PropelException;
+use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotUpdatedException;
 use SprykerFeature\Zed\Customer\Business\Exception\EmailAlreadyRegisteredException;
@@ -24,9 +26,13 @@ use SprykerFeature\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginI
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddress;
+use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
 class Customer
 {
+
+    const BCRYPT_FACTOR = 12;
+    const BCRYPT_SALT = '';
 
     /**
      * @var CustomerQueryContainerInterface
@@ -140,6 +146,8 @@ class Customer
             throw new EmailAlreadyRegisteredException();
         }
 
+        $customerTransfer = $this->encryptPassword($customerTransfer);
+
         $customer = new SpyCustomer();
 
         $customer->fromArray($customerTransfer->toArray());
@@ -212,12 +220,13 @@ class Customer
         $customer = $this->queryContainer->queryCustomerByRegistrationKey($customerTransfer->getRegistrationKey())
             ->findOne()
         ;
-        if (!$customer) {
+        if (null === $customer) {
             throw new CustomerNotFoundException('Customer not found.');
         }
 
-        $customer->setRegistered(new DateTime());
+        $customer->setRegistered(new \DateTime('now', new \DateTimeZone(Config::get(SystemConfig::PROJECT_TIMEZONE))));
         $customer->setRegistrationKey(null);
+
         $customer->save();
         $customerTransfer->fromArray($customer->toArray());
 
@@ -235,9 +244,11 @@ class Customer
     public function forgotPassword(CustomerInterface $customerTransfer)
     {
         $customer = $this->getCustomer($customerTransfer);
-        $customer->setRestorePasswordDate(new DateTime());
+        $customer->setRestorePasswordDate(new \DateTime('now', new \DateTimeZone(Config::get(SystemConfig::PROJECT_TIMEZONE))));
         $customer->setRestorePasswordKey($this->generateKey());
+
         $customer->save();
+
         $customerTransfer->fromArray($customer->toArray());
         $this->sendPasswordRestoreToken($customerTransfer);
 
@@ -254,10 +265,15 @@ class Customer
      */
     public function restorePassword(CustomerInterface $customerTransfer)
     {
+        $customerTransfer = $this->encryptPassword($customerTransfer);
+
         $customer = $this->getCustomer($customerTransfer);
+
         $customer->setRestorePasswordDate(null);
         $customer->setRestorePasswordKey(null);
+
         $customer->setPassword($customerTransfer->getPassword());
+
         $customer->save();
         $this->sendPasswordRestoreConfirmation($customerTransfer);
 
@@ -281,9 +297,6 @@ class Customer
     }
 
     /**
-     * FIXME KSP-430 @spryker: this fails since the function encryptPassword() cannot be found!
-     * //$customerTransfer = $this->encryptPassword($customerTransfer);
-     *
      * @param CustomerInterface $customerTransfer
      *
      * @throws PropelException
@@ -294,10 +307,14 @@ class Customer
      */
     public function update(CustomerInterface $customerTransfer)
     {
+        $customerTransfer = $this->encryptPassword($customerTransfer);
+
         $customer = $this->getCustomer($customerTransfer);
         $customer->fromArray($customerTransfer->toArray());
+
         $changedRows = $customer->save();
-        return ($changedRows>0);
+
+        return ($changedRows > 0);
     }
 
     /**
@@ -307,15 +324,8 @@ class Customer
      */
     protected function entityToTransfer(SpyCustomerAddress $customer)
     {
-        $data = $customer->toArray();
-        unset($data['fk_misc_region']);
-        unset($data['deleted_at']);
-        unset($data['created_at']);
-        unset($data['updated_at']);
-        $addressTransfer = new CustomerAddressTransfer();
-        $addressTransfer->fromArray($data);
-
-        return $addressTransfer;
+        $entity = new CustomerAddressTransfer();
+        return $entity->fromArray($customer->toArray(), true);
     }
 
     /**
@@ -327,7 +337,6 @@ class Customer
     {
         $addressCollection = new AddressesTransfer();
         foreach ($entities->getData() as $address) {
-            /** @var SpyCustomerAddress $address */
             $addressTransfer = $this->entityToTransfer($address);
 
             if ($customer->getDefaultBillingAddress() === $address->getIdCustomerAddress()) {
@@ -360,9 +369,13 @@ class Customer
             $customer = $this->queryContainer->queryCustomerByEmail($customerTransfer->getEmail())
                 ->findOne()
             ;
+        } elseif ($customerTransfer->getRestorePasswordKey()) {
+            $customer = $this->queryContainer->queryCustomerByRestorePasswordKey($customerTransfer->getRestorePasswordKey())
+                ->findOne()
+            ;
         }
 
-        if (isset($customer) && ($customer !== null)) {
+        if (null !== $customer) {
             return $customer;
         }
 
@@ -376,6 +389,8 @@ class Customer
      */
     protected function hasCustomer(CustomerInterface $customerTransfer)
     {
+        $result = false;
+
         if ($customerTransfer->getIdCustomer()) {
             $customer = $this->queryContainer
                 ->queryCustomerById($customerTransfer->getIdCustomer())
@@ -388,11 +403,63 @@ class Customer
             ;
         }
 
-        if (isset($customer)) {
-            return true;
+        if (null !== $customer) {
+            $result = true;
         }
 
-        return false;
+        return $result;
+    }
+
+    /**
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    public function tryAuthorizeCustomerByEmailAndPassword(CustomerTransfer $customerTransfer)
+    {
+        $result = false;
+
+        $customer = $this->queryContainer->queryCustomerByEmail($customerTransfer->getEmail())
+            ->findOne()
+        ;
+
+        if (null !== $customer) {
+            $result = $this->isValidPassword($customer->getPassword(), $customerTransfer->getPassword());
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return CustomerInterface
+     */
+    protected function encryptPassword(CustomerInterface $customerTransfer)
+    {
+        $currentPassword = $customerTransfer->getPassword();
+
+        if ('$2' !== mb_substr($currentPassword, 0, 2)) {
+            $encoder = new BCryptPasswordEncoder(self::BCRYPT_FACTOR);
+
+            $newPassword = $encoder->encodePassword($currentPassword, self::BCRYPT_SALT);
+            $customerTransfer->setPassword($newPassword);
+        }
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @param string $hash
+     * @param string $rawPassword
+     *
+     * @return bool
+     */
+    protected function isValidPassword($hash, $rawPassword)
+    {
+        $encoder = new BCryptPasswordEncoder(self::BCRYPT_FACTOR);
+
+        return $encoder->isPasswordValid($hash, $rawPassword, self::BCRYPT_SALT);
     }
 
 }
