@@ -7,10 +7,8 @@ namespace SprykerFeature\Zed\Shipment\Business\Model;
 
 use Generated\Shared\Cart\CartInterface;
 use Generated\Shared\Shipment\CustomerAddressInterface;
-use Generated\Shared\Shipment\ShipmentInterface;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
-use Generated\Shared\Transfer\TaxSetTransfer;
 use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface;
 use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface;
 use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodPriceCalculationPluginInterface;
@@ -63,8 +61,7 @@ class Method
             ->setAvailabilityPlugin($methodTransfer->getAvailabilityPlugin())
             ->setPriceCalculationPlugin($methodTransfer->getPriceCalculationPlugin())
             ->setDeliveryTimePlugin($methodTransfer->getDeliveryTimePlugin())
-            ->save()
-        ;
+            ->save();
 
         return $methodEntity->getPrimaryKey();
     }
@@ -187,7 +184,8 @@ class Method
      *
      * @return int
      */
-    private function getPrice(SpyShipmentMethod $method, CartInterface $cartTransfer) {
+    private function getPrice(SpyShipmentMethod $method, CartInterface $cartTransfer)
+    {
         $price = $method->getPrice();
         $priceCalculationPlugins = $this->plugins[ShipmentDependencyProvider::PRICE_CALCULATION_PLUGINS];
 
@@ -205,14 +203,17 @@ class Method
      * @param CartInterface $cartTransfer
      * @return int
      */
-    private function getTaxRate(SpyShipmentMethod $method, CartInterface $cartTransfer, CustomerAddressInterface $shippingAddress = null) {
+    private function getTaxRate(SpyShipmentMethod $method, CartInterface $cartTransfer, CustomerAddressInterface $shippingAddress = null)
+    {
         $taxSetEntity = $method->getTaxSet();
 
-        $taxRates = $taxSetEntity->getSpyTaxRates();
-
         $effectiveTaxRate = 0;
-        foreach ($taxRates as &$taxRate) {
-            $effectiveTaxRate += $taxRate->getRate();
+
+        if (isset($taxSetEntity)) {
+            $taxRates = $taxSetEntity->getSpyTaxRates();
+            foreach ($taxRates as &$taxRate) {
+                $effectiveTaxRate += $taxRate->getRate();
+            }
         }
 
         $taxCalculationPlugins = $this->plugins[ShipmentDependencyProvider::TAX_CALCULATION_PLUGINS];
