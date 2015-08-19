@@ -11,8 +11,11 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class ShipmentCheckoutConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+    const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
-    const FACADE_SHIPMENT = 'shipment facade';
+    const QUERY_CONTAINER_SHIPMENT = 'QUERY_CONTAINER_SHIPMENT';
+
+    const FACADE_SHIPMENT = 'FACADE_SHIPMENT';
 
     /**
      * @param Container $container
@@ -23,6 +26,25 @@ class ShipmentCheckoutConnectorDependencyProvider extends AbstractBundleDependen
     {
         $container[self::FACADE_SHIPMENT] = function (Container $container) {
             return $container->getLocator()->shipment()->facade();
+        };
+
+        return $container;
+    }
+
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    public function providePersistenceLayerDependencies(Container $container)
+    {
+        $container[self::QUERY_CONTAINER_SALES] = function (Container $container) {
+            return $container->getLocator()->sales()->queryContainer();
+        };
+
+        $container[self::QUERY_CONTAINER_SHIPMENT] = function (Container $container) {
+            return $container->getLocator()->shipment()->queryContainer();
         };
 
         return $container;

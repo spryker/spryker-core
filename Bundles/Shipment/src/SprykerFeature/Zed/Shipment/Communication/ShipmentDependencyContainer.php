@@ -12,6 +12,7 @@ use SprykerFeature\Zed\Shipment\Communication\Form\CarrierForm;
 use SprykerFeature\Zed\Shipment\Communication\Table\MethodTable;
 use SprykerFeature\Zed\Shipment\Persistence\ShipmentQueryContainer;
 use SprykerFeature\Zed\Shipment\ShipmentDependencyProvider;
+use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainerInterface;
 
 /**
  * @method ShipmentCommunication getFactory()
@@ -50,14 +51,26 @@ class ShipmentDependencyContainer extends AbstractCommunicationDependencyContain
         $methodQuery = $this->getQueryContainer()->queryMethods();
         $carrierQuery = $this->getQueryContainer()->queryCarriers();
 
+        $taxSetQuery = $this->getTaxQueryContainer()->queryAllTaxSets();
+
         return $this
             ->getFactory()
             ->createFormMethodForm(
                 $methodQuery,
                 $carrierQuery,
+                $taxSetQuery,
+                $this->getConfig(),
                 $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS),
                 $idMethod
             )
             ;
+    }
+
+    /**
+     * @return TaxQueryContainerInterface
+     */
+    protected function getTaxQueryContainer()
+    {
+        return $this->getProvidedDependency(ShipmentDependencyProvider::QUERY_CONTAINER_TAX);
     }
 }

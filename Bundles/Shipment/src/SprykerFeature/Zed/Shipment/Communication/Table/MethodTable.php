@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Shipment\Communication\Table;
 
 use Propel\Runtime\Collection\ObjectCollection;
+use SprykerFeature\Shared\Library\Currency\CurrencyManager;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\Shipment\Persistence\Propel\Map\SpyShipmentMethodTableMap;
@@ -22,6 +23,12 @@ class MethodTable extends AbstractTable
     const ACTIVE = 'Active';
     const ACTIONS = 'Actions';
     const PLUGINS = 'Plugins';
+
+    const AVAILABILITY_PLUGIN = 'Availability plugin';
+    const PRICE_CALCULATION_PLUGIN = 'Price plugin';
+    const DELIVERY_TIME_PLUGIN = 'Delivery time plugin';
+    const TAX_CALCULATION_PLUGIN = 'Tax calculaltion plugin';
+
     const ID_METHOD_PARAMETER = 'id-method';
 
     /**
@@ -50,7 +57,12 @@ class MethodTable extends AbstractTable
             SpyShipmentMethodTableMap::COL_NAME => self::METHOD,
             SpyShipmentMethodTableMap::COL_GLOSSARY_KEY_DESCRIPTION => self::DESCRIPTION,
             SpyShipmentMethodTableMap::COL_PRICE => self::PRICE,
-            self::PLUGINS => self::PLUGINS,
+
+            SpyShipmentMethodTableMap::COL_AVAILABILITY_PLUGIN => self::AVAILABILITY_PLUGIN,
+            SpyShipmentMethodTableMap::COL_PRICE_CALCULATION_PLUGIN => self::PRICE_CALCULATION_PLUGIN,
+            SpyShipmentMethodTableMap::COL_DELIVERY_TIME_PLUGIN => self::DELIVERY_TIME_PLUGIN,
+            SpyShipmentMethodTableMap::COL_TAX_CALCULATION_PLUGIN => self::TAX_CALCULATION_PLUGIN,
+
             self::ACTIONS => self::ACTIONS
         ]);
 
@@ -94,10 +106,15 @@ class MethodTable extends AbstractTable
                 SpyShipmentMethodTableMap::COL_FK_SHIPMENT_CARRIER => $method->getShipmentCarrier()->getName(),
                 SpyShipmentMethodTableMap::COL_NAME => $method->getName(),
                 SpyShipmentMethodTableMap::COL_GLOSSARY_KEY_DESCRIPTION => $method->getGlossaryKeyDescription(),
-                SpyShipmentMethodTableMap::COL_PRICE => $method->getPrice(),
-                self::PLUGINS => 'Availability ' . $method->getAvailabilityPlugin() .
-                    ' | Price ' . $method->getPriceCalculationPlugin() .
-                    ' | Delivery ' . $method->getDeliveryTimePlugin(),
+                SpyShipmentMethodTableMap::COL_PRICE => $this->formatPrice($method->getPrice()),
+
+
+                SpyShipmentMethodTableMap::COL_AVAILABILITY_PLUGIN => $method->getAvailabilityPlugin(),
+                SpyShipmentMethodTableMap::COL_PRICE_CALCULATION_PLUGIN => $method->getPriceCalculationPlugin(),
+                SpyShipmentMethodTableMap::COL_DELIVERY_TIME_PLUGIN => $method->getDeliveryTimePlugin(),
+                SpyShipmentMethodTableMap::COL_TAX_CALCULATION_PLUGIN => $method->getTaxCalculationPlugin(),
+
+
                 self::ACTIONS =>
                     '<div class="btn-group btn-group-sm" role="group">' .
                     '<a class="btn btn-outline btn-default" href="/shipment/method/edit?' . self::ID_METHOD_PARAMETER . '='
@@ -110,5 +127,19 @@ class MethodTable extends AbstractTable
         }
 
         return $results;
+    }
+
+    /**
+     * @param int $value
+     * @param bool $includeSymbol
+     *
+     * @return string
+     */
+    protected function formatPrice($value, $includeSymbol = true)
+    {
+        $currencyManager = CurrencyManager::getInstance();
+        $value = $currencyManager->convertCentToDecimal($value);
+
+        return $currencyManager->format($value, $includeSymbol);
     }
 }

@@ -41,6 +41,7 @@ class MethodController extends AbstractController
                 ->createMethod($methodTransfer)
             ;
 
+            $this->addSuccessMessage('Shipment method '.$methodTransfer->getName().' saved');
             return $this->redirectResponse('/shipment/');
         }
 
@@ -68,10 +69,11 @@ class MethodController extends AbstractController
                 $data = $form->getData();
                 $methodTransfer = new ShipmentMethodTransfer();
                 $methodTransfer->fromArray($data, true);
+
                 $this->getFacade()
                     ->updateMethod($methodTransfer)
                 ;
-
+                $this->addSuccessMessage('Shipment method '.$methodTransfer->getName().' updated');
                 return $this->redirectResponse('/shipment/');
             }
 

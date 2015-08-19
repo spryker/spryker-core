@@ -6,12 +6,15 @@
 namespace SprykerFeature\Zed\Shipment\Business\Model;
 
 use Generated\Shared\Cart\CartInterface;
+use Generated\Shared\Shipment\CustomerAddressInterface;
 use Generated\Shared\Shipment\ShipmentInterface;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
 use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface;
 use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface;
 use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodPriceCalculationPluginInterface;
+use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodTaxCalculationPluginInterface;
 use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentMethod;
 use SprykerFeature\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use SprykerFeature\Zed\Shipment\ShipmentDependencyProvider;
@@ -68,10 +71,10 @@ class Method
 
     /**
      * @param CartInterface $cartTransfer
-     *
-     * @return ShipmentInterface
+     * @param CustomerAddressInterface|null $shippingAddress
+     * @return ShipmentTransfer
      */
-    public function getAvailableMethods(CartInterface $cartTransfer)
+    public function getAvailableMethods(CartInterface $cartTransfer, CustomerAddressInterface $shippingAddress = null)
     {
         $shipmentTransfer = new ShipmentTransfer();
         $methods = $this->queryContainer->queryActiveMethods()->find();
@@ -82,6 +85,7 @@ class Method
 
             if ($this->isAvailable($method, $cartTransfer)) {
                 $methodTransfer->setPrice($this->getPrice($method, $cartTransfer));
+                $methodTransfer->setTaxRate($this->getTaxRate($method, $cartTransfer, $shippingAddress));
                 $methodTransfer->setTime($this->getDeliveryTime($method, $cartTransfer));
 
                 $shipmentTransfer->addMethod($methodTransfer);
@@ -101,6 +105,22 @@ class Method
         $methodQuery = $this->queryContainer->queryMethodByIdMethod($idMethod);
 
         return $methodQuery->count() > 0;
+    }
+
+    /**
+     * @param $idMethod
+     * @return ShipmentMethodTransfer
+     */
+    public function getShipmentMethodTransferById($idMethod)
+    {
+        $shipmentMethodTransfer = new ShipmentMethodTransfer();
+
+        $methodQuery = $this->queryContainer->queryMethodByIdMethod($idMethod);
+
+        $shipmentMethodTransferEntity = $methodQuery->findOne();
+
+        $shipmentMethodTransfer->fromArray($shipmentMethodTransferEntity->toArray());
+        return $shipmentMethodTransfer;
     }
 
     /**
@@ -130,18 +150,10 @@ class Method
         if ($this->hasMethod($methodTransfer->getIdShipmentMethod())) {
             $methodEntity =
                 $this->queryContainer->queryMethodByIdMethod($methodTransfer->getIdShipmentMethod())->findOne();
-            $methodEntity
-                ->setFkShipmentCarrier($methodTransfer->getFkShipmentCarrier())
-                ->setGlossaryKeyName($methodTransfer->getGlossaryKeyName())
-                ->setGlossaryKeyDescription($methodTransfer->getGlossaryKeyDescription())
-                ->setPrice($methodTransfer->getPrice())
-                ->setName($methodTransfer->getName())
-                ->setIsActive($methodTransfer->getIsActive())
-                ->setAvailabilityPlugin($methodTransfer->getAvailabilityPlugin())
-                ->setPriceCalculationPlugin($methodTransfer->getPriceCalculationPlugin())
-                ->setDeliveryTimePlugin($methodTransfer->getDeliveryTimePlugin())
-                ->save()
-            ;
+
+            $methodEntity->fromArray($methodTransfer->toArray());
+
+            $methodEntity->save();
 
             return $methodEntity->getPrimaryKey();
         }
@@ -186,6 +198,30 @@ class Method
         }
 
         return $price;
+    }
+
+    /**
+     * @param SpyShipmentMethod $method
+     * @param CartInterface $cartTransfer
+     * @return int
+     */
+    private function getTaxRate(SpyShipmentMethod $method, CartInterface $cartTransfer, CustomerAddressInterface $shippingAddress = null) {
+        $taxSetEntity = $method->getTaxSet();
+
+        $taxRates = $taxSetEntity->getSpyTaxRates();
+
+        $effectiveTaxRate = 0;
+        foreach ($taxRates as &$taxRate) {
+            $effectiveTaxRate += $taxRate->getRate();
+        }
+
+        $taxCalculationPlugins = $this->plugins[ShipmentDependencyProvider::TAX_CALCULATION_PLUGINS];
+        if (array_key_exists($method->getTaxCalculationPlugin(), $taxCalculationPlugins)) {
+            /** @var ShipmentMethodTaxCalculationPluginInterface $taxCalculationPlugin */
+            $taxCalculationPlugin = $taxCalculationPlugins[$method->getTaxCalculationPlugin()];
+            $effectiveTaxRate = $taxCalculationPlugin->getTaxRate($cartTransfer, $effectiveTaxRate, $shippingAddress);
+        }
+        return $effectiveTaxRate;
     }
 
     /**
