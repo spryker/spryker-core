@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Category\Business;
 
-use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeStructure;
+use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeFormatter;
 use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeFormat;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;

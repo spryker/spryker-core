@@ -7,7 +7,7 @@
 namespace Unit\SprykerFeature\Zed\Category\Business\Tree;
 
 use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeStructure;
+use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeFormatter;
 use Unit\SprykerFeature\Zed\Category\Business\Tree\Fixtures\Expected\CategoryStructureExpected;
 use Unit\SprykerFeature\Zed\Category\Business\Tree\Fixtures\Input\CategoryStructureInput;
 
@@ -16,7 +16,7 @@ use Unit\SprykerFeature\Zed\Category\Business\Tree\Fixtures\Input\CategoryStruct
  * @group Zed
  * @group Category
  * @group Business
- * @group CategoryTreeStructure
+ * @group CategoryTreeFormatter
  */
 class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
 {
@@ -50,7 +50,7 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
         $categories = $this->input->getOrderedCategoriesArray();
 
         $treeStructure = $this->factory
-            ->createTreeCategoryTreeStructure($categories)
+            ->createTreeFormatterCategoryTreeFormatter($categories)
             ->getCategoryTree()
         ;
 
@@ -65,7 +65,7 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
         $categories = $this->input->getSecondOrderedCategoriesArray();
 
         $treeStructure = $this->factory
-            ->createTreeCategoryTreeStructure($categories)
+            ->createTreeFormatterCategoryTreeFormatter($categories)
             ->getCategoryTree()
         ;
 
@@ -80,7 +80,7 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
         $categories = $this->input->getCategoryStructureWithChildrenBeforeParent();
 
         $treeStructure = $this->factory
-            ->createTreeCategoryTreeStructure($categories)
+            ->createTreeFormatterCategoryTreeFormatter($categories)
             ->getCategoryTree()
         ;
 
@@ -95,7 +95,7 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
         $categories = $this->input->getCategoryStructureWithNonexistantParent();
 
         $treeStructure = $this->factory
-            ->createTreeCategoryTreeStructure($categories)
+            ->createTreeFormatterCategoryTreeFormatter($categories)
             ->getCategoryTree()
         ;
 

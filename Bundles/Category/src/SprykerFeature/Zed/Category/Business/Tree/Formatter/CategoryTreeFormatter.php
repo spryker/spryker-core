@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Category\Business\Tree;
+namespace SprykerFeature\Zed\Category\Business\Tree\Formatter;
 
-class CategoryTreeStructure
+class CategoryTreeFormatter
 {
     const ID = 'id';
     const ID_PARENT = 'parent';

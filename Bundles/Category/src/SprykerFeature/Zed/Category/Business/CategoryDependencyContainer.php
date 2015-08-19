@@ -21,7 +21,7 @@ use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
-use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeStructure;
+use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeFormatter;
 
 /**
  * @method CategoryBusiness getFactory()
@@ -48,11 +48,11 @@ class CategoryDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @param array $category
      *
-     * @return CategoryTreeStructure
+     * @return CategoryTreeFormatter
      */
     public function createCategoryTreeStructure(array $category)
     {
-        return $this->getFactory()->createTreeCategoryTreeStructure($category);
+        return $this->getFactory()->createTreeFormatterCategoryTreeFormatter($category);
     }
 
     /**
