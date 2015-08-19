@@ -318,6 +318,42 @@ class Customer
     }
 
     /**
+     * @param CustomerInterface $customerTransfer
+     * @return array
+     * @throws CustomerNotFoundException
+     */
+    public function getLatestCartOrders(CustomerInterface $customerTransfer)
+    {
+        $customer = $this->getCustomer($customerTransfer);
+        
+        
+        $data = [[
+            'orderNumber' => 'B651478',
+            'orderDate' => '01.06.15',
+            'price' => '12.99',
+            'sender' => 'John Doe',
+            'status' => 'Stoniert',
+        ],[
+            'orderNumber' => 'B457499',
+            'orderDate' => '02.06.15',
+            'price' => 8.99,
+            'sender' => 'Ben Muller',
+            'status' => 'Stoniert',
+        ],[
+            'orderNumber' => 'B123141',
+            'orderDate' => '03.06.15',
+            'price' => 28.99,
+            'sender' => 'Ben Foobar',
+            'status' => 'Stoniert',
+        ]];
+
+        $shit = new \ArrayObject($data);
+        $customerTransfer->setLatestCartOrders([]);
+
+        return $customerTransfer;
+    }
+
+    /**
      * @param SpyCustomerAddress $customer
      *
      * @return CustomerAddressInterface

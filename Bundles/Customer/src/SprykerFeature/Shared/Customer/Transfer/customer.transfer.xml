@@ -56,6 +56,7 @@
         <property name="registrationKey" type="string" />
         <property name="registered" type="string" />
         <property name="message" type="string" />
+        <property name="latestCartOrders" type="[]" singular="latestCartOrder" />
     </transfer>
 
     <transfer name="CustomerResponse">

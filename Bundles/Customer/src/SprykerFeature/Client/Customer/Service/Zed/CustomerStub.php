@@ -111,6 +111,15 @@ class CustomerStub implements CustomerStubInterface
 
     /**
      * @param CustomerInterface $customerTransfer
+     * @return array
+     */
+    public function getLatestCartOrders(CustomerInterface $customerTransfer)
+    {
+        return $this->zedStub->call('/customer/gateway/get-latest-cart-orders', $customerTransfer);
+    }
+
+    /**
+     * @param CustomerAddressInterface $addressTransfer
      *
      * @return CustomerTransfer
      */

@@ -91,4 +91,10 @@ interface CustomerStubInterface
      */
     public function createAddress(CustomerAddressInterface $addressTransfer);
 
+    /**
+     * @param CustomerInterface $customerTransfer
+     * @return array
+     */
+    public function getLatestCartOrders(CustomerInterface $customerTransfer);
+
 }

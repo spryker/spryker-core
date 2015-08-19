@@ -240,14 +240,14 @@ class CustomerFacade extends AbstractFacade
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return bool
+     * @return array
      */
-    public function tryAuthorizeCustomerByEmailAndPassword(CustomerTransfer $customerTransfer)
+    public function getLatestCartOrders(CustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()
             ->createCustomer()
-            ->tryAuthorizeCustomerByEmailAndPassword($customerTransfer)
-        ;
+            ->getLatestCartOrders($customerTransfer)
+            ;
     }
 
 }
