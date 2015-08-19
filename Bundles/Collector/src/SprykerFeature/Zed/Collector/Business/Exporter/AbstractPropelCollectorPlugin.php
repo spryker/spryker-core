@@ -15,6 +15,11 @@ abstract class AbstractPropelCollectorPlugin
 {
 
     /**
+     * @var int
+     */
+    private $chunkSize = 100;
+
+    /**
      * @return string
      */
     abstract protected function getTouchItemType();
@@ -47,25 +52,43 @@ abstract class AbstractPropelCollectorPlugin
 
         $resultSets = $this->getBatchIterator($query);
 
-        $result->setTotalCount($resultSets->count());
-
+        $totalCount = 0;
         foreach ($resultSets as $resultSet) {
             $collectedData = $this->processData($resultSet, $locale);
+            $count = count($collectedData);
 
             $dataWriter->write($collectedData, $this->getTouchItemType());
-            $result->increaseProcessedCount(count($collectedData));
+
+            $result->increaseProcessedCount($count);
+            $totalCount += $count;
         }
+
+        $result->setTotalCount($totalCount);
+    }
+
+    /**
+     * @param int $chunkSize
+     */
+    public function setChunkSize($chunkSize) {
+        $this->chunkSize = $chunkSize;
+    }
+
+    /**
+     * @return int
+     */
+    public function getChunkSize()
+    {
+        return $this->chunkSize;
     }
 
     /**
      * @param $baseQuery
-     * @param int $chunkSize
      *
      * @return BatchIterator
      */
-    protected function getBatchIterator($baseQuery, $chunkSize = 1000)
+    protected function getBatchIterator($baseQuery)
     {
-        return new BatchIterator($baseQuery, $chunkSize);
+        return new BatchIterator($baseQuery, $this->chunkSize);
     }
 
 }
