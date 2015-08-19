@@ -66,8 +66,8 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
                 $abstractLocalizedAttributes = json_decode($productData['abstract_localized_attributes'], true);
                 $abstractAttributes = array_merge($abstractAttributes, $abstractLocalizedAttributes);
 
-                $concreteAttributes          = json_decode('['.$productData['concrete_attributes'].']', true);
-                $concreteLocalizedAttributes = json_decode('['.$productData['concrete_localized_attributes'].']', true);
+                $concreteAttributes = json_decode('[' . $productData['concrete_attributes'] . ']', true);
+                $concreteLocalizedAttributes = json_decode('[' . $productData['concrete_localized_attributes'] . ']', true);
 
                 $concreteSkus = explode(',', $productData['concrete_skus']);
                 $concreteNames = explode(',', $productData['concrete_names']);
@@ -80,10 +80,10 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
                     }
                     $encodedAttributes = $concreteAttributes[$i];
                     $encodedLocalizedAttributes = $concreteLocalizedAttributes[$i];
-                    if (is_null($encodedAttributes)) {
+                    if (null === $encodedAttributes) {
                         $encodedAttributes = [];
                     }
-                    if (is_null($encodedLocalizedAttributes)) {
+                    if (null === $encodedLocalizedAttributes) {
                         $encodedLocalizedAttributes = [];
                     }
                     $mergedAttributes = array_merge($encodedAttributes, $encodedLocalizedAttributes);
