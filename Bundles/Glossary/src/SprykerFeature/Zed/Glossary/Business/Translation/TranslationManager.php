@@ -5,6 +5,7 @@
 
 namespace SprykerFeature\Zed\Glossary\Business\Translation;
 
+use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
 use Propel\Runtime\Exception\PropelException;
@@ -62,34 +63,32 @@ class TranslationManager implements TranslationManagerInterface
     }
 
     /**
-     * @param array $formData
+     * @param KeyTranslationTransfer $transfer
      *
-     * @return bool
      * @throws MissingKeyException
+     * @return bool
      */
-    public function saveGlossaryKeyTranslations(array $formData)
+    public function saveGlossaryKeyTranslations(KeyTranslationTransfer $transfer)
     {
-        if (!isset($formData[self::GLOSSARY_KEY]) || empty($formData[self::GLOSSARY_KEY])) {
+        if (empty($transfer->getGlossaryKey())) {
             throw new MissingKeyException('Glossary Key cannot be empty');
         }
 
-        if (!$this->keyManager->hasKey($formData[self::GLOSSARY_KEY])) {
-            $glossaryKey = $this->keyManager->createKey($formData[self::GLOSSARY_KEY]);
+        if (!$this->keyManager->hasKey($transfer->getGlossaryKey())) {
+            $glossaryKey = $this->keyManager->createKey($transfer->getGlossaryKey());
         } else {
-            $glossaryKey = $this->keyManager->getKey($formData[self::GLOSSARY_KEY])
+            $glossaryKey = $this->keyManager->getKey($transfer->getGlossaryKey())
                 ->getIdGlossaryKey()
             ;
         }
 
         $availableLocales = $this->localeFacade->getAvailableLocales();
 
-        foreach ($availableLocales as $localeId => $localeName) {
-            if (array_key_exists(self::LOCALE_PREFIX . $localeId, $formData)) {
-                $locale = $this->localeFacade->getLocale($availableLocales[$localeId]);
-                $translationTransfer = $this->createTranslationTransfer($locale, $glossaryKey, $formData[self::LOCALE_PREFIX . $locale->getIdLocale()]);
+        foreach ($availableLocales as $localeName) {
+            $locale = $this->localeFacade->getLocale($localeName);
+            $translationTransfer = $this->createTranslationTransfer($locale, $glossaryKey, $transfer->getLocales()[$localeName]);
 
-                $this->saveAndTouchTranslation($translationTransfer);
-            }
+            $this->saveAndTouchTranslation($translationTransfer);
         }
 
         return true;
@@ -103,7 +102,7 @@ class TranslationManager implements TranslationManagerInterface
      *
      * @return TranslationTransfer
      */
-    private function createTranslationTransfer(LocaleTransfer $locale, $glossaryKey, $value, $isActive = true)
+    protected function createTranslationTransfer(LocaleTransfer $locale, $glossaryKey, $value, $isActive = true)
     {
         $translationTransfer = new TranslationTransfer();
         $translationTransfer->setValue($value);
@@ -346,7 +345,7 @@ class TranslationManager implements TranslationManagerInterface
             $translationEntity->save();
 
             $translation = new TranslationTransfer();
-            $translation->fromArray($translationEntity->toArray());
+            $translation->fromArray($translationEntity->toArray(), true);
         } else {
             $translation = $this->createTranslationFromTransfer($transferTranslation);
         }

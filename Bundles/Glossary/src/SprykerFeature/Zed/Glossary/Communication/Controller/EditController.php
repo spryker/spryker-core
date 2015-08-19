@@ -9,6 +9,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\GlossaryCommunication;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Glossary\Communication\GlossaryDependencyContainer;
+use Generated\Shared\Transfer\KeyTranslationTransfer;
 
 /**
  * @method GlossaryCommunication getFactory()
@@ -36,12 +37,11 @@ class EditController extends AbstractController
         if ($glossaryForm->isValid()) {
             $data = $glossaryForm->getData();
 
-            echo '<pre>';
-            print_r($data);
-            die;
+            $transfer = new KeyTranslationTransfer();
+            $transfer->fromArray($data, true);
 
             $facade = $this->getFacade();
-            $facade->saveGlossaryKeyTranslations($data);
+            $facade->saveGlossaryKeyTranslations($transfer);
 
             return $this->redirectResponse('/glossary/');
         }

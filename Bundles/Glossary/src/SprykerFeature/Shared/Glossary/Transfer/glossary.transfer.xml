@@ -11,7 +11,7 @@
         <property name="isActive" type="bool" />
     </transfer>
 
-    <transfer name="GlosssaryKeyTranslation">
+    <transfer name="KeyTranslation">
         <property name="glossaryKey" type="int"></property>
         <property name="locales" type="array"></property>
     </transfer>

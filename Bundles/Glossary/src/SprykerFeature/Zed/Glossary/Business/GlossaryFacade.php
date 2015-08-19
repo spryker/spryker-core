@@ -5,6 +5,7 @@
 
 namespace SprykerFeature\Zed\Glossary\Business;
 
+use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
@@ -201,7 +202,7 @@ class GlossaryFacade extends AbstractFacade
      *
      * @return bool
      */
-    public function saveGlossaryKeyTranslations(array $formData)
+    public function saveGlossaryKeyTranslations(KeyTranslationTransfer $formData)
     {
         $translationManager = $this->getDependencyContainer()->createTranslationManager();
 
