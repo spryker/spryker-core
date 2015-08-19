@@ -66,4 +66,43 @@ class TouchFacade extends AbstractFacade
         );
     }
 
+    /**
+     * @param string $itemType
+     * @param array $itemIds
+     *
+     * @return int
+     */
+    public function bulkTouchActive($itemType, array $itemIds = [])
+    {
+        $touchRecordModel = $this->getDependencyContainer()->getTouchRecordModel();
+
+        return $touchRecordModel->bulkUpdateTouchRecords($itemType, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, $itemIds);
+    }
+
+    /**
+     * @param string $itemType
+     * @param array $itemIds
+     *
+     * @return int
+     */
+    public function bulkTouchInactive($itemType, array $itemIds = [])
+    {
+        $touchRecordModel = $this->getDependencyContainer()->getTouchRecordModel();
+
+        return $touchRecordModel->bulkUpdateTouchRecords($itemType, SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, $itemIds);
+    }
+
+    /**
+     * @param string $itemType
+     * @param array $itemIds
+     *
+     * @return int
+     */
+    public function bulkTouchDeleted($itemType, array $itemIds = [])
+    {
+        $touchRecordModel = $this->getDependencyContainer()->getTouchRecordModel();
+
+        return $touchRecordModel->bulkUpdateTouchRecords($itemType, SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $itemIds);
+    }
+
 }

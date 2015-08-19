@@ -29,46 +29,16 @@ function SprykerAjaxCallbacks() {
         } else {
             self.alerter.error(ajaxResponse.message);
         }
-    }
+    };
 
     /**
+     *
      * @param ajaxResponse
-     * @returns {ajaxReponse}
+     * @returns string
      */
     self.categoryDisplayNodeTree = function(ajaxResponse){
         $('#category-node-tree').removeClass('hidden');
-        $('#jstree-container').html('<div id="jstree-category"></div>');
-        $('#jstree-category').jstree({
-            'core' : {
-                'data' : ajaxResponse.data
-            }
-        });
-        return ajaxResponse;
-    }
-
-    /**
-     * @param ajaxResponse
-     */
-    self.categoryDisplayAttributes = function(ajaxResponse){
-        $('#category-tabs').removeClass('hidden');
-        $('#category-attributes').html(ajaxResponse);
-    }
-
-    /**
-     * @param ajaxResponse
-     */
-    self.categoryDisplayUrls = function(ajaxResponse){
-        $('#category-tabs').removeClass('hidden');
-        $('#category-urls').html(ajaxResponse);
+        $('#categories-list').html(ajaxResponse);
         closeLoaderBar();
-    }
-
-    /**
-     * @param ajaxResponse
-     */
-    self.categoryDisplayProducts = function(ajaxResponse){
-        $('#category-tabs').removeClass('hidden');
-        $('#category-products').html(ajaxResponse);
-        closeLoaderBar();
-    }
+    };
 }

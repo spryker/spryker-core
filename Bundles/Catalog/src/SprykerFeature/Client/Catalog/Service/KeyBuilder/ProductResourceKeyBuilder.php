@@ -6,9 +6,18 @@
 
 namespace SprykerFeature\Client\Catalog\Service\KeyBuilder;
 
-use SprykerFeature\Shared\ProductFrontendExporterConnector\Code\KeyBuilder\SharedAbstractProductResourceKeyBuilder;
+use SprykerFeature\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
+use SprykerFeature\Shared\Product\ProductConfig;
 
-class ProductResourceKeyBuilder extends SharedAbstractProductResourceKeyBuilder
+class ProductResourceKeyBuilder extends SharedResourceKeyBuilder
 {
+
+    /**
+     * @return string
+     */
+    protected function getResourceType()
+    {
+        return ProductConfig::RESOURCE_TYPE_ABSTRACT_PRODUCT;
+    }
 
 }

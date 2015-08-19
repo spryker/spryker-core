@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Category\Communication\Form;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;

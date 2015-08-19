@@ -23,5 +23,9 @@
         <index>
             <index-column name="item_event"/>
         </index>
-    <id-method-parameter value="spy_touch_pk_seq"/></table>
+        <id-method-parameter value="spy_touch_pk_seq"/>
+        <behavior name="query_cache">
+            <parameter name="backend" value="custom" />
+        </behavior>
+    </table>
 </database>

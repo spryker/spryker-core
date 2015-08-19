@@ -145,6 +145,9 @@ class InstalledPackageFinder implements InstalledPackageFinderInterface
             $licenses = [$licenses];
         }
         foreach ($licenses as $key => $license) {
+            if (!isset($license['type'])) {  //@todo add suport for different licence formats
+                continue;
+            }
             $parsedLicenses[] = $license['type'];
         }
 

@@ -11,7 +11,7 @@ use Generated\Client\Ide\FactoryAutoCompletion\Catalog;
 use SprykerFeature\Client\Catalog\CatalogDependencyProvider;
 use SprykerFeature\Client\Catalog\Service\Model\FacetConfig;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
+use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class CatalogDependencyContainer extends AbstractServiceDependencyContainer

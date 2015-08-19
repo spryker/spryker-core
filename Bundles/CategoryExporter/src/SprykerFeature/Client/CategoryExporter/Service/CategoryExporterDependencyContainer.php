@@ -11,7 +11,7 @@ use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\CategoryExporter\Service\Builder\CategoryTreeBuilder;
 use SprykerFeature\Client\CategoryExporter\Service\Model\Navigation;
 use SprykerFeature\Shared\CategoryExporter\Code\KeyBuilder\NavigationKeyBuilder;
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
+use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
 /**
  * @method CategoryExporter getFactory()

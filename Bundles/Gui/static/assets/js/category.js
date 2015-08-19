@@ -3,11 +3,15 @@
 $(document).ready(function() {
     var spyAj = new SprykerAjax();
 
-    $('#root_node_table').on('click', 'tr', function(){
+    $('#root-node-table').on('click', 'tr', function(){
         showLoaderBar();
         var idCategory = $(this).children('td:first').text();
         spyAj.getCategoryTreeByCategoryId(idCategory);
-        spyAj.getCategoryAttributes(idCategory);
-        spyAj.getCategoryUrls(idCategory);
+    });
+
+    $('#category-node-tree').on('click', '.category-tree', function(event){
+        event.preventDefault();
+        var idCategory = $(this).attr('id').replace('categ-', '');
+        spyAj.getCategoryTreeByCategoryId(idCategory);
     });
 });

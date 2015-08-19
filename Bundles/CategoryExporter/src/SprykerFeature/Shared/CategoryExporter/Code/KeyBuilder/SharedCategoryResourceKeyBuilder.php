@@ -7,7 +7,7 @@
 namespace SprykerFeature\Shared\CategoryExporter\Code\KeyBuilder;
 
 use SprykerFeature\Shared\Category\CategoryConfig;
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\SharedResourceKeyBuilder;
+use SprykerFeature\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
 
 abstract class SharedCategoryResourceKeyBuilder extends SharedResourceKeyBuilder
 {

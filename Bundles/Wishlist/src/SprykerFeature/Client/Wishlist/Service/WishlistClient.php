@@ -97,7 +97,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
         $customerTransfer = $this->getCustomerTransfer();
         $wishlistChange->setCustomer($customerTransfer);
 
-        foreach($wishlistItems->getItems() as $item) {
+        foreach ($wishlistItems->getItems() as $item) {
             $wishlistChange->addItem($item);
         }
 
@@ -121,6 +121,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
         $wishlistChange->setWishlist($wishlistTransfer);
         $wishlistChange->addItem($wishlistItemTransfer);
         $customerTransfer = $this->getCustomerTransfer();
+
         if (null !== $customerTransfer) {
             $wishlistChange->setCustomer($customerTransfer);
         }
@@ -135,6 +136,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     {
         $customerClient = $this->getDependencyContainer()->createCustomerClient();
         $customerTransfer = $customerClient->getCustomer();
+
         return $customerTransfer;
     }
 
