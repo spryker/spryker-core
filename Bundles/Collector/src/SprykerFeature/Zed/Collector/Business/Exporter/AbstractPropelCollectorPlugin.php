@@ -15,25 +15,9 @@ abstract class AbstractPropelCollectorPlugin
 {
 
     /**
-     * @return string
+     * @var int
      */
-    abstract protected function getTouchItemType();
-
-    /**
-     * @param SpyTouchQuery $baseQuery
-     * @param LocaleTransfer $locale
-     *
-     * @return SpyTouchQuery
-     */
-    abstract protected function createQuery(SpyTouchQuery $baseQuery, LocaleTransfer $locale);
-
-    /**
-     * @param array $resultSet
-     * @param LocaleTransfer $locale
-     *
-     * @return array
-     */
-    abstract protected function processData($resultSet, LocaleTransfer $locale);
+    private $chunkSize = 100;
 
     /**
      * @param SpyTouchQuery $baseQuery
@@ -47,25 +31,65 @@ abstract class AbstractPropelCollectorPlugin
 
         $resultSets = $this->getBatchIterator($query);
 
-        $result->setTotalCount($resultSets->count());
-
+        $totalCount = 0;
         foreach ($resultSets as $resultSet) {
             $collectedData = $this->processData($resultSet, $locale);
+            $count = count($collectedData);
 
             $dataWriter->write($collectedData, $this->getTouchItemType());
-            $result->increaseProcessedCount(count($collectedData));
+
+            $result->increaseProcessedCount($count);
+            $totalCount += $count;
         }
+
+        $result->setTotalCount($totalCount);
     }
 
     /**
+     * @param SpyTouchQuery $baseQuery
+     * @param LocaleTransfer $locale
+     *
+     * @return SpyTouchQuery
+     */
+    abstract protected function createQuery(SpyTouchQuery $baseQuery, LocaleTransfer $locale);
+
+    /**
      * @param $baseQuery
-     * @param int $chunkSize
      *
      * @return BatchIterator
      */
-    protected function getBatchIterator($baseQuery, $chunkSize = 1000)
+    protected function getBatchIterator($baseQuery)
     {
-        return new BatchIterator($baseQuery, $chunkSize);
+        return new BatchIterator($baseQuery, $this->chunkSize);
+    }
+
+    /**
+     * @param array $resultSet
+     * @param LocaleTransfer $locale
+     *
+     * @return array
+     */
+    abstract protected function processData($resultSet, LocaleTransfer $locale);
+
+    /**
+     * @return string
+     */
+    abstract protected function getTouchItemType();
+
+    /**
+     * @return int
+     */
+    public function getChunkSize()
+    {
+        return $this->chunkSize;
+    }
+
+    /**
+     * @param int $chunkSize
+     */
+    public function setChunkSize($chunkSize)
+    {
+        $this->chunkSize = $chunkSize;
     }
 
 }
