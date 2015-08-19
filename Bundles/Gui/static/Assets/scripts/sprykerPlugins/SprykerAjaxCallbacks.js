@@ -34,7 +34,7 @@ function SprykerAjaxCallbacks() {
     /**
      *
      * @param ajaxResponse
-     * @returns html
+     * @returns string
      */
     self.categoryDisplayNodeTree = function(ajaxResponse){
         $('#category-node-tree').removeClass('hidden');

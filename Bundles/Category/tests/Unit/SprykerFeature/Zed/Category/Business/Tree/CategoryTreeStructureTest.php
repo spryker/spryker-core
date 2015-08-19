@@ -42,7 +42,10 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
         $this->expected = new CategoryStructureExpected();
     }
 
-    public function testCategoryArrayTreeOrderedStructureIncreasingOrder()
+    /**
+     * @todo find better names for test methods
+     */
+    public function testOutputTreeStructureFromOrderedCategoriesArray()
     {
         $categories = $this->input->getOrderedCategoriesArray();
 
@@ -54,7 +57,10 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->expected->getOrderedCategoriesArray(), $treeStructure);
     }
 
-    public function testCategoryArrayTreeRandomOrder()
+    /**
+     * @todo find better names for test methods
+     */
+    public function testOutputTreeStructureFromOrderedCategoriesArrayWhereParentWasChangedForAnItem()
     {
         $categories = $this->input->getSecondOrderedCategoriesArray();
 
@@ -66,7 +72,10 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->expected->getSecondOrderedCategoriesArray(), $treeStructure);
     }
 
-    public function testUnorderedStructure()
+    /**
+     * @todo find better names for test methods
+     */
+    public function testOuputTreeStructureFromRandomOrderCategoryArray()
     {
         $categories = $this->input->getCategoryStructureWithChildrenBeforeParent();
 
@@ -78,7 +87,10 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($this->expected->getCategoryStructureWithChildrenBeforeParent(), $treeStructure);
     }
 
-    public function testStructureWithParentNotExistant()
+    /**
+     * @todo find better names for test methods
+     */
+    public function testOutputStructureWithCategoryArrayItemThatParentDoesNotExist()
     {
         $categories = $this->input->getCategoryStructureWithNonexistantParent();
 

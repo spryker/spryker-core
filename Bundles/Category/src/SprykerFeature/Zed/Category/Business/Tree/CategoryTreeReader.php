@@ -294,10 +294,10 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
         }
         foreach ($children as $child) {
             $tree[] = [
-                static::ID => $child->getIdCategoryNode(),
-                static::ID_CATEGORY => $child->getFkCategory(),
-                static::ID_PARENT => $idParent,
-                static::TEXT => $child->getCategory()->getAttributes()->getFirst()->getName(),
+                self::ID => $child->getIdCategoryNode(),
+                self::ID_CATEGORY => $child->getFkCategory(),
+                self::ID_PARENT => $idParent,
+                self::TEXT => $child->getCategory()->getAttributes()->getFirst()->getName(),
             ];
             if ($child->countDescendants() > 0) {
                 $tree = array_merge($tree, $this->getTreeNodesRecursively($child, $localeTransfer));
