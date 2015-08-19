@@ -119,10 +119,9 @@ class Address
     {
         $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
 
-        $entity = $this->queryContainer->queryAddressForCustomer(
-            $addressTransfer->getIdCustomerAddress(),
-            $customer->getEmail())
-            ->findOne();
+        $entity = $this->queryContainer->queryAddressForCustomer($addressTransfer->getIdCustomerAddress(), $customer->getEmail())
+            ->findOne()
+        ;
 
         if (!$entity) {
             throw new AddressNotFoundException();
@@ -239,14 +238,8 @@ class Address
      */
     protected function entityToTransfer(SpyCustomerAddress $entity)
     {
-        $data = $entity->toArray();
-        unset($data['deleted_at']);
-        unset($data['created_at']);
-        unset($data['updated_at']);
         $addressTransfer = new CustomerAddressTransfer();
-        $addressTransfer->fromArray($data);
-
-        return $addressTransfer;
+        return $addressTransfer->fromArray($entity->toArray(), true);
     }
 
     /**
