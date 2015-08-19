@@ -20,27 +20,6 @@ abstract class AbstractPropelCollectorPlugin
     private $chunkSize = 100;
 
     /**
-     * @return string
-     */
-    abstract protected function getTouchItemType();
-
-    /**
-     * @param SpyTouchQuery $baseQuery
-     * @param LocaleTransfer $locale
-     *
-     * @return SpyTouchQuery
-     */
-    abstract protected function createQuery(SpyTouchQuery $baseQuery, LocaleTransfer $locale);
-
-    /**
-     * @param array $resultSet
-     * @param LocaleTransfer $locale
-     *
-     * @return array
-     */
-    abstract protected function processData($resultSet, LocaleTransfer $locale);
-
-    /**
      * @param SpyTouchQuery $baseQuery
      * @param LocaleTransfer $locale
      * @param BatchResultInterface $result
@@ -67,11 +46,35 @@ abstract class AbstractPropelCollectorPlugin
     }
 
     /**
-     * @param int $chunkSize
+     * @param SpyTouchQuery $baseQuery
+     * @param LocaleTransfer $locale
+     *
+     * @return SpyTouchQuery
      */
-    public function setChunkSize($chunkSize) {
-        $this->chunkSize = $chunkSize;
+    abstract protected function createQuery(SpyTouchQuery $baseQuery, LocaleTransfer $locale);
+
+    /**
+     * @param $baseQuery
+     *
+     * @return BatchIterator
+     */
+    protected function getBatchIterator($baseQuery)
+    {
+        return new BatchIterator($baseQuery, $this->chunkSize);
     }
+
+    /**
+     * @param array $resultSet
+     * @param LocaleTransfer $locale
+     *
+     * @return array
+     */
+    abstract protected function processData($resultSet, LocaleTransfer $locale);
+
+    /**
+     * @return string
+     */
+    abstract protected function getTouchItemType();
 
     /**
      * @return int
@@ -82,13 +85,11 @@ abstract class AbstractPropelCollectorPlugin
     }
 
     /**
-     * @param $baseQuery
-     *
-     * @return BatchIterator
+     * @param int $chunkSize
      */
-    protected function getBatchIterator($baseQuery)
+    public function setChunkSize($chunkSize)
     {
-        return new BatchIterator($baseQuery, $this->chunkSize);
+        $this->chunkSize = $chunkSize;
     }
 
 }
