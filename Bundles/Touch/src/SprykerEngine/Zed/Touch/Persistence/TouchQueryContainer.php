@@ -75,6 +75,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
             ->setDistinct()
             ->setFormatter(new PropelArraySetFormatter())
         ;
+
+        return $query;
     }
 
     /**
