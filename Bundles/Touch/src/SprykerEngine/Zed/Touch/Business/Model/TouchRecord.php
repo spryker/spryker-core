@@ -6,11 +6,14 @@
 
 namespace SprykerEngine\Zed\Touch\Business\Model;
 
+use DateTime;
 use Propel\Runtime\Exception\PropelException;
+use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 class TouchRecord implements TouchRecordInterface
 {
+    const BULK_UPDATE_CHUNK_SIZE = 250;
 
     /**
      * @var TouchQueryContainerInterface
@@ -44,11 +47,29 @@ class TouchRecord implements TouchRecordInterface
             ->setItemType($itemType)
             ->setItemEvent($itemEvent)
             ->setItemId($idItem)
-            ->setTouched(new \DateTime());
+            ->setTouched(new DateTime());
 
         $touchEntity->save();
 
         return true;
     }
 
+    /**
+     * @param string $itemType
+     * @param string $itemEvent
+     * @param array $itemIds
+     *
+     * @return int
+     */
+    public function bulkUpdateTouchRecords($itemType, $itemEvent, array $itemIds = [])
+    {
+        $updated = 0;
+        $itemIdChunks = array_chunk($itemIds, self::BULK_UPDATE_CHUNK_SIZE);
+        foreach ($itemIdChunks as $itemIdChunk) {
+            $touchQuery = $this->touchQueryContainer->queryTouchEntries($itemType, $itemEvent, $itemIdChunk);
+            $updated += $touchQuery->update(['Touched' => new DateTime()]);
+        }
+
+        return $updated;
+    }
 }

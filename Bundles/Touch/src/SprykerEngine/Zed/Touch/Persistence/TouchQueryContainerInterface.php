@@ -26,4 +26,13 @@ interface TouchQueryContainerInterface
      */
     public function queryTouchEntry($itemType, $itemId);
 
+    /**
+     * @param string $itemType
+     * @param string $itemEvent
+     * @param array $itemIds
+     *
+     * @return SpyTouchQuery
+     */
+    public function queryTouchEntries($itemType, $itemEvent, array $itemIds);
+
 }

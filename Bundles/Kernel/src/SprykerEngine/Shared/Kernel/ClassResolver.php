@@ -21,6 +21,11 @@ class ClassResolver implements ClassResolverInterface
      */
     private $existsMap = [];
 
+    /**
+     * @var array
+     */
+    private $canResolveCache = [];
+
     const MESSAGE_CLASS_NAME_AMBIGUOUS =
         'It\'s not allowed to have the same bundle in two namespaces in one layer. Check: "%s"';
 
@@ -34,14 +39,20 @@ class ClassResolver implements ClassResolverInterface
      */
     public function canResolve($classNamePattern, $bundle)
     {
-        $class = $this->prepareClassName($classNamePattern, $bundle);
-        $canBeResolved = $this->canBeResolvedIn($this->getProjectNamespaces(), $class);
+        $cacheId = $this->getCacheId($classNamePattern, $bundle);
 
-        if (!$canBeResolved) {
-            $canBeResolved = $this->canBeResolvedIn($this->getCoreNamespaces(), $class);
+        if (!array_key_exists($cacheId, $this->canResolveCache)) {
+            $class = $this->prepareClassName($classNamePattern, $bundle);
+            $canBeResolved = $this->canBeResolvedIn($this->getProjectNamespaces(), $class);
+
+            if (!$canBeResolved) {
+                $canBeResolved = $this->canBeResolvedIn($this->getCoreNamespaces(), $class);
+            }
+
+            $this->canResolveCache[$cacheId] = $canBeResolved;
         }
 
-        return $canBeResolved;
+        return $this->canResolveCache[$cacheId];
     }
 
     /**
@@ -147,7 +158,6 @@ class ClassResolver implements ClassResolverInterface
     public function resolve($classNamePattern, $bundle, array $arguments = [])
     {
         $class = $this->prepareClassName($classNamePattern, $bundle);
-        $resolvedClass = false;
 
         $resolvedClass = $this->resolveIn($this->getProjectNamespaces(), $class, $arguments);
 
@@ -243,6 +253,17 @@ class ClassResolver implements ClassResolverInterface
         }
 
         return $this->existsMap[$className] = class_exists($className);
+    }
+
+    /**
+     * @param string $classNamePattern
+     * @param string $bundle
+     *
+     * @return string
+     */
+    protected function getCacheId($classNamePattern, $bundle)
+    {
+        return $classNamePattern . '|' . $bundle;
     }
 
 }
