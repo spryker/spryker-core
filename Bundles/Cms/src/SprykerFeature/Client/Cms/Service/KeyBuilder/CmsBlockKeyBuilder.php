@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\CmsExporter\Business\Builder;
+namespace SprykerFeature\Client\Cms\Service\KeyBuilder;
 
 use SprykerFeature\Shared\CmsExporter\Code\KeyBuilder\SharedBlockResourceKeyBuilder;
 
-class BlockResourceKeyBuilder extends SharedBlockResourceKeyBuilder
+class CmsBlockKeyBuilder extends SharedBlockResourceKeyBuilder
 {
 }
