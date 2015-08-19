@@ -47,4 +47,18 @@
             <index-column name="placeholder"/>
         </index>
     <id-method-parameter value="spy_cms_glossary_key_mapping_pk_seq"/></table>
+
+    <table name="spy_cms_block" phpName="SpyCmsBlock">
+        <column name="id_cms_page" type="INTEGER" required="true"/>
+        <column name="name" type="VARCHAR" required="true" size="255"/>
+        <foreign-key foreignTable="spy_cms_page" phpName="SpyCmsPage" onDelete="CASCADE">
+            <reference foreign="id_cms_page" local="id_cms_page"/>
+        </foreign-key>
+        <unique>
+            <unique-column name="name"/>
+        </unique>
+        <index>
+            <index-column name="name"/>
+        </index>
+    </table>
 </database>

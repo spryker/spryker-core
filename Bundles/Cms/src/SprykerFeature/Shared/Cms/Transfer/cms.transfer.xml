@@ -24,5 +24,10 @@
         <property name="placeholder" type="string" />
     </transfer>
 
+    <transfer name="CmsBlock">
+        <property name="idCmsPage" type="int" />
+        <property name="name" type="string" />
+    </transfer>
+
 </transfers>
 
