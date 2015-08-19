@@ -20,7 +20,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
 
     const ID = 'id';
     const ID_CATEGORY = 'id_category';
-    const PARENT = 'parent';
+    const ID_PARENT = 'parent';
     const TEXT = 'text';
 
     /**
@@ -288,15 +288,15 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
             $children = $this->getChildren($node->getIdCategoryNode(), $localeTransfer);
         }
         if ($isRoot){
-            $parentId = 0;
+            $idParent = 0;
         } else {
-            $parentId = $node->getIdCategoryNode();
+            $idParent = $node->getIdCategoryNode();
         }
         foreach ($children as $child) {
             $tree[] = [
                 static::ID => $child->getIdCategoryNode(),
                 static::ID_CATEGORY => $child->getFkCategory(),
-                static::PARENT => $parentId,
+                static::ID_PARENT => $idParent,
                 static::TEXT => $child->getCategory()->getAttributes()->getFirst()->getName(),
             ];
             if ($child->countDescendants() > 0) {

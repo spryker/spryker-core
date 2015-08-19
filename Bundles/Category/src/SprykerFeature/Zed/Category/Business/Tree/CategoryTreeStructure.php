@@ -9,8 +9,8 @@ namespace SprykerFeature\Zed\Category\Business\Tree;
 class CategoryTreeStructure
 {
     const ID = 'id';
-    const PARENT = 'parent';
-    const ROOT = 'root';
+    const ID_PARENT = 'parent';
+    const ROOT = 0;
     const TEXT = 'text';
     const CHILDREN = 'children';
 
@@ -31,28 +31,24 @@ class CategoryTreeStructure
 
     /**
      * @param array $categories
-     *
-     * @return $this
      */
-    public function loadCategoriesArray(array $categories)
+    public function __construct(array $categories)
     {
         foreach ($categories as $category) {
-            $this->setCategoryIndex($category);
-            $this->setCategoryChildren($category);
+            $this->findCategoryIndex($category);
+            $this->findCategoryChildren($category);
         }
 
-        $this->indexData();
-
-        return $this;
+        $this->structureArray();
     }
 
     /**
      * @param array $category
      */
-    protected function setCategoryIndex(array $category)
+    protected function findCategoryIndex(array $category)
     {
         $idCategory = $category[static::ID];
-        $this->categoryIndex[$idCategory] = $this->fixValues($category);
+        $this->categoryIndex[$idCategory] = $this->filterValues($category);
     }
 
     /**
@@ -60,7 +56,7 @@ class CategoryTreeStructure
      *
      * @return array
      */
-    protected function fixValues(array $category)
+    protected function filterValues(array $category)
     {
         $category[static::TEXT] = stripslashes($category[static::TEXT]);
 
@@ -70,11 +66,11 @@ class CategoryTreeStructure
     /**
      * @param array $category
      */
-    protected function setCategoryChildren(array $category)
+    protected function findCategoryChildren(array $category)
     {
         $parent = static::ROOT;
-        if (!empty($category[static::PARENT])) {
-            $parent = $category[static::PARENT];
+        if (!empty($category[static::ID_PARENT])) {
+            $parent = $category[static::ID_PARENT];
         }
 
         $this->categoryChildren[$parent][] = $category[static::ID];
@@ -83,19 +79,19 @@ class CategoryTreeStructure
     /**
      * @return CategoryTreeStructure
      */
-    protected function indexData()
+    protected function structureArray()
     {
-        $this->categories = $this->processChildren(static::ROOT);
+        $this->categories = $this->addChildrenToParents(static::ROOT);
 
         return $this;
     }
 
     /**
-     * @param string|id $parent
+     * @param id $parent
      *
      * @return array
      */
-    protected function processChildren($parent)
+    protected function addChildrenToParents($parent)
     {
         if (!array_key_exists($parent, $this->categoryChildren)) {
             return [];
@@ -105,7 +101,7 @@ class CategoryTreeStructure
 
         foreach ($this->categoryChildren[$parent] as $category) {
             $children[$category] = array_merge($this->categoryIndex[$category], [static::CHILDREN => []]);
-            $children[$category][static::CHILDREN] = $this->processChildren($category);
+            $children[$category][static::CHILDREN] = $this->addChildrenToParents($category);
         }
 
         return $children;
@@ -114,7 +110,7 @@ class CategoryTreeStructure
     /**
      * @return array
      */
-    public function getCategoriesTree()
+    public function getCategoryTree()
     {
         return $this->categories;
     }

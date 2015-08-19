@@ -21,7 +21,7 @@ use Unit\SprykerFeature\Zed\Category\Business\Tree\Fixtures\Input\CategoryStruct
 class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * @var CategoryTreeStructure
+     * @var Factory
      */
     protected $factory;
 
@@ -47,9 +47,8 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
         $categories = $this->input->getOrderedCategoriesArray();
 
         $treeStructure = $this->factory
-            ->createTreeCategoryTreeStructure()
-            ->loadCategoriesArray($categories)
-            ->getCategoriesTree()
+            ->createTreeCategoryTreeStructure($categories)
+            ->getCategoryTree()
         ;
 
         $this->assertSame($this->expected->getOrderedCategoriesArray(), $treeStructure);
@@ -60,9 +59,8 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
         $categories = $this->input->getSecondOrderedCategoriesArray();
 
         $treeStructure = $this->factory
-            ->createTreeCategoryTreeStructure()
-            ->loadCategoriesArray($categories)
-            ->getCategoriesTree()
+            ->createTreeCategoryTreeStructure($categories)
+            ->getCategoryTree()
         ;
 
         $this->assertSame($this->expected->getSecondOrderedCategoriesArray(), $treeStructure);
@@ -73,9 +71,8 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
         $categories = $this->input->getCategoryStructureWithChildrenBeforeParent();
 
         $treeStructure = $this->factory
-            ->createTreeCategoryTreeStructure()
-            ->loadCategoriesArray($categories)
-            ->getCategoriesTree()
+            ->createTreeCategoryTreeStructure($categories)
+            ->getCategoryTree()
         ;
 
         $this->assertSame($this->expected->getCategoryStructureWithChildrenBeforeParent(), $treeStructure);
@@ -86,9 +83,8 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
         $categories = $this->input->getCategoryStructureWithNonexistantParent();
 
         $treeStructure = $this->factory
-            ->createTreeCategoryTreeStructure()
-            ->loadCategoriesArray($categories)
-            ->getCategoriesTree()
+            ->createTreeCategoryTreeStructure($categories)
+            ->getCategoryTree()
         ;
 
         $this->assertSame($this->expected->getCategoryStructureWithNonexistantParent(), $treeStructure);

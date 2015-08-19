@@ -46,11 +46,13 @@ class CategoryDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
+     * @param array $category
+     *
      * @return CategoryTreeStructure
      */
-    public function createCategoryTreeStructure()
+    public function createCategoryTreeStructure(array $category)
     {
-        return $this->getFactory()->createTreeCategoryTreeStructure();
+        return $this->getFactory()->createTreeCategoryTreeStructure($category);
     }
 
     /**

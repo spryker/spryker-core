@@ -225,9 +225,8 @@ class CategoryFacade extends AbstractFacade
         ;
 
         return $this->getDependencyContainer()
-            ->createCategoryTreeStructure()
-            ->loadCategoriesArray($categories)
-            ->getCategoriesTree()
+            ->createCategoryTreeStructure($categories)
+            ->getCategoryTree()
         ;
     }
 
