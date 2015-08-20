@@ -225,13 +225,11 @@ class GatewayController extends AbstractGatewayController
 
     /**
      * @param CustomerTransfer $customerTransfer
-     *
-     * @return array
+     * 
+     * @return CustomerTransfer
      */
-    public function getLatestCartOrdersAction(CustomerTransfer $customerTransfer)
+    public function getOrdersAction(CustomerTransfer $customerTransfer)
     {
-        return $this->getFacade()->getLatestCartOrders($customerTransfer);
-        //$this->setSuccess($success);
-        //return $customerTransfer;
+        return $this->getFacade()->getOrders($customerTransfer);
     }
 }

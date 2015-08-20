@@ -23,6 +23,9 @@
         <property name="totals" type="Totals" />
         <property name="expenses" type="Expense[]" singular="expense" />
         <property name="invoice" type="Invoice[]" />
+        <property name="invoiceReference" type="string" />
+        <property name="invoiceCreatedAt" type="string" />
+        <property name="fkShipmentMethod" type="string" />
     </transfer>
 
     <transfer name="SalesAddress">

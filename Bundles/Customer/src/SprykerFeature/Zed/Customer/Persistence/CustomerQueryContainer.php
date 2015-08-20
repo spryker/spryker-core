@@ -7,9 +7,6 @@
 namespace SprykerFeature\Zed\Customer\Persistence;
 
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
-use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddressQuery;
-use Propel\Runtime\Exception\PropelException;
 
 /**
  * @method CustomerDependencyContainer getDependencyContainer()
@@ -18,9 +15,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
 {
 
     /**
-     * @param string $email
-     *
-     * @return SpyCustomerQuery
+     * @inheritdoc
      */
     public function queryCustomerByEmail($email)
     {
@@ -31,9 +26,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     }
 
     /**
-     * @param int $id
-     *
-     * @return SpyCustomerQuery
+     * @inheritdoc
      */
     public function queryCustomerById($id)
     {
@@ -44,9 +37,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     }
 
     /**
-     * @param string $token
-     *
-     * @return SpyCustomerQuery
+     * @inheritdoc
      */
     public function queryCustomerByRegistrationKey($token)
     {
@@ -57,9 +48,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     }
 
     /**
-     * @param string $token
-     *
-     * @return SpyCustomerQuery
+     * @inheritdoc
      */
     public function queryCustomerByRestorePasswordKey($token)
     {
@@ -70,12 +59,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     }
 
     /**
-     * @param int $idAddress
-     * @param string $email
-     *
-     * @throws PropelException
-     *
-     * @return SpyCustomerAddressQuery
+     * @inheritdoc
      */
     public function queryAddressForCustomer($idAddress, $email)
     {
@@ -89,11 +73,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     }
 
     /**
-     * @param int $idAddress
-     *
-     * @throws PropelException
-     *
-     * @return SpyCustomerAddressQuery
+     * @inheritdoc
      */
     public function queryAddress($idAddress)
     {
@@ -104,9 +84,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     }
 
     /**
-     * @param string $email
-     *
-     * @return SpyCustomerAddressQuery
+     * @inheritdoc
      */
     public function queryAddressesForCustomer($email)
     {
@@ -119,7 +97,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     }
 
     /**
-     * @return SpyCustomerAddressQuery
+     * @inheritdoc
      */
     public function queryAddresses()
     {
@@ -129,11 +107,22 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     }
 
     /**
-     * @return SpyCustomerQuery
+     * @inheritdoc
      */
     public function queryCustomers()
     {
         $query = $this->getDependencyContainer()->createSpyCustomerQuery();
+
+        return $query;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function queryOrdersByCustomerId($idCustomer)
+    {
+        $query = $this->getDependencyContainer()->createSpySalesOrderQuery();
+        $query->filterByFkCustomer($idCustomer);
 
         return $query;
     }

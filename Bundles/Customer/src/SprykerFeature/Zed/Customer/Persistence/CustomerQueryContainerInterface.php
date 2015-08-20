@@ -10,6 +10,7 @@ use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddressQuery;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
 
 interface CustomerQueryContainerInterface extends QueryContainerInterface
 {
@@ -77,5 +78,12 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
      * @return SpyCustomerQuery
      */
     public function queryCustomers();
+
+    /**
+     * @param int $idCustomer
+     *
+     * @return SpySalesOrderQuery
+     */
+    public function queryOrdersByCustomerId($idCustomer);
 
 }

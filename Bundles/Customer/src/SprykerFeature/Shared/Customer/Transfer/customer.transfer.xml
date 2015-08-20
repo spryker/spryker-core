@@ -32,6 +32,13 @@
         <property name="customerAddressItems" type="CustomerAddress[]" singular="customerAddress" />
     </transfer>
 
+    <transfer name="Filter">
+        <property name="limit" type="int" />
+        <property name="offset" type="int" />
+        <property name="orderBy" type="string" />
+        <property name="orderDirection" type="string" />
+    </transfer>
+
     <transfer name="Customer">
         <property name="email" type="string" />
         <property name="idCustomer" type="int" />
@@ -56,6 +63,8 @@
         <property name="registrationKey" type="string" />
         <property name="registered" type="string" />
         <property name="message" type="string" />
+        <property name="orders" type="Order[]" singular="order" />
+        <property name="filter" type="Filter[]" singular="filter" />
     </transfer>
 
     <transfer name="CustomerResponse">
