@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Cms\Business;
 
+use Generated\Shared\Transfer\CmsBlockTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Propel\Runtime\Exception\PropelException;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
@@ -78,6 +79,18 @@ class CmsFacade extends AbstractFacade
         $pageManager = $this->getDependencyContainer()->getPageManager();
 
         return $pageManager->savePage($page);
+    }
+
+    /**
+     * @param CmsBlockTransfer $blockTransfer
+     *
+     * @return CmsBlockTransfer
+     */
+    public function saveBlock(CmsBlockTransfer $blockTransfer)
+    {
+        $blockManager = $this->getDependencyContainer()->getBlockManager();
+
+        return $blockManager->saveBlock($blockTransfer);
     }
 
     /**
@@ -217,6 +230,15 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
+     * @param CmsBlockTransfer $cmsBlockTransfer
+     */
+    public function touchBlockActive(CmsBlockTransfer $cmsBlockTransfer)
+    {
+        $blockManager = $this->getDependencyContainer()->getBlockManager();
+        $blockManager->touchPageActive($cmsBlockTransfer);
+    }
+
+    /**
      * @param PageTransfer $page
      * @param string $url
      *
@@ -227,6 +249,19 @@ class CmsFacade extends AbstractFacade
         $pageManager = $this->getDependencyContainer()->getPageManager();
 
         return $pageManager->savePageUrlAndTouch($page, $url);
+    }
+
+    /**
+     * @param PageTransfer $page
+     * @param string $blockName
+     *
+     * @return PageTransfer
+     */
+    public function savePageBlockAndTouch(PageTransfer $page, $blockName)
+    {
+        $pageManager = $this->getDependencyContainer()->getPageManager();
+
+        return $pageManager->savePageBlockAndTouch($page, $blockName);
     }
 
     /**

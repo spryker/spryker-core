@@ -12,6 +12,7 @@ use SprykerFeature\Zed\Cms\CmsDependencyProvider;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsPageForm;
 use SprykerFeature\Zed\Cms\Persistence\Propel\Map\SpyCmsPageTableMap;
 use SprykerFeature\Zed\Cms\Persistence\Propel\Map\SpyCmsTemplateTableMap;
+use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlockQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPageQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsGlossaryKeyMappingQuery;
@@ -73,6 +74,16 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     public function queryPages()
     {
         $query = SpyCmsPageQuery::create();
+
+        return $query;
+    }
+
+    /**
+     * @return SpyCmsBlockQuery
+     */
+    public function queryBlocks()
+    {
+        $query = SpyCmsBlockQuery::create();
 
         return $query;
     }
@@ -279,6 +290,30 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     {
         return $this->getProvidedDependency(CmsDependencyProvider::URL_QUERY_CONTAINER)
             ->queryUrlById($idUrl)
+            ;
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return SpyCmsBlockQuery
+     */
+    public function queryBlockByIdPage($idCmsPage)
+    {
+        return $this->queryBlocks()
+            ->filterByIdCmsPage($idCmsPage)
+            ;
+    }
+
+    /**
+     * @param string $blockName
+     *
+     * @return SpyCmsBlockQuery
+     */
+    public function queryBlockByName($blockName)
+    {
+        return $this->queryBlocks()
+            ->filterByName($blockName)
             ;
     }
 

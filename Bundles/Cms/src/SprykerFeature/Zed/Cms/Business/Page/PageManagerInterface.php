@@ -69,4 +69,12 @@ interface PageManagerInterface
      */
     public function savePageUrlAndTouch(PageTransfer $page, $url);
 
+    /**
+     * @param PageTransfer $page
+     * @param string $blockName
+     *
+     * @return PageTransfer
+     */
+    public function savePageBlockAndTouch(PageTransfer $page, $blockName);
+
 }

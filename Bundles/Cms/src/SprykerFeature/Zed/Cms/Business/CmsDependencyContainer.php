@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Cms\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CmsBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use SprykerFeature\Zed\Cms\Business\Block\BlockManagerInterface;
 use SprykerFeature\Zed\Cms\Business\Mapping\GlossaryKeyMappingManagerInterface;
 use SprykerFeature\Zed\Cms\Business\Page\PageManagerInterface;
 use SprykerFeature\Zed\Cms\Business\Template\TemplateManagerInterface;
@@ -38,6 +39,7 @@ class CmsDependencyContainer extends AbstractBusinessDependencyContainer
         return $this->getFactory()->createPagePageManager(
             $this->getCmsQueryContainer(),
             $this->getTemplateManager(),
+            $this->getBlockManager(),
             $this->getGlossaryFacade(),
             $this->getTouchFacade(),
             $this->getUrlFacade(),
@@ -53,6 +55,17 @@ class CmsDependencyContainer extends AbstractBusinessDependencyContainer
         return $this->getFactory()->createTemplateTemplateManager(
             $this->getCmsQueryContainer(),
             $this->getLocator()
+        );
+    }
+
+    /**
+     * @return BlockManagerInterface
+     */
+    public function getBlockManager()
+    {
+        return $this->getFactory()->createBlockBlockManager(
+            $this->getCmsQueryContainer(),
+            $this->getTouchFacade()
         );
     }
 
