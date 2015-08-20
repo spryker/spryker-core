@@ -6,11 +6,21 @@
 
 namespace SprykerFeature\Zed\Price\Communication\Form;
 
-use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
+use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class PriceTypeForm extends AbstractForm
 {
+
+    protected function buildFormFields()
+    {
+        // @todo: Implement buildFormFields() method.
+    }
+
+    protected function populateFormFields()
+    {
+        // @todo: Implement populateFormFields() method.
+    }
 
     /**
      * @return array|\SprykerFeature\Zed\Ui\Communication\Plugin\Form\Field[]
