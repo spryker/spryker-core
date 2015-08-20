@@ -6,10 +6,11 @@
 
 namespace SprykerFeature\Zed\SearchPage\Communication\Grid;
 
-use SprykerFeature\Zed\Ui\Dependency\Grid\AbstractGrid;
+use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
+use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\Ui\Dependency\Plugin\GridPluginInterface;
 
-class PageElementGrid extends AbstractGrid
+class PageElementGrid extends AbstractTable
 {
 
     const ID_SEARCH_PAGE_ELEMENT = 'id_search_page_element';
@@ -18,6 +19,16 @@ class PageElementGrid extends AbstractGrid
     const TEMPLATE_NAME = 'template_name';
     const ATTRIBUTE_TYPE = 'attribute_type';
     const ATTRIBUTE_NAME = 'attribute_name';
+
+    protected function configure(TableConfiguration $config)
+    {
+        // @todo: Implement configure() method.
+    }
+
+    protected function prepareData(TableConfiguration $config)
+    {
+        // @todo: Implement prepareData() method.
+    }
 
     /**
      * @return GridPluginInterface[]
