@@ -151,7 +151,6 @@ class AddressController extends AbstractController
         $addressForm = $this->getDependencyContainer()
             ->createAddressForm('add')
         ;
-        $addressForm->init();
 
         $addressForm->handleRequest();
 

@@ -16,10 +16,9 @@ class IndexController extends AbstractController
     {
         /** @var CountryTable $table */
         $table = $this->getDependencyContainer()->createCountryTable();
-        $table->init();
 
         return $this->viewResponse([
-            'countryTable' => $table,
+            'countryTable' => $table->render(),
         ]);
     }
 
@@ -29,7 +28,6 @@ class IndexController extends AbstractController
     public function tableAction()
     {
         $table = $this->getDependencyContainer()->createCountryTable();
-        $table->init();
 
         return $this->jsonResponse(
             $table->fetchData()

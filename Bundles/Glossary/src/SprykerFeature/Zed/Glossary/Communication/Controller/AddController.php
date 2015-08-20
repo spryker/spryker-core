@@ -9,6 +9,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\GlossaryCommunication;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Glossary\Communication\GlossaryDependencyContainer;
+use Generated\Shared\Transfer\KeyTranslationTransfer;
 
 /**
  * @method GlossaryCommunication getFactory()
@@ -17,6 +18,8 @@ use SprykerFeature\Zed\Glossary\Communication\GlossaryDependencyContainer;
  */
 class AddController extends AbstractController
 {
+
+    const FORM_ADD_TYPE = 'add';
 
     /**
      * @return array
@@ -28,17 +31,19 @@ class AddController extends AbstractController
         ;
 
         $glossaryForm = $this->getDependencyContainer()
-            ->createTranslationForm($availableLocales, 'add')
+            ->createTranslationForm($availableLocales, self::FORM_ADD_TYPE)
         ;
-        $glossaryForm->init();
 
         $glossaryForm->handleRequest();
 
         if ($glossaryForm->isValid()) {
             $data = $glossaryForm->getData();
 
+            $keyTranslationTransfer = new KeyTranslationTransfer();
+            $keyTranslationTransfer->fromArray($data, true);
+
             $facade = $this->getFacade();
-            $facade->saveGlossaryKeyTranslations($data);
+            $facade->saveGlossaryKeyTranslations($keyTranslationTransfer);
 
             $this->addSuccessMessage('Saved entry to glossary.');
 

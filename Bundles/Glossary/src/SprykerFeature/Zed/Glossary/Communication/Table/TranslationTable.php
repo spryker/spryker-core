@@ -7,6 +7,7 @@ namespace SprykerFeature\Zed\Glossary\Communication\Table;
 
 use Propel\Runtime\Map\TableMap;
 use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
+use SprykerFeature\Zed\Glossary\Communication\Form\TranslationForm;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Base\SpyGlossaryTranslationQuery;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryKeyTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
@@ -40,7 +41,6 @@ class TranslationTable extends AbstractTable
     {
         $this->glossaryQuery = $glossaryQuery;
         $this->subGlossaryQuery = $subGlossaryKey;
-
         $this->locales = $locales;
     }
 
@@ -150,25 +150,16 @@ class TranslationTable extends AbstractTable
      */
     private function buildLinks($details)
     {
-        $result = '';
+        $urls = '';
 
-        $glossaryKey = SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY;
-
-        $idGlossaryKey = !empty($details[$glossaryKey]) ? $details[$glossaryKey] : false;
-        if (false !== $idGlossaryKey) {
-            $links = [
-                'Edit' => '/glossary/edit/?fk_glossary_key=',
-            ];
-
-            $result = [];
-            foreach ($links as $key => $value) {
-                $result[] = '<a href="' . $value . $idGlossaryKey . '" class="btn btn-xs btn-white">' . $key . '</a>';
+        if (!empty($details[SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY])) {
+            $idGlossaryKey = $details[SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY];
+            if (false !== $idGlossaryKey) {
+                $urls = '<a href="/glossary/edit/?' . TranslationForm::URL_PARAMETER_GLOSSARY_KEY . '=' . $idGlossaryKey . '" class="btn btn-xs btn-white">Edit</a>';
             }
-
-            $result = implode('&nbsp;&nbsp;&nbsp;', $result);
         }
 
-        return $result;
+        return $urls;
     }
 
 }

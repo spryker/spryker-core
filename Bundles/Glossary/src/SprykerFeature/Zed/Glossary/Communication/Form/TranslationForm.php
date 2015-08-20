@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -6,6 +7,7 @@
 namespace SprykerFeature\Zed\Glossary\Communication\Form;
 
 use Propel\Runtime\Map\TableMap;
+use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKeyQuery;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslationQuery;
@@ -16,10 +18,12 @@ use Symfony\Component\Validator\Constraints\Required;
 class TranslationForm extends AbstractForm
 {
 
-    const ADD = 'add';
     const UPDATE = 'update';
-    const FK_GLOSSARY_KEY = 'fk_glossary_key';
+    const URL_PARAMETER_GLOSSARY_KEY = 'fk-glossary-key';
     const NAME = 'Name';
+    const LOCALE = 'translation_locale_name';
+    const FIELD_GLOSSARY_KEY = 'glossary_key';
+    const FIELD_LOCALES = 'locales';
 
     /**
      * @var SpyGlossaryTranslationQuery
@@ -41,11 +45,16 @@ class TranslationForm extends AbstractForm
      */
     protected $type;
 
-    public function __construct(SpyGlossaryTranslationQuery $glossaryTranslationQuery, SpyGlossaryKeyQuery $glossaryKeyQuery, $locales, $type)
+    /**
+     * @param SpyGlossaryTranslationQuery $glossaryTranslationQuery
+     * @param SpyGlossaryKeyQuery $glossaryKeyQuery
+     * @param array $locales
+     * @param string $type
+     */
+    public function __construct(SpyGlossaryTranslationQuery $glossaryTranslationQuery, SpyGlossaryKeyQuery $glossaryKeyQuery, array $locales, $type)
     {
         $this->glossaryTranslationQuery = $glossaryTranslationQuery;
         $this->glossaryKeyQuery = $glossaryKeyQuery;
-
         $this->locales = $locales;
         $this->type = $type;
     }
@@ -53,71 +62,92 @@ class TranslationForm extends AbstractForm
     /**
      * @return array
      */
-    protected function populateFormFields()
+    public function buildFormFields()
     {
-        $result = [];
-
-        $fkGlossaryKey = $this->request->get(self::FK_GLOSSARY_KEY);
-
-        if (!empty($fkGlossaryKey)) {
-            $key = $this->glossaryKeyQuery->findOneByIdGlossaryKey($fkGlossaryKey);
-
-            $result['glossary_key'] = $key->getKey();
-
-            $translations = $this->glossaryTranslationQuery->filterByFkGlossaryKey($fkGlossaryKey)
-                ->find()
-            ;
-
-            if (!empty($translations)) {
-                $translations = $translations->toArray(null, false, TableMap::TYPE_COLNAME);
-
-                foreach ($translations as $value) {
-                    $result['locale_' . $value[SpyGlossaryTranslationTableMap::COL_FK_LOCALE]] = $value[SpyGlossaryTranslationTableMap::COL_VALUE];
-                }
-    }
+        if (self::UPDATE === $this->type) {
+            $this->addText(self::FIELD_GLOSSARY_KEY, [
+                'label' => self::NAME,
+                'attr' => [
+                    'readonly' => 'readonly',
+                ],
+            ]);
+        } else {
+            $this->addAutosuggest(self::FIELD_GLOSSARY_KEY, [
+                'label' => self::NAME,
+                'url' => '/glossary/key/suggest',
+                'constraints' => [
+                    new NotBlank(),
+                    new Required(),
+                ],
+            ]);
         }
 
-        return $result;
+        $this->add(self::FIELD_LOCALES, 'collection', [
+            'type' => 'text',
+            'label' => false,
+            'constraints' => [
+                new NotBlank(),
+                new Required(),
+            ],
+        ]);
+
+        return $this;
     }
 
     /**
      * @return array
      */
-    public function buildFormFields()
+    protected function populateFormFields()
     {
+        $defaultData = [];
 
-        if (self::UPDATE === $this->type) {
-            $this->addText('glossary_key', [
-                'label' => self::NAME,
-                'attr' => [
-                'readonly' => 'readonly',
-                ],
-            ]);
-        } else {
-            $this->addAutosuggest('glossary_key', [
-                'label' => self::NAME,
-                'url' => '/glossary/key/suggest',
-            ]);
+        $fkGlossaryKey = $this->request->get(self::URL_PARAMETER_GLOSSARY_KEY);
+
+        if (null !== $fkGlossaryKey) {
+            $glossaryKeyEntity = $this->getGlossaryKey($fkGlossaryKey);
+            $defaultData[self::FIELD_GLOSSARY_KEY] = $glossaryKeyEntity->getKey();
         }
 
-        foreach ($this->locales as $key => $locale) {
-            $this->addText('locale_' . $key, [
-                'label' => $locale,
-                'constraints' => [
-                    new NotBlank(),
-                    new Required(),
-                ]
-            ]);
+        foreach ($this->locales as $locale) {
+            $defaultData[self::FIELD_LOCALES][$locale] = '';
         }
 
-        $this->addSubmit('submit', [
-            'label' => (self::UPDATE === $this->type ? 'Update' : 'Add'),
-            'attr' => [
-                'class' => 'btn btn-primary',
-            ],
-        ]);
+        $translationCollection = $this->getGlossaryKeyTranslations($fkGlossaryKey);
 
-        return $this;
+        if (!empty($translationCollection)) {
+            foreach ($translationCollection as $translation) {
+                $defaultData[self::FIELD_LOCALES][$translation[static::LOCALE]] = $translation[SpyGlossaryTranslationTableMap::COL_VALUE];
+            }
+        }
+
+        return $defaultData;
+    }
+
+    /**
+     * @param int $fkGlossaryKey
+     *
+     * @return array
+     */
+    protected function getGlossaryKeyTranslations($fkGlossaryKey)
+    {
+        return $this->glossaryTranslationQuery
+            ->filterByFkGlossaryKey($fkGlossaryKey)
+            ->useLocaleQuery()
+                ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, static::LOCALE)
+            ->endUse()
+            ->find()
+            ->toArray(null, false, TableMap::TYPE_COLNAME)
+        ;
+    }
+
+    /**
+     * @param int $fkGlossaryKey
+     *
+     * @return SpyGlossaryKey
+     */
+    protected function getGlossaryKey($fkGlossaryKey)
+    {
+        return $this->glossaryKeyQuery->findOneByIdGlossaryKey($fkGlossaryKey);
     }
 
 }
