@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -8,6 +9,7 @@ namespace SprykerFeature\Zed\Glossary\Communication\Form;
 use Propel\Runtime\Map\TableMap;
 use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKey;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKeyQuery;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslationQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
@@ -65,7 +67,28 @@ class TranslationForm extends AbstractForm
      */
     protected function populateFormFields()
     {
-        return $this->populateFormTranslationFields();
+        $defaultData = [];
+
+        $fkGlossaryKey = $this->request->get(self::URL_PARAMETER_GLOSSARY_KEY);
+
+        if (null !== $fkGlossaryKey) {
+            $glossaryKeyEntity = $this->getGlossaryKey($fkGlossaryKey);
+            $defaultData[self::FIELD_GLOSSARY_KEY] = $glossaryKeyEntity->getKey();
+        }
+
+        foreach ($this->locales as $locale) {
+            $defaultData[self::FIELD_LOCALES][$locale] = '';
+        }
+
+        $translationCollection = $this->getTranslationsForGlossaryKey($fkGlossaryKey);
+
+        if (!empty($translationCollection)) {
+            foreach ($translationCollection as $translation) {
+                $defaultData[self::FIELD_LOCALES][$translation[static::LOCALE]] = $translation[SpyGlossaryTranslationTableMap::COL_VALUE];
+            }
+        }
+
+        return $defaultData;
     }
 
     /**
@@ -84,6 +107,10 @@ class TranslationForm extends AbstractForm
             $this->addAutosuggest(self::FIELD_GLOSSARY_KEY, [
                 'label' => self::NAME,
                 'url' => '/glossary/key/suggest',
+                'constraints' => [
+                    new NotBlank(),
+                    new Required(),
+                ],
             ]);
         }
 
@@ -100,57 +127,11 @@ class TranslationForm extends AbstractForm
     }
 
     /**
-     * @return array
-     */
-    protected function getTranslationFormFields()
-    {
-        $localeFields = [];
-        foreach ($this->locales as $value) {
-            $localeFields[$value] = '';
-
-            if (isset($this->defaultData[self::FIELD_LOCALES][$value])) {
-                $localeFields[$value] = $this->defaultData[self::FIELD_LOCALES][$value];
-            }
-        }
-
-        return $localeFields;
-    }
-
-    /**
-     * @return array
-     */
-    protected function populateFormTranslationFields()
-    {
-        $populatedFields = [];
-
-        $fkGlossaryKey = $this->request->get(self::URL_PARAMETER_GLOSSARY_KEY);
-        $key = $this->getExistantGlossaryKeyIfExists($fkGlossaryKey);
-
-        if (false === is_null($fkGlossaryKey)) {
-            $populatedFields[self::FIELD_GLOSSARY_KEY] = $key->getKey();
-        }
-
-        $translations = $this->getAvailableTranslations($fkGlossaryKey);
-
-        if (!empty($translations)) {
-            foreach ($translations as $value) {
-                $populatedFields[self::FIELD_LOCALES][$value[static::LOCALE]] = $value[SpyGlossaryTranslationTableMap::COL_VALUE];
-            }
-        } else {
-            foreach ($this->locales as $locale) {
-                $populatedFields[self::FIELD_LOCALES][$locale] = '';
-            }
-        }
-
-        return $populatedFields;
-    }
-
-    /**
      * @param int $fkGlossaryKey
      *
      * @return array
      */
-    protected function getAvailableTranslations($fkGlossaryKey)
+    protected function getTranslationsForGlossaryKey($fkGlossaryKey)
     {
         return $this->glossaryTranslationQuery
             ->filterByFkGlossaryKey($fkGlossaryKey)
@@ -158,7 +139,7 @@ class TranslationForm extends AbstractForm
                 ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, static::LOCALE)
             ->endUse()
             ->find()
-            ->toArray(null, false, TableMap::TYPE_COLNAME);
+            ->toArray(null, false, TableMap::TYPE_COLNAME)
         ;
     }
 
@@ -167,7 +148,7 @@ class TranslationForm extends AbstractForm
      *
      * @return SpyGlossaryKey
      */
-    protected function getExistantGlossaryKeyIfExists($fkGlossaryKey)
+    protected function getGlossaryKey($fkGlossaryKey)
     {
         return $this->glossaryKeyQuery->findOneByIdGlossaryKey($fkGlossaryKey);
     }
