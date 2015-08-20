@@ -3,8 +3,8 @@
  *
  * (c) Copyright Spryker Systems GmbH 2015
  */
-namespace SprykerFeature\Shared\Lumberjack\Persistence\Writer;
-use SprykerFeature\Shared\Lumberjack\Persistence\EntryEntity;
+namespace SprykerEngine\Zed\Lumberjack\Persistence\Writer;
+use SprykerEngine\Zed\Lumberjack\Persistence\EntryEntity;
 
 interface WriterInterface {
     public function writeEntry(EntryEntity $entry);
