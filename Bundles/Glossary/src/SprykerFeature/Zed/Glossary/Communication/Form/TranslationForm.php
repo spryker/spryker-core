@@ -64,6 +64,11 @@ class TranslationForm extends AbstractForm
      */
     public function buildFormFields()
     {
+        $translationFields = [];
+        foreach ($this->locales as $locale) {
+            $translationFields[$locale] = '';
+        }
+
         if (self::UPDATE === $this->type) {
             $this->addText(self::FIELD_GLOSSARY_KEY, [
                 'label' => self::NAME,
@@ -85,6 +90,7 @@ class TranslationForm extends AbstractForm
         $this->add(self::FIELD_LOCALES, 'collection', [
             'type' => 'text',
             'label' => false,
+            'data' => $translationFields,
             'constraints' => [
                 new NotBlank(),
                 new Required(),
@@ -106,10 +112,6 @@ class TranslationForm extends AbstractForm
         if (null !== $fkGlossaryKey) {
             $glossaryKeyEntity = $this->getGlossaryKey($fkGlossaryKey);
             $defaultData[self::FIELD_GLOSSARY_KEY] = $glossaryKeyEntity->getKey();
-        }
-
-        foreach ($this->locales as $locale) {
-            $defaultData[self::FIELD_LOCALES][$locale] = '';
         }
 
         $translationCollection = $this->getGlossaryKeyTranslations($fkGlossaryKey);
