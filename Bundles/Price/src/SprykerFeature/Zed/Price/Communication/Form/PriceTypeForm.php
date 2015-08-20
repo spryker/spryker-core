@@ -23,7 +23,7 @@ class PriceTypeForm extends AbstractForm
     }
 
     /**
-     * @return array|\SprykerFeature\Zed\Ui\Communication\Plugin\Form\Field[]
+     * @return array
      */
     public function addFormFields()
     {

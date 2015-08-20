@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\SearchPage\Communication\Grid;
 
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
-use SprykerFeature\Zed\Ui\Dependency\Plugin\GridPluginInterface;
 
 class PageElementGrid extends AbstractTable
 {
@@ -30,9 +29,6 @@ class PageElementGrid extends AbstractTable
         // @todo: Implement prepareData() method.
     }
 
-    /**
-     * @return GridPluginInterface[]
-     */
     public function definePlugins()
     {
         $plugins = [
