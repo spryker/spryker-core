@@ -6,14 +6,25 @@
 
 namespace SprykerFeature\Zed\Url\Communication\Grid;
 
-use SprykerFeature\Zed\Ui\Dependency\Grid\AbstractGrid;
+use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
+use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
-class TranslationGrid extends AbstractGrid
+class TranslationGrid extends AbstractTable
 {
 
     const ID_LOCALE = 'id_locale';
     const IS_ACTIVE = 'is_active';
     const LOCALE_NAME = 'locale_name';
+
+    protected function configure(TableConfiguration $config)
+    {
+        // @todo: Implement configure() method.
+    }
+
+    protected function prepareData(TableConfiguration $config)
+    {
+        // @todo: Implement prepareData() method.
+    }
 
     public function definePlugins()
     {
