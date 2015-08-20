@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Glossary\Communication\Form;
 use Propel\Runtime\Map\TableMap;
 use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
-use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKey;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKeyQuery;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslationQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
@@ -19,12 +18,10 @@ use Symfony\Component\Validator\Constraints\Required;
 class TranslationForm extends AbstractForm
 {
 
-    const ADD = 'add';
     const UPDATE = 'update';
     const URL_PARAMETER_GLOSSARY_KEY = 'fk-glossary-key';
     const NAME = 'Name';
     const LOCALE = 'translation_locale_name';
-
     const FIELD_GLOSSARY_KEY = 'glossary_key';
     const FIELD_LOCALES = 'locales';
 
@@ -65,35 +62,6 @@ class TranslationForm extends AbstractForm
     /**
      * @return array
      */
-    protected function populateFormFields()
-    {
-        $defaultData = [];
-
-        $fkGlossaryKey = $this->request->get(self::URL_PARAMETER_GLOSSARY_KEY);
-
-        if (null !== $fkGlossaryKey) {
-            $glossaryKeyEntity = $this->getGlossaryKey($fkGlossaryKey);
-            $defaultData[self::FIELD_GLOSSARY_KEY] = $glossaryKeyEntity->getKey();
-        }
-
-        foreach ($this->locales as $locale) {
-            $defaultData[self::FIELD_LOCALES][$locale] = '';
-        }
-
-        $translationCollection = $this->getTranslationsForGlossaryKey($fkGlossaryKey);
-
-        if (!empty($translationCollection)) {
-            foreach ($translationCollection as $translation) {
-                $defaultData[self::FIELD_LOCALES][$translation[static::LOCALE]] = $translation[SpyGlossaryTranslationTableMap::COL_VALUE];
-            }
-        }
-
-        return $defaultData;
-    }
-
-    /**
-     * @return array
-     */
     public function buildFormFields()
     {
         if (self::UPDATE === $this->type) {
@@ -127,11 +95,40 @@ class TranslationForm extends AbstractForm
     }
 
     /**
+     * @return array
+     */
+    protected function populateFormFields()
+    {
+        $defaultData = [];
+
+        $fkGlossaryKey = $this->request->get(self::URL_PARAMETER_GLOSSARY_KEY);
+
+        if (null !== $fkGlossaryKey) {
+            $glossaryKeyEntity = $this->getGlossaryKey($fkGlossaryKey);
+            $defaultData[self::FIELD_GLOSSARY_KEY] = $glossaryKeyEntity->getKey();
+        }
+
+        foreach ($this->locales as $locale) {
+            $defaultData[self::FIELD_LOCALES][$locale] = '';
+        }
+
+        $translationCollection = $this->getGlossaryKeyTranslations($fkGlossaryKey);
+
+        if (!empty($translationCollection)) {
+            foreach ($translationCollection as $translation) {
+                $defaultData[self::FIELD_LOCALES][$translation[static::LOCALE]] = $translation[SpyGlossaryTranslationTableMap::COL_VALUE];
+            }
+        }
+
+        return $defaultData;
+    }
+
+    /**
      * @param int $fkGlossaryKey
      *
      * @return array
      */
-    protected function getTranslationsForGlossaryKey($fkGlossaryKey)
+    protected function getGlossaryKeyTranslations($fkGlossaryKey)
     {
         return $this->glossaryTranslationQuery
             ->filterByFkGlossaryKey($fkGlossaryKey)
