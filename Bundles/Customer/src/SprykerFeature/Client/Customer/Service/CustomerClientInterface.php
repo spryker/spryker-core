@@ -68,14 +68,7 @@ interface CustomerClientInterface
     public function login(CustomerInterface $customerTransfer);
 
     /**
-     * @param CustomerInterface $customerTransfer
-     *
-     * @return bool
-     */
-    public function hasCustomerWithEmailAndPassword(CustomerInterface $customerTransfer);
-
-    /**
-     * @return bool
+     * @return mixed
      */
     public function logout();
 
@@ -99,6 +92,12 @@ interface CustomerClientInterface
     public function updateCustomer(CustomerInterface $customerTransfer);
 
     /**
+     * @param CustomerInterface $customerTransfer
+     * @return array
+     */
+    public function getLatestCartOrders(CustomerInterface $customerTransfer);
+
+    /**
      * @param CustomerAddressInterface $addressTransfer
      *
      * @return CustomerAddressInterface
@@ -120,9 +119,24 @@ interface CustomerClientInterface
     public function createAddress(CustomerAddressInterface $addressTransfer);
 
     /**
-     * @param CustomerInterface $customerTransfer
-     * @return array
+     * @param CustomerAddressInterface $addressTransfer
+     *
+     * @return CustomerAddressInterface
      */
-    public function getLatestCartOrders(CustomerInterface $customerTransfer);
+    public function deleteAddress(CustomerAddressInterface $addressTransfer);
+
+    /**
+     * @param CustomerAddressInterface $addressTransfer
+     *
+     * @return CustomerAddressInterface
+     */
+    public function setDefaultShippingAddress(CustomerAddressInterface $addressTransfer);
+
+    /**
+     * @param CustomerAddressInterface $addressTransfer
+     *
+     * @return CustomerAddressInterface
+     */
+    public function setDefaultBillingAddress(CustomerAddressInterface $addressTransfer);
 
 }

@@ -195,6 +195,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
 
     /**
      * @param CustomerInterface $customerTransfer
+     * 
      * @return array
      */
     public function getLatestCartOrders(CustomerInterface $customerTransfer)
