@@ -66,6 +66,8 @@ class TranslationManager implements TranslationManagerInterface
      * @param KeyTranslationTransfer $keyTranslationTransfer
      *
      * @throws MissingKeyException
+     *
+     * @return bool
      */
     public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer)
     {
@@ -89,6 +91,8 @@ class TranslationManager implements TranslationManagerInterface
 
             $this->saveAndTouchTranslation($translationTransfer);
         }
+
+        return true;
     }
 
     /**

@@ -6,6 +6,7 @@
 namespace Functional\SprykerFeature\Zed\Glossary\Communication\Grid;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Business\Factory;
@@ -103,9 +104,12 @@ class GlossaryFacadeTest extends Test
             self::GLOSSARY_KEY => 'form.button.save',
         ];
         foreach ($this->locales as $localeId => $localeName) {
-            $formData['locale_' . $localeId] = 'save ' . $localeId;
+            $formData['locales'][$localeName] = 'save ' . $localeId;
         }
-        $action = $facade->saveGlossaryKeyTranslations($formData);
+
+        $translationTransfer = (new KeyTranslationTransfer())->fromArray($formData);
+
+        $action = $facade->saveGlossaryKeyTranslations($translationTransfer);
 
         $this->assertTrue($action);
     }
@@ -121,18 +125,27 @@ class GlossaryFacadeTest extends Test
 
         $formData = [
             self::GLOSSARY_KEY => 'form.button.save',
-            'locale_' . $localesIds[0] => 'save_1',
         ];
+        foreach ($this->locales as $localeId => $localeName) {
+            $formData['locales'][$localeName] = 'save ' . $localeId;
+        }
 
-        $facade->saveGlossaryKeyTranslations($formData);
+        $translationTransfer = (new KeyTranslationTransfer())->fromArray($formData);
 
-        $variant1 = $facade->getTranslation($formData[self::GLOSSARY_KEY], $locale);
+        $facade->saveGlossaryKeyTranslations($translationTransfer);
 
-        $formData['locale_' . $localesIds[0]] = 'save_1_updated';
+        $translatedKey = $facade->getTranslation($formData[self::GLOSSARY_KEY], $locale);
 
-        $facade->saveGlossaryKeyTranslations($formData);
-        $variant2 = $facade->getTranslation($formData[self::GLOSSARY_KEY], $locale);
+        $changedLocales = [];
+        foreach ($this->locales as $localeId => $localeName) {
+            $changedLocales[$localeName] = 'save-changed-' . $localeId;
+        }
 
-        $this->assertNotSame($variant1->getValue(), $variant2->getValue());
+        $translationTransfer->setLocales($changedLocales);
+
+        $facade->saveGlossaryKeyTranslations($translationTransfer);
+        $translatedKeyChanged = $facade->getTranslation($formData[self::GLOSSARY_KEY], $locale);
+
+        $this->assertNotSame($translatedKey->getValue(), $translatedKeyChanged->getValue());
     }
 }
