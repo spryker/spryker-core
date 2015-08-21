@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Glossary\Communication\Grid;
+namespace Functional\SprykerFeature\Zed\Glossary\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
@@ -96,8 +96,6 @@ class GlossaryFacadeTest extends Test
 
     public function testAddTranslation()
     {
-        $this->markTestSkipped('Test is broken. Can\'t use array as parameter in facade');
-
         $facade = $this->getGlossaryFacade();
 
         $formData = [
@@ -116,8 +114,6 @@ class GlossaryFacadeTest extends Test
 
     public function testUpdateTranslation()
     {
-        $this->markTestSkipped('Test is broken. Can\'t use array as parameter in facade');
-
         $facade = $this->getGlossaryFacade();
         $localesIds = array_keys($this->locales);
 

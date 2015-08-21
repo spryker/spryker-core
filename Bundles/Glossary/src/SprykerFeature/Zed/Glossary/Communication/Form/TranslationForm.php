@@ -68,15 +68,6 @@ class TranslationForm extends AbstractForm
      */
     public function buildFormFields()
     {
-        $dataTypeField = self::TYPE_DATA_EMPTY;
-        $translationFields = [];
-        foreach ($this->locales as $locale) {
-            $translationFields[$locale] = '';
-        }
-        if (true === empty($this->request->get(self::URL_PARAMETER_GLOSSARY_KEY))) {
-            $dataTypeField = self::TYPE_DATA;
-        }
-
         if (self::UPDATE === $this->type) {
             $this->addText(self::FIELD_GLOSSARY_KEY, [
                 'label' => self::NAME,
@@ -92,17 +83,35 @@ class TranslationForm extends AbstractForm
             ]);
         }
 
-        $this->add(self::FIELD_LOCALES, 'collection', [
-            'type' => 'text',
-            'label' => false,
-            $dataTypeField => $translationFields,
-            'constraints' => $this->getFieldDefaultConstraints(),
-        ]);
+        $this->add(self::FIELD_LOCALES, 'collection', $this->buildLocaleFieldConfiguration());
 
         return $this;
     }
 
-    public function getFieldDefaultConstraints()
+    /**
+     * @return array
+     */
+    protected function buildLocaleFieldConfiguration()
+    {
+        $translationFields = array_fill_keys($this->locales, '');
+
+        $dataTypeField = self::TYPE_DATA_EMPTY;
+        if (empty($this->request->get(self::URL_PARAMETER_GLOSSARY_KEY))) {
+            $dataTypeField = self::TYPE_DATA;
+        }
+
+        return [
+            'type' => 'text',
+            'label' => false,
+            $dataTypeField => $translationFields,
+            'constraints' => $this->getFieldDefaultConstraints(),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getFieldDefaultConstraints()
     {
         return [
             new NotBlank(),
