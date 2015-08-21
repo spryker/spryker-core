@@ -1,11 +1,14 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Library\Propel\Builder;
+namespace SprykerEngine\Zed\Propel\Business\Builder;
 
-class TableMapBuilder extends \Propel\Generator\Builder\Om\TableMapBuilder
+use Propel\Generator\Builder\Om\TableMapBuilder as PropelTableMapBuilder;
+
+class TableMapBuilder extends PropelTableMapBuilder
 {
 
     /**

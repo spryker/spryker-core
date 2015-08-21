@@ -9,7 +9,7 @@ namespace SprykerEngine\Zed\Touch\Persistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
-use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
+use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 
 class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryContainerInterface
 {

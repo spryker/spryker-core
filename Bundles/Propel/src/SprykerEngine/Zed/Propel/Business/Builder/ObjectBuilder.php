@@ -4,11 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Library\Propel\Builder;
+namespace SprykerEngine\Zed\Propel\Business\Builder;
 
 use Propel\Generator\Model\Column;
+use Propel\Generator\Builder\Om\ObjectBuilder as PropelObjectBuilder;
 
-class ObjectBuilder extends \Propel\Generator\Builder\Om\ObjectBuilder
+class ObjectBuilder extends PropelObjectBuilder
 {
 
     /**

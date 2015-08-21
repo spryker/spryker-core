@@ -8,12 +8,12 @@ namespace SprykerFeature\Zed\Category\Communication\Form;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
+use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CategoryFormAdd extends AbstractForm
@@ -99,7 +99,7 @@ class CategoryFormAdd extends AbstractForm
         /**
          * @var SpyCategory $category
          */
-        
+
         $category = $this->categoryQueryContainer->queryCategoryById($this->idCategory)
             ->innerJoinAttribute()
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::NAME)

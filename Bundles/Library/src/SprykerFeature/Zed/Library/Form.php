@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Library;
 
 use Symfony\Component\HttpFoundation\Request;
-use SprykerFeature\Zed\Library\Validator\ValidatorChain;
 
 class Form extends \Zend_Form
 {
@@ -33,18 +32,6 @@ class Form extends \Zend_Form
         $this->setView(new \Zend_View());
         parent::__construct();
         $this->populateWithDataSource();
-    }
-
-    /**
-     * @param ValidatorChain $validatorChain
-     * @param $validationType
-     */
-    public function addValidatorChain(ValidatorChain $validatorChain, $validationType = ValidatorChain::DEFAULT_VALIDATION)
-    {
-        foreach ($validatorChain->getValidatorChain($validationType) as $fieldName => $validators) {
-            $element = $this->getElement($fieldName);
-            $element->addValidators($validators);
-        }
     }
 
     /**

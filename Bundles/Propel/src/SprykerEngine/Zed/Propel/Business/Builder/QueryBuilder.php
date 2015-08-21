@@ -1,11 +1,14 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Library\Propel\Builder;
+namespace SprykerEngine\Zed\Propel\Business\Builder;
 
-class QueryBuilder extends \Propel\Generator\Builder\Om\QueryBuilder
+use Propel\Generator\Builder\Om\QueryBuilder as PropelQueryBuilder;
+
+class QueryBuilder extends PropelQueryBuilder
 {
 
     /**

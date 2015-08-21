@@ -4,7 +4,7 @@ namespace SprykerFeature\Zed\Distributor\Business\Distributor;
 
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerFeature\Zed\Distributor\Business\Exception\QueryExpanderNotFoundException;
-use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
+use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 use SprykerFeature\Zed\Distributor\Business\Marker\LastDistributionMarkerInterface;
 use SprykerFeature\Zed\Distributor\Dependency\Plugin\DistributorQueryExpanderPluginInterface;
 use SprykerFeature\Zed\Distributor\Persistence\DistributorQueryContainerInterface;
