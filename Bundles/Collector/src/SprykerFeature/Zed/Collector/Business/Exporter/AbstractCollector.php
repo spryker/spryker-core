@@ -13,7 +13,7 @@ use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
 use SprykerFeature\Zed\Collector\Business\Model\FailedResultInterface;
 use SprykerFeature\Zed\Collector\Dependency\Plugin\CollectorPluginInterface;
-use SprykerFeature\Zed\Library\Propel\Formatter\PropelArraySetFormatter;
+use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 
 abstract class AbstractCollector implements ExporterInterface
 {
