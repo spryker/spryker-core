@@ -167,12 +167,14 @@ class SalesFacadeTest extends Test
         $initialState->save();
         $this->assertNotNull($initialState->getIdOmsOrderItemState());
 
+        $taxSetTransfer = new TaxSetTransfer();
         $item1 = new ItemTransfer();
         $item1->setName('item-test-1')
             ->setSku('sku1')
             ->setGrossPrice(120)
             ->setPriceToPay(100)
             ->setQuantity(2)
+            ->setTaxSet($taxSetTransfer)
         ;
 
         $item2 = new ItemTransfer();
@@ -181,6 +183,7 @@ class SalesFacadeTest extends Test
             ->setGrossPrice(130)
             ->setPriceToPay(110)
             ->setQuantity(3)
+            ->setTaxSet($taxSetTransfer)
         ;
 
         $orderTransfer->addItem($item1);
@@ -232,9 +235,9 @@ class SalesFacadeTest extends Test
         $initialState->save();
         $this->assertNotNull($initialState->getIdOmsOrderItemState());
 
-        $taxSet = new TaxSetTransfer();
-        $taxSet->setEffectiveRate(20);
-        $taxSet->setAmount(231);
+        $taxSetTransfer = new TaxSetTransfer();
+        $taxSetTransfer->setEffectiveRate(20);
+        $taxSetTransfer->setAmount(231);
 
         $productOption = new ProductOptionTransfer();
         $productOption->setIdOptionValueUsage(1)
@@ -242,7 +245,7 @@ class SalesFacadeTest extends Test
             ->setLabelOptionValue('Red')
             ->setGrossPrice(1000)
             ->setPriceToPay(1000)
-            ->setTaxSet($taxSet)
+            ->setTaxSet($taxSetTransfer)
         ;
 
         $item = new ItemTransfer();
@@ -252,6 +255,7 @@ class SalesFacadeTest extends Test
             ->setPriceToPay(100)
             ->setQuantity(2)
             ->addProductOption($productOption)
+            ->setTaxSet($taxSetTransfer)
         ;
 
         $orderTransfer->addItem($item);
@@ -291,6 +295,7 @@ class SalesFacadeTest extends Test
             ->setSku('sku1')
             ->setGrossPrice(120)
             ->setPriceToPay(100)
+            ->setTaxSet(new TaxSetTransfer())
         ;
 
         $orderTransfer->addItem($item1);

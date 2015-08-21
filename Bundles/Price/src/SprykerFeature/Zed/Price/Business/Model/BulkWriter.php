@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\Price\Business\Model;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
-use SprykerFeature\Zed\Price\Persistence\Propel\Base\SpyPriceProduct;
+use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceProduct;
 
 class BulkWriter extends Writer implements BulkWriterInterface
 {
@@ -16,43 +16,45 @@ class BulkWriter extends Writer implements BulkWriterInterface
     protected $recordsToTouch = [];
 
     /**
-     * @param PriceProductTransfer $transferPriceProduct
+     * @param PriceProductTransfer $priceProductTransfer
      *
      * @throws \Exception
      *
      * @return SpyPriceProduct
      */
-    public function createPriceForProduct(PriceProductTransfer $transferPriceProduct)
+    public function createPriceForProduct(PriceProductTransfer $priceProductTransfer)
     {
-        $transferPriceProduct = $this->setPriceType($transferPriceProduct);
+        $priceProductTransfer = $this->setPriceType($priceProductTransfer);
 
-        $this->loadAbstractProductIdForPriceProductTransfer($transferPriceProduct);
-        $this->loadConcreteProductIdForPriceProductTransfer($transferPriceProduct);
+        $this->loadAbstractProductIdForPriceProductTransfer($priceProductTransfer);
+        $this->loadConcreteProductIdForPriceProductTransfer($priceProductTransfer);
 
-        $entity = $this->locator->price()->entitySpyPriceProduct();
-        $newPrice = $this->savePriceProductEntity($transferPriceProduct, $entity);
+        $entity = new SpyPriceProduct();
+        $newPrice = $this->savePriceProductEntity($priceProductTransfer, $entity);
 
-        $this->addRecordToTouch(self::TOUCH_PRODUCT, $transferPriceProduct->getIdProduct());
+        $this->addRecordToTouch(self::TOUCH_PRODUCT, $priceProductTransfer->getIdProduct());
 
         return $newPrice;
     }
 
     /**
-     * @param PriceProductTransfer $transferPriceProduct
+     * @param PriceProductTransfer $priceProductTransfer
      *
      * @throws \Exception
      */
-    public function setPriceForProduct(PriceProductTransfer $transferPriceProduct)
+    public function setPriceForProduct(PriceProductTransfer $priceProductTransfer)
     {
-        $transferPriceProduct = $this->setPriceType($transferPriceProduct);
+        $priceProductTransfer = $this->setPriceType($priceProductTransfer);
 
-        $this->loadAbstractProductIdForPriceProductTransfer($transferPriceProduct);
-        $this->loadConcreteProductIdForPriceProductTransfer($transferPriceProduct);
+        $this->loadAbstractProductIdForPriceProductTransfer($priceProductTransfer);
+        $this->loadConcreteProductIdForPriceProductTransfer($priceProductTransfer);
 
-        $priceProductEntity = $this->getPriceProductById($transferPriceProduct->getIdPriceProduct());
-        $this->savePriceProductEntity($transferPriceProduct, $priceProductEntity);
+        $priceProductEntity = $this->getPriceProductById($priceProductTransfer->getIdPriceProduct());
+        $this->savePriceProductEntity($priceProductTransfer, $priceProductEntity);
 
-        $this->addRecordToTouch(self::TOUCH_PRODUCT, $transferPriceProduct->getIdProduct());
+        if ($priceProductTransfer->getIdProduct()) {
+            $this->addRecordToTouch(self::TOUCH_PRODUCT, $priceProductTransfer->getIdProduct());
+        }
     }
 
     /**

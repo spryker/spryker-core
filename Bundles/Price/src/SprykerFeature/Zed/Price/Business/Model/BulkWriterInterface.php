@@ -24,9 +24,9 @@ interface BulkWriterInterface
     public function createPriceType($name);
 
     /**
-     * @param PriceProductTransfer $transferPriceProduct
+     * @param PriceProductTransfer $priceProductTransfer
      */
-    public function setPriceForProduct(PriceProductTransfer $transferPriceProduct);
+    public function setPriceForProduct(PriceProductTransfer $priceProductTransfer);
 
     /**
      * @param PriceProductTransfer $transferPriceProduct

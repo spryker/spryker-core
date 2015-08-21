@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Container;
@@ -104,6 +105,10 @@ class CheckoutFacadeTest extends Test
         $this->checkoutFacade->setExternalDependencies($container);
     }
 
+    /**
+     * @todo move this code to customer checkout connector, registration can only happen if we have
+     * already installed customer bundle
+     */
     public function testRegistrationIsTriggeredOnNewNonGuestCustomer()
     {
         $checkoutRequest = $this->getBaseCheckoutTransfer();
@@ -117,6 +122,10 @@ class CheckoutFacadeTest extends Test
         $this->assertEquals(1, $customerQuery->count());
     }
 
+    /**
+     * @todo move this code to customer checkout connector, registration can only happen if we have
+     * already installed customer bundle
+     */
     public function testRegistrationDoesNotCreateACustomerIfGuest()
     {
         $checkoutRequest = $this->getBaseCheckoutTransfer();
@@ -307,6 +316,7 @@ class CheckoutFacadeTest extends Test
             ->setPriceToPay(1000)
             ->setGrossPrice(3000)
             ->setName('Product1')
+            ->setTaxSet(new TaxSetTransfer())
         ;
 
         $item2 = new ItemTransfer();
@@ -316,6 +326,7 @@ class CheckoutFacadeTest extends Test
             ->setPriceToPay(2000)
             ->setGrossPrice(4000)
             ->setName('Product2')
+            ->setTaxSet(new TaxSetTransfer())
         ;
 
         $cart = new CartTransfer();
