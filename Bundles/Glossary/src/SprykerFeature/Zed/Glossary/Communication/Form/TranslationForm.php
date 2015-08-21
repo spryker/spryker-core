@@ -126,9 +126,9 @@ class TranslationForm extends AbstractForm
     {
         $defaultData = [];
 
-        $fkGlossaryKey = $this->request->get(self::URL_PARAMETER_GLOSSARY_KEY, 0);
+        $fkGlossaryKey = $this->request->get(self::URL_PARAMETER_GLOSSARY_KEY);
 
-        if ($fkGlossaryKey > 0) {
+        if (!empty($fkGlossaryKey)) {
             $glossaryKeyEntity = $this->getGlossaryKey($fkGlossaryKey);
             $defaultData[self::FIELD_GLOSSARY_KEY] = $glossaryKeyEntity->getKey();
         }
@@ -154,7 +154,7 @@ class TranslationForm extends AbstractForm
         return $this->glossaryTranslationQuery
             ->useLocaleQuery(null, Criteria::LEFT_JOIN)
             ->leftJoinSpyGlossaryTranslation(SpyGlossaryTranslationTableMap::TABLE_NAME)
-            ->addJoinCondition(SpyGlossaryTranslationTableMap::TABLE_NAME, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY . ' = ?', $fkGlossaryKey)
+            ->addJoinCondition(SpyGlossaryTranslationTableMap::TABLE_NAME, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY . ' = ?', (int) $fkGlossaryKey)
             ->where(SpyLocaleTableMap::COL_LOCALE_NAME . ' IN ?', $this->locales)
             ->groupBy(SpyLocaleTableMap::COL_ID_LOCALE)
             ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, self::LOCALE)
