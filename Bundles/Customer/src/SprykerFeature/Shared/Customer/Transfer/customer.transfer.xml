@@ -64,7 +64,7 @@
         <property name="registered" type="string" />
         <property name="message" type="string" />
         <property name="orders" type="Order[]" singular="order" />
-        <property name="filter" type="Filter[]" singular="filter" />
+        <property name="filter" type="Filter" />
     </transfer>
 
     <transfer name="CustomerResponse">
