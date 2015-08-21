@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Communication\Controller;
@@ -27,7 +27,7 @@ use Symfony\Component\HttpFoundation\Request;
 class GlossaryController extends AbstractController
 {
     const REDIRECT_ADDRESS = '/cms/glossary/';
-    const TYPE = 'type';
+    const TYPE             = 'type';
 
     /**
      * @param Request $request
@@ -39,7 +39,7 @@ class GlossaryController extends AbstractController
         $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
 
         $title = null;
-        $type = CmsConfig::RESOURCE_TYPE_PAGE;
+        $type  = CmsConfig::RESOURCE_TYPE_PAGE;
         $block = $this->getQueryContainer()->queryBlockByIdPage($idPage)->findOne();
 
         if (null === $block) {
@@ -49,11 +49,9 @@ class GlossaryController extends AbstractController
             ;
             $title = $pageUrl->getUrl();
         } else {
-            $type = CmsConfig::RESOURCE_TYPE_BLOCK;
+            $type  = CmsConfig::RESOURCE_TYPE_BLOCK;
             $title = $block->getName();
         }
-
-
 
         $localeTransfer = $this->getLocaleFacade()
             ->getCurrentLocale()
@@ -65,9 +63,9 @@ class GlossaryController extends AbstractController
 
         return [
             'keyMaps' => $table->render(),
-            'idPage' => $idPage,
-            'title' => $title,
-            'type' => $type
+            'idPage'  => $idPage,
+            'title'   => $title,
+            'type'    => $type,
         ];
     }
 
@@ -90,7 +88,7 @@ class GlossaryController extends AbstractController
         ;
 
         $pageUrlArray = $pageUrl->toArray();
-        $tempFile = $this->getDependencyContainer()
+        $tempFile     = $this->getDependencyContainer()
             ->getTemplateRealPath($pageUrlArray[CmsQueryContainer::TEMPLATE_PATH])
         ;
 
@@ -110,7 +108,6 @@ class GlossaryController extends AbstractController
      */
     public function addAction(Request $request)
     {
-
         $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
 
         $placeholder = $request->get('placeholder');
@@ -128,11 +125,11 @@ class GlossaryController extends AbstractController
             $this->getFacade()->savePageKeyMappingAndTouch($pageKeyMappingTransfer);
             $this->touchNecessaryBlock($idPage);
 
-            return $this->redirectResponse(self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $idPage);
+            return $this->redirectResponse(self::REDIRECT_ADDRESS.'?'.CmsPageTable::REQUEST_ID_PAGE.'='.$idPage);
         }
 
         return $this->viewResponse([
-            'form' => $form->createView(),
+            'form'   => $form->createView(),
             'idPage' => $idPage,
         ]);
     }
@@ -145,7 +142,7 @@ class GlossaryController extends AbstractController
     public function editAction(Request $request)
     {
         $idMapping = $request->get(CmsGlossaryTable::REQUEST_ID_MAPPING);
-        $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
+        $idPage    = $request->get(CmsPageTable::REQUEST_ID_PAGE);
 
         $form = $this->getDependencyContainer()
             ->createCmsGlossaryForm($idPage, $idMapping, null, $this->getFacade())
@@ -159,11 +156,11 @@ class GlossaryController extends AbstractController
             $this->getFacade()->savePageKeyMappingAndTouch($pageKeyMappingTransfer);
             $this->touchNecessaryBlock($idPage);
 
-            return $this->redirectResponse(self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $idPage);
+            return $this->redirectResponse(self::REDIRECT_ADDRESS.'?'.CmsPageTable::REQUEST_ID_PAGE.'='.$idPage);
         }
 
         return $this->viewResponse([
-            'form' => $form->createView(),
+            'form'   => $form->createView(),
             'idPage' => $idPage,
         ]);
     }
@@ -176,7 +173,7 @@ class GlossaryController extends AbstractController
     public function deleteAction(Request $request)
     {
         $idMapping = $request->get(CmsGlossaryTable::REQUEST_ID_MAPPING);
-        $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
+        $idPage    = $request->get(CmsPageTable::REQUEST_ID_PAGE);
 
         $mappingGlossary = $this->getQueryContainer()
             ->queryGlossaryKeyMappingById($idMapping)
@@ -187,7 +184,7 @@ class GlossaryController extends AbstractController
             ->deletePageKeyMapping($pageTransfer, $mappingGlossary->getPlaceholder())
         ;
 
-        return $this->redirectResponse(self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $idPage);
+        return $this->redirectResponse(self::REDIRECT_ADDRESS.'?'.CmsPageTable::REQUEST_ID_PAGE.'='.$idPage);
     }
 
     /**
@@ -270,5 +267,4 @@ class GlossaryController extends AbstractController
             ;
         }
     }
-
 }

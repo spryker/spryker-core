@@ -1,18 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 class GridController extends AbstractController
 {
-
     /**
      * @param Request $request
      *
@@ -24,5 +23,4 @@ class GridController extends AbstractController
 
         return $this->jsonResponse($grid->renderData());
     }
-
 }

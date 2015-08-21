@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Business\Block;
@@ -14,7 +14,6 @@ use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlock;
 
 class BlockManager implements BlockManagerInterface
 {
-
     /**
      * @var CmsQueryContainerInterface
      */
@@ -25,17 +24,16 @@ class BlockManager implements BlockManagerInterface
      */
     protected $touchFacade;
 
-
     /**
      * @param CmsQueryContainerInterface $cmsQueryContainer
-     * @param CmsToTouchInterface $touchFacade
+     * @param CmsToTouchInterface        $touchFacade
      */
     public function __construct(
         CmsQueryContainerInterface $cmsQueryContainer,
         CmsToTouchInterface $touchFacade
     ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
-        $this->touchFacade = $touchFacade;
+        $this->touchFacade       = $touchFacade;
     }
 
     /**
@@ -84,7 +82,6 @@ class BlockManager implements BlockManagerInterface
 
     /**
      * @param CmsBlockTransfer $cmsBlock
-     *
      */
     public function touchBlockActive(CmsBlockTransfer $cmsBlock)
     {
@@ -153,5 +150,4 @@ class BlockManager implements BlockManagerInterface
 
         return $blockEntity;
     }
-
 }

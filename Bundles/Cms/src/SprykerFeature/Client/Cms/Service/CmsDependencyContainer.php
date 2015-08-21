@@ -1,6 +1,7 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Client\Cms\Service;
@@ -42,5 +43,4 @@ class CmsDependencyContainer extends AbstractServiceDependencyContainer
     {
         return $this->getFactory()->createKeyBuilderCmsBlockKeyBuilder();
     }
-
 }

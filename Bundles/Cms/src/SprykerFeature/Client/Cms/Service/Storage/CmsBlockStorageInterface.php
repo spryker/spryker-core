@@ -1,6 +1,7 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Client\Cms\Service\Storage;
@@ -13,5 +14,4 @@ interface CmsBlockStorageInterface
      * @return array
      */
     public function getBlockContent($blockName);
-
 }

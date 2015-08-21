@@ -1,18 +1,18 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Business;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use Propel\Runtime\Exception\PropelException;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
-use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
+use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Propel\Runtime\Exception\PropelException;
+use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingTemplateException;
@@ -25,7 +25,6 @@ use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
  */
 class CmsFacade extends AbstractFacade
 {
-
     /**
      * @param string $name
      * @param string $path
@@ -118,7 +117,7 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param int $idPage
+     * @param int    $idPage
      * @param string $placeholder
      *
      * @return bool
@@ -131,7 +130,7 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param int $idPage
+     * @param int    $idPage
      * @param string $placeholder
      *
      * @throws MissingGlossaryKeyMappingException
@@ -158,9 +157,9 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param int $idPage
+     * @param int    $idPage
      * @param string $placeholder
-     * @param array $data
+     * @param array  $data
      *
      * @throws MissingGlossaryKeyMappingException
      * @throws MissingTranslationException
@@ -176,8 +175,8 @@ class CmsFacade extends AbstractFacade
 
     /**
      * @param PageTransfer $page
-     * @param string $placeholder
-     * @param string $value
+     * @param string       $placeholder
+     * @param string       $value
      *
      * @return PageKeyMappingTransfer
      */
@@ -190,7 +189,7 @@ class CmsFacade extends AbstractFacade
 
     /**
      * @param PageTransfer $page
-     * @param string $placeholder
+     * @param string       $placeholder
      *
      * @throws MissingGlossaryKeyMappingException
      * @throws \Exception
@@ -207,7 +206,7 @@ class CmsFacade extends AbstractFacade
 
     /**
      * @param PageTransfer $page
-     * @param string $url
+     * @param string       $url
      *
      * @throws UrlExistsException
      *
@@ -240,7 +239,7 @@ class CmsFacade extends AbstractFacade
 
     /**
      * @param PageTransfer $page
-     * @param string $url
+     * @param string       $url
      *
      * @return UrlTransfer
      */
@@ -253,7 +252,7 @@ class CmsFacade extends AbstractFacade
 
     /**
      * @param PageTransfer $page
-     * @param string $blockName
+     * @param string       $blockName
      *
      * @return PageTransfer
      */
@@ -275,5 +274,4 @@ class CmsFacade extends AbstractFacade
 
         return $glossaryKeyMappingManager->deleteGlossaryKeysByIdPage($idPage);
     }
-
 }

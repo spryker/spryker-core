@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Business;
@@ -22,7 +22,6 @@ use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
  */
 class CmsDependencyContainer extends AbstractBusinessDependencyContainer
 {
-
     /**
      * @return CmsQueryContainerInterface
      */
@@ -106,5 +105,4 @@ class CmsDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getLocator()->url()->facade();
     }
-
 }

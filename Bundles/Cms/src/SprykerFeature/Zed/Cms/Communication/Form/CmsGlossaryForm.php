@@ -12,10 +12,9 @@ use Symfony\Component\Validator\Context\ExecutionContext;
 
 class CmsGlossaryForm extends AbstractForm
 {
-
-    const FK_PAGE = 'fkPage';
-    const PLACEHOLDER = 'placeholder';
-    const GLOSSARY_KEY = 'glossary_key';
+    const FK_PAGE        = 'fkPage';
+    const PLACEHOLDER    = 'placeholder';
+    const GLOSSARY_KEY   = 'glossary_key';
     const ID_KEY_MAPPING = 'idCmsGlossaryKeyMapping';
 
     /**
@@ -45,20 +44,20 @@ class CmsGlossaryForm extends AbstractForm
 
     /**
      * @param SpyCmsGlossaryKeyMappingQuery $glossaryByIdQuery
-     * @param int $idPage
-     * @param int $idMapping
-     * @param array $placeholder
-     * @param CmsFacade $cmsFacade
-     * @param GlossaryFacade $glossaryFacade
+     * @param int                           $idPage
+     * @param int                           $idMapping
+     * @param array                         $placeholder
+     * @param CmsFacade                     $cmsFacade
+     * @param GlossaryFacade                $glossaryFacade
      */
 
     public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryByIdQuery, $idPage, $idMapping, $placeholder, CmsFacade $cmsFacade)
     {
         $this->glossaryByIdQuery = $glossaryByIdQuery;
-        $this->idPage = $idPage;
-        $this->idMapping = $idMapping;
-        $this->placeholder = $placeholder;
-        $this->cmsFacade = $cmsFacade;
+        $this->idPage            = $idPage;
+        $this->idMapping         = $idMapping;
+        $this->placeholder       = $placeholder;
+        $this->cmsFacade         = $cmsFacade;
     }
 
     /**
@@ -93,7 +92,7 @@ class CmsGlossaryForm extends AbstractForm
         ]);
 
         $placeholderParams = [
-            'label' => 'Placeholder',
+            'label'       => 'Placeholder',
             'constraints' => $placeholderConstraints,
         ];
 
@@ -105,8 +104,8 @@ class CmsGlossaryForm extends AbstractForm
             ->addHidden(self::ID_KEY_MAPPING)
             ->addText(self::PLACEHOLDER, $placeholderParams)
             ->addAutosuggest(self::GLOSSARY_KEY, [
-                'label' => 'Glossary Key',
-                'url' => '/glossary/key/suggest',
+                'label'       => 'Glossary Key',
+                'url'         => '/glossary/key/suggest',
                 'constraints' => $keyConstraints,
             ])
             ;
@@ -118,7 +117,7 @@ class CmsGlossaryForm extends AbstractForm
     protected function populateFormFields()
     {
         $formItems = [
-            self::FK_PAGE => $this->idPage,
+            self::FK_PAGE        => $this->idPage,
             self::ID_KEY_MAPPING => $this->idMapping,
         ];
 
@@ -130,12 +129,11 @@ class CmsGlossaryForm extends AbstractForm
             $glossaryMapping = $this->glossaryByIdQuery->findOne();
 
             if ($glossaryMapping) {
-                $formItems[self::PLACEHOLDER] = $glossaryMapping->getPlaceholder();
+                $formItems[self::PLACEHOLDER]  = $glossaryMapping->getPlaceholder();
                 $formItems[self::GLOSSARY_KEY] = $glossaryMapping->getKeyname();
             }
         }
 
         return $formItems;
     }
-
 }

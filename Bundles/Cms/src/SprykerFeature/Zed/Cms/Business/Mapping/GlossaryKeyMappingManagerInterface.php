@@ -1,25 +1,24 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Business\Mapping;
 
-use Propel\Runtime\Exception\PropelException;
-use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
+use Generated\Shared\Transfer\PageTransfer;
+use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Cms\Business\Exception\MappingAmbiguousException;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
 
 interface GlossaryKeyMappingManagerInterface
 {
-
     /**
-     * @param int $idPage
+     * @param int    $idPage
      * @param string $placeholder
-     * @param array $data
+     * @param array  $data
      *
      * @throws MissingGlossaryKeyMappingException
      * @throws MissingTranslationException
@@ -49,8 +48,8 @@ interface GlossaryKeyMappingManagerInterface
 
     /**
      * @param PageTransfer $page
-     * @param string $placeholder
-     * @param string $value
+     * @param string       $placeholder
+     * @param string       $value
      *
      * @return PageKeyMappingTransfer
      */
@@ -58,7 +57,7 @@ interface GlossaryKeyMappingManagerInterface
 
     /**
      * @param PageTransfer $page
-     * @param string $placeholder
+     * @param string       $placeholder
      *
      * @throws MissingGlossaryKeyMappingException
      * @throws \Exception
@@ -76,7 +75,7 @@ interface GlossaryKeyMappingManagerInterface
     public function deleteGlossaryKeysByIdPage($idPage);
 
     /**
-     * @param int $idPage
+     * @param int    $idPage
      * @param string $placeholder
      *
      * @throws MissingGlossaryKeyMappingException
@@ -86,11 +85,10 @@ interface GlossaryKeyMappingManagerInterface
     public function getPagePlaceholderMapping($idPage, $placeholder);
 
     /**
-     * @param int $idPage
+     * @param int    $idPage
      * @param string $placeholder
      *
      * @return bool
      */
     public function hasPagePlaceholderMapping($idPage, $placeholder);
-
 }

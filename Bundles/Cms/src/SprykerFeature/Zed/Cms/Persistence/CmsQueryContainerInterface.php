@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Persistence;
@@ -13,7 +13,6 @@ use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
 
 interface CmsQueryContainerInterface
 {
-
     /**
      * @return SpyCmsTemplateQuery
      */
@@ -51,7 +50,7 @@ interface CmsQueryContainerInterface
     public function queryPageById($id);
 
     /**
-     * @param int $idPage
+     * @param int    $idPage
      * @param string $placeholder
      *
      * @return SpyCmsGlossaryKeyMappingQuery
@@ -90,5 +89,4 @@ interface CmsQueryContainerInterface
      * @return SpyCmsBlockQuery
      */
     public function queryBlockByName($blockName);
-
 }

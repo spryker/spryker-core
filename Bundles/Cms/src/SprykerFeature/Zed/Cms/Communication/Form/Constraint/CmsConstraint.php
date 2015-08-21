@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Communication\Form\Constraint;
@@ -12,7 +12,6 @@ use Symfony\Component\Validator\Constraints\Required;
 
 class CmsConstraint
 {
-
     public static function getMandatoryConstraints()
     {
         return [
@@ -21,5 +20,4 @@ class CmsConstraint
             new Length(['max' => 256]),
         ];
     }
-
 }

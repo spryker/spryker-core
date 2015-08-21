@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms;
@@ -12,7 +12,6 @@ use SprykerFeature\Shared\Yves\YvesConfig;
 
 class CmsConfig extends AbstractBundleConfig
 {
-
     /**
      * @param string $templateRelativePath
      *
@@ -21,9 +20,8 @@ class CmsConfig extends AbstractBundleConfig
     public function getTemplateRealPath($templateRelativePath)
     {
         $templateRelativePath = substr($templateRelativePath, 4);
-        $physicalAddress = APPLICATION_ROOT_DIR . '/src/' . $this->get(SystemConfig::PROJECT_NAMESPACE) . '/Yves/Cms/Theme/' . $this->get(YvesConfig::YVES_THEME) . $templateRelativePath;
+        $physicalAddress      = APPLICATION_ROOT_DIR.'/src/'.$this->get(SystemConfig::PROJECT_NAMESPACE).'/Yves/Cms/Theme/'.$this->get(YvesConfig::YVES_THEME).$templateRelativePath;
 
         return $physicalAddress;
     }
-
 }

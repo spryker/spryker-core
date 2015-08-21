@@ -1,6 +1,7 @@
 <?php
+
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Client\Cms\Service;
@@ -14,5 +15,4 @@ interface CmsClientInterface
      * @return array
      */
     public function blockFinder($blockName, $localeName);
-
 }

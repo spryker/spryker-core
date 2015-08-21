@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Business\Block;
@@ -11,7 +11,6 @@ use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlock;
 
 interface BlockManagerInterface
 {
-
     /**
      * @param CmsBlockTransfer $cmsBlock
      *
@@ -35,8 +34,6 @@ interface BlockManagerInterface
 
     /**
      * @param CmsBlockTransfer $cmsBlock
-     *
      */
     public function touchBlockActive(CmsBlockTransfer $cmsBlock);
-
 }

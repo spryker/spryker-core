@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Persistence;
@@ -15,9 +15,9 @@ use SprykerFeature\Zed\Cms\Persistence\Propel\Map\SpyCmsBlockTableMap;
 use SprykerFeature\Zed\Cms\Persistence\Propel\Map\SpyCmsPageTableMap;
 use SprykerFeature\Zed\Cms\Persistence\Propel\Map\SpyCmsTemplateTableMap;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlockQuery;
+use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsGlossaryKeyMappingQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPageQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsGlossaryKeyMappingQuery;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryKeyTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKeyQuery;
@@ -25,14 +25,13 @@ use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
 
 class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContainerInterface
 {
-
     const TEMPLATE_NAME = 'template_name';
     const TEMPLATE_PATH = 'template_path';
-    const ID_URL = 'id_url';
-    const URL = 'url';
-    const TO_URL = 'toUrl';
-    const TRANS = 'trans';
-    const KEY = 'keyname';
+    const ID_URL        = 'id_url';
+    const URL           = 'url';
+    const TO_URL        = 'toUrl';
+    const TRANS         = 'trans';
+    const KEY           = 'keyname';
 
     /**
      * @return SpyCmsTemplateQuery
@@ -164,7 +163,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
-     * @param int $idPage
+     * @param int    $idPage
      * @param string $placeholder
      *
      * @return SpyCmsGlossaryKeyMappingQuery
@@ -353,5 +352,4 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->filterByName($blockName)
             ;
     }
-
 }

@@ -1,23 +1,20 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Communication\Controller;
 
-use Generated\Shared\Transfer\PageTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 
 class IndexController extends AbstractController
 {
-
     /**
      * @return array
      */
     public function indexAction()
     {
-
         $pageTable = $this->getDependencyContainer()
             ->createCmsPageTable()
         ;
@@ -31,8 +28,8 @@ class IndexController extends AbstractController
         ;
 
         return [
-            'pages' => $pageTable->render(),
-            'blocks' => $blockTable->render(),
+            'pages'     => $pageTable->render(),
+            'blocks'    => $blockTable->render(),
             'redirects' => $redirectTable->render(),
         ];
     }

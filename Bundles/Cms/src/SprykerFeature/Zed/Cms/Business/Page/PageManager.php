@@ -1,17 +1,17 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Business\Page;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use Propel\Runtime\Exception\PropelException;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Generated\Zed\Ide\AutoCompletion;
+use Propel\Runtime\Exception\PropelException;
+use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Shared\Cms\CmsConfig;
 use SprykerFeature\Zed\Cms\Business\Block\BlockManagerInterface;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
@@ -28,7 +28,6 @@ use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
 class PageManager implements PageManagerInterface
 {
-
     /**
      * @var CmsQueryContainerInterface
      */
@@ -66,12 +65,12 @@ class PageManager implements PageManagerInterface
 
     /**
      * @param CmsQueryContainerInterface $cmsQueryContainer
-     * @param TemplateManagerInterface $templateManager
-     * @param BlockManagerInterface $blockManager
-     * @param CmsToGlossaryInterface $glossaryFacade
-     * @param CmsToTouchInterface $touchFacade
-     * @param CmsToUrlInterface $urlFacade
-     * @param LocatorLocatorInterface $locator
+     * @param TemplateManagerInterface   $templateManager
+     * @param BlockManagerInterface      $blockManager
+     * @param CmsToGlossaryInterface     $glossaryFacade
+     * @param CmsToTouchInterface        $touchFacade
+     * @param CmsToUrlInterface          $urlFacade
+     * @param LocatorLocatorInterface    $locator
      */
     public function __construct(
         CmsQueryContainerInterface $cmsQueryContainer,
@@ -83,12 +82,12 @@ class PageManager implements PageManagerInterface
         LocatorLocatorInterface $locator
     ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
-        $this->templateManager = $templateManager;
-        $this->blockManager = $blockManager;
-        $this->locator = $locator;
-        $this->glossaryFacade = $glossaryFacade;
-        $this->touchFacade = $touchFacade;
-        $this->urlFacade = $urlFacade;
+        $this->templateManager   = $templateManager;
+        $this->blockManager      = $blockManager;
+        $this->locator           = $locator;
+        $this->glossaryFacade    = $glossaryFacade;
+        $this->touchFacade       = $touchFacade;
+        $this->urlFacade         = $urlFacade;
     }
 
     /**
@@ -243,7 +242,7 @@ class PageManager implements PageManagerInterface
 
     /**
      * @param PageTransfer $page
-     * @param string $url
+     * @param string       $url
      *
      * @throws UrlExistsException
      *
@@ -258,7 +257,7 @@ class PageManager implements PageManagerInterface
 
     /**
      * @param PageTransfer $pageTransfer
-     * @param string $url
+     * @param string       $url
      *
      * @return UrlTransfer
      */
@@ -276,7 +275,7 @@ class PageManager implements PageManagerInterface
 
     /**
      * @param PageTransfer $page
-     * @param string $blockName
+     * @param string       $blockName
      *
      * @return PageTransfer
      */
@@ -304,5 +303,4 @@ class PageManager implements PageManagerInterface
 
         return $query->count() > 0;
     }
-
 }

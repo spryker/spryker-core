@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Communication;
@@ -9,14 +9,12 @@ namespace SprykerFeature\Zed\Cms\Communication;
 use Generated\Zed\Ide\FactoryAutoCompletion\CmsCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Cms\CmsDependencyProvider;
-use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 
 /**
  * @method CmsCommunication getFactory()
  */
 class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
 {
-
     /**
      * @return CmsPageTable
      */
@@ -60,8 +58,8 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     }
 
     /**
-     * @param int $idPage
-     * @param int $fkLocale
+     * @param int   $idPage
+     * @param int   $fkLocale
      * @param array $placeholders
      * @param array $searchArray
      *
@@ -80,13 +78,12 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
 
     /**
      * @param string $formType
-     * @param int $idPage
+     * @param int    $idPage
      *
      * @return CmsPageForm
      */
     public function createCmsPageForm($formType, $idPage = null)
     {
-
         $pageUrlByIdQuery = $this->getQueryContainer()
             ->queryPageWithTemplatesAndUrlByIdPage($idPage)
         ;
@@ -104,14 +101,13 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
 
     /**
      * @param string $formType
-     * @param int $idPage
+     * @param int    $idPage
      *
      * @return CmsPageForm
      */
     public function createCmsBlockForm($formType, $idPage = null)
     {
-
-        $blockPageByIdQuery  = $this->getQueryContainer()
+        $blockPageByIdQuery = $this->getQueryContainer()
             ->queryPageWithTemplatesAndBlocksByIdPage($idPage)
         ;
 
@@ -120,13 +116,13 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
         ;
 
         return $this->getFactory()
-            ->createFormCmsBlockForm($templateQuery, $blockPageByIdQuery , $formType, $idPage)
+            ->createFormCmsBlockForm($templateQuery, $blockPageByIdQuery, $formType, $idPage)
             ;
     }
 
     /**
      * @param string $formType
-     * @param int $idUrl
+     * @param int    $idUrl
      *
      * @return CmsRedirectForm
      */
@@ -144,16 +140,15 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     }
 
     /**
-     * @param int $idPage
-     * @param int $idMapping
-     * @param array $placeholder
+     * @param int       $idPage
+     * @param int       $idMapping
+     * @param array     $placeholder
      * @param CmsFacade $cmsFacade
      *
      * @return CmsGlossaryForm
      */
     public function createCmsGlossaryForm($idPage, $idMapping = null, $placeholder = null, $cmsFacade)
     {
-
         $glossaryMappingByIdQuery = $this->getQueryContainer()
             ->queryGlossaryKeyMappingWithKeyById($idMapping)
         ;
@@ -172,5 +167,4 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     {
         return $this->getConfig()->getTemplateRealPath($templateRelativePath);
     }
-
 }

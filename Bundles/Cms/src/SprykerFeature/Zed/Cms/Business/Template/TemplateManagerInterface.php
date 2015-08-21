@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Business\Template;
@@ -12,7 +12,6 @@ use SprykerFeature\Zed\Cms\Business\Exception\TemplateExistsException;
 
 interface TemplateManagerInterface
 {
-
     /**
      * @param string $name
      * @param string $path
@@ -61,5 +60,4 @@ interface TemplateManagerInterface
      * @return CmsTemplateTransfer
      */
     public function getTemplateByPath($path);
-
 }

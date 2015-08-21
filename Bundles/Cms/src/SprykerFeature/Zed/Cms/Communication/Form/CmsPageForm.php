@@ -13,16 +13,15 @@ use Symfony\Component\Validator\Context\ExecutionContext;
 
 class CmsPageForm extends AbstractForm
 {
-
-    const ADD = 'add';
-    const UPDATE = 'update';
-    const ID_CMS_PAGE = 'idCmsPage';
-    const FK_TEMPLATE = 'fkTemplate';
-    const ID_URL = 'idUrl';
-    const URL = 'url';
+    const ADD              = 'add';
+    const UPDATE           = 'update';
+    const ID_CMS_PAGE      = 'idCmsPage';
+    const FK_TEMPLATE      = 'fkTemplate';
+    const ID_URL           = 'idUrl';
+    const URL              = 'url';
     const CURRENT_TEMPLATE = 'cur_temp';
-    const PAGE = 'Page';
-    const IS_ACTIVE = 'is_active';
+    const PAGE             = 'Page';
+    const IS_ACTIVE        = 'is_active';
 
     /**
      * @var SpyCmsTemplateQuery
@@ -51,19 +50,19 @@ class CmsPageForm extends AbstractForm
 
     /**
      * @param SpyCmsTemplateQuery $templateQuery
-     * @param SpyCmsPageQuery $pageUrlByIdQuery
-     * @param string $formType
-     * @param int $idPage
-     * @param UrlFacade $urlFacade
+     * @param SpyCmsPageQuery     $pageUrlByIdQuery
+     * @param string              $formType
+     * @param int                 $idPage
+     * @param UrlFacade           $urlFacade
      */
 
-    public function __construct(SpyCmsTemplateQuery $templateQuery,SpyCmsPageQuery $pageUrlByIdQuery, $formType, $idPage, UrlFacade $urlFacade)
+    public function __construct(SpyCmsTemplateQuery $templateQuery, SpyCmsPageQuery $pageUrlByIdQuery, $formType, $idPage, UrlFacade $urlFacade)
     {
-        $this->templateQuery = $templateQuery;
+        $this->templateQuery    = $templateQuery;
         $this->pageUrlByIdQuery = $pageUrlByIdQuery;
-        $this->formType = $formType;
-        $this->idPage = $idPage;
-        $this->urlFacade = $urlFacade;
+        $this->formType         = $formType;
+        $this->idPage           = $idPage;
+        $this->urlFacade        = $urlFacade;
     }
 
     /**
@@ -86,7 +85,7 @@ class CmsPageForm extends AbstractForm
         }
 
         $urlParams = [
-            'label' => 'URL',
+            'label'       => 'URL',
             'constraints' => $urlConstraints,
         ];
 
@@ -98,7 +97,7 @@ class CmsPageForm extends AbstractForm
             ->addHidden(CmsQueryContainer::ID_URL)
             ->addHidden(self::CURRENT_TEMPLATE)
             ->addChoice(self::FK_TEMPLATE, [
-                'label' => 'Template',
+                'label'   => 'Template',
                 'choices' => $this->getTemplateList(),
             ])
             ->addText(self::URL, $urlParams)
@@ -132,14 +131,13 @@ class CmsPageForm extends AbstractForm
             $pageUrlTemplate = $this->pageUrlByIdQuery->findOne();
 
             return [
-                self::ID_CMS_PAGE => $pageUrlTemplate->getIdCmsPage(),
-                self::FK_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
-                self::URL => $pageUrlTemplate->getUrl(),
-                self::CURRENT_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
-                self::IS_ACTIVE => $pageUrlTemplate->getIsActive(),
+                self::ID_CMS_PAGE         => $pageUrlTemplate->getIdCmsPage(),
+                self::FK_TEMPLATE         => $pageUrlTemplate->getFkTemplate(),
+                self::URL                 => $pageUrlTemplate->getUrl(),
+                self::CURRENT_TEMPLATE    => $pageUrlTemplate->getFkTemplate(),
+                self::IS_ACTIVE           => $pageUrlTemplate->getIsActive(),
                 CmsQueryContainer::ID_URL => $pageUrlTemplate->getIdUrl(),
             ];
         }
     }
-
 }

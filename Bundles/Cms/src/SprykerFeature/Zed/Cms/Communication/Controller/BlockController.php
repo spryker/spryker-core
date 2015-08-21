@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Communication\Controller;
@@ -20,7 +20,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class BlockController extends AbstractController
 {
-
     const REDIRECT_ADDRESS = '/cms/glossary/';
 
     /**
@@ -35,11 +34,11 @@ class BlockController extends AbstractController
         $form->handleRequest();
 
         if ($form->isValid()) {
-            $data = $form->getData();
+            $data         = $form->getData();
             $pageTransfer = $this->createPageTransfer($data);
 
             $this->getFacade()->savePageBlockAndTouch($pageTransfer, $data[CmsBlockForm::BLOCK]);
-            $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
+            $redirectUrl = self::REDIRECT_ADDRESS.'?'.CmsPageTable::REQUEST_ID_PAGE.'='.$pageTransfer->getIdCmsPage();
 
             return $this->redirectResponse($redirectUrl);
         }
@@ -71,7 +70,7 @@ class BlockController extends AbstractController
 
             $this->updatePageAndBlock($data, $idPage, $pageTransfer);
 
-            $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
+            $redirectUrl = self::REDIRECT_ADDRESS.'?'.CmsPageTable::REQUEST_ID_PAGE.'='.$pageTransfer->getIdCmsPage();
 
             return $this->redirectResponse($redirectUrl);
         }
@@ -95,8 +94,8 @@ class BlockController extends AbstractController
     }
 
     /**
-     * @param array $data
-     * @param int $idPage
+     * @param array        $data
+     * @param int          $idPage
      * @param PageTransfer $pageTransfer
      */
     protected function updatePageAndBlock($data, $idPage, $pageTransfer)
