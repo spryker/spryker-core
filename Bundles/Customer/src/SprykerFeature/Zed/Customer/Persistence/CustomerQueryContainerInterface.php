@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Customer\Persistence;
 
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddressQuery;
@@ -80,10 +81,11 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     public function queryCustomers();
 
     /**
-     * @param int $idCustomer
-     *
+     * @param $idCustomer
+     * @param Criteria|null $criteria
+     * 
      * @return SpySalesOrderQuery
      */
-    public function queryOrdersByCustomerId($idCustomer);
+    public function queryOrdersByCustomerId($idCustomer, Criteria $criteria=null);
 
 }

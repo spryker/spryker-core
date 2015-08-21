@@ -102,13 +102,6 @@ interface CustomerClientInterface
      * 
      * @return CustomerTransferInterface
      */
-    public function getLatestOrders(CustomerTransferInterface $customerTransfer);
-
-    /**
-     * @param CustomerTransferInterface $customerTransfer
-     * 
-     * @return CustomerTransferInterface
-     */
     public function getOrders(CustomerTransferInterface $customerTransfer);
 
     /**

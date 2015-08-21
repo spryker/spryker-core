@@ -6,16 +6,18 @@
 
 namespace SprykerFeature\Zed\Customer\Business\Customer;
 
-use DateTime;
 use Generated\Shared\Customer\CustomerInterface as CustomerTransferInterface;
 use Generated\Shared\Customer\CustomerAddressInterface as CustomerAddressTransferInterface;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+use SprykerEngine\Zed\Propel\PropelFilterCriteria;
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotUpdatedException;
@@ -304,7 +306,33 @@ class Customer
      */
     public function getOrders(CustomerTransferInterface $customerTransfer)
     {
-        $orders = $this->queryContainer->queryOrdersByCustomerId($customerTransfer->getIdCustomer())
+        /**
+         * @var FilterTransfer $filter
+         */
+        $filter = $customerTransfer->getFilter();
+        $criteria = new Criteria();
+        
+        if (null !== $filter) {
+            $criteria = (new PropelFilterCriteria($filter))
+                ->toCriteria();
+/*           
+            if ($filter->getLimit()) {
+                $criteria->setLimit($filter->getLimit());
+            }
+            
+            if ($filter->getOffset()) {
+                $criteria->setOffset($filter->getOffset());
+            }
+            
+            if ($filter->getOrderBy()) {
+                $criteria->addAscendingOrderByColumn($filter->getOrderBy());
+                if ('DESC' === $filter->getOrderDirection()) {
+                    $criteria->addDescendingOrderByColumn($filter->getOrderBy());
+                }
+            }*/
+        }
+        
+        $orders = $this->queryContainer->queryordersByCustomerId($customerTransfer->getIdCustomer(), $criteria)
             ->find();
 
         $result = [];

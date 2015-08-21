@@ -178,22 +178,6 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     /**
      * @inheritdoc
      */
-    public function getLatestOrders(CustomerTransferInterface $customerTransfer)
-    {
-        $filterTransfer = new FilterTransfer();
-        $filterTransfer->setLimit(5);
-        $filterTransfer->setOffset(0);
-        $filterTransfer->setOrderBy('created_at, updated_at');
-        $filterTransfer->setOrderDirection('DESC');
-
-        $customerTransfer->setFilter($filterTransfer);
-
-        return $this->getOrders($customerTransfer);
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getOrders(CustomerTransferInterface $customerTransfer)
     {
         return $this->getDependencyContainer()

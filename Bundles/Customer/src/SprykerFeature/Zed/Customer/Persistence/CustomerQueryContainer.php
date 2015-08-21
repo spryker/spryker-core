@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Customer\Persistence;
 
+use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 /**
@@ -119,9 +120,9 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     /**
      * @inheritdoc
      */
-    public function queryOrdersByCustomerId($idCustomer)
+    public function queryOrdersByCustomerId($idCustomer, Criteria $criteria=null)
     {
-        $query = $this->getDependencyContainer()->createSpySalesOrderQuery();
+        $query = $this->getDependencyContainer()->createSpySalesOrderQuery(null, $criteria);
         $query->filterByFkCustomer($idCustomer);
 
         return $query;

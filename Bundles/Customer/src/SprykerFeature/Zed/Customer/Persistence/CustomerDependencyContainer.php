@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Customer\Persistence;
 
+use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddressQuery;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
@@ -33,9 +34,9 @@ class CustomerDependencyContainer extends AbstractPersistenceDependencyContainer
     /**
      * @return SpySalesOrderQuery
      */
-    public function createSpySalesOrderQuery()
+    public function createSpySalesOrderQuery($modelAlias=null, Criteria $criteria=null)
     {
-        return SpySalesOrderQuery::create();
+        return SpySalesOrderQuery::create($modelAlias, $criteria);
     }
 
 }
