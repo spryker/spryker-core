@@ -69,11 +69,7 @@ class BlockController extends AbstractController
             $pageTransfer = $this->createPageTransfer($data);
             $pageTransfer = $this->getFacade()->savePage($pageTransfer);
 
-            if (intval($data[CmsPageForm::CURRENT_TEMPLATE]) !== intval($data[CmsPageForm::FK_TEMPLATE])) {
-                $this->getFacade()->deleteGlossaryKeysByIdPage($idPage);
-            }
-
-            $this->getFacade()->savePageBlockAndTouch($pageTransfer, $data[CmsBlockForm::BLOCK]);
+            $this->updatePageAndBlock($data, $idPage, $pageTransfer);
 
             $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 
@@ -86,7 +82,7 @@ class BlockController extends AbstractController
     }
 
     /**
-     * @param $data
+     * @param array $data
      *
      * @return PageTransfer
      */
@@ -96,5 +92,23 @@ class BlockController extends AbstractController
         $pageTransfer->fromArray($data, true);
 
         return $pageTransfer;
+    }
+
+    /**
+     * @param array $data
+     * @param int $idPage
+     * @param PageTransfer $pageTransfer
+     */
+    protected function updatePageAndBlock($data, $idPage, $pageTransfer)
+    {
+        if (intval($data[CmsPageForm::CURRENT_TEMPLATE]) !== intval($data[CmsPageForm::FK_TEMPLATE])) {
+            $this->getFacade()
+                ->deleteGlossaryKeysByIdPage($idPage)
+            ;
+        }
+
+        $this->getFacade()
+            ->savePageBlockAndTouch($pageTransfer, $data[CmsBlockForm::BLOCK])
+        ;
     }
 }
