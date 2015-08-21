@@ -141,7 +141,6 @@
         <column name="gross_price" type="INTEGER" required="true" default="0"/>
         <column name="price_to_pay" type="INTEGER" required="true" default="0"/>
         <column name="tax_percentage" type="INTEGER" required="true" default="0"/>
-        <column name="tax_amount" type="INTEGER" required="true" default="0"/>
 
         <behavior name="timestampable"/>
 

@@ -70,6 +70,7 @@ class WriterTest extends Test
             self::DUMMY_SKU_ABSTRACT_PRODUCT,
             self::DUMMY_PRICE_TYPE_1
         );
+
         $this->priceFacade->createPriceForProduct($transferPriceProduct);
 
         $request = $this->findPriceEntitiesAbstractProduct($abstractProduct, $priceType1);

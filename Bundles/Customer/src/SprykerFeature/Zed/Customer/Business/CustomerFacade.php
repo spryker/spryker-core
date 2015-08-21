@@ -237,4 +237,17 @@ class CustomerFacade extends AbstractFacade
         ;
     }
 
+    /**
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return bool
+     */
+    public function tryAuthorizeCustomerByEmailAndPassword(CustomerTransfer $customerTransfer)
+    {
+        return $this->getDependencyContainer()
+            ->createCustomer()
+            ->tryAuthorizeCustomerByEmailAndPassword($customerTransfer)
+        ;
+    }
+
 }

@@ -29,6 +29,8 @@ use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerFeature\Zed\Product\ProductConfig;
 use SprykerFeature\Zed\Product\ProductDependencyProvider;
 
+use SprykerFeature\Zed\Product\Business\Product\ProductManager;
+
 /**
  * @method ProductBusiness getFactory()
  * @method ProductConfig getConfig()
@@ -36,6 +38,10 @@ use SprykerFeature\Zed\Product\ProductDependencyProvider;
  */
 class ProductDependencyContainer extends AbstractBusinessDependencyContainer
 {
+    /**
+     * @var ProductManager
+     */
+    protected $productManager;
 
     /**
      * @return UploadedFileImporter
@@ -156,12 +162,16 @@ class ProductDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createProductManager()
     {
-        return $this->getFactory()->createProductProductManager(
-            $this->getQueryContainer(),
-            $this->getTouchFacade(),
-            $this->getUrlFacade(),
-            $this->getLocaleFacade()
-        );
+        if (null === $this->productManager) {
+            $this->productManager = $this->getFactory()->createProductProductManager(
+                $this->getQueryContainer(),
+                $this->getTouchFacade(),
+                $this->getUrlFacade(),
+                $this->getLocaleFacade()
+            );
+        }
+
+        return $this->productManager;
     }
 
     /**

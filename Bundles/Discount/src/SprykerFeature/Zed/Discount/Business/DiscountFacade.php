@@ -42,6 +42,16 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 
     /**
      * @param string $code
+     *
+     * @return ModelResult
+     */
+    public function isCodeUsable($code)
+    {
+        return $this->getDependencyContainer()->getDecisionRuleVoucher()->isCodeUsable($code);
+    }
+
+    /**
+     * @param string $code
      * @param int $idDiscountVoucherPool
      *
      * @return ModelResult

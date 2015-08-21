@@ -3,6 +3,9 @@
 namespace SprykerFeature\Client\Catalog\Service;
 
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
+use SprykerFeature\Client\Catalog\Service\Model\FacetConfig;
+use SprykerFeature\Client\Catalog\Service\Model\FacetSearch;
+use SprykerFeature\Client\Catalog\Service\Model\FulltextSearch;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Client\Catalog\Service\Model\Catalog;
 
@@ -24,7 +27,7 @@ class CatalogClient extends AbstractClient
      * @param Request $request
      * @param array $category
      *
-     * @return Model\FacetSearch
+     * @return FacetSearch
      */
     public function createFacetSearch(Request $request, array $category)
     {
@@ -34,7 +37,7 @@ class CatalogClient extends AbstractClient
     /**
      * @param Request $request
      *
-     * @return Model\FulltextSearch
+     * @return FulltextSearch
      */
     public function createFulltextSearch(Request $request)
     {
@@ -42,7 +45,7 @@ class CatalogClient extends AbstractClient
     }
 
     /**
-     * @return \Pyz\Client\Catalog\Model\FacetConfig
+     * @return FacetConfig
      */
     public function createFacetConfig()
     {

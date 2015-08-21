@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<transfers xmlns="http://xsd.spryker.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
+
+    <transfer name="FlashMessages">
+        <property name="success_messages" type="array" singular="success_message" />
+        <property name="error_messages" type="array" singular="error_message" />
+        <property name="info_messages" type="array" singular="info_message" />
+    </transfer>
+
+</transfers>
+

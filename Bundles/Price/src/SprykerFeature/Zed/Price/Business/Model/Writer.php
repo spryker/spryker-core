@@ -85,19 +85,28 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param PriceProductTransfer $transferPriceProduct
+     * @param PriceProductTransfer $priceProductTransfer
      *
      * @throws \Exception
      *
      * @return SpyPriceProduct
      */
-    public function createPriceForProduct(PriceProductTransfer $transferPriceProduct)
+    public function createPriceForProduct(PriceProductTransfer $priceProductTransfer)
     {
-        $transferPriceProduct = $this->setPriceType($transferPriceProduct);
-        if (!$this->isPriceTypeExistingForAbstractProduct($transferPriceProduct)
-            && !$this->isPriceTypeExistingForConcreteProduct($transferPriceProduct)) {
-            $entity = $this->locator->price()->entitySpyPriceProduct();
-            $newPrice = $this->savePriceProductEntity($transferPriceProduct, $entity);
+        $priceProductTransfer = $this->setPriceType($priceProductTransfer);
+        if (
+            !$this->isPriceTypeExistingForAbstractProduct($priceProductTransfer)
+            && !$this->isPriceTypeExistingForConcreteProduct($priceProductTransfer)
+        ) {
+            $this->loadAbstractProductIdForPriceProductTransfer($priceProductTransfer);
+            $this->loadConcreteProductIdForPriceProductTransfer($priceProductTransfer);
+
+            $entity = new SpyPriceProduct();
+            $newPrice = $this->savePriceProductEntity($priceProductTransfer, $entity);
+
+            if ($priceProductTransfer->getIdProduct()) {
+                $this->insertTouchRecord(self::TOUCH_PRODUCT, $priceProductTransfer->getIdProduct());
+            }
 
             return $newPrice;
         }
@@ -105,18 +114,27 @@ class Writer implements WriterInterface
     }
 
     /**
-     * @param PriceProductTransfer $transferPriceProduct
+     * @param PriceProductTransfer $priceProductTransfer
      *
      * @throws \Exception
      */
-    public function setPriceForProduct(PriceProductTransfer $transferPriceProduct)
+    public function setPriceForProduct(PriceProductTransfer $priceProductTransfer)
     {
-        $transferPriceProduct = $this->setPriceType($transferPriceProduct);
+        $priceProductTransfer = $this->setPriceType($priceProductTransfer);
 
-        if (!$this->isPriceTypeExistingForConcreteProduct($transferPriceProduct)
-            && !$this->isPriceTypeExistingForAbstractProduct($transferPriceProduct)) {
-            $priceProductEntity = $this->getPriceProductById($transferPriceProduct->getIdPriceProduct());
-            $this->savePriceProductEntity($transferPriceProduct, $priceProductEntity);
+        if (
+            !$this->isPriceTypeExistingForConcreteProduct($priceProductTransfer)
+            && !$this->isPriceTypeExistingForAbstractProduct($priceProductTransfer)
+        ) {
+            $this->loadAbstractProductIdForPriceProductTransfer($priceProductTransfer);
+            $this->loadConcreteProductIdForPriceProductTransfer($priceProductTransfer);
+
+            $priceProductEntity = $this->getPriceProductById($priceProductTransfer->getIdPriceProduct());
+            $this->savePriceProductEntity($priceProductTransfer, $priceProductEntity);
+
+            if ($priceProductTransfer->getIdProduct()) {
+                $this->insertTouchRecord(self::TOUCH_PRODUCT, $priceProductTransfer->getIdProduct());
+            }
         } else {
             throw new \Exception('This couple product price type is already set');
         }
@@ -124,30 +142,54 @@ class Writer implements WriterInterface
 
     /**
      * @param PriceProductTransfer $transferPriceProduct
-     * @param SpyPriceProduct $productEntity
+     */
+    protected function loadAbstractProductIdForPriceProductTransfer(PriceProductTransfer $transferPriceProduct)
+    {
+        if (null === $transferPriceProduct->getIdAbstractProduct()) {
+            $transferPriceProduct->setIdAbstractProduct(
+                $this->reader->getAbstractProductIdBySku($transferPriceProduct->getSkuAbstractProduct())
+            );
+        }
+    }
+
+    /**
+     * @param PriceProductTransfer $transferPriceProduct
+     */
+    protected function loadConcreteProductIdForPriceProductTransfer(PriceProductTransfer $transferPriceProduct)
+    {
+        if (
+            null === $transferPriceProduct->getIdProduct() &&
+            $this->reader->hasConcreteProduct($transferPriceProduct->getSkuProduct())
+        ) {
+            $transferPriceProduct->setIdProduct(
+                $this->reader->getConcreteProductIdBySku($transferPriceProduct->getSkuProduct())
+            );
+        }
+    }
+
+    /**
+     * @param PriceProductTransfer $transferPriceProduct
+     * @param SpyPriceProduct $priceProductEntity
      *
      * @return SpyPriceProduct
      */
-    protected function savePriceProductEntity(PriceProductTransfer $transferPriceProduct, SpyPriceProduct $productEntity)
+    protected function savePriceProductEntity(PriceProductTransfer $transferPriceProduct, SpyPriceProduct $priceProductEntity)
     {
         $priceType = $this->reader->getPriceTypeByName($transferPriceProduct->getPriceTypeName());
-        $productEntity
+        $priceProductEntity
             ->setPriceType($priceType)
             ->setPrice($transferPriceProduct->getPrice())
         ;
 
-        $idAbstractProduct = $this->reader->getAbstractProductIdBySku($transferPriceProduct->getSkuAbstractProduct());
-
-        if ($this->reader->hasConcreteProduct($transferPriceProduct->getSkuProduct())) {
-            $productEntity->setFkProduct($this->reader->getConcreteProductIdBySku($transferPriceProduct->getSkuProduct()));
+        if ($transferPriceProduct->getIdProduct()) {
+            $priceProductEntity->setFkProduct($transferPriceProduct->getIdProduct());
         } else {
-            $productEntity->setFkAbstractProduct($idAbstractProduct);
+            $priceProductEntity->setFkAbstractProduct($transferPriceProduct->getIdAbstractProduct());
         }
 
-        $productEntity->save();
-        $this->insertTouchRecord(self::TOUCH_PRODUCT, $idAbstractProduct);
+        $priceProductEntity->save();
 
-        return $productEntity;
+        return $priceProductEntity;
     }
 
     /**

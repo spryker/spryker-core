@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Country\Communication\Table;
 
 use Propel\Runtime\Collection\ObjectCollection;
+use SprykerFeature\Zed\Country\Persistence\Propel\Map\SpyCountryTableMap;
 use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
@@ -35,12 +36,12 @@ class CountryTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeader([
-            'Iso2Code' => 'ISO2 code',
-            'Iso3Code' => 'ISO3 Code',
-            'Name' => 'Country name',
+            SpyCountryTableMap::COL_ISO2_CODE => 'ISO2 code',
+            SpyCountryTableMap::COL_ISO3_CODE => 'ISO3 code',
+            SpyCountryTableMap::COL_NAME => 'Country Name',
         ]);
         $config->setSortable([
-            'Iso3Code',
+            SpyCountryTableMap::COL_ISO3_CODE,
         ]);
 
         return $config;

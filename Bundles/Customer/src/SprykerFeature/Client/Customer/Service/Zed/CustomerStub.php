@@ -6,17 +6,16 @@
 
 namespace SprykerFeature\Client\Customer\Service\Zed;
 
-use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Customer\CustomerAddressInterface;
-use Generated\Shared\Transfer\CustomerTransfer;
-use SprykerFeature\Client\ZedRequest\Service\ZedRequestClient;
-use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
-use SprykerFeature\Client\ZedRequest\Service\Client\Response;
+use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
+use SprykerFeature\Client\ZedRequest\Service\Client\Response;
+use SprykerFeature\Client\ZedRequest\Service\ZedRequestClient;
 
 class CustomerStub implements CustomerStubInterface
 {
-
     /**
      * @var ZedRequestClient
      */
@@ -35,45 +34,19 @@ class CustomerStub implements CustomerStubInterface
      *
      * @return CustomerTransfer
      */
-    public function register(CustomerInterface $customerTransfer)
-    {
-        $encoder = new MessageDigestPasswordEncoder();
-        $customerTransfer->setPassword($encoder->encodePassword($customerTransfer->getPassword(), ''));
-
-        return $this->zedStub->call('/customer/gateway/register', $customerTransfer);
-    }
-
-    /**
-     * @param CustomerInterface $customerTransfer
-     *
-     * @return CustomerTransfer
-     */
     public function confirmRegistration(CustomerInterface $customerTransfer)
     {
         return $this->zedStub->call('/customer/gateway/confirm-registration', $customerTransfer);
     }
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerAddressInterface $addressTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerAddressInterface
      */
-    public function forgotPassword(CustomerInterface $customerTransfer)
+    public function createAddress(CustomerAddressInterface $addressTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/forgot-password', $customerTransfer);
-    }
-
-    /**
-     * @param CustomerInterface $customerTransfer
-     *
-     * @return CustomerTransfer
-     */
-    public function restorePassword(CustomerInterface $customerTransfer)
-    {
-        $encoder = new MessageDigestPasswordEncoder();
-        $customerTransfer->setPassword($encoder->encodePassword($customerTransfer->getPassword(), ''));
-
-        return $this->zedStub->call('/customer/gateway/restore-password', $customerTransfer);
+        return $this->zedStub->call('/customer/gateway/new-address', $addressTransfer);
     }
 
     /**
@@ -91,9 +64,59 @@ class CustomerStub implements CustomerStubInterface
      *
      * @return CustomerTransfer
      */
+    public function forgotPassword(CustomerInterface $customerTransfer)
+    {
+        return $this->zedStub->call('/customer/gateway/forgot-password', $customerTransfer);
+    }
+
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return CustomerTransfer
+     */
     public function get(CustomerInterface $customerTransfer)
     {
         return $this->zedStub->call('/customer/gateway/customer', $customerTransfer);
+    }
+
+    /**
+     * @param CustomerAddressInterface $addressTransfer
+     *
+     * @return CustomerAddressInterface
+     */
+    public function getAddress(CustomerAddressInterface $addressTransfer)
+    {
+        return $this->zedStub->call('/customer/gateway/address', $addressTransfer);
+    }
+
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return CustomerResponseTransfer
+     */
+    public function hasCustomerWithEmailAndPassword(CustomerInterface $customerTransfer)
+    {
+        return $this->zedStub->call('/customer/gateway/has-customer-with-email-and-password', $customerTransfer);
+    }
+
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return CustomerTransfer
+     */
+    public function register(CustomerInterface $customerTransfer)
+    {
+        return $this->zedStub->call('/customer/gateway/register', $customerTransfer);
+    }
+
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return CustomerTransfer
+     */
+    public function restorePassword(CustomerInterface $customerTransfer)
+    {
+        return $this->zedStub->call('/customer/gateway/restore-password', $customerTransfer);
     }
 
     /**
@@ -114,26 +137,6 @@ class CustomerStub implements CustomerStubInterface
     public function updateAddress(CustomerAddressInterface $addressTransfer)
     {
         return $this->zedStub->call('/customer/gateway/update-address', $addressTransfer);
-    }
-
-    /**
-     * @param CustomerAddressInterface $addressTransfer
-     *
-     * @return CustomerAddressInterface
-     */
-    public function getAddress(CustomerAddressInterface $addressTransfer)
-    {
-        return $this->zedStub->call('/customer/gateway/address', $addressTransfer);
-    }
-
-    /**
-     * @param CustomerAddressInterface $addressTransfer
-     *
-     * @return CustomerAddressInterface
-     */
-    public function createAddress(CustomerAddressInterface $addressTransfer)
-    {
-        return $this->zedStub->call('/customer/gateway/new-address', $addressTransfer);
     }
 
     /**

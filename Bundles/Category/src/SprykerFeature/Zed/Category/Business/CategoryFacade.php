@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Category\Business;
 
+use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeFormatter;
 use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeFormat;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
@@ -90,15 +91,27 @@ class CategoryFacade extends AbstractFacade
     /**
      * @param NodeTransfer $categoryNode
      * @param LocaleTransfer $locale
+     * @param bool $createUrlPath
      *
-     * @return int $nodeId
+     * @return int
      */
-    public function createCategoryNode(NodeTransfer $categoryNode, LocaleTransfer $locale)
+    public function createCategoryNode(NodeTransfer $categoryNode, LocaleTransfer $locale, $createUrlPath = true)
     {
         return $this->getDependencyContainer()
             ->createCategoryTreeWriter()
-            ->createCategoryNode($categoryNode, $locale)
+            ->createCategoryNode($categoryNode, $locale, $createUrlPath)
         ;
+    }
+
+    /**
+     * @param NodeTransfer $categoryNode
+     */
+    public function updateNodeWithTreeWriter(NodeTransfer $categoryNode)
+    {
+        $this->getDependencyContainer()
+            ->createNodeWriter()
+            ->update($categoryNode)
+            ;
     }
 
     /**
@@ -211,7 +224,10 @@ class CategoryFacade extends AbstractFacade
             )
         ;
 
-        return CategoryTreeFormat::formatForJsTreePlugin($categories, $idCategory);
+        return $this->getDependencyContainer()
+            ->createCategoryTreeStructure($categories)
+            ->getCategoryTree()
+        ;
     }
 
 }

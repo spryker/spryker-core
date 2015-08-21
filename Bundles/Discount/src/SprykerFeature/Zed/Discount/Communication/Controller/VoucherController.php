@@ -26,9 +26,9 @@ class VoucherController extends AbstractController
     /**
      * @return array|RedirectResponse
      */
-    public function createAction()
+    public function createSingleAction()
     {
-        $form = $this->getDependencyContainer()->createFormVoucherForm();
+        $form = $this->getDependencyContainer()->createVoucherForm();
         $form->handleRequest();
 
         if ($form->isValid()) {
@@ -41,7 +41,30 @@ class VoucherController extends AbstractController
         return [
             'form' => $form->createView(),
         ];
+    }
 
+    /**
+     * @return array|RedirectResponse
+     */
+    public function createMultipleAction()
+    {
+        $form = $this->getDependencyContainer()->createVoucherForm(true);
+        $form->handleRequest();
+
+        if ($form->isValid()) {
+            $formData = $form->getData();
+            $this->getFacade()->createVoucherCodes(
+                $formData[VoucherForm::FIELD_NUMBER],
+                $formData[VoucherForm::FIELD_POOL],
+                false
+            );
+
+            return $this->redirectResponse('/discount/voucher');
+        }
+
+        return [
+            'form' => $form->createView(),
+        ];
     }
 
     /**

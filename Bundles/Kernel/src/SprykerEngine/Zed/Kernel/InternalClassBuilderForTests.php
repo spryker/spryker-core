@@ -6,8 +6,11 @@
 
 namespace SprykerEngine\Zed\Kernel;
 
+use Generated\Zed\Ide\AutoCompletion;
+use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Business\Factory as BusinessFactory;
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerEngine\Zed\Kernel\Communication\Factory as CommunicationFactory;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -47,6 +50,40 @@ trait InternalClassBuilderForTests
         $facade->setExternalDependencies($this->getContainer($namespace, $bundle));
 
         return $facade;
+    }
+
+    /**
+     * @param AbstractBundleConfig $bundleConfig
+     *
+     * @return AbstractDependencyContainer
+     */
+    protected function getDependencyContainer(AbstractBundleConfig $bundleConfig = null)
+    {
+        $namespace = $this->getNamespaceFromTestClassName();
+        $bundle = $this->getBundleFromTestClassName();
+        $layer = $this->getLayerFromTestClassName();
+
+        $className = '\\' . $namespace . '\\Zed\\' . $bundle . '\\' . $layer . '\\' . $bundle . 'DependencyContainer';
+
+        $factory = new CommunicationFactory($bundle);
+
+        if (null === $bundleConfig) {
+            $bundleConfigLocator = new BundleConfigLocator();
+            $bundleConfig = $bundleConfigLocator->locate($bundle, $this->getLocator());
+        }
+
+        /** @var AbstractDependencyContainer $class */
+        $class = new $className($factory, $this->getLocator(), $bundleConfig);
+
+        return $class;
+    }
+
+    /**
+     * @return AutoCompletion|LocatorLocatorInterface
+     */
+    private function getLocator()
+    {
+        return Locator::getInstance();
     }
 
     /**
@@ -109,7 +146,7 @@ trait InternalClassBuilderForTests
         }
         $factory = new PersistenceFactory($bundle);
         /** @var AbstractQueryContainer $queryContainer */
-        $queryContainer = new $queryContainerClassName($factory, Locator::getInstance());
+        $queryContainer = new $queryContainerClassName($factory, $this->getLocator());
         $queryContainer->setContainer($this->getContainer($namespace, $bundle));
 
         return $queryContainer;
@@ -128,7 +165,7 @@ trait InternalClassBuilderForTests
         $factory = new CommunicationFactory($bundle);
 
         /** @var AbstractPlugin $plugin */
-        $plugin = new $pluginClassName($factory, Locator::getInstance());
+        $plugin = new $pluginClassName($factory, $this->getLocator());
         $plugin->setExternalDependencies($this->getContainer($namespace, $bundle));
         $plugin->setOwnFacade($this->getFacade($namespace, $bundle));
 
@@ -146,9 +183,25 @@ trait InternalClassBuilderForTests
     /**
      * @return string
      */
+    private function getApplicationFromTestClassName()
+    {
+        return $this->getClassNamePart(get_class($this), 2);
+    }
+
+    /**
+     * @return string
+     */
     private function getBundleFromTestClassName()
     {
         return $this->getClassNamePart(get_class($this), 3);
+    }
+
+    /**
+     * @return string
+     */
+    private function getLayerFromTestClassName()
+    {
+        return $this->getClassNamePart(get_class($this), 4);
     }
 
     /**

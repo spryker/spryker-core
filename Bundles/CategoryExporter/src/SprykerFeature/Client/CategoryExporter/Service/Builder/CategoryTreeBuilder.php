@@ -7,11 +7,13 @@
 namespace SprykerFeature\Client\CategoryExporter\Service\Builder;
 
 use SprykerFeature\Client\Storage\Service\StorageClientInterface;
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
+use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
+use SprykerFeature\Shared\CategoryExporter\Business\CategoryNodeKeyInterface;
 
 class CategoryTreeBuilder
 {
 
+    const SUBTREE_DEPTH_KEY = 'depth';
     const SUBTREE_DEPTH = 3;
 
     /**
@@ -42,14 +44,21 @@ class CategoryTreeBuilder
      */
     public function createTreeFromCategoryNode(array $categoryNode, $locale)
     {
-        $parents = array_slice(array_reverse($categoryNode['parents']), 0, self::SUBTREE_DEPTH);
+        $parents = array_slice(array_reverse($categoryNode[CategoryNodeKeyInterface::PARENTS]), 0, self::SUBTREE_DEPTH);
         $subtree = [];
+        $idCategoryCode = $categoryNode[CategoryNodeKeyInterface::NODE_ID];
+
         foreach ($parents as $parent) {
             $storageKey = $this->keyBuilder->generateKey(
-                $parent['node_id'],
+                $parent[CategoryNodeKeyInterface::NODE_ID],
                 $locale
             );
             $parentCategory = $this->kvReader->get($storageKey);
+
+            if (isset($parentCategory[CategoryNodeKeyInterface::CHILDREN][$idCategoryCode])) {
+                $parentCategory[CategoryNodeKeyInterface::CHILDREN][$idCategoryCode] = $categoryNode;
+            }
+
             if (empty($subtree)) {
                 $subtree = $parentCategory;
             }
@@ -59,11 +68,11 @@ class CategoryTreeBuilder
             }
         }
 
-        if (empty($categoryNode['parents']) || empty($subtree)) {
+        if (empty($categoryNode[CategoryNodeKeyInterface::PARENTS]) || empty($subtree)) {
             $subtree = $categoryNode;
         }
 
-        $subtree['depth'] = self::SUBTREE_DEPTH;
+        $subtree[self::SUBTREE_DEPTH_KEY] = self::SUBTREE_DEPTH;
 
         return $subtree;
     }
@@ -76,9 +85,10 @@ class CategoryTreeBuilder
      */
     protected function addCurrentSubtree(array $parentCategory, array $subtree)
     {
-        foreach ($parentCategory['children'] as $key => $child) {
-            if ($child['url'] === $subtree['url']) {
-                $parentCategory['children'][$key]['children'] = $subtree['children'];
+        foreach ($parentCategory[CategoryNodeKeyInterface::CHILDREN] as $key => $child) {
+            if ($child[CategoryNodeKeyInterface::URL] === $subtree[CategoryNodeKeyInterface::URL]) {
+                $parentCategory[CategoryNodeKeyInterface::CHILDREN][$key][CategoryNodeKeyInterface::CHILDREN] =
+                    $subtree[CategoryNodeKeyInterface::CHILDREN];
             }
         }
 

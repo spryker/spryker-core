@@ -25,7 +25,6 @@ class CommentController extends AbstractController
     public function addAction(Request $request)
     {
         $form = $this->getDependencyContainer()->getCommentForm($request);
-        $form->init();
 
         if ($form->isValid()) {
             $facade = $this->getFacade();

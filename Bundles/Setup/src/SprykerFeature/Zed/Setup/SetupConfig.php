@@ -8,7 +8,15 @@ namespace SprykerFeature\Zed\Setup;
 
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use SprykerEngine\Zed\Propel\Communication\Console\PropelConsole;
+use SprykerEngine\Zed\Transfer\Communication\Console\GeneratorConsole;
 use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Zed\Application\Communication\Console\BuildNavigationConsole;
+use SprykerFeature\Zed\Installer\Communication\Console\InitializeDatabaseConsole;
+use SprykerFeature\Zed\Maintenance\Communication\Console\FossMarkDownGeneratorConsole;
+use SprykerFeature\Zed\Setup\Communication\Console\GenerateIdeAutoCompletionConsole;
+use SprykerFeature\Zed\Setup\Communication\Console\Npm\RunnerConsole;
+use SprykerFeature\Zed\Setup\Communication\Console\RemoveGeneratedDirectoryConsole;
 
 class SetupConfig extends AbstractBundleConfig
 {
@@ -57,6 +65,22 @@ class SetupConfig extends AbstractBundleConfig
     public function getGeneratedDirectory()
     {
         return APPLICATION_SOURCE_DIR . DIRECTORY_SEPARATOR . 'Generated';
+    }
+
+    /**
+     * @return array
+     */
+    public function getSetupInstallCommandNames()
+    {
+        return [
+            RemoveGeneratedDirectoryConsole::COMMAND_NAME,
+            PropelConsole::COMMAND_NAME,
+            GeneratorConsole::COMMAND_NAME,
+            InitializeDatabaseConsole::COMMAND_NAME,
+            GenerateIdeAutoCompletionConsole::COMMAND_NAME,
+            RunnerConsole::COMMAND_NAME => ['--' . RunnerConsole::OPTION_TASK_BUILD_ALL],
+            BuildNavigationConsole::COMMAND_NAME,
+        ];
     }
 
 }

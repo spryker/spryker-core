@@ -9,6 +9,10 @@
         <property name="name" type="string" />
         <property name="url" type="string" />
         <property name="imageName" type="string" />
+        <property name="metaTitle" type="string" />
+        <property name="metaDescription" type="string" />
+        <property name="metaKeywords" type="string" />
+        <property name="categoryImageName" type="CategoryImage" />
     </transfer>
 
     <transfer name="Node">

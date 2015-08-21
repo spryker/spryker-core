@@ -8,7 +8,9 @@
         <property name="price" type="string" />
         <property name="isActive" type="string" />
         <property name="priceTypeName" type="string" />
+        <property name="idProduct" type="int" />
         <property name="skuProduct" type="string" />
+        <property name="idAbstractProduct" type="int" />
         <property name="skuAbstractProduct" type="string" />
     </transfer>
 

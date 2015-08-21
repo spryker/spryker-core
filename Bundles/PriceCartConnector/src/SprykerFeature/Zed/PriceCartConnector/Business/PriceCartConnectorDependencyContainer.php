@@ -21,13 +21,18 @@ class PriceCartConnectorDependencyContainer extends AbstractBusinessDependencyCo
 {
 
     /**
-     * @return PriceManagerInterface
+     * @param null $grossPriceType
+     * @return Manager\PriceManager
      */
-    public function createPriceManager()
+    public function createPriceManager($grossPriceType = null)
     {
-        $bundleConfig = $this->getConfig();
+        if(is_null($grossPriceType))
+        {
+            $bundleConfig = $this->getConfig();
+            $grossPriceType = $bundleConfig->getGrossPriceType();
+        }
 
-        return $this->getFactory()->createManagerPriceManager($this->getPriceFacade(), $bundleConfig->getGrossPriceType());
+        return $this->getFactory()->createManagerPriceManager($this->getPriceFacade(), $grossPriceType);
     }
 
     /**

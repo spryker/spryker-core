@@ -1,0 +1,28 @@
+{% macro node_item(item) %}
+    {% import _self as tree %}
+    <li class="dd-item" id="node-{{ item.id }}">
+        <div class="dd-handle">{{ item.text }}
+            <div class="pull-right">
+                <a href="/category/add" class="btn btn-xs btn-success"><i class="fa fa-plus"></i></a>
+                <a href="#" id="categ-{{ item.id }}" class="category-tree btn btn-xs btn-primary"><i class="fa fa-sitemap"></i></a>
+                <a href="/category/edit?id-category={{ item.id }}" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i></a>
+            </div>
+        </div>
+        {% if item.children is defined and item.children|length > 0 %}
+            {{ tree.node(item.children) }}
+        {% endif %}
+    </li>
+{% endmacro %}
+
+{% macro node(items) %}
+    {% import _self as tree %}
+    <ol class="dd-list">
+        {% for item in items %}
+            {{ tree.node_item(item) }}
+        {% endfor %}
+    </ol>
+{% endmacro %}
+
+{% import _self as tree %}
+
+{{ tree.node(categories) }}

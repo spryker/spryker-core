@@ -1,0 +1,42 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% if widget_title is not defined %}
+    {% set widget_title = 'Category Add' %}
+{% endif %}
+
+{% if submit_title is not defined %}
+    {% set submit_title = 'Add' %}
+{% endif %}
+
+{% if idCategory is not defined %}
+    {% set idCategory = 0 %}
+{% endif %}
+
+{% block head_title -%}
+    {{ widget_title | trans }} {% if idCategory > 0 %} : {{ idCategory }} {% endif %}
+{%- endblock %}
+{% block section_title %}{{ widget_title }}{% endblock %}
+
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+
+            <input type="submit" class="btn btn-primary" value="{{ submit_title | trans }}" />
+            {{ form_end(form) }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <link rel="stylesheet" href="/bundles/Gui/styles/select2.min.css">
+{% endblock %}

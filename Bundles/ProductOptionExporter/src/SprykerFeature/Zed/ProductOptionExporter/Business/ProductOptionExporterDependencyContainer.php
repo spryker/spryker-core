@@ -6,10 +6,10 @@
 
 namespace SprykerFeature\Zed\ProductOptionExporter\Business;
 
+use Generated\Zed\Ide\FactoryAutoCompletion\ProductOptionExporterBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\ProductOptionExporter\Business\Model\ExportProcessorInterface;
 use SprykerFeature\Zed\ProductOptionExporter\ProductOptionExporterDependencyProvider;
-use Generated\Zed\Ide\FactoryAutoCompletion\ProductOptionExporterBusiness;
 
 /**
  * @method ProductOptionExporterBusiness getFactory()

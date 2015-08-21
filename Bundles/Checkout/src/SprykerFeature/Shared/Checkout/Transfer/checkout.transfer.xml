@@ -26,6 +26,7 @@
         <property name="errors" type="CheckoutError[]" singular="error" />
         <property name="isExternalRedirect" type="bool" />
         <property name="redirectUrl" type="string" />
+        <property name="order" type="Order" />
     </transfer>
 
     <transfer name="Comment">

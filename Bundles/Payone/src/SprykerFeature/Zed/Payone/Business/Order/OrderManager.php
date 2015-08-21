@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Payone\Business\Order;
 
 use Generated\Shared\Payone\OrderInterface as PayoneOrderInterface;
 use Generated\Shared\Payone\PayonePaymentInterface;
+use Generated\Shared\Transfer\PayonePaymentDetailsTransfer;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneDetails;
 
@@ -20,25 +21,35 @@ class OrderManager implements OrderManagerInterface
     public function saveOrder(PayoneOrderInterface $orderTransfer)
     {
         $paymentTransfer = $orderTransfer->getPayonePayment();
-        $this->persistPayment($paymentTransfer);
+        $payment = $this->savePayment($paymentTransfer);
+
+        $paymentDetailsTransfer = $paymentTransfer->getPaymentDetails();
+        $this->savePaymentDetails($payment, $paymentDetailsTransfer);
     }
 
     /**
      * @param PayonePaymentInterface $paymentTransfer
+     * @return SpyPaymentPayone
      */
-    protected function persistPayment(PayonePaymentInterface $paymentTransfer)
+    protected function savePayment(PayonePaymentInterface $paymentTransfer)
     {
         $payment = new SpyPaymentPayone();
-        $payment->setPaymentMethod($paymentTransfer->getPaymentMethod());
-        $payment->setAuthorizationType($paymentTransfer->getAuthorizationType());
-        $payment->setTransactionId($paymentTransfer->getTransactionId());
+        $payment->fromArray(($paymentTransfer->toArray()));
         $payment->save();
+        return $payment;
+    }
 
-        $paymentDetailsTransfer = $paymentTransfer->getPaymentDetails();
+    /**
+     * @param SpyPaymentPayone $payment
+     * @param PayonePaymentDetailsTransfer $paymentDetailsTransfer
+     */
+    protected function savePaymentDetails(SpyPaymentPayone $payment, PayonePaymentDetailsTransfer $paymentDetailsTransfer)
+    {
         $paymentDetails = new SpyPaymentPayoneDetails();
         $paymentDetails->setSpyPaymentPayone($payment);
-        $paymentDetails->setPseudocardpan($paymentDetailsTransfer->getPseudocardpan());
+        $paymentDetails->fromArray($paymentDetailsTransfer->toArray());
         $paymentDetails->save();
     }
+
 
 }

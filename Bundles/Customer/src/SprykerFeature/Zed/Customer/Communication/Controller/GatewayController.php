@@ -7,9 +7,10 @@
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
+use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
  * @method CustomerFacade getFacade()
@@ -26,7 +27,7 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()
             ->registerCustomer($customerTransfer)
-            ;
+        ;
     }
 
     /**
@@ -38,7 +39,7 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()
             ->confirmRegistration($customerTransfer)
-            ;
+        ;
     }
 
     /**
@@ -50,7 +51,7 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()
             ->forgotPassword($customerTransfer)
-            ;
+        ;
     }
 
     /**
@@ -62,7 +63,7 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()
             ->restorePassword($customerTransfer)
-            ;
+        ;
     }
 
     /**
@@ -70,12 +71,33 @@ class GatewayController extends AbstractGatewayController
      */
     public function deleteAction(CustomerTransfer $customerTransfer)
     {
-        $success = $this->getFacade()
+        $result = $this->getFacade()
             ->deleteCustomer($customerTransfer)
         ;
-        $this->setSuccess($success);
+        $this->setSuccess($result);
 
         return;
+    }
+
+    /**
+     * @param CustomerTransfer $customerTransfer
+     */
+    public function hasCustomerWithEmailAndPasswordAction(CustomerTransfer $customerTransfer)
+    {
+        $isAuthorized = $this->getFacade()
+            ->tryAuthorizeCustomerByEmailAndPassword($customerTransfer)
+        ;
+
+        $result = new CustomerResponseTransfer();
+        if (true === $isAuthorized) {
+            $result->setCustomerTransfer($this->getFacade()->getCustomer($customerTransfer));
+        }
+
+        $result->setHasCustomer($isAuthorized);
+
+        $this->setSuccess($isAuthorized);
+
+        return $result;
     }
 
     /**
@@ -85,9 +107,11 @@ class GatewayController extends AbstractGatewayController
      */
     public function customerAction(CustomerTransfer $customerTransfer)
     {
-        return $this->getFacade()
+        $result = $this->getFacade()
             ->getCustomer($customerTransfer)
-            ;
+        ;
+
+        return $result;
     }
 
     /**
@@ -97,10 +121,10 @@ class GatewayController extends AbstractGatewayController
      */
     public function updateAction(CustomerTransfer $customerTransfer)
     {
-        $success = $this->getFacade()
+        $result = $this->getFacade()
             ->updateCustomer($customerTransfer)
         ;
-        $this->setSuccess($success);
+        $this->setSuccess($result);
 
         return $customerTransfer;
     }
@@ -115,7 +139,7 @@ class GatewayController extends AbstractGatewayController
         $addressTransfer = $this->getFacade()
             ->getAddress($addressTransfer)
         ;
-        if (true === is_null($addressTransfer)) {
+        if (null === $addressTransfer) {
             $this->setSuccess(false);
 
             return;
@@ -131,10 +155,10 @@ class GatewayController extends AbstractGatewayController
      */
     public function updateAddressAction(CustomerAddressTransfer $addressTransfer)
     {
-        $success = $this->getFacade()
+        $result = $this->getFacade()
             ->updateAddress($addressTransfer)
         ;
-        $this->setSuccess($success);
+        $this->setSuccess($result);
 
         return $addressTransfer;
     }
@@ -161,10 +185,10 @@ class GatewayController extends AbstractGatewayController
      */
     public function deleteAddressAction(CustomerAddressTransfer $addressTransfer)
     {
-        $success = $this->getFacade()
+        $result = $this->getFacade()
             ->deleteAddress($addressTransfer)
         ;
-        $this->setSuccess($success);
+        $this->setSuccess($result);
 
         return $addressTransfer;
     }
@@ -176,8 +200,10 @@ class GatewayController extends AbstractGatewayController
      */
     public function defaultBillingAddressAction(CustomerAddressTransfer $addressTransfer)
     {
-        $success = $this->getFacade()->setDefaultBillingAddress($addressTransfer);
-        $this->setSuccess($success);
+        $result = $this->getFacade()
+            ->setDefaultBillingAddress($addressTransfer)
+        ;
+        $this->setSuccess($result);
 
         return $addressTransfer;
     }
@@ -189,8 +215,10 @@ class GatewayController extends AbstractGatewayController
      */
     public function defaultShippingAddressAction(CustomerAddressTransfer $addressTransfer)
     {
-        $success = $this->getFacade()->setDefaultShippingAddress($addressTransfer);
-        $this->setSuccess($success);
+        $result = $this->getFacade()
+            ->setDefaultShippingAddress($addressTransfer)
+        ;
+        $this->setSuccess($result);
 
         return $addressTransfer;
     }

@@ -64,7 +64,10 @@ class Address
 
         $entity = new SpyCustomerAddress();
         $entity->fromArray($addressTransfer->toArray());
-        $entity->setFkCountry($this->getCustomerCountryId());
+
+        $fkCountry = $this->retrieveFkCountry($addressTransfer);
+        $entity->setFkCountry($fkCountry);
+
         $entity->setCustomer($customer);
         $entity->save();
 
@@ -124,9 +127,11 @@ class Address
             throw new AddressNotFoundException();
         }
 
+        $fkCountry = $this->retrieveFkCountry($addressTransfer);
+
         $entity->fromArray($addressTransfer->toArray());
         $entity->setCustomer($customer);
-        $entity->setFkCountry($this->getCustomerCountryId());
+        $entity->setFkCountry($fkCountry);
         $entity->save();
 
         return $this->entityToTransfer($entity);
@@ -233,14 +238,8 @@ class Address
      */
     protected function entityToTransfer(SpyCustomerAddress $entity)
     {
-        $data = $entity->toArray();
-        unset($data['deleted_at']);
-        unset($data['created_at']);
-        unset($data['updated_at']);
         $addressTransfer = new CustomerAddressTransfer();
-        $addressTransfer->fromArray($data);
-
-        return $addressTransfer;
+        return $addressTransfer->fromArray($entity->toArray(), true);
     }
 
     /**
@@ -428,6 +427,25 @@ class Address
         $entity->delete();
 
         return $oldAddressTransfer;
+    }
+
+    /**
+     * @param CustomerAddressTransfer $addressTransfer
+     * @return int
+     * @throws CountryNotFoundException
+     */
+    protected function retrieveFkCountry(CustomerAddressTransfer $addressTransfer)
+    {
+        $fkCountry = $addressTransfer->getFkCountry();
+        if (empty($fkCountry)) {
+            $iso2Code = $addressTransfer->getIso2Code();
+            if (false === empty($iso2Code)) {
+                $fkCountry = $this->countryFacade->getIdCountryByIso2Code($iso2Code);
+            } else {
+                $fkCountry = $this->getCustomerCountryId();
+            }
+        }
+        return $fkCountry;
     }
 
 }

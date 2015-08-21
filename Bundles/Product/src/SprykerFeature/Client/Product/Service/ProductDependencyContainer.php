@@ -11,7 +11,7 @@ use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Product\ProductDependencyProvider;
 use SprykerFeature\Client\Product\Service\Storage\ProductStorageInterface;
 use SprykerFeature\Client\Storage\Service\StorageClientInterface;
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
+use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerEngine\Client\Locale\Service\LocaleClient;
 
 /**

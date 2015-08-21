@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Application\Communication\Controller;
 use Generated\Zed\Ide\AutoCompletion;
 use Silex\Application;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
+use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
@@ -53,6 +54,11 @@ abstract class AbstractController
     private $queryContainer;
 
     /**
+     * @var FlashMessengerFacade
+     */
+    private $flashMessengerFacade;
+
+    /**
      * @param Application $application
      * @param Factory $factory
      * @param Locator $locator
@@ -62,17 +68,11 @@ abstract class AbstractController
         $this->application = $application;
         $this->locator = $locator;
 
+        $this->flashMessengerFacade = $this->locator->flashMessenger()->facade();
+
         if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
             $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator);
         }
-    }
-
-    /**
-     * @return MessengerInterface
-     */
-    private function getMessenger()
-    {
-        return $this->getTwig()->getExtension(self::TWIG_MESSENGER_PLUGIN)->getMessenger();
     }
 
     /**
@@ -191,11 +191,9 @@ abstract class AbstractController
      *
      * @return $this
      */
-    protected function addMessageSuccess($message)
+    protected function addSuccessMessage($message)
     {
-        $this->getMessenger()->success($message);
-
-        return $this;
+        $this->flashMessengerFacade->addSuccessMessage($message); 
     }
 
     /**
@@ -205,9 +203,9 @@ abstract class AbstractController
      *
      * @return $this
      */
-    protected function addMessageWarning($message)
+    protected function addInfoMessage($message)
     {
-        $this->getMessenger()->warning($message);
+        $this->flashMessengerFacade->addInfoMessage($message); 
 
         return $this;
     }
@@ -219,9 +217,9 @@ abstract class AbstractController
      *
      * @return $this
      */
-    protected function addMessageError($message)
+    protected function addErrorMessage($message)
     {
-        $this->getMessenger()->error($message);
+        $this->flashMessengerFacade->addErrorMessage($message); 
 
         return $this;
     }

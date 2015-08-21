@@ -25,4 +25,20 @@ interface PriceToTouchInterface
      */
     public function touchDeleted($itemType, $itemId);
 
+    /**
+     * @param string $itemType
+     * @param array $itemIds
+     *
+     * @return int
+     */
+    public function bulkTouchActive($itemType, array $itemIds);
+
+    /**
+     * @param string $itemType
+     * @param array $itemIds
+     *
+     * @return int
+     */
+    public function bulkTouchDeleted($itemType, array $itemIds);
+
 }

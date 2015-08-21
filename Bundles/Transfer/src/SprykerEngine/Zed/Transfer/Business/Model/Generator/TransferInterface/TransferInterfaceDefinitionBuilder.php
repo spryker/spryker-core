@@ -11,6 +11,9 @@ use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\DefinitionInterface;
 
+/**
+ * @todo remove merger code here
+ */
 class TransferInterfaceDefinitionBuilder extends AbstractDefinitionBuilder
 {
 
@@ -47,12 +50,9 @@ class TransferInterfaceDefinitionBuilder extends AbstractDefinitionBuilder
     public function getDefinitions()
     {
         $definitions = $this->loader->getDefinitions();
-        
-        $definitions = $this->merger->merge($definitions);
 
         return $this->buildDefinitions($definitions, $this->interfaceDefinition);
     }
-
 
     /**
      * @param array $definitions
@@ -72,7 +72,7 @@ class TransferInterfaceDefinitionBuilder extends AbstractDefinitionBuilder
                 }
             } else {
                 $definitionInstance = clone $definitionClass;
-                $definitionInstances[] = $definitionInstance->setDefinition($definition);                
+                $definitionInstances[] = $definitionInstance->setDefinition($definition);
             }
         }
 

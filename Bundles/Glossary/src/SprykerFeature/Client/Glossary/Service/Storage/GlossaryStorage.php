@@ -6,7 +6,7 @@
 namespace SprykerFeature\Client\Glossary\Service\Storage;
 
 use SprykerFeature\Client\Storage\Service\StorageClientInterface;
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
+use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
 class GlossaryStorage implements GlossaryStorageInterface
 {

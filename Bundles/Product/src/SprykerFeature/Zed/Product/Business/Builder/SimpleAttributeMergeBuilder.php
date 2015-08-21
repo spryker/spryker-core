@@ -33,7 +33,7 @@ class SimpleAttributeMergeBuilder
             $productUrls = explode(',', $productData[self::PRODUCT_URLS]);
             $productData[self::URL] = $productUrls[0];
 
-            $productData[self::ABSTRACT_ATTRIBUTES] = $this->extractAbstractAttributes($productData);
+            $productData[self::ABSTRACT_ATTRIBUTES] = $this->mergeAttributes($productData[self::ABSTRACT_ATTRIBUTES], $productData[self::ABSTRACT_LOCALIZED_ATTRIBUTES]);
 
             $concreteAttributes = explode('$%', $productData[self::CONCRETE_ATTRIBUTES]);
             $concreteLocalizedAttributes = explode('$%', $productData[self::CONCRETE_LOCALIZED_ATTRIBUTES]);
@@ -47,12 +47,8 @@ class SimpleAttributeMergeBuilder
                 if (isset($processedConcreteSkus[$concreteSkus[$i]])) {
                     continue;
                 }
-                $decodedAttributes = json_decode($concreteAttributes[$i], true);
-                $decodedLocalizedAttributes = json_decode($concreteLocalizedAttributes[$i], true);
-                if (is_null($decodedLocalizedAttributes)) {
-                    $decodedLocalizedAttributes = [];
-                }
-                $mergedAttributes = array_merge($decodedAttributes, $decodedLocalizedAttributes);
+
+                $mergedAttributes = $this->mergeAttributes($concreteAttributes[$i], $concreteLocalizedAttributes[$i]);
 
                 $processedConcreteSkus[$concreteSkus[$i]] = true;
                 $productData[self::CONCRETE_PRODUCTS][] = [
@@ -67,6 +63,21 @@ class SimpleAttributeMergeBuilder
     }
 
     /**
+     * @param string $attributes
+     * @param string $localizedAttributes
+     *
+     * @return array
+     */
+    protected function mergeAttributes($attributes, $localizedAttributes)
+    {
+        $decodedAttributes = json_decode($attributes, true);
+        $decodedLocalizedAttributes = json_decode($localizedAttributes, true);
+        $mergedAttributes = array_merge($decodedAttributes, $decodedLocalizedAttributes);
+
+        return $this->normalizeAttributes($mergedAttributes);
+    }
+
+    /**
      * @param array $attributes
      *
      * @return array
@@ -78,20 +89,6 @@ class SimpleAttributeMergeBuilder
         }, array_keys($attributes));
 
         return array_combine($newKeys, $attributes);
-    }
-
-    /**
-     * @param array $productData
-     *
-     * @return array
-     */
-    protected function extractAbstractAttributes(array $productData)
-    {
-        $decodedAttributes = json_decode($productData[self::ABSTRACT_ATTRIBUTES], true);
-        $decodedLocalizedAttributes = json_decode($productData[self::ABSTRACT_LOCALIZED_ATTRIBUTES], true);
-        $abstractAttributes = array_merge($decodedAttributes, $decodedLocalizedAttributes);
-
-         return $this->normalizeAttributes($abstractAttributes);
     }
 
 }

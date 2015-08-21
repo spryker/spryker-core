@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\ProductSearch\Business;
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductSearchBusiness;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Shared\Library\Storage\StorageInstanceBuilder;
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
+use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Product\Business\ProductFacade;
 use SprykerFeature\Zed\ProductSearch\Business\Internal\InstallProductSearch;
@@ -61,12 +61,12 @@ class ProductSearchDependencyContainer extends AbstractBusinessDependencyContain
      */
     public function getInstaller(MessengerInterface $messenger)
     {
-        $frontendExporterFacade = $this->getLocator()->frontendExporter()->facade();
+        $collectorFacade = $this->getLocator()->collector()->facade();
 
         $installer = $this->getFactory()->createInternalInstallProductSearch(
             StorageInstanceBuilder::getElasticsearchInstance(),
-            $frontendExporterFacade->getSearchIndexName(),
-            $frontendExporterFacade->getSearchDocumentType()
+            $collectorFacade->getSearchIndexName(),
+            $collectorFacade->getSearchDocumentType()
         );
         $installer->setMessenger($messenger);
 

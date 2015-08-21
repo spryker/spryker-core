@@ -17,6 +17,12 @@ use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeExc
 
 class CategoryTreeReader implements CategoryTreeReaderInterface
 {
+
+    const ID = 'id';
+    const ID_CATEGORY = 'id_category';
+    const ID_PARENT = 'parent';
+    const TEXT = 'text';
+
     /**
      * @var CategoryQueryContainer
      */
@@ -250,22 +256,20 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param LocaleTransfer $localeTransfer
      *
-     * @return SpyCategoryNode[]
+     * @return array
      */
     public function getTree($idCategory, LocaleTransfer $localeTransfer)
     {
-        $rootNodes = $this->getRootNodes();
-        foreach ($rootNodes as $rootNode) {
-            if ($rootNode->getFkCategory() === $idCategory){
-                return $this->getTreeNodesRecursively($rootNode, $localeTransfer, true);
-            }
+        $nodes = $this->getNodesByIdCategory($idCategory);
+        $categoryNodes = $nodes->getData();
+        if ($categoryNodes) {
+            return $this->getTreeNodesRecursively($categoryNodes[0], $localeTransfer, true);
         }
-        $tree = $this->getTreeNodesRecursively(null, $localeTransfer, true);
 
-        return $tree;
+        return $this->getTreeNodesRecursively(null, $localeTransfer, true);
     }
 
     /**
@@ -273,7 +277,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
      * @param LocaleTransfer $localeTransfer
      * @param bool $isRoot
      *
-     * @return SpyCategoryNode[]
+     * @return array
      */
     private function getTreeNodesRecursively(SpyCategoryNode $node = null, LocaleTransfer $localeTransfer, $isRoot = false)
     {
@@ -284,19 +288,16 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
             $children = $this->getChildren($node->getIdCategoryNode(), $localeTransfer);
         }
         if ($isRoot){
-            $parentId = '#';
-            $nodeOpened = true;
+            $idParent = 0;
         } else {
-            $parentId = $node->getIdCategoryNode();
-            $nodeOpened = false;
+            $idParent = $node->getIdCategoryNode();
         }
         foreach ($children as $child) {
             $tree[] = [
-                'id'     => $child->getIdCategoryNode(),
-                'id_category' => $child->getFkCategory(),
-                'parent' => $parentId,
-                'text'   => $child->getCategory()->getAttributes()->getFirst()->getName(),
-                'state'  => ['opened' => $nodeOpened],
+                self::ID => $child->getIdCategoryNode(),
+                self::ID_CATEGORY => $child->getFkCategory(),
+                self::ID_PARENT => $idParent,
+                self::TEXT => $child->getCategory()->getAttributes()->getFirst()->getName(),
             ];
             if ($child->countDescendants() > 0) {
                 $tree = array_merge($tree, $this->getTreeNodesRecursively($child, $localeTransfer));

@@ -62,7 +62,7 @@ class IndexController extends AbstractController
         $cookieName = $request->query->get('cookie_name');
         $cookieValue = $request->query->get('cookie_value');
         setcookie($cookieName, $cookieValue, time() + 3600, '/');
-        $this->addMessageSuccess('Cookie ' . $cookieName . ' updated with value(' . $cookieValue . ')');
+        $this->addSuccessMessage('Cookie ' . $cookieName . ' updated with value(' . $cookieValue . ')');
 
         return $this->redirectResponse('/system/index');
     }

@@ -29,8 +29,8 @@ interface WriterInterface
     public function setPriceForProduct(PriceProductTransfer $transferPriceProduct);
 
     /**
-     * @param PriceProductTransfer $transferPriceProduct
+     * @param PriceProductTransfer $priceProductTransfer
      */
-    public function createPriceForProduct(PriceProductTransfer $transferPriceProduct);
+    public function createPriceForProduct(PriceProductTransfer $priceProductTransfer);
 
 }

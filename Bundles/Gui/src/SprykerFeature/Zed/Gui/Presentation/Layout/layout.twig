@@ -8,15 +8,9 @@
     <title>{% block head_title %}{{ title | trans }}{% endblock %}</title>
 
     {% block head_css %}
-
-        <link href="/bundles/Gui/styles/bootstrap.min.css" rel="stylesheet">
-        <link href="/bundles/Gui/font-awesome/css/font-awesome.css" rel="stylesheet">
-        <link href="/bundles/Gui/styles/plugins/footable/footable.core.css" rel="stylesheet">
-        <link href="/bundles/Gui/styles/animate.css" rel="stylesheet">
-        <link href="/bundles/Gui/styles/plugins/jsTree/themes/spryker/style.css" rel="stylesheet" />
-        <link href="/bundles/Gui/styles/plugins/jQueryUI/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
-        <link href="/bundles/Gui/styles/style.min.css" rel="stylesheet">
-
+        <link href="/bundles/css/style.external.min.css" rel="stylesheet">
+        <link href="/bundles/css/style.internal.min.css" rel="stylesheet">
+        <link href="/bundles/css/style.custom.min.css" rel="stylesheet">
     {% endblock %}
 
 </head>
@@ -72,6 +66,8 @@
         {% endif %}
         <div class="wrapper wrapper-content animated fadeInRight">
 
+            {% include '@FlashMessenger/Partials/flash-messages.twig' %}
+
             {% block content -%}
 
             {%- endblock %}
@@ -102,7 +98,9 @@
 </div>
 
 {% block footer_js %}
-<script src="/bundles/Gui/scripts/resources.min.js"></script>
+    <script src="/bundles/js/resources.external.min.js"></script>
+    <script src="/bundles/js/resources.internal.min.js"></script>
+    <script src="/bundles/js/resources.custom.min.js"></script>
 {% endblock %}
 
 </body>
