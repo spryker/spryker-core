@@ -18,9 +18,6 @@
         <column name="controller" required="true" size="45" type="VARCHAR"/>
         <column name="action" required="true" size="45" type="VARCHAR"/>
         <column name="type" required="true" size="10" type="ENUM" valueSet="allow,deny"/>
-        <unique>
-            <unique-column name="id_acl_rule"/>
-        </unique>
         <behavior name="timestampable"/>
         <behavior name="archivable"/>
         <foreign-key foreignTable="spy_acl_role" phpName="AclRole" refPhpName="AclRule" onDelete="CASCADE">
