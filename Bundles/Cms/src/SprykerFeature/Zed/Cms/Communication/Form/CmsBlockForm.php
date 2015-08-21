@@ -3,23 +3,20 @@
 namespace SprykerFeature\Zed\Cms\Communication\Form;
 
 use SprykerFeature\Zed\Cms\Communication\Form\Constraint\CmsConstraint;
-use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPageQuery;
+use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlockQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use SprykerFeature\Zed\Url\Business\UrlFacade;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContext;
 
-class CmsPageForm extends AbstractForm
+class CmsBlockForm extends AbstractForm
 {
 
     const ADD = 'add';
     const UPDATE = 'update';
     const ID_CMS_PAGE = 'idCmsPage';
     const FK_TEMPLATE = 'fkTemplate';
-    const ID_URL = 'idUrl';
-    const URL = 'url';
+    const BLOCK = 'block';
     const CURRENT_TEMPLATE = 'cur_temp';
     const PAGE = 'Page';
     const IS_ACTIVE = 'is_active';
@@ -30,9 +27,9 @@ class CmsPageForm extends AbstractForm
     protected $templateQuery;
 
     /**
-     * @var SpyCmsPageQuery
+     * @var SpyCmsBlockQuery
      */
-    protected $pageUrlByIdQuery;
+    protected $blockPageByIdQuery;
 
     /**
      * @var string
@@ -45,25 +42,18 @@ class CmsPageForm extends AbstractForm
     protected $idPage;
 
     /**
-     * @var UrlFacade
-     */
-    protected $urlFacade;
-
-    /**
      * @param SpyCmsTemplateQuery $templateQuery
-     * @param SpyCmsPageQuery $pageUrlByIdQuery
+     * @param SpyCmsBlockQuery $blockPageByIdQuery
      * @param string $formType
      * @param int $idPage
-     * @param UrlFacade $urlFacade
      */
 
-    public function __construct(SpyCmsTemplateQuery $templateQuery,SpyCmsPageQuery $pageUrlByIdQuery, $formType, $idPage, UrlFacade $urlFacade)
+    public function __construct(SpyCmsTemplateQuery $templateQuery,SpyCmsBlockQuery $blockPageByIdQuery, $formType, $idPage)
     {
         $this->templateQuery = $templateQuery;
-        $this->pageUrlByIdQuery = $pageUrlByIdQuery;
+        $this->blockPageByIdQuery = $blockPageByIdQuery;
         $this->formType = $formType;
         $this->idPage = $idPage;
-        $this->urlFacade = $urlFacade;
     }
 
     /**
@@ -71,37 +61,40 @@ class CmsPageForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-        $urlConstraints = CmsConstraint::getMandatoryConstraints();
+        $blockConstraints = CmsConstraint::getMandatoryConstraints();
 
         if (self::ADD === $this->formType) {
-            $urlConstraints[] = new Callback([
+            $blockConstraints[] = new Callback([
                 'methods' => [
-                    function ($url, ExecutionContext $context) {
-                        if ($this->urlFacade->hasUrl($url)) {
-                            $context->addViolation('Url is already used');
+                    function ($name, ExecutionContext $context) {
+                        if (!empty($this->templateQuery->useSpyCmsPageQuery()
+                            ->useSpyCmsBlockQuery()
+                            ->findByName($name)
+                            ->getData())
+                        ) {
+                            $context->addViolation('Block name already exists.');
                         }
                     },
                 ],
             ]);
         }
 
-        $urlParams = [
-            'label' => 'URL',
-            'constraints' => $urlConstraints,
+        $blockParams = [
+            'label' => 'Block Name',
+            'constraints' => $blockConstraints,
         ];
 
         if (self::UPDATE === $this->formType) {
-            $urlParams['disabled'] = 'disabled';
+            $blockParams['disabled'] = 'disabled';
         }
 
         return $this->addHidden(self::ID_CMS_PAGE)
-            ->addHidden(CmsQueryContainer::ID_URL)
             ->addHidden(self::CURRENT_TEMPLATE)
             ->addChoice(self::FK_TEMPLATE, [
                 'label' => 'Template',
                 'choices' => $this->getTemplateList(),
             ])
-            ->addText(self::URL, $urlParams)
+            ->addText(self::BLOCK, $blockParams)
             ->addCheckbox(self::IS_ACTIVE, [
                 'label' => 'Active',
             ])
@@ -129,15 +122,14 @@ class CmsPageForm extends AbstractForm
     protected function populateFormFields()
     {
         if ($this->idPage) {
-            $pageUrlTemplate = $this->pageUrlByIdQuery->findOne();
+            $pageUrlTemplate = $this->blockPageByIdQuery->findOne();
 
             return [
                 self::ID_CMS_PAGE => $pageUrlTemplate->getIdCmsPage(),
                 self::FK_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
-                self::URL => $pageUrlTemplate->getUrl(),
+                self::BLOCK => $pageUrlTemplate->getName(),
                 self::CURRENT_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
-                self::IS_ACTIVE => $pageUrlTemplate->getIsActive(),
-                CmsQueryContainer::ID_URL => $pageUrlTemplate->getIdUrl(),
+                self::IS_ACTIVE => (bool)$pageUrlTemplate->getIsActive(),
             ];
         }
     }

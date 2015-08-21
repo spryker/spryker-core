@@ -77,7 +77,7 @@ class BlockManager implements BlockManagerInterface
     public function convertBlockEntityToTransfer(SpyCmsBlock $block)
     {
         $blockTransfer = new CmsBlockTransfer();
-        $blockTransfer->fromArray($block->toArray());
+        $blockTransfer->fromArray($block->toArray(), true);
 
         return $blockTransfer;
     }

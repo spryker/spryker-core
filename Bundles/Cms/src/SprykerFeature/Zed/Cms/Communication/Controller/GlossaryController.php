@@ -6,8 +6,10 @@
 
 namespace SprykerFeature\Zed\Cms\Communication\Controller;
 
+use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
+use SprykerFeature\Shared\Cms\CmsConfig;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
 use SprykerFeature\Zed\Cms\CmsDependencyProvider;
@@ -25,6 +27,7 @@ use Symfony\Component\HttpFoundation\Request;
 class GlossaryController extends AbstractController
 {
     const REDIRECT_ADDRESS = '/cms/glossary/';
+    const TYPE = 'type';
 
     /**
      * @param Request $request
@@ -34,10 +37,23 @@ class GlossaryController extends AbstractController
     public function indexAction(Request $request)
     {
         $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
-        $pageUrl = $this->getQueryContainer()
-            ->queryPageWithTemplatesAndUrlByIdPage($idPage)
-            ->findOne()
-        ;
+
+        $title = null;
+        $type = CmsConfig::RESOURCE_TYPE_PAGE;
+        $block = $this->getQueryContainer()->queryBlockByIdPage($idPage)->findOne();
+
+        if (null === $block) {
+            $pageUrl = $this->getQueryContainer()
+                ->queryPageWithTemplatesAndUrlByIdPage($idPage)
+                ->findOne()
+            ;
+            $title = $pageUrl->getUrl();
+        } else {
+            $type = CmsConfig::RESOURCE_TYPE_BLOCK;
+            $title = $block->getName();
+        }
+
+
 
         $localeTransfer = $this->getLocaleFacade()
             ->getCurrentLocale()
@@ -50,7 +66,8 @@ class GlossaryController extends AbstractController
         return [
             'keyMaps' => $table->render(),
             'idPage' => $idPage,
-            'url' => $pageUrl->getUrl(),
+            'title' => $title,
+            'type' => $type
         ];
     }
 
@@ -109,6 +126,7 @@ class GlossaryController extends AbstractController
 
             $pageKeyMappingTransfer = $this->createKeyMappingTransfer($data);
             $this->getFacade()->savePageKeyMappingAndTouch($pageKeyMappingTransfer);
+            $this->touchNecessaryBlock($idPage);
 
             return $this->redirectResponse(self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $idPage);
         }
@@ -139,6 +157,7 @@ class GlossaryController extends AbstractController
 
             $pageKeyMappingTransfer = $this->createKeyMappingTransfer($data);
             $this->getFacade()->savePageKeyMappingAndTouch($pageKeyMappingTransfer);
+            $this->touchNecessaryBlock($idPage);
 
             return $this->redirectResponse(self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $idPage);
         }
@@ -219,6 +238,37 @@ class GlossaryController extends AbstractController
         $pageKeyMappingTransfer->setFkGlossaryKey($glossaryKey->getIdGlossaryKey());
 
         return $pageKeyMappingTransfer;
+    }
+
+    /**
+     * @param $block
+     *
+     * @return CmsBlockTransfer
+     */
+    protected function createBlockTransfer($block)
+    {
+        $blockTransfer = new CmsBlockTransfer();
+        $blockTransfer->fromArray($block->toArray());
+
+        return $blockTransfer;
+    }
+
+    /**
+     * @param $idPage
+     */
+    protected function touchNecessaryBlock($idPage)
+    {
+        $block = $this->getQueryContainer()
+            ->queryBlockByIdPage($idPage)
+            ->findOne()
+        ;
+
+        if (null !== $block) {
+            $blockTransfer = $this->createBlockTransfer($block);
+            $this->getFacade()
+                ->touchBlockActive($blockTransfer)
+            ;
+        }
     }
 
 }

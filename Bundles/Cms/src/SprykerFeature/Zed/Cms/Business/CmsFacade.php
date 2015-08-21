@@ -235,7 +235,7 @@ class CmsFacade extends AbstractFacade
     public function touchBlockActive(CmsBlockTransfer $cmsBlockTransfer)
     {
         $blockManager = $this->getDependencyContainer()->getBlockManager();
-        $blockManager->touchPageActive($cmsBlockTransfer);
+        $blockManager->touchBlockActive($cmsBlockTransfer);
     }
 
     /**

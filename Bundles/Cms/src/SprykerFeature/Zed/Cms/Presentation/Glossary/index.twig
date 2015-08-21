@@ -3,7 +3,11 @@
 {% block content %}
 
     <h4>
-        Page URL : [<b> <a href="http://www.de.spryker.dev{{ url }}" target="_blank">{{ url }}</a> </b>]
+        {% if type == 'page' %}
+            Page URL : [<b> <a href="http://www.de.spryker.dev{{ title }}" target="_blank">{{ title }}</a> </b>]
+        {% elseif type == 'block' %}
+            Block Name : {{ title }}
+        {% endif %}
     </h4>
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Page glossary mapping' } %}

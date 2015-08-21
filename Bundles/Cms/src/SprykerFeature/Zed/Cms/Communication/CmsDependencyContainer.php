@@ -32,6 +32,20 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     }
 
     /**
+     * @return CmsBlockTable
+     */
+    public function createCmsBlockTable()
+    {
+        $blockQuery = $this->getQueryContainer()
+            ->queryPageWithTemplatesAndBlocks()
+        ;
+
+        return $this->getFactory()
+            ->createTableCmsBlockTable($blockQuery)
+            ;
+    }
+
+    /**
      * @return CmsRedirectTable
      */
     public function createCmsRedirectTable()
@@ -73,13 +87,9 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     public function createCmsPageForm($formType, $idPage = null)
     {
 
-        $pageUrlByIdQuery = null;
-
-        if (null !== $idPage) {
-            $pageUrlByIdQuery = $this->getQueryContainer()
-                ->queryPageWithTemplatesAndUrlByIdPage($idPage)
-            ;
-        }
+        $pageUrlByIdQuery = $this->getQueryContainer()
+            ->queryPageWithTemplatesAndUrlByIdPage($idPage)
+        ;
 
         $templateQuery = $this->getQueryContainer()
             ->queryTemplates()
@@ -89,6 +99,28 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
 
         return $this->getFactory()
             ->createFormCmsPageForm($templateQuery, $pageUrlByIdQuery, $formType, $idPage, $urlFacade)
+            ;
+    }
+
+    /**
+     * @param string $formType
+     * @param int $idPage
+     *
+     * @return CmsPageForm
+     */
+    public function createCmsBlockForm($formType, $idPage = null)
+    {
+
+        $blockPageByIdQuery  = $this->getQueryContainer()
+            ->queryPageWithTemplatesAndBlocksByIdPage($idPage)
+        ;
+
+        $templateQuery = $this->getQueryContainer()
+            ->queryTemplates()
+        ;
+
+        return $this->getFactory()
+            ->createFormCmsBlockForm($templateQuery, $blockPageByIdQuery , $formType, $idPage)
             ;
     }
 
