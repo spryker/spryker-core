@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Glossary\Communication\Form;
 
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Map\TableMap;
 use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
@@ -24,6 +25,9 @@ class TranslationForm extends AbstractForm
     const LOCALE = 'translation_locale_name';
     const FIELD_GLOSSARY_KEY = 'glossary_key';
     const FIELD_LOCALES = 'locales';
+    const FIELD_VALUE = 'value';
+    const TYPE_DATA = 'data';
+    const TYPE_DATA_EMPTY = 'empty_data';
 
     /**
      * @var SpyGlossaryTranslationQuery
@@ -64,9 +68,13 @@ class TranslationForm extends AbstractForm
      */
     public function buildFormFields()
     {
+        $dataTypeField = self::TYPE_DATA_EMPTY;
         $translationFields = [];
         foreach ($this->locales as $locale) {
             $translationFields[$locale] = '';
+        }
+        if (true === empty($this->request->get(self::URL_PARAMETER_GLOSSARY_KEY))) {
+            $dataTypeField = self::TYPE_DATA;
         }
 
         if (self::UPDATE === $this->type) {
@@ -80,24 +88,26 @@ class TranslationForm extends AbstractForm
             $this->addAutosuggest(self::FIELD_GLOSSARY_KEY, [
                 'label' => self::NAME,
                 'url' => '/glossary/key/suggest',
-                'constraints' => [
-                    new NotBlank(),
-                    new Required(),
-                ],
+                'constraints' => $this->getFieldDefaultConstraints(),
             ]);
         }
 
         $this->add(self::FIELD_LOCALES, 'collection', [
             'type' => 'text',
             'label' => false,
-            'data' => $translationFields,
-            'constraints' => [
-                new NotBlank(),
-                new Required(),
-            ],
+            $dataTypeField => $translationFields,
+            'constraints' => $this->getFieldDefaultConstraints(),
         ]);
 
         return $this;
+    }
+
+    public function getFieldDefaultConstraints()
+    {
+        return [
+            new NotBlank(),
+            new Required(),
+        ];
     }
 
     /**
@@ -107,9 +117,9 @@ class TranslationForm extends AbstractForm
     {
         $defaultData = [];
 
-        $fkGlossaryKey = $this->request->get(self::URL_PARAMETER_GLOSSARY_KEY);
+        $fkGlossaryKey = $this->request->get(self::URL_PARAMETER_GLOSSARY_KEY, 0);
 
-        if (null !== $fkGlossaryKey) {
+        if ($fkGlossaryKey > 0) {
             $glossaryKeyEntity = $this->getGlossaryKey($fkGlossaryKey);
             $defaultData[self::FIELD_GLOSSARY_KEY] = $glossaryKeyEntity->getKey();
         }
@@ -118,7 +128,7 @@ class TranslationForm extends AbstractForm
 
         if (!empty($translationCollection)) {
             foreach ($translationCollection as $translation) {
-                $defaultData[self::FIELD_LOCALES][$translation[static::LOCALE]] = $translation[SpyGlossaryTranslationTableMap::COL_VALUE];
+                $defaultData[self::FIELD_LOCALES][$translation[static::LOCALE]] = $translation[self::FIELD_VALUE];
             }
         }
 
@@ -133,10 +143,13 @@ class TranslationForm extends AbstractForm
     protected function getGlossaryKeyTranslations($fkGlossaryKey)
     {
         return $this->glossaryTranslationQuery
-            ->filterByFkGlossaryKey($fkGlossaryKey)
-            ->useLocaleQuery()
-                ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, static::LOCALE)
-            ->endUse()
+            ->useLocaleQuery(null, Criteria::LEFT_JOIN)
+            ->leftJoinSpyGlossaryTranslation(SpyGlossaryTranslationTableMap::TABLE_NAME)
+            ->addJoinCondition(SpyGlossaryTranslationTableMap::TABLE_NAME, SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY . ' = ?', $fkGlossaryKey)
+            ->where(SpyLocaleTableMap::COL_LOCALE_NAME . ' IN ?', $this->locales)
+            ->groupBy(SpyLocaleTableMap::COL_ID_LOCALE)
+            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, self::LOCALE)
+            ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::FIELD_VALUE)
             ->find()
             ->toArray(null, false, TableMap::TYPE_COLNAME)
         ;
