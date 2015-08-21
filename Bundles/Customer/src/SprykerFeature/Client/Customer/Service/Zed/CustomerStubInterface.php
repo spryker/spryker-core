@@ -7,10 +7,17 @@ namespace SprykerFeature\Client\Customer\Service\Zed;
 
 use Generated\Shared\Customer\CustomerInterface as CustomerTransferInterface;
 use Generated\Shared\Customer\CustomerAddressInterface as CustomerAddressTransferInterface;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use SprykerFeature\Client\ZedRequest\Service\Client\Response;
 
 interface CustomerStubInterface
 {
+    /**
+     * @param CustomerTransferInterface $customerTransfer
+     *
+     * @return CustomerResponseTransfer
+     */
+    public function hasCustomerWithEmailAndPassword(CustomerTransferInterface $customerTransfer);
 
     /**
      * @param CustomerTransferInterface $customerTransfer

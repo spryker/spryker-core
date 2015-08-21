@@ -81,6 +81,8 @@ class GatewayController extends AbstractGatewayController
 
     /**
      * @param CustomerTransfer $customerTransfer
+     * 
+     * @return CustomerResponseTransfer
      */
     public function hasCustomerWithEmailAndPasswordAction(CustomerTransfer $customerTransfer)
     {

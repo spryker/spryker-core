@@ -150,7 +150,9 @@ class Customer
         $customerTransfer = $this->encryptPassword($customerTransfer);
 
         $customer = new SpyCustomer();
+
         $customer->fromArray($customerTransfer->toArray());
+
         $customer->setCustomerReference($this->customerReferenceGenerator->generateCustomerReference($customerTransfer));
         $customer->setRegistrationKey($this->generateKey());
 
@@ -297,45 +299,15 @@ class Customer
 
     /**
      * @param CustomerTransferInterface $customerTransfer
-     *
-     * @throws CustomerNotFoundException
-     *
-     * @return bool
+     * 
+     * @return CustomerTransferInterface
      */
     public function getOrders(CustomerTransferInterface $customerTransfer)
     {
-        /*
-         *  data structure for Yves
-                $orders = [[
-                    'orderNumber' => 'B651478',
-                    'orderDate' => '01.06.15',
-                    'price' => '12.99',
-                    'sender' => 'John Doe',
-                    'status' => 'Stoniert',
-                ],[
-                    'orderNumber' => 'B457499',
-                    'orderDate' => '02.06.15',
-                    'price' => 8.99,
-                    'sender' => 'Ben Muller',
-                    'status' => 'Stoniert',
-                ],[
-                    'orderNumber' => 'B123141',
-                    'orderDate' => '03.06.15',
-                    'price' => 28.99,
-                    'sender' => 'Ben Foobar',
-                    'status' => 'Stoniert',
-                ]];*/
+        $orders = $this->queryContainer->queryOrdersByCustomerId($customerTransfer->getIdCustomer())
+            ->find();
 
-        try {
-            //error_log('idCustomer: '.$idCustomer, 3, '/tmp/shit.log');
-            $result = [];
-            $orders = $this->queryContainer->queryOrdersByCustomerId($customerTransfer->getIdCustomer())
-                ->find();
-        
-        } catch (\Exception $e) {
-            die(dump($e));            
-        }
-
+        $result = [];
         foreach ($orders as $orderItem) {
             $result[] = (new OrderTransfer())
                 ->fromArray($orderItem->toArray());
@@ -414,6 +386,8 @@ class Customer
      */
     protected function getCustomer(CustomerTransferInterface $customerTransfer)
     {
+        $customer = null;
+        
         if ($customerTransfer->getIdCustomer()) {
             $customer = $this->queryContainer->queryCustomerById($customerTransfer->getIdCustomer())
                 ->findOne()
@@ -443,6 +417,7 @@ class Customer
     protected function hasCustomer(CustomerTransferInterface $customerTransfer)
     {
         $result = false;
+        $customer = null;
 
         if ($customerTransfer->getIdCustomer()) {
             $customer = $this->queryContainer
@@ -464,11 +439,11 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerTransferInterface $customerTransfer
      *
      * @return bool
      */
-    public function tryAuthorizeCustomerByEmailAndPassword(CustomerTransfer $customerTransfer)
+    public function tryAuthorizeCustomerByEmailAndPassword(CustomerTransferInterface $customerTransfer)
     {
         $result = false;
 
@@ -484,11 +459,11 @@ class Customer
     }
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransferInterface $customerTransfer
      *
-     * @return CustomerInterface
+     * @return CustomerTransferInterface
      */
-    protected function encryptPassword(CustomerInterface $customerTransfer)
+    protected function encryptPassword(CustomerTransferInterface $customerTransfer)
     {
         $currentPassword = $customerTransfer->getPassword();
 
