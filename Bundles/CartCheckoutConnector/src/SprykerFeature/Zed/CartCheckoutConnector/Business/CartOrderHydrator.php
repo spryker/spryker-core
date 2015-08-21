@@ -69,21 +69,17 @@ class CartOrderHydrator implements CartOrderHydratorInterface
     }
 
     /**
-     * @param ItemTransfer $cartItem
+     * @param ItemInterface $cartItemTransfer
      *
      * @return ItemInterface
      */
-    protected function createItemTransfer(ItemTransfer $cartItem)
+    protected function createItemTransfer(ItemInterface $cartItemTransfer)
     {
-        $orderItem = $this->getItemTransfer();
-        $orderItem->setGrossPrice($cartItem->getGrossPrice());
-        $orderItem->setQuantity(1);
-        $orderItem->setPriceToPay($cartItem->getPriceToPay());
-        $orderItem->setSku($cartItem->getSku());
-        $orderItem->setName($cartItem->getName());
-        $orderItem->setTaxSet($cartItem->getTaxSet());
+        $orderItemTransfer = $this->getItemTransfer();
+        $orderItemTransfer->fromArray($cartItemTransfer->toArray());
+        $orderItemTransfer->setQuantity(1);
 
-        return $orderItem;
+        return $orderItemTransfer;
     }
 
 }

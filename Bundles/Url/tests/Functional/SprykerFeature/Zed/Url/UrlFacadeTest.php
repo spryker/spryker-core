@@ -169,10 +169,13 @@ class UrlFacadeTest extends Test
         $idUrl = $this->urlFacade->createUrl('/aPageUrl', $locale, 'redirect', $redirect->getIdRedirect())->getIdUrl();
 
         $touchQuery = $this->touchQueryContainer->queryTouchEntry('url', $idUrl);
+        $touchQuery->setQueryKey('count');
         $this->assertEquals(0, $touchQuery->count());
 
+        $touchQuery->setQueryKey(TouchQueryContainer::TOUCH_ENTRY_QUERY_KEY);
         $this->urlFacade->touchUrlActive($idUrl);
 
+        $touchQuery->setQueryKey('count');
         $this->assertEquals(1, $touchQuery->count());
     }
 
