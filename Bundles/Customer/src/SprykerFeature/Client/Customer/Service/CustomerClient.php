@@ -8,7 +8,6 @@ namespace SprykerFeature\Client\Customer\Service;
 
 use Generated\Shared\Customer\CustomerAddressInterface as CustomerAddressTransferInterface;
 use Generated\Shared\Customer\CustomerInterface as CustomerTransferInterface;
-use Generated\Shared\Transfer\FilterTransfer;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
 
 /**
@@ -125,8 +124,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     {
         return $this->getDependencyContainer()
             ->createZedCustomerStub()
-            ->update($customerTransfer)
-            ;
+            ->update($customerTransfer);
     }
 
     /**
@@ -137,7 +135,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
         return $this->getDependencyContainer()
             ->createZedCustomerStub()
             ->delete($customerTransfer)
-            ;
+        ;
     }
 
     /**
@@ -172,7 +170,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     {
         return $this->getDependencyContainer()
             ->createSessionCustomerSession()
-            ->hasCustomer();
+            ->hasCustomer()
+        ;
     }
 
     /**
@@ -182,7 +181,8 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     {
         return $this->getDependencyContainer()
             ->createZedCustomerStub()
-            ->getOrders($customerTransfer);
+            ->getOrders($customerTransfer)
+        ;
     }
 
     /**
