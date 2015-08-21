@@ -315,21 +315,6 @@ class Customer
         if (null !== $filter) {
             $criteria = (new PropelFilterCriteria($filter))
                 ->toCriteria();
-/*           
-            if ($filter->getLimit()) {
-                $criteria->setLimit($filter->getLimit());
-            }
-            
-            if ($filter->getOffset()) {
-                $criteria->setOffset($filter->getOffset());
-            }
-            
-            if ($filter->getOrderBy()) {
-                $criteria->addAscendingOrderByColumn($filter->getOrderBy());
-                if ('DESC' === $filter->getOrderDirection()) {
-                    $criteria->addDescendingOrderByColumn($filter->getOrderBy());
-                }
-            }*/
         }
         
         $orders = $this->queryContainer->queryordersByCustomerId($customerTransfer->getIdCustomer(), $criteria)
