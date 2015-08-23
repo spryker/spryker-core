@@ -25,13 +25,14 @@ use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
 
 class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContainerInterface
 {
+
     const TEMPLATE_NAME = 'template_name';
     const TEMPLATE_PATH = 'template_path';
-    const ID_URL        = 'id_url';
-    const URL           = 'url';
-    const TO_URL        = 'toUrl';
-    const TRANS         = 'trans';
-    const KEY           = 'keyname';
+    const ID_URL = 'id_url';
+    const URL = 'url';
+    const TO_URL = 'toUrl';
+    const TRANS = 'trans';
+    const KEY = 'keyname';
 
     /**
      * @return SpyCmsTemplateQuery
@@ -121,12 +122,12 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     {
         return $this->queryBlocks()
             ->leftJoinSpyCmsPage()
-                ->useSpyCmsPageQuery()
-                    ->joinCmsTemplate()
-                    ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, self::TEMPLATE_NAME)
-                ->endUse()
-                ->withColumn(SpyCmsBlockTableMap::COL_NAME)
-        ;
+            ->useSpyCmsPageQuery()
+            ->joinCmsTemplate()
+            ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, self::TEMPLATE_NAME)
+            ->endUse()
+            ->withColumn(SpyCmsBlockTableMap::COL_NAME)
+            ;
     }
 
     /**
@@ -140,9 +141,9 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->filterByIdCmsPage($idCmsPage)
             ->leftJoinSpyCmsPage()
             ->useSpyCmsPageQuery()
-                ->joinCmsTemplate()
-                    ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, self::TEMPLATE_NAME)
-                ->endUse()
+            ->joinCmsTemplate()
+            ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, self::TEMPLATE_NAME)
+            ->endUse()
             ->withColumn(SpyCmsBlockTableMap::COL_NAME)
             ->withColumn(SpyCmsPageTableMap::COL_FK_TEMPLATE, CmsBlockForm::FK_TEMPLATE)
             ->withColumn(SpyCmsPageTableMap::COL_IS_ACTIVE, 'isActive')
@@ -163,7 +164,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
-     * @param int    $idPage
+     * @param int $idPage
      * @param string $placeholder
      *
      * @return SpyCmsGlossaryKeyMappingQuery
@@ -242,11 +243,11 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::KEY)
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::TRANS)
             ->filterByFkPage($idCmsPage)
-                ->useGlossaryKeyQuery()
-                    ->useSpyGlossaryTranslationQuery()
-                        ->filterByFkLocale($fkLocale)
-                    ->endUse()
-                ->endUse()
+            ->useGlossaryKeyQuery()
+            ->useSpyGlossaryTranslationQuery()
+            ->filterByFkLocale($fkLocale)
+            ->endUse()
+            ->endUse()
         ;
 
         return $query;

@@ -15,6 +15,7 @@ use SprykerFeature\Zed\Cms\CmsDependencyProvider;
  */
 class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return CmsPageTable
      */
@@ -58,8 +59,8 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     }
 
     /**
-     * @param int   $idPage
-     * @param int   $fkLocale
+     * @param int $idPage
+     * @param int $fkLocale
      * @param array $placeholders
      * @param array $searchArray
      *
@@ -78,7 +79,7 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
 
     /**
      * @param string $formType
-     * @param int    $idPage
+     * @param int $idPage
      *
      * @return CmsPageForm
      */
@@ -101,7 +102,7 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
 
     /**
      * @param string $formType
-     * @param int    $idPage
+     * @param int $idPage
      *
      * @return CmsPageForm
      */
@@ -122,7 +123,7 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
 
     /**
      * @param string $formType
-     * @param int    $idUrl
+     * @param int $idUrl
      *
      * @return CmsRedirectForm
      */
@@ -140,9 +141,9 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     }
 
     /**
-     * @param int       $idPage
-     * @param int       $idMapping
-     * @param array     $placeholder
+     * @param int $idPage
+     * @param int $idMapping
+     * @param array $placeholder
      * @param CmsFacade $cmsFacade
      *
      * @return CmsGlossaryForm
@@ -165,6 +166,8 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function getTemplateRealPath($templateRelativePath)
     {
-        return $this->getConfig()->getTemplateRealPath($templateRelativePath);
+        return $this->getConfig()
+            ->getTemplateRealPath($templateRelativePath)
+            ;
     }
 }

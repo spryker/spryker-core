@@ -15,11 +15,12 @@ use Symfony\Component\Validator\Context\ExecutionContext;
 
 class CmsRedirectForm extends AbstractForm
 {
-    const ADD         = 'add';
-    const UPDATE      = 'update';
+
+    const ADD = 'add';
+    const UPDATE = 'update';
     const ID_REDIRECT = 'id_redirect';
-    const FROM_URL    = 'from_url';
-    const TO_URL      = 'to_url';
+    const FROM_URL = 'from_url';
+    const TO_URL = 'to_url';
 
     /**
      * @var SpyUrlQuery
@@ -42,14 +43,14 @@ class CmsRedirectForm extends AbstractForm
 
     /**
      * @param SpyUrlQuery $urlByIdQuery
-     * @param string      $formType
-     * @param UrlFacade   $urlFacade
+     * @param string $formType
+     * @param UrlFacade $urlFacade
      */
     public function __construct(SpyUrlQuery $urlByIdQuery, $formType, UrlFacade $urlFacade)
     {
         $this->urlByIdQuery = $urlByIdQuery;
-        $this->formType     = $formType;
-        $this->urlFacade    = $urlFacade;
+        $this->formType = $formType;
+        $this->urlFacade = $urlFacade;
     }
 
     /**
@@ -72,7 +73,7 @@ class CmsRedirectForm extends AbstractForm
         }
 
         $urlParams = [
-            'label'       => 'URL',
+            'label' => 'URL',
             'constraints' => $urlConstraints,
         ];
 
@@ -83,7 +84,7 @@ class CmsRedirectForm extends AbstractForm
         return $this->addHidden(self::ID_REDIRECT)
             ->addText(self::FROM_URL, $urlParams)
             ->addText(self::TO_URL, [
-                'label'       => 'To URL',
+                'label' => 'To URL',
                 'constraints' => CmsConstraint::getMandatoryConstraints(),
             ])
             ;
@@ -99,7 +100,7 @@ class CmsRedirectForm extends AbstractForm
         if ($url) {
             return [
                 self::FROM_URL => $url->getUrl(),
-                self::TO_URL   => $url->getToUrl(),
+                self::TO_URL => $url->getToUrl(),
             ];
         }
     }

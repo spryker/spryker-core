@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class PageController extends AbstractController
 {
+
     const REDIRECT_ADDRESS = '/cms/glossary/';
 
     /**
@@ -36,11 +37,13 @@ class PageController extends AbstractController
         $form->handleRequest();
 
         if ($form->isValid()) {
-            $data         = $form->getData();
+            $data = $form->getData();
             $pageTransfer = $this->createPageTransfer($data);
 
-            $this->getFacade()->savePageUrlAndTouch($pageTransfer, $data[CmsPageForm::URL]);
-            $redirectUrl = self::REDIRECT_ADDRESS.'?'.CmsPageTable::REQUEST_ID_PAGE.'='.$pageTransfer->getIdCmsPage();
+            $this->getFacade()
+                ->savePageUrlAndTouch($pageTransfer, $data[CmsPageForm::URL])
+            ;
+            $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 
             return $this->redirectResponse($redirectUrl);
         }
@@ -68,16 +71,22 @@ class PageController extends AbstractController
             $data = $form->getData();
 
             $pageTransfer = $this->createPageTransfer($data);
-            $pageTransfer = $this->getFacade()->savePage($pageTransfer);
+            $pageTransfer = $this->getFacade()
+                ->savePage($pageTransfer)
+            ;
 
             if (intval($data[CmsPageForm::CURRENT_TEMPLATE]) !== intval($data[CmsPageForm::FK_TEMPLATE])) {
-                $this->getFacade()->deleteGlossaryKeysByIdPage($idPage);
+                $this->getFacade()
+                    ->deleteGlossaryKeysByIdPage($idPage)
+                ;
             }
 
             $urlTransfer = $this->createUrlTransfer($data['id_url'], $pageTransfer, $data);
-            $this->getUrlFacade()->saveUrlAndTouch($urlTransfer);
+            $this->getUrlFacade()
+                ->saveUrlAndTouch($urlTransfer)
+            ;
 
-            $redirectUrl = self::REDIRECT_ADDRESS.'?'.CmsPageTable::REQUEST_ID_PAGE.'='.$pageTransfer->getIdCmsPage();
+            $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 
             return $this->redirectResponse($redirectUrl);
         }
@@ -111,15 +120,18 @@ class PageController extends AbstractController
     }
 
     /**
-     * @param int          $idUrl
+     * @param int $idUrl
      * @param PageTransfer $pageTransfer
-     * @param array        $data
+     * @param array $data
      *
      * @return UrlTransfer
      */
     private function createUrlTransfer($idUrl, $pageTransfer, array $data)
     {
-        $url = $this->getQueryContainer()->queryUrlById($idUrl)->findOne();
+        $url = $this->getQueryContainer()
+            ->queryUrlById($idUrl)
+            ->findOne()
+        ;
 
         $urlTransfer = new UrlTransfer();
 

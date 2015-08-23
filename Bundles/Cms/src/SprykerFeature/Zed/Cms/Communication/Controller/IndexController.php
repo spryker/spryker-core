@@ -10,6 +10,7 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 
 class IndexController extends AbstractController
 {
+
     /**
      * @return array
      */
@@ -28,8 +29,8 @@ class IndexController extends AbstractController
         ;
 
         return [
-            'pages'     => $pageTable->render(),
-            'blocks'    => $blockTable->render(),
+            'pages' => $pageTable->render(),
+            'blocks' => $blockTable->render(),
             'redirects' => $redirectTable->render(),
         ];
     }

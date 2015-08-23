@@ -17,7 +17,8 @@ use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CmsGlossaryTable extends AbstractTable
 {
-    const ACTIONS            = 'Actions';
+
+    const ACTIONS = 'Actions';
     const REQUEST_ID_MAPPING = 'id-mapping';
 
     /**
@@ -42,17 +43,17 @@ class CmsGlossaryTable extends AbstractTable
 
     /**
      * @param SpyCmsGlossaryKeyMappingQuery $glossaryQuery
-     * @param int                           $idPage
-     * @param array                         $placeholders
+     * @param int $idPage
+     * @param array $placeholders
      * @param SpyCmsGlossaryKeyMappingQuery $glossaryQuery
-     * @param array                         $searchArray
+     * @param array $searchArray
      */
     public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryQuery, $idPage, array $placeholders = null, array $searchArray = null)
     {
         $this->glossaryQuery = $glossaryQuery;
-        $this->idPage        = $idPage;
-        $this->placeholders  = $placeholders;
-        $this->searchArray   = $searchArray;
+        $this->idPage = $idPage;
+        $this->placeholders = $placeholders;
+        $this->searchArray = $searchArray;
     }
 
     /**
@@ -64,10 +65,10 @@ class CmsGlossaryTable extends AbstractTable
     {
         $config->setHeader([
             SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING => 'Id',
-            SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER                 => 'Placeholder',
-            CmsQueryContainer::KEY                                            => 'Glossary Key',
-            CmsQueryContainer::TRANS                                          => 'Glossary Value',
-            self::ACTIONS                                                     => self::ACTIONS,
+            SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER => 'Placeholder',
+            CmsQueryContainer::KEY => 'Glossary Key',
+            CmsQueryContainer::TRANS => 'Glossary Value',
+            self::ACTIONS => self::ACTIONS,
         ]);
         $config->setSortable([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE,
@@ -76,11 +77,11 @@ class CmsGlossaryTable extends AbstractTable
         $config->setSearchable([
             SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING,
             SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER,
-            CmsQueryContainer::KEY   => SpyGlossaryKeyTableMap::COL_KEY,
+            CmsQueryContainer::KEY => SpyGlossaryKeyTableMap::COL_KEY,
             CmsQueryContainer::TRANS => SpyGlossaryTranslationTableMap::COL_VALUE,
         ]);
 
-        $config->setUrl('table?'.CmsPageTable::REQUEST_ID_PAGE.'='.$this->idPage);
+        $config->setUrl('table?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $this->idPage);
 
         return $config;
     }
@@ -96,19 +97,19 @@ class CmsGlossaryTable extends AbstractTable
             $this->placeholders = $this->findPlaceholders($this->searchArray);
         }
 
-        $query        = $this->glossaryQuery;
+        $query = $this->glossaryQuery;
         $queryResults = $this->runQuery($query, $config);
 
         $mappedPlaceholders = [];
-        $results            = [];
+        $results = [];
 
         foreach ($queryResults as $item) {
             $results[] = [
                 SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING => $item[SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING],
-                SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER                 => $item[SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER],
-                CmsQueryContainer::KEY                                            => $item[CmsQueryContainer::KEY],
-                CmsQueryContainer::TRANS                                          => $item[CmsQueryContainer::TRANS],
-                self::ACTIONS                                                     => $this->buildLinks($item),
+                SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER => $item[SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER],
+                CmsQueryContainer::KEY => $item[CmsQueryContainer::KEY],
+                CmsQueryContainer::TRANS => $item[CmsQueryContainer::TRANS],
+                self::ACTIONS => $this->buildLinks($item),
             ];
             $mappedPlaceholders[] = $item[SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER];
         }
@@ -127,11 +128,11 @@ class CmsGlossaryTable extends AbstractTable
      */
     private function buildLinks(array $item)
     {
-        $mappingParam = self::REQUEST_ID_MAPPING.'='.$item[SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING];
-        $pageParam    = CmsPageTable::REQUEST_ID_PAGE.'='.$this->idPage;
+        $mappingParam = self::REQUEST_ID_MAPPING . '=' . $item[SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING];
+        $pageParam = CmsPageTable::REQUEST_ID_PAGE . '=' . $this->idPage;
 
-        $result = '<a href="/cms/glossary/edit/?'.$mappingParam.'&'.$pageParam.'" class="btn btn-xs btn-white">Edit</a>&nbsp;
-                   <a href="/cms/glossary/delete/?'.$mappingParam.'&'.$pageParam.'" class="btn btn-xs btn-white">Delete</a>';
+        $result = '<a href="/cms/glossary/edit/?' . $mappingParam . '&' . $pageParam . '" class="btn btn-xs btn-white">Edit</a>&nbsp;
+                   <a href="/cms/glossary/delete/?' . $mappingParam . '&' . $pageParam . '" class="btn btn-xs btn-white">Delete</a>';
 
         return $result;
     }
@@ -143,7 +144,7 @@ class CmsGlossaryTable extends AbstractTable
      */
     private function buildPlaceholderLinks($placeholder)
     {
-        return '<a href="/cms/glossary/add/?'.CmsPageTable::REQUEST_ID_PAGE.'='.$this->idPage.'&placeholder='.$placeholder.'" class="btn btn-xs btn-white">Add Glossary</a>';
+        return '<a href="/cms/glossary/add/?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $this->idPage . '&placeholder=' . $placeholder . '" class="btn btn-xs btn-white">Add Glossary</a>';
     }
 
     /**
@@ -158,10 +159,10 @@ class CmsGlossaryTable extends AbstractTable
             if (!in_array($place, $mappedPlaceholders)) {
                 $results[] = [
                     SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING => null,
-                    SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER                 => $place,
-                    CmsQueryContainer::KEY                                            => null,
-                    CmsQueryContainer::TRANS                                          => null,
-                    self::ACTIONS                                                     => $this->buildPlaceholderLinks($place),
+                    SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER => $place,
+                    CmsQueryContainer::KEY => null,
+                    CmsQueryContainer::TRANS => null,
+                    self::ACTIONS => $this->buildPlaceholderLinks($place),
                 ];
             }
         }

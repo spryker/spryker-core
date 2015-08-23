@@ -11,14 +11,15 @@ use Symfony\Component\Validator\Context\ExecutionContext;
 
 class CmsBlockForm extends AbstractForm
 {
-    const ADD              = 'add';
-    const UPDATE           = 'update';
-    const ID_CMS_PAGE      = 'idCmsPage';
-    const FK_TEMPLATE      = 'fkTemplate';
-    const BLOCK            = 'block';
+
+    const ADD = 'add';
+    const UPDATE = 'update';
+    const ID_CMS_PAGE = 'idCmsPage';
+    const FK_TEMPLATE = 'fkTemplate';
+    const BLOCK = 'block';
     const CURRENT_TEMPLATE = 'cur_temp';
-    const PAGE             = 'Page';
-    const IS_ACTIVE        = 'is_active';
+    const PAGE = 'Page';
+    const IS_ACTIVE = 'is_active';
 
     /**
      * @var SpyCmsTemplateQuery
@@ -42,17 +43,16 @@ class CmsBlockForm extends AbstractForm
 
     /**
      * @param SpyCmsTemplateQuery $templateQuery
-     * @param SpyCmsBlockQuery    $blockPageByIdQuery
-     * @param string              $formType
-     * @param int                 $idPage
+     * @param SpyCmsBlockQuery $blockPageByIdQuery
+     * @param string $formType
+     * @param int $idPage
      */
-
     public function __construct(SpyCmsTemplateQuery $templateQuery, SpyCmsBlockQuery $blockPageByIdQuery, $formType, $idPage)
     {
-        $this->templateQuery      = $templateQuery;
+        $this->templateQuery = $templateQuery;
         $this->blockPageByIdQuery = $blockPageByIdQuery;
-        $this->formType           = $formType;
-        $this->idPage             = $idPage;
+        $this->formType = $formType;
+        $this->idPage = $idPage;
     }
 
     /**
@@ -79,7 +79,7 @@ class CmsBlockForm extends AbstractForm
         }
 
         $blockParams = [
-            'label'       => 'Block Name',
+            'label' => 'Block Name',
             'constraints' => $blockConstraints,
         ];
 
@@ -90,7 +90,7 @@ class CmsBlockForm extends AbstractForm
         return $this->addHidden(self::ID_CMS_PAGE)
             ->addHidden(self::CURRENT_TEMPLATE)
             ->addChoice(self::FK_TEMPLATE, [
-                'label'   => 'Template',
+                'label' => 'Template',
                 'choices' => $this->getTemplateList(),
             ])
             ->addText(self::BLOCK, $blockParams)
@@ -124,11 +124,11 @@ class CmsBlockForm extends AbstractForm
             $pageUrlTemplate = $this->blockPageByIdQuery->findOne();
 
             return [
-                self::ID_CMS_PAGE      => $pageUrlTemplate->getIdCmsPage(),
-                self::FK_TEMPLATE      => $pageUrlTemplate->getFkTemplate(),
-                self::BLOCK            => $pageUrlTemplate->getName(),
+                self::ID_CMS_PAGE => $pageUrlTemplate->getIdCmsPage(),
+                self::FK_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
+                self::BLOCK => $pageUrlTemplate->getName(),
                 self::CURRENT_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
-                self::IS_ACTIVE        => (bool) $pageUrlTemplate->getIsActive(),
+                self::IS_ACTIVE => (bool)$pageUrlTemplate->getIsActive(),
             ];
         }
     }

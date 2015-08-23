@@ -12,6 +12,7 @@ use SprykerFeature\Zed\Cms\Business\Exception\TemplateExistsException;
 
 interface TemplateManagerInterface
 {
+
     /**
      * @param string $name
      * @param string $path

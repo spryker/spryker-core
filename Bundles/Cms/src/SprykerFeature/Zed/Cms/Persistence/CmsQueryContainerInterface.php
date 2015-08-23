@@ -13,6 +13,7 @@ use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
 
 interface CmsQueryContainerInterface
 {
+
     /**
      * @return SpyCmsTemplateQuery
      */
@@ -50,7 +51,7 @@ interface CmsQueryContainerInterface
     public function queryPageById($id);
 
     /**
-     * @param int    $idPage
+     * @param int $idPage
      * @param string $placeholder
      *
      * @return SpyCmsGlossaryKeyMappingQuery

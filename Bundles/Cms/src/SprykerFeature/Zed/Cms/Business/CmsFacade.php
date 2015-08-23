@@ -117,7 +117,7 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param int    $idPage
+     * @param int $idPage
      * @param string $placeholder
      *
      * @return bool
@@ -130,7 +130,7 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param int    $idPage
+     * @param int $idPage
      * @param string $placeholder
      *
      * @throws MissingGlossaryKeyMappingException
@@ -157,9 +157,9 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param int    $idPage
+     * @param int $idPage
      * @param string $placeholder
-     * @param array  $data
+     * @param array $data
      *
      * @throws MissingGlossaryKeyMappingException
      * @throws MissingTranslationException
@@ -175,8 +175,8 @@ class CmsFacade extends AbstractFacade
 
     /**
      * @param PageTransfer $page
-     * @param string       $placeholder
-     * @param string       $value
+     * @param string $placeholder
+     * @param string $value
      *
      * @return PageKeyMappingTransfer
      */
@@ -189,7 +189,7 @@ class CmsFacade extends AbstractFacade
 
     /**
      * @param PageTransfer $page
-     * @param string       $placeholder
+     * @param string $placeholder
      *
      * @throws MissingGlossaryKeyMappingException
      * @throws \Exception
@@ -206,7 +206,7 @@ class CmsFacade extends AbstractFacade
 
     /**
      * @param PageTransfer $page
-     * @param string       $url
+     * @param string $url
      *
      * @throws UrlExistsException
      *
@@ -239,7 +239,7 @@ class CmsFacade extends AbstractFacade
 
     /**
      * @param PageTransfer $page
-     * @param string       $url
+     * @param string $url
      *
      * @return UrlTransfer
      */
@@ -252,7 +252,7 @@ class CmsFacade extends AbstractFacade
 
     /**
      * @param PageTransfer $page
-     * @param string       $blockName
+     * @param string $blockName
      *
      * @return PageTransfer
      */

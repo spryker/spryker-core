@@ -8,9 +8,10 @@ namespace SprykerFeature\Zed\Cms\Dependency\Facade;
 
 interface CmsToTouchInterface
 {
+
     /**
      * @param string $itemType
-     * @param int    $itemId
+     * @param int $itemId
      *
      * @return bool
      */

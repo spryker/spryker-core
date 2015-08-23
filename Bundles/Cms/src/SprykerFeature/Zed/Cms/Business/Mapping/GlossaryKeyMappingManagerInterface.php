@@ -15,10 +15,11 @@ use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
 
 interface GlossaryKeyMappingManagerInterface
 {
+
     /**
-     * @param int    $idPage
+     * @param int $idPage
      * @param string $placeholder
-     * @param array  $data
+     * @param array $data
      *
      * @throws MissingGlossaryKeyMappingException
      * @throws MissingTranslationException
@@ -48,8 +49,8 @@ interface GlossaryKeyMappingManagerInterface
 
     /**
      * @param PageTransfer $page
-     * @param string       $placeholder
-     * @param string       $value
+     * @param string $placeholder
+     * @param string $value
      *
      * @return PageKeyMappingTransfer
      */
@@ -57,7 +58,7 @@ interface GlossaryKeyMappingManagerInterface
 
     /**
      * @param PageTransfer $page
-     * @param string       $placeholder
+     * @param string $placeholder
      *
      * @throws MissingGlossaryKeyMappingException
      * @throws \Exception
@@ -75,7 +76,7 @@ interface GlossaryKeyMappingManagerInterface
     public function deleteGlossaryKeysByIdPage($idPage);
 
     /**
-     * @param int    $idPage
+     * @param int $idPage
      * @param string $placeholder
      *
      * @throws MissingGlossaryKeyMappingException
@@ -85,7 +86,7 @@ interface GlossaryKeyMappingManagerInterface
     public function getPagePlaceholderMapping($idPage, $placeholder);
 
     /**
-     * @param int    $idPage
+     * @param int $idPage
      * @param string $placeholder
      *
      * @return bool

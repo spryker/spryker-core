@@ -26,6 +26,7 @@ use SprykerFeature\Zed\Url\Business\UrlFacade;
 
 class CmsFacadeTest extends Test
 {
+
     /**
      * @var CmsFacade
      */
@@ -64,12 +65,12 @@ class CmsFacadeTest extends Test
     protected function setUp()
     {
         parent::setUp();
-        $this->locator   = Locator::getInstance();
+        $this->locator = Locator::getInstance();
         $this->cmsFacade = new CmsFacade(new Factory('Cms'), $this->locator);
         $this->urlFacade = new UrlFacade(new Factory('Url'), $this->locator);
 
-        $this->localeFacade           = new LocaleFacade(new Factory('Locale'), $this->locator);
-        $this->cmsQueryContainer      = new CmsQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Cms'), $this->locator);
+        $this->localeFacade = new LocaleFacade(new Factory('Locale'), $this->locator);
+        $this->cmsQueryContainer = new CmsQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Cms'), $this->locator);
         $this->glossaryQueryContainer = new GlossaryQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Glossary'), $this->locator);
 
         $this->buildGlossaryFacade();
@@ -83,8 +84,8 @@ class CmsFacadeTest extends Test
         $templateQuery = $this->cmsQueryContainer->queryTemplates();
 
         $templateCountBeforeCreation = $templateQuery->count();
-        $newTemplate                 = $this->cmsFacade->createTemplate('ATemplateName', 'ATemplatePath');
-        $templateCountAfterCreation  = $templateQuery->count();
+        $newTemplate = $this->cmsFacade->createTemplate('ATemplateName', 'ATemplatePath');
+        $templateCountAfterCreation = $templateQuery->count();
 
         $this->assertTrue($templateCountAfterCreation > $templateCountBeforeCreation);
 
@@ -106,8 +107,8 @@ class CmsFacadeTest extends Test
         $page->setIsActive(true);
 
         $pageCountBeforeCreation = $pageQuery->count();
-        $page                    = $this->cmsFacade->savePage($page);
-        $pageCountAfterCreation  = $pageQuery->count();
+        $page = $this->cmsFacade->savePage($page);
+        $pageCountAfterCreation = $pageQuery->count();
 
         $this->assertTrue($pageCountAfterCreation > $pageCountBeforeCreation);
 
@@ -128,7 +129,9 @@ class CmsFacadeTest extends Test
 
         $page = $this->cmsFacade->savePage($page);
 
-        $pageEntity = $this->cmsQueryContainer->queryPageById($page->getIdCmsPage())->findOne();
+        $pageEntity = $this->cmsQueryContainer->queryPageById($page->getIdCmsPage())
+            ->findOne()
+        ;
         $this->assertEquals($template1->getIdCmsTemplate(), $pageEntity->getFkTemplate());
 
         $page->setFkTemplate($template2->getIdCmsTemplate());
@@ -149,8 +152,8 @@ class CmsFacadeTest extends Test
         $templateQuery = $this->cmsQueryContainer->queryTemplates();
 
         $templateCountBeforeCreation = $templateQuery->count();
-        $template                    = $this->cmsFacade->saveTemplate($template);
-        $templateCountAfterCreation  = $templateQuery->count();
+        $template = $this->cmsFacade->saveTemplate($template);
+        $templateCountAfterCreation = $templateQuery->count();
 
         $this->assertTrue($templateCountAfterCreation > $templateCountBeforeCreation);
 
@@ -169,12 +172,14 @@ class CmsFacadeTest extends Test
 
         $templateQuery = $this->cmsQueryContainer->queryTemplateById($template->getIdCmsTemplate());
 
-        $this->assertEquals('WhatARandomPath2', $templateQuery->findOne()->getTemplatePath());
+        $this->assertEquals('WhatARandomPath2', $templateQuery->findOne()
+            ->getTemplatePath());
 
         $template->setTemplatePath('WhatAnotherRandomPath2');
         $this->cmsFacade->saveTemplate($template);
 
-        $this->assertEquals('WhatAnotherRandomPath2', $templateQuery->findOne()->getTemplatePath());
+        $this->assertEquals('WhatAnotherRandomPath2', $templateQuery->findOne()
+            ->getTemplatePath());
     }
 
     /**
@@ -185,7 +190,7 @@ class CmsFacadeTest extends Test
         $pageKeyMappingQuery = $this->cmsQueryContainer->queryGlossaryKeyMappings();
 
         $glossaryKeyId = $this->glossaryFacade->createKey('AHopefullyNotYetExistingKey');
-        $template      = $this->cmsFacade->createTemplate('ANotExistingTemplateName', 'ANotYetExistingTemplatePath');
+        $template = $this->cmsFacade->createTemplate('ANotExistingTemplateName', 'ANotYetExistingTemplatePath');
 
         $page = new PageTransfer();
         $page->setFkTemplate($template->getIdCmsTemplate());
@@ -199,8 +204,8 @@ class CmsFacadeTest extends Test
         $pageKeyMapping->setPlaceholder('SomePlaceholderName');
 
         $mappingCountBeforeCreation = $pageKeyMappingQuery->count();
-        $pageKeyMapping             = $this->cmsFacade->savePageKeyMapping($pageKeyMapping);
-        $mappingCountAfterCreation  = $pageKeyMappingQuery->count();
+        $pageKeyMapping = $this->cmsFacade->savePageKeyMapping($pageKeyMapping);
+        $mappingCountAfterCreation = $pageKeyMappingQuery->count();
 
         $this->assertTrue($mappingCountAfterCreation > $mappingCountBeforeCreation);
 
@@ -214,7 +219,7 @@ class CmsFacadeTest extends Test
     {
         $glossaryKeyId1 = $this->glossaryFacade->createKey('AHopefullyNotYetExistingKey2');
         $glossaryKeyId2 = $this->glossaryFacade->createKey('AHopefullyNotYetExistingKey3');
-        $template       = $this->cmsFacade->createTemplate('ANotExistingTemplateName2', 'ANotYetExistingTemplatePath2');
+        $template = $this->cmsFacade->createTemplate('ANotExistingTemplateName2', 'ANotYetExistingTemplatePath2');
 
         $page = new PageTransfer();
         $page->setFkTemplate($template->getIdCmsTemplate());
@@ -231,12 +236,14 @@ class CmsFacadeTest extends Test
 
         $pageKeyMappingQuery = $this->cmsQueryContainer->queryGlossaryKeyMappingById($pageKeyMapping->getIdCmsGlossaryKeyMapping());
 
-        $this->assertEquals($glossaryKeyId1, $pageKeyMappingQuery->findOne()->getFkGlossaryKey());
+        $this->assertEquals($glossaryKeyId1, $pageKeyMappingQuery->findOne()
+            ->getFkGlossaryKey());
 
         $pageKeyMapping->setFkGlossaryKey($glossaryKeyId2);
         $this->cmsFacade->savePageKeyMapping($pageKeyMapping);
 
-        $this->assertEquals($glossaryKeyId2, $pageKeyMappingQuery->findOne()->getFkGlossaryKey());
+        $this->assertEquals($glossaryKeyId2, $pageKeyMappingQuery->findOne()
+            ->getFkGlossaryKey());
     }
 
     /**
@@ -244,7 +251,7 @@ class CmsFacadeTest extends Test
      */
     public function testAddPlaceholderTextInsertsAndReturnsSomething()
     {
-        $keyQuery         = $this->glossaryQueryContainer->queryKeys();
+        $keyQuery = $this->glossaryQueryContainer->queryKeys();
         $pageMappingQuery = $this->cmsQueryContainer->queryGlossaryKeyMappings();
 
         $template = $this->cmsFacade->createTemplate('APlaceholderTemplate', 'APlaceholderTemplatePath');
@@ -255,12 +262,12 @@ class CmsFacadeTest extends Test
 
         $page = $this->cmsFacade->savePage($page);
 
-        $keyCountBeforeCreation     = $keyQuery->count();
+        $keyCountBeforeCreation = $keyQuery->count();
         $mappingCountBeforeCreation = $pageMappingQuery->count();
 
         $mapping = $this->cmsFacade->addPlaceholderText($page, 'Placeholder1', 'Some Translation');
 
-        $keyCountAfterCreation     = $keyQuery->count();
+        $keyCountAfterCreation = $keyQuery->count();
         $mappingCountAfterCreation = $pageMappingQuery->count();
 
         $this->assertTrue($keyCountAfterCreation > $keyCountBeforeCreation);

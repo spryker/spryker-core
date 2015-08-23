@@ -24,6 +24,7 @@ use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
 
 class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
 {
+
     const GENERATED_GLOSSARY_KEY_PREFIX = 'generated.cms';
 
     /**
@@ -52,30 +53,25 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     protected $locator;
 
     /**
-     * @param CmsToGlossaryInterface     $glossaryFacade
+     * @param CmsToGlossaryInterface $glossaryFacade
      * @param CmsQueryContainerInterface $cmsQueryContainer
-     * @param TemplateManagerInterface   $templateManager
-     * @param PageManagerInterface       $pageManager
-     * @param LocatorLocatorInterface    $locator
+     * @param TemplateManagerInterface $templateManager
+     * @param PageManagerInterface $pageManager
+     * @param LocatorLocatorInterface $locator
      */
-    public function __construct(
-        CmsToGlossaryInterface $glossaryFacade,
-        CmsQueryContainerInterface $cmsQueryContainer,
-        TemplateManagerInterface $templateManager,
-        PageManagerInterface $pageManager,
-        LocatorLocatorInterface $locator
-    ) {
-        $this->glossaryFacade    = $glossaryFacade;
+    public function __construct(CmsToGlossaryInterface $glossaryFacade, CmsQueryContainerInterface $cmsQueryContainer, TemplateManagerInterface $templateManager, PageManagerInterface $pageManager, LocatorLocatorInterface $locator)
+    {
+        $this->glossaryFacade = $glossaryFacade;
         $this->cmsQueryContainer = $cmsQueryContainer;
-        $this->templateManager   = $templateManager;
-        $this->pageManager       = $pageManager;
-        $this->locator           = $locator;
+        $this->templateManager = $templateManager;
+        $this->pageManager = $pageManager;
+        $this->locator = $locator;
     }
 
     /**
-     * @param int    $idPage
+     * @param int $idPage
      * @param string $placeholder
-     * @param array  $data
+     * @param array $data
      *
      * @throws MissingGlossaryKeyMappingException
      * @throws MissingTranslationException
@@ -90,7 +86,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     }
 
     /**
-     * @param int    $idPage
+     * @param int $idPage
      * @param string $placeholder
      *
      * @throws MissingGlossaryKeyMappingException
@@ -99,16 +95,12 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      */
     public function getPagePlaceholderMapping($idPage, $placeholder)
     {
-        $glossaryKeyMapping = $this->cmsQueryContainer->queryGlossaryKeyMapping($idPage, $placeholder)->findOne();
+        $glossaryKeyMapping = $this->cmsQueryContainer->queryGlossaryKeyMapping($idPage, $placeholder)
+            ->findOne()
+        ;
 
         if (!$glossaryKeyMapping) {
-            throw new MissingGlossaryKeyMappingException(
-                sprintf(
-                    'Tried to translate a missing placeholder mapping: Placeholder %s on Page Id %s',
-                    $placeholder,
-                    $idPage
-                )
-            );
+            throw new MissingGlossaryKeyMappingException(sprintf('Tried to translate a missing placeholder mapping: Placeholder %s on Page Id %s', $placeholder, $idPage));
         }
 
         return $this->convertMappingEntityToTransfer($glossaryKeyMapping);
@@ -156,7 +148,9 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     {
         $this->checkPagePlaceholderNotAmbiguous($pageKeyMapping->getFkPage(), $pageKeyMapping->getPlaceholder());
 
-        $mappingEntity = $this->locator->cms()->entitySpyCmsGlossaryKeyMapping();
+        $mappingEntity = $this->locator->cms()
+            ->entitySpyCmsGlossaryKeyMapping()
+        ;
         $mappingEntity->fromArray($pageKeyMapping->toArray());
 
         $mappingEntity->save();
@@ -185,7 +179,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
         }
 
         $isPlaceholderModified = $mappingEntity->isColumnModified(SpyCmsGlossaryKeyMappingTableMap::COL_PLACEHOLDER);
-        $isPageIdModified      = $mappingEntity->isColumnModified(SpyCmsGlossaryKeyMappingTableMap::COL_FK_PAGE);
+        $isPageIdModified = $mappingEntity->isColumnModified(SpyCmsGlossaryKeyMappingTableMap::COL_FK_PAGE);
 
         if ($isPlaceholderModified || $isPageIdModified) {
             $this->checkPagePlaceholderNotAmbiguous($pageKeyMapping->getFkPage(), $pageKeyMapping->getPlaceholder());
@@ -197,7 +191,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     }
 
     /**
-     * @param int    $idPage
+     * @param int $idPage
      * @param string $placeholder
      *
      * @throws MappingAmbiguousException
@@ -205,25 +199,21 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     protected function checkPagePlaceholderNotAmbiguous($idPage, $placeholder)
     {
         if ($this->hasPagePlaceholderMapping($idPage, $placeholder)) {
-            throw new MappingAmbiguousException(
-                sprintf(
-                    'Tried to create an ambiguous mapping for placeholder %s on page %s',
-                    $placeholder,
-                    $idPage
-                )
-            );
+            throw new MappingAmbiguousException(sprintf('Tried to create an ambiguous mapping for placeholder %s on page %s', $placeholder, $idPage));
         }
     }
 
     /**
-     * @param int    $idPage
+     * @param int $idPage
      * @param string $placeholder
      *
      * @return bool
      */
     public function hasPagePlaceholderMapping($idPage, $placeholder)
     {
-        $mappingCount = $this->cmsQueryContainer->queryGlossaryKeyMapping($idPage, $placeholder)->count();
+        $mappingCount = $this->cmsQueryContainer->queryGlossaryKeyMapping($idPage, $placeholder)
+            ->count()
+        ;
 
         return $mappingCount > 0;
     }
@@ -237,14 +227,11 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      */
     protected function getGlossaryKeyMappingById($idMapping)
     {
-        $mapping = $this->cmsQueryContainer->queryGlossaryKeyMappingById($idMapping)->findOne();
+        $mapping = $this->cmsQueryContainer->queryGlossaryKeyMappingById($idMapping)
+            ->findOne()
+        ;
         if (!$mapping) {
-            throw new MissingGlossaryKeyMappingException(
-                sprintf(
-                    'Tried to retrieve a missing glossary key mapping with id %s',
-                    $idMapping
-                )
-            );
+            throw new MissingGlossaryKeyMappingException(sprintf('Tried to retrieve a missing glossary key mapping with id %s', $idMapping));
         }
 
         return $mapping;
@@ -252,8 +239,8 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
 
     /**
      * @param PageTransfer $page
-     * @param string       $placeholder
-     * @param string       $value
+     * @param string $placeholder
+     * @param string $value
      *
      * @return PageKeyMappingTransfer
      */
@@ -263,7 +250,9 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
 
         $keyName = $this->generateGlossaryKeyName($template->getTemplateName(), $placeholder);
 
-        Propel::getConnection()->beginTransaction();
+        Propel::getConnection()
+            ->beginTransaction()
+        ;
 
         $idKey = $this->glossaryFacade->createKey($keyName);
         $this->glossaryFacade->createTranslationForCurrentLocale($keyName, $value);
@@ -275,7 +264,9 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
 
         $pageKeyMapping = $this->savePageKeyMapping($pageKeyMapping);
 
-        Propel::getConnection()->commit();
+        Propel::getConnection()
+            ->commit()
+        ;
 
         return $pageKeyMapping;
     }
@@ -288,16 +279,22 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      */
     protected function generateGlossaryKeyName($templateName, $placeholder)
     {
-        $keyName = self::GENERATED_GLOSSARY_KEY_PREFIX.'.';
-        $keyName .= str_replace([' ', '.'], '-', $templateName).'.';
-        $keyName .= str_replace([' ', '.'], '-', $placeholder);
+        $keyName = self::GENERATED_GLOSSARY_KEY_PREFIX . '.';
+        $keyName .= str_replace([
+                ' ',
+                '.',
+            ], '-', $templateName) . '.';
+        $keyName .= str_replace([
+            ' ',
+            '.',
+        ], '-', $placeholder);
 
         $index = 0;
 
-        $candidate = $keyName.$index;
+        $candidate = $keyName . $index;
 
         while ($this->glossaryFacade->hasKey($candidate)) {
-            $candidate = $keyName.++$index;
+            $candidate = $keyName . ++$index;
         }
 
         return $candidate;
@@ -305,7 +302,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
 
     /**
      * @param PageTransfer $page
-     * @param string       $placeholder
+     * @param string $placeholder
      *
      * @throws MissingGlossaryKeyMappingException
      * @throws \Exception
@@ -328,8 +325,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      */
     public function deleteGlossaryKeysByIdPage($idPage)
     {
-        $mappedGlossaries = $this->cmsQueryContainer
-            ->queryGlossaryKeyMappingsByPageId($idPage)
+        $mappedGlossaries = $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($idPage)
             ->find()
         ;
 

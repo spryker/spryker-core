@@ -14,6 +14,7 @@ use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlock;
 
 class BlockManager implements BlockManagerInterface
 {
+
     /**
      * @var CmsQueryContainerInterface
      */
@@ -26,14 +27,12 @@ class BlockManager implements BlockManagerInterface
 
     /**
      * @param CmsQueryContainerInterface $cmsQueryContainer
-     * @param CmsToTouchInterface        $touchFacade
+     * @param CmsToTouchInterface $touchFacade
      */
-    public function __construct(
-        CmsQueryContainerInterface $cmsQueryContainer,
-        CmsToTouchInterface $touchFacade
-    ) {
+    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, CmsToTouchInterface $touchFacade)
+    {
         $this->cmsQueryContainer = $cmsQueryContainer;
-        $this->touchFacade       = $touchFacade;
+        $this->touchFacade = $touchFacade;
     }
 
     /**
@@ -129,13 +128,10 @@ class BlockManager implements BlockManagerInterface
      */
     protected function checkPageExists($idPage)
     {
-        if (!$this->cmsQueryContainer->queryPageById($idPage)->count() > 0) {
-            throw new MissingPageException(
-                sprintf(
-                    'Tried to refer to a missing page with id %s',
-                    $idPage
-                )
-            );
+        if (!$this->cmsQueryContainer->queryPageById($idPage)
+                ->count() > 0
+        ) {
+            throw new MissingPageException(sprintf('Tried to refer to a missing page with id %s', $idPage));
         }
     }
 
@@ -146,7 +142,9 @@ class BlockManager implements BlockManagerInterface
      */
     protected function getCmsBlockByIdPage($idCmsPage)
     {
-        $blockEntity = $this->cmsQueryContainer->queryBlockByIdPage($idCmsPage)->findOne();
+        $blockEntity = $this->cmsQueryContainer->queryBlockByIdPage($idCmsPage)
+            ->findOne()
+        ;
 
         return $blockEntity;
     }

@@ -11,10 +11,10 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class CmsDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const FACADE_URL    = 'facade_url';
+    const FACADE_URL = 'facade_url';
     const FACADE_LOCALE = 'facade_locale';
 
-    const URL_QUERY_CONTAINER      = 'url_query_container';
+    const URL_QUERY_CONTAINER = 'url_query_container';
     const GLOSSARY_QUERY_CONTAINER = 'glossary_query_container';
 
     /**

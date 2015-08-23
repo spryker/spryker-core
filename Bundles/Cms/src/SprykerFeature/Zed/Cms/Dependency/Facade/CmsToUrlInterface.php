@@ -12,10 +12,11 @@ use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
 interface CmsToUrlInterface
 {
+
     /**
      * @param string $url
      * @param string $resourceType
-     * @param int    $idResource
+     * @param int $idResource
      *
      * @throws PropelException
      * @throws UrlExistsException

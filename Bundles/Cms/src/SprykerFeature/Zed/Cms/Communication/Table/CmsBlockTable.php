@@ -14,7 +14,8 @@ use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
 class CmsBlockTable extends AbstractTable
 {
-    const ACTIONS         = 'Actions';
+
+    const ACTIONS = 'Actions';
     const REQUEST_ID_PAGE = 'id-page';
 
     /**
@@ -39,9 +40,9 @@ class CmsBlockTable extends AbstractTable
     {
         $config->setHeader([
             SpyCmsBlockTableMap::COL_ID_CMS_PAGE => 'Page Id',
-            CmsQueryContainer::TEMPLATE_NAME     => 'Template',
-            SpyCmsBlockTableMap::COL_NAME        => 'Name',
-            self::ACTIONS                        => self::ACTIONS,
+            CmsQueryContainer::TEMPLATE_NAME => 'Template',
+            SpyCmsBlockTableMap::COL_NAME => 'Name',
+            self::ACTIONS => self::ACTIONS,
         ]);
         $config->setSortable([
             SpyCmsBlockTableMap::COL_ID_CMS_PAGE,
@@ -69,14 +70,14 @@ class CmsBlockTable extends AbstractTable
         $query = $this->blockQuery;
 
         $queryResults = $this->runQuery($query, $config);
-        $results      = [];
+        $results = [];
 
         foreach ($queryResults as $item) {
             $results[] = [
                 SpyCmsBlockTableMap::COL_ID_CMS_PAGE => $item[SpyCmsBlockTableMap::COL_ID_CMS_PAGE],
-                CmsQueryContainer::TEMPLATE_NAME     => $item[CmsQueryContainer::TEMPLATE_NAME],
-                SpyCmsBlockTableMap::COL_NAME        => $item[SpyCmsBlockTableMap::COL_NAME],
-                self::ACTIONS                        => $this->buildLinks($item),
+                CmsQueryContainer::TEMPLATE_NAME => $item[CmsQueryContainer::TEMPLATE_NAME],
+                SpyCmsBlockTableMap::COL_NAME => $item[SpyCmsBlockTableMap::COL_NAME],
+                self::ACTIONS => $this->buildLinks($item),
             ];
         }
         unset($queryResults);
@@ -91,8 +92,8 @@ class CmsBlockTable extends AbstractTable
      */
     private function buildLinks($item)
     {
-        $result = '<a href="/cms/glossary/?'.self::REQUEST_ID_PAGE.'='.$item[SpyCmsBlockTableMap::COL_ID_CMS_PAGE].'" class="btn btn-xs btn-white">Edit glossaries</a>&nbsp;
-        <a href="/cms/block/edit/?'.self::REQUEST_ID_PAGE.'='.$item[SpyCmsBlockTableMap::COL_ID_CMS_PAGE].'" class="btn btn-xs btn-white">Edit page</a>';
+        $result = '<a href="/cms/glossary/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsBlockTableMap::COL_ID_CMS_PAGE] . '" class="btn btn-xs btn-white">Edit glossaries</a>&nbsp;
+        <a href="/cms/block/edit/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsBlockTableMap::COL_ID_CMS_PAGE] . '" class="btn btn-xs btn-white">Edit page</a>';
 
         return $result;
     }

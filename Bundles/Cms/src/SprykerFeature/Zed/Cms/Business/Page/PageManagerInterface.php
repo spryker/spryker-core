@@ -17,6 +17,7 @@ use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
 interface PageManagerInterface
 {
+
     /**
      * @param PageTransfer $page
      *
@@ -52,7 +53,7 @@ interface PageManagerInterface
 
     /**
      * @param PageTransfer $page
-     * @param string       $url
+     * @param string $url
      *
      * @throws UrlExistsException
      *
@@ -62,7 +63,7 @@ interface PageManagerInterface
 
     /**
      * @param PageTransfer $page
-     * @param string       $url
+     * @param string $url
      *
      * @return UrlTransfer
      */
@@ -70,7 +71,7 @@ interface PageManagerInterface
 
     /**
      * @param PageTransfer $page
-     * @param string       $blockName
+     * @param string $blockName
      *
      * @return PageTransfer
      */

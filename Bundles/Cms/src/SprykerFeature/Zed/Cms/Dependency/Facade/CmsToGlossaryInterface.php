@@ -15,8 +15,9 @@ use SprykerFeature\Zed\Glossary\Business\Exception\TranslationExistsException;
 
 interface CmsToGlossaryInterface
 {
+
     /**
-     * @param int   $idKey
+     * @param int $idKey
      * @param array $data
      *
      * @throws MissingTranslationException
@@ -28,7 +29,7 @@ interface CmsToGlossaryInterface
     /**
      * @param string $keyName
      * @param string $value
-     * @param bool   $isActive
+     * @param bool $isActive
      *
      * @throws MissingKeyException
      * @throws MissingLocaleException
