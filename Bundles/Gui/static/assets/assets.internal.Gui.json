@@ -1,13 +1,12 @@
 [{
-    "priority": 10,
+    "priority": 1,
     "assets": {
         "js": [
-            "/js/spryker.js",
             "/js/fixHeight.js",
-            "/js/category.helpers.js",
             "/js/SprykerAjax.js",
-            "/js/SprykerAjaxCallback.js",
-            "/js/SprykerAlert.js"
+            "/js/SprykerAjaxCallbacks.js",
+            "/js/SprykerAlert.js",
+            "/js/spryker.js"
         ],
         "css": [
             "/scss/spryker.scss",

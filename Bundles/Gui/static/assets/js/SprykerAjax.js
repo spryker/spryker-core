@@ -53,11 +53,6 @@ function SprykerAjax() {
         self.ajaxSubmit(options, 'changeStatusMarkInGrid');
     };
 
-    self.getCategoryTreeByCategoryId = function(idCategory) {
-        var options = {
-            'id-category': idCategory
-        };
-        self.setUrl('/category/index/node').setDataType('html').ajaxSubmit(options, 'categoryDisplayNodeTree');
-    };
+
 
 }
