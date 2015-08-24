@@ -22,14 +22,14 @@ class PasswordReset
     /**
      * @var AuthPasswordResetSenderInterface
      */
-    private $userPasswordResetSender;
+    private $userPasswordResetNotificationSender;
 
     /**
      * @var UserFacade
      */
     private $facadeUser;
 
-  /**
+    /**
      * @var AuthConfig
      */
     private $authConfig;
@@ -66,7 +66,7 @@ class PasswordReset
 
         $resetPasswordEntity = new SpyResetPassword();
         $resetPasswordEntity->setCode($passwordResetToken);
-        $resetPasswordEntity->setFkUserId($userTransfer->getIdUser());
+        $resetPasswordEntity->setFkUser($userTransfer->getIdUser());
         $resetPasswordEntity->setStatus(SpyResetPasswordTableMap::COL_STATUS_ACTIVE);
 
         $affectedRows = $resetPasswordEntity->save();
@@ -91,7 +91,7 @@ class PasswordReset
             return false;
         }
 
-        $userTransfer = $this->facadeUser->getUserById($resetPasswordEntity->getFkUserId());
+        $userTransfer = $this->facadeUser->getUserById($resetPasswordEntity->getFkUser());
         $userTransfer->setPassword($newPassword);
         $this->facadeUser->updateUser($userTransfer);
 
@@ -143,16 +143,17 @@ class PasswordReset
      */
     protected function sendResetRequest($email, $passwordResetToken)
     {
-        if (null !== $this->userPasswordResetSender) {
-            $this->userPasswordResetSender->send($email, $passwordResetToken);
+        if (null !== $this->userPasswordResetNotificationSender) {
+            $this->userPasswordResetNotificationSender->send($email, $passwordResetToken);
         }
     }
 
     /**
-     * @param AuthPasswordResetSenderInterface $userPasswordResetSender
+     * @param AuthPasswordResetSenderInterface $userPasswordResetNotificationSender
      */
-    public function setUserPasswordResetSender(AuthPasswordResetSenderInterface $userPasswordResetSender)
-    {
-        $this->userPasswordResetSender = $userPasswordResetSender;
+    public function setUserPasswordResetNotificationSender(
+        AuthPasswordResetSenderInterface $userPasswordResetNotificationSender
+    ) {
+        $this->userPasswordResetNotificationSender = $userPasswordResetNotificationSender;
     }
 }

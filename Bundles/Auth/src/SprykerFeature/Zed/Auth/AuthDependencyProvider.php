@@ -41,7 +41,7 @@ class AuthDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::PASSWORD_RESET_SENDER] = function (Container $container) {
-            return $this->getPasswordResetSender($container);
+            return $this->getPasswordResetNotificationSender($container);
         };
 
         return $container;
@@ -53,7 +53,7 @@ class AuthDependencyProvider extends AbstractBundleDependencyProvider
      * @return AuthPasswordResetSenderInterface;
      *
      */
-    protected function getPasswordResetSender(Container $container)
+    protected function getPasswordResetNotificationSender(Container $container)
     {
         return;
     }

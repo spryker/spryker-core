@@ -242,27 +242,6 @@ class User implements UserInterface
     }
 
     /**
-     * @param string $token
-     *
-     * @throws UserNotFoundException
-     *
-     * @return UserTransfer
-     */
-    public function getUserByToken($token)
-    {
-        $entity = $this->queryContainer
-            ->queryUserByToken($token)
-            ->findOne()
-        ;
-
-        if ($entity === null) {
-            throw new UserNotFoundException();
-        }
-
-        return $this->entityToTransfer($entity);
-    }
-
-    /**
      * @param int $id
      *
      * @throws UserNotFoundException

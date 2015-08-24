@@ -32,7 +32,7 @@ class AuthFacadeTest extends Test
         $this->authFacade = $locator->auth()->facade();
     }
 
-    public function testRequestPasswordReset()
+    public function testResetRequestCheckIfStatusIsActiveAndTokenIsSet()
     {
         $userEntity = $this->createTestUser();
         $userEntity->save();
@@ -41,7 +41,7 @@ class AuthFacadeTest extends Test
 
         $userEntity->reload();
 
-        $passwordEntity = SpyResetPasswordQuery::create()->findOneByFkUserId($userEntity->getIdUser());
+        $passwordEntity = SpyResetPasswordQuery::create()->findOneByFkUser($userEntity->getIdUser());
 
         $this->assertEquals($passwordEntity->getStatus(), SpyResetPasswordTableMap::COL_STATUS_ACTIVE);
         $this->assertNotEmpty($passwordEntity->getCode());
@@ -49,13 +49,13 @@ class AuthFacadeTest extends Test
 
     }
 
-    public function testRequestPasswordEmailNotExisting()
+    public function testRequestPasswordEmailNotExistingShouldThrowException()
     {
         $this->setExpectedException('SprykerFeature\Zed\User\Business\Exception\UserNotFoundException');
         $this->authFacade->requestPasswordReset('username1@domain.tld');
     }
 
-    public function testResetPassword()
+    public function testPasswordResetWhenTokenIsValidStateShouldBeChangedToUsed()
     {
         $userEntity = $this->createTestUser();
         $userEntity->save();
@@ -64,7 +64,7 @@ class AuthFacadeTest extends Test
 
         $userEntity->reload();
 
-        $passwordEntity = SpyResetPasswordQuery::create()->findOneByFkUserId($userEntity->getIdUser());
+        $passwordEntity = SpyResetPasswordQuery::create()->findOneByFkUser($userEntity->getIdUser());
 
         $resetStatus = $this->authFacade->resetPassword($passwordEntity->getCode(), 'new');
 
@@ -74,7 +74,7 @@ class AuthFacadeTest extends Test
         $this->assertEquals($passwordEntity->getStatus(), SpyResetPasswordTableMap::COL_STATUS_USED);
     }
 
-    public function testValidateExpiredResetToken()
+    public function testValidateTokenExpirityShouldStateSetToExpired()
     {
         $userEntity = $this->createTestUser();
         $userEntity->save();
@@ -83,7 +83,7 @@ class AuthFacadeTest extends Test
 
         $userEntity->reload();
 
-        $passwordEntity = SpyResetPasswordQuery::create()->findOneByFkUserId($userEntity->getIdUser());
+        $passwordEntity = SpyResetPasswordQuery::create()->findOneByFkUser($userEntity->getIdUser());
         $expiredDateTime = new \DateTime('last year');
         $passwordEntity->setCreatedAt($expiredDateTime);
         $passwordEntity->save();
@@ -96,7 +96,7 @@ class AuthFacadeTest extends Test
         $this->assertFalse($resetStatus);
     }
 
-    public function testValidateNonExistantResetToken()
+    public function testValidatePasswordWhenTokenProvidedNotSavedToDatabase()
     {
         $resetStatus = $this->authFacade->isValidPasswordResetToken('NERAMANES');
         $this->assertFalse($resetStatus);

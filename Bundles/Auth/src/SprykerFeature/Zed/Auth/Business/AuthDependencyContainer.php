@@ -56,9 +56,9 @@ class AuthDependencyContainer extends AbstractBusinessDependencyContainer
             $this->getConfig()
         );
 
-        $passwordResetSender = $this->getProvidedDependency(AuthDependencyProvider::PASSWORD_RESET_SENDER);
-        if (null !== $passwordResetSender) {
-            $passwordReset->setUserPasswordResetSender($passwordResetSender);
+        $passwordResetNotificationSender = $this->getProvidedDependency(AuthDependencyProvider::PASSWORD_RESET_SENDER);
+        if (null !== $passwordResetNotificationSender) {
+            $passwordReset->setUserPasswordResetNotificationSender($passwordResetNotificationSender);
         }
 
         return $passwordReset;

@@ -33,12 +33,12 @@ class AuthPasswordResetMailSenderPlugin extends AbstractPlugin implements AuthPa
         $mailRecipientTransfer->setEmail($email);
 
         $mailTransfer->addRecipient($mailRecipientTransfer);
-        $mailTransfer->setSubject(self::SUBJECT);
-        $mailTransfer->setTemplateName(self::TEMPLATE);
+        $mailTransfer->setSubject(static::SUBJECT);
+        $mailTransfer->setTemplateName(static::TEMPLATE);
         $mailTransfer->setMerge(true);
         $mailTransfer->setMergeLanguage('handlebars');
         $mailTransfer->setGlobalMergeVars([
-            'reset_password_token_url' => $token
+            'reset_password_token' => $token
         ]);
 
         $this->getDependencyContainer()
