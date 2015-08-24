@@ -75,19 +75,44 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
         $query = $this->queryProductCategoryMappings();
         $query
             ->useSpyAbstractProductQuery()
-            ->filterBySku($sku)
+                ->filterBySku($sku)
             ->endUse()
             ->useSpyCategoryNodeQuery()
-            ->useCategoryQuery()
-            ->useAttributeQuery()
-            ->filterByFkLocale($locale->getIdLocale())
-            ->filterByName($categoryName)
-            ->endUse()
-            ->endUse()
+                ->useCategoryQuery()
+                    ->useAttributeQuery()
+                        ->filterByFkLocale($locale->getIdLocale())
+                        ->filterByName($categoryName)
+                    ->endUse()
+                ->endUse()
             ->endUse()
         ;
 
         return $query;
     }
 
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return SpyProductCategoryQuery
+     */
+    public function queryProductCategoryMappingByIdCategory($idCategoryNode, LocaleTransfer $localeTransfer)
+    {
+        $query = $this->queryProductCategoryMappings();
+
+        $query->innerJoinSpyAbstractProduct()
+            ->useSpyCategoryNodeQuery()
+                ->filterByFkCategory($idCategoryNode)
+            ->endUse()
+            ->useSpyCategoryNodeQuery()
+                ->useCategoryQuery()
+                    ->useAttributeQuery()
+                        ->useLocaleQuery()
+                            ->filterByLocaleName($localeTransfer->getLocaleName())
+                        ->endUse()
+                    ->endUse()
+                ->endUse()
+            ->endUse();
+
+        return $query;
+    }
 }
