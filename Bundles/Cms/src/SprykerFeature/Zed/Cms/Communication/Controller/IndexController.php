@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Communication\Controller;
@@ -16,9 +16,12 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-
         $pageTable = $this->getDependencyContainer()
             ->createCmsPageTable()
+        ;
+
+        $blockTable = $this->getDependencyContainer()
+            ->createCmsBlockTable()
         ;
 
         $redirectTable = $this->getDependencyContainer()
@@ -27,6 +30,7 @@ class IndexController extends AbstractController
 
         return [
             'pages' => $pageTable->render(),
+            'blocks' => $blockTable->render(),
             'redirects' => $redirectTable->render(),
         ];
     }
@@ -46,6 +50,18 @@ class IndexController extends AbstractController
     /**
      * @return JsonResponse
      */
+    public function blockTableAction()
+    {
+        $table = $this->getDependencyContainer()
+            ->createCmsBlockTable()
+        ;
+
+        return $this->jsonResponse($table->fetchData());
+    }
+
+    /**
+     * @return JsonResponse
+     */
     public function redirectTableAction()
     {
         $table = $this->getDependencyContainer()
@@ -54,5 +70,4 @@ class IndexController extends AbstractController
 
         return $this->jsonResponse($table->fetchData());
     }
-
 }

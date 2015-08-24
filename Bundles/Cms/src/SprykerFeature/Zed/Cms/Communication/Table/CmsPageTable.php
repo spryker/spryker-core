@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Communication\Table;
@@ -96,5 +96,4 @@ class CmsPageTable extends AbstractTable
 
         return $result;
     }
-
 }

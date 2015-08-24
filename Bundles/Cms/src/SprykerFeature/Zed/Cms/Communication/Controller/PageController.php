@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Communication\Controller;
@@ -40,7 +40,9 @@ class PageController extends AbstractController
             $data = $form->getData();
             $pageTransfer = $this->createPageTransfer($data);
 
-            $this->getFacade()->savePageUrlAndTouch($pageTransfer, $data[CmsPageForm::URL]);
+            $this->getFacade()
+                ->savePageUrlAndTouch($pageTransfer, $data[CmsPageForm::URL])
+            ;
             $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 
             return $this->redirectResponse($redirectUrl);
@@ -69,14 +71,20 @@ class PageController extends AbstractController
             $data = $form->getData();
 
             $pageTransfer = $this->createPageTransfer($data);
-            $pageTransfer = $this->getFacade()->savePage($pageTransfer);
+            $pageTransfer = $this->getFacade()
+                ->savePage($pageTransfer)
+            ;
 
             if (intval($data[CmsPageForm::CURRENT_TEMPLATE]) !== intval($data[CmsPageForm::FK_TEMPLATE])) {
-                $this->getFacade()->deleteGlossaryKeysByIdPage($idPage);
+                $this->getFacade()
+                    ->deleteGlossaryKeysByIdPage($idPage)
+                ;
             }
 
             $urlTransfer = $this->createUrlTransfer($data['id_url'], $pageTransfer, $data);
-            $this->getUrlFacade()->saveUrlAndTouch($urlTransfer);
+            $this->getUrlFacade()
+                ->saveUrlAndTouch($urlTransfer)
+            ;
 
             $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 
@@ -120,7 +128,10 @@ class PageController extends AbstractController
      */
     private function createUrlTransfer($idUrl, $pageTransfer, array $data)
     {
-        $url = $this->getQueryContainer()->queryUrlById($idUrl)->findOne();
+        $url = $this->getQueryContainer()
+            ->queryUrlById($idUrl)
+            ->findOne()
+        ;
 
         $urlTransfer = new UrlTransfer();
 
@@ -132,5 +143,4 @@ class PageController extends AbstractController
 
         return $urlTransfer;
     }
-
 }

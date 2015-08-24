@@ -1,20 +1,20 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Communication\Controller;
 
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
 use SprykerFeature\Zed\Cms\CmsDependencyProvider;
 use SprykerFeature\Zed\Cms\Communication\CmsDependencyContainer;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsRedirectForm;
 use SprykerFeature\Zed\Cms\Communication\Table\CmsRedirectTable;
-use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerFeature\Zed\Url\Business\UrlFacade;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -41,10 +41,13 @@ class RedirectController extends AbstractController
         if ($form->isValid()) {
             $data = $form->getData();
 
-            $redirectTransfer = $this->getUrlFacade()->createRedirectAndTouch($data[CmsRedirectForm::TO_URL]);
+            $redirectTransfer = $this->getUrlFacade()
+                ->createRedirectAndTouch($data[CmsRedirectForm::TO_URL])
+            ;
 
-            $this->getUrlFacade()->saveRedirectUrlAndTouch($data[CmsRedirectForm::FROM_URL], $this->getLocaleFacade()
-                ->getCurrentLocale(), $redirectTransfer->getIdRedirect())
+            $this->getUrlFacade()
+                ->saveRedirectUrlAndTouch($data[CmsRedirectForm::FROM_URL], $this->getLocaleFacade()
+                    ->getCurrentLocale(), $redirectTransfer->getIdRedirect())
             ;
 
             return $this->redirectResponse(self::REDIRECT_ADDRESS);
@@ -72,17 +75,26 @@ class RedirectController extends AbstractController
 
         if ($form->isValid()) {
             $data = $form->getData();
-            $url = $this->getQueryContainer()->queryUrlByIdWithRedirect($idUrl)->findOne();
+            $url = $this->getQueryContainer()
+                ->queryUrlByIdWithRedirect($idUrl)
+                ->findOne()
+            ;
 
             if ($url) {
                 $urlTransfer = $this->createUrlTransfer($url, $data);
-                $this->getUrlFacade()->saveUrlAndTouch($urlTransfer);
+                $this->getUrlFacade()
+                    ->saveUrlAndTouch($urlTransfer)
+                ;
 
-                $redirect = $this->getQueryContainer()->queryRedirectById($url->getFkResourceRedirect())->findOne();
+                $redirect = $this->getQueryContainer()
+                    ->queryRedirectById($url->getFkResourceRedirect())
+                    ->findOne()
+                ;
                 $redirectTransfer = $this->createRedirectTransfer($redirect, $data);
 
-                $this->getUrlFacade()->saveRedirectAndTouch($redirectTransfer);
-
+                $this->getUrlFacade()
+                    ->saveRedirectAndTouch($redirectTransfer)
+                ;
             }
 
             return $this->redirectResponse(self::REDIRECT_ADDRESS);
@@ -143,5 +155,4 @@ class RedirectController extends AbstractController
 
         return $redirectTransfer;
     }
-
 }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Communication\Grid;
@@ -10,7 +10,6 @@ use SprykerFeature\Zed\Ui\Dependency\Grid\AbstractGrid;
 
 class CmsGrid extends AbstractGrid
 {
-
     public function definePlugins()
     {
         return [
@@ -40,5 +39,4 @@ class CmsGrid extends AbstractGrid
             ,
         ];
     }
-
 }

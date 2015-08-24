@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Communication\Form;
@@ -38,19 +38,26 @@ class CmsRedirectForm extends AbstractForm
     protected $formType;
 
     /**
+     * @var CmsConstraint
+     */
+    protected $constraints;
+
+    /**
      * @param string $type
      */
 
     /**
      * @param SpyUrlQuery $urlByIdQuery
-     * @param string $formType
      * @param UrlFacade $urlFacade
+     * @param CmsConstraint $constraints
+     * @param string $formType
      */
-    public function __construct(SpyUrlQuery $urlByIdQuery, $formType, UrlFacade $urlFacade)
+    public function __construct(SpyUrlQuery $urlByIdQuery, UrlFacade $urlFacade, CmsConstraint $constraints, $formType)
     {
         $this->urlByIdQuery = $urlByIdQuery;
-        $this->formType = $formType;
         $this->urlFacade = $urlFacade;
+        $this->constraints = $constraints;
+        $this->formType = $formType;
     }
 
     /**
@@ -58,8 +65,7 @@ class CmsRedirectForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-
-        $urlConstraints = CmsConstraint::getMandatoryConstraints();
+        $urlConstraints = $this->constraints->getMandatoryConstraints();
 
         if (self::ADD === $this->formType) {
             $urlConstraints[] = new Callback([
@@ -86,7 +92,7 @@ class CmsRedirectForm extends AbstractForm
             ->addText(self::FROM_URL, $urlParams)
             ->addText(self::TO_URL, [
                 'label' => 'To URL',
-                'constraints' => CmsConstraint::getMandatoryConstraints(),
+                'constraints' => $this->constraints->getMandatoryConstraints(),
             ])
             ;
     }
@@ -105,5 +111,4 @@ class CmsRedirectForm extends AbstractForm
             ];
         }
     }
-
 }

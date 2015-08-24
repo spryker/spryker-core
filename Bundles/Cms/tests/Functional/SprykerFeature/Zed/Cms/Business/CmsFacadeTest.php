@@ -1,10 +1,10 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace Functional\SprykerFeature\Zed\Cms;
+namespace Functional\SprykerFeature\Zed\Cms\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
@@ -129,7 +129,9 @@ class CmsFacadeTest extends Test
 
         $page = $this->cmsFacade->savePage($page);
 
-        $pageEntity = $this->cmsQueryContainer->queryPageById($page->getIdCmsPage())->findOne();
+        $pageEntity = $this->cmsQueryContainer->queryPageById($page->getIdCmsPage())
+            ->findOne()
+        ;
         $this->assertEquals($template1->getIdCmsTemplate(), $pageEntity->getFkTemplate());
 
         $page->setFkTemplate($template2->getIdCmsTemplate());
@@ -170,12 +172,14 @@ class CmsFacadeTest extends Test
 
         $templateQuery = $this->cmsQueryContainer->queryTemplateById($template->getIdCmsTemplate());
 
-        $this->assertEquals('WhatARandomPath2', $templateQuery->findOne()->getTemplatePath());
+        $this->assertEquals('WhatARandomPath2', $templateQuery->findOne()
+            ->getTemplatePath());
 
         $template->setTemplatePath('WhatAnotherRandomPath2');
         $this->cmsFacade->saveTemplate($template);
 
-        $this->assertEquals('WhatAnotherRandomPath2', $templateQuery->findOne()->getTemplatePath());
+        $this->assertEquals('WhatAnotherRandomPath2', $templateQuery->findOne()
+            ->getTemplatePath());
     }
 
     /**
@@ -232,12 +236,14 @@ class CmsFacadeTest extends Test
 
         $pageKeyMappingQuery = $this->cmsQueryContainer->queryGlossaryKeyMappingById($pageKeyMapping->getIdCmsGlossaryKeyMapping());
 
-        $this->assertEquals($glossaryKeyId1, $pageKeyMappingQuery->findOne()->getFkGlossaryKey());
+        $this->assertEquals($glossaryKeyId1, $pageKeyMappingQuery->findOne()
+            ->getFkGlossaryKey());
 
         $pageKeyMapping->setFkGlossaryKey($glossaryKeyId2);
         $this->cmsFacade->savePageKeyMapping($pageKeyMapping);
 
-        $this->assertEquals($glossaryKeyId2, $pageKeyMappingQuery->findOne()->getFkGlossaryKey());
+        $this->assertEquals($glossaryKeyId2, $pageKeyMappingQuery->findOne()
+            ->getFkGlossaryKey());
     }
 
     /**
@@ -302,5 +308,4 @@ class CmsFacadeTest extends Test
 
         $this->glossaryFacade->setOwnQueryContainer($this->glossaryQueryContainer);
     }
-
 }

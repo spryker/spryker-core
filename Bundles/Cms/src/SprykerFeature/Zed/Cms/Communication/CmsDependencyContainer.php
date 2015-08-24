@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Communication;
@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Cms\Communication;
 use Generated\Zed\Ide\FactoryAutoCompletion\CmsCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Cms\CmsDependencyProvider;
-use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 
 /**
  * @method CmsCommunication getFactory()
@@ -28,6 +27,20 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
 
         return $this->getFactory()
             ->createTableCmsPageTable($pageQuery)
+            ;
+    }
+
+    /**
+     * @return CmsBlockTable
+     */
+    public function createCmsBlockTable()
+    {
+        $blockQuery = $this->getQueryContainer()
+            ->queryPageWithTemplatesAndBlocks()
+        ;
+
+        return $this->getFactory()
+            ->createTableCmsBlockTable($blockQuery)
             ;
     }
 
@@ -72,14 +85,9 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createCmsPageForm($formType, $idPage = null)
     {
-
-        $pageUrlByIdQuery = null;
-
-        if (null !== $idPage) {
-            $pageUrlByIdQuery = $this->getQueryContainer()
-                ->queryPageWithTemplatesAndUrlByIdPage($idPage)
-            ;
-        }
+        $pageUrlByIdQuery = $this->getQueryContainer()
+            ->queryPageWithTemplatesAndUrlByIdPage($idPage)
+        ;
 
         $templateQuery = $this->getQueryContainer()
             ->queryTemplates()
@@ -88,7 +96,30 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
         $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
 
         return $this->getFactory()
-            ->createFormCmsPageForm($templateQuery, $pageUrlByIdQuery, $formType, $idPage, $urlFacade)
+            ->createFormCmsPageForm($templateQuery, $pageUrlByIdQuery, $urlFacade,
+                $this->getFactory()->createFormConstraintCmsConstraint(), $formType, $idPage)
+            ;
+    }
+
+    /**
+     * @param string $formType
+     * @param int $idPage
+     *
+     * @return CmsPageForm
+     */
+    public function createCmsBlockForm($formType, $idPage = null)
+    {
+        $blockPageByIdQuery = $this->getQueryContainer()
+            ->queryPageWithTemplatesAndBlocksByIdPage($idPage)
+        ;
+
+        $templateQuery = $this->getQueryContainer()
+            ->queryTemplates()
+        ;
+
+        return $this->getFactory()
+            ->createFormCmsBlockForm($templateQuery, $blockPageByIdQuery,
+                $this->getFactory()->createFormConstraintCmsConstraint(), $formType, $idPage)
             ;
     }
 
@@ -107,7 +138,8 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
         $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
 
         return $this->getFactory()
-            ->createFormCmsRedirectForm($queryUrlById, $formType, $urlFacade)
+            ->createFormCmsRedirectForm($queryUrlById, $urlFacade,
+                $this->getFactory()->createFormConstraintCmsConstraint(), $formType)
             ;
     }
 
@@ -121,13 +153,13 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createCmsGlossaryForm($idPage, $idMapping = null, $placeholder = null, $cmsFacade)
     {
-
         $glossaryMappingByIdQuery = $this->getQueryContainer()
             ->queryGlossaryKeyMappingWithKeyById($idMapping)
         ;
 
         return $this->getFactory()
-            ->createFormCmsGlossaryForm($glossaryMappingByIdQuery, $idPage, $idMapping, $placeholder, $cmsFacade)
+            ->createFormCmsGlossaryForm($glossaryMappingByIdQuery, $cmsFacade,
+                $this->getFactory()->createFormConstraintCmsConstraint(), $idPage, $idMapping, $placeholder)
             ;
     }
 
@@ -138,7 +170,8 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function getTemplateRealPath($templateRelativePath)
     {
-        return $this->getConfig()->getTemplateRealPath($templateRelativePath);
+        return $this->getConfig()
+            ->getTemplateRealPath($templateRelativePath)
+            ;
     }
-
 }

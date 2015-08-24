@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Business\Page;
@@ -69,4 +69,11 @@ interface PageManagerInterface
      */
     public function savePageUrlAndTouch(PageTransfer $page, $url);
 
+    /**
+     * @param PageTransfer $page
+     * @param string $blockName
+     *
+     * @return PageTransfer
+     */
+    public function savePageBlockAndTouch(PageTransfer $page, $blockName);
 }

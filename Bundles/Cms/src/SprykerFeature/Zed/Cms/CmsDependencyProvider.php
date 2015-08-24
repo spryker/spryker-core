@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms;
@@ -11,7 +11,6 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class CmsDependencyProvider extends AbstractBundleDependencyProvider
 {
-
     const FACADE_URL = 'facade_url';
     const FACADE_LOCALE = 'facade_locale';
 
@@ -52,5 +51,4 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->glossary()->queryContainer();
         };
     }
-
 }
