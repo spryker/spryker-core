@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace Functional\SprykerFeature\Zed\Cms;
+namespace Functional\SprykerFeature\Zed\Cms\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CmsTemplateTransfer;

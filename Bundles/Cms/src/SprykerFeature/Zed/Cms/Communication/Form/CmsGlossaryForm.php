@@ -44,21 +44,27 @@ class CmsGlossaryForm extends AbstractForm
     protected $cmsFacade;
 
     /**
+     * @var CmsConstraint
+     */
+    protected $constraints;
+
+    /**
      * @param SpyCmsGlossaryKeyMappingQuery $glossaryByIdQuery
+     * @param CmsFacade $cmsFacade
+     * @param CmsConstraint $constraints
      * @param int $idPage
      * @param int $idMapping
      * @param array $placeholder
-     * @param CmsFacade $cmsFacade
-     * @param GlossaryFacade $glossaryFacade
      */
 
-    public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryByIdQuery, $idPage, $idMapping, $placeholder, CmsFacade $cmsFacade)
+    public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryByIdQuery, CmsFacade $cmsFacade, CmsConstraint $constraints, $idPage, $idMapping, $placeholder)
     {
         $this->glossaryByIdQuery = $glossaryByIdQuery;
+        $this->cmsFacade = $cmsFacade;
+        $this->constraints = $constraints;
         $this->idPage = $idPage;
         $this->idMapping = $idMapping;
         $this->placeholder = $placeholder;
-        $this->cmsFacade = $cmsFacade;
     }
 
     /**
@@ -66,7 +72,7 @@ class CmsGlossaryForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-        $placeholderConstraints = CmsConstraint::getMandatoryConstraints();
+        $placeholderConstraints = $this->constraints->getMandatoryConstraints();
 
         if (!isset($this->idMapping)) {
             $placeholderConstraints[] = new Callback([

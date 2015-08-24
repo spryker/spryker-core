@@ -50,17 +50,24 @@ class CmsPageForm extends AbstractForm
     protected $urlFacade;
 
     /**
+     * @var CmsConstraint
+     */
+    protected $constraints;
+
+    /**
      * @param SpyCmsTemplateQuery $templateQuery
      * @param SpyCmsPageQuery $pageUrlByIdQuery
+     * @param UrlFacade $urlFacade
+     * @param CmsConstraint $constraints
      * @param string $formType
      * @param int $idPage
-     * @param UrlFacade $urlFacade
      */
 
-    public function __construct(SpyCmsTemplateQuery $templateQuery, SpyCmsPageQuery $pageUrlByIdQuery, $formType, $idPage, UrlFacade $urlFacade)
+    public function __construct(SpyCmsTemplateQuery $templateQuery, SpyCmsPageQuery $pageUrlByIdQuery, UrlFacade $urlFacade, CmsConstraint $constraints, $formType, $idPage)
     {
         $this->templateQuery = $templateQuery;
         $this->pageUrlByIdQuery = $pageUrlByIdQuery;
+        $this->constraints = $constraints;
         $this->formType = $formType;
         $this->idPage = $idPage;
         $this->urlFacade = $urlFacade;
@@ -71,7 +78,7 @@ class CmsPageForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-        $urlConstraints = CmsConstraint::getMandatoryConstraints();
+        $urlConstraints = $this->constraints->getMandatoryConstraints();
 
         if (self::ADD === $this->formType) {
             $urlConstraints[] = new Callback([

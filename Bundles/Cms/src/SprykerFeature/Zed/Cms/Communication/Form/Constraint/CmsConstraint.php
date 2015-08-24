@@ -12,7 +12,11 @@ use Symfony\Component\Validator\Constraints\Required;
 
 class CmsConstraint
 {
-    public static function getMandatoryConstraints()
+
+    /**
+     * @return array
+     */
+    public function getMandatoryConstraints()
     {
         return [
             new Required(),

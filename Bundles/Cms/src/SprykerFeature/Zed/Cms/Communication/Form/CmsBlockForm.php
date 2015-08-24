@@ -42,15 +42,22 @@ class CmsBlockForm extends AbstractForm
     protected $idPage;
 
     /**
+     * @var CmsConstraint
+     */
+    protected $constraints;
+
+    /**
      * @param SpyCmsTemplateQuery $templateQuery
      * @param SpyCmsBlockQuery $blockPageByIdQuery
+     * @param CmsConstraint $constraints
      * @param string $formType
      * @param int $idPage
      */
-    public function __construct(SpyCmsTemplateQuery $templateQuery, SpyCmsBlockQuery $blockPageByIdQuery, $formType, $idPage)
+    public function __construct(SpyCmsTemplateQuery $templateQuery, SpyCmsBlockQuery $blockPageByIdQuery, CmsConstraint $constraints, $formType, $idPage)
     {
         $this->templateQuery = $templateQuery;
         $this->blockPageByIdQuery = $blockPageByIdQuery;
+        $this->constraints = $constraints;
         $this->formType = $formType;
         $this->idPage = $idPage;
     }
@@ -60,7 +67,7 @@ class CmsBlockForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-        $blockConstraints = CmsConstraint::getMandatoryConstraints();
+        $blockConstraints = $this->constraints->getMandatoryConstraints();
 
         if (self::ADD === $this->formType) {
             $blockConstraints[] = new Callback([

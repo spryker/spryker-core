@@ -91,7 +91,7 @@ class CmsBlockTable extends AbstractTable
     private function buildLinks(array $item)
     {
         $result = '<a href="/cms/glossary/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsBlockTableMap::COL_ID_CMS_PAGE] . '" class="btn btn-xs btn-white">Edit glossaries</a>&nbsp;
-        <a href="/cms/block/edit/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsBlockTableMap::COL_ID_CMS_PAGE] . '" class="btn btn-xs btn-white">Edit page</a>';
+        <a href="/cms/block/edit/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsBlockTableMap::COL_ID_CMS_PAGE] . '" class="btn btn-xs btn-white">Edit block</a>';
 
         return $result;
     }

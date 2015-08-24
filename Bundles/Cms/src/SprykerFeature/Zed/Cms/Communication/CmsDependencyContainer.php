@@ -96,7 +96,8 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
         $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
 
         return $this->getFactory()
-            ->createFormCmsPageForm($templateQuery, $pageUrlByIdQuery, $formType, $idPage, $urlFacade)
+            ->createFormCmsPageForm($templateQuery, $pageUrlByIdQuery, $urlFacade,
+                $this->getFactory()->createFormConstraintCmsConstraint(), $formType, $idPage)
             ;
     }
 
@@ -117,7 +118,8 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
         ;
 
         return $this->getFactory()
-            ->createFormCmsBlockForm($templateQuery, $blockPageByIdQuery, $formType, $idPage)
+            ->createFormCmsBlockForm($templateQuery, $blockPageByIdQuery,
+                $this->getFactory()->createFormConstraintCmsConstraint(), $formType, $idPage)
             ;
     }
 
@@ -136,7 +138,8 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
         $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
 
         return $this->getFactory()
-            ->createFormCmsRedirectForm($queryUrlById, $formType, $urlFacade)
+            ->createFormCmsRedirectForm($queryUrlById, $urlFacade,
+                $this->getFactory()->createFormConstraintCmsConstraint(), $formType)
             ;
     }
 
@@ -155,7 +158,8 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
         ;
 
         return $this->getFactory()
-            ->createFormCmsGlossaryForm($glossaryMappingByIdQuery, $idPage, $idMapping, $placeholder, $cmsFacade)
+            ->createFormCmsGlossaryForm($glossaryMappingByIdQuery, $cmsFacade,
+                $this->getFactory()->createFormConstraintCmsConstraint(), $idPage, $idMapping, $placeholder)
             ;
     }
 
