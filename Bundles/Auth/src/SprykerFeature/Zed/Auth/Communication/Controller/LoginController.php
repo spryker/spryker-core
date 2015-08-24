@@ -38,7 +38,7 @@ class LoginController extends AbstractController
 
             $isLogged = $this->getFacade()->login($formData[LoginForm::USERNAME], $formData[LoginForm::PASSWORD]);
 
-            if (true === $isLogged) {
+            if ($isLogged) {
                 return $this->redirectResponse('/');
             } else {
                 $message = 'Authentication failed'; //@todo use flash Messenger

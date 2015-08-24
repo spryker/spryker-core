@@ -119,7 +119,7 @@ class User implements UserInterface
         $userEntity->setUsername($userTransfer->getUsername());
 
         $password = $userTransfer->getPassword();
-        if (!empty($password) && true === $this->isRawPassword($userTransfer->getPassword())) {
+        if (!empty($password) && $this->isRawPassword($userTransfer->getPassword())) {
             $userEntity->setPassword($this->encryptPassword($userTransfer->getPassword()));
         }
 

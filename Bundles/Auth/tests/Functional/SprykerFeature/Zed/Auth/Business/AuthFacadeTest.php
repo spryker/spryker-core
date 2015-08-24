@@ -16,6 +16,7 @@ use SprykerFeature\Zed\Auth\Persistence\Propel\Map\SpyResetPasswordTableMap;
 
 class AuthFacadeTest extends Test
 {
+    const TEST_MAIL = 'username@example.com';
 
     /**
      * @var AuthFacade
@@ -37,7 +38,7 @@ class AuthFacadeTest extends Test
         $userEntity = $this->createTestUser();
         $userEntity->save();
 
-        $resetStatus = $this->authFacade->requestPasswordReset('username@domain.tld');
+        $resetStatus = $this->authFacade->requestPasswordReset(self::TEST_MAIL);
 
         $userEntity->reload();
 
@@ -52,7 +53,7 @@ class AuthFacadeTest extends Test
     public function testRequestPasswordEmailNotExistingShouldThrowException()
     {
         $this->setExpectedException('SprykerFeature\Zed\User\Business\Exception\UserNotFoundException');
-        $this->authFacade->requestPasswordReset('username1@domain.tld');
+        $this->authFacade->requestPasswordReset('username1@example.com');
     }
 
     public function testPasswordResetWhenTokenIsValidStateShouldBeChangedToUsed()
@@ -60,7 +61,7 @@ class AuthFacadeTest extends Test
         $userEntity = $this->createTestUser();
         $userEntity->save();
 
-        $this->authFacade->requestPasswordReset('username@domain.tld');
+        $this->authFacade->requestPasswordReset(self::TEST_MAIL);
 
         $userEntity->reload();
 
@@ -79,7 +80,7 @@ class AuthFacadeTest extends Test
         $userEntity = $this->createTestUser();
         $userEntity->save();
 
-        $this->authFacade->requestPasswordReset('username@domain.tld');
+        $this->authFacade->requestPasswordReset(self::TEST_MAIL);
 
         $userEntity->reload();
 

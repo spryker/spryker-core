@@ -22,7 +22,7 @@ class AuthDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[static::FACADE_USER] = function (Container $container) {
+        $container[self::FACADE_USER] = function (Container $container) {
             return $container->getLocator()->user()->facade();
         };
 
@@ -36,7 +36,7 @@ class AuthDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[static::FACADE_USER] = function (Container $container) {
+        $container[self::FACADE_USER] = function (Container $container) {
             return $container->getLocator()->user()->facade();
         };
 
