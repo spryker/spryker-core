@@ -44,7 +44,7 @@ class DiscountVoucherTable extends AbstractTable
         $config->setHeader([
             SpyDiscountVoucherTableMap::COL_CREATED_AT => 'Created At',
             SpyDiscountTableMap::COL_VALID_TO => 'Valid To',
-            SpyDiscountTableMap::COL_DISPLAY_NAME => 'Voucher Name',
+            SpyDiscountVoucherTableMap::COL_VOUCHER_TITLE => 'Voucher Name',
             self::COL_VOUCHER_POOL => 'Voucher Pool',
             self::COL_VOUCHER_POOL_CATEGORY => 'Category',
             SpyDiscountVoucherTableMap::COL_CODE => 'Code',
@@ -89,6 +89,7 @@ class DiscountVoucherTable extends AbstractTable
                 SpyDiscountVoucherTableMap::COL_CREATED_AT => $item[SpyDiscountVoucherTableMap::COL_CREATED_AT],
                 SpyDiscountTableMap::COL_VALID_TO => $item[self::COL_DISCOUNT_VALID_TO],
                 SpyDiscountTableMap::COL_DISPLAY_NAME => $item[self::COL_DISCOUNT_NAME],
+                SpyDiscountVoucherTableMap::COL_VOUCHER_TITLE => $item[SpyDiscountVoucherTableMap::COL_VOUCHER_TITLE],
                 SpyDiscountTableMap::COL_AMOUNT => $item[self::COL_DISCOUNT_AMOUNT],
                 SpyDiscountTableMap::COL_TYPE => SpyDiscountTableMap::getValueSet(SpyDiscountTableMap::COL_TYPE)[$item[self::COL_DISCOUNT_AMOUNT_TYPE]],
                 self::COL_VOUCHER_POOL => $item[self::COL_VOUCHER_POOL],
