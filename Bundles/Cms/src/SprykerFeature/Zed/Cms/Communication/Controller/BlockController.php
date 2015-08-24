@@ -90,7 +90,7 @@ class BlockController extends AbstractController
      *
      * @return PageTransfer
      */
-    private function createPageTransfer($data)
+    private function createPageTransfer(array $data)
     {
         $pageTransfer = new PageTransfer();
         $pageTransfer->fromArray($data, true);

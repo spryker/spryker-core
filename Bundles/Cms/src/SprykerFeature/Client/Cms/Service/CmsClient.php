@@ -6,28 +6,27 @@
 
 namespace SprykerFeature\Client\Cms\Service;
 
+use Generated\Shared\Transfer\CmsBlockTransfer;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
 
 class CmsClient extends AbstractClient implements CmsClientInterface
 {
     /**
-     * @param string $blockName
-     * @param string $localeName
+     * @param CmsBlockTransfer $cmsBlockTransfer
      *
      * @return array
      */
-    public function blockFinder($blockName, $localeName)
+    public function findBlockByName(CmsBlockTransfer $cmsBlockTransfer)
     {
-        return $this->createCmsBlockFinder($localeName)->getBlockContent($blockName);
+        return $this->createCmsBlockFinder()->getBlockByName($cmsBlockTransfer);
     }
 
     /**
-     * @param $localeName
      *
      * @return CmsBlockStorageInterface
      */
-    private function createCmsBlockFinder($localeName)
+    private function createCmsBlockFinder()
     {
-        return $this->getDependencyContainer()->createCmsBlockFinder($localeName);
+        return $this->getDependencyContainer()->createCmsBlockFinder();
     }
 }

@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Cms\Business\Block;
 
+use Generated\Shared\Cms\CmsBlockInterface;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use SprykerFeature\Shared\Cms\CmsConfig;
 use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
@@ -36,81 +37,81 @@ class BlockManager implements BlockManagerInterface
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlock
+     * @param CmsBlockInterface $cmsBlockTransfer
      *
      * @return CmsBlockTransfer
      */
-    public function saveBlock(CmsBlockTransfer $cmsBlock)
+    public function saveBlock(CmsBlockInterface $cmsBlockTransfer)
     {
-        $this->checkPageExists($cmsBlock->getIdCmsPage());
+        $this->checkPageExists($cmsBlockTransfer->getIdCmsPage());
 
-        if (is_null($this->getCmsBlockByIdPage($cmsBlock->getIdCmsPage()))) {
-            $block = $this->createBlock($cmsBlock);
+        if (null === $this->getCmsBlockByIdPage($cmsBlockTransfer->getIdCmsPage())) {
+            $block = $this->createBlock($cmsBlockTransfer);
         } else {
-            $block = $this->updateBlock($cmsBlock);
+            $block = $this->updateBlock($cmsBlockTransfer);
         }
 
         return $this->convertBlockEntityToTransfer($block);
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlock
+     * @param CmsBlockInterface $cmsBlockTransfer
      *
      * @return CmsBlockTransfer
      */
-    public function saveBlockAndTouch(CmsBlockTransfer $cmsBlock)
+    public function saveBlockAndTouch(CmsBlockInterface $cmsBlockTransfer)
     {
-        $blockTransfer = $this->saveBlock($cmsBlock);
+        $blockTransfer = $this->saveBlock($cmsBlockTransfer);
         $this->touchBlockActive($blockTransfer);
 
         return $blockTransfer;
     }
 
     /**
-     * @param SpyCmsBlock $block
+     * @param SpyCmsBlock $blockEntity
      *
      * @return CmsBlockTransfer
      */
-    public function convertBlockEntityToTransfer(SpyCmsBlock $block)
+    public function convertBlockEntityToTransfer(SpyCmsBlock $blockEntity)
     {
         $blockTransfer = new CmsBlockTransfer();
-        $blockTransfer->fromArray($block->toArray(), true);
+        $blockTransfer->fromArray($blockEntity->toArray(), true);
 
         return $blockTransfer;
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlock
+     * @param CmsBlockInterface $cmsBlockTransfer
      */
-    public function touchBlockActive(CmsBlockTransfer $cmsBlock)
+    public function touchBlockActive(CmsBlockInterface $cmsBlockTransfer)
     {
-        $this->touchFacade->touchActive(CmsConfig::RESOURCE_TYPE_BLOCK, $cmsBlock->getIdCmsPage());
+        $this->touchFacade->touchActive(CmsConfig::RESOURCE_TYPE_BLOCK, $cmsBlockTransfer->getIdCmsPage());
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlock
+     * @param CmsBlockInterface $cmsBlockTransfer
      *
      * @return SpyCmsBlock
      */
-    protected function createBlock(CmsBlockTransfer $cmsBlock)
+    protected function createBlock(CmsBlockInterface $cmsBlockTransfer)
     {
         $blockEntity = new SpyCmsBlock();
 
-        $blockEntity->fromArray($cmsBlock->toArray());
+        $blockEntity->fromArray($cmsBlockTransfer->toArray());
         $blockEntity->save();
 
         return $blockEntity;
     }
 
     /**
-     * @param CmsBlockTransfer $cmsBlock
+     * @param CmsBlockInterface $cmsBlockTransfer
      *
      * @return SpyCmsBlock
      */
-    protected function updateBlock(CmsBlockTransfer $cmsBlock)
+    protected function updateBlock(CmsBlockInterface $cmsBlockTransfer)
     {
-        $blockEntity = $this->getCmsBlockByIdPage($cmsBlock->getIdCmsPage());
-        $blockEntity->fromArray($cmsBlock->toArray());
+        $blockEntity = $this->getCmsBlockByIdPage($cmsBlockTransfer->getIdCmsPage());
+        $blockEntity->fromArray($cmsBlockTransfer->toArray());
 
         if (!$blockEntity->isModified()) {
             return $blockEntity;

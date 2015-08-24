@@ -6,12 +6,14 @@
 
 namespace SprykerFeature\Client\Cms\Service\Storage;
 
+use Generated\Shared\Transfer\CmsBlockTransfer;
+
 interface CmsBlockStorageInterface
 {
     /**
-     * @param string $blockName
+     * @param CmsBlockTransfer $cmsBlockTransfer
      *
      * @return array
      */
-    public function getBlockContent($blockName);
+    public function getBlockByName(CmsBlockTransfer $cmsBlockTransfer);
 }

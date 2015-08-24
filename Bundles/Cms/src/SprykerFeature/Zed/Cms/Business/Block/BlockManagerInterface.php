@@ -6,34 +6,34 @@
 
 namespace SprykerFeature\Zed\Cms\Business\Block;
 
-use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Cms\CmsBlockInterface;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlock;
 
 interface BlockManagerInterface
 {
     /**
-     * @param CmsBlockTransfer $cmsBlock
+     * @param CmsBlockInterface $cmsBlockTransfer
      *
      * @return CmsBlockTransfer
      */
-    public function saveBlock(CmsBlockTransfer $cmsBlock);
+    public function saveBlock(CmsBlockInterface $cmsBlockTransfer);
 
     /**
-     * @param CmsBlockTransfer $cmsBlock
+     * @param CmsBlockInterface $cmsBlockTransfer
      *
      * @return CmsBlockTransfer
      */
-    public function saveBlockAndTouch(CmsBlockTransfer $cmsBlock);
+    public function saveBlockAndTouch(CmsBlockInterface $cmsBlockTransfer);
 
     /**
-     * @param SpyCmsBlock $block
+     * @param SpyCmsBlock $blockEntity
      *
      * @return CmsBlockTransfer
      */
-    public function convertBlockEntityToTransfer(SpyCmsBlock $block);
+    public function convertBlockEntityToTransfer(SpyCmsBlock $blockEntity);
 
     /**
-     * @param CmsBlockTransfer $cmsBlock
+     * @param CmsBlockInterface $cmsBlockTransfer
      */
-    public function touchBlockActive(CmsBlockTransfer $cmsBlock);
+    public function touchBlockActive(CmsBlockInterface $cmsBlockTransfer);
 }

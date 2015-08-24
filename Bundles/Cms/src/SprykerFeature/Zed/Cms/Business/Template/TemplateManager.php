@@ -37,7 +37,7 @@ class TemplateManager implements TemplateManagerInterface
         LocatorLocatorInterface $locator
     ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
-        $this->locator           = $locator;
+        $this->locator = $locator;
     }
 
     /**

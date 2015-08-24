@@ -6,13 +6,14 @@
 
 namespace SprykerFeature\Client\Cms\Service;
 
+use Generated\Shared\Transfer\CmsBlockTransfer;
+
 interface CmsClientInterface
 {
     /**
-     * @param string $blockName
-     * @param string $localeName
+     * @param CmsBlockTransfer $cmsBlockTransfer
      *
      * @return array
      */
-    public function blockFinder($blockName, $localeName);
+    public function findBlockByName(CmsBlockTransfer $cmsBlockTransfer);
 }

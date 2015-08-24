@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Client\Cms\Service\Storage;
 
+use Generated\Shared\Transfer\CmsBlockTransfer;
 use SprykerFeature\Client\Storage\Service\StorageClientInterface;
-use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 
 class CmsBlockStorage implements CmsBlockStorageInterface
 {
@@ -23,30 +23,23 @@ class CmsBlockStorage implements CmsBlockStorageInterface
     private $keyBuilder;
 
     /**
-     * @var string
-     */
-    private $locale;
-
-    /**
      * @param StorageClientInterface $storage
      * @param KeyBuilderInterface $keyBuilder
-     * @param string $localeName
      */
-    public function __construct($storage, $keyBuilder, $localeName)
+    public function __construct($storage, $keyBuilder)
     {
         $this->storage = $storage;
         $this->keyBuilder = $keyBuilder;
-        $this->locale = $localeName;
     }
 
     /**
-     * @param $blockName
+     * @param CmsBlockTransfer $cmsBlockTransfer
      *
      * @return array
      */
-    public function getBlockContent($blockName)
+    public function getBlockByName(CmsBlockTransfer $cmsBlockTransfer)
     {
-        $key = $this->keyBuilder->generateKey($blockName, $this->locale);
+        $key = $this->keyBuilder->generateKey($cmsBlockTransfer->getName(), $cmsBlockTransfer->getLocale()->getLocaleName());
         $block = $this->storage->get($key);
 
         return $block;

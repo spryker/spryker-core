@@ -21,14 +21,14 @@ class CmsBlockTable extends AbstractTable
     /**
      * @var SpyCmsBlockQuery
      */
-    protected $blockQuery;
+    protected $cmsBlockQuery;
 
     /**
-     * @param SpyCmsBlockQuery $blockQuery
+     * @param SpyCmsBlockQuery $cmsBlockQuery
      */
-    public function __construct(SpyCmsBlockQuery $blockQuery)
+    public function __construct(SpyCmsBlockQuery $cmsBlockQuery)
     {
-        $this->blockQuery = $blockQuery;
+        $this->cmsBlockQuery = $cmsBlockQuery;
     }
 
     /**
@@ -67,9 +67,7 @@ class CmsBlockTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->blockQuery;
-
-        $queryResults = $this->runQuery($query, $config);
+        $queryResults = $this->runQuery($this->cmsBlockQuery, $config);
         $results = [];
 
         foreach ($queryResults as $item) {
@@ -90,7 +88,7 @@ class CmsBlockTable extends AbstractTable
      *
      * @return string
      */
-    private function buildLinks($item)
+    private function buildLinks(array $item)
     {
         $result = '<a href="/cms/glossary/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsBlockTableMap::COL_ID_CMS_PAGE] . '" class="btn btn-xs btn-white">Edit glossaries</a>&nbsp;
         <a href="/cms/block/edit/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsBlockTableMap::COL_ID_CMS_PAGE] . '" class="btn btn-xs btn-white">Edit page</a>';

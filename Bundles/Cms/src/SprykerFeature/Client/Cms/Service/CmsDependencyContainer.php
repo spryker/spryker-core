@@ -15,16 +15,14 @@ use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 class CmsDependencyContainer extends AbstractServiceDependencyContainer
 {
     /**
-     * @param string $locale
      *
      * @return CmsBlockStorageInterface
      */
-    public function createCmsBlockFinder($locale)
+    public function createCmsBlockFinder()
     {
         return $this->getFactory()->createStorageCmsBlockStorage(
             $this->getStorage(),
-            $this->getKeyBuilder(),
-            $locale
+            $this->getKeyBuilder()
         );
     }
 

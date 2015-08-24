@@ -25,6 +25,7 @@
     </transfer>
 
     <transfer name="CmsBlock">
+        <property name="locale" type="Locale" />
         <property name="idCmsPage" type="int" />
         <property name="name" type="string" />
     </transfer>

@@ -67,53 +67,53 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param PageTransfer $page
+     * @param PageTransfer $pageTransfer
      *
      * @throws MissingPageException
      *
      * @return PageTransfer
      */
-    public function savePage(PageTransfer $page)
+    public function savePage(PageTransfer $pageTransfer)
     {
         $pageManager = $this->getDependencyContainer()->getPageManager();
 
-        return $pageManager->savePage($page);
+        return $pageManager->savePage($pageTransfer);
     }
 
     /**
-     * @param CmsBlockTransfer $blockTransfer
+     * @param CmsBlockTransfer $cmsBlockTransfer
      *
      * @return CmsBlockTransfer
      */
-    public function saveBlock(CmsBlockTransfer $blockTransfer)
+    public function saveBlock(CmsBlockTransfer $cmsBlockTransfer)
     {
         $blockManager = $this->getDependencyContainer()->getBlockManager();
 
-        return $blockManager->saveBlock($blockTransfer);
+        return $blockManager->saveBlock($cmsBlockTransfer);
     }
 
     /**
-     * @param PageKeyMappingTransfer $pageKeyMapping
+     * @param PageKeyMappingTransfer $pageKeyMappingTransfer
      *
      * @return PageKeyMappingTransfer
      */
-    public function savePageKeyMapping(PageKeyMappingTransfer $pageKeyMapping)
+    public function savePageKeyMapping(PageKeyMappingTransfer $pageKeyMappingTransfer)
     {
         $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
 
-        return $glossaryKeyMappingManager->savePageKeyMapping($pageKeyMapping);
+        return $glossaryKeyMappingManager->savePageKeyMapping($pageKeyMappingTransfer);
     }
 
     /**
-     * @param PageKeyMappingTransfer $pageKeyMapping
+     * @param PageKeyMappingTransfer $pageKeyMappingTransfer
      *
      * @return PageKeyMappingTransfer
      */
-    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMapping)
+    public function savePageKeyMappingAndTouch(PageKeyMappingTransfer $pageKeyMappingTransfer)
     {
         $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
 
-        return $glossaryKeyMappingManager->savePageKeyMappingAndTouch($pageKeyMapping);
+        return $glossaryKeyMappingManager->savePageKeyMappingAndTouch($pageKeyMappingTransfer);
     }
 
     /**
@@ -145,15 +145,15 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param CmsTemplateTransfer $cmsTemplate
+     * @param CmsTemplateTransfer $cmsTemplateTransfer
      *
      * @return CmsTemplateTransfer
      */
-    public function saveTemplate(CmsTemplateTransfer $cmsTemplate)
+    public function saveTemplate(CmsTemplateTransfer $cmsTemplateTransfer)
     {
         $templateManager = $this->getDependencyContainer()->getTemplateManager();
 
-        return $templateManager->saveTemplate($cmsTemplate);
+        return $templateManager->saveTemplate($cmsTemplateTransfer);
     }
 
     /**
@@ -174,21 +174,21 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param PageTransfer $page
+     * @param PageTransfer $pageTransfer
      * @param string $placeholder
      * @param string $value
      *
      * @return PageKeyMappingTransfer
      */
-    public function addPlaceholderText(PageTransfer $page, $placeholder, $value)
+    public function addPlaceholderText(PageTransfer $pageTransfer, $placeholder, $value)
     {
         $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
 
-        return $glossaryKeyMappingManager->addPlaceholderText($page, $placeholder, $value);
+        return $glossaryKeyMappingManager->addPlaceholderText($pageTransfer, $placeholder, $value);
     }
 
     /**
-     * @param PageTransfer $page
+     * @param PageTransfer $pageTransfer
      * @param string $placeholder
      *
      * @throws MissingGlossaryKeyMappingException
@@ -197,35 +197,35 @@ class CmsFacade extends AbstractFacade
      *
      * @return bool
      */
-    public function deletePageKeyMapping(PageTransfer $page, $placeholder)
+    public function deletePageKeyMapping(PageTransfer $pageTransfer, $placeholder)
     {
         $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
 
-        return $glossaryKeyMappingManager->deletePageKeyMapping($page, $placeholder);
+        return $glossaryKeyMappingManager->deletePageKeyMapping($pageTransfer, $placeholder);
     }
 
     /**
-     * @param PageTransfer $page
+     * @param PageTransfer $pageTransfer
      * @param string $url
      *
      * @throws UrlExistsException
      *
      * @return UrlTransfer
      */
-    public function createPageUrl(PageTransfer $page, $url)
+    public function createPageUrl(PageTransfer $pageTransfer, $url)
     {
         $pageManager = $this->getDependencyContainer()->getPageManager();
 
-        return $pageManager->createPageUrl($page, $url);
+        return $pageManager->createPageUrl($pageTransfer, $url);
     }
 
     /**
-     * @param PageTransfer $page
+     * @param PageTransfer $pageTransfer
      */
-    public function touchPageActive(PageTransfer $page)
+    public function touchPageActive(PageTransfer $pageTransfer)
     {
         $pageManager = $this->getDependencyContainer()->getPageManager();
-        $pageManager->touchPageActive($page);
+        $pageManager->touchPageActive($pageTransfer);
     }
 
     /**
@@ -238,29 +238,29 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
-     * @param PageTransfer $page
+     * @param PageTransfer $pageTransfer
      * @param string $url
      *
      * @return UrlTransfer
      */
-    public function savePageUrlAndTouch(PageTransfer $page, $url)
+    public function savePageUrlAndTouch(PageTransfer $pageTransfer, $url)
     {
         $pageManager = $this->getDependencyContainer()->getPageManager();
 
-        return $pageManager->savePageUrlAndTouch($page, $url);
+        return $pageManager->savePageUrlAndTouch($pageTransfer, $url);
     }
 
     /**
-     * @param PageTransfer $page
+     * @param PageTransfer $pageTransfer
      * @param string $blockName
      *
      * @return PageTransfer
      */
-    public function savePageBlockAndTouch(PageTransfer $page, $blockName)
+    public function savePageBlockAndTouch(PageTransfer $pageTransfer, $blockName)
     {
         $pageManager = $this->getDependencyContainer()->getPageManager();
 
-        return $pageManager->savePageBlockAndTouch($page, $blockName);
+        return $pageManager->savePageBlockAndTouch($pageTransfer, $blockName);
     }
 
     /**
