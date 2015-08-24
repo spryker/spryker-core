@@ -29,7 +29,7 @@ abstract class InstallerConfig extends AbstractBundleConfig
      */
     public function getGlossaryFilePaths()
     {
-        // Find flies in Core bundles
+        // Find files in Core bundles
         return glob(
             APPLICATION_VENDOR_DIR
             . '/spryker/spryker/Bundles/*/src/SprykerFeature/*/*/Ressources/glossary.yml'
