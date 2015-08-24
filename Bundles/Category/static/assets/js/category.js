@@ -11,6 +11,7 @@ $(document).ready(function() {
 
     $('#category-node-tree').on('click', '.category-tree', function(event){
         event.preventDefault();
+        showLoaderBar();
         var idCategory = $(this).attr('id').replace('categ-', '');
         spyAj.getCategoryTreeByCategoryId(idCategory);
     });

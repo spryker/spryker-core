@@ -1,0 +1,14 @@
+[{
+    "priority": 50,
+    "assets": {
+        "js": [
+            "/js/category.helpers.js",
+            "/js/category.js"
+        ],
+        "css": [
+            "/scss/category.scss"
+        ],
+        "images": [],
+        "fonts": []
+    }
+}]
