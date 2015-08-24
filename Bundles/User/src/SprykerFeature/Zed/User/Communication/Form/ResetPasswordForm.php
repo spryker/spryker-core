@@ -3,13 +3,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Auth\Communication\Form;
+namespace SprykerFeature\Zed\User\Communication\Form;
 
-use Symfony\Component\Validator\Constraints;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use SprykerFeature\Zed\User\Communication\Form\Constraints\CurrentPassword;
 
 class ResetPasswordForm extends AbstractForm
 {
+    const CURRENT_PASSWORD = 'current_password';
     const PASSWORD = 'password';
 
     /**
@@ -19,11 +21,22 @@ class ResetPasswordForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-        return $this->addRepeated(
+        return $this->addPassword(
+            self::CURRENT_PASSWORD,
+            [
+                'label'       => 'Current password',
+                'constraints' => [
+                    new NotBlank(),
+                    new CurrentPassword([
+                        'facadeUser' => $this->getLocator()->user()->facade(),
+                    ]),
+                ],
+            ]
+        )->addRepeated(
             self::PASSWORD,
             [
                 'constraints' => [
-                    new Constraints\NotBlank(),
+                    new NotBlank(),
                 ],
                 'invalid_message' => 'The password fields must match.',
                 'first_options' => ['label' => 'Password'],

@@ -14,8 +14,8 @@ class AuthConfig extends AbstractBundleConfig
 
     const AUTH_SESSION_KEY = 'auth';
     const AUTH_CURRENT_USER_KEY = '%s:currentUser:%s';
-
     const AUTHORIZATION_WILDCARD = '*';
+    const DAY_IN_SECONDS = 86400;
 
     /**
      * @return string
@@ -48,6 +48,11 @@ class AuthConfig extends AbstractBundleConfig
             'bundle' => 'auth',
             'controller' => 'password',
             'action' => 'reset',
+        ],
+        [
+            'bundle' => 'auth',
+            'controller' => 'password',
+            'action' => 'reset-request',
         ],
     ];
 
@@ -96,6 +101,14 @@ class AuthConfig extends AbstractBundleConfig
         }
 
         return $response;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPasswordTokenExpirationInSeconds()
+    {
+        return self::DAY_IN_SECONDS;
     }
 
 }

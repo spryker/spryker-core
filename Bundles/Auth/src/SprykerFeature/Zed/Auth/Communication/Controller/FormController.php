@@ -26,8 +26,6 @@ class FormController extends AbstractController
     {
         $form = $this->getDependencyContainer()->createLoginForm($request);
 
-        $form->init();
-
         return $this->viewResponse([
             'form' => json_encode($form->toArray()),
         ]);

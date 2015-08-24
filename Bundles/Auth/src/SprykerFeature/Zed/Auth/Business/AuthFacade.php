@@ -108,4 +108,36 @@ class AuthFacade extends AbstractFacade
             ->getCurrentUserToken();
     }
 
+    /**
+     * @param string $email
+     *
+     * @return bool
+     */
+    public function requestPasswordReset($email)
+    {
+        return $this->getDependencyContainer()->createPasswordReset()->requestToken($email);
+    }
+
+
+    /**
+     * @param string $token
+     *
+     * @return bool
+     */
+    public function isValidPasswordResetToken($token)
+    {
+        return $this->getDependencyContainer()->createPasswordReset()->isValidToken($token);
+    }
+
+    /**
+     * @param string $token
+     * @param string $password
+     *
+     * @return bool
+     */
+    public function resetPassword($token, $password)
+    {
+        return $this->getDependencyContainer()->createPasswordReset()->resetPassword($token, $password);
+    }
+
 }

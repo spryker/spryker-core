@@ -102,35 +102,31 @@ class User implements UserInterface
     }
 
     /**
-     * @param UserTransfer $user
+     * @param UserTransfer $userTransfer
      *
      * @return UserTransfer
      */
-    public function save(UserTransfer $user)
+    public function save(UserTransfer $userTransfer)
     {
-        if ($user->getIdUser() !== null) {
-            $entity = $this->getEntityUserById($user->getIdUser());
+        if ($userTransfer->getIdUser() !== null) {
+            $userEntity = $this->getEntityUserById($userTransfer->getIdUser());
         } else {
-            $entity = new SpyUser();
+            $userEntity = new SpyUser();
         }
 
-        $entity->setFirstName($user->getFirstName());
-        $entity->setLastName($user->getLastName());
-        $entity->setUsername($user->getUsername());
+        $userEntity->setFirstName($userTransfer->getFirstName());
+        $userEntity->setLastName($userTransfer->getLastName());
+        $userEntity->setUsername($userTransfer->getUsername());
 
-        if (!is_null($user->getStatus())) {
-            $entity->setStatus($user->getStatus());
+        $password = $userTransfer->getPassword();
+        if (!empty($password) && $this->isRawPassword($userTransfer->getPassword())) {
+            $userEntity->setPassword($this->encryptPassword($userTransfer->getPassword()));
         }
 
-        $password = $user->getPassword();
-        if (!empty($password) && true === $this->isRawPassword($user->getPassword())) {
-            $entity->setPassword($this->encryptPassword($user->getPassword()));
-        }
+        $userEntity->save();
+        $userTransfer = $this->entityToTransfer($userEntity);
 
-        $entity->save();
-        $transfer = $this->entityToTransfer($entity);
-
-        return $transfer;
+        return $userTransfer;
     }
 
     /**

@@ -4,11 +4,15 @@ namespace SprykerFeature\Zed\User\Communication\Controller;
 
 use Generated\Shared\Transfer\UserTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\User\Business\UserFacade;
 use SprykerFeature\Zed\User\Persistence\Propel\Map\SpyUserTableMap;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use SprykerFeature\Zed\User\Communication\UserDependencyContainer;
 
 /**
  * @method UserDependencyContainer getDependencyContainer()
+ * @method UserFacade getFacade()
  */
 class FormController extends AbstractController
 {
