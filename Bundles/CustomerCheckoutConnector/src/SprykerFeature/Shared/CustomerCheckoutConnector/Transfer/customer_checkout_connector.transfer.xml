@@ -13,8 +13,8 @@
         <property name="guest" type="bool" />
         <property name="idUser" type="int" />
         <property name="email" type="string" />
-        <property name="billingAddress" type="CustomerAddress" />
-        <property name="shippingAddress" type="CustomerAddress" />
+        <property name="billingAddress" type="SalesAddress" />
+        <property name="shippingAddress" type="SalesAddress" />
     </transfer>
 
     <transfer name="Customer">

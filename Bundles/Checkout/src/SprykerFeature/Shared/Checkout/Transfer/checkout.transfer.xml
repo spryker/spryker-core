@@ -63,8 +63,8 @@
         <property name="guest" type="bool" />
         <property name="idUser" type="int" />
         <property name="email" type="string" />
-        <property name="billingAddress" type="CustomerAddress" />
-        <property name="shippingAddress" type="CustomerAddress" />
+        <property name="billingAddress" type="SalesAddress" />
+        <property name="shippingAddress" type="SalesAddress" />
         <property name="paymentMethod" type="string" />
         <property name="cart" type="Cart" />
     </transfer>

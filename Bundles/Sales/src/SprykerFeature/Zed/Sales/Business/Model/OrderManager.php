@@ -137,7 +137,10 @@ class OrderManager
 
             $itemEntity->setProcess($orderProcess);
 
-            $itemEntity->setTaxPercentage($item->getTaxSet()->getEffectiveRate());
+            $taxSet = $item->getTaxSet();
+            if (null !== $taxSet) {
+                $itemEntity->setTaxPercentage($taxSet->getEffectiveRate());
+            }
 
             $itemEntity->save();
 
