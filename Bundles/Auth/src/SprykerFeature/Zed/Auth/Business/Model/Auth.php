@@ -42,6 +42,8 @@ class Auth implements AuthInterface
     protected $dependencyContainer;
 
     /**
+     * @todo cleanup dependencies
+     *
      * @param LocatorLocatorInterface $locator
      * @param SessionClientInterface $session
      * @param UserFacade $userFacade

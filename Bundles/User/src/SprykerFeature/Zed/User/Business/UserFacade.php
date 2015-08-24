@@ -174,5 +174,4 @@ class UserFacade extends AbstractFacade
             ->getUserModel()
             ->removeUser($idUser);
     }
-
 }

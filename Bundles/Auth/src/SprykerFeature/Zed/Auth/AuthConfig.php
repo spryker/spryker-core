@@ -49,6 +49,11 @@ class AuthConfig extends AbstractBundleConfig
             'controller' => 'password',
             'action' => 'reset',
         ],
+        [
+            'bundle' => 'auth',
+            'controller' => 'password',
+            'action' => 'reset-request',
+        ],
     ];
 
     /**
@@ -96,6 +101,14 @@ class AuthConfig extends AbstractBundleConfig
         }
 
         return $response;
+    }
+
+    /**
+     * @return int
+     */
+    public function getPasswordTokenExpirationInSeconds()
+    {
+        return 60 * 60 * 24; //24h
     }
 
 }

@@ -8,24 +8,18 @@ namespace SprykerFeature\Zed\User\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\UserCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Auth\Business\AuthFacade;
-use SprykerFeature\Zed\User\Business\UserFacade;
+use SprykerFeature\Zed\User\Communication\Form\DetailsUserForm;
+use SprykerFeature\Zed\User\Communication\Form\ResetPasswordRequestForm;
 use Symfony\Component\HttpFoundation\Request;
+use SprykerFeature\Zed\User\Communication\Form\ResetPasswordForm;
+use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
 
 /**
  * @method UserCommunication getFactory()
+ * @method UserQueryContainer getQueryContainer()
  */
 class UserDependencyContainer extends AbstractCommunicationDependencyContainer
 {
-
-    /**
-     * @return AuthFacade
-     */
-    public function getFacade()
-    {
-        return $this->getLocator()->user()->facade();
-    }
-
     /**
      * @param Request $request
      *
@@ -33,23 +27,15 @@ class UserDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function getDetailsUserForm(Request $request)
     {
-        return $this->getFactory()->createFormDetailsUserForm(
-            $request,
-            $this->getQueryContainer()
-        );
+        return $this->getFactory()->createFormDetailsUserForm($request, $this->getQueryContainer());
     }
 
     /**
-     * @param Request $request
-     *
-     * @return PasswordForm
+     * @return ResetPasswordForm
      */
-    public function getPasswordForm(Request $request)
+    public function createResetPasswordForm()
     {
-        return $this->getFactory()->createFormPasswordForm(
-            $request,
-            $this->getQueryContainer()
-        );
+        return $this->getFactory()->createFormResetPasswordForm();
     }
 
     /**
@@ -62,26 +48,6 @@ class UserDependencyContainer extends AbstractCommunicationDependencyContainer
         $queryContainer = $this->getQueryContainer();
         $users = $queryContainer->queryUsersAndGroup();
 
-        return $this->getFactory()->createGridUserGrid(
-            $users,
-            $request
-        );
+        return $this->getFactory()->createGridUserGrid($users, $request);
     }
-
-    /**
-     * @return \SprykerFeature\Zed\User\Persistence\UserQueryContainer
-     */
-    public function getQueryContainer()
-    {
-        return $this->getLocator()->user()->queryContainer();
-    }
-
-    /**
-     * @return UserFacade
-     */
-    public function getInstallerFacade()
-    {
-        return $this->getLocator()->user()->facade();
-    }
-
 }
