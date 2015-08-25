@@ -306,9 +306,6 @@ class Customer
      */
     public function getOrders(CustomerTransferInterface $customerTransfer)
     {
-        /**
-         * @var FilterTransfer $filter
-         */
         $filter = $customerTransfer->getFilter();
         $criteria = new Criteria();
         
@@ -317,7 +314,7 @@ class Customer
                 ->toCriteria();
         }
         
-        $orders = $this->queryContainer->queryordersByCustomerId($customerTransfer->getIdCustomer(), $criteria)
+        $orders = $this->queryContainer->queryOrdersByCustomerId($customerTransfer->getIdCustomer(), $criteria)
             ->find();
 
         $result = [];
@@ -332,9 +329,6 @@ class Customer
     }
 
     /**
-     * FIXME KSP-430 @spryker: this fails since the function encryptPassword() cannot be found!
-     * //$customerTransfer = $this->encryptPassword($customerTransfer);
-     *
      * @param CustomerTransferInterface $customerTransfer
      *
      * @throws PropelException
@@ -399,24 +393,24 @@ class Customer
      */
     protected function getCustomer(CustomerTransferInterface $customerTransfer)
     {
-        $customer = null;
+        $customerEntity = null;
         
         if ($customerTransfer->getIdCustomer()) {
-            $customer = $this->queryContainer->queryCustomerById($customerTransfer->getIdCustomer())
+            $customerEntity = $this->queryContainer->queryCustomerById($customerTransfer->getIdCustomer())
                 ->findOne()
             ;
         } elseif ($customerTransfer->getEmail()) {
-            $customer = $this->queryContainer->queryCustomerByEmail($customerTransfer->getEmail())
+            $customerEntity = $this->queryContainer->queryCustomerByEmail($customerTransfer->getEmail())
                 ->findOne()
             ;
         } elseif ($customerTransfer->getRestorePasswordKey()) {
-            $customer = $this->queryContainer->queryCustomerByRestorePasswordKey($customerTransfer->getRestorePasswordKey())
+            $customerEntity = $this->queryContainer->queryCustomerByRestorePasswordKey($customerTransfer->getRestorePasswordKey())
                 ->findOne()
             ;
         }
 
-        if (null !== $customer) {
-            return $customer;
+        if (null !== $customerEntity) {
+            return $customerEntity;
         }
 
         throw new CustomerNotFoundException();
@@ -430,21 +424,21 @@ class Customer
     protected function hasCustomer(CustomerTransferInterface $customerTransfer)
     {
         $result = false;
-        $customer = null;
+        $customerEntity = null;
 
         if ($customerTransfer->getIdCustomer()) {
-            $customer = $this->queryContainer
+            $customerEntity = $this->queryContainer
                 ->queryCustomerById($customerTransfer->getIdCustomer())
                 ->findOne()
             ;
         } elseif ($customerTransfer->getEmail()) {
-            $customer = $this->queryContainer
+            $customerEntity = $this->queryContainer
                 ->queryCustomerByEmail($customerTransfer->getEmail())
                 ->findOne()
             ;
         }
 
-        if (null !== $customer) {
+        if (null !== $customerEntity) {
             $result = true;
         }
 

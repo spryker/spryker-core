@@ -1,10 +1,8 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: oli
- * Date: 8/21/15
- * Time: 2:15 PM
+ * (c) Spryker Systems GmbH copyright protected
  */
+
 namespace SprykerEngine\Zed\Propel;
 
 use Propel\Runtime\ActiveQuery\Criteria;
