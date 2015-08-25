@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Payone\Business\Order;
 use Generated\Shared\Payone\OrderInterface as PayoneOrderInterface;
 use Generated\Shared\Payone\PayonePaymentInterface;
 use Generated\Shared\Transfer\PayonePaymentDetailsTransfer;
+use Propel\Runtime\Propel;
 use SprykerFeature\Zed\Payone\PayoneConfig;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneDetails;
@@ -33,11 +34,15 @@ class OrderManager implements OrderManagerInterface
      */
     public function saveOrder(PayoneOrderInterface $orderTransfer)
     {
+        Propel::getConnection()->beginTransaction();
+
         $paymentTransfer = $orderTransfer->getPayonePayment();
         $payment = $this->savePayment($paymentTransfer);
 
         $paymentDetailsTransfer = $paymentTransfer->getPaymentDetails();
         $this->savePaymentDetails($payment, $paymentDetailsTransfer);
+
+        Propel::getConnection()->commit();
     }
 
     /**
