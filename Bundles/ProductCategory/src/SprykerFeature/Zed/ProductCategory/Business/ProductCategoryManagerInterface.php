@@ -7,12 +7,10 @@
 namespace SprykerFeature\Zed\ProductCategory\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
-use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategory;
 
 interface ProductCategoryManagerInterface
 {
