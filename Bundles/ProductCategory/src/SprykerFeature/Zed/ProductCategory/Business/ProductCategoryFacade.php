@@ -15,6 +15,7 @@ use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMapping
 
 /**
  * @property ProductCategoryDependencyContainer $dependencyContainer
+ * @method ProductCategoryDependencyContainer getDependencyContainer()
  */
 class ProductCategoryFacade extends AbstractFacade
 {
@@ -36,7 +37,7 @@ class ProductCategoryFacade extends AbstractFacade
         return $this->getDependencyContainer()
             ->createProductCategoryManager()
             ->createProductCategoryMapping($sku, $categoryName, $locale)
-            ;
+        ;
     }
 
     /**
@@ -51,7 +52,7 @@ class ProductCategoryFacade extends AbstractFacade
         return $this->getDependencyContainer()
             ->createProductCategoryManager()
             ->hasProductCategoryMapping($sku, $categoryName, $locale)
-            ;
+        ;
     }
 
 }
