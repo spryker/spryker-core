@@ -48,6 +48,13 @@ class IdentityMapClassResolver implements ClassResolverInterface
 
     protected function __construct()
     {
+        $this->cache = new ClassResolverCache();
+        $this->map = $this->cache->loadClassMap();
+    }
+
+    public function __destruct()
+    {
+        $this->cache->saveClassMap($this->map);
     }
 
     /**
