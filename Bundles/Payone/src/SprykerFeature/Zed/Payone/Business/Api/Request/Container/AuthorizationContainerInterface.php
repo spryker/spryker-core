@@ -146,7 +146,7 @@ interface AuthorizationContainerInterface
     public function setApiVersion($api_version);
 
     /**
-     * @param string $clearingtype
+     * @param string $clearingType
      */
     public function setClearingType($clearingType);
 

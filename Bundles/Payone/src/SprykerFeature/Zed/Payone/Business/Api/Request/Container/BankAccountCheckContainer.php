@@ -6,13 +6,15 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
 
+use SprykerFeature\Shared\Payone\PayoneApiConstants;
+
 class BankAccountCheckContainer extends AbstractRequestContainer
 {
 
     /**
      * @var string
      */
-    protected $request = self::REQUEST_TYPE_BANKACCOUNTCHECK;
+    protected $request = PayoneApiConstants::REQUEST_TYPE_BANKACCOUNTCHECK;
 
     /**
      * @var int

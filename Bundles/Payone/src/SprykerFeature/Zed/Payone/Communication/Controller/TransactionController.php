@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  * @method PayoneFacade getFacade()
  * @method PayoneDependencyContainer getDependencyContainer()
  */
-class TransactionController extends AbstractController implements PayoneApiConstants
+class TransactionController extends AbstractController
 {
 
     /**

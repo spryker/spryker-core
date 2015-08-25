@@ -6,13 +6,15 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
 
+use SprykerFeature\Shared\Payone\PayoneApiConstants;
+
 class GetInvoiceContainer extends AbstractRequestContainer
 {
 
     /**
      * @var string
      */
-    protected $request = self::REQUEST_TYPE_GETINVOICE;
+    protected $request = PayoneApiConstants::REQUEST_TYPE_GETINVOICE;
 
     /**
      * @var string

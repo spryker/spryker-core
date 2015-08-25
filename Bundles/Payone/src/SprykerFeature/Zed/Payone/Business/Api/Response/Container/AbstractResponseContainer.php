@@ -6,9 +6,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Response\Container;
 
-use SprykerFeature\Shared\Payone\PayoneApiConstants;
-
-abstract class AbstractResponseContainer implements PayoneApiConstants
+abstract class AbstractResponseContainer
 {
 
     /**
@@ -197,7 +195,7 @@ abstract class AbstractResponseContainer implements PayoneApiConstants
             return $this->$name;
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -214,7 +212,7 @@ abstract class AbstractResponseContainer implements PayoneApiConstants
             return true;
         }
 
-        return;
+        return null;
     }
 
     /**

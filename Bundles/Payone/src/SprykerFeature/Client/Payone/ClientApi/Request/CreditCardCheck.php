@@ -8,19 +8,21 @@ namespace SprykerFeature\Client\Payone\ClientApi\Request;
 
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
 
-class CreditCardCheck extends AbstractRequest implements PayoneApiConstants
+class CreditCardCheck extends AbstractRequest
 {
 
-    protected $request = self::REQUEST_TYPE_CREDITCARDCHECK;
+    protected $request = PayoneApiConstants::REQUEST_TYPE_CREDITCARDCHECK;
 
     /**
      * @var string
      */
     protected $storecarddata;
+
     /**
      * @var string
      */
     protected $successurl;
+
     /**
      * @var string
      */
