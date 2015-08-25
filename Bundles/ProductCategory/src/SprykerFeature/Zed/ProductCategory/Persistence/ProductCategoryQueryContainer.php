@@ -90,29 +90,4 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
         return $query;
     }
 
-    /**
-     * @param int $idCategoryNode
-     *
-     * @return SpyProductCategoryQuery
-     */
-    public function queryProductCategoryMappingByIdCategory($idCategoryNode, LocaleTransfer $localeTransfer)
-    {
-        $query = $this->queryProductCategoryMappings();
-
-        $query->innerJoinSpyAbstractProduct()
-            ->useSpyCategoryNodeQuery()
-                ->filterByFkCategory($idCategoryNode)
-            ->endUse()
-            ->useSpyCategoryNodeQuery()
-                ->useCategoryQuery()
-                    ->useAttributeQuery()
-                        ->useLocaleQuery()
-                            ->filterByLocaleName($localeTransfer->getLocaleName())
-                        ->endUse()
-                    ->endUse()
-                ->endUse()
-            ->endUse();
-
-        return $query;
-    }
 }

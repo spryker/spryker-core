@@ -40,12 +40,4 @@ interface ProductCategoryManagerInterface
      */
     public function createProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale);
 
-    /**
-     * @param int $idCategoryNode
-     * @param LocaleTransfer $localeTransfer
-     *
-     * @return ObjectCollection|SpyProductCategory[]
-     */
-    public function getProducts($idCategoryNode, LocaleTransfer $localeTransfer);
-
 }

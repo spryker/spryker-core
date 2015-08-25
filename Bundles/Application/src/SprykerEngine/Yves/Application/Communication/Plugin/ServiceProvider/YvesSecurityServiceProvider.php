@@ -12,6 +12,7 @@ use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
 class YvesSecurityServiceProvider extends SecurityServiceProvider
 {
+
     const BCRYPT_FACTOR = 12;
 
     /**

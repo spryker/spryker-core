@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\ProductCategory\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\ProductCategoryTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
@@ -55,19 +54,6 @@ class ProductCategoryFacade extends AbstractFacade
         return $this->getDependencyContainer()
             ->createProductCategoryManager()
             ->hasProductCategoryMapping($sku, $categoryName, $locale)
-        ;
-    }
-
-    /**
-     * @param ProductCategoryTransfer $productCategoryTransfer
-     *
-     * @return ProductCategoryTransfer
-     */
-    public function getProductsByIdCategory(ProductCategoryTransfer $productCategoryTransfer)
-    {
-        return $this->getDependencyContainer()
-            ->createProductCategoryManager()
-            ->getProducts($productCategoryTransfer->getIdCategory(), $productCategoryTransfer->getLocale())
         ;
     }
 

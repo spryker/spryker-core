@@ -32,13 +32,6 @@ interface ProductCategoryQueryContainerInterface
     public function queryProductCategoryMappingByIds($idAbstractProduct, $idCategoryNode);
 
     /**
-     * @param int $idCategoryNode
-     *
-     * @return SpyProductCategoryQuery
-     */
-    public function queryProductCategoryMappingByIdCategory($idCategoryNode, LocaleTransfer $localeTransfer);
-
-    /**
      * @param string $sku
      * @param string $categoryName
      * @param LocaleTransfer $locale

@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\ProductCategory\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
@@ -17,7 +16,6 @@ use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMapping
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
-use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategory;
 
 class ProductCategoryManager implements ProductCategoryManagerInterface
 {
@@ -125,27 +123,6 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
                 )
             );
         }
-    }
-
-    /**
-     * @param int $idCategoryNode
-     * @param LocaleTransfer $localeTransfer
-     *
-     * @return ObjectCollection|SpyProductCategory[]
-     */
-    public function getProducts($idCategoryNode, LocaleTransfer $localeTransfer)
-    {
-        $q = $this->productCategoryQueryContainer
-            ->queryProductCategoryMappingByIdCategory($idCategoryNode, $localeTransfer)
-
-        ;
-
-        die(dump($q->find()));
-
-        return $this->productCategoryQueryContainer
-            ->queryProductCategoryMappingByIdCategory($idCategoryNode, $localeTransfer)
-            ->find()
-        ;
     }
 
 }
