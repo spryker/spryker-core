@@ -117,6 +117,9 @@ class User implements UserInterface
         $userEntity->setFirstName($userTransfer->getFirstName());
         $userEntity->setLastName($userTransfer->getLastName());
         $userEntity->setUsername($userTransfer->getUsername());
+        if (null !== $userTransfer->getStatus()) {
+            $userEntity->setStatus($userTransfer->getStatus());
+        }
 
         $password = $userTransfer->getPassword();
         if (!empty($password) && $this->isRawPassword($userTransfer->getPassword())) {
