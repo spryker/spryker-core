@@ -55,7 +55,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     /**
      * @var ConnectionInterface
      */
-    private $connection;
+    protected $connection;
 
     /**
      * @param CmsToGlossaryInterface $glossaryFacade
