@@ -13,13 +13,13 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 /**
  * @method PayoneDependencyContainer getDependencyContainer()
  */
-class PaymentIsPaid extends AbstractCondition
+class PaymentIsCapture extends AbstractCondition
 {
 
     public function check(SpySalesOrderItem $orderItem)
     {
         return $this->getDependencyContainer()
             ->createPayoneFacade()
-            ->isPaymentPaid($orderItem->getFkSalesOrder(), $orderItem->getIdSalesOrderItem());
+            ->isPaymentCapture($orderItem->getFkSalesOrder(), $orderItem->getIdSalesOrderItem());
     }
 }

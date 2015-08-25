@@ -6,16 +6,12 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Payment;
 
-use Generated\Shared\Payone\AuthorizationInterface;
-use Generated\Shared\Payone\CaptureInterface;
-use Generated\Shared\Payone\DebitInterface;
-use Generated\Shared\Payone\RefundInterface;
-use Generated\Shared\Payone\StandardParameterInterface;
+use Generated\Shared\Payone\PayoneStandardParameterInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\DebitContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\RefundContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
+use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
 
 interface PaymentMethodMapperInterface
 {
@@ -31,43 +27,43 @@ interface PaymentMethodMapperInterface
     public function setSequenceNumberProvider(SequenceNumberProviderInterface $sequenceNumberProvider);
 
     /**
-     * @param StandardParameterInterface $standardParameter
+     * @param PayoneStandardParameterInterface $standardParameter
      */
-    public function setStandardParameter(StandardParameterInterface $standardParameter);
+    public function setStandardParameter(PayoneStandardParameterInterface $standardParameter);
 
     /**
-     * @param AuthorizationInterface $authorizationData
+     * @param SpyPaymentPayone $paymentEntity
      *
      * @return AuthorizationContainer
      */
-    public function mapAuthorization(AuthorizationInterface $authorizationData);
+    public function mapPaymentToAuthorization(SpyPaymentPayone $paymentEntity);
 
     /**
-     * @param AuthorizationInterface $authorizationData
+     * @param SpyPaymentPayone $paymentEntity
      *
-     * @return AuthorizationContainer
+     * @return PreAuthorizationContainer
      */
-    public function mapPreAuthorization(AuthorizationInterface $authorizationData);
+    public function mapPaymentToPreAuthorization(SpyPaymentPayone $paymentEntity);
 
     /**
-     * @param CaptureInterface $captureData
+     * @param SpyPaymentPayone $paymentEntity
      *
      * @return CaptureContainer
      */
-    public function mapCapture(CaptureInterface $captureData);
+    public function mapPaymentToCapture(SpyPaymentPayone $paymentEntity);
 
     /**
-     * @param DebitInterface $debitData
+     * @param SpyPaymentPayone $paymentEntity
      *
-     * @return DebitContainer
+     * @return CaptureContainer
      */
-    public function mapDebit(DebitInterface $debitData);
+    public function mapPaymentToDebit(SpyPaymentPayone $paymentEntity);
 
     /**
-     * @param RefundInterface $refundData
+     * @param SpyPaymentPayone $paymentEntity
      *
-     * @return RefundContainer
+     * @return CaptureContainer
      */
-    public function mapRefund(RefundInterface $refundData);
+    public function mapPaymentToRefund(SpyPaymentPayone $paymentEntity);
 
 }

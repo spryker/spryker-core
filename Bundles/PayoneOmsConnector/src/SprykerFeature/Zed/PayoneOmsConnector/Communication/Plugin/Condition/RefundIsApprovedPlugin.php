@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class RefundIsApprovedPlugin extends AbstractPlugin
 {
+    const NAME = 'RefundIsApprovedPlugin';
 
     /**
      * @param OrderTransfer $orderTransfer

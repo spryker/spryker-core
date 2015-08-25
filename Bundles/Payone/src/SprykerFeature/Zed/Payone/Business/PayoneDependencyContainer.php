@@ -6,7 +6,8 @@
 
 namespace SprykerFeature\Zed\Payone\Business;
 
-use Generated\Shared\Payone\StandardParameterInterface;
+use Generated\Shared\Payone\PayoneStandardParameterInterface;
+use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use SprykerFeature\Zed\Payone\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerEngine\Zed\Kernel\Business\Factory;
@@ -32,7 +33,7 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**
-     * @var StandardParameterInterface
+     * @var PayoneStandardParameterInterface
      */
     private $standardParameter;
 
@@ -71,7 +72,7 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createOrderManager()
     {
-        return $this->getFactory()->createOrderManager();
+        return $this->getFactory()->createOrderOrderManager($this->getConfig());
     }
 
     /**
@@ -144,13 +145,13 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @param array $requestParams
+     * @param PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer
      *
      * @return TransactionStatusRequest
      */
-    public function createTransactionStatusUpdateRequest(array $requestParams)
+    public function createTransactionStatusUpdateRequest(PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer)
     {
-        return new TransactionStatusRequest($requestParams);
+        return new TransactionStatusRequest($transactionStatusUpdateTransfer->toArray());
     }
 
     /**
@@ -163,14 +164,16 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
         $storeConfig = $this->getProvidedDependency(PayoneDependencyProvider::STORE_CONFIG);
 
         return [
-            PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT => $this->getFactory()->createPaymentMethodMapperPrePayment($storeConfig),
             PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO => $this->getFactory()->createPaymentMethodMapperCreditCardPseudo($storeConfig),
-            PayoneApiConstants::PAYMENT_METHOD_PAYPAL => $this->getFactory()->createPaymentMethodMapperPayPal($storeConfig),
+            PayoneApiConstants::PAYMENT_METHOD_INVOICE => $this->getFactory()->createPaymentMethodMapperInvoice($storeConfig),
+            PayoneApiConstants::PAYMENT_METHOD_ONLINE_BANK_TRANSFER => $this->getFactory()->createPaymentMethodMapperOnlineBankTransfer($storeConfig),
+            PayoneApiConstants::PAYMENT_METHOD_E_WALLET => $this->getFactory()->createPaymentMethodMapperEWallet($storeConfig),
+            PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT => $this->getFactory()->createPaymentMethodMapperPrepayment($storeConfig),
         ];
     }
 
     /**
-     * @return StandardParameterInterface
+     * @return PayoneStandardParameterInterface
      */
     protected function createStandardParameter()
     {

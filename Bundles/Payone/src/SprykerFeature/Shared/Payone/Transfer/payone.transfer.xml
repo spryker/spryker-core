@@ -3,7 +3,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
-    <transfer name="Authorization">
+    <transfer name="PayoneAuthorization">
         <property name="amount" type="int" />
         <property name="referenceId" type="string" />
         <property name="paymentMethod" type="string" />
@@ -11,17 +11,17 @@
         <property name="order" type="Order" />
     </transfer>
 
-    <transfer name="Capture">
+    <transfer name="PayoneCapture">
         <property name="amount" type="int" />
         <property name="payment" type="PayonePayment" />
     </transfer>
 
-    <transfer name="Debit">
+    <transfer name="PayoneDebit">
         <property name="amount" type="int" />
         <property name="payment" type="PayonePayment" />
     </transfer>
 
-    <transfer name="CreditCard">
+    <transfer name="PayoneCreditCard">
         <property name="aid" type="string" />
         <property name="cardPan" type="string" />
         <property name="cardType" type="string" />
@@ -33,7 +33,7 @@
         <property name="payment" type="PayonePayment" />
     </transfer>
 
-    <transfer name="Refund">
+    <transfer name="PayoneRefund">
         <property name="amount" type="int" />
         <property name="payment" type="PayonePayment" />
         <property name="useCustomerdata" type="string" />
@@ -41,20 +41,31 @@
     </transfer>
 
     <transfer name="PayonePayment">
-        <property name="idPaymentPayone" type="int" />
-        <property name="fkSalesOrder" type="int" />
+        <property name="idSalesOrder" type="int" />
         <property name="createdAt" type="string" />
         <property name="updatedAt" type="string" />
         <property name="paymentMethod" type="string" />
         <property name="authorizationType" type="string" />
+        <property name="reference" type="string" />
         <property name="transactionId" type="string" />
         <property name="paymentDetails" type="PayonePaymentDetails" />
     </transfer>
 
     <transfer name="PayonePaymentDetails">
-        <property name="pseudocardpan" type="string" />
-        <property name="name" type="string" />
-        <property name="transactionId" type="string" />
+        <property name="amount" type="int" />
+        <property name="currency" type="string" />
+        <property name="pseudoCardPan" type="string" />
+        <property name="lastName" type="string" />
+        <property name="country" type="string" />
+        <property name="type" type="string" />
+        <property name="bankCountry" type="string"/>
+        <property name="bankAccount" type="string"/>
+        <property name="bankCode" type="string"/>
+        <property name="bankGroupType" type="string"/>
+        <property name="bankBranchCode" type="string"/>
+        <property name="bankCheckDigit" type="string"/>
+        <property name="iban" type="string"/>
+        <property name="bic" type="string"/>
     </transfer>
 
     <transfer name="PaymentStatus">
@@ -62,7 +73,7 @@
         <property name="redirectUrl" type="string" />
     </transfer>
 
-    <transfer name="StandardParameter">
+    <transfer name="PayoneStandardParameter">
         <property name="encoding" type="string" />
         <property name="mid" type="string" />
         <property name="aid" type="string" />
@@ -77,12 +88,12 @@
         <property name="redirectErrorUrl" type="string" />
     </transfer>
 
-    <transfer name="ApiCallResponseCheck">
+    <transfer name="PayoneApiCallResponseCheck">
         <property name="requestType" type="string" />
         <property name="payment" type="Payment" />
     </transfer>
 
-    <transfer name="AuthorizationCheckResponse">
+    <transfer name="PayoneAuthorizationCheckResponse">
         <property name="isSuccess" type="bool" />
         <property name="request" type="string" />
         <property name="status" type="string" />
@@ -93,37 +104,58 @@
         <property name="errorCode" type="string" />
     </transfer>
 
-    <transfer name="PersonalData">
-        <property name="customerid" type="string" />
-        <property name="userid" type="string" />
+
+    <transfer name="PayonePersonalData">
+        <property name="customerId" type="string" />
+        <property name="userId" type="string" />
         <property name="salutation" type="string" />
         <property name="title" type="string" />
-        <property name="firstname" type="string" />
-        <property name="lastname" type="string" />
+        <property name="firstName" type="string" />
+        <property name="lastName" type="string" />
         <property name="company" type="string" />
         <property name="street" type="string" />
-        <property name="addressaddition" type="string" />
+        <property name="addressAddition" type="string" />
         <property name="zip" type="string" />
         <property name="city" type="string" />
         <property name="country" type="string" />
         <property name="state" type="string" />
         <property name="email" type="string" />
-        <property name="telephonenumber" type="string" />
+        <property name="telephoneNumber" type="string" />
         <property name="birthday" type="string" />
         <property name="language" type="string" />
-        <property name="vatid" type="string" />
+        <property name="vatId" type="string" />
         <property name="gender" type="string" />
-        <property name="personalid" type="string" />
+        <property name="personalId" type="string" />
         <property name="ip" type="string" />
         <property name="pseudoCardPan" type="string" />
     </transfer>
 
     <transfer name="Order">
         <property name="idSalesOrder" type="int" />
-        <property name="payonePayment" type="PayonePayment" />
+        <property name="payonePayment" type="PayonePayment"/>
     </transfer>
 
     <transfer name="CheckoutRequest">
         <property name="payonePayment" type="PayonePayment" />
+    </transfer>
+
+
+    <transfer name="PayoneTransactionStatusUpdate">
+        <property name="key" type="string" />
+        <property name="aid" type="string" />
+        <property name="mode" type="string" />
+        <property name="customerid" type="string" />
+        <property name="portalid" type="string" />
+        <property name="sequencenumber" type="string" />
+        <property name="txaction" type="string" />
+        <property name="receivable" type="string" />
+        <property name="balance" type="string" />
+        <property name="currency" type="string" />
+        <property name="txid" type="string" />
+        <property name="userid" type="string" />
+        <property name="txtime" type="string" />
+        <property name="clearingtype" type="string" />
+        <property name="reference" type="string" />
+        <property name="reminderlevel" type="string" />
     </transfer>
 </transfers>

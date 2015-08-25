@@ -6,17 +6,18 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Payment;
 
-use Generated\Shared\Payone\AuthorizationInterface;
-use Generated\Shared\Payone\CaptureInterface;
-use Generated\Shared\Payone\DebitInterface;
-use Generated\Shared\Payone\RefundInterface;
-use Generated\Shared\Payone\CreditCardInterface;
-use Generated\Shared\Payone\StandardParameterInterface;
+use Generated\Shared\Payone\PayoneAuthorizationInterface;
+use Generated\Shared\Payone\PayoneCreditCardInterface;
+use Generated\Shared\Payone\PayoneDebitInterface;
+use Generated\Shared\Payone\PayoneRefundInterface;
+use Generated\Shared\Payone\PayoneStandardParameterInterface;
 use Generated\Shared\Payone\OrderInterface as PayoneOrderInterface;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Shared\Payone\Dependency\HashInterface;
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\DebitContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\RefundContainer;
 use SprykerFeature\Zed\Payone\Business\Exception\InvalidPaymentMethodException;
 use SprykerFeature\Zed\Payone\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
@@ -44,7 +45,7 @@ class PaymentManager implements PaymentManagerInterface
      */
     protected $queryContainer;
     /**
-     * @var StandardParameterInterface
+     * @var PayoneStandardParameterInterface
      */
     protected $standardParameter;
     /**
@@ -67,7 +68,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param AdapterInterface $executionAdapter
      * @param PayoneQueryContainerInterface $queryContainer
-     * @param StandardParameterInterface $standardParameter
+     * @param PayoneStandardParameterInterface $standardParameter
      * @param HashInterface $hashProvider
      * @param SequenceNumberProviderInterface $sequenceNumberProvider
      * @param ModeDetectorInterface $modeDetector
@@ -75,7 +76,7 @@ class PaymentManager implements PaymentManagerInterface
     public function __construct(
         AdapterInterface $executionAdapter,
         PayoneQueryContainerInterface $queryContainer,
-        StandardParameterInterface $standardParameter,
+        PayoneStandardParameterInterface $standardParameter,
         HashInterface $hashProvider,
         SequenceNumberProviderInterface $sequenceNumberProvider,
         ModeDetectorInterface $modeDetector)
@@ -109,7 +110,7 @@ class PaymentManager implements PaymentManagerInterface
             return $this->registeredMethodMappers[$name];
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -132,52 +133,48 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param AuthorizationInterface $authorizationData
+     * @param int $idPayment
      *
      * @return AuthorizationResponseContainer
      */
-    public function authorize(AuthorizationInterface $authorizationData)
+    public function authorizePayment($idPayment)
     {
-        $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper($authorizationData->getPaymentMethod());
-        $requestContainer = $paymentMethodMapper->mapAuthorization($authorizationData);
-        $responseContainer = $this->performAuthorization($authorizationData, $requestContainer);
+        $paymentEntity = $this->getPaymentEntity($idPayment);
+        $paymentMethodMapper = $this->getPaymentMethodMapper($paymentEntity);
+        $requestContainer = $paymentMethodMapper->mapPaymentToAuthorization($paymentEntity);
+        $responseContainer = $this->performAuthorizationRequest($paymentEntity, $requestContainer);
 
         return $responseContainer;
     }
 
     /**
-     * @param AuthorizationInterface $authorizationData
+     * @param int $idPayment
      *
      * @return AuthorizationResponseContainer
      */
-    public function preAuthorize(AuthorizationInterface $authorizationData)
+    public function preAuthorizePayment($idPayment)
     {
-        $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper($authorizationData->getPaymentMethod());
-        $requestContainer = $paymentMethodMapper->mapPreAuthorization($authorizationData);
-        $responseContainer = $this->performAuthorization($authorizationData, $requestContainer);
+        $paymentEntity = $this->getPaymentEntity($idPayment);
+        $paymentMethodMapper = $this->getPaymentMethodMapper($paymentEntity);
+        $requestContainer = $paymentMethodMapper->mapPaymentToPreAuthorization($paymentEntity);
+        $responseContainer = $this->performAuthorizationRequest($paymentEntity, $requestContainer);
 
         return $responseContainer;
     }
 
     /**
-     * @param AuthorizationInterface $authorizationData
+     * @param SpyPaymentPayone $paymentEntity
      * @param AuthorizationContainerInterface $requestContainer
      *
      * @return AuthorizationResponseContainer
      */
-    protected function performAuthorization(AuthorizationInterface $authorizationData, AuthorizationContainerInterface $requestContainer)
+    protected function performAuthorizationRequest(SpyPaymentPayone $paymentEntity, AuthorizationContainerInterface $requestContainer)
     {
         $this->setStandardParameter($requestContainer);
 
-        $paymentEntity = $this->initializePayment(
-            $authorizationData->getPaymentMethod(),
-            $requestContainer->getRequest()
-        );
         $apiLogEntity = $this->initializeApiLog($paymentEntity, $requestContainer);
-
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
         $responseContainer = new AuthorizationResponseContainer($rawResponse);
-
         $this->updatePaymentAfterAuthorization($paymentEntity, $responseContainer);
         $this->updateApiLogAfterAuthorization($apiLogEntity, $responseContainer);
 
@@ -185,17 +182,38 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param CaptureInterface $captureData
+     * @param SpyPaymentPayone $paymentEntity
+     *
+     * @return PaymentMethodMapperInterface
+     */
+    protected function getPaymentMethodMapper(SpyPaymentPayone $paymentEntity)
+    {
+        return $this->getRegisteredPaymentMethodMapper($paymentEntity->getPaymentMethod());
+    }
+
+    /**
+     * @param int $idPayment
+     *
+     * @return SpyPaymentPayone
+     */
+    protected function getPaymentEntity($idPayment)
+    {
+        return $this->queryContainer->getPaymentById($idPayment)->findOne();
+    }
+
+    /**
+     * @param int $idPayment
      *
      * @return CaptureResponseContainer
      */
-    public function capture(CaptureInterface $captureData)
+    public function capturePayment($idPayment)
     {
-        $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper($captureData->getPayment()->getPaymentMethod());
-        $requestContainer = $paymentMethodMapper->mapCapture($captureData);
+        $paymentEntity = $this->getPaymentEntity($idPayment);
+        $paymentMethodMapper = $this->getPaymentMethodMapper($paymentEntity);
+
+        $requestContainer = $paymentMethodMapper->mapPaymentToCapture($paymentEntity);
         $this->setStandardParameter($requestContainer);
 
-        $paymentEntity = $this->findPaymentByTransactionId($captureData->getPayment()->getTransactionId());
         $apiLogEntity = $this->initializeApiLog($paymentEntity, $requestContainer);
 
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
@@ -207,17 +225,18 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param DebitInterface $debitData
+     * @param int $idPayment
      *
      * @return DebitResponseContainer
      */
-    public function debit(DebitInterface $debitData)
+    public function debitPayment($idPayment)
     {
-        $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper($debitData->getPayment()->getPaymentMethod());
-        $requestContainer = $paymentMethodMapper->mapDebit($debitData);
+        $paymentEntity = $this->getPaymentEntity($idPayment);
+        $paymentMethodMapper = $this->getPaymentMethodMapper($paymentEntity);
+        $requestContainer = $paymentMethodMapper->mapPaymentToDebit($paymentEntity);
         $this->setStandardParameter($requestContainer);
 
-        $paymentEntity = $this->findPaymentByTransactionId($debitData->getPayment()->getTransactionId());
+        $paymentEntity = $this->findPaymentByTransactionId($paymentEntity->getTransactionId());
         $apiLogEntity = $this->initializeApiLog($paymentEntity, $requestContainer);
 
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
@@ -229,11 +248,11 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param CreditCardInterface $creditCardData
+     * @param PayoneCreditCardInterface $creditCardData
      *
      * @return CreditCardCheckResponseContainer
      */
-    public function creditCardCheck(CreditCardInterface $creditCardData)
+    public function creditCardCheck(PayoneCreditCardInterface $creditCardData)
     {
         $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper($creditCardData->getPayment()->getPaymentMethod());
         $requestContainer = $paymentMethodMapper->mapCreditCardCheck($creditCardData);
@@ -246,17 +265,20 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param RefundInterface $refundData
+     * @param PayoneRefundInterface $refundTransfer
      *
      * @return RefundResponseContainer
      */
-    public function refund(RefundInterface $refundData)
+    public function refundPayment(PayoneRefundInterface $refundTransfer)
     {
-        $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper($refundData->getPayment()->getPaymentMethod());
-        $requestContainer = $paymentMethodMapper->mapRefund($refundData);
+        $payonePaymentTransfer = $refundTransfer->getPayment();
+
+        $paymentEntity = $this->getPaymentEntity($payonePaymentTransfer->getIdSalesOrder());
+        $paymentMethodMapper = $this->getPaymentMethodMapper($paymentEntity);
+        $requestContainer = $paymentMethodMapper->mapPaymentToRefund($paymentEntity);
+        $requestContainer->setAmount($refundTransfer->getAmount());
         $this->setStandardParameter($requestContainer);
 
-        $paymentEntity = $this->findPaymentByTransactionId($refundData->getPayment()->getTransactionId());
         $apiLogEntity = $this->initializeApiLog($paymentEntity, $requestContainer);
 
         $rawResponse = $this->executionAdapter->sendRequest($requestContainer);
@@ -272,7 +294,7 @@ class PaymentManager implements PaymentManagerInterface
      *
      * @return PayonePaymentTransfer
      */
-    public function getPayment(PayoneOrderInterface $orderTransfer)
+    protected function getPayment(PayoneOrderInterface $orderTransfer)
     {
         $payment = $this->queryContainer->getPaymentByOrderId($orderTransfer->getIdSalesOrder())->findOne();
 
@@ -280,22 +302,6 @@ class PaymentManager implements PaymentManagerInterface
         $paymentTransfer->fromArray($payment->toArray());
 
         return $paymentTransfer;
-    }
-
-    /**
-     * @param $paymentMethodName
-     * @param $authorizationType
-     *
-     * @return SpyPaymentPayone
-     */
-    protected function initializePayment($paymentMethodName, $authorizationType)
-    {
-        $entity = $entity = new SpyPaymentPayone();
-        $entity->setPaymentMethod($paymentMethodName);
-        $entity->setAuthorizationType($authorizationType);
-        $entity->save();
-
-        return $entity;
     }
 
     /**
@@ -336,6 +342,9 @@ class PaymentManager implements PaymentManagerInterface
         $entity->setMode($container->getMode());
         $entity->setMerchantId($container->getMid());
         $entity->setPortalId($container->getPortalid());
+        if ($container instanceof RefundContainer || $container instanceof DebitContainer) {
+            $entity->setSequenceNumber($container->getSequenceNumber());
+        }
         $entity->save();
 
         return $entity;
@@ -419,5 +428,4 @@ class PaymentManager implements PaymentManagerInterface
         $container->setPortalid($this->standardParameter->getPortalId());
         $container->setMode($this->modeDetector->getMode());
     }
-
 }

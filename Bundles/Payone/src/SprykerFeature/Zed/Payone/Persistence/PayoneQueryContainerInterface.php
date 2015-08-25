@@ -6,6 +6,9 @@
 
 namespace SprykerFeature\Zed\Payone\Persistence;
 
+use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog;
+use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLog;
+use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLogOrderItem;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLogQuery;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneQuery;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLogQuery;
@@ -41,5 +44,33 @@ interface PayoneQueryContainerInterface
      * @return SpyPaymentPayoneQuery
      */
     public function getPaymentByOrderId($orderId);
+
+    /**
+     * @param int $orderId
+     * @param string $request
+     *
+     * @return SpyPaymentPayoneApiLog
+     */
+    public function getApiLogByOrderIdAndRequest($orderId, $request);
+
+    /**
+     * @param int $paymentId
+     *
+     * @return SpyPaymentPayoneQuery
+     */
+    public function getPaymentById($paymentId);
+
+    /**
+     * @param int $salesOrderId
+     * @return SpyPaymentPayoneTransactionStatusLog[]
+     */
+    public function getTransactionStatusLogBySalesOrder($salesOrderId);
+
+    /**
+     * @param int $salesOrderItemId
+     * @param array $ids
+     * @return SpyPaymentPayoneTransactionStatusLogOrderItem[]
+     */
+    public function getTransactionStatusLogOrderItemsByLogIds($salesOrderItemId, $ids);
 
 }

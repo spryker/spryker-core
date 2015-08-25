@@ -58,6 +58,41 @@ class RefundContainer extends AbstractRequestContainer
     protected $invoicing;
 
     /**
+     * @var string
+     */
+    protected $bankcountry;
+
+    /**
+     * @var string
+     */
+    protected $bankaccount;
+
+    /**
+     * @var string
+     */
+    protected $bankcode;
+
+    /**
+     * @var string
+     */
+    protected $bankbranchcode;
+
+    /**
+     * @var string
+     */
+    protected $bankcheckdigit;
+
+    /**
+     * @var string
+     */
+    protected $iban;
+
+    /**
+     * @var string
+     */
+    protected $bic;
+
+    /**
      * @param int $amount
      * Amount of refund (in smallest currency unit! e.g.
      * cent). The amount must be less than or equal to
@@ -187,6 +222,118 @@ class RefundContainer extends AbstractRequestContainer
     public function getUseCustomerData()
     {
         return $this->use_customerdata;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBankcountry()
+    {
+        return $this->bankcountry;
+    }
+
+    /**
+     * @param string $bankcountry
+     */
+    public function setBankcountry($bankcountry)
+    {
+        $this->bankcountry = $bankcountry;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBankaccount()
+    {
+        return $this->bankaccount;
+    }
+
+    /**
+     * @param string $bankaccount
+     */
+    public function setBankaccount($bankaccount)
+    {
+        $this->bankaccount = $bankaccount;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBankcode()
+    {
+        return $this->bankcode;
+    }
+
+    /**
+     * @param string $bankcode
+     */
+    public function setBankcode($bankcode)
+    {
+        $this->bankcode = $bankcode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBankbranchcode()
+    {
+        return $this->bankbranchcode;
+    }
+
+    /**
+     * @param string $bankbranchcode
+     */
+    public function setBankbranchcode($bankbranchcode)
+    {
+        $this->bankbranchcode = $bankbranchcode;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBankcheckdigit()
+    {
+        return $this->bankcheckdigit;
+    }
+
+    /**
+     * @param string $bankcheckdigit
+     */
+    public function setBankcheckdigit($bankcheckdigit)
+    {
+        $this->bankcheckdigit = $bankcheckdigit;
+    }
+
+    /**
+     * @return string
+     */
+    public function getIban()
+    {
+        return $this->iban;
+    }
+
+    /**
+     * @param string $iban
+     */
+    public function setIban($iban)
+    {
+        $this->iban = $iban;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBic()
+    {
+        return $this->bic;
+    }
+
+    /**
+     * @param string $bic
+     */
+    public function setBic($bic)
+    {
+        $this->bic = $bic;
     }
 
 }

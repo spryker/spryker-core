@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod;
 
-class PrePaymentContainer extends AbstractPaymentMethodContainer
+class PrepaymentContainer extends AbstractPaymentMethodContainer
 {
 
     /**

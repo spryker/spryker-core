@@ -7,21 +7,19 @@
 namespace SprykerFeature\Zed\Payone\Business\Payment\MethodMapper;
 
 use Generated\Shared\Payone\PayoneAuthorizationInterface;
-use Generated\Shared\Payone\PayoneCreditCardInterface;
+use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CreditCardPseudoContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\OnlineBankTransferContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CreditCardCheckContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
-use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\RefundContainer;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
 
-class CreditCardPseudo extends AbstractMapper
+class OnlineBankTransfer extends AbstractMapper
 {
 
     /**
@@ -29,7 +27,7 @@ class CreditCardPseudo extends AbstractMapper
      */
     public function getName()
     {
-        return PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO;
+        return PayoneApiConstants::PAYMENT_METHOD_ONLINE_BANK_TRANSFER;
     }
 
     /**
@@ -86,11 +84,12 @@ class CreditCardPseudo extends AbstractMapper
         $paymentDetailsEntity = $paymentEntity->getSpyPaymentPayoneDetails();
 
         $authorizationContainer->setAid($this->getStandardParameter()->getAid());
-        $authorizationContainer->setClearingType(PayoneApiConstants::CLEARING_TYPE_CREDIT_CARD);
+        $authorizationContainer->setClearingType(PayoneApiConstants::CLEARING_TYPE_ONLINE_BANK_TRANSFER);
         $authorizationContainer->setReference($paymentEntity->getReference());
         $authorizationContainer->setAmount($paymentDetailsEntity->getAmount());
         $authorizationContainer->setCurrency($this->getStandardParameter()->getCurrency());
         $authorizationContainer->setPaymentMethod($this->createPaymentMethodContainerFromPayment($paymentEntity));
+        $authorizationContainer->setOnlinebanktransfertype($paymentDetailsEntity->getType());
 
         $billingAddressEntity = $paymentEntity->getSpySalesOrder()->getBillingAddress();
 
@@ -100,27 +99,6 @@ class CreditCardPseudo extends AbstractMapper
         $authorizationContainer->setPersonalData($personalContainer);
 
         return $authorizationContainer;
-    }
-
-    /**
-     * @param PayoneCreditCardInterface $payoneCreditCardTransfer
-     *
-     * @return CreditCardCheckContainer
-     */
-    public function mapCreditCardCheck(PayoneCreditCardInterface $payoneCreditCardTransfer)
-    {
-        $creditCardCheckContainer = new CreditCardCheckContainer();
-
-        $creditCardCheckContainer->setAid($this->getStandardParameter()->getAid());
-        $creditCardCheckContainer->setCardPan($payoneCreditCardTransfer->getCardPan());
-        $creditCardCheckContainer->setCardType($payoneCreditCardTransfer->getCardType());
-        $creditCardCheckContainer->setCardExpireDate($payoneCreditCardTransfer->getCardExpireDate());
-        $creditCardCheckContainer->setCardCvc2($payoneCreditCardTransfer->getCardCvc2());
-        $creditCardCheckContainer->setCardIssueNumber($payoneCreditCardTransfer->getCardIssueNumber());
-        $creditCardCheckContainer->setStoreCardData($payoneCreditCardTransfer->getStoreCardData());
-        $creditCardCheckContainer->setLanguage($this->getStandardParameter()->getLanguage());
-
-        return $creditCardCheckContainer;
     }
 
     /**
@@ -153,35 +131,50 @@ class CreditCardPseudo extends AbstractMapper
         $refundContainer->setSequenceNumber($this->getNextSequenceNumber($paymentEntity->getTransactionId()));
         $refundContainer->setCurrency($this->getStandardParameter()->getCurrency());
 
+        $refundContainer->setBankcountry($paymentEntity->getSpyPaymentPayoneDetails()->getBankcountry());
+        $refundContainer->setBankaccount($paymentEntity->getSpyPaymentPayoneDetails()->getBankaccount());
+        $refundContainer->setBankcode($paymentEntity->getSpyPaymentPayoneDetails()->getBankcode());
+        $refundContainer->setBankbranchcode($paymentEntity->getSpyPaymentPayoneDetails()->getBankbranchcode());
+        $refundContainer->setBankcheckdigit($paymentEntity->getSpyPaymentPayoneDetails()->getBankcheckdigit());
+        $refundContainer->setIban($paymentEntity->getSpyPaymentPayoneDetails()->getIban());
+        $refundContainer->setBic($paymentEntity->getSpyPaymentPayoneDetails()->getBic());
+
         return $refundContainer;
     }
 
     /**
      * @param SpyPaymentPayone $paymentEntity
      *
-     * @return CreditCardPseudoContainer
+     * @return OnlineBankTransferContainer
      */
     protected function createPaymentMethodContainerFromPayment(SpyPaymentPayone $paymentEntity)
     {
-        $paymentMethodContainer = new CreditCardPseudoContainer();
+        $paymentDetailsEntity = $paymentEntity->getSpyPaymentPayoneDetails();
 
-        $pseudoCardPan = $paymentEntity->getSpyPaymentPayoneDetails()->getPseudocardpan();
-        $paymentMethodContainer->setPseudoCardPan($pseudoCardPan);
+        $paymentMethodContainer = new OnlineBankTransferContainer();
+
+        $paymentMethodContainer->setRedirect($this->createRedirectContainer($paymentEntity->getSpySalesOrder()->getOrderreference()));
+        $paymentMethodContainer->setBankCountry($paymentDetailsEntity->getBankcountry());
+        $paymentMethodContainer->setBankAccount($paymentDetailsEntity->getBankaccount());
+        $paymentMethodContainer->setBankCode($paymentDetailsEntity->getBankcode());
+        $paymentMethodContainer->setBankGroupType($paymentDetailsEntity->getBankgrouptype());
+        $paymentMethodContainer->setIban($paymentDetailsEntity->getIban());
+        $paymentMethodContainer->setBic($paymentDetailsEntity->getBic());
 
         return $paymentMethodContainer;
     }
 
     /**
-     * @param PayoneAuthorizationInterface $payoneAuthorizationTransfer
+     * @param PayoneAuthorizationInterface $authorizationData
      *
      * @return PersonalContainer
      */
-    protected function createAuthorizationPersonalData(PayoneAuthorizationInterface $payoneAuthorizationTransfer)
+    protected function createAuthorizationPersonalData(PayoneAuthorizationInterface $authorizationData)
     {
         $personalContainer = new PersonalContainer();
 
-        $personalContainer->setFirstName($payoneAuthorizationTransfer->getOrder()->getFirstName());
-        $personalContainer->setLastName($payoneAuthorizationTransfer->getOrder()->getLastName());
+        $personalContainer->setFirstName($authorizationData->getOrder()->getFirstName());
+        $personalContainer->setLastName($authorizationData->getOrder()->getLastName());
         $personalContainer->setCountry($this->storeConfig->getCurrentCountry());
 
         return $personalContainer;

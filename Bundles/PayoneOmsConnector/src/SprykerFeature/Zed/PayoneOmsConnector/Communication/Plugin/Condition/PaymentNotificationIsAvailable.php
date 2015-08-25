@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\PayoneOmsConnector\Communication\Plugin\Condition;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\AbstractCondition;
 use SprykerFeature\Zed\Payone\Business\PayoneDependencyContainer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
@@ -13,13 +14,21 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 /**
  * @method PayoneDependencyContainer getDependencyContainer()
  */
-class PaymentIsPaid extends AbstractCondition
+class PaymentNotificationIsAvailable extends AbstractCondition
 {
 
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
     public function check(SpySalesOrderItem $orderItem)
     {
-        return $this->getDependencyContainer()
+        $result = $this->getDependencyContainer()
             ->createPayoneFacade()
-            ->isPaymentPaid($orderItem->getFkSalesOrder(), $orderItem->getIdSalesOrderItem());
+            ->isPaymentNotificationAvailable($orderItem->getFkSalesOrder(), $orderItem->getIdSalesOrderItem());
+
+        return $result;
     }
+
 }

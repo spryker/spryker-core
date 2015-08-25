@@ -6,13 +6,9 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Payment;
 
-use Generated\Shared\Payone\AuthorizationInterface;
-use Generated\Shared\Payone\CaptureInterface;
-use Generated\Shared\Payone\CreditCardInterface;
-use Generated\Shared\Payone\DebitInterface;
-use Generated\Shared\Payone\OrderInterface as PayoneOrderInterface;
-use Generated\Shared\Payone\RefundInterface;
-use Generated\Shared\Transfer\PayonePaymentTransfer;
+use Generated\Shared\Payone\PayoneCreditCardInterface;
+use Generated\Shared\Payone\PayoneDebitInterface;
+use Generated\Shared\Payone\PayoneRefundInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
@@ -23,57 +19,50 @@ interface PaymentManagerInterface
 {
 
     /**
-     * @param DebitInterface $debitData
-     *
-     * @return DebitResponseContainer
-     */
-    public function debit(DebitInterface $debitData);
-
-    /**
-     * @param CaptureInterface $captureData
-     *
-     * @return CaptureResponseContainer
-     */
-    public function capture(CaptureInterface $captureData);
-
-    /**
      * @param PaymentMethodMapperInterface $paymentMethodMapper
      */
     public function registerPaymentMethodMapper(PaymentMethodMapperInterface $paymentMethodMapper);
 
     /**
-     * @param RefundInterface $refundData
+     * @param PayoneRefundInterface $refundTransfer
      *
      * @return RefundResponseContainer
      */
-    public function refund(RefundInterface $refundData);
+    public function refundPayment(PayoneRefundInterface $refundTransfer);
 
     /**
-     * @param AuthorizationInterface $authorizationData
+     * @param int $idPayment
+     *
+     * @return DebitResponseContainer
+     */
+    public function debitPayment($idPayment);
+
+    /**
+     * @param int $idPayment
      *
      * @return AuthorizationResponseContainer
      */
-    public function preAuthorize(AuthorizationInterface $authorizationData);
+    public function authorizePayment($idPayment);
 
     /**
-     * @param AuthorizationInterface $authorizationData
+     * @param $idPayment
      *
      * @return AuthorizationResponseContainer
      */
-    public function authorize(AuthorizationInterface $authorizationData);
+    public function preAuthorizePayment($idPayment);
 
     /**
-     * @param PayoneOrderInterface $orderTransfer
+     * @param $idPayment
      *
-     * @return PayonePaymentTransfer
+     * @return CaptureResponseContainer
      */
-    public function getPayment(PayoneOrderInterface $orderTransfer);
+    public function capturePayment($idPayment);
 
     /**
-     * @param CreditCardInterface $creditCardData
+     * @param PayoneCreditCardInterface $creditCardData
      *
      * @return CreditCardCheckResponseContainer
      */
-    public function creditCardCheck(CreditCardInterface $creditCardData);
+    public function creditCardCheck(PayoneCreditCardInterface $creditCardData);
 
 }

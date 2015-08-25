@@ -1,9 +1,10 @@
 <?php
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
 
 namespace SprykerFeature\Zed\PayoneOmsConnector\Communication\Plugin\Command;
 
-use Generated\Shared\Transfer\AuthorizationTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
@@ -20,23 +21,15 @@ class AuthorizePlugin extends AbstractPlugin implements CommandByOrderInterface
      * @param array $orderItems
      * @param SpySalesOrder $orderEntity
      * @param ReadOnlyArrayObject $data
+     *
+     * @return array $returnArray
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        $payoneFacade = $this->getDependencyContainer()->createPayoneFacade();
-
-        $orderTransfer = new OrderTransfer();
-        $orderTransfer->fromArray($orderEntity->toArray());
-
-        $paymentTransfer = $payoneFacade->getPayment($orderTransfer);
-
-        $authorizationTransfer = new AuthorizationTransfer();
-        $authorizationTransfer->setPaymentMethod($paymentTransfer->getPaymentMethod());
-        $authorizationTransfer->setAmount($orderEntity->getGrandTotal());
-        $authorizationTransfer->setReferenceId($orderEntity->getOrderReference());
-        $authorizationTransfer->setOrder($orderEntity);
-
-        $this->getDependencyContainer()->createPayoneFacade()->authorize($authorizationTransfer);
+        $paymentEntity = $orderEntity->getSpyPaymentPayone();
+        $this->getDependencyContainer()->createPayoneFacade()->authorizePayment($paymentEntity->getIdSalesOrder());
+        
+        return [];
     }
 
 }
