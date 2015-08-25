@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class AuthorizationIsApprovedPlugin extends AbstractPlugin
 {
+    const NAME = 'AuthorizationIsApprovedPlugin';
 
     /**
      * @param OrderTransfer $orderTransfer

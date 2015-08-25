@@ -9,11 +9,24 @@ namespace SprykerFeature\Zed\Payone\Business\Order;
 use Generated\Shared\Payone\OrderInterface as PayoneOrderInterface;
 use Generated\Shared\Payone\PayonePaymentInterface;
 use Generated\Shared\Transfer\PayonePaymentDetailsTransfer;
+use SprykerFeature\Zed\Payone\PayoneConfig;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneDetails;
 
 class OrderManager implements OrderManagerInterface
 {
+    /**
+     * @var PayoneConfig
+     */
+    private $config;
+
+    /**
+     * @param PayoneConfig $config
+     */
+    public function __construct(PayoneConfig $config)
+    {
+        $this->config = $config;
+    }
 
     /**
      * @param PayoneOrderInterface $orderTransfer
@@ -35,6 +48,12 @@ class OrderManager implements OrderManagerInterface
     {
         $payment = new SpyPaymentPayone();
         $payment->fromArray(($paymentTransfer->toArray()));
+
+        if ($payment->getReference() === null) {
+            $orderEntity = $payment->getSpySalesOrder();
+            $payment->setReference($this->config->generatePayoneReference($paymentTransfer, $orderEntity));
+        }
+
         $payment->save();
         return $payment;
     }
@@ -45,11 +64,10 @@ class OrderManager implements OrderManagerInterface
      */
     protected function savePaymentDetails(SpyPaymentPayone $payment, PayonePaymentDetailsTransfer $paymentDetailsTransfer)
     {
-        $paymentDetails = new SpyPaymentPayoneDetails();
-        $paymentDetails->setSpyPaymentPayone($payment);
-        $paymentDetails->fromArray($paymentDetailsTransfer->toArray());
-        $paymentDetails->save();
+        $paymentDetailsEntity = new SpyPaymentPayoneDetails();
+        $paymentDetailsEntity->setSpyPaymentPayone($payment);
+        $paymentDetailsEntity->fromArray($paymentDetailsTransfer->toArray());
+        $paymentDetailsEntity->save();
     }
-
 
 }

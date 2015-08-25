@@ -6,19 +6,20 @@
 
 namespace SprykerFeature\Zed\PayoneOmsConnector\Communication\Plugin\Condition;
 
-use Generated\Shared\Transfer\OrderTransfer;
+use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\AbstractCondition;
+use SprykerFeature\Zed\Payone\Business\PayoneDependencyContainer;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 
-class PaymentIsUnderPaid extends AbstractPlugin
+/**
+ * @method PayoneDependencyContainer getDependencyContainer()
+ */
+class PaymentIsUnderpaid extends AbstractCondition
 {
 
-    /**
-     * @param OrderTransfer $orderTransfer
-     *
-     * @return bool
-     */
-    protected function callFacade(OrderTransfer $orderTransfer)
+    public function check(SpySalesOrderItem $orderItem)
     {
-        return $this->getDependencyContainer()->createPayoneFacade()->isPaymentUnderPaid($orderTransfer);
+        return $this->getDependencyContainer()
+            ->createPayoneFacade()
+            ->isPaymentUnderpaid($orderItem->getFkSalesOrder(), $orderItem->getIdSalesOrderItem());
     }
-
 }

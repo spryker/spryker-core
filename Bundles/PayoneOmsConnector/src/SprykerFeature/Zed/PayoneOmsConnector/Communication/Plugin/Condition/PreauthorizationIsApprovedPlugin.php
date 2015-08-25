@@ -6,7 +6,20 @@
 
 namespace SprykerFeature\Zed\PayoneOmsConnector\Communication\Plugin\Condition;
 
-class PreauthorizationIsApprovedPlugin extends AuthorizationIsApprovedPlugin
+use Generated\Shared\Transfer\OrderTransfer;
+
+class PreauthorizationIsApprovedPlugin extends AbstractPlugin
 {
+    const NAME = 'PreauthorizationIsApprovedPlugin';
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    protected function callFacade(OrderTransfer $orderTransfer)
+    {
+        return $this->getDependencyContainer()->createPayoneFacade()->isPreauthorizationApproved($orderTransfer);
+    }
 
 }

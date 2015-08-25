@@ -19,5 +19,4 @@ use SprykerFeature\Zed\Payone\Persistence\Propel\Base\SpyPaymentPayone as BaseSp
  */
 class SpyPaymentPayone extends BaseSpyPaymentPayone
 {
-
 }

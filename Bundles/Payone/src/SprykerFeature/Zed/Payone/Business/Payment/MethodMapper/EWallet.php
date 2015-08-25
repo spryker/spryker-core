@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Payone\Business\Payment\MethodMapper;
 use Generated\Shared\Payone\PayoneAuthorizationInterface;
 use Generated\Shared\Payone\PayoneCreditCardInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CreditCardPseudoContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\EWalletContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
@@ -21,7 +21,7 @@ use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\RefundContainer;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
 
-class CreditCardPseudo extends AbstractMapper
+class EWallet extends AbstractMapper
 {
 
     /**
@@ -29,7 +29,7 @@ class CreditCardPseudo extends AbstractMapper
      */
     public function getName()
     {
-        return PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO;
+        return PayoneApiConstants::PAYMENT_METHOD_E_WALLET;
     }
 
     /**
@@ -86,7 +86,7 @@ class CreditCardPseudo extends AbstractMapper
         $paymentDetailsEntity = $paymentEntity->getSpyPaymentPayoneDetails();
 
         $authorizationContainer->setAid($this->getStandardParameter()->getAid());
-        $authorizationContainer->setClearingType(PayoneApiConstants::CLEARING_TYPE_CREDIT_CARD);
+        $authorizationContainer->setClearingType(PayoneApiConstants::CLEARING_TYPE_E_WALLET);
         $authorizationContainer->setReference($paymentEntity->getReference());
         $authorizationContainer->setAmount($paymentDetailsEntity->getAmount());
         $authorizationContainer->setCurrency($this->getStandardParameter()->getCurrency());
@@ -100,27 +100,6 @@ class CreditCardPseudo extends AbstractMapper
         $authorizationContainer->setPersonalData($personalContainer);
 
         return $authorizationContainer;
-    }
-
-    /**
-     * @param PayoneCreditCardInterface $payoneCreditCardTransfer
-     *
-     * @return CreditCardCheckContainer
-     */
-    public function mapCreditCardCheck(PayoneCreditCardInterface $payoneCreditCardTransfer)
-    {
-        $creditCardCheckContainer = new CreditCardCheckContainer();
-
-        $creditCardCheckContainer->setAid($this->getStandardParameter()->getAid());
-        $creditCardCheckContainer->setCardPan($payoneCreditCardTransfer->getCardPan());
-        $creditCardCheckContainer->setCardType($payoneCreditCardTransfer->getCardType());
-        $creditCardCheckContainer->setCardExpireDate($payoneCreditCardTransfer->getCardExpireDate());
-        $creditCardCheckContainer->setCardCvc2($payoneCreditCardTransfer->getCardCvc2());
-        $creditCardCheckContainer->setCardIssueNumber($payoneCreditCardTransfer->getCardIssueNumber());
-        $creditCardCheckContainer->setStoreCardData($payoneCreditCardTransfer->getStoreCardData());
-        $creditCardCheckContainer->setLanguage($this->getStandardParameter()->getLanguage());
-
-        return $creditCardCheckContainer;
     }
 
     /**
@@ -159,14 +138,14 @@ class CreditCardPseudo extends AbstractMapper
     /**
      * @param SpyPaymentPayone $paymentEntity
      *
-     * @return CreditCardPseudoContainer
+     * @return EWalletContainer
      */
     protected function createPaymentMethodContainerFromPayment(SpyPaymentPayone $paymentEntity)
     {
-        $paymentMethodContainer = new CreditCardPseudoContainer();
+        $paymentMethodContainer = new EWalletContainer();
+        $paymentMethodContainer->setRedirect($this->createRedirectContainer($paymentEntity->getSpySalesOrder()->getOrderreference()));
 
-        $pseudoCardPan = $paymentEntity->getSpyPaymentPayoneDetails()->getPseudocardpan();
-        $paymentMethodContainer->setPseudoCardPan($pseudoCardPan);
+        $paymentMethodContainer->setWalletType($paymentEntity->getSpyPaymentPayoneDetails()->getType());
 
         return $paymentMethodContainer;
     }

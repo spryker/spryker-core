@@ -7,7 +7,6 @@
 namespace SprykerFeature\Client\Payone;
 
 use Generated\Client\Ide\FactoryAutoCompletion\Payone;
-use Generated\Shared\Transfer\StandardParameterTransfer;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Payone\ClientApi\HashGeneratorInterface;
 use SprykerFeature\Shared\Payone\Dependency\HashInterface;

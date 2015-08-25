@@ -14,6 +14,7 @@ class PayoneDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const FACADE_LOCALE = 'locale facade';
+    const FACADE_OMS = 'oms facade';
 
     const STORE_CONFIG = 'store config';
 
@@ -26,6 +27,10 @@ class PayoneDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::FACADE_LOCALE] = function (Container $container) {
             return $container->getLocator()->locale()->facade();
+        };
+
+        $container[self::FACADE_OMS] = function (Container $container) {
+            return $container->getLocator()->oms()->facade();
         };
 
         return $container;

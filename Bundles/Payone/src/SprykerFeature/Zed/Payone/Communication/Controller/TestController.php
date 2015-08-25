@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Payone\Communication\Controller;
 
+use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Generated\Shared\Transfer\PersonalDataTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\AuthorizationTransfer;
@@ -40,7 +41,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $authorization = new AuthorizationTransfer();
         $authorization->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT);
         $authorization->setAmount($order->getTotals()->getGrandTotal());
-        $authorization->setReferenceId($order->getOrderReference());
+        $authorization->setReferenceId($order->getIdSalesOrder());
         $authorization->setOrder($order);
 
         $result = $this->getFacade()->preAuthorize($authorization);
@@ -55,7 +56,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $authorization = new AuthorizationTransfer();
         $authorization->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT);
         $authorization->setAmount($order->getTotals()->getGrandTotal());
-        $authorization->setReferenceId($order->getOrderReference());
+        $authorization->setReferenceId($order->getIdSalesOrder());
         $authorization->setOrder($order);
 
         $result = $this->getFacade()->preAuthorize($authorization);
@@ -105,7 +106,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $refund->setPayment($payment);
         $refund->setAmount(-100);
 
-        $result = $this->getFacade()->refund($refund);
+        $result = $this->getFacade()->refundPayment($refund);
 
         dump($result);die;
     }
@@ -140,7 +141,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $authorization->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO);
         $authorization->setPersonalData($personalData);
         $authorization->setAmount($order->getTotals()->getGrandTotal());
-        $authorization->setReferenceId($order->getOrderReference());
+        $authorization->setReferenceId($order->getIdSalesOrder());
         $authorization->setOrder($order);
 
         $result = $this->getFacade()->preAuthorize($authorization);
@@ -172,7 +173,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $authorization->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO);
         $authorization->setPersonalData($personalData);
         $authorization->setAmount($order->getTotals()->getGrandTotal());
-        $authorization->setReferenceId($order->getOrderReference());
+        $authorization->setReferenceId($order->getIdSalesOrder());
         $authorization->setOrder($order);
 
         $result = $this->getFacade()->authorize($authorization);
@@ -227,7 +228,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $refund->setNarrativeText('Test narrative');
 //        echo '<pre>' . var_dump($refund) . '</pre>';die;
 
-        $result = $this->getFacade()->refund($refund);
+        $result = $this->getFacade()->refundPayment($refund);
 
         dump($result);die;
     }
@@ -251,7 +252,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $authorization = new AuthorizationTransfer();
         $authorization->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_PAYPAL);
         $authorization->setAmount($order->getTotals()->getGrandTotal());
-        $authorization->setReferenceId($order->getOrderReference());
+        $authorization->setReferenceId($order->getIdSalesOrder());
 
         $authorization->setOrder($order);
 
@@ -268,7 +269,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $authorization = new AuthorizationTransfer();
         $authorization->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_PAYPAL);
         $authorization->setAmount($order->getTotals()->getGrandTotal());
-        $authorization->setReferenceId($order->getOrderReference());
+        $authorization->setReferenceId($order->getIdSalesOrder());
 
         $authorization->setOrder($order);
 
@@ -319,7 +320,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $authorization = new AuthorizationTransfer();
         $authorization->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_GIROPAY);
         $authorization->setAmount($order->getTotals()->getGrandTotal());
-        $authorization->setReferenceId($order->getOrderReference());
+        $authorization->setReferenceId($order->getIdSalesOrder());
         $authorization->setOrder($order);
 
         $result = $this->getFacade()->preAuthorize($authorization);
@@ -337,9 +338,8 @@ class TestController extends AbstractController implements PayoneApiConstants
         $order->setLastName('wurst');
         $order->setEmail('horst@wurst.de');
         $order->setIsTest(true);
-        $order->setOrderReference('DY999991011');
+//        $order->setIncrementId('DY999991011');
 
-//        @todo remove
         $order->setOrderReference(rand(0, 100000));
 
         $order->setIdSalesOrder(1);
@@ -356,7 +356,9 @@ class TestController extends AbstractController implements PayoneApiConstants
 
     public function transactionUpdateAction()
     {
-        $order = $this->getOrder();        $params = [
+        $order = $this->getOrder();
+
+        $params = [
             'aid' => '25811',
             'mode' => 'test',
             'customerid' => '999',
@@ -374,7 +376,10 @@ class TestController extends AbstractController implements PayoneApiConstants
             'reference' => $order->getOrderReference(),
         ];
 
-        $r = $this->getFacade()->processTransactionStatusUpdate($params);
+        $transactionStatusUpdateTransfer = new PayoneTransactionStatusUpdateTransfer();
+        $transactionStatusUpdateTransfer->fromArray($params);
+
+        $r = $this->getFacade()->processTransactionStatusUpdate($transactionStatusUpdateTransfer);
 
         echo '<pre>' . print_r($r, false) . '</pre>';die;
     }
