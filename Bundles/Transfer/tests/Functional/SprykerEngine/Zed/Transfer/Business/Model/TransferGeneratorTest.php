@@ -75,9 +75,6 @@ class TransferGeneratorTest extends Test
         );
     }
 
-    /**
-     * @group singleTest
-     */
     public function testExecuteShouldGenerateExpectedMergedTransfer()
     {
         $messenger = new ConsoleMessenger(new ConsoleOutput(OutputInterface::VERBOSITY_QUIET));

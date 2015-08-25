@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\PageTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
-use Propel\Runtime\Propel;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Cms\Business\Exception\MappingAmbiguousException;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
@@ -74,14 +73,6 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
         $this->pageManager = $pageManager;
         $this->locator = $locator;
         $this->connection = $connection;
-    }
-
-    /**
-     * @return ConnectionInterface
-     */
-    private function getConnection()
-    {
-        return $this->connection;
     }
 
     /**
