@@ -273,7 +273,7 @@ class PaymentManager implements PaymentManagerInterface
     {
         $payonePaymentTransfer = $refundTransfer->getPayment();
 
-        $paymentEntity = $this->getPaymentEntity($payonePaymentTransfer->getIdSalesOrder());
+        $paymentEntity = $this->getPaymentEntity($payonePaymentTransfer->getFkSalesOrder());
         $paymentMethodMapper = $this->getPaymentMethodMapper($paymentEntity);
         $requestContainer = $paymentMethodMapper->mapPaymentToRefund($paymentEntity);
         $requestContainer->setAmount($refundTransfer->getAmount());

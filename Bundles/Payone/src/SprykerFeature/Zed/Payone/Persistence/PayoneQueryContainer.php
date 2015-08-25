@@ -69,7 +69,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     public function getPaymentByOrderId($orderId)
     {
         $query = SpyPaymentPayoneQuery::create();
-        $query->findByIdSalesOrder($orderId);
+        $query->findByFkSalesOrder($orderId);
 
         return $query;
     }
@@ -84,7 +84,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     {
         $query = SpyPaymentPayoneApiLogQuery::create()
             ->useSpyPaymentPayoneQuery()
-            ->filterByIdSalesOrder($orderId)
+            ->filterByFkSalesOrder($orderId)
             ->endUse()
             ->filterByRequest($request)
             ->orderByCreatedAt(Criteria::DESC) //TODO: Index?
@@ -102,7 +102,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     public function getPaymentById($paymentId)
     {
         $query = SpyPaymentPayoneQuery::create();
-        $query->findByIdSalesOrder($paymentId);
+        $query->findByFkSalesOrder($paymentId);
 
         return $query;
     }
@@ -115,7 +115,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     {
         $query = SpyPaymentPayoneTransactionStatusLogQuery::create()
             ->useSpyPaymentPayoneQuery()
-            ->filterByIdSalesOrder($idIdSalesOrder)
+            ->filterByFkSalesOrder($idIdSalesOrder)
             ->endUse()
             ->orderByCreatedAt()
         ;

@@ -54,10 +54,10 @@ class Invoice extends AbstractMapper
      */
     public function mapPaymentToCapture(SpyPaymentPayone $paymentEntity)
     {
-        $paymentDetailsEntity = $paymentEntity->getSpyPaymentPayoneDetails();
+        $paymentDetailEntity = $paymentEntity->getSpyPaymentPayoneDetail();
 
         $captureContainer = new CaptureContainer();
-        $captureContainer->setAmount($paymentDetailsEntity->getAmount());
+        $captureContainer->setAmount($paymentDetailEntity->getAmount());
         $captureContainer->setCurrency($this->getStandardParameter()->getCurrency());
         $captureContainer->setTxid($paymentEntity->getTransactionId());
 
@@ -85,12 +85,12 @@ class Invoice extends AbstractMapper
      */
     protected function mapPaymentToAbstractAuthorization(SpyPaymentPayone $paymentEntity, AbstractAuthorizationContainer $authorizationContainer)
     {
-        $paymentDetailsEntity = $paymentEntity->getSpyPaymentPayoneDetails();
+        $paymentDetailEntity = $paymentEntity->getSpyPaymentPayoneDetail();
 
         $authorizationContainer->setAid($this->getStandardParameter()->getAid());
         $authorizationContainer->setClearingType(PayoneApiConstants::CLEARING_TYPE_INVOICE);
         $authorizationContainer->setReference($paymentEntity->getReference());
-        $authorizationContainer->setAmount($paymentDetailsEntity->getAmount());
+        $authorizationContainer->setAmount($paymentDetailEntity->getAmount());
         $authorizationContainer->setCurrency($this->getStandardParameter()->getCurrency());
         $authorizationContainer->setPaymentMethod($this->createPaymentMethodContainerFromPayment($paymentEntity));
 
@@ -116,7 +116,7 @@ class Invoice extends AbstractMapper
         $debitContainer->setTxid($paymentEntity->getTransactionId());
         $debitContainer->setSequenceNumber($this->getNextSequenceNumber($paymentEntity->getTransactionId()));
         $debitContainer->setCurrency($this->getStandardParameter()->getCurrency());
-        $debitContainer->setAmount($paymentEntity->getSpyPaymentPayoneDetails()->getAmount());
+        $debitContainer->setAmount($paymentEntity->getSpyPaymentPayoneDetail()->getAmount());
 
         return $debitContainer;
     }
@@ -134,13 +134,13 @@ class Invoice extends AbstractMapper
         $refundContainer->setSequenceNumber($this->getNextSequenceNumber($paymentEntity->getTransactionId()));
         $refundContainer->setCurrency($this->getStandardParameter()->getCurrency());
 
-        $refundContainer->setBankcountry($paymentEntity->getSpyPaymentPayoneDetails()->getBankcountry());
-        $refundContainer->setBankaccount($paymentEntity->getSpyPaymentPayoneDetails()->getBankaccount());
-        $refundContainer->setBankcode($paymentEntity->getSpyPaymentPayoneDetails()->getBankcode());
-        $refundContainer->setBankbranchcode($paymentEntity->getSpyPaymentPayoneDetails()->getBankbranchcode());
-        $refundContainer->setBankcheckdigit($paymentEntity->getSpyPaymentPayoneDetails()->getBankcheckdigit());
-        $refundContainer->setIban($paymentEntity->getSpyPaymentPayoneDetails()->getIban());
-        $refundContainer->setBic($paymentEntity->getSpyPaymentPayoneDetails()->getBic());
+        $refundContainer->setBankcountry($paymentEntity->getSpyPaymentPayoneDetail()->getBankcountry());
+        $refundContainer->setBankaccount($paymentEntity->getSpyPaymentPayoneDetail()->getBankaccount());
+        $refundContainer->setBankcode($paymentEntity->getSpyPaymentPayoneDetail()->getBankcode());
+        $refundContainer->setBankbranchcode($paymentEntity->getSpyPaymentPayoneDetail()->getBankbranchcode());
+        $refundContainer->setBankcheckdigit($paymentEntity->getSpyPaymentPayoneDetail()->getBankcheckdigit());
+        $refundContainer->setIban($paymentEntity->getSpyPaymentPayoneDetail()->getIban());
+        $refundContainer->setBic($paymentEntity->getSpyPaymentPayoneDetail()->getBic());
 
         return $refundContainer;
     }
