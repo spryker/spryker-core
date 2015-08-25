@@ -38,14 +38,6 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
     private $standardParameter;
 
     /**
-     * @return PayoneFacade
-     */
-    public function createPayoneFacade()
-    {
-        return $this->getProvidedDependency(PayoneDependencyProvider::FACADE_LOCALE);
-    }
-
-    /**
      * @return PaymentManagerInterface
      */
     public function createPaymentManager()
