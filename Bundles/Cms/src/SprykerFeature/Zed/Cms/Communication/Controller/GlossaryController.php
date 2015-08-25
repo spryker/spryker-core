@@ -6,8 +6,10 @@
 
 namespace SprykerFeature\Zed\Cms\Communication\Controller;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
+use SprykerFeature\Shared\Cms\CmsConfig;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
 use SprykerFeature\Zed\Cms\CmsDependencyProvider;
@@ -15,6 +17,7 @@ use SprykerFeature\Zed\Cms\Communication\Form\CmsGlossaryForm;
 use SprykerFeature\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use SprykerFeature\Zed\Cms\Communication\Table\CmsPageTable;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
+use SprykerFeature\Zed\Cms\Persistence\Propel\Base\SpyCmsPage;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -26,6 +29,8 @@ class GlossaryController extends AbstractController
 {
     const REDIRECT_ADDRESS = '/cms/glossary/';
     const SEARCH_LIMIT = 10;
+    const LOCALE = 'locale_';
+    const ID_FORM = 'id-form';
     const TYPE = 'type';
 
     /**
@@ -81,7 +86,7 @@ class GlossaryController extends AbstractController
             'forms' => $formViews,
         ];
     }
-    
+
 
     /**
      * @param Request $request
@@ -225,9 +230,10 @@ class GlossaryController extends AbstractController
             CmsGlossaryForm::GLOSSARY_KEY => $data[CmsGlossaryForm::GLOSSARY_KEY],
             self::LOCALE . $localeTransfer->getIdLocale() => $data[CmsGlossaryForm::TRANSLATION],
         ];
-        $this->getGlossaryFacade()
-            ->saveGlossaryKeyTranslations($glossaryFormData)
-        ;
+        // @todo saveGlossary functionality changed ...
+//        $this->getGlossaryFacade()
+//            ->saveGlossaryKeyTranslations($glossaryFormData)
+//        ;
         $pageKeyMappingTransfer = $this->createKeyMappingTransfer($data);
         $this->getFacade()
             ->savePageKeyMappingAndTouch($pageKeyMappingTransfer)
