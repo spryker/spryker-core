@@ -61,16 +61,16 @@ interface PayoneQueryContainerInterface
     public function getPaymentById($paymentId);
 
     /**
-     * @param int $salesOrderId
+     * @param int $idSalesOrder
      * @return SpyPaymentPayoneTransactionStatusLog[]
      */
-    public function getTransactionStatusLogBySalesOrder($salesOrderId);
+    public function getTransactionStatusLogBySalesOrder($idSalesOrder);
 
     /**
-     * @param int $salesOrderItemId
+     * @param int $idSalesOrderItem
      * @param array $ids
      * @return SpyPaymentPayoneTransactionStatusLogOrderItem[]
      */
-    public function getTransactionStatusLogOrderItemsByLogIds($salesOrderItemId, $ids);
+    public function getTransactionStatusLogOrderItemsByLogIds($idSalesOrderItem, $ids);
 
 }

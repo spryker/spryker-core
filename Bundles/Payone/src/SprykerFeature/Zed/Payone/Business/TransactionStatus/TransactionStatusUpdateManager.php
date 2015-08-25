@@ -100,13 +100,13 @@ class TransactionStatusUpdateManager
     }
 
     /**
-     * @param int $salesOrderId
-     * @param int $salesOrderItemId
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
      * @return bool
      */
-    public function isPaymentNotificationAvailable($salesOrderId, $salesOrderItemId)
+    public function isPaymentNotificationAvailable($idSalesOrder, $idSalesOrderItem)
     {
-        return $this->hasUnprocessedTransactionStatusLogs($salesOrderId, $salesOrderItemId);
+        return $this->hasUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem);
     }
 
     /**
@@ -179,10 +179,10 @@ class TransactionStatusUpdateManager
         return $this->queryContainer->getPaymentByTransactionIdQuery($transactionId)->findOne();
     }
 
-    public function isPaymentPaid($salesOrderId, $salesOrderItemId)
+    public function isPaymentPaid($idSalesOrder, $idSalesOrderItem)
     {
         $status = PayoneTransactionStatusConstants::TXACTION_PAID;
-        $statusLog = $this->getFirstUnprocessedTransactionStatusLog($salesOrderId, $salesOrderItemId, $status);
+        $statusLog = $this->getFirstUnprocessedTransactionStatusLog($idSalesOrder, $idSalesOrderItem, $status);
         if ($statusLog === null) {
             return false;
         }
@@ -190,21 +190,21 @@ class TransactionStatusUpdateManager
             return false;
         }
 
-        $this->saveSpyPaymentPayoneTransactionStatusLogOrderItem($salesOrderItemId, $statusLog);
+        $this->saveSpyPaymentPayoneTransactionStatusLogOrderItem($idSalesOrderItem, $statusLog);
 
         return true;
     }
 
-    public function isPaymentCapture($salesOrderId, $salesOrderItemId)
+    public function isPaymentCapture($idSalesOrder, $idSalesOrderItem)
     {
         $status = PayoneTransactionStatusConstants::TXACTION_CAPTURE;
-        return $this->isPayment($salesOrderId, $salesOrderItemId, $status);
+        return $this->isPayment($idSalesOrder, $idSalesOrderItem, $status);
     }
 
-    public function isPaymentOverpaid($salesOrderId, $salesOrderItemId)
+    public function isPaymentOverpaid($idSalesOrder, $idSalesOrderItem)
     {
         $status = PayoneTransactionStatusConstants::TXACTION_PAID;
-        $statusLog = $this->getFirstUnprocessedTransactionStatusLog($salesOrderId, $salesOrderItemId, $status);
+        $statusLog = $this->getFirstUnprocessedTransactionStatusLog($idSalesOrder, $idSalesOrderItem, $status);
         if ($statusLog === null) {
             return false;
         }
@@ -212,26 +212,26 @@ class TransactionStatusUpdateManager
             return false;
         }
 
-        $this->saveSpyPaymentPayoneTransactionStatusLogOrderItem($salesOrderItemId, $statusLog);
+        $this->saveSpyPaymentPayoneTransactionStatusLogOrderItem($idSalesOrderItem, $statusLog);
 
         return true;
     }
 
-    public function isPaymentUnderpaid($salesOrderId, $salesOrderItemId)
+    public function isPaymentUnderpaid($idSalesOrder, $idSalesOrderItem)
     {
         $status = PayoneTransactionStatusConstants::TXACTION_UNDERPAID;
-        return $this->isPayment($salesOrderId, $salesOrderItemId, $status);
+        return $this->isPayment($idSalesOrder, $idSalesOrderItem, $status);
     }
 
-    public function isPaymentAppointed($salesOrderId, $salesOrderItemId)
+    public function isPaymentAppointed($idSalesOrder, $idSalesOrderItem)
     {
         $status = PayoneTransactionStatusConstants::TXACTION_APPOINTED;
-        return $this->isPayment($salesOrderId, $salesOrderItemId, $status);
+        return $this->isPayment($idSalesOrder, $idSalesOrderItem, $status);
     }
 
-    public function isPaymentOther($salesOrderId, $salesOrderItemId)
+    public function isPaymentOther($idSalesOrder, $idSalesOrderItem)
     {
-        $statusLogs = $this->getUnprocessedTransactionStatusLogs($salesOrderId, $salesOrderItemId);
+        $statusLogs = $this->getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem);
         if (empty($statusLogs)) {
             return false;
         }
@@ -248,49 +248,49 @@ class TransactionStatusUpdateManager
             return false;
         }
 
-        $this->saveSpyPaymentPayoneTransactionStatusLogOrderItem($salesOrderItemId, $statusLog);
+        $this->saveSpyPaymentPayoneTransactionStatusLogOrderItem($idSalesOrderItem, $statusLog);
 
         return true;
     }
 
     /**
-     * @param $salesOrderId
-     * @param $salesOrderItemId
+     * @param $idSalesOrder
+     * @param $idSalesOrderItem
      * @param $status
      * @return bool
      */
-    private function isPayment($salesOrderId, $salesOrderItemId, $status)
+    private function isPayment($idSalesOrder, $idSalesOrderItem, $status)
     {
-        $statusLog = $this->getFirstUnprocessedTransactionStatusLog($salesOrderId, $salesOrderItemId, $status);
+        $statusLog = $this->getFirstUnprocessedTransactionStatusLog($idSalesOrder, $idSalesOrderItem, $status);
         if ($statusLog === null) {
             return false;
         }
 
-        $this->saveSpyPaymentPayoneTransactionStatusLogOrderItem($salesOrderItemId, $statusLog);
+        $this->saveSpyPaymentPayoneTransactionStatusLogOrderItem($idSalesOrderItem, $statusLog);
 
         return true;
     }
 
 
     /**
-     * @param $salesOrderId
-     * @param $salesOrderItemId
+     * @param $idSalesOrder
+     * @param $idSalesOrderItem
      * @return bool
      */
-    private function hasUnprocessedTransactionStatusLogs($salesOrderId, $salesOrderItemId) {
-        $records = $this->getUnprocessedTransactionStatusLogs($salesOrderId, $salesOrderItemId);
+    private function hasUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem) {
+        $records = $this->getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem);
 
         return !empty($records);
     }
 
     /**
-     * @param $salesOrderId
-     * @param $salesOrderItemId
+     * @param $idSalesOrder
+     * @param $idSalesOrderItem
      * @param $status
      * @return SpyPaymentPayoneTransactionStatusLog
      */
-    private function getFirstUnprocessedTransactionStatusLog($salesOrderId, $salesOrderItemId, $status) {
-        $records = $this->getUnprocessedTransactionStatusLogs($salesOrderId, $salesOrderItemId);
+    private function getFirstUnprocessedTransactionStatusLog($idSalesOrder, $idSalesOrderItem, $status) {
+        $records = $this->getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem);
 
         if (empty($records)) {
             return null;
@@ -307,12 +307,12 @@ class TransactionStatusUpdateManager
     }
 
     /**
-     * @param $salesOrderId
-     * @param $salesOrderItemId
+     * @param $idSalesOrder
+     * @param $idSalesOrderItem
      * @return SpyPaymentPayoneTransactionStatusLog[]
      */
-    private function getUnprocessedTransactionStatusLogs($salesOrderId, $salesOrderItemId) {
-        $records = $this->queryContainer->getTransactionStatusLogBySalesOrder($salesOrderId);
+    private function getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem) {
+        $records = $this->queryContainer->getTransactionStatusLogBySalesOrder($idSalesOrder);
 
         $ids = [];
 
@@ -320,7 +320,7 @@ class TransactionStatusUpdateManager
             $ids[$record->getIdPaymentPayoneTransactionStatusLog()] = $record;
         }
 
-        $relations = $this->queryContainer->getTransactionStatusLogOrderItemsByLogIds($salesOrderItemId, array_keys($ids));
+        $relations = $this->queryContainer->getTransactionStatusLogOrderItemsByLogIds($idSalesOrderItem, array_keys($ids));
 
         foreach ($relations as $relation) {
             unset($ids[$relation->getIdPaymentPayoneTransactionStatusLog()]);
@@ -330,15 +330,15 @@ class TransactionStatusUpdateManager
     }
 
     /**
-     * @param int $salesOrderItemId
+     * @param int $idSalesOrderItem
      * @param SpyPaymentPayoneTransactionStatusLog $statusLog
      * @throws \Propel\Runtime\Exception\PropelException
      */
-    private function saveSpyPaymentPayoneTransactionStatusLogOrderItem($salesOrderItemId, SpyPaymentPayoneTransactionStatusLog $statusLog)
+    private function saveSpyPaymentPayoneTransactionStatusLogOrderItem($idSalesOrderItem, SpyPaymentPayoneTransactionStatusLog $statusLog)
     {
         $entity = new SpyPaymentPayoneTransactionStatusLogOrderItem();
         $entity->setSpyPaymentPayoneTransactionStatusLog($statusLog);
-        $entity->setIdSalesOrderItem($salesOrderItemId);
+        $entity->setIdSalesOrderItem($idSalesOrderItem);
         $entity->save();
     }
 
