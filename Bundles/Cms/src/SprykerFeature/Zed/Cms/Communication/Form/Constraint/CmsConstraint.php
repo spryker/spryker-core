@@ -25,7 +25,7 @@ class CmsConstraint
         ];
     }
 
-    public static function getRequiredConstraints()
+    public function getRequiredConstraints()
     {
         return [
             new Required(),

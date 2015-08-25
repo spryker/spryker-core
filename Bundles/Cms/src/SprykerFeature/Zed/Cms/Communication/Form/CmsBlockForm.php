@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * (c) Spryker Systems GmbH copyright protected.
+ */
+
 namespace SprykerFeature\Zed\Cms\Communication\Form;
 
 use SprykerFeature\Zed\Cms\Communication\Form\Constraint\CmsConstraint;

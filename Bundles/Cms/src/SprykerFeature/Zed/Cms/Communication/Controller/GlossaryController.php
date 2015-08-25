@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Cms\Communication\Controller;
 
+use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
@@ -226,14 +227,10 @@ class GlossaryController extends AbstractController
      */
     private function saveGlossaryKeyPageMapping(array $data, LocaleTransfer $localeTransfer)
     {
-        $glossaryFormData = [
-            CmsGlossaryForm::GLOSSARY_KEY => $data[CmsGlossaryForm::GLOSSARY_KEY],
-            self::LOCALE . $localeTransfer->getIdLocale() => $data[CmsGlossaryForm::TRANSLATION],
-        ];
-        // @todo saveGlossary functionality changed ...
-//        $this->getGlossaryFacade()
-//            ->saveGlossaryKeyTranslations($glossaryFormData)
-//        ;
+        $keyTranslationTransfer = $this->createKeyTranslationTransfer($data, $localeTransfer);
+        $this->getGlossaryFacade()
+            ->saveGlossaryKeyTranslations($keyTranslationTransfer)
+        ;
         $pageKeyMappingTransfer = $this->createKeyMappingTransfer($data);
         $this->getFacade()
             ->savePageKeyMappingAndTouch($pageKeyMappingTransfer)
@@ -313,6 +310,24 @@ class GlossaryController extends AbstractController
         ;
         $form->handleRequest();
         return $form;
+    }
+
+    /**
+     * @param array $data
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return KeyTranslationTransfer
+     */
+    private function createKeyTranslationTransfer(array $data, LocaleTransfer $localeTransfer)
+    {
+        $keyTranslationTransfer = new KeyTranslationTransfer();
+        $keyTranslationTransfer->setGlossaryKey($data[CmsGlossaryForm::GLOSSARY_KEY]);
+
+        $keyTranslationTransfer->setLocales([
+            $localeTransfer->getLocaleName() => $data[CmsGlossaryForm::TRANSLATION]
+        ]);
+
+        return $keyTranslationTransfer;
     }
 
 }

@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * (c) Spryker Systems GmbH copyright protected.
+ */
+
 namespace SprykerFeature\Zed\Cms\Communication\Form;
 
 use SprykerFeature\Zed\Cms\Communication\Form\Constraint\CmsConstraint;
@@ -65,7 +69,8 @@ class CmsPageForm extends AbstractForm
      * @param UrlFacade $urlFacade
      * @param CmsConstraint $constraints
      * @param string $formType
-     * @param int $idPage     */
+     * @param int $idPage
+     */
 
     public function __construct(SpyCmsTemplateQuery $templateQuery, SpyCmsPageQuery $pageUrlByIdQuery, UrlFacade $urlFacade, CmsConstraint $constraints, $formType, $idPage)
     {

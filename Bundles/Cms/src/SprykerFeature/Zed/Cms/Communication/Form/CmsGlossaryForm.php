@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * (c) Spryker Systems GmbH copyright protected.
+ */
+
 namespace SprykerFeature\Zed\Cms\Communication\Form;
 
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
@@ -111,11 +115,11 @@ class CmsGlossaryForm extends AbstractForm
                 ],
             ])
             ->addText(self::GLOSSARY_KEY, [
-                'constraints' => CmsConstraint::getRequiredConstraints(),
+                'constraints' => $this->constraints->getRequiredConstraints(),
             ])
             ->addTextarea(self::TRANSLATION,[
                 'label' => 'Content',
-                'constraints' => CmsConstraint::getRequiredConstraints(),
+                'constraints' => $this->constraints->getRequiredConstraints(),
             ])
             ;
     }

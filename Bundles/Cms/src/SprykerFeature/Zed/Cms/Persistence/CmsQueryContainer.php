@@ -125,9 +125,9 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
         return $this->queryBlocks()
             ->leftJoinSpyCmsPage()
             ->useSpyCmsPageQuery()
-            ->joinCmsTemplate()
-            ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, self::TEMPLATE_NAME)
-            ->endUse()
+                ->joinCmsTemplate()
+                    ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, self::TEMPLATE_NAME)
+                ->endUse()
             ->withColumn(SpyCmsBlockTableMap::COL_NAME)
             ;
     }
@@ -143,9 +143,9 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->filterByIdCmsPage($idCmsPage)
             ->leftJoinSpyCmsPage()
             ->useSpyCmsPageQuery()
-            ->joinCmsTemplate()
-            ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, self::TEMPLATE_NAME)
-            ->endUse()
+                ->joinCmsTemplate()
+                    ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, self::TEMPLATE_NAME)
+                ->endUse()
             ->withColumn(SpyCmsBlockTableMap::COL_NAME)
             ->withColumn(SpyCmsPageTableMap::COL_FK_TEMPLATE, CmsBlockForm::FK_TEMPLATE)
             ->withColumn(SpyCmsPageTableMap::COL_IS_ACTIVE, 'isActive')
@@ -246,9 +246,9 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::TRANS)
             ->filterByFkPage($idCmsPage)
             ->useGlossaryKeyQuery()
-            ->useSpyGlossaryTranslationQuery()
-            ->filterByFkLocale($fkLocale)
-            ->endUse()
+                ->useSpyGlossaryTranslationQuery()
+                    ->filterByFkLocale($fkLocale)
+                ->endUse()
             ->endUse()
         ;
 
