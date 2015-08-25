@@ -9,11 +9,12 @@ namespace SprykerFeature\Zed\Discount\Communication\Controller;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
-use SprykerFeature\Zed\Discount\DiscountDependencyProvider;
+use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use SprykerFeature\Zed\Discount\Business\DiscountFacade;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method DiscountDependencyContainer getDependencyContainer()
@@ -25,6 +26,7 @@ class VoucherController extends AbstractController
     const NR_VOUCHERS = 1;
     const SESSION_TIME = 'session_title';
     const ID_POOL_PARAMETER = 'id-pool';
+    const GENERATED_ON_PARAMETER = 'generated-on';
 
     /**
      * @return array|RedirectResponse
@@ -96,14 +98,33 @@ class VoucherController extends AbstractController
         ;
 
         $countVouchers = $this->getDependencyContainer()
-            ->getGeneratedVouchersCountByPoolAndTimestamp($pool, $vouchersCreatedAt)
+            ->getGeneratedVouchersCountByIdPoolAndTimestamp($pool->getIdDiscountVoucherPool(), $vouchersCreatedAt)
         ;
 
         return $this->viewResponse([
+            'idPool' => $idPool,
+            'generatedOn' => $vouchersCreatedAt->getTimestamp(),
             'pool' => $pool,
             'discount' => $discount,
             'countVouchers' => $countVouchers,
         ]);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return Response
+     */
+    public function exportAction(Request $request)
+    {
+        $idPool = $request->query->get(self::ID_POOL_PARAMETER);
+        $timestamp = $request->query->get(self::GENERATED_ON_PARAMETER);
+        $store = $this->getDependencyContainer()->getStore();
+
+        $createdAt = new \DateTime('now', new \DateTimeZone($store->getTimezone()));
+        $createdAt->setTimestamp($timestamp);
+
+        return $this->generateCsvFromVouchers($idPool, $createdAt);
     }
 
     /**
@@ -159,7 +180,7 @@ class VoucherController extends AbstractController
      */
     protected function getCurrentTimestampByStoreTimeZone()
     {
-        $store = $this->getDependencyContainer()->getProvidedDependency(DiscountDependencyProvider::STORE_CONFIG);
+        $store = $this->getDependencyContainer()->getStore();
         $now = new \DateTime('now', new \DateTimeZone($store->getTimezone()));
 
         return $now;
@@ -171,6 +192,39 @@ class VoucherController extends AbstractController
     private function getSession()
     {
         return $this->getApplication()['request']->getSession();
+    }
+
+    /**
+     * @param int $idPool
+     * @param \DateTime $createdAt
+     *
+     * @return Response
+     */
+    protected function generateCsvFromVouchers($idPool, \DateTime $createdAt)
+    {
+        $generatedVouchers = $this->getDependencyContainer()
+            ->getQueryForGeneratedVouchersByIdPoolAndTimestamp($idPool, $createdAt)
+            ->find()
+        ;
+
+        $response = new StreamedResponse();
+
+        $response->setCallback(function () use ($generatedVouchers) {
+            $csvHandle = fopen('php://output', 'w+');
+            fputcsv($csvHandle, ['Voucher Code']);
+
+            foreach ($generatedVouchers as $voucher) {
+                fputcsv($csvHandle, [$voucher->getCode()]);
+            }
+
+            fclose($csvHandle);
+        });
+
+        $response->setStatusCode(Response::HTTP_OK);
+        $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
+        $response->headers->set('Content-Disposition', 'attachment; filename="vouchers.csv"');
+
+        return $response->send();
     }
 
 }

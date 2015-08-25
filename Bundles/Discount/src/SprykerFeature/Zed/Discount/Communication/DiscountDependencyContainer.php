@@ -303,21 +303,41 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
-     * @param VoucherPoolTransfer $poolTransfer
+     * @param int $idPool
      * @param \DateTime $dateTime
      *
      * @return int
      */
-    public function getGeneratedVouchersCountByPoolAndTimestamp(VoucherPoolTransfer $poolTransfer, \DateTime $dateTime)
+    public function getGeneratedVouchersCountByIdPoolAndTimestamp($idPool, \DateTime $dateTime)
+    {
+        return $this->getQueryForGeneratedVouchersByIdPoolAndTimestamp($idPool, $dateTime)
+            ->count()
+        ;
+    }
+
+    /**
+     * @param int $idPool
+     * @param \DateTime $dateTime
+     *
+     * @return SpyDiscountVoucherQuery
+     */
+    public function getQueryForGeneratedVouchersByIdPoolAndTimestamp($idPool, \DateTime $dateTime)
     {
         return $this->getQueryContainer()
             ->queryDiscountVoucher()
-            ->filterByFkDiscountVoucherPool($poolTransfer->getIdDiscountVoucherPool())
+            ->filterByFkDiscountVoucherPool($idPool)
             ->filterByCreatedAt([
                 'min' => $dateTime
             ])
-            ->count()
         ;
+    }
+
+    /**
+     * @return Store
+     */
+    public function getStore()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::STORE_CONFIG);
     }
 
 }
