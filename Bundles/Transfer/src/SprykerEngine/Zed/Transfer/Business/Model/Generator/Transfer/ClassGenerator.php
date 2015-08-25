@@ -31,8 +31,6 @@ class ClassGenerator implements GeneratorInterface
     {
         $this->targetDirectory = $targetDirectory;
 
-        \Twig_Autoloader::register();
-
         $loader = new \Twig_Loader_Filesystem(__DIR__ . self::TWIG_TEMPLATES_LOCATION);
         $this->twig = new \Twig_Environment($loader, []);
     }
