@@ -17,24 +17,19 @@
         {% block widget_content %}
 
             <table class="table table-stripped table-bordered table-hover">
-                    <tr>
-                        <td>Valid until</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Value</td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>Count</td>
-                        <td>{{ countVouchers }}</td>
-                    </tr>
+                <tr>
+                    <td>Valid until</td>
+                    <td>{{ discount.validTo | date }}</td>
+                </tr>
+                <tr>
+                    <td>Value</td>
+                    <td>{% if discount.type == 'percent' %}{{ discount.amount }} %{% else %}{{ discount.amount }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Generated Vouchers</td>
+                    <td>{{ countVouchers }}</td>
+                </tr>
             </table>
-
-            <pre>
-                {{ dump(pool) }}
-            </pre>
-
 
         {% endblock %}
 

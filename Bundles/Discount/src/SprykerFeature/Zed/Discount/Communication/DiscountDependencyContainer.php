@@ -267,7 +267,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
             ->findOneByIdDiscountVoucherPool($idPool)
         ;
 
-        return Copy::entityToTransfer(new VoucherPoolTransfer(), $pool);
+        return (new VoucherPoolTransfer())->fromArray($pool->toArray(), true);
     }
 
     /**
@@ -277,12 +277,29 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function getDiscountById($idDiscount)
     {
-        $voucher = $this->getQueryContainer()
+        $discount = $this->getQueryContainer()
             ->queryDiscount()
             ->filterByIdDiscount($idDiscount)
+            ->findOne()
         ;
 
-        return Copy::entityToTransfer(new DiscountTransfer(), $voucher);
+        return (new DiscountTransfer())->fromArray($discount->toArray(), true);
+    }
+
+    /**
+     * @param $idDiscountVoucherPool
+     *
+     * @return DiscountTransfer
+     */
+    public function getDiscountByIdDiscountVoucherPool($idDiscountVoucherPool)
+    {
+        $discount = $this->getQueryContainer()
+            ->queryDiscount()
+            ->filterByFkDiscountVoucherPool($idDiscountVoucherPool)
+            ->findOne()
+        ;
+
+        return (new DiscountTransfer())->fromArray($discount->toArray(), true);
     }
 
     /**

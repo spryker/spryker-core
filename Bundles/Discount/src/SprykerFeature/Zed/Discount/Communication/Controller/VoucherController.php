@@ -40,8 +40,7 @@ class VoucherController extends AbstractController
             $this->getFacade()->createVoucherCodes(
                 self::NR_VOUCHERS,
                 $formData[VoucherForm::FIELD_POOL],
-                false,
-                $formData[VoucherForm::FIELD_TITLE]
+                false
             );
 
             return $this->redirectResponse('/discount/voucher/view/?' . self::ID_POOL_PARAMETER . '=' . (int) $formData[VoucherForm::FIELD_POOL]);
@@ -66,8 +65,7 @@ class VoucherController extends AbstractController
             $this->getFacade()->createVoucherCodes(
                 $formData[VoucherForm::FIELD_NUMBER],
                 $formData[VoucherForm::FIELD_POOL],
-                false,
-                $formData[VoucherForm::FIELD_TITLE]
+                false
             );
 
             return $this->redirectResponse('/discount/voucher/view/?' . self::ID_POOL_PARAMETER . '=' . (int) $formData[VoucherForm::FIELD_POOL]);
@@ -78,6 +76,11 @@ class VoucherController extends AbstractController
         ];
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
     public function viewAction(Request $request)
     {
         $idPool = $request->query->get(self::ID_POOL_PARAMETER);
@@ -88,9 +91,9 @@ class VoucherController extends AbstractController
             ->getVoucherPoolById($idPool)
         ;
 
-//        $discount = $this->getDependencyContainer()
-//            ->getDiscountById($pool->get)
-//        ;
+        $discount = $this->getDependencyContainer()
+            ->getDiscountByIdDiscountVoucherPool($idPool)
+        ;
 
         $countVouchers = $this->getDependencyContainer()
             ->getGeneratedVouchersCountByPoolAndTimestamp($pool, $vouchersCreatedAt)
@@ -98,6 +101,7 @@ class VoucherController extends AbstractController
 
         return $this->viewResponse([
             'pool' => $pool,
+            'discount' => $discount,
             'countVouchers' => $countVouchers,
         ]);
     }
