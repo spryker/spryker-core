@@ -3,9 +3,10 @@
  *
  * (c) Copyright Spryker Systems GmbH 2015
  */
-namespace SprykerEngine\Zed\Lumberjack\Persistence\Writer;
-use SprykerEngine\Zed\Lumberjack\Persistence\EntryEntity;
+namespace SprykerEngine\Shared\Lumberjack\Model\Writer;
+
+use SprykerEngine\Shared\Lumberjack\Model\EventInterface;
 
 interface WriterInterface {
-    public function writeEntry(EntryEntity $entry);
+    public function write(EventInterface $entry);
 }

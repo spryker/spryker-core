@@ -4,7 +4,7 @@
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
-namespace SprykerEngine\Zed\Lumberjack\Persistence\Writer;
+namespace SprykerEngine\Shared\Lumberjack\Model\Writer;
 
 
 class Newrelic extends AbstractWriter {

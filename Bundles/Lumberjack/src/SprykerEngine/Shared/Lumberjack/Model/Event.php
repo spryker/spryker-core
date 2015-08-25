@@ -9,8 +9,17 @@ namespace SprykerEngine\Shared\Lumberjack\Model;
 class Event implements EventInterface
 {
 
+    /**
+     * @var array
+     */
     private $fields = [];
 
+    /**
+     * @param $name
+     * @param $data
+     *
+     * @throws DataInvalidException
+     */
     public function addField($name, $data)
     {
         if (!$this->isValidData($data)) {
@@ -23,6 +32,11 @@ class Event implements EventInterface
         $this->fields[$name] = $data;
     }
 
+    /**
+     * @param array $fields
+     *
+     * @throws DataInvalidException
+     */
     public function addFields(array $fields)
     {
         foreach ($fields as $name => $data) {
@@ -30,10 +44,18 @@ class Event implements EventInterface
         }
     }
 
+    /**
+     * @return array
+     */
     public function getFields() {
         return $this->fields;
     }
 
+    /**
+     * @param $data
+     *
+     * @return bool
+     */
     private function isValidData($data)
     {
         $check = !is_object($data);
