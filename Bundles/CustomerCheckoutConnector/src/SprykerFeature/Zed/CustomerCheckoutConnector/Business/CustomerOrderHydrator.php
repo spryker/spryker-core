@@ -29,10 +29,10 @@ class CustomerOrderHydrator implements CustomerOrderHydratorInterface
     }
 
     /**
-     * @param OrderInterface $order
+     * @param OrderInterface $orderTransfer
      * @param CheckoutRequestInterface $request
      */
-    public function hydrateOrderTransfer(OrderInterface $order, CheckoutRequestInterface $request)
+    public function hydrateOrderTransfer(OrderInterface $orderTransfer, CheckoutRequestInterface $request)
     {
         $customerTransfer = new CustomerTransfer();
 
@@ -48,25 +48,25 @@ class CustomerOrderHydrator implements CustomerOrderHydratorInterface
 
         $billingAddress = $request->getBillingAddress();
         if (null !== $billingAddress) {
-            $order->setBillingAddress($billingAddress);
+            $orderTransfer->setBillingAddress($billingAddress);
 
-            $customerAddressEntity = new CustomerAddressTransfer();
-            $customerAddressEntity->fromArray($billingAddress->toArray(), true);
+            $customerAddressTransfer = new CustomerAddressTransfer();
+            $customerAddressTransfer->fromArray($billingAddress->toArray(), true);
 
-            $customerTransfer->addBillingAddress($customerAddressEntity);
+            $customerTransfer->addBillingAddress($customerAddressTransfer);
         }
 
         $shippingAddress = $request->getShippingAddress();
         if (null !== $shippingAddress) {
-            $order->setShippingAddress($shippingAddress);
+            $orderTransfer->setShippingAddress($shippingAddress);
 
-            $customerAddressEntity = new CustomerAddressTransfer();
-            $customerAddressEntity->fromArray($shippingAddress->toArray(), true);
+            $customerAddressTransfer = new CustomerAddressTransfer();
+            $customerAddressTransfer->fromArray($shippingAddress->toArray(), true);
 
-            $customerTransfer->addShippingAddress($customerAddressEntity);
+            $customerTransfer->addShippingAddress($customerAddressTransfer);
         }
 
-        $order->setCustomer($customerTransfer);
+        $orderTransfer->setCustomer($customerTransfer);
     }
 
 }
