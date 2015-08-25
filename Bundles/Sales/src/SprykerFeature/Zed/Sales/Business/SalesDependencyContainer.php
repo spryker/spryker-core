@@ -29,6 +29,7 @@ class SalesDependencyContainer extends AbstractBusinessDependencyContainer
     public function createOrderManager()
     {
         return $this->getFactory()->createModelOrderManager(
+            $this->createSalesQueryContainer(),
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_COUNTRY),
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_OMS),
             $this->createReferenceGenerator()

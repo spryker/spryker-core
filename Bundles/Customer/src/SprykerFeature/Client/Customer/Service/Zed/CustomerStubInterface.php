@@ -70,13 +70,6 @@ interface CustomerStubInterface
     public function delete(CustomerInterface $customerTransfer);
 
     /**
-     * @param CustomerInterface $customerTransfer
-     *
-     * @return CustomerInterface
-     */
-    public function getOrders(CustomerInterface $customerTransfer);
-
-    /**
      * @param CustomerAddressInterface $addressTransfer
      *
      * @return CustomerAddressInterface

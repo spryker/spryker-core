@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Sales\Business;
 use Generated\Shared\Sales\ItemSplitResponseInterface;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
+use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SalesAddressTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
@@ -150,6 +151,19 @@ class SalesFacade extends AbstractFacade
         return $this->getDependencyContainer()
             ->createOrderDetailsManager()
             ->getPaymentLogs($idOrder)
+            ;
+    }
+
+    /**
+     * @param OrderListTransfer $orderListTransfer
+     *
+     * @return OrderListTransfer
+     */
+    public function getOrders(OrderListTransfer $orderListTransfer)
+    {
+        return $this->getDependencyContainer()
+            ->createOrderManager()
+            ->getOrders($orderListTransfer)
             ;
     }
 

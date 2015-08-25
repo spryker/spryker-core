@@ -80,12 +80,4 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
      */
     public function queryCustomers();
 
-    /**
-     * @param $idCustomer
-     * @param Criteria|null $criteria
-     * 
-     * @return SpySalesOrderQuery
-     */
-    public function queryOrdersByCustomerId($idCustomer, Criteria $criteria=null);
-
 }

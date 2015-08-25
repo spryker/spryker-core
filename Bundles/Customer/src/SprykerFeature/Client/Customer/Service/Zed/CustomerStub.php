@@ -111,16 +111,6 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerInterface $customerTransfer
-     * 
-     * @return CustomerInterface
-     */
-    public function getOrders(CustomerInterface $customerTransfer)
-    {
-        return $this->zedStub->call('/customer/gateway/get-orders', $customerTransfer);
-    }
-
-    /**
      * @param CustomerAddressInterface $addressTransfer
      *
      * @return CustomerAddressTransfer

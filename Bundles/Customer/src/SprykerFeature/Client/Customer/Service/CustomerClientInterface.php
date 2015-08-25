@@ -98,13 +98,6 @@ interface CustomerClientInterface
     public function updateCustomer(CustomerInterface $customerTransfer);
 
     /**
-     * @param CustomerInterface $customerTransfer
-     * 
-     * @return CustomerInterface
-     */
-    public function getOrders(CustomerInterface $customerTransfer);
-
-    /**
      * @param CustomerAddressInterface $addressTransfer
      *
      * @return CustomerAddressInterface

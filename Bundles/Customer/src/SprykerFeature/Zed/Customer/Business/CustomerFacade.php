@@ -240,19 +240,6 @@ class CustomerFacade extends AbstractFacade
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
-     */
-    public function getOrders(CustomerTransfer $customerTransfer)
-    {
-        return $this->getDependencyContainer()
-            ->createCustomer()
-            ->getOrders($customerTransfer)
-        ;
-    }
-
-    /**
-     * @param CustomerTransfer $customerTransfer
-     *
      * @return bool
      */
     public function tryAuthorizeCustomerByEmailAndPassword(CustomerTransfer $customerTransfer)

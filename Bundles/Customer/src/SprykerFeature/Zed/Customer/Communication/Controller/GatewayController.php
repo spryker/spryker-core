@@ -225,13 +225,4 @@ class GatewayController extends AbstractGatewayController
         return $addressTransfer;
     }
 
-    /**
-     * @param CustomerTransfer $customerTransfer
-     * 
-     * @return CustomerTransfer
-     */
-    public function getOrdersAction(CustomerTransfer $customerTransfer)
-    {
-        return $this->getFacade()->getOrders($customerTransfer);
-    }
 }

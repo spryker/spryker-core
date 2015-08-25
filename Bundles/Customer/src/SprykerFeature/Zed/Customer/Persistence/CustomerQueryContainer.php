@@ -117,15 +117,4 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
         return $query;
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function queryOrdersByCustomerId($idCustomer, Criteria $criteria=null)
-    {
-        $query = $this->getDependencyContainer()->createSpySalesOrderQuery(null, $criteria);
-        $query->filterByFkCustomer($idCustomer);
-
-        return $query;
-    }
-
 }

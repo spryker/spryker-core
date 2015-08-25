@@ -300,35 +300,6 @@ class Customer
 
     /**
      * @param CustomerInterface $customerTransfer
-     * 
-     * @return CustomerInterface
-     */
-    public function getOrders(CustomerInterface $customerTransfer)
-    {
-        $filter = $customerTransfer->getFilter();
-        $criteria = new Criteria();
-        
-        if (null !== $filter) {
-            $criteria = (new PropelFilterCriteria($filter))
-                ->toCriteria();
-        }
-        
-        $orders = $this->queryContainer->queryOrdersByCustomerId($customerTransfer->getIdCustomer(), $criteria)
-            ->find();
-
-        $result = [];
-        foreach ($orders as $orderItem) {
-            $result[] = (new OrderTransfer())
-                ->fromArray($orderItem->toArray());
-        }
-
-        $customerTransfer->setOrders(new \ArrayObject($result));
-
-        return $customerTransfer;
-    }
-
-    /**
-     * @param CustomerInterface $customerTransfer
      *
      * @throws PropelException
      * @throws CustomerNotFoundException

@@ -196,19 +196,6 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
-     * @param CustomerInterface $customerTransfer
-     * 
-     * @return CustomerInterface
-     */
-    public function getOrders(CustomerInterface $customerTransfer)
-    {
-        return $this->getDependencyContainer()
-            ->createZedCustomerStub()
-            ->getOrders($customerTransfer)
-        ;
-    }
-
-    /**
      * @param CustomerAddressInterface $addressTransfer
      * 
      * @return CustomerAddressInterface

@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Sales\Persistence;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\SalesPersistence;
+use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesExpenseQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddressQuery;
@@ -122,6 +123,20 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     {
         $query = SpySalesOrderQuery::create();
         $query->filterByIdSalesOrder($idSalesOrder);
+
+        return $query;
+    }
+
+    /**
+     * @param $idCustomer
+     * @param Criteria|null $criteria
+     * 
+     * @return SpySalesOrderQuery
+     */
+    public function querySalesOrdersByCustomerId($idCustomer, Criteria $criteria=null)
+    {
+        $query = SpySalesOrderQuery::create(null, $criteria);
+        $query->filterByFkCustomer($idCustomer);
 
         return $query;
     }
