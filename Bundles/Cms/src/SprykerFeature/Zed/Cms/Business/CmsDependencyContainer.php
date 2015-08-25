@@ -12,6 +12,7 @@ use SprykerFeature\Zed\Cms\Business\Block\BlockManagerInterface;
 use SprykerFeature\Zed\Cms\Business\Mapping\GlossaryKeyMappingManagerInterface;
 use SprykerFeature\Zed\Cms\Business\Page\PageManagerInterface;
 use SprykerFeature\Zed\Cms\Business\Template\TemplateManagerInterface;
+use SprykerFeature\Zed\Cms\CmsDependencyProvider;
 use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
 use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use sprykerfeature\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
@@ -78,7 +79,8 @@ class CmsDependencyContainer extends AbstractBusinessDependencyContainer
             $this->getCmsQueryContainer(),
             $this->getTemplateManager(),
             $this->getPageManager(),
-            $this->getLocator()
+            $this->getLocator(),
+            $this->getProvidedDependency(CmsDependencyProvider::PLUGIN_PROPEL_CONNECTION)
         );
     }
 

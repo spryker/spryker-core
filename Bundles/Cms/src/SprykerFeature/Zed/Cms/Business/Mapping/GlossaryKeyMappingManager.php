@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Cms\Business\Mapping;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Zed\Ide\AutoCompletion;
+use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Cms\Business\Exception\MappingAmbiguousException;
@@ -52,19 +53,26 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     protected $locator;
 
     /**
+     * @var ConnectionInterface
+     */
+    protected $connection;
+
+    /**
      * @param CmsToGlossaryInterface $glossaryFacade
      * @param CmsQueryContainerInterface $cmsQueryContainer
      * @param TemplateManagerInterface $templateManager
      * @param PageManagerInterface $pageManager
      * @param LocatorLocatorInterface $locator
+     * @param ConnectionInterface $connection
      */
-    public function __construct(CmsToGlossaryInterface $glossaryFacade, CmsQueryContainerInterface $cmsQueryContainer, TemplateManagerInterface $templateManager, PageManagerInterface $pageManager, LocatorLocatorInterface $locator)
+    public function __construct(CmsToGlossaryInterface $glossaryFacade, CmsQueryContainerInterface $cmsQueryContainer, TemplateManagerInterface $templateManager, PageManagerInterface $pageManager, LocatorLocatorInterface $locator, ConnectionInterface $connection)
     {
         $this->glossaryFacade = $glossaryFacade;
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->templateManager = $templateManager;
         $this->pageManager = $pageManager;
         $this->locator = $locator;
+        $this->connection = $connection;
     }
 
     /**
@@ -249,7 +257,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
 
         $keyName = $this->generateGlossaryKeyName($template->getTemplateName(), $placeholder);
 
-        $this->getConnection()->beginTransaction();
+        $this->connection->beginTransaction();
 
         $idKey = $this->glossaryFacade->createKey($keyName);
         $this->glossaryFacade->createTranslationForCurrentLocale($keyName, $value);
@@ -261,7 +269,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
 
         $pageKeyMapping = $this->savePageKeyMapping($pageKeyMapping);
 
-        $this->getConnection()->commit();
+        $this->connection->commit();
 
         return $pageKeyMapping;
     }

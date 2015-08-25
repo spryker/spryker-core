@@ -16,6 +16,7 @@ use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
+use SprykerFeature\Zed\Cms\CmsDependencyProvider;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
@@ -66,7 +67,12 @@ class CmsFacadeTest extends Test
     {
         parent::setUp();
         $this->locator = Locator::getInstance();
+        $container = new Container();
+        $container = (new CmsDependencyProvider())
+            ->provideBusinessLayerDependencies($container)
+        ;
         $this->cmsFacade = new CmsFacade(new Factory('Cms'), $this->locator);
+        $this->cmsFacade->setExternalDependencies($container);
         $this->urlFacade = new UrlFacade(new Factory('Url'), $this->locator);
 
         $this->localeFacade = new LocaleFacade(new Factory('Locale'), $this->locator);
@@ -118,24 +124,28 @@ class CmsFacadeTest extends Test
     /**
      * @group Cms
      */
-    public function testSavePageUpdatesSomething()
+    public function testSavePageWithNewTemplateMustSaveFkTemplateInPage()
     {
         $template1 = $this->cmsFacade->createTemplate('AnotherUsedTemplateName', 'AnotherUsedTemplatePath');
         $template2 = $this->cmsFacade->createTemplate('YetAnotherUsedTemplateName', 'YetAnotherUsedTemplatePath');
 
-        $page = new PageTransfer();
-        $page->setFkTemplate($template1->getIdCmsTemplate());
-        $page->setIsActive(true);
+        $pageTransfer = new PageTransfer();
+        $pageTransfer->setFkTemplate($template1->getIdCmsTemplate());
+        $pageTransfer->setIsActive(true);
 
-        $page = $this->cmsFacade->savePage($page);
+        $pageTransfer = $this->cmsFacade->savePage($pageTransfer);
 
-        $pageEntity = $this->cmsQueryContainer->queryPageById($page->getIdCmsPage())
+        $pageEntity = $this->cmsQueryContainer->queryPageById($pageTransfer->getIdCmsPage())
             ->findOne()
         ;
         $this->assertEquals($template1->getIdCmsTemplate(), $pageEntity->getFkTemplate());
 
-        $page->setFkTemplate($template2->getIdCmsTemplate());
-        $this->cmsFacade->savePage($page);
+        $pageTransfer->setFkTemplate($template2->getIdCmsTemplate());
+        $this->cmsFacade->savePage($pageTransfer);
+
+        $pageEntity = $this->cmsQueryContainer->queryPageById($pageTransfer->getIdCmsPage())
+            ->findOne()
+        ;
 
         $this->assertEquals($template2->getIdCmsTemplate(), $pageEntity->getFkTemplate());
     }

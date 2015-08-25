@@ -97,16 +97,16 @@ class UserTest extends Test
         $this->assertNotEquals($data['password'], $user->getPassword());
     }
 
-    public function testAfterCallToRemoveUserMustBeMArkedAsDeleted()
+    public function testAfterCallToRemoveUserGetUserByIdMustThrowAnExcetpion()
     {
-        $this->setExpectedException('\SprykerFeature\Zed\User\Business\Exception\UserNotFoundException');
-
         $data = $this->mockUserData();
         $user = $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
 
         $this->assertInstanceOf('\Generated\Shared\Transfer\UserTransfer', $user);
 
         $this->userFacade->removeUser($user->getIdUser());
+
+        $this->setExpectedException('\SprykerFeature\Zed\User\Business\Exception\UserNotFoundException');
         $this->userFacade->getUserById($user->getIdUser());
     }
 
