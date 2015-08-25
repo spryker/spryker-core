@@ -19,12 +19,12 @@ class AuthorizationContainer extends AbstractAuthorizationContainer
     protected $request = PayoneApiConstants::REQUEST_TYPE_AUTHORIZATION;
 
     /**
-     * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\BusinessContainer
+     * @var BusinessContainer
      */
     protected $business;
 
     /**
-     * @param Authorization\BusinessContainer $business
+     * @param BusinessContainer $business
      */
     public function setBusiness(BusinessContainer $business)
     {
@@ -32,7 +32,7 @@ class AuthorizationContainer extends AbstractAuthorizationContainer
     }
 
     /**
-     * @return null|Authorization\BusinessContainer
+     * @return BusinessContainer
      */
     public function getBusiness()
     {

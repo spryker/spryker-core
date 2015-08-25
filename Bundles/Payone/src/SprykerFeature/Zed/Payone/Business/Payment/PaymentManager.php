@@ -102,7 +102,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param string $name
      *
-     * @return null|PaymentMethodMapperInterface
+     * @return PaymentMethodMapperInterface
      */
     protected function findPaymentMethodMapperByName($name)
     {
@@ -110,7 +110,7 @@ class PaymentManager implements PaymentManagerInterface
             return $this->registeredMethodMappers[$name];
         }
 
-        return null;
+        return;
     }
 
     /**

@@ -91,7 +91,7 @@ interface PayoneApiConstants
 
     // WALLET TYPE
 
-    const EWALLET_TYPE_PAYPAL = 'PPE';
+    const E_WALLET_TYPE_PAYPAL = 'PPE';
 
     // USE CUSTOMER DATA
 

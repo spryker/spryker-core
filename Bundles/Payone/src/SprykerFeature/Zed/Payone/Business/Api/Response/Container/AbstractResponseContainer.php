@@ -166,7 +166,7 @@ abstract class AbstractResponseContainer
     /**
      * @param string $key
      *
-     * @return null|mixed
+     * @return mixed
      */
     public function getValue($key)
     {

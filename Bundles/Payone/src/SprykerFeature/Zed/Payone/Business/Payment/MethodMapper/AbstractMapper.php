@@ -29,10 +29,12 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
      * @var PayoneStandardParameterInterface
      */
     private $standardParameter;
+
     /**
      * @var SequenceNumberProviderInterface
      */
     private $sequenceNumberProvider;
+
     /**
      * @var Store
      */
@@ -89,6 +91,7 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
 
     /**
      * @param string $orderReference
+     *
      * @return RedirectContainer
      */
     protected function createRedirectContainer($orderReference)
