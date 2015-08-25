@@ -19,6 +19,11 @@ use Monolog\Handler\StreamHandler;
 class PropelServiceProvider implements ServiceProviderInterface
 {
 
+    public function __construct()
+    {
+        Propel::disableInstancePooling();
+    }
+
     /**
      * @param Application $app
      */

@@ -27,7 +27,6 @@ class AuthFacadeTest extends Test
     {
         parent::setUp();
 
-        Propel::disableInstancePooling();
         $locator = Locator::getInstance();
 
         $this->authFacade = $locator->auth()->facade();
