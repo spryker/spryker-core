@@ -49,13 +49,15 @@ class OrderManager
     /**
      * @param OrderTransfer $orderTransfer
      *
+     * @throws PropelException
+     *
+     * @throws \Exception
+     *
      * @return OrderTransfer
      */
     public function saveOrder(OrderTransfer $orderTransfer)
     {
-        Propel::getConnection()
-            ->beginTransaction()
-        ;
+        Propel::getConnection()->beginTransaction();
 
         try {
             $orderEntity = $this->saveOrderEntity($orderTransfer);
@@ -65,16 +67,15 @@ class OrderManager
             $orderProcess = $this->omsFacade->getProcessEntity($processName);
 
             $this->saveOrderItems($orderTransfer, $orderEntity, $orderProcess);
-        } catch (PropelException $e) {
+
+            $orderTransfer->setIdSalesOrder($orderEntity->getIdSalesOrder());
+            $orderTransfer->setOrderReference($orderEntity->getOrderReference());
+
+            Propel::getConnection()->commit();
+        } catch (\Exception $e) {
             Propel::getConnection()->rollBack();
+            throw $e;
         }
-
-        Propel::getConnection()
-            ->commit()
-        ;
-
-        $orderTransfer->setIdSalesOrder($orderEntity->getIdSalesOrder());
-        $orderTransfer->setOrderReference($orderEntity->getOrderReference());
 
         return $orderTransfer;
     }
