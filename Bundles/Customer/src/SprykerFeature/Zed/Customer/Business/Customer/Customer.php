@@ -6,11 +6,10 @@
 
 namespace SprykerFeature\Zed\Customer\Business\Customer;
 
-use Generated\Shared\Customer\CustomerInterface as CustomerTransferInterface;
-use Generated\Shared\Customer\CustomerAddressInterface as CustomerAddressTransferInterface;
+use Generated\Shared\Customer\CustomerInterface;
+use Generated\Shared\Customer\CustomerAddressInterface;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\CustomerAddressTransfer;
-use Generated\Shared\Transfer\FilterTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -119,11 +118,11 @@ class Customer
     }
 
     /**
-     * @param CustomerTransferInterface $customerTransfer
+     * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerTransferInterface
+     * @return CustomerInterface
      */
-    public function get(CustomerTransferInterface $customerTransfer)
+    public function get(CustomerInterface $customerTransfer)
     {
         $customer = $this->getCustomer($customerTransfer);
         $customerTransfer->fromArray($customer->toArray());
@@ -136,14 +135,14 @@ class Customer
     }
 
     /**
-     * @param CustomerTransferInterface $customerTransfer
+     * @param CustomerInterface $customerTransfer
      *
      * @throws EmailAlreadyRegisteredException
      * @throws PropelException
      *
-     * @return CustomerTransferInterface
+     * @return CustomerInterface
      */
-    public function register(CustomerTransferInterface $customerTransfer)
+    public function register(CustomerInterface $customerTransfer)
     {
         if ($this->hasCustomer($customerTransfer)) {
             throw new EmailAlreadyRegisteredException();
@@ -178,9 +177,9 @@ class Customer
     }
 
     /**
-     * @param CustomerTransferInterface $customerTransfer
+     * @param CustomerInterface $customerTransfer
      */
-    protected function sendPasswordRestoreToken(CustomerTransferInterface $customerTransfer)
+    protected function sendPasswordRestoreToken(CustomerInterface $customerTransfer)
     {
         $customerTransfer = $this->get($customerTransfer);
         $link = $this->hostYves . '/password/restore?token=' . $customerTransfer->getRestorePasswordKey();
@@ -190,9 +189,9 @@ class Customer
     }
 
     /**
-     * @param CustomerTransferInterface $customerTransfer
+     * @param CustomerInterface $customerTransfer
      */
-    protected function sendRegistrationToken(CustomerTransferInterface $customerTransfer)
+    protected function sendRegistrationToken(CustomerInterface $customerTransfer)
     {
         $link = $this->hostYves . '/register/confirm?token=' . $customerTransfer->getRegistrationKey();
         foreach ($this->registrationTokenSender as $sender) {
@@ -201,9 +200,9 @@ class Customer
     }
 
     /**
-     * @param CustomerTransferInterface $customerTransfer
+     * @param CustomerInterface $customerTransfer
      */
-    protected function sendPasswordRestoreConfirmation(CustomerTransferInterface $customerTransfer)
+    protected function sendPasswordRestoreConfirmation(CustomerInterface $customerTransfer)
     {
         foreach ($this->passwordRestoredConfirmationSender as $sender) {
             $sender->send($customerTransfer->getEmail());
@@ -211,14 +210,14 @@ class Customer
     }
 
     /**
-     * @param CustomerTransferInterface $customerTransfer
+     * @param CustomerInterface $customerTransfer
      *
      * @throws CustomerNotFoundException
      * @throws PropelException
      *
-     * @return CustomerTransferInterface
+     * @return CustomerInterface
      */
-    public function confirmRegistration(CustomerTransferInterface $customerTransfer)
+    public function confirmRegistration(CustomerInterface $customerTransfer)
     {
         $customer = $this->queryContainer->queryCustomerByRegistrationKey($customerTransfer->getRegistrationKey())
             ->findOne()
@@ -237,14 +236,14 @@ class Customer
     }
 
     /**
-     * @param CustomerTransferInterface $customerTransfer
+     * @param CustomerInterface $customerTransfer
      *
      * @throws CustomerNotFoundException
      * @throws PropelException
      *
      * @return bool
      */
-    public function forgotPassword(CustomerTransferInterface $customerTransfer)
+    public function forgotPassword(CustomerInterface $customerTransfer)
     {
         $customer = $this->getCustomer($customerTransfer);
         $customer->setRestorePasswordDate(new \DateTime('now', new \DateTimeZone(Config::get(SystemConfig::PROJECT_TIMEZONE))));
@@ -259,14 +258,14 @@ class Customer
     }
 
     /**
-     * @param CustomerTransferInterface $customerTransfer
+     * @param CustomerInterface $customerTransfer
      *
      * @throws PropelException
      * @throws CustomerNotFoundException
      *
      * @return bool
      */
-    public function restorePassword(CustomerTransferInterface $customerTransfer)
+    public function restorePassword(CustomerInterface $customerTransfer)
     {
         $customerTransfer = $this->encryptPassword($customerTransfer);
 
@@ -284,14 +283,14 @@ class Customer
     }
 
     /**
-     * @param CustomerTransferInterface $customerTransfer
+     * @param CustomerInterface $customerTransfer
      *
      * @throws PropelException
      * @throws CustomerNotFoundException
      *
      * @return bool
      */
-    public function delete(CustomerTransferInterface $customerTransfer)
+    public function delete(CustomerInterface $customerTransfer)
     {
         $customer = $this->getCustomer($customerTransfer);
         $customer->delete();
@@ -300,11 +299,11 @@ class Customer
     }
 
     /**
-     * @param CustomerTransferInterface $customerTransfer
+     * @param CustomerInterface $customerTransfer
      * 
-     * @return CustomerTransferInterface
+     * @return CustomerInterface
      */
-    public function getOrders(CustomerTransferInterface $customerTransfer)
+    public function getOrders(CustomerInterface $customerTransfer)
     {
         $filter = $customerTransfer->getFilter();
         $criteria = new Criteria();
@@ -329,7 +328,7 @@ class Customer
     }
 
     /**
-     * @param CustomerTransferInterface $customerTransfer
+     * @param CustomerInterface $customerTransfer
      *
      * @throws PropelException
      * @throws CustomerNotFoundException
@@ -337,7 +336,7 @@ class Customer
      *
      * @return bool
      */
-    public function update(CustomerTransferInterface $customerTransfer)
+    public function update(CustomerInterface $customerTransfer)
     {
         $customerTransfer = $this->encryptPassword($customerTransfer);
 
@@ -352,7 +351,7 @@ class Customer
     /**
      * @param SpyCustomerAddress $customer
      *
-     * @return CustomerAddressTransferInterface
+     * @return CustomerAddressInterface
      */
     protected function entityToTransfer(SpyCustomerAddress $customer)
     {
@@ -385,13 +384,13 @@ class Customer
     }
 
     /**
-     * @param CustomerTransferInterface $customerTransfer
+     * @param CustomerInterface $customerTransfer
      *
      * @throws CustomerNotFoundException
      *
      * @return SpyCustomer
      */
-    protected function getCustomer(CustomerTransferInterface $customerTransfer)
+    protected function getCustomer(CustomerInterface $customerTransfer)
     {
         $customerEntity = null;
         
@@ -417,11 +416,11 @@ class Customer
     }
 
     /**
-     * @param CustomerTransferInterface $customerTransfer
+     * @param CustomerInterface $customerTransfer
      *
      * @return bool
      */
-    protected function hasCustomer(CustomerTransferInterface $customerTransfer)
+    protected function hasCustomer(CustomerInterface $customerTransfer)
     {
         $result = false;
         $customerEntity = null;
@@ -446,11 +445,11 @@ class Customer
     }
 
     /**
-     * @param CustomerTransferInterface $customerTransfer
+     * @param CustomerInterface $customerTransfer
      *
      * @return bool
      */
-    public function tryAuthorizeCustomerByEmailAndPassword(CustomerTransferInterface $customerTransfer)
+    public function tryAuthorizeCustomerByEmailAndPassword(CustomerInterface $customerTransfer)
     {
         $result = false;
 
@@ -466,11 +465,11 @@ class Customer
     }
 
     /**
-     * @param CustomerTransferInterface $customerTransfer
+     * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerTransferInterface
+     * @return CustomerInterface
      */
-    protected function encryptPassword(CustomerTransferInterface $customerTransfer)
+    protected function encryptPassword(CustomerInterface $customerTransfer)
     {
         $currentPassword = $customerTransfer->getPassword();
 
