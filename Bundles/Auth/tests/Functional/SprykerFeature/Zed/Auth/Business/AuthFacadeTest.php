@@ -47,7 +47,6 @@ class AuthFacadeTest extends Test
         $this->assertEquals($passwordEntity->getStatus(), SpyResetPasswordTableMap::COL_STATUS_ACTIVE);
         $this->assertNotEmpty($passwordEntity->getCode());
         $this->assertTrue($resetStatus);
-
     }
 
     public function testRequestPasswordEmailNotExistingShouldThrowException()
@@ -106,7 +105,7 @@ class AuthFacadeTest extends Test
     protected function createTestUser()
     {
         $userEntity = new SpyUser();
-        $userEntity->setUsername('username@domain.tld');
+        $userEntity->setUsername(self::TEST_MAIL);
         $userEntity->setFirstName('FirstName');
         $userEntity->setLastName('LastName');
         $userEntity->setPassword('Secret');
