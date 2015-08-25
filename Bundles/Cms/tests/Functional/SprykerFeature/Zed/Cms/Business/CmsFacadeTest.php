@@ -16,6 +16,7 @@ use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
+use SprykerFeature\Zed\Cms\CmsDependencyProvider;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
@@ -66,7 +67,12 @@ class CmsFacadeTest extends Test
     {
         parent::setUp();
         $this->locator = Locator::getInstance();
+        $container = new Container();
+        $container = (new CmsDependencyProvider())
+            ->provideBusinessLayerDependencies($container)
+        ;
         $this->cmsFacade = new CmsFacade(new Factory('Cms'), $this->locator);
+        $this->cmsFacade->setExternalDependencies($container);
         $this->urlFacade = new UrlFacade(new Factory('Url'), $this->locator);
 
         $this->localeFacade = new LocaleFacade(new Factory('Locale'), $this->locator);
