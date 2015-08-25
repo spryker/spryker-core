@@ -304,6 +304,10 @@ class GlossaryTest extends Test
             return $this->localeFacade;
         };
 
+        $container[GlossaryDependencyProvider::FLASH_MESSAGES] = function (Container $container) {
+            return $container->getLocator()->flashMessenger()->facade();
+        };
+
         $this->glossaryFacade->setExternalDependencies($container);
 
         $this->glossaryFacade->setOwnQueryContainer($this->glossaryQueryContainer);

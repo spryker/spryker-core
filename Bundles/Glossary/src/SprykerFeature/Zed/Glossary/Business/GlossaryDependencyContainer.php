@@ -33,7 +33,8 @@ class GlossaryDependencyContainer extends AbstractBusinessDependencyContainer
             $this->getQueryContainer(),
             $this->getTouchFacade(),
             $this->getLocaleFacade(),
-            $this->createKeyManager()
+            $this->createKeyManager(),
+            $this->getFlashMessagesFacade()
         );
     }
 
@@ -51,6 +52,14 @@ class GlossaryDependencyContainer extends AbstractBusinessDependencyContainer
     protected function getLocaleFacade()
     {
         return $this->getProvidedDependency(GlossaryDependencyProvider::FACADE_LOCALE);
+    }
+
+    /**
+     * @return FLashMessagesFacade
+     */
+    protected function getFlashMessagesFacade()
+    {
+        return $this->getProvidedDependency(GlossaryDependencyProvider::FLASH_MESSAGES);
     }
 
     /**
