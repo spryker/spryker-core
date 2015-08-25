@@ -21,10 +21,6 @@ class ClassResolver implements ClassResolverInterface
      */
     private $existsMap = [];
 
-    /**
-     * @var array
-     */
-    private $canResolveCache = [];
 
     const MESSAGE_CLASS_NAME_AMBIGUOUS =
         'It\'s not allowed to have the same bundle in two namespaces in one layer. Check: "%s"';
@@ -39,20 +35,13 @@ class ClassResolver implements ClassResolverInterface
      */
     public function canResolve($classNamePattern, $bundle)
     {
-        $cacheId = $this->getCacheId($classNamePattern, $bundle);
+        $class = $this->prepareClassName($classNamePattern, $bundle);
+        $canBeResolved = $this->canBeResolvedIn($this->getProjectNamespaces(), $class);
 
-        if (!array_key_exists($cacheId, $this->canResolveCache)) {
-            $class = $this->prepareClassName($classNamePattern, $bundle);
-            $canBeResolved = $this->canBeResolvedIn($this->getProjectNamespaces(), $class);
-
-            if (!$canBeResolved) {
-                $canBeResolved = $this->canBeResolvedIn($this->getCoreNamespaces(), $class);
-            }
-
-            $this->canResolveCache[$cacheId] = $canBeResolved;
+        if (!$canBeResolved) {
+            $canBeResolved = $this->canBeResolvedIn($this->getCoreNamespaces(), $class);
         }
-
-        return $this->canResolveCache[$cacheId];
+        return $canBeResolved;
     }
 
     /**
@@ -253,17 +242,6 @@ class ClassResolver implements ClassResolverInterface
         }
 
         return $this->existsMap[$className] = class_exists($className);
-    }
-
-    /**
-     * @param string $classNamePattern
-     * @param string $bundle
-     *
-     * @return string
-     */
-    protected function getCacheId($classNamePattern, $bundle)
-    {
-        return $classNamePattern . '|' . $bundle;
     }
 
 }
