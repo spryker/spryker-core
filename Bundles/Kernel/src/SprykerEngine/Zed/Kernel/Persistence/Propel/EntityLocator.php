@@ -43,7 +43,9 @@ class EntityLocator implements LocatorInterface
         $classToLocate = $this->classNamePattern . $className;
         $classResolver = new ClassResolver();
         $camelHumpClassResolver = new CamelHumpClassResolver($classResolver);
-        $resolvedTransfer = $camelHumpClassResolver->resolve($classToLocate, $bundle);
+        $identityMapResolver = IdentityMapClassResolver::getInstance($camelHumpClassResolver);
+
+        $resolvedTransfer = $identityMapResolver->resolve($classToLocate, $bundle);
 
         return $resolvedTransfer;
     }

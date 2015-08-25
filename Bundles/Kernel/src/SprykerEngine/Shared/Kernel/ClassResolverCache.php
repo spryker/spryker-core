@@ -9,23 +9,30 @@ use SprykerEngine\Zed\Kernel\KernelConfig;
 
 class ClassResolverCache
 {
+
     /**
      * @var string
      */
     protected static $fileName = 'map.php';
+
     /**
      * @var bool
      */
     protected $isCacheActive = false;
+
     /**
      * @var string
      */
     protected $applicationRootDir;
+
     /**
      * @var string
      */
     protected $applicationName;
 
+    /**
+     * @throws \Exception
+     */
     public function __construct()
     {
         $this->isCacheActive = Config::getInstance()->get(KernelConfig::CLASS_RESOLVER_CACHE_ENABLED);
@@ -56,9 +63,9 @@ class ClassResolverCache
     }
 
     /**
-     * @param $map
+     * @param array $map
      */
-    public function saveClassMap($map)
+    public function saveClassMap(array $map)
     {
         if ($this->isCacheActive) {
             file_put_contents($this->createCacheFilePath(),
@@ -74,11 +81,13 @@ class ClassResolverCache
     {
         if ($this->isCacheActive) {
             $storeName = Store::getInstance()->getStoreName();
-            $dir = $this->applicationRootDir . '/data/' . $storeName . '/cache/' . $this->applicationName . '/resolver/';
-            if (false === is_dir($dir)) {
-                mkdir($dir, 0777, true);
+            $directory = $this->applicationRootDir . '/data/' . $storeName . '/cache/' . $this->applicationName . '/resolver/';
+
+            if (false === is_dir($directory)) {
+                mkdir($directory, 0777, true);
             }
-            return $dir . self::$fileName;
+
+            return $directory . self::$fileName;
         }
     }
 }
