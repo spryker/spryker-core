@@ -6,12 +6,16 @@
 
 namespace SprykerFeature\Zed\Discount\Communication;
 
+use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\DiscountCommunication;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\DiscountDependencyProvider;
 use SprykerFeature\Zed\Discount\Communication\Table\DiscountVoucherTable;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
+use SprykerFeature\Zed\Library\Copy;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolCategoryTable;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolTable;
@@ -249,6 +253,54 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     public function getQueryContainer()
     {
         return $this->getLocator()->discount()->queryContainer();
+    }
+
+    /**
+     * @param int $idPool
+     *
+     * @return VoucherPoolTransfer
+     */
+    public function getVoucherPoolById($idPool)
+    {
+        $pool = $this->getQueryContainer()
+            ->queryDiscountVoucherPool()
+            ->findOneByIdDiscountVoucherPool($idPool)
+        ;
+
+        return Copy::entityToTransfer(new VoucherPoolTransfer(), $pool);
+    }
+
+    /**
+     * @param $idDiscount
+     *
+     * @return DiscountTransfer
+     */
+    public function getDiscountById($idDiscount)
+    {
+        $voucher = $this->getQueryContainer()
+            ->queryDiscount()
+            ->filterByIdDiscount($idDiscount)
+        ;
+
+        return Copy::entityToTransfer(new DiscountTransfer(), $voucher);
+    }
+
+    /**
+     * @param VoucherPoolTransfer $poolTransfer
+     * @param \DateTime $dateTime
+     *
+     * @return int
+     */
+    public function getGeneratedVouchersCountByPoolAndTimestamp(VoucherPoolTransfer $poolTransfer, \DateTime $dateTime)
+    {
+        return $this->getQueryContainer()
+            ->queryDiscountVoucher()
+            ->filterByFkDiscountVoucherPool($poolTransfer->getIdDiscountVoucherPool())
+            ->filterByCreatedAt([
+                'min' => $dateTime
+            ])
+            ->count()
+        ;
     }
 
 }
