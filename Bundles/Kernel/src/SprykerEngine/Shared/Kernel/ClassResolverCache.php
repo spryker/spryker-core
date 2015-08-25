@@ -5,7 +5,6 @@
 namespace SprykerEngine\Shared\Kernel;
 
 use SprykerEngine\Shared\Config;
-use SprykerEngine\Zed\Kernel\KernelConfig;
 
 class ClassResolverCache
 {

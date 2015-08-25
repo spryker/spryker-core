@@ -1,7 +1,12 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: wesner
- * Date: 25.08.15
- * Time: 20:42
+ * (c) Spryker Systems GmbH copyright protected
  */
+namespace SprykerEngine\Shared\Kernel;
+
+use SprykerFeature\Shared\Library\ConfigInterface;
+
+interface KernelConfig extends ConfigInterface
+{
+    const CLASS_RESOLVER_CACHE_ENABLED = 'CLASS_RESOLVER_CACHE_ENABLED';
+}
