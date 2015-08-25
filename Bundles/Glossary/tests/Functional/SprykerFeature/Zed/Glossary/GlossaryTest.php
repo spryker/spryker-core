@@ -82,7 +82,7 @@ class GlossaryTest extends Test
         $this->assertTrue($keyCountAfterCreation > $keyCountBeforeCreation);
     }
 
-    public function testUpdateKeyUpdatesSomething()
+    public function testUpdateKeyMustSaveNewKeyInDatabase()
     {
         $keyQuery = $this->glossaryQueryContainer->queryKeys();
         $keyId = $this->glossaryFacade->createKey('ATestKey2');

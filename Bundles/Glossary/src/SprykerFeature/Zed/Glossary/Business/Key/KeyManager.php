@@ -40,6 +40,8 @@ class KeyManager implements KeyManagerInterface
         $key = $this->getKey($currentKeyName);
         $key->setKey($newKeyName);
 
+        $key->save();
+
         return true;
     }
 

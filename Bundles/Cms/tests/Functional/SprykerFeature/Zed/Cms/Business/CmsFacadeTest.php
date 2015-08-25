@@ -124,24 +124,28 @@ class CmsFacadeTest extends Test
     /**
      * @group Cms
      */
-    public function testSavePageUpdatesSomething()
+    public function testSavePageWithNewTemplateMustSaveFkTemplateInPage()
     {
         $template1 = $this->cmsFacade->createTemplate('AnotherUsedTemplateName', 'AnotherUsedTemplatePath');
         $template2 = $this->cmsFacade->createTemplate('YetAnotherUsedTemplateName', 'YetAnotherUsedTemplatePath');
 
-        $page = new PageTransfer();
-        $page->setFkTemplate($template1->getIdCmsTemplate());
-        $page->setIsActive(true);
+        $pageTransfer = new PageTransfer();
+        $pageTransfer->setFkTemplate($template1->getIdCmsTemplate());
+        $pageTransfer->setIsActive(true);
 
-        $page = $this->cmsFacade->savePage($page);
+        $pageTransfer = $this->cmsFacade->savePage($pageTransfer);
 
-        $pageEntity = $this->cmsQueryContainer->queryPageById($page->getIdCmsPage())
+        $pageEntity = $this->cmsQueryContainer->queryPageById($pageTransfer->getIdCmsPage())
             ->findOne()
         ;
         $this->assertEquals($template1->getIdCmsTemplate(), $pageEntity->getFkTemplate());
 
-        $page->setFkTemplate($template2->getIdCmsTemplate());
-        $this->cmsFacade->savePage($page);
+        $pageTransfer->setFkTemplate($template2->getIdCmsTemplate());
+        $this->cmsFacade->savePage($pageTransfer);
+
+        $pageEntity = $this->cmsQueryContainer->queryPageById($pageTransfer->getIdCmsPage())
+            ->findOne()
+        ;
 
         $this->assertEquals($template2->getIdCmsTemplate(), $pageEntity->getFkTemplate());
     }
