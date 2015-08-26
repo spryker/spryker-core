@@ -32,6 +32,7 @@ class Method
 
     /**
      * @param ShipmentQueryContainerInterface $queryContainer
+     * @param array $plugins
      */
     public function __construct(ShipmentQueryContainerInterface $queryContainer, array $plugins)
     {
@@ -80,10 +81,10 @@ class Method
             $methodTransfer = new ShipmentMethodTransfer();
             $methodTransfer->fromArray($method->toArray());
 
-            if ($this->isAvailable($method, $cartTransfer)) {
-                $methodTransfer->setPrice($this->getPrice($method, $cartTransfer));
+            if ($this->isAvailable($method, $cartTransfer, $shippingAddress)) {
+                $methodTransfer->setPrice($this->getPrice($method, $cartTransfer, $shipmentTransfer));
                 $methodTransfer->setTaxRate($this->getTaxRate($method, $cartTransfer, $shippingAddress));
-                $methodTransfer->setTime($this->getDeliveryTime($method, $cartTransfer));
+                $methodTransfer->setTime($this->getDeliveryTime($method, $cartTransfer, $shippingAddress));
 
                 $shipmentTransfer->addMethod($methodTransfer);
             }
@@ -161,10 +162,11 @@ class Method
     /**
      * @param SpyShipmentMethod $method
      * @param CartInterface $cartTransfer
+     * @param CustomerAddressInterface $shippingAddress
      *
      * @return bool
      */
-    private function isAvailable(SpyShipmentMethod $method, CartInterface $cartTransfer)
+    private function isAvailable(SpyShipmentMethod $method, CartInterface $cartTransfer, CustomerAddressInterface $shippingAddress = null)
     {
         $availabilityPlugins = $this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS];
         $isAvailable = true;
@@ -172,7 +174,7 @@ class Method
         if (array_key_exists($method->getAvailabilityPlugin(), $availabilityPlugins)) {
             /** @var ShipmentMethodAvailabilityPluginInterface $availabilityPlugin */
             $availabilityPlugin = $availabilityPlugins[$method->getAvailabilityPlugin()];
-            $isAvailable = $availabilityPlugin->isAvailable($cartTransfer);
+            $isAvailable = $availabilityPlugin->isAvailable($cartTransfer, $shippingAddress);
         }
 
         return $isAvailable;
@@ -181,10 +183,11 @@ class Method
     /**
      * @param SpyShipmentMethod $method
      * @param CartInterface $cartTransfer
+     * @param CustomerAddressInterface $shippingAddress
      *
      * @return int
      */
-    private function getPrice(SpyShipmentMethod $method, CartInterface $cartTransfer)
+    private function getPrice(SpyShipmentMethod $method, CartInterface $cartTransfer, CustomerAddressInterface $shippingAddress = null)
     {
         $price = $method->getPrice();
         $priceCalculationPlugins = $this->plugins[ShipmentDependencyProvider::PRICE_CALCULATION_PLUGINS];
@@ -192,7 +195,7 @@ class Method
         if (array_key_exists($method->getPriceCalculationPlugin(), $priceCalculationPlugins)) {
             /** @var ShipmentMethodPriceCalculationPluginInterface $priceCalculationPlugin */
             $priceCalculationPlugin = $priceCalculationPlugins[$method->getPriceCalculationPlugin()];
-            $price = $priceCalculationPlugin->getPrice($cartTransfer);
+            $price = $priceCalculationPlugin->getPrice($cartTransfer, $shippingAddress);
         }
 
         return $price;
@@ -201,6 +204,8 @@ class Method
     /**
      * @param SpyShipmentMethod $method
      * @param CartInterface $cartTransfer
+     * @param CustomerAddressInterface $shippingAddress
+     *
      * @return int
      */
     private function getTaxRate(SpyShipmentMethod $method, CartInterface $cartTransfer, CustomerAddressInterface $shippingAddress = null)
@@ -228,10 +233,11 @@ class Method
     /**
      * @param SpyShipmentMethod $method
      * @param CartInterface $cartTransfer
+     * @param CustomerAddressInterface $shippingAddress
      *
      * @return string
      */
-    private function getDeliveryTime(SpyShipmentMethod $method, CartInterface $cartTransfer)
+    private function getDeliveryTime(SpyShipmentMethod $method, CartInterface $cartTransfer, CustomerAddressInterface $shippingAddress = null)
     {
         $timeString = '';
 
@@ -239,7 +245,7 @@ class Method
         if (array_key_exists($method->getDeliveryTimePlugin(), $deliveryTimePlugins)) {
             /** @var ShipmentMethodDeliveryTimePluginInterface $deliveryTimePlugin */
             $deliveryTimePlugin = $deliveryTimePlugins[$method->getDeliveryTimePlugin()];
-            $timeString = $deliveryTimePlugin->getTime($cartTransfer);
+            $timeString = $deliveryTimePlugin->getTime($cartTransfer, $shippingAddress);
         }
 
         return $timeString;
