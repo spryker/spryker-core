@@ -44,7 +44,7 @@ class Guzzle extends AbstractHttpAdapter
             throw new TimeoutException('Timeout - Payone Communication: ' . $e->getMessage());
         }
 
-        $result = (string)$response->getBody();
+        $result = (string) $response->getBody();
         $result = explode("\n", $result);
 
         return $result;
