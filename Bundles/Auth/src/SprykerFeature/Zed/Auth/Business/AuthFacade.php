@@ -29,11 +29,11 @@ class AuthFacade extends AbstractFacade
     }
 
     /**
-     * @return bool
+     * @return void
      */
     public function logout()
     {
-        return $this->getDependencyContainer()
+        $this->getDependencyContainer()
             ->createAuthModel()
             ->logout();
     }

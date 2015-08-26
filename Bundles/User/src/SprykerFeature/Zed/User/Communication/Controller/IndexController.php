@@ -10,8 +10,7 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
 use SprykerFeature\Zed\User\Business\UserFacade;
 use SprykerFeature\Zed\User\Communication\UserDependencyContainer;
-use Symfony\Component\HttpFoundation\Request;
-use SprykerFeature\Zed\User\Communication\Form\ResetPasswordForm;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
 
 /**
@@ -21,52 +20,27 @@ use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
  */
 class IndexController extends AbstractController
 {
-
     /**
-     * indexAction
+     * @return array
      */
     public function indexAction()
     {
-
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return array
-     */
-    public function detailsAction(Request $request)
-    {
-        $userId = $request->query->get('id');
+        $usersTable = $this->getDependencyContainer()->createUserTable();
 
         return [
-            'user_id' => $userId,
+            'users' => $usersTable->render()
         ];
     }
 
     /**
-     * @return array
+     * @return JsonResponse
      */
-    public function passwordResetAction()
+    public function tableAction()
     {
-        $currentUserTransfer = $this->getFacade()->getCurrentUser();
-        $resetPasswordForm = $this->getDependencyContainer()->createResetPasswordForm();
-        $resetPasswordForm->handleRequest();
+        $table = $this->getDependencyContainer()->createUserTable();
 
-        if ($resetPasswordForm->isValid()) {
-            $formData = $resetPasswordForm->getData();
-            $currentUserTransfer->setPassword($formData[ResetPasswordForm::PASSWORD]);
-
-            try {
-                $this->getFacade()->updateUser($currentUserTransfer);
-                $this->addSuccessMessage('Password successfully updated.');
-            } catch (UserNotFoundException $e) {
-                $this->addErrorMessage($e->getMessage());
-            }
-        }
-
-        return [
-            'resetPasswordForm' => $resetPasswordForm->createView()
-        ];
+        return $this->jsonResponse(
+            $table->fetchData()
+        );
     }
 }

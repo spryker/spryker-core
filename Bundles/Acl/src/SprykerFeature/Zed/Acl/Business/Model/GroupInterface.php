@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
+use Generated\Shared\Transfer\GroupsTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\RoleTransfer;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupAlreadyHasRoleException;
@@ -110,6 +111,13 @@ interface GroupInterface
      * @return GroupTransfer
      */
     public function getUserGroup($idUser);
+
+    /**
+     * @param integer $idUser
+     *
+     * @return GroupsTransfer
+     */
+    public function getUserGroups($idUser);
 
     /**
      * @param int $idRole

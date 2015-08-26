@@ -167,11 +167,33 @@ class UserFacade extends AbstractFacade
 
     /**
      * @param int $idUser
+     *
+     * @return UserTransfer;
      */
     public function removeUser($idUser)
     {
-        $this->getDependencyContainer()
+        return $this->getDependencyContainer()
             ->getUserModel()
             ->removeUser($idUser);
+    }
+
+    /**
+     * @param integer $idUser
+     *
+     * @return boolean
+     */
+    public function activateUser($idUser)
+    {
+        return $this->getDependencyContainer()->getUserModel()->activateUser($idUser);
+    }
+
+    /**
+     * @param integer $idUser
+     *
+     * @return bool
+     */
+    public function deactivateUser($idUser)
+    {
+        return $this->getDependencyContainer()->getUserModel()->deactivateUser($idUser);
     }
 }

@@ -1,6 +1,6 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Users List' %}
+{% set widget_title = 'Create user' %}
 
 {% block head_title widget_title | trans %}
 
@@ -8,17 +8,17 @@
 
     {% embed '@Gui/Partials/widget.twig' %}
 
-        {% block widget_header_content %}
-            <a href="/user/edit/create" class="btn btn-sm btn-primary ">{{ 'Add new user' | trans }}</a>
-        {% endblock %}
-
         {% block widget_content %}
 
-            {{ users | raw }}
+            {{ form_start(userForm) }}
+
+            {{ form_widget(userForm) }}
+
+            <input type="submit" class="btn btn-primary" value="{{ 'Create' | trans }}" />
+            {{ form_end(userForm) }}
 
         {% endblock %}
 
     {% endembed %}
 
 {% endblock %}
-
