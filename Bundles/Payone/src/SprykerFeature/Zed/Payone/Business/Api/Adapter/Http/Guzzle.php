@@ -26,6 +26,7 @@ class Guzzle extends AbstractHttpAdapter
     /**
      * @param array $params
      * @return array
+     * @throws TimeoutException
      */
     protected function performRequest(array $params)
     {

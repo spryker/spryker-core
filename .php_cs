@@ -21,7 +21,7 @@ return Symfony\CS\Config\Config::create()
             'double_arrow_multiline_whitespaces',
             'duplicate_semicolon',
             'empty_enclosing_lines',
-            'empty_return',
+            '-empty_return',
             'encoding',
             'extra_empty_lines',
             'include',
