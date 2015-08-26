@@ -101,16 +101,11 @@ class RedirectController extends AbstractController
 
         if ($form->isValid()) {
             $data = $form->getData();
-            $url = $this->getQueryContainer()
-                ->queryUrlByIdWithRedirect($idUrl)
-                ->findOne()
-            ;
+            $url = $this->getQueryContainer()->queryUrlByIdWithRedirect($idUrl)->findOne();
 
             if ($url) {
                 $urlTransfer = $this->createUrlTransfer($url, $data);
-                $this->getUrlFacade()
-                    ->saveUrlAndTouch($urlTransfer)
-                ;
+                $this->getUrlFacade()->saveUrlAndTouch($urlTransfer);
 
                 $redirect = $this->getQueryContainer()
                     ->queryRedirectById($url->getFkResourceRedirect())
@@ -118,9 +113,7 @@ class RedirectController extends AbstractController
                 ;
                 $redirectTransfer = $this->createRedirectTransfer($redirect, $data);
 
-                $this->getUrlFacade()
-                    ->saveRedirectAndTouch($redirectTransfer)
-                ;
+                $this->getUrlFacade()->saveRedirectAndTouch($redirectTransfer);
             }
 
             return $this->redirectResponse(self::REDIRECT_ADDRESS);

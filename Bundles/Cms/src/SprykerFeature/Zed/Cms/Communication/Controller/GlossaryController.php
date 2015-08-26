@@ -43,18 +43,11 @@ class GlossaryController extends AbstractController
     {
         $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
         $idForm = $request->get(self::ID_FORM);
-        $title = null;
         $type = CmsConfig::RESOURCE_TYPE_PAGE;
 
-        $block = $this->getQueryContainer()
-            ->queryBlockByIdPage($idPage)
-            ->findOne()
-        ;
-
-        $pageUrl = $this->getQueryContainer()
-            ->queryPageWithTemplatesAndUrlByIdPage($idPage)
-            ->findOne()
-        ;
+        $block = $this->getQueryContainer()->queryBlockByIdPage($idPage)->findOne();
+        $pageUrl = $this->getQueryContainer()->queryPageWithTemplatesAndUrlByIdPage($idPage)->findOne();
+        $localeTransfer = $this->getLocaleFacade()->getCurrentLocale();
 
         if (null === $block) {
             $title = $pageUrl->getUrl();
@@ -62,9 +55,6 @@ class GlossaryController extends AbstractController
             $type = CmsConfig::RESOURCE_TYPE_BLOCK;
             $title = $block->getName();
         }
-        $localeTransfer = $this->getLocaleFacade()
-            ->getCurrentLocale()
-        ;
 
         $placeholders = $this->findPagePlaceholders($pageUrl);
         $glossaryMappingArray = $this->extractGlossaryMapping($idPage, $localeTransfer);
@@ -76,6 +66,7 @@ class GlossaryController extends AbstractController
             $forms[] = $form;
             $formViews[] = $form->createView();
         }
+
         if (null !== $idForm) {
             return $this->handleAjaxRequest($forms, $idForm, $localeTransfer);
         }
@@ -180,7 +171,6 @@ class GlossaryController extends AbstractController
         return $searchedItems;
     }
 
-
     /**
      * @param array $data
      *
@@ -201,8 +191,10 @@ class GlossaryController extends AbstractController
             ->findOne()
         ;
         $pageKeyMappingTransfer->setFkGlossaryKey($glossaryKey->getIdGlossaryKey());
+
         return $pageKeyMappingTransfer;
     }
+
     /**
      * @return LocaleFacade
      */
@@ -212,6 +204,7 @@ class GlossaryController extends AbstractController
             ->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE)
             ;
     }
+
     /**
      * @return GlossaryFacade
      */
@@ -221,6 +214,7 @@ class GlossaryController extends AbstractController
             ->getProvidedDependency(CmsDependencyProvider::FACADE_GLOSSARY)
             ;
     }
+
     /**
      * @param array $data
      * @param LocaleTransfer $localeTransfer
@@ -236,6 +230,7 @@ class GlossaryController extends AbstractController
             ->savePageKeyMappingAndTouch($pageKeyMappingTransfer)
         ;
     }
+
     /**
      * @param SpyCmsPage $pageUrl
      *
@@ -248,8 +243,10 @@ class GlossaryController extends AbstractController
             ->getTemplateRealPath($pageUrlArray[CmsQueryContainer::TEMPLATE_PATH])
         ;
         $placeholders = $this->findTemplatePlaceholders($tempFile);
+
         return $placeholders;
     }
+
     /**
      * @param int $idPage
      * @param LocaleTransfer $localeTransfer
@@ -266,8 +263,10 @@ class GlossaryController extends AbstractController
                      ->getData() as $keyMapping) {
             $glossaryMappingArray[$keyMapping->getPlaceholder()] = $keyMapping->getIdCmsGlossaryKeyMapping();
         }
+
         return $glossaryMappingArray;
     }
+
     /**
      * @param array $forms
      * @param int $idForm
@@ -280,6 +279,7 @@ class GlossaryController extends AbstractController
         if ($forms[$idForm]->isValid()) {
             $data = $forms[$idForm]->getData();
             $this->saveGlossaryKeyPageMapping($data, $localeTransfer);
+
             return $this->jsonResponse([
                 'success' => 'true',
                 'data' => $data,
@@ -292,6 +292,7 @@ class GlossaryController extends AbstractController
             ]);
         }
     }
+
     /**
      * @param array $glossaryMappingArray
      * @param string $place
@@ -309,6 +310,7 @@ class GlossaryController extends AbstractController
             ->createCmsGlossaryForm($idPage, $idMapping, $place, $this->getFacade())
         ;
         $form->handleRequest();
+
         return $form;
     }
 

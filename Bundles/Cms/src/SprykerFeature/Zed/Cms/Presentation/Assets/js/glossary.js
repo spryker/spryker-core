@@ -42,7 +42,7 @@ var ajaxifySubmmit = function(formId) {
 }
 
 function showAutoComplete(formId, type) {
-    var listElement = '<div id="foundKeyListContainer" style="display:none; position: absolute; width: 400px;font-family: Helvetica,Arial,sans-serif;font-size: 13px;color: #676a6c;overflow-x: hidden;font-size: 14px;"> <select id="foundKeyList" size="10" style="width: 100%;height: 100%"> </select> </div>'
+    var listElement = '<div id="foundKeyListContainer" class="key-container"><select id="foundKeyList" size="10" class="key-list"></select></div>'
     $('.keyListCanvas').empty();
     $('.keyListCanvas').append(listElement);
 
