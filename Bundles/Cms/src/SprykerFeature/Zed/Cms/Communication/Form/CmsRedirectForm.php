@@ -21,6 +21,7 @@ class CmsRedirectForm extends AbstractForm
     const ID_REDIRECT = 'id_redirect';
     const FROM_URL = 'from_url';
     const TO_URL = 'to_url';
+    const STATUS = 'status';
 
     /**
      * @var SpyUrlQuery
@@ -91,6 +92,7 @@ class CmsRedirectForm extends AbstractForm
                 'label' => 'To URL',
                 'constraints' => $this->constraints->getMandatoryConstraints(),
             ])
+            ->addText(self::STATUS)
             ;
     }
 
@@ -107,6 +109,7 @@ class CmsRedirectForm extends AbstractForm
             return [
                 self::FROM_URL => $url->getUrl(),
                 self::TO_URL => $url->getToUrl(),
+                self::STATUS => $url->getStatus(),
             ];
         }
     }

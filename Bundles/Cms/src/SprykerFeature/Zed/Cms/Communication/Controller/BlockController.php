@@ -26,6 +26,32 @@ class BlockController extends AbstractController
     /**
      * @return array
      */
+    public function indexAction()
+    {
+        $blockTable = $this->getDependencyContainer()
+            ->createCmsBlockTable()
+        ;
+
+        return [
+            'blocks' => $blockTable->render(),
+        ];
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function tableAction()
+    {
+        $table = $this->getDependencyContainer()
+            ->createCmsBlockTable()
+        ;
+
+        return $this->jsonResponse($table->fetchData());
+    }
+
+    /**
+     * @return array
+     */
     public function addAction()
     {
         $form = $this->getDependencyContainer()

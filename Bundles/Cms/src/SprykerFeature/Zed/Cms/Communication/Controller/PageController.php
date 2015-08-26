@@ -28,6 +28,32 @@ class PageController extends AbstractController
     /**
      * @return array
      */
+    public function indexAction()
+    {
+        $pageTable = $this->getDependencyContainer()
+            ->createCmsPageTable()
+        ;
+
+        return [
+            'pages' => $pageTable->render(),
+        ];
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function tableAction()
+    {
+        $table = $this->getDependencyContainer()
+            ->createCmsPageTable()
+        ;
+
+        return $this->jsonResponse($table->fetchData());
+    }
+
+    /**
+     * @return array
+     */
     public function addAction()
     {
         $form = $this->getDependencyContainer()

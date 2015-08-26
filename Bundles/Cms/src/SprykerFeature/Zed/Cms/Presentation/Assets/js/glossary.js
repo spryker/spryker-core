@@ -11,7 +11,7 @@ function postForm( $form, id, successCallback ){
     });
     $.ajax({
         type        : $form.attr( 'method' ),
-        url         : '?id-page={{ idPage }}&id-form=' + id,
+        url         : '?id-page=' + $('#idPage').val() +'&id-form=' + id,
         data        : values,
         success     : function(data) {
             successCallback(data);
@@ -135,6 +135,14 @@ var delay = (function(){
         timer = setTimeout(callback, ms);
     };
 })();
+
+$(document).ready(function(){
+    $('.cms_form').each(function(index, item){
+        var formId = $(item).attr('data-index');
+        ajaxifySubmmit(formId);
+        addKeySearchEvent(formId);
+    });
+});
 
 $(document).on('click', function(e) {
     if (keyContainer !== null && !$(e.target).is('option')) {

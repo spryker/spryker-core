@@ -54,7 +54,6 @@ class CmsBlockTable extends AbstractTable
             SpyCmsBlockTableMap::COL_NAME,
         ]);
 
-        $config->setUrl('blockTable');
         $config->setPageLength(5);
 
         return $config;

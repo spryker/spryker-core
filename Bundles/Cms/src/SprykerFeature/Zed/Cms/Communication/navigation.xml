@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <CMS>
+        <label>CMS</label>
+        <title>CMS</title>
+        <bundle>Cms</bundle>
+        <pages>
+            <page>
+                <label>Pages</label>
+                <title>Pages</title>
+                <bundle>cms</bundle>
+                <controller>page</controller>
+                <action>index</action>
+            </page>
+            <block>
+                <label>Blocks</label>
+                <title>Blocks</title>
+                <bundle>cms</bundle>
+                <controller>block</controller>
+                <action>index</action>
+            </block>
+            <redirects>
+                <label>Redirects</label>
+                <title>Redirects</title>
+                <bundle>cms</bundle>
+                <controller>Redirect</controller>
+                <action>index</action>
+            </redirects>
+        </pages>
+    </CMS>
+</config>
