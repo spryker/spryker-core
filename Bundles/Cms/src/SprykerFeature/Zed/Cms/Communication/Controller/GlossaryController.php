@@ -13,12 +13,15 @@ use Generated\Shared\Transfer\PageTransfer;
 use SprykerFeature\Shared\Cms\CmsConfig;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
+use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
 use SprykerFeature\Zed\Cms\CmsDependencyProvider;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsGlossaryForm;
 use SprykerFeature\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use SprykerFeature\Zed\Cms\Communication\Table\CmsPageTable;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 use SprykerFeature\Zed\Cms\Persistence\Propel\Base\SpyCmsPage;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -30,7 +33,6 @@ class GlossaryController extends AbstractController
 {
     const REDIRECT_ADDRESS = '/cms/glossary/';
     const SEARCH_LIMIT = 10;
-    const LOCALE = 'locale_';
     const ID_FORM = 'id-form';
     const TYPE = 'type';
 
@@ -46,17 +48,17 @@ class GlossaryController extends AbstractController
         $type = CmsConfig::RESOURCE_TYPE_PAGE;
 
         $block = $this->getQueryContainer()->queryBlockByIdPage($idPage)->findOne();
-        $pageUrl = $this->getQueryContainer()->queryPageWithTemplatesAndUrlByIdPage($idPage)->findOne();
+        $cmsPage = $this->findCmsPageById($idPage);
         $localeTransfer = $this->getLocaleFacade()->getCurrentLocale();
 
         if (null === $block) {
-            $title = $pageUrl->getUrl();
+            $title = $cmsPage->getUrl();
         } else {
             $type = CmsConfig::RESOURCE_TYPE_BLOCK;
             $title = $block->getName();
         }
 
-        $placeholders = $this->findPagePlaceholders($pageUrl);
+        $placeholders = $this->findPagePlaceholders($cmsPage);
         $glossaryMappingArray = $this->extractGlossaryMapping($idPage, $localeTransfer);
         $forms = [];
         $formViews = [];
@@ -83,7 +85,7 @@ class GlossaryController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
     public function deleteAction(Request $request)
     {
@@ -125,7 +127,7 @@ class GlossaryController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     * @return JsonResponse
      */
     public function searchAction(Request $request)
     {
@@ -330,6 +332,28 @@ class GlossaryController extends AbstractController
         ]);
 
         return $keyTranslationTransfer;
+    }
+
+    /**
+     * @param $idPage
+     *
+     * @throws MissingPageException
+     * @return SpyCmsPage
+     */
+    private function findCmsPageById($idPage)
+    {
+        $cmsPage = $this->getQueryContainer()
+            ->queryPageWithTemplatesAndUrlByIdPage($idPage)
+            ->findOne()
+        ;
+
+        if (null === $cmsPage) {
+            throw new MissingPageException(
+                sprintf('Page with id %s not found', $idPage)
+            );
+        }
+
+        return $cmsPage;
     }
 
 }
