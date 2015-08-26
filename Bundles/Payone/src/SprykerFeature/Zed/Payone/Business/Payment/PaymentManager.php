@@ -110,7 +110,7 @@ class PaymentManager implements PaymentManagerInterface
             return $this->registeredMethodMappers[$name];
         }
 
-        return;
+        return null;
     }
 
     /**

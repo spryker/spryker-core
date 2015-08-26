@@ -104,7 +104,7 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
     protected function createExecutionAdapter()
     {
         return $this->getFactory()
-            ->createApiAdapterHttpCurl(
+            ->createApiAdapterHttpGuzzle(
                 $this->createStandardParameter()->getPaymentGatewayUrl()
             );
     }
