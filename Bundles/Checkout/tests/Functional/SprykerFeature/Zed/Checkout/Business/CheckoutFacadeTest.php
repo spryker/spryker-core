@@ -12,7 +12,7 @@ use Functional\SprykerFeature\Zed\Checkout\Dependency\OmsFacade;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\SalesAddressTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use SprykerEngine\Zed\Kernel\Business\Factory;
@@ -342,8 +342,8 @@ class CheckoutFacadeTest extends Test
 
         $cart->setTotals($totals);
 
-        $billingAddress = new CustomerAddressTransfer();
-        $shippingAddress = new CustomerAddressTransfer();
+        $billingAddress = new SalesAddressTransfer();
+        $shippingAddress = new SalesAddressTransfer();
 
         $billingAddress
             ->setIso2Code('xi')

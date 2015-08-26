@@ -44,6 +44,7 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
         } else {
             $customer->setFirstName($orderTransfer->getBillingAddress()->getFirstName());
             $customer->setLastName($orderTransfer->getBillingAddress()->getLastName());
+            $customer->setEmail($orderTransfer->getBillingAddress()->getEmail());
             $customer = $this->customerFacade->registerCustomer($customer);
             $orderTransfer->setCustomer($customer);
         }
