@@ -73,20 +73,25 @@ class Auth implements AuthInterface
     public function authenticate($username, $password)
     {
         $hasUser = $this->userFacade->hasUserByUsername($username);
-        if (false === $hasUser) {
+        if (!$hasUser) {
             return false;
         }
 
-        $user = $this->userFacade->getUserByUsername($username);
+        $userTransfer = $this->userFacade->getUserByUsername($username);
 
-        $isValidPassword = $this->userFacade->isValidPassword($password, $user->getPassword());
-        if (false === $isValidPassword) {
+        $isValidPassword = $this->userFacade->isValidPassword($password, $userTransfer->getPassword());
+        if (!$isValidPassword) {
             return false;
         }
 
-        $token = $this->generateToken($user);
+        $userTransfer->setLastLogin((new \DateTime())->format(\DateTime::ATOM));
 
-        $users = $this->registerAuthorizedUser($token, $user);
+        $token = $this->generateToken($userTransfer);
+
+        $this->registerAuthorizedUser($token, $userTransfer);
+
+        $userTransfer->setPassword(null);
+        $this->userFacade->updateUser($userTransfer);
 
         return true;
     }
@@ -113,22 +118,22 @@ class Auth implements AuthInterface
 
     /**
      * @param string $token
-     * @param UserTransfer $user
+     * @param UserTransfer $userTransfer
      *
      * @return string
      */
-    protected function registerAuthorizedUser($token, UserTransfer $user)
+    protected function registerAuthorizedUser($token, UserTransfer $userTransfer)
     {
         $key = $this->getSessionKey($token);
-        $this->session->set($key, serialize($user));
+        $this->session->set($key, serialize($userTransfer));
 
-        $this->userFacade->setCurrentUser($user);
+        $this->userFacade->setCurrentUser($userTransfer);
 
         return unserialize($this->session->get($key));
     }
 
     /**
-     *
+     * @return void
      */
     public function logout()
     {
@@ -167,7 +172,11 @@ class Auth implements AuthInterface
 
         $currentUser = $this->getCurrentUser($token);
 
-        $realUser = $this->userFacade->getUserById($currentUser->getIdUser());
+        try {
+            $realUser = $this->userFacade->getUserById($currentUser->getIdUser());
+        } catch (UserNotFoundException $e) {
+            return false;
+        }
 
         return $realUser->getPassword() === $currentUser->getPassword();
     }

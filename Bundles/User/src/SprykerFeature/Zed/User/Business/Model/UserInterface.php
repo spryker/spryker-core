@@ -113,4 +113,17 @@ interface UserInterface
      */
     public function getCurrentUser();
 
+    /**
+     * @param integer $idUser
+     *
+     * @return bool
+     */
+    public function activateUser($idUser);
+
+    /**
+     * @param integer $idUser
+     *
+     * @return bool
+     */
+    public function deactivateUser($idUser);
 }

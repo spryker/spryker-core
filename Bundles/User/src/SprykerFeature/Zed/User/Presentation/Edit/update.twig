@@ -1,0 +1,23 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Update user #' ~ idUser   %}
+
+{% block head_title widget_title | trans %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+
+            {{ form_start(userForm) }}
+            {{ form_widget(userForm) }}
+
+            <input type="submit" class="btn btn-primary" value="{{ 'Update' | trans }}" />
+            {{ form_end(userForm) }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

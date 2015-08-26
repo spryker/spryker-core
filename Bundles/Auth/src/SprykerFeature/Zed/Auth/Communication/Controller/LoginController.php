@@ -10,6 +10,7 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Auth\Business\AuthFacade;
 use SprykerFeature\Zed\Auth\Communication\AuthDependencyContainer;
 use SprykerFeature\Zed\Auth\Communication\Form\LoginForm;
+use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -26,12 +27,8 @@ class LoginController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $form = $this->getDependencyContainer()
-            ->createLoginForm($request)
-        ;
+        $form = $this->getDependencyContainer()->createLoginForm($request);
         $form->handleRequest();
-
-        $message = null;
 
         if ($request->isMethod(Request::METHOD_POST) && $form->isValid()) {
             $formData = $form->getData();
@@ -41,13 +38,12 @@ class LoginController extends AbstractController
             if ($isLogged) {
                 return $this->redirectResponse('/');
             } else {
-                $message = 'Authentication failed'; //@todo use flash Messenger
+                $this->addErrorMessage('Authentication failed!');
             }
         }
 
         return $this->viewResponse([
             'form' => $form->createView(),
-            'message' => $message,
         ]);
     }
 

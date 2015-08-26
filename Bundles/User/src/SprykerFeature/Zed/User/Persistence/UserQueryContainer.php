@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\User\Persistence;
 
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use SprykerFeature\Zed\User\Persistence\Propel\Map\SpyUserTableMap;
 use SprykerFeature\Zed\User\Persistence\Propel\SpyUserQuery;
 
 /**
@@ -14,7 +15,6 @@ use SprykerFeature\Zed\User\Persistence\Propel\SpyUserQuery;
  */
 class UserQueryContainer extends AbstractQueryContainer
 {
-
     /**
      * @param string $username
      *
@@ -47,7 +47,7 @@ class UserQueryContainer extends AbstractQueryContainer
     public function queryUsers()
     {
         $query = $this->getDependencyContainer()->createUserQuery();
-        $query->filterByStatus(['active', 'blocked']);
+        $query->filterByStatus([SpyUserTableMap::COL_STATUS_ACTIVE, SpyUserTableMap::COL_STATUS_BLOCKED]);
 
         return $query;
     }
@@ -55,11 +55,9 @@ class UserQueryContainer extends AbstractQueryContainer
     /**
      * @return SpyUserQuery
      */
-    public function queryUsersAndGroup()
+    public function queryUser()
     {
-        $query = $this->getDependencyContainer()->createUserQuery();
-
-        return $query;
+        return $this->getDependencyContainer()->createUserQuery();
     }
 
 }

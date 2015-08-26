@@ -121,6 +121,10 @@ class User implements UserInterface
             $userEntity->setStatus($userTransfer->getStatus());
         }
 
+        if (null !== $userTransfer->getLastLogin()) {
+            $userEntity->setLastLogin($userTransfer->getLastLogin());
+        }
+
         $password = $userTransfer->getPassword();
         if (!empty($password) && $this->isRawPassword($userTransfer->getPassword())) {
             $userEntity->setPassword($this->encryptPassword($userTransfer->getPassword()));
@@ -351,6 +355,34 @@ class User implements UserInterface
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;
+    }
+
+    /**
+     * @param integer $idUser
+     *
+     * @return bool
+     */
+    public function activateUser($idUser)
+    {
+        $userEntity = $this->queryContainer->queryUserById($idUser)->findOne();
+        $userEntity->setStatus(SpyUserTableMap::COL_STATUS_ACTIVE);
+        $rowsAffected = $userEntity->save();
+
+        return $rowsAffected > 0;
+    }
+
+    /**
+     * @param integer $idUser
+     *
+     * @return bool
+     */
+    public function deactivateUser($idUser)
+    {
+        $userEntity = $this->queryContainer->queryUserById($idUser)->findOne();
+        $userEntity->setStatus(SpyUserTableMap::COL_STATUS_BLOCKED);
+        $rowsAffected = $userEntity->save();
+
+        return $rowsAffected > 0;
     }
 
 }

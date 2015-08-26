@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Sales\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Sales\Communication\SalesDependencyContainer;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * @method SalesDependencyContainer getDependencyContainer()
@@ -17,11 +17,9 @@ class IndexController extends AbstractController
 {
 
     /**
-     * @param Request $request
-     *
      * @return array
      */
-    public function indexAction(Request $request)
+    public function indexAction()
     {
         $table = $this->getDependencyContainer()->createOrdersTable();
 

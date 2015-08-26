@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Acl\Business;
 
+use Generated\Shared\Transfer\GroupsTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RulesTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
@@ -77,7 +78,7 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @return GroupTransfer
+     * @return GroupsTransfer
      */
     public function getAllGroups()
     {
@@ -196,6 +197,16 @@ class AclFacade extends AbstractFacade
         return $this->getDependencyContainer()
             ->createGroupModel()
             ->getUserGroup($idUser);
+    }
+
+    /**
+     * @param integer $idUser
+     *
+     * @return GroupsTransfer
+     */
+    public function getUserGroups($idUser)
+    {
+        return $this->getDependencyContainer()->createGroupModel()->getUserGroups($idUser);
     }
 
     /**
