@@ -7,16 +7,12 @@
 namespace SprykerFeature\Zed\Payone\Business\Payment\MethodMapper;
 
 use Generated\Shared\Payone\PayoneAuthorizationInterface;
-use Generated\Shared\Payone\PayoneCreditCardInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CreditCardPseudoContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\InvoiceContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\PrepaymentContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CreditCardCheckContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;

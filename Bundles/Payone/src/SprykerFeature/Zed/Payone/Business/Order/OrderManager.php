@@ -16,6 +16,7 @@ use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneDetail;
 
 class OrderManager implements OrderManagerInterface
 {
+
     /**
      * @var PayoneConfig
      */
@@ -47,6 +48,7 @@ class OrderManager implements OrderManagerInterface
 
     /**
      * @param PayonePaymentInterface $paymentTransfer
+     *
      * @return SpyPaymentPayone
      */
     protected function savePayment(PayonePaymentInterface $paymentTransfer)

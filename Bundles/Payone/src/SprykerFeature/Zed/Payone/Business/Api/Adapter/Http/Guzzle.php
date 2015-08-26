@@ -19,14 +19,16 @@ class Guzzle extends AbstractHttpAdapter
         parent::__construct($paymentGatewayUrl);
 
         $this->client = new Client([
-            'timeout' => $this->getTimeout()
+            'timeout' => $this->getTimeout(),
         ]);
     }
 
     /**
      * @param array $params
-     * @return array
+     *
      * @throws TimeoutException
+     *
+     * @return array
      */
     protected function performRequest(array $params)
     {

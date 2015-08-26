@@ -195,7 +195,7 @@ abstract class AbstractResponseContainer
             return $this->$name;
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -212,7 +212,7 @@ abstract class AbstractResponseContainer
             return true;
         }
 
-        return null;
+        return;
     }
 
     /**

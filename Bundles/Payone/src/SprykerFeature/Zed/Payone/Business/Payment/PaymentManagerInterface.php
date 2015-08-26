@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Payone\Business\Payment;
 
 use Generated\Shared\Payone\PayoneCreditCardInterface;
-use Generated\Shared\Payone\PayoneDebitInterface;
 use Generated\Shared\Payone\PayoneRefundInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;

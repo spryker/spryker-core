@@ -11,6 +11,7 @@ use SprykerFeature\Zed\Sales\Communication\SalesDependencyContainer;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Sales\Business\SalesFacade;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method SalesDependencyContainer getDependencyContainer()
@@ -32,6 +33,10 @@ class DetailsController extends AbstractController
         $orderEntity = $this->getQueryContainer()
             ->querySalesOrderById($idOrder)
             ->findOne();
+
+        if ($orderEntity === null) {
+            throw new NotFoundHttpException('Record not found');
+        }
 
         $orderItems = $this->getQueryContainer()
             ->querySalesOrderItemsWithState($idOrder)

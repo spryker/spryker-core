@@ -11,7 +11,6 @@ use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\OnlineBankTransferContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\DebitContainer;

@@ -102,6 +102,7 @@ class TransactionStatusUpdateManager
     /**
      * @param int $idSalesOrder
      * @param int $idSalesOrderItem
+     *
      * @return bool
      */
     public function isPaymentNotificationAvailable($idSalesOrder, $idSalesOrderItem)
@@ -186,7 +187,7 @@ class TransactionStatusUpdateManager
         if ($statusLog === null) {
             return false;
         }
-        if ($statusLog->getBalance() != 0) {
+        if ($statusLog->getBalance() !== 0) {
             return false;
         }
 
@@ -257,6 +258,7 @@ class TransactionStatusUpdateManager
      * @param $idSalesOrder
      * @param $idSalesOrderItem
      * @param $status
+     *
      * @return bool
      */
     private function isPayment($idSalesOrder, $idSalesOrderItem, $status)
@@ -271,10 +273,10 @@ class TransactionStatusUpdateManager
         return true;
     }
 
-
     /**
      * @param $idSalesOrder
      * @param $idSalesOrderItem
+     *
      * @return bool
      */
     private function hasUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem) {
@@ -287,20 +289,21 @@ class TransactionStatusUpdateManager
      * @param $idSalesOrder
      * @param $idSalesOrderItem
      * @param $status
+     *
      * @return SpyPaymentPayoneTransactionStatusLog
      */
     private function getFirstUnprocessedTransactionStatusLog($idSalesOrder, $idSalesOrderItem, $status) {
         $records = $this->getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem);
 
         if (empty($records)) {
-            return null;
+            return;
         }
 
         /** @var SpyPaymentPayoneTransactionStatusLog $record */
         $record = array_shift($records);
 
         if ($record->getStatus() !== $status) {
-            return null;
+            return;
         }
 
         return $record;
@@ -309,6 +312,7 @@ class TransactionStatusUpdateManager
     /**
      * @param $idSalesOrder
      * @param $idSalesOrderItem
+     *
      * @return SpyPaymentPayoneTransactionStatusLog[]
      */
     private function getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem) {
@@ -332,6 +336,7 @@ class TransactionStatusUpdateManager
     /**
      * @param int $idSalesOrderItem
      * @param SpyPaymentPayoneTransactionStatusLog $statusLog
+     *
      * @throws \Propel\Runtime\Exception\PropelException
      */
     private function saveSpyPaymentPayoneTransactionStatusLogOrderItem($idSalesOrderItem, SpyPaymentPayoneTransactionStatusLog $statusLog)

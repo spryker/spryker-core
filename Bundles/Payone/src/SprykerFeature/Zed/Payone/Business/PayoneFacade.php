@@ -107,7 +107,6 @@ class PayoneFacade extends AbstractFacade
         return $transactionManager->processTransactionStatusUpdate($transactionTransfer);
     }
 
-
     /**
      * @param OrderInterface $orderTransfer
      *
@@ -211,6 +210,7 @@ class PayoneFacade extends AbstractFacade
     /**
      * @param $idSalesOrder
      * @param $idSalesOrderItem
+     *
      * @return bool
      */
     public function isPaymentNotificationAvailable($idSalesOrder, $idSalesOrderItem)

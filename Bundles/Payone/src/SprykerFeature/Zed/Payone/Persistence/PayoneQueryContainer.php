@@ -109,6 +109,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
 
     /**
      * @param int $idIdSalesOrder
+     *
      * @return SpyPaymentPayoneTransactionStatusLog[]
      */
     public function getTransactionStatusLogBySalesOrder($idIdSalesOrder)
@@ -128,6 +129,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     /**
      * @param int $idSalesOrderItem
      * @param array $ids
+     *
      * @return SpyPaymentPayoneTransactionStatusLogOrderItem[]
      */
     public function getTransactionStatusLogOrderItemsByLogIds($idSalesOrderItem, $ids)

@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Payone\Communication\Controller;
 
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Zed\Payone\Business\PayoneFacade;
 use SprykerFeature\Zed\Payone\Communication\PayoneDependencyContainer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
@@ -49,7 +48,7 @@ class TransactionController extends AbstractController
             'txtime' => 'txtime',
             'clearingtype' => 'clearingtype',
             'reference' => 'reference',
-            'reminderlevel' => 'reminderlevel'
+            'reminderlevel' => 'reminderlevel',
         ];
 
         $dataArray = [];

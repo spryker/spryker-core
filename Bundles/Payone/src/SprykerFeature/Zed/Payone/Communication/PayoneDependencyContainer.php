@@ -18,6 +18,7 @@ use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
  */
 class PayoneDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return OmsFacade
      */
@@ -25,4 +26,5 @@ class PayoneDependencyContainer extends AbstractCommunicationDependencyContainer
     {
         return $this->getProvidedDependency(PayoneDependencyProvider::FACADE_OMS);
     }
+
 }
