@@ -1,225 +1,84 @@
 {% extends '@Application/Layout/layout.twig' %}
 
 {% block content %}
+    <div id="kam-cms" class="glossary">
+        <h4>
+            {% if type == 'page' %}
+                Page URL :
+            {% elseif type == 'block' %}
+                Block Name :
+            {% endif %}
+            {{ title }}
+        </h4>
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Page glossary mapping' } %}
 
-    <h4>
-        {% if type == 'page' %}
-            Page URL :
-        {% elseif type == 'block' %}
-            Block Name :
-        {% endif %}
-        {{ title }}
-    </h4>
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Page glossary mapping' } %}
+                {% block widget_header_content %}
 
-            {% block widget_header_content %}
+                    <a href="/cms/" class="btn btn-sm btn-default">{{ 'Back to CMS' | trans }}</a>
 
-                <a href="/cms/" class="btn btn-sm btn-default">{{ 'Back to CMS' | trans }}</a>
+                {% endblock %}
 
-            {% endblock %}
+                {% block widget_content %}
 
-            {% block widget_content %}
+                    {% for form in forms %}
+                        <hr>
+                        {{ form_start(form, { 'attr': {'class': 'form_class_' ~ loop.index} }) }}
+                        {{ form_errors(form) }}
 
-                {% for form in forms %}
-                    <hr style="border: 1px dashed #eee;">
-                    {{ form_start(form, { 'attr': {'class': 'form_class_' ~ loop.index} }) }}
-                    {{ form_errors(form) }}
-
-                    <div class="row">
-                        <div class="col-sm-2">
-                            {{ form_label(form.placeholder) }}
-                            {{ form_widget(form.placeholder) }}
-                            {{ form_errors(form.placeholder) }}
-                        </div>
-                        <div class="col-sm-2">
-                            {{ form_label(form.search_option) }}
-                            {{ form_widget(form.search_option) }}
-                            {{ form_errors(form.search_option) }}
-                        </div>
-                        <div class="col-sm-8">
-                            {{ form_label(form.glossary_key) }}
-                            {{ form_widget(form.glossary_key, { 'attr': {'autocomplete' : 'off'} }) }}
-                            {{ form_errors(form.glossary_key) }}
-                            <div class="loading-{{ loop.index }}" style="display: none; position: absolute;">
-                                <img src="/bundles/images/loading.gif" width="15px" style="display: inline">
-                                Loading...
+                        <div class="row">
+                            <div class="col-sm-2">
+                                {{ form_label(form.placeholder) }}
+                                {{ form_widget(form.placeholder) }}
+                                {{ form_errors(form.placeholder) }}
+                            </div>
+                            <div class="col-sm-2">
+                                {{ form_label(form.search_option) }}
+                                {{ form_widget(form.search_option) }}
+                                {{ form_errors(form.search_option) }}
+                            </div>
+                            <div class="col-sm-8">
+                                {{ form_label(form.glossary_key) }}
+                                {{ form_widget(form.glossary_key, { 'attr': {'autocomplete' : 'off'} }) }}
+                                {{ form_errors(form.glossary_key) }}
+                                <div class="loading-{{ loop.index }}" class="loading">
+                                    <img src="/bundles/images/loading.gif">
+                                    Loading...
+                                </div>
+                            </div>
+                            <div class="col-sm-12" class="translation">
+                                {{ form_label(form.translation) }}
+                                {{ form_errors(form.translation) }}
+                                {{ form_widget(form.translation, {'attr' : { 'rows' : 5 }}) }}
+                            </div>
+                            <div class="col-sm-1" class="small-padding">
+                                <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+                            </div>
+                            <div class="col-sm-10" class="small-padding alert">
+                                <div class="{{ 'waiting_' ~ loop.index }}" class="gray"></div>
+                                <div class="{{ 'success_' ~ loop.index }}" class="green"></div>
+                                <div class="{{ 'error_' ~ loop.index }}" class="red"></div>
                             </div>
                         </div>
-                        <div class="col-sm-12" style="padding-top: 10px;">
-                            {{ form_label(form.translation) }}
-                            {{ form_errors(form.translation) }}
-                            {{ form_widget(form.translation, {'attr' : { 'rows' : 5 }}) }}
-                        </div>
-                        <div class="col-sm-1" style="padding: 10px;">
-                            <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
-                        </div>
-                        <div class="col-sm-10" style="padding: 10px;">
-                            <div class="{{ 'waiting_' ~ loop.index }}" style="color:gray;font-weight: bold"></div>
-                            <div class="{{ 'success_' ~ loop.index }}" style="color:green;font-weight: bold"></div>
-                            <div class="{{ 'error_' ~ loop.index }}" style="color:red;font-weight: bold"></div>
-                        </div>
+
+                        {{ form_end(form) }}
+                    {% endfor %}
+                    <div class="keyListCanvas">
+
                     </div>
+                {% endblock %}
 
-                    {{ form_end(form) }}
-                {% endfor %}
-                <div class="keyListCanvas">
-
-                </div>
-            {% endblock %}
-
-    {% endembed %}
-
+        {% endembed %}
+    </div>
 {% endblock %}
 
 {% block footer_js %}
     {{ parent() }}
     <script>
-
-        var xhr = null;
-        var keyList = null;
-        var keyContainer = null;
-
-
-        function postForm( $form, id, successCallback ){
-
-            var values = {};
-            $.each( $form.serializeArray(), function(i, field) {
-                values[field.name] = field.value;
-            });
-            $.ajax({
-                type        : $form.attr( 'method' ),
-                url         : '?id-page={{ idPage }}&id-form=' + id,
-                data        : values,
-                success     : function(data) {
-                    successCallback(data);
-                }
-            });
-        }
-        function showAutoComplete(formId, type) {
-
-            var listElement = '<div id="foundKeyListContainer" style="display:none; position: absolute; width: 400px;font-family: Helvetica,Arial,sans-serif;font-size: 13px;color: #676a6c;overflow-x: hidden;font-size: 14px;"> <select id="foundKeyList" size="10" style="width: 100%;height: 100%"> </select> </div>'
-            $('.keyListCanvas').empty();
-            $('.keyListCanvas').append(listElement);
-
-            keyList = $('#foundKeyList');
-            keyContainer = $('#foundKeyListContainer');
-
-            var form = $('.form_class_' + formId);
-
-            var keyInput = form.find('#form_glossary_key');
-            var ketTranslation = form.find('#form_translation');
-            var ajaxUrl = type == 1 ? 'search/?key=' : 'search/?value=';
-
-            keyList.find('option').remove();
-            $('.loading-' + formId).show();
-
-            xhr = $.ajax({
-                type        : 'GET',
-                url         : ajaxUrl + keyInput.val(),
-                success     : function(data) {
-                    $('.loading-' + formId).hide();
-                    
-                    $.each(data, function (i, item) {
-                        keyList.append($('<option>', {
-                            value: i,
-                            text : item.key
-                        }));
-
-                        keyContainer.css({ top: keyInput.offset().top - 137 });
-                        keyContainer.css({ left: keyInput.offset().left - 230 });
-                        keyContainer.css({ width: keyInput.width() + 25 });
-                        keyContainer.show();
-                    });
-
-                    keyList.css({ height :  data.length * 17 });
-                    keyList.on('change', function() {
-                        ketTranslation.text(data[this.value].value);
-                        keyInput.val(data[this.value].key);
-                    });
-
-                    keyList.on('keydown', function(e) {
-                        var key = e.keyCode;
-                        if (key == 13 || key == 9) {
-                            keyList.blur();
-                            return false;
-                        }
-                    });
-
-                    keyList.on('blur', function() {
-                        keyInput.val(data[this.value].key);
-                        keyContainer.hide();
-                        keyInput.focus();
-                        return false;
-                    });
-                },
-            });
-        }
-
-        var addKeySearchEvent = function(formId) {
-            var form = $('.form_class_' + formId);
-            var keyInput = form.find('#form_glossary_key');
-            var keyType = form.find('#form_search_option');
-
-            keyInput.on('input', function() {
-                if($(this).val().length > 3){
-                    delay(function(){
-                        if(xhr && xhr.readystate != 4){
-                            xhr.abort();
-                        }
-                        if (keyType.val() != 0) {
-                            showAutoComplete(formId, keyType.val());
-                        }
-                    }, 500 );
-                }
-            });
-
-            keyInput.on('keyup', function(e) {
-                var key = e.keyCode;
-
-                if (key == 40) {
-                    keyList.first().focus();
-                    keyList.val(0).change();
-                }
-            });
-        }
-
-        var delay = (function(){
-            var timer = 0;
-            return function(callback, ms){
-                clearTimeout (timer);
-                timer = setTimeout(callback, ms);
-            };
-        })();
-
         $(document).ready(function(){
             {% for form in forms %}
-                $('.form_class_' + {{ loop.index }}).submit( function( e ){
-                    e.preventDefault();
-                    $('.waiting_' + {{ loop.index }}).text('Waiting ...');
-                    $('.success_' + {{ loop.index }}).text('');
-                    $('.error_' + {{ loop.index }}).text('');
-                    postForm( $(this), {{ loop.index - 1 }},
-                        function( response ){
-                            $('.waiting_' + {{ loop.index }}).text('');
-                            if(response.success != 'false'){
-                                $('.success_' + {{ loop.index }}).text('Successfully added.');
-                            }else{
-                                $('.error_' + {{ loop.index }}).text(response.errorMessages);
-                            }
-                        });
-
-                    return false;
-                });
-
+                ajaxifySubmmit({{ loop.index }});
                 addKeySearchEvent({{ loop.index }});
             {% endfor %}
         });
-
-        $(document).on('click', function(e) {
-            if (keyContainer !== null && !$(e.target).is('option')) {
-                keyContainer.hide();
-            }
-        });
-
     </script>
 {% endblock %}

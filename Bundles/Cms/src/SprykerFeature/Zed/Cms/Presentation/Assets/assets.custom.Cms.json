@@ -1,0 +1,11 @@
+[{
+  "priority" : 100,
+  "assets" : {
+    "js" : [
+      "/js/*.js"
+    ],
+    "css" : [
+      "/css/*{css,scss}"
+    ]
+  }
+}]

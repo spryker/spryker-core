@@ -1,0 +1,32 @@
+.glossary{
+    hr {
+        border: 1px dashed #eee;
+    }
+    .loading {
+        display: none;
+        position: absolute;
+
+        img {
+            display: inline;
+            width: 15px;
+        }
+    }
+    .translation {
+        padding-top: 10px;
+    }
+    .small-padding {
+        padding: 10px;
+    }
+    .alert {
+        font-weight: bold;
+        .gray {
+            color: gray;
+        }
+        .green {
+            color: green;
+        }
+        .red {
+            color: red;
+        }
+    }
+}
