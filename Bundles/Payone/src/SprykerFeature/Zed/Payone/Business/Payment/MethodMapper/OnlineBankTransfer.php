@@ -11,7 +11,6 @@ use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\OnlineBankTransferContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\DebitContainer;
@@ -50,10 +49,10 @@ class OnlineBankTransfer extends AbstractMapper
      */
     public function mapPaymentToCapture(SpyPaymentPayone $paymentEntity)
     {
-        $paymentDetailsEntity = $paymentEntity->getSpyPaymentPayoneDetails();
+        $paymentDetailEntity = $paymentEntity->getSpyPaymentPayoneDetail();
 
         $captureContainer = new CaptureContainer();
-        $captureContainer->setAmount($paymentDetailsEntity->getAmount());
+        $captureContainer->setAmount($paymentDetailEntity->getAmount());
         $captureContainer->setCurrency($this->getStandardParameter()->getCurrency());
         $captureContainer->setTxid($paymentEntity->getTransactionId());
 
@@ -81,15 +80,15 @@ class OnlineBankTransfer extends AbstractMapper
      */
     protected function mapPaymentToAbstractAuthorization(SpyPaymentPayone $paymentEntity, AbstractAuthorizationContainer $authorizationContainer)
     {
-        $paymentDetailsEntity = $paymentEntity->getSpyPaymentPayoneDetails();
+        $paymentDetailEntity = $paymentEntity->getSpyPaymentPayoneDetail();
 
         $authorizationContainer->setAid($this->getStandardParameter()->getAid());
         $authorizationContainer->setClearingType(PayoneApiConstants::CLEARING_TYPE_ONLINE_BANK_TRANSFER);
         $authorizationContainer->setReference($paymentEntity->getReference());
-        $authorizationContainer->setAmount($paymentDetailsEntity->getAmount());
+        $authorizationContainer->setAmount($paymentDetailEntity->getAmount());
         $authorizationContainer->setCurrency($this->getStandardParameter()->getCurrency());
         $authorizationContainer->setPaymentMethod($this->createPaymentMethodContainerFromPayment($paymentEntity));
-        $authorizationContainer->setOnlinebanktransfertype($paymentDetailsEntity->getType());
+        $authorizationContainer->setOnlinebanktransfertype($paymentDetailEntity->getType());
 
         $billingAddressEntity = $paymentEntity->getSpySalesOrder()->getBillingAddress();
 
@@ -113,7 +112,7 @@ class OnlineBankTransfer extends AbstractMapper
         $debitContainer->setTxid($paymentEntity->getTransactionId());
         $debitContainer->setSequenceNumber($this->getNextSequenceNumber($paymentEntity->getTransactionId()));
         $debitContainer->setCurrency($this->getStandardParameter()->getCurrency());
-        $debitContainer->setAmount($paymentEntity->getSpyPaymentPayoneDetails()->getAmount());
+        $debitContainer->setAmount($paymentEntity->getSpyPaymentPayoneDetail()->getAmount());
 
         return $debitContainer;
     }
@@ -131,13 +130,13 @@ class OnlineBankTransfer extends AbstractMapper
         $refundContainer->setSequenceNumber($this->getNextSequenceNumber($paymentEntity->getTransactionId()));
         $refundContainer->setCurrency($this->getStandardParameter()->getCurrency());
 
-        $refundContainer->setBankcountry($paymentEntity->getSpyPaymentPayoneDetails()->getBankcountry());
-        $refundContainer->setBankaccount($paymentEntity->getSpyPaymentPayoneDetails()->getBankaccount());
-        $refundContainer->setBankcode($paymentEntity->getSpyPaymentPayoneDetails()->getBankcode());
-        $refundContainer->setBankbranchcode($paymentEntity->getSpyPaymentPayoneDetails()->getBankbranchcode());
-        $refundContainer->setBankcheckdigit($paymentEntity->getSpyPaymentPayoneDetails()->getBankcheckdigit());
-        $refundContainer->setIban($paymentEntity->getSpyPaymentPayoneDetails()->getIban());
-        $refundContainer->setBic($paymentEntity->getSpyPaymentPayoneDetails()->getBic());
+        $refundContainer->setBankcountry($paymentEntity->getSpyPaymentPayoneDetail()->getBankcountry());
+        $refundContainer->setBankaccount($paymentEntity->getSpyPaymentPayoneDetail()->getBankaccount());
+        $refundContainer->setBankcode($paymentEntity->getSpyPaymentPayoneDetail()->getBankcode());
+        $refundContainer->setBankbranchcode($paymentEntity->getSpyPaymentPayoneDetail()->getBankbranchcode());
+        $refundContainer->setBankcheckdigit($paymentEntity->getSpyPaymentPayoneDetail()->getBankcheckdigit());
+        $refundContainer->setIban($paymentEntity->getSpyPaymentPayoneDetail()->getIban());
+        $refundContainer->setBic($paymentEntity->getSpyPaymentPayoneDetail()->getBic());
 
         return $refundContainer;
     }
@@ -149,17 +148,17 @@ class OnlineBankTransfer extends AbstractMapper
      */
     protected function createPaymentMethodContainerFromPayment(SpyPaymentPayone $paymentEntity)
     {
-        $paymentDetailsEntity = $paymentEntity->getSpyPaymentPayoneDetails();
+        $paymentDetailEntity = $paymentEntity->getSpyPaymentPayoneDetail();
 
         $paymentMethodContainer = new OnlineBankTransferContainer();
 
         $paymentMethodContainer->setRedirect($this->createRedirectContainer($paymentEntity->getSpySalesOrder()->getOrderreference()));
-        $paymentMethodContainer->setBankCountry($paymentDetailsEntity->getBankcountry());
-        $paymentMethodContainer->setBankAccount($paymentDetailsEntity->getBankaccount());
-        $paymentMethodContainer->setBankCode($paymentDetailsEntity->getBankcode());
-        $paymentMethodContainer->setBankGroupType($paymentDetailsEntity->getBankgrouptype());
-        $paymentMethodContainer->setIban($paymentDetailsEntity->getIban());
-        $paymentMethodContainer->setBic($paymentDetailsEntity->getBic());
+        $paymentMethodContainer->setBankCountry($paymentDetailEntity->getBankcountry());
+        $paymentMethodContainer->setBankAccount($paymentDetailEntity->getBankaccount());
+        $paymentMethodContainer->setBankCode($paymentDetailEntity->getBankcode());
+        $paymentMethodContainer->setBankGroupType($paymentDetailEntity->getBankgrouptype());
+        $paymentMethodContainer->setIban($paymentDetailEntity->getIban());
+        $paymentMethodContainer->setBic($paymentDetailEntity->getBic());
 
         return $paymentMethodContainer;
     }

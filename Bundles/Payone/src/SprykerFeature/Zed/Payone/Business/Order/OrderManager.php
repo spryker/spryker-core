@@ -8,13 +8,15 @@ namespace SprykerFeature\Zed\Payone\Business\Order;
 
 use Generated\Shared\Payone\OrderInterface as PayoneOrderInterface;
 use Generated\Shared\Payone\PayonePaymentInterface;
-use Generated\Shared\Transfer\PayonePaymentDetailsTransfer;
+use Generated\Shared\Transfer\PayonePaymentDetailTransfer;
+use Propel\Runtime\Propel;
 use SprykerFeature\Zed\Payone\PayoneConfig;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneDetails;
+use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneDetail;
 
 class OrderManager implements OrderManagerInterface
 {
+
     /**
      * @var PayoneConfig
      */
@@ -33,15 +35,20 @@ class OrderManager implements OrderManagerInterface
      */
     public function saveOrder(PayoneOrderInterface $orderTransfer)
     {
+        Propel::getConnection()->beginTransaction();
+
         $paymentTransfer = $orderTransfer->getPayonePayment();
         $payment = $this->savePayment($paymentTransfer);
 
-        $paymentDetailsTransfer = $paymentTransfer->getPaymentDetails();
-        $this->savePaymentDetails($payment, $paymentDetailsTransfer);
+        $paymentDetailTransfer = $paymentTransfer->getPaymentDetail();
+        $this->savePaymentDetail($payment, $paymentDetailTransfer);
+
+        Propel::getConnection()->commit();
     }
 
     /**
      * @param PayonePaymentInterface $paymentTransfer
+     *
      * @return SpyPaymentPayone
      */
     protected function savePayment(PayonePaymentInterface $paymentTransfer)
@@ -60,14 +67,14 @@ class OrderManager implements OrderManagerInterface
 
     /**
      * @param SpyPaymentPayone $payment
-     * @param PayonePaymentDetailsTransfer $paymentDetailsTransfer
+     * @param PayonePaymentDetailTransfer $paymentDetailTransfer
      */
-    protected function savePaymentDetails(SpyPaymentPayone $payment, PayonePaymentDetailsTransfer $paymentDetailsTransfer)
+    protected function savePaymentDetail(SpyPaymentPayone $payment, PayonePaymentDetailTransfer $paymentDetailTransfer)
     {
-        $paymentDetailsEntity = new SpyPaymentPayoneDetails();
-        $paymentDetailsEntity->setSpyPaymentPayone($payment);
-        $paymentDetailsEntity->fromArray($paymentDetailsTransfer->toArray());
-        $paymentDetailsEntity->save();
+        $paymentDetailEntity = new SpyPaymentPayoneDetail();
+        $paymentDetailEntity->setSpyPaymentPayone($payment);
+        $paymentDetailEntity->fromArray($paymentDetailTransfer->toArray());
+        $paymentDetailEntity->save();
     }
 
 }

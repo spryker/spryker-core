@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Payone\Communication\Controller;
 
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Zed\Payone\Business\PayoneFacade;
 use SprykerFeature\Zed\Payone\Communication\PayoneDependencyContainer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
@@ -19,7 +18,7 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
  * @method PayoneFacade getFacade()
  * @method PayoneDependencyContainer getDependencyContainer()
  */
-class TransactionController extends AbstractController implements PayoneApiConstants
+class TransactionController extends AbstractController
 {
 
     /**
@@ -49,7 +48,7 @@ class TransactionController extends AbstractController implements PayoneApiConst
             'txtime' => 'txtime',
             'clearingtype' => 'clearingtype',
             'reference' => 'reference',
-            'reminderlevel' => 'reminderlevel'
+            'reminderlevel' => 'reminderlevel',
         ];
 
         $dataArray = [];

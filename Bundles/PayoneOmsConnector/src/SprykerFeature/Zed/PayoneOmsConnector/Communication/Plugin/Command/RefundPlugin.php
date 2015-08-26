@@ -41,10 +41,10 @@ class RefundPlugin extends AbstractPlugin implements CommandByOrderInterface
         $refundTransfer->setNarrativeText($narrativeText);
         $refundTransfer->setUseCustomerdata(PayoneApiConstants::USE_CUSTOMER_DATA_YES);
 
-        $paymentPayoneEntity = $orderEntity->getSpyPaymentPayone();
+        $paymentPayoneEntity = $orderEntity->getSpyPaymentPayones()->getFirst();
 
         $payonePaymentTransfer = new PayonePaymentTransfer();
-        $payonePaymentTransfer->fromArray($paymentPayoneEntity->toArray());
+        $payonePaymentTransfer->fromArray($paymentPayoneEntity->toArray(), true);
         $refundTransfer->setPayment($payonePaymentTransfer);
 
         $this->getDependencyContainer()->createPayoneFacade()->refundPayment($refundTransfer);

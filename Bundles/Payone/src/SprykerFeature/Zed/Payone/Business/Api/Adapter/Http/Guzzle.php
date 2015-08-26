@@ -2,28 +2,54 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Adapter\Http;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ConnectException;
+use SprykerFeature\Zed\Payone\Business\Exception\TimeoutException;
+
 class Guzzle extends AbstractHttpAdapter
 {
 
     protected $client;
 
-    public function __construct()
+    /**
+     * @param string $paymentGatewayUrl
+     */
+    public function __construct($paymentGatewayUrl)
     {
-        $this->client = new GuzzleHttp\Client();
-        $res = $client->get('https://api.github.com/user', ['auth' => ['user', 'pass']]);
-        echo $res->getStatusCode();
+        parent::__construct($paymentGatewayUrl);
+
+        $this->client = new Client([
+            'timeout' => $this->getTimeout(),
+        ]);
     }
 
     /**
-     * @throws \ErrorException
+     * @param array $params
+     *
+     * @throws TimeoutException
      *
      * @return array
      */
     protected function performRequest(array $params)
     {
-        $response = $params;
+        $urlArray = $this->generateUrlArray($params);
 
-        return $response;
+        $urlHost = $urlArray['host'];
+        $urlPath = isset($urlArray['path']) ? $urlArray['path'] : '';
+        $urlScheme = $urlArray['scheme'];
+
+        $url = $urlScheme . '://' . $urlHost . $urlPath;
+
+        try {
+            $response = $this->client->post($url, ['form_params' => $params]);
+        } catch (ConnectException $e) {
+            throw new TimeoutException('Timeout - Payone Communication: ' . $e->getMessage());
+        }
+
+        $result = (string) $response->getBody();
+        $result = explode("\n", $result);
+
+        return $result;
     }
 
 }

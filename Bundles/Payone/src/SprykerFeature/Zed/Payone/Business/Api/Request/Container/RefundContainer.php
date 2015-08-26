@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
 
+use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod\BankAccountContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
 
@@ -15,7 +16,7 @@ class RefundContainer extends AbstractRequestContainer
     /**
      * @var string
      */
-    protected $request = self::REQUEST_TYPE_REFUND;
+    protected $request = PayoneApiConstants::REQUEST_TYPE_REFUND;
 
     /**
      * @var string

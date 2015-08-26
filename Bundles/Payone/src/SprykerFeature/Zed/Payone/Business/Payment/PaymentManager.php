@@ -6,9 +6,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Payment;
 
-use Generated\Shared\Payone\PayoneAuthorizationInterface;
 use Generated\Shared\Payone\PayoneCreditCardInterface;
-use Generated\Shared\Payone\PayoneDebitInterface;
 use Generated\Shared\Payone\PayoneRefundInterface;
 use Generated\Shared\Payone\PayoneStandardParameterInterface;
 use Generated\Shared\Payone\OrderInterface as PayoneOrderInterface;
@@ -102,7 +100,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param string $name
      *
-     * @return null|PaymentMethodMapperInterface
+     * @return PaymentMethodMapperInterface
      */
     protected function findPaymentMethodMapperByName($name)
     {
@@ -110,7 +108,7 @@ class PaymentManager implements PaymentManagerInterface
             return $this->registeredMethodMappers[$name];
         }
 
-        return null;
+        return;
     }
 
     /**
@@ -273,7 +271,7 @@ class PaymentManager implements PaymentManagerInterface
     {
         $payonePaymentTransfer = $refundTransfer->getPayment();
 
-        $paymentEntity = $this->getPaymentEntity($payonePaymentTransfer->getIdSalesOrder());
+        $paymentEntity = $this->getPaymentEntity($payonePaymentTransfer->getFkSalesOrder());
         $paymentMethodMapper = $this->getPaymentMethodMapper($paymentEntity);
         $requestContainer = $paymentMethodMapper->mapPaymentToRefund($paymentEntity);
         $requestContainer->setAmount($refundTransfer->getAmount());
@@ -428,4 +426,5 @@ class PaymentManager implements PaymentManagerInterface
         $container->setPortalid($this->standardParameter->getPortalId());
         $container->setMode($this->modeDetector->getMode());
     }
+
 }

@@ -10,10 +10,12 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use SprykerFeature\Zed\Payone\Business\PayoneDependencyContainer;
+use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
+use SprykerFeature\Zed\PayoneOmsConnector\Communication\PayoneOmsConnectorDependencyContainer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 
 /**
- * @method PayoneDependencyContainer getDependencyContainer()
+ * @method PayoneOmsConnectorDependencyContainer getDependencyContainer()
  */
 class CapturePlugin extends AbstractPlugin implements CommandByOrderInterface
 {
@@ -27,8 +29,9 @@ class CapturePlugin extends AbstractPlugin implements CommandByOrderInterface
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        $paymentEntity = $orderEntity->getSpyPaymentPayone();
-        $this->getDependencyContainer()->createPayoneFacade()->capturePayment($paymentEntity->getIdSalesOrder());
+        /** @var SpyPaymentPayone $paymentEntity */
+        $paymentEntity = $orderEntity->getSpyPaymentPayones()->getFirst();
+        $this->getDependencyContainer()->createPayoneFacade()->capturePayment($paymentEntity->getFkSalesOrder());
 
         return [];
     }

@@ -86,7 +86,6 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
      */
     protected $bankcountry;
 
-
     /**
      * @param int $aid
      */

@@ -69,7 +69,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     public function getPaymentByOrderId($orderId)
     {
         $query = SpyPaymentPayoneQuery::create();
-        $query->findByIdSalesOrder($orderId);
+        $query->findByFkSalesOrder($orderId);
 
         return $query;
     }
@@ -84,7 +84,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     {
         $query = SpyPaymentPayoneApiLogQuery::create()
             ->useSpyPaymentPayoneQuery()
-            ->filterByIdSalesOrder($orderId)
+            ->filterByFkSalesOrder($orderId)
             ->endUse()
             ->filterByRequest($request)
             ->orderByCreatedAt(Criteria::DESC) //TODO: Index?
@@ -102,20 +102,21 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     public function getPaymentById($paymentId)
     {
         $query = SpyPaymentPayoneQuery::create();
-        $query->findByIdSalesOrder($paymentId);
+        $query->findByFkSalesOrder($paymentId);
 
         return $query;
     }
 
     /**
-     * @param int $salesOrderId
+     * @param int $idIdSalesOrder
+     *
      * @return SpyPaymentPayoneTransactionStatusLog[]
      */
-    public function getTransactionStatusLogBySalesOrder($salesOrderId)
+    public function getTransactionStatusLogBySalesOrder($idIdSalesOrder)
     {
         $query = SpyPaymentPayoneTransactionStatusLogQuery::create()
             ->useSpyPaymentPayoneQuery()
-            ->filterByIdSalesOrder($salesOrderId)
+            ->filterByFkSalesOrder($idIdSalesOrder)
             ->endUse()
             ->orderByCreatedAt()
         ;
@@ -126,15 +127,16 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
-     * @param int $salesOrderItemId
+     * @param int $idSalesOrderItem
      * @param array $ids
+     *
      * @return SpyPaymentPayoneTransactionStatusLogOrderItem[]
      */
-    public function getTransactionStatusLogOrderItemsByLogIds($salesOrderItemId, $ids)
+    public function getTransactionStatusLogOrderItemsByLogIds($idSalesOrderItem, $ids)
     {
         $relations = SpyPaymentPayoneTransactionStatusLogOrderItemQuery::create()
             ->filterByIdPaymentPayoneTransactionStatusLog($ids)
-            ->filterByIdSalesOrderItem($salesOrderItemId)
+            ->filterByIdSalesOrderItem($idSalesOrderItem)
             ->find()
             ->getData()
         ;

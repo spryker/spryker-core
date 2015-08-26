@@ -107,7 +107,6 @@ class PayoneFacade extends AbstractFacade
         return $transactionManager->processTransactionStatusUpdate($transactionTransfer);
     }
 
-
     /**
      * @param OrderInterface $orderTransfer
      *
@@ -209,52 +208,53 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param $salesOrderId
-     * @param $salesOrderItemId
+     * @param $idSalesOrder
+     * @param $idSalesOrderItem
+     *
      * @return bool
      */
-    public function isPaymentNotificationAvailable($salesOrderId, $salesOrderItemId)
+    public function isPaymentNotificationAvailable($idSalesOrder, $idSalesOrderItem)
     {
         return $this->getDependencyContainer()
             ->createTransactionStatusManager()
-            ->isPaymentNotificationAvailable($salesOrderId, $salesOrderItemId);
+            ->isPaymentNotificationAvailable($idSalesOrder, $idSalesOrderItem);
     }
 
-    public function isPaymentPaid($salesOrderId, $salesOrderItemId) {
+    public function isPaymentPaid($idSalesOrder, $idSalesOrderItem) {
         return $this->getDependencyContainer()
             ->createTransactionStatusManager()
-            ->isPaymentPaid($salesOrderId, $salesOrderItemId);
+            ->isPaymentPaid($idSalesOrder, $idSalesOrderItem);
     }
 
-    public function isPaymentOverpaid($salesOrderId, $salesOrderItemId) {
+    public function isPaymentOverpaid($idSalesOrder, $idSalesOrderItem) {
         return $this->getDependencyContainer()
             ->createTransactionStatusManager()
-            ->isPaymentOverpaid($salesOrderId, $salesOrderItemId);
+            ->isPaymentOverpaid($idSalesOrder, $idSalesOrderItem);
     }
 
-    public function isPaymentUnderpaid($salesOrderId, $salesOrderItemId) {
+    public function isPaymentUnderpaid($idSalesOrder, $idSalesOrderItem) {
         return $this->getDependencyContainer()
             ->createTransactionStatusManager()
-            ->isPaymentUnderpaid($salesOrderId, $salesOrderItemId);
+            ->isPaymentUnderpaid($idSalesOrder, $idSalesOrderItem);
     }
 
-    public function isPaymentAppointed($salesOrderId, $salesOrderItemId)
+    public function isPaymentAppointed($idSalesOrder, $idSalesOrderItem)
     {
         return $this->getDependencyContainer()
             ->createTransactionStatusManager()
-            ->isPaymentAppointed($salesOrderId, $salesOrderItemId);
+            ->isPaymentAppointed($idSalesOrder, $idSalesOrderItem);
     }
 
-    public function isPaymentOther($salesOrderId, $salesOrderItemId) {
+    public function isPaymentOther($idSalesOrder, $idSalesOrderItem) {
         return $this->getDependencyContainer()
             ->createTransactionStatusManager()
-            ->isPaymentOther($salesOrderId, $salesOrderItemId);
+            ->isPaymentOther($idSalesOrder, $idSalesOrderItem);
     }
 
-    public function isPaymentCapture($salesOrderId, $salesOrderItemId) {
+    public function isPaymentCapture($idSalesOrder, $idSalesOrderItem) {
         return $this->getDependencyContainer()
             ->createTransactionStatusManager()
-            ->isPaymentCapture($salesOrderId, $salesOrderItemId);
+            ->isPaymentCapture($idSalesOrder, $idSalesOrderItem);
     }
 
 }

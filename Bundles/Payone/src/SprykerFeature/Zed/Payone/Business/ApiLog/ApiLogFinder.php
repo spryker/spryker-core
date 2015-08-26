@@ -261,7 +261,7 @@ class ApiLogFinder
     /**
      * @param int $transactionId
      *
-     * @return SpyPaymentPayone|null
+     * @return SpyPaymentPayone
      */
     protected function findPaymentByTransactionId($transactionId)
     {

@@ -80,7 +80,7 @@ abstract class AbstractHttpAdapter implements AdapterInterface
             return $this->sendRawRequest($container->toArray());
         } catch (TimeoutException $e) {
             $fakeArray = [
-                "status" => "TIMEOUT"
+                'status' => 'TIMEOUT',
             ];
             return $fakeArray;
         }

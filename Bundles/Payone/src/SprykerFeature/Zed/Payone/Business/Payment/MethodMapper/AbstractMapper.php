@@ -6,20 +6,12 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Payment\MethodMapper;
 
-use Generated\Shared\Payone\PayoneCaptureInterface;
-use Generated\Shared\Payone\PayoneDebitInterface;
-use Generated\Shared\Payone\PayonePaymentInterface;
-use Generated\Shared\Payone\PayoneRefundInterface;
 use Generated\Shared\Payone\PayoneStandardParameterInterface;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\DebitContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\RefundContainer;
 use SprykerFeature\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
 use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
 
 abstract class AbstractMapper implements PaymentMethodMapperInterface
@@ -29,10 +21,12 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
      * @var PayoneStandardParameterInterface
      */
     private $standardParameter;
+
     /**
      * @var SequenceNumberProviderInterface
      */
     private $sequenceNumberProvider;
+
     /**
      * @var Store
      */
@@ -89,6 +83,7 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
 
     /**
      * @param string $orderReference
+     *
      * @return RedirectContainer
      */
     protected function createRedirectContainer($orderReference)

@@ -11,7 +11,6 @@ use Generated\Shared\Payone\PayoneCreditCardInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\CreditCardPseudoContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CreditCardCheckContainer;
@@ -52,10 +51,10 @@ class CreditCardPseudo extends AbstractMapper
      */
     public function mapPaymentToCapture(SpyPaymentPayone $paymentEntity)
     {
-        $paymentDetailsEntity = $paymentEntity->getSpyPaymentPayoneDetails();
+        $paymentDetailEntity = $paymentEntity->getSpyPaymentPayoneDetail();
 
         $captureContainer = new CaptureContainer();
-        $captureContainer->setAmount($paymentDetailsEntity->getAmount());
+        $captureContainer->setAmount($paymentDetailEntity->getAmount());
         $captureContainer->setCurrency($this->getStandardParameter()->getCurrency());
         $captureContainer->setTxid($paymentEntity->getTransactionId());
 
@@ -83,12 +82,12 @@ class CreditCardPseudo extends AbstractMapper
      */
     protected function mapPaymentToAbstractAuthorization(SpyPaymentPayone $paymentEntity, AbstractAuthorizationContainer $authorizationContainer)
     {
-        $paymentDetailsEntity = $paymentEntity->getSpyPaymentPayoneDetails();
+        $paymentDetailEntity = $paymentEntity->getSpyPaymentPayoneDetail();
 
         $authorizationContainer->setAid($this->getStandardParameter()->getAid());
         $authorizationContainer->setClearingType(PayoneApiConstants::CLEARING_TYPE_CREDIT_CARD);
         $authorizationContainer->setReference($paymentEntity->getReference());
-        $authorizationContainer->setAmount($paymentDetailsEntity->getAmount());
+        $authorizationContainer->setAmount($paymentDetailEntity->getAmount());
         $authorizationContainer->setCurrency($this->getStandardParameter()->getCurrency());
         $authorizationContainer->setPaymentMethod($this->createPaymentMethodContainerFromPayment($paymentEntity));
 
@@ -135,7 +134,7 @@ class CreditCardPseudo extends AbstractMapper
         $debitContainer->setTxid($paymentEntity->getTransactionId());
         $debitContainer->setSequenceNumber($this->getNextSequenceNumber($paymentEntity->getTransactionId()));
         $debitContainer->setCurrency($this->getStandardParameter()->getCurrency());
-        $debitContainer->setAmount($paymentEntity->getSpyPaymentPayoneDetails()->getAmount());
+        $debitContainer->setAmount($paymentEntity->getSpyPaymentPayoneDetail()->getAmount());
 
         return $debitContainer;
     }
@@ -165,7 +164,7 @@ class CreditCardPseudo extends AbstractMapper
     {
         $paymentMethodContainer = new CreditCardPseudoContainer();
 
-        $pseudoCardPan = $paymentEntity->getSpyPaymentPayoneDetails()->getPseudocardpan();
+        $pseudoCardPan = $paymentEntity->getSpyPaymentPayoneDetail()->getPseudocardpan();
         $paymentMethodContainer->setPseudoCardPan($pseudoCardPan);
 
         return $paymentMethodContainer;

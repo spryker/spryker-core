@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
 use SprykerFeature\Shared\Payone\PayoneConfigConstants;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 
 class PayoneConfig extends AbstractBundleConfig
@@ -46,6 +45,7 @@ class PayoneConfig extends AbstractBundleConfig
     /**
      * @param PayonePaymentInterface $paymentTransfer
      * @param SpySalesOrder $orderEntity
+     *
      * @return string
      */
     public function generatePayoneReference(PayonePaymentInterface $paymentTransfer, SpySalesOrder $orderEntity) {
