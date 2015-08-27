@@ -12,4 +12,6 @@ class CheckoutConfig implements ConfigInterface
     const ERROR_CODE_CART_AMOUNT_DIFFERENT = 4003;
     const ERROR_CODE_UNKNOWN_ERROR = 5000;
 
+    const ERROR_MESSAGE_INTERNAL_ERROR = 'Internal error';
+
 }
