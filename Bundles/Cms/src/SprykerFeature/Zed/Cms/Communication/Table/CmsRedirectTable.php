@@ -59,8 +59,6 @@ class CmsRedirectTable extends AbstractTable
             SpyRedirectTableMap::COL_STATUS,
         ]);
 
-        $config->setPageLength(5);
-
         return $config;
     }
 

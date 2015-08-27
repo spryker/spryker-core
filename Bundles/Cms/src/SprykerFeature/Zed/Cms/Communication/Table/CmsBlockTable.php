@@ -39,7 +39,7 @@ class CmsBlockTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeader([
-            SpyCmsBlockTableMap::COL_ID_CMS_PAGE => 'Page Id',
+            SpyCmsBlockTableMap::COL_ID_CMS_PAGE => 'Block Id',
             SpyCmsBlockTableMap::COL_NAME => 'Name',
             CmsQueryContainer::TEMPLATE_NAME => 'Template',
             self::ACTIONS => self::ACTIONS,
@@ -53,8 +53,6 @@ class CmsBlockTable extends AbstractTable
             CmsQueryContainer::TEMPLATE_NAME,
             SpyCmsBlockTableMap::COL_NAME,
         ]);
-
-        $config->setPageLength(5);
 
         return $config;
     }

@@ -54,8 +54,6 @@ class CmsPageTable extends AbstractTable
             CmsQueryContainer::URL,
         ]);
 
-        $config->setPageLength(5);
-
         return $config;
     }
 
