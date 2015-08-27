@@ -6,15 +6,26 @@
 
 namespace SprykerFeature\Zed\Acl\Communication\Grid;
 
-use SprykerFeature\Zed\Ui\Dependency\Grid\AbstractGrid;
+use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
+use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
-class UserGrid extends AbstractGrid
+class UserGrid extends AbstractTable
 {
 
     const USERNAME = 'username';
     const FIRST_NAME = 'first_name';
     const LAST_NAME = 'last_name';
     const GROUP_NAME = 'group_name';
+
+    protected function configure(TableConfiguration $config)
+    {
+        // @todo: Implement configure() method.
+    }
+
+    protected function prepareData(TableConfiguration $config)
+    {
+        // @todo: Implement prepareData() method.
+    }
 
     /**
      * @return array

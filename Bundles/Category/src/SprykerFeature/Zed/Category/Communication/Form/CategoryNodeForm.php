@@ -11,7 +11,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\CategoryCommunication;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
-use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
+use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints;
 
@@ -24,6 +24,16 @@ class CategoryNodeForm extends AbstractForm
     const ID_CATEGORY_NODE = 'id_category_node';
     const CATEGORY_NAME = 'category_name';
     const PARENT_CATEGORY_NAME = 'parent_category_name';
+
+    protected function buildFormFields()
+    {
+        // @todo: Implement buildFormFields() method.
+    }
+
+    protected function populateFormFields()
+    {
+        // @todo: Implement populateFormFields() method.
+    }
 
     /**
      * @var FactoryInterface|CategoryCommunication

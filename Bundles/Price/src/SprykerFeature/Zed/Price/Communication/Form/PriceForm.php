@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Price\Communication\Form;
 
-use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
+use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use Propel\Runtime\Exception\PropelException;
 use Symfony\Component\Validator\Constraints;
 use SprykerFeature\Zed\Price\Persistence\PriceQueryContainer;
@@ -18,6 +18,16 @@ class PriceForm extends AbstractForm
      * @var PriceQueryContainer
      */
     protected $queryContainer;
+
+    protected function buildFormFields()
+    {
+        // @todo: Implement buildFormFields() method.
+    }
+
+    protected function populateFormFields()
+    {
+        // @todo: Implement populateFormFields() method.
+    }
 
     public function addFormFields()
     {

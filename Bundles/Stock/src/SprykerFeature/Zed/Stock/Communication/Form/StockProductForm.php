@@ -7,8 +7,7 @@
 namespace SprykerFeature\Zed\Stock\Communication\Form;
 
 use SprykerFeature\Zed\Stock\Persistence\StockQueryContainer;
-use SprykerFeature\Zed\Ui\Communication\Plugin\Form\Field;
-use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
+use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class StockProductForm extends AbstractForm
@@ -26,9 +25,16 @@ class StockProductForm extends AbstractForm
      */
     protected $queryContainer;
 
-    /**
-     * @return Field[]
-     */
+    protected function buildFormFields()
+    {
+        // @todo: Implement buildFormFields() method.
+    }
+
+    protected function populateFormFields()
+    {
+        // @todo: Implement populateFormFields() method.
+    }
+
     public function addFormFields()
     {
         $this->addField(self::ID_STOCK_PRODUCT)

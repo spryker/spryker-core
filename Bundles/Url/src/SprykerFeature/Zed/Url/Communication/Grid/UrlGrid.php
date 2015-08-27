@@ -6,9 +6,10 @@
 
 namespace SprykerFeature\Zed\Url\Communication\Grid;
 
-use SprykerFeature\Zed\Ui\Dependency\Grid\AbstractGrid;
+use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
+use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
-class UrlGrid extends AbstractGrid
+class UrlGrid extends AbstractTable
 {
 
     const ID_URL = 'id_url';
@@ -18,6 +19,16 @@ class UrlGrid extends AbstractGrid
     const FK_RESOURCE_PRODUCT = 'fk_resource_product';
     const FK_RESOURCE_CATEGORYNODE = 'fk_resource_categoryname';
     const FK_RESOURCE_PAGE = 'fk_resource_page';
+
+    protected function configure(TableConfiguration $config)
+    {
+        // @todo: Implement configure() method.
+    }
+
+    protected function prepareData(TableConfiguration $config)
+    {
+        // @todo: Implement prepareData() method.
+    }
 
     public function definePlugins()
     {

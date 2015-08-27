@@ -11,7 +11,7 @@ use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Shared\Acl\Messages\Messages;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
-use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
+use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -26,6 +26,17 @@ class UserForm extends AbstractForm
     const FIELD_GROUP_NAME = 'group_name';
     const FIELD_GROUP_LIST = 'groups';
     const FIELD_USER_PASSWORD = 'password';
+
+    protected function buildFormFields()
+    {
+        // @todo: Implement buildFormFields() method.
+    }
+
+    protected function populateFormFields()
+    {
+        // @todo: Implement populateFormFields() method.
+    }
+
 
     /**
      * @var FactoryInterface|AclCommunication

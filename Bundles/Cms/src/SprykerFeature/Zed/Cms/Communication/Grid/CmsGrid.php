@@ -6,10 +6,22 @@
 
 namespace SprykerFeature\Zed\Cms\Communication\Grid;
 
-use SprykerFeature\Zed\Ui\Dependency\Grid\AbstractGrid;
+use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
+use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
-class CmsGrid extends AbstractGrid
+class CmsGrid extends AbstractTable
 {
+
+    protected function configure(TableConfiguration $config)
+    {
+        // @todo: Implement configure() method.
+    }
+
+    protected function prepareData(TableConfiguration $config)
+    {
+        // @todo: Implement prepareData() method.
+    }
+
     public function definePlugins()
     {
         return [

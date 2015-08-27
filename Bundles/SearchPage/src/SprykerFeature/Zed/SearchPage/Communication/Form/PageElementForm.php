@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\SearchPage\Communication\Form;
 
 use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 use SprykerFeature\Zed\SearchPage\Persistence\SearchPageQueryContainer;
-use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
+use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Validator\Constraints;
 
 /**
@@ -22,6 +22,16 @@ class PageElementForm extends AbstractForm
     const FK_SEARCH_DOCUMENT_ATTRIBUTE = 'fk_search_document_attribute';
     const FK_SEARCH_PAGE_ELEMENT_TEMPLATE = 'fk_search_page_element_template';
     const ELEMENT_KEY = 'element_key';
+
+    protected function buildFormFields()
+    {
+        // @todo: Implement buildFormFields() method.
+    }
+
+    protected function populateFormFields()
+    {
+        // @todo: Implement populateFormFields() method.
+    }
 
     /**
      * @return array
