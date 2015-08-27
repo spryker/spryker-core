@@ -65,7 +65,6 @@ include:
  - Bundles/Transfer/
  - Bundles/Touch/
  - Bundles/Twig/
- - Bundles/Ui/
  - Bundles/Url/
  - Bundles/User/
  - Bundles/Yves/
