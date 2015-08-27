@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerEngine\Zed\Transfer\Business\Model;
+namespace Functional\SprykerEngine\Zed\Application\Business\Model;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Business\Factory;
