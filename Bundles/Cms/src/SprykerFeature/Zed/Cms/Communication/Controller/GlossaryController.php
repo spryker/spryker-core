@@ -1,23 +1,27 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Cms\Communication\Controller;
 
-use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\KeyTranslationTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use SprykerFeature\Shared\Cms\CmsConfig;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
+use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
 use SprykerFeature\Zed\Cms\CmsDependencyProvider;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsGlossaryForm;
 use SprykerFeature\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use SprykerFeature\Zed\Cms\Communication\Table\CmsPageTable;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlock;
+use SprykerFeature\Zed\Cms\Persistence\Propel\Base\SpyCmsPage;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -27,8 +31,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class GlossaryController extends AbstractController
 {
-
     const REDIRECT_ADDRESS = '/cms/glossary/';
+    const SEARCH_LIMIT = 10;
+    const ID_FORM = 'id-form';
     const TYPE = 'type';
 
     /**
@@ -39,151 +44,53 @@ class GlossaryController extends AbstractController
     public function indexAction(Request $request)
     {
         $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
-
-        $title = null;
+        $idForm = $request->get(self::ID_FORM);
         $type = CmsConfig::RESOURCE_TYPE_PAGE;
-        $block = $this->getQueryContainer()
-            ->queryBlockByIdPage($idPage)
-            ->findOne()
-        ;
+
+        $block = $this->getQueryContainer()->queryBlockByIdPage($idPage)->findOne();
+        $cmsPage = $this->findCmsPageById($idPage);
+        $localeTransfer = $this->getLocaleFacade()->getCurrentLocale();
 
         if (null === $block) {
-            $pageUrl = $this->getQueryContainer()
-                ->queryPageWithTemplatesAndUrlByIdPage($idPage)
-                ->findOne()
-            ;
-            $title = $pageUrl->getUrl();
+            $title = $cmsPage->getUrl();
         } else {
             $type = CmsConfig::RESOURCE_TYPE_BLOCK;
             $title = $block->getName();
         }
 
-        $localeTransfer = $this->getLocaleFacade()
-            ->getCurrentLocale()
-        ;
+        $placeholders = $this->findPagePlaceholders($cmsPage);
+        $glossaryMappingArray = $this->extractGlossaryMapping($idPage, $localeTransfer);
+        $forms = [];
+        $formViews = [];
 
-        $table = $this->getDependencyContainer()
-            ->createCmsGlossaryTable($idPage, $localeTransfer->getIdLocale())
-        ;
+        foreach ($placeholders as $place) {
+            $form = $this->createPlaceholderForm($glossaryMappingArray, $place, $idPage);
+            $forms[] = $form;
+            $formViews[] = $form->createView();
+        }
+
+        if (null !== $idForm) {
+            return $this->handleAjaxRequest($forms, $idForm, $localeTransfer);
+        }
 
         return [
-            'keyMaps' => $table->render(),
             'idPage' => $idPage,
             'title' => $title,
             'type' => $type,
+            'forms' => $formViews,
         ];
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function tableAction(Request $request)
-    {
-        $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
-
-        $localeTransfer = $this->getLocaleFacade()
-            ->getCurrentLocale()
-        ;
-
-        $pageUrl = $this->getQueryContainer()
-            ->queryPageWithTemplatesAndUrlByIdPage($idPage)
-            ->findOne()
-        ;
-
-        $pageUrlArray = $pageUrl->toArray();
-        $tempFile = $this->getDependencyContainer()
-            ->getTemplateRealPath($pageUrlArray[CmsQueryContainer::TEMPLATE_PATH])
-        ;
-
-        $placeholders = $this->findTemplatePlaceholders($tempFile);
-
-        $table = $this->getDependencyContainer()
-            ->createCmsGlossaryTable($idPage, $localeTransfer->getIdLocale(), $placeholders, $request->get('search'))
-        ;
-
-        return $this->jsonResponse($table->fetchData());
-    }
 
     /**
      * @param Request $request
      *
-     * @return array
-     */
-    public function addAction(Request $request)
-    {
-        $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
-
-        $placeholder = $request->get('placeholder');
-
-        $form = $this->getDependencyContainer()
-            ->createCmsGlossaryForm($idPage, null, $placeholder, $this->getFacade())
-        ;
-
-        $form->handleRequest();
-
-        if ($form->isValid()) {
-            $data = $form->getData();
-
-            $pageKeyMappingTransfer = $this->createKeyMappingTransfer($data);
-            $this->getFacade()
-                ->savePageKeyMappingAndTouch($pageKeyMappingTransfer)
-            ;
-            $this->touchNecessaryBlock($idPage);
-
-            return $this->redirectResponse(self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $idPage);
-        }
-
-        return $this->viewResponse([
-            'form' => $form->createView(),
-            'idPage' => $idPage,
-        ]);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return array
-     */
-    public function editAction(Request $request)
-    {
-        $idMapping = $request->get(CmsGlossaryTable::REQUEST_ID_MAPPING);
-        $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
-
-        $form = $this->getDependencyContainer()
-            ->createCmsGlossaryForm($idPage, $idMapping, null, $this->getFacade())
-        ;
-
-        $form->handleRequest();
-        if ($form->isValid()) {
-            $data = $form->getData();
-
-            $pageKeyMappingTransfer = $this->createKeyMappingTransfer($data);
-            $this->getFacade()
-                ->savePageKeyMappingAndTouch($pageKeyMappingTransfer)
-            ;
-            $this->touchNecessaryBlock($idPage);
-
-            return $this->redirectResponse(self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $idPage);
-        }
-
-        return $this->viewResponse([
-            'form' => $form->createView(),
-            'idPage' => $idPage,
-        ]);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @return RedirectResponse
      */
     public function deleteAction(Request $request)
     {
         $idMapping = $request->get(CmsGlossaryTable::REQUEST_ID_MAPPING);
         $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
-
         $mappingGlossary = $this->getQueryContainer()
             ->queryGlossaryKeyMappingById($idMapping)
             ->findOne()
@@ -193,17 +100,9 @@ class GlossaryController extends AbstractController
             ->deletePageKeyMapping($pageTransfer, $mappingGlossary->getPlaceholder())
         ;
 
-        return $this->redirectResponse(self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $idPage);
-    }
+        $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $idPage;
 
-    /**
-     * @return LocaleFacade
-     */
-    private function getLocaleFacade()
-    {
-        return $this->getDependencyContainer()
-            ->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE)
-            ;
+        return $this->redirectResponse($redirectUrl);
     }
 
     /**
@@ -228,52 +127,235 @@ class GlossaryController extends AbstractController
     }
 
     /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function searchAction(Request $request)
+    {
+        $value = $request->get('value');
+        $key = $request->get('key');
+
+        $searchedItems = $this->searchGlossaryKeysAndTranslations($value, $key);
+
+        $result = [];
+        foreach ($searchedItems as $trans) {
+            $result[] = [
+                'key' => $trans->getLabel(),
+                'value' => $trans->getValue(),
+            ];
+        }
+
+        return $this->jsonResponse($result);
+    }
+
+    /**
+     * @param string $value
+     * @param string $key
+     *
+     * @return array
+     */
+    private function searchGlossaryKeysAndTranslations($value, $key)
+    {
+        $searchedItems = [];
+        if (null !== $value) {
+            $searchedItems = $this->getQueryContainer()
+                ->queryTranslationWithKeyByValue($value)
+                ->limit(self::SEARCH_LIMIT)
+                ->find()
+            ;
+            return $searchedItems;
+        } else if (null !== $key) {
+            $searchedItems = $this->getQueryContainer()
+                ->queryKeyWithTranslationByKey($key)
+                ->limit(self::SEARCH_LIMIT)
+                ->find()
+            ;
+        }
+        return $searchedItems;
+    }
+
+    /**
      * @param array $data
      *
-     * @return $this
+     * @return PageKeyMappingTransfer
      */
     private function createKeyMappingTransfer(array $data)
     {
         $pageKeyMappingTransfer = (new PageKeyMappingTransfer())->fromArray($data, true);
-
+        $hasPageMapping = $this->getFacade()->hasPagePlaceholderMapping($data['fkPage'], $data['placeholder']);
+        if ($hasPageMapping) {
+            $pageKeyMappingFound = $this->getFacade()
+                ->getPagePlaceholderMapping($data['fkPage'], $data['placeholder'])
+            ;
+            $pageKeyMappingTransfer->setIdCmsGlossaryKeyMapping($pageKeyMappingFound->getIdCmsGlossaryKeyMapping());
+        }
         $glossaryKey = $this->getQueryContainer()
             ->queryKey($data[CmsGlossaryForm::GLOSSARY_KEY])
             ->findOne()
         ;
-
         $pageKeyMappingTransfer->setFkGlossaryKey($glossaryKey->getIdGlossaryKey());
 
         return $pageKeyMappingTransfer;
     }
 
     /**
-     * @param SpyCmsBlock $blockEntity
-     *
-     * @return CmsBlockTransfer
+     * @return LocaleFacade
      */
-    protected function createBlockTransfer(SpyCmsBlock $blockEntity)
+    private function getLocaleFacade()
     {
-        $blockTransfer = new CmsBlockTransfer();
-        $blockTransfer->fromArray($blockEntity->toArray());
+        return $this->getDependencyContainer()
+            ->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE)
+            ;
+    }
 
-        return $blockTransfer;
+    /**
+     * @return GlossaryFacade
+     */
+    private function getGlossaryFacade()
+    {
+        return $this->getDependencyContainer()
+            ->getProvidedDependency(CmsDependencyProvider::FACADE_GLOSSARY)
+            ;
+    }
+
+    /**
+     * @param array $data
+     * @param LocaleTransfer $localeTransfer
+     */
+    private function saveGlossaryKeyPageMapping(array $data, LocaleTransfer $localeTransfer)
+    {
+        $keyTranslationTransfer = $this->createKeyTranslationTransfer($data, $localeTransfer);
+        $this->getGlossaryFacade()
+            ->saveGlossaryKeyTranslations($keyTranslationTransfer)
+        ;
+        $pageKeyMappingTransfer = $this->createKeyMappingTransfer($data);
+        $this->getFacade()
+            ->savePageKeyMappingAndTouch($pageKeyMappingTransfer)
+        ;
+    }
+
+    /**
+     * @param SpyCmsPage $pageUrl
+     *
+     * @return array
+     */
+    private function findPagePlaceholders(SpyCmsPage $pageUrl)
+    {
+        $pageUrlArray = $pageUrl->toArray();
+        $tempFile = $this->getDependencyContainer()
+            ->getTemplateRealPath($pageUrlArray[CmsQueryContainer::TEMPLATE_PATH])
+        ;
+        $placeholders = $this->findTemplatePlaceholders($tempFile);
+
+        return $placeholders;
     }
 
     /**
      * @param int $idPage
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return array
      */
-    protected function touchNecessaryBlock($idPage)
+    private function extractGlossaryMapping($idPage, LocaleTransfer $localeTransfer)
     {
-        $blockEntity = $this->getQueryContainer()
-            ->queryBlockByIdPage($idPage)
+        $glossaryQuery = $this->getQueryContainer()
+            ->queryGlossaryKeyMappingsWithKeyByPageId($idPage, $localeTransfer->getIdLocale())
+        ;
+        $glossaryMappingArray = [];
+        foreach ($glossaryQuery->find()
+                     ->getData() as $keyMapping) {
+            $glossaryMappingArray[$keyMapping->getPlaceholder()] = $keyMapping->getIdCmsGlossaryKeyMapping();
+        }
+
+        return $glossaryMappingArray;
+    }
+
+    /**
+     * @param array $forms
+     * @param int $idForm
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    private function handleAjaxRequest(array $forms, $idForm, LocaleTransfer $localeTransfer)
+    {
+        if ($forms[$idForm]->isValid()) {
+            $data = $forms[$idForm]->getData();
+            $this->saveGlossaryKeyPageMapping($data, $localeTransfer);
+
+            return $this->jsonResponse([
+                'success' => 'true',
+                'data' => $data,
+            ]);
+        } else {
+            return $this->jsonResponse([
+                'success' => 'false',
+                'errorMessages' => $forms[$idForm]->getErrors()
+                    ->__toString(),
+            ]);
+        }
+    }
+
+    /**
+     * @param array $glossaryMappingArray
+     * @param string $place
+     * @param int $idPage
+     *
+     * @return mixed
+     */
+    private function createPlaceholderForm(array $glossaryMappingArray, $place, $idPage)
+    {
+        $idMapping = null;
+        if (isset($glossaryMappingArray[$place])) {
+            $idMapping = $glossaryMappingArray[$place];
+        }
+        $form = $this->getDependencyContainer()
+            ->createCmsGlossaryForm($idPage, $idMapping, $place, $this->getFacade())
+        ;
+        $form->handleRequest();
+
+        return $form;
+    }
+
+    /**
+     * @param array $data
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return KeyTranslationTransfer
+     */
+    private function createKeyTranslationTransfer(array $data, LocaleTransfer $localeTransfer)
+    {
+        $keyTranslationTransfer = new KeyTranslationTransfer();
+        $keyTranslationTransfer->setGlossaryKey($data[CmsGlossaryForm::GLOSSARY_KEY]);
+
+        $keyTranslationTransfer->setLocales([
+            $localeTransfer->getLocaleName() => $data[CmsGlossaryForm::TRANSLATION]
+        ]);
+
+        return $keyTranslationTransfer;
+    }
+
+    /**
+     * @param $idPage
+     *
+     * @throws MissingPageException
+     * @return SpyCmsPage
+     */
+    private function findCmsPageById($idPage)
+    {
+        $cmsPage = $this->getQueryContainer()
+            ->queryPageWithTemplatesAndUrlByIdPage($idPage)
             ->findOne()
         ;
 
-        if (null !== $blockEntity) {
-            $blockTransfer = $this->createBlockTransfer($blockEntity);
-            $this->getFacade()
-                ->touchBlockActive($blockTransfer)
-            ;
+        if (null === $cmsPage) {
+            throw new MissingPageException(
+                sprintf('Page with id %s not found', $idPage)
+            );
         }
+
+        return $cmsPage;
     }
+
 }

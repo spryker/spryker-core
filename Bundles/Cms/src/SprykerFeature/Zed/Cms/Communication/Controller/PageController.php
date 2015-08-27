@@ -28,6 +28,32 @@ class PageController extends AbstractController
     /**
      * @return array
      */
+    public function indexAction()
+    {
+        $pageTable = $this->getDependencyContainer()
+            ->createCmsPageTable()
+        ;
+
+        return [
+            'pages' => $pageTable->render(),
+        ];
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function tableAction()
+    {
+        $table = $this->getDependencyContainer()
+            ->createCmsPageTable()
+        ;
+
+        return $this->jsonResponse($table->fetchData());
+    }
+
+    /**
+     * @return array
+     */
     public function addAction()
     {
         $form = $this->getDependencyContainer()
@@ -71,20 +97,14 @@ class PageController extends AbstractController
             $data = $form->getData();
 
             $pageTransfer = $this->createPageTransfer($data);
-            $pageTransfer = $this->getFacade()
-                ->savePage($pageTransfer)
-            ;
+            $pageTransfer = $this->getFacade()->savePage($pageTransfer);
 
             if (intval($data[CmsPageForm::CURRENT_TEMPLATE]) !== intval($data[CmsPageForm::FK_TEMPLATE])) {
-                $this->getFacade()
-                    ->deleteGlossaryKeysByIdPage($idPage)
-                ;
+                $this->getFacade()->deleteGlossaryKeysByIdPage($idPage);
             }
 
             $urlTransfer = $this->createUrlTransfer($data['id_url'], $pageTransfer, $data);
-            $this->getUrlFacade()
-                ->saveUrlAndTouch($urlTransfer)
-            ;
+            $this->getUrlFacade()->saveUrlAndTouch($urlTransfer);
 
             $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 

@@ -1,0 +1,21 @@
+{% extends '@Application/Layout/layout.twig' %}
+
+{% block content %}
+
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'CMS page' } %}
+
+                {% block widget_header_content %}
+
+                        <a class="btn btn-sm btn-primary" href="/cms/page/add/">{{ 'Add CMS Page' | trans }}</a>
+
+                {% endblock %}
+
+                {% block widget_content %}
+
+                        {{ pages | raw }}
+
+                {% endblock %}
+
+        {% endembed %}
+
+{% endblock %}

@@ -388,4 +388,16 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
 
         return $keyQuery;
     }
+
+    /**
+     * @param string $value
+     *
+     * @return SpyGlossaryTranslationQuery
+     */
+    public function queryTranslationByValue($value)
+    {
+        $query = $this->queryTranslations();
+        $query->filterByValue('%' . mb_strtolower($value) . '%', Criteria::LIKE);
+        return $query;
+    }
 }

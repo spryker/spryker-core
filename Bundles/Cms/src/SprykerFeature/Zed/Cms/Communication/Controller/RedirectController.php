@@ -25,7 +25,33 @@ use Symfony\Component\HttpFoundation\Request;
 class RedirectController extends AbstractController
 {
 
-    const REDIRECT_ADDRESS = '/cms/';
+    const REDIRECT_ADDRESS = '/cms/redirect/';
+
+    /**
+     * @return array
+     */
+    public function indexAction()
+    {
+        $redirectTable = $this->getDependencyContainer()
+            ->createCmsRedirectTable()
+        ;
+
+        return [
+            'redirects' => $redirectTable->render(),
+        ];
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function tableAction()
+    {
+        $table = $this->getDependencyContainer()
+            ->createCmsRedirectTable()
+        ;
+
+        return $this->jsonResponse($table->fetchData());
+    }
 
     /**
      * @return array
@@ -42,7 +68,7 @@ class RedirectController extends AbstractController
             $data = $form->getData();
 
             $redirectTransfer = $this->getUrlFacade()
-                ->createRedirectAndTouch($data[CmsRedirectForm::TO_URL])
+                ->createRedirectAndTouch($data[CmsRedirectForm::TO_URL], $data[CmsRedirectForm::STATUS])
             ;
 
             $this->getUrlFacade()
@@ -75,16 +101,11 @@ class RedirectController extends AbstractController
 
         if ($form->isValid()) {
             $data = $form->getData();
-            $url = $this->getQueryContainer()
-                ->queryUrlByIdWithRedirect($idUrl)
-                ->findOne()
-            ;
+            $url = $this->getQueryContainer()->queryUrlByIdWithRedirect($idUrl)->findOne();
 
             if ($url) {
                 $urlTransfer = $this->createUrlTransfer($url, $data);
-                $this->getUrlFacade()
-                    ->saveUrlAndTouch($urlTransfer)
-                ;
+                $this->getUrlFacade()->saveUrlAndTouch($urlTransfer);
 
                 $redirect = $this->getQueryContainer()
                     ->queryRedirectById($url->getFkResourceRedirect())
@@ -92,9 +113,7 @@ class RedirectController extends AbstractController
                 ;
                 $redirectTransfer = $this->createRedirectTransfer($redirect, $data);
 
-                $this->getUrlFacade()
-                    ->saveRedirectAndTouch($redirectTransfer)
-                ;
+                $this->getUrlFacade()->saveRedirectAndTouch($redirectTransfer);
             }
 
             return $this->redirectResponse(self::REDIRECT_ADDRESS);
@@ -152,6 +171,7 @@ class RedirectController extends AbstractController
     {
         $redirectTransfer = (new RedirectTransfer())->fromArray($redirect->toArray());
         $redirectTransfer->setToUrl($data[CmsRedirectForm::TO_URL]);
+        $redirectTransfer->setStatus($data[CmsRedirectForm::STATUS]);
 
         return $redirectTransfer;
     }

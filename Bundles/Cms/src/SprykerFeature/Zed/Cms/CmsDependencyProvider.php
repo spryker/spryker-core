@@ -13,7 +13,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
 {
     const FACADE_URL = 'facade_url';
     const FACADE_LOCALE = 'facade_locale';
-
+    const FACADE_GLOSSARY = 'facade glossary';
     const URL_QUERY_CONTAINER = 'url_query_container';
     const GLOSSARY_QUERY_CONTAINER = 'glossary_query_container';
 
@@ -32,6 +32,10 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_LOCALE] = function (Container $container) {
             return $container->getLocator()->locale()->facade();
+        };
+
+        $container[self::FACADE_GLOSSARY] = function (Container $container) {
+            return $container->getLocator()->glossary()->facade();
         };
 
         return $container;

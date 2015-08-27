@@ -1,30 +1,71 @@
 {% extends '@Application/Layout/layout.twig' %}
 
 {% block content %}
+    <div id="spy-cms" class="glossary">
+        <h4>
+            {% if type == 'page' %}
+                Page URL :
+            {% elseif type == 'block' %}
+                Block Name :
+            {% endif %}
+            {{ title }}
+        </h4>
+        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Page glossary mapping' } %}
 
-    <h4>
-        {% if type == 'page' %}
-            Page URL :
-        {% elseif type == 'block' %}
-            Block Name :
-        {% endif %}
-        {{ title }}
-    </h4>
+                {% block widget_header_content %}
 
-    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Page glossary mapping' } %}
+                    <a href="/cms/{{ type }}/" class="btn btn-sm btn-default">{{ 'Back to CMS ' ~ type | trans }}</a>
 
-        {% block widget_header_content %}
+                {% endblock %}
 
-            <a href="/cms/" class="btn btn-sm btn-default">{{ 'Back to CMS' | trans }}</a>
+                {% block widget_content %}
 
-        {% endblock %}
+                    {% for form in forms %}
+                        <hr>
+                        {{ form_start(form, { 'attr': {'class': 'cms_form form_class_' ~ loop.index, 'data-index': loop.index} }) }}
+                        {{ form_errors(form) }}
 
-        {% block widget_content %}
+                        <div class="row">
+                            <div class="col-sm-2">
+                                {{ form_label(form.placeholder) }}
+                                {{ form_widget(form.placeholder) }}
+                                {{ form_errors(form.placeholder) }}
+                            </div>
+                            <div class="col-sm-2">
+                                {{ form_label(form.search_option) }}
+                                {{ form_widget(form.search_option) }}
+                                {{ form_errors(form.search_option) }}
+                            </div>
+                            <div class="col-sm-8">
+                                {{ form_label(form.glossary_key) }}
+                                {{ form_widget(form.glossary_key, { 'attr': {'autocomplete' : 'off'} }) }}
+                                {{ form_errors(form.glossary_key) }}
+                                <div class="loading loading-{{ loop.index }}">
+                                    <img src="/bundles/images/loading.gif">
+                                    Loading...
+                                </div>
+                            </div>
+                            <div class="col-sm-12" class="translation">
+                                {{ form_label(form.translation) }}
+                                {{ form_errors(form.translation) }}
+                                {{ form_widget(form.translation, {'attr' : { 'rows' : 5 }}) }}
+                            </div>
+                            <div class="col-sm-1 small-padding">
+                                <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+                            </div>
+                            <div class="col-sm-10 small-padding alert">
+                                <div class="{{ 'waiting_' ~ loop.index }} gray"></div>
+                                <div class="{{ 'success_' ~ loop.index }} green"></div>
+                                <div class="{{ 'error_' ~ loop.index }} red"></div>
+                            </div>
+                        </div>
 
-            {{ keyMaps | raw }}
+                        {{ form_end(form) }}
+                    {% endfor %}
+                    <div class="keyListCanvas"></div>
+                   <input id="idPage" type="hidden" value="{{ idPage }}">
+                {% endblock %}
 
-        {% endblock %}
-
-    {% endembed %}
-
+        {% endembed %}
+    </div>
 {% endblock %}

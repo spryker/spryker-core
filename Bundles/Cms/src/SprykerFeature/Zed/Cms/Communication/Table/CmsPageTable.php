@@ -40,8 +40,8 @@ class CmsPageTable extends AbstractTable
     {
         $config->setHeader([
             SpyCmsPageTableMap::COL_ID_CMS_PAGE => 'Page Id',
-            CmsQueryContainer::TEMPLATE_NAME => 'Template',
             CmsQueryContainer::URL => 'url',
+            CmsQueryContainer::TEMPLATE_NAME => 'Template',
             self::ACTIONS => self::ACTIONS,
         ]);
         $config->setSortable([
@@ -53,9 +53,6 @@ class CmsPageTable extends AbstractTable
             CmsQueryContainer::TEMPLATE_NAME,
             CmsQueryContainer::URL,
         ]);
-
-        $config->setUrl('pageTable');
-        $config->setPageLength(5);
 
         return $config;
     }
@@ -91,7 +88,7 @@ class CmsPageTable extends AbstractTable
      */
     private function buildLinks($item)
     {
-        $result = '<a href="/cms/glossary/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE] . '" class="btn btn-xs btn-white">Edit glossaries</a>&nbsp;
+        $result = '<a href="/cms/glossary/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE] . '" class="btn btn-xs btn-white">Edit placeholders</a>&nbsp;
         <a href="/cms/page/edit/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsPageTableMap::COL_ID_CMS_PAGE] . '" class="btn btn-xs btn-white">Edit page</a>';
 
         return $result;

@@ -39,9 +39,9 @@ class CmsBlockTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeader([
-            SpyCmsBlockTableMap::COL_ID_CMS_PAGE => 'Page Id',
-            CmsQueryContainer::TEMPLATE_NAME => 'Template',
+            SpyCmsBlockTableMap::COL_ID_CMS_PAGE => 'Block Id',
             SpyCmsBlockTableMap::COL_NAME => 'Name',
+            CmsQueryContainer::TEMPLATE_NAME => 'Template',
             self::ACTIONS => self::ACTIONS,
         ]);
         $config->setSortable([
@@ -53,9 +53,6 @@ class CmsBlockTable extends AbstractTable
             CmsQueryContainer::TEMPLATE_NAME,
             SpyCmsBlockTableMap::COL_NAME,
         ]);
-
-        $config->setUrl('blockTable');
-        $config->setPageLength(5);
 
         return $config;
     }
@@ -90,7 +87,7 @@ class CmsBlockTable extends AbstractTable
      */
     private function buildLinks(array $item)
     {
-        $result = '<a href="/cms/glossary/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsBlockTableMap::COL_ID_CMS_PAGE] . '" class="btn btn-xs btn-white">Edit glossaries</a>&nbsp;
+        $result = '<a href="/cms/glossary/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsBlockTableMap::COL_ID_CMS_PAGE] . '" class="btn btn-xs btn-white">Edit placeholders</a>&nbsp;
         <a href="/cms/block/edit/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsBlockTableMap::COL_ID_CMS_PAGE] . '" class="btn btn-xs btn-white">Edit block</a>';
 
         return $result;
