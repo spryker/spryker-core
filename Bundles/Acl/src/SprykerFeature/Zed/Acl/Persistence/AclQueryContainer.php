@@ -82,6 +82,14 @@ class AclQueryContainer extends AbstractQueryContainer
     }
 
     /**
+     * @return SpyAclRoleQuery
+     */
+    public function queryRole()
+    {
+        return $this->getDependencyContainer()->createRoleQuery();
+    }
+
+    /**
      * @param int $id
      *
      * @return SpyAclGroupQuery
@@ -91,6 +99,19 @@ class AclQueryContainer extends AbstractQueryContainer
         $query = $this->getDependencyContainer()->createRoleQuery();
 
         $query->filterByIdAclRole($id);
+
+        return $query;
+    }
+
+    /**
+     * @param integer $idRole
+     *
+     * @return SpyAclGroupsHasRolesQuery
+     */
+    public function queryRoleHasGroup($idRole)
+    {
+        $query = $this->getDependencyContainer()->createGroupHasRoleQuery();
+        $query->filterByFkAclRole($idRole);
 
         return $query;
     }
@@ -194,6 +215,19 @@ class AclQueryContainer extends AbstractQueryContainer
         $query = $this->getDependencyContainer()->createRuleQuery();
 
         $query->filterByIdAclRule($id);
+
+        return $query;
+    }
+
+    /**
+     * @param $roleId
+     *
+     * @return SpyAclRuleQuery
+     */
+    public function queryRuleByRoleId($roleId)
+    {
+        $query = $this->getDependencyContainer()->createRuleQuery();
+        $query->filterByFkAclRole($roleId);
 
         return $query;
     }

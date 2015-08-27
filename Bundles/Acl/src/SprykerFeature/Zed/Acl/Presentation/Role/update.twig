@@ -1,0 +1,45 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Update "' ~ roleTransfer.getName() ~ '" rule' %}
+
+{% block head_title widget_title | trans %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ 'Role' | trans }}</div>
+                <div class="panel-body">
+                    {{ form_start(roleForm) }}
+                    {{ form_widget(roleForm) }}
+                    <input type="submit" class="btn btn-primary" value="{{ 'Update role' | trans }}"/>
+                    {{ form_end(roleForm) }}
+                </div>
+            </div>
+
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ 'Ruleset' | trans }}</div>
+                <div class="panel-body">
+                    {{ form_start(rulesetForm) }}
+                    {{ form_widget(rulesetForm) }}
+                    <input type="submit" class="btn btn-primary" value="{{ 'Add ruleset' | trans }}"/>
+                    {{ form_end(rulesetForm) }}
+                </div>
+            </div>
+
+            <h3>{{ 'Assigned rulesets' | trans }}</h3>
+
+            {% if rulesetTable %}
+                <p>
+                    {{ rulesetTable | raw }}
+                </p>
+            {% endif %}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

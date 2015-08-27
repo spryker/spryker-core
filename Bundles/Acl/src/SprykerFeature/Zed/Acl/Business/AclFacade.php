@@ -126,17 +126,24 @@ class AclFacade extends AbstractFacade
 
     /**
      * @param string $name
-     * @param int $idGroup
      *
      * @return RoleTransfer
      */
-    public function addRole($name, $idGroup)
+    public function addRole($name)
     {
-        return $this->getDependencyContainer()
-            ->createRoleModel()
-            ->addRole($name, $idGroup);
+        return $this->getDependencyContainer()->createRoleModel()->addRole($name);
     }
 
+    /**
+     * @param RoleTransfer $roleTransfer
+     *
+     * @return RoleTransfer
+     */
+    public function updateRole(RoleTransfer $roleTransfer)
+    {
+        return $this->getDependencyContainer()->createRoleModel()->save($roleTransfer);
+    }
+    
     /**
      * @param int $id
      *
@@ -221,19 +228,15 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @param string $bundle
-     * @param string $controller
-     * @param string $action
-     * @param string $idRole
-     * @param string $type
+     * @param RuleTransfer $ruleTransfer
      *
      * @return RuleTransfer
      */
-    public function addRule($bundle, $controller, $action, $idRole, $type = 'allow')
+    public function addRule(RuleTransfer $ruleTransfer)
     {
         return $this->getDependencyContainer()
             ->createRuleModel()
-            ->addRule($bundle, $controller, $action, $idRole, $type);
+            ->addRule($ruleTransfer);
     }
 
     /**

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <acl>
+        <bundle>acl</bundle>
+        <controller>index</controller>
+        <action>index</action>
+        <pages>
+            <roles>
+                <label>Roles</label>
+                <title>Roles</title>
+                <bundle>acl</bundle>
+                <controller>role</controller>
+                <action>index</action>
+            </roles>
+        </pages>
+    </acl>
+</config>
