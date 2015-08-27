@@ -82,29 +82,29 @@ class Rule implements RuleInterface
     }
 
     /**
-     * @param RuleTransfer $RuleTransfer
+     * @param RuleTransfer $ruleTransfer
      *
      * @throws RuleNotFoundException
      *
      * @return RuleTransfer
      */
-    public function save(RuleTransfer $RuleTransfer)
+    public function save(RuleTransfer $ruleTransfer)
     {
         $aclRuleEntity = new SpyAclRule();
 
-        if ($RuleTransfer->getIdAclRule() !== null && $this->hasRule($RuleTransfer->getIdAclRule()) === true) {
+        if ($ruleTransfer->getIdAclRule() !== null && $this->hasRule($ruleTransfer->getIdAclRule()) === true) {
             throw new RuleNotFoundException();
         }
 
-        if ($RuleTransfer->getIdAclRule() !== null) {
-            $aclRuleEntity->setIdAclRule($RuleTransfer->getIdAclRule());
+        if ($ruleTransfer->getIdAclRule() !== null) {
+            $aclRuleEntity->setIdAclRule($ruleTransfer->getIdAclRule());
         }
 
-        $aclRuleEntity->setFkAclRole($RuleTransfer->getFkAclRole());
-        $aclRuleEntity->setBundle($RuleTransfer->getBundle());
-        $aclRuleEntity->setController($RuleTransfer->getController());
-        $aclRuleEntity->setAction($RuleTransfer->getAction());
-        $aclRuleEntity->setType($RuleTransfer->getType());
+        $aclRuleEntity->setFkAclRole($ruleTransfer->getFkAclRole());
+        $aclRuleEntity->setBundle($ruleTransfer->getBundle());
+        $aclRuleEntity->setController($ruleTransfer->getController());
+        $aclRuleEntity->setAction($ruleTransfer->getAction());
+        $aclRuleEntity->setType($ruleTransfer->getType());
         $aclRuleEntity->save();
 
         $ruleTransfer = new RuleTransfer();
@@ -325,6 +325,9 @@ class Rule implements RuleInterface
         $this->rulesValidator->setRules($rulesTransfer);
 
         return $this->rulesValidator->isAccessible($bundle, $controller, $action);
+
+
+
     }
 
 }
