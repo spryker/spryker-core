@@ -100,7 +100,9 @@ class GlossaryController extends AbstractController
             ->deletePageKeyMapping($pageTransfer, $mappingGlossary->getPlaceholder())
         ;
 
-        return $this->redirectResponse(self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $idPage);
+        $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $idPage;
+
+        return $this->redirectResponse($redirectUrl);
     }
 
     /**
