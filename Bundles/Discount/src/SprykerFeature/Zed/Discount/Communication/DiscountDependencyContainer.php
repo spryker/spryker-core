@@ -6,12 +6,16 @@
 
 namespace SprykerFeature\Zed\Discount\Communication;
 
+use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\DiscountCommunication;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\DiscountDependencyProvider;
 use SprykerFeature\Zed\Discount\Communication\Table\DiscountVoucherTable;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
+use SprykerFeature\Zed\Library\Copy;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolCategoryTable;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolTable;
@@ -249,6 +253,91 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     public function getQueryContainer()
     {
         return $this->getLocator()->discount()->queryContainer();
+    }
+
+    /**
+     * @param int $idPool
+     *
+     * @return VoucherPoolTransfer
+     */
+    public function getVoucherPoolById($idPool)
+    {
+        $pool = $this->getQueryContainer()
+            ->queryDiscountVoucherPool()
+            ->findOneByIdDiscountVoucherPool($idPool)
+        ;
+
+        return (new VoucherPoolTransfer())->fromArray($pool->toArray(), true);
+    }
+
+    /**
+     * @param $idDiscount
+     *
+     * @return DiscountTransfer
+     */
+    public function getDiscountById($idDiscount)
+    {
+        $discount = $this->getQueryContainer()
+            ->queryDiscount()
+            ->filterByIdDiscount($idDiscount)
+            ->findOne()
+        ;
+
+        return (new DiscountTransfer())->fromArray($discount->toArray(), true);
+    }
+
+    /**
+     * @param $idDiscountVoucherPool
+     *
+     * @return DiscountTransfer
+     */
+    public function getDiscountByIdDiscountVoucherPool($idDiscountVoucherPool)
+    {
+        $discount = $this->getQueryContainer()
+            ->queryDiscount()
+            ->filterByFkDiscountVoucherPool($idDiscountVoucherPool)
+            ->findOne()
+        ;
+
+        return (new DiscountTransfer())->fromArray($discount->toArray(), true);
+    }
+
+    /**
+     * @param int $idPool
+     * @param \DateTime $dateTime
+     *
+     * @return int
+     */
+    public function getGeneratedVouchersCountByIdPoolAndTimestamp($idPool, \DateTime $dateTime)
+    {
+        return $this->getQueryForGeneratedVouchersByIdPoolAndTimestamp($idPool, $dateTime)
+            ->count()
+        ;
+    }
+
+    /**
+     * @param int $idPool
+     * @param \DateTime $dateTime
+     *
+     * @return SpyDiscountVoucherQuery
+     */
+    public function getQueryForGeneratedVouchersByIdPoolAndTimestamp($idPool, \DateTime $dateTime)
+    {
+        return $this->getQueryContainer()
+            ->queryDiscountVoucher()
+            ->filterByFkDiscountVoucherPool($idPool)
+            ->filterByCreatedAt([
+                'min' => $dateTime
+            ])
+        ;
+    }
+
+    /**
+     * @return Store
+     */
+    public function getStore()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::STORE_CONFIG);
     }
 
 }

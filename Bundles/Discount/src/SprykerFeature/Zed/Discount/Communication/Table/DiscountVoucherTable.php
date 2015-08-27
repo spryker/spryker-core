@@ -44,7 +44,6 @@ class DiscountVoucherTable extends AbstractTable
         $config->setHeader([
             SpyDiscountVoucherTableMap::COL_CREATED_AT => 'Created At',
             SpyDiscountTableMap::COL_VALID_TO => 'Valid To',
-            SpyDiscountTableMap::COL_DISPLAY_NAME => 'Voucher Name',
             self::COL_VOUCHER_POOL => 'Voucher Pool',
             self::COL_VOUCHER_POOL_CATEGORY => 'Category',
             SpyDiscountVoucherTableMap::COL_CODE => 'Code',

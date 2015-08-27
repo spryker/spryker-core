@@ -99,6 +99,8 @@ class PoolController extends AbstractController
             $discount = $this->getQueryContainer()->queryDiscount()->findOneByFkDiscountVoucherPool($idPool);
             $discount->setAmount($formData[PoolForm::AMOUNT]);
             $discount->setType($formData[PoolForm::AMOUNT_TYPE]);
+            $discount->setDescription($formData[PoolForm::DESCRIPTION]);
+            $discount->setIsPrivileged($formData[PoolForm::IS_PRIVILEGED]);
 
             $discountTransfer = new DiscountTransfer();
             $discountTransfer->fromArray($discount->toArray(), true);

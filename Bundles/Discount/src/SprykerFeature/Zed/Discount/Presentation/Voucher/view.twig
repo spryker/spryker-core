@@ -1,0 +1,39 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set section_title = 'Generated Vouchers View' %}
+
+{% block breadcrumb %}
+    <li class="active"><strong>{{ section_title | trans }}</strong></li>
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: section_title } %}
+
+        {% block widget_header_content %}
+            <a class="btn btn-sm btn-default" href="/discount/voucher/">{{ 'List Vouchers' | trans }}</a>
+            <a class="btn btn-sm btn-success" href="/discount/voucher/export?id-pool={{ idPool }}&generated-on={{ generatedOn }}" target="_blank">{{ 'Export' | trans }}</a>
+        {% endblock %}
+
+        {% block widget_content %}
+
+            <table class="table table-stripped table-bordered table-hover">
+                <tr>
+                    <td>Valid until</td>
+                    <td>{{ discount.validTo | date }}</td>
+                </tr>
+                <tr>
+                    <td>Value</td>
+                    <td>{% if discount.type == 'percent' %}{{ discount.amount }} %{% else %}{{ discount.amount }}{% endif %}</td>
+                </tr>
+                <tr>
+                    <td>Generated Vouchers</td>
+                    <td>{{ countVouchers }}</td>
+                </tr>
+            </table>
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
