@@ -77,8 +77,9 @@ class GroupTable extends AbstractTable
      */
     protected function createRolesUrl(array $group)
     {
-        return '<a href="#" class="display-roles" id="group-' . $group[SpyAclGroupTableMap::COL_ID_ACL_GROUP] . '">' . $group[self::ROLES] . ' Roles</a>';
-//        return '<a data-toggle="modal" data-taget="groupsModal" href="/acl/group/roles?id-group=' . $group[SpyAclGroupTableMap::COL_ID_ACL_GROUP] . '">' . $group[self::ROLES] . ' Roles</a>';
+        return '<a href="#" class="display-roles" id="group-'
+            . $group[SpyAclGroupTableMap::COL_ID_ACL_GROUP] . '">'
+            . $group[self::ROLES] . ' Roles</a> <span id="group-spinner-' . $group[SpyAclGroupTableMap::COL_ID_ACL_GROUP] . '"></span>';
     }
 
 }
