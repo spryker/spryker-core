@@ -1,0 +1,14 @@
+[{
+    "priority": 60,
+    "assets": {
+        "js": [
+            "/js/acl.group.memoize.js",
+            "/js/acl.group.modal.js",
+            "/js/acl.helpers.js",
+            "/js/acl.js"
+        ],
+        "css": [],
+        "images": [],
+        "fonts": []
+    }
+}]
