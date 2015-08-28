@@ -6,9 +6,11 @@
 
 namespace SprykerFeature\Shared\Library\Error;
 
+use SprykerEngine\Shared\Lumberjack\Model\EventInterface;
 use SprykerFeature\Shared\Library\Application\Version;
-use SprykerFeature\Shared\Lumberjack\Code\Lumberjack;
-use SprykerFeature\Shared\Lumberjack\Code\Log\Types;
+use SprykerEngine\Shared\Lumberjack\Model\SharedEventJournal;
+use SprykerEngine\Shared\Lumberjack\Model\Event;
+
 
 class ErrorLogger
 {
@@ -30,17 +32,16 @@ class ErrorLogger
     protected static function sendExceptionToLumberjack(\Exception $exception, $ignoreInternalExceptions = false)
     {
         try {
-            $lumberjack = Lumberjack::getInstance();
-            $lumberjack->addField('message', $exception->getMessage());
-            $lumberjack->addField('trace', '<pre>' . $exception->getTraceAsString() . '</pre>');
-            $lumberjack->addField('className', get_class($exception));
-            $lumberjack->addField('fileName', $exception->getFile());
-            $lumberjack->addField('line', $exception->getLine());
-            $lumberjack->send(
-                Types::EXCEPTION,
-                $exception->getMessage(),
-                Types::EXCEPTION
-            );
+            $lumberjack = new SharedEventJournal();
+            $event = new Event();
+            $event->addField('message', $exception->getMessage());
+            $event->addField('trace', $exception->getTraceAsString());
+            $event->addField('className', get_class($exception));
+            $event->addField('fileName', $exception->getFile());
+            $event->addField('line', $exception->getLine());
+            $event->addField('name', 'exception');
+            self::addDeploymentInfo($event);
+            $lumberjack->saveEvent($event);
         } catch (\Exception $internalException) {
             if (!$ignoreInternalExceptions) {
                 self::sendExceptionToNewRelic($internalException, true);
@@ -55,8 +56,6 @@ class ErrorLogger
     protected static function sendExceptionToNewRelic(\Exception $exception, $ignoreInternalExceptions = false)
     {
         try {
-            self::addDeploymentInfo();
-            self::addLumberjackRequestId();
             $message = $message = get_class($exception) . ' - ' . $exception->getMessage() . ' in file "' . $exception->getFile() . '"';
             \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->noticeError($message, $exception);
         } catch (\Exception $internalException) {
@@ -66,18 +65,12 @@ class ErrorLogger
         }
     }
 
-    protected static function addLumberjackRequestId()
-    {
-        $requestId = Lumberjack::getInstance()->getRequestId();
-        \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->addCustomParameter('LumberjackId', $requestId);
-    }
-
-    protected static function addDeploymentInfo()
+    protected static function addDeploymentInfo(EventInterface $event)
     {
         $deployData = (new Version())->toArray();
         foreach ($deployData as $name => $data) {
             if (!empty($data)) {
-                \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->addCustomParameter('Deployment_' . $name, $data);
+                $event->addField('deployment_' . $name, $data);
             }
         }
     }
