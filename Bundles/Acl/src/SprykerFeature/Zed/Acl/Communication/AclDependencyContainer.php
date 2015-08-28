@@ -12,13 +12,13 @@ use SprykerFeature\Zed\Acl\AclDependencyProvider;
 use SprykerFeature\Zed\Acl\Communication\Form\GroupForm;
 use SprykerFeature\Zed\Acl\Communication\Form\RoleForm;
 use SprykerFeature\Zed\Acl\Communication\Form\RulesetForm;
-use SprykerFeature\Zed\Acl\Communication\Form\UserForm;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Acl\Communication\Table\RoleTable;
 use SprykerFeature\Zed\Acl\Communication\Table\RulesetTable;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 use SprykerFeature\Zed\User\Business\UserFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method AclCommunication getFactory()
@@ -27,12 +27,43 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class AclDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return UserFacade
      */
     public function createUserFacade()
     {
         return $this->getProvidedDependency(AclDependencyProvider::FACADE_USER);
+    }
+
+    /**
+     * @return GroupTable
+     */
+    public function createGroupTable()
+    {
+        return $this->getFactory()->createTableGroupTable(
+            $this->getQueryContainer()->queryGroup()
+        );
+    }
+
+    /**
+     * @param int $idGroup
+     *
+     * @return array
+     */
+    public function createGroupRoleListByGroupId($idGroup)
+    {
+        $roleCollection = $this->getQueryContainer()
+            ->queryGroupRoles($idGroup)
+            ->find()
+            ->toArray()
+        ;
+
+        return [
+            'code' => Response::HTTP_OK,
+            'idGroup' => $idGroup,
+            'data' => $roleCollection,
+        ];
     }
 
     /**
@@ -90,7 +121,7 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
     }
 
     /**
-     * @param integer $idRole
+     * @param int $idRole
      *
      * @return RulesetTable
      */
