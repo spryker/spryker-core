@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Acl\Business\Model;
 
+use Generated\Shared\Transfer\RuleTransfer;
 use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupNotFoundException;
 use SprykerFeature\Zed\Acl\Business\Exception\RoleNotFoundException;
@@ -110,7 +111,8 @@ class Installer implements InstallerInterface
             throw new GroupNotFoundException();
         }
 
-        $this->role->addRole($role['name'], $group->getIdAclGroup());
+        $roleTransfer = $this->role->addRole($role['name']);
+        $this->group->addRoleToGroup($roleTransfer->getIdAclRole(), $group->getIdAclGroup());
     }
 
     /**
@@ -125,9 +127,10 @@ class Installer implements InstallerInterface
             }
 
             if (!$this->rule->existsRoleRule($role->getIdAclRole(), $rule['bundle'], $rule['controller'], $rule['action'], $rule['type'])) {
-                $this->rule->addRule(
-                    $rule['bundle'], $rule['controller'], $rule['action'], $role->getIdAclRole(), $rule['type']
-                );
+                $ruleTransfer = new RuleTransfer();
+                $ruleTransfer->fromArray($rule, true);
+                $ruleTransfer->setFkAclRole($role->getIdAclRole());
+                $this->rule->addRule($ruleTransfer);
             }
         }
     }

@@ -10,6 +10,7 @@ use Generated\Shared\Cart\CartInterface;
 use Generated\Shared\Cart\ChangeInterface;
 use Generated\Shared\Cart\GroupKeyParameterInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerFeature\Zed\Cart\Business\Model\CalculableContainer;
 
 
 /**
@@ -70,10 +71,11 @@ class CartFacade extends AbstractFacade
      *
      * @return CartInterface
      */
-    public function recalculateCart(CartInterface $cart)
+    public function recalculate(CartInterface $cart)
     {
         $calculator = $this->getDependencyContainer()->createCartCalculator();
+        $calculableContainer = $calculator->recalculate(new CalculableContainer($cart));
 
-        return $calculator->recalculate($cart);
+        return $calculableContainer->getCalculableObject();
     }
 }
