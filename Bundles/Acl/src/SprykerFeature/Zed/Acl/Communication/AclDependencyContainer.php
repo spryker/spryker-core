@@ -1,8 +1,9 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected.
+ * (c) Spryker Systems GmbH copyright protected
  */
+
 namespace SprykerFeature\Zed\Acl\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\AclCommunication;
@@ -11,7 +12,6 @@ use SprykerFeature\Zed\Acl\AclDependencyProvider;
 use SprykerFeature\Zed\Acl\Communication\Form\GroupForm;
 use SprykerFeature\Zed\Acl\Communication\Form\RoleForm;
 use SprykerFeature\Zed\Acl\Communication\Form\RulesetForm;
-use SprykerFeature\Zed\Acl\Communication\Form\UserForm;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Acl\Communication\Table\RoleTable;
 use SprykerFeature\Zed\Acl\Communication\Table\RulesetTable;
@@ -27,6 +27,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class AclDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return UserFacade
      */
@@ -50,9 +51,9 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
      *
      * @return array
      */
-    public function createGroupRolesListByGroupId($idGroup)
+    public function createGroupRoleListByGroupId($idGroup)
     {
-        $roles = $this->getQueryContainer()
+        $roleCollection = $this->getQueryContainer()
             ->queryGroupRoles($idGroup)
             ->find()
             ->toArray()
@@ -61,7 +62,7 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
         return [
             'code' => Response::HTTP_OK,
             'idGroup' => $idGroup,
-            'data' => $roles,
+            'data' => $roleCollection,
         ];
     }
 
@@ -120,7 +121,7 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
     }
 
     /**
-     * @param integer $idRole
+     * @param int $idRole
      *
      * @return RulesetTable
      */
@@ -128,4 +129,5 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
     {
         return $this->getFactory()->createTableRulesetTable($this->getQueryContainer(), $idRole);
     }
+
 }
