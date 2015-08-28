@@ -1,9 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
-
 namespace SprykerFeature\Zed\Acl\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\AclCommunication;
@@ -19,6 +18,7 @@ use SprykerFeature\Zed\Acl\Communication\Table\RulesetTable;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 use SprykerFeature\Zed\User\Business\UserFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method AclCommunication getFactory()
@@ -33,6 +33,36 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
     public function createUserFacade()
     {
         return $this->getProvidedDependency(AclDependencyProvider::FACADE_USER);
+    }
+
+    /**
+     * @return GroupTable
+     */
+    public function createGroupTable()
+    {
+        return $this->getFactory()->createTableGroupTable(
+            $this->getQueryContainer()->queryGroup()
+        );
+    }
+
+    /**
+     * @param int $idGroup
+     *
+     * @return array
+     */
+    public function createGroupRolesListByGroupId($idGroup)
+    {
+        $roles = $this->getQueryContainer()
+            ->queryGroupRoles($idGroup)
+            ->find()
+            ->toArray()
+        ;
+
+        return [
+            'code' => Response::HTTP_OK,
+            'idGroup' => $idGroup,
+            'data' => $roles,
+        ];
     }
 
     /**
@@ -98,5 +128,4 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
     {
         return $this->getFactory()->createTableRulesetTable($this->getQueryContainer(), $idRole);
     }
-
 }

@@ -1,9 +1,8 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
-
 namespace SprykerFeature\Zed\Acl\Communication\Controller;
 
 use Generated\Shared\Transfer\GroupTransfer;
@@ -19,17 +18,45 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class GroupController extends AbstractController
 {
-
     const USER_LIST_URL = '/acl/users';
+    const ID_GROUP_PARAMETER = 'id-group';
+
+    /**
+     * @return array
+     */
+    public function indexAction()
+    {
+        $table = $this->getDependencyContainer()->createGroupTable();
+
+        return $this->viewResponse([
+            'table' => $table->render(),
+        ]);
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function tableAction()
+    {
+        $table = $this->getDependencyContainer()->createGroupTable();
+
+        return $this->jsonResponse(
+            $table->fetchData()
+        );
+    }
 
     /**
      * @param Request $request
      *
-     * @return array
+     * @return JsonResponse
      */
-    public function indexAction(Request $request)
+    public function rolesAction(Request $request)
     {
-        return [];
+        $idGroup = $request->get(self::ID_GROUP_PARAMETER);
+
+        $roles = $this->getDependencyContainer()->createGroupRolesListByGroupId($idGroup);
+
+        return $this->jsonResponse($roles);
     }
 
     /**
@@ -127,5 +154,4 @@ class GroupController extends AbstractController
 
         return $this->jsonResponse($data);
     }
-
 }
