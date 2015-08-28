@@ -96,15 +96,7 @@ class Rule implements RuleInterface
             throw new RuleNotFoundException();
         }
 
-        if ($ruleTransfer->getIdAclRule() !== null) {
-            $aclRuleEntity->setIdAclRule($ruleTransfer->getIdAclRule());
-        }
-
-        $aclRuleEntity->setFkAclRole($ruleTransfer->getFkAclRole());
-        $aclRuleEntity->setBundle($ruleTransfer->getBundle());
-        $aclRuleEntity->setController($ruleTransfer->getController());
-        $aclRuleEntity->setAction($ruleTransfer->getAction());
-        $aclRuleEntity->setType($ruleTransfer->getType());
+        $aclRuleEntity->fromArray($ruleTransfer->toArray());
         $aclRuleEntity->save();
 
         $ruleTransfer = new RuleTransfer();

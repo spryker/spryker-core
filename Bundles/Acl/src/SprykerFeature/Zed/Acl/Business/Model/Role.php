@@ -69,12 +69,12 @@ class Role implements RoleInterface
         $aclRoleEntity = new SpyAclRole();
         if (!empty($roleTransfer->getIdAclRole())) {
             $aclRoleEntity = $this->queryContainer->queryRoleById($roleTransfer->getIdAclRole())->findOne();
-            if ($aclRoleEntity->getName() == AclConfig::ROOT_ROLE) {
+            if ($aclRoleEntity->getName() === AclConfig::ROOT_ROLE) {
                 throw new RootNodeModificationException('Could not modify root role node!');
             }
         }
 
-        if ($this->hasRoleName($roleTransfer->getName()) === true) {
+        if ($this->hasRoleName($roleTransfer->getName())) {
             throw new RoleNameExistsException(
                 sprintf('Role with name "%s" already exists!', $roleTransfer->getName())
             );
