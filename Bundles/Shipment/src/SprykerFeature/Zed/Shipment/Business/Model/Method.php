@@ -5,8 +5,7 @@
 
 namespace SprykerFeature\Zed\Shipment\Business\Model;
 
-use Generated\Shared\Cart\CartInterface;
-use Generated\Shared\Shipment\CustomerAddressInterface;
+use Generated\Shared\Shipment\ShipmentMethodAvailabilityInterface;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface;
@@ -68,11 +67,10 @@ class Method
     }
 
     /**
-     * @param CartInterface $cartTransfer
-     * @param CustomerAddressInterface|null $shippingAddress
+     * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer
      * @return ShipmentTransfer
      */
-    public function getAvailableMethods(CartInterface $cartTransfer, CustomerAddressInterface $shippingAddress = null)
+    public function getAvailableMethods(ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
     {
         $shipmentTransfer = new ShipmentTransfer();
         $methods = $this->queryContainer->queryActiveMethods()->find();
@@ -81,10 +79,10 @@ class Method
             $methodTransfer = new ShipmentMethodTransfer();
             $methodTransfer->fromArray($method->toArray());
 
-            if ($this->isAvailable($method, $cartTransfer, $shippingAddress)) {
-                $methodTransfer->setPrice($this->getPrice($method, $cartTransfer, $shipmentTransfer));
-                $methodTransfer->setTaxRate($this->getTaxRate($method, $cartTransfer, $shippingAddress));
-                $methodTransfer->setTime($this->getDeliveryTime($method, $cartTransfer, $shippingAddress));
+            if ($this->isAvailable($method, $shipmentMethodAvailabilityTransfer)) {
+                $methodTransfer->setPrice($this->getPrice($method, $shipmentMethodAvailabilityTransfer));
+                $methodTransfer->setTaxRate($this->getTaxRate($method, $shipmentMethodAvailabilityTransfer));
+                $methodTransfer->setTime($this->getDeliveryTime($method, $shipmentMethodAvailabilityTransfer));
 
                 $shipmentTransfer->addMethod($methodTransfer);
             }
@@ -161,12 +159,11 @@ class Method
 
     /**
      * @param SpyShipmentMethod $method
-     * @param CartInterface $cartTransfer
-     * @param CustomerAddressInterface $shippingAddress
+     * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer
      *
      * @return bool
      */
-    private function isAvailable(SpyShipmentMethod $method, CartInterface $cartTransfer, CustomerAddressInterface $shippingAddress = null)
+    private function isAvailable(SpyShipmentMethod $method, ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
     {
         $availabilityPlugins = $this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS];
         $isAvailable = true;
@@ -174,7 +171,7 @@ class Method
         if (array_key_exists($method->getAvailabilityPlugin(), $availabilityPlugins)) {
             /** @var ShipmentMethodAvailabilityPluginInterface $availabilityPlugin */
             $availabilityPlugin = $availabilityPlugins[$method->getAvailabilityPlugin()];
-            $isAvailable = $availabilityPlugin->isAvailable($cartTransfer, $shippingAddress);
+            $isAvailable = $availabilityPlugin->isAvailable($shipmentMethodAvailabilityTransfer);
         }
 
         return $isAvailable;
@@ -182,12 +179,11 @@ class Method
 
     /**
      * @param SpyShipmentMethod $method
-     * @param CartInterface $cartTransfer
-     * @param CustomerAddressInterface $shippingAddress
+     * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer
      *
      * @return int
      */
-    private function getPrice(SpyShipmentMethod $method, CartInterface $cartTransfer, CustomerAddressInterface $shippingAddress = null)
+    private function getPrice(SpyShipmentMethod $method, ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
     {
         $price = $method->getPrice();
         $priceCalculationPlugins = $this->plugins[ShipmentDependencyProvider::PRICE_CALCULATION_PLUGINS];
@@ -195,7 +191,7 @@ class Method
         if (array_key_exists($method->getPriceCalculationPlugin(), $priceCalculationPlugins)) {
             /** @var ShipmentMethodPriceCalculationPluginInterface $priceCalculationPlugin */
             $priceCalculationPlugin = $priceCalculationPlugins[$method->getPriceCalculationPlugin()];
-            $price = $priceCalculationPlugin->getPrice($cartTransfer, $shippingAddress);
+            $price = $priceCalculationPlugin->getPrice($shipmentMethodAvailabilityTransfer);
         }
 
         return $price;
@@ -203,12 +199,11 @@ class Method
 
     /**
      * @param SpyShipmentMethod $method
-     * @param CartInterface $cartTransfer
-     * @param CustomerAddressInterface $shippingAddress
+     * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer
      *
      * @return int
      */
-    private function getTaxRate(SpyShipmentMethod $method, CartInterface $cartTransfer, CustomerAddressInterface $shippingAddress = null)
+    private function getTaxRate(SpyShipmentMethod $method, ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
     {
         $taxSetEntity = $method->getTaxSet();
 
@@ -225,19 +220,18 @@ class Method
         if (array_key_exists($method->getTaxCalculationPlugin(), $taxCalculationPlugins)) {
             /** @var ShipmentMethodTaxCalculationPluginInterface $taxCalculationPlugin */
             $taxCalculationPlugin = $taxCalculationPlugins[$method->getTaxCalculationPlugin()];
-            $effectiveTaxRate = $taxCalculationPlugin->getTaxRate($cartTransfer, $effectiveTaxRate, $shippingAddress);
+            $effectiveTaxRate = $taxCalculationPlugin->getTaxRate($shipmentMethodAvailabilityTransfer, $effectiveTaxRate);
         }
         return $effectiveTaxRate;
     }
 
     /**
      * @param SpyShipmentMethod $method
-     * @param CartInterface $cartTransfer
-     * @param CustomerAddressInterface $shippingAddress
+     * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer
      *
      * @return string
      */
-    private function getDeliveryTime(SpyShipmentMethod $method, CartInterface $cartTransfer, CustomerAddressInterface $shippingAddress = null)
+    private function getDeliveryTime(SpyShipmentMethod $method, ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
     {
         $timeString = '';
 
@@ -245,7 +239,7 @@ class Method
         if (array_key_exists($method->getDeliveryTimePlugin(), $deliveryTimePlugins)) {
             /** @var ShipmentMethodDeliveryTimePluginInterface $deliveryTimePlugin */
             $deliveryTimePlugin = $deliveryTimePlugins[$method->getDeliveryTimePlugin()];
-            $timeString = $deliveryTimePlugin->getTime($cartTransfer, $shippingAddress);
+            $timeString = $deliveryTimePlugin->getTime($shipmentMethodAvailabilityTransfer);
         }
 
         return $timeString;

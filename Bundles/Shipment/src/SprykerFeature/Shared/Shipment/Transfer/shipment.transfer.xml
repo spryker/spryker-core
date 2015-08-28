@@ -58,4 +58,8 @@
         <property name="iso2Code" type="string" />
     </transfer>
 
+    <transfer name="ShipmentMethodAvailability">
+        <property name="cart" type="Cart" />
+    </transfer>
+
 </transfers>
