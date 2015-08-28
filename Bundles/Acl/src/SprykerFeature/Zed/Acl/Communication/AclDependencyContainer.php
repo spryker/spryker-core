@@ -90,9 +90,8 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
     public function createGroupForm(Request $request)
     {
         return $this->getFactory()->createFormGroupForm(
-            $request,
-            $this->getFactory(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $request
         );
     }
 

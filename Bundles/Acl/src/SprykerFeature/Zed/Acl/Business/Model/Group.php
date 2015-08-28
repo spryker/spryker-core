@@ -218,6 +218,18 @@ class Group implements GroupInterface
 
     /**
      * @param int $idGroup
+     */
+    public function removeRolesFromGroup($idGroup)
+    {
+        $rolesForGroup = $this->queryContainer->queryGroupHasRole($idGroup)->find();
+
+        foreach ($rolesForGroup as $role) {
+            $role->delete();
+        }
+    }
+
+    /**
+     * @param int $idGroup
      * @param int $idUser
      *
      * @throws GroupAlreadyHasUserException

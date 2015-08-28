@@ -6,134 +6,91 @@
 
 namespace SprykerFeature\Zed\Acl\Communication\Form;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\AclCommunication;
-use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerFeature\Zed\Acl\Communication\Controller\GroupController;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class GroupForm extends AbstractForm
 {
 
-    const FIELD_ID_ACL_GROUP = 'id_acl_group';
-    const FIELD_NAME = 'name';
+    const FIELD_TITLE = 'title';
+    const FIELD_ROLES = 'roles';
 
-    /**
-     * @var FactoryInterface|AclCommunication
-     */
-    protected $factory;
+    const VALIDATE_ADD = 'add';
+    const VALIDATE_EDIT = 'edit';
 
-    /**
-     * @var AclQueryContainer
-     */
-    protected $aclQueryContainer;
+    protected $queryContainer;
 
-    /** @var int */
-    protected $idGroup;
+    protected $request;
+
+    public function __construct(AclQueryContainer $queryContainer, Request $request)
+    {
+        $this->queryContainer = $queryContainer;
+        $this->request = $request;
+    }
 
     protected function buildFormFields()
     {
-        // @todo: Implement buildFormFields() method.
-        $this->addText('title');
+        $this->addText(self::FIELD_TITLE, [
+            'constraints' => [
+                new Assert\NotBlank([
+                    'groups' => [self::VALIDATE_ADD, self::VALIDATE_EDIT]
+                ]),
+                new Assert\Callback([
+                    'groups' => [self::VALIDATE_ADD],
+                    'methods' => [
+                        function($name, ExecutionContextInterface $contextInterface) {
+                            if ($this->queryContainer->queryGroupByName($name)->count() > 0) {
+                                $contextInterface->addViolation('Group name already in use');
+                            }
+                        },
+                    ],
+                ]),
+            ]
+        ]);
+
+        $this->add(self::FIELD_ROLES, 'choice', [
+            'label'       => 'Customer Group',
+            'empty_value' => false,
+            'multiple'    => true,
+            'choices'     => $this->getAvailableRoleList(),
+        ]);
     }
 
     protected function populateFormFields()
     {
-        // @todo: Implement populateFormFields() method.
-        return [];
-    }
+        $defaultData = [
+            self::FIELD_TITLE => '',
+            self::FIELD_ROLES => [],
+        ];
 
-    public function __construct()
-    {
+        $idGroup = $this->request->query->get(GroupController::ID_GROUP_PARAMETER);
 
-    }
+        if ($idGroup > 0) {
+            $group = $this->queryContainer->queryGroupById($idGroup)->findOne();
+            $defaultData[self::FIELD_TITLE] = $group->getName();
 
-    /**
-     * @param Request $request
-     * @param LocatorLocatorInterface $locator
-     * @param FactoryInterface $factory
-     * @param AclQueryContainer $queryContainer
-     */
-    public function __construct_old(
-        Request $request,
-        FactoryInterface $factory,
-        AclQueryContainer $queryContainer = null
-    ) {
-        $this->factory = $factory;
-        $this->aclQueryContainer = $queryContainer;
-        parent::__construct($request);
-    }
-
-    /**
-     * @return array
-     */
-    protected function getDefaultData()
-    {
-        $response = [];
-
-        if ($this->getGroupId()) {
-            $query = $this->getAclQueryContainer()->queryGroupById($this->getGroupId());
-
-            $entity = $query->findOne();
-
-            $response = $entity->toArray();
-            $response[self::FIELD_ID_ACL_GROUP] = (int) $response[self::FIELD_ID_ACL_GROUP];
+            $defaultData[self::FIELD_ROLES] = $this->getAvailableRoleListByIdGroup($idGroup);
         }
 
-        return $response;
+        return $defaultData;
     }
 
-    /**
-     *
-     */
-    public function addFormFields()
+    public function getAvailableRoleListByIdGroup($idGroup)
     {
-        $this->addField(self::FIELD_ID_ACL_GROUP);
+        $roleCollection = $this->queryContainer->queryGroupHasRole($idGroup)->find()->toArray();
 
-        $this->addField(self::FIELD_NAME)
-            ->setConstraints(
-                [
-                    new Assert\Type([
-                        'type' => 'string',
-                    ]),
-
-                    new Assert\NotBlank(),
-
-                    $this->factory->createConstraintGroupExistsConstraint(
-                        $this->getGroupName(),
-                        $this->getGroupId(),
-                        $this->getLocator()
-                    ),
-                ]
-            );
+        return array_column($roleCollection, 'FkAclRole');
     }
 
-    protected function getGroupName()
+    public function getAvailableRoleList()
     {
-        return $this->stateContainer->getRequestValue(self::FIELD_NAME);
-    }
+        $roleCollection = $this->queryContainer->queryRole()->find()->toArray();
 
-    /**
-     * @return int
-     */
-    protected function getGroupId()
-    {
-        return $this->idGroup;
-    }
-
-    public function setGroupId($idGroup)
-    {
-        $this->idGroup = $idGroup;
-    }
-
-    /**
-     * @return AclQueryContainer
-     */
-    protected function getAclQueryContainer()
-    {
-        return $this->aclQueryContainer;
+        return array_column($roleCollection, 'Name', 'IdAclRole');
     }
 
 }

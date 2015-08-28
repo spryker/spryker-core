@@ -6,9 +6,9 @@
 
 namespace SprykerFeature\Zed\Acl\Communication\Controller;
 
-use Generated\Shared\Transfer\GroupTransfer;
 use SprykerFeature\Zed\Acl\Business\AclFacade;
 use SprykerFeature\Zed\Acl\Communication\AclDependencyContainer;
+use SprykerFeature\Zed\Acl\Communication\Form\GroupForm;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -47,19 +47,76 @@ class GroupController extends AbstractController
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return array|RedirectResponse
+     */
     public function addAction(Request $request)
     {
         $form = $this->getDependencyContainer()->createGroupForm($request);
+        $form->setOptions([
+            'validation_groups' => [GroupForm::VALIDATE_ADD],
+        ]);
 
         $form->handleRequest();
 
         if ($form->isValid()) {
-            $data = $form->getData();
+            $formData = $form->getData();
+
+            $groupTransfer = $this->getFacade()->addGroup($formData[GroupForm::FIELD_TITLE]);
+
+            $this->assignRolesToGroup($groupTransfer->getIdAclGroup(), $formData[GroupForm::FIELD_ROLES]);
+
+            return $this->redirectResponse('/acl/group/edit?' . self::ID_GROUP_PARAMETER . '=' . $groupTransfer->getIdAclGroup());
         }
 
         return $this->viewResponse([
             'form' => $form->createView(),
         ]);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return array|RedirectResponse
+     */
+    public function editAction(Request $request)
+    {
+        $idGroup = $request->query->get(self::ID_GROUP_PARAMETER);
+
+        $form = $this->getDependencyContainer()->createGroupForm($request);
+        $form->setOptions([
+            'validation_groups' => [GroupForm::VALIDATE_EDIT],
+        ]);
+
+        $form->handleRequest();
+
+        if ($form->isValid()) {
+            $formData = $form->getData();
+
+            $groupTransfer = $this->getFacade()->getGroup($idGroup);
+            $groupTransfer->setName($formData[GroupForm::FIELD_TITLE]);
+
+            $groupTransfer = $this->getFacade()->updateGroup($groupTransfer);
+
+            $this->assignRolesToGroup($groupTransfer->getIdAclGroup(), $formData[GroupForm::FIELD_ROLES]);
+
+            return $this->redirectResponse('/acl/group/edit?' . self::ID_GROUP_PARAMETER . '=' . $groupTransfer->getIdAclGroup());
+        }
+
+        return $this->viewResponse([
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @param int $idGroup
+     * @param array $rolesArray
+     */
+    protected function assignRolesToGroup($idGroup, array $rolesArray)
+    {
+        $this->getFacade()->assignRolesToGroup($idGroup, $rolesArray);
     }
 
     /**
@@ -87,55 +144,6 @@ class GroupController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return array
-     */
-    public function viewAction(Request $request)
-    {
-        $idGroup = $request->get('id');
-        $query = sprintf('?id=%s', $idGroup);
-
-        return $this->viewResponse(['query' => $query]);
-    }
-
-//    /**
-//     * @param Request $request
-//     *
-//     * @return JsonResponse
-//     */
-//    public function formAction(Request $request)
-//    {
-//        $form = $this->getDependencyContainer()->createGroupForm(
-//            $request
-//        );
-//
-//        $idGroup = $request->get('id');
-//        if (!empty($idGroup)) {
-//            $form->setGroupId($idGroup);
-//        }
-//
-//        $statusCode = 200;
-//
-//        $form->init();
-//
-//        if ($form->isValid()) {
-//            $data = $form->getRequestData();
-//            $group = new GroupTransfer();
-//            $group->setName($data['name']);
-//
-//            if (!empty($idGroup)) {
-//                $group->setIdAclGroup($idGroup);
-//                $this->getFacade()->updateGroup($group);
-//            } else {
-//                $this->getFacade()->addGroup($group->getName());
-//            }
-//        }
-//
-//        return $this->jsonResponse($form->renderData(), $statusCode);
-//    }
-
-    /**
-     * @param Request $request
-     *
      * @return JsonResponse
      */
     public function listAction(Request $request)
@@ -159,11 +167,6 @@ class GroupController extends AbstractController
         $data = $grid->renderData();
 
         return $this->jsonResponse($data);
-    }
-
-    public function rulesetAction(Request $request)
-    {
-
     }
 
     /**
