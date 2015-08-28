@@ -15,8 +15,8 @@ class Event implements EventInterface
     private $fields = [];
 
     /**
-     * @param $name
-     * @param $data
+     * @param string $name
+     * @param array|string $data
      *
      * @throws DataInvalidException
      */

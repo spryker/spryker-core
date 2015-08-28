@@ -14,12 +14,18 @@ abstract class AbstractEventJournal
     /**
      * @var DataCollectorInterface[]
      */
-    private $dataCollectors;
+    private $dataCollectors = [];
 
     /**
      * @var WriterInterface[]
      */
-    private $eventWriters;
+    private $eventWriters = [];
+
+    public function __construct() {
+        $this->addDataCollector(new ServerDataCollector());
+        $this->addDataCollector(new RequestDataCollector());
+        $this->addDataCollector(new EnvironmentDataCollector());
+    }
 
     /**
      * @param DataCollectorInterface $dataCollector

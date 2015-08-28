@@ -8,10 +8,6 @@ namespace SprykerEngine\Shared\Lumberjack\Model;
 
 interface EventInterface
 {
-
-
-    const FIELD_EVENT_NAME = 'event_name';
-
     /**
      * @param $name
      * @param $data
