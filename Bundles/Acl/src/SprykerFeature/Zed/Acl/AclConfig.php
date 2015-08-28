@@ -53,10 +53,10 @@ class AclConfig extends AbstractBundleConfig
     public function setRules($bundle, $controller, $action, $type)
     {
         $this->rules[] = [
-            'bundle'     => $bundle,
+            'bundle' => $bundle,
             'controller' => $controller,
-            'action'     => $action,
-            'type'       => $type,
+            'action' => $action,
+            'type' => $type,
         ];
     }
 
@@ -83,11 +83,11 @@ class AclConfig extends AbstractBundleConfig
     {
         return [
             [
-                'bundle'     => self::VALIDATOR_WILDCARD,
+                'bundle' => self::VALIDATOR_WILDCARD,
                 'controller' => self::VALIDATOR_WILDCARD,
-                'action'     => self::VALIDATOR_WILDCARD,
-                'type'       => self::ALLOW,
-                'role'       => self::ROOT_ROLE,
+                'action' => self::VALIDATOR_WILDCARD,
+                'type' => self::ALLOW,
+                'role' => self::ROOT_ROLE,
                 //this is related to the installer_data only and will not interact with existing data if any
             ],
         ];
@@ -100,7 +100,7 @@ class AclConfig extends AbstractBundleConfig
     {
         return [
             [
-                'name'  => self::ROOT_ROLE,
+                'name' => self::ROOT_ROLE,
                 'group' => self::ROOT_GROUP,
                 //this is related to the installer_data only and will not interact with existing data if any
             ],
@@ -139,4 +139,5 @@ class AclConfig extends AbstractBundleConfig
         }
         return [];
     }
+
 }
