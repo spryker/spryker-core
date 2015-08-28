@@ -2,6 +2,21 @@
 
 var memoize = new GroupModalMemoization();
 
+function spinnerCreate(elementId){
+    var container = $('<div/>', {
+        class: 'sk-spinner sk-spinner-circle'
+    });
+    for (var I = 1; I<=12; I++) {
+        var circle = $('<div>', {
+            class: 'sk-circle sk-circle' + I
+        }).appendTo(container);
+    }
+    $(elementId).html(container);
+}
+function spinnerClear(elementId){
+    $(elementId).html('');
+}
+
 /**
  * @param int idGroup
  */
@@ -13,6 +28,7 @@ SprykerAjax.prototype.getRolesForGroup = function(idGroup) {
         var ajaxCallbacks = new SprykerAjaxCallbacks();
         ajaxCallbacks.displayGroupRoles(memoize.getMember(idGroup));
     } else {
+        spinnerCreate('#group-spinner-' + idGroup);
         this
             .setUrl('/acl/group/roles')
             .ajaxSubmit(options, 'displayGroupRoles');
@@ -33,6 +49,7 @@ SprykerAjaxCallbacks.prototype.displayGroupRoles = function(ajaxResponse){
             ajaxResponse.data.forEach(function(role){
                 groupModal.addGroupRoleElement(role);
             });
+            spinnerClear('#group-spinner-' + ajaxResponse.idGroup);
             groupModal.showModal();
         }
     }
