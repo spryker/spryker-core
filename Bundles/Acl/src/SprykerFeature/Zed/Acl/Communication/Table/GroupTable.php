@@ -54,20 +54,20 @@ class GroupTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->aclGroupQuery
-            ->leftJoinSpyAclGroupsHasRoles('has_roles')
+            ->leftJoinSpyAclGroupsHasRoles()
             ->groupByIdAclGroup()
             ->withColumn('COUNT(*)', self::ROLES)
         ;
 
-        $groupsResult = $this->runQuery($query, $config);
+        $groupCollection = $this->runQuery($query, $config);
 
         $groups = [];
 
-        foreach ($groupsResult as $group) {
+        foreach ($groupCollection as $group) {
             $groups[] = [
                 SpyAclGroupTableMap::COL_NAME => $group[SpyAclGroupTableMap::COL_NAME],
                 SpyAclGroupTableMap::COL_CREATED_AT => $group[SpyAclGroupTableMap::COL_CREATED_AT],
-                self::ROLES => $this->createRolesUrl($group),
+                self::ROLES => $this->createRoleUrl($group),
             ];
         }
 
@@ -79,7 +79,7 @@ class GroupTable extends AbstractTable
      *
      * @return string
      */
-    protected function createRolesUrl(array $group)
+    protected function createRoleUrl(array $group)
     {
         return '<a href="#" class="display-roles" id="group-'
             . $group[SpyAclGroupTableMap::COL_ID_ACL_GROUP] . '">'
