@@ -73,7 +73,7 @@ class AclConfig extends AbstractBundleConfig
      */
     public function getAccessDeniedUri()
     {
-        return '/acl/denied';
+        return '/acl/index/denied';
     }
 
     /**
@@ -127,6 +127,17 @@ class AclConfig extends AbstractBundleConfig
             ],
             //this is related to existent username and will be searched into the database
         ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getUserRuleWhitelist()
+    {
+        if (Config::hasValue(AclSharedConfig::ACL_USER_RULE_WHITELIST)) {
+            return Config::get(AclSharedConfig::ACL_USER_RULE_WHITELIST);
+        }
+        return [];
     }
 
 }
