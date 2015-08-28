@@ -47,6 +47,21 @@ class GroupController extends AbstractController
         );
     }
 
+    public function addAction(Request $request)
+    {
+        $form = $this->getDependencyContainer()->createGroupForm($request);
+
+        $form->handleRequest();
+
+        if ($form->isValid()) {
+            $data = $form->getData();
+        }
+
+        return $this->viewResponse([
+            'form' => $form->createView(),
+        ]);
+    }
+
     /**
      * @return GroupTable
      */
@@ -82,41 +97,41 @@ class GroupController extends AbstractController
         return $this->viewResponse(['query' => $query]);
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function formAction(Request $request)
-    {
-        $form = $this->getDependencyContainer()->createGroupForm(
-            $request
-        );
-
-        $idGroup = $request->get('id');
-        if (!empty($idGroup)) {
-            $form->setGroupId($idGroup);
-        }
-
-        $statusCode = 200;
-
-        $form->init();
-
-        if ($form->isValid()) {
-            $data = $form->getRequestData();
-            $group = new GroupTransfer();
-            $group->setName($data['name']);
-
-            if (!empty($idGroup)) {
-                $group->setIdAclGroup($idGroup);
-                $this->getFacade()->updateGroup($group);
-            } else {
-                $this->getFacade()->addGroup($group->getName());
-            }
-        }
-
-        return $this->jsonResponse($form->renderData(), $statusCode);
-    }
+//    /**
+//     * @param Request $request
+//     *
+//     * @return JsonResponse
+//     */
+//    public function formAction(Request $request)
+//    {
+//        $form = $this->getDependencyContainer()->createGroupForm(
+//            $request
+//        );
+//
+//        $idGroup = $request->get('id');
+//        if (!empty($idGroup)) {
+//            $form->setGroupId($idGroup);
+//        }
+//
+//        $statusCode = 200;
+//
+//        $form->init();
+//
+//        if ($form->isValid()) {
+//            $data = $form->getRequestData();
+//            $group = new GroupTransfer();
+//            $group->setName($data['name']);
+//
+//            if (!empty($idGroup)) {
+//                $group->setIdAclGroup($idGroup);
+//                $this->getFacade()->updateGroup($group);
+//            } else {
+//                $this->getFacade()->addGroup($group->getName());
+//            }
+//        }
+//
+//        return $this->jsonResponse($form->renderData(), $statusCode);
+//    }
 
     /**
      * @param Request $request

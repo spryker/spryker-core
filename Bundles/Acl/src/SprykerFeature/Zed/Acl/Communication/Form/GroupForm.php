@@ -36,11 +36,18 @@ class GroupForm extends AbstractForm
     protected function buildFormFields()
     {
         // @todo: Implement buildFormFields() method.
+        $this->addText('title');
     }
 
     protected function populateFormFields()
     {
         // @todo: Implement populateFormFields() method.
+        return [];
+    }
+
+    public function __construct()
+    {
+
     }
 
     /**
@@ -49,7 +56,7 @@ class GroupForm extends AbstractForm
      * @param FactoryInterface $factory
      * @param AclQueryContainer $queryContainer
      */
-    public function __construct(
+    public function __construct_old(
         Request $request,
         FactoryInterface $factory,
         AclQueryContainer $queryContainer = null
