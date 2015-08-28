@@ -15,7 +15,19 @@ use SprykerFeature\Zed\Acl\Communication\AclDependencyContainer;
 class IndexController extends AbstractController
 {
 
+    /**
+     * @return void
+     */
     public function indexAction()
+    {
+
+    }
+
+
+    /**
+     * @return void
+     */
+    public function deniedAction()
     {
     }
 }

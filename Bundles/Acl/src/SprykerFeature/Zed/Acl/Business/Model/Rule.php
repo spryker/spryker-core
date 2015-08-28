@@ -304,22 +304,43 @@ class Rule implements RuleInterface
             return true;
         }
 
-        $group = $this->group->getUserGroup($userTransfer->getIdUser());
-        if ($group === null) {
+        $groups = $this->group->getUserGroups($userTransfer->getIdUser());
+        if (empty($groups->getGroups())) {
             return false;
         }
 
-        $rulesTransfer = $this->getRulesForGroupId($group->getIdAclGroup());
-        if ($rulesTransfer === null) {
-            return false;
+        $this->provideUserRuleWhitelist();
+
+        foreach ($groups->getGroups() as $group) {
+            $rulesTransfer = $this->getRulesForGroupId($group->getIdAclGroup());
+
+            if (empty($rulesTransfer->getRules())) {
+                continue;
+            }
+
+            $this->rulesValidator->setRules($rulesTransfer);
+            $isAccesible = $this->rulesValidator->isAccessible($bundle, $controller, $action);
+
+            if ($isAccesible) {
+                return true;
+            }
         }
 
-        $this->rulesValidator->setRules($rulesTransfer);
+        return false;
+    }
 
-        return $this->rulesValidator->isAccessible($bundle, $controller, $action);
+    /**
+     * @return void
+     */
+    protected function provideUserRuleWhitelist()
+    {
+        $ruleWhitelist = $this->settings->getUserRuleWhitelist();
 
-
-
+        foreach ($ruleWhitelist as $rule) {
+            $rulesTransfer = new RuleTransfer();
+            $rulesTransfer->fromArray($rule, true);
+            $this->rulesValidator->addRule($rulesTransfer);
+        }
     }
 
 }
