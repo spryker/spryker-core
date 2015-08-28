@@ -61,6 +61,7 @@ class Method
             ->setAvailabilityPlugin($methodTransfer->getAvailabilityPlugin())
             ->setPriceCalculationPlugin($methodTransfer->getPriceCalculationPlugin())
             ->setDeliveryTimePlugin($methodTransfer->getDeliveryTimePlugin())
+            ->setTaxCalculationPlugin($methodTransfer->getTaxCalculationPlugin())
             ->save();
 
         return $methodEntity->getPrimaryKey();

@@ -6,12 +6,10 @@
 
 namespace SprykerFeature\Zed\Shipment\Communication\Table;
 
-use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Shared\Library\Currency\CurrencyManager;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\Shipment\Persistence\Propel\Map\SpyShipmentMethodTableMap;
-use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentMethod;
 use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentMethodQuery;
 
 class MethodTable extends AbstractTable
@@ -95,6 +93,7 @@ class MethodTable extends AbstractTable
         foreach ($queryResults as $item) {
             $methodQuery = clone $query;
             $method = $methodQuery
+                ->offset(0)
                 ->findOneByIdShipmentMethod(
                     $item[SpyShipmentMethodTableMap::COL_ID_SHIPMENT_METHOD]
                 );
