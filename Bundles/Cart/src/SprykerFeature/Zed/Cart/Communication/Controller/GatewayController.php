@@ -62,9 +62,9 @@ class GatewayController extends AbstractGatewayController
      *
      * @return CartInterface
      */
-    public function recalculateCart(CartInterface $cart)
+    public function recalculateAction(CartInterface $cart)
     {
-        return $this->getFacade()->recalculateCart($cart);
+        return $this->getFacade()->recalculate($cart);
     }
 
 }
