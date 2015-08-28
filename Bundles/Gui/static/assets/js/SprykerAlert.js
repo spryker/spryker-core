@@ -1,34 +1,38 @@
 'use strict';
 
 function SprykerAlert() {
-    this.init = function(){
-        this.clean();
+    var self = this;
+    self.init = function(){
+        self.clean();
     };
-    this.success = function(message){
+    self.success = function(message){
         var data = {
             "message": message,
             "title": "Success"
         };
-        this.clangeClass('alert-success');
-        this.displayAlert(data);
+        self.clangeClass('alert-success');
+        self.displayAlert(data);
     };
-    this.error = function(message) {
+    self.error = function(message) {
         var data = {
             "message": message,
             "title": "Error"
         };
-        this.clangeClass('alert-danger');
-        this.displayAlert(data);
+        self.clangeClass('alert-danger');
+        self.displayAlert(data);
     };
-    this.info = function(message){
+    self.info = function(message){
+        return self.custom(message);
+    };
+    self.custom = function(message, title){
         var data = {
             "message": message,
-            "title": "Info"
+            "title": title || "Info"
         };
-        this.clangeClass('alert-info');
-        this.displayAlert(data);
+        self.clangeClass('alert-info');
+        self.displayAlert(data);
     };
-    this.clean = function() {
+    self.clean = function() {
         $('#modal-content').removeClass([
             'alert-success',
             'alert-danger',
@@ -38,14 +42,17 @@ function SprykerAlert() {
         $('#modal-title').html('');
         $('#modal-body').html('');
     };
-    this.clangeClass = function(className){
-        this.clean();
+    self.clangeClass = function(className){
+        self.clean();
         $('#modal-content').addClass(className);
     };
-    this.displayAlert = function(options){
+    self.displayAlert = function(options){
         $('#modal-title').html(options.title);
         $('#modal-body').html(options.message);
+        self.show();
+    };
+    self.show = function(){
         $('#modal-alert').modal('show');
     };
-    this.init();
+    self.init();
 }
