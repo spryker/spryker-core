@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Acl\Communication\Plugin\Bootstrap;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Acl\Business\AclFacade;
 use SprykerFeature\Zed\Acl\Communication\AclDependencyContainer;
 use Symfony\Component\HttpFoundation\Request;
@@ -35,26 +34,26 @@ class AclBootstrapProvider extends AbstractPlugin implements ServiceProviderInte
      */
     public function boot(Application $app)
     {
-        $aclFacade = $this->getFacade();
-        $userFacade = Locator::getInstance()->user()->facade();
-        $settings = $this->getDependencyContainer()->getConfig();
+        $facadeAcl = $this->getFacade();
+        $facadeUser = $this->getDependencyContainer()->createUserFacade();
+        $config = $this->getDependencyContainer()->getConfig();
 
-        $app->before(function (Request $request) use ($app, $aclFacade, $userFacade, $settings) {
+        $app->before(function (Request $request) use ($app, $facadeAcl, $facadeUser, $config) {
             $bundle = $request->attributes->get('module');
             $controller = $request->attributes->get('controller');
             $action = $request->attributes->get('action');
 
-            if ($aclFacade->isIgnorable($bundle, $controller, $action)) {
+            if ($facadeAcl->isIgnorable($bundle, $controller, $action)) {
                 return true;
             }
 
-            if (!$userFacade->hasCurrentUser()) {
-                return $app->redirect($settings->getAccessDeniedUri());
+            if (!$facadeUser->hasCurrentUser()) {
+                return $app->redirect($config->getAccessDeniedUri());
             }
 
-            $user = $userFacade->getCurrentUser();
-            if (!$aclFacade->checkAccess($user, $bundle, $controller, $action)) {
-                return $app->redirect($settings->getAccessDeniedUri());
+            $user = $facadeUser->getCurrentUser();
+            if (!$facadeAcl->checkAccess($user, $bundle, $controller, $action)) {
+                return $app->redirect($config->getAccessDeniedUri());
             }
         });
     }

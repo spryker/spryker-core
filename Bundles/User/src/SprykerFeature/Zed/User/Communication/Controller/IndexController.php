@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\User\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
 use SprykerFeature\Zed\User\Business\UserFacade;
 use SprykerFeature\Zed\User\Communication\UserDependencyContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;

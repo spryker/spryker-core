@@ -71,60 +71,38 @@ class Rule implements RuleInterface
     }
 
     /**
-     * @param string $bundle
-     * @param string $controller
-     * @param string $action
-     * @param int $idRole
-     * @param string $type
+     * @param RuleTransfer $ruleTransfer
      *
      * @throws RuleNotFoundException
-     *
      * @return RuleTransfer
      */
-    public function addRule($bundle, $controller, $action, $idRole, $type = 'allow')
+    public function addRule(RuleTransfer $ruleTransfer)
     {
-        $data = new RuleTransfer();
-
-        $data->setBundle($bundle);
-        $data->setController($controller);
-        $data->setAction($action);
-        $data->setType($type);
-        $data->setFkAclRole($idRole);
-
-        return $this->save($data);
+        return $this->save($ruleTransfer);
     }
 
     /**
-     * @param RuleTransfer $data
+     * @param RuleTransfer $ruleTransfer
      *
      * @throws RuleNotFoundException
      *
      * @return RuleTransfer
      */
-    public function save(RuleTransfer $data)
+    public function save(RuleTransfer $ruleTransfer)
     {
-        $entity = new SpyAclRule();
+        $aclRuleEntity = new SpyAclRule();
 
-        if ($data->getIdAclRule() !== null && $this->hasRule($data->getIdAclRule()) === true) {
+        if ($ruleTransfer->getIdAclRule() !== null && $this->hasRule($ruleTransfer->getIdAclRule()) === true) {
             throw new RuleNotFoundException();
-
         }
 
-        if ($data->getIdAclRule() !== null) {
-            $entity->setIdAclRule($data->getIdAclRule());
-        }
+        $aclRuleEntity->fromArray($ruleTransfer->toArray());
+        $aclRuleEntity->save();
 
-        $entity->setFkAclRole($data->getFkAclRole());
-        $entity->setBundle($data->getBundle());
-        $entity->setController($data->getController());
-        $entity->setAction($data->getAction());
-        $entity->setType($data->getType());
-        $entity->save();
+        $ruleTransfer = new RuleTransfer();
+        $ruleTransfer = Copy::entityToTransfer($ruleTransfer, $aclRuleEntity);
 
-        $transfer = new RuleTransfer();
-        $transfer = Copy::entityToTransfer($transfer, $entity);
-
-        return $transfer;
+        return $ruleTransfer;
     }
 
     /**
@@ -134,9 +112,9 @@ class Rule implements RuleInterface
      */
     public function hasRule($idRule)
     {
-        $entity = $this->queryContainer->queryRuleById($idRule)->count();
+        $aclRuleEntity = $this->queryContainer->queryRuleById($idRule)->count();
 
-        return $entity > 0;
+        return $aclRuleEntity > 0;
     }
 
     /**
@@ -146,13 +124,13 @@ class Rule implements RuleInterface
      */
     public function getRoleRules($idRole)
     {
-        $role = new RoleTransfer();
-        $role->setIdAclRole($idRole);
+        $roleTransfer = new RoleTransfer();
+        $roleTransfer->setIdAclRole($idRole);
 
-        $roles = new RolesTransfer();
-        $roles->addRole($role);
+        $rolesTransfer = new RolesTransfer();
+        $rolesTransfer->addRole($roleTransfer);
 
-        $rules = $this->findByRoles($roles);
+        $rules = $this->findByRoles($rolesTransfer);
 
         return $rules;
     }
@@ -191,15 +169,15 @@ class Rule implements RuleInterface
     ) {
         $results = $this->queryContainer->queryRuleByPathAndRoles($roles, $bundle, $controller, $action)->find();
 
-        $collection = new RulesTransfer();
+        $rulesTransfer = new RulesTransfer();
 
         foreach ($results as $result) {
-            $transfer = new RuleTransfer();
-            Copy::entityToTransfer($transfer, $result);
-            $collection->addRule($transfer);
+            $ruleTransfer = new RuleTransfer();
+            Copy::entityToTransfer($ruleTransfer, $result);
+            $rulesTransfer->addRule($ruleTransfer);
         }
 
-        return $collection;
+        return $rulesTransfer;
     }
 
     /**
@@ -212,15 +190,15 @@ class Rule implements RuleInterface
         $relationshipCollection = $this->queryContainer->queryGroupHasRole($idGroup)->find();
         $results = $this->queryContainer->queryGroupRules($relationshipCollection)->find();
 
-        $collection = new RulesTransfer();
+        $rulesTransfer = new RulesTransfer();
 
         foreach ($results as $result) {
-            $transfer = new RuleTransfer();
-            Copy::entityToTransfer($transfer, $result);
-            $collection->addRule($transfer);
+            $ruleTransfer = new RuleTransfer();
+            Copy::entityToTransfer($ruleTransfer, $result);
+            $rulesTransfer->addRule($ruleTransfer);
         }
 
-        return $collection;
+        return $rulesTransfer;
     }
 
     /**
@@ -232,16 +210,16 @@ class Rule implements RuleInterface
      */
     public function getRuleById($id)
     {
-        $entity = $this->queryContainer->queryRuleById($id)->findOne();
+        $aclRuleEntity = $this->queryContainer->queryRuleById($id)->findOne();
 
-        if ($entity === null) {
+        if ($aclRuleEntity === null) {
             throw new RuleNotFoundException();
         }
 
-        $transfer = new RuleTransfer();
-        $transfer = Copy::entityToTransfer($transfer, $entity);
+        $ruleTransfer = new RuleTransfer();
+        $ruleTransfer = Copy::entityToTransfer($ruleTransfer, $aclRuleEntity);
 
-        return $transfer;
+        return $ruleTransfer;
     }
 
     /**
@@ -253,9 +231,9 @@ class Rule implements RuleInterface
      */
     public function removeRuleById($id)
     {
-        $entity = $this->queryContainer->queryRuleById($id)->delete();
+        $aclRuleEntity = $this->queryContainer->queryRuleById($id)->delete();
 
-        if ($entity <= 0) {
+        if ($aclRuleEntity <= 0) {
             throw new RuleNotFoundException();
         }
 
@@ -271,81 +249,77 @@ class Rule implements RuleInterface
      */
     public function isIgnorable($bundle, $controller, $action)
     {
-        $ignore = $this->settings->getRules();
+        $ignoredRules = $this->settings->getRules();
 
-        foreach ($ignore as $arrayRule) {
-            $rule = new RuleTransfer();
-            $rule->setBundle($arrayRule['bundle']);
-            $rule->setController($arrayRule['controller']);
-            $rule->setAction($arrayRule['action']);
-            $rule->setType($arrayRule['type']);
+        foreach ($ignoredRules as $arrayRule) {
+            $ruleTransfer = new RuleTransfer();
+            $ruleTransfer->setBundle($arrayRule['bundle']);
+            $ruleTransfer->setController($arrayRule['controller']);
+            $ruleTransfer->setAction($arrayRule['action']);
+            $ruleTransfer->setType($arrayRule['type']);
 
-            $this->rulesValidator->addRule($rule);
+            $this->rulesValidator->addRule($ruleTransfer);
         }
 
         return $this->rulesValidator->isAccessible($bundle, $controller, $action);
     }
 
     /**
-     * @param UserTransfer $user
+     * @param UserTransfer $userTransfer
      *
      * @throws UserNotFoundException
      */
-    public function registerSystemUserRules(UserTransfer $user)
+    public function registerSystemUserRules(UserTransfer $userTransfer)
     {
         $credentials = $this->settings->getCredentials();
 
-        $credential = array_filter($credentials, function ($username) use ($user) {
-            return $username === $user->getUsername();
+        $credential = array_filter($credentials, function ($username) use ($userTransfer) {
+            return $username === $userTransfer->getUsername();
         }, ARRAY_FILTER_USE_KEY);
 
         if (count($credential) === 0) {
             throw new UserNotFoundException();
         }
 
-        foreach ($credential[$user->getUsername()]['rules'] as $rule) {
+        foreach ($credential[$userTransfer->getUsername()]['rules'] as $rule) {
             $this->settings->setRules($rule['bundle'], $rule['controller'], $rule['action'], $rule['type']);
         }
     }
 
     /**
-     * @param UserTransfer $user
+     * @param UserTransfer $userTransfer
      * @param string $bundle
      * @param string $controller
      * @param string $action
      *
      * @return bool
      */
-    public function isAllowed(UserTransfer $user, $bundle, $controller, $action)
+    public function isAllowed(UserTransfer $userTransfer, $bundle, $controller, $action)
     {
-        if ($this->facadeUser->isSystemUser($user)) {
-            $this->registerSystemUserRules($user);
+        if ($this->facadeUser->isSystemUser($userTransfer)) {
+            $this->registerSystemUserRules($userTransfer);
         }
 
         if ($this->isIgnorable($bundle, $controller, $action)) {
             return true;
         }
 
-        $group = $this->group->getUserGroup($user->getIdUser());
-        $rules = $this->getRulesForGroupId($group->getIdAclGroup());
-
-        if ($this->facadeUser->isSystemUser($user)) {
-            return false;
-        }
-
-        $group = $this->group->getUserGroup($user->getIdUser());
+        $group = $this->group->getUserGroup($userTransfer->getIdUser());
         if ($group === null) {
             return false;
         }
 
-        $rules = $this->getRulesForGroupId($group->getIdAclGroup());
-        if ($rules === null) {
+        $rulesTransfer = $this->getRulesForGroupId($group->getIdAclGroup());
+        if ($rulesTransfer === null) {
             return false;
         }
 
-        $this->rulesValidator->setRules($rules);
+        $this->rulesValidator->setRules($rulesTransfer);
 
         return $this->rulesValidator->isAccessible($bundle, $controller, $action);
+
+
+
     }
 
 }

@@ -6,12 +6,12 @@
 
 namespace SprykerFeature\Zed\Acl\Communication\Controller;
 
-use Generated\Shared\Transfer\GroupTransfer;
+use Generated\Shared\Transfer\RuleTransfer;
 use SprykerFeature\Zed\Acl\Business\AclFacade;
 use SprykerFeature\Zed\Acl\Communication\AclDependencyContainer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * @method AclDependencyContainer getDependencyContainer()
@@ -19,80 +19,31 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class RulesetController extends AbstractController
 {
-
-    const USER_LIST_URL = '/acl/users';
-
-    /**
-     * @param Request $request
-     *
-     * @return array
-     */
-    public function indexAction(Request $request)
-    {
-        $idGroup = $request->get('id');
-        $query = sprintf('?id=%s', $idGroup);
-
-        return $this->viewResponse(['query' => $query]);
-    }
+    const ROLE_UPDATE_URL = '/acl/role/update?id-role=%d';
 
     /**
      * @param Request $request
      *
-     * @return JsonResponse
+     * @return RedirectResponse
      */
-    public function formAction(Request $request)
+    public function deleteAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createGroupForm(
-            $request
-        );
+        $idRule = $request->get('id-rule');
+        $idRole = $request->get('id-role');
 
-        $idGroup = $request->get('id');
-        if (!empty($idGroup)) {
-            $form->setGroupId($idGroup);
+        if (empty($idRule)) {
+            $this->addErrorMessage('Missing rule id!');
+            return $this->redirectResponse(sprintf(self::ROLE_UPDATE_URL, $idRole));
         }
 
-        $statusCode = 200;
+        $removeStatus = $this->getFacade()->removeRule($idRule);
 
-        $form->init();
-
-        if ($form->isValid()) {
-            $data = $form->getRequestData();
-            $group = new GroupTransfer();
-            $group->setName($data['name']);
-
-            if (!empty($idGroup)) {
-                $group->setIdAclGroup($idGroup);
-                $this->getFacade()->updateGroup($group);
-            } else {
-                $this->getFacade()->addGroup($group->getName());
-            }
+        if ($removeStatus) {
+            $this->addSuccessMessage(sprintf('Rule with id "%d" was successfully removed!', $idRule));
+        } else {
+            $this->addErrorMessage('Failed to remove rule');
         }
 
-        return $this->jsonResponse($form->renderData(), $statusCode);
+        return $this->redirectResponse(sprintf(self::ROLE_UPDATE_URL, $idRole));
     }
-
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function rulesAction(Request $request)
-    {
-        $idGroup = $request->get('id');
-        $grid = $this->getDependencyContainer()->createRulesetGrid($request, $idGroup);
-
-        $data = $grid->renderData();
-
-        return $this->jsonResponse($data);
-    }
-
-    public function usersAction(Request $request)
-    {
-        $idGroup = $request->get('id');
-        $grid = $this->getDependencyContainer()->createUserGridByGroupId($request, $idGroup);
-        $data = $grid->renderData();
-
-        return $this->jsonResponse($data);
-    }
-
 }

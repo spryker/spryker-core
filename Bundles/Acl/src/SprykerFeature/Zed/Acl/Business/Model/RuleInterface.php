@@ -17,26 +17,22 @@ interface RuleInterface
 {
 
     /**
-     * @param string $bundle
-     * @param string $controller
-     * @param string $action
-     * @param int $idRole
-     * @param string $type
+     * @param RuleTransfer $ruleTransfer
      *
      * @throws RuleNotFoundException
      *
-     * @return RuleTransfer
+     * @return mixed
      */
-    public function addRule($bundle, $controller, $action, $idRole, $type = 'allow');
+    public function addRule(RuleTransfer $ruleTransfer);
 
     /**
-     * @param RuleTransfer $data
+     * @param RuleTransfer $RuleTransfer
      *
      * @throws RuleNotFoundException
      *
      * @return RuleTransfer
      */
-    public function save(RuleTransfer $data);
+    public function save(RuleTransfer $RuleTransfer);
 
     /**
      * @param int $idRule
@@ -101,20 +97,20 @@ interface RuleInterface
     public function isIgnorable($bundle, $controller, $action);
 
     /**
-     * @param UserTransfer $user
+     * @param UserTransfer $userTransfer
      *
      * @throws UserNotFoundException
      */
-    public function registerSystemUserRules(UserTransfer $user);
+    public function registerSystemUserRules(UserTransfer $userTransfer);
 
     /**
-     * @param UserTransfer $user
+     * @param UserTransfer $userTransfer
      * @param string $bundle
      * @param string $controller
      * @param string $action
      *
      * @return bool
      */
-    public function isAllowed(UserTransfer $user, $bundle, $controller, $action);
+    public function isAllowed(UserTransfer $userTransfer, $bundle, $controller, $action);
 
 }
