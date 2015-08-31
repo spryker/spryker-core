@@ -6,6 +6,7 @@
 
 namespace SprykerEngine\Shared\Lumberjack\Model\Writer;
 
-abstract class AbstractWriter implements WriterInterface {
+abstract class AbstractWriter implements WriterInterface
+{
 
 }

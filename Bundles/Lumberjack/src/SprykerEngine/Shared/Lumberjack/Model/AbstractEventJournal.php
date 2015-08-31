@@ -38,7 +38,7 @@ abstract class AbstractEventJournal
     /**
      * @param EventInterface $event
      */
-    private function applyCollectors(EventInterface $event)
+    public function applyCollectors(EventInterface $event)
     {
         foreach ($this->dataCollectors as $collector) {
             $event->addFields($collector->getData());

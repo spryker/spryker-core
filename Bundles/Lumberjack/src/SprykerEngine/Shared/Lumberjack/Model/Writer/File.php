@@ -6,7 +6,11 @@
 
 namespace SprykerEngine\Shared\Lumberjack\Model\Writer;
 
+class File extends AbstractWriter
+{
 
-class File extends AbstractWriter {
-
+    public function write(EventInterface $entry)
+    {
+        // TODO: Implement write() method.
+    }
 }

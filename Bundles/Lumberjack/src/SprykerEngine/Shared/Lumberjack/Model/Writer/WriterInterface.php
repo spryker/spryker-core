@@ -7,6 +7,8 @@ namespace SprykerEngine\Shared\Lumberjack\Model\Writer;
 
 use SprykerEngine\Shared\Lumberjack\Model\EventInterface;
 
-interface WriterInterface {
+interface WriterInterface
+{
+
     public function write(EventInterface $entry);
 }

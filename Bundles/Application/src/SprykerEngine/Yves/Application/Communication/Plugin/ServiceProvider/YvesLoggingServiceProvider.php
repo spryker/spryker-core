@@ -11,8 +11,8 @@ use Silex\ServiceProviderInterface;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use SprykerFeature\Shared\Lumberjack\Code\Lumberjack;
-use SprykerFeature\Shared\Lumberjack\Code\Log\Types;
+use SprykerEngine\Client\Lumberjack\Service\EventJournalClient;
+use SprykerEngine\Shared\Lumberjack\Model\Event;
 
 class YvesLoggingServiceProvider implements ServiceProviderInterface
 {
@@ -57,7 +57,6 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
     protected function logRequest(Request $request)
     {
         $route = $request->attributes->get('_route', 'unknown');
-        Lumberjack::setRoute($route);
 
         // do not log the loadbalancer-heartbeat
         if (strpos($route, 'system/heartbeat') !== false) {
@@ -65,11 +64,13 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
         }
 
         $sessionId = substr(session_id(), 0, 4);
-        $lumberjack = Lumberjack::getInstance();
-        $lumberjack->addHttpUserAgent();
-        $lumberjack->addField('params.post', $request->request->all());
-        $lumberjack->addField('params.get', $request->query->all());
-        $lumberjack->send(Types::REQUEST, 'User ' . $sessionId . ' on /' . $route, $request->getMethod());
+        $event = new Event();
+        $event->addField('route', $route);
+        $event->addField('params.post', $request->request->all());
+        $event->addField('params.get', $request->query->all());
+        $event->addField('name', 'request');
+        $eventJournal = new EventJournalClient();
+        $eventJournal->saveEvent($event);
     }
 
     /**

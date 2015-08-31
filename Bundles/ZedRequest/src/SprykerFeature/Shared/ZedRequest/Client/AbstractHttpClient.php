@@ -178,7 +178,14 @@ abstract class AbstractHttpClient implements HttpClientInterface
         );
 
         $char = (strpos($pathInfo, '?') === false) ? '?' : ' &';
-        $pathInfo .= $char . 'yvesRequestId=' . Lumberjack::getInstance()->getRequestId();
+        /*
+         * @todo refactor this little hack. We just want to get the requestId here..
+         */
+        $eventJournal = new EventJournalClient();
+        $event = new Event();
+        $eventJournal->applyCollectors($event);
+        $requestId = $event->getFields()['request_id'];
+        $pathInfo .= $char . 'yvesRequestId=' . $requestId;
 
         $client->setUserAgent('Yves 2.0');
         /** @var EntityEnclosingRequest $request */
@@ -290,18 +297,22 @@ abstract class AbstractHttpClient implements HttpClientInterface
      */
     protected function doLog($pathInfo, $subType, ObjectInterface $transfer, $rawBody)
     {
-        $lumberjack = Lumberjack::getInstance();
+        $lumberjack = new EventJournalClient();
+        $event = new Event();
         $responseTransfer = $transfer->getTransfer();
         if ($responseTransfer instanceof TransferInterface) {
-            $lumberjack->addField('transferData', $responseTransfer->toArray());
-            $lumberjack->addField('transferClass', get_class($responseTransfer));
+            $event->addField('transfer_data', $responseTransfer->toArray());
+            $event->addField('transfer_class', get_class($responseTransfer));
         } else {
-            $lumberjack->addField('transferData', null);
-            $lumberjack->addField('transferClass', null);
+            $event->addField('transfer_data', null);
+            $event->addField('transfer_class', null);
         }
-        $lumberjack->addField('rawBody', $rawBody);
+        $event->addField('raw_body', $rawBody);
 
-        $lumberjack->send(Types::TRANSFER, $pathInfo, $subType);
+        $event->addField('name', 'transfer');
+        $event->addField('path_info', $pathInfo);
+        $event->addField('sub_type', $subType);
+        $lumberjack->saveEvent($event);
     }
 
     /**

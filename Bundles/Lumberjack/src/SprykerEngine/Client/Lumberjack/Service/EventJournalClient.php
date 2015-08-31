@@ -7,6 +7,7 @@
 namespace SprykerEngine\Client\Lumberjack\Service;
 
 use SprykerEngine\Shared\Lumberjack\Model\AbstractEventJournal;
+use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
 
 class EventJournalClient extends AbstractEventJournal
 {
