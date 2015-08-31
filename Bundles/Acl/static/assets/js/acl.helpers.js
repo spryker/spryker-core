@@ -13,9 +13,11 @@ function spinnerCreate(elementId){
     }
     $(elementId).html(container);
 }
-function spinnerClear(elementId){
-    $(elementId).html('');
+
+function spinnerClear(){
+    $('.group-spinner-container').html('');
 }
+
 
 /**
  * @param int idGroup
@@ -49,8 +51,8 @@ SprykerAjaxCallbacks.prototype.displayGroupRoles = function(ajaxResponse){
             ajaxResponse.data.forEach(function(role){
                 groupModal.addGroupRoleElement(role);
             });
-            spinnerClear('#group-spinner-' + ajaxResponse.idGroup);
             groupModal.showModal();
         }
     }
+    spinnerClear();
 };

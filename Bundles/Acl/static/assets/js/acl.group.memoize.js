@@ -6,7 +6,7 @@ function GroupModalMemoization(){
     var cached = {};
 
     self.hasMember = function(memberId){
-        return !!self.cached[memberId];
+        return !!cached[memberId];
     };
 
     self.saveMember = function(memberId, data){
