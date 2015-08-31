@@ -96,7 +96,7 @@ class Session
      */
     public static function getSessionLifetime()
     {
-        $lifetime = ini_get('session.gc_maxlifetime');
+        $lifetime = (int) ini_get('session.gc_maxlifetime');
 
         return $lifetime;
     }
