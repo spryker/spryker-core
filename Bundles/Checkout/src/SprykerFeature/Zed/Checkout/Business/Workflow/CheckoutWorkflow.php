@@ -90,7 +90,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
             $checkoutResponse->setOrder($orderTransfer);
 
             if (!$this->hasErrors($checkoutResponse)) {
-                $this->triggerStatemachine($orderTransfer);
+                $this->triggerStateMachine($orderTransfer);
                 $this->executePostHooks($orderTransfer, $checkoutResponse);
 
                 $checkoutResponse->setIsSuccess(true);
@@ -177,7 +177,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     /**
      * @param OrderInterface $orderTransfer
      */
-    private function triggerStatemachine(OrderInterface $orderTransfer)
+    private function triggerStateMachine(OrderInterface $orderTransfer)
     {
         $itemIds = [];
 

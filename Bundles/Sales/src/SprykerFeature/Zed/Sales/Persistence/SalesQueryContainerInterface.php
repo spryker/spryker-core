@@ -43,4 +43,16 @@ interface SalesQueryContainerInterface
      */
     public function querySalesOrderItem();
 
+    /**
+     * @param $paymentPayoneIds
+     * @return mixed
+     */
+    public function querySalesOrderApiLogs($paymentPayoneIds);
+
+    /**
+     * @param $paymentPayoneIds
+     * @return mixed
+     */
+    public function querySalesOrderTransactionStatusLogs($paymentPayoneIds);
+
 }

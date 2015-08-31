@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Sales\Communication;
 use Generated\Zed\Ide\FactoryAutoCompletion\SalesCommunication;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use SprykerFeature\Zed\Sales\Communication\Form\OrderItemSplitForm\Collection;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Sales\Communication\Table\OrdersTable;

@@ -64,42 +64,42 @@ class SalesFacade extends AbstractFacade
     /**
      * @deprecated
      *
-     * @param int $orderItemId
+     * @param int $idOrderItem
      *
      * @return array
      */
-    public function getOrderItemManualEvents($orderItemId)
+    public function getOrderItemManualEvents($idOrderItem)
     {
         return $this->getDependencyContainer()
             ->getProvidedDependency(SalesDependencyProvider::FACADE_OMS)
-            ->getManualEvents($orderItemId)
+            ->getManualEvents($idOrderItem)
         ;
     }
 
     /**
-     * @param int $orderItemId
+     * @param int $idOrderItem
      *
      * @deprecated
      *
      * @return OrderItemsTransfer
      */
-    public function getOrderItemById($orderItemId)
+    public function getOrderItemById($idOrderItem)
     {
         return $this->getDependencyContainer()
             ->getProvidedDependency(SalesDependencyProvider::FACADE_OMS)
-            ->getOrderItemById($orderItemId)
+            ->getOrderItemById($idOrderItem)
         ;
     }
     /**
-     * @param OrderTransfer $transferOrder
+     * @param OrderTransfer $orderTransfer
      *
      * @return OrderTransfer
      */
-    public function saveOrder(OrderTransfer $transferOrder)
+    public function saveOrder(OrderTransfer $orderTransfer)
     {
         return $this->getDependencyContainer()
             ->createOrderManager()
-            ->saveOrder($transferOrder);
+            ->saveOrder($orderTransfer);
     }
 
     /**
@@ -128,17 +128,29 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
-     * @param AddressesTransfer $addressesTransfer
+     * @param SalesAddressTransfer $salesAddressesTransfer
      * @param int $idAddress
      *
      * @return mixed
      */
-    public function updateOrderAddress(SalesAddressTransfer $addressesTransfer, $idAddress)
+    public function updateOrderAddress(SalesAddressTransfer $salesAddressesTransfer, $idAddress)
     {
         return $this->getDependencyContainer()
             ->createOrderDetailsManager()
-            ->updateOrderAddress($addressesTransfer, $idAddress)
+            ->updateOrderAddress($salesAddressesTransfer, $idAddress)
         ;
+    }
+
+    /**
+     * @param string $idOrder
+     * @return array
+     */
+    public function getOrderLogs($idOrder)
+    {
+        return $this->getDependencyContainer()
+            ->createOrderDetailsManager()
+            ->getOrderLogs($idOrder)
+            ;
     }
 
 }

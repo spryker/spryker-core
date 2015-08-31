@@ -75,4 +75,8 @@ interface PayoneQueryContainerInterface
      */
     public function getTransactionStatusLogOrderItemsByLogIds($idSalesOrderItem, $ids);
 
+    public function getApiLogsByOrderIds($orders);
+
+    public function getTransactionStatusLogsByOrderIds($orders);
+
 }

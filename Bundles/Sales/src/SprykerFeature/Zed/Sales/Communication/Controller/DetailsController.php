@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Sales\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Sales\Communication\SalesDependencyContainer;
-use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
+use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Sales\Business\SalesFacade;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * @method SalesDependencyContainer getDependencyContainer()
  * @method SalesFacade getFacade()
- * @method SalesQueryContainerInterface getQueryContainer()
+ * @method SalesQueryContainer getQueryContainer()
  */
 class DetailsController extends AbstractController
 {
@@ -60,6 +60,8 @@ class DetailsController extends AbstractController
                 ->findOne();
         }
 
+        $logs = $this->getFacade()->getOrderLogs($idOrder);
+die(dump($logs));die();
         return [
             'idOrder' => $idOrder,
             'orderDetails' => $orderEntity,
@@ -67,6 +69,7 @@ class DetailsController extends AbstractController
             'events' => $events,
             'allEvents' => $allEvents,
             'expenses' => $expenses,
+            'logs' => $logs,
             'billingAddress' => $billingAddress,
             'shippingAddress' => $shippingAddress,
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection->create(),

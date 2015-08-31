@@ -11,6 +11,7 @@ use Generated\Shared\Payone\PayoneRefundInterface;
 use Generated\Shared\Payone\PayoneStandardParameterInterface;
 use Generated\Shared\Payone\OrderInterface as PayoneOrderInterface;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Shared\Payone\Dependency\HashInterface;
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
@@ -30,6 +31,7 @@ use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog;
 use Propel\Runtime\Exception\PropelException;
+use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLog;
 
 class PaymentManager implements PaymentManagerInterface
 {
@@ -427,4 +429,31 @@ class PaymentManager implements PaymentManagerInterface
         $container->setMode($this->modeDetector->getMode());
     }
 
+    /**
+     * Gets payment logs (both api and transaction status) for specific orders in chronological order.
+     *
+     * @param ObjectCollection $orders
+     * @return array
+     */
+    public function getPaymentLogs(ObjectCollection $orders)
+    {
+
+        $apiLogs = $this->queryContainer->getApiLogsByOrderIds($orders)->find();
+
+        $transactionStatusLogs = $this->queryContainer->getTransactionStatusLogsByOrderIds($orders)->find();
+
+        $logs = [];
+        /** @var SpyPaymentPayoneApiLog $apiLog */
+        foreach ($apiLogs as $apiLog) {
+            $key = $apiLog->getCreatedAt()->format('Y-m-d\TH:i:s\Z') . 'a' . $apiLog->getIdPaymentPayoneApiLog();
+            $logs[$key] = $apiLog;
+        }
+        /** @var SpyPaymentPayoneTransactionStatusLog $transactionStatusLog */
+        foreach ($transactionStatusLogs as $transactionStatusLog) {
+            $key = $transactionStatusLog->getCreatedAt()->format('Y-m-d\TH:i:s\Z') . 't' . $transactionStatusLog->getIdPaymentPayoneTransactionStatusLog();
+            $logs[$key] = $transactionStatusLog;
+        }
+
+        return $logs;
+    }
 }

@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Payone\Business\Payment;
 
 use Generated\Shared\Payone\PayoneCreditCardInterface;
 use Generated\Shared\Payone\PayoneRefundInterface;
+use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
@@ -63,5 +64,7 @@ interface PaymentManagerInterface
      * @return CreditCardCheckResponseContainer
      */
     public function creditCardCheck(PayoneCreditCardInterface $creditCardData);
+
+    public function getPaymentLogs(ObjectCollection $orders);
 
 }
