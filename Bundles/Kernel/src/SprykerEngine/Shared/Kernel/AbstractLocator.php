@@ -17,6 +17,14 @@ abstract class AbstractLocator implements LocatorInterface
      */
     protected $factoryClassNamePattern;
 
+    protected $bundle;
+
+    protected $layer;
+
+    protected $suffix;
+
+    protected $application;
+
     /**
      * @param string $factoryClassNamePattern
      *
@@ -24,8 +32,13 @@ abstract class AbstractLocator implements LocatorInterface
      */
     final public function __construct($factoryClassNamePattern = null)
     {
+//        die('<pre><b>'.print_r((new \Exception())->getTraceAsString(), true).'</b>'.PHP_EOL.__CLASS__.' '.__LINE__);
         if (!is_null($factoryClassNamePattern)) {
             $this->factoryClassNamePattern = $factoryClassNamePattern;
+        }
+
+        if (is_null($this->application)) {
+            throw new \Exception('Properties missig for: '.get_class($this));
         }
 
         if (is_null($this->factoryClassNamePattern)) {
@@ -67,14 +80,16 @@ abstract class AbstractLocator implements LocatorInterface
      */
     protected function getFactory($bundle)
     {
-        $resolver = IdentityMapClassResolver::getInstance(new ClassResolver());
-        $classNamePattern = $this->getFactoryClassNamePattern();
+//        $resolver = IdentityMapClassResolver::getInstance(new ClassResolver());
+//        $classNamePattern = $this->getFactoryClassNamePattern();
+//die('<pre><b>'.print_r($classNamePattern, true).'</b>'.PHP_EOL.__CLASS__.' '.__LINE__);
+        return Factory2::getInstance()->create($this->application, $this->bundle, $this->suffix, $this->layer, [$bundle]);
 
-        if ($resolver->canResolve($classNamePattern, $bundle)) {
-            return $resolver->resolve($classNamePattern, $bundle, [$bundle]);
-        }
-
-        throw new LocatorException(sprintf('Could not find Factory "%s', $classNamePattern));
+//        if ($resolver->canResolve($classNamePattern, $bundle)) {
+//            return $resolver->resolve($classNamePattern, $bundle, [$bundle]);
+//        }
+//
+//        throw new LocatorException(sprintf('Could not find Factory "%s', $classNamePattern));
     }
 
     /**

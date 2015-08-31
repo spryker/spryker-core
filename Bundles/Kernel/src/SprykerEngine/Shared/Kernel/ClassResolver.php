@@ -35,6 +35,7 @@ class ClassResolver implements ClassResolverInterface
      */
     public function canResolve($classNamePattern, $bundle)
     {
+        die('<pre><b>'.print_r((new \Exception())->getTraceAsString(), true).'</b>'.PHP_EOL.__CLASS__.' '.__LINE__);
         $class = $this->prepareClassName($classNamePattern, $bundle);
         $canBeResolved = $this->canBeResolvedIn($this->getProjectNamespaces(), $class);
 
@@ -146,6 +147,7 @@ class ClassResolver implements ClassResolverInterface
      */
     public function resolve($classNamePattern, $bundle, array $arguments = [])
     {
+        die('<pre><b>'.print_r((new \Exception())->getTraceAsString(), true).'</b>'.PHP_EOL.__CLASS__.' '.__LINE__);
         $class = $this->prepareClassName($classNamePattern, $bundle);
 
         $resolvedClass = $this->resolveIn($this->getProjectNamespaces(), $class, $arguments);

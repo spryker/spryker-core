@@ -22,6 +22,14 @@ class ConsoleLocator extends AbstractLocator
      */
     protected $factoryClassNamePattern = '\\{{namespace}}\\Zed\\Kernel\\Communication\\Factory';
 
+    protected $bundle = 'Kernel';
+
+    protected $layer = 'Communication';
+
+    protected $suffix = 'Factory';
+
+    protected $application = 'Zed';
+
     /**
      * @param string $bundle
      * @param LocatorLocatorInterface $locator

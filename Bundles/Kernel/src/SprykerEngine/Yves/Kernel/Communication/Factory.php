@@ -7,6 +7,7 @@
 namespace SprykerEngine\Yves\Kernel\Communication;
 
 use SprykerEngine\Shared\Kernel\AbstractFactory;
+use SprykerEngine\Shared\Kernel\Factory2;
 
 class Factory extends AbstractFactory
 {
@@ -14,7 +15,17 @@ class Factory extends AbstractFactory
     /**
      * @var string
      */
-    protected $classNamePattern = '\\{{namespace}}\\Yves\\{{bundle}}{{store}}\\Communication\\';
+    protected $classNamePattern = '\\{{namespace}}\\\\{{bundle}}{{store}}\\Communication\\';
+
+    /**
+     * @var string
+     */
+    protected $application = 'Yves';
+
+    /**
+     * @var string
+     */
+    protected $layer = 'Communication';
 
     /**
      * @param string $class
@@ -32,10 +43,16 @@ class Factory extends AbstractFactory
             $arguments = (count($arguments) > 0) ? $arguments[0] : [];
         }
 
-        $class = $this->buildClassName($class);
-        $resolver = $this->getResolver();
+        if (in_array($class, $this->baseClasses)) {
+            $class = $this->getBundle() . $class;
+        }
 
-        return $resolver->resolve($class, $this->getBundle(), $arguments);
+        return Factory2::getInstance()->create($this->application, $this->getBundle(), $class, $this->layer, $arguments);
+//
+//        $class = $this->buildClassName($class);
+//        $resolver = $this->getResolver();
+//
+//        return $resolver->resolve($class, $this->getBundle(), $arguments);
     }
 
 }

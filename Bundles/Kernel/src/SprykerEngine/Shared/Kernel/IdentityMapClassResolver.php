@@ -38,6 +38,7 @@ class IdentityMapClassResolver implements ClassResolverInterface
      */
     public static function getInstance(ClassResolverInterface $resolver)
     {
+
         if (is_null(self::$instance)) {
             self::$instance = new self();
         }
@@ -73,6 +74,7 @@ class IdentityMapClassResolver implements ClassResolverInterface
      */
     public function canResolve($classNamePattern, $bundle)
     {
+        die('<pre><b>'.print_r((new \Exception())->getTraceAsString(), true).'</b>'.PHP_EOL.__CLASS__.' '.__LINE__);
         $classNamePattern = $this->getPatternWithResolvedBundle($classNamePattern, $bundle);
         if (array_key_exists($classNamePattern, $this->map)) {
             return $this->map[$classNamePattern][self::MAP_KEY_CAN_RESOLVE];
@@ -97,6 +99,7 @@ class IdentityMapClassResolver implements ClassResolverInterface
      */
     public function resolve($classNamePattern, $bundle, array $arguments = [])
     {
+         die('<pre><b>'.print_r((new \Exception())->getTraceAsString(), true).'</b>'.PHP_EOL.__CLASS__.' '.__LINE__);
         $classNamePattern = $this->getPatternWithResolvedBundle($classNamePattern, $bundle);
         if (!$this->canResolve($classNamePattern, $bundle)) {
             throw new ClassNotFoundException(

@@ -36,6 +36,7 @@ class CamelHumpClassResolver implements ClassResolverInterface
      */
     public function canResolve($classNamePattern, $bundle)
     {
+        die('<pre><b>'.print_r((new \Exception())->getTraceAsString(), true).'</b>'.PHP_EOL.__CLASS__.' '.__LINE__);
         $classBaseName = $this->getClassBaseName($classNamePattern);
         $camelHumpClassParts = $this->getCamelHumpClassParts($classNamePattern);
 
@@ -69,6 +70,7 @@ class CamelHumpClassResolver implements ClassResolverInterface
      */
     public function resolve($classNamePattern, $bundle, array $arguments = [])
     {
+        die('<pre><b>'.print_r((new \Exception())->getTraceAsString(), true).'</b>'.PHP_EOL.__CLASS__.' '.__LINE__);
         $classBaseName = $this->getClassBaseName($classNamePattern);
         $camelHumpClassParts = $this->getCamelHumpClassParts($classNamePattern);
         $combinations = $this->findCombinations($camelHumpClassParts);

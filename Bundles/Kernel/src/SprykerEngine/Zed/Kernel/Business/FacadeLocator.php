@@ -23,6 +23,14 @@ class FacadeLocator extends AbstractLocator
      */
     protected $factoryClassNamePattern = '\\{{namespace}}\\Zed\\Kernel\\Business\\Factory';
 
+    protected $bundle = 'Kernel';
+
+    protected $layer = 'Business';
+
+    protected $application = 'Zed';
+
+    protected $suffix = 'Factory';
+
     /**
      * @param string $bundle
      * @param LocatorLocatorInterface $locator

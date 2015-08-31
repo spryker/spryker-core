@@ -10,6 +10,7 @@ use SprykerEngine\Shared\Kernel\ClassResolver;
 use SprykerEngine\Shared\Kernel\IdentityMapClassResolver;
 use SprykerEngine\Shared\Kernel\Locator\LocatorInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerEngine\Shared\Kernel\Factory2;
 
 class EntityLocator implements LocatorInterface
 {
@@ -41,13 +42,14 @@ class EntityLocator implements LocatorInterface
     public function locate($bundle, LocatorLocatorInterface $locator, $className = null)
     {
         $classToLocate = $this->classNamePattern . $className;
-        $classResolver = new ClassResolver();
-        $camelHumpClassResolver = new CamelHumpClassResolver($classResolver);
-        $identityMapResolver = IdentityMapClassResolver::getInstance($camelHumpClassResolver);
+//        $classResolver = new ClassResolver();
+//        $camelHumpClassResolver = new CamelHumpClassResolver($classResolver);
+//        $identityMapResolver = IdentityMapClassResolver::getInstance($camelHumpClassResolver);
 
-        $resolvedTransfer = $identityMapResolver->resolve($classToLocate, $bundle);
-
-        return $resolvedTransfer;
+//        $resolvedTransfer = $identityMapResolver->resolve($classToLocate, $bundle);
+//        die('<pre><b>'.print_r($className, true).'</b>'.PHP_EOL.__CLASS__.' '.__LINE__);
+        $entity = Factory2::getInstance()->create('Zed', $bundle, 'Propel'.$className, 'Persistence');
+        return $entity;
     }
 
     /**

@@ -14,6 +14,7 @@ use SprykerEngine\Shared\Kernel\ClassResolver;
 use SprykerEngine\Zed\Kernel\BundleDependencyProviderLocator;
 use SprykerEngine\Zed\Kernel\ClassNamePattern;
 use SprykerEngine\Zed\Kernel\Container;
+use SprykerEngine\Shared\Kernel\Factory2;
 
 class ControllerLocator implements ControllerLocatorInterface
 {
@@ -22,6 +23,11 @@ class ControllerLocator implements ControllerLocatorInterface
      * @var string
      */
     protected $bundle;
+
+    /**
+     * @var string
+     */
+    protected $controller;
 
     /**
      * @var string
@@ -45,6 +51,7 @@ class ControllerLocator implements ControllerLocatorInterface
     ) {
         $this->bundle = $bundleControllerAction->getBundle();
         $this->action = $bundleControllerAction->getAction();
+        $this->controller = $bundleControllerAction->getController();
 
         $this->controllerPattern = $this->preparePattern(
             $bundleControllerAction->getController(),
@@ -77,22 +84,24 @@ class ControllerLocator implements ControllerLocatorInterface
      */
     public function locate(\Pimple $application, LocatorLocatorInterface $locator)
     {
-        $resolver = IdentityMapClassResolver::getInstance(new ClassResolver());
+//        $resolver = IdentityMapClassResolver::getInstance(new ClassResolver());
         $factory = new Factory($this->bundle);
 
-        if ($resolver->canResolve($this->widgetControllerPattern, $this->bundle)) {
-            $resolvedController = $resolver->resolve(
-                $this->widgetControllerPattern,
-                $this->bundle,
-                [$application, $factory, $locator]
-            );
-        } else {
-            $resolvedController = $resolver->resolve(
-                $this->controllerPattern,
-                $this->bundle,
-                [$application, $factory, $locator]
-            );
-        }
+//        if ($resolver->canResolve($this->widgetControllerPattern, $this->bundle)) {
+//            $resolvedController = $resolver->resolve(
+//                $this->widgetControllerPattern,
+//                $this->bundle,
+//                [$application, $factory, $locator]
+//            );
+//        } else {
+//            $resolvedController = $resolver->resolve(
+//                $this->controllerPattern,
+//                $this->bundle,
+//                [$application, $factory, $locator]
+//            );
+//        }
+
+        $resolvedController = Factory2::getInstance()->create('Zed', $this->bundle, 'Controller'.$this->controller.'Controller', 'Communication', [$application, $factory, $locator]);
 
         // @todo REFACTOR -  move to constructor when all controllers are upgraded
         $bundleName = lcfirst($this->bundle);
@@ -126,12 +135,15 @@ class ControllerLocator implements ControllerLocatorInterface
      */
     public function canLocate()
     {
-        $resolver = IdentityMapClassResolver::getInstance(new ClassResolver());
 
-        $canResolveWidgetController = $resolver->canResolve($this->widgetControllerPattern, $this->bundle);
-        $canResolveController = $resolver->canResolve($this->controllerPattern, $this->bundle);
-
-        return $canResolveWidgetController || $canResolveController;
+        return Factory2::getInstance()->has('Zed', $this->bundle, 'Controller'.$this->controller.'Controller', 'Communication');
+//
+//        $resolver = IdentityMapClassResolver::getInstance(new ClassResolver());
+//
+//        $canResolveWidgetController = $resolver->canResolve($this->widgetControllerPattern, $this->bundle);
+//        $canResolveController = $resolver->canResolve($this->controllerPattern, $this->bundle);
+//
+//        return $canResolveWidgetController || $canResolveController;
     }
 
 }
