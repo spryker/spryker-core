@@ -1,5 +1,5 @@
 {
-  "name": "spryker/sales-checkout-connector",
+  "name": "spryker/payone-sales-connector",
   "autoload": {
     "psr-0": {
       "SprykerFeature": "src/",

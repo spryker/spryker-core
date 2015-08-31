@@ -63,7 +63,8 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return array
      */
-    protected function getPaymentLogPlugins(Container $container) {
+    protected function getPaymentLogPlugins(Container $container)
+    {
         return [];
     }
 

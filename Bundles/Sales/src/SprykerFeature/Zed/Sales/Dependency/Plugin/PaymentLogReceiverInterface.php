@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,11 @@ use Propel\Runtime\Collection\ObjectCollection;
 interface PaymentLogReceiverInterface
 {
 
-    public function getLogs(ObjectCollection $orders);
+    /**
+     * @param ObjectCollection $orders
+     *
+     * @return array
+     */
+    public function getPaymentLogs(ObjectCollection $orders);
 
 }

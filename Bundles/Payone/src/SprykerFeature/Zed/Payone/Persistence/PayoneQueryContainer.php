@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Payone\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Zed\Payone\Persistence\Propel\Base\SpyPaymentPayoneQuery;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog;
@@ -81,7 +82,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      *
      * @return SpyPaymentPayoneApiLog
      */
-    public function getApiLogByOrderIdAndRequest($orderId, $request)
+    public function getApiLogsByOrderIdAndRequest($orderId, $request)
     {
         $query = SpyPaymentPayoneApiLogQuery::create()
             ->useSpyPaymentPayoneQuery()
@@ -90,7 +91,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
             ->filterByRequest($request)
             ->orderByCreatedAt(Criteria::DESC) //TODO: Index?
             ->orderByIdPaymentPayoneApiLog(Criteria::DESC)
-            ->findOne();
+        ;
 
         return $query;
     }
@@ -113,7 +114,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      *
      * @return SpyPaymentPayoneTransactionStatusLog[]
      */
-    public function getTransactionStatusLogBySalesOrder($idIdSalesOrder)
+    public function getTransactionStatusLogsBySalesOrder($idIdSalesOrder)
     {
         $query = SpyPaymentPayoneTransactionStatusLogQuery::create()
             ->useSpyPaymentPayoneQuery()
@@ -122,9 +123,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
             ->orderByCreatedAt()
         ;
 
-        return $query
-            ->find()
-            ->getData();
+        return $query;
     }
 
     /**
@@ -138,12 +137,15 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
         $relations = SpyPaymentPayoneTransactionStatusLogOrderItemQuery::create()
             ->filterByIdPaymentPayoneTransactionStatusLog($ids)
             ->filterByIdSalesOrderItem($idSalesOrderItem)
-            ->find()
-            ->getData()
         ;
         return $relations;
     }
 
+    /**
+     * @param ObjectCollection $orders
+     *
+     * @return SpyPaymentPayoneApiLogQuery
+     */
     public function getApiLogsByOrderIds($orders)
     {
         $ids = [];
@@ -157,11 +159,16 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
             ->filterByFkSalesOrder($ids)
             ->endUse()
             ->orderByCreatedAt()
-            ;
+        ;
 
         return $query;
     }
 
+    /**
+     * @param ObjectCollection $orders
+     *
+     * @return SpyPaymentPayoneTransactionStatusLogQuery
+     */
     public function getTransactionStatusLogsByOrderIds($orders)
     {
         $ids = [];
@@ -175,8 +182,9 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
             ->filterByFkSalesOrder($ids)
             ->endUse()
             ->orderByCreatedAt()
-            ;
+        ;
 
         return $query;
     }
+
 }

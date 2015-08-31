@@ -41,6 +41,7 @@ class TransactionController extends AbstractController
             'sequencenumber' => 'sequencenumber',
             'txaction' => 'txaction',
             'receivable' => 'receivable',
+            'price' => 'price',
             'balance' => 'balance',
             'currency' => 'currency',
             'txid' => 'txid',

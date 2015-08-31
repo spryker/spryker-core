@@ -50,7 +50,6 @@ class OrderManager
      * @param OrderTransfer $orderTransfer
      *
      * @throws PropelException
-     *
      * @throws \Exception
      *
      * @return OrderTransfer

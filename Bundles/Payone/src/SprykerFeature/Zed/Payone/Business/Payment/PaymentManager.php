@@ -9,7 +9,8 @@ namespace SprykerFeature\Zed\Payone\Business\Payment;
 use Generated\Shared\Payone\PayoneCreditCardInterface;
 use Generated\Shared\Payone\PayoneRefundInterface;
 use Generated\Shared\Payone\PayoneStandardParameterInterface;
-use Generated\Shared\Payone\OrderInterface as PayoneOrderInterface;
+use Generated\Shared\Payone\OrderInterface;
+use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
@@ -35,6 +36,9 @@ use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStat
 
 class PaymentManager implements PaymentManagerInterface
 {
+
+    const LOG_TYPE_API_LOG = 'SpyPaymentPayoneApiLog';
+    const LOG_TYPE_TRANSACTION_STATUS_LOG = 'SpyPaymentPayoneTransactionStatusLog';
 
     /**
      * @var AdapterInterface
@@ -290,11 +294,11 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param PayoneOrderInterface $orderTransfer
+     * @param OrderInterface $orderTransfer
      *
      * @return PayonePaymentTransfer
      */
-    protected function getPayment(PayoneOrderInterface $orderTransfer)
+    protected function getPayment(OrderInterface $orderTransfer)
     {
         $payment = $this->queryContainer->getPaymentByOrderId($orderTransfer->getIdSalesOrder())->findOne();
 
@@ -433,27 +437,36 @@ class PaymentManager implements PaymentManagerInterface
      * Gets payment logs (both api and transaction status) for specific orders in chronological order.
      *
      * @param ObjectCollection $orders
-     * @return array
+     *
+     * @return PayonePaymentLogTransfer[]
      */
     public function getPaymentLogs(ObjectCollection $orders)
     {
+        $apiLogs = $this->queryContainer->getApiLogsByOrderIds($orders)->find()->getData();
 
-        $apiLogs = $this->queryContainer->getApiLogsByOrderIds($orders)->find();
-
-        $transactionStatusLogs = $this->queryContainer->getTransactionStatusLogsByOrderIds($orders)->find();
+        $transactionStatusLogs = $this->queryContainer->getTransactionStatusLogsByOrderIds($orders)->find()->getData();
 
         $logs = [];
         /** @var SpyPaymentPayoneApiLog $apiLog */
         foreach ($apiLogs as $apiLog) {
             $key = $apiLog->getCreatedAt()->format('Y-m-d\TH:i:s\Z') . 'a' . $apiLog->getIdPaymentPayoneApiLog();
-            $logs[$key] = $apiLog;
+            $payonePaymentLogTransfer = new PayonePaymentLogTransfer();
+            $payonePaymentLogTransfer->fromArray($apiLog->toArray(), true);
+            $payonePaymentLogTransfer->setLogType(self::LOG_TYPE_API_LOG);
+            $logs[$key] = $payonePaymentLogTransfer;
         }
         /** @var SpyPaymentPayoneTransactionStatusLog $transactionStatusLog */
         foreach ($transactionStatusLogs as $transactionStatusLog) {
             $key = $transactionStatusLog->getCreatedAt()->format('Y-m-d\TH:i:s\Z') . 't' . $transactionStatusLog->getIdPaymentPayoneTransactionStatusLog();
-            $logs[$key] = $transactionStatusLog;
+            $payonePaymentLogTransfer = new PayonePaymentLogTransfer();
+            $payonePaymentLogTransfer->fromArray($transactionStatusLog->toArray(), true);
+            $payonePaymentLogTransfer->setLogType(self::LOG_TYPE_TRANSACTION_STATUS_LOG);
+            $logs[$key] = $payonePaymentLogTransfer;
         }
+
+        ksort($logs);
 
         return $logs;
     }
+
 }

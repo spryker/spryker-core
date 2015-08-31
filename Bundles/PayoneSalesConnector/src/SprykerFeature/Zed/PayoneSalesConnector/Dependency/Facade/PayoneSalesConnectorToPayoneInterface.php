@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\PayoneSalesConnector\Dependency\Facade;
 
-use Generated\Shared\Sales\OrderInterface;
+use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 
 interface PayoneSalesConnectorToPayoneInterface
@@ -14,7 +14,8 @@ interface PayoneSalesConnectorToPayoneInterface
 
     /**
      * @param ObjectCollection $orders
-     * @return array
+     *
+     * @return PayonePaymentLogTransfer[]
      */
     public function getPaymentLogs(ObjectCollection $orders);
 

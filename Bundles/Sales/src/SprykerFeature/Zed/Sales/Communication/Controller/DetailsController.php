@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Sales\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Sales\Communication\SalesDependencyContainer;
-use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainer;
+use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Sales\Business\SalesFacade;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -16,7 +16,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 /**
  * @method SalesDependencyContainer getDependencyContainer()
  * @method SalesFacade getFacade()
- * @method SalesQueryContainer getQueryContainer()
+ * @method SalesQueryContainerInterface getQueryContainer()
  */
 class DetailsController extends AbstractController
 {
@@ -60,8 +60,8 @@ class DetailsController extends AbstractController
                 ->findOne();
         }
 
-        $logs = $this->getFacade()->getOrderLogs($idOrder);
-die(dump($logs));die();
+        $logs = $this->getFacade()->getPaymentLogs($idOrder);
+
         return [
             'idOrder' => $idOrder,
             'orderDetails' => $orderEntity,

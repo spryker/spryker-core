@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\Sales\Persistence;
 
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesExpenseQuery;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddressQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
 
@@ -44,15 +46,17 @@ interface SalesQueryContainerInterface
     public function querySalesOrderItem();
 
     /**
-     * @param $paymentPayoneIds
-     * @return mixed
+     * @param int $orderId
+     *
+     * @return SpySalesExpenseQuery
      */
-    public function querySalesOrderApiLogs($paymentPayoneIds);
+    public function querySalesExpensesByOrderId($orderId);
 
     /**
-     * @param $paymentPayoneIds
-     * @return mixed
+     * @param int $idSalesOrderAddress
+     *
+     * @return SpySalesOrderAddressQuery
      */
-    public function querySalesOrderTransactionStatusLogs($paymentPayoneIds);
+    public function querySalesOrderAddressById($idSalesOrderAddress);
 
 }

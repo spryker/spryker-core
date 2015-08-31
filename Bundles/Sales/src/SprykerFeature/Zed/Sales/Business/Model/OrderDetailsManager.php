@@ -94,7 +94,7 @@ class OrderDetailsManager
         $orderItems = $this->queryContainer->querySalesOrderItemsByIdSalesOrder($idOrder)->find();
 
         $events = [];
-        foreach ($orderItems as $i => $orderItem) {
+        foreach ($orderItems as $orderItem) {
             $events[$orderItem->getIdSalesOrderItem()] = $this->omsFacade->getManualEvents($orderItem->getIdSalesOrderItem());
         }
 
@@ -111,7 +111,7 @@ class OrderDetailsManager
         $orderItems = $this->queryContainer->querySalesOrderItemsByIdSalesOrder($idOrder)->find();
 
         $status = [];
-        foreach ($orderItems as $i => $orderItem) {
+        foreach ($orderItems as $orderItem) {
             $status[$orderItem->getIdSalesOrderItem()] = $orderItem->getState()->getName();
         }
 
@@ -120,16 +120,17 @@ class OrderDetailsManager
 
     /**
      * @param string $idOrder
+     *
      * @return array
      */
-    public function getOrderLogs($idOrder)
+    public function getPaymentLogs($idOrder)
     {
         $orders = $this->queryContainer->querySalesOrderById($idOrder)
             ->find();
 
         $logs = [];
         foreach ($this->logReceiverPluginStack as $logReceiver) {
-            $logs = $logReceiver->getLogs($orders);
+            $logs = $logReceiver->getPaymentLogs($orders);
         }
 
         return $logs;

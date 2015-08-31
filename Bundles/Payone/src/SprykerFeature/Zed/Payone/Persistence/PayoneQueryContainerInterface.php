@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Payone\Persistence;
 
+use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLog;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLogOrderItem;
@@ -51,7 +52,7 @@ interface PayoneQueryContainerInterface
      *
      * @return SpyPaymentPayoneApiLog
      */
-    public function getApiLogByOrderIdAndRequest($orderId, $request);
+    public function getApiLogsByOrderIdAndRequest($orderId, $request);
 
     /**
      * @param int $paymentId
@@ -65,7 +66,7 @@ interface PayoneQueryContainerInterface
      *
      * @return SpyPaymentPayoneTransactionStatusLog[]
      */
-    public function getTransactionStatusLogBySalesOrder($idSalesOrder);
+    public function getTransactionStatusLogsBySalesOrder($idSalesOrder);
 
     /**
      * @param int $idSalesOrderItem
@@ -75,8 +76,18 @@ interface PayoneQueryContainerInterface
      */
     public function getTransactionStatusLogOrderItemsByLogIds($idSalesOrderItem, $ids);
 
+    /**
+     * @param ObjectCollection $orders
+     *
+     * @return SpyPaymentPayoneApiLogQuery
+     */
     public function getApiLogsByOrderIds($orders);
 
+    /**
+     * @param ObjectCollection $orders
+     *
+     * @return SpyPaymentPayoneTransactionStatusLogQuery
+     */
     public function getTransactionStatusLogsByOrderIds($orders);
 
 }
