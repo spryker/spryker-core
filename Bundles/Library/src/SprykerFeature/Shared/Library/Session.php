@@ -92,7 +92,7 @@ class Session
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public static function getSessionLifetime()
     {
