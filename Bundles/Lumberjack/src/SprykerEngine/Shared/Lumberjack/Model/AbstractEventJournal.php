@@ -6,7 +6,9 @@
 
 namespace SprykerEngine\Shared\Lumberjack\Model;
 
-use SprykerEngine\Shared\Lumberjack\Model\Writer;
+
+use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
+use SprykerEngine\Shared\Lumberjack\Model\Writer\WriterInterface;
 
 abstract class AbstractEventJournal
 {
@@ -50,10 +52,16 @@ abstract class AbstractEventJournal
      */
     public function saveEvent(EventInterface $event) {
         $this->applyCollectors($event);
-        // foreach Writer ..
+        $this->writeEvent($event);
     }
 
     public function addEventWriter(WriterInterface $writer) {
         $this->eventWriters[get_class($writer)] = $writer;
+    }
+
+    protected function writeEvent(EventInterface $event) {
+        foreach($this->eventWriters as $writer) {
+            $writer->write($event);
+        }
     }
 }
