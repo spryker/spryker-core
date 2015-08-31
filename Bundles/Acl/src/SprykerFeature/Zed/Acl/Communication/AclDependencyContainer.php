@@ -66,19 +66,13 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
         ];
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return RulesGrid
-     */
-    public function createGroupsGrid(Request $request)
+    public function createGroupUsersTable($idGroup)
     {
-        $aclQueryContainer = $this->getQueryContainer();
-        $query = $aclQueryContainer->queryGroup();
-
-        return $this->getFactory()->createGridGroupGrid(
-            $query,
-            $request
+        return $this->getFactory()->createTableGroupUsersTable(
+            $this->getQueryContainer()
+                ->queryGroup()
+                ->useSpyAclUserHasGroupQuery()
+                ->endUse()
         );
     }
 

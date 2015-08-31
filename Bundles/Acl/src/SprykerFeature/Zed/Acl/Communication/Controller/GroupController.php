@@ -105,6 +105,8 @@ class GroupController extends AbstractController
             return $this->redirectResponse('/acl/group/edit?' . self::ID_GROUP_PARAMETER . '=' . $groupTransfer->getIdAclGroup());
         }
 
+        $usersTable = $this->getDependencyContainer()->createGroupUsersTable($idGroup);
+
         return $this->viewResponse([
             'form' => $form->createView(),
         ]);
