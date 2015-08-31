@@ -31,14 +31,5 @@ function SprykerAjaxCallbacks() {
         }
     };
 
-    /**
-     *
-     * @param ajaxResponse
-     * @returns string
-     */
-    self.categoryDisplayNodeTree = function(ajaxResponse){
-        $('#category-node-tree').removeClass('hidden');
-        $('#categories-list').html(ajaxResponse);
-        closeLoaderBar();
-    };
+
 }

@@ -15,7 +15,8 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 /**
  * @method PayoneDependencyContainer getDependencyContainer()
  */
-class CheckoutSaveOrderPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface{
+class CheckoutSaveOrderPlugin extends AbstractPlugin implements CheckoutSaveOrderInterface
+{
 
     /**
      * @param OrderTransfer $orderTransfer

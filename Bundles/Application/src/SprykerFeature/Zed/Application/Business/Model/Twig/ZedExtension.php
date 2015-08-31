@@ -39,16 +39,16 @@ class ZedExtension extends \Twig_Extension
     {
         $locator = $this->getLocator();
         $functions = [
-            $locator->ui()->pluginTwigButton(),
-            $locator->ui()->pluginTwigConfirmDialog(),
-            $locator->ui()->pluginTwigFormatPrice(),
-            $locator->ui()->pluginTwigGrid(),
-            $locator->ui()->pluginTwigGridConfirmDialog(),
-            $locator->ui()->pluginTwigListGroup(),
-            $locator->ui()->pluginTwigModal(),
-            $locator->ui()->pluginTwigPanel(),
-            $locator->ui()->pluginTwigWidget(),
-            $locator->ui()->pluginTwigStaticPath(),
+            $locator->gui()->pluginTwigButton(),
+            $locator->gui()->pluginTwigConfirmDialog(),
+            $locator->gui()->pluginTwigFormatPrice(),
+            $locator->gui()->pluginTwigGrid(),
+            $locator->gui()->pluginTwigGridConfirmDialog(),
+            $locator->gui()->pluginTwigListGroup(),
+            $locator->gui()->pluginTwigModal(),
+            $locator->gui()->pluginTwigPanel(),
+            $locator->gui()->pluginTwigWidget(),
+            $locator->gui()->pluginTwigStaticPath(),
         ];
 
         return $functions;

@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Payone\Communication\Controller;
 
+use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Generated\Shared\Transfer\PersonalDataTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\AuthorizationTransfer;
@@ -26,7 +27,7 @@ use SprykerFeature\Zed\Payone\Communication\PayoneDependencyContainer;
  * @method PayoneQueryContainerInterface getQueryContainer()
  * @method PayoneDependencyContainer getDependencyContainer()
  */
-class TestController extends AbstractController implements PayoneApiConstants
+class TestController extends AbstractController
 {
 
     const TEST_TRANSACTION_ID = '165145481';
@@ -40,7 +41,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $authorization = new AuthorizationTransfer();
         $authorization->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT);
         $authorization->setAmount($order->getTotals()->getGrandTotal());
-        $authorization->setReferenceId($order->getOrderReference());
+        $authorization->setReferenceId($order->getIdSalesOrder());
         $authorization->setOrder($order);
 
         $result = $this->getFacade()->preAuthorize($authorization);
@@ -55,7 +56,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $authorization = new AuthorizationTransfer();
         $authorization->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT);
         $authorization->setAmount($order->getTotals()->getGrandTotal());
-        $authorization->setReferenceId($order->getOrderReference());
+        $authorization->setReferenceId($order->getIdSalesOrder());
         $authorization->setOrder($order);
 
         $result = $this->getFacade()->preAuthorize($authorization);
@@ -68,8 +69,8 @@ class TestController extends AbstractController implements PayoneApiConstants
         $order = $this->getOrder();
 
         $payment = new PayonePaymentTransfer();
-        $payment->setTransactionId(self::TEST_TRANSACTION_ID);
-        $payment->setPaymentMethod(self::PAYMENT_METHOD_PREPAYMENT);
+        $payment->setTransactionId(PayoneApiConstants::TEST_TRANSACTION_ID);
+        $payment->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT);
 
         $capture = new CaptureTransfer();
         $capture->setPayment($payment);
@@ -83,8 +84,8 @@ class TestController extends AbstractController implements PayoneApiConstants
     public function vorDebitAction()
     {
         $payment = new PayonePaymentTransfer();
-        $payment->setTransactionId(self::TEST_TRANSACTION_ID);
-        $payment->setPaymentMethod(self::PAYMENT_METHOD_PREPAYMENT);
+        $payment->setTransactionId(PayoneApiConstants::TEST_TRANSACTION_ID);
+        $payment->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT);
 
         $debit = new DebitTransfer();
         $debit->setPayment($payment);
@@ -98,14 +99,14 @@ class TestController extends AbstractController implements PayoneApiConstants
     public function vorRefundAction()
     {
         $payment = new PayonePaymentTransfer();
-        $payment->setTransactionId(self::TEST_TRANSACTION_ID);
-        $payment->setPaymentMethod(self::PAYMENT_METHOD_PREPAYMENT);
+        $payment->setTransactionId(PayoneApiConstants::TEST_TRANSACTION_ID);
+        $payment->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT);
 
         $refund = new RefundTransfer();
         $refund->setPayment($payment);
         $refund->setAmount(-100);
 
-        $result = $this->getFacade()->refund($refund);
+        $result = $this->getFacade()->refundPayment($refund);
 
         dump($result);die;
     }
@@ -113,11 +114,11 @@ class TestController extends AbstractController implements PayoneApiConstants
     public function ccClientCheckAction()
     {
         $payment = new PayonePaymentTransfer();
-        $payment->setPaymentMethod(self::PAYMENT_METHOD_CREDITCARD_PSEUDO);
+        $payment->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO);
 
         $creditCard = new CreditCardTransfer();
         $creditCard->setPayment($payment);
-        $creditCard->setCardPan(self::TEST_VISA_PAN);
+        $creditCard->setCardPan(PayoneApiConstants::TEST_VISA_PAN);
         $creditCard->setCardType(PayoneApiConstants::CREDITCARD_TYPE_VISA);
         $creditCard->setCardExpireDate('2012');
 //        $creditCard->setCardCvc2('123');
@@ -133,14 +134,14 @@ class TestController extends AbstractController implements PayoneApiConstants
         $order = $this->getOrder();
 
         $personalData = new PersonalDataTransfer();
-        $personalData->setPseudoCardPan(self::TEST_PSEUDO_PAN);
+        $personalData->setPseudoCardPan(PayoneApiConstants::TEST_PSEUDO_PAN);
         $personalData->setCountry('DE');
 
         $authorization = new AuthorizationTransfer();
         $authorization->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO);
         $authorization->setPersonalData($personalData);
         $authorization->setAmount($order->getTotals()->getGrandTotal());
-        $authorization->setReferenceId($order->getOrderReference());
+        $authorization->setReferenceId($order->getIdSalesOrder());
         $authorization->setOrder($order);
 
         $result = $this->getFacade()->preAuthorize($authorization);
@@ -151,7 +152,7 @@ class TestController extends AbstractController implements PayoneApiConstants
     public function ccCheckAuthAction()
     {
         $payment = new PayonePaymentTransfer();
-        $payment->setTransactionId(self::TEST_TRANSACTION_ID);
+        $payment->setTransactionId(PayoneApiConstants::TEST_TRANSACTION_ID);
         $payment->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO);
         $payment->setAuthorizationType(PayoneApiConstants::REQUEST_TYPE_AUTHORIZATION);
 
@@ -165,14 +166,14 @@ class TestController extends AbstractController implements PayoneApiConstants
         $order = $this->getOrder();
 
         $personalData = new PersonalDataTransfer();
-        $personalData->setPseudoCardPan(self::TEST_PSEUDO_PAN);
+        $personalData->setPseudoCardPan(PayoneApiConstants::TEST_PSEUDO_PAN);
         $personalData->setCountry('DE');
 
         $authorization = new AuthorizationTransfer();
         $authorization->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO);
         $authorization->setPersonalData($personalData);
         $authorization->setAmount($order->getTotals()->getGrandTotal());
-        $authorization->setReferenceId($order->getOrderReference());
+        $authorization->setReferenceId($order->getIdSalesOrder());
         $authorization->setOrder($order);
 
         $result = $this->getFacade()->authorize($authorization);
@@ -185,7 +186,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $order = $this->getOrder();
 
         $payment = new PayonePaymentTransfer();
-        $payment->setTransactionId(self::TEST_TRANSACTION_ID);
+        $payment->setTransactionId(PayoneApiConstants::TEST_TRANSACTION_ID);
         $payment->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT);
 
         $capture = new CaptureTransfer();
@@ -201,7 +202,7 @@ class TestController extends AbstractController implements PayoneApiConstants
     public function ccDebitAction()
     {
         $payment = new PayonePaymentTransfer();
-        $payment->setTransactionId(self::TEST_TRANSACTION_ID);
+        $payment->setTransactionId(PayoneApiConstants::TEST_TRANSACTION_ID);
         $payment->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO);
 
         $debit = new DebitTransfer();
@@ -216,18 +217,18 @@ class TestController extends AbstractController implements PayoneApiConstants
     public function ccRefundAction()
     {
         $payment = new PayonePaymentTransfer();
-        $payment->setTransactionId(self::TEST_TRANSACTION_ID);
+        $payment->setTransactionId(PayoneApiConstants::TEST_TRANSACTION_ID);
         $payment->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO);
 
         $refund = new RefundTransfer();
         $refund->setPayment($payment);
         $refund->setAmount(-100);
 
-        $refund->setUseCustomerdata(self::USE_CUSTOMER_DATA_YES);
+        $refund->setUseCustomerdata(PayoneApiConstants::USE_CUSTOMER_DATA_YES);
         $refund->setNarrativeText('Test narrative');
 //        echo '<pre>' . var_dump($refund) . '</pre>';die;
 
-        $result = $this->getFacade()->refund($refund);
+        $result = $this->getFacade()->refundPayment($refund);
 
         dump($result);die;
     }
@@ -235,7 +236,7 @@ class TestController extends AbstractController implements PayoneApiConstants
     public function ppCheckAuthAction()
     {
         $payment = new PayonePaymentTransfer();
-        $payment->setTransactionId(self::TEST_TRANSACTION_ID);
+        $payment->setTransactionId(PayoneApiConstants::TEST_TRANSACTION_ID);
         $payment->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_PAYPAL);
         $payment->setAuthorizationType(PayoneApiConstants::REQUEST_TYPE_AUTHORIZATION);
 
@@ -251,7 +252,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $authorization = new AuthorizationTransfer();
         $authorization->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_PAYPAL);
         $authorization->setAmount($order->getTotals()->getGrandTotal());
-        $authorization->setReferenceId($order->getOrderReference());
+        $authorization->setReferenceId($order->getIdSalesOrder());
 
         $authorization->setOrder($order);
 
@@ -268,7 +269,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $authorization = new AuthorizationTransfer();
         $authorization->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_PAYPAL);
         $authorization->setAmount($order->getTotals()->getGrandTotal());
-        $authorization->setReferenceId($order->getOrderReference());
+        $authorization->setReferenceId($order->getIdSalesOrder());
 
         $authorization->setOrder($order);
 
@@ -283,7 +284,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $order = $this->getOrder();
 
         $payment = new PayonePaymentTransfer();
-        $payment->setTransactionId(self::TEST_TRANSACTION_ID);
+        $payment->setTransactionId(PayoneApiConstants::TEST_TRANSACTION_ID);
         $payment->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_PAYPAL);
 
         $capture = new CaptureTransfer();
@@ -300,7 +301,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $order = $this->getOrder();
 
         $payment = new PayonePaymentTransfer();
-        $payment->setTransactionId(self::TEST_TRANSACTION_ID);
+        $payment->setTransactionId(PayoneApiConstants::TEST_TRANSACTION_ID);
         $payment->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_PAYPAL);
 
         $capture = new CaptureTransfer();
@@ -319,7 +320,7 @@ class TestController extends AbstractController implements PayoneApiConstants
         $authorization = new AuthorizationTransfer();
         $authorization->setPaymentMethod(PayoneApiConstants::PAYMENT_METHOD_GIROPAY);
         $authorization->setAmount($order->getTotals()->getGrandTotal());
-        $authorization->setReferenceId($order->getOrderReference());
+        $authorization->setReferenceId($order->getIdSalesOrder());
         $authorization->setOrder($order);
 
         $result = $this->getFacade()->preAuthorize($authorization);
@@ -337,9 +338,8 @@ class TestController extends AbstractController implements PayoneApiConstants
         $order->setLastName('wurst');
         $order->setEmail('horst@wurst.de');
         $order->setIsTest(true);
-        $order->setOrderReference('DY999991011');
+//        $order->setIncrementId('DY999991011');
 
-//        @todo remove
         $order->setOrderReference(rand(0, 100000));
 
         $order->setIdSalesOrder(1);
@@ -356,7 +356,9 @@ class TestController extends AbstractController implements PayoneApiConstants
 
     public function transactionUpdateAction()
     {
-        $order = $this->getOrder();        $params = [
+        $order = $this->getOrder();
+
+        $params = [
             'aid' => '25811',
             'mode' => 'test',
             'customerid' => '999',
@@ -367,14 +369,17 @@ class TestController extends AbstractController implements PayoneApiConstants
             'receivable' => '0',
             'balance' => '0',
             'currency' => 'EUR',
-            'txid' => self::TEST_TRANSACTION_ID,
+            'txid' => PayoneApiConstants::TEST_TRANSACTION_ID,
             'userid' => '67518130',
             'txtime' => '1354187955',
             'clearingtype' => 'wlt',
             'reference' => $order->getOrderReference(),
         ];
 
-        $r = $this->getFacade()->processTransactionStatusUpdate($params);
+        $transactionStatusUpdateTransfer = new PayoneTransactionStatusUpdateTransfer();
+        $transactionStatusUpdateTransfer->fromArray($params);
+
+        $r = $this->getFacade()->processTransactionStatusUpdate($transactionStatusUpdateTransfer);
 
         echo '<pre>' . print_r($r, false) . '</pre>';die;
     }

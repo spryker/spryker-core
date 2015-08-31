@@ -7,6 +7,7 @@
 namespace SprykerFeature\Shared\Library\SystemUnderTest;
 
 // @todo Pyz not allowed in vendor
+use Propel\Runtime\Propel;
 use Pyz\Yves\Application\Communication\YvesBootstrap;
 use Pyz\Zed\Application\Communication\ZedBootstrap;
 
@@ -59,6 +60,8 @@ class SystemUnderTestBootstrap
      */
     public function bootstrap($application = self::APPLICATION_ZED)
     {
+        Propel::disableInstancePooling();
+
         $this->validateApplication($application);
         error_reporting(E_ALL | E_STRICT);
         ini_set('display_errors', 1);

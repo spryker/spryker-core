@@ -23,6 +23,7 @@ class PoolForm extends AbstractForm
     const IS_INFINITELY_USABLE = 'is_infinitely_usable';
     const IS_ACTIVE = 'is_active';
     const IS_PRIVILEGED = 'is_privileged';
+    const DESCRIPTION = 'description';
     const AMOUNT = 'amount';
     const AMOUNT_TYPE = 'type';
     const VALID_FROM = 'valid_from';
@@ -85,6 +86,7 @@ class PoolForm extends AbstractForm
                     new NotBlank(),
                 ],
             ])
+            ->addTextarea(self::DESCRIPTION)
             ->addText(self::AMOUNT, [
                 'constraints' => [
                     new NotBlank(),
@@ -154,6 +156,8 @@ class PoolForm extends AbstractForm
             $defaultData[self::AMOUNT_TYPE] = $this->discount->getType();
             $defaultData[self::VALID_FROM] = $this->discount->getValidFrom();
             $defaultData[self::VALID_TO] = $this->discount->getValidTo();
+            $defaultData[self::DESCRIPTION] = $this->discount->getDescription();
+            $defaultData[self::IS_PRIVILEGED] = $this->discount->getIsPrivileged();
         }
 
         return $defaultData;

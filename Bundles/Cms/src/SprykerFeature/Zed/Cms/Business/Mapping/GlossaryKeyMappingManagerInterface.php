@@ -1,14 +1,14 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Business\Mapping;
 
-use Propel\Runtime\Exception\PropelException;
-use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
+use Generated\Shared\Transfer\PageTransfer;
+use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Cms\Business\Exception\MappingAmbiguousException;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingGlossaryKeyMappingException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
@@ -92,5 +92,4 @@ interface GlossaryKeyMappingManagerInterface
      * @return bool
      */
     public function hasPagePlaceholderMapping($idPage, $placeholder);
-
 }

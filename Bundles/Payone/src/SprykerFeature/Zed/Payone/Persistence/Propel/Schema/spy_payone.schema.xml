@@ -1,89 +1,122 @@
 <?xml version="1.0"?>
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" defaultIdMethod="native" defaultPhpNamingMethod="underscore" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" identifierQuoting="true" namespace="SprykerFeature\Zed\Payone\Persistence\Propel" package="vendor.spryker.spryker.Bundles.Payone.src.SprykerFeature.Zed.Payone.Persistence.Propel">
 
-
-    <table name="spy_payment_payone" phpName="SpyPaymentPayone" identifierQuoting="true">
-        <column name="id_payment_payone" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+    <table name="spy_payment_payone" phpName="SpyPaymentPayone">
+        <column name="id_payment_payone" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" required="true" type="INTEGER"/>
+
         <column name="payment_method" required="true" type="VARCHAR"/>
-        <column name="authorization_type" required="true" type="VARCHAR"/>
-        <column name="transaction_id" required="false" type="INTEGER" comment="payone txid"/>
+        <column name="reference" required="true" type="VARCHAR"/>
+        <column name="transaction_id" type="INTEGER"/>
 
-
-        <foreign-key foreignTable="spy_sales_order" phpName="SpySalesOrder" refPhpName="SpyPaymentPayone">
+        <foreign-key foreignTable="spy_sales_order" phpName="SpySalesOrder">
             <reference foreign="id_sales_order" local="fk_sales_order"/>
         </foreign-key>
 
         <behavior name="timestampable"/>
     <id-method-parameter value="spy_payment_payone_pk_seq"/></table>
 
-    <table name="spy_payment_payone_details" phpName="SpyPaymentPayoneDetails" identifierQuoting="true">
-        <column name="id_payment_payone_details" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
-        <column name="fk_payment_payone" required="true" type="INTEGER"/>
+    <table name="spy_payment_payone_detail" phpName="SpyPaymentPayoneDetail">
+        <column name="id_payment_payone" type="INTEGER" primaryKey="true" />
 
-        <column name="pseudocardpan" required="false" type="VARCHAR" comment="Payone generated pseudocardpan instead of actual credit card data"/>
+        <column name="amount" required="true" type="INTEGER"/>
+        <column name="currency" required="true" type="VARCHAR"/>
+        
+        <column name="pseudo_card_pan" type="VARCHAR" comment="Payone generated pseudocardpan instead of actual credit card data"/>
 
-        <foreign-key foreignTable="spy_payment_payone" phpName="SpyPaymentPayone" refPhpName="SpyPaymentPayoneDetails">
-            <reference foreign="id_payment_payone" local="fk_payment_payone"/>
+        <column name="bank_country" type="VARCHAR" size="2"/>
+        <column name="bank_account" type="VARCHAR" size="26"/>
+        <column name="bank_code" type="VARCHAR" size="8"/>
+        <column name="bank_group_type" type="VARCHAR" size="50"/>
+        <column name="bank_branch_code" type="VARCHAR" size="5"/>
+        <column name="bank_check_digit" type="VARCHAR" size="2"/>
+        <column name="iban" type="VARCHAR" size="35"/>
+        <column name="bic" type="VARCHAR" size="11"/>
+        <column name="type" type="VARCHAR" size="3"/>
+
+        <foreign-key foreignTable="spy_payment_payone" phpName="SpyPaymentPayone">
+            <reference foreign="id_payment_payone" local="id_payment_payone"/>
         </foreign-key>
 
         <behavior name="timestampable"/>
-    <id-method-parameter value="spy_payment_payone_details_pk_seq"/></table>
+    <id-method-parameter value="spy_payment_payone_detail_pk_seq"/></table>
 
-    <table name="spy_payment_payone_api_log" phpName="SpyPaymentPayoneApiLog" identifierQuoting="true">
-
+    <table name="spy_payment_payone_api_log">
         <column name="id_payment_payone_api_log" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_payment_payone" required="true" type="INTEGER"/>
 
         <column name="request" required="true" type="VARCHAR"/>
         <column name="mode" required="true" type="VARCHAR"/>
-        <column name="status" required="false" type="VARCHAR"/>
-        <column name="transaction_id" required="false" type="INTEGER" comment="payone txid"/>
-        <column name="user_id" required="false" type="VARCHAR"/>
-        <column name="merchant_id" required="true" type="VARCHAR" comment="payone mid"/>
-        <column name="portal_id" required="true" type="VARCHAR" comment="payone portalid"/>
+        <column name="status" type="VARCHAR"/>
+        <column name="transaction_id" type="INTEGER"/>
+        <column name="sequence_number" type="INTEGER"/>
+        <column name="user_id" type="VARCHAR"/>
+        <column name="merchant_id" required="true" type="VARCHAR"/>
+        <column name="portal_id" required="true" type="VARCHAR"/>
 
-        <column name="error_code" required="false" type="VARCHAR" comment="payone errorcode"/>
-        <column name="error_message_internal" required="false" type="VARCHAR" comment="payone errormessage"/>
-        <column name="error_message_user" required="false" type="VARCHAR" comment="payone customermessage"/>
+        <column name="error_code" type="VARCHAR"/>
+        <column name="error_message_internal" type="VARCHAR"/>
+        <column name="error_message_user" type="VARCHAR"/>
 
-        <column name="redirect_url" required="false" type="VARCHAR" comment="payone redirecturl"/>
+        <column name="redirect_url" type="LONGVARCHAR"/>
 
-        <foreign-key foreignTable="spy_payment_payone" phpName="SpyPaymentPayone" refPhpName="SpyPaymentPayoneApiLog">
+        <foreign-key foreignTable="spy_payment_payone">
             <reference foreign="id_payment_payone" local="fk_payment_payone"/>
         </foreign-key>
 
         <behavior name="timestampable"/>
     <id-method-parameter value="spy_payment_payone_api_log_pk_seq"/></table>
 
-    <table name="spy_payment_payone_transaction_status_log" phpName="SpyPaymentPayoneTransactionStatusLog" identifierQuoting="true">
+    <table name="spy_payment_payone_transaction_status_log">
 
         <column name="id_payment_payone_transaction_status_log" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_payment_payone" required="true" type="INTEGER"/>
 
-        <column name="transaction_id" required="false" type="INTEGER" comment="payone txid"/>
-        <column name="reference_id" required="false" type="INTEGER" comment="payone txid"/>
-        <column name="mode" required="false" type="VARCHAR"/>
+        <column name="transaction_id" type="INTEGER"/>
+        <column name="reference_id" type="INTEGER"/>
 
-        <column name="status" required="true" type="VARCHAR" comment="payone txaction"/>
-        <column name="transaction_time" required="false" type="TIMESTAMP" comment="payone txtime"/>
-        <column name="sequence_number" required="false" type="INTEGER" comment="payone sequencenumber"/>
+        <column name="mode" type="VARCHAR"/>
 
-        <column name="clearing_type" required="false" type="VARCHAR" comment="payone clearingtype"/>
-        <column name="portal_id" required="false" type="VARCHAR" comment="payone portalid"/>
+        <column name="status" required="true" type="VARCHAR"/>
+        <column name="transaction_time" type="TIMESTAMP"/>
+        <column name="sequence_number" type="INTEGER"/>
 
-        <column name="balance" required="false" type="INTEGER"/>
-        <column name="receivable" required="false" type="INTEGER"/>
+        <column name="clearing_type" type="VARCHAR"/>
+        <column name="portal_id" type="VARCHAR"/>
+
+        <column name="balance" type="INTEGER"/>
+        <column name="receivable" type="INTEGER"/>
+
+        <column name="reminder_level" type="VARCHAR"/>
 
         <index>
             <index-column name="transaction_id"/>
         </index>
 
-        <foreign-key foreignTable="spy_payment_payone" phpName="SpyPaymentPayone" refPhpName="SpyPaymentPayoneTransactionStatusLog">
+        <foreign-key foreignTable="spy_payment_payone">
             <reference foreign="id_payment_payone" local="fk_payment_payone"/>
         </foreign-key>
 
         <behavior name="timestampable"/>
-    <id-method-parameter value="spy_payment_payone_transaction_status_log_pk_seq"/></table>
+        <id-method-parameter value="spy_payment_payone_transaction_status_log_pk_seq"/>
+    </table>
+
+    <table name="spy_payment_payone_transaction_status_log_order_item">
+
+        <column name="id_payment_payone_transaction_status_log" type="INTEGER" primaryKey="true"/>
+        <column name="id_sales_order_item" type="INTEGER" primaryKey="true"/>
+
+        <behavior name="timestampable">
+            <parameter name="disable_updated_at" value="true"/>
+        </behavior>
+
+        <foreign-key foreignTable="spy_payment_payone_transaction_status_log">
+            <reference foreign="id_payment_payone_transaction_status_log" local="id_payment_payone_transaction_status_log"/>
+        </foreign-key>
+        <foreign-key foreignTable="spy_sales_order_item">
+            <reference foreign="id_sales_order_item" local="id_sales_order_item"/>
+        </foreign-key>
+
+    </table>
 
 </database>

@@ -8,37 +8,26 @@ namespace SprykerFeature\Zed\Auth\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\AuthBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use SprykerFeature\Zed\Auth\AuthConfig;
 use SprykerFeature\Zed\Auth\Business\Client\StaticToken;
 use SprykerFeature\Zed\Auth\Business\Model\Auth;
-use SprykerFeature\Zed\User\Business\UserFacade;
+use SprykerFeature\Zed\Auth\Business\Model\PasswordReset;
+use SprykerFeature\Zed\Auth\AuthDependencyProvider;
+use SprykerFeature\Zed\Auth\Persistence\AuthQueryContainer;
 
 /**
  * @method AuthBusiness getFactory()
+ * @method AuthConfig getConfig()
+ * @method AuthQueryContainer getQueryContainer()
  */
 class AuthDependencyContainer extends AbstractBusinessDependencyContainer
 {
-
-    /**
-     * @return AuthFacade
-     */
-    public function locateAuthFacade()
-    {
-        return $this->getLocator()->auth()->facade();
-    }
-
-    /**
-     * @return UserFacade
-     */
-    public function locateUserFacade()
-    {
-        return $this->getLocator()->user()->facade();
-    }
-
     /**
      * @return Auth
      */
     public function createAuthModel()
     {
+        //@todo refactor those messy dependencies.
         return $this->getFactory()->createModelAuth(
             $this->getLocator(),
             $this->getLocator()->session()->client(),
@@ -54,6 +43,25 @@ class AuthDependencyContainer extends AbstractBusinessDependencyContainer
     public function createStaticTokenClient()
     {
         return $this->getFactory()->createClientStaticToken();
+    }
+
+    /**
+     * @return PasswordReset
+     */
+    public function createPasswordReset()
+    {
+        $passwordReset =  $this->getFactory()->createModelPasswordReset(
+            $this->getQueryContainer(),
+            $this->getProvidedDependency(AuthDependencyProvider::FACADE_USER),
+            $this->getConfig()
+        );
+
+        $passwordResetNotificationSender = $this->getProvidedDependency(AuthDependencyProvider::PASSWORD_RESET_SENDER);
+        if (null !== $passwordResetNotificationSender) {
+            $passwordReset->setUserPasswordResetNotificationSender($passwordResetNotificationSender);
+        }
+
+        return $passwordReset;
     }
 
 }

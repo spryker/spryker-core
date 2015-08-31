@@ -6,6 +6,11 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Adapter\Http;
 
+use SprykerFeature\Zed\Payone\Business\Exception\TimeoutException;
+
+/**
+ * @deprecated Use Guzzle instead.
+ */
 class Curl extends AbstractHttpAdapter
 {
 
@@ -24,7 +29,9 @@ class Curl extends AbstractHttpAdapter
         $urlScheme = $urlArray['scheme'];
         $urlQuery = $urlArray['query'];
 
-        $curl = curl_init($urlScheme . '://' . $urlHost . $urlPath);
+        $url = $urlScheme . '://' . $urlHost . $urlPath;
+
+        $curl = curl_init($url);
 
         curl_setopt($curl, CURLOPT_POST, 1);
         curl_setopt($curl, CURLOPT_POSTFIELDS, $urlQuery);
@@ -38,12 +45,14 @@ class Curl extends AbstractHttpAdapter
         $this->setRawResponse($result);
 
         if (curl_getinfo($curl, CURLINFO_HTTP_CODE) !== 200) {
-            throw new \ErrorException('Invalid Response - Payone Communication');
+            if (curl_errno($curl) === CURLE_OPERATION_TIMEOUTED) {
+                throw new TimeoutException('Timeout - Payone Communication');
+            }
+            throw new \ErrorException('Invalid Response - Payone Communication: ' . curl_errno($curl));
         }
-        elseif (curl_error($curl)) {
+        if (curl_error($curl)) {
             $response[] = 'errormessage=' . curl_errno($curl) . ': ' . curl_error($curl);
-        }
-        else {
+        } else {
             $response = explode("\n", $result);
         }
         curl_close($curl);

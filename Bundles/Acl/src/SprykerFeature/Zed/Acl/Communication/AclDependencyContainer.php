@@ -7,19 +7,23 @@
 namespace SprykerFeature\Zed\Acl\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\AclCommunication;
+use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Acl\AclDependencyProvider;
 use SprykerFeature\Zed\Acl\Communication\Form\GroupForm;
-use SprykerFeature\Zed\Acl\Communication\Form\UserForm;
-use SprykerFeature\Zed\Acl\Communication\Grid\RulesetGrid;
-use SprykerFeature\Zed\Acl\Communication\Grid\UserGrid;
+use SprykerFeature\Zed\Acl\Communication\Form\RoleForm;
+use SprykerFeature\Zed\Acl\Communication\Form\RulesetForm;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use SprykerFeature\Zed\Acl\Communication\Table\RoleTable;
+use SprykerFeature\Zed\Acl\Communication\Table\RulesetTable;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 use SprykerFeature\Zed\User\Business\UserFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method AclCommunication getFactory()
  * @method AclQueryContainer getQueryContainer()
+ * @method AclConfig getConfig()
  */
 class AclDependencyContainer extends AbstractCommunicationDependencyContainer
 {
@@ -33,53 +37,33 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
     }
 
     /**
-     * @param Request $request
-     *
-     * @return UserGrid
+     * @return GroupTable
      */
-    public function createUserGrid(Request $request)
+    public function createGroupTable()
     {
-        $aclQueryContainer = $this->getQueryContainer();
-        $query = $aclQueryContainer->queryUsersWithGroup();
-
-        return $this->getFactory()->createGridUserGrid(
-            $query,
-            $request
+        return $this->getFactory()->createTableGroupTable(
+            $this->getQueryContainer()->queryGroup()
         );
     }
 
     /**
-     * @param Request $request
      * @param int $idGroup
      *
-     * @return UserGrid
+     * @return array
      */
-    public function createUserGridByGroupId(Request $request, $idGroup)
+    public function createGroupRoleListByGroupId($idGroup)
     {
-        $aclQueryContainer = $this->getQueryContainer();
-        $query = $aclQueryContainer->queryGroupUsers($idGroup);
+        $roleCollection = $this->getQueryContainer()
+            ->queryGroupRoles($idGroup)
+            ->find()
+            ->toArray()
+        ;
 
-        return $this->getFactory()->createGridUserGrid(
-            $query,
-            $request
-        );
-    }
-
-    /**
-     * @param Request $request
-     * @param int $idGroup
-     *
-     * @return RulesetGrid
-     */
-    public function createRulesetGrid(Request $request, $idGroup)
-    {
-        $aclQueryContainer = $this->getQueryContainer();
-        $query = $aclQueryContainer->queryRulesFromGroup($idGroup);
-
-        return $this->getFactory()->createGridRulesetGrid(
-            $query,
-            $request
-        );
+        return [
+            'code' => Response::HTTP_OK,
+            'idGroup' => $idGroup,
+            'data' => $roleCollection,
+        ];
     }
 
     /**
@@ -101,20 +85,6 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
     /**
      * @param Request $request
      *
-     * @return UserForm
-     */
-    public function createUserWithGroupForm(Request $request)
-    {
-        return $this->getFactory()->createFormUserForm(
-            $request,
-            $this->getFactory(),
-            $this->getQueryContainer()
-        );
-    }
-
-    /**
-     * @param Request $request
-     *
      * @return GroupForm
      */
     public function createGroupForm(Request $request)
@@ -124,6 +94,40 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
             $this->getFactory(),
             $this->getQueryContainer()
         );
+    }
+
+    /**
+     * @return RoleTable
+     */
+    public function createRoleTable()
+    {
+        return $this->getFactory()->createTableRoleTable($this->getQueryContainer());
+    }
+
+    /**
+     * @return RoleForm
+     */
+    public function createRoleForm()
+    {
+        return $this->getFactory()->createFormRoleForm();
+    }
+
+    /**
+     * @return RulesetForm
+     */
+    public function createRulesetForm()
+    {
+        return $this->getFactory()->createFormRulesetForm();
+    }
+
+    /**
+     * @param int $idRole
+     *
+     * @return RulesetTable
+     */
+    public function createRulesetTable($idRole)
+    {
+        return $this->getFactory()->createTableRulesetTable($this->getQueryContainer(), $idRole);
     }
 
 }

@@ -102,35 +102,38 @@ class User implements UserInterface
     }
 
     /**
-     * @param UserTransfer $user
+     * @param UserTransfer $userTransfer
      *
      * @return UserTransfer
      */
-    public function save(UserTransfer $user)
+    public function save(UserTransfer $userTransfer)
     {
-        if ($user->getIdUser() !== null) {
-            $entity = $this->getEntityUserById($user->getIdUser());
+        if ($userTransfer->getIdUser() !== null) {
+            $userEntity = $this->getEntityUserById($userTransfer->getIdUser());
         } else {
-            $entity = new SpyUser();
+            $userEntity = new SpyUser();
         }
 
-        $entity->setFirstName($user->getFirstName());
-        $entity->setLastName($user->getLastName());
-        $entity->setUsername($user->getUsername());
-
-        if (!is_null($user->getStatus())) {
-            $entity->setStatus($user->getStatus());
+        $userEntity->setFirstName($userTransfer->getFirstName());
+        $userEntity->setLastName($userTransfer->getLastName());
+        $userEntity->setUsername($userTransfer->getUsername());
+        if (null !== $userTransfer->getStatus()) {
+            $userEntity->setStatus($userTransfer->getStatus());
         }
 
-        $password = $user->getPassword();
-        if (!empty($password) && true === $this->isRawPassword($user->getPassword())) {
-            $entity->setPassword($this->encryptPassword($user->getPassword()));
+        if (null !== $userTransfer->getLastLogin()) {
+            $userEntity->setLastLogin($userTransfer->getLastLogin());
         }
 
-        $entity->save();
-        $transfer = $this->entityToTransfer($entity);
+        $password = $userTransfer->getPassword();
+        if (!empty($password) && $this->isRawPassword($userTransfer->getPassword())) {
+            $userEntity->setPassword($this->encryptPassword($userTransfer->getPassword()));
+        }
 
-        return $transfer;
+        $userEntity->save();
+        $userTransfer = $this->entityToTransfer($userEntity);
+
+        return $userTransfer;
     }
 
     /**
@@ -352,6 +355,34 @@ class User implements UserInterface
         $transfer = Copy::entityToTransfer($transfer, $entity);
 
         return $transfer;
+    }
+
+    /**
+     * @param integer $idUser
+     *
+     * @return bool
+     */
+    public function activateUser($idUser)
+    {
+        $userEntity = $this->queryContainer->queryUserById($idUser)->findOne();
+        $userEntity->setStatus(SpyUserTableMap::COL_STATUS_ACTIVE);
+        $rowsAffected = $userEntity->save();
+
+        return $rowsAffected > 0;
+    }
+
+    /**
+     * @param integer $idUser
+     *
+     * @return bool
+     */
+    public function deactivateUser($idUser)
+    {
+        $userEntity = $this->queryContainer->queryUserById($idUser)->findOne();
+        $userEntity->setStatus(SpyUserTableMap::COL_STATUS_BLOCKED);
+        $rowsAffected = $userEntity->save();
+
+        return $rowsAffected > 0;
     }
 
 }

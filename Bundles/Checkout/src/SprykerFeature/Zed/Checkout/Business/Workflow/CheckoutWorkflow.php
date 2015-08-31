@@ -78,26 +78,24 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     public function requestCheckout(CheckoutRequestTransfer $checkoutRequest)
     {
         $checkoutResponse = new CheckoutResponseTransfer();
-        $checkoutResponse->setIsSuccess(true);
+        $checkoutResponse->setIsSuccess(false);
 
         $this->checkPreConditions($checkoutRequest, $checkoutResponse);
 
-        if ($this->hasErrors($checkoutResponse)) {
-            return $checkoutResponse;
+        if (!$this->hasErrors($checkoutResponse)) {
+            $orderTransfer = $this->getOrderTransfer();
+
+            $this->hydrateOrder($orderTransfer, $checkoutRequest);
+            $orderTransfer = $this->doSaveOrder($orderTransfer, $checkoutResponse);
+            $checkoutResponse->setOrder($orderTransfer);
+
+            if (!$this->hasErrors($checkoutResponse)) {
+                $this->triggerStatemachine($orderTransfer);
+                $this->executePostHooks($orderTransfer, $checkoutResponse);
+
+                $checkoutResponse->setIsSuccess(true);
+            }
         }
-
-        $orderTransfer = $this->getOrderTransfer();
-
-        $this->hydrateOrder($orderTransfer, $checkoutRequest);
-        $orderTransfer = $this->doSaveOrder($orderTransfer, $checkoutResponse);
-        $checkoutResponse->setOrder($orderTransfer);
-
-        if ($this->hasErrors($checkoutResponse)) {
-            return $checkoutResponse;
-        }
-
-        $this->triggerStatemachine($orderTransfer);
-        $this->executePostHooks($orderTransfer, $checkoutResponse);
 
         return $checkoutResponse;
     }
@@ -113,11 +111,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
                 $preCondition->checkCondition($checkoutRequest, $checkoutResponse);
             }
         } catch (\Exception $e) {
-            $error = new CheckoutErrorTransfer();
-            $error
-                ->setMessage('Es ist ein Fehler aufgetreten: ' . $e->getMessage())
-                ->setErrorCode(CheckoutConfig::ERROR_CODE_UNKNOWN_ERROR)
-            ;
+            $error = $this->createInternalErrorTransfer();
 
             $checkoutResponse
                 ->addError($error)
@@ -161,11 +155,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         } catch (\Exception $e) {
             Propel::getConnection()->rollBack();
 
-            $error = new CheckoutErrorTransfer();
-            $error
-                ->setMessage('Error: ' . $e->getMessage())
-                ->setErrorCode(CheckoutConfig::ERROR_CODE_UNKNOWN_ERROR)
-            ;
+            $error = $this->createInternalErrorTransfer();
 
             $checkoutResponse
                 ->addError($error)
@@ -220,17 +210,27 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
                 $postSaveHook->executeHook($orderTransfer, $checkoutResponse);
             }
         } catch (\Exception $e) {
-            $error = new CheckoutErrorTransfer();
-            $error
-                ->setMessage('Es ist ein Fehler aufgetreten: ' . $e->getMessage())
-                ->setErrorCode(CheckoutConfig::ERROR_CODE_UNKNOWN_ERROR)
-            ;
+            $error = $this->createInternalErrorTransfer();
 
             $checkoutResponse
                 ->addError($error)
                 ->setIsSuccess(false)
             ;
         }
+    }
+
+    /**
+     * @return CheckoutErrorTransfer
+     */
+    protected function createInternalErrorTransfer()
+    {
+        $error = new CheckoutErrorTransfer();
+        $error
+            ->setMessage(CheckoutConfig::ERROR_MESSAGE_INTERNAL_ERROR)
+            ->setErrorCode(CheckoutConfig::ERROR_CODE_UNKNOWN_ERROR)
+        ;
+
+        return $error;
     }
 
 }

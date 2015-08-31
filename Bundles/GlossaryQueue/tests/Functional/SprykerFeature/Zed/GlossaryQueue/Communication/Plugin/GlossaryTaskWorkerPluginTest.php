@@ -8,7 +8,7 @@ use Generated\Shared\Transfer\QueueMessageTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Pyz\Zed\Glossary\Business\GlossaryFacade;
 use Pyz\Zed\Glossary\GlossaryDependencyProvider;
-use SprykerEngine\Zed\Kernel\Communication\Factory as CommuncationFactory;
+use SprykerEngine\Zed\Kernel\Communication\Factory as CommunicationFactory;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 use SprykerEngine\Zed\Kernel\Container;
@@ -52,9 +52,15 @@ class GlossaryTaskWorkerPluginTest extends Test
 
         $this->generateTestLocales();
         $this->glossaryFacade = $this->createGlossaryFacade();
+        $container = new Container();
+        $container = (new \SprykerFeature\Zed\Glossary\GlossaryDependencyProvider())
+            ->provideBusinessLayerDependencies($container)
+        ;
+        $this->glossaryFacade->setExternalDependencies($container);
+
         $glossaryQueueFacade = $this->createGlossaryQueueFacade();
 
-        $this->taskPlugin = new GlossaryTaskWorkerPlugin(new CommuncationFactory('GlossaryQueue'), $this->getLocator());
+        $this->taskPlugin = new GlossaryTaskWorkerPlugin(new CommunicationFactory('GlossaryQueue'), $this->getLocator());
         $this->taskPlugin->setOwnFacade($glossaryQueueFacade);
     }
 

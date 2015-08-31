@@ -6,16 +6,12 @@
 
 namespace SprykerFeature\Zed\Payone\Business;
 
-use Generated\Shared\Payone\AuthorizationInterface;
-use Generated\Shared\Payone\CaptureInterface;
-use Generated\Shared\Payone\DebitInterface;
-use Generated\Shared\Payone\RefundInterface;
+use Generated\Shared\Payone\PayoneCreditCardInterface;
 use Generated\Shared\Payone\PayonePaymentInterface;
-use Generated\Shared\Payone\CreditCardInterface;
-use Generated\Shared\Payone\ApiCallResponseCheckInterface;
-use Generated\Shared\Transfer\AuthorizationCheckResponseTransfer;
-use Generated\Shared\Transfer\PayonePaymentTransfer;
+use Generated\Shared\Payone\PayoneRefundInterface;
+use Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer;
 use Generated\Shared\Payone\OrderInterface;
+use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
@@ -39,89 +35,76 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param AuthorizationInterface $authorizationData
+     * @param int $idPayment
      *
      * @return AuthorizationResponseContainer
      */
-    public function authorize(AuthorizationInterface $authorizationData)
+    public function authorizePayment($idPayment)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->authorize($authorizationData);
+        return $this->getDependencyContainer()->createPaymentManager()->authorizePayment($idPayment);
     }
 
     /**
-     * @param AuthorizationInterface $authorizationData
+     * @param int $idPayment
      *
      * @return AuthorizationResponseContainer
      */
-    public function preAuthorize(AuthorizationInterface $authorizationData)
+    public function preAuthorizePayment($idPayment)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->preAuthorize($authorizationData);
+        return $this->getDependencyContainer()->createPaymentManager()->preAuthorizePayment($idPayment);
     }
 
     /**
-     * @param CaptureInterface $captureData
+     * @param int $idPayment
      *
      * @return CaptureResponseContainer
      */
-    public function capture(CaptureInterface $captureData)
+    public function capturePayment($idPayment)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->capture($captureData);
+        return $this->getDependencyContainer()->createPaymentManager()->capturePayment($idPayment);
     }
 
     /**
-     * @param DebitInterface $debitData
+     * @param int $idPayment
      *
      * @return DebitResponseContainer
      */
-    public function debit(DebitInterface $debitData)
+    public function debitPayment($idPayment)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->debit($debitData);
+        return $this->getDependencyContainer()->createPaymentManager()->debitPayment($idPayment);
     }
 
     /**
-     * @param RefundInterface $refundData
+     * @param PayoneRefundInterface $refundTransfer
      *
      * @return RefundResponseContainer
      */
-    public function refund(RefundInterface $refundData)
+    public function refundPayment(PayoneRefundInterface $refundTransfer)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->refund($refundData);
+        return $this->getDependencyContainer()->createPaymentManager()->refundPayment($refundTransfer);
     }
 
     /**
-     * @param CreditCardInterface $creditCardData
+     * @param PayoneCreditCardInterface $creditCardData
      *
      * @return CreditCardCheckResponseContainer
      */
-    public function creditCardCheck(CreditCardInterface $creditCardData)
+    public function creditCardCheck(PayoneCreditCardInterface $creditCardData)
     {
         return $this->getDependencyContainer()->createPaymentManager()->creditCardCheck($creditCardData);
     }
 
-    //@todo type hint right container interface
     /**
-     * @param array $requestParams
+     * @param PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer
      *
      * @return TransactionStatusResponse
      */
-    public function processTransactionStatusUpdate(array $requestParams)
+    public function processTransactionStatusUpdate(PayoneTransactionStatusUpdateTransfer $transactionStatusUpdateTransfer)
     {
         $transactionManager = $this->getDependencyContainer()->createTransactionStatusManager();
-        $transactionTransfer = $this->getDependencyContainer()->createTransactionStatusUpdateRequest($requestParams);
+        $transactionTransfer = $this->getDependencyContainer()->createTransactionStatusUpdateRequest($transactionStatusUpdateTransfer);
 
         return $transactionManager->processTransactionStatusUpdate($transactionTransfer);
-    }
-
-    /**
-     * @param PayonePaymentInterface $paymentTransfer
-     *
-     * @return bool
-     *
-     * @deprecated use is approved & is redirect
-     */
-    public function isAuthorizationSuccessful(PayonePaymentInterface $paymentTransfer)
-    {
-        return $this->getDependencyContainer()->createApiLogFinder()->isAuthorizationSuccessful($paymentTransfer);
     }
 
     /**
@@ -142,6 +125,26 @@ class PayoneFacade extends AbstractFacade
     public function isAuthorizationRedirect(OrderInterface $orderTransfer)
     {
         return $this->getDependencyContainer()->createApiLogFinder()->isAuthorizationRedirect($orderTransfer);
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
+     *
+     * @return bool
+     */
+    public function isPreauthorizationApproved(OrderInterface $orderTransfer)
+    {
+        return $this->getDependencyContainer()->createApiLogFinder()->isPreauthorizationApproved($orderTransfer);
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
+     *
+     * @return bool
+     */
+    public function isPreauthorizationRedirect(OrderInterface $orderTransfer)
+    {
+        return $this->getDependencyContainer()->createApiLogFinder()->isPreauthorizationRedirect($orderTransfer);
     }
 
     /**
@@ -179,26 +182,6 @@ class PayoneFacade extends AbstractFacade
      *
      * @return bool
      */
-    public function isPaymentPaid(OrderInterface $orderTransfer)
-    {
-        return $this->getDependencyContainer()->createApiLogFinder()->isPaymentPaid($orderTransfer);
-    }
-
-    /**
-     * @param OrderInterface $orderTransfer
-     *
-     * @return bool
-     */
-    public function isPaymentUnderPaid(OrderInterface $orderTransfer)
-    {
-        return $this->getDependencyContainer()->createApiLogFinder()->isPaymentUnderPaid($orderTransfer);
-    }
-
-    /**
-     * @param OrderInterface $orderTransfer
-     *
-     * @return bool
-     */
     public function isRefundApproved(OrderInterface $orderTransfer)
     {
         return $this->getDependencyContainer()->createApiLogFinder()->isRefundApproved($orderTransfer);
@@ -217,7 +200,7 @@ class PayoneFacade extends AbstractFacade
     /**
      * @param PayonePaymentInterface $payment
      *
-     * @return AuthorizationCheckResponseTransfer
+     * @return PayoneAuthorizationCheckResponseTransfer
      */
     public function getAuthorizationResponse(PayonePaymentInterface $payment)
     {
@@ -225,34 +208,53 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param ApiCallResponseCheckInterface $apiCallCheck
+     * @param $idSalesOrder
+     * @param $idSalesOrderItem
      *
      * @return bool
      */
-    public function isApiCallSuccessful(ApiCallResponseCheckInterface $apiCallCheck)
+    public function isPaymentNotificationAvailable($idSalesOrder, $idSalesOrderItem)
     {
-        return $this->getDependencyContainer()->createApiLogFinder()->isApiCallSuccessful($apiCallCheck);
+        return $this->getDependencyContainer()
+            ->createTransactionStatusManager()
+            ->isPaymentNotificationAvailable($idSalesOrder, $idSalesOrderItem);
     }
 
-    /**
-     * @param OrderInterface $orderData
-     *
-     * @return PaymentStatusTransfer
-     */
-    public function getPaymentStatus(OrderInterface $orderTransfer)
-    {
-//        @todo implement
-//        return $this->getDependencyContainer()->createTransactionStatusManager()->getPaymentStatus($orderData);
+    public function isPaymentPaid($idSalesOrder, $idSalesOrderItem) {
+        return $this->getDependencyContainer()
+            ->createTransactionStatusManager()
+            ->isPaymentPaid($idSalesOrder, $idSalesOrderItem);
     }
 
-    /**
-     * @param OrderInterface $orderTransfer
-     *
-     * @return PayonePaymentTransfer
-     */
-    public function getPayment(OrderInterface $orderTransfer)
+    public function isPaymentOverpaid($idSalesOrder, $idSalesOrderItem) {
+        return $this->getDependencyContainer()
+            ->createTransactionStatusManager()
+            ->isPaymentOverpaid($idSalesOrder, $idSalesOrderItem);
+    }
+
+    public function isPaymentUnderpaid($idSalesOrder, $idSalesOrderItem) {
+        return $this->getDependencyContainer()
+            ->createTransactionStatusManager()
+            ->isPaymentUnderpaid($idSalesOrder, $idSalesOrderItem);
+    }
+
+    public function isPaymentAppointed($idSalesOrder, $idSalesOrderItem)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->getPayment($orderTransfer);
+        return $this->getDependencyContainer()
+            ->createTransactionStatusManager()
+            ->isPaymentAppointed($idSalesOrder, $idSalesOrderItem);
+    }
+
+    public function isPaymentOther($idSalesOrder, $idSalesOrderItem) {
+        return $this->getDependencyContainer()
+            ->createTransactionStatusManager()
+            ->isPaymentOther($idSalesOrder, $idSalesOrderItem);
+    }
+
+    public function isPaymentCapture($idSalesOrder, $idSalesOrderItem) {
+        return $this->getDependencyContainer()
+            ->createTransactionStatusManager()
+            ->isPaymentCapture($idSalesOrder, $idSalesOrderItem);
     }
 
 }

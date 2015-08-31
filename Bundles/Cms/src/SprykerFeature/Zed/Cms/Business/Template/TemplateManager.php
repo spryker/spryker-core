@@ -1,15 +1,15 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Business\Template;
 
-use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use Propel\Runtime\Exception\PropelException;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
+use Generated\Zed\Ide\AutoCompletion;
+use Propel\Runtime\Exception\PropelException;
+use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingTemplateException;
 use SprykerFeature\Zed\Cms\Business\Exception\TemplateExistsException;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
@@ -18,7 +18,6 @@ use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplate;
 
 class TemplateManager implements TemplateManagerInterface
 {
-
     /**
      * @var CmsQueryContainerInterface
      */
@@ -31,7 +30,7 @@ class TemplateManager implements TemplateManagerInterface
 
     /**
      * @param CmsQueryContainerInterface $cmsQueryContainer
-     * @param LocatorLocatorInterface $locator
+     * @param LocatorLocatorInterface    $locator
      */
     public function __construct(
         CmsQueryContainerInterface $cmsQueryContainer,
@@ -234,5 +233,4 @@ class TemplateManager implements TemplateManagerInterface
 
         return $templateEntity;
     }
-
 }

@@ -1,55 +1,46 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Auth\Communication\Form;
 
+use Symfony\Component\Validator\Constraints;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use Symfony\Component\Validator\Constraints as Assert;
 
 class ResetPasswordForm extends AbstractForm
 {
-    const EMAIL = 'email';
-    const SUBMIT = 'submit';
-    const LOGIN = 'login';
+    const PASSWORD = 'password';
 
     /**
-     * @return $this;
+     * Prepares form
+     *
+     * @return $this
      */
     protected function buildFormFields()
     {
-        return $this
-            ->addText(self::EMAIL, [
+        return $this->addRepeated(
+            self::PASSWORD,
+            [
                 'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Required(),
-                    new Assert\Email(),
-                ]
-            ])
-            ->addSubmit(self::SUBMIT, [
-                'label' => 'Recover password',
-                'attr' => [
-                    'class' => 'btn btn-success btn-block',
-                ]
-            ])
-            ->addUrl(self::LOGIN, [
-                'attr' => [
-                    'href' => '/auth/login',
-                    'class' => 'btn btn-default btn-block',
-                    'title' => 'Login',
-                ]
-            ])
-        ;
+                    new Constraints\NotBlank(),
+                ],
+                'invalid_message' => 'The password fields must match.',
+                'first_options' => ['label' => 'Password'],
+                'second_options' => ['label' => 'Repeat Password'],
+                'required' => true,
+                'type' => 'password',
+            ]
+        );
     }
 
     /**
+     * Set the values for fields
+     *
      * @return array
      */
     protected function populateFormFields()
     {
         return [];
     }
-
 }

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Communication\Table;
@@ -156,7 +156,6 @@ class CmsGlossaryTable extends AbstractTable
     protected function addExtractedPlaceholders(array $mappedPlaceholders, array $results)
     {
         foreach ($this->placeholders as $place) {
-
             if (!in_array($place, $mappedPlaceholders)) {
                 $results[] = [
                     SpyCmsGlossaryKeyMappingTableMap::COL_ID_CMS_GLOSSARY_KEY_MAPPING => null,
@@ -179,13 +178,12 @@ class CmsGlossaryTable extends AbstractTable
     private function findPlaceholders(array $searchItems)
     {
         $foundPlaceholders = [];
-            foreach ($this->placeholders as $place) {
-                if (stripos($place, $searchItems['value']) !== false) {
-                    $foundPlaceholders[] = $place;
-                }
+        foreach ($this->placeholders as $place) {
+            if (stripos($place, $searchItems['value']) !== false) {
+                $foundPlaceholders[] = $place;
             }
+        }
 
         return $foundPlaceholders;
     }
-
 }

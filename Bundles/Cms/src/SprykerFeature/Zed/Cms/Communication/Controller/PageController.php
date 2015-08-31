@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Communication\Controller;
@@ -28,6 +28,32 @@ class PageController extends AbstractController
     /**
      * @return array
      */
+    public function indexAction()
+    {
+        $pageTable = $this->getDependencyContainer()
+            ->createCmsPageTable()
+        ;
+
+        return [
+            'pages' => $pageTable->render(),
+        ];
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function tableAction()
+    {
+        $table = $this->getDependencyContainer()
+            ->createCmsPageTable()
+        ;
+
+        return $this->jsonResponse($table->fetchData());
+    }
+
+    /**
+     * @return array
+     */
     public function addAction()
     {
         $form = $this->getDependencyContainer()
@@ -40,7 +66,9 @@ class PageController extends AbstractController
             $data = $form->getData();
             $pageTransfer = $this->createPageTransfer($data);
 
-            $this->getFacade()->savePageUrlAndTouch($pageTransfer, $data[CmsPageForm::URL]);
+            $this->getFacade()
+                ->savePageUrlAndTouch($pageTransfer, $data[CmsPageForm::URL])
+            ;
             $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 
             return $this->redirectResponse($redirectUrl);
@@ -120,7 +148,10 @@ class PageController extends AbstractController
      */
     private function createUrlTransfer($idUrl, $pageTransfer, array $data)
     {
-        $url = $this->getQueryContainer()->queryUrlById($idUrl)->findOne();
+        $url = $this->getQueryContainer()
+            ->queryUrlById($idUrl)
+            ->findOne()
+        ;
 
         $urlTransfer = new UrlTransfer();
 
@@ -132,5 +163,4 @@ class PageController extends AbstractController
 
         return $urlTransfer;
     }
-
 }

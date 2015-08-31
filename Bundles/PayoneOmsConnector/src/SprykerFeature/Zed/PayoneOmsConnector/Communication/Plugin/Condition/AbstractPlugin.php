@@ -17,11 +17,12 @@ use Generated\Shared\Transfer\OrderTransfer;
  */
 abstract class AbstractPlugin extends BaseAbstractPlugin implements ConditionInterface
 {
+    const NAME = 'AbstractPlugin';
 
     /**
      * @var array
      */
-    protected static $resultCache = [];
+    private static $resultCache = [];
 
     /**
      * @param SpySalesOrderItem $orderItem
@@ -32,8 +33,8 @@ abstract class AbstractPlugin extends BaseAbstractPlugin implements ConditionInt
     {
         $order = $orderItem->getOrder();
 
-        if (isset(self::$resultCache[$order->getPrimaryKey()])) {
-            return self::$resultCache[$order->getPrimaryKey()];
+        if (isset(self::$resultCache[$this->getName()][$order->getPrimaryKey()])) {
+            return self::$resultCache[$this->getName()][$order->getPrimaryKey()];
         }
 
         $orderTransfer = new OrderTransfer();
@@ -51,5 +52,13 @@ abstract class AbstractPlugin extends BaseAbstractPlugin implements ConditionInt
      * @return bool
      */
     abstract protected function callFacade(OrderTransfer $orderTransfer);
+
+    /**
+     * @return string
+     */
+    protected function getName()
+    {
+        return self::NAME;
+    }
 
 }

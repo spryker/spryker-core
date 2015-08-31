@@ -16,6 +16,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContainerInterface
 {
     const TO_URL = 'toUrl';
+    const STATUS = 'status';
 
     /**
      * @param string $url
@@ -69,6 +70,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
         $query = SpyUrlQuery::create();
         $query->innerJoinSpyRedirect()
             ->withColumn(SpyRedirectTableMap::COL_TO_URL, self::TO_URL)
+            ->withColumn(SpyRedirectTableMap::COL_STATUS, self::STATUS)
         ;
 
         return $query;
@@ -118,6 +120,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
         $query = SpyUrlQuery::create();
         $query->leftJoinSpyRedirect()
             ->withColumn(SpyRedirectTableMap::COL_TO_URL, self::TO_URL)
+            ->withColumn(SpyRedirectTableMap::COL_STATUS, self::STATUS)
             ->filterByIdUrl($id)
         ;
 

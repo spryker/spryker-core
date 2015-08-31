@@ -7,9 +7,13 @@
 namespace SprykerFeature\Zed\PayoneOmsConnector\Communication;
 
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use SprykerFeature\Zed\PayoneOmsConnector\PayoneOmsConnectorConfig;
 use SprykerFeature\Zed\PayoneOmsConnector\PayoneOmsConnectorDependencyProvider;
 use SprykerFeature\Zed\Payone\Business\PayoneFacade;
 
+/**
+ * @method PayoneOmsConnectorConfig getConfig()
+ */
 class PayoneOmsConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 

@@ -82,7 +82,7 @@ class GlossaryTest extends Test
         $this->assertTrue($keyCountAfterCreation > $keyCountBeforeCreation);
     }
 
-    public function testUpdateKeyUpdatesSomething()
+    public function testUpdateKeyMustSaveNewKeyInDatabase()
     {
         $keyQuery = $this->glossaryQueryContainer->queryKeys();
         $keyId = $this->glossaryFacade->createKey('ATestKey2');
@@ -302,6 +302,10 @@ class GlossaryTest extends Test
 
         $container[GlossaryDependencyProvider::FACADE_LOCALE] = function (Container $container) {
             return $this->localeFacade;
+        };
+
+        $container[GlossaryDependencyProvider::FLASH_MESSAGES] = function (Container $container) {
+            return $container->getLocator()->flashMessenger()->facade();
         };
 
         $this->glossaryFacade->setExternalDependencies($container);

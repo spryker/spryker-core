@@ -6,17 +6,17 @@
 
 namespace SprykerFeature\Client\Payone\ClientApi\Call;
 
+use Generated\Shared\Payone\PayoneStandardParameterInterface;
 use SprykerFeature\Client\Payone\ClientApi\HashGeneratorInterface;
 use SprykerFeature\Client\Payone\ClientApi\Request\AbstractRequest;
 use SprykerFeature\Shared\Payone\Dependency\HashInterface;
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
-use Generated\Shared\Payone\StandardParameterInterface;
 
 abstract class AbstractCall
 {
 
     /**
-     * @var StandardParameterInterface
+     * @var PayoneStandardParameterInterface
      */
     protected $standardParameter;
     /**
@@ -33,19 +33,19 @@ abstract class AbstractCall
     protected $modeDetector;
 
     /**
-     * @param StandardParameterInterface $standardParameter
+     * @param PayoneStandardParameterInterface $standardParameter
      * @param HashInterface $hashProvider
      * @param HashGeneratorInterface $hashGenerator
      * @param ModeDetectorInterface $modeDetector
      */
     public function __construct(
-        StandardParameterInterface $standardParameter,
+        PayoneStandardParameterInterface $standardParameterTransfer,
         HashInterface $hashProvider,
         HashGeneratorInterface $hashGenerator,
         ModeDetectorInterface $modeDetector
     )
     {
-        $this->standardParameter = $standardParameter;
+        $this->standardParameter = $standardParameterTransfer;
         $this->hashProvider = $hashProvider;
         $this->hashGenerator = $hashGenerator;
         $this->modeDetector = $modeDetector;
@@ -73,7 +73,7 @@ abstract class AbstractCall
     }
 
     /**
-     * @return StandardParameterInterface
+     * @return PayoneStandardParameterInterface
      */
     protected function getStandardParameter()
     {

@@ -13,7 +13,7 @@ use SprykerEngine\Zed\Kernel\Container;
 class PayoneDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const FACADE_LOCALE = 'locale facade';
+    const FACADE_OMS = 'oms facade';
 
     const STORE_CONFIG = 'store config';
 
@@ -24,8 +24,8 @@ class PayoneDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::FACADE_LOCALE] = function (Container $container) {
-            return $container->getLocator()->locale()->facade();
+        $container[self::FACADE_OMS] = function (Container $container) {
+            return $container->getLocator()->oms()->facade();
         };
 
         return $container;
@@ -38,10 +38,6 @@ class PayoneDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::FACADE_LOCALE] = function (Container $container) {
-            return $container->getLocator()->touch()->facade();
-        };
-
         $container[self::STORE_CONFIG] = function (Container $container) {
             return Store::getInstance();
         };

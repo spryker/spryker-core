@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * (c) Spryker Systems GmbH copyright protected.
+ */
+
 namespace SprykerFeature\Zed\Cms\Communication\Form;
 
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
@@ -17,6 +21,11 @@ class CmsGlossaryForm extends AbstractForm
     const PLACEHOLDER = 'placeholder';
     const GLOSSARY_KEY = 'glossary_key';
     const ID_KEY_MAPPING = 'idCmsGlossaryKeyMapping';
+    const SEARCH_OPTION = 'search_option';
+    const GLOSSARY_NEW = 'New glossary';
+    const GLOSSARY_FIND = 'Find glossary';
+    const FULLTEXT_SEARCH = 'Full text';
+    const TRANSLATION = 'translation';
 
     /**
      * @var SpyCmsGlossaryKeyMappingQuery
@@ -44,21 +53,27 @@ class CmsGlossaryForm extends AbstractForm
     protected $cmsFacade;
 
     /**
+     * @var CmsConstraint
+     */
+    protected $constraints;
+
+    /**
      * @param SpyCmsGlossaryKeyMappingQuery $glossaryByIdQuery
+     * @param CmsFacade $cmsFacade
+     * @param CmsConstraint $constraints
      * @param int $idPage
      * @param int $idMapping
      * @param array $placeholder
-     * @param CmsFacade $cmsFacade
-     * @param GlossaryFacade $glossaryFacade
      */
 
-    public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryByIdQuery, $idPage, $idMapping, $placeholder, CmsFacade $cmsFacade)
+    public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryByIdQuery, CmsFacade $cmsFacade, CmsConstraint $constraints, $idPage, $idMapping, $placeholder)
     {
         $this->glossaryByIdQuery = $glossaryByIdQuery;
+        $this->cmsFacade = $cmsFacade;
+        $this->constraints = $constraints;
         $this->idPage = $idPage;
         $this->idMapping = $idMapping;
         $this->placeholder = $placeholder;
-        $this->cmsFacade = $cmsFacade;
     }
 
     /**
@@ -66,7 +81,7 @@ class CmsGlossaryForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-        $placeholderConstraints = CmsConstraint::getMandatoryConstraints();
+        $placeholderConstraints = $this->constraints->getMandatoryConstraints();
 
         if (!isset($this->idMapping)) {
             $placeholderConstraints[] = new Callback([
@@ -80,34 +95,31 @@ class CmsGlossaryForm extends AbstractForm
             ]);
         }
 
-        $keyConstraints[] = new Callback([
-            'methods' => [
-                function ($key, ExecutionContext $context) {
-                    if (!$this->glossaryByIdQuery->useGlossaryKeyQuery()
-                        ->findOneByKey($key)
-                    ) {
-                        $context->addViolation('Key does not exist.');
-                    }
-                },
-            ],
-        ]);
-
         $placeholderParams = [
             'label' => 'Placeholder',
             'constraints' => $placeholderConstraints,
         ];
 
-        if (intval($this->idMapping) > 0) {
-            $placeholderParams['disabled'] = 'disabled';
-        }
+
+        $placeholderParams['disabled'] = 'disabled';
 
         return $this->addHidden(self::FK_PAGE)
             ->addHidden(self::ID_KEY_MAPPING)
             ->addText(self::PLACEHOLDER, $placeholderParams)
-            ->addAutosuggest(self::GLOSSARY_KEY, [
-                'label' => 'Glossary Key',
-                'url' => '/glossary/key/suggest',
-                'constraints' => $keyConstraints,
+            ->addChoice(self::SEARCH_OPTION, [
+                'label' => 'Search Type',
+                'choices' => [
+                    self::GLOSSARY_NEW,
+                    self::GLOSSARY_FIND,
+                    self::FULLTEXT_SEARCH,
+                ],
+            ])
+            ->addText(self::GLOSSARY_KEY, [
+                'constraints' => $this->constraints->getRequiredConstraints(),
+            ])
+            ->addTextarea(self::TRANSLATION,[
+                'label' => 'Content',
+                'constraints' => $this->constraints->getRequiredConstraints(),
             ])
             ;
     }
@@ -132,10 +144,10 @@ class CmsGlossaryForm extends AbstractForm
             if ($glossaryMapping) {
                 $formItems[self::PLACEHOLDER] = $glossaryMapping->getPlaceholder();
                 $formItems[self::GLOSSARY_KEY] = $glossaryMapping->getKeyname();
+                $formItems[self::TRANSLATION] = $glossaryMapping->getTrans();
             }
         }
 
         return $formItems;
     }
-
 }

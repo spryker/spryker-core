@@ -28,6 +28,15 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
      */
     protected $bla;
 
+    /**
+     * @var \ArrayObject|FooBarTransfer[] $selfReference
+     */
+    protected $selfReference;
+
+    public function __construct()
+    {
+        $this->selfReference = new \ArrayObject();
+    }
 
     /**
      * @param string $name
@@ -69,6 +78,40 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     public function getBla()
     {
         return $this->bla;
+    }
+
+    /**
+     * @param \ArrayObject|FooBarTransfer[] $selfReference
+     *
+     * @return $this
+     */
+    public function setSelfReference(\ArrayObject $selfReference)
+    {
+        $this->selfReference = $selfReference;
+        $this->addModifiedProperty('selfReference');
+
+        return $this;
+    }
+
+    /**
+     * @return FooBarTransfer[]
+     */
+    public function getSelfReference()
+    {
+        return $this->selfReference;
+    }
+
+    /**
+     * @param FooBarTransfer $selfReference
+     *
+     * @return $this
+     */
+    public function addSelfReference(FooBarTransfer $selfReference)
+    {
+        $this->selfReference[] = $selfReference;
+        $this->addModifiedProperty('selfReference');
+
+        return $this;
     }
 
 

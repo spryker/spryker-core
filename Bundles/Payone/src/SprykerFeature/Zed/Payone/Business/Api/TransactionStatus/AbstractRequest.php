@@ -64,7 +64,7 @@ class AbstractRequest
     /**
      * @param string $key
      *
-     * @return null|mixed
+     * @return mixed
      */
     public function getValue($key)
     {
@@ -85,7 +85,7 @@ class AbstractRequest
     /**
      * @param string $name
      *
-     * @return null|mixed
+     * @return mixed
      */
     public function get($name)
     {

@@ -42,13 +42,13 @@ interface UserInterface
     public function validatePassword($password, $hash);
 
     /**
-     * @param UserTransfer $user
+     * @param UserTransfer $userTransfer
      *
      * @throws UserNotFoundException
      *
      * @return UserTransfer
      */
-    public function save(UserTransfer $user);
+    public function save(UserTransfer $userTransfer);
 
     /**
      * @param string $username
@@ -113,4 +113,17 @@ interface UserInterface
      */
     public function getCurrentUser();
 
+    /**
+     * @param integer $idUser
+     *
+     * @return bool
+     */
+    public function activateUser($idUser);
+
+    /**
+     * @param integer $idUser
+     *
+     * @return bool
+     */
+    public function deactivateUser($idUser);
 }

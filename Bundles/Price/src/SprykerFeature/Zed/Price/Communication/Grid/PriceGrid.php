@@ -6,9 +6,10 @@
 
 namespace SprykerFeature\Zed\Price\Communication\Grid;
 
-use SprykerFeature\Zed\Ui\Dependency\Grid\AbstractGrid;
+use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
+use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
-class PriceGrid extends AbstractGrid
+class PriceGrid extends AbstractTable
 {
 
     const PRICE = 'price';
@@ -16,6 +17,16 @@ class PriceGrid extends AbstractGrid
     const PRICE_TYPE = 'price_type_name';
     const SKU = 'sku_product';
     const IS_ACTIVE = 'is_active';
+
+    protected function configure(TableConfiguration $config)
+    {
+        // @todo: Implement configure() method.
+    }
+
+    protected function prepareData(TableConfiguration $config)
+    {
+        // @todo: Implement prepareData() method.
+    }
 
     /**
      * @return array

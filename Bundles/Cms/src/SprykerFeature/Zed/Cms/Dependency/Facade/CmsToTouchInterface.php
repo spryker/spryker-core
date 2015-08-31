@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Dependency\Facade;
@@ -16,5 +16,4 @@ interface CmsToTouchInterface
      * @return bool
      */
     public function touchActive($itemType, $itemId);
-
 }

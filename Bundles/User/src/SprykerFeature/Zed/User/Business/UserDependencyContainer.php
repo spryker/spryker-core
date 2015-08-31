@@ -9,9 +9,11 @@ namespace SprykerFeature\Zed\User\Business;
 use Generated\Zed\Ide\FactoryAutoCompletion\UserBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\User\Business\Model\Installer;
+use SprykerFeature\Zed\User\Business\Model\PasswordReset;
 use SprykerFeature\Zed\User\Business\Model\UserInterface;
 use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
 use SprykerFeature\Zed\User\UserConfig;
+use SprykerFeature\Zed\User\UserDependencyProvider;
 
 /**
  * @method UserBusiness getFactory()

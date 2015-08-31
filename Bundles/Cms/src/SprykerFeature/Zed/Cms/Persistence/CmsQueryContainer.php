@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Persistence;
@@ -9,12 +9,15 @@ namespace SprykerFeature\Zed\Cms\Persistence;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Cms\CmsDependencyProvider;
+use SprykerFeature\Zed\Cms\Communication\Form\CmsBlockForm;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsPageForm;
+use SprykerFeature\Zed\Cms\Persistence\Propel\Map\SpyCmsBlockTableMap;
 use SprykerFeature\Zed\Cms\Persistence\Propel\Map\SpyCmsPageTableMap;
 use SprykerFeature\Zed\Cms\Persistence\Propel\Map\SpyCmsTemplateTableMap;
+use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlockQuery;
+use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsGlossaryKeyMappingQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPageQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsGlossaryKeyMappingQuery;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryKeyTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKeyQuery;
@@ -30,6 +33,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     const TO_URL = 'toUrl';
     const TRANS = 'trans';
     const KEY = 'keyname';
+    const LABEL = 'label';
+    const VALUE = 'value';
 
     /**
      * @return SpyCmsTemplateQuery
@@ -78,6 +83,16 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
+     * @return SpyCmsBlockQuery
+     */
+    public function queryBlocks()
+    {
+        $query = SpyCmsBlockQuery::create();
+
+        return $query;
+    }
+
+    /**
      * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryPagesWithTemplates()
@@ -96,9 +111,44 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     {
         return $this->queryPages()
             ->leftJoinCmsTemplate(null, Criteria::LEFT_JOIN)
-            ->leftJoinSpyUrl(null, Criteria::LEFT_JOIN)
+            ->innerJoinSpyUrl()
             ->withColumn(self::TEMPLATE_NAME)
             ->withColumn(self::URL)
+            ;
+    }
+
+    /**
+     * @return SpyCmsPageQuery
+     */
+    public function queryPageWithTemplatesAndBlocks()
+    {
+        return $this->queryBlocks()
+            ->leftJoinSpyCmsPage()
+            ->useSpyCmsPageQuery()
+                ->joinCmsTemplate()
+                    ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, self::TEMPLATE_NAME)
+                ->endUse()
+            ->withColumn(SpyCmsBlockTableMap::COL_NAME)
+            ;
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return SpyCmsPageQuery
+     */
+    public function queryPageWithTemplatesAndBlocksByIdPage($idCmsPage)
+    {
+        return $this->queryBlocks()
+            ->filterByIdCmsPage($idCmsPage)
+            ->leftJoinSpyCmsPage()
+            ->useSpyCmsPageQuery()
+                ->joinCmsTemplate()
+                    ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, self::TEMPLATE_NAME)
+                ->endUse()
+            ->withColumn(SpyCmsBlockTableMap::COL_NAME)
+            ->withColumn(SpyCmsPageTableMap::COL_FK_TEMPLATE, CmsBlockForm::FK_TEMPLATE)
+            ->withColumn(SpyCmsPageTableMap::COL_IS_ACTIVE, 'isActive')
             ;
     }
 
@@ -195,11 +245,11 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::KEY)
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::TRANS)
             ->filterByFkPage($idCmsPage)
-                ->useGlossaryKeyQuery()
-                    ->useSpyGlossaryTranslationQuery()
-                        ->filterByFkLocale($fkLocale)
-                    ->endUse()
+            ->useGlossaryKeyQuery()
+                ->useSpyGlossaryTranslationQuery()
+                    ->filterByFkLocale($fkLocale)
                 ->endUse()
+            ->endUse()
         ;
 
         return $query;
@@ -282,4 +332,58 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ;
     }
 
+    /**
+     * @param string $value
+     *
+     * @throws \ErrorException
+     * @return SpyGlossaryTranslationQuery
+     */
+    public function queryTranslationWithKeyByValue($value)
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::GLOSSARY_QUERY_CONTAINER)
+            ->queryTranslationByValue($value)
+            ->innerJoinGlossaryKey()
+            ->filterByIsActive(true)
+            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::LABEL)
+            ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::VALUE);
+    }
+    /**
+     * @param string $key
+     *
+     * @throws \ErrorException
+     * @return SpyUrlQuery
+     */
+    public function queryKeyWithTranslationByKey($key)
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::GLOSSARY_QUERY_CONTAINER)
+            ->queryByKey($key)
+            ->rightJoinSpyGlossaryTranslation()
+            ->filterByIsActive(true)
+            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::LABEL)
+            ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::VALUE);
+    }
+
+    /**
+     * @param int $idCmsPage
+     *
+     * @return SpyCmsBlockQuery
+     */
+    public function queryBlockByIdPage($idCmsPage)
+    {
+        return $this->queryBlocks()
+            ->filterByIdCmsPage($idCmsPage)
+            ;
+    }
+
+    /**
+     * @param string $blockName
+     *
+     * @return SpyCmsBlockQuery
+     */
+    public function queryBlockByName($blockName)
+    {
+        return $this->queryBlocks()
+            ->filterByName($blockName)
+            ;
+    }
 }

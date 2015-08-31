@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
 
+use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Capture\BusinessContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
 
@@ -15,7 +16,7 @@ class CaptureContainer extends AbstractRequestContainer
     /**
      * @var string
      */
-    protected $request = self::REQUEST_TYPE_CAPTURE;
+    protected $request = PayoneApiConstants::REQUEST_TYPE_CAPTURE;
 
     /**
      * @var string

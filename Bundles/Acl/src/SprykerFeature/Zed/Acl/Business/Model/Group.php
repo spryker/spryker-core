@@ -175,6 +175,26 @@ class Group implements GroupInterface
     }
 
     /**
+     * @param integer $idUser
+     *
+     * @return GroupsTransfer
+     */
+    public function getUserGroups($idUser)
+    {
+        $groupEntities = $this->queryContainer->queryUserGroupByIdUser($idUser)->find();
+
+        $groupsTransfer = new GroupsTransfer();
+
+        foreach ($groupEntities as $groupEntity) {
+            $groupTransfer = new GroupTransfer();
+            $groupsTransfer->addGroup(Copy::entityToTransfer($groupTransfer, $groupEntity));
+        }
+
+        return $groupsTransfer;
+
+    }
+
+    /**
      * @param int $idRole
      * @param int $idGroup
      *

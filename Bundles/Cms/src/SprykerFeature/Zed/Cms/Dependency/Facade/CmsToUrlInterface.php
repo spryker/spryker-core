@@ -1,13 +1,13 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Dependency\Facade;
 
-use Propel\Runtime\Exception\PropelException;
 use Generated\Shared\Transfer\UrlTransfer;
+use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
 interface CmsToUrlInterface
@@ -29,5 +29,4 @@ interface CmsToUrlInterface
      * @param int $idUrl
      */
     public function touchUrlActive($idUrl);
-
 }

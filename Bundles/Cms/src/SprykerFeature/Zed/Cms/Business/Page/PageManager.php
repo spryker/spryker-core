@@ -1,17 +1,19 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Business\Page;
 
-use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use Propel\Runtime\Exception\PropelException;
+use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Generated\Zed\Ide\AutoCompletion;
+use Propel\Runtime\Exception\PropelException;
+use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Shared\Cms\CmsConfig;
+use SprykerFeature\Zed\Cms\Business\Block\BlockManagerInterface;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingTemplateException;
 use SprykerFeature\Zed\Cms\Business\Exception\PageExistsException;
@@ -38,6 +40,11 @@ class PageManager implements PageManagerInterface
     protected $templateManager;
 
     /**
+     * @var BlockManagerInterface
+     */
+    protected $blockManager;
+
+    /**
      * @var AutoCompletion
      */
     protected $locator;
@@ -60,21 +67,17 @@ class PageManager implements PageManagerInterface
     /**
      * @param CmsQueryContainerInterface $cmsQueryContainer
      * @param TemplateManagerInterface $templateManager
+     * @param BlockManagerInterface $blockManager
      * @param CmsToGlossaryInterface $glossaryFacade
      * @param CmsToTouchInterface $touchFacade
      * @param CmsToUrlInterface $urlFacade
      * @param LocatorLocatorInterface $locator
      */
-    public function __construct(
-        CmsQueryContainerInterface $cmsQueryContainer,
-        TemplateManagerInterface $templateManager,
-        CmsToGlossaryInterface $glossaryFacade,
-        CmsToTouchInterface $touchFacade,
-        CmsToUrlInterface $urlFacade,
-        LocatorLocatorInterface $locator
-    ) {
+    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, TemplateManagerInterface $templateManager, BlockManagerInterface $blockManager, CmsToGlossaryInterface $glossaryFacade, CmsToTouchInterface $touchFacade, CmsToUrlInterface $urlFacade, LocatorLocatorInterface $locator)
+    {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->templateManager = $templateManager;
+        $this->blockManager = $blockManager;
         $this->locator = $locator;
         $this->glossaryFacade = $glossaryFacade;
         $this->touchFacade = $touchFacade;
@@ -114,7 +117,9 @@ class PageManager implements PageManagerInterface
     {
         $this->checkTemplateExists($page->getFkTemplate());
 
-        $pageEntity = $this->locator->cms()->entitySpyCmsPage();
+        $pageEntity = $this->locator->cms()
+            ->entitySpyCmsPage()
+        ;
 
         $pageEntity->fromArray($page->toArray());
         $pageEntity->save();
@@ -155,12 +160,7 @@ class PageManager implements PageManagerInterface
     protected function checkTemplateExists($idTemplate)
     {
         if (!$this->templateManager->hasTemplateId($idTemplate)) {
-            throw new MissingTemplateException(
-                sprintf(
-                    'Tried to save page referring to a missing template with id %s',
-                    $idTemplate
-                )
-            );
+            throw new MissingTemplateException(sprintf('Tried to save page referring to a missing template with id %s', $idTemplate));
         }
     }
 
@@ -172,12 +172,7 @@ class PageManager implements PageManagerInterface
     protected function checkPageExists($idPage)
     {
         if (!$this->hasPageId($idPage)) {
-            throw new MissingPageException(
-                sprintf(
-                    'Tried to refer to a missing page with id %s',
-                    $idPage
-                )
-            );
+            throw new MissingPageException(sprintf('Tried to refer to a missing page with id %s', $idPage));
         }
     }
 
@@ -190,14 +185,11 @@ class PageManager implements PageManagerInterface
      */
     public function getPageById($idPage)
     {
-        $page = $this->cmsQueryContainer->queryPageById($idPage)->findOne();
+        $page = $this->cmsQueryContainer->queryPageById($idPage)
+            ->findOne()
+        ;
         if (!$page) {
-            throw new MissingPageException(
-                sprintf(
-                    'Tried to retrieve a missing page with id %s',
-                    $idPage
-                )
-            );
+            throw new MissingPageException(sprintf('Tried to retrieve a missing page with id %s', $idPage));
         }
 
         return $page;
@@ -223,7 +215,9 @@ class PageManager implements PageManagerInterface
      */
     public function touchPageActive(PageTransfer $page)
     {
-        $pageMappings = $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($page->getIdCmsPage())->find();
+        $pageMappings = $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($page->getIdCmsPage())
+            ->find()
+        ;
         foreach ($pageMappings as $pageMapping) {
             $this->glossaryFacade->touchCurrentTranslationForKeyId($pageMapping->getFkGlossaryKey());
         }
@@ -265,6 +259,25 @@ class PageManager implements PageManagerInterface
     }
 
     /**
+     * @param PageTransfer $page
+     * @param string $blockName
+     *
+     * @return PageTransfer
+     */
+    public function savePageBlockAndTouch(PageTransfer $page, $blockName)
+    {
+        $pageTransfer = $this->savePage($page);
+
+        $blockTransfer = new CmsBlockTransfer();
+        $blockTransfer->setIdCmsPage($pageTransfer->getIdCmsPage());
+        $blockTransfer->setName($blockName);
+
+        $this->blockManager->saveBlockAndTouch($blockTransfer);
+
+        return $pageTransfer;
+    }
+
+    /**
      * @param int $idPage
      *
      * @return bool
@@ -275,5 +288,4 @@ class PageManager implements PageManagerInterface
 
         return $query->count() > 0;
     }
-
 }

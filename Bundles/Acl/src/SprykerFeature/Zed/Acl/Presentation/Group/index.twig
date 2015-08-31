@@ -1,44 +1,20 @@
-{% extends '@Application/Layout/layout.twig' %}
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Groups' %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
 
 {% block content %}
-    <section spy-app="spyFormat, spyGrid, spyLayout">
-        <section
-                class="spy-grid"
-                ng-controller="GridController"
-                ng-strict-di
-                src="/acl/group/list/{{ query | default ('') }}"
-                name="grid"
-                on="{ form_success : 'update' }"
-                >
-            <h3>Rule Sets</h3>
 
-            <div spy-grid-pages="pages" labels="{ items : 'Show %n items', pages : 'Page %n of %m' }"></div>
+    {% embed '@Gui/Partials/widget.twig' %}
 
-            <table>
-                <thead>
-                <tr>
-                    <th spy-grid-head="columns['id_acl_group']" label="Group ID"></th>
-                    <th spy-grid-head="columns['name']" label="Name"></th>
-                    <th spy-grid-head="columns['created_at']" label="Created at"></th>
-                    <th spy-grid-head="columns['updated_at']" label="Updated at"></th>
-                    <th spy-grid-head="" label="Actions"></th>
-                </tr>
-                </thead>
+        {% block widget_content %}
 
-                <tbody>
-                <tr ng-repeat="row in rows">
-                    <td>{[{ row['id_acl_group'] }]}</td>
-                    <td>{[{ row['name'] }]}</td>
-                    <td>{[{ row['created_at'] }]}</td>
-                    <td>{[{ row['updated_at'] }]}</td>
-                    <td>
-                        <a href="/acl/group/view/?id={[{ row['id_acl_group'] }]}" class="button default">edit</a>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            {{ table | raw }}
 
-            <div spy-grid-pages="pages" labels="{ items : 'Show %n items', pages : 'Page %n of %m' }"></div>
-        </section>
-    </section>
+        {% endblock %}
+
+    {% endembed %}
+
 {% endblock %}

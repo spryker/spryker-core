@@ -5,11 +5,13 @@
 
 namespace SprykerFeature\Zed\Glossary\Business\Translation;
 
+use Generated\Shared\FlashMessenger\FlashMessagesInterface;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
+use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
@@ -49,23 +51,36 @@ class TranslationManager implements TranslationManagerInterface
     protected $localeFacade;
 
     /**
+     * @var FlashMessagesFacade
+     */
+    protected $flashMessagesFacade;
+
+    /**
      * @param GlossaryQueryContainerInterface $glossaryQueryContainer
      * @param GlossaryToTouchInterface $touchFacade
      * @param GlossaryToLocaleInterface $localeFacade
      * @param KeyManagerInterface $keyManager
      */
-    public function __construct(GlossaryQueryContainerInterface $glossaryQueryContainer, GlossaryToTouchInterface $touchFacade, GlossaryToLocaleInterface $localeFacade, KeyManagerInterface $keyManager)
-    {
+    public function __construct(
+        GlossaryQueryContainerInterface $glossaryQueryContainer,
+        GlossaryToTouchInterface $touchFacade,
+        GlossaryToLocaleInterface $localeFacade,
+        KeyManagerInterface $keyManager,
+        FlashMessengerFacade $flashMessengerFacade
+    ) {
         $this->glossaryQueryContainer = $glossaryQueryContainer;
         $this->touchFacade = $touchFacade;
         $this->keyManager = $keyManager;
         $this->localeFacade = $localeFacade;
+        $this->flashMessagesFacade = $flashMessengerFacade;
     }
 
     /**
      * @param KeyTranslationTransfer $keyTranslationTransfer
      *
      * @throws MissingKeyException
+     *
+     * @return bool
      */
     public function saveGlossaryKeyTranslations(KeyTranslationTransfer $keyTranslationTransfer)
     {
@@ -73,21 +88,32 @@ class TranslationManager implements TranslationManagerInterface
             throw new MissingKeyException('Glossary Key cannot be empty');
         }
 
-        if (!$this->keyManager->hasKey($keyTranslationTransfer->getGlossaryKey())) {
-            $idGlossaryKey = $this->keyManager->createKey($keyTranslationTransfer->getGlossaryKey());
-        } else {
-            $idGlossaryKey = $this->keyManager->getKey($keyTranslationTransfer->getGlossaryKey())
-                ->getIdGlossaryKey()
-            ;
-        }
+        try {
+            if (!$this->keyManager->hasKey($keyTranslationTransfer->getGlossaryKey())) {
+                $idGlossaryKey = $this->keyManager->createKey($keyTranslationTransfer->getGlossaryKey());
+            } else {
+                $idGlossaryKey = $this->keyManager->getKey($keyTranslationTransfer->getGlossaryKey())
+                    ->getIdGlossaryKey()
+                ;
+            }
 
-        $availableLocales = $this->localeFacade->getAvailableLocales();
+            $availableLocales = $this->localeFacade->getAvailableLocales();
 
-        foreach ($availableLocales as $localeName) {
-            $localeTransfer = $this->localeFacade->getLocale($localeName);
-            $translationTransfer = $this->createTranslationTransfer($localeTransfer, $idGlossaryKey, $keyTranslationTransfer->getLocales()[$localeName]);
+            foreach ($availableLocales as $localeName) {
+                $localeTransfer = $this->localeFacade->getLocale($localeName);
 
-            $this->saveAndTouchTranslation($translationTransfer);
+                if (isset($keyTranslationTransfer->getLocales()[$localeName])) {
+                    $translationTransfer = $this->createTranslationTransfer($localeTransfer, $idGlossaryKey, $keyTranslationTransfer->getLocales()[$localeName]);
+                    $this->saveAndTouchTranslation($translationTransfer);
+                }
+            }
+
+            return true;
+
+        } catch (MissingKeyException $error) {
+            $this->flashMessages->addErrorMessage($error->getMessage());
+
+            return false;
         }
     }
 

@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms;
@@ -25,5 +25,4 @@ class CmsConfig extends AbstractBundleConfig
 
         return $physicalAddress;
     }
-
 }

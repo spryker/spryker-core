@@ -21,15 +21,52 @@ class GroupController extends AbstractController
 {
 
     const USER_LIST_URL = '/acl/users';
+    const ID_GROUP_PARAMETER = 'id-group';
+
+    /**
+     * @return array
+     */
+    public function indexAction()
+    {
+        $table = $this->createGroupTable();
+
+        return $this->viewResponse([
+            'table' => $table->render(),
+        ]);
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function tableAction()
+    {
+        $table = $this->createGroupTable();
+
+        return $this->jsonResponse(
+            $table->fetchData()
+        );
+    }
+
+    /**
+     * @return GroupTable
+     */
+    protected function createGroupTable()
+    {
+        return $this->getDependencyContainer()->createGroupTable();
+    }
 
     /**
      * @param Request $request
      *
-     * @return array
+     * @return JsonResponse
      */
-    public function indexAction(Request $request)
+    public function rolesAction(Request $request)
     {
-        return [];
+        $idGroup = $request->get(self::ID_GROUP_PARAMETER);
+
+        $roles = $this->getDependencyContainer()->createGroupRoleListByGroupId($idGroup);
+
+        return $this->jsonResponse($roles);
     }
 
     /**

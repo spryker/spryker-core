@@ -6,13 +6,15 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
 
+use SprykerFeature\Shared\Payone\PayoneApiConstants;
+
 class ThreeDSecureCheckContainer extends AbstractRequestContainer
 {
 
     /**
      * @var string
      */
-    protected $request = self::REQUEST_TYPE_3DSECURE_CHECK;
+    protected $request = PayoneApiConstants::REQUEST_TYPE_3DSECURE_CHECK;
 
     /**
      * @var int

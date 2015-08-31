@@ -77,6 +77,16 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
     protected $invoicing;
 
     /**
+     * @var string
+     */
+    protected $onlinebanktransfertype;
+
+    /**
+     * @var string
+     */
+    protected $bankcountry;
+
+    /**
      * @param int $aid
      */
     public function setAid($aid)
@@ -266,6 +276,22 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
     public function getInvoicing()
     {
         return $this->invoicing;
+    }
+
+    /**
+     * @return string
+     */
+    public function getOnlinebanktransfertype()
+    {
+        return $this->onlinebanktransfertype;
+    }
+
+    /**
+     * @param string $onlinebanktransfertype
+     */
+    public function setOnlinebanktransfertype($onlinebanktransfertype)
+    {
+        $this->onlinebanktransfertype = $onlinebanktransfertype;
     }
 
 }

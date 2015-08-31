@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container;
 
+use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Debit\BusinessContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Debit\PaymentMethod\AbstractPaymentMethodContainer;
@@ -16,7 +17,7 @@ class DebitContainer extends AbstractRequestContainer
     /**
      * @var string
      */
-    protected $request = self::REQUEST_TYPE_DEBIT;
+    protected $request = PayoneApiConstants::REQUEST_TYPE_DEBIT;
 
     /**
      * @var string

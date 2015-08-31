@@ -6,9 +6,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Api\Response\Container;
 
-use SprykerFeature\Shared\Payone\PayoneApiConstants;
-
-abstract class AbstractResponseContainer implements PayoneApiConstants
+abstract class AbstractResponseContainer
 {
 
     /**
@@ -168,7 +166,7 @@ abstract class AbstractResponseContainer implements PayoneApiConstants
     /**
      * @param string $key
      *
-     * @return null|mixed
+     * @return mixed
      */
     public function getValue($key)
     {

@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class CaptureIsApprovedPlugin extends AbstractPlugin
 {
+    const NAME = 'CaptureIsApprovedPlugin';
 
     /**
      * @param OrderTransfer $orderTransfer

@@ -75,15 +75,15 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
         $query = $this->queryProductCategoryMappings();
         $query
             ->useSpyAbstractProductQuery()
-            ->filterBySku($sku)
+                ->filterBySku($sku)
             ->endUse()
             ->useSpyCategoryNodeQuery()
-            ->useCategoryQuery()
-            ->useAttributeQuery()
-            ->filterByFkLocale($locale->getIdLocale())
-            ->filterByName($categoryName)
-            ->endUse()
-            ->endUse()
+                ->useCategoryQuery()
+                    ->useAttributeQuery()
+                        ->filterByFkLocale($locale->getIdLocale())
+                        ->filterByName($categoryName)
+                    ->endUse()
+                ->endUse()
             ->endUse()
         ;
 

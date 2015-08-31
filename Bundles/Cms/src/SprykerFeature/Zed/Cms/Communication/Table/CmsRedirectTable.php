@@ -1,14 +1,16 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Communication\Table;
 
+use SprykerFeature\Zed\Cms\Communication\Form\CmsRedirectForm;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
+use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyRedirectTableMap;
 use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
 use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
 
@@ -42,6 +44,7 @@ class CmsRedirectTable extends AbstractTable
             SpyUrlTableMap::COL_ID_URL => 'ID',
             SpyUrlTableMap::COL_URL => 'From Url',
             CmsQueryContainer::TO_URL => 'To Url',
+            SpyRedirectTableMap::COL_STATUS => 'Status',
             self::ACTIONS => self::ACTIONS,
         ]);
         $config->setSortable([
@@ -53,10 +56,8 @@ class CmsRedirectTable extends AbstractTable
             SpyUrlTableMap::COL_ID_URL,
             SpyUrlTableMap::COL_URL,
             CmsQueryContainer::TO_URL => 'to_url',
+            SpyRedirectTableMap::COL_STATUS,
         ]);
-
-        $config->setUrl('redirectTable');
-        $config->setPageLength(5);
 
         return $config;
     }
@@ -77,6 +78,7 @@ class CmsRedirectTable extends AbstractTable
                 SpyUrlTableMap::COL_ID_URL => $item[SpyUrlTableMap::COL_ID_URL],
                 SpyUrlTableMap::COL_URL => $item[SpyUrlTableMap::COL_URL],
                 CmsQueryContainer::TO_URL => $item[CmsQueryContainer::TO_URL],
+                SpyRedirectTableMap::COL_STATUS => $item[CmsRedirectForm::STATUS],
                 self::ACTIONS => $this->buildLinks($item),
             ];
         }
@@ -93,9 +95,8 @@ class CmsRedirectTable extends AbstractTable
     private function buildLinks($item)
     {
         $result = '<a href="/cms/redirect/edit/?' . self::REQUEST_ID_URL . '=' . $item[SpyUrlTableMap::COL_ID_URL] . '" class="btn btn-xs btn-white">Edit</a>&nbsp;
-                   <a href="/cms/redirect/delete/?' . self::REQUEST_ID_URL . '=' . $item[SpyUrlTableMap::COL_ID_URL] . '" class="btn btn-xs btn-white">Delete</a>';
+                   <a class="btn btn-xs btn-white">Delete</a>';
 
         return $result;
     }
-
 }

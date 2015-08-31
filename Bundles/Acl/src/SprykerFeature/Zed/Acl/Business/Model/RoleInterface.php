@@ -16,13 +16,12 @@ interface RoleInterface
 
     /**
      * @param string $name
-     * @param int $idGroup
      *
      * @throws RoleNameExistsException
      *
      * @return RoleTransfer
      */
-    public function addRole($name, $idGroup);
+    public function addRole($name);
 
     /**
      * @param RoleTransfer $data
@@ -72,13 +71,13 @@ interface RoleInterface
     public function getRoleById($id);
 
     /**
-     * @param int $id
+     * @param int $idRole
      *
      * @throws RoleNotFoundException
      *
      * @return bool
      */
-    public function removeRoleById($id);
+    public function removeRoleById($idRole);
 
     /**
      * @param string $name

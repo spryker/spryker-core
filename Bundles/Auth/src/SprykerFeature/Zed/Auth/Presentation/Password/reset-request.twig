@@ -1,0 +1,11 @@
+{% extends '@Auth/Layout/layout.twig' %}
+
+{% form_theme form '@Auth/Layout/form.twig' %}
+
+{% block content %}
+
+    {% include '@Auth/Partial/form-message.twig' %}
+
+    {{ form(form) }}
+
+{% endblock %}

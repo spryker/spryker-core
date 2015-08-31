@@ -292,7 +292,7 @@ class Cronjobs
         $disabled = (true === $job['enable']) ? 'false' : 'true';
         $schedule = $this->getSchedule($job);
         $daysToKeep = $this->getDaysToKeep($job);
-        $command = $job['command'];
+        $command = htmlspecialchars($job['command']);
         $store = $job['store'];
 
         $xml = "<?xml version='1.0' encoding='UTF-8'?>

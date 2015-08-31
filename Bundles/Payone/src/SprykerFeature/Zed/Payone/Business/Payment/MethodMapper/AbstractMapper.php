@@ -6,29 +6,27 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Payment\MethodMapper;
 
-use Generated\Shared\Payone\CaptureInterface;
-use Generated\Shared\Payone\DebitInterface;
-use Generated\Shared\Payone\PayonePaymentInterface;
-use Generated\Shared\Payone\RefundInterface;
-use Generated\Shared\Payone\StandardParameterInterface;
+use Generated\Shared\Payone\PayoneStandardParameterInterface;
 use SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\DebitContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\RefundContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 use SprykerFeature\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
 use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
 
 abstract class AbstractMapper implements PaymentMethodMapperInterface
 {
 
     /**
-     * @var StandardParameterInterface
+     * @var PayoneStandardParameterInterface
      */
     private $standardParameter;
+
     /**
      * @var SequenceNumberProviderInterface
      */
     private $sequenceNumberProvider;
+
     /**
      * @var Store
      */
@@ -40,15 +38,15 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     }
 
     /**
-     * @param StandardParameterInterface $standardParameter
+     * @param PayoneStandardParameterInterface $standardParameterTransfer
      */
-    public function setStandardParameter(StandardParameterInterface $standardParameter)
+    public function setStandardParameter(PayoneStandardParameterInterface $standardParameterTransfer)
     {
-        $this->standardParameter = $standardParameter;
+        $this->standardParameter = $standardParameterTransfer;
     }
 
     /**
-     * @return StandardParameterInterface
+     * @return PayoneStandardParameterInterface
      */
     protected function getStandardParameter()
     {
@@ -72,70 +70,63 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     }
 
     /**
-     * @param PayonePaymentInterface $payment
+     * @param string $transactionId
      *
      * @return int
      */
-    protected function getNextSequenceNumber(PayonePaymentInterface $payment)
+    protected function getNextSequenceNumber($transactionId)
     {
-        $transactionId = $payment->getTransactionId();
         $nextSequenceNumber = $this->getSequenceNumberProvider()->getNextSequenceNumber($transactionId);
 
         return $nextSequenceNumber;
     }
 
     /**
-     * @param CaptureInterface $captureData
+     * @param string $orderReference
      *
-     * @return CaptureContainer
+     * @return RedirectContainer
      */
-    public function mapCapture(CaptureInterface $captureData)
+    protected function createRedirectContainer($orderReference)
     {
-        $captureContainer = new CaptureContainer();
+        $redirectContainer = new RedirectContainer();
 
-        $captureContainer->setTxid($captureData->getPayment()->getTransactionId());
-        $captureContainer->setSequenceNumber($this->getNextSequenceNumber($captureData->getPayment()));
-        $captureContainer->setCurrency($this->getStandardParameter()->getCurrency());
-        $captureContainer->setAmount($captureData->getAmount());
+        $params = 'orderReference=' . $orderReference;
 
-        return $captureContainer;
+        $redirectContainer->setSuccessUrl($this->getStandardParameter()->getRedirectSuccessUrl() . $params);
+        $redirectContainer->setBackUrl($this->getStandardParameter()->getRedirectBackUrl() . $params);
+        $redirectContainer->setErrorUrl($this->getStandardParameter()->getRedirectErrorUrl() . $params);
+
+        return $redirectContainer;
     }
 
     /**
-     * @param DebitInterface $debitData
-     *
-     * @return DebitContainer
+     * @param PersonalContainer $personalContainer
+     * @param SpySalesOrderAddress $billingAddressEntity
      */
-    public function mapDebit(DebitInterface $debitData)
+    protected function mapBillingAddressToPersonalContainer(PersonalContainer $personalContainer, SpySalesOrderAddress $billingAddressEntity)
     {
-        $debitContainer = new DebitContainer();
-
-        $debitContainer->setTxid($debitData->getPayment()->getTransactionId());
-        $debitContainer->setSequenceNumber($this->getNextSequenceNumber($debitData->getPayment()));
-        $debitContainer->setCurrency($this->getStandardParameter()->getCurrency());
-        $debitContainer->setAmount($debitData->getAmount());
-
-        return $debitContainer;
-
-    }
-
-    /**
-     * @param RefundInterface $refundData
-     *
-     * @return RefundContainer
-     */
-    public function mapRefund(RefundInterface $refundData)
-    {
-        $refundContainer = new RefundContainer();
-
-        $refundContainer->setTxid($refundData->getPayment()->getTransactionId());
-        $refundContainer->setSequenceNumber($this->getNextSequenceNumber($refundData->getPayment()));
-        $refundContainer->setAmount($refundData->getAmount());
-        $refundContainer->setCurrency($this->getStandardParameter()->getCurrency());
-        $refundContainer->setNarrativeText($refundData->getNarrativeText());
-        $refundContainer->setUseCustomerData($refundData->getUseCustomerdata());
-
-        return $refundContainer;
+        //dump($billingAddressEntity);die();
+        $personalContainer->setCountry($billingAddressEntity->getCountry()->getIso2Code());
+        $personalContainer->setLastName($billingAddressEntity->getLastName());
+        //$personalContainer->setCustomerId($billingAddressEntity->getM);
+        $personalContainer->setSalutation($billingAddressEntity->getSalutation());
+        //$personalContainer->setTitle($billingAddressEntity->getTitle());
+        $personalContainer->setFirstName($billingAddressEntity->getFirstName());
+        $personalContainer->setLastName($billingAddressEntity->getLastName());
+        $personalContainer->setCompany($billingAddressEntity->getCompany());
+        $personalContainer->setStreet($billingAddressEntity->getAddress1() . ' ' . $billingAddressEntity->getAddress2());
+        $personalContainer->setAddressAddition($billingAddressEntity->getAddress3());
+        $personalContainer->setZip($billingAddressEntity->getZipCode());
+        $personalContainer->setCity($billingAddressEntity->getCity());
+        //$personalContainer->setState($billingAddressEntity->getState());
+        $personalContainer->setEmail($billingAddressEntity->getEmail());
+        //$personalContainer->setBirthday($billingAddressEntity->getBirthday());
+        $personalContainer->setTelephoneNumber($billingAddressEntity->getPhone());
+        //$personalContainer->setLanguage($billingAddressEntity->getLanguage());
+        //$personalContainer->setVatId($billingAddressEntity->getVatId());
+        //$personalContainer->setGender($billingAddressEntity->getGender());
+        //$personalContainer->setPersonalid($billingAddressEntity->getPersonalId());
+        //$personalContainer->setIp($billingAddressEntity->getIp());
     }
 
 }

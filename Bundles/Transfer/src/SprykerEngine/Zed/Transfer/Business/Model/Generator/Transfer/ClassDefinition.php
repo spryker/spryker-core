@@ -151,13 +151,22 @@ class ClassDefinition implements ClassDefinitionInterface
         ];
 
         $this->properties[$property['name']] = $propertyInfo;
-
-        if ($this->isCollection($property) && !$this->isArray($property)) {
-            $use = 'Generated\\Shared\\Transfer\\' . str_replace('[]', '', $property['type']);
-            $this->uses[$use] = $use;
-        }
-
+        $this->addUseForType($property);
         $this->addPropertyConstructorIfCollection($property);
+    }
+
+    /**
+     * @param array $property
+     */
+    private function addUseForType(array $property)
+    {
+        if ($this->isCollection($property) && !$this->isArray($property)) {
+            $transferName = ucfirst(str_replace('[]', '', $property['type']));
+            if ($transferName !== $this->getName()) {
+                $use = 'Generated\\Shared\\Transfer\\' . $transferName;
+                $this->uses[$use] = $use;
+            }
+        }
     }
 
     /**

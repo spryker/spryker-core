@@ -30,6 +30,11 @@ interface PayoneApiConstants
     const PAYMENT_METHOD_CREDITCARD_PSEUDO = 'payment.payone.creditcardpseudo';
 
     // e-wallet methods
+    const PAYMENT_METHOD_E_WALLET = 'payment.payone.e_wallet';
+
+    /**
+     * @deprecated //TODO: To be removed
+     */
     const PAYMENT_METHOD_PAYPAL = 'payment.payone.paypal';
 
     // bank account based methods
@@ -38,12 +43,28 @@ interface PayoneApiConstants
     const PAYMENT_METHOD_PREPAYMENT = 'payment.payone.prepayment';
     const PAYMENT_METHOD_CASH_ON_DELIVERY = 'payment.payone.cash_on_delivery';
 
-    // online uberweisung methods
-    const PAYMENT_METHOD_IDEAL = 'payment.payone.ideal';
+    // online transfer methods
+    const PAYMENT_METHOD_ONLINE_BANK_TRANSFER = 'payment.payone.online_bank_transfer';
+
+    /**
+     * @deprecated //TODO: To be removed
+     */
     const PAYMENT_METHOD_SOFORT_UEBERWEISUNG = 'payment.payone.sofort_ueberweisung';
+    /**
+     * @deprecated //TODO: To be removed
+     */
     const PAYMENT_METHOD_EPS = 'payment.payone.eps';
+    /**
+     * @deprecated //TODO: To be removed
+     */
     const PAYMENT_METHOD_POST_FINANCE_CARD = 'payment.payone.post_finance_card';
+    /**
+     * @deprecated //TODO: To be removed
+     */
     const PAYMENT_METHOD_POST_FINANCE_EFINANCE = 'payment.payone.post_finance_efinance';
+    /**
+     * @deprecated //TODO: To be removed
+     */
     const PAYMENT_METHOD_GIROPAY = 'payment.payone.giropay';
 
     // financing methods
@@ -55,12 +76,12 @@ interface PayoneApiConstants
     // CLEARING TYPE
 
     const CLEARING_TYPE_DIRECT_DEBIT = 'elv';
-    const CLEARING_TYPE_CREDITCARD = 'cc';
+    const CLEARING_TYPE_CREDIT_CARD = 'cc';
     const CLEARING_TYPE_PREPAYMENT = 'vor';
     const CLEARING_TYPE_INVOICE = 'rec';
     const CLEARING_TYPE_ONLINE_BANK_TRANSFER = 'sb';
     const CLEARING_TYPE_CASH_ON_DELIVERY = 'cod';
-    const CLEARING_TYPE_EWALLET = 'wlt';
+    const CLEARING_TYPE_E_WALLET = 'wlt';
     const CLEARING_TYPE_FINANCING = 'fnc';
 
     // TXACTION
@@ -70,7 +91,7 @@ interface PayoneApiConstants
 
     // WALLET TYPE
 
-    const EWALLET_TYPE_PAYPAL = 'PPE';
+    const E_WALLET_TYPE_PAYPAL = 'PPE';
 
     // USE CUSTOMER DATA
 

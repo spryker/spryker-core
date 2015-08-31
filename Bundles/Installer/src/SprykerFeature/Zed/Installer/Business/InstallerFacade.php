@@ -31,4 +31,11 @@ class InstallerFacade extends AbstractFacade
         return $this->getDependencyContainer()->getDemoDataInstaller();
     }
 
+    /**
+     * @return AbstractInstaller[]
+     */
+    public function getGlossaryInstaller()
+    {
+        return $this->getDependencyContainer()->getGlossaryInstaller();
+    }
 }

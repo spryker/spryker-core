@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Payone\Business\Api\Adapter\Http;
 
 use SprykerFeature\Zed\Payone\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
+use SprykerFeature\Zed\Payone\Business\Exception\TimeoutException;
 
 abstract class AbstractHttpAdapter implements AdapterInterface
 {
@@ -75,7 +76,14 @@ abstract class AbstractHttpAdapter implements AdapterInterface
      */
     public function sendRequest(AbstractRequestContainer $container)
     {
-        return $this->sendRawRequest($container->toArray());
+        try {
+            return $this->sendRawRequest($container->toArray());
+        } catch (TimeoutException $e) {
+            $fakeArray = [
+                'status' => 'TIMEOUT',
+            ];
+            return $fakeArray;
+        }
     }
 
     /**

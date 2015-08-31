@@ -6,22 +6,24 @@
 
 namespace SprykerFeature\Zed\Payone;
 
-use Generated\Shared\Transfer\StandardParameterTransfer;
+use Generated\Shared\Payone\PayonePaymentInterface;
+use Generated\Shared\Payone\PayoneStandardParameterInterface;
+use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
 use SprykerFeature\Shared\Payone\PayoneConfigConstants;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerEngine\Shared\Kernel\Store;
-use Generated\Shared\Payone\StandardParameterInterface;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 
 class PayoneConfig extends AbstractBundleConfig
 {
 
     /**
-     * @return StandardParameterInterface
+     * @return PayoneStandardParameterInterface
      */
     public function getRequestStandardParameter()
     {
         $settings = $this->get(PayoneConfigConstants::PAYONE);
-        $standardParameter = new StandardParameterTransfer();
+        $standardParameter = new PayoneStandardParameterTransfer();
 
         $standardParameter->setEncoding($settings[PayoneConfigConstants::PAYONE_CREDENTIALS_ENCODING]);
         $standardParameter->setMid($settings[PayoneConfigConstants::PAYONE_CREDENTIALS_MID]);
@@ -38,6 +40,16 @@ class PayoneConfig extends AbstractBundleConfig
         $standardParameter->setRedirectErrorUrl($settings[PayoneConfigConstants::PAYONE_REDIRECT_ERROR_URL]);
 
         return $standardParameter;
+    }
+
+    /**
+     * @param PayonePaymentInterface $paymentTransfer
+     * @param SpySalesOrder $orderEntity
+     *
+     * @return string
+     */
+    public function generatePayoneReference(PayonePaymentInterface $paymentTransfer, SpySalesOrder $orderEntity) {
+        return $orderEntity->getOrderReference();
     }
 
 }

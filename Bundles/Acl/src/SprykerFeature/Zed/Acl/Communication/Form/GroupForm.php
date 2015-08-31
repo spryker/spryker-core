@@ -10,7 +10,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\AclCommunication;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
-use SprykerFeature\Zed\Ui\Dependency\Form\AbstractForm;
+use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -32,6 +32,16 @@ class GroupForm extends AbstractForm
 
     /** @var int */
     protected $idGroup;
+
+    protected function buildFormFields()
+    {
+        // @todo: Implement buildFormFields() method.
+    }
+
+    protected function populateFormFields()
+    {
+        // @todo: Implement populateFormFields() method.
+    }
 
     /**
      * @param Request $request

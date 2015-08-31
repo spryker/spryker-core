@@ -1,13 +1,13 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Dependency\Facade;
 
-use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use Generated\Shared\Transfer\TranslationTransfer;
+use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Zed\Glossary\Business\Exception\KeyExistsException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
@@ -59,5 +59,4 @@ interface CmsToGlossaryInterface
      * @param int $idKey
      */
     public function touchCurrentTranslationForKeyId($idKey);
-
 }

@@ -12,7 +12,7 @@ use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\Payme
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\EWalletContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\FinancingContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\OnlineBankTransferContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\PrePaymentContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\PrepaymentContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\ShippingContainer;
@@ -147,7 +147,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $container->setInvoicing(new TransactionContainer());
         $container->set3dsecure(new ThreeDSecureContainer());
         $container->setPersonalData(new PersonalContainer());
-        $container->setPaymentMethod(new PrePaymentContainer());
+        $container->setPaymentMethod(new PrepaymentContainer());
 
         $this->assertEquals(PayoneApiConstants::REQUEST_TYPE_AUTHORIZATION, $container->getRequest());
         $this->assertStandardParams($container);
@@ -160,7 +160,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer', $container->getInvoicing());
         $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer', $container->get3dsecure());
         $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer', $container->getPersonalData());
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\PrePaymentContainer', $container->getPaymentMethod());
+        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\PrepaymentContainer', $container->getPaymentMethod());
         $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer', $container->getPaymentMethod());
     }
 
@@ -184,7 +184,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $container->setInvoicing(new TransactionContainer());
         $container->set3dsecure(new ThreeDSecureContainer());
         $container->setPersonalData(new PersonalContainer());
-        $container->setPaymentMethod(new PrePaymentContainer());
+        $container->setPaymentMethod(new PrepaymentContainer());
 
         $this->assertEquals(PayoneApiConstants::REQUEST_TYPE_PREAUTHORIZATION, $container->getRequest());
         $this->assertStandardParams($container);
@@ -196,7 +196,7 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer', $container->getInvoicing());
         $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\ThreeDSecureContainer', $container->get3dsecure());
         $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer', $container->getPersonalData());
-        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\PrePaymentContainer', $container->getPaymentMethod());
+        $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\PrepaymentContainer', $container->getPaymentMethod());
         $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer', $container->getPaymentMethod());
     }
 
@@ -330,9 +330,9 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(19, $container->toArray());
     }
 
-    public function testPrePaymentContainer()
+    public function testPrepaymentContainer()
     {
-        $container = new PrePaymentContainer();
+        $container = new PrepaymentContainer();
         $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer', $container);
         $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\ContainerInterface', $container);
 

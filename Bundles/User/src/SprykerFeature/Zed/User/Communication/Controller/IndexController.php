@@ -7,35 +7,39 @@
 namespace SprykerFeature\Zed\User\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
-use SprykerFeature\Zed\Url\Communication\UrlDependencyContainer;
+use SprykerFeature\Zed\User\Business\UserFacade;
+use SprykerFeature\Zed\User\Communication\UserDependencyContainer;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
 
 /**
- * @method UrlDependencyContainer getDependencyContainer
+ * @method UserDependencyContainer getDependencyContainer
+ * @method UserFacade getFacade()
+ * @method UserQueryContainer getQueryContainer()
  */
 class IndexController extends AbstractController
 {
-
     /**
-     * indexAction
+     * @return array
      */
     public function indexAction()
     {
-
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return array
-     */
-    public function detailsAction(Request $request)
-    {
-        $userId = $request->query->get('id');
+        $usersTable = $this->getDependencyContainer()->createUserTable();
 
         return [
-            'user_id' => $userId,
+            'users' => $usersTable->render()
         ];
     }
 
+    /**
+     * @return JsonResponse
+     */
+    public function tableAction()
+    {
+        $table = $this->getDependencyContainer()->createUserTable();
+
+        return $this->jsonResponse(
+            $table->fetchData()
+        );
+    }
 }

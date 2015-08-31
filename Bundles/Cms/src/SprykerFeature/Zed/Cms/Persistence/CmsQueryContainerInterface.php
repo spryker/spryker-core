@@ -1,11 +1,12 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Cms\Persistence;
 
+use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlockQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsGlossaryKeyMappingQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPageQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
@@ -36,6 +37,11 @@ interface CmsQueryContainerInterface
      * @return SpyCmsPageQuery
      */
     public function queryPages();
+
+    /**
+     * @return SpyCmsBlockQuery
+     */
+    public function queryBlocks();
 
     /**
      * @param int $id
@@ -71,4 +77,17 @@ interface CmsQueryContainerInterface
      */
     public function queryGlossaryKeyMappingsByPageId($idCmsPage);
 
+    /**
+     * @param int $idCmsPage
+     *
+     * @return SpyCmsBlockQuery
+     */
+    public function queryBlockByIdPage($idCmsPage);
+
+    /**
+     * @param string $blockName
+     *
+     * @return SpyCmsBlockQuery
+     */
+    public function queryBlockByName($blockName);
 }

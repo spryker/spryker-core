@@ -1,50 +1,24 @@
-{% extends '@Application/Layout/layout.twig' %}
+{% extends '@Gui/Layout/layout.twig' %}
 
-{% block body_class %}spy-page{% endblock %}
+{% set widget_title = 'Users List' %}
 
-{% block head2 %}--{% endblock %}
-
-{% block title_content %}Users List{% endblock %}
+{% block head_title widget_title | trans %}
 
 {% block content %}
-    <section
-            class="spy-layout compact"
-            spy-app="spyGrid,spyForm"
-            ng-controller="GridController"
-            ng-strict-di
-            src="/user/grid"
-            name="grid"
-            on="{ form_success : 'update' }"
-            ng-class="{ query : queryActive }"
-            >
 
-        <h3>{{ "user.index" | trans }}</h3>
+    {% embed '@Gui/Partials/widget.twig' %}
 
-        <div spy-grid-pages="pages" labels="{ items : 'Show items %n', pages : 'Page %n of %m' }"></div>
+        {% block widget_header_content %}
+            <a href="/user/edit/create" class="btn btn-sm btn-primary ">{{ 'Add new user' | trans }}</a>
+        {% endblock %}
 
-        <table class="spy-grid">
-            <thead>
-            <tr>
-                <th spy-grid-head="columns['name']" label="Name"></th>
-                <th spy-grid-head="columns['username']" label="Email"></th>
-                <th spy-grid-head="columns['group']" label="Group"></th>
-            </tr>
-            </thead>
+        {% block widget_content %}
 
-            <tbody>
-            <tr ng-repeat="row in rows">
-                <td><a href="/user/index/details?id={[{ row.id_user }]}">{[{ row.first_name + ' ' + row.last_name }]}</a></td>
-                <td>{[{ row.username }]}</td>
-                <td>{[{ row.group }]}</td>
-            </tr>
-            <tr ng-if="!rows.length">
-                <td colspan="4">{{ "grid.no.results" | trans }}</td>
-            </tr>
-            </tbody>
-        </table>
+            {{ users | raw }}
 
-        <div spy-grid-pages="pages" labels="{ items : 'Show items %n', pages : 'Page %n of %m' }"></div>
+        {% endblock %}
 
-    </section>
+    {% endembed %}
 
 {% endblock %}
+

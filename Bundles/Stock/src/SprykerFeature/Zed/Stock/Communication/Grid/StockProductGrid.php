@@ -6,9 +6,10 @@
 
 namespace SprykerFeature\Zed\Stock\Communication\Grid;
 
-use SprykerFeature\Zed\Ui\Dependency\Grid\AbstractGrid;
+use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
+use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
-class StockProductGrid extends AbstractGrid
+class StockProductGrid extends AbstractTable
 {
 
     const ID_STOCK_PRODUCT = 'id_stock_product';
@@ -16,6 +17,16 @@ class StockProductGrid extends AbstractGrid
     const PAC_STOCKNAME = 'name';
     const QUANTITY = 'quantity';
     const IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
+
+    protected function configure(TableConfiguration $config)
+    {
+        // @todo: Implement configure() method.
+    }
+
+    protected function prepareData(TableConfiguration $config)
+    {
+        // @todo: Implement prepareData() method.
+    }
 
     /**
      * @return array

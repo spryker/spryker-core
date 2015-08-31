@@ -159,6 +159,22 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $uses);
     }
 
+    public function testIfPropertyTypeIsAReferenceToItselfItMustNotAddAUseForIt()
+    {
+        $transferDefinition = [
+            'name' => 'name',
+            'property' => [
+                $this->getProperty('property1', 'name[]')
+            ],
+        ];
+
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
+
+        $uses = $classDefinition->getUses();
+        $this->assertCount(0, $uses);
+    }
+
     public function testIfPropertyTypeIsCollectionTheReturnTypeShouldBeAnArrayObject()
     {
         $transferDefinition = [

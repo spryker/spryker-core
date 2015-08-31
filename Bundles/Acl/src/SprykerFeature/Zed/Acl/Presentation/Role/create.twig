@@ -1,0 +1,27 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Create role' %}
+
+{% block head_title widget_title | trans %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+
+            <div class="panel panel-default">
+                <div class="panel-heading">{{ 'Role' | trans }}</div>
+                <div class="panel-body">
+                    {{ form_start(roleForm) }}
+                    {{ form_widget(roleForm) }}
+                    <input type="submit" class="btn btn-primary" value="{{ 'Create' | trans }}"/>
+                    {{ form_end(roleForm) }}
+                </div>
+            </div>
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

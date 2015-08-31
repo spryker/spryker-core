@@ -10,6 +10,7 @@
         <property name="firstName" type="string" />
         <property name="status" type="string" />
         <property name="lastName" type="string" />
+        <property name="lastLogin" type="string" />
     </transfer>
 
     <transfer name="Collection">

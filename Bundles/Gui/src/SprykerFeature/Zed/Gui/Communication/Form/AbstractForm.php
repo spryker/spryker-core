@@ -52,6 +52,11 @@ abstract class AbstractForm
     protected $options = [];
 
     /**
+     * @var string
+     */
+    protected $formName = 'form';
+
+    /**
      * Prepares form
      *
      * @return $this
@@ -78,7 +83,12 @@ abstract class AbstractForm
         $this->request = $app['request'];
         $this->formFactory = $app['form.factory'];
 
-        $this->form = $this->formFactory->create('form', $this->getDefaultDataType(), $this->options);
+        $this->form = $this->formFactory->createNamed(
+            $this->getFormName(),
+            'form',
+            $this->getDefaultDataType(),
+            $this->options
+        );
 
         return $this;
     }
@@ -676,4 +686,11 @@ abstract class AbstractForm
         return $this;
     }
 
+    /**
+     * @return string
+     */
+    protected function getFormName()
+    {
+        return $this->formName;
+    }
 }
