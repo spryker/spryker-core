@@ -56,7 +56,7 @@ class GroupTable extends AbstractTable
         $query = $this->aclGroupQuery
             ->leftJoinSpyAclGroupsHasRoles()
             ->groupByIdAclGroup()
-            ->withColumn('COUNT(*)', self::ROLES)
+            ->withColumn('COUNT(fk_acl_role)', self::ROLES)
         ;
 
         $groupCollection = $this->runQuery($query, $config);
@@ -81,9 +81,14 @@ class GroupTable extends AbstractTable
      */
     protected function createRoleUrl(array $group)
     {
-        return '<a href="#" class="display-roles" id="group-'
-            . $group[SpyAclGroupTableMap::COL_ID_ACL_GROUP] . '">'
-            . $group[self::ROLES] . ' Roles</a> <span id="group-spinner-' . $group[SpyAclGroupTableMap::COL_ID_ACL_GROUP] . '"></span>';
+        if ($group[self::ROLES] > 0) {
+            return '<a href="#" class="display-roles" id="group-'
+                . $group[SpyAclGroupTableMap::COL_ID_ACL_GROUP] . '">'
+                . $group[self::ROLES] . ' Roles</a> <span class="group-spinner-container" id="group-spinner-'
+                . $group[SpyAclGroupTableMap::COL_ID_ACL_GROUP] . '"></span>';
+        } else {
+            return 'No roles';
+        }
     }
 
 }
