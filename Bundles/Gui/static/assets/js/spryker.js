@@ -24,4 +24,6 @@ $(document).ready(function() {
         var elementId = $(this).attr('id').replace('active-', '');
         spyAj.setUrl('/discount/voucher/status').changeActiveStatus(elementId);
     });
+
+    $('.dropdown-toggle').dropdown();
 });
