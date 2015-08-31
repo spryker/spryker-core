@@ -33,10 +33,12 @@ class Redis implements \SessionHandlerInterface
 
     /**
      * @param string $savePath
+     * @param integer $lifetime
      */
-    public function __construct($savePath)
+    public function __construct($savePath, $lifetime)
     {
         $this->savePath = $savePath;
+        $this->lifetime = $lifetime;
     }
 
     /**
