@@ -63,7 +63,6 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
             return;
         }
 
-        $sessionId = substr(session_id(), 0, 4);
         $event = new Event();
         $event->addField('route', $route);
         $event->addField('params.post', $request->request->all());
