@@ -19,11 +19,11 @@ class CheckoutAvailableShipmentMethodsPlugin extends AbstractPlugin
     /**
      * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
      *
-     * @internal param OrderTransfer $orderTransfer
+     * @return \Generated\Shared\Shipment\ShipmentInterface
      */
     public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer)
     {
-        $this->getDependencyContainer()->createShipmentFacade()->getAvailableMethods($shipmentMethodAvailabilityTransfer);
+        return $this->getDependencyContainer()->createShipmentFacade()->getAvailableMethods($shipmentMethodAvailabilityTransfer);
     }
 
 }
