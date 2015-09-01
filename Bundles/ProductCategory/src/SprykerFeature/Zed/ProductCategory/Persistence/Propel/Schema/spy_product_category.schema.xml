@@ -4,10 +4,10 @@
     <table name="spy_product_category" idMethod="native" phpName="SpyProductCategory">
         <column name="id_product_category" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_abstract_product" required="true" type="INTEGER"/>
-        <column name="fk_category_node" required="true" type="INTEGER"/>
+        <column name="fk_category" required="true" type="INTEGER"/>
 
-        <foreign-key foreignTable="spy_category_node">
-            <reference foreign="id_category_node" local="fk_category_node"/>
+        <foreign-key foreignTable="spy_category">
+            <reference foreign="id_category" local="fk_category"/>
         </foreign-key>
 
         <foreign-key foreignTable="spy_abstract_product">
@@ -16,7 +16,7 @@
 
         <unique>
             <unique-column name="fk_abstract_product"/>
-            <unique-column name="fk_category_node"/>
+            <unique-column name="fk_category"/>
         </unique>
-    <id-method-parameter value="spy_product_category_pk_seq"/></table>
+        <id-method-parameter value="spy_product_category_pk_seq"/></table>
 </database>

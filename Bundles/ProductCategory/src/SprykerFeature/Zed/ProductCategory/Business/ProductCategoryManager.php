@@ -97,7 +97,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         $mappingEntity = $this->locator->productCategory()->entitySpyProductCategory();
         $mappingEntity
             ->setFkAbstractProduct($idAbstractProduct)
-            ->setFkCategoryNode($idCategoryNode)
+            ->setFkCategory($idCategoryNode)    
         ;
 
         $mappingEntity->save();

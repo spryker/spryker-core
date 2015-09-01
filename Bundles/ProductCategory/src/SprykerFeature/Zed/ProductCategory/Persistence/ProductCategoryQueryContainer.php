@@ -52,16 +52,15 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
 
     /**
      * @param int $idAbstractProduct
-     * @param int $idCategoryNode
-     *
+     * @param int $idCategory
      * @return SpyProductCategoryQuery
      */
-    public function queryProductCategoryMappingByIds($idAbstractProduct, $idCategoryNode)
+    public function queryProductCategoryMappingByIds($idAbstractProduct, $idCategory)
     {
         $query = $this->queryProductCategoryMappings();
         $query
             ->filterByFkAbstractProduct($idAbstractProduct)
-            ->filterByFkCategoryNode($idCategoryNode)
+            ->filterByFkCategory($idCategory)
         ;
 
         return $query;
@@ -81,7 +80,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
             ->useSpyAbstractProductQuery()
                 ->filterBySku($sku)
             ->endUse()
-            ->useSpyCategoryNodeQuery()
+            ->endUse()
                 ->useCategoryQuery()
                     ->useAttributeQuery()
                         ->filterByFkLocale($locale->getIdLocale())
