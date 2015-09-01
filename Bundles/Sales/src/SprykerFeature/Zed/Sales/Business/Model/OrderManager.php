@@ -193,7 +193,7 @@ class OrderManager
             $optionEntity->fromArray($productOption->toArray());
 
             $optionEntity->setFkSalesOrderItem($item->getIdSalesOrderItem());
-            $optionEntity->setTaxPercentage($item->getTaxSet()
+            $optionEntity->setTaxPercentage($productOption->getTaxSet()
                 ->getEffectiveRate());
 
             $optionEntity->save();
