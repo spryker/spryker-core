@@ -8,7 +8,7 @@ namespace SprykerEngine\Shared\Kernel;
 
 use SprykerEngine\Shared\Kernel\Factory\FactoryException;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerEngine\Shared\Kernel\Factory2;
+use SprykerEngine\Shared\Kernel\ClassMapFactory;
 
 abstract class AbstractFactory implements FactoryInterface
 {
@@ -108,7 +108,7 @@ abstract class AbstractFactory implements FactoryInterface
         }
                 \SprykerFeature_Shared_Library_Log::log($class. ' - '.$this->application. ' - '.$this->getBundle(). ' - ' .$this->layer, 'exist.log');
 
-        return Factory2::getInstance()->has($this->application, $this->getBundle(), $class, $this->layer);
+        return ClassMapFactory::getInstance()->has($this->application, $this->getBundle(), $class, $this->layer);
 
         $class = $this->buildClassName($class);
 
@@ -142,7 +142,7 @@ abstract class AbstractFactory implements FactoryInterface
 if(!isset($this->application)){
     die('<pre><b>'.print_r('Property missing: '.get_class($this), true).'</b>'.PHP_EOL.__CLASS__.' '.__LINE__);
 }
-        return Factory2::getInstance()->create($this->application, $this->getBundle(), $class, $this->layer, $arguments);
+        return ClassMapFactory::getInstance()->create($this->application, $this->getBundle(), $class, $this->layer, $arguments);
 //
 //        $class = $this->buildClassName($class);
 //        $resolver = $this->getResolver();

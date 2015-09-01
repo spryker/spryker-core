@@ -8,7 +8,7 @@ namespace SprykerEngine\Zed\Kernel\Business;
 
 use SprykerEngine\Shared\Kernel\AbstractFactory;
 use SprykerEngine\Zed\Kernel\BundleConfigLocator;
-use SprykerEngine\Shared\Kernel\Factory2;
+use SprykerEngine\Shared\Kernel\ClassMapFactory;
 
 class Factory extends AbstractFactory
 {
@@ -52,7 +52,7 @@ class Factory extends AbstractFactory
             $arguments = (count($arguments) > 0) ? $arguments[0] : [];
         }
         $this->isMagicCall = false;
-        return Factory2::getInstance()->create('Zed', $this->getBundle(), $class, 'Business', $arguments);
+        return ClassMapFactory::getInstance()->create('Zed', $this->getBundle(), $class, 'Business', $arguments);
 //
 //        $class = $this->buildClassName($class);
 //        $resolver = $this->getResolver();

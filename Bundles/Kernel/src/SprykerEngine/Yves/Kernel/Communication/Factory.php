@@ -7,7 +7,7 @@
 namespace SprykerEngine\Yves\Kernel\Communication;
 
 use SprykerEngine\Shared\Kernel\AbstractFactory;
-use SprykerEngine\Shared\Kernel\Factory2;
+use SprykerEngine\Shared\Kernel\ClassMapFactory;
 
 class Factory extends AbstractFactory
 {
@@ -47,7 +47,7 @@ class Factory extends AbstractFactory
             $class = $this->getBundle() . $class;
         }
 
-        return Factory2::getInstance()->create($this->application, $this->getBundle(), $class, $this->layer, $arguments);
+        return ClassMapFactory::getInstance()->create($this->application, $this->getBundle(), $class, $this->layer, $arguments);
 //
 //        $class = $this->buildClassName($class);
 //        $resolver = $this->getResolver();

@@ -14,7 +14,7 @@ use SprykerEngine\Shared\Kernel\ClassResolver;
 use SprykerEngine\Zed\Kernel\BundleDependencyProviderLocator;
 use SprykerEngine\Zed\Kernel\ClassNamePattern;
 use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Shared\Kernel\Factory2;
+use SprykerEngine\Shared\Kernel\ClassMapFactory;
 
 class ControllerLocator implements ControllerLocatorInterface
 {
@@ -101,7 +101,7 @@ class ControllerLocator implements ControllerLocatorInterface
 //            );
 //        }
 
-        $resolvedController = Factory2::getInstance()->create('Zed', $this->bundle, 'Controller'.$this->controller.'Controller', 'Communication', [$application, $factory, $locator]);
+        $resolvedController = ClassMapFactory::getInstance()->create('Zed', $this->bundle, 'Controller'.$this->controller.'Controller', 'Communication', [$application, $factory, $locator]);
 
         // @todo REFACTOR -  move to constructor when all controllers are upgraded
         $bundleName = lcfirst($this->bundle);
@@ -136,7 +136,7 @@ class ControllerLocator implements ControllerLocatorInterface
     public function canLocate()
     {
 
-        return Factory2::getInstance()->has('Zed', $this->bundle, 'Controller'.$this->controller.'Controller', 'Communication');
+        return ClassMapFactory::getInstance()->has('Zed', $this->bundle, 'Controller'.$this->controller.'Controller', 'Communication');
 //
 //        $resolver = IdentityMapClassResolver::getInstance(new ClassResolver());
 //

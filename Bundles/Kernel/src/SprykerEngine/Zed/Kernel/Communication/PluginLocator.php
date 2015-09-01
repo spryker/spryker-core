@@ -11,7 +11,7 @@ use SprykerEngine\Shared\Kernel\Locator\LocatorException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\BundleDependencyProviderLocator;
 use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Shared\Kernel\Factory2;
+use SprykerEngine\Shared\Kernel\ClassMapFactory;
 
 class PluginLocator extends AbstractLocator
 {
@@ -42,7 +42,7 @@ class PluginLocator extends AbstractLocator
     {
         $factory = $this->getFactory($bundle);
 
-        $plugin = Factory2::getInstance()->create('Zed', $bundle, 'Plugin'.$className, 'Communication', [$factory, $locator]);
+        $plugin = ClassMapFactory::getInstance()->create('Zed', $bundle, 'Plugin'.$className, 'Communication', [$factory, $locator]);
 
         // $plugin = $factory->create('Plugin' . $className, $factory, $locator);
 

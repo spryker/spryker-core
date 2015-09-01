@@ -83,7 +83,7 @@ abstract class AbstractLocator implements LocatorInterface
 //        $resolver = IdentityMapClassResolver::getInstance(new ClassResolver());
 //        $classNamePattern = $this->getFactoryClassNamePattern();
 //die('<pre><b>'.print_r($classNamePattern, true).'</b>'.PHP_EOL.__CLASS__.' '.__LINE__);
-        return Factory2::getInstance()->create($this->application, $this->bundle, $this->suffix, $this->layer, [$bundle]);
+        return ClassMapFactory::getInstance()->create($this->application, $this->bundle, $this->suffix, $this->layer, [$bundle]);
 
 //        if ($resolver->canResolve($classNamePattern, $bundle)) {
 //            return $resolver->resolve($classNamePattern, $bundle, [$bundle]);

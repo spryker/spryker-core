@@ -8,7 +8,7 @@ namespace SprykerEngine\Zed\Kernel\Persistence;
 
 use SprykerEngine\Shared\Kernel\AbstractFactory;
 use SprykerEngine\Zed\Kernel\BundleConfigLocator;
-use SprykerEngine\Shared\Kernel\Factory2;
+use SprykerEngine\Shared\Kernel\ClassMapFactory;
 
 class Factory extends AbstractFactory
 {
@@ -61,7 +61,7 @@ class Factory extends AbstractFactory
         }
         $this->isMagicCall = false;
 
-        return Factory2::getInstance()->create('Zed', $this->getBundle(), $class, 'Persistence', $arguments);
+        return ClassMapFactory::getInstance()->create('Zed', $this->getBundle(), $class, 'Persistence', $arguments);
 
 //        $class = $this->buildClassName($class);
 //        $resolver = $this->getResolver();

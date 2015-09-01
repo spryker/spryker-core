@@ -10,7 +10,7 @@ use SprykerEngine\Shared\Kernel\ClassResolver;
 use SprykerEngine\Shared\Kernel\IdentityMapClassResolver;
 use SprykerEngine\Shared\Kernel\Locator\LocatorInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Shared\Kernel\Factory2;
+use SprykerEngine\Shared\Kernel\ClassMapFactory;
 
 class EntityLocator implements LocatorInterface
 {
@@ -48,7 +48,7 @@ class EntityLocator implements LocatorInterface
 
 //        $resolvedTransfer = $identityMapResolver->resolve($classToLocate, $bundle);
 //        die('<pre><b>'.print_r($className, true).'</b>'.PHP_EOL.__CLASS__.' '.__LINE__);
-        $entity = Factory2::getInstance()->create('Zed', $bundle, 'Propel'.$className, 'Persistence');
+        $entity = ClassMapFactory::getInstance()->create('Zed', $bundle, 'Propel'.$className, 'Persistence');
         return $entity;
     }
 
