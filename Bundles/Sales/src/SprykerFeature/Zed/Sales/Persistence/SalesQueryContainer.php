@@ -8,6 +8,8 @@ namespace SprykerFeature\Zed\Sales\Persistence;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\SalesPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesExpenseQuery;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddressQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderCommentQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;

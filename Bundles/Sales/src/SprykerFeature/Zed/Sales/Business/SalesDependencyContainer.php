@@ -52,7 +52,8 @@ class SalesDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createModelOrderDetailsManager(
             $this->createSalesQueryContainer(),
-            $this->getProvidedDependency(SalesDependencyProvider::FACADE_OMS)
+            $this->getProvidedDependency(SalesDependencyProvider::FACADE_OMS),
+            $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_PAYMENT_LOGS)
         );
     }
 

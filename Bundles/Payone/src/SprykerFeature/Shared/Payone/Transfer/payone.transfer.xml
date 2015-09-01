@@ -148,6 +148,7 @@
         <property name="portalid" type="string" />
         <property name="sequencenumber" type="string" />
         <property name="txaction" type="string" />
+        <property name="price" type="string" />
         <property name="receivable" type="string" />
         <property name="balance" type="string" />
         <property name="currency" type="string" />
@@ -157,5 +158,19 @@
         <property name="clearingtype" type="string" />
         <property name="reference" type="string" />
         <property name="reminderlevel" type="string" />
+    </transfer>
+
+
+    <transfer name="PayonePaymentLog">
+        <property name="transactionId" type="string" />
+        <property name="logType" type="string" />
+        <property name="request" type="string" />
+        <property name="status" type="string" />
+
+        <property name="receivable" type="string" />
+        <property name="balance" type="string" />
+        <property name="price" type="string" />
+
+        <property name="createdAt" type="string" />
     </transfer>
 </transfers>

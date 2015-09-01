@@ -81,6 +81,7 @@ class TransactionStatusUpdateManager
         $entity->setSequenceNumber($request->getSequencenumber());
         $entity->setClearingType($request->getClearingtype());
         $entity->setPortalId($request->getPortalid());
+        $entity->setPrice($request->getPrice());
         $entity->setBalance($request->getBalance());
         $entity->setReceivable($request->getReceivable());
         $entity->setReminderlevel($request->getReminderlevel());
@@ -316,16 +317,21 @@ class TransactionStatusUpdateManager
      * @return SpyPaymentPayoneTransactionStatusLog[]
      */
     private function getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem) {
-        $records = $this->queryContainer->getTransactionStatusLogBySalesOrder($idSalesOrder);
+        $transactionStatusLogs = $this->queryContainer->getTransactionStatusLogsBySalesOrder($idSalesOrder)->find();
 
         $ids = [];
 
-        foreach ($records as $record) {
-            $ids[$record->getIdPaymentPayoneTransactionStatusLog()] = $record;
+        /* @var SpyPaymentPayoneTransactionStatusLog $record */
+        foreach ($transactionStatusLogs as $transactionStatusLog) {
+            $ids[$record->getIdPaymentPayoneTransactionStatusLog()] = $transactionStatusLog;
         }
 
-        $relations = $this->queryContainer->getTransactionStatusLogOrderItemsByLogIds($idSalesOrderItem, array_keys($ids));
+        $relations = $this->queryContainer
+            ->getTransactionStatusLogOrderItemsByLogIds($idSalesOrderItem, array_keys($ids))
+            ->find()
+            ;
 
+        /** @var SpyPaymentPayoneTransactionStatusLogOrderItem $relation */
         foreach ($relations as $relation) {
             unset($ids[$relation->getIdPaymentPayoneTransactionStatusLog()]);
         }

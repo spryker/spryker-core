@@ -227,7 +227,7 @@ class CheckoutFacadeTest extends Test
         $this->assertEquals(CheckoutConfig::ERROR_CODE_PRODUCT_UNAVAILABLE, $result->getErrors()[0]->getErrorCode());
     }
 
-    public function testCheckoutTriggersStatemachine()
+    public function testCheckoutTriggersStateMachine()
     {
         $checkoutRequest = $this->getBaseCheckoutTransfer();
 

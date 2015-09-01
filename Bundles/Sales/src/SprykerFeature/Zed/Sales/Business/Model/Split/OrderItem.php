@@ -10,7 +10,6 @@ use Generated\Shared\Sales\ItemSplitResponseInterface;
 use Generated\Shared\Transfer\ItemSplitResponseTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Propel;
-use SprykerFeature\Zed\Sales\Business\Model\Split\Validation;
 use SprykerFeature\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemOption;
