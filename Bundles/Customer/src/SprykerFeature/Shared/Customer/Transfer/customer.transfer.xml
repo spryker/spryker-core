@@ -29,7 +29,7 @@
     </transfer>
 
     <transfer name="Addresses">
-        <property name="Addresses" type="Address[]" singular="Address" />
+        <property name="addresses" type="Address[]" singular="Address" />
     </transfer>
 
     <transfer name="Customer">

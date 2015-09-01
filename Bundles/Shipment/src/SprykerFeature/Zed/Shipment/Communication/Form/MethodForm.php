@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Shipment\Communication\Form;
 
+use SprykerFeature\Shared\Library\Currency\CurrencyManager;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentCarrierQuery;
 use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentMethodQuery;
@@ -188,12 +189,11 @@ class MethodForm extends AbstractForm
     public function getData(){
         $data = parent::getData();
         if(isset($data[self::PRICE_FIELD])){
-            $data[self::PRICE_FIELD] = $data[self::PRICE_FIELD] * $this->shipmentConfig->getPricePrecision();
+            $data[self::PRICE_FIELD] = CurrencyManager::getInstance()->convertDecimalToCent($data[self::PRICE_FIELD]);
             $data[self::PRICE_FIELD] = round($data[self::PRICE_FIELD]);
         }
         return $data;
     }
-
 
     /**
      * @return array
@@ -209,7 +209,7 @@ class MethodForm extends AbstractForm
                 self::NAME_FIELD => $method->getName(),
                 self::NAME_GLOSSARY_FIELD => $method->getGlossaryKeyName(),
                 self::DESCRIPTION_GLOSSARY_FIELD => $method->getGlossaryKeyDescription(),
-                self::PRICE_FIELD => $method->getPrice() / $this->shipmentConfig->getPricePrecision(),
+                self::PRICE_FIELD => CurrencyManager::getInstance()->convertCentToDecimal($method->getPrice()),
                 self::AVAILABILITY_PLUGIN_FIELD => $method->getAvailabilityPlugin(),
                 self::PRICE_CALCULATION_PLUGIN_FIELD => $method->getPriceCalculationPlugin(),
                 self::DELIVERY_TIME_PLUGIN_FIELD => $method->getDeliveryTimePlugin(),

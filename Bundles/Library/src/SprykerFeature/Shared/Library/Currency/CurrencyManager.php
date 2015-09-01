@@ -11,6 +11,7 @@ namespace SprykerFeature\Shared\Library\Currency;
  */
 class CurrencyManager
 {
+    CONST PRICE_PRECISION = 100;
 
     /**
      * @var CurrencyInterface
@@ -95,7 +96,17 @@ class CurrencyManager
      */
     public function convertCentToDecimal($centValue)
     {
-        return number_format($centValue / 100, 2, '.', '');
+        return number_format($centValue / self::PRICE_PRECISION, 2, '.', '');
+    }
+
+    /**
+     * @param float $decimalValue
+     *
+     * @return int
+     */
+    public function convertDecimalToCent($decimalValue)
+    {
+        return number_format($decimalValue * self::PRICE_PRECISION, 2, '.', '');
     }
 
     /**
