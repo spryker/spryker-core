@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Sales\Business\Model;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\SalesAddressTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use SprykerFeature\Zed\Library\Copy;
 use SprykerFeature\Zed\Oms\Business\OmsFacade;
 use SprykerFeature\Zed\Sales\Dependency\Plugin\PaymentLogReceiverInterface;
@@ -66,12 +66,12 @@ class OrderDetailsManager
     }
 
     /**
-     * @param SalesAddressTransfer $addressTransfer
+     * @param AddressTransfer $addressTransfer
      * @param int $idAddress
      *
      * @return SpySalesOrderAddress
      */
-    public function updateOrderAddress(SalesAddressTransfer $addressTransfer, $idAddress)
+    public function updateOrderAddress(AddressTransfer $addressTransfer, $idAddress)
     {
         $addressEntity = $this->queryContainer
             ->querySalesOrderAddressById($idAddress)

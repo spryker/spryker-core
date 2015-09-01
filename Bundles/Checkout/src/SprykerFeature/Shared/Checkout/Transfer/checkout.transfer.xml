@@ -10,8 +10,8 @@
         <property name="totals" type="Totals" />
         <property name="discounts" type="Discount[]" singular="discount" />
         <property name="expenses" type="Expense[]" singular="expense" />
-        <property name="billingAddresses" type="SalesAddress[]" singular="billingAddress" />
-        <property name="shippingAddresses" type="SalesAddress[]" singular="shippingAddress" />
+        <property name="billingAddresses" type="Address[]" singular="billingAddress" />
+        <property name="shippingAddresses" type="Address[]" singular="shippingAddress" />
         <property name="process" type="string" />
     </transfer>
 
@@ -46,7 +46,7 @@
         <property name="quantity" type="int" />
     </transfer>
 
-    <transfer name="CustomerAddress">
+    <transfer name="Address">
         <property name="firstName" type="string" />
         <property name="lastName" type="string" />
         <property name="address1" type="string" />
@@ -63,8 +63,8 @@
         <property name="guest" type="bool" />
         <property name="idUser" type="int" />
         <property name="email" type="string" />
-        <property name="billingAddress" type="SalesAddress" />
-        <property name="shippingAddress" type="SalesAddress" />
+        <property name="billingAddress" type="Address" />
+        <property name="shippingAddress" type="Address" />
         <property name="paymentMethod" type="string" />
         <property name="cart" type="Cart" />
     </transfer>

@@ -10,8 +10,8 @@
         <property name="lastName" type="string" />
         <property name="firstName" type="string" />
         <property name="orderReference" type="string" />
-        <property name="billingAddress" type="SalesAddress" />
-        <property name="shippingAddress" type="SalesAddress" />
+        <property name="billingAddress" type="Address" />
+        <property name="shippingAddress" type="Address" />
         <property name="customer" type="Customer" />
         <property name="items" type="Item[]"  singular="item" />
         <property name="payment" type="string" />
@@ -34,7 +34,7 @@
         <property name="orders" type="Order[]" singular="order" />
     </transfer>
 
-    <transfer name="SalesAddress">
+    <transfer name="Address">
         <property name="idSalesOrderAddress" type="int" />
         <property name="idCustomerAddress" type="int" />
         <property name="iso2Code" type="string" />

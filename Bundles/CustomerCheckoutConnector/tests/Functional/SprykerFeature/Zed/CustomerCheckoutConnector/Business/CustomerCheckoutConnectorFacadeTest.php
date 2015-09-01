@@ -9,7 +9,7 @@ namespace Functional\SprykerFeature\Zed\CustomerCheckoutConnector\Business;
 use Codeception\TestCase\Test;
 use Functional\SprykerFeature\Zed\CustomerCheckoutConnector\Dependency\CustomerFacade;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Container;
@@ -61,8 +61,8 @@ class CustomerCheckoutConnectorFacadeTest extends Test
 
         $checkoutRequest
             ->setIdUser($customerEntity->getIdCustomer())
-            ->setBillingAddress(new CustomerAddressTransfer())
-            ->setShippingAddress(new CustomerAddressTransfer())
+            ->setBillingAddress(new AddressTransfer())
+            ->setShippingAddress(new AddressTransfer())
         ;
 
         $this->customerCheckoutConnectorFacade->hydrateOrderTransfer($orderTransfer, $checkoutRequest);
@@ -82,8 +82,8 @@ class CustomerCheckoutConnectorFacadeTest extends Test
             ->setIdUser(null)
             ->setGuest(true)
             ->setEmail('max@sprykermann.de')
-            ->setBillingAddress(new CustomerAddressTransfer())
-            ->setShippingAddress(new CustomerAddressTransfer())
+            ->setBillingAddress(new AddressTransfer())
+            ->setShippingAddress(new AddressTransfer())
         ;
 
         $this->customerCheckoutConnectorFacade->hydrateOrderTransfer($orderTransfer, $checkoutRequest);
@@ -98,7 +98,7 @@ class CustomerCheckoutConnectorFacadeTest extends Test
         $orderTransfer = new OrderTransfer();
         $checkoutRequest = new CheckoutRequestTransfer();
 
-        $billingAddress = new CustomerAddressTransfer();
+        $billingAddress = new AddressTransfer();
         $billingAddress
             ->setAddress1('A1')
             ->setAddress2('A2')
@@ -108,7 +108,7 @@ class CustomerCheckoutConnectorFacadeTest extends Test
             ->setZipCode('11111')
         ;
 
-        $shippingAddress = new CustomerAddressTransfer();
+        $shippingAddress = new AddressTransfer();
         $shippingAddress
             ->setAddress1('B1')
             ->setAddress2('B1')
@@ -125,8 +125,8 @@ class CustomerCheckoutConnectorFacadeTest extends Test
 
         $this->customerCheckoutConnectorFacade->hydrateOrderTransfer($orderTransfer, $checkoutRequest);
 
-        $this->assertInstanceOf('Generated\\Shared\\Transfer\\SalesAddressTransfer', $orderTransfer->getShippingAddress());
-        $this->assertInstanceOf('Generated\\Shared\\Transfer\\SalesAddressTransfer', $orderTransfer->getBillingAddress());
+        $this->assertInstanceOf('Generated\\Shared\\Transfer\\AddressTransfer', $orderTransfer->getShippingAddress());
+        $this->assertInstanceOf('Generated\\Shared\\Transfer\\AddressTransfer', $orderTransfer->getBillingAddress());
 
         $this->assertSame($orderTransfer->getBillingAddress()->getAddress1(), $billingAddress->getAddress1());
         $this->assertSame($orderTransfer->getBillingAddress()->getAddress2(), $billingAddress->getAddress2());

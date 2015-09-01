@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\SalesAddressTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
@@ -128,16 +128,16 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
-     * @param SalesAddressTransfer $salesAddressesTransfer
+     * @param AddressTransfer $addressesTransfer
      * @param int $idAddress
      *
      * @return mixed
      */
-    public function updateOrderAddress(SalesAddressTransfer $salesAddressesTransfer, $idAddress)
+    public function updateOrderAddress(AddressTransfer $addressesTransfer, $idAddress)
     {
         return $this->getDependencyContainer()
             ->createOrderDetailsManager()
-            ->updateOrderAddress($salesAddressesTransfer, $idAddress)
+            ->updateOrderAddress($addressesTransfer, $idAddress)
         ;
     }
 

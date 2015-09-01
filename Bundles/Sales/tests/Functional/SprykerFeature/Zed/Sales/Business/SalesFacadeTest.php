@@ -12,7 +12,7 @@ use Functional\SprykerFeature\Zed\Sales\Business\Dependency\OmsFacade;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Generated\Shared\Transfer\SalesAddressTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use SprykerEngine\Zed\Kernel\Business\Factory;
@@ -75,7 +75,7 @@ class SalesFacadeTest extends Test
         $country->save();
 
         $orderTransfer = new OrderTransfer();
-        $billingAddress = new SalesAddressTransfer();
+        $billingAddress = new AddressTransfer();
 
         $billingAddress->setIso2Code('ix')
             ->setAddress1('address-1-1-test')
@@ -85,7 +85,7 @@ class SalesFacadeTest extends Test
             ->setCity('SpryHome')
         ;
 
-        $shippingAddress = new SalesAddressTransfer();
+        $shippingAddress = new AddressTransfer();
         $shippingAddress->setIso2Code('ix')
             ->setAddress1('address-1-2-test')
             ->setFirstName('Max')

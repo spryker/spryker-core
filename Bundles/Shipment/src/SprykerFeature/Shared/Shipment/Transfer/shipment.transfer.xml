@@ -36,7 +36,7 @@
         <property name="shipmentDeliveryTime" type="int" />
     </transfer>
 
-    <transfer name="CustomerAddress">
+    <transfer name="Address">
         <property name="idCustomerAddress" type="int" />
         <property name="customerId" type="string" />
         <property name="fkCustomer" type="int" />

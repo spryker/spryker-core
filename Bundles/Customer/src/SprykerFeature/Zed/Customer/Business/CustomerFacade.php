@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Customer\Business;
 
-use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
@@ -121,11 +121,11 @@ class CustomerFacade extends AbstractFacade
     }
 
     /**
-     * @param CustomerAddressTransfer $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
-     * @return CustomerAddressTransfer
+     * @return AddressTransfer
      */
-    public function getAddress(CustomerAddressTransfer $addressTransfer)
+    public function getAddress(AddressTransfer $addressTransfer)
     {
         return $this->getDependencyContainer()
             ->createAddress()
@@ -134,11 +134,11 @@ class CustomerFacade extends AbstractFacade
     }
 
     /**
-     * @param CustomerAddressTransfer $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
-     * @return CustomerAddressTransfer
+     * @return AddressTransfer
      */
-    public function updateAddress(CustomerAddressTransfer $addressTransfer)
+    public function updateAddress(AddressTransfer $addressTransfer)
     {
         return $this->getDependencyContainer()
             ->createAddress()
@@ -147,11 +147,11 @@ class CustomerFacade extends AbstractFacade
     }
 
     /**
-     * @param CustomerAddressTransfer $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
-     * @return CustomerAddressTransfer
+     * @return AddressTransfer
      */
-    public function createAddress(CustomerAddressTransfer $addressTransfer)
+    public function createAddress(AddressTransfer $addressTransfer)
     {
         return $this->getDependencyContainer()
             ->createAddress()
@@ -160,11 +160,11 @@ class CustomerFacade extends AbstractFacade
     }
 
     /**
-     * @param CustomerAddressTransfer $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
      * @return bool
      */
-    public function setDefaultBillingAddress(CustomerAddressTransfer $addressTransfer)
+    public function setDefaultBillingAddress(AddressTransfer $addressTransfer)
     {
         return $this->getDependencyContainer()
             ->createAddress()
@@ -173,11 +173,11 @@ class CustomerFacade extends AbstractFacade
     }
 
     /**
-     * @param CustomerAddressTransfer $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
      * @return bool
      */
-    public function setDefaultShippingAddress(CustomerAddressTransfer $addressTransfer)
+    public function setDefaultShippingAddress(AddressTransfer $addressTransfer)
     {
         return $this->getDependencyContainer()
             ->createAddress()
@@ -186,11 +186,11 @@ class CustomerFacade extends AbstractFacade
     }
 
     /**
-     * @param CustomerAddressTransfer $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
      * @return string
      */
-    public function renderAddress(CustomerAddressTransfer $addressTransfer)
+    public function renderAddress(AddressTransfer $addressTransfer)
     {
         return $this->getDependencyContainer()
             ->createAddress()
@@ -201,7 +201,7 @@ class CustomerFacade extends AbstractFacade
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerAddressTransfer
+     * @return AddressTransfer
      */
     public function getDefaultShippingAddress(CustomerTransfer $customerTransfer)
     {
@@ -214,7 +214,7 @@ class CustomerFacade extends AbstractFacade
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerAddressTransfer
+     * @return AddressTransfer
      */
     public function getDefaultBillingAddress(CustomerTransfer $customerTransfer)
     {
@@ -225,11 +225,11 @@ class CustomerFacade extends AbstractFacade
     }
 
     /**
-     * @param CustomerAddressTransfer $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
-     * @return CustomerAddressTransfer
+     * @return AddressTransfer
      */
-    public function deleteAddress(CustomerAddressTransfer $addressTransfer)
+    public function deleteAddress(AddressTransfer $addressTransfer)
     {
         return $this->getDependencyContainer()
             ->createAddress()
