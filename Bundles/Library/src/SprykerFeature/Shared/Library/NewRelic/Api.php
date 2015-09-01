@@ -4,12 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
+namespace SprykerFeature\Shared\Library\NewRelic;
+
 /**
  * The PHP API for New Relic
  *
  * @link https://newrelic.com/docs/php/the-php-api
  */
-class SprykerFeature_Shared_Library_NewRelic_Api
+class Api
 {
 
     /**
@@ -43,7 +45,7 @@ class SprykerFeature_Shared_Library_NewRelic_Api
     public static function getInstance()
     {
         if (is_null(self::$instance)) {
-            self::$instance = new \SprykerFeature_Shared_Library_NewRelic_Api();
+            self::$instance = new static;
         }
 
         return self::$instance;

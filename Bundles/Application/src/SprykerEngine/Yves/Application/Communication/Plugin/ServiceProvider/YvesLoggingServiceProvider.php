@@ -82,7 +82,7 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
         $host = $request->server->get('COMPUTERNAME', System::getHostname());
         $requestUri = $request->getRequestUri();
 
-        $nr = \SprykerFeature_Shared_Library_NewRelic_Api::getInstance();
+        $nr = \SprykerFeature\Shared\Library\NewRelic\Api::getInstance();
         $nr->setNameOfTransaction($transactionName)
             ->addCustomParameter('request_uri', $requestUri)
             ->addCustomParameter('host', $host);

@@ -99,7 +99,7 @@ class Couchbase implements \SessionHandlerInterface
 
         $startTime = microtime(true);
         $result = $this->connection->getAndTouch($key, $this->lifetime);
-        \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->addCustomMetric('Couchbase/Session_read_time', microtime(true) - $startTime);
+        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->addCustomMetric('Couchbase/Session_read_time', microtime(true) - $startTime);
 
         return $result ? json_decode($result, true) : null;
     }
@@ -119,7 +119,7 @@ class Couchbase implements \SessionHandlerInterface
 
         $startTime = microtime(true);
         $result = $this->connection->set($key, json_encode($sessionData), $this->lifetime);
-        \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->addCustomMetric('Couchbase/Session_write_time', microtime(true) - $startTime);
+        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->addCustomMetric('Couchbase/Session_write_time', microtime(true) - $startTime);
 
         return $result ? true : false;
     }
@@ -134,7 +134,7 @@ class Couchbase implements \SessionHandlerInterface
 
         $startTime = microtime(true);
         $result = $this->connection->delete($key);
-        \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->addCustomMetric('Couchbase/Session_delete_time', microtime(true) - $startTime);
+        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->addCustomMetric('Couchbase/Session_delete_time', microtime(true) - $startTime);
 
         return $result ? true : false;
     }

@@ -47,7 +47,7 @@ abstract class AbstractGatewayController extends AbstractController
         parent::__construct($application, $factory, $locator);
 
         // @todo this can be a plugin which listen for kernel.controller events
-        \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->addCustomParameter('Call_from', 'Yves');
+        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->addCustomParameter('Call_from', 'Yves');
         (new RequestLogger())->log(LogLevel::INFO, Request::createFromGlobals(), ['yvesRequest' => true]);
     }
 

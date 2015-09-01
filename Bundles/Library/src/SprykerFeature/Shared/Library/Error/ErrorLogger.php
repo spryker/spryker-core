@@ -57,7 +57,7 @@ class ErrorLogger
     {
         try {
             $message = $message = get_class($exception) . ' - ' . $exception->getMessage() . ' in file "' . $exception->getFile() . '"';
-            \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->noticeError($message, $exception);
+            \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->noticeError($message, $exception);
         } catch (\Exception $internalException) {
             if (!$ignoreInternalExceptions) {
                 self::sendExceptionToLumberjack($internalException, true);
