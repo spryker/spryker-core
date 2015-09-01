@@ -6,21 +6,29 @@
 
 namespace SprykerFeature\Zed\Sales\Business\Model;
 
+use Generated\Shared\Sales\OrderListInterface;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\SalesAddressTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
+use SprykerEngine\Zed\Propel\PropelFilterCriteria;
 use SprykerFeature\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use SprykerFeature\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemOption;
+use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderManager
 {
-
+    /**
+     * @var SalesQueryContainerInterface
+     */
+    protected $queryContainer;
+    
     /**
      * @var SalesToCountryInterface
      */
@@ -37,10 +45,12 @@ class OrderManager
     protected $orderReferenceGenerator;
 
     public function __construct(
+        SalesQueryContainerInterface $queryContainer,
         SalesToCountryInterface $countryFacade,
         SalesToOmsInterface $omsFacade,
         OrderReferenceGeneratorInterface $orderReferenceGenerator
     ) {
+        $this->queryContainer = $queryContainer;
         $this->countryFacade = $countryFacade;
         $this->omsFacade = $omsFacade;
         $this->orderReferenceGenerator = $orderReferenceGenerator;
@@ -190,4 +200,32 @@ class OrderManager
         }
     }
 
+    /**
+     * @param OrderListInterface $orderListTransfer
+     *
+     * @return OrderListInterface
+     */
+    public function getOrders(OrderListInterface $orderListTransfer)
+    {
+        $filter = $orderListTransfer->getFilter();
+        $criteria = new Criteria();
+
+        if (null !== $filter) {
+            $criteria = (new PropelFilterCriteria($filter))
+                ->toCriteria();
+        }
+
+        $ordersQuery = $this->queryContainer->querySalesOrdersByCustomerId($orderListTransfer->getIdCustomer(), $criteria)
+            ->find();
+        
+        $result = [];
+        foreach ($ordersQuery as $order) {
+            $result[] = (new OrderTransfer())
+                ->fromArray($order->toArray());
+        }
+
+        $orderListTransfer->setOrders(new \ArrayObject($result));
+
+        return $orderListTransfer;
+    }
 }

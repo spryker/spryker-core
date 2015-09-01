@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Sales\Persistence;
 
+use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesExpenseQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddressQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
@@ -59,4 +60,13 @@ interface SalesQueryContainerInterface
      */
     public function querySalesOrderAddressById($idSalesOrderAddress);
 
+    /**
+     * @param $idCustomer
+     * @param Criteria|null $criteria
+     *
+     * @return SpySalesOrderQuery
+     */
+    public function querySalesOrdersByCustomerId($idCustomer, Criteria $criteria=null);
+
+    
 }

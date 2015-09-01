@@ -6,12 +6,18 @@
 
 namespace SprykerFeature\Client\Customer\Service;
 
-use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Customer\CustomerAddressInterface;
-use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Customer\CustomerInterface;
 
 interface CustomerClientInterface
 {
+
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return bool
+     */
+    public function hasCustomerWithEmailAndPassword(CustomerInterface $customerTransfer);
 
     /**
      * @param CustomerInterface $customerTransfer
@@ -63,19 +69,12 @@ interface CustomerClientInterface
     /**
      * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerInterface
      */
     public function login(CustomerInterface $customerTransfer);
 
     /**
-     * @param CustomerInterface $customerTransfer
-     *
-     * @return bool
-     */
-    public function hasCustomerWithEmailAndPassword(CustomerInterface $customerTransfer);
-
-    /**
-     * @return bool
+     * @return mixed
      */
     public function logout();
 
@@ -118,5 +117,26 @@ interface CustomerClientInterface
      * @return CustomerAddressInterface
      */
     public function createAddress(CustomerAddressInterface $addressTransfer);
+
+    /**
+     * @param CustomerAddressInterface $addressTransfer
+     *
+     * @return CustomerAddressInterface
+     */
+    public function deleteAddress(CustomerAddressInterface $addressTransfer);
+
+    /**
+     * @param CustomerAddressInterface $addressTransfer
+     *
+     * @return CustomerAddressInterface
+     */
+    public function setDefaultShippingAddress(CustomerAddressInterface $addressTransfer);
+
+    /**
+     * @param CustomerAddressInterface $addressTransfer
+     *
+     * @return CustomerAddressInterface
+     */
+    public function setDefaultBillingAddress(CustomerAddressInterface $addressTransfer);
 
 }
