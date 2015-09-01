@@ -22,7 +22,7 @@ class File extends AbstractWriter
 
     protected function getFilePath(){
         $path = \SprykerFeature_Shared_Library_Data::getLocalCommonPath('lumberjack');
-        $path . 'lumberjack-' . date('Y-m-d') . '.log';
+        $path .= 'lumberjack-' . date('Y-m-d') . '.log';
         return $path;
     }
 

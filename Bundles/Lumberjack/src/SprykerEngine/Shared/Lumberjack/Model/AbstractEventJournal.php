@@ -24,6 +24,7 @@ abstract class AbstractEventJournal
     public function __construct()
     {
         $this->addDefaultCollectors();
+        $this->addDefaultWriters();
     }
 
     protected function addDefaultCollectors()
@@ -31,6 +32,11 @@ abstract class AbstractEventJournal
         $this->addDataCollector(new ServerDataCollector());
         $this->addDataCollector(new RequestDataCollector());
         $this->addDataCollector(new EnvironmentDataCollector());
+    }
+
+    protected function addDefaultWriters()
+    {
+        $this->addEventWriter(new Writer\File());
     }
 
     /**

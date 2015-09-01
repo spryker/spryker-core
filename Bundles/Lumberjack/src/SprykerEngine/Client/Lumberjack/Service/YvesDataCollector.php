@@ -13,7 +13,7 @@ class YvesDataCollector implements DataCollectorInterface
 
     public function getData()
     {
-        return ['session_id' => substr(session_id(), 0, 4)];
+        return ['session_id' => sha1(session_id())];
     }
 
 }

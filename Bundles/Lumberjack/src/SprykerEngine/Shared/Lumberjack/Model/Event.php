@@ -14,6 +14,11 @@ class Event implements EventInterface
      */
     private $fields = [];
 
+    public function __construct()
+    {
+        $this->addField('name', null);
+    }
+
     /**
      * @param string $name
      * @param array|string $data
@@ -47,7 +52,8 @@ class Event implements EventInterface
     /**
      * @return array
      */
-    public function getFields() {
+    public function getFields()
+    {
         return $this->fields;
     }
 
