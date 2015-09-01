@@ -47,22 +47,8 @@ class Method
     public function create(ShipmentMethodTransfer $methodTransfer)
     {
         $methodEntity = new SpyShipmentMethod();
-        $methodEntity
-            ->setFkShipmentCarrier($methodTransfer->getFkShipmentCarrier())
-            ->setGlossaryKeyName(
-                $methodTransfer->getGlossaryKeyName()
-            )
-            ->setGlossaryKeyDescription(
-                $methodTransfer->getGlossaryKeyDescription()
-            )
-            ->setPrice($methodTransfer->getPrice())
-            ->setName($methodTransfer->getName())
-            ->setIsActive($methodTransfer->getIsActive())
-            ->setAvailabilityPlugin($methodTransfer->getAvailabilityPlugin())
-            ->setPriceCalculationPlugin($methodTransfer->getPriceCalculationPlugin())
-            ->setDeliveryTimePlugin($methodTransfer->getDeliveryTimePlugin())
-            ->setTaxCalculationPlugin($methodTransfer->getTaxCalculationPlugin())
-            ->save();
+        $methodEntity->fromArray($methodTransfer->toArray());
+        $methodEntity->save();
 
         return $methodEntity->getPrimaryKey();
     }
