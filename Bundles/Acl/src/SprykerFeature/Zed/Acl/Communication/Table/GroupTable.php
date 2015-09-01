@@ -15,6 +15,8 @@ class GroupTable extends AbstractTable
 {
 
     const ROLES = 'roles';
+    const EDIT = 'Edit';
+    const EDIT_PARAMETER = 'id-group';
 
     /**
      * @var SpyAclGroupQuery
@@ -41,6 +43,7 @@ class GroupTable extends AbstractTable
             SpyAclGroupTableMap::COL_NAME => 'Name',
             self::ROLES => 'Roles',
             SpyAclGroupTableMap::COL_CREATED_AT => 'Created At',
+            self::EDIT => self::EDIT,
         ]);
 
         return $config;
@@ -68,6 +71,7 @@ class GroupTable extends AbstractTable
                 SpyAclGroupTableMap::COL_NAME => $group[SpyAclGroupTableMap::COL_NAME],
                 SpyAclGroupTableMap::COL_CREATED_AT => $group[SpyAclGroupTableMap::COL_CREATED_AT],
                 self::ROLES => $this->createRoleUrl($group),
+                self::EDIT => $this->createEditUrl($group),
             ];
         }
 
@@ -89,6 +93,20 @@ class GroupTable extends AbstractTable
         } else {
             return 'No roles';
         }
+    }
+
+    /**
+     * @param array $group
+     *
+     * @return string
+     */
+    protected function createEditUrl(array $group)
+    {
+        return sprintf(
+            '<a href="/acl/group/edit?%s=%d" class="btn btn-xs btn-primary">Edit</a>',
+            self::EDIT_PARAMETER,
+            $group[SpyAclGroupTableMap::COL_ID_ACL_GROUP]
+        );
     }
 
 }

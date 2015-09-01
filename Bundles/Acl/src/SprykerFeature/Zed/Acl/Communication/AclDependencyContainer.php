@@ -66,13 +66,17 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
         ];
     }
 
+    /**
+     * @param int $idGroup
+     *
+     * @return GroupUsersTable
+     */
     public function createGroupUsersTable($idGroup)
     {
         return $this->getFactory()->createTableGroupUsersTable(
-            $this->getQueryContainer()
-                ->queryGroup()
-                ->useSpyAclUserHasGroupQuery()
-                ->endUse()
+            $this->getQueryContainer()->queryGroup(),
+            $this->getQueryContainer()->queryUsersWithGroupByGroupId($idGroup),
+            $idGroup
         );
     }
 

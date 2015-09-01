@@ -67,7 +67,7 @@ class GroupForm extends AbstractForm
             self::FIELD_ROLES => [],
         ];
 
-        $idGroup = $this->request->query->get(GroupController::ID_GROUP_PARAMETER);
+        $idGroup = $this->request->query->get(GroupController::PARAMETER_ID_GROUP);
 
         if ($idGroup > 0) {
             $group = $this->queryContainer->queryGroupById($idGroup)->findOne();

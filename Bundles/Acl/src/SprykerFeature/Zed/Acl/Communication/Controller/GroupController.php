@@ -7,11 +7,13 @@
 namespace SprykerFeature\Zed\Acl\Communication\Controller;
 
 use SprykerFeature\Zed\Acl\Business\AclFacade;
+use SprykerFeature\Zed\Acl\Business\Exception\UserAndGroupNotFoundException;
 use SprykerFeature\Zed\Acl\Communication\AclDependencyContainer;
 use SprykerFeature\Zed\Acl\Communication\Form\GroupForm;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method AclDependencyContainer getDependencyContainer()
@@ -21,7 +23,8 @@ class GroupController extends AbstractController
 {
 
     const USER_LIST_URL = '/acl/users';
-    const ID_GROUP_PARAMETER = 'id-group';
+    const PARAMETER_ID_GROUP = 'id-group';
+    const PARAMETER_ID_USER = 'id-user';
 
     /**
      * @return array
@@ -68,7 +71,7 @@ class GroupController extends AbstractController
 
             $this->assignRolesToGroup($groupTransfer->getIdAclGroup(), $formData[GroupForm::FIELD_ROLES]);
 
-            return $this->redirectResponse('/acl/group/edit?' . self::ID_GROUP_PARAMETER . '=' . $groupTransfer->getIdAclGroup());
+            return $this->redirectResponse('/acl/group/edit?' . self::PARAMETER_ID_GROUP . '=' . $groupTransfer->getIdAclGroup());
         }
 
         return $this->viewResponse([
@@ -83,7 +86,7 @@ class GroupController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idGroup = $request->query->get(self::ID_GROUP_PARAMETER);
+        $idGroup = $request->query->get(self::PARAMETER_ID_GROUP);
 
         $form = $this->getDependencyContainer()->createGroupForm($request);
         $form->setOptions([
@@ -102,14 +105,52 @@ class GroupController extends AbstractController
 
             $this->assignRolesToGroup($groupTransfer->getIdAclGroup(), $formData[GroupForm::FIELD_ROLES]);
 
-            return $this->redirectResponse('/acl/group/edit?' . self::ID_GROUP_PARAMETER . '=' . $groupTransfer->getIdAclGroup());
+            return $this->redirectResponse('/acl/group/edit?' . self::PARAMETER_ID_GROUP . '=' . $groupTransfer->getIdAclGroup());
         }
 
         $usersTable = $this->getDependencyContainer()->createGroupUsersTable($idGroup);
 
         return $this->viewResponse([
             'form' => $form->createView(),
+            'users' => $usersTable->render(),
         ]);
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function usersAction(Request $request)
+    {
+        $idGroup = $request->query->get(self::PARAMETER_ID_GROUP);
+
+        $usersTable = $this->getDependencyContainer()->createGroupUsersTable($idGroup);
+
+        return $this->jsonResponse(
+            $usersTable->fetchData()
+        );
+    }
+
+    public function removeUserFromGroupAction(Request $request)
+    {
+        $idGroup = (int) $request->request->get(self::PARAMETER_ID_GROUP);
+        $idUser = (int) $request->request->get(self::PARAMETER_ID_USER);
+
+        try {
+            $this->getFacade()->removeUserFromGroup($idUser, $idGroup);
+            $response = [
+                'code' => Response::HTTP_OK,
+                'id-group' => $idGroup,
+                'id-user' => $idUser,
+            ];
+        } catch (UserAndGroupNotFoundException $e) {
+            $response = [
+                'code' => Response::HTTP_NOT_FOUND,
+            ];
+        }
+
+        return $this->jsonResponse($response);
     }
 
     /**
@@ -136,7 +177,7 @@ class GroupController extends AbstractController
      */
     public function rolesAction(Request $request)
     {
-        $idGroup = $request->get(self::ID_GROUP_PARAMETER);
+        $idGroup = $request->get(self::PARAMETER_ID_GROUP);
 
         $roles = $this->getDependencyContainer()->createGroupRoleListByGroupId($idGroup);
 
@@ -166,20 +207,6 @@ class GroupController extends AbstractController
         $idGroup = $request->get('id');
         $grid = $this->getDependencyContainer()->createRulesetGrid($request, $idGroup);
 
-        $data = $grid->renderData();
-
-        return $this->jsonResponse($data);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function usersAction(Request $request)
-    {
-        $idGroup = $request->get('id');
-        $grid = $this->getDependencyContainer()->createUserGridByGroupId($request, $idGroup);
         $data = $grid->renderData();
 
         return $this->jsonResponse($data);

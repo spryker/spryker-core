@@ -37,6 +37,22 @@ SprykerAjax.prototype.getRolesForGroup = function(idGroup) {
     }
 };
 
+SprykerAjax.prototype.removeUserFromGroup = function(options){
+    var ajaxOptions = {
+        "id-group": parseInt(options.idGroup),
+        "id-user": parseInt(options.idUser)
+    };
+    if (!confirm('Are you sure you want to detele this user from this group ?')) {
+        return false;
+    }
+    if (ajaxOptions.idGroup < 1 || ajaxOptions.idUser < 1) {
+        var spyAlert = new SprykerAlert();
+        spyAlert.error('User Id and Group Id cannot be null');
+        return false;
+    }
+    this.setUrl('/acl/group/remove-user-from-group').ajaxSubmit(ajaxOptions, 'removeUserRowFromGroupTable');
+};
+
 /*
  * @param ajaxResponse
  * @returns string
@@ -55,4 +71,8 @@ SprykerAjaxCallbacks.prototype.displayGroupRoles = function(ajaxResponse){
         }
     }
     spinnerClear();
+};
+
+SprykerAjaxCallbacks.prototype.removeUserRowFromGroupTable = function(ajaxResponse){
+
 };

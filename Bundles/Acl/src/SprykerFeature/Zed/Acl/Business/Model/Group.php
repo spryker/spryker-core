@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\GroupsTransfer;
+use SprykerFeature\Zed\Acl\Business\Exception\UserAndGroupNotFoundException;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroup;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupsHasRoles;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclUserHasGroup;
@@ -253,12 +254,21 @@ class Group implements GroupInterface
     /**
      * @param int $idGroup
      * @param int $idUser
+     *
+     * @throws UserAndGroupNotFoundException
+     * @throws PropelException
      */
     public function removeUser($idGroup, $idUser)
     {
-        $entity = $this->queryContainer->queryUserHasGroupById($idGroup, $idUser)->findOne();
+        $entity = $this->queryContainer
+            ->queryUserHasGroupById($idGroup, $idUser)
+            ->findOne()
+        ;
 
-        //TODO guard against NPE
+        if (!$entity) {
+            throw new UserAndGroupNotFoundException();
+        }
+
         $entity->delete();
     }
 
