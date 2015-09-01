@@ -11,9 +11,10 @@ use SprykerEngine\Shared\Lumberjack\Model\EventInterface;
 class Console extends AbstractWriter
 {
 
-    public function write(EventInterface $entry)
+    public function write(EventInterface $event)
     {
-        // TODO: Implement write() method.
+        print json_encode($event->getFields(), JSON_PRETTY_PRINT);
+        return true;
     }
 
 }

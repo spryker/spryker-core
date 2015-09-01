@@ -6,11 +6,13 @@
 
 namespace SprykerEngine\Shared\Lumberjack\Model\Writer;
 
+use SprykerEngine\Shared\Lumberjack\Model\EventInterface;
+
 class Newrelic extends AbstractWriter
 {
 
-    public function write(EventInterface $entry)
+    public function write(EventInterface $event)
     {
-        // TODO: Implement write() method.
+        return false;
     }
 }

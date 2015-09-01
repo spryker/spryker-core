@@ -6,11 +6,18 @@
 
 namespace SprykerEngine\Shared\Lumberjack\Model\Writer;
 
+use SprykerEngine\Shared\Lumberjack\Model\EventInterface;
+
 class File extends AbstractWriter
 {
 
-    public function write(EventInterface $entry)
+    public function write(EventInterface $event)
     {
-        // TODO: Implement write() method.
+        return file_put_contents(
+            $this->options['file_path'],
+            json_encode($event->getFields()),
+            FILE_APPEND | LOCK_EX
+        );
     }
+
 }

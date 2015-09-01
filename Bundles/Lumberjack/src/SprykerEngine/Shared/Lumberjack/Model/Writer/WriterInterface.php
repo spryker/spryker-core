@@ -10,5 +10,10 @@ use SprykerEngine\Shared\Lumberjack\Model\EventInterface;
 interface WriterInterface
 {
 
-    public function write(EventInterface $entry);
+    /**
+     * @param EventInterface $event
+     *
+     * @return bool success or failure.
+     */
+    public function write(EventInterface $event);
 }
