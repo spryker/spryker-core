@@ -126,7 +126,6 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     {
         return $this->queryProductCategoryMappings()
             ->innerJoinSpyAbstractProduct()
-            //->withColumn(SpyAbstractProductTableMap::COL_SKU, 'sku')
             ->addJoin(
                 SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
                 SpyLocalizedAbstractProductAttributesTableMap::COL_FK_ABSTRACT_PRODUCT,
@@ -158,6 +157,10 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
             ->withColumn(
                 SpyLocalizedAbstractProductAttributesTableMap::COL_ATTRIBUTES,
                 'abstract_localized_attributes'
+            )
+            ->withColumn(
+                SpyAbstractProductTableMap::COL_SKU, 
+                'sku'
             )
             ->filterByFkCategory($idCategory)
         ;

@@ -9,6 +9,7 @@ use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerFeature\Zed\Category\Communication\CategoryDependencyContainer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -34,9 +35,13 @@ class EditController extends AbstractController
         $categoryExists = $this->getQueryContainer()->queryCategoryById($idCategory)->count() > 0;
         
         if (!$categoryExists) {
-            $this->addErrorMessage('The category you are trying to edit does not exist.');
+            $this->addErrorMessage(sprintf('The category you are trying to edit %s does not exist.', $idCategory));
             return new RedirectResponse('/category');
         }
+
+        $locale = $this->getDependencyContainer()
+            ->createCurrentLocale()
+        ;
 
         /**
          * @var Form $form
@@ -47,10 +52,6 @@ class EditController extends AbstractController
         $form->handleRequest();
 
         if ($form->isValid()) {
-            $locale = $this->getDependencyContainer()
-                ->createCurrentLocale()
-            ;
-
             $categoryTransfer = (new CategoryTransfer())
                 ->fromArray($form->getData(), true)
             ;
@@ -72,10 +73,35 @@ class EditController extends AbstractController
             return $this->redirectResponse('/category');
         }
 
+        $productCategories = $this->getDependencyContainer()
+            ->createProductCategoryTable($locale, $idCategory)
+        ;
+        
         return $this->viewResponse([
             'idCategory' => $idCategory,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'productCategories' => $productCategories->render(),
         ]);
+    }
+
+
+    /**
+     * @return JsonResponse
+     */
+    public function productCategoryTableAction(Request $request)
+    {
+        $idCategory = $request->get(self::PARAM_ID_CATEGORY);
+        $locale = $this->getDependencyContainer()
+            ->createCurrentLocale()
+        ;
+
+        $table = $this->getDependencyContainer()
+            ->createProductCategoryTable($locale, $idCategory)
+        ;
+
+        return $this->jsonResponse(
+            $table->fetchData()
+        );
     }
 
 }
