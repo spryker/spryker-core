@@ -51,6 +51,11 @@ class CmsBlockForm extends AbstractForm
     protected $constraints;
 
     /**
+     * @var string
+     */
+    protected $blockName;
+
+    /**
      * @param SpyCmsTemplateQuery $templateQuery
      * @param SpyCmsBlockQuery $blockPageByIdQuery
      * @param CmsConstraint $constraints
@@ -73,30 +78,20 @@ class CmsBlockForm extends AbstractForm
     {
         $blockConstraints = $this->constraints->getMandatoryConstraints();
 
-        if (self::ADD === $this->formType) {
+
             $blockConstraints[] = new Callback([
                 'methods' => [
                     function ($name, ExecutionContext $context) {
                         if (!empty($this->templateQuery->useSpyCmsPageQuery()
                             ->useSpyCmsBlockQuery()
                             ->findByName($name)
-                            ->getData())
+                            ->getData() && $this->blockName !== $name)
                         ) {
                             $context->addViolation('Block name already exists.');
                         }
                     },
                 ],
             ]);
-        }
-
-        $blockParams = [
-            'label' => 'Block Name',
-            'constraints' => $blockConstraints,
-        ];
-
-        if (self::UPDATE === $this->formType) {
-            $blockParams['disabled'] = 'disabled';
-        }
 
         return $this->addHidden(self::ID_CMS_PAGE)
             ->addHidden(self::CURRENT_TEMPLATE)
@@ -104,7 +99,10 @@ class CmsBlockForm extends AbstractForm
                 'label' => 'Template',
                 'choices' => $this->getTemplateList(),
             ])
-            ->addText(self::BLOCK, $blockParams)
+            ->addText(self::BLOCK, [
+                'label' => 'Block Name',
+                'constraints' => $blockConstraints,
+            ])
             ->addCheckbox(self::IS_ACTIVE, [
                 'label' => 'Active',
             ])
@@ -133,6 +131,7 @@ class CmsBlockForm extends AbstractForm
     {
         if ($this->idPage) {
             $pageUrlTemplate = $this->blockPageByIdQuery->findOne();
+            $this->blockName = $pageUrlTemplate->getName();
 
             return [
                 self::ID_CMS_PAGE => $pageUrlTemplate->getIdCmsPage(),

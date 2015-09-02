@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Cms\Communication\Controller;
 
+use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
@@ -19,6 +20,7 @@ use SprykerFeature\Zed\Cms\Communication\Form\CmsGlossaryForm;
 use SprykerFeature\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use SprykerFeature\Zed\Cms\Communication\Table\CmsPageTable;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
+use SprykerFeature\Zed\Cms\Persistence\Propel\Base\SpyCmsBlock;
 use SprykerFeature\Zed\Cms\Persistence\Propel\Base\SpyCmsPage;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -60,6 +62,7 @@ class GlossaryController extends AbstractController
 
         $placeholders = $this->findPagePlaceholders($cmsPage);
         $glossaryMappingArray = $this->extractGlossaryMapping($idPage, $localeTransfer);
+        $this->touchNecessaryBlock($idPage);
         $forms = [];
         $formViews = [];
 
@@ -358,4 +361,34 @@ class GlossaryController extends AbstractController
         return $cmsPage;
     }
 
+    /**
+     * @param int $idPage
+     */
+    protected function touchNecessaryBlock($idPage)
+    {
+        $blockEntity = $this->getQueryContainer()
+            ->queryBlockByIdPage($idPage)
+            ->findOne()
+        ;
+
+        if (null !== $blockEntity) {
+            $blockTransfer = $this->createBlockTransfer($blockEntity);
+            $this->getFacade()
+                ->touchBlockActive($blockTransfer)
+            ;
+        }
+    }
+
+    /**
+     * @param SpyCmsBlock $blockEntity
+     *
+     * @return CmsBlockTransfer
+     */
+    protected function createBlockTransfer(SpyCmsBlock $blockEntity)
+    {
+        $blockTransfer = new CmsBlockTransfer();
+        $blockTransfer->fromArray($blockEntity->toArray());
+
+        return $blockTransfer;
+    }
 }
