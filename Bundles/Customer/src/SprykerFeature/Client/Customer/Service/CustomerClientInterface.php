@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Client\Customer\Service;
 
-use Generated\Shared\Customer\CustomerAddressInterface;
+use Generated\Shared\Customer\AddressInterface;
 use Generated\Shared\Customer\CustomerInterface;
 
 interface CustomerClientInterface
@@ -98,45 +98,45 @@ interface CustomerClientInterface
     public function updateCustomer(CustomerInterface $customerTransfer);
 
     /**
-     * @param CustomerAddressInterface $addressTransfer
+     * @param AddressInterface $addressTransfer
      *
-     * @return CustomerAddressInterface
+     * @return AddressInterface
      */
-    public function getAddress(CustomerAddressInterface $addressTransfer);
+    public function getAddress(AddressInterface $addressTransfer);
 
     /**
-     * @param CustomerAddressInterface $addressTransfer
+     * @param AddressInterface $addressTransfer
      *
-     * @return CustomerAddressInterface
+     * @return AddressInterface
      */
-    public function updateAddress(CustomerAddressInterface $addressTransfer);
+    public function updateAddress(AddressInterface $addressTransfer);
 
     /**
-     * @param CustomerAddressInterface $addressTransfer
+     * @param AddressInterface $addressTransfer
      *
-     * @return CustomerAddressInterface
+     * @return AddressInterface
      */
-    public function createAddress(CustomerAddressInterface $addressTransfer);
+    public function createAddress(AddressInterface $addressTransfer);
 
     /**
-     * @param CustomerAddressInterface $addressTransfer
+     * @param AddressInterface $addressTransfer
      *
-     * @return CustomerAddressInterface
+     * @return AddressInterface
      */
-    public function deleteAddress(CustomerAddressInterface $addressTransfer);
+    public function deleteAddress(AddressInterface $addressTransfer);
 
     /**
-     * @param CustomerAddressInterface $addressTransfer
+     * @param AddressInterface $addressTransfer
      *
-     * @return CustomerAddressInterface
+     * @return AddressInterface
      */
-    public function setDefaultShippingAddress(CustomerAddressInterface $addressTransfer);
+    public function setDefaultShippingAddress(AddressInterface $addressTransfer);
 
     /**
-     * @param CustomerAddressInterface $addressTransfer
+     * @param AddressInterface $addressTransfer
      *
-     * @return CustomerAddressInterface
+     * @return AddressInterface
      */
-    public function setDefaultBillingAddress(CustomerAddressInterface $addressTransfer);
+    public function setDefaultBillingAddress(AddressInterface $addressTransfer);
 
 }

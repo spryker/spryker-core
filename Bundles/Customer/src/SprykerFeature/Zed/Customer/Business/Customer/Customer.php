@@ -6,17 +6,14 @@
 
 namespace SprykerFeature\Zed\Customer\Business\Customer;
 
+use Generated\Shared\Customer\AddressInterface;
 use Generated\Shared\Customer\CustomerInterface;
-use Generated\Shared\Customer\CustomerAddressInterface;
 use Generated\Shared\Transfer\AddressesTransfer;
-use Generated\Shared\Transfer\CustomerAddressTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
-use Propel\Runtime\ActiveQuery\Criteria;
+use Generated\Shared\Transfer\AddressTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
-use SprykerEngine\Zed\Propel\PropelFilterCriteria;
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotUpdatedException;
@@ -322,11 +319,11 @@ class Customer
     /**
      * @param SpyCustomerAddress $customer
      *
-     * @return CustomerAddressInterface
+     * @return AddressInterface
      */
     protected function entityToTransfer(SpyCustomerAddress $customer)
     {
-        $entity = new CustomerAddressTransfer();
+        $entity = new AddressTransfer();
         return $entity->fromArray($customer->toArray(), true);
     }
 
@@ -348,7 +345,7 @@ class Customer
                 $addressTransfer->setIsDefaultShipping(true);
             }
 
-            $addressCollection->addCustomerAddress($addressTransfer);
+            $addressCollection->addAddress($addressTransfer);
         }
 
         return $addressCollection;

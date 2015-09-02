@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Form;
 
-use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 

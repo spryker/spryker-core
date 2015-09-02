@@ -6,9 +6,9 @@
 
 namespace SprykerFeature\Client\Customer\Service\Zed;
 
-use Generated\Shared\Customer\CustomerAddressInterface;
+use Generated\Shared\Customer\AddressInterface;
 use Generated\Shared\Customer\CustomerInterface;
-use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Client\ZedRequest\Service\Client\Response;
@@ -111,64 +111,70 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerAddressInterface $addressTransfer
+     * @param AddressInterface $addressTransfer
      *
-     * @return CustomerAddressTransfer
+     * @return AddressTransfer
      */
-    public function createAddress(CustomerAddressInterface $addressTransfer)
+    public function createAddress(AddressInterface $addressTransfer)
     {
         return $this->zedStub->call('/customer/gateway/new-address', $addressTransfer);
     }
 
     /**
-     * @param CustomerAddressInterface $addressTransfer
+     * @param AddressInterface $addressTransfer
      * 
-     * @return CustomerAddressTransfer
+     * @return AddressTransfer
      */
-    public function updateAddress(CustomerAddressInterface $addressTransfer)
+    public function updateAddress(AddressInterface $addressTransfer)
     {
         return $this->zedStub->call('/customer/gateway/update-address', $addressTransfer);
     }
 
     /**
-     * @param CustomerAddressInterface $addressTransfer
+     * @param AddressInterface $addressTransfer
      *
-     * @return CustomerAddressTransfer
+     * @return AddressTransfer
      */
-    public function getAddress(CustomerAddressInterface $addressTransfer)
+    public function getAddress(AddressInterface $addressTransfer)
     {
         return $this->zedStub->call('/customer/gateway/address', $addressTransfer);
     }
 
     /**
-     * @param CustomerAddressInterface $customerAddressTransfer
+     * @param AddressInterface $AddressTransfer
      * 
-     * @return CustomerAddressTransfer
+     * @return AddressTransfer
      */
-    public function deleteAddress(CustomerAddressInterface $customerAddressTransfer)
+    public function deleteAddress(AddressInterface $AddressTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/delete-address', $customerAddressTransfer);
+        return $this->zedStub->call('/customer/gateway/delete-address', $AddressTransfer);
     }
 
     /**
-     * @param CustomerAddressInterface $customerAddressInterface
+<<<<<<< HEAD
+     * @param AddressInterface $AddressInterface
      * 
-     * @return CustomerAddressTransfer
-     */
-    public function setDefaultBillingAddress(CustomerAddressInterface $customerAddressInterface)
-    {
-        return $this->zedStub->call('/customer/gateway/default-billing-address', $customerAddressInterface);
-    }
-
-
-    /**
-     * @param CustomerAddressInterface $customerAddressInterface
+     * @return AddressTransfer
+=======
+     * @param AddressInterface $AddressInterface
      *
-     * @return CustomerAddressTransfer
+     * @return AddressTransfer
+>>>>>>> bbf21b9... KSP-134 Create shipping methods
      */
-    public function setDefaultShippingAddress(CustomerAddressInterface $customerAddressInterface)
+    public function setDefaultBillingAddress(AddressInterface $AddressInterface)
     {
-        return $this->zedStub->call('/customer/gateway/default-shipping-address', $customerAddressInterface);
+        return $this->zedStub->call('/customer/gateway/default-billing-address', $AddressInterface);
+    }
+
+
+    /**
+     * @param AddressInterface $AddressInterface
+     *
+     * @return AddressTransfer
+     */
+    public function setDefaultShippingAddress(AddressInterface $AddressInterface)
+    {
+        return $this->zedStub->call('/customer/gateway/default-shipping-address', $AddressInterface);
     }
 
 }

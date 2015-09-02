@@ -9,7 +9,7 @@
     <table name="spy_tax_rate" idMethod="native" allowPkInsert="true" phpName="SpyTaxRate">
         <column name="id_tax_rate" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
-        <column name="rate" type="FLOAT" size="4" scale="2" required="true"/>
+        <column name="rate" type="INTEGER" required="true"/>
     <id-method-parameter value="spy_tax_rate_pk_seq"/></table>
 
     <table name="spy_tax_set_tax" isCrossRef="true">

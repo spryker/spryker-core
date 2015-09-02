@@ -5,16 +5,16 @@
 
     <transfer name="Order">
         <property name="customer" type="Customer" />
-        <property name="billingAddress" type="SalesAddress" />
-        <property name="shippingAddress" type="SalesAddress" />
+        <property name="billingAddress" type="Address" />
+        <property name="shippingAddress" type="Address" />
     </transfer>
 
     <transfer name="CheckoutRequest">
         <property name="guest" type="bool" />
         <property name="idUser" type="int" />
         <property name="email" type="string" />
-        <property name="billingAddress" type="SalesAddress" />
-        <property name="shippingAddress" type="SalesAddress" />
+        <property name="billingAddress" type="Address" />
+        <property name="shippingAddress" type="Address" />
     </transfer>
 
     <transfer name="Customer">

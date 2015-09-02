@@ -6,10 +6,13 @@
 
 namespace SprykerFeature\Zed\Shipment\Communication\Form;
 
+use SprykerFeature\Shared\Library\Currency\CurrencyManager;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentCarrierQuery;
 use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentMethodQuery;
+use SprykerFeature\Zed\Shipment\ShipmentConfig;
 use SprykerFeature\Zed\Shipment\ShipmentDependencyProvider;
+use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSetQuery;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 
 class MethodForm extends AbstractForm
@@ -22,9 +25,11 @@ class MethodForm extends AbstractForm
     const IS_ACTIVE_FIELD = 'isActive';
     const PRICE_FIELD = 'price';
     const AVAILABILITY_PLUGIN_FIELD = 'availabilityPlugin';
+    const TAX_PLUGIN_FIELD = 'taxCalculationPlugin';
     const PRICE_CALCULATION_PLUGIN_FIELD = 'priceCalculationPlugin';
     const DELIVERY_TIME_PLUGIN_FIELD = 'deliveryTimePlugin';
     const CARRIER_FIELD = 'fkShipmentCarrier';
+    const TAX_SET = 'fkTaxSet';
 
     /**
      * @var SpyShipmentMethodQuery
@@ -37,6 +42,11 @@ class MethodForm extends AbstractForm
     protected $carrierQuery;
 
     /**
+     * @var SpyTaxSetQuery
+     */
+    protected $taxSetQuery;
+
+    /**
      * @var array
      */
     protected $plugins;
@@ -47,19 +57,30 @@ class MethodForm extends AbstractForm
     protected $idMethod;
 
     /**
+     * @var ShipmentConfig
+     */
+    protected $shipmentConfig;
+
+    /**
      * @param SpyShipmentMethodQuery $methodQuery
      * @param SpyShipmentCarrierQuery $carrierQuery
+     * @param SpyTaxSetQuery $taxQuery
+     * @param ShipmentConfig $shipmentConfig
      * @param array $plugins
-     * @param int|null $idMethod
+     * @param null $idMethod
      */
     public function __construct(
         SpyShipmentMethodQuery $methodQuery,
         SpyShipmentCarrierQuery $carrierQuery,
+        SpyTaxSetQuery $taxSetQuery,
+        ShipmentConfig $shipmentConfig,
         array $plugins,
         $idMethod = null
     ) {
         $this->methodQuery = $methodQuery;
         $this->carrierQuery = $carrierQuery;
+        $this->taxSetQuery = $taxSetQuery;
+        $this->shipmentConfig = $shipmentConfig;
         $this->plugins = $plugins;
         $this->idMethod = $idMethod;
     }
@@ -120,6 +141,23 @@ class MethodForm extends AbstractForm
             )
         ])
         ;
+        $this->addChoice(self::TAX_PLUGIN_FIELD, [
+            'label' => 'Tax Calculation Plugin',
+            'placeholder' => 'Select one',
+            'choice_list' => new ChoiceList(
+                array_keys($this->plugins[ShipmentDependencyProvider::TAX_CALCULATION_PLUGINS]),
+                array_keys($this->plugins[ShipmentDependencyProvider::TAX_CALCULATION_PLUGINS])
+            )
+        ])
+        ;
+
+
+        $this->addChoice(self::TAX_SET, [
+            'label' => 'Tax Set',
+            'placeholder' => 'Select one',
+            'choices' => $this->loadTaxSets()
+        ])
+        ;
         $this->addCheckbox('isActive');
 
         if (!is_null($this->idMethod)) {
@@ -146,6 +184,18 @@ class MethodForm extends AbstractForm
     }
 
     /**
+     * Set price vom euro to cent
+     */
+    public function getData(){
+        $data = parent::getData();
+        if(isset($data[self::PRICE_FIELD])){
+            $data[self::PRICE_FIELD] = CurrencyManager::getInstance()->convertDecimalToCent($data[self::PRICE_FIELD]);
+            $data[self::PRICE_FIELD] = round($data[self::PRICE_FIELD]);
+        }
+        return $data;
+    }
+
+    /**
      * @return array
      */
     protected function populateFormFields()
@@ -153,20 +203,41 @@ class MethodForm extends AbstractForm
         if (!is_null($this->idMethod)) {
             $method = $this->methodQuery->findOneByIdShipmentMethod($this->idMethod);
 
-            return [
+            $data = [
                 self::ID_FIELD => $method->getIdShipmentMethod(),
                 self::CARRIER_FIELD => $method->getFkShipmentCarrier(),
                 self::NAME_FIELD => $method->getName(),
                 self::NAME_GLOSSARY_FIELD => $method->getGlossaryKeyName(),
                 self::DESCRIPTION_GLOSSARY_FIELD => $method->getGlossaryKeyDescription(),
-                self::PRICE_FIELD => $method->getPrice(),
+                self::PRICE_FIELD => CurrencyManager::getInstance()->convertCentToDecimal($method->getPrice()),
                 self::AVAILABILITY_PLUGIN_FIELD => $method->getAvailabilityPlugin(),
                 self::PRICE_CALCULATION_PLUGIN_FIELD => $method->getPriceCalculationPlugin(),
                 self::DELIVERY_TIME_PLUGIN_FIELD => $method->getDeliveryTimePlugin(),
+                self::TAX_PLUGIN_FIELD => $method->getTaxCalculationPlugin(),
                 self::IS_ACTIVE_FIELD => $method->getIsActive()
             ];
+
+            $taxSet = $method->getTaxSet();
+            if(isset($taxSet)){
+                $data[self::TAX_SET] = $method->getTaxSet()->getIdTaxSet();
+            }
+
+            return $data;
         }
 
         return [];
+    }
+
+    /**
+     * @return array
+     */
+    protected function loadTaxSets()
+    {
+        $taxSets = $this->taxSetQuery->find();
+        $taxSetsArray = [];
+        foreach ($taxSets as $taxSet) {
+            $taxSetsArray[$taxSet->getIdTaxSet()] = $taxSet->getName();
+        }
+        return $taxSetsArray;
     }
 }

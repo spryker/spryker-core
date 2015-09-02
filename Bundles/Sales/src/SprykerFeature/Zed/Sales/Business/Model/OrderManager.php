@@ -9,8 +9,8 @@ namespace SprykerFeature\Zed\Sales\Business\Model;
 use Generated\Shared\Sales\OrderListInterface;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\SalesAddressTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Generated\Shared\Transfer\AddressTransfer;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
 use SprykerEngine\Zed\Propel\PropelFilterCriteria;
@@ -162,11 +162,11 @@ class OrderManager
     }
 
     /**
-     * @param SalesAddressTransfer $address
+     * @param AddressTransfer $address
      *
      * @return SpySalesOrderAddress
      */
-    protected function saveAddressTransfer(SalesAddressTransfer $address = null)
+    protected function saveAddressTransfer(AddressTransfer $address = null)
     {
         if (is_null($address)) {
             return;

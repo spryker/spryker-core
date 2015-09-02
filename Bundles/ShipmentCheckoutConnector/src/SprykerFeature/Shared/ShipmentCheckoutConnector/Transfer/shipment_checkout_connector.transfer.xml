@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<transfers xmlns="http://xsd.spryker.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
+
+    <transfer name="Order">
+        <property name="idShipmentMethod" type="int" />
+        <property name="expenses" type="Expense[]" singular="expense" />
+        <property name="shipmentMethod" type="ShipmentMethod" />
+    </transfer>
+
+    <transfer name="CheckoutRequest">
+        <property name="idShipmentMethod" type="int" />
+        <property name="shipmentMethod" type="ShipmentMethod" singular="shipmentMethod" />
+    </transfer>
+
+    <transfer name="Expense">
+        <property name="type" type="string" />
+        <property name="grossPrice" type="int" />
+        <property name="priceToPay" type="int" />
+        <property name="taxSet" type="TaxSet" />
+        <property name="name" type="string" />
+        <property name="discounts" type="Discount[]" singular="discountItem" />
+    </transfer>
+
+</transfers>
+

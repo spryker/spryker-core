@@ -29,6 +29,12 @@
                         <th>{{ 'Sub total' | trans }}</th>
                         <td class="text-right">{{ orderDetails.subTotal | currency  }}</td>
                     </tr>
+                    {% for expense in expenses %}
+                    <tr>
+                        <th>{{ expense.name }}</th>
+                        <td class="text-right">{{ expense.GrossPrice | currency  }}</td>
+                    </tr>
+                    {% endfor %}
                     <tr>
                         <th>{{ 'Grand total' | trans }}</th>
                         <td class="text-right">{{ orderDetails.grandTotal | currency  }}</td>

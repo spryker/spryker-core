@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
-use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
@@ -74,7 +74,7 @@ class ProfileController extends AbstractController
 
         $addresses = [];
         $addressesItems = $customerTransfer->getAddresses()
-            ->getCustomerAddressItems()
+            ->getAddresses()
         ;
         foreach ($addressesItems as $address) {
             $addresses[] = [
@@ -167,7 +167,7 @@ class ProfileController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $addressTransfer = new CustomerAddressTransfer();
+            $addressTransfer = new AddressTransfer();
             $addressTransfer->fromArray($form->getRequestData());
             if ($addressTransfer->getIdCustomerAddress()) {
                 $this->getFacade()
@@ -192,7 +192,7 @@ class ProfileController extends AbstractController
      */
     public function setDefaultShippingAddressAction(Request $request)
     {
-        $addressTransfer = new CustomerAddressTransfer();
+        $addressTransfer = new AddressTransfer();
         $addressTransfer->setIdCustomerAddress($request->query->get('address_id'));
         $addressTransfer->setFkCustomer($request->query->get('customer_id'));
         $this->getFacade()
@@ -209,7 +209,7 @@ class ProfileController extends AbstractController
      */
     public function setDefaultBillingAddressAction(Request $request)
     {
-        $addressTransfer = new CustomerAddressTransfer();
+        $addressTransfer = new AddressTransfer();
         $addressTransfer->setIdCustomerAddress($request->query->get('address_id'));
         $addressTransfer->setFkCustomer($request->query->get('customer_id'));
         $this->getFacade()

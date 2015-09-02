@@ -3,7 +3,7 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
-    <transfer name="CustomerAddress">
+    <transfer name="Address">
         <property name="idCustomerAddress" type="int" />
         <property name="customerId" type="string" />
         <property name="fkCustomer" type="int" />
@@ -29,7 +29,7 @@
     </transfer>
 
     <transfer name="Addresses">
-        <property name="customerAddressItems" type="CustomerAddress[]" singular="customerAddress" />
+        <property name="addresses" type="Address[]" singular="Address" />
     </transfer>
 
     <transfer name="Customer">
@@ -44,8 +44,8 @@
         <property name="salutation" type="string" />
         <property name="password" type="string" />
         <property name="newPassword" type="string" />
-        <property name="billingAddress" type="CustomerAddress[]" />
-        <property name="shippingAddress" type="CustomerAddress[]" />
+        <property name="billingAddress" type="Address[]" />
+        <property name="shippingAddress" type="Address[]" />
         <property name="addresses" type="Addresses" singular="address" />
         <property name="defaultBillingAddress" type="string" />
         <property name="defaultShippingAddress" type="string" />

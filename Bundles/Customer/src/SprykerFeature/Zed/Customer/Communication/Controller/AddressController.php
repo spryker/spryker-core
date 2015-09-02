@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
-use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
@@ -175,11 +175,11 @@ class AddressController extends AbstractController
     }
 
     /**
-     * @return CustomerAddressTransfer
+     * @return AddressTransfer
      */
     protected function createCustomerAddressTransfer()
     {
-        return new CustomerAddressTransfer();
+        return new AddressTransfer();
     }
 
 }
