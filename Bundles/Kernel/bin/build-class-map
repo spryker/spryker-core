@@ -1,0 +1,83 @@
+#!/usr/bin/env php
+<?php
+
+include_once __DIR__ . '/../vendor/autoload.php';
+
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
+
+const CLASS_PART_NAMESPACE = 1;
+const CLASS_PART_APPLICATION = 2;
+const CLASS_PART_BUNDLE = 3;
+const CLASS_PART_LAYER = 4;
+
+/**
+ * @param array $directories
+ *
+ * @return SplFileInfo[]|Finder
+ */
+function getFiles(array $directories)
+{
+    foreach ($directories as $key => $directory) {
+        if (!glob($directory)) {
+            unset($directories[$key]);
+        }
+    }
+    $finder = new Finder();
+    $finder->files()->in($directories)->name('*.php');
+
+    return $finder;
+}
+
+$directories = [
+    __DIR__ . '/../vendor/spryker/spryker/Bundles/*/src/',
+    __DIR__ . '/../src',
+];
+
+/**
+ * @param SplFileInfo[] $files
+ *
+ * @return array
+ */
+$buildFactoryClassMap = function ($files) {
+
+    $map = [];
+    /** @var $file \Symfony\Component\Finder\SplFileInfo */
+    foreach ($files as $file) {
+        $path = $file->getRelativePath() . '/' . $file->getFilename();
+        $className = '\\' . str_replace('/', '\\', $path);
+        $className = str_replace('.php', '', $className);
+
+        $classNameParts = explode('\\', $className);
+
+        $namespace = $classNameParts[CLASS_PART_NAMESPACE];
+        $application = $classNameParts[CLASS_PART_APPLICATION];
+        $bundle = $classNameParts[CLASS_PART_BUNDLE];
+
+        $hasLayer = false;
+        if (count($classNameParts) > 5) {
+            $hasLayer = true;
+        }
+
+        if ($hasLayer) {
+            $layer = $classNameParts[CLASS_PART_LAYER];
+            $prefix = implode('\\', [$namespace, $application, $bundle, $layer]);
+            $suffix = str_replace($prefix, '', $className);
+            $suffix = str_replace('\\', '', $suffix);
+            $map[$application . '|' . $bundle . '|' . $layer . '|' . $suffix] = $className;
+        } else {
+            $prefix = implode('\\', [$namespace, $application, $bundle]);
+            $suffix = str_replace($prefix, '', $className);
+            $suffix = str_replace('\\', '', $suffix);
+            $map[$application . '|' . $bundle . '|' . $suffix] = $className;
+        }
+    }
+
+    return $map;
+};
+
+
+$files = getFiles($directories);
+$map = $buildFactoryClassMap($files);
+
+file_put_contents(__DIR__ . '/../.class_map', '<?php return ' . var_export($map, true) . ';');

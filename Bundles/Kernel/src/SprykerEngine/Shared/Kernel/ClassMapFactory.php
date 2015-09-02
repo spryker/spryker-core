@@ -12,6 +12,8 @@ use SprykerEngine\Shared\Kernel\ClassResolver\InstanceBuilder;
 class ClassMapFactory
 {
 
+    const CLASS_MAP_FILE_NAME = '.class_map';
+
     /**
      * @var ClassMapFactory
      */
@@ -36,9 +38,7 @@ class ClassMapFactory
 
     private function __construct()
     {
-        global $map;
-        include_once APPLICATION_ROOT_DIR . '/factory_class_map.php';
-        $this->map = $map;
+        $this->map = include_once APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . self::CLASS_MAP_FILE_NAME;;
     }
 
     /**
@@ -56,7 +56,7 @@ class ClassMapFactory
     {
         $key = $this->createKey($application, $bundle, $suffix, $layer);
 
-        if (false === array_key_exists($key, $this->map)) {
+        if (!array_key_exists($key, $this->map)) {
             throw new ClassNotFoundException('Class ' . $suffix . ' does not exist');
         }
         $className = $this->map[$key];
@@ -64,6 +64,14 @@ class ClassMapFactory
         return (new InstanceBuilder())->createInstance($className, $arguments);
     }
 
+    /**
+     * @param $application
+     * @param $bundle
+     * @param $suffix
+     * @param null $layer
+     *
+     * @return bool
+     */
     public function has($application, $bundle, $suffix, $layer = null)
     {
         $key = $this->createKey($application, $bundle, $suffix, $layer);
@@ -81,15 +89,13 @@ class ClassMapFactory
      */
     protected function createKey($application, $bundle, $suffix, $layer)
     {
-        if (isset($layer)) {
+        if (null !== $layer) {
             $key = implode('|', [$application, $bundle, $layer, $suffix]);
-
-            return $key;
         } else {
             $key = implode('|', [$application, $bundle, $suffix]);
-
-            return $key;
         }
+
+        return $key;
     }
 
 }

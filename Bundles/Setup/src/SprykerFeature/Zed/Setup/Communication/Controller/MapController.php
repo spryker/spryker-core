@@ -8,15 +8,13 @@ namespace SprykerFeature\Zed\Setup\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 class MapController extends AbstractController
 {
 
     public function watchAction()
     {
-
-        $file = new \SplFileInfo(APPLICATION_ROOT_DIR . '/map.php');
+        $file = new \SplFileInfo(APPLICATION_ROOT_DIR . '/.class_map');
         $mapLastChange = $file->getMTime();
 
         $c = 0;
@@ -26,7 +24,6 @@ class MapController extends AbstractController
                 break;
             }
 
-
             $basePaths = [
                 APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/*/src/',
                 APPLICATION_SOURCE_DIR,
@@ -34,20 +31,18 @@ class MapController extends AbstractController
 
             foreach ($basePaths as $basePath) {
                 $files = $this->createBasePath($basePath);
-                foreach($files as $file){
+                foreach ($files as $file) {
                     /* @var $file \Symfony\Component\Finder\SplFileInfo */
-                    if($file->getMTime() > $mapLastChange){
+                    if ($file->getMTime() > $mapLastChange) {
                         $this->createMap();
 
-                        $file = new \SplFileInfo(APPLICATION_ROOT_DIR . '/map.php');
+                        $file = new \SplFileInfo(APPLICATION_ROOT_DIR . '/.class_map');
                         $mapLastChange = $file->getMTime();
                     }
                 }
             }
 
             sleep(1);
-
-
         }
 
         die('<pre><b>' . print_r('!!', true) . '</b>' . PHP_EOL . __CLASS__ . ' ' . __LINE__);
@@ -62,6 +57,7 @@ class MapController extends AbstractController
 
     /**
      * @param $basePath
+     *
      * @return $this|Finder
      */
     protected function createBasePath($basePath)
@@ -70,12 +66,14 @@ class MapController extends AbstractController
             ->files()
             ->name('*.php')
             ->exclude(['Base', 'Map', 'Generated']);
+
         return $finder;
     }
 
     /**
      * @param $finder
      * @param $map
+     *
      * @return mixed
      */
     protected function buildMap(Finder $finder, $map)
@@ -86,7 +84,6 @@ class MapController extends AbstractController
             $path = $file->getRelativePath() . '/' . $file->getFilename();
             $className = '\\' . str_replace('/', '\\', $path);
             $className = str_replace('.php', '', $className);
-
 
             $expl = explode('\\', $className);
 
@@ -107,6 +104,7 @@ class MapController extends AbstractController
                 $map[$application . '|' . $bundle . '|' . $suffix] = $className;
             }
         }
+
         return $map;
     }
 
@@ -127,9 +125,9 @@ class MapController extends AbstractController
             $map = $this->buildMap($files, $map);
         }
 
-        file_put_contents(APPLICATION_ROOT_DIR . '/map.php', '<?php $map = ' . var_export($map, true) . ';');
+        file_put_contents(APPLICATION_ROOT_DIR . '/.class_map', '<?php return ' . var_export($map, true) . ';');
+
         return $map;
     }
-
 
 }
