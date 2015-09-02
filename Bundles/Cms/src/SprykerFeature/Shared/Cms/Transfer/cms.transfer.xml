@@ -25,9 +25,12 @@
     </transfer>
 
     <transfer name="CmsBlock">
+        <property name="idCmsBlock" type="int" />
+        <property name="fkPage" type="int" />
         <property name="locale" type="Locale" />
-        <property name="idCmsPage" type="int" />
         <property name="name" type="string" />
+        <property name="type" type="string" />
+        <property name="value" type="string" />
     </transfer>
 
 </transfers>

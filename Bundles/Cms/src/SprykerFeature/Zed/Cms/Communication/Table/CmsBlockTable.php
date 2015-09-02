@@ -16,6 +16,7 @@ class CmsBlockTable extends AbstractTable
 {
 
     const ACTIONS = 'Actions';
+    const REQUEST_ID_BLOCK = 'id-block';
     const REQUEST_ID_PAGE = 'id-page';
 
     /**
@@ -39,18 +40,22 @@ class CmsBlockTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeader([
-            SpyCmsBlockTableMap::COL_ID_CMS_PAGE => 'Block Id',
+            SpyCmsBlockTableMap::COL_ID_CMS_BLOCK => 'Block Id',
             SpyCmsBlockTableMap::COL_NAME => 'Name',
             CmsQueryContainer::TEMPLATE_NAME => 'Template',
+            SpyCmsBlockTableMap::COL_TYPE => 'Type',
+            SpyCmsBlockTableMap::COL_VALUE => 'Value',
             self::ACTIONS => self::ACTIONS,
         ]);
         $config->setSortable([
-            SpyCmsBlockTableMap::COL_ID_CMS_PAGE,
+            SpyCmsBlockTableMap::COL_ID_CMS_BLOCK,
         ]);
 
         $config->setSearchable([
-            SpyCmsBlockTableMap::COL_ID_CMS_PAGE,
+            SpyCmsBlockTableMap::COL_ID_CMS_BLOCK,
             CmsQueryContainer::TEMPLATE_NAME,
+            SpyCmsBlockTableMap::COL_TYPE,
+            SpyCmsBlockTableMap::COL_VALUE,
             SpyCmsBlockTableMap::COL_NAME,
         ]);
 
@@ -69,9 +74,11 @@ class CmsBlockTable extends AbstractTable
 
         foreach ($queryResults as $item) {
             $results[] = [
-                SpyCmsBlockTableMap::COL_ID_CMS_PAGE => $item[SpyCmsBlockTableMap::COL_ID_CMS_PAGE],
+                SpyCmsBlockTableMap::COL_ID_CMS_BLOCK => $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK],
                 CmsQueryContainer::TEMPLATE_NAME => $item[CmsQueryContainer::TEMPLATE_NAME],
                 SpyCmsBlockTableMap::COL_NAME => $item[SpyCmsBlockTableMap::COL_NAME],
+                SpyCmsBlockTableMap::COL_TYPE => $item[SpyCmsBlockTableMap::COL_TYPE],
+                SpyCmsBlockTableMap::COL_VALUE => $item[SpyCmsBlockTableMap::COL_VALUE],
                 self::ACTIONS => $this->buildLinks($item),
             ];
         }
@@ -87,8 +94,8 @@ class CmsBlockTable extends AbstractTable
      */
     private function buildLinks(array $item)
     {
-        $result = '<a href="/cms/glossary/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsBlockTableMap::COL_ID_CMS_PAGE] . '" class="btn btn-xs btn-white">Edit placeholders</a>&nbsp;
-        <a href="/cms/block/edit/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsBlockTableMap::COL_ID_CMS_PAGE] . '" class="btn btn-xs btn-white">Edit block</a>';
+        $result = '<a href="/cms/glossary/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsBlockTableMap::COL_FK_PAGE] . '" class="btn btn-xs btn-white">Edit placeholders</a>&nbsp;
+        <a href="/cms/block/edit/?' . self::REQUEST_ID_BLOCK . '=' . $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK] . '" class="btn btn-xs btn-white">Edit block</a>';
 
         return $result;
     }

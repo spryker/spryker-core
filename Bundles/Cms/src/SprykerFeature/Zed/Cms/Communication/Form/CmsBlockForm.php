@@ -16,11 +16,14 @@ use Symfony\Component\Validator\Context\ExecutionContext;
 class CmsBlockForm extends AbstractForm
 {
 
-    const ADD = 'add';
-    const UPDATE = 'update';
-    const ID_CMS_PAGE = 'idCmsPage';
+    const CATEGORY = 'category';
+    const PRODUCT = 'product';
+    const ID_CMS_BLOCK = 'idCmsBlock';
+    const FK_PAGE = 'fkPage';
     const FK_TEMPLATE = 'fkTemplate';
-    const BLOCK = 'block';
+    const NAME = 'name';
+    const TYPE = 'type';
+    const VALUE = 'value';
     const CURRENT_TEMPLATE = 'cur_temp';
     const PAGE = 'Page';
     const IS_ACTIVE = 'is_active';
@@ -43,7 +46,7 @@ class CmsBlockForm extends AbstractForm
     /**
      * @var int
      */
-    protected $idPage;
+    protected $idCmsBlock;
 
     /**
      * @var CmsConstraint
@@ -62,13 +65,13 @@ class CmsBlockForm extends AbstractForm
      * @param string $formType
      * @param int $idPage
      */
-    public function __construct(SpyCmsTemplateQuery $templateQuery, SpyCmsBlockQuery $blockPageByIdQuery, CmsConstraint $constraints, $formType, $idPage)
+    public function __construct(SpyCmsTemplateQuery $templateQuery, SpyCmsBlockQuery $blockPageByIdQuery, CmsConstraint $constraints, $formType, $idCmsBlock)
     {
         $this->templateQuery = $templateQuery;
         $this->blockPageByIdQuery = $blockPageByIdQuery;
         $this->constraints = $constraints;
         $this->formType = $formType;
-        $this->idPage = $idPage;
+        $this->idCmsBlock = $idCmsBlock;
     }
 
     /**
@@ -79,29 +82,41 @@ class CmsBlockForm extends AbstractForm
         $blockConstraints = $this->constraints->getMandatoryConstraints();
 
 
-            $blockConstraints[] = new Callback([
-                'methods' => [
-                    function ($name, ExecutionContext $context) {
-                        if (!empty($this->templateQuery->useSpyCmsPageQuery()
-                            ->useSpyCmsBlockQuery()
-                            ->findByName($name)
-                            ->getData() && $this->blockName !== $name)
-                        ) {
-                            $context->addViolation('Block name already exists.');
-                        }
-                    },
-                ],
-            ]);
+//            $blockConstraints[] = new Callback([
+//                'methods' => [
+//                    function ($name, ExecutionContext $context) {
+//                        if (!empty($this->templateQuery->useSpyCmsPageQuery()
+//                            ->useSpyCmsBlockQuery()
+//                            ->findByName($name)
+//                            ->getData() && $this->blockName !== $name)
+//                        ) {
+//                            $context->addViolation('Block name already exists.');
+//                        }
+//                    },
+//                ],
+//            ]);
 
-        return $this->addHidden(self::ID_CMS_PAGE)
+        return $this->addHidden(self::ID_CMS_BLOCK)
             ->addHidden(self::CURRENT_TEMPLATE)
+            ->addHidden(self::FK_PAGE)
             ->addChoice(self::FK_TEMPLATE, [
                 'label' => 'Template',
                 'choices' => $this->getTemplateList(),
             ])
-            ->addText(self::BLOCK, [
-                'label' => 'Block Name',
+            ->addText(self::NAME, [
+                'label' => 'Name',
                 'constraints' => $blockConstraints,
+            ])
+            ->addChoice(self::TYPE, [
+                'label' => 'Type',
+                'choices' => [
+                    'none' => '-- select --',
+                    self::CATEGORY => 'Category',
+                    self::PRODUCT => 'Product'
+                ],
+            ])
+            ->addText(self::VALUE, [
+                'label' => 'Value',
             ])
             ->addCheckbox(self::IS_ACTIVE, [
                 'label' => 'Active',
@@ -129,14 +144,17 @@ class CmsBlockForm extends AbstractForm
      */
     protected function populateFormFields()
     {
-        if ($this->idPage) {
+        if ($this->idCmsBlock) {
             $pageUrlTemplate = $this->blockPageByIdQuery->findOne();
             $this->blockName = $pageUrlTemplate->getName();
 
             return [
-                self::ID_CMS_PAGE => $pageUrlTemplate->getIdCmsPage(),
+                self::ID_CMS_BLOCK => $pageUrlTemplate->getIdCmsBlock(),
+                self::FK_PAGE => $pageUrlTemplate->getFkPage(),
                 self::FK_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
-                self::BLOCK => $pageUrlTemplate->getName(),
+                self::NAME => $pageUrlTemplate->getName(),
+                self::TYPE => $pageUrlTemplate->getType(),
+                self::VALUE => $pageUrlTemplate->getValue(),
                 self::CURRENT_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
                 self::IS_ACTIVE => (bool)$pageUrlTemplate->getIsActive(),
             ];

@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Cms\Business;
 
+use Generated\Shared\Cms\CmsBlockInterface;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
@@ -252,15 +253,15 @@ class CmsFacade extends AbstractFacade
 
     /**
      * @param PageTransfer $pageTransfer
-     * @param string $blockName
+     * @param CmsBlockTransfer $blockTransfer
      *
      * @return PageTransfer
      */
-    public function savePageBlockAndTouch(PageTransfer $pageTransfer, $blockName)
+    public function savePageBlockAndTouch(PageTransfer $pageTransfer, CmsBlockTransfer $blockTransfer)
     {
         $pageManager = $this->getDependencyContainer()->getPageManager();
 
-        return $pageManager->savePageBlockAndTouch($pageTransfer, $blockName);
+        return $pageManager->savePageBlockAndTouch($pageTransfer, $blockTransfer);
     }
 
     /**

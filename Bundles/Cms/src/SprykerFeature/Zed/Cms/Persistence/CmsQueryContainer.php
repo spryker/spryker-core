@@ -133,14 +133,14 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
-     * @param int $idCmsPage
+     * @param int $idCmsBlock
      *
      * @return SpyCmsPageQuery
      */
-    public function queryPageWithTemplatesAndBlocksByIdPage($idCmsPage)
+    public function queryPageWithTemplatesAndBlocksById($idCmsBlock)
     {
         return $this->queryBlocks()
-            ->filterByIdCmsPage($idCmsPage)
+            ->filterByIdCmsBlock($idCmsBlock)
             ->leftJoinSpyCmsPage()
             ->useSpyCmsPageQuery()
                 ->joinCmsTemplate()
@@ -371,7 +371,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     public function queryBlockByIdPage($idCmsPage)
     {
         return $this->queryBlocks()
-            ->filterByIdCmsPage($idCmsPage)
+            ->filterByFkPage($idCmsPage)
             ;
     }
 

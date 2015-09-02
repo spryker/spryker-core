@@ -6,11 +6,13 @@
 
 namespace SprykerFeature\Zed\Cms\Communication\Controller;
 
+use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsBlockForm;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsPageForm;
+use SprykerFeature\Zed\Cms\Communication\Table\CmsBlockTable;
 use SprykerFeature\Zed\Cms\Communication\Table\CmsPageTable;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -63,9 +65,10 @@ class BlockController extends AbstractController
         if ($form->isValid()) {
             $data = $form->getData();
             $pageTransfer = $this->createPageTransfer($data);
+            $blockTransfer = $this->createBlockTransfer($data);
 
             $this->getFacade()
-                ->savePageBlockAndTouch($pageTransfer, $data[CmsBlockForm::BLOCK])
+                ->savePageBlockAndTouch($pageTransfer, $blockTransfer)
             ;
             $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 
@@ -84,10 +87,10 @@ class BlockController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
+        $idBlock = $request->get(CmsBlockTable::REQUEST_ID_BLOCK);
 
         $form = $this->getDependencyContainer()
-            ->createCmsBlockForm('update', $idPage)
+            ->createCmsBlockForm('update', $idBlock)
         ;
 
         $form->handleRequest();
@@ -95,11 +98,9 @@ class BlockController extends AbstractController
             $data = $form->getData();
 
             $pageTransfer = $this->createPageTransfer($data);
-            $pageTransfer = $this->getFacade()
-                ->savePage($pageTransfer)
-            ;
+            $pageTransfer->setIdCmsPage($data[CmsBlockForm::FK_PAGE]);
 
-            $this->updatePageAndBlock($data, $idPage, $pageTransfer);
+            $this->updatePageAndBlock($data, $pageTransfer);
 
             $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 
@@ -126,19 +127,37 @@ class BlockController extends AbstractController
 
     /**
      * @param array $data
-     * @param int $idPage
+     * @param int $idBlock
      * @param PageTransfer $pageTransfer
      */
-    protected function updatePageAndBlock(array $data, $idPage, $pageTransfer)
+    protected function updatePageAndBlock(array $data, $pageTransfer)
     {
         if (intval($data[CmsPageForm::CURRENT_TEMPLATE]) !== intval($data[CmsPageForm::FK_TEMPLATE])) {
             $this->getFacade()
-                ->deleteGlossaryKeysByIdPage($idPage)
+                ->deleteGlossaryKeysByIdPage($data[CmsBlockForm::FK_PAGE])
             ;
         }
+        $blockTransfer = $this->createBlockTransfer($data);
 
         $this->getFacade()
-            ->savePageBlockAndTouch($pageTransfer, $data[CmsBlockForm::BLOCK])
+            ->savePageBlockAndTouch($pageTransfer, $blockTransfer)
         ;
+    }
+
+    /**
+     * @param $data
+     *
+     * @return CmsBlockTransfer
+     */
+    private function createBlockTransfer($data)
+    {
+        $blockTransfer = new CmsBlockTransfer();
+        $blockTransfer->fromArray($data, true);
+        if ($data[CmsBlockForm::TYPE] == 'none') {
+            $blockTransfer->setType(null);
+            $blockTransfer->setValue(null);
+        }
+
+        return $blockTransfer;
     }
 }

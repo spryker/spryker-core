@@ -49,16 +49,19 @@
     <id-method-parameter value="spy_cms_glossary_key_mapping_pk_seq"/></table>
 
     <table name="spy_cms_block" phpName="SpyCmsBlock">
-        <column name="id_cms_page" type="INTEGER" required="true" primaryKey="true"/>
+        <column name="id_cms_block" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_page" type="INTEGER" required="true"/>
         <column name="name" type="VARCHAR" required="true" size="255"/>
+        <column name="type" type="VARCHAR" size="255"/>
+        <column name="value" type="VARCHAR" size="255"/>
         <foreign-key foreignTable="spy_cms_page" phpName="SpyCmsPage" onDelete="CASCADE">
-            <reference foreign="id_cms_page" local="id_cms_page"/>
+            <reference foreign="id_cms_page" local="fk_page"/>
         </foreign-key>
         <unique>
-            <unique-column name="name"/>
+            <unique-column name="fk_page"/>
         </unique>
         <index>
-            <index-column name="name"/>
+            <index-column name="fk_page"/>
         </index>
     </table>
 </database>
