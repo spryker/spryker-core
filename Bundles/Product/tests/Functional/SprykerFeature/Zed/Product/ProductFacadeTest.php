@@ -149,7 +149,7 @@ class ProductFacadeTest extends Test
     /**
      * @group Product
      */
-    public function testGetEffectiveTaxRateReturnsFloat()
+    public function testGetEffectiveTaxRateReturnsInteger()
     {
         $concreteProductQuery = $this->productQueryContainer->queryConcreteProductBySku('AConcreteProductSku');
 
@@ -172,7 +172,7 @@ class ProductFacadeTest extends Test
 
         $effectiveTaxRate = $this->productFacade->getEffectiveTaxRateForConcreteProduct('AConcreteProductSku');
 
-        $this->assertInternalType('float', $effectiveTaxRate);
+        $this->assertInternalType('integer', $effectiveTaxRate);
     }
 
     /**

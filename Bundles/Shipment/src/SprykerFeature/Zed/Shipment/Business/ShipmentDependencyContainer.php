@@ -27,7 +27,7 @@ class ShipmentDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()
             ->createModelCarrier()
-            ;
+        ;
     }
 
     /**
@@ -40,6 +40,7 @@ class ShipmentDependencyContainer extends AbstractBusinessDependencyContainer
                 $this->getQueryContainer(),
                 $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS)
             )
-            ;
+        ;
     }
+
 }
