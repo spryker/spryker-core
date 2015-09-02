@@ -1,83 +1,149 @@
 #!/usr/bin/env php
 <?php
 
-include_once __DIR__ . '/../vendor/autoload.php';
+include_once __DIR__ . '/../autoload.php';
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
-const CLASS_PART_NAMESPACE = 1;
-const CLASS_PART_APPLICATION = 2;
-const CLASS_PART_BUNDLE = 3;
-const CLASS_PART_LAYER = 4;
-
-/**
- * @param array $directories
- *
- * @return SplFileInfo[]|Finder
- */
-function getFiles(array $directories)
+class ClassMapBuilder
 {
-    foreach ($directories as $key => $directory) {
-        if (!glob($directory)) {
-            unset($directories[$key]);
-        }
+
+    const CLASS_PART_NAMESPACE = 1;
+    const CLASS_PART_APPLICATION = 2;
+    const CLASS_PART_BUNDLE = 3;
+    const CLASS_PART_LAYER = 4;
+    const STORE_PLACEHOLDER = '{{STORE}}';
+
+    /**
+     * @return array
+     */
+    public function buildFactoryClassMap()
+    {
+        $directories = $this->getDirectories();
+        $files = $this->getFiles($directories);
+        $map = $this->buildFactoryClassMapFromFiles($files);
+        $this->saveMapToFile($map);
+
+        return $map;
     }
-    $finder = new Finder();
-    $finder->files()->in($directories)->name('*.php');
+    /**
+     * @param array $directories
+     *
+     * @return SplFileInfo[]|Finder
+     */
+    private function getFiles(array $directories)
+    {
+        foreach ($directories as $key => $directory) {
+            if (!glob($directory)) {
+                unset($directories[$key]);
+            }
+        }
+        $finder = new Finder();
+        $finder->files()->in($directories)->name('*.php');
 
-    return $finder;
-}
+        return $finder;
+    }
 
-$directories = [
-    __DIR__ . '/../vendor/spryker/spryker/Bundles/*/src/',
-    __DIR__ . '/../src',
-];
+    /**
+     * @return array
+     */
+    private function getDirectories()
+    {
+        $directories = [
+            __DIR__ . '/../spryker/spryker/Bundles/*/src/',
+            __DIR__ . '/../../src',
+        ];
 
-/**
- * @param SplFileInfo[] $files
- *
- * @return array
- */
-$buildFactoryClassMap = function ($files) {
+        return $directories;
+    }
 
-    $map = [];
-    /** @var $file \Symfony\Component\Finder\SplFileInfo */
-    foreach ($files as $file) {
+    /**
+     * @param SplFileInfo[] $files
+     *
+     * @return array
+     */
+    private function buildFactoryClassMapFromFiles($files)
+    {
+        $map = [];
+
+        foreach ($files as $file) {
+            $map = $this->addMapEntryFromFile($file, $map);
+        }
+
+        return $map;
+    }
+
+    /**
+     * @param SplFileInfo $file
+     * @param array $map
+     *
+     * @return mixed
+     */
+    private function addMapEntryFromFile(SplFileInfo $file, array $map)
+    {
+        $className = $this->getClassNameFromFile($file);
+        $classNameParts = explode('\\', $className);
+
+        $namespace = $classNameParts[self::CLASS_PART_NAMESPACE];
+        $application = $classNameParts[self::CLASS_PART_APPLICATION];
+        $bundle = $classNameParts[self::CLASS_PART_BUNDLE];
+
+        $hasLayer = $this->hasClassLayer($classNameParts);
+
+        if ($hasLayer) {
+            $layer = $classNameParts[self::CLASS_PART_LAYER];
+            $prefix = implode('\\', [$namespace, $application, $bundle, $layer]);
+            $suffix = str_replace([$prefix, '\\'], '', $className);
+            $map[$application . '|' . $bundle . '|' . $layer . '|' . $suffix] = $className;
+        } else {
+            $prefix = implode('\\', [$namespace, $application, $bundle]);
+            $suffix = str_replace([$prefix, '\\'], '', $className);
+            $map[$application . '|' . $bundle . '|' . $suffix] = $className;
+        }
+
+        return $map;
+    }
+
+    /**
+     * @param SplFileInfo $file
+     *
+     * @return mixed|string
+     */
+    private function getClassNameFromFile(SplFileInfo $file)
+    {
         $path = $file->getRelativePath() . '/' . $file->getFilename();
         $className = '\\' . str_replace('/', '\\', $path);
         $className = str_replace('.php', '', $className);
 
-        $classNameParts = explode('\\', $className);
+        return $className;
+    }
 
-        $namespace = $classNameParts[CLASS_PART_NAMESPACE];
-        $application = $classNameParts[CLASS_PART_APPLICATION];
-        $bundle = $classNameParts[CLASS_PART_BUNDLE];
-
+    /**
+     * @param $classNameParts
+     *
+     * @return bool
+     */
+    private function hasClassLayer($classNameParts)
+    {
         $hasLayer = false;
+
         if (count($classNameParts) > 5) {
             $hasLayer = true;
         }
 
-        if ($hasLayer) {
-            $layer = $classNameParts[CLASS_PART_LAYER];
-            $prefix = implode('\\', [$namespace, $application, $bundle, $layer]);
-            $suffix = str_replace($prefix, '', $className);
-            $suffix = str_replace('\\', '', $suffix);
-            $map[$application . '|' . $bundle . '|' . $layer . '|' . $suffix] = $className;
-        } else {
-            $prefix = implode('\\', [$namespace, $application, $bundle]);
-            $suffix = str_replace($prefix, '', $className);
-            $suffix = str_replace('\\', '', $suffix);
-            $map[$application . '|' . $bundle . '|' . $suffix] = $className;
-        }
+        return $hasLayer;
     }
 
-    return $map;
-};
+    /**
+     * @param array $map
+     */
+    private function saveMapToFile(array $map)
+    {
+        file_put_contents(__DIR__ . '/../../.class_map', '<?php return ' . var_export($map, true) . ';');
+    }
 
+}
 
-$files = getFiles($directories);
-$map = $buildFactoryClassMap($files);
-
-file_put_contents(__DIR__ . '/../.class_map', '<?php return ' . var_export($map, true) . ';');
+$classMapBuilder = new ClassMapBuilder();
+$classMapBuilder->buildFactoryClassMap();

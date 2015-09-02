@@ -1,5 +1,10 @@
 <?php
 
+if (!defined('APPLICATION_STORE')) {
+    $store = include __DIR__ . '/../../../config/Shared/default_store.php';
+    define('APPLICATION_STORE', $store);
+}
+
 $finder = Symfony\CS\Finder\DefaultFinder::create()
     ->in(__DIR__ . '/Bundles')
     ->exclude('Generated')
@@ -14,7 +19,7 @@ return Symfony\CS\Config\Config::create()
     ->finder($finder)
     ->level(\Symfony\CS\FixerInterface::PSR2_LEVEL)
     ->fixers(
-        array(
+        [
             'blankline_after_open_tag',
             'braces',
             'concat_with_spaces',
@@ -62,8 +67,8 @@ return Symfony\CS\Config\Config::create()
             'unalign_equals',
             'unary_operators_spaces',
             'unused_use',
-            'whitespacy_lines'
-        )
+            'whitespacy_lines',
+        ]
     )
     ->addCustomFixer(new \SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\EmptyEnclosingLinesFixer())
     ;

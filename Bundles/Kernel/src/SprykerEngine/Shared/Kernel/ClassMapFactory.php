@@ -54,10 +54,13 @@ class ClassMapFactory
      */
     public function create($application, $bundle, $suffix, $layer = null, $arguments = [])
     {
-        $key = $this->createKey($application, $bundle, $suffix, $layer);
+        $key = $this->createKey($application, $bundle . Store::getInstance()->getStoreName(), $suffix, $layer);
 
         if (!array_key_exists($key, $this->map)) {
-            throw new ClassNotFoundException('Class "' . $suffix . '" does not exist');
+            $key = $this->createKey($application, $bundle, $suffix, $layer);
+            if (!array_key_exists($key, $this->map)) {
+                throw new ClassNotFoundException('Class "' . $suffix . '" does not exist');
+            }
         }
         $className = $this->map[$key];
 
