@@ -59,9 +59,10 @@ class RequestServiceProvider implements ServiceProviderInterface
      */
     protected function parseRequestData(Request $request)
     {
-        $requestUri = trim($request->server->get('DOCUMENT_URI'), '/');
-        $requestUri = str_replace('//', '/', $requestUri);
-        $requestUriParts = explode('/', $requestUri);
+        $requestUriWithoutParameters = strtok($request->server->get('REQUEST_URI'),'?');
+        $requestUriWithoutParameters = trim($requestUriWithoutParameters, '/');
+        $requestUriWithoutParameters = str_replace('//', '/', $requestUriWithoutParameters);
+        $requestUriParts = explode('/', $requestUriWithoutParameters);
 
         if (count($requestUriParts) < 3) {
             $request->attributes->set('action', 'index');
