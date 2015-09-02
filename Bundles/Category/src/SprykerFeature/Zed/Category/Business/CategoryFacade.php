@@ -49,6 +49,20 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
+     * @param string $categoryName
+     * @param LocaleTransfer $locale
+     *
+     * @return int
+     */
+    public function getCategoryIdentifier($categoryName, LocaleTransfer $locale)
+    {
+        return $this->getDependencyContainer()
+            ->createCategoryTreeReader()
+            ->getCategoryIdentifier($categoryName, $locale)
+        ;
+    }
+
+    /**
      * @param CategoryTransfer $category
      * @param LocaleTransfer $locale
      *
@@ -111,7 +125,7 @@ class CategoryFacade extends AbstractFacade
         $this->getDependencyContainer()
             ->createNodeWriter()
             ->update($categoryNode)
-            ;
+        ;
     }
 
     /**
@@ -172,7 +186,6 @@ class CategoryFacade extends AbstractFacade
      */
     public function getTree($idCategory, LocaleTransfer $locale)
     {
-
         return $this->getDependencyContainer()
             ->createCategoryTreeReader()
             ->getTree($idCategory, $locale)

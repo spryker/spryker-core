@@ -13,6 +13,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryClosureTableTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
+use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 
 class CategoryTreeReader implements CategoryTreeReaderInterface
@@ -37,7 +38,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @param int            $idNode
+     * @param int $idNode
      * @param LocaleTransfer $locale
      *
      * @return SpyCategoryNode[]|ObjectCollection
@@ -51,9 +52,9 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @param int            $idNode
+     * @param int $idNode
      * @param LocaleTransfer $locale
-     * @param bool           $excludeRootNode
+     * @param bool $excludeRootNode
      *
      * @return array
      */
@@ -63,10 +64,10 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @param int            $idNode
+     * @param int $idNode
      * @param LocaleTransfer $locale
-     * @param bool           $excludeRootNode
-     * @param bool           $onlyParents
+     * @param bool $excludeRootNode
+     * @param bool $onlyParents
      *
      * @return array
      */
@@ -79,10 +80,10 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @param int            $idNode
+     * @param int $idNode
      * @param LocaleTransfer $locale
-     * @param bool           $excludeRootNode
-     * @param bool           $onlyParents
+     * @param bool $excludeRootNode
+     * @param bool $onlyParents
      *
      * @return array
      */
@@ -106,10 +107,10 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @param int            $idNode
+     * @param int $idNode
      * @param LocaleTransfer $locale
-     * @param bool           $excludeRootNode
-     * @param bool           $onlyParents
+     * @param bool $excludeRootNode
+     * @param bool $onlyParents
      *
      * @TODO Move getGroupedPathIds and getGroupedPaths to another class, duplicated Code!
      *
@@ -163,7 +164,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @param string         $categoryName
+     * @param string $categoryName
      * @param LocaleTransfer $locale
      *
      * @return bool
@@ -176,7 +177,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @param string         $categoryName
+     * @param string $categoryName
      * @param LocaleTransfer $locale
      *
      * @throws MissingCategoryNodeException
@@ -202,6 +203,32 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
+     * @param string $categoryName
+     * @param LocaleTransfer $locale
+     *
+     * @throws MissingCategoryException
+     *
+     * @return int
+     */
+    public function getCategoryIdentifier($categoryName, LocaleTransfer $locale)
+    {
+        $categoryQuery = $this->queryContainer->queryCategoryByName($categoryName, $locale->getIdLocale());
+        $category = $categoryQuery->findOne();
+
+        if (!$category) {
+            throw new MissingCategoryException(
+                sprintf(
+                    'Tried to retrieve a missing category %s, locale %s',
+                    $categoryName,
+                    $locale->getLocaleName()
+                )
+            );
+        }
+
+        return $category->getPrimaryKey();
+    }
+
+    /**
      * @param int $idNode
      *
      * @return SpyCategoryNode
@@ -221,6 +248,9 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
      */
     public function getCategoryTransferByIdNode($idNode)
     {
+        /**
+         * @var SpyCategoryNode $categoryEntity
+         */
         $categoryEntity = $this->getNodesByIdCategory($idNode);
         $categoryTransfer = new CategoryTransfer();
         foreach ($categoryEntity->getCategory()->getAttributes() as $attributeEntity) {
@@ -282,12 +312,12 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     private function getTreeNodesRecursively(SpyCategoryNode $node = null, LocaleTransfer $localeTransfer, $isRoot = false)
     {
         $tree = [];
-        if (null === $node ) {
+        if (null === $node) {
             $children = $this->getRootNodes();
         } else {
             $children = $this->getChildren($node->getIdCategoryNode(), $localeTransfer);
         }
-        if ($isRoot){
+        if ($isRoot) {
             $idParent = 0;
         } else {
             $idParent = $node->getIdCategoryNode();
