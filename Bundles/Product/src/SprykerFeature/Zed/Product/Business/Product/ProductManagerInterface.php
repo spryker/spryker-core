@@ -11,11 +11,10 @@ use Generated\Shared\Product\ConcreteProductInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Product\Business\Exception\AbstractProductAttributesExistException;
 use SprykerFeature\Zed\Product\Business\Exception\AbstractProductExistsException;
-use SprykerFeature\Zed\Product\Business\Exception\ConcreteProductAttributesExistException;
 use SprykerFeature\Zed\Product\Business\Exception\ConcreteProductExistsException;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
 interface ProductManagerInterface
@@ -161,5 +160,13 @@ interface ProductManagerInterface
      * @return ConcreteProductInterface
      */
     public function getConcreteProduct($concreteSku);
+
+    /**
+     * @param $term
+     * @param LocaleTransfer $locale
+     *
+     * @return SpyAbstractProduct[]
+     */
+    public function getAbstractProductsBySearchTerm($term, LocaleTransfer $locale);
 
 }

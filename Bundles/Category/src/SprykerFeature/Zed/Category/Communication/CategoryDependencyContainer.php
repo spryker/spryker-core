@@ -18,6 +18,7 @@ use SprykerFeature\Zed\Category\Communication\Table\CategoryAttributeTable;
 use SprykerFeature\Zed\Category\Communication\Table\RootNodeTable;
 use SprykerFeature\Zed\Category\Communication\Table\UrlTable;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
+use SprykerFeature\Zed\Product\Business\ProductFacade;
 use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -48,6 +49,15 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
     public function createProductCategoryFacade()
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_PRODUCT_CATEGORY);
+    }
+
+    /**
+     * @return ProductFacade
+     * @throws \ErrorException
+     */
+    public function createProductFacade()
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_PRODUCT);
     }
 
     /**
@@ -91,7 +101,7 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
     /**
      * @return ProductCategoryQueryContainerInterface
      */
-    protected function createProductCategoryQueryContainer()
+    public function createProductCategoryQueryContainer()
     {
         return $this->getLocator()->productCategory()->queryContainer();
     }
