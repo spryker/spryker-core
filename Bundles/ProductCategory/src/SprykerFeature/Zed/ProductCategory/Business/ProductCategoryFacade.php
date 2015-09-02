@@ -57,6 +57,14 @@ class ProductCategoryFacade extends AbstractFacade
             ->hasProductCategoryMapping($sku, $categoryName, $locale)
         ;
     }
+    
+    public function getProductsByCategory($idCategory, LocaleTransfer $locale)
+    {
+        return $this->getDependencyContainer()
+            ->createProductCategoryManager()
+            ->getProductsByCategory($idCategory, $locale)
+        ;
+    }
 
     /**
      * @param int $idCategory
