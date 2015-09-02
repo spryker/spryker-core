@@ -15,7 +15,7 @@ class Newrelic extends AbstractWriter
     public function write(EventInterface $event)
     {
         $api = NewRelicApi()::getInstance();
-        foreach($event)
+        //foreach($event)
         return false;
     }
 }
