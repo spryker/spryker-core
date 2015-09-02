@@ -161,4 +161,12 @@ interface ProductManagerInterface
      */
     public function getConcreteProduct($concreteSku);
 
+    /**
+     * @param $term
+     * @param LocaleTransfer $locale
+     *
+     * @return SpyAbstractProduct[]
+     */
+    public function getAbstractProductsBySearchTerm($term, LocaleTransfer $locale);
+
 }

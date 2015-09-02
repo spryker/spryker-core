@@ -18,7 +18,6 @@ use SprykerFeature\Zed\Product\Business\Exception\AttributeTypeExistsException;
 use SprykerFeature\Zed\Product\Business\Exception\MissingAttributeTypeException;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 use SprykerFeature\Zed\Product\Business\Model\ProductBatchResult;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
 /**

@@ -64,8 +64,7 @@ class CategoryFormEdit extends CategoryFormAdd
                 'choices' => $this->getCategories(),
                 'constraints' => [
                     new NotBlank(),
-                ],
-                'multiple' => true,
+                ]
             ])
             ->addSelect2ComboBox('products', [
                 'label' => 'Products',

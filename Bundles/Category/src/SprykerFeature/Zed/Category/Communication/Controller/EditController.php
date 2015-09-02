@@ -4,12 +4,11 @@ namespace SprykerFeature\Zed\Category\Communication\Controller;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
+use SprykerFeature\Zed\Category\CategoryConfig;
 use SprykerFeature\Zed\Category\Communication\CategoryDependencyContainer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use Symfony\Component\Form\Form;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
@@ -18,10 +17,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  * @method CategoryDependencyContainer getDependencyContainer()
  * @method CategoryQueryContainer getQueryContainer()
  */
-class EditController extends AbstractController
+class EditController extends AddController
 {
-
-    const PARAM_ID_CATEGORY = 'id-category';
 
     /**
      * @param Request $request
@@ -30,7 +27,7 @@ class EditController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCategory = $request->get(self::PARAM_ID_CATEGORY);
+        $idCategory = $request->get(CategoryConfig::PARAM_ID_CATEGORY);
 
         $categoryExists = $this->getQueryContainer()->queryCategoryById($idCategory)->count() > 0;
         
@@ -82,26 +79,6 @@ class EditController extends AbstractController
             'form' => $form->createView(),
             'productCategories' => $productCategories->render(),
         ]);
-    }
-
-
-    /**
-     * @return JsonResponse
-     */
-    public function productCategoryTableAction(Request $request)
-    {
-        $idCategory = $request->get(self::PARAM_ID_CATEGORY);
-        $locale = $this->getDependencyContainer()
-            ->createCurrentLocale()
-        ;
-
-        $table = $this->getDependencyContainer()
-            ->createProductCategoryTable($locale, $idCategory)
-        ;
-
-        return $this->jsonResponse(
-            $table->fetchData()
-        );
     }
 
 }

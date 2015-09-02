@@ -360,4 +360,60 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
             ->filterByFkAbstractProduct($abstractProduct->getIdAbstractProduct());
     }
 
+    /**
+     * @param $term
+     * @param LocaleTransfer $locale
+     * 
+     * @return SpyAbstractProductQuery
+     */
+    public function queryAbstractProductsBySearchTerm($term, LocaleTransfer $locale)
+    {
+        $term = '%'.strtoupper($term).'%';
+        $query = SpyAbstractProductQuery::create();
+        
+        $query->addJoin(
+                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
+                SpyLocalizedAbstractProductAttributesTableMap::COL_FK_ABSTRACT_PRODUCT,
+                Criteria::INNER_JOIN
+            )
+            ->addJoin(
+                SpyLocalizedAbstractProductAttributesTableMap::COL_FK_LOCALE,
+                SpyLocaleTableMap::COL_ID_LOCALE,
+                Criteria::INNER_JOIN
+            )
+            ->addAnd(
+                SpyLocaleTableMap::COL_ID_LOCALE,
+                $locale->getIdLocale(),
+                Criteria::EQUAL
+            )
+            ->addAnd(
+                SpyLocaleTableMap::COL_IS_ACTIVE,
+                true,
+                Criteria::EQUAL
+            )
+            ->withColumn(
+                SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
+                'name'
+            )
+            ->withColumn(
+                SpyAbstractProductTableMap::COL_ATTRIBUTES,
+                'abstract_attributes'
+            )
+            ->withColumn(
+                SpyLocalizedAbstractProductAttributesTableMap::COL_ATTRIBUTES,
+                'abstract_localized_attributes'
+            )
+            ->withColumn(
+                SpyAbstractProductTableMap::COL_SKU,
+                'sku'
+            )
+            ->where('UPPER('.SpyAbstractProductTableMap::COL_SKU.') LIKE ?', $term, \PDO::PARAM_STR)
+            ->_or()
+            ->where('UPPER('.SpyLocalizedAbstractProductAttributesTableMap::COL_NAME.') LIKE ?', $term, \PDO::PARAM_STR)
+
+        ;
+
+        return $query;
+    }
+
 }

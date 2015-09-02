@@ -626,4 +626,16 @@ class ProductManager implements ProductManagerInterface
         return json_encode($attributes);
     }
 
+    /**
+     * @param $term
+     * @param LocaleTransfer $locale
+     * 
+     * @return SpyAbstractProduct[]
+     */
+    public function getAbstractProductsBySearchTerm($term, LocaleTransfer $locale)
+    {
+        return $this->productQueryContainer->queryAbstractProductsBySearchTerm($term, $locale)->find();
+        
+    }
+
 }

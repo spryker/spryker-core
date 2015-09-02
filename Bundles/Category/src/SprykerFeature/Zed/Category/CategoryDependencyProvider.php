@@ -16,6 +16,7 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_LOCALE = 'locale facade';
     const FACADE_URL = 'url facade';
     const FACADE_PRODUCT_CATEGORY = 'product category facade';
+    const FACADE_PRODUCT = 'product facade';
 
     /**
      * @var Container
@@ -52,6 +53,10 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_PRODUCT_CATEGORY] = function (Container $container) {
             return $container->getLocator()->productCategory()->facade();
+        };
+
+        $container[self::FACADE_PRODUCT] = function (Container $container) {
+            return $container->getLocator()->product()->facade();
         };
 
         return $container;
