@@ -27,6 +27,8 @@
             {{ form_start(form) }}
             {{ form_widget(form) }}
 
+            {{ productCategories | raw }}
+
             <input type="submit" class="btn btn-primary" value="{{ submit_title | trans }}" />
             {{ form_end(form) }}
 
