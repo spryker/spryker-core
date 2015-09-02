@@ -40,4 +40,12 @@ interface ProductCategoryQueryContainerInterface
      */
     public function queryLocalizedProductCategoryMappingBySkuAndCategoryName($sku, $categoryName, LocaleTransfer $locale);
 
+    /**
+     * @param $idCategory
+     *
+     * @param LocaleTransfer $locale
+     * @return SpyProductCategoryQuery
+     */
+    public function queryProductsByCategoryId($idCategory, LocaleTransfer $locale);
+
 }

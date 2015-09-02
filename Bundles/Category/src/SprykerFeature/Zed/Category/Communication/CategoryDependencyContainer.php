@@ -18,6 +18,7 @@ use SprykerFeature\Zed\Category\Communication\Table\CategoryAttributeTable;
 use SprykerFeature\Zed\Category\Communication\Table\RootNodeTable;
 use SprykerFeature\Zed\Category\Communication\Table\UrlTable;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
+use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -37,6 +38,15 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
         return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_LOCALE)
             ->getCurrentLocale()
         ;
+    }
+
+    /**
+     * @return ProductCategoryFacade
+     * @throws \ErrorException
+     */
+    public function createProductCategoryFacade()
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_PRODUCT_CATEGORY);
     }
 
     /**
@@ -123,6 +133,7 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
     {
         return $this->getFactory()->createFormCategoryFormAdd(
             $this->getQueryContainer(),
+            $this->createProductCategoryFacade(),
             $this->getCurrentLocale(),
             null
         );
@@ -137,6 +148,7 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
     {
         return $this->getFactory()->createFormCategoryFormEdit(
             $this->getQueryContainer(),
+            $this->createProductCategoryFacade(),
             $this->getCurrentLocale(),
             $idCategory
         );

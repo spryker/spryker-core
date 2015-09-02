@@ -11,6 +11,7 @@ use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
+use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
 
 interface ProductCategoryManagerInterface
 {
@@ -37,5 +38,13 @@ interface ProductCategoryManagerInterface
      * @return int
      */
     public function createProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale);
+
+    /**
+     * @param $idCategory
+     *
+     * @param LocaleTransfer $locale
+     * @return SpyProductCategoryQuery[]
+     */
+    public function getProductsByCategory($idCategory, LocaleTransfer $locale);
 
 }

@@ -38,5 +38,13 @@
 
 {% block head_css %}
     {{ parent() }}
-    <link rel="stylesheet" href="/bundles/Gui/styles/select2.min.css">
+{% endblock %}
+
+{% block footer_js %}
+    {{ parent() }}
+    <script>
+        $(document).ready(function() {
+            $('.spryker-form-select2combobox').select2();
+        });
+    </script>
 {% endblock %}

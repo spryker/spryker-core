@@ -13,6 +13,7 @@ use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
+use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
 
 /**
  * @property ProductCategoryDependencyContainer $dependencyContainer
@@ -54,6 +55,14 @@ class ProductCategoryFacade extends AbstractFacade
         return $this->getDependencyContainer()
             ->createProductCategoryManager()
             ->hasProductCategoryMapping($sku, $categoryName, $locale)
+        ;
+    }
+    
+    public function getProductsByCategory($idCategory, LocaleTransfer $locale)
+    {
+        return $this->getDependencyContainer()
+            ->createProductCategoryManager()
+            ->getProductsByCategory($idCategory, $locale)
         ;
     }
 

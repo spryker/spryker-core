@@ -17,6 +17,7 @@ use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMapping
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
+use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
 
 class ProductCategoryManager implements ProductCategoryManagerInterface
 {
@@ -92,12 +93,12 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         $this->checkMappingDoesNotExist($sku, $categoryName, $locale);
 
         $idAbstractProduct = $this->productFacade->getAbstractProductIdBySku($sku);
-        $idCategoryNode = $this->categoryFacade->getCategoryNodeIdentifier($categoryName, $locale);
+        $idCategory = $this->categoryFacade->getCategoryIdentifier($categoryName, $locale);
 
         $mappingEntity = $this->locator->productCategory()->entitySpyProductCategory();
         $mappingEntity
             ->setFkAbstractProduct($idAbstractProduct)
-            ->setFkCategory($idCategoryNode)    
+            ->setFkCategory($idCategory)    
         ;
 
         $mappingEntity->save();
@@ -124,6 +125,21 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
                 )
             );
         }
+    }
+
+    /**
+     * @param $idCategory
+     *
+     * @param LocaleTransfer $locale
+     * @return array
+     */
+    public function getProductsByCategory($idCategory, LocaleTransfer $locale)
+    {
+        return $this->productCategoryQueryContainer
+            ->queryProductsByCategoryId($idCategory, $locale)
+            ->orderByFkAbstractProduct()
+            ->find()
+        ;
     }
 
     /**
