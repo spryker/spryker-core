@@ -6,9 +6,7 @@
 
 namespace SprykerEngine\Shared\Kernel;
 
-use SprykerEngine\Shared\Kernel\Factory\FactoryException;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerEngine\Shared\Kernel\ClassMapFactory;
 
 abstract class AbstractFactory implements FactoryInterface
 {
@@ -21,22 +19,12 @@ abstract class AbstractFactory implements FactoryInterface
     /**
      * @var string
      */
-    protected $classNamePattern;
-
-    /**
-     * @var string
-     */
     protected $application;
 
     /**
      * @var string
      */
     protected $layer;
-
-    /**
-     * @var ClassResolver
-     */
-    private $resolver;
 
     /**
      * @var string
@@ -88,7 +76,6 @@ abstract class AbstractFactory implements FactoryInterface
                 return $this->create($className);
             }
         }
-
     }
 
     /**
@@ -98,23 +85,11 @@ abstract class AbstractFactory implements FactoryInterface
      */
     public function exists($class)
     {
-
-//
         if (in_array($class, $this->baseClasses)) {
             $class = $this->getBundle() . $class;
         }
-        if(!isset($this->application)){
-            die('<pre><b>'.print_r('Property missing: '.get_class($this), true).'</b>'.PHP_EOL.__CLASS__.' '.__LINE__);
-        }
-                \SprykerFeature_Shared_Library_Log::log($class. ' - '.$this->application. ' - '.$this->getBundle(). ' - ' .$this->layer, 'exist.log');
 
         return ClassMapFactory::getInstance()->has($this->application, $this->getBundle(), $class, $this->layer);
-
-        $class = $this->buildClassName($class);
-
-        $resolver = $this->getResolver();
-
-        return $resolver->canResolve($class, $this->getBundle());
     }
 
     /**
@@ -126,11 +101,10 @@ abstract class AbstractFactory implements FactoryInterface
      */
     public function create($class)
     {
-
         $arguments = func_get_args();
 
         if (in_array($class, $this->baseClasses)) {
-            $class = $this->getBundle().$class;
+            $class = $this->getBundle() . $class;
         }
 
         array_shift($arguments);
@@ -139,27 +113,8 @@ abstract class AbstractFactory implements FactoryInterface
             $arguments = (count($arguments) > 0) ? $arguments[0] : [];
         }
         $this->isMagicCall = false;
-if(!isset($this->application)){
-    die('<pre><b>'.print_r('Property missing: '.get_class($this), true).'</b>'.PHP_EOL.__CLASS__.' '.__LINE__);
-}
+
         return ClassMapFactory::getInstance()->create($this->application, $this->getBundle(), $class, $this->layer, $arguments);
-//
-//        $class = $this->buildClassName($class);
-//        $resolver = $this->getResolver();
-//
-//        return $resolver->resolve($class, $this->getBundle(), $arguments);
-    }
-
-    /**
-     * @return ClassResolver
-     */
-    protected function getResolver()
-    {
-        $classResolver = new ClassResolver();
-        $camelHumpClassResolver = new CamelHumpClassResolver($classResolver);
-        $this->resolver = IdentityMapClassResolver::getInstance($camelHumpClassResolver);
-
-        return $this->resolver;
     }
 
     /**
@@ -168,34 +123,6 @@ if(!isset($this->application)){
     protected function getBundle()
     {
         return $this->bundle;
-    }
-
-    /**
-     * @param string $class
-     *
-     * @return string
-     */
-    protected function buildClassName($class)
-    {
-        if (in_array($class, $this->baseClasses)) {
-            $class = $this->getBundle() . $class;
-        }
-
-        return $this->getClassNamePattern() . $class;
-    }
-
-    /**
-     * @throws FactoryException
-     *
-     * @return string
-     */
-    protected function getClassNamePattern()
-    {
-        if (is_null($this->classNamePattern)) {
-            throw new FactoryException(sprintf('Couldn\'t find a classNamePattern in "%s"', get_class($this)));
-        }
-
-        return $this->classNamePattern;
     }
 
 }

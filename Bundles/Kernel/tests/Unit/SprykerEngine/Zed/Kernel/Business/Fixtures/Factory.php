@@ -16,9 +16,4 @@ use SprykerEngine\Zed\Kernel\Business\Factory as BusinessFactory;
 class Factory extends BusinessFactory
 {
 
-    /**
-     * @var string
-     */
-    protected $classNamePattern = '\\Unit\\{{namespace}}\\Zed\\{{bundle}}{{store}}\\Business\\Fixtures\\';
-
 }

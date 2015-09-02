@@ -17,34 +17,33 @@ abstract class AbstractLocator implements LocatorInterface
      */
     protected $factoryClassNamePattern;
 
+    /**
+     * @var string
+     */
     protected $bundle;
 
+    /**
+     * @var string
+     */
     protected $layer;
 
+    /**
+     * @var string
+     */
     protected $suffix;
 
+    /**
+     * @var string
+     */
     protected $application;
 
     /**
-     * @param string $factoryClassNamePattern
-     *
      * @throws LocatorException
      */
-    final public function __construct($factoryClassNamePattern = null)
+    final public function __construct()
     {
-//        die('<pre><b>'.print_r((new \Exception())->getTraceAsString(), true).'</b>'.PHP_EOL.__CLASS__.' '.__LINE__);
-        if (!is_null($factoryClassNamePattern)) {
-            $this->factoryClassNamePattern = $factoryClassNamePattern;
-        }
-
         if (is_null($this->application)) {
-            throw new \Exception('Properties missig for: '.get_class($this));
-        }
-
-        if (is_null($this->factoryClassNamePattern)) {
-            throw new LocatorException(
-                sprintf('You must provide a factoryClassNamePattern for "%s"', get_class($this))
-            );
+            throw new LocatorException('Properties missing for: ' . get_class($this));
         }
     }
 
@@ -80,26 +79,7 @@ abstract class AbstractLocator implements LocatorInterface
      */
     protected function getFactory($bundle)
     {
-//        $resolver = IdentityMapClassResolver::getInstance(new ClassResolver());
-//        $classNamePattern = $this->getFactoryClassNamePattern();
-//die('<pre><b>'.print_r($classNamePattern, true).'</b>'.PHP_EOL.__CLASS__.' '.__LINE__);
         return ClassMapFactory::getInstance()->create($this->application, $this->bundle, $this->suffix, $this->layer, [$bundle]);
-
-//        if ($resolver->canResolve($classNamePattern, $bundle)) {
-//            return $resolver->resolve($classNamePattern, $bundle, [$bundle]);
-//        }
-//
-//        throw new LocatorException(sprintf('Could not find Factory "%s', $classNamePattern));
-    }
-
-    /**
-     * @throws LocatorException
-     *
-     * @return null|string
-     */
-    private function getFactoryClassNamePattern()
-    {
-        return $this->factoryClassNamePattern;
     }
 
 }

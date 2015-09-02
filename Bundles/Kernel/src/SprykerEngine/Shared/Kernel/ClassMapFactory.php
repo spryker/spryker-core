@@ -38,14 +38,14 @@ class ClassMapFactory
 
     private function __construct()
     {
-        $this->map = include_once APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . self::CLASS_MAP_FILE_NAME;;
+        $this->map = include_once APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . self::CLASS_MAP_FILE_NAME;
     }
 
     /**
-     * @param $application
-     * @param $bundle
-     * @param $suffix
-     * @param null $layer
+     * @param string $application
+     * @param string $bundle
+     * @param string $suffix
+     * @param string $layer
      * @param array $arguments
      *
      * @throws ClassNotFoundException
@@ -57,7 +57,7 @@ class ClassMapFactory
         $key = $this->createKey($application, $bundle, $suffix, $layer);
 
         if (!array_key_exists($key, $this->map)) {
-            throw new ClassNotFoundException('Class ' . $suffix . ' does not exist');
+            throw new ClassNotFoundException('Class "' . $suffix . '" does not exist');
         }
         $className = $this->map[$key];
 
@@ -65,10 +65,10 @@ class ClassMapFactory
     }
 
     /**
-     * @param $application
-     * @param $bundle
-     * @param $suffix
-     * @param null $layer
+     * @param string $application
+     * @param string $bundle
+     * @param string $suffix
+     * @param string $layer
      *
      * @return bool
      */
@@ -80,10 +80,10 @@ class ClassMapFactory
     }
 
     /**
-     * @param $application
-     * @param $bundle
-     * @param $suffix
-     * @param $layer
+     * @param string $application
+     * @param string $bundle
+     * @param string $suffix
+     * @param string $layer
      *
      * @return string
      */

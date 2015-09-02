@@ -79,53 +79,6 @@ class AbstractPluginTest extends AbstractUnitTest
         $this->assertInstanceOf('SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer', $queryContainer);
     }
 
-    public function testSetMessengerMustReturnPlugin()
-    {
-        $locator = new PluginLocator(
-            '\\Unit\\SprykerEngine\\Zed\\{{bundle}}{{store}}\\Communication\\Fixtures\\AbstractPlugin\\Factory'
-        );
-        /** @var FooPlugin $plugin */
-        $plugin = $locator->locate('Kernel', Locator::getInstance(), 'FooPlugin');
-
-        $messengerMock = $this->getMock('SprykerEngine\Shared\Kernel\Messenger\MessengerInterface');
-        $plugin = $plugin->setMessenger($messengerMock);
-
-        $this->assertInstanceOf(
-            'Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugin',
-            $plugin
-        );
-    }
-
-    public function testCallLogShouldOnlyReturnPluginIfNoMessengerIsSet()
-    {
-        $locator = new PluginLocator(
-            '\\Unit\\SprykerEngine\\Zed\\{{bundle}}{{store}}\\Communication\\Fixtures\\AbstractPlugin\\Factory'
-        );
-        /** @var FooPlugin $plugin */
-        $plugin = $locator->locate('Kernel', Locator::getInstance(), 'FooPlugin');
-
-        $this->assertInstanceOf(
-            'Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugin',
-            $plugin->log('foo', 'bar')
-        );
-    }
-
-    public function testCallLogMustDelegateToInjectedMessengerAndReturnPlugin()
-    {
-        $plugin = $this->locatePlugin();
-
-        $messengerMock = $this->getMock('Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\FooMessenger', ['log']);
-        $messengerMock->expects($this->once())
-            ->method('log');
-
-        $plugin->setMessenger($messengerMock);
-
-        $this->assertInstanceOf(
-            'Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugin',
-            $plugin->log('foo', 'bar')
-        );
-    }
-
     /**
      * @return AbstractCommunicationDependencyContainer
      */

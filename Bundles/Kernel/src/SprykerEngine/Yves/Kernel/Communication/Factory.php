@@ -15,11 +15,6 @@ class Factory extends AbstractFactory
     /**
      * @var string
      */
-    protected $classNamePattern = '\\{{namespace}}\\\\{{bundle}}{{store}}\\Communication\\';
-
-    /**
-     * @var string
-     */
     protected $application = 'Yves';
 
     /**
@@ -48,11 +43,6 @@ class Factory extends AbstractFactory
         }
 
         return ClassMapFactory::getInstance()->create($this->application, $this->getBundle(), $class, $this->layer, $arguments);
-//
-//        $class = $this->buildClassName($class);
-//        $resolver = $this->getResolver();
-//
-//        return $resolver->resolve($class, $this->getBundle(), $arguments);
     }
 
 }

@@ -16,11 +16,6 @@ class Factory extends AbstractFactory
     /**
      * @var string
      */
-    protected $classNamePattern = '\\{{namespace}}\\Zed\\{{bundle}}{{store}}\\Persistence\\';
-
-    /**
-     * @var string
-     */
     protected $application = 'Zed';
 
     /**
@@ -50,7 +45,7 @@ class Factory extends AbstractFactory
         if (in_array($class, $this->baseClasses)) {
             $bundleConfigLocator = new BundleConfigLocator();
             $bundleConfig = $bundleConfigLocator->locate($this->getBundle(), $arguments[2]);
-            $class = $this->getBundle().$class;
+            $class = $this->getBundle() . $class;
             $arguments[] = $bundleConfig;
         }
 
@@ -62,11 +57,6 @@ class Factory extends AbstractFactory
         $this->isMagicCall = false;
 
         return ClassMapFactory::getInstance()->create('Zed', $this->getBundle(), $class, 'Persistence', $arguments);
-
-//        $class = $this->buildClassName($class);
-//        $resolver = $this->getResolver();
-//
-//        return $resolver->resolve($class, $this->getBundle(), $arguments);
     }
 
 }

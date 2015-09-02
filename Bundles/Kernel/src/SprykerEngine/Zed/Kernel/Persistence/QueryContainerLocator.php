@@ -22,16 +22,22 @@ class QueryContainerLocator extends AbstractLocator
     /**
      * @var string
      */
-    protected $factoryClassNamePattern = '\\{{namespace}}\\Zed\\Kernel\\Persistence\\Factory';
-
     protected $bundle = 'Kernel';
 
+    /**
+     * @var string
+     */
     protected $layer = 'Persistence';
 
+    /**
+     * @var string
+     */
     protected $suffix = 'Factory';
 
+    /**
+     * @var string
+     */
     protected $application = 'Zed';
-
 
     /**
      * @param string $bundle
@@ -54,7 +60,7 @@ class QueryContainerLocator extends AbstractLocator
             $bundleBuilder = $bundleConfigLocator->locate($bundle, $locator);
             $container = new Container();
             $container[self::PROPEL_CONNECTION] = function () use ($locator) {
-                /** @var $locator AutoCompletion */
+                /* @var $locator AutoCompletion */
                 return $locator->propel()->pluginConnection()->get();
             };
             $bundleBuilder->providePersistenceLayerDependencies($container);

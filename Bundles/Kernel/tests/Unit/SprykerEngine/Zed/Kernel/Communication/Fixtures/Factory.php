@@ -11,6 +11,4 @@ use SprykerEngine\Zed\Kernel\Communication\Factory as CommunicationFactory;
 class Factory extends CommunicationFactory
 {
 
-    protected $classNamePattern = '\\Unit\\SprykerEngine\\Zed\\Kernel\\Communication\\Fixtures\\';
-
 }
