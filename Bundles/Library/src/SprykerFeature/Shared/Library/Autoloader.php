@@ -89,8 +89,10 @@ class Autoloader
     private function getResourceRelativePath($resourceParts)
     {
         $bundle = $resourceParts[2];
-        $bundleWithoutStore = str_replace(APPLICATION_STORE, '', $bundle);
-        $relativeResourcePath = 'Bundles/' . $bundleWithoutStore . '/src/' . implode(DIRECTORY_SEPARATOR, $resourceParts);
+        if (defined('APPLICATION_STORE')) {
+            $bundle = str_replace(APPLICATION_STORE, '', $bundle);
+        }
+        $relativeResourcePath = 'Bundles/' . $bundle . '/src/' . implode(DIRECTORY_SEPARATOR, $resourceParts);
 
         return $relativeResourcePath . '.php';
     }
