@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-include_once __DIR__ . '/../autoload.php';
+require_once(__DIR__ . '/../../../../../autoload.php');
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -14,7 +14,7 @@ class ClassMapBuilder
     const CLASS_PART_BUNDLE = 3;
     const CLASS_PART_LAYER = 4;
     const STORE_PLACEHOLDER = '{{STORE}}';
-    const PATH_TO_CLASS_MAP = '/../../.class_map';
+    const PATH_TO_CLASS_MAP = '/../../../../../../.class_map';
 
     /**
      * @return array
@@ -35,8 +35,8 @@ class ClassMapBuilder
     private function getDirectories()
     {
         $directories = [
-            __DIR__ . '/../spryker/spryker/Bundles/*/src/',
-            __DIR__ . '/../../src',
+            __DIR__ . '/../../*/src',
+            __DIR__ . '/../../../../../../src',
         ];
 
         return $directories;

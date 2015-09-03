@@ -34,7 +34,7 @@ class FacadeLocator extends AbstractLocator
     protected $application = 'Zed';
 
     /**
-     * @var string string
+     * @var string
      */
     protected $suffix = 'Factory';
 
