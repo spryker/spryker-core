@@ -33,8 +33,7 @@
                 <tr>
                     <th>Name</th>
                     <th>SKU</th>
-                    <th>Preconfig</th>
-                    <th></th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -67,28 +66,58 @@
 {% block footer_js %}
     {{ parent() }}
     <script>
+        var selectedProducts = {};
+        var suggestedProductsFromSelect2 = {};
+        
         function fnClickAddRow() {
-            var selectedProductId = parseInt($('#form_products').val()) || 0;
-            alert(selectedProductId)
-            if (selectedProductId <= 0) {
-                return;
-            }
+            var combo = $('#form_products');
+            //var selectedProductId = parseInt(combo.val()) || 0;
 
-            $('#assignNewProductsTable').dataTable().fnAddData( [
-                'SKU',
-                'Name',
-                '',
-                '<div class=""><a onclick="fnClickRemoveRow(this);" href="javascript:void(0);" class="btn btn-xs ">Remove</a></div>'
-            ]);
+            var select2Data = combo.select2('data');
+            for (var i=0; i<select2Data.length; i++) {
+                var currentId = select2Data[i].id;
+                var product = null;
+
+                if (selectedProducts.hasOwnProperty(currentId)) {
+                    continue;
+                }
+                
+                if (suggestedProductsFromSelect2.hasOwnProperty(currentId)) {
+                    product = suggestedProductsFromSelect2[currentId]; 
+                }
+                
+                selectedProducts[product.id] = product.id;
+                
+                var action = '<div class=""><a onclick="fnClickRemoveRow(this, ' + product.id + ');" href="javascript:void(0);" class="btn btn-xs ">Remove</a></div>';
+                
+                $('#assignNewProductsTable').dataTable().fnAddData([
+                    product.sku,
+                    product.name,
+                    action
+                ]);
+            }
         }
 
-        function fnClickRemoveRow(btn) {
-            //var $table = $('#assignNewProductsTable')
-            $(this).parents('tr').remove();
+        function fnClickRemoveRow(btn, id) {
+            var table = $('#assignNewProductsTable').DataTable();
+                table
+                    .row( $(btn).parents('tr') )
+                    .remove()
+                    .draw();
+            
+            delete selectedProducts[id];
+
+            var new_data = $.grep($('#form_products').select2('data'), function (value) {
+                return value['id'] != id;
+            });
+            
+            console.log('newData', new_data);
+            
+            //$('#form_products').('data', new_data).trigger("change");
+            $('#form_products').data(new_data).trigger("change");
         }
         
         $(document).ready(function() {
-
             //parent
             $('.spryker-form-select2combobox').select2();
             
@@ -105,6 +134,10 @@
                         };
                     },
                     processResults: function (data, page) {
+                        for (var i=0; i<data.items.length; i++) {
+                            suggestedProductsFromSelect2[data.items[i].id] = data.items[i];
+                        }
+                        
                         return {
                             results: data.items
                         };
