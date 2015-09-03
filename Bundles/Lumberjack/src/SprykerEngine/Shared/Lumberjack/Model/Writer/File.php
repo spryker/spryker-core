@@ -12,10 +12,13 @@ class File extends AbstractWriter
 {
 
     /**
-     * @var array
+     * @var resource[]
      */
     static $fileHandles = [];
 
+    /**
+     * @var resource
+     */
     static $preferedHandle;
 
     /**
@@ -55,11 +58,11 @@ class File extends AbstractWriter
     }
 
     /**
-     * @return mixed
+     * @return resource
      */
     protected function getOrCreateRandomFileHandle()
     {
-        if(null !== self::$preferedHandle) {
+        if (null !== self::$preferedHandle) {
             return self::$preferedHandle;
         }
         $fileName = $this->getRandomFileName();
@@ -102,7 +105,7 @@ class File extends AbstractWriter
      */
     protected function getJsonEntry(EventInterface $event)
     {
-        $json = json_encode($event->getFields(), JSON_PRETTY_PRINT);
+        $json = json_encode($event->getFields());
         if ($json === false) {
             return '';
         }
