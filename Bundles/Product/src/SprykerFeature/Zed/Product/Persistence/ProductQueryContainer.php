@@ -24,6 +24,7 @@ use SprykerFeature\Zed\Product\Persistence\Propel\SpyLocalizedProductAttributesQ
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductAttributesMetadataQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductAttributeTypeQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
+use SprykerFeature\Zed\ProductCategory\Persistence\Propel\Map\SpyProductCategoryTableMap;
 use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
 use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSetQuery;
 
@@ -363,12 +364,13 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     /**
      * @param $term
      * @param LocaleTransfer $locale
+     * @param int $idExcludedCategory null
      * 
      * @return SpyAbstractProductQuery
      */
-    public function queryAbstractProductsBySearchTerm($term, LocaleTransfer $locale)
+    public function queryAbstractProductsBySearchTerm($term, LocaleTransfer $locale, $idExcludedCategory = null)
     {
-        $term = '%'.strtoupper($term).'%';
+        $idExcludedCategory = (int) $idExcludedCategory;
         $query = SpyAbstractProductQuery::create();
         
         $query->addJoin(
@@ -406,12 +408,99 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
             ->withColumn(
                 SpyAbstractProductTableMap::COL_SKU,
                 'sku'
-            )
-            ->where('UPPER('.SpyAbstractProductTableMap::COL_SKU.') LIKE ?', $term, \PDO::PARAM_STR)
-            ->_or()
-            ->where('UPPER('.SpyLocalizedAbstractProductAttributesTableMap::COL_NAME.') LIKE ?', $term, \PDO::PARAM_STR)
+            );
+        
+        if ('' !== trim($term)) {
+            $term = '%'.strtoupper($term).'%';
 
-        ;
+            $query->where('UPPER('.SpyAbstractProductTableMap::COL_SKU.') LIKE ?', $term, \PDO::PARAM_STR)
+                ->_or()
+                ->where('UPPER('.SpyLocalizedAbstractProductAttributesTableMap::COL_NAME.') LIKE ?', $term, \PDO::PARAM_STR)
+            ;
+        }
+        
+        if ($idExcludedCategory > 0) {
+            $query
+                ->addJoin(
+                    SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
+                    SpyProductCategoryTableMap::COL_FK_ABSTRACT_PRODUCT,
+                    Criteria::INNER_JOIN
+                )
+                ->_and()
+                ->where(SpyProductCategoryTableMap::COL_FK_CATEGORY.' <> ?', $idExcludedCategory, \PDO::PARAM_INT);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param $term
+     * @param LocaleTransfer $locale
+     * @param int $idExcludedCategory null
+     *
+     * @return SpyAbstractProductQuery
+     */
+    public function queryAbstractProductsBySearchTermFuckingLol($term, LocaleTransfer $locale, $idExcludedCategory = null)
+    {
+        $idExcludedCategory = (int) $idExcludedCategory;
+        $query = SpyAbstractProductQuery::create();
+
+        $query->addJoin(
+            SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
+            SpyLocalizedAbstractProductAttributesTableMap::COL_FK_ABSTRACT_PRODUCT,
+            Criteria::INNER_JOIN
+        )
+            ->addJoin(
+                SpyLocalizedAbstractProductAttributesTableMap::COL_FK_LOCALE,
+                SpyLocaleTableMap::COL_ID_LOCALE,
+                Criteria::INNER_JOIN
+            )
+            ->addAnd(
+                SpyLocaleTableMap::COL_ID_LOCALE,
+                $locale->getIdLocale(),
+                Criteria::EQUAL
+            )
+            ->addAnd(
+                SpyLocaleTableMap::COL_IS_ACTIVE,
+                true,
+                Criteria::EQUAL
+            )
+            ->withColumn(
+                SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
+                'name'
+            )
+            ->withColumn(
+                SpyAbstractProductTableMap::COL_ATTRIBUTES,
+                'abstract_attributes'
+            )
+            ->withColumn(
+                SpyLocalizedAbstractProductAttributesTableMap::COL_ATTRIBUTES,
+                'abstract_localized_attributes'
+            )
+            ->withColumn(
+                SpyAbstractProductTableMap::COL_SKU,
+                'SKU' //THIS HAS TO BE UPPERCASE WTF 
+            );
+
+        if ('' !== trim($term)) {
+            $term = '%'.strtoupper($term).'%';
+
+            $query->where('UPPER('.SpyAbstractProductTableMap::COL_SKU.') LIKE ?', $term, \PDO::PARAM_STR)
+                ->_or()
+                ->where('UPPER('.SpyLocalizedAbstractProductAttributesTableMap::COL_NAME.') LIKE ?', $term, \PDO::PARAM_STR)
+            ;
+        }
+
+        if ($idExcludedCategory > 0) {
+            $query
+                ->addJoin(
+                    SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
+                    SpyProductCategoryTableMap::COL_FK_ABSTRACT_PRODUCT,
+                    Criteria::INNER_JOIN
+                )
+                ->_and()
+                ->where(SpyProductCategoryTableMap::COL_FK_CATEGORY.' <> ?', $idExcludedCategory, \PDO::PARAM_INT);
+        }
 
         return $query;
     }

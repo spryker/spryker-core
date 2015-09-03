@@ -47,7 +47,7 @@ class CategoryFormEdit extends CategoryFormAdd
                 ],
                 //'multiple' => true,
             ])
-            ->addSelect2ComboBox('products', [
+/*            ->addSelect2ComboBox('products', [
                 'label' => 'Products',
                 'choices' => $this->getProducts(),
                 'constraints' => [
@@ -56,7 +56,7 @@ class CategoryFormEdit extends CategoryFormAdd
                 'multiple' => true,
                 'placeholder' => '-Select Product-'
                 //'data' => $this->getAssignedProducts()
-            ])
+            ])*/
             ->addHidden(self::PK_CATEGORY_NODE)
             ;
     }

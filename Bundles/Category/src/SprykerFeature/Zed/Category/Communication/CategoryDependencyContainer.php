@@ -19,6 +19,7 @@ use SprykerFeature\Zed\Category\Communication\Table\RootNodeTable;
 use SprykerFeature\Zed\Category\Communication\Table\UrlTable;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Product\Business\ProductFacade;
+use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
 use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -88,14 +89,29 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
-     *
-     * @return RootNodeTable
+     * @param LocaleTransfer $locale
+     * @param $idCategory
+     * 
+     * @return Table\ProductCategoryTable
      */
     public function createProductCategoryTable(LocaleTransfer $locale, $idCategory)
     {
         $productCategoryQueryContainer = $this->createProductCategoryQueryContainer();
 
         return $this->getFactory()->createTableProductCategoryTable($productCategoryQueryContainer, $locale, $idCategory);
+    }
+
+    /**
+     * @param LocaleTransfer $locale
+     * @param $idCategory
+     * 
+     * @return Table\ProductTable
+     */
+    public function createProductTable(LocaleTransfer $locale, $idCategory)
+    {
+        $productQueryContainer = $this->createProductQueryContainer();
+
+        return $this->getFactory()->createTableProductTable($productQueryContainer, $locale, $idCategory);
     }
 
     /**
@@ -107,7 +123,14 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
-     *
+     * @return ProductQueryContainerInterface
+     */
+    public function createProductQueryContainer()
+    {
+        return $this->getLocator()->product()->queryContainer();
+    }
+
+    /**
      * @return RootNodeTable
      */
     public function createRootNodeTable()

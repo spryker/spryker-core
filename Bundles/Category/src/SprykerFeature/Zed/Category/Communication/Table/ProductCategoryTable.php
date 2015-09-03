@@ -57,6 +57,7 @@ class ProductCategoryTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeader([
+            //'checkboxes' => 'Select All',
             SpyAbstractProductTableMap::COL_SKU => 'SKU',
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => 'Name',
             SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => 'Preconfig',
@@ -81,13 +82,14 @@ class ProductCategoryTable extends AbstractTable
         $query->setModelAlias('spy_abstract_product');
         
         $queryResults = $this->runQuery($query, $config);
+        
         $results = [];
         foreach ($queryResults as $productCategory) {
-            //die(dump($productCategory));
             $results[] = [
                 SpyAbstractProductTableMap::COL_SKU => '<input type="checkbox" /> '.$productCategory['sku'],
                 SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => $productCategory['name'],
                 SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => $productCategory[SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT],
+                //'checkboxes' => '<input type="checkbox" />',
             ];
         }
         unset($queryResults);

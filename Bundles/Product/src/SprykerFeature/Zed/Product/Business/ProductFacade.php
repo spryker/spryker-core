@@ -278,11 +278,12 @@ class ProductFacade extends AbstractFacade
     /**
      * @param $term
      * @param LocaleTransfer $locale
+     * @param $idExcludedCategory
      * 
      * @return SpyAbstractProduct[]
      */
-    public function getAbstractProductsBySearchTerm($term, LocaleTransfer $locale)
+    public function getAbstractProductsBySearchTerm($term, LocaleTransfer $locale, $idExcludedCategory=null)
     {
-        return $this->getDependencyContainer()->createProductManager()->getAbstractProductsBySearchTerm($term, $locale);
+        return $this->getDependencyContainer()->createProductManager()->getAbstractProductsBySearchTerm($term, $locale, $idExcludedCategory);
     }
 }

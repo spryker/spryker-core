@@ -73,11 +73,16 @@ class EditController extends AddController
         $productCategories = $this->getDependencyContainer()
             ->createProductCategoryTable($locale, $idCategory)
         ;
+
+        $products = $this->getDependencyContainer()
+            ->createProductTable($locale, $idCategory)
+        ;
         
         return $this->viewResponse([
             'idCategory' => $idCategory,
             'form' => $form->createView(),
-            'productCategories' => $productCategories->render(),
+            'productCategoriesTable' => $productCategories->render(),
+            'productsTable' => $products->render(),
         ]);
     }
 

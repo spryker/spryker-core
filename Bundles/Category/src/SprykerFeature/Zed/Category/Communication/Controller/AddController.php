@@ -70,8 +70,6 @@ class AddController extends AbstractController
         ]);
     }
 
-
-
     /**
      * @param Request $request
      *
@@ -84,12 +82,33 @@ class AddController extends AbstractController
             ->createCurrentLocale()
         ;
 
-        $table = $this->getDependencyContainer()
+        $productCategoryTable = $this->getDependencyContainer()
             ->createProductCategoryTable($locale, $idCategory)
         ;
 
         return $this->jsonResponse(
-            $table->fetchData()
+            $productCategoryTable->fetchData()
+        );
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return JsonResponse
+     */
+    public function productTableAction(Request $request)
+    {
+        $idCategory = $request->get(CategoryConfig::PARAM_ID_CATEGORY);
+        $locale = $this->getDependencyContainer()
+            ->createCurrentLocale()
+        ;
+
+        $productTable = $this->getDependencyContainer()
+            ->createProductTable($locale, $idCategory)
+        ;
+
+        return $this->jsonResponse(
+            $productTable->fetchData()
         );
     }
 
@@ -101,6 +120,7 @@ class AddController extends AbstractController
     public function productCategorySuggestProductAction(Request $request)
     {
         $term = $request->get(CategoryConfig::PARAM_PRODUCT_PHRASE_SUGGEST);
+        $idCategory = $request->get(CategoryConfig::PARAM_ID_CATEGORY);
         
         $locale = $this->getDependencyContainer()
             ->createCurrentLocale()
@@ -108,7 +128,7 @@ class AddController extends AbstractController
 
         $resultSet = $this->getDependencyContainer()
             ->createProductFacade()
-            ->getAbstractProductsBySearchTerm($term, $locale);
+            ->getAbstractProductsBySearchTerm($term, $locale, $idCategory);
         ;
         
         $results = [];
