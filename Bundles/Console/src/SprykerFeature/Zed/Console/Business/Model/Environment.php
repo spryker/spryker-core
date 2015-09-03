@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Console\Business\Model;
 
 use SprykerFeature\Shared\Library\Application\Environment as SprykerEnvironment;
+use Symfony\Component\Process\Process;
 
 class Environment
 {
@@ -28,7 +29,17 @@ class Environment
         defined('SYSTEM_UNDER_TEST')
             || define('SYSTEM_UNDER_TEST', false);
 
+        self::setupClassMapIfNotPresent();
+
         SprykerEnvironment::initialize(APPLICATION, true);
+    }
+
+    private static function setupClassMapIfNotPresent()
+    {
+        if (!file_exists(APPLICATION_ROOT_DIR . '.class_map')) {
+            $process = new Process('vendor/bin/build-class-map');
+            $process->run();
+        }
     }
 
 }

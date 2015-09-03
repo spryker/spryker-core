@@ -81,4 +81,12 @@ class ConsoleBootstrap extends Application
         );
     }
 
+    /**
+     *
+     */
+    private function setupClassMapIfNotPresent()
+    {
+        die(__DIR__);
+    }
+
 }
