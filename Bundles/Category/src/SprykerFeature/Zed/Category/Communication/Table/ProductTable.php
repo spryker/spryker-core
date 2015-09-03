@@ -73,6 +73,8 @@ class ProductTable extends AbstractTable
             SpyAbstractProductTableMap::COL_SKU,
             //SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
         ]);
+        
+        $config->setPageLength(10);
 
         return $config;
     }
@@ -87,8 +89,8 @@ class ProductTable extends AbstractTable
         $query = $this->productQueryContainer->queryAbstractProductsBySearchTermFuckingLol(null, $this->locale, $this->idCategory);
         $query->setModelAlias('spy_abstract_product');
         
-        
         $queryResults = $this->runQuery($query, $config);
+        
         $results = [];
         foreach ($queryResults as $productCategory) {
             $results[] = [

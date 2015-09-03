@@ -27,13 +27,12 @@
             {{ form_start(form) }}
             {{ form_widget(form) }}
 
-            <h3>Selected products</h3>
+{#            <h3>Selected products</h3>
             <table class="table table-striped table-bordered table-hover " id="assignNewProductsTable" >
             <thead>
                 <tr>
                     <th>Name</th>
                     <th>SKU</th>
-                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,7 +44,7 @@
             </div>
             <br/>
             <br/>
-            <br/>
+            <br/>#}
 
             <h3>Products in this category</h3>
             {{ productsTable | raw }}
@@ -125,6 +124,13 @@
         }
         
         $(document).ready(function() {
+
+            $('#assignNewProductsTable').DataTable( {
+                'processing': true,
+                'serverSide': true,
+                'ajax': '/category/edit/productTable?id-category={{ idCategory }}'
+            } );
+            
             //parent
             $('.spryker-form-select2combobox').select2();
             
