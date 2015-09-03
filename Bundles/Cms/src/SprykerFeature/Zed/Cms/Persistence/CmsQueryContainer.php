@@ -8,6 +8,9 @@ namespace SprykerFeature\Zed\Cms\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategoryNodeQuery;
+use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
+use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
 use SprykerFeature\Zed\Cms\CmsDependencyProvider;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsBlockForm;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsPageForm;
@@ -21,6 +24,7 @@ use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryKeyTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKeyQuery;
+use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
 use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
 
 class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContainerInterface
@@ -28,6 +32,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
 
     const TEMPLATE_NAME = 'template_name';
     const TEMPLATE_PATH = 'template_path';
+    const CATEGORY_NODE_ID = 'categoryNodeId';
+    const CATEGORY_NAME = 'categoryName';
     const ID_URL = 'id_url';
     const URL = 'url';
     const TO_URL = 'toUrl';
@@ -128,6 +134,18 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
                 ->joinCmsTemplate()
                     ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, self::TEMPLATE_NAME)
                 ->endUse()
+            ->addJoin(
+                SpyCmsBlockTableMap::COL_VALUE,
+                SpyCategoryAttributeTableMap::COL_ID_CATEGORY_ATTRIBUTE,
+                Criteria::LEFT_JOIN
+            )
+            ->addJoin(
+                SpyCategoryAttributeTableMap::COL_ID_CATEGORY_ATTRIBUTE,
+                SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE,
+                Criteria::LEFT_JOIN
+            )
+            ->withColumn(SpyUrlTableMap::COL_URL, self::URL)
+            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::CATEGORY_NAME)
             ->withColumn(SpyCmsBlockTableMap::COL_NAME)
             ;
     }
@@ -146,6 +164,12 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
                 ->joinCmsTemplate()
                     ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_NAME, self::TEMPLATE_NAME)
                 ->endUse()
+            ->addJoin(
+                SpyCmsBlockTableMap::COL_VALUE,
+                SpyCategoryAttributeTableMap::COL_ID_CATEGORY_ATTRIBUTE,
+                Criteria::LEFT_JOIN
+            )
+            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::CATEGORY_NAME)
             ->withColumn(SpyCmsBlockTableMap::COL_NAME)
             ->withColumn(SpyCmsPageTableMap::COL_FK_TEMPLATE, CmsBlockForm::FK_TEMPLATE)
             ->withColumn(SpyCmsPageTableMap::COL_IS_ACTIVE, 'isActive')
@@ -384,6 +408,30 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     {
         return $this->queryBlocks()
             ->filterByName($blockName)
+            ;
+    }
+
+    /**
+     * @param $categoryName
+     * @param $idLocale
+     *
+     * @throws \ErrorException
+     * @return SpyCategoryNodeQuery
+     */
+    public function queryNodeByCategoryName($categoryName, $idLocale)
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::CATEGORY_QUERY_CONTAINER)
+            ->queryCategoryNode($idLocale)
+            ->useCategoryQuery()
+                ->useAttributeQuery()
+                    ->filterByName('%' . mb_strtolower($categoryName) . '%', Criteria::LIKE)
+                    ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::CATEGORY_NAME)
+                ->endUse()
+            ->endUse()
+            ->useSpyUrlQuery()
+            ->endUse()
+            ->withColumn(SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE, self::CATEGORY_NODE_ID)
+            ->withColumn(SpyUrlTableMap::COL_URL, self::URL)
             ;
     }
 }

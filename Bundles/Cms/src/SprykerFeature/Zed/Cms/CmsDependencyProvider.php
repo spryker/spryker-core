@@ -16,6 +16,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_GLOSSARY = 'facade glossary';
     const URL_QUERY_CONTAINER = 'url_query_container';
     const GLOSSARY_QUERY_CONTAINER = 'glossary_query_container';
+    const CATEGORY_QUERY_CONTAINER = 'category query container';
 
     const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
 
@@ -69,6 +70,10 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::GLOSSARY_QUERY_CONTAINER] = function (Container $container) {
             return $container->getLocator()->glossary()->queryContainer();
+        };
+
+        $container[self::CATEGORY_QUERY_CONTAINER] = function (Container $container) {
+            return $container->getLocator()->category()->queryContainer();
         };
     }
 }

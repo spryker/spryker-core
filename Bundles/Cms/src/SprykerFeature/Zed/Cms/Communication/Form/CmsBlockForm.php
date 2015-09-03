@@ -18,6 +18,7 @@ class CmsBlockForm extends AbstractForm
 
     const CATEGORY = 'category';
     const PRODUCT = 'product';
+    const SELECT_VALUE = 'selectValue';
     const ID_CMS_BLOCK = 'idCmsBlock';
     const FK_PAGE = 'fkPage';
     const FK_TEMPLATE = 'fkTemplate';
@@ -115,7 +116,10 @@ class CmsBlockForm extends AbstractForm
                     self::PRODUCT => 'Product'
                 ],
             ])
-            ->addText(self::VALUE, [
+            ->addText(self::SELECT_VALUE, [
+                'label' => 'Value',
+            ])
+            ->addHidden(self::VALUE, [
                 'label' => 'Value',
             ])
             ->addCheckbox(self::IS_ACTIVE, [
@@ -154,6 +158,7 @@ class CmsBlockForm extends AbstractForm
                 self::FK_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
                 self::NAME => $pageUrlTemplate->getName(),
                 self::TYPE => $pageUrlTemplate->getType(),
+                self::SELECT_VALUE => $pageUrlTemplate->getCategoryName(),
                 self::VALUE => $pageUrlTemplate->getValue(),
                 self::CURRENT_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
                 self::IS_ACTIVE => (bool)$pageUrlTemplate->getIsActive(),

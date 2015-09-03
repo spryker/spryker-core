@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Cms\Communication\Table;
 
+use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 use SprykerFeature\Zed\Cms\Persistence\Propel\Base\SpyCmsBlockQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\Map\SpyCmsBlockTableMap;
@@ -57,6 +58,7 @@ class CmsBlockTable extends AbstractTable
             SpyCmsBlockTableMap::COL_TYPE,
             SpyCmsBlockTableMap::COL_VALUE,
             SpyCmsBlockTableMap::COL_NAME,
+            SpyCategoryAttributeTableMap::COL_NAME
         ]);
 
         return $config;
@@ -78,7 +80,7 @@ class CmsBlockTable extends AbstractTable
                 CmsQueryContainer::TEMPLATE_NAME => $item[CmsQueryContainer::TEMPLATE_NAME],
                 SpyCmsBlockTableMap::COL_NAME => $item[SpyCmsBlockTableMap::COL_NAME],
                 SpyCmsBlockTableMap::COL_TYPE => $item[SpyCmsBlockTableMap::COL_TYPE],
-                SpyCmsBlockTableMap::COL_VALUE => $item[SpyCmsBlockTableMap::COL_VALUE],
+                SpyCmsBlockTableMap::COL_VALUE => $this->buildValueItem($item),
                 self::ACTIONS => $this->buildLinks($item),
             ];
         }
@@ -96,6 +98,13 @@ class CmsBlockTable extends AbstractTable
     {
         $result = '<a href="/cms/glossary/?' . self::REQUEST_ID_PAGE . '=' . $item[SpyCmsBlockTableMap::COL_FK_PAGE] . '" class="btn btn-xs btn-white">Edit placeholders</a>&nbsp;
         <a href="/cms/block/edit/?' . self::REQUEST_ID_BLOCK . '=' . $item[SpyCmsBlockTableMap::COL_ID_CMS_BLOCK] . '" class="btn btn-xs btn-white">Edit block</a>';
+
+        return $result;
+    }
+
+    private function buildValueItem(array $item)
+    {
+        $result = $item[CmsQueryContainer::CATEGORY_NAME].'<br><div style="font-size:.8em">'.$item[CmsQueryContainer::URL].'<div>';
 
         return $result;
     }

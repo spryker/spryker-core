@@ -2,6 +2,8 @@
 var xhr = null;
 var keyList = null;
 var keyContainer = null;
+var itemList = null;
+var itemContainer = null;
 
 function postForm( $form, id, successCallback ){
 
@@ -128,6 +130,94 @@ var addKeySearchEvent = function(formId) {
     });
 }
 
+function showBlockAutoComplete(elementId, type) {
+    var listElement = '<div id="foundItemListContainer" class="key-container"><select id="foundItemList" size="10" class="key-list"></select></div>'
+    $('.itemListCanvas').empty();
+    $('.itemListCanvas').append(listElement);
+
+    itemList = $('#foundItemList');
+    itemContainer = $('#foundItemListContainer');
+
+
+    var elementInput = $(elementId);
+
+    var blockValue = $('#form_value');
+    var ajaxUrl = type == 'category' ? '/cms/block/search-category?term=' : '/cms/block/search-product?term=';
+
+    itemList.find('option').remove();
+
+    var loadingBlock = $('.block-loading');
+    loadingBlock.css({ top: elementInput.offset().top - 28, left: elementInput.offset().left - 235, position : 'absolute'});
+    loadingBlock.show();
+
+    xhr = $.ajax({
+        type        : 'GET',
+        url         : ajaxUrl + elementInput.val(),
+        success     : function(data) {
+            $('.block-loading').hide();
+
+            $.each(data, function (i, item) {
+                itemList.append($('<option>', {
+                    value: i,
+                    text : item.name + '  ->  ' + item.url,
+                }));
+
+                itemContainer.css({ top: elementInput.offset().top - 28 });
+                itemContainer.css({ left: elementInput.offset().left - 235 });
+                itemContainer.css({ width: elementInput.width() + 25 });
+                itemContainer.show();
+            });
+
+            itemList.css({ height :  data.length * 17 });
+
+            itemList.on('keydown', function(e) {
+                var key = e.keyCode;
+                if (key == 13 || key == 9) {
+                    itemList.blur();
+                    return false;
+                }
+            });
+
+            itemList.on('blur', function() {
+                elementInput.val(data[this.value].name);
+                blockValue.val(data[this.value].id);
+                itemContainer.hide();
+                elementInput.focus();
+                return false;
+            });
+        },
+    });
+}
+
+var addAutoCompleteSearchEvent = function(elementId) {
+    var elementInput = $(elementId);
+    var elementType = $('#form_type');
+
+    elementInput.attr( 'autocomplete', 'off' );
+
+    elementInput.on('input', function() {
+        if($(this).val().length > 3){
+            delay(function(){
+                if(xhr && xhr.readystate != 4){
+                    xhr.abort();
+                }
+                if (elementType.val() != 0) {
+                    showBlockAutoComplete(elementId, elementType.val());
+                }
+            }, 500 );
+        }
+    });
+
+    elementInput.on('keyup', function(e) {
+        var key = e.keyCode;
+
+        if (key == 40) {
+            itemList.first().focus();
+            itemList.val(0).change();
+        }
+    });
+}
+
 var delay = (function(){
     var timer = 0;
     return function(callback, ms){
@@ -137,6 +227,9 @@ var delay = (function(){
 })();
 
 $(document).ready(function(){
+
+    addAutoCompleteSearchEvent('#form_selectValue');
+
     $('.cms_form').each(function(index, item){
         var formId = $(item).attr('data-index');
         ajaxifySubmmit(formId);
@@ -148,4 +241,8 @@ $(document).on('click', function(e) {
     if (keyContainer !== null && !$(e.target).is('option')) {
         keyContainer.hide();
     }
+    if (itemContainer !== null && !$(e.target).is('option')) {
+        itemContainer.hide();
+    }
 });
+

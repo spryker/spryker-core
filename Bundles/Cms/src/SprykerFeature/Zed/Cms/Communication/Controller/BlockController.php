@@ -6,10 +6,12 @@
 
 namespace SprykerFeature\Zed\Cms\Communication\Controller;
 
+use Functional\SprykerFeature\Zed\ProductOption\Mock\LocaleFacade;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
+use SprykerFeature\Zed\Cms\CmsDependencyProvider;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsBlockForm;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsPageForm;
 use SprykerFeature\Zed\Cms\Communication\Table\CmsBlockTable;
@@ -24,6 +26,7 @@ class BlockController extends AbstractController
 {
 
     const REDIRECT_ADDRESS = '/cms/glossary/';
+    const SEARCH_LIMIT = 15;
 
     /**
      * @return array
@@ -159,5 +162,36 @@ class BlockController extends AbstractController
         }
 
         return $blockTransfer;
+    }
+
+    /**
+     * @return LocaleFacade
+     */
+    private function getLocaleFacade()
+    {
+        return $this->getDependencyContainer()
+            ->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE)
+            ;
+    }
+
+    public function searchCategoryAction(Request $request)
+    {
+        $term = $request->get('term');
+        $localId = $this->getLocaleFacade()->getCurrentLocale()->getIdLocale();
+
+        $searchedItems = $this->getQueryContainer()->queryNodeByCategoryName($term,$localId)
+            ->limit(self::SEARCH_LIMIT)
+            ->find();
+
+        $result = [];
+        foreach ($searchedItems as $category) {
+            $result[] = [
+                'id' => $category->getCategoryNodeId(),
+                'name' => $category->getCategoryName(),
+                'url' => $category->getUrl(),
+            ];
+        }
+
+        return $this->jsonResponse($result);
     }
 }
