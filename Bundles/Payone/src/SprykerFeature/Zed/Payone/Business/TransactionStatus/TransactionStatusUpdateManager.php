@@ -344,7 +344,7 @@ class TransactionStatusUpdateManager
             return;
         }
 
-        return $transactionStatusLogs;
+        return $transactionStatusLog;
     }
 
     /**
