@@ -6,6 +6,7 @@
 
 namespace SprykerEngine\Zed\Kernel\Persistence\Propel;
 
+use SprykerEngine\Shared\Kernel\ClassResolver\ClassNotFoundException;
 use SprykerEngine\Shared\Kernel\Locator\LocatorInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Shared\Kernel\ClassMapFactory;
@@ -18,7 +19,7 @@ class EntityLocator implements LocatorInterface
      * @param LocatorLocatorInterface $locator
      * @param null $className
      *
-     * @throws \SprykerEngine\Shared\Kernel\ClassResolver\ClassNotFoundException
+     * @throws ClassNotFoundException
      *
      * @return object
      */

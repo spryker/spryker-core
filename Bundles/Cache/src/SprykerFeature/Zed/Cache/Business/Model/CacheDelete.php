@@ -1,18 +1,23 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
+
 namespace SprykerFeature\Zed\Cache\Business\Model;
+
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Zed\Cache\CacheConfig;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
+
 class CacheDelete
 {
+
     /**
      * @var CacheConfig
      */
     protected $config;
+
     /**
      * @param CacheConfig $config
      */
@@ -20,8 +25,10 @@ class CacheDelete
     {
         $this->config = $config;
     }
+
     /**
      * Deletes all cache files for all stores
+     *
      * @return array
      */
     public function deleteAllFiles()
@@ -34,6 +41,8 @@ class CacheDelete
         }
         $filesystem = new Filesystem();
         $filesystem->remove($dirs);
+
         return $dirs;
     }
+
 }

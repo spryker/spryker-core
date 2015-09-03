@@ -57,7 +57,8 @@ class Environment
     public static function initialize($application, $disableApplicationCheck = false)
     {
         if (!file_exists(APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . '.class_map')) {
-            echo 'Can\'t find a class map file. Please run $ vendor/bin/class-map-builder to create a class map.';exit;
+            echo 'Can\'t find a class map file. Please run $ vendor/bin/build-class-map to create a fresh class map.';
+            exit;
         }
 
         self::defineEnvironment();

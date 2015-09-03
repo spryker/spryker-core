@@ -27,6 +27,20 @@ class ClassMapBuilder
 
         return $map;
     }
+
+    /**
+     * @return array
+     */
+    private function getDirectories()
+    {
+        $directories = [
+            __DIR__ . '/../spryker/spryker/Bundles/*/src/',
+            __DIR__ . '/../../src',
+        ];
+
+        return $directories;
+    }
+
     /**
      * @param array $directories
      *
@@ -46,24 +60,11 @@ class ClassMapBuilder
     }
 
     /**
-     * @return array
-     */
-    private function getDirectories()
-    {
-        $directories = [
-            __DIR__ . '/../spryker/spryker/Bundles/*/src/',
-            __DIR__ . '/../../src',
-        ];
-
-        return $directories;
-    }
-
-    /**
-     * @param SplFileInfo[] $files
+     * @param Finder $files
      *
      * @return array
      */
-    private function buildFactoryClassMapFromFiles($files)
+    private function buildFactoryClassMapFromFiles(Finder $files)
     {
         $map = [];
 
@@ -78,7 +79,7 @@ class ClassMapBuilder
      * @param SplFileInfo $file
      * @param array $map
      *
-     * @return mixed
+     * @return array
      */
     private function addMapEntryFromFile(SplFileInfo $file, array $map)
     {
@@ -108,7 +109,7 @@ class ClassMapBuilder
     /**
      * @param SplFileInfo $file
      *
-     * @return mixed|string
+     * @return string
      */
     private function getClassNameFromFile(SplFileInfo $file)
     {
@@ -120,11 +121,11 @@ class ClassMapBuilder
     }
 
     /**
-     * @param $classNameParts
+     * @param array $classNameParts
      *
      * @return bool
      */
-    private function hasClassLayer($classNameParts)
+    private function hasClassLayer(array $classNameParts)
     {
         $hasLayer = false;
 

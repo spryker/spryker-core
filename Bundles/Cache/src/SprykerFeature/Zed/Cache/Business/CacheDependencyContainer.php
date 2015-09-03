@@ -1,7 +1,9 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
+
 namespace SprykerFeature\Zed\Cache\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CacheBusiness;
@@ -15,12 +17,15 @@ use SprykerFeature\Zed\Cache\CacheConfig;
  */
 class CacheDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return CacheDelete
      */
     public function createCacheDelete()
     {
         $config = $this->getConfig();
+
         return $this->getFactory()->createModelCacheDelete($config);
     }
+
 }

@@ -38,7 +38,11 @@ class ControllerLocator implements ControllerLocatorInterface
         $factory = new Factory($this->bundleControllerAction->getBundle());
 
         $resolvedController = ClassMapFactory::getInstance()->create(
-            'Yves', $this->bundleControllerAction->getBundle(), 'Controller' . $this->bundleControllerAction->getController() . 'Controller', 'Communication', [$application, $factory, $locator]
+            'Yves',
+            $this->bundleControllerAction->getBundle(),
+            'Controller' . $this->bundleControllerAction->getController() . 'Controller',
+            'Communication',
+            [$application, $factory, $locator]
         );
 
         return $resolvedController;
@@ -50,7 +54,10 @@ class ControllerLocator implements ControllerLocatorInterface
     public function canLocate()
     {
         return ClassMapFactory::getInstance()->has(
-            'Yves', $this->bundleControllerAction->getBundle(), 'Controller' . $this->bundleControllerAction->getController() . 'Controller', 'Communication'
+            'Yves',
+            $this->bundleControllerAction->getBundle(),
+            'Controller' . $this->bundleControllerAction->getController() . 'Controller',
+            'Communication'
         );
     }
 

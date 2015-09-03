@@ -1,7 +1,9 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
+
 namespace SprykerFeature\Zed\Cache\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
@@ -13,6 +15,7 @@ use SprykerFeature\Zed\Cache\CacheConfig;
  */
 class CacheFacade extends AbstractFacade
 {
+
     /**
      * @return array
      */
@@ -20,4 +23,5 @@ class CacheFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->createCacheDelete()->deleteAllFiles();
     }
+
 }

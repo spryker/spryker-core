@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class DeleteAllCachesConsole extends Console
 {
+
     const COMMAND_NAME = 'cache:delete-all';
     const DESCRIPTION = 'Deletes all cache files from /data/{Store}/cache for all stores';
 
@@ -41,4 +43,5 @@ class DeleteAllCachesConsole extends Console
             $output->writeln($dir);
         }
     }
+
 }

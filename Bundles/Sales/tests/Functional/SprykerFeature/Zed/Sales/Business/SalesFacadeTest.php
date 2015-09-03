@@ -50,7 +50,6 @@ class SalesFacadeTest extends Test
         parent::setUp();
         $locator = Locator::getInstance();
 
-
         $countryFacade = new CountryFacade(new Factory('Country'), $locator);
         $countryFacade->setOwnQueryContainer(new CountryQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Country'), $locator));
 
