@@ -48,7 +48,14 @@
             <br/>
 
             <h3>Products in this category</h3>
-            {{ productCategories | raw }}
+            {{ productsTable | raw }}
+
+            <br/>
+            <br/>
+            <br/>
+
+            <h3>Products in this category</h3>
+            {{ productCategoriesTable | raw }}
 
             <input type="submit" class="btn btn-primary" value="{{ submit_title | trans }}" />
             {{ form_end(form) }}

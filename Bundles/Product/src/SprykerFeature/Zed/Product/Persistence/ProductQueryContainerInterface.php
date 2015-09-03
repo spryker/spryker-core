@@ -105,8 +105,9 @@ interface ProductQueryContainerInterface
      * @param $term
      * @param LocaleTransfer $locale
      *
+     * @param null $idExcludedCategory
      * @return SpyAbstractProductQuery
      */
-    public function queryAbstractProductsBySearchTerm($term, LocaleTransfer $locale);
+    public function queryAbstractProductsBySearchTerm($term, LocaleTransfer $locale, $idExcludedCategory = null);
 
 }
