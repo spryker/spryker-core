@@ -57,7 +57,7 @@ class RequestServiceProvider implements ServiceProviderInterface
             }
         }
 
-        if (is_null($request->attributes->has(self::BUNDLE)) || is_null($request->attributes->has(self::CONTROLLER)) || is_null($request->attributes->has(self::ACTION))) {
+        if (!$request->attributes->has(self::BUNDLE) || !$request->attributes->has(self::CONTROLLER) || !$request->attributes->has(self::ACTION)) {
             throw new \InvalidArgumentException('One of the required parameter (--module, --controller, --action) is missing!');
         }
     }
