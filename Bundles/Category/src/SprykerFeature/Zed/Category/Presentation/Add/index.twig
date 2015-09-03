@@ -113,8 +113,8 @@
             
             console.log('newData', new_data);
             
-            //$('#form_products').('data', new_data).trigger("change");
-            $('#form_products').data(new_data).trigger("change");
+            $('#form_products').select2('data', new_data);
+            //$('#form_products').val(new_data).trigger("change");
         }
         
         $(document).ready(function() {
