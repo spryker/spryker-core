@@ -29,12 +29,12 @@ class Environment
         defined('SYSTEM_UNDER_TEST')
             || define('SYSTEM_UNDER_TEST', false);
 
-        self::setupClassMapIfNotPresent();
+        self::buildClassMapIfNotPresent();
 
         SprykerEnvironment::initialize(APPLICATION, true);
     }
 
-    private static function setupClassMapIfNotPresent()
+    private static function buildClassMapIfNotPresent()
     {
         if (!file_exists(APPLICATION_ROOT_DIR . '.class_map')) {
             $process = new Process('vendor/bin/build-class-map');
