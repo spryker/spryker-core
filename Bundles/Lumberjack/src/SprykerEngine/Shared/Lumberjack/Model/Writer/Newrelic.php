@@ -16,6 +16,6 @@ class Newrelic extends AbstractWriter
     {
         $api = NewRelicApi()::getInstance();
         //foreach($event)
-        return false;
+        return true;
     }
 }

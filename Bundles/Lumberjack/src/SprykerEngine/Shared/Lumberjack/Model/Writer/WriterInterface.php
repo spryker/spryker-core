@@ -16,4 +16,6 @@ interface WriterInterface
      * @return bool success or failure.
      */
     public function write(EventInterface $event);
+
+    public function setOptions(array $options);
 }
