@@ -18,7 +18,22 @@ class BundleDependencyProviderLocator extends AbstractLocator
     /**
      * @var string
      */
-    protected $factoryClassNamePattern = '\\{{namespace}}\\Client\\Kernel\\Factory';
+    protected $bundle = 'Kernel';
+
+    /**
+     * @var string
+     */
+    protected $layer;
+
+    /**
+     * @var string
+     */
+    protected $suffix = 'Factory';
+
+    /**
+     * @var string
+     */
+    protected $application = 'Client';
 
     /**
      * @param string $bundle

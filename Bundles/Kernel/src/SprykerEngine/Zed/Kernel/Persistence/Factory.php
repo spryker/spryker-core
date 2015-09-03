@@ -8,6 +8,7 @@ namespace SprykerEngine\Zed\Kernel\Persistence;
 
 use SprykerEngine\Shared\Kernel\AbstractFactory;
 use SprykerEngine\Zed\Kernel\BundleConfigLocator;
+use SprykerEngine\Shared\Kernel\ClassMapFactory;
 
 class Factory extends AbstractFactory
 {
@@ -15,7 +16,12 @@ class Factory extends AbstractFactory
     /**
      * @var string
      */
-    protected $classNamePattern = '\\{{namespace}}\\Zed\\{{bundle}}{{store}}\\Persistence\\';
+    protected $application = 'Zed';
+
+    /**
+     * @var string
+     */
+    protected $layer = 'Persistence';
 
     /**
      * @var array
@@ -39,7 +45,7 @@ class Factory extends AbstractFactory
         if (in_array($class, $this->baseClasses)) {
             $bundleConfigLocator = new BundleConfigLocator();
             $bundleConfig = $bundleConfigLocator->locate($this->getBundle(), $arguments[2]);
-
+            $class = $this->getBundle() . $class;
             $arguments[] = $bundleConfig;
         }
 
@@ -50,10 +56,7 @@ class Factory extends AbstractFactory
         }
         $this->isMagicCall = false;
 
-        $class = $this->buildClassName($class);
-        $resolver = $this->getResolver();
-
-        return $resolver->resolve($class, $this->getBundle(), $arguments);
+        return ClassMapFactory::getInstance()->create('Zed', $this->getBundle(), $class, 'Persistence', $arguments);
     }
 
 }

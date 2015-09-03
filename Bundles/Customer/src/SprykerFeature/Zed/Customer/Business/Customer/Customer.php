@@ -6,11 +6,10 @@
 
 namespace SprykerFeature\Zed\Customer\Business\Customer;
 
-use Generated\Shared\Customer\CustomerAddressInterface;
+use Generated\Shared\Customer\AddressInterface;
 use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Transfer\AddressesTransfer;
-use Generated\Shared\Transfer\CustomerAddressTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Config;
@@ -320,11 +319,11 @@ class Customer
     /**
      * @param SpyCustomerAddress $customer
      *
-     * @return CustomerAddressInterface
+     * @return AddressInterface
      */
     protected function entityToTransfer(SpyCustomerAddress $customer)
     {
-        $entity = new CustomerAddressTransfer();
+        $entity = new AddressTransfer();
         return $entity->fromArray($customer->toArray(), true);
     }
 
@@ -346,7 +345,7 @@ class Customer
                 $addressTransfer->setIsDefaultShipping(true);
             }
 
-            $addressCollection->addCustomerAddress($addressTransfer);
+            $addressCollection->addAddress($addressTransfer);
         }
 
         return $addressCollection;
@@ -361,22 +360,24 @@ class Customer
      */
     protected function getCustomer(CustomerInterface $customerTransfer)
     {
+        $customerEntity = null;
+        
         if ($customerTransfer->getIdCustomer()) {
-            $customer = $this->queryContainer->queryCustomerById($customerTransfer->getIdCustomer())
+            $customerEntity = $this->queryContainer->queryCustomerById($customerTransfer->getIdCustomer())
                 ->findOne()
             ;
         } elseif ($customerTransfer->getEmail()) {
-            $customer = $this->queryContainer->queryCustomerByEmail($customerTransfer->getEmail())
+            $customerEntity = $this->queryContainer->queryCustomerByEmail($customerTransfer->getEmail())
                 ->findOne()
             ;
         } elseif ($customerTransfer->getRestorePasswordKey()) {
-            $customer = $this->queryContainer->queryCustomerByRestorePasswordKey($customerTransfer->getRestorePasswordKey())
+            $customerEntity = $this->queryContainer->queryCustomerByRestorePasswordKey($customerTransfer->getRestorePasswordKey())
                 ->findOne()
             ;
         }
 
-        if (null !== $customer) {
-            return $customer;
+        if (null !== $customerEntity) {
+            return $customerEntity;
         }
 
         throw new CustomerNotFoundException();
@@ -390,20 +391,21 @@ class Customer
     protected function hasCustomer(CustomerInterface $customerTransfer)
     {
         $result = false;
+        $customerEntity = null;
 
         if ($customerTransfer->getIdCustomer()) {
-            $customer = $this->queryContainer
+            $customerEntity = $this->queryContainer
                 ->queryCustomerById($customerTransfer->getIdCustomer())
                 ->findOne()
             ;
         } elseif ($customerTransfer->getEmail()) {
-            $customer = $this->queryContainer
+            $customerEntity = $this->queryContainer
                 ->queryCustomerByEmail($customerTransfer->getEmail())
                 ->findOne()
             ;
         }
 
-        if (null !== $customer) {
+        if (null !== $customerEntity) {
             $result = true;
         }
 
@@ -411,11 +413,11 @@ class Customer
     }
 
     /**
-     * @param CustomerTransfer $customerTransfer
+     * @param CustomerInterface $customerTransfer
      *
      * @return bool
      */
-    public function tryAuthorizeCustomerByEmailAndPassword(CustomerTransfer $customerTransfer)
+    public function tryAuthorizeCustomerByEmailAndPassword(CustomerInterface $customerTransfer)
     {
         $result = false;
 

@@ -23,8 +23,7 @@ class AvailabilityDependencyContainer extends AbstractBusinessDependencyContaine
      */
     public function getSellableModel()
     {
-        return $this->getFactory()->create(
-            'Model\\Sellable',
+        return $this->getFactory()->createModelSellable(
             $this->getOmsFacade(),
             $this->getStockFacade()
         );

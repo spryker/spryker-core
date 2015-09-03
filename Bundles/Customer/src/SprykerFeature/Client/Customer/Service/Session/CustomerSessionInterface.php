@@ -10,6 +10,9 @@ use Generated\Shared\Customer\CustomerInterface;
 interface CustomerSessionInterface
 {
 
+    /**
+     * @return mixed
+     */
     public function logout();
 
     /**

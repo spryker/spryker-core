@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\CustomerCheckoutConnector\Business;
 
 use Generated\Shared\CustomerCheckoutConnector\CheckoutRequestInterface;
 use Generated\Shared\CustomerCheckoutConnector\OrderInterface;
-use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Zed\CustomerCheckoutConnector\Dependency\Facade\CustomerCheckoutConnectorToCustomerInterface;
 
@@ -50,7 +50,7 @@ class CustomerOrderHydrator implements CustomerOrderHydratorInterface
         if (null !== $billingAddress) {
             $orderTransfer->setBillingAddress($billingAddress);
 
-            $customerAddressTransfer = new CustomerAddressTransfer();
+            $customerAddressTransfer = new AddressTransfer();
             $customerAddressTransfer->fromArray($billingAddress->toArray(), true);
 
             $customerTransfer->addBillingAddress($customerAddressTransfer);
@@ -60,7 +60,7 @@ class CustomerOrderHydrator implements CustomerOrderHydratorInterface
         if (null !== $shippingAddress) {
             $orderTransfer->setShippingAddress($shippingAddress);
 
-            $customerAddressTransfer = new CustomerAddressTransfer();
+            $customerAddressTransfer = new AddressTransfer();
             $customerAddressTransfer->fromArray($shippingAddress->toArray(), true);
 
             $customerTransfer->addShippingAddress($customerAddressTransfer);

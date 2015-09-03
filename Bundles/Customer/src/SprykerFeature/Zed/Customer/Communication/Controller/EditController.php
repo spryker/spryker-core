@@ -5,7 +5,7 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
-use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
@@ -79,11 +79,11 @@ class EditController extends AbstractController
     }
 
     /**
-     * @return CustomerAddressTransfer
+     * @return AddressTransfer
      */
-    protected function createCustomerAddressTransfer()
+    protected function createAddressTransfer()
     {
-        return new CustomerAddressTransfer();
+        return new AddressTransfer();
     }
 
     /**
@@ -114,11 +114,11 @@ class EditController extends AbstractController
      * @param int $idCustomer
      * @param int $billingAddress
      *
-     * @return CustomerAddressTransfer
+     * @return AddressTransfer
      */
     private function createCustomAddressTransfer($idCustomer, $billingAddress)
     {
-        $addressTransfer = $this->createCustomerAddressTransfer();
+        $addressTransfer = $this->createAddressTransfer();
 
         $addressTransfer->setIdCustomerAddress($billingAddress);
         $addressTransfer->setFkCustomer($idCustomer);

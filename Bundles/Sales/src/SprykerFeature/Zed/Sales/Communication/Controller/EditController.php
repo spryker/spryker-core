@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Sales\Communication\Controller;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\SalesAddressTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Sales\Communication\SalesDependencyContainer;
@@ -60,7 +60,7 @@ class EditController extends AbstractController
 
         if ($form->isValid()) {
 
-            $addressTransfer = (new SalesAddressTransfer())->fromArray($form->getData(), true);
+            $addressTransfer = (new AddressTransfer())->fromArray($form->getData(), true);
             $this->getFacade()
                 ->updateOrderAddress($addressTransfer, $idOrderAddress)
             ;

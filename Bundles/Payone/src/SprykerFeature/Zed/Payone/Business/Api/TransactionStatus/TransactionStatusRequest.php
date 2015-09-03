@@ -64,22 +64,32 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
      * @var int
      */
     protected $txid;
+
     /**
      * @var string
      */
     protected $reference;
+
     /**
      * @var string
      */
     protected $sequencenumber;
+
     /**
      * @var string
      */
     protected $receivable;
+
     /**
      * @var string
      */
     protected $balance;
+
+    /**
+     * @var string
+     */
+    protected $price;
+
     /**
      * @var string
      */
@@ -885,6 +895,22 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
     public function getClearingReference()
     {
         return $this->clearing_reference;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param string $price
+     */
+    public function setPrice($price)
+    {
+        $this->price = $price;
     }
 
 }

@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\ShipmentCheckoutConnector\Communication\Plugin;
 
-use Generated\Shared\Cart\CartInterface;
+use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\ShipmentCheckoutConnector\Communication\ShipmentCheckoutConnectorDependencyContainer;
 
@@ -17,13 +17,13 @@ class CheckoutAvailableShipmentMethodsPlugin extends AbstractPlugin
 {
 
     /**
-     * @param CartInterface $cartTransfer
+     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
      *
-     * @internal param OrderTransfer $orderTransfer
+     * @return \Generated\Shared\Shipment\ShipmentInterface
      */
-    public function getAvailableMethods(CartInterface $cartTransfer)
+    public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer)
     {
-        $this->getDependencyContainer()->createShipmentFacade()->getAvailableMethods($cartTransfer);
+        return $this->getDependencyContainer()->createShipmentFacade()->getAvailableMethods($shipmentMethodAvailabilityTransfer);
     }
 
 }

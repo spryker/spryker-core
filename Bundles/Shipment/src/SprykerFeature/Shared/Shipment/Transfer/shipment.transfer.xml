@@ -17,13 +17,16 @@
     <transfer name="ShipmentMethod">
         <property name="idShipmentMethod" type="int" />
         <property name="fkShipmentCarrier" type="int" />
+        <property name="fkTaxSet" type="int" />
         <property name="glossaryKeyName" type="string" />
         <property name="glossaryKeyDescription" type="string" />
         <property name="availabilityPlugin" type="string" />
         <property name="priceCalculationPlugin" type="string" />
         <property name="deliveryTimePlugin" type="string" />
+        <property name="taxCalculationPlugin" type="string" />
         <property name="name" type="string" />
         <property name="price" type="int" />
+        <property name="taxRate" type="int" />
         <property name="isActive" type="bool" />
         <property name="time" type="int" />
     </transfer>
@@ -33,9 +36,30 @@
         <property name="shipmentDeliveryTime" type="int" />
     </transfer>
 
-    <transfer name="CheckoutRequest">
-        <property name="shipmentMethodId" type="int" />
-        <property name="shipmentMethod" type="ShipmentMethod" singular="shipmentMethod" />
+    <transfer name="Address">
+        <property name="idCustomerAddress" type="int" />
+        <property name="customerId" type="string" />
+        <property name="fkCustomer" type="int" />
+        <property name="email" type="string" />
+        <property name="salutation" type="string" />
+        <property name="firstName" type="string" />
+        <property name="lastName" type="string" />
+        <property name="address1" type="string" />
+        <property name="address2" type="string" />
+        <property name="address3" type="string" />
+        <property name="company" type="string" />
+        <property name="city" type="string" />
+        <property name="zipCode" type="string" />
+        <property name="phone" type="string" />
+        <property name="comment" type="string" />
+        <property name="state" type="string" />
+        <property name="fkCountry" type="int" />
+        <property name="fkRegion" type="int" />
+        <property name="iso2Code" type="string" />
+    </transfer>
+
+    <transfer name="ShipmentMethodAvailability">
+        <property name="cart" type="Cart" />
     </transfer>
 
 </transfers>

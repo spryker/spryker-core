@@ -6,12 +6,10 @@
 
 namespace SprykerEngine\Yves\Kernel\Communication;
 
-use SprykerEngine\Shared\Kernel\ClassResolver;
+use SprykerEngine\Shared\Kernel\ClassMapFactory;
 use SprykerEngine\Shared\Kernel\Communication\BundleControllerActionInterface;
 use SprykerEngine\Shared\Kernel\Communication\ControllerLocatorInterface;
-use SprykerEngine\Shared\Kernel\IdentityMapClassResolver;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Yves\Kernel\ClassNamePattern;
 
 class ControllerLocator implements ControllerLocatorInterface
 {
@@ -22,40 +20,32 @@ class ControllerLocator implements ControllerLocatorInterface
     private $bundleControllerAction;
 
     /**
-     * @var string
-     */
-    private $classNamePattern;
-
-    /**
      * @param BundleControllerActionInterface $bundleControllerAction
-     * @param string $classNamePattern
      */
-    public function __construct(
-        BundleControllerActionInterface $bundleControllerAction,
-        $classNamePattern = ClassNamePattern::CONTROLLER
-    ) {
+    public function __construct(BundleControllerActionInterface $bundleControllerAction)
+    {
         $this->bundleControllerAction = $bundleControllerAction;
-        $this->classNamePattern = $classNamePattern;
     }
 
     /**
      * @param \Pimple $application
      * @param LocatorLocatorInterface $locator
      *
-     * @throws ClassResolver\ClassNotFoundException
-     *
      * @return object
      */
     public function locate(\Pimple $application, LocatorLocatorInterface $locator)
     {
-        $resolver = IdentityMapClassResolver::getInstance(new ClassResolver());
         $factory = new Factory($this->bundleControllerAction->getBundle());
 
-        return $resolver->resolve(
-            $this->prepareClassName(),
+        $resolvedController = ClassMapFactory::getInstance()->create(
+            'Yves',
             $this->bundleControllerAction->getBundle(),
+            'Controller' . $this->bundleControllerAction->getController() . 'Controller',
+            'Communication',
             [$application, $factory, $locator]
         );
+
+        return $resolvedController;
     }
 
     /**
@@ -63,20 +53,12 @@ class ControllerLocator implements ControllerLocatorInterface
      */
     public function canLocate()
     {
-        $resolver = IdentityMapClassResolver::getInstance(new ClassResolver());
-
-        return $resolver->canResolve(
-            $this->prepareClassName(),
-            $this->bundleControllerAction->getBundle()
+        return ClassMapFactory::getInstance()->has(
+            'Yves',
+            $this->bundleControllerAction->getBundle(),
+            'Controller' . $this->bundleControllerAction->getController() . 'Controller',
+            'Communication'
         );
-    }
-
-    /**
-     * @return mixed
-     */
-    private function prepareClassName()
-    {
-        return str_replace('{{controller}}', $this->bundleControllerAction->getController(), $this->classNamePattern);
     }
 
 }

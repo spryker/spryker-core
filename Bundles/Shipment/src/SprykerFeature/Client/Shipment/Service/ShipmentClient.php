@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Client\Shipment\Service;
 
-use Generated\Shared\Cart\CartInterface;
 use Generated\Shared\Shipment\ShipmentInterface;
+use Generated\Shared\Shipment\ShipmentMethodAvailabilityInterface;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
 
 /**
@@ -17,15 +17,15 @@ class ShipmentClient extends AbstractClient implements ShipmentClientInterface
 {
 
     /**
-     * @param CartInterface $cartTransfer
+     * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailability
      *
      * @return ShipmentInterface
      */
-    public function getAvailableMethods(CartInterface $cartTransfer)
+    public function getAvailableMethods(ShipmentMethodAvailabilityInterface $shipmentMethodAvailability)
     {
         return $this->getDependencyContainer()
             ->createZedStub()
-            ->getAvailableMethods($cartTransfer)
+            ->getAvailableMethods($shipmentMethodAvailability)
             ;
     }
 }

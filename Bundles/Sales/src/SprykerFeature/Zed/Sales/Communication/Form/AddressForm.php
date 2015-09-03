@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Sales\Communication\Form;
 
-use Generated\Shared\Transfer\SalesAddressTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddressQuery;
@@ -47,7 +47,7 @@ class AddressForm extends AbstractForm
     public function __construct(SpySalesOrderAddressQuery $addressQuery)
     {
         $this->addressQuery = $addressQuery;
-//        $this->setDefaultDataType(new SalesAddressTransfer());
+//        $this->setDefaultDataType(new AddressTransfer());
     }
 
     /**

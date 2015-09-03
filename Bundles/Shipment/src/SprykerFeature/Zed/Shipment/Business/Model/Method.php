@@ -5,13 +5,13 @@
 
 namespace SprykerFeature\Zed\Shipment\Business\Model;
 
-use Generated\Shared\Cart\CartInterface;
-use Generated\Shared\Shipment\ShipmentInterface;
+use Generated\Shared\Shipment\ShipmentMethodAvailabilityInterface;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface;
 use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface;
 use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodPriceCalculationPluginInterface;
+use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodTaxCalculationPluginInterface;
 use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentMethod;
 use SprykerFeature\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use SprykerFeature\Zed\Shipment\ShipmentDependencyProvider;
@@ -31,6 +31,7 @@ class Method
 
     /**
      * @param ShipmentQueryContainerInterface $queryContainer
+     * @param array $plugins
      */
     public function __construct(ShipmentQueryContainerInterface $queryContainer, array $plugins)
     {
@@ -46,32 +47,17 @@ class Method
     public function create(ShipmentMethodTransfer $methodTransfer)
     {
         $methodEntity = new SpyShipmentMethod();
-        $methodEntity
-            ->setFkShipmentCarrier($methodTransfer->getFkShipmentCarrier())
-            ->setGlossaryKeyName(
-                $methodTransfer->getGlossaryKeyName()
-            )
-            ->setGlossaryKeyDescription(
-                $methodTransfer->getGlossaryKeyDescription()
-            )
-            ->setPrice($methodTransfer->getPrice())
-            ->setName($methodTransfer->getName())
-            ->setIsActive($methodTransfer->getIsActive())
-            ->setAvailabilityPlugin($methodTransfer->getAvailabilityPlugin())
-            ->setPriceCalculationPlugin($methodTransfer->getPriceCalculationPlugin())
-            ->setDeliveryTimePlugin($methodTransfer->getDeliveryTimePlugin())
-            ->save()
-        ;
+        $methodEntity->fromArray($methodTransfer->toArray());
+        $methodEntity->save();
 
         return $methodEntity->getPrimaryKey();
     }
 
     /**
-     * @param CartInterface $cartTransfer
-     *
-     * @return ShipmentInterface
+     * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer
+     * @return ShipmentTransfer
      */
-    public function getAvailableMethods(CartInterface $cartTransfer)
+    public function getAvailableMethods(ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
     {
         $shipmentTransfer = new ShipmentTransfer();
         $methods = $this->queryContainer->queryActiveMethods()->find();
@@ -80,9 +66,10 @@ class Method
             $methodTransfer = new ShipmentMethodTransfer();
             $methodTransfer->fromArray($method->toArray());
 
-            if ($this->isAvailable($method, $cartTransfer)) {
-                $methodTransfer->setPrice($this->getPrice($method, $cartTransfer));
-                $methodTransfer->setTime($this->getDeliveryTime($method, $cartTransfer));
+            if ($this->isAvailable($method, $shipmentMethodAvailabilityTransfer)) {
+                $methodTransfer->setPrice($this->getPrice($method, $shipmentMethodAvailabilityTransfer));
+                $methodTransfer->setTaxRate($this->getTaxRate($method, $shipmentMethodAvailabilityTransfer));
+                $methodTransfer->setTime($this->getDeliveryTime($method, $shipmentMethodAvailabilityTransfer));
 
                 $shipmentTransfer->addMethod($methodTransfer);
             }
@@ -101,6 +88,22 @@ class Method
         $methodQuery = $this->queryContainer->queryMethodByIdMethod($idMethod);
 
         return $methodQuery->count() > 0;
+    }
+
+    /**
+     * @param $idMethod
+     * @return ShipmentMethodTransfer
+     */
+    public function getShipmentMethodTransferById($idMethod)
+    {
+        $shipmentMethodTransfer = new ShipmentMethodTransfer();
+
+        $methodQuery = $this->queryContainer->queryMethodByIdMethod($idMethod);
+
+        $shipmentMethodTransferEntity = $methodQuery->findOne();
+
+        $shipmentMethodTransfer->fromArray($shipmentMethodTransferEntity->toArray());
+        return $shipmentMethodTransfer;
     }
 
     /**
@@ -130,18 +133,10 @@ class Method
         if ($this->hasMethod($methodTransfer->getIdShipmentMethod())) {
             $methodEntity =
                 $this->queryContainer->queryMethodByIdMethod($methodTransfer->getIdShipmentMethod())->findOne();
-            $methodEntity
-                ->setFkShipmentCarrier($methodTransfer->getFkShipmentCarrier())
-                ->setGlossaryKeyName($methodTransfer->getGlossaryKeyName())
-                ->setGlossaryKeyDescription($methodTransfer->getGlossaryKeyDescription())
-                ->setPrice($methodTransfer->getPrice())
-                ->setName($methodTransfer->getName())
-                ->setIsActive($methodTransfer->getIsActive())
-                ->setAvailabilityPlugin($methodTransfer->getAvailabilityPlugin())
-                ->setPriceCalculationPlugin($methodTransfer->getPriceCalculationPlugin())
-                ->setDeliveryTimePlugin($methodTransfer->getDeliveryTimePlugin())
-                ->save()
-            ;
+
+            $methodEntity->fromArray($methodTransfer->toArray());
+
+            $methodEntity->save();
 
             return $methodEntity->getPrimaryKey();
         }
@@ -151,11 +146,11 @@ class Method
 
     /**
      * @param SpyShipmentMethod $method
-     * @param CartInterface $cartTransfer
+     * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer
      *
      * @return bool
      */
-    private function isAvailable(SpyShipmentMethod $method, CartInterface $cartTransfer)
+    private function isAvailable(SpyShipmentMethod $method, ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
     {
         $availabilityPlugins = $this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS];
         $isAvailable = true;
@@ -163,7 +158,7 @@ class Method
         if (array_key_exists($method->getAvailabilityPlugin(), $availabilityPlugins)) {
             /** @var ShipmentMethodAvailabilityPluginInterface $availabilityPlugin */
             $availabilityPlugin = $availabilityPlugins[$method->getAvailabilityPlugin()];
-            $isAvailable = $availabilityPlugin->isAvailable($cartTransfer);
+            $isAvailable = $availabilityPlugin->isAvailable($shipmentMethodAvailabilityTransfer);
         }
 
         return $isAvailable;
@@ -171,18 +166,19 @@ class Method
 
     /**
      * @param SpyShipmentMethod $method
-     * @param CartInterface $cartTransfer
+     * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer
      *
      * @return int
      */
-    private function getPrice(SpyShipmentMethod $method, CartInterface $cartTransfer) {
+    private function getPrice(SpyShipmentMethod $method, ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
+    {
         $price = $method->getPrice();
         $priceCalculationPlugins = $this->plugins[ShipmentDependencyProvider::PRICE_CALCULATION_PLUGINS];
 
         if (array_key_exists($method->getPriceCalculationPlugin(), $priceCalculationPlugins)) {
             /** @var ShipmentMethodPriceCalculationPluginInterface $priceCalculationPlugin */
             $priceCalculationPlugin = $priceCalculationPlugins[$method->getPriceCalculationPlugin()];
-            $price = $priceCalculationPlugin->getPrice($cartTransfer);
+            $price = $priceCalculationPlugin->getPrice($shipmentMethodAvailabilityTransfer);
         }
 
         return $price;
@@ -190,21 +186,49 @@ class Method
 
     /**
      * @param SpyShipmentMethod $method
-     * @param CartInterface $cartTransfer
+     * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer
      *
-     * @return int|null
+     * @return int
      */
-    private function getDeliveryTime(SpyShipmentMethod $method, CartInterface $cartTransfer)
+    private function getTaxRate(SpyShipmentMethod $method, ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
     {
-        $time = null;
+        $taxSetEntity = $method->getTaxSet();
+
+        $effectiveTaxRate = 0;
+
+        if (isset($taxSetEntity)) {
+            $taxRates = $taxSetEntity->getSpyTaxRates();
+            foreach ($taxRates as &$taxRate) {
+                $effectiveTaxRate += $taxRate->getRate();
+            }
+        }
+
+        $taxCalculationPlugins = $this->plugins[ShipmentDependencyProvider::TAX_CALCULATION_PLUGINS];
+        if (array_key_exists($method->getTaxCalculationPlugin(), $taxCalculationPlugins)) {
+            /** @var ShipmentMethodTaxCalculationPluginInterface $taxCalculationPlugin */
+            $taxCalculationPlugin = $taxCalculationPlugins[$method->getTaxCalculationPlugin()];
+            $effectiveTaxRate = $taxCalculationPlugin->getTaxRate($shipmentMethodAvailabilityTransfer, $effectiveTaxRate);
+        }
+        return $effectiveTaxRate;
+    }
+
+    /**
+     * @param SpyShipmentMethod $method
+     * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer
+     *
+     * @return string
+     */
+    private function getDeliveryTime(SpyShipmentMethod $method, ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
+    {
+        $timeString = '';
 
         $deliveryTimePlugins = $this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS];
         if (array_key_exists($method->getDeliveryTimePlugin(), $deliveryTimePlugins)) {
             /** @var ShipmentMethodDeliveryTimePluginInterface $deliveryTimePlugin */
             $deliveryTimePlugin = $deliveryTimePlugins[$method->getDeliveryTimePlugin()];
-            $time = $deliveryTimePlugin->getTime($cartTransfer);
+            $timeString = $deliveryTimePlugin->getTime($shipmentMethodAvailabilityTransfer);
         }
 
-        return $time;
+        return $timeString;
     }
 }

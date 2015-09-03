@@ -29,7 +29,7 @@ class WriterTest extends Test
 
     const DUMMY_TAX_SET_NAME = 'SalesTax';
     const DUMMY_TAX_RATE1_NAME = 'Local';
-    const DUMMY_TAX_RATE1_PERCENTAGE = 2.5;
+    const DUMMY_TAX_RATE1_PERCENTAGE = 25;
     const DUMMY_TAX_RATE2_NAME = 'Regional';
     const DUMMY_TAX_RATE2_PERCENTAGE = 10;
     const NON_EXISTENT_ID = 999999999;

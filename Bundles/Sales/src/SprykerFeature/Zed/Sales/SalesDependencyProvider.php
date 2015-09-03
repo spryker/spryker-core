@@ -16,6 +16,8 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_OMS = 'FACADE_OMS';
     const FACADE_LOCALE = 'FACADE_LOCALE';
 
+    const PLUGINS_PAYMENT_LOGS = 'PLUGINS_PAYMENT_LOGS';
+
     /**
      * @param Container $container
      *
@@ -29,6 +31,10 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_OMS] = function (Container $container) {
             return $container->getLocator()->oms()->facade();
+        };
+
+        $container[self::PLUGINS_PAYMENT_LOGS] = function (Container $container) {
+            return $this->getPaymentLogPlugins($container);
         };
 
         return $container;
@@ -50,6 +56,16 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return array
+     */
+    protected function getPaymentLogPlugins(Container $container)
+    {
+        return [];
     }
 
 }

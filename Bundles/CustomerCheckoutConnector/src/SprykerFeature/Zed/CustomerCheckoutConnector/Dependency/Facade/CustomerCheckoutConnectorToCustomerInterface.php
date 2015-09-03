@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\CustomerCheckoutConnector\Dependency\Facade;
 
-use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerCheckoutConnectorToCustomerInterface
@@ -34,18 +34,18 @@ interface CustomerCheckoutConnectorToCustomerInterface
     public function registerCustomer(CustomerTransfer $customerTransfer);
 
     /**
-     * @param CustomerAddressTransfer $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
-     * @return CustomerAddressTransfer
+     * @return AddressTransfer
      */
-    public function createAddress(CustomerAddressTransfer $addressTransfer);
+    public function createAddress(AddressTransfer $addressTransfer);
 
     /**
-     * @param CustomerAddressTransfer $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
-     * @return CustomerAddressTransfer
+     * @return AddressTransfer
      */
-    public function updateAddress(CustomerAddressTransfer $addressTransfer);
+    public function updateAddress(AddressTransfer $addressTransfer);
 
     /**
      * @param string $email

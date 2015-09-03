@@ -12,7 +12,7 @@ use Functional\SprykerFeature\Zed\Sales\Business\Dependency\OmsFacade;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use Generated\Shared\Transfer\SalesAddressTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use SprykerEngine\Zed\Kernel\Business\Factory;
@@ -28,6 +28,7 @@ use SprykerFeature\Zed\Sales\Business\SalesFacade;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddressQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
+use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainer;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
 
 /**
@@ -43,6 +44,26 @@ class SalesFacadeTest extends Test
      * @var SalesFacade
      */
     protected $salesFacade;
+
+    protected function setUp()
+    {
+        parent::setUp();
+        $locator = Locator::getInstance();
+
+        $countryFacade = new CountryFacade(new Factory('Country'), $locator);
+        $countryFacade->setOwnQueryContainer(new CountryQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Country'), $locator));
+
+        $omsFacade = new OmsFacade(new Factory('Oms'), $locator);
+        $omsFacade->setOwnQueryContainer(new OmsQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Oms'), $locator));
+
+        $container = new Container();
+        $container[SalesDependencyProvider::FACADE_COUNTRY] = $countryFacade;
+        $container[SalesDependencyProvider::FACADE_OMS] = $omsFacade;
+
+        $this->salesFacade = new SalesFacade(new Factory('Sales'), $locator);
+        $this->salesFacade->setOwnQueryContainer(new SalesQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('sales'), $locator));
+        $this->salesFacade->setExternalDependencies($container);
+    }
 
     public function testSaveOrderCreatesBillingAddressAndAssignsItToOrder()
     {
@@ -75,7 +96,7 @@ class SalesFacadeTest extends Test
         $country->save();
 
         $orderTransfer = new OrderTransfer();
-        $billingAddress = new SalesAddressTransfer();
+        $billingAddress = new AddressTransfer();
 
         $billingAddress->setIso2Code('ix')
             ->setAddress1('address-1-1-test')
@@ -85,7 +106,7 @@ class SalesFacadeTest extends Test
             ->setCity('SpryHome')
         ;
 
-        $shippingAddress = new SalesAddressTransfer();
+        $shippingAddress = new AddressTransfer();
         $shippingAddress->setIso2Code('ix')
             ->setAddress1('address-1-2-test')
             ->setFirstName('Max')
@@ -314,26 +335,6 @@ class SalesFacadeTest extends Test
         $orderTransfer = $this->getValidBaseOrderTransfer();
         $orderTransfer = $this->salesFacade->saveOrder($orderTransfer);
         $this->assertNotNull($orderTransfer->getOrderReference());
-    }
-
-    protected function setUp()
-    {
-        parent::setUp();
-        $locator = Locator::getInstance();
-        $this->salesFacade = new SalesFacade(new Factory('Sales'), $locator);
-
-        $container = new Container();
-
-        $countryFacade = new CountryFacade(new Factory('Country'), $locator);
-        $countryFacade->setOwnQueryContainer(new CountryQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Country'), $locator));
-
-        $omsFacade = new OmsFacade(new Factory('Oms'), $locator);
-        $omsFacade->setOwnQueryContainer(new OmsQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Oms'), $locator));
-
-        $container[SalesDependencyProvider::FACADE_COUNTRY] = $countryFacade;
-        $container[SalesDependencyProvider::FACADE_OMS] = $omsFacade;
-
-        $this->salesFacade->setExternalDependencies($container);
     }
 
 }

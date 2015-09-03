@@ -10,8 +10,8 @@
         <property name="lastName" type="string" />
         <property name="firstName" type="string" />
         <property name="orderReference" type="string" />
-        <property name="billingAddress" type="SalesAddress" />
-        <property name="shippingAddress" type="SalesAddress" />
+        <property name="billingAddress" type="Address" />
+        <property name="shippingAddress" type="Address" />
         <property name="customer" type="Customer" />
         <property name="items" type="Item[]"  singular="item" />
         <property name="payment" type="string" />
@@ -23,9 +23,18 @@
         <property name="totals" type="Totals" />
         <property name="expenses" type="Expense[]" singular="expense" />
         <property name="invoice" type="Invoice[]" />
+        <property name="invoiceReference" type="string" />
+        <property name="invoiceCreatedAt" type="string" />
+        <property name="fkShipmentMethod" type="int" />
     </transfer>
 
-    <transfer name="SalesAddress">
+    <transfer name="OrderList">
+        <property name="idCustomer" type="int" />
+        <property name="filter" type="Filter" />
+        <property name="orders" type="Order[]" singular="order" />
+    </transfer>
+
+    <transfer name="Address">
         <property name="idSalesOrderAddress" type="int" />
         <property name="idCustomerAddress" type="int" />
         <property name="iso2Code" type="string" />
@@ -159,6 +168,13 @@
         <property name="success" type="boolean" />
         <property name="validationMessages" type="array" singular="code" />
         <property name="successMessage" type="string" />
+    </transfer>
+
+    <transfer name="Filter">
+        <property name="limit" type="int" />
+        <property name="offset" type="int" />
+        <property name="orderBy" type="string" />
+        <property name="orderDirection" type="string" />
     </transfer>
 
 </transfers>

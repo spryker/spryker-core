@@ -6,16 +6,16 @@
 
 namespace SprykerFeature\Client\Shipment\Service\Zed;
 
-use Generated\Shared\Cart\CartInterface;
 use Generated\Shared\Shipment\ShipmentInterface;
+use Generated\Shared\Shipment\ShipmentMethodAvailabilityInterface;
 
 interface ShipmentStubInterface
 {
 
     /**
-     * @param CartInterface $cartTransfer
+     * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailability
      *
      * @return ShipmentInterface
      */
-    public function getAvailableMethods(CartInterface $cartTransfer);
+    public function getAvailableMethods(ShipmentMethodAvailabilityInterface $shipmentMethodAvailability);
 }

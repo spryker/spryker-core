@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
-use Generated\Shared\Transfer\CustomerAddressTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
@@ -81,6 +81,8 @@ class GatewayController extends AbstractGatewayController
 
     /**
      * @param CustomerTransfer $customerTransfer
+     * 
+     * @return CustomerResponseTransfer
      */
     public function hasCustomerWithEmailAndPasswordAction(CustomerTransfer $customerTransfer)
     {
@@ -130,11 +132,11 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param CustomerAddressTransfer $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
-     * @return CustomerAddressTransfer
+     * @return AddressTransfer
      */
-    public function addressAction(CustomerAddressTransfer $addressTransfer)
+    public function addressAction(AddressTransfer $addressTransfer)
     {
         $addressTransfer = $this->getFacade()
             ->getAddress($addressTransfer)
@@ -149,11 +151,11 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param CustomerAddressTransfer $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
-     * @return CustomerAddressTransfer
+     * @return AddressTransfer
      */
-    public function updateAddressAction(CustomerAddressTransfer $addressTransfer)
+    public function updateAddressAction(AddressTransfer $addressTransfer)
     {
         $result = $this->getFacade()
             ->updateAddress($addressTransfer)
@@ -164,11 +166,11 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param CustomerAddressTransfer $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
-     * @return CustomerAddressTransfer
+     * @return AddressTransfer
      */
-    public function newAddressAction(CustomerAddressTransfer $addressTransfer)
+    public function newAddressAction(AddressTransfer $addressTransfer)
     {
         $addressTransfer = $this->getFacade()
             ->createAddress($addressTransfer)
@@ -179,11 +181,11 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param CustomerAddressTransfer $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
-     * @return CustomerAddressTransfer
+     * @return AddressTransfer
      */
-    public function deleteAddressAction(CustomerAddressTransfer $addressTransfer)
+    public function deleteAddressAction(AddressTransfer $addressTransfer)
     {
         $result = $this->getFacade()
             ->deleteAddress($addressTransfer)
@@ -194,11 +196,11 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param CustomerAddressTransfer $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
-     * @return CustomerAddressTransfer
+     * @return AddressTransfer
      */
-    public function defaultBillingAddressAction(CustomerAddressTransfer $addressTransfer)
+    public function defaultBillingAddressAction(AddressTransfer $addressTransfer)
     {
         $result = $this->getFacade()
             ->setDefaultBillingAddress($addressTransfer)
@@ -209,11 +211,11 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param CustomerAddressTransfer $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
-     * @return CustomerAddressTransfer
+     * @return AddressTransfer
      */
-    public function defaultShippingAddressAction(CustomerAddressTransfer $addressTransfer)
+    public function defaultShippingAddressAction(AddressTransfer $addressTransfer)
     {
         $result = $this->getFacade()
             ->setDefaultShippingAddress($addressTransfer)

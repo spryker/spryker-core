@@ -84,6 +84,7 @@
         <column name="clearing_type" type="VARCHAR"/>
         <column name="portal_id" type="VARCHAR"/>
 
+        <column name="price" type="INTEGER"/>
         <column name="balance" type="INTEGER"/>
         <column name="receivable" type="INTEGER"/>
 

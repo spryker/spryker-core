@@ -29,7 +29,7 @@ class Session
         $user = is_array($credentials) && array_key_exists(self::USER, $credentials) ? $credentials[self::USER] : null;
         $password = is_array($credentials) && array_key_exists(self::PASSWORD, $credentials) ? $credentials[self::PASSWORD] : null;
         $hosts = self::getHostsFromSavePath($savePath);
-        $lifetime = ini_get('session.gc_maxlifetime');
+        $lifetime = self::getSessionLifetime();
 
         $handler = new Couchbase($hosts, $user, $password, self::getBucketName(), true, $lifetime);
         session_set_save_handler(
@@ -55,7 +55,7 @@ class Session
         $user = is_array($credentials) && array_key_exists(self::USER, $credentials) ? $credentials[self::USER] : null;
         $password = is_array($credentials) && array_key_exists(self::PASSWORD, $credentials) ? $credentials[self::PASSWORD] : null;
         $hosts = self::getHostsFromSavePath($savePath);
-        $lifetime = ini_get('session.gc_maxlifetime');
+        $lifetime = self::getSessionLifetime();
 
         $handler = new Mysql($hosts, $user, $password, $lifetime);
         session_set_save_handler(
@@ -77,7 +77,8 @@ class Session
      */
     public static function registerRedisSessionHandler($savePath)
     {
-        $handler = new Redis($savePath);
+        $lifetime = self::getSessionLifetime();
+        $handler = new Redis($savePath, $lifetime);
         session_set_save_handler(
             [$handler, 'open'],
             [$handler, 'close'],
@@ -88,6 +89,16 @@ class Session
         );
 
         return $handler;
+    }
+
+    /**
+     * @return int
+     */
+    public static function getSessionLifetime()
+    {
+        $lifetime = (int) ini_get('session.gc_maxlifetime');
+
+        return $lifetime;
     }
 
     /**

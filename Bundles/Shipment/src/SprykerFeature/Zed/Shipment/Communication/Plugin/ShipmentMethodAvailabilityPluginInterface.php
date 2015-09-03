@@ -5,15 +5,15 @@
 
 namespace SprykerFeature\Zed\Shipment\Communication\Plugin;
 
-use Generated\Shared\Cart\CartInterface;
+use Generated\Shared\Shipment\ShipmentMethodAvailabilityInterface;
 
 interface ShipmentMethodAvailabilityPluginInterface
 {
 
     /**
-     * @param CartInterface $cartInterface
+     * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailability
      *
      * @return bool
      */
-    public function isAvailable(CartInterface $cartInterface);
+    public function isAvailable(ShipmentMethodAvailabilityInterface $shipmentMethodAvailability);
 }

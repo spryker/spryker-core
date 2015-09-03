@@ -14,6 +14,6 @@ class Factory extends AbstractFactory
     /**
      * @var string
      */
-    protected $classNamePattern = '\\{{namespace}}\\Zed\\{{bundle}}{{store}}\\';
+    protected $application = 'Zed';
 
 }

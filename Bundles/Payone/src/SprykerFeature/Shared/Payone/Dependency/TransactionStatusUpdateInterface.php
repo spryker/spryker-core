@@ -97,6 +97,11 @@ interface TransactionStatusUpdateInterface
     /**
      * @return string
      */
+    public function getPrice();
+
+    /**
+     * @return string
+     */
     public function getReceivable();
 
     /**

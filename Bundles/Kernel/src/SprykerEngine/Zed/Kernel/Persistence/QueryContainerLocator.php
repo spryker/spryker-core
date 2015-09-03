@@ -22,7 +22,22 @@ class QueryContainerLocator extends AbstractLocator
     /**
      * @var string
      */
-    protected $factoryClassNamePattern = '\\{{namespace}}\\Zed\\Kernel\\Persistence\\Factory';
+    protected $bundle = 'Kernel';
+
+    /**
+     * @var string
+     */
+    protected $layer = 'Persistence';
+
+    /**
+     * @var string
+     */
+    protected $suffix = 'Factory';
+
+    /**
+     * @var string
+     */
+    protected $application = 'Zed';
 
     /**
      * @param string $bundle

@@ -8,11 +8,10 @@ namespace Functional\SprykerFeature\Zed\Checkout\Business;
 
 use Codeception\TestCase\Test;
 use Functional\SprykerFeature\Zed\Checkout\Dependency\MockOmsOrderHydrator;
-use Functional\SprykerFeature\Zed\Checkout\Dependency\OmsFacade;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Generated\Shared\Transfer\SalesAddressTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use SprykerEngine\Zed\Kernel\Business\Factory;
@@ -25,8 +24,6 @@ use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountry;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
 use SprykerFeature\Zed\Oms\OmsConfig;
-use SprykerFeature\Zed\Oms\OmsDependencyProvider;
-use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
@@ -98,7 +95,7 @@ class CheckoutFacadeTest extends Test
             ];
         };
 
-        $container[CheckoutDependencyProvider::FACADE_OMS] = function(Container $container) {
+        $container[CheckoutDependencyProvider::FACADE_OMS] = function (Container $container) {
             return $container->getLocator()->oms()->facade();
         };
 
@@ -227,7 +224,7 @@ class CheckoutFacadeTest extends Test
         $this->assertEquals(CheckoutConfig::ERROR_CODE_PRODUCT_UNAVAILABLE, $result->getErrors()[0]->getErrorCode());
     }
 
-    public function testCheckoutTriggersStatemachine()
+    public function testCheckoutTriggersStateMachine()
     {
         $checkoutRequest = $this->getBaseCheckoutTransfer();
 
@@ -342,8 +339,8 @@ class CheckoutFacadeTest extends Test
 
         $cart->setTotals($totals);
 
-        $billingAddress = new SalesAddressTransfer();
-        $shippingAddress = new SalesAddressTransfer();
+        $billingAddress = new AddressTransfer();
+        $shippingAddress = new AddressTransfer();
 
         $billingAddress
             ->setIso2Code('xi')

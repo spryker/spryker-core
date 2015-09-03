@@ -7,11 +7,11 @@
 namespace SprykerFeature\Zed\Sales\Business;
 
 use Generated\Shared\Sales\ItemSplitResponseInterface;
-use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\CommentTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
+use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\SalesAddressTransfer;
+use Generated\Shared\Transfer\AddressTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
@@ -64,42 +64,42 @@ class SalesFacade extends AbstractFacade
     /**
      * @deprecated
      *
-     * @param int $orderItemId
+     * @param int $idOrderItem
      *
      * @return array
      */
-    public function getOrderItemManualEvents($orderItemId)
+    public function getOrderItemManualEvents($idOrderItem)
     {
         return $this->getDependencyContainer()
             ->getProvidedDependency(SalesDependencyProvider::FACADE_OMS)
-            ->getManualEvents($orderItemId)
+            ->getManualEvents($idOrderItem)
         ;
     }
 
     /**
-     * @param int $orderItemId
+     * @param int $idOrderItem
      *
      * @deprecated
      *
      * @return OrderItemsTransfer
      */
-    public function getOrderItemById($orderItemId)
+    public function getOrderItemById($idOrderItem)
     {
         return $this->getDependencyContainer()
             ->getProvidedDependency(SalesDependencyProvider::FACADE_OMS)
-            ->getOrderItemById($orderItemId)
+            ->getOrderItemById($idOrderItem)
         ;
     }
     /**
-     * @param OrderTransfer $transferOrder
+     * @param OrderTransfer $orderTransfer
      *
      * @return OrderTransfer
      */
-    public function saveOrder(OrderTransfer $transferOrder)
+    public function saveOrder(OrderTransfer $orderTransfer)
     {
         return $this->getDependencyContainer()
             ->createOrderManager()
-            ->saveOrder($transferOrder);
+            ->saveOrder($orderTransfer);
     }
 
     /**
@@ -128,17 +128,43 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
-     * @param AddressesTransfer $addressesTransfer
+     * @param AddressTransfer $addressesTransfer
      * @param int $idAddress
      *
      * @return mixed
      */
-    public function updateOrderAddress(SalesAddressTransfer $addressesTransfer, $idAddress)
+    public function updateOrderAddress(AddressTransfer $addressesTransfer, $idAddress)
     {
         return $this->getDependencyContainer()
             ->createOrderDetailsManager()
             ->updateOrderAddress($addressesTransfer, $idAddress)
         ;
+    }
+
+    /**
+     * @param string $idOrder
+     *
+     * @return array
+     */
+    public function getPaymentLogs($idOrder)
+    {
+        return $this->getDependencyContainer()
+            ->createOrderDetailsManager()
+            ->getPaymentLogs($idOrder)
+            ;
+    }
+
+    /**
+     * @param OrderListTransfer $orderListTransfer
+     *
+     * @return OrderListTransfer
+     */
+    public function getOrders(OrderListTransfer $orderListTransfer)
+    {
+        return $this->getDependencyContainer()
+            ->createOrderManager()
+            ->getOrders($orderListTransfer)
+            ;
     }
 
 }

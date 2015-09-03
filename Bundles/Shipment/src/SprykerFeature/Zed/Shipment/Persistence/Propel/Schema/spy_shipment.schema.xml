@@ -15,6 +15,7 @@
     <table name="spy_shipment_method" phpName="SpyShipmentMethod" identifierQuoting="true">
         <column name="id_shipment_method" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_shipment_carrier" type="INTEGER" required="true"/>
+        <column name="fk_tax_set" type="INTEGER" required="false"/>
         <column name="glossary_key_name" size="255" type="VARCHAR"/>
         <column name="glossary_key_description" size="255" type="VARCHAR"/>
         <column name="name" required="true" size="255" type="VARCHAR"/>
@@ -23,9 +24,14 @@
         <column name="availability_plugin" size="255" type="VARCHAR"/>
         <column name="price_calculation_plugin" size="255" type="VARCHAR"/>
         <column name="delivery_time_plugin" size="255" type="VARCHAR"/>
+        <column name="tax_calculation_plugin" size="255" type="VARCHAR"/>
 
         <foreign-key foreignTable="spy_shipment_carrier" phpName="ShipmentCarrier" refPhpName="ShipmentMethods">
             <reference local="fk_shipment_carrier" foreign="id_shipment_carrier"/>
+        </foreign-key>
+
+        <foreign-key foreignTable="spy_tax_set" phpName="TaxSet" refPhpName="ShipmentMethods">
+            <reference local="fk_tax_set" foreign="id_tax_set"/>
         </foreign-key>
 
         <index>

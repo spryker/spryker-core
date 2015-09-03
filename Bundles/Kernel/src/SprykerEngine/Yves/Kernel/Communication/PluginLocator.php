@@ -19,6 +19,26 @@ class PluginLocator extends AbstractLocator
     protected $factoryClassNamePattern = '\\{{namespace}}\\Yves\\Kernel\\Communication\\Factory';
 
     /**
+     * @var string
+     */
+    protected $application = 'Yves';
+
+    /**
+     * @var string
+     */
+    protected $layer = 'Communication';
+
+    /**
+     * @var string
+     */
+    protected $suffix = 'Factory';
+
+    /**
+     * @var string
+     */
+    protected $bundle = 'Kernel';
+
+    /**
      * @param string $bundle
      * @param LocatorLocatorInterface $locator
      * @param null|string $className

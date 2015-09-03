@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Shared\Library;
 
+use SprykerEngine\Shared\Kernel\Store;
+
 class Autoloader
 {
 
@@ -87,6 +89,9 @@ class Autoloader
     private function getResourceRelativePath($resourceParts)
     {
         $bundle = $resourceParts[2];
+        if (defined('APPLICATION_STORE')) {
+            $bundle = str_replace(APPLICATION_STORE, '', $bundle);
+        }
         $relativeResourcePath = 'Bundles/' . $bundle . '/src/' . implode(DIRECTORY_SEPARATOR, $resourceParts);
 
         return $relativeResourcePath . '.php';

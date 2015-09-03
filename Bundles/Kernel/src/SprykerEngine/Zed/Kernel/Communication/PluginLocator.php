@@ -11,6 +11,7 @@ use SprykerEngine\Shared\Kernel\Locator\LocatorException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\BundleDependencyProviderLocator;
 use SprykerEngine\Zed\Kernel\Container;
+use SprykerEngine\Shared\Kernel\ClassMapFactory;
 
 class PluginLocator extends AbstractLocator
 {
@@ -18,7 +19,22 @@ class PluginLocator extends AbstractLocator
     /**
      * @var string
      */
-    protected $factoryClassNamePattern = '\\{{namespace}}\\Zed\\Kernel\\Communication\\Factory';
+    protected $bundle = 'Kernel';
+
+    /**
+     * @var string
+     */
+    protected $layer = 'Communication';
+
+    /**
+     * @var string
+     */
+    protected $suffix = 'Factory';
+
+    /**
+     * @var string
+     */
+    protected $application = 'Zed';
 
     /**
      * @param string $bundle
@@ -33,7 +49,13 @@ class PluginLocator extends AbstractLocator
     {
         $factory = $this->getFactory($bundle);
 
-        $plugin = $factory->create('Plugin' . $className, $factory, $locator);
+        $plugin = ClassMapFactory::getInstance()->create(
+            'Zed',
+            $bundle,
+            'Plugin' . $className,
+            'Communication',
+            [$factory, $locator]
+        );
 
         // @todo REFACTOR -  move to constructor when all controllers are upgraded
         $bundleName = lcfirst($bundle);

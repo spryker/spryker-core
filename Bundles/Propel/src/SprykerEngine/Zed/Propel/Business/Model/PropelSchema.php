@@ -41,6 +41,7 @@ class PropelSchema implements PropelSchemaInterface
     public function copy()
     {
         $schemaFiles = $this->finder->getGroupedSchemaFiles();
+
         foreach ($schemaFiles as $fileName => $groupedSchemas) {
             if ($this->needMerge($groupedSchemas)) {
                 $content = $this->merger->merge($groupedSchemas);
