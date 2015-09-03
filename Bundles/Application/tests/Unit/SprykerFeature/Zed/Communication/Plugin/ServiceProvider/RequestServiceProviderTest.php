@@ -22,24 +22,28 @@ class RequestServiceProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider urlStack
      *
-     * @param $url
-     * @param $module
-     * @param $controller
-     * @param $action
+     * @param string $givenUrl
+     * @param string $expectedBundle
+     * @param string $expectedController
+     * @param string $expectedAction
      */
-    public function testBeforeMustParseRequestDataAndSetModuleControllerAndActionInRequest($url, $module, $controller, $action)
-    {
+    public function testBeforeMustParseRequestDataAndSetModuleControllerAndActionInRequest(
+        $givenUrl,
+        $expectedBundle,
+        $expectedController,
+        $expectedAction
+    ) {
         $application = new Application();
 
         $requestServiceProvider = new RequestServiceProvider();
         $requestServiceProvider->boot($application);
 
-        $request = Request::create($url);
+        $request = Request::create($givenUrl);
         $application->handle($request);
 
-        $this->assertSame($module, $request->attributes->get(RequestServiceProvider::BUNDLE));
-        $this->assertSame($controller, $request->attributes->get(RequestServiceProvider::CONTROLLER));
-        $this->assertSame($action, $request->attributes->get(RequestServiceProvider::ACTION));
+        $this->assertSame($expectedBundle, $request->attributes->get(RequestServiceProvider::BUNDLE));
+        $this->assertSame($expectedController, $request->attributes->get(RequestServiceProvider::CONTROLLER));
+        $this->assertSame($expectedAction, $request->attributes->get(RequestServiceProvider::ACTION));
     }
 
     /**
@@ -55,4 +59,5 @@ class RequestServiceProviderTest extends \PHPUnit_Framework_TestCase
             ['/foo/bar/baz?foo=bar&bar=baz', 'foo', 'bar', 'baz'],
         ];
     }
+
 }
