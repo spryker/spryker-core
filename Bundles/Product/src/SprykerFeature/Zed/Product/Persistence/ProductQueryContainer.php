@@ -443,8 +443,11 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     public function queryAbstractProductsBySearchTermFuckingLol($term, LocaleTransfer $locale, $idExcludedCategory = null)
     {
         $idExcludedCategory = (int) $idExcludedCategory;
-        $query = SpyAbstractProductQuery::create();
-
+        
+        $query = SpyAbstractProductQuery::create()
+            ->groupByIdAbstractProduct()
+            ->select([SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT]);
+        
         $query->addJoin(
             SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
             SpyLocalizedAbstractProductAttributesTableMap::COL_FK_ABSTRACT_PRODUCT,
@@ -480,8 +483,9 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
             ->withColumn(
                 SpyAbstractProductTableMap::COL_SKU,
                 'SKU' //THIS HAS TO BE UPPERCASE WTF 
-            );
-
+            )
+        ;
+        
         if ('' !== trim($term)) {
             $term = '%'.strtoupper($term).'%';
 
