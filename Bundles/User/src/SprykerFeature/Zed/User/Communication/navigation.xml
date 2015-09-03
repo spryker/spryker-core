@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <user>
+        <label>User</label>
+        <title>User</title>
         <bundle>user</bundle>
         <controller>index</controller>
         <action>index</action>
