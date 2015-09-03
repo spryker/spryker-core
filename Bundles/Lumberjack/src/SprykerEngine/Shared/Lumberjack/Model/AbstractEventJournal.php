@@ -6,7 +6,10 @@
 
 namespace SprykerEngine\Shared\Lumberjack\Model;
 
+use SprykerEngine\Shared\Config;
+use SprykerEngine\Shared\Lumberjack\LumberjackConfig;
 use SprykerEngine\Shared\Lumberjack\Model\Writer\WriterInterface;
+use SprykerEngine\Shared\Lumberjack\Model\Collector\DataCollectorInterface;
 
 abstract class AbstractEventJournal
 {
@@ -23,20 +26,24 @@ abstract class AbstractEventJournal
 
     public function __construct()
     {
-        $this->addDefaultCollectors();
-        $this->addDefaultWriters();
+        $this->addConfiguredCollectors();
+        $this->addConfiguredWriters();
     }
 
-    protected function addDefaultCollectors()
+    protected function addConfiguredCollectors()
     {
-        $this->addDataCollector(new ServerDataCollector());
-        $this->addDataCollector(new RequestDataCollector());
-        $this->addDataCollector(new EnvironmentDataCollector());
+        $collectors = Config::get(LumberjackConfig::COLLECTORS);
+        foreach($collectors[APPLICATION] as $collector) {
+            $this->addDataCollector(new $collector);
+        }
     }
 
-    protected function addDefaultWriters()
+    protected function addConfiguredWriters()
     {
-        $this->addEventWriter(new Writer\File());
+        $writers = Config::get(LumberjackConfig::WRITERS);
+        foreach($writers[APPLICATION] as $writer) {
+            $this->addEventWriter(new $writer);
+        }
     }
 
     /**
