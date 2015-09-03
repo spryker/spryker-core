@@ -25,6 +25,11 @@ class ClassMapFactory
     protected $map;
 
     /**
+     * @var InstanceBuilder
+     */
+    private $instanceBuilder;
+
+    /**
      * @return ClassMapFactory
      */
     public static function getInstance()
@@ -39,6 +44,7 @@ class ClassMapFactory
     private function __construct()
     {
         $this->map = include_once APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . self::CLASS_MAP_FILE_NAME;
+        $this->instanceBuilder = new InstanceBuilder();
     }
 
     /**
@@ -64,7 +70,7 @@ class ClassMapFactory
         }
         $className = $this->map[$key];
 
-        return (new InstanceBuilder())->createInstance($className, $arguments);
+        return $this->instanceBuilder->createInstance($className, $arguments);
     }
 
     /**
@@ -90,7 +96,7 @@ class ClassMapFactory
      *
      * @return string
      */
-    protected function createKey($application, $bundle, $suffix, $layer)
+    protected function createKey($application, $bundle, $suffix, $layer = null)
     {
         if (null !== $layer) {
             $key = implode('|', [$application, $bundle, $layer, $suffix]);

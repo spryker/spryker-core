@@ -60,7 +60,7 @@ class QueryContainerLocator extends AbstractLocator
             $bundleBuilder = $bundleConfigLocator->locate($bundle, $locator);
             $container = new Container();
             $container[self::PROPEL_CONNECTION] = function () use ($locator) {
-                /* @var $locator AutoCompletion */
+                /** @var $locator AutoCompletion */
                 return $locator->propel()->pluginConnection()->get();
             };
             $bundleBuilder->providePersistenceLayerDependencies($container);

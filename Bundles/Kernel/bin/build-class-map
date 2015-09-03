@@ -14,6 +14,7 @@ class ClassMapBuilder
     const CLASS_PART_BUNDLE = 3;
     const CLASS_PART_LAYER = 4;
     const STORE_PLACEHOLDER = '{{STORE}}';
+    const PATH_TO_CLASS_MAP = '/../../.class_map';
 
     /**
      * @return array
@@ -94,13 +95,13 @@ class ClassMapBuilder
 
         if ($hasLayer) {
             $layer = $classNameParts[self::CLASS_PART_LAYER];
-            $prefix = implode('\\', [$namespace, $application, $bundle, $layer]);
-            $suffix = str_replace([$prefix, '\\'], '', $className);
-            $map[$application . '|' . $bundle . '|' . $layer . '|' . $suffix] = $className;
+            $absoluteBundlePath = $this->getAbsoluteBundlePath($namespace, $application, $bundle, $layer);
+            $factoryMethodName = $this->extractFactoryMethodName($absoluteBundlePath, $className);
+            $map[$application . '|' . $bundle . '|' . $layer . '|' . $factoryMethodName] = $className;
         } else {
-            $prefix = implode('\\', [$namespace, $application, $bundle]);
-            $suffix = str_replace([$prefix, '\\'], '', $className);
-            $map[$application . '|' . $bundle . '|' . $suffix] = $className;
+            $absoluteBundlePath = $this->getAbsoluteBundlePath($namespace, $application, $bundle);
+            $factoryMethodName = $this->extractFactoryMethodName($absoluteBundlePath, $className);
+            $map[$application . '|' . $bundle . '|' . $factoryMethodName] = $className;
         }
 
         return $map;
@@ -113,8 +114,8 @@ class ClassMapBuilder
      */
     private function getClassNameFromFile(SplFileInfo $file)
     {
-        $path = $file->getRelativePath() . '/' . $file->getFilename();
-        $className = '\\' . str_replace('/', '\\', $path);
+        $path = $file->getRelativePath() . DIRECTORY_SEPARATOR . $file->getFilename();
+        $className = '\\' . str_replace(DIRECTORY_SEPARATOR, '\\', $path);
         $className = str_replace('.php', '', $className);
 
         return $className;
@@ -141,7 +142,48 @@ class ClassMapBuilder
      */
     private function saveMapToFile(array $map)
     {
-        file_put_contents(__DIR__ . '/../../.class_map', '<?php return ' . var_export($map, true) . ';');
+        $content = '<?php return ' . var_export($map, true) . ';';
+
+        file_put_contents(
+            $this->getPathToClassMap(),
+            $content
+        );
+    }
+
+    /**
+     * @param $namespace
+     * @param $application
+     * @param $bundle
+     * @param $layer
+     *
+     * @return string
+     */
+    private function getAbsoluteBundlePath($namespace, $application, $bundle, $layer = null)
+    {
+        $absoluteBundlePath = implode('\\', [$namespace, $application, $bundle, $layer]);
+
+        return $absoluteBundlePath;
+    }
+
+    /**
+     * @param $absoluteBundlePath
+     * @param $className
+     *
+     * @return mixed
+     */
+    private function extractFactoryMethodName($absoluteBundlePath, $className)
+    {
+        $factoryMethodName = str_replace([$absoluteBundlePath, '\\'], '', $className);
+
+        return $factoryMethodName;
+    }
+
+    /**
+     * @return string
+     */
+    private function getPathToClassMap()
+    {
+        return __DIR__ . self::PATH_TO_CLASS_MAP;
     }
 
 }
