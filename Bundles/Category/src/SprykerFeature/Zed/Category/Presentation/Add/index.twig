@@ -44,7 +44,9 @@
             <div class="">
                 <a onclick="fnClickAddRow();" href="javascript:void(0);" class="btn btn-primary ">Assign Selected</a>
             </div>
-            
+            <br/>
+            <br/>
+            <br/>
 
             <h3>Products in this category</h3>
             {{ productCategories | raw }}
@@ -134,7 +136,12 @@
                 templateSelection: function(product) {
                     return product.name || product.text;
                 }
+            }).on("change", function(e) {
+                // mostly used event, fired to the original element when the value changes
+                console.log("change val=" , $(this).select2('data'));
+                
             });
+
         });
     </script>
 {% endblock %}
