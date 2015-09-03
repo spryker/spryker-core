@@ -37,9 +37,9 @@ class RequestServiceProviderTest extends \PHPUnit_Framework_TestCase
         $request = Request::create($url);
         $application->handle($request);
 
-        $this->assertSame($module, $request->attributes->get('module'));
-        $this->assertSame($controller, $request->attributes->get('controller'));
-        $this->assertSame($action, $request->attributes->get('action'));
+        $this->assertSame($module, $request->attributes->get(RequestServiceProvider::BUNDLE));
+        $this->assertSame($controller, $request->attributes->get(RequestServiceProvider::CONTROLLER));
+        $this->assertSame($action, $request->attributes->get(RequestServiceProvider::ACTION));
     }
 
     /**
