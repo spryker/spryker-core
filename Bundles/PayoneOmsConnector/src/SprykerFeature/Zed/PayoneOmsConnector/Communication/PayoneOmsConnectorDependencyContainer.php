@@ -10,6 +10,7 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContai
 use SprykerFeature\Zed\PayoneOmsConnector\PayoneOmsConnectorConfig;
 use SprykerFeature\Zed\PayoneOmsConnector\PayoneOmsConnectorDependencyProvider;
 use SprykerFeature\Zed\Payone\Business\PayoneFacade;
+use SprykerFeature\Zed\Refund\Business\RefundFacade;
 
 /**
  * @method PayoneOmsConnectorConfig getConfig()
@@ -23,6 +24,14 @@ class PayoneOmsConnectorDependencyContainer extends AbstractCommunicationDepende
     public function createPayoneFacade()
     {
         return $this->getProvidedDependency(PayoneOmsConnectorDependencyProvider::FACADE_PAYONE);
+    }
+
+    /**
+     * @return RefundFacade
+     */
+    public function createRefundFacade()
+    {
+        return $this->getProvidedDependency(PayoneOmsConnectorDependencyProvider::FACADE_REFUND);
     }
 
 }

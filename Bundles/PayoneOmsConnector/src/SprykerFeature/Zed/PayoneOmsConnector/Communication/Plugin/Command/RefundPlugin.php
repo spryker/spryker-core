@@ -12,7 +12,6 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
-use SprykerFeature\Zed\Payone\Business\PayoneDependencyContainer;
 use SprykerFeature\Zed\PayoneOmsConnector\Communication\PayoneOmsConnectorDependencyContainer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
@@ -30,11 +29,14 @@ class RefundPlugin extends AbstractPlugin implements CommandByOrderInterface
      *
      * @return array Array
      */
-
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
         $refundTransfer = new PayoneRefundTransfer();
-        $amount = $this->calculateAmount($orderItems);
+
+        $amount = $this->getDependencyContainer()
+            ->createRefundFacade()
+            ->calculateAmount($orderItems, $orderEntity);
+        //$amount = $this->calculateAmount($orderItems);
         $refundTransfer->setAmount($amount * -1);
 
         $narrativeText = $this->getDependencyContainer()->getConfig()->getNarrativeText($orderItems, $orderEntity, $data);
@@ -49,19 +51,6 @@ class RefundPlugin extends AbstractPlugin implements CommandByOrderInterface
 
         $this->getDependencyContainer()->createPayoneFacade()->refundPayment($refundTransfer);
         return [];
-    }
-
-    /**
-     * @param array $orderItems
-     * @return int Amount
-     */
-    protected function calculateAmount($orderItems) {
-        $amount = 0;
-        /* @var SpySalesOrderItem $orderItem */
-        foreach ($orderItems as $orderItem) {
-            $amount += $orderItem->getPriceToPay();
-        }
-        return $amount;
     }
 
 }

@@ -14,6 +14,8 @@ class PayoneOmsConnectorDependencyProvider extends AbstractBundleDependencyProvi
 
     const FACADE_PAYONE = 'payone facade';
 
+    const FACADE_REFUND = 'refund facade';
+
     /**
      * @param Container $container
      *
@@ -21,8 +23,12 @@ class PayoneOmsConnectorDependencyProvider extends AbstractBundleDependencyProvi
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[self::FACADE_PAYONE] = function (Container $container) {
+        $container[static::FACADE_PAYONE] = function (Container $container) {
             return $container->getLocator()->payone()->facade();
+        };
+
+        $container[static::FACADE_REFUND] = function (Container $container) {
+            return $container->getLocator()->refund()->facade();
         };
 
         return $container;

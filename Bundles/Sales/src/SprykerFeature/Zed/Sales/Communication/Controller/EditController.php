@@ -5,11 +5,13 @@ namespace SprykerFeature\Zed\Sales\Communication\Controller;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\Sales\Business\SalesFacade;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Sales\Communication\SalesDependencyContainer;
 
 /**
  * @method SalesDependencyContainer getDependencyContainer()
+ * @method SalesFacade getFacade()
  */
 class EditController extends AbstractController
 {

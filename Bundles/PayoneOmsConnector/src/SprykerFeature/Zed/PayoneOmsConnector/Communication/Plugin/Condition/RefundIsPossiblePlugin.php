@@ -7,14 +7,10 @@
 namespace SprykerFeature\Zed\PayoneOmsConnector\Communication\Plugin\Condition;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerFeature\Zed\Payone\Communication\PayoneDependencyContainer;
 
-/**
- * @method PayoneDependencyContainer getDependencyContainer()
- */
-class RefundIsApprovedPlugin extends AbstractPlugin
+class RefundIsPossiblePlugin extends AbstractPlugin
 {
-    const NAME = 'RefundIsApprovedPlugin';
+    const NAME = 'RefundIsPossiblePlugin';
 
     /**
      * @param OrderTransfer $orderTransfer
@@ -23,7 +19,7 @@ class RefundIsApprovedPlugin extends AbstractPlugin
      */
     protected function callFacade(OrderTransfer $orderTransfer)
     {
-        return $this->getDependencyContainer()->createPayoneFacade()->isRefundApproved($orderTransfer);
+        return $this->getDependencyContainer()->createPayoneFacade()->isRefundPossible($orderTransfer);
     }
 
 }

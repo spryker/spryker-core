@@ -10,6 +10,7 @@ use Generated\Shared\Payone\PayoneCreditCardInterface;
 use Generated\Shared\Payone\PayoneRefundInterface;
 use Generated\Shared\Payone\PayoneStandardParameterInterface;
 use Generated\Shared\Payone\OrderInterface;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -306,7 +307,7 @@ class PaymentManager implements PaymentManagerInterface
         $payment = $this->queryContainer->getPaymentByOrderId($orderTransfer->getIdSalesOrder())->findOne();
 
         $paymentTransfer = new PayonePaymentTransfer();
-        $paymentTransfer->fromArray($payment->toArray());
+        $paymentTransfer->fromArray($payment->toArray(), true);
 
         return $paymentTransfer;
     }
@@ -489,4 +490,28 @@ class PaymentManager implements PaymentManagerInterface
         return $data->toArray();
     }
 
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    public function isRefundPossible($orderTransfer)
+    {
+        //$idSalesOrder = $orderTransfer->getIdSalesOrder();
+        $payment = $this->getPayment($orderTransfer);
+
+        // Return early if we don't need the iban or bic data
+        $paymentMethod = $payment->getPaymentMethod();
+        $whiteList = [
+            PayoneApiConstants::PAYMENT_METHOD_PAYPAL,
+            PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO
+        ];
+        if (in_array($paymentMethod, $whiteList)) {
+            return true;
+        }
+
+        $paymentDetail = $payment->getPaymentDetail();
+
+        return $paymentDetail->getBic() && $paymentDetail->getIban();
+    }
 }
