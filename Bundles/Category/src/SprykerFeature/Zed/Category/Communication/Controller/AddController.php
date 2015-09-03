@@ -113,11 +113,16 @@ class AddController extends AbstractController
         
         $results = [];
         foreach ($resultSet as $searchItem) {
-            $results[] = $searchItem->toArray();
+            $item = $searchItem->toArray();
+            //fix for select 2
+            $item['id'] = $item['id_abstract_product'];
+            $item['text'] = $item['name'].' ('.$item['sku'].')';
+            $results[] = $item;
         }
         
         return $this->jsonResponse([
-            'items' => $results, 
+            'items' => $results,
+            "incomplete_results" => false,
             'total_count' => count($results)
         ]);
     }

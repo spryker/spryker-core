@@ -53,6 +53,7 @@ class CategoryFormEdit extends CategoryFormAdd
                 'constraints' => [
                     new NotBlank(),
                 ],
+                'multiple' => true,
                 'placeholder' => '-Select Product-'
                 //'data' => $this->getAssignedProducts()
             ])
