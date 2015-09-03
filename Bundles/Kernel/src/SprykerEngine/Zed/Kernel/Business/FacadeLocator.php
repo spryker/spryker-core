@@ -21,7 +21,22 @@ class FacadeLocator extends AbstractLocator
     /**
      * @var string
      */
-    protected $factoryClassNamePattern = '\\{{namespace}}\\Zed\\Kernel\\Business\\Factory';
+    protected $bundle = 'Kernel';
+
+    /**
+     * @var string
+     */
+    protected $layer = 'Business';
+
+    /**
+     * @var string
+     */
+    protected $application = 'Zed';
+
+    /**
+     * @var string
+     */
+    protected $suffix = 'Factory';
 
     /**
      * @param string $bundle
@@ -47,10 +62,9 @@ class FacadeLocator extends AbstractLocator
             $facade->setExternalDependencies($container);
 
             // TODO make lazy
-            if($locator->$bundle()->hasQueryContainer()) {
+            if ($locator->$bundle()->hasQueryContainer()) {
                 $facade->setOwnQueryContainer($locator->$bundle()->queryContainer());
             }
-
         } catch (ClassNotFoundException $e) {
             // TODO remove try-catch when all bundles have a Builder
             \SprykerFeature_Shared_Library_Log::log(APPLICATION . ' - ' . $bundle, 'builder_missing.log');

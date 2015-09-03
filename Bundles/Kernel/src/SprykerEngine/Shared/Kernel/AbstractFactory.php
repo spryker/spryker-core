@@ -6,7 +6,6 @@
 
 namespace SprykerEngine\Shared\Kernel;
 
-use SprykerEngine\Shared\Kernel\Factory\FactoryException;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 
 abstract class AbstractFactory implements FactoryInterface
@@ -20,12 +19,12 @@ abstract class AbstractFactory implements FactoryInterface
     /**
      * @var string
      */
-    protected $classNamePattern;
+    protected $application;
 
     /**
-     * @var ClassResolver
+     * @var string
      */
-    private $resolver;
+    protected $layer;
 
     /**
      * @var string
@@ -77,7 +76,6 @@ abstract class AbstractFactory implements FactoryInterface
                 return $this->create($className);
             }
         }
-
     }
 
     /**
@@ -87,10 +85,11 @@ abstract class AbstractFactory implements FactoryInterface
      */
     public function exists($class)
     {
-        $class = $this->buildClassName($class);
-        $resolver = $this->getResolver();
+        if (in_array($class, $this->baseClasses)) {
+            $class = $this->getBundle() . $class;
+        }
 
-        return $resolver->canResolve($class, $this->getBundle());
+        return ClassMapFactory::getInstance()->has($this->application, $this->getBundle(), $class, $this->layer);
     }
 
     /**
@@ -104,6 +103,10 @@ abstract class AbstractFactory implements FactoryInterface
     {
         $arguments = func_get_args();
 
+        if (in_array($class, $this->baseClasses)) {
+            $class = $this->getBundle() . $class;
+        }
+
         array_shift($arguments);
 
         if ($this->isMagicCall) {
@@ -111,22 +114,7 @@ abstract class AbstractFactory implements FactoryInterface
         }
         $this->isMagicCall = false;
 
-        $class = $this->buildClassName($class);
-        $resolver = $this->getResolver();
-
-        return $resolver->resolve($class, $this->getBundle(), $arguments);
-    }
-
-    /**
-     * @return ClassResolver
-     */
-    protected function getResolver()
-    {
-        $classResolver = new ClassResolver();
-        $camelHumpClassResolver = new CamelHumpClassResolver($classResolver);
-        $this->resolver = IdentityMapClassResolver::getInstance($camelHumpClassResolver);
-
-        return $this->resolver;
+        return ClassMapFactory::getInstance()->create($this->application, $this->getBundle(), $class, $this->layer, $arguments);
     }
 
     /**
@@ -135,34 +123,6 @@ abstract class AbstractFactory implements FactoryInterface
     protected function getBundle()
     {
         return $this->bundle;
-    }
-
-    /**
-     * @param string $class
-     *
-     * @return string
-     */
-    protected function buildClassName($class)
-    {
-        if (in_array($class, $this->baseClasses)) {
-            $class = $this->getBundle() . $class;
-        }
-
-        return $this->getClassNamePattern() . $class;
-    }
-
-    /**
-     * @throws FactoryException
-     *
-     * @return string
-     */
-    protected function getClassNamePattern()
-    {
-        if (is_null($this->classNamePattern)) {
-            throw new FactoryException(sprintf('Couldn\'t find a classNamePattern in "%s"', get_class($this)));
-        }
-
-        return $this->classNamePattern;
     }
 
 }

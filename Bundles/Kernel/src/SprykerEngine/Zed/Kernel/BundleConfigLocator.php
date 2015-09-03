@@ -19,7 +19,22 @@ class BundleConfigLocator extends AbstractLocator
     /**
      * @var string
      */
-    protected $factoryClassNamePattern = '\\{{namespace}}\\Zed\\Kernel\\Factory';
+    protected $bundle = 'Kernel';
+
+    /**
+     * @var string
+     */
+    protected $layer;
+
+    /**
+     * @var string
+     */
+    protected $suffix = 'Factory';
+
+    /**
+     * @var string
+     */
+    protected $application = 'Zed';
 
     /**
      * @param string $bundle

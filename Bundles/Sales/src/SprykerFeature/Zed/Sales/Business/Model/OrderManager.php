@@ -28,7 +28,7 @@ class OrderManager
      * @var SalesQueryContainerInterface
      */
     protected $queryContainer;
-    
+
     /**
      * @var SalesToCountryInterface
      */
@@ -217,7 +217,7 @@ class OrderManager
 
         $ordersQuery = $this->queryContainer->querySalesOrdersByCustomerId($orderListTransfer->getIdCustomer(), $criteria)
             ->find();
-        
+
         $result = [];
         foreach ($ordersQuery as $order) {
             $result[] = (new OrderTransfer())

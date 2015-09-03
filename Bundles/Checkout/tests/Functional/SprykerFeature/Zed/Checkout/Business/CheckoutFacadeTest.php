@@ -8,7 +8,6 @@ namespace Functional\SprykerFeature\Zed\Checkout\Business;
 
 use Codeception\TestCase\Test;
 use Functional\SprykerFeature\Zed\Checkout\Dependency\MockOmsOrderHydrator;
-use Functional\SprykerFeature\Zed\Checkout\Dependency\OmsFacade;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
@@ -25,8 +24,6 @@ use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountry;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
 use SprykerFeature\Zed\Oms\OmsConfig;
-use SprykerFeature\Zed\Oms\OmsDependencyProvider;
-use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainer;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
@@ -98,7 +95,7 @@ class CheckoutFacadeTest extends Test
             ];
         };
 
-        $container[CheckoutDependencyProvider::FACADE_OMS] = function(Container $container) {
+        $container[CheckoutDependencyProvider::FACADE_OMS] = function (Container $container) {
             return $container->getLocator()->oms()->facade();
         };
 

@@ -12,13 +12,13 @@ use SprykerEngine\Zed\Kernel\Container;
 class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const AVAILABILITY_PLUGINS          = 'AVAILABILITY_PLUGINS';
-    const PRICE_CALCULATION_PLUGINS     = 'PRICE_CALCULATION_PLUGINS';
-    const TAX_CALCULATION_PLUGINS       = 'TAX_CALCULATION_PLUGINS';
-    const DELIVERY_TIME_PLUGINS         = 'DELIVERY_TIME_PLUGINS';
-    const PLUGINS                       = 'PLUGINS';
+    const AVAILABILITY_PLUGINS = 'AVAILABILITY_PLUGINS';
+    const PRICE_CALCULATION_PLUGINS = 'PRICE_CALCULATION_PLUGINS';
+    const TAX_CALCULATION_PLUGINS = 'TAX_CALCULATION_PLUGINS';
+    const DELIVERY_TIME_PLUGINS = 'DELIVERY_TIME_PLUGINS';
+    const PLUGINS = 'PLUGINS';
 
-    const QUERY_CONTAINER_TAX           = 'QUERY_CONTAINER_TAX';
+    const QUERY_CONTAINER_TAX = 'QUERY_CONTAINER_TAX';
 
     /**
      * @param Container $container
@@ -33,6 +33,5 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
-
 
 }

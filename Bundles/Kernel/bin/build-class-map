@@ -1,0 +1,192 @@
+#!/usr/bin/env php
+<?php
+
+require_once(__DIR__ . '/../../../../../autoload.php');
+
+use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
+
+class ClassMapBuilder
+{
+
+    const CLASS_PART_NAMESPACE = 1;
+    const CLASS_PART_APPLICATION = 2;
+    const CLASS_PART_BUNDLE = 3;
+    const CLASS_PART_LAYER = 4;
+    const STORE_PLACEHOLDER = '{{STORE}}';
+    const PATH_TO_CLASS_MAP = '/../../../../../../.class_map';
+
+    /**
+     * @return array
+     */
+    public function buildFactoryClassMap()
+    {
+        $directories = $this->getDirectories();
+        $files = $this->getFiles($directories);
+        $map = $this->buildFactoryClassMapFromFiles($files);
+        $this->saveMapToFile($map);
+
+        return $map;
+    }
+
+    /**
+     * @return array
+     */
+    private function getDirectories()
+    {
+        $directories = [
+            __DIR__ . '/../../*/src',
+            __DIR__ . '/../../../../../../src',
+        ];
+
+        return $directories;
+    }
+
+    /**
+     * @param array $directories
+     *
+     * @return SplFileInfo[]|Finder
+     */
+    private function getFiles(array $directories)
+    {
+        foreach ($directories as $key => $directory) {
+            if (!glob($directory)) {
+                unset($directories[$key]);
+            }
+        }
+        $finder = new Finder();
+        $finder->files()->in($directories)->name('*.php');
+
+        return $finder;
+    }
+
+    /**
+     * @param Finder $files
+     *
+     * @return array
+     */
+    private function buildFactoryClassMapFromFiles(Finder $files)
+    {
+        $map = [];
+
+        foreach ($files as $file) {
+            $map = $this->addMapEntryFromFile($file, $map);
+        }
+
+        return $map;
+    }
+
+    /**
+     * @param SplFileInfo $file
+     * @param array $map
+     *
+     * @return array
+     */
+    private function addMapEntryFromFile(SplFileInfo $file, array $map)
+    {
+        $className = $this->getClassNameFromFile($file);
+        $classNameParts = explode('\\', $className);
+
+        $namespace = $classNameParts[self::CLASS_PART_NAMESPACE];
+        $application = $classNameParts[self::CLASS_PART_APPLICATION];
+        $bundle = $classNameParts[self::CLASS_PART_BUNDLE];
+
+        $hasLayer = $this->hasClassLayer($classNameParts);
+
+        if ($hasLayer) {
+            $layer = $classNameParts[self::CLASS_PART_LAYER];
+            $absoluteBundlePath = $this->getAbsoluteBundlePath($namespace, $application, $bundle, $layer);
+            $factoryMethodName = $this->extractFactoryMethodName($absoluteBundlePath, $className);
+            $map[$application . '|' . $bundle . '|' . $layer . '|' . $factoryMethodName] = $className;
+        } else {
+            $absoluteBundlePath = $this->getAbsoluteBundlePath($namespace, $application, $bundle);
+            $factoryMethodName = $this->extractFactoryMethodName($absoluteBundlePath, $className);
+            $map[$application . '|' . $bundle . '|' . $factoryMethodName] = $className;
+        }
+
+        return $map;
+    }
+
+    /**
+     * @param SplFileInfo $file
+     *
+     * @return string
+     */
+    private function getClassNameFromFile(SplFileInfo $file)
+    {
+        $path = $file->getRelativePath() . DIRECTORY_SEPARATOR . $file->getFilename();
+        $className = '\\' . str_replace(DIRECTORY_SEPARATOR, '\\', $path);
+        $className = str_replace('.php', '', $className);
+
+        return $className;
+    }
+
+    /**
+     * @param array $classNameParts
+     *
+     * @return bool
+     */
+    private function hasClassLayer(array $classNameParts)
+    {
+        $hasLayer = false;
+
+        if (count($classNameParts) > 5) {
+            $hasLayer = true;
+        }
+
+        return $hasLayer;
+    }
+
+    /**
+     * @param array $map
+     */
+    private function saveMapToFile(array $map)
+    {
+        $content = '<?php return ' . var_export($map, true) . ';';
+
+        file_put_contents(
+            $this->getPathToClassMap(),
+            $content
+        );
+    }
+
+    /**
+     * @param $namespace
+     * @param $application
+     * @param $bundle
+     * @param $layer
+     *
+     * @return string
+     */
+    private function getAbsoluteBundlePath($namespace, $application, $bundle, $layer = null)
+    {
+        $absoluteBundlePath = implode('\\', [$namespace, $application, $bundle, $layer]);
+
+        return $absoluteBundlePath;
+    }
+
+    /**
+     * @param $absoluteBundlePath
+     * @param $className
+     *
+     * @return mixed
+     */
+    private function extractFactoryMethodName($absoluteBundlePath, $className)
+    {
+        $factoryMethodName = str_replace([$absoluteBundlePath, '\\'], '', $className);
+
+        return $factoryMethodName;
+    }
+
+    /**
+     * @return string
+     */
+    private function getPathToClassMap()
+    {
+        return __DIR__ . self::PATH_TO_CLASS_MAP;
+    }
+
+}
+
+$classMapBuilder = new ClassMapBuilder();
+$classMapBuilder->buildFactoryClassMap();

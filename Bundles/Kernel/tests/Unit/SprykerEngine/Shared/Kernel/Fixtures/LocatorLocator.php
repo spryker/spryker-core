@@ -12,6 +12,9 @@ use SprykerEngine\Shared\Kernel\BundleProxy;
 class LocatorLocator extends AbstractLocatorLocator
 {
 
+    /**
+     * @return BundleProxy
+     */
     protected function getBundleProxy()
     {
         return new BundleProxy($this);

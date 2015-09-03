@@ -6,9 +6,7 @@
 
 namespace SprykerEngine\Zed\Kernel;
 
-use SprykerEngine\Shared\Kernel\ClassResolver;
-use SprykerEngine\Shared\Kernel\IdentityMapClassResolver;
-use SprykerEngine\Zed\Kernel\Factory\FactoryException;
+use SprykerEngine\Shared\Kernel\ClassMapFactory;
 use SprykerEngine\Zed\Kernel\Factory\FactoryInterface;
 
 abstract class AbstractFactory implements FactoryInterface
@@ -17,16 +15,6 @@ abstract class AbstractFactory implements FactoryInterface
     const SUFFIX_FACTORY = self::FACTORY;
     const DEPENDENCY_CONTAINER = 'DependencyContainer';
     const FACTORY = 'Factory';
-
-    /**
-     * @var string
-     */
-    protected $classNamePattern;
-
-    /**
-     * @var ClassResolver
-     */
-    private $resolver;
 
     /**
      * @var string
@@ -48,22 +36,11 @@ abstract class AbstractFactory implements FactoryInterface
      */
     public function exists($class)
     {
-        $class = $this->buildClassName($class);
-        $resolver = $this->getResolver();
-
-        return $resolver->canResolve($class, $this->getBundle());
-    }
-
-    /**
-     * @return ClassResolver
-     */
-    protected function getResolver()
-    {
-        if (is_null($this->resolver)) {
-            $this->resolver = IdentityMapClassResolver::getInstance(new ClassResolver());
+        if (in_array($class, $this->baseClasses)) {
+            $class = $this->getBundle() . $class;
         }
 
-        return $this->resolver;
+        return ClassMapFactory::getInstance()->has('Zed', $this->getBundle(), $class);
     }
 
     /**
@@ -79,34 +56,6 @@ abstract class AbstractFactory implements FactoryInterface
         }
 
         return $this->bundle;
-    }
-
-    /**
-     * @param string $class
-     *
-     * @return string
-     */
-    protected function buildClassName($class)
-    {
-        if (in_array($class, $this->baseClasses)) {
-            $class = $this->getBundle() . $class;
-        }
-
-        return $this->getClassNamePattern() . $class;
-    }
-
-    /**
-     * @throws FactoryException
-     *
-     * @return string
-     */
-    protected function getClassNamePattern()
-    {
-        if (is_null($this->classNamePattern)) {
-            throw new FactoryException(sprintf('Couldn\'t find a classNamePattern in "%s"', get_class($this)));
-        }
-
-        return $this->classNamePattern;
     }
 
 }

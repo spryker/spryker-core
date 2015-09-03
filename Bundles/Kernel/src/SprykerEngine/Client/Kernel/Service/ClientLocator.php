@@ -17,7 +17,22 @@ class ClientLocator extends AbstractLocator
     /**
      * @var string
      */
-    protected $factoryClassNamePattern = '\\{{namespace}}\\Client\\Kernel\\Service\\Factory';
+    protected $bundle = 'Kernel';
+
+    /**
+     * @var string
+     */
+    protected $layer = 'Service';
+
+    /**
+     * @var string
+     */
+    protected $suffix = 'Factory';
+
+    /**
+     * @var string
+     */
+    protected $application = 'Client';
 
     /**
      * @param string $bundle

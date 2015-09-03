@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider;
 
+use SprykerFeature\Shared\Application\ApplicationConfig;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Zed\Application\Business\Model\Twig\RouteResolver;
 use SprykerFeature\Shared\System\SystemConfig;
@@ -63,11 +64,11 @@ class TwigServiceProvider extends SilexTwigServiceProvider
             );
         });
 
-        if (false === \SprykerFeature_Shared_Library_Environment::isDevelopment()) {
-            $app['twig.options'] = [
-                'cache' => \SprykerFeature_Shared_Library_Data::getLocalStoreSpecificPath('cache/twig'),
-            ];
-        }
+        $app['twig.options'] = Config::get(ApplicationConfig::ZED_TWIG_OPTIONS);
+
+        $app['twig.global.variables'] = $app->share(function () {
+            return [];
+        });
 
         $app['twig.global.variables'] = $app->share(function () {
              return [];

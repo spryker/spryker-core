@@ -10,6 +10,11 @@ class Factory extends AbstractFactory
     /**
      * @var string
      */
-    protected $classNamePattern = '\\{{namespace}}\\Client\\{{bundle}}{{store}}\\Service\\';
+    protected $application = 'Client';
+
+    /**
+     * @var string
+     */
+    protected $layer = 'Service';
 
 }

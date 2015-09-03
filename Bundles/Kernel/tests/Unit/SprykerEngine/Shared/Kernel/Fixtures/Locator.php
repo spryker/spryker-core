@@ -13,6 +13,21 @@ class Locator extends AbstractLocator
 {
 
     /**
+     * @var string
+     */
+    protected $bundle = 'foo';
+
+    /**
+     * @var string
+     */
+    protected $layer = 'bar';
+
+    /**
+     * @var string
+     */
+    protected $application = 'baz';
+
+    /**
      * @param $bundle
      * @param LocatorLocatorInterface $locator
      * @param null|string $className
