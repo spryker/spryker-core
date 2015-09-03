@@ -13,6 +13,14 @@ use Silex\ServiceProviderInterface;
 class RequestServiceProvider implements ServiceProviderInterface
 {
 
+    const BUNDLE = 'module';
+    const CONTROLLER = 'controller';
+    const ACTION = 'action';
+
+    const DEFAULT_BUNDLE = 'application';
+    const DEFAULT_CONTROLLER = 'index';
+    const DEFAULT_ACTION = 'index';
+
     /**
      * @param Application $app
      */
@@ -49,7 +57,7 @@ class RequestServiceProvider implements ServiceProviderInterface
             }
         }
 
-        if (is_null($request->attributes->has('module')) || is_null($request->attributes->has('controller')) || is_null($request->attributes->has('action'))) {
+        if (is_null($request->attributes->has(self::BUNDLE)) || is_null($request->attributes->has(self::CONTROLLER)) || is_null($request->attributes->has(self::ACTION))) {
             throw new \InvalidArgumentException('One of the required parameter (--module, --controller, --action) is missing!');
         }
     }
@@ -59,25 +67,25 @@ class RequestServiceProvider implements ServiceProviderInterface
      */
     protected function parseRequestData(Request $request)
     {
-        $requestUriWithoutParameters = strtok($request->server->get('REQUEST_URI'),'?');
+        $requestUriWithoutParameters = strtok($request->server->get('REQUEST_URI'), '?');
         $requestUriWithoutParameters = trim($requestUriWithoutParameters, '/');
         $requestUriWithoutParameters = str_replace('//', '/', $requestUriWithoutParameters);
         $requestUriParts = explode('/', $requestUriWithoutParameters);
 
         if (count($requestUriParts) < 3) {
-            $request->attributes->set('action', 'index');
+            $request->attributes->set(self::ACTION, self::DEFAULT_ACTION);
         } else {
-            $request->attributes->set('action', $requestUriParts[2]);
+            $request->attributes->set(self::ACTION, $requestUriParts[2]);
         }
         if (count($requestUriParts) < 2) {
-            $request->attributes->set('controller', 'index');
+            $request->attributes->set(self::CONTROLLER, self::DEFAULT_CONTROLLER);
         } else {
-            $request->attributes->set('controller', $requestUriParts[1]);
+            $request->attributes->set(self::CONTROLLER, $requestUriParts[1]);
         }
         if (count($requestUriParts) < 1 || empty($requestUriParts[0])) {
-            $request->attributes->set('module', 'application');
+            $request->attributes->set(self::BUNDLE, self::DEFAULT_BUNDLE);
         } else {
-            $request->attributes->set('module', $requestUriParts[0]);
+            $request->attributes->set(self::BUNDLE, $requestUriParts[0]);
         }
     }
 
