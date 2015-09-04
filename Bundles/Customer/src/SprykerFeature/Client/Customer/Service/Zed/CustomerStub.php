@@ -8,6 +8,7 @@ namespace SprykerFeature\Client\Customer\Service\Zed;
 
 use Generated\Shared\Customer\AddressInterface;
 use Generated\Shared\Customer\CustomerInterface;
+use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -122,12 +123,32 @@ class CustomerStub implements CustomerStubInterface
 
     /**
      * @param AddressInterface $addressTransfer
-     * 
+     *
      * @return AddressTransfer
      */
     public function updateAddress(AddressInterface $addressTransfer)
     {
         return $this->zedStub->call('/customer/gateway/update-address', $addressTransfer);
+    }
+
+    /**
+     * @param AddressInterface $addressTransfer
+     *
+     * @return CustomerTransfer
+     */
+    public function updateAddressAndCustomerDefaults(AddressInterface $addressTransfer)
+    {
+        return $this->zedStub->call('/customer/gateway/update-address-and-customer-defaults', $addressTransfer);
+    }
+
+    /**
+     * @param AddressInterface $addressTransfer
+     *
+     * @return CustomerTransfer
+     */
+    public function createAddressAndUpdateCustomerDefaults(AddressInterface $addressTransfer)
+    {
+        return $this->zedStub->call('/customer/gateway/create-address-and-update-customer-defaults', $addressTransfer);
     }
 
     /**
@@ -141,6 +162,16 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return AddressesTransfer
+     */
+    public function getAddresses(CustomerInterface $customerTransfer)
+    {
+        return $this->zedStub->call('/customer/gateway/addresses', $customerTransfer);
+    }
+
+    /**
      * @param AddressInterface $AddressTransfer
      * 
      * @return AddressTransfer
@@ -151,15 +182,9 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-<<<<<<< HEAD
-     * @param AddressInterface $AddressInterface
-     * 
-     * @return AddressTransfer
-=======
      * @param AddressInterface $AddressInterface
      *
      * @return AddressTransfer
->>>>>>> bbf21b9... KSP-134 Create shipping methods
      */
     public function setDefaultBillingAddress(AddressInterface $AddressInterface)
     {

@@ -8,6 +8,7 @@ namespace SprykerFeature\Client\Customer\Service;
 
 use Generated\Shared\Customer\AddressInterface;
 use Generated\Shared\Customer\CustomerInterface;
+use Generated\Shared\Transfer\AddressesTransfer;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
 use SprykerFeature\Client\ZedRequest\Service\Client\Response;
 
@@ -196,6 +197,19 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     }
 
     /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return AddressesTransfer
+     */
+    public function getAddresses(CustomerInterface $customerTransfer)
+    {
+        return $this->getDependencyContainer()
+            ->createZedCustomerStub()
+            ->getAddresses($customerTransfer)
+        ;
+    }
+
+    /**
      * @param AddressInterface $addressTransfer
      * 
      * @return AddressInterface
@@ -211,13 +225,39 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     /**
      * @param AddressInterface $addressTransfer
      * 
-     * @return Response
+     * @return AddressInterface
      */
     public function updateAddress(AddressInterface $addressTransfer)
     {
         return $this->getDependencyContainer()
             ->createZedCustomerStub()
             ->updateAddress($addressTransfer)
+        ;
+    }
+
+    /**
+     * @param AddressInterface $addressTransfer
+     *
+     * @return CustomerInterface
+     */
+    public function updateAddressAndCustomerDefaults(AddressInterface $addressTransfer)
+    {
+        return $this->getDependencyContainer()
+            ->createZedCustomerStub()
+            ->updateAddressAndCustomerDefaults($addressTransfer)
+        ;
+    }
+
+    /**
+     * @param AddressInterface $addressTransfer
+     *
+     * @return CustomerInterface
+     */
+    public function createAddressAndUpdateCustomerDefaults(AddressInterface $addressTransfer)
+    {
+        return $this->getDependencyContainer()
+            ->createZedCustomerStub()
+            ->createAddressAndUpdateCustomerDefaults($addressTransfer)
         ;
     }
 

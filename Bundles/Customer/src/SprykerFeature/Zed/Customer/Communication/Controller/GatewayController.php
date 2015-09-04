@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
+use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -151,6 +152,25 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return AddressesTransfer
+     */
+    public function addressesAction(CustomerTransfer $customerTransfer)
+    {
+        $addressesTransfer = $this->getFacade()
+            ->getAddresses($customerTransfer)
+        ;
+        if (null === $addressesTransfer) {
+            $this->setSuccess(false);
+
+            return;
+        }
+
+        return $addressesTransfer;
+    }
+
+    /**
      * @param AddressTransfer $addressTransfer
      *
      * @return AddressTransfer
@@ -163,6 +183,38 @@ class GatewayController extends AbstractGatewayController
         $this->setSuccess($result);
 
         return $addressTransfer;
+    }
+
+    /**
+     * @param AddressTransfer $addressTransfer
+     *
+     * @return CustomerTransfer
+     */
+    public function updateAddressAndCustomerDefaultsAction(AddressTransfer $addressTransfer)
+    {
+        $customerTransfer = $this->getFacade()
+            ->updateAddressAndCustomerDefaults($addressTransfer)
+        ;
+
+        $this->setSuccess(null !== $customerTransfer);
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @param AddressTransfer $addressTransfer
+     *
+     * @return CustomerTransfer
+     */
+    public function createAddressAndUpdateCustomerDefaultsAction(AddressTransfer $addressTransfer)
+    {
+        $customerTransfer = $this->getFacade()
+            ->createAddressAndUpdateCustomerDefaults($addressTransfer)
+        ;
+
+        $this->setSuccess(null !== $customerTransfer);
+
+        return $customerTransfer;
     }
 
     /**
