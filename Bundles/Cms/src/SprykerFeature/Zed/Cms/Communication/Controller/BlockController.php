@@ -156,7 +156,7 @@ class BlockController extends AbstractController
     {
         $blockTransfer = new CmsBlockTransfer();
         $blockTransfer->fromArray($data, true);
-        if ($data[CmsBlockForm::TYPE] == CmsBlockForm::TYPE_STATIC) {
+        if ($data[CmsBlockForm::TYPE] === 'static') {
             $blockTransfer->setValue(0);
         }
 

@@ -54,7 +54,7 @@ function showAutoComplete(formId, type) {
     var form = $('.form_class_' + formId);
 
     var keyInput = form.find('#form_glossary_key');
-    var ketTranslation = form.find('#form_translation');
+    var keyTranslation = form.find('#form_translation');
     var ajaxUrl = type == 1 ? 'search/?key=' : 'search/?value=';
 
     keyList.find('option').remove();
@@ -80,7 +80,7 @@ function showAutoComplete(formId, type) {
 
             keyList.css({ height :  data.length * 17 });
             keyList.on('change', function() {
-                ketTranslation.val(data[this.value].value);
+                keyTranslation.val(data[this.value].value);
                 keyInput.val(data[this.value].key);
             });
 

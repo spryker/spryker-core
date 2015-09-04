@@ -103,15 +103,9 @@ class CmsBlockForm extends AbstractForm
                 'methods' => [
                     function ($name, ExecutionContext $context) {
                         $formData = $context->getRoot()->getViewData();
-                        if (!empty($this->templateQuery->useSpyCmsPageQuery()
-                            ->useSpyCmsBlockQuery()
-                                ->filterByName($name)
-                                ->filterByType($formData['type'])
-                                ->filterByValue($formData['value'])
-                            ->find()
-                            ->getData() && ($this->blockName !== $name
+                        if (!empty($this->checkExistingBlock($name, $formData)) && ($this->blockName !== $name
                                             || $this->blockType !== $formData['type']
-                                            || $this->blockValue !== $formData['value']))
+                                            || $this->blockValue !== $formData['value'])
                         ) {
                             $context->addViolation('Block name with same Type and Value already exists.');
                         }
@@ -189,5 +183,24 @@ class CmsBlockForm extends AbstractForm
                 self::IS_ACTIVE => (bool)$pageUrlTemplate->getIsActive(),
             ];
         }
+    }
+
+    /**
+     * @param $name
+     * @param $this
+     * @param $formData
+     *
+     * @return array
+     */
+    private function checkExistingBlock($name, $formData)
+    {
+        return $this->templateQuery->useSpyCmsPageQuery()
+            ->useSpyCmsBlockQuery()
+            ->filterByName($name)
+            ->filterByType($formData['type'])
+            ->filterByValue($formData['value'])
+            ->find()
+            ->getData()
+            ;
     }
 }
