@@ -8,8 +8,8 @@ namespace SprykerFeature\Client\Checkout\Service\Zed;
 
 use Generated\Shared\Checkout\CheckoutRequestInterface;
 use Generated\Shared\Checkout\CheckoutResponseInterface;
-use SprykerFeature\Client\ZedRequest\Service\ZedRequestClient;
 use SprykerFeature\Client\ZedRequest\Service\Client\ZedClient;
+use SprykerFeature\Client\ZedRequest\Service\ZedRequestClient;
 
 class CheckoutStub implements CheckoutStubInterface
 {
@@ -17,7 +17,7 @@ class CheckoutStub implements CheckoutStubInterface
     /**
      * @var ZedClient
      */
-    private $zedStub;
+    protected $zedStub;
 
     /**
      * @param ZedRequestClient $zedStub
