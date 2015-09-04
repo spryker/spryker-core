@@ -27,25 +27,6 @@
             {{ form_start(form) }}
             {{ form_widget(form) }}
 
-            {#            <h3>Selected products</h3>
-                        <table class="table table-striped table-bordered table-hover " id="assignNewProductsTable" >
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>SKU</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                        </table>
-            
-                        <div class="">
-                            <a onclick="fnClickAddRow();" href="javascript:void(0);" class="btn btn-primary ">Assign Selected</a>
-                        </div>
-                        <br/>
-                        <br/>
-                        <br/>#}
-
             <div class="tabs-container">
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#tab-1">Select products to assign</a></li>
@@ -57,13 +38,7 @@
                             {{ productsTable | raw }}
 
                             <div class="">
-                                <a onclick="assignNewSelectedProductsClickAssignSelected();" href="javascript:void(0);"
-                                   class="btn btn-primary ">Assign Selected</a>
-                            </div>
-
-                            <div class="">
-                                <a onclick="fnClearSelection();" href="javascript:void(0);" class="btn btn-primary ">Clear
-                                    Selected</a>
+                                <a onclick="allProductsClickSelectAll();" href="javascript:void(0);" class="btn btn-primary ">Select All</a>
                             </div>
                         </div>
                     </div>
@@ -76,6 +51,7 @@
                                     <th>id_abstract_product</th>
                                     <th>SKU</th>
                                     <th>Name</th>
+                                    <th>Selected</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -155,26 +131,41 @@
 
 
         function TableHandler() {
-            var assignNewProductsTableHandler = {};
+            var allProductsTableHandler = {};
             var selectedProductsTable = $('#selectedProductsTable');
+            var allProductsTable = $('#product-table');
             
             var selectedProductSelector = new ProductSelector();
 
-            assignNewProductsTableHandler.assignSelected = function () {
-                console.log('assignNewProductsTableHandler.assignSelected', data);
+            allProductsTableHandler.selectAll = function () {
+
+                var nodes = allProductsTable.dataTable().fnGetNodes();
+                //$('.selected_product', nodes).attr('checked', 'checked');
+                $('input[type="checkbox"]', nodes).prop('checked', true);
+                
+                var allProductsData = allProductsTable.DataTable().rows().data();
+                allProductsData.each(function (cellData, index) {
+                    console.log('Data in index: ' + index + ' is: ', cellData);
+
+                    allProductsTableHandler.addSelectedProduct(cellData[0], cellData[1], cellData[2]);
+                });
             };
 
-            assignNewProductsTableHandler.addSelectedProduct = function (idProduct, sku, name) {
+            allProductsTableHandler.addSelectedProduct = function (idProduct, sku, name) {
+                if (selectedProductSelector.isProductSelected(idProduct)) {
+                    return;
+                }
                 selectedProductSelector.addProductToSelection(idProduct);
 
                 selectedProductsTable.dataTable().fnAddData([
                     idProduct,
                     decodeURIComponent((sku+'').replace(/\+/g, '%20')),
                     decodeURIComponent((name+'').replace(/\+/g, '%20')),
+                    '<input type="checkbox" name="selected_product['+idProduct+']" />'
                 ]);
             };
 
-            assignNewProductsTableHandler.removeSelectedProduct = function (idProduct, sku, name) {
+            allProductsTableHandler.removeSelectedProduct = function (idProduct, sku, name) {
                 selectedProductSelector.removeProductFromSelection(idProduct);
 
                 var selectedProductsData = selectedProductsTable.DataTable().rows().data();
@@ -182,38 +173,37 @@
                     var currentId = cellData[0];
                     
                     if (currentId == idProduct) {
-                        console.log('Data in index: ' + index + ' is: ', cellData);
-
                         selectedProductsTable.dataTable().fnDeleteRow(index);
                     }
                 });
             };
 
-            return assignNewProductsTableHandler;
+            return allProductsTableHandler;
         }
 
-        var assignNewProductsTableHandler = new TableHandler();
+        var allProductsTableHandler = new TableHandler();
+        
 
-        function assignNewSelectedProductsClickAssignSelected() {
-            assignNewProductsTableHandler.assignSelected();
+        function allProductsClickSelectAll() {
+            allProductsTableHandler.selectAll();
         }
 
-        function assignNewSelectedProductsClickMarkAsSelected(checkbox, idProduct, sku, name) {
+        function allProductsClickMarkAsSelected(checkbox, idProduct, sku, name) {
             if (checkbox.checked) {
-                assignNewProductsTableHandler.addSelectedProduct(idProduct, sku, name);
+                allProductsTableHandler.addSelectedProduct(idProduct, sku, name);
             }
             else {
-                assignNewProductsTableHandler.removeSelectedProduct(idProduct, sku, name);
+                allProductsTableHandler.removeSelectedProduct(idProduct, sku, name);
             }
         }
 
         $(document).ready(function () {
 
-            var table = $('#assignNewProductsTable').DataTable({
+/*            var table = $('#product-table').DataTable({
                 'processing': true,
                 'serverSide': true,
                 'ajax': '/category/edit/productTable?id-category={{ idCategory }}'
-            });
+            });*/
 
             $('#assignNewProductsTable tbody').on('click', 'tr', function () {
                 console.log(table.row(this).data());
