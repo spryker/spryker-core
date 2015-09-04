@@ -446,13 +446,12 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
         
         $query = SpyAbstractProductQuery::create()
             ->groupByIdAbstractProduct()
-            ->select([SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT]);
-        
-        $query->addJoin(
-            SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
-            SpyLocalizedAbstractProductAttributesTableMap::COL_FK_ABSTRACT_PRODUCT,
-            Criteria::INNER_JOIN
-        )
+            ->select([SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT])
+            ->addJoin(
+                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
+                SpyLocalizedAbstractProductAttributesTableMap::COL_FK_ABSTRACT_PRODUCT,
+                Criteria::INNER_JOIN
+            )
             ->addJoin(
                 SpyLocalizedAbstractProductAttributesTableMap::COL_FK_LOCALE,
                 SpyLocaleTableMap::COL_ID_LOCALE,
@@ -471,6 +470,10 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
             ->withColumn(
                 SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
                 'name'
+            )
+            ->withColumn(
+                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
+                'ID_ABSTRACT_PRODUCT' //fucking lol continues
             )
             ->withColumn(
                 SpyAbstractProductTableMap::COL_ATTRIBUTES,

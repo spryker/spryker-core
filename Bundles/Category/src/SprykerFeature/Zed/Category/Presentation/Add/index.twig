@@ -27,36 +27,82 @@
             {{ form_start(form) }}
             {{ form_widget(form) }}
 
-{#            <h3>Selected products</h3>
-            <table class="table table-striped table-bordered table-hover " id="assignNewProductsTable" >
-            <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>SKU</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
-            </table>
+            {#            <h3>Selected products</h3>
+                        <table class="table table-striped table-bordered table-hover " id="assignNewProductsTable" >
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>SKU</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                        </table>
+            
+                        <div class="">
+                            <a onclick="fnClickAddRow();" href="javascript:void(0);" class="btn btn-primary ">Assign Selected</a>
+                        </div>
+                        <br/>
+                        <br/>
+                        <br/>#}
 
-            <div class="">
-                <a onclick="fnClickAddRow();" href="javascript:void(0);" class="btn btn-primary ">Assign Selected</a>
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tab-1">Select products to assign</a></li>
+                    <li class=""><a data-toggle="tab" href="#tab-2">Products to be assigned</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-1" class="tab-pane active">
+                        <div class="panel-body">
+                            {{ productsTable | raw }}
+
+                            <div class="">
+                                <a onclick="assignNewSelectedProductsClickAssignSelected();" href="javascript:void(0);"
+                                   class="btn btn-primary ">Assign Selected</a>
+                            </div>
+
+                            <div class="">
+                                <a onclick="fnClearSelection();" href="javascript:void(0);" class="btn btn-primary ">Clear
+                                    Selected</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="tab-2" class="tab-pane">
+                        <div class="panel-body">
+                            <h3>Selected products</h3>
+                            <table class="table table-striped table-bordered table-hover " id="selectedProductsTable">
+                                <thead>
+                                <tr>
+                                    <th>id_abstract_product</th>
+                                    <th>SKU</th>
+                                    <th>Name</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
+
+                            <div class="">
+                                <a onclick="fnClearSelection();" href="javascript:void(0);" class="btn btn-primary ">Clear
+                                    Selected</a>
+                            </div>
+
+                            <div class="">
+                                <a onclick="fnClearSelection();" href="javascript:void(0);" class="btn btn-primary ">Clear
+                                    All</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <br/>
-            <br/>
-            <br/>#}
 
-            <h3>Products in this category</h3>
-            {{ productsTable | raw }}
-
-            <br/>
             <br/>
             <br/>
 
             <h3>Products in this category</h3>
             {{ productCategoriesTable | raw }}
 
-            <input type="submit" class="btn btn-primary" value="{{ submit_title | trans }}" />
+            <input type="submit" class="btn btn-primary" value="{{ submit_title | trans }}"/>
             {{ form_end(form) }}
 
         {% endblock %}
@@ -72,121 +118,111 @@
 {% block footer_js %}
     {{ parent() }}
     <script>
-        var selectedProducts = {};
-        var suggestedProductsFromSelect2 = {};
-        
-        function fnClickAddRow() {
-            var combo = $('#form_products');
-            //var selectedProductId = parseInt(combo.val()) || 0;
+        function ProductSelector() {
+            var productSelector = {};
+            var selectedProducts = {};
+            var idKey = 'id';
 
-            var select2Data = combo.select2('data');
-            for (var i=0; i<select2Data.length; i++) {
-                var currentId = select2Data[i].id;
-                var product = null;
+            productSelector.addProductToSelection = function (idProduct) {
+                selectedProducts[idProduct] = idProduct;
+            };
 
-                if (selectedProducts.hasOwnProperty(currentId)) {
-                    continue;
+            productSelector.removeProductFromSelection = function (idProduct) {
+                delete selectedProducts[idProduct];
+            };
+
+            productSelector.isProductSelected = function (idProduct) {
+                return selectedProducts.hasOwnProperty(idProduct);
+            };
+
+            productSelector.clearAllSelections = function () {
+                selectedProducts = {};
+            };
+
+            productSelector.addAllToSelection = function (data) {
+                for (var i = 0; i < data.length; i++) {
+                    var id = data[i][idKey];
+                    selectedProducts[id] = id;
                 }
-                
-                if (suggestedProductsFromSelect2.hasOwnProperty(currentId)) {
-                    product = suggestedProductsFromSelect2[currentId]; 
-                }
-                
-                selectedProducts[product.id] = product.id;
-                
-                var action = '<div class=""><a onclick="fnClickRemoveRow(this, ' + product.id + ');" href="javascript:void(0);" class="btn btn-xs ">Remove</a></div>';
-                
-                $('#assignNewProductsTable').dataTable().fnAddData([
-                    product.sku,
-                    product.name,
-                    action
+            };
+
+            productSelector.getSelected = function () {
+                return selectedProducts;
+            };
+
+            return productSelector;
+        }
+
+
+        function TableHandler() {
+            var assignNewProductsTableHandler = {};
+            var productBrowserTable = $('#assignNewProductsTable');
+            var selectedProductsTable = $('#selectedProductsTable');
+            
+            var selectedProductSelector = new ProductSelector();
+
+            assignNewProductsTableHandler.assignSelected = function () {
+                console.log('assignNewProductsTableHandler.assignSelected', data);
+            };
+
+            assignNewProductsTableHandler.addSelectedProduct = function (idProduct, sku, name) {
+                selectedProductSelector.addProductToSelection(idProduct);
+
+                selectedProductsTable.dataTable().fnAddData([
+                    idProduct,
+                    decodeURIComponent((sku+'').replace(/\+/g, '%20')),
+                    decodeURIComponent((name+'').replace(/\+/g, '%20')),
                 ]);
+            };
+
+            assignNewProductsTableHandler.removeSelectedProduct = function (idProduct, sku, name) {
+                selectedProductSelector.removeProductFromSelection(idProduct);
+
+                var selectedProductsData = selectedProductsTable.DataTable().rows().data();
+                selectedProductsData.each(function (cellData, index) {
+                    var currentId = cellData[0];
+                    
+                    if (currentId == idProduct) {
+                        console.log('Data in index: ' + index + ' is: ', cellData);
+
+                        selectedProductsTable.dataTable().fnDeleteRow(index);
+                    }
+                });
+            };
+
+            return assignNewProductsTableHandler;
+        }
+
+
+        var assignNewProductsTableHandler = new TableHandler();
+
+        function assignNewSelectedProductsClickAssignSelected() {
+            assignNewProductsTableHandler.assignSelected();
+        }
+
+        function assignNewSelectedProductsClickMarkAsSelected(checkbox, idProduct, sku, name) {
+            if (checkbox.checked) {
+                assignNewProductsTableHandler.addSelectedProduct(idProduct, sku, name);
+            }
+            else {
+                assignNewProductsTableHandler.removeSelectedProduct(idProduct, sku, name);
             }
         }
 
-        function fnClickRemoveRow(btn, id) {
-            var table = $('#assignNewProductsTable').DataTable();
-                table
-                    .row( $(btn).parents('tr') )
-                    .remove()
-                    .draw();
-            
-            delete selectedProducts[id];
+        $(document).ready(function () {
 
-            var new_data = $.grep($('#form_products').select2('data'), function (value) {
-                return value['id'] != id;
-            });
-            
-            console.log('newData', new_data);
-            
-            $('#form_products').select2('data', new_data);
-            //$('#form_products').val(new_data).trigger("change");
-        }
-        
-        $(document).ready(function() {
-
-            $('#assignNewProductsTable').DataTable( {
+            var table = $('#assignNewProductsTable').DataTable({
                 'processing': true,
                 'serverSide': true,
                 'ajax': '/category/edit/productTable?id-category={{ idCategory }}'
-            } );
-            
+            });
+
+            $('#assignNewProductsTable tbody').on('click', 'tr', function () {
+                console.log(table.row(this).data());
+            });
+
             //parent
             $('.spryker-form-select2combobox').select2();
-            
-            //category products
-            $('#form_products').select2({
-                ajax: {
-                    url: "/category/edit/productCategorySuggestProduct?id-category={{ idCategory }}",
-                    dataType: 'json',
-                    delay: 250,
-                    data: function (params) {
-                        return {
-                            q: params.term, // search term
-                            page: params.page
-                        };
-                    },
-                    processResults: function (data, page) {
-                        for (var i=0; i<data.items.length; i++) {
-                            suggestedProductsFromSelect2[data.items[i].id] = data.items[i];
-                        }
-                        
-                        return {
-                            results: data.items
-                        };
-                    },
-                    cache: true
-                },
-                escapeMarkup: function (markup) {
-                    return markup; // let our custom formatter work
-                },
-                minimumInputLength: 2,
-                templateResult: function(product) {
-                    if (product.loading) return product.text;
-                    
-                    var markup = 
-                            '<div class="clearfix">' +
-                                '<div class="col-sm-10">' +
-                                '<div class="clearfix">' +
-                                    '<div class="col-sm-7"><b class="">' + product.name + '</b> </div>' +
-                                    '<div class="col-sm-3"><i class=""> ' + product.sku + '</i></div>' +
-                                '</div>'+
-                            '<div>';
-
-/*                    if (product.description) {
-                        markup += '<div>' + product.description + '</div>';
-                    }*/
-
-                    return markup;
-                },
-                templateSelection: function(product) {
-                    return product.name || product.text;
-                }
-            }).on("change", function(e) {
-                // mostly used event, fired to the original element when the value changes
-                console.log("change val=" , $(this).select2('data'));
-                
-            });
 
         });
     </script>

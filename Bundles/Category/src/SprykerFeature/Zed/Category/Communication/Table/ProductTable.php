@@ -64,6 +64,7 @@ class ProductTable extends AbstractTable
     {
         $config->setHeader([
             //'checkboxes' => 'Select All',
+            SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => 'id_abstract_product',
             SpyAbstractProductTableMap::COL_SKU => 'SKU',
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => 'Name',
             //SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => 'Preconfig',
@@ -88,14 +89,17 @@ class ProductTable extends AbstractTable
     {
         $query = $this->productQueryContainer->queryAbstractProductsBySearchTermFuckingLol(null, $this->locale, $this->idCategory);
         $query->setModelAlias('spy_abstract_product');
+        //$query->addAlias('SKU', 'spy_abstract_product.sku');
         
         $queryResults = $this->runQuery($query, $config);
         
         $results = [];
-        foreach ($queryResults as $productCategory) {
+        foreach ($queryResults as $product) {
             $results[] = [
-                SpyAbstractProductTableMap::COL_SKU => '<input type="checkbox" /> '.$productCategory['SKU'],
-                SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => $productCategory['name'],
+                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => $product['ID_ABSTRACT_PRODUCT'],
+                SpyAbstractProductTableMap::COL_SKU => '<input type="checkbox" onclick="assignNewSelectedProductsClickMarkAsSelected(this, '.$product['ID_ABSTRACT_PRODUCT'].', \''.$product['SKU'].'\', \''.urlencode($product['name']).'\'); return" /> '.$product['SKU'],
+                //SpyAbstractProductTableMap::COL_SKU => $product['SKU'],
+                SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => $product['name'],
                 //SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => $productCategory[SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT],
                 //'checkboxes' => '<input type="checkbox" />',
             ];
