@@ -356,7 +356,8 @@ abstract class AbstractTable
      */
     protected function runQuery(ModelCriteria $query, TableConfiguration $config)
     {
-        $limit = $config->getPageLength();
+        //$limit = $config->getPageLength();
+        $limit = $this->getLimit();
         $offset = $this->getOffset();
         $order = $this->getOrders();
         // @todo CD-412 refactor this class to allow unspecified header columns and to add flexibility

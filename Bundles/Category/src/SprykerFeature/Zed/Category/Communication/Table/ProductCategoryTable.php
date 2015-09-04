@@ -86,7 +86,7 @@ class ProductCategoryTable extends AbstractTable
         $results = [];
         foreach ($queryResults as $productCategory) {
             $results[] = [
-                SpyAbstractProductTableMap::COL_SKU => '<input type="checkbox" /> '.$productCategory['sku'],
+                SpyAbstractProductTableMap::COL_SKU => '<input type="checkbox" checked="checked" /> '.$productCategory['sku'],
                 SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => $productCategory['name'],
                 SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => $productCategory[SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT],
                 //'checkboxes' => '<input type="checkbox" />',
