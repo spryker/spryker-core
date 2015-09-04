@@ -45,7 +45,7 @@
                     <div id="tab-2" class="tab-pane">
                         <div class="panel-body">
                             <h3>Selected products</h3>
-                            <table class="table table-striped table-bordered table-hover " id="selectedProductsTable">
+                            <table id="selectedProductsTable">
                                 <thead>
                                 <tr>
                                     <th>id_abstract_product</th>
@@ -159,14 +159,32 @@
             };
 
             allProductsTableHandler.removeSelectedProduct = function (idProduct) {
-                var selectedProductsData = selectedProductsTable.DataTable().rows().data();
-                selectedProductsData.each(function (cellData, index) {
-                    var currentId = cellData[0];
+                var selectedProducts = selectedProductsTable.DataTable().rows().data();
+                console.log('chuj', selectedProducts);
+                var removed = false;
+                $('#selectedProductsTable tr').each(function (index, row) {
+                    selectedProducts.each(function (cellData, step) {
+                        var currentId = cellData[0];
+
+                        if (parseInt(currentId) == parseInt(idProduct)) {
+                            selectedProductSelector.removeProductFromSelection(idProduct);
+                            
+                            var rowNum = selectedProductsTable.fnGetPosition(row);
+                            console.log('row', rowNum, row);
+                            selectedProductsTable.dataTable().fnDeleteRow(rowNum);
+                            
+                            if ($('#all_products_checkbox_'+idProduct).prop('checked')) {
+                                $('#all_products_checkbox_'+idProduct).prop('checked', false);
+                            }
+
+                            console.log('index', currentId, index, step);
+                            removed = true;
+                            return;
+                        }      
+                    });
                     
-                    if (parseInt(currentId) == parseInt(idProduct)) {
-                        selectedProductSelector.removeProductFromSelection(idProduct);
-                        selectedProductsTable.dataTable().fnDeleteRow(index);
-                        $('#all_products_checkbox_'+idProduct).prop('checked', false);
+                    if (removed) {
+                        return;
                     }
                 });
             };
@@ -200,9 +218,9 @@
 
             allProductsTable = new TableHandler();
 
-            $('#selectedProductsTable').dataTable({
+/*            $('#selectedProductsTable').dataTable({
                 paging: false,
-            });
+            });*/
 
             $('#product-table').dataTable({
                 destroy: true,
@@ -211,11 +229,11 @@
                     for (var i=0; i<settings.json.data.length; i++) {
                         var product = settings.json.data[i];
                         var idProduct = parseInt(product[0]);
-                        console.log('settings.json.data', idProduct, product);
+                        //console.log('settings.json.data', idProduct, product);
 
-                        var selection = allProductsTable.getSelection();
-                        console.log('selectedData', selection);
-                        if (selection.isProductSelected(idProduct)) {
+                        var selector = allProductsTable.getSelection();
+                        console.log('selectedData', selector);
+                        if (selector.isProductSelected(idProduct)) {
                             $('#all_products_checkbox_'+idProduct).prop('checked', true);
                         }
                     }
