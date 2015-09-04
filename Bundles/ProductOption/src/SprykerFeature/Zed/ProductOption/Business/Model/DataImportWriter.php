@@ -69,9 +69,9 @@ class DataImportWriter implements DataImportWriterInterface
             ->findOneOrCreate()
         ;
 
-        $productOptionTypeEntity->save();
-
         $this->createOrUpdateOptionTypeTranslations($productOptionTypeEntity, $localizedNames);
+
+        $productOptionTypeEntity->save();
 
         $associatedAbstractProductIds = $this->queryContainer
             ->queryAssociatedAbstractProductIdsForProductOptionType($productOptionTypeEntity->getIdProductOptionType())
@@ -133,9 +133,9 @@ class DataImportWriter implements DataImportWriterInterface
             $productOptionValueEntity->setSpyProductOptionValuePrice($priceEntity);
         }
 
-        $productOptionValueEntity->save();
-
         $this->createOrUpdateOptionValueTranslations($productOptionValueEntity, $localizedNames);
+
+        $productOptionValueEntity->save();
 
         $associatedAbstractProductIds = $this->queryContainer
             ->queryAssociatedAbstractProductIdsForProductOptionValue($productOptionValueEntity->getIdProductOptionValue())

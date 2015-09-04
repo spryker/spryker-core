@@ -501,7 +501,7 @@ class CategoryQueryContainer extends AbstractQueryContainer
         if ($excludeRoot) {
             $expandableQuery->addJoinCondition(
                 $relationTableAlias . 'Join',
-                $relationTableAlias . '.is_root = 0'
+                $relationTableAlias . '.is_root = false'
             );
         }
 

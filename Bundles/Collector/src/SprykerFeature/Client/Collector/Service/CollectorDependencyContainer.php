@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Client\Collector\Service;
 
-use Generated\Client\Ide\FactoryAutoCompletion\Collector;
+use Generated\Yves\Ide\Collector;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 
 /**
