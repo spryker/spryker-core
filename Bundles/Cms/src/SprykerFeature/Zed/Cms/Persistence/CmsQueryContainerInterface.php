@@ -86,8 +86,10 @@ interface CmsQueryContainerInterface
 
     /**
      * @param string $blockName
+     * @param string $blockType
+     * @param string $blockValue
      *
      * @return SpyCmsBlockQuery
      */
-    public function queryBlockByName($blockName);
+    public function queryBlockByNameAndTypeValue($blockName, $blockType, $blockValue);
 }

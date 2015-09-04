@@ -60,6 +60,11 @@
         <unique>
             <unique-column name="fk_page"/>
         </unique>
+        <unique>
+            <unique-column name="name"/>
+            <unique-column name="type"/>
+            <unique-column name="value"/>
+        </unique>
         <index>
             <index-column name="fk_page"/>
         </index>

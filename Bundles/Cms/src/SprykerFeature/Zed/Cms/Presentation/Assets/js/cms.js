@@ -80,7 +80,7 @@ function showAutoComplete(formId, type) {
 
             keyList.css({ height :  data.length * 17 });
             keyList.on('change', function() {
-                ketTranslation.text(data[this.value].value);
+                ketTranslation.val(data[this.value].value);
                 keyInput.val(data[this.value].key);
             });
 
@@ -214,6 +214,22 @@ var addAutoCompleteSearchEvent = function(elementId) {
         if (key == 40) {
             itemList.first().focus();
             itemList.val(0).change();
+        }
+    });
+
+
+    if (elementType.val() == 'static') {
+        $('#form_selectValue').attr('disabled','disabled');
+        $('#form_value').val(0);
+    }
+
+
+    elementType.on('change', function() {
+        if (this.value == 'static') {
+            $('#form_selectValue').attr('disabled','disabled');
+            $('#form_value').attr('value',0);
+        } else {
+            $('#form_selectValue').removeAttr('disabled');
         }
     });
 }

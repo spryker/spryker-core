@@ -16,6 +16,7 @@ use Symfony\Component\Validator\Context\ExecutionContext;
 class CmsBlockForm extends AbstractForm
 {
 
+    const TYPE_STATIC = 'static';
     const CATEGORY = 'category';
     const PRODUCT = 'product';
     const SELECT_VALUE = 'selectValue';
@@ -60,6 +61,21 @@ class CmsBlockForm extends AbstractForm
     protected $blockName;
 
     /**
+     * @var string
+     */
+    protected $blockType;
+
+    /**
+     * @var string
+     */
+    protected $blockValue;
+
+    /**
+     * @var string
+     */
+    protected $selectValue;
+
+    /**
      * @param SpyCmsTemplateQuery $templateQuery
      * @param SpyCmsBlockQuery $blockPageByIdQuery
      * @param CmsConstraint $constraints
@@ -83,19 +99,25 @@ class CmsBlockForm extends AbstractForm
         $blockConstraints = $this->constraints->getMandatoryConstraints();
 
 
-//            $blockConstraints[] = new Callback([
-//                'methods' => [
-//                    function ($name, ExecutionContext $context) {
-//                        if (!empty($this->templateQuery->useSpyCmsPageQuery()
-//                            ->useSpyCmsBlockQuery()
-//                            ->findByName($name)
-//                            ->getData() && $this->blockName !== $name)
-//                        ) {
-//                            $context->addViolation('Block name already exists.');
-//                        }
-//                    },
-//                ],
-//            ]);
+            $blockConstraints[] = new Callback([
+                'methods' => [
+                    function ($name, ExecutionContext $context) {
+                        $formData = $context->getRoot()->getViewData();
+                        if (!empty($this->templateQuery->useSpyCmsPageQuery()
+                            ->useSpyCmsBlockQuery()
+                                ->filterByName($name)
+                                ->filterByType($formData['type'])
+                                ->filterByValue($formData['value'])
+                            ->find()
+                            ->getData() && ($this->blockName !== $name
+                                            || $this->blockType !== $formData['type']
+                                            || $this->blockValue !== $formData['value']))
+                        ) {
+                            $context->addViolation('Block name with same Type and Value already exists.');
+                        }
+                    },
+                ],
+            ]);
 
         return $this->addHidden(self::ID_CMS_BLOCK)
             ->addHidden(self::CURRENT_TEMPLATE)
@@ -111,7 +133,7 @@ class CmsBlockForm extends AbstractForm
             ->addChoice(self::TYPE, [
                 'label' => 'Type',
                 'choices' => [
-                    'none' => '-- select --',
+                    self::TYPE_STATIC => 'Static',
                     self::CATEGORY => 'Category',
                     self::PRODUCT => 'Product'
                 ],
@@ -151,6 +173,9 @@ class CmsBlockForm extends AbstractForm
         if ($this->idCmsBlock) {
             $pageUrlTemplate = $this->blockPageByIdQuery->findOne();
             $this->blockName = $pageUrlTemplate->getName();
+            $this->blockType = $pageUrlTemplate->getType();
+            $this->blockValue = $pageUrlTemplate->getValue();
+            $this->selectValue = $pageUrlTemplate->getCategoryName();
 
             return [
                 self::ID_CMS_BLOCK => $pageUrlTemplate->getIdCmsBlock(),
