@@ -150,7 +150,7 @@ class Method
      *
      * @return bool
      */
-    private function isAvailable(SpyShipmentMethod $method, ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
+    protected function isAvailable(SpyShipmentMethod $method, ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
     {
         $availabilityPlugins = $this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS];
         $isAvailable = true;
@@ -170,7 +170,7 @@ class Method
      *
      * @return int
      */
-    private function getPrice(SpyShipmentMethod $method, ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
+    protected function getPrice(SpyShipmentMethod $method, ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
     {
         $price = $method->getPrice();
         $priceCalculationPlugins = $this->plugins[ShipmentDependencyProvider::PRICE_CALCULATION_PLUGINS];
@@ -190,7 +190,7 @@ class Method
      *
      * @return int
      */
-    private function getTaxRate(SpyShipmentMethod $method, ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
+    protected function getTaxRate(SpyShipmentMethod $method, ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
     {
         $taxSetEntity = $method->getTaxSet();
 
@@ -218,7 +218,7 @@ class Method
      *
      * @return string
      */
-    private function getDeliveryTime(SpyShipmentMethod $method, ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
+    protected function getDeliveryTime(SpyShipmentMethod $method, ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
     {
         $timeString = '';
 
