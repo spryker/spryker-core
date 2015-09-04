@@ -50,7 +50,7 @@
         <column name="fk_page" type="INTEGER" required="true"/>
         <column name="name" type="VARCHAR" required="true" size="255"/>
         <column name="type" type="VARCHAR" size="255"/>
-        <column name="value" type="VARCHAR" size="255"/>
+        <column name="value" type="INTEGER" />
         <foreign-key foreignTable="spy_cms_page" phpName="SpyCmsPage" onDelete="CASCADE">
             <reference foreign="id_cms_page" local="fk_page"/>
         </foreign-key>
