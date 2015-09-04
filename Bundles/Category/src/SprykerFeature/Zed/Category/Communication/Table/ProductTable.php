@@ -101,7 +101,7 @@ class ProductTable extends AbstractTable
                 //SpyAbstractProductTableMap::COL_SKU => '<input type="checkbox" onclick="assignNewSelectedProductsClickMarkAsSelected(this, '.$product['ID_ABSTRACT_PRODUCT'].', \''.$product['SKU'].'\', \''.urlencode($product['name']).'\'); return" /> '.$product['SKU'],
                 SpyAbstractProductTableMap::COL_SKU => $product['SKU'],
                 SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => $product['name'],
-                'checkbox' => '<input type="checkbox" onclick="allProductsClickMarkAsSelected(this, '.$product['ID_ABSTRACT_PRODUCT'].', \''.$product['SKU'].'\', \''.urlencode($product['name']).'\'); return" /> ',
+                'checkbox' => '<input id="all_products_checkbox_'.$product['ID_ABSTRACT_PRODUCT'].'" type="checkbox" onclick="allProductsClickMarkAsSelected(this.checked, '.$product['ID_ABSTRACT_PRODUCT'].', \''.$product['SKU'].'\', \''.urlencode($product['name']).'\'); return" /> ',
                 //SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => $productCategory[SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT],
                 //'checkboxes' => '<input type="checkbox" />',
             ];

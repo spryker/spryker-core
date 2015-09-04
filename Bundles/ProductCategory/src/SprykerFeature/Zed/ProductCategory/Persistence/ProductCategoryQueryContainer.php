@@ -151,6 +151,10 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
                 'name'
             )
             ->withColumn(
+                SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
+                'id_abstract_product'
+            )
+            ->withColumn(
                 SpyAbstractProductTableMap::COL_ATTRIBUTES,
                 'abstract_attributes'
             )

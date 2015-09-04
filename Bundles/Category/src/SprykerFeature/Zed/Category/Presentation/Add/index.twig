@@ -59,13 +59,11 @@
                             </table>
 
                             <div class="">
-                                <a onclick="fnClearSelection();" href="javascript:void(0);" class="btn btn-primary ">Clear
-                                    Selected</a>
+                                <a onclick="fnClearSelection();" href="javascript:void(0);" class="btn btn-primary ">Clear Selected</a>
                             </div>
 
                             <div class="">
-                                <a onclick="fnClearSelection();" href="javascript:void(0);" class="btn btn-primary ">Clear
-                                    All</a>
+                                <a onclick="fnClearSelection();" href="javascript:void(0);" class="btn btn-primary ">Clear All</a>
                             </div>
                         </div>
                     </div>
@@ -132,21 +130,16 @@
 
         function TableHandler() {
             var allProductsTableHandler = {};
+            var selectedProductSelector = new ProductSelector();
             var selectedProductsTable = $('#selectedProductsTable');
             var allProductsTable = $('#product-table');
-            
-            var selectedProductSelector = new ProductSelector();
 
             allProductsTableHandler.selectAll = function () {
-
                 var nodes = allProductsTable.dataTable().fnGetNodes();
-                //$('.selected_product', nodes).attr('checked', 'checked');
                 $('input[type="checkbox"]', nodes).prop('checked', true);
                 
                 var allProductsData = allProductsTable.DataTable().rows().data();
                 allProductsData.each(function (cellData, index) {
-                    console.log('Data in index: ' + index + ' is: ', cellData);
-
                     allProductsTableHandler.addSelectedProduct(cellData[0], cellData[1], cellData[2]);
                 });
             };
@@ -161,52 +154,72 @@
                     idProduct,
                     decodeURIComponent((sku+'').replace(/\+/g, '%20')),
                     decodeURIComponent((name+'').replace(/\+/g, '%20')),
-                    '<input type="checkbox" name="selected_product['+idProduct+']" />'
+                    '<div class=""><a onclick="selectedProductClickRemoveSelected('+idProduct+'); return false" href="javascript:void(0);" class="btn btn-xs ">Remove</a></div>'
                 ]);
             };
 
-            allProductsTableHandler.removeSelectedProduct = function (idProduct, sku, name) {
-                selectedProductSelector.removeProductFromSelection(idProduct);
-
+            allProductsTableHandler.removeSelectedProduct = function (idProduct) {
                 var selectedProductsData = selectedProductsTable.DataTable().rows().data();
                 selectedProductsData.each(function (cellData, index) {
                     var currentId = cellData[0];
                     
-                    if (currentId == idProduct) {
+                    if (parseInt(currentId) == parseInt(idProduct)) {
+                        selectedProductSelector.removeProductFromSelection(idProduct);
                         selectedProductsTable.dataTable().fnDeleteRow(index);
+                        $('#all_products_checkbox_'+idProduct).prop('checked', false);
                     }
                 });
             };
 
+            allProductsTableHandler.getSelection = function() {
+                return selectedProductSelector; 
+            };
+            
+
             return allProductsTableHandler;
         }
 
-        var allProductsTableHandler = new TableHandler();
-        
-
         function allProductsClickSelectAll() {
-            allProductsTableHandler.selectAll();
+            allProductsTable.selectAll();
         }
 
-        function allProductsClickMarkAsSelected(checkbox, idProduct, sku, name) {
-            if (checkbox.checked) {
-                allProductsTableHandler.addSelectedProduct(idProduct, sku, name);
+        function allProductsClickMarkAsSelected(checked, idProduct, sku, name) {
+            if (checked) {
+                allProductsTable.addSelectedProduct(idProduct, sku, name);
             }
             else {
-                allProductsTableHandler.removeSelectedProduct(idProduct, sku, name);
+                allProductsTable.removeSelectedProduct(idProduct);
             }
+        }
+        
+        function selectedProductClickRemoveSelected(idProduct) {
+            allProductsTable.removeSelectedProduct(idProduct);
         }
 
         $(document).ready(function () {
 
-/*            var table = $('#product-table').DataTable({
-                'processing': true,
-                'serverSide': true,
-                'ajax': '/category/edit/productTable?id-category={{ idCategory }}'
-            });*/
+            allProductsTable = new TableHandler();
 
-            $('#assignNewProductsTable tbody').on('click', 'tr', function () {
-                console.log(table.row(this).data());
+            $('#selectedProductsTable').dataTable({
+                paging: false,
+            });
+
+            $('#product-table').dataTable({
+                destroy: true,
+                fnDrawCallback: function(settings) {
+                    //this.fnDraw(false);
+                    for (var i=0; i<settings.json.data.length; i++) {
+                        var product = settings.json.data[i];
+                        var idProduct = parseInt(product[0]);
+                        console.log('settings.json.data', idProduct, product);
+
+                        var selection = allProductsTable.getSelection();
+                        console.log('selectedData', selection);
+                        if (selection.isProductSelected(idProduct)) {
+                            $('#all_products_checkbox_'+idProduct).prop('checked', true);
+                        }
+                    }
+                }
             });
 
             //parent
