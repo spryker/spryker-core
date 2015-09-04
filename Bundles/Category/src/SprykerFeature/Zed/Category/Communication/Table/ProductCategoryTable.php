@@ -57,11 +57,11 @@ class ProductCategoryTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeader([
-            //'checkboxes' => 'Select All',
+            'id_abstract_product' => 'ID',
             SpyAbstractProductTableMap::COL_SKU => 'SKU',
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => 'Name',
             SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => 'Preconfig',
-
+            'checkbox' => 'Selected',
         ]);
         $config->setSortable([
             SpyAbstractProductTableMap::COL_SKU,
@@ -86,10 +86,11 @@ class ProductCategoryTable extends AbstractTable
         $results = [];
         foreach ($queryResults as $productCategory) {
             $results[] = [
-                SpyAbstractProductTableMap::COL_SKU => '<input type="checkbox" checked="checked" /> '.$productCategory['sku'],
+                'id_abstract_product' => $productCategory['id_abstract_product'],
+                SpyAbstractProductTableMap::COL_SKU => $productCategory['sku'],
                 SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => $productCategory['name'],
                 SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => $productCategory[SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT],
-                //'checkboxes' => '<input type="checkbox" />',
+                'checkbox' => '<input type="checkbox" checked="checked" onclick="allProductsClickMarkAsSelected(this, '.$productCategory['id_abstract_product'].', \''.$productCategory['sku'].'\', \''.urlencode($productCategory['name']).'\'); return" /> ',
             ];
         }
         unset($queryResults);
