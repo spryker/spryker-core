@@ -100,6 +100,23 @@ class CategoryQueryContainer extends AbstractQueryContainer
     }
 
     /**
+     * @param $idCategory
+     * @param $idParentNode
+     * 
+     * @return $this|ModelCriteria
+     */
+    public function queryNodeByIdCategoryAndParentNode($idCategory, $idParentNode)
+    {
+        return SpyCategoryNodeQuery::create()
+            ->filterByFkParentCategoryNode($idParentNode)
+            ->where(
+                SpyCategoryNodeTableMap::COL_FK_CATEGORY . ' = ?',
+                $idCategory
+            )
+        ; 
+    }
+
+    /**
      *
      * @return SpyCategoryAttributeQuery
      */

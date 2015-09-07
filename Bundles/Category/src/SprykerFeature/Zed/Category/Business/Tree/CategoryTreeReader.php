@@ -242,6 +242,20 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
+     * @param $idCategory
+     * @param $idParentNode
+     * 
+     * @return SpyCategoryNode
+     */
+    public function getNodeByIdCategoryAndParentNode($idCategory, $idParentNode)
+    {
+        return $this->queryContainer
+            ->queryNodeByIdCategoryAndParentNode($idCategory, $idParentNode)
+            ->findOne()
+        ;
+    }
+
+    /**
      * @param $idNode
      *
      * @return CategoryTransfer

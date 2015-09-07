@@ -45,18 +45,8 @@ class CategoryFormEdit extends CategoryFormAdd
                 'constraints' => [
                     new NotBlank(),
                 ],
-                //'multiple' => true,
-            ])
-/*            ->addSelect2ComboBox('products', [
-                'label' => 'Products',
-                'choices' => $this->getProducts(),
-                'constraints' => [
-                    new NotBlank(),
-                ],
                 'multiple' => true,
-                'placeholder' => '-Select Product-'
-                //'data' => $this->getAssignedProducts()
-            ])*/
+            ])
             ->addHidden(self::PK_CATEGORY_NODE)
             ;
     }
@@ -85,12 +75,21 @@ class CategoryFormEdit extends CategoryFormAdd
         ;
         
         if ($category) {
+            $nodeList = $this->categoryQueryContainer->queryNodesByCategoryId($this->idCategory)
+                ->find()
+            ;
+            
+            $nodeIds = [];
+            foreach ($nodeList as $node) {
+                $nodeIds[] = $node->getFkParentCategoryNode();
+            }
+            
             $category = $category->toArray();
 
             $fields = [
                 self::PK_CATEGORY => $category[self::PK_CATEGORY],
                 self::PK_CATEGORY_NODE => $category[self::PK_CATEGORY_NODE],
-                self::FK_PARENT_CATEGORY_NODE => $category[self::FK_PARENT_CATEGORY_NODE],
+                self::FK_PARENT_CATEGORY_NODE => $nodeIds,
                 self::NAME => $category[self::NAME],
                 self::ATTRIBUTE_META_TITLE => $category[self::ATTRIBUTE_META_TITLE],
                 self::ATTRIBUTE_META_DESCRIPTION => $category[self::ATTRIBUTE_META_DESCRIPTION],

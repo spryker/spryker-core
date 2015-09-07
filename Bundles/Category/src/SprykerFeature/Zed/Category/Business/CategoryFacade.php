@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Category\Business;
 
 use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeFormatter;
-use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeFormat;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Locale\LocaleInterface;
@@ -31,6 +30,20 @@ class CategoryFacade extends AbstractFacade
         return $this->getDependencyContainer()
             ->createCategoryTreeReader()
             ->hasCategoryNode($categoryName, $locale)
+        ;
+    }
+
+    /**
+     * @param $idCategory
+     * @param $idParentNode
+     * 
+     * @return SpyCategoryNode
+     */
+    public function getNodeByIdCategoryAndParentNode($idCategory, $idParentNode)
+    {
+        return $this->getDependencyContainer()
+            ->createCategoryTreeReader()
+            ->getNodeByIdCategoryAndParentNode($idCategory, $idParentNode)
         ;
     }
 
@@ -59,6 +72,18 @@ class CategoryFacade extends AbstractFacade
         return $this->getDependencyContainer()
             ->createCategoryTreeReader()
             ->getCategoryIdentifier($categoryName, $locale)
+        ;
+    }
+
+    /**
+     * @param $idCategory
+     * @return SpyCategoryNode[]
+     */
+    public function getNodesByIdCategory($idCategory)
+    {
+        return $this->getDependencyContainer()
+            ->createCategoryTreeReader()
+            ->getNodesByIdCategory($idCategory)
         ;
     }
 
