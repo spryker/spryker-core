@@ -34,12 +34,12 @@ class SkuGroupKeyPluginTest extends \PHPUnit_Framework_TestCase
         $changeTransfer->addItem($itemTransfer);
 
         $plugin = new SkuGroupKeyPlugin(new Factory('Cart'), Locator::getInstance());
-        $expandedItems = $plugin->expandItems($changeTransfer);
+        $plugin->expandItems($changeTransfer);
 
-        $this->assertSame(self::SKU, $expandedItems->getItems()[0]->getGroupKey());
+        $this->assertSame(self::SKU, $changeTransfer->getItems()[0]->getGroupKey());
     }
 
-    public function testExpandItemMustNotSetGroupKeyWhenGroupKeyIsSet()
+    public function testExpandItemMustNotChangeGroupKeyWhenGroupKeyIsSet()
     {
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setSku(self::SKU);
@@ -49,9 +49,9 @@ class SkuGroupKeyPluginTest extends \PHPUnit_Framework_TestCase
         $changeTransfer->addItem($itemTransfer);
 
         $plugin = new SkuGroupKeyPlugin(new Factory('Cart'), Locator::getInstance());
-        $expandedItems = $plugin->expandItems($changeTransfer);
+        $plugin->expandItems($changeTransfer);
 
-        $this->assertSame(self::SKU, $expandedItems->getItems()[0]->getGroupKey());
+        $this->assertSame(self::SKU, $changeTransfer->getItems()[0]->getGroupKey());
     }
 
 }
