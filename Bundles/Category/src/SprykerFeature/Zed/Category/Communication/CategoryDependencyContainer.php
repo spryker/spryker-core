@@ -131,6 +131,8 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
+     * @return RootNodeTable
+     */
     public function createRootNodeTable()
     {
         $categoryQueryContainer = $this->getQueryContainer();
