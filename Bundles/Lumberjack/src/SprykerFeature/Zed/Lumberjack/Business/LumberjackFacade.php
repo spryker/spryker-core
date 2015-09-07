@@ -6,21 +6,36 @@
 
 namespace SprykerFeature\Zed\Lumberjack\Business;
 
+use SprykerEngine\Shared\Lumberjack\Model\EventInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
+/**
+ * @method LumberjackDependencyContainer getDependencyContainer()
+ */
 class LumberjackFacade extends AbstractFacade
 {
 
+    /**
+     * @return Model\Event
+     */
     public function createEvent()
     {
-        // @todo implement
+        return $this->getDependencyContainer()->createEvent();
     }
 
-    public function saveEvent()
+    /**
+     * @param EventInterface $event
+     */
+    public function saveEvent(EventInterface $event)
     {
+        $this->createEventJournal()->saveEvent($event);
     }
 
-    protected function createEventJournal()
+    /**
+     * @return Model\EventJournal
+     */
+    public function createEventJournal()
     {
+        return $this->getDependencyContainer()->createEventJournal();
     }
 }

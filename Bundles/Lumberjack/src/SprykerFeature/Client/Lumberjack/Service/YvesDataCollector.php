@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Client\Lumberjack\Service;
 
-use SprykerEngine\Shared\Lumberjack\Model\DataCollectorInterface;
+use SprykerEngine\Shared\Lumberjack\Model\Collector\DataCollectorInterface;
 
 class YvesDataCollector implements DataCollectorInterface
 {
