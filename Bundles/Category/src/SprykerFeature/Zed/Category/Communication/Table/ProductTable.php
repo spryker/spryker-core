@@ -63,8 +63,7 @@ class ProductTable extends AbstractTable
     protected function configure(TableConfiguration $config)
     {
         $config->setHeader([
-            //'checkboxes' => 'Select All',
-            SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => 'id_abstract_product',
+            SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => 'ID',
             SpyAbstractProductTableMap::COL_SKU => 'SKU',
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => 'Name',
             'checkbox' => 'Selected',
