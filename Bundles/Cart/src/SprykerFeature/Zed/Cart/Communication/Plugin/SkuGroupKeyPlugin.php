@@ -35,9 +35,7 @@ class SkuGroupKeyPlugin extends AbstractPlugin implements ItemExpanderPluginInte
             return $cartItem->getSku();
         }
 
-        $groupKey = $groupKey . '-' . $cartItem->getSku();
-
         return $groupKey;
-
     }
+
 }
