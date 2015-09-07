@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,11 +12,13 @@ use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentCarrier;
 
 class Carrier
 {
+
     /**
      * @param ShipmentCarrierTransfer $carrierTransfer
      *
-     * @return int
      * @throws PropelException
+     *
+     * @return int
      */
     public function create(ShipmentCarrierTransfer $carrierTransfer)
     {
@@ -31,4 +34,5 @@ class Carrier
 
         return $carrierEntity->getPrimaryKey();
     }
+
 }

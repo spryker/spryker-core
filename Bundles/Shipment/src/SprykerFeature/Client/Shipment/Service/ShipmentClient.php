@@ -28,4 +28,5 @@ class ShipmentClient extends AbstractClient implements ShipmentClientInterface
             ->getAvailableMethods($shipmentMethodAvailability)
             ;
     }
+
 }

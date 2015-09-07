@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -55,6 +56,7 @@ class Method
 
     /**
      * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer
+     *
      * @return ShipmentTransfer
      */
     public function getAvailableMethods(ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
@@ -92,6 +94,7 @@ class Method
 
     /**
      * @param $idMethod
+     *
      * @return ShipmentMethodTransfer
      */
     public function getShipmentMethodTransferById($idMethod)
@@ -103,6 +106,7 @@ class Method
         $shipmentMethodTransferEntity = $methodQuery->findOne();
 
         $shipmentMethodTransfer->fromArray($shipmentMethodTransferEntity->toArray());
+
         return $shipmentMethodTransfer;
     }
 
@@ -209,6 +213,7 @@ class Method
             $taxCalculationPlugin = $taxCalculationPlugins[$method->getTaxCalculationPlugin()];
             $effectiveTaxRate = $taxCalculationPlugin->getTaxRate($shipmentMethodAvailabilityTransfer, $effectiveTaxRate);
         }
+
         return $effectiveTaxRate;
     }
 
@@ -231,4 +236,5 @@ class Method
 
         return $timeString;
     }
+
 }

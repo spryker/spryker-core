@@ -53,9 +53,9 @@ class ShipmentDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::PLUGINS] = function (Container $container) {
 
             return [
-                self::AVAILABILITY_PLUGINS      => $this->getAvailabilityPlugins($container),
+                self::AVAILABILITY_PLUGINS => $this->getAvailabilityPlugins($container),
                 self::PRICE_CALCULATION_PLUGINS => $this->getPriceCalculationPlugins($container),
-                self::DELIVERY_TIME_PLUGINS     => $this->getDeliveryTimePlugins($container),
+                self::DELIVERY_TIME_PLUGINS => $this->getDeliveryTimePlugins($container),
                 self::TAX_CALCULATION_PLUGINS => $this->getTaxCalculationPlugins($container),
             ];
         };

@@ -15,6 +15,7 @@ use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentMethod;
 
 class MethodTable extends AbstractTable
 {
+
     const CARRIER = 'Carrier';
     const METHOD = 'Method';
     const DESCRIPTION = 'Description';
@@ -112,7 +113,7 @@ class MethodTable extends AbstractTable
             SpyShipmentMethodTableMap::COL_DELIVERY_TIME_PLUGIN => self::DELIVERY_TIME_PLUGIN,
             SpyShipmentMethodTableMap::COL_TAX_CALCULATION_PLUGIN => self::TAX_CALCULATION_PLUGIN,
 
-            self::ACTIONS => self::ACTIONS
+            self::ACTIONS => self::ACTIONS,
         ]);
     }
 
@@ -122,7 +123,7 @@ class MethodTable extends AbstractTable
     protected function configureSortable(TableConfiguration $config)
     {
         $config->setSortable([
-            SpyShipmentMethodTableMap::COL_PRICE
+            SpyShipmentMethodTableMap::COL_PRICE,
         ]);
     }
 
@@ -135,7 +136,7 @@ class MethodTable extends AbstractTable
             SpyShipmentMethodTableMap::COL_FK_SHIPMENT_CARRIER,
             SpyShipmentMethodTableMap::COL_NAME,
             SpyShipmentMethodTableMap::COL_GLOSSARY_KEY_DESCRIPTION,
-            SpyShipmentMethodTableMap::COL_PRICE
+            SpyShipmentMethodTableMap::COL_PRICE,
         ]);
     }
 
@@ -156,8 +157,7 @@ class MethodTable extends AbstractTable
     protected function getResult($method, $idShipmentMethod)
     {
         return [
-            SpyShipmentMethodTableMap::COL_IS_ACTIVE =>
-                '<span class="label '
+            SpyShipmentMethodTableMap::COL_IS_ACTIVE => '<span class="label '
                 . (($method->isActive()) ? 'label-success">Activated' : 'label-danger">Disabled') . '</span>',
             SpyShipmentMethodTableMap::COL_FK_SHIPMENT_CARRIER => $method->getShipmentCarrier()->getName(),
             SpyShipmentMethodTableMap::COL_NAME => $method->getName(),
@@ -168,14 +168,14 @@ class MethodTable extends AbstractTable
             SpyShipmentMethodTableMap::COL_DELIVERY_TIME_PLUGIN => $method->getDeliveryTimePlugin(),
             SpyShipmentMethodTableMap::COL_TAX_CALCULATION_PLUGIN => $method->getTaxCalculationPlugin(),
 
-            self::ACTIONS =>
-                '<div class="btn-group btn-group-sm" role="group">' .
+            self::ACTIONS => '<div class="btn-group btn-group-sm" role="group">' .
                 '<a class="btn btn-outline btn-default" href="/shipment/method/edit?' . self::ID_METHOD_PARAMETER . '='
                 . $idShipmentMethod . '"><i class="fa fa-paste"></i> Edit</a>' .
                 '<a class="btn btn-outline  btn-default" href="/shipment/method/delete?' . self::ID_METHOD_PARAMETER . '='
                 . $idShipmentMethod . '"><i class="fa fa-times"></i> Delete</a>' .
-                '</div>'
+                '</div>',
 
         ];
     }
+
 }

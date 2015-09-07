@@ -50,6 +50,7 @@ class ShipmentFacade extends AbstractFacade
 
     /**
      * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailability
+     *
      * @return ShipmentInterface
      */
     public function getAvailableMethods(ShipmentMethodAvailabilityInterface $shipmentMethodAvailability)
@@ -63,6 +64,7 @@ class ShipmentFacade extends AbstractFacade
 
     /**
      * @param $idMethod
+     *
      * @return ShipmentMethodTransfer
      */
     public function getShipmentMethodTransferById($idMethod)
@@ -115,4 +117,5 @@ class ShipmentFacade extends AbstractFacade
 
         return $methodModel->updateMethod($methodTransfer);
     }
+
 }

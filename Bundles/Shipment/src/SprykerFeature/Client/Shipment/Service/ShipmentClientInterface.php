@@ -18,4 +18,5 @@ interface ShipmentClientInterface
      * @return ShipmentInterface
      */
     public function getAvailableMethods(ShipmentMethodAvailabilityInterface $shipmentMethodAvailability);
+
 }
