@@ -152,6 +152,9 @@ class CategoryTreeWriter
         $this->touchCategoryActiveRecursive($categoryNode);
         $this->touchNavigationActive();
 
+        $this->touchCategoryActive($categoryNode->getIdCategoryNode());
+        $this->touchNavigationActive();
+
         $connection->commit();
     }
 
