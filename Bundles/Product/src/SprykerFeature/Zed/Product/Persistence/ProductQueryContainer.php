@@ -344,7 +344,6 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
         return $this;
     }
 
-
     // @todo refactor queries from below
 
     public function queryConcreteProductByAbstractProduct(SpyAbstractProduct $abstractProduct)

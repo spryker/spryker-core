@@ -41,8 +41,6 @@ class IndexController extends AbstractController
             'attributes' => json_decode($attributesCollection->getAttributes(), true),
         ];
 
-//        $this->getQueryContainer()->
-
         return $this->viewResponse([
             'abstractProduct' => $abstractProduct,
             'concreteProducts' => $concreteProducts,

@@ -65,14 +65,11 @@
 
         <div class="row">
             {% for product in concreteProducts %}
-
-                {#{% set prices = product.getPriceProductsJoinPriceType %}#}
-
             <div class="col-md-3">
                 <div class="ibox">
                     <div class="ibox-content product-box">
 
-                        <div class="product-imitation">[ INFO ]</div>
+                        <div class="product-imitation">[ IMAGE ]</div>
                         <div class="product-desc">
                             <small class="text-muted"></small>
                             <a class="product-name" href="#">{{ product.sku }}</a>
@@ -108,14 +105,3 @@
     </div>
 
 {% endblock %}
-
-{#{% block footer_js %}#}
-    {#{{ parent() }}#}
-    {#<script>#}
-        {#$(document).ready(function(){#}
-            {#$('.product-images').slick({#}
-                {#dots: true#}
-            {#});#}
-        {#});#}
-    {#</script>#}
-{#{% endblock %}#}
