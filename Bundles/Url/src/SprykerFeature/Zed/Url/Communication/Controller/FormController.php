@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 use SprykerFeature\Zed\Url\Communication\UrlDependencyContainer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method UrlDependencyContainer getDependencyContainer()
@@ -21,13 +20,11 @@ class FormController extends AbstractController
     /**
      * @todo finish in next PR
      *
-     * @param Request $request
-     *
      * @return JsonResponse
      */
-    public function addAction(Request $request)
+    public function addAction()
     {
-        $form = $this->getDependencyContainer()->getUrlForm($request);
+        $form = $this->getDependencyContainer()->getUrlForm();
         $form->init();
 
         if ($form->isValid()) {
@@ -46,13 +43,11 @@ class FormController extends AbstractController
     /**
      * @deprecated this is for test purpose
      *
-     * @param Request $request
-     *
      * @return JsonResponse
      */
-    public function demoAction(Request $request)
+    public function demoAction()
     {
-        $form = $this->getDependencyContainer()->getDemoForm($request);
+        $form = $this->getDependencyContainer()->getDemoForm();
         $form->init();
 
         return $this->jsonResponse($form->renderData());
