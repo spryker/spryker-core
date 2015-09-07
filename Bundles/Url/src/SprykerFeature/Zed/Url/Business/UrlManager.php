@@ -8,9 +8,7 @@ namespace SprykerFeature\Zed\Url\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Zed\Url\Business\Exception\MissingUrlException;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
@@ -36,29 +34,21 @@ class UrlManager implements UrlManagerInterface
     protected $localeFacade;
 
     /**
-     * @var AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @var UrlToTouchInterface
      */
-    private $touchFacade;
+    protected $touchFacade;
 
     /**
      * @param UrlQueryContainerInterface $urlQueryContainer
      * @param UrlToLocaleInterface $localeFacade
      * @param UrlToTouchInterface $touchFacade
-     * @param LocatorLocatorInterface $locator
      */
     public function __construct(
         UrlQueryContainerInterface $urlQueryContainer,
         UrlToLocaleInterface $localeFacade,
         UrlToTouchInterface $touchFacade,
-        LocatorLocatorInterface $locator
     ) {
         $this->urlQueryContainer = $urlQueryContainer;
-        $this->locator = $locator;
         $this->localeFacade = $localeFacade;
         $this->touchFacade = $touchFacade;
     }
@@ -263,7 +253,7 @@ class UrlManager implements UrlManagerInterface
     {
         $this->checkUrlDoesNotExist($url->getUrl());
 
-        $urlEntity = $this->locator->url()->entitySpyUrl();
+        $urlEntity = new SpyUrl();
         $this->syncUrlEntityWithTransfer($url, $urlEntity);
 
         $urlEntity->save();
