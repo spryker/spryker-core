@@ -161,6 +161,9 @@ class CategoryTreeWriter
         }
         $this->closureTableWriter->delete($idNode);
 
+        $this->touchCategoryDeleted($idNode);
+        $this->touchNavigationDeleted();
+
         return $this->nodeWriter->delete($idNode);
     }
 
@@ -172,9 +175,19 @@ class CategoryTreeWriter
         $this->touchFacade->touchActive(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
     }
 
+    protected function touchCategoryDeleted($idCategoryNode)
+    {
+        $this->touchFacade->touchDeleted(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
+    }
+    
     protected function touchNavigationActive()
     {
         $this->touchFacade->touchActive(CategoryConfig::RESOURCE_TYPE_NAVIGATION, self::ID_NAVIGATION);
+    }
+
+    protected function touchNavigationDeleted()
+    {
+        $this->touchFacade->touchDeleted(CategoryConfig::RESOURCE_TYPE_NAVIGATION, self::ID_NAVIGATION);
     }
 
 }

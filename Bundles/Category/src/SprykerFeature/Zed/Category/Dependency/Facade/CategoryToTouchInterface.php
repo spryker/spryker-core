@@ -16,5 +16,7 @@ interface CategoryToTouchInterface
      * @return bool
      */
     public function touchActive($itemType, $itemId);
+    
+    public function touchDeleted($itemType, $itemId);
 
 }
