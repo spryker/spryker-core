@@ -20,13 +20,7 @@ class RequestDataCollector extends AbstractDataCollector
     {
         parent::__construct($options);
 
-        if (!isset($this->options['param_blacklist'])) {
-            $this->options['param_blacklist'] = [];
-        }
-
-        if (!isset($this->options['filtered_content'])) {
-            $this->options['filtered_content'] = '***FILTERED***';
-        }
+        $this->setDefaultOptions();
 
         if (null === self::$idRequest) {
             self::$idRequest = uniqid('', true);
@@ -91,5 +85,16 @@ class RequestDataCollector extends AbstractDataCollector
             $request->attributes->get('controller'),
             $request->attributes->get('action')
         );
+    }
+
+    protected function setDefaultOptions()
+    {
+        if (!isset($this->options['param_blacklist'])) {
+            $this->options['param_blacklist'] = [];
+        }
+
+        if (!isset($this->options['filtered_content'])) {
+            $this->options['filtered_content'] = '***FILTERED***';
+        }
     }
 }
