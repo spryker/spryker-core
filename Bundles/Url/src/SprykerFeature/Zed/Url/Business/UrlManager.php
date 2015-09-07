@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Url\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Zed\Url\Business\Exception\MissingUrlException;
@@ -39,18 +40,26 @@ class UrlManager implements UrlManagerInterface
     protected $touchFacade;
 
     /**
+     * @var ConnectionInterface
+     */
+    protected $connection;
+
+    /**
      * @param UrlQueryContainerInterface $urlQueryContainer
      * @param UrlToLocaleInterface $localeFacade
      * @param UrlToTouchInterface $touchFacade
+     * @param ConnectionInterface $connection
      */
     public function __construct(
         UrlQueryContainerInterface $urlQueryContainer,
         UrlToLocaleInterface $localeFacade,
         UrlToTouchInterface $touchFacade,
+        ConnectionInterface $connection
     ) {
         $this->urlQueryContainer = $urlQueryContainer;
         $this->localeFacade = $localeFacade;
         $this->touchFacade = $touchFacade;
+        $this->connection = $connection;
     }
 
     /**
@@ -234,8 +243,12 @@ class UrlManager implements UrlManagerInterface
      */
     public function saveUrlAndTouch(UrlTransfer $url)
     {
+        $this->connection->beginTransaction();
+        
         $urlTransfer  = $this->saveUrl($url);
         $this->touchUrlActive($url->getIdUrl());
+
+        $this->connection->commit();
 
         return $urlTransfer;
     }
