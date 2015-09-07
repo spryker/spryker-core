@@ -5,7 +5,7 @@
             <div class="pull-right">
                 <a href="/category/add" class="btn btn-xs btn-success"><i class="fa fa-plus"></i></a>
                 <a href="#" id="categ-{{ item.id }}" class="category-tree btn btn-xs btn-primary"><i class="fa fa-sitemap"></i></a>
-                <a href="/category/edit?id-category={{ item.id }}" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i></a>
+                <a href="/category/edit?id-category={{ item.id_category }}" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i></a>
             </div>
         </div>
         {% if item.children is defined and item.children|length > 0 %}
