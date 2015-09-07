@@ -4,7 +4,7 @@
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
-namespace SprykerEngine\Zed\Lumberjack\Business;
+namespace SprykerFeature\Zed\Lumberjack\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 

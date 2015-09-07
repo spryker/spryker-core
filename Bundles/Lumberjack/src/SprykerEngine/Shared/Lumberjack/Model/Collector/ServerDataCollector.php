@@ -23,6 +23,7 @@ class ServerDataCollector extends AbstractDataCollector
             'user_agent'     => $this->getUserAgent(),
             'user_ip'        => $this->getRemoteAddress(),
             'request_method' => $this->getRequestMethod(),
+            'referer'        => $this->getHttpReferer(),
         ];
     }
 
