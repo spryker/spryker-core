@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
 
 class ResourceAwareSpyUrlTableMap extends SpyUrlTableMap
 {
+
     /**
      * @return array
      */
@@ -25,6 +27,8 @@ class ResourceAwareSpyUrlTableMap extends SpyUrlTableMap
     public static function getConstantValue($constantName)
     {
         $reflection = new \ReflectionClass('SprykerFeature\\Zed\\Url\\Persistence\\Propel\\Map\\SpyUrlTableMap');
+
         return $reflection->getConstant($constantName);
     }
+
 }

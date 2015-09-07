@@ -244,8 +244,8 @@ class UrlManager implements UrlManagerInterface
     public function saveUrlAndTouch(UrlTransfer $url)
     {
         $this->connection->beginTransaction();
-        
-        $urlTransfer  = $this->saveUrl($url);
+
+        $urlTransfer = $this->saveUrl($url);
         $this->touchUrlActive($url->getIdUrl());
 
         $this->connection->commit();
@@ -311,7 +311,6 @@ class UrlManager implements UrlManagerInterface
      */
     protected function syncUrlEntityWithTransfer(UrlTransfer $urlTransfer, SpyUrl $urlEntity)
     {
-
         $urlEntity
             ->setFkLocale($urlTransfer->getFkLocale())
             ->setResource($urlTransfer->getResourceType(), $urlTransfer->getResourceId())

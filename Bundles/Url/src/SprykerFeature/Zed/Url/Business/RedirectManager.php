@@ -104,7 +104,6 @@ class RedirectManager implements RedirectManagerInterface
         $this->touchRedirectActive($redirectTransfer);
 
         return $redirectTransfer;
-
     }
 
     /**
@@ -255,7 +254,7 @@ class RedirectManager implements RedirectManagerInterface
      */
     public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idRedirect)
     {
-        $urlTransfer  = $this->createRedirectUrl($url, $locale, $idRedirect);
+        $urlTransfer = $this->createRedirectUrl($url, $locale, $idRedirect);
         $this->urlManager->touchUrlActive($urlTransfer->getIdUrl());
 
         return $urlTransfer;

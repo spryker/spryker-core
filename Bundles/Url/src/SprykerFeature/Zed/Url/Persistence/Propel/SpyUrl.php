@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -17,13 +18,14 @@ use SprykerFeature\Zed\Url\Persistence\Propel\Base\SpyUrl as BaseSpyUrl;
  * You should add additional methods to this class to meet the
  * application requirements.  This class will only be generated as
  * long as it does not already exist in the output directory.
- *
  */
 class SpyUrl extends BaseSpyUrl
 {
+
     /**
-     * @return string
      * @throws MissingResourceException
+     *
+     * @return string
      */
     public function getResourceType()
     {
@@ -35,8 +37,9 @@ class SpyUrl extends BaseSpyUrl
     }
 
     /**
-     * @return int
      * @throws MissingResourceException
+     *
+     * @return int
      */
     public function getResourceId()
     {
@@ -46,8 +49,9 @@ class SpyUrl extends BaseSpyUrl
     }
 
     /**
-     * @return array
      * @throws MissingResourceException
+     *
+     * @return array
      */
     protected function findResourceData()
     {
@@ -58,7 +62,7 @@ class SpyUrl extends BaseSpyUrl
             if ($value !== null) {
                 return [
                     'name' => $name,
-                    'value' => $value
+                    'value' => $value,
                 ];
             }
         }
@@ -75,8 +79,9 @@ class SpyUrl extends BaseSpyUrl
      * @param string $resourceType
      * @param int $resourceId
      *
-     * @return $this
      * @throws UnknownResourceTypeException
+     *
+     * @return $this
      */
     public function setResource($resourceType, $resourceId)
     {
@@ -89,8 +94,9 @@ class SpyUrl extends BaseSpyUrl
     /**
      * @param string $resourceType
      *
-     * @return string
      * @throws UnknownResourceTypeException
+     *
+     * @return string
      */
     protected function getSetterName($resourceType)
     {
@@ -109,4 +115,5 @@ class SpyUrl extends BaseSpyUrl
 
         return $setterName;
     }
+
 }
