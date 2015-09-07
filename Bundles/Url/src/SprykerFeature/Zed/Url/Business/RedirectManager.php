@@ -9,8 +9,8 @@ namespace SprykerFeature\Zed\Url\Business;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
+use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
-use Propel\Runtime\Propel;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Zed\Url\Business\Exception\MissingRedirectException;
 use SprykerFeature\Zed\Url\Business\Exception\RedirectExistsException;
@@ -40,18 +40,26 @@ class RedirectManager implements RedirectManagerInterface
     protected $touchFacade;
 
     /**
+     * @var ConnectionInterface
+     */
+    protected $connection;
+
+    /**
      * @param UrlQueryContainerInterface $urlQueryContainer
      * @param UrlManagerInterface $urlManager
      * @param UrlToTouchInterface $touchFacade
+     * @param ConnectionInterface $connection
      */
     public function __construct(
         UrlQueryContainerInterface $urlQueryContainer,
         UrlManagerInterface $urlManager,
         UrlToTouchInterface $touchFacade,
+        ConnectionInterface $connection
     ) {
         $this->urlManager = $urlManager;
         $this->urlQueryContainer = $urlQueryContainer;
         $this->touchFacade = $touchFacade;
+        $this->connection = $connection;
     }
 
     /**
@@ -66,7 +74,7 @@ class RedirectManager implements RedirectManagerInterface
      */
     public function createRedirect($toUrl, $status = 301)
     {
-        Propel::getConnection()->beginTransaction();
+        $this->connection->beginTransaction();
 
         $redirect = new SpyRedirect();
 
@@ -77,7 +85,7 @@ class RedirectManager implements RedirectManagerInterface
             ->save()
         ;
 
-        Propel::getConnection()->commit();
+        $this->connection->commit();
 
         return $redirect;
     }
@@ -154,12 +162,12 @@ class RedirectManager implements RedirectManagerInterface
     {
         $redirectEntity = new SpyRedirect();
 
-        Propel::getConnection()->beginTransaction();
+        $this->connection->beginTransaction();
 
         $redirectEntity->fromArray($redirectTransfer->toArray());
 
         $redirectEntity->save();
-        Propel::getConnection()->commit();
+        $this->connection->commit();
 
         $redirectTransfer->setIdRedirect($redirectEntity->getIdRedirect());
 
