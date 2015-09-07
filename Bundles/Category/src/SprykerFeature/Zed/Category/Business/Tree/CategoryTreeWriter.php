@@ -205,6 +205,9 @@ class CategoryTreeWriter
 
         $this->closureTableWriter->delete($idNode);
 
+        $this->touchCategoryDeleted($idNode);
+        $this->touchNavigationDeleted();
+
         return $this->nodeWriter->delete($idNode);
     }
 
