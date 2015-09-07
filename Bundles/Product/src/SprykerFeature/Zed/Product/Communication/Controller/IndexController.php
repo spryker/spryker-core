@@ -1,0 +1,39 @@
+<?php
+
+namespace SprykerFeature\Zed\Product\Communication\Controller;
+
+use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceProduct;
+use SprykerFeature\Zed\Product\Business\ProductFacade;
+use SprykerFeature\Zed\Product\Communication\ProductDependencyContainer;
+use SprykerFeature\Zed\Product\Persistence\ProductQueryContainer;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
+use Symfony\Component\HttpFoundation\Request;
+
+/**
+ * @method ProductFacade getFacade()
+ * @method ProductQueryContainer getQueryContainer()
+ * @method ProductDependencyContainer getDependencyContainer()
+ */
+class IndexController extends AbstractController
+{
+    const ID_ABSTRACT_PRODUCT = 'id-abstract-product';
+
+    public function indexAction()
+    {
+
+    }
+
+    public function viewAction(Request $request)
+    {
+        $idAbstractProduct = $request->query->getInt(self::ID_ABSTRACT_PRODUCT);
+
+        $abstractProduct = $this->getQueryContainer()->querySkuFromAbstractProductById($idAbstractProduct)->findOne();
+        $concreteProducts = $this->getQueryContainer()->queryConcreteProductByAbstractProduct($abstractProduct)->find();
+
+        return $this->viewResponse([
+            'abstractProduct' => $abstractProduct,
+            'concreteProducts' => $concreteProducts,
+        ]);
+    }
+}
