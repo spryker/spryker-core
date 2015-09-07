@@ -9,10 +9,8 @@ namespace SprykerFeature\Zed\Url\Business;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Zed\Url\Business\Exception\MissingRedirectException;
 use SprykerFeature\Zed\Url\Business\Exception\RedirectExistsException;
@@ -37,11 +35,6 @@ class RedirectManager implements RedirectManagerInterface
     protected $urlQueryContainer;
 
     /**
-     * @var AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @var UrlToTouchInterface
      */
     protected $touchFacade;
@@ -50,17 +43,14 @@ class RedirectManager implements RedirectManagerInterface
      * @param UrlQueryContainerInterface $urlQueryContainer
      * @param UrlManagerInterface $urlManager
      * @param UrlToTouchInterface $touchFacade
-     * @param LocatorLocatorInterface $locator
      */
     public function __construct(
         UrlQueryContainerInterface $urlQueryContainer,
         UrlManagerInterface $urlManager,
         UrlToTouchInterface $touchFacade,
-        LocatorLocatorInterface $locator
     ) {
         $this->urlManager = $urlManager;
         $this->urlQueryContainer = $urlQueryContainer;
-        $this->locator = $locator;
         $this->touchFacade = $touchFacade;
     }
 
@@ -78,7 +68,7 @@ class RedirectManager implements RedirectManagerInterface
     {
         Propel::getConnection()->beginTransaction();
 
-        $redirect = $this->locator->url()->entitySpyRedirect();
+        $redirect = new SpyRedirect();
 
         $redirect
             ->setToUrl($toUrl)
@@ -162,7 +152,7 @@ class RedirectManager implements RedirectManagerInterface
      */
     protected function createRedirectFromTransfer(RedirectTransfer $redirectTransfer)
     {
-        $redirectEntity = $this->locator->url()->entitySpyRedirect();
+        $redirectEntity = new SpyRedirect();
 
         Propel::getConnection()->beginTransaction();
 
