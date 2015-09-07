@@ -45,7 +45,7 @@
                     <div id="tab-2" class="tab-pane">
                         <div class="panel-body">
                             <h3>Selected products</h3>
-                            <table id="selectedProductsTable">
+                            <table class="table table-stripped table-bordered table-hover gui-table-data" id="selectedProductsTable" data-paging="false">
                                 <thead>
                                 <tr>
                                     <th>id_abstract_product</th>
@@ -154,41 +154,23 @@
                     idProduct,
                     decodeURIComponent((sku+'').replace(/\+/g, '%20')),
                     decodeURIComponent((name+'').replace(/\+/g, '%20')),
-                    '<div class=""><a onclick="selectedProductClickRemoveSelected('+idProduct+'); return false" href="javascript:void(0);" class="btn btn-xs ">Remove</a></div>'
+                    '<div class=""><a onclick="selectedProductClickRemoveSelected(this, '+idProduct+'); return false" href="javascript:void(0);" class="btn btn-xs ">Remove</a></div>'
                 ]);
             };
 
             allProductsTableHandler.removeSelectedProduct = function (idProduct) {
-                var selectedProducts = selectedProductsTable.DataTable().rows().data();
-                console.log('chuj', selectedProducts);
-                var removed = false;
-                $('#selectedProductsTable tr').each(function (index, row) {
-                    selectedProducts.each(function (cellData, step) {
-                        var currentId = cellData[0];
+                var selectedProductsData = selectedProductsTable.DataTable().rows().data();
+                selectedProductsData.each(function (cellData, index) {
+                    var currentId = cellData[0];
 
-                        if (parseInt(currentId) == parseInt(idProduct)) {
-                            selectedProductSelector.removeProductFromSelection(idProduct);
-                            
-                            var rowNum = selectedProductsTable.fnGetPosition(row);
-                            console.log('row', rowNum, row);
-                            selectedProductsTable.dataTable().fnDeleteRow(rowNum);
-                            
-                            if ($('#all_products_checkbox_'+idProduct).prop('checked')) {
-                                $('#all_products_checkbox_'+idProduct).prop('checked', false);
-                            }
-
-                            console.log('index', currentId, index, step);
-                            removed = true;
-                            return;
-                        }      
-                    });
-                    
-                    if (removed) {
-                        return;
+                    if (parseInt(currentId) == parseInt(idProduct)) {
+                        selectedProductSelector.removeProductFromSelection(idProduct);
+                        selectedProductsTable.dataTable().fnDeleteRow(index);
+                        $('#all_products_checkbox_'+idProduct).prop('checked', false);
                     }
                 });
             };
-
+            
             allProductsTableHandler.getSelection = function() {
                 return selectedProductSelector; 
             };
@@ -210,17 +192,19 @@
             }
         }
         
-        function selectedProductClickRemoveSelected(idProduct) {
-            allProductsTable.removeSelectedProduct(idProduct);
+        function selectedProductClickRemoveSelected(btn, idProduct) {
+            var table = $('#selectedProductsTable').DataTable();
+                table.row( $(btn).parents('tr') )
+                    .remove()
+                    .draw();
+
+            allProductsTable.getSelection().removeProductFromSelection(idProduct);
+            $('#all_products_checkbox_'+idProduct).prop('checked', false);
         }
 
         $(document).ready(function () {
 
             allProductsTable = new TableHandler();
-
-/*            $('#selectedProductsTable').dataTable({
-                paging: false,
-            });*/
 
             $('#product-table').dataTable({
                 destroy: true,
