@@ -114,6 +114,20 @@ interface CustomerClientInterface
     /**
      * @param AddressInterface $addressTransfer
      *
+     * @return CustomerInterface
+     */
+    public function updateAddressAndCustomerDefaultAddresses(AddressInterface $addressTransfer);
+
+    /**
+     * @param AddressInterface $addressTransfer
+     *
+     * @return CustomerInterface
+     */
+    public function createAddressAndUpdateCustomerDefaultAddresses(AddressInterface $addressTransfer);
+
+    /**
+     * @param AddressInterface $addressTransfer
+     *
      * @return AddressInterface
      */
     public function createAddress(AddressInterface $addressTransfer);

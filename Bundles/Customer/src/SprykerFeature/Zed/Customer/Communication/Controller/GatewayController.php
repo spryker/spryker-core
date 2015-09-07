@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
+use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -151,6 +152,25 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return AddressesTransfer
+     */
+    public function addressesAction(CustomerTransfer $customerTransfer)
+    {
+        $addressesTransfer = $this->getFacade()
+            ->getAddresses($customerTransfer)
+        ;
+        if (null === $addressesTransfer) {
+            $this->setSuccess(false);
+
+            return;
+        }
+
+        return $addressesTransfer;
+    }
+
+    /**
      * @param AddressTransfer $addressTransfer
      *
      * @return AddressTransfer
@@ -163,6 +183,40 @@ class GatewayController extends AbstractGatewayController
         $this->setSuccess($result);
 
         return $addressTransfer;
+    }
+
+    /**
+     * @param AddressTransfer $addressTransfer
+     *
+     * @return CustomerTransfer
+     */
+    public function updateAddressAndCustomerDefaultAddressesAction(AddressTransfer $addressTransfer)
+    {
+        $customerTransfer = $this->getFacade()
+            ->updateAddressAndCustomerDefaultAddresses($addressTransfer)
+        ;
+
+        $isSuccess = (null !== $customerTransfer);
+        $this->setSuccess($isSuccess);
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @param AddressTransfer $addressTransfer
+     *
+     * @return CustomerTransfer
+     */
+    public function createAddressAndUpdateCustomerDefaultAddressesAction(AddressTransfer $addressTransfer)
+    {
+        $customerTransfer = $this->getFacade()
+            ->createAddressAndUpdateCustomerDefaultAddresses($addressTransfer)
+        ;
+
+        $isSuccess = (null !== $customerTransfer);
+        $this->setSuccess($isSuccess);
+
+        return $customerTransfer;
     }
 
     /**
