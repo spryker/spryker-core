@@ -64,6 +64,10 @@ class EditController extends AddController
             $this->getFacade()
                 ->updateNodeWithTreeWriter($categoryNodeTransfer)
             ;
+            
+            $this->getFacade()
+                ->moveCategoryNode($categoryNodeTransfer)
+            ;
 
             $this->addSuccessMessage('The category was saved successfully.');
             
