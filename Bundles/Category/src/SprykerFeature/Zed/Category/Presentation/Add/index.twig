@@ -30,7 +30,7 @@
             <div class="tabs-container">
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#tab-1">Select products to assign</a></li>
-                    <li class=""><a data-toggle="tab" href="#tab-2">Products to be assigned</a></li>
+                    <li class=""><a data-toggle="tab" href="#tab-2" id="assigned-tab-label">Products to be assigned</a></li>
                 </ul>
                 <div class="tab-content">
                     <div id="tab-1" class="tab-pane active">
@@ -48,7 +48,7 @@
                             <table class="table table-stripped table-bordered table-hover gui-table-data" id="selectedProductsTable" data-paging="false">
                                 <thead>
                                 <tr>
-                                    <th>id_abstract_product</th>
+                                    <th>ID</th>
                                     <th>SKU</th>
                                     <th>Name</th>
                                     <th>Selected</th>
@@ -97,30 +97,30 @@
             var selectedProducts = {};
             var idKey = 'id';
 
-            productSelector.addProductToSelection = function (idProduct) {
+            productSelector.addProductToSelection = function(idProduct) {
                 selectedProducts[idProduct] = idProduct;
             };
 
-            productSelector.removeProductFromSelection = function (idProduct) {
+            productSelector.removeProductFromSelection = function(idProduct) {
                 delete selectedProducts[idProduct];
             };
 
-            productSelector.isProductSelected = function (idProduct) {
+            productSelector.isProductSelected = function(idProduct) {
                 return selectedProducts.hasOwnProperty(idProduct);
             };
 
-            productSelector.clearAllSelections = function () {
+            productSelector.clearAllSelections = function() {
                 selectedProducts = {};
             };
 
-            productSelector.addAllToSelection = function (data) {
+            productSelector.addAllToSelection = function(data) {
                 for (var i = 0; i < data.length; i++) {
                     var id = data[i][idKey];
                     selectedProducts[id] = id;
                 }
             };
 
-            productSelector.getSelected = function () {
+            productSelector.getSelected = function() {
                 return selectedProducts;
             };
 
@@ -134,7 +134,7 @@
             var selectedProductsTable = $('#selectedProductsTable');
             var allProductsTable = $('#product-table');
 
-            allProductsTableHandler.selectAll = function () {
+            allProductsTableHandler.selectAll = function() {
                 var nodes = allProductsTable.dataTable().fnGetNodes();
                 $('input[type="checkbox"]', nodes).prop('checked', true);
                 
@@ -144,7 +144,7 @@
                 });
             };
 
-            allProductsTableHandler.addSelectedProduct = function (idProduct, sku, name) {
+            allProductsTableHandler.addSelectedProduct = function(idProduct, sku, name) {
                 if (selectedProductSelector.isProductSelected(idProduct)) {
                     return;
                 }
@@ -156,9 +156,11 @@
                     decodeURIComponent((name+'').replace(/\+/g, '%20')),
                     '<div class=""><a onclick="selectedProductClickRemoveSelected(this, '+idProduct+'); return false" href="javascript:void(0);" class="btn btn-xs ">Remove</a></div>'
                 ]);
+
+                this.updateSelectedProductsLabelCount();
             };
 
-            allProductsTableHandler.removeSelectedProduct = function (idProduct) {
+            allProductsTableHandler.removeSelectedProduct = function(idProduct) {
                 var selectedProductsData = selectedProductsTable.DataTable().rows().data();
                 selectedProductsData.each(function (cellData, index) {
                     var currentId = cellData[0];
@@ -167,6 +169,7 @@
                         selectedProductSelector.removeProductFromSelection(idProduct);
                         selectedProductsTable.dataTable().fnDeleteRow(index);
                         $('#all_products_checkbox_'+idProduct).prop('checked', false);
+                        this.updateSelectedProductsLabelCount();
                     }
                 });
             };
@@ -174,6 +177,10 @@
             allProductsTableHandler.getSelection = function() {
                 return selectedProductSelector; 
             };
+
+            allProductsTableHandler.updateSelectedProductsLabelCount = function() {
+                $('#assigned-tab-label').text('Products to be assigned (' + Object.keys(this.getSelection().getSelected()).length + ')');
+            }
             
 
             return allProductsTableHandler;
@@ -199,6 +206,7 @@
                     .draw();
 
             allProductsTable.getSelection().removeProductFromSelection(idProduct);
+            allProductsTable.updateSelectedProductsLabelCount();
             $('#all_products_checkbox_'+idProduct).prop('checked', false);
         }
 
@@ -223,6 +231,8 @@
                     }
                 }
             });
+            
+
 
             //parent
             $('.spryker-form-select2combobox').select2();
