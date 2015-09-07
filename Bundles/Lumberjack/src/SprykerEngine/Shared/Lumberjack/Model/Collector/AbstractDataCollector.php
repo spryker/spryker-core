@@ -4,9 +4,9 @@
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
-namespace SprykerEngine\Shared\Lumberjack\Model\Writer;
+namespace SprykerEngine\Shared\Lumberjack\Model\Collector;
 
-abstract class AbstractWriter implements WriterInterface
+abstract class AbstractDataCollector implements DataCollectorInterface
 {
 
     /**
@@ -22,4 +22,3 @@ abstract class AbstractWriter implements WriterInterface
         $this->options = $options;
     }
 }
-

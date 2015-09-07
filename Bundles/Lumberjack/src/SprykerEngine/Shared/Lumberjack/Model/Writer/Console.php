@@ -14,6 +14,7 @@ class Console extends AbstractWriter
     public function write(EventInterface $event)
     {
         print json_encode($event->getFields(), JSON_PRETTY_PRINT);
+
         return true;
     }
 

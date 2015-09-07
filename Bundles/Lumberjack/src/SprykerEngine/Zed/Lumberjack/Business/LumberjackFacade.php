@@ -10,7 +10,9 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 class LumberjackFacade extends AbstractFacade
 {
-    public function createEvent() {
+
+    public function createEvent()
+    {
         // @todo implement
     }
 }

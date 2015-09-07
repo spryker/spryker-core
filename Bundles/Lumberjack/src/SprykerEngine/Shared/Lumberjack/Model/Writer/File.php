@@ -35,6 +35,21 @@ class File extends AbstractWriter
     }
 
     /**
+     * @param EventInterface $event
+     *
+     * @return string
+     */
+    protected function getJsonEntry(EventInterface $event)
+    {
+        $json = json_encode($event->getFields());
+        if ($json === false) {
+            return '';
+        }
+
+        return $json . "\n";
+    }
+
+    /**
      * @param string $content
      *
      * @return bool
@@ -79,7 +94,7 @@ class File extends AbstractWriter
      */
     protected function getRandomFileName()
     {
-        $path = \SprykerFeature_Shared_Library_Data::getLocalCommonPath('lumberjack');
+        $path = $this->getLogPath();
         $path .= sprintf(
             '%s.%s.%d.log',
             'lumberjack',
@@ -91,26 +106,21 @@ class File extends AbstractWriter
     }
 
     /**
+     * @return string
+     */
+    protected function getLogPath()
+    {
+        return isset($this->options['log_path']) ?
+            $this->options['log_path']
+            : \SprykerFeature_Shared_Library_Data::getLocalCommonPath('lumberjack');
+    }
+
+    /**
      * @return int
      */
     protected function getRandomizedFileIndex()
     {
         return rand(0, 9);
-    }
-
-    /**
-     * @param EventInterface $event
-     *
-     * @return string
-     */
-    protected function getJsonEntry(EventInterface $event)
-    {
-        $json = json_encode($event->getFields());
-        if ($json === false) {
-            return '';
-        }
-
-        return $json . "\n";
     }
 
     /**

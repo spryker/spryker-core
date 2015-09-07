@@ -38,6 +38,24 @@ class Event implements EventInterface
     }
 
     /**
+     * @param $data
+     *
+     * @return bool
+     */
+    private function isValidData($data)
+    {
+        $check = !is_object($data);
+
+        if (is_array($data)) {
+            foreach ($data as $childElements) {
+                $check |= $this->isValidData($childElements);
+            }
+        }
+
+        return $check;
+    }
+
+    /**
      * @param array $fields
      *
      * @throws DataInvalidException
@@ -55,23 +73,5 @@ class Event implements EventInterface
     public function getFields()
     {
         return $this->fields;
-    }
-
-    /**
-     * @param $data
-     *
-     * @return bool
-     */
-    private function isValidData($data)
-    {
-        $check = !is_object($data);
-
-        if (is_array($data)) {
-            foreach ($data as $childElements) {
-                $check |= $this->isValidData($childElements);
-            }
-        }
-
-        return $check;
     }
 }

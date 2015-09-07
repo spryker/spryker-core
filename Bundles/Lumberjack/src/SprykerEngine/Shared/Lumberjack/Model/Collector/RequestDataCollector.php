@@ -8,7 +8,7 @@ namespace SprykerEngine\Shared\Lumberjack\Model\Collector;
 
 use Symfony\Component\HttpFoundation\Request;
 
-class RequestDataCollector implements DataCollectorInterface
+class RequestDataCollector extends AbstractDataCollector
 {
 
     /**
@@ -16,8 +16,18 @@ class RequestDataCollector implements DataCollectorInterface
      */
     static $idRequest;
 
-    public function __construct()
+    public function __construct(array $options)
     {
+        parent::__construct($options);
+
+        if (!isset($this->options['param_blacklist'])) {
+            $this->options['param_blacklist'] = [];
+        }
+
+        if (!isset($this->options['filtered_content'])) {
+            $this->options['filtered_content'] = '***FILTERED***';
+        }
+
         if (null === self::$idRequest) {
             self::$idRequest = uniqid('', true);
         }
@@ -29,26 +39,29 @@ class RequestDataCollector implements DataCollectorInterface
     public function getData()
     {
         $fields = [
-            'request_id' => self::$idRequest,
-            'microtime'  => microtime(true),
+            'request_id'     => self::$idRequest,
+            'microtime'      => microtime(true),
+            'request_params' => $this->getRequestParams(),
         ];
         $fields = array_merge($fields, $this->getModuleControllerAction());
 
         return $fields;
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return string
-     */
-    protected function getRoute(Request $request)
+    protected function getRequestParams()
     {
-        return sprintf("%s/%s/%s",
-            $request->attributes->get('module'),
-            $request->attributes->get('controller'),
-            $request->attributes->get('action')
-        );
+        return $this->applyBlackList($_REQUEST);
+    }
+
+    protected function applyBlackList($requestParams)
+    {
+        foreach ($requestParams as $name => &$value) {
+            if (in_array($name, $this->options['param_blacklist'])) {
+                $value = $this->options['filtered_content'];
+            }
+        }
+
+        return $requestParams;
     }
 
     /**
@@ -64,5 +77,19 @@ class RequestDataCollector implements DataCollectorInterface
             'controller' => $request->attributes->get('controller'),
             'action'     => $request->attributes->get('action'),
         ];
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return string
+     */
+    protected function getRoute(Request $request)
+    {
+        return sprintf("%s/%s/%s",
+            $request->attributes->get('module'),
+            $request->attributes->get('controller'),
+            $request->attributes->get('action')
+        );
     }
 }

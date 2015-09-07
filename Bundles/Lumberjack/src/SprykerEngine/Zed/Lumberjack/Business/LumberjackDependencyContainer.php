@@ -13,7 +13,9 @@ use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
  */
 class LumberjackDependencyContainer extends AbstractBusinessDependencyContainer
 {
-    public function createEvent() {
+
+    public function createEvent()
+    {
         // @todo implement
     }
 

@@ -8,6 +8,7 @@ namespace SprykerEngine\Shared\Lumberjack\Model;
 
 interface EventInterface
 {
+
     /**
      * @param $name
      * @param $data

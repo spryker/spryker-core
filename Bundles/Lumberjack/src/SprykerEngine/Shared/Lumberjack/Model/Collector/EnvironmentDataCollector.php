@@ -8,7 +8,7 @@ namespace SprykerEngine\Shared\Lumberjack\Model\Collector;
 
 use SprykerEngine\Shared\Kernel\Store;
 
-class EnvironmentDataCollector implements DataCollectorInterface
+class EnvironmentDataCollector extends AbstractDataCollector
 {
 
     /**

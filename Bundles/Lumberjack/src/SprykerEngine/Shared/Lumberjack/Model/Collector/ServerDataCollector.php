@@ -8,7 +8,7 @@ namespace SprykerEngine\Shared\Lumberjack\Model\Collector;
 
 use SprykerFeature\Shared\Library\System;
 
-class ServerDataCollector implements DataCollectorInterface
+class ServerDataCollector extends AbstractDataCollector
 {
 
     /**
@@ -76,14 +76,6 @@ class ServerDataCollector implements DataCollectorInterface
     /**
      * @return string
      */
-    protected function getHttpReferer()
-    {
-        return isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'unknown';
-    }
-
-    /**
-     * @return string
-     */
     protected function getRemoteAddress()
     {
         return isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : 'unknown';
@@ -92,6 +84,14 @@ class ServerDataCollector implements DataCollectorInterface
     protected function getRequestMethod()
     {
         return isset($_SERVER['REQUEST_METHOD']) ? strtolower($_SERVER['REQUEST_METHOD']) : 'cli';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getHttpReferer()
+    {
+        return isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'unknown';
     }
 
 }

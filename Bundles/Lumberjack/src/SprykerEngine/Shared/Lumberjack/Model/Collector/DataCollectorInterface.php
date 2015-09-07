@@ -8,5 +8,6 @@ namespace SprykerEngine\Shared\Lumberjack\Model\Collector;
 
 interface DataCollectorInterface
 {
+
     public function getData();
 }
