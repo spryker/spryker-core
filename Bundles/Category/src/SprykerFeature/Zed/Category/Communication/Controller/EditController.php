@@ -49,25 +49,41 @@ class EditController extends AddController
         $form->handleRequest();
 
         if ($form->isValid()) {
-            $categoryTransfer = (new CategoryTransfer())
-                ->fromArray($form->getData(), true)
-            ;
-            
-            $this->getFacade()
-                ->updateCategory($categoryTransfer, $locale)
-            ;
+            $categoryTransfer = (new CategoryTransfer())->fromArray($form->getData(), true);
+            $this->getFacade()->updateCategory($categoryTransfer, $locale);
 
-            $categoryNodeTransfer = (new NodeTransfer())
-                ->fromArray($form->getData(), true)
-            ;
-
-            $this->getFacade()
-                ->updateNodeWithTreeWriter($categoryNodeTransfer)
-            ;
+            $data = $form->getData();
+            $parentIdList = $form->getData()['fk_parent_category_node'];
             
-            $this->getFacade()
-                ->moveCategoryNode($categoryNodeTransfer)
-            ;
+            foreach ($parentIdList as $parentNodeId) {
+                $data['fk_parent_category_node'] = $parentNodeId;
+                $data['fk_category'] = $categoryTransfer->getIdCategory();
+                
+                $categoryNodeTransfer = (new NodeTransfer())->fromArray($data, true);
+                $existingCategoryNode = $this->getFacade()->getNodeByIdCategoryAndParentNode($categoryTransfer->getIdCategory(), $parentNodeId);
+                
+                if ($existingCategoryNode) {
+                    $categoryNodeTransfer->setIdCategoryNode($existingCategoryNode->getIdCategoryNode());
+                    $this->getFacade()->moveCategoryNode($categoryNodeTransfer);
+                }
+                else {
+                    $new_data = $data;
+                    unset($new_data['id_category_node']);
+                    $categoryNodeTransfer = (new NodeTransfer())->fromArray($new_data, true);
+                    //die(dump($new_data, $categoryNodeTransfer));
+                    $this->getFacade()->createCategoryNode($categoryNodeTransfer, $locale);
+                }
+            }
+            
+            $existingParents = $this->getFacade()->getNodesByIdCategory($categoryTransfer->getIdCategory());
+            $parentIdList = array_flip($parentIdList);
+            
+            //remove deselected parents
+            foreach ($existingParents as $parent) {
+                if (!array_key_exists($parent->getFkParentCategoryNode(), $parentIdList)) {
+                    $this->getFacade()->deleteNode($parent->getIdCategoryNode(), $locale);
+                }
+            }
 
             $this->addSuccessMessage('The category was saved successfully.');
             
