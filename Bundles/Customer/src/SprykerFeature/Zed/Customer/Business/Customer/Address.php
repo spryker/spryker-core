@@ -23,6 +23,7 @@ use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddress;
 
 class Address
 {
+
     /**
      * @var CustomerQueryContainer
      */
@@ -254,6 +255,7 @@ class Address
     protected function entityToTransfer(SpyCustomerAddress $entity)
     {
         $addressTransfer = new AddressTransfer();
+
         return $addressTransfer->fromArray($entity->toArray(), true);
     }
 
@@ -415,7 +417,7 @@ class Address
             ->findOne()
         ;
 
-        if(!$entity) {
+        if (!$entity) {
             throw new AddressNotFoundException();
         }
 
@@ -442,8 +444,10 @@ class Address
 
     /**
      * @param AddressTransfer $addressTransfer
-     * @return int
+     *
      * @throws CountryNotFoundException
+     *
+     * @return int
      */
     protected function retrieveFkCountry(AddressTransfer $addressTransfer)
     {
@@ -456,6 +460,7 @@ class Address
                 $fkCountry = $this->getCustomerCountryId();
             }
         }
+
         return $fkCountry;
     }
 
@@ -496,9 +501,7 @@ class Address
                 $customer->setDefaultShippingAddress($addressTransfer->getIdCustomerAddress());
             }
 
-            if ($customer->isModified()) {
-                $customer->save();
-            }
+            $customer->save();
 
             $connection->commit();
 
@@ -541,9 +544,7 @@ class Address
                 $customer->setDefaultShippingAddress($entity->getIdCustomerAddress());
             }
 
-            if ($customer->isModified()) {
-                $customer->save();
-            }
+            $customer->save();
 
             $connection->commit();
 
@@ -562,6 +563,7 @@ class Address
     protected function entityToCustomerTransfer(SpyCustomer $entity)
     {
         $addressTransfer = new CustomerTransfer();
+
         return $addressTransfer->fromArray($entity->toArray(), true);
     }
 

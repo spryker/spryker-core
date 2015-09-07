@@ -191,7 +191,6 @@ class CustomerStub implements CustomerStubInterface
         return $this->zedStub->call('/customer/gateway/default-billing-address', $AddressInterface);
     }
 
-
     /**
      * @param AddressInterface $AddressInterface
      *
