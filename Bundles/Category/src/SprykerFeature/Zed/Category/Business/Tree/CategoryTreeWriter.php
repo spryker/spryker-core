@@ -138,6 +138,9 @@ class CategoryTreeWriter
         $this->nodeWriter->update($categoryNode);
         $this->closureTableWriter->create($categoryNode);
 
+        $this->touchCategoryActive($categoryNode->getIdCategoryNode());
+        $this->touchNavigationActive();
+
         $connection->commit();
     }
 
