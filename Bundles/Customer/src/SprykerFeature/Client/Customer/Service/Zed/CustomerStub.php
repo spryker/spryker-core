@@ -136,9 +136,9 @@ class CustomerStub implements CustomerStubInterface
      *
      * @return CustomerTransfer
      */
-    public function updateAddressAndCustomerDefaults(AddressInterface $addressTransfer)
+    public function updateAddressAndCustomerDefaultAddresses(AddressInterface $addressTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/update-address-and-customer-defaults', $addressTransfer);
+        return $this->zedStub->call('/customer/gateway/update-address-and-customer-default-addresses', $addressTransfer);
     }
 
     /**
@@ -146,9 +146,9 @@ class CustomerStub implements CustomerStubInterface
      *
      * @return CustomerTransfer
      */
-    public function createAddressAndUpdateCustomerDefaults(AddressInterface $addressTransfer)
+    public function createAddressAndUpdateCustomerDefaultAddresses(AddressInterface $addressTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/create-address-and-update-customer-defaults', $addressTransfer);
+        return $this->zedStub->call('/customer/gateway/create-address-and-update-customer-default-addresses', $addressTransfer);
     }
 
     /**

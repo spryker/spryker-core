@@ -190,13 +190,14 @@ class GatewayController extends AbstractGatewayController
      *
      * @return CustomerTransfer
      */
-    public function updateAddressAndCustomerDefaultsAction(AddressTransfer $addressTransfer)
+    public function updateAddressAndCustomerDefaultAddressesAction(AddressTransfer $addressTransfer)
     {
         $customerTransfer = $this->getFacade()
-            ->updateAddressAndCustomerDefaults($addressTransfer)
+            ->updateAddressAndCustomerDefaultAddresses($addressTransfer)
         ;
 
-        $this->setSuccess(null !== $customerTransfer);
+        $isSuccess = (null !== $customerTransfer);
+        $this->setSuccess($isSuccess);
 
         return $customerTransfer;
     }
@@ -206,13 +207,14 @@ class GatewayController extends AbstractGatewayController
      *
      * @return CustomerTransfer
      */
-    public function createAddressAndUpdateCustomerDefaultsAction(AddressTransfer $addressTransfer)
+    public function createAddressAndUpdateCustomerDefaultAddressesAction(AddressTransfer $addressTransfer)
     {
         $customerTransfer = $this->getFacade()
-            ->createAddressAndUpdateCustomerDefaults($addressTransfer)
+            ->createAddressAndUpdateCustomerDefaultAddresses($addressTransfer)
         ;
 
-        $this->setSuccess(null !== $customerTransfer);
+        $isSuccess = (null !== $customerTransfer);
+        $this->setSuccess($isSuccess);
 
         return $customerTransfer;
     }

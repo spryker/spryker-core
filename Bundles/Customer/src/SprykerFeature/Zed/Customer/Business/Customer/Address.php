@@ -61,13 +61,13 @@ class Address
      */
     public function createAddress(AddressTransfer $addressTransfer)
     {
-        $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
+        $customerEntity = $this->getCustomerFromAddressTransfer($addressTransfer);
 
-        $entity = $this->createCustomerAddress($addressTransfer, $customer);
+        $addressEntity = $this->createCustomerAddress($addressTransfer, $customerEntity);
 
-        $this->updateCustomerDefaultAddresses($addressTransfer, $customer, $entity);
+        $this->updateCustomerDefaultAddresses($addressTransfer, $customerEntity, $addressEntity);
 
-        return $this->entityToAddressTransfer($entity);
+        return $this->entityToAddressTransfer($addressEntity);
     }
 
     /**
@@ -441,21 +441,21 @@ class Address
      *
      * @return CustomerTransfer
      */
-    public function updateAddressAndCustomerDefaults(AddressTransfer $addressTransfer)
+    public function updateAddressAndCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
         $connection = $this->queryContainer->getConnection();
         $connection->beginTransaction();
 
         try {
-            $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
+            $customerEntity = $this->getCustomerFromAddressTransfer($addressTransfer);
 
-            $entity = $this->updateCustomerAddress($addressTransfer, $customer);
+            $addressEntity = $this->updateCustomerAddress($addressTransfer, $customerEntity);
 
-            $this->updateCustomerDefaultAddresses($addressTransfer, $customer, $entity);
+            $this->updateCustomerDefaultAddresses($addressTransfer, $customerEntity, $addressEntity);
 
             $connection->commit();
 
-            return $this->entityToCustomerTransfer($customer);
+            return $this->entityToCustomerTransfer($customerEntity);
         } catch (\Exception $e) {
             $connection->rollBack();
             throw $e;
@@ -469,21 +469,21 @@ class Address
      *
      * @return CustomerTransfer
      */
-    public function createAddressAndUpdateCustomerDefaults(AddressTransfer $addressTransfer)
+    public function createAddressAndUpdateCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
         $connection = $this->queryContainer->getConnection();
         $connection->beginTransaction();
 
         try {
-            $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
+            $customerEntity = $this->getCustomerFromAddressTransfer($addressTransfer);
 
-            $entity = $this->createCustomerAddress($addressTransfer, $customer);
+            $addressEntity = $this->createCustomerAddress($addressTransfer, $customerEntity);
 
-            $this->updateCustomerDefaultAddresses($addressTransfer, $customer, $entity);
+            $this->updateCustomerDefaultAddresses($addressTransfer, $customerEntity, $addressEntity);
 
             $connection->commit();
 
-            return $this->entityToCustomerTransfer($customer);
+            return $this->entityToCustomerTransfer($customerEntity);
         } catch (\Exception $e) {
             $connection->rollBack();
             throw $e;
@@ -510,16 +510,16 @@ class Address
      */
     protected function createCustomerAddress(AddressTransfer $addressTransfer, SpyCustomer $customer)
     {
-        $entity = new SpyCustomerAddress();
-        $entity->fromArray($addressTransfer->toArray());
+        $addressEntity = new SpyCustomerAddress();
+        $addressEntity->fromArray($addressTransfer->toArray());
 
         $fkCountry = $this->retrieveFkCountry($addressTransfer);
-        $entity->setFkCountry($fkCountry);
+        $addressEntity->setFkCountry($fkCountry);
 
-        $entity->setCustomer($customer);
-        $entity->save();
+        $addressEntity->setCustomer($customer);
+        $addressEntity->save();
 
-        return $entity;
+        return $addressEntity;
     }
 
     /**
@@ -532,39 +532,39 @@ class Address
      */
     protected function updateCustomerAddress(AddressTransfer $addressTransfer, SpyCustomer $customer)
     {
-        $entity = $this->queryContainer->queryAddressForCustomer($addressTransfer->getIdCustomerAddress(), $customer->getEmail())
+        $addressEntity = $this->queryContainer->queryAddressForCustomer($addressTransfer->getIdCustomerAddress(), $customer->getEmail())
             ->findOne();
 
-        if (!$entity) {
+        if (!$addressEntity) {
             throw new AddressNotFoundException();
         }
 
         $fkCountry = $this->retrieveFkCountry($addressTransfer);
 
-        $entity->fromArray($addressTransfer->toArray());
-        $entity->setCustomer($customer);
-        $entity->setFkCountry($fkCountry);
-        $entity->save();
+        $addressEntity->fromArray($addressTransfer->toArray());
+        $addressEntity->setCustomer($customer);
+        $addressEntity->setFkCountry($fkCountry);
+        $addressEntity->save();
 
-        return $entity;
+        return $addressEntity;
     }
 
     /**
      * @param AddressTransfer $addressTransfer
-     * @param SpyCustomer $customer
+     * @param SpyCustomer $customerEntity
      * @param SpyCustomerAddress $entity
      */
-    protected function updateCustomerDefaultAddresses(AddressTransfer $addressTransfer, SpyCustomer $customer, SpyCustomerAddress $entity)
+    protected function updateCustomerDefaultAddresses(AddressTransfer $addressTransfer, SpyCustomer $customerEntity, SpyCustomerAddress $entity)
     {
-        if (null === $customer->getDefaultBillingAddress() || $addressTransfer->getIsDefaultBilling()) {
-            $customer->setDefaultBillingAddress($entity->getIdCustomerAddress());
+        if (null === $customerEntity->getDefaultBillingAddress() || $addressTransfer->getIsDefaultBilling()) {
+            $customerEntity->setDefaultBillingAddress($entity->getIdCustomerAddress());
         }
 
-        if (null === $customer->getDefaultShippingAddress() || $addressTransfer->getIsDefaultShipping()) {
-            $customer->setDefaultShippingAddress($entity->getIdCustomerAddress());
+        if (null === $customerEntity->getDefaultShippingAddress() || $addressTransfer->getIsDefaultShipping()) {
+            $customerEntity->setDefaultShippingAddress($entity->getIdCustomerAddress());
         }
 
-        $customer->save();
+        $customerEntity->save();
     }
 
 }

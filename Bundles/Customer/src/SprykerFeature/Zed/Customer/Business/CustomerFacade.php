@@ -165,11 +165,11 @@ class CustomerFacade extends AbstractFacade
      *
      * @return CustomerTransfer
      */
-    public function updateAddressAndCustomerDefaults(AddressTransfer $addressTransfer)
+    public function updateAddressAndCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
         return $this->getDependencyContainer()
             ->createAddress()
-            ->updateAddressAndCustomerDefaults($addressTransfer)
+            ->updateAddressAndCustomerDefaultAddresses($addressTransfer)
         ;
     }
 
@@ -178,11 +178,11 @@ class CustomerFacade extends AbstractFacade
      *
      * @return CustomerTransfer
      */
-    public function createAddressAndUpdateCustomerDefaults(AddressTransfer $addressTransfer)
+    public function createAddressAndUpdateCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
         return $this->getDependencyContainer()
             ->createAddress()
-            ->createAddressAndUpdateCustomerDefaults($addressTransfer)
+            ->createAddressAndUpdateCustomerDefaultAddresses($addressTransfer)
         ;
     }
 

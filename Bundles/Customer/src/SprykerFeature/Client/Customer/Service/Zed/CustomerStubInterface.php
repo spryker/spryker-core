@@ -89,14 +89,14 @@ interface CustomerStubInterface
      *
      * @return CustomerInterface
      */
-    public function updateAddressAndCustomerDefaults(AddressInterface $addressTransfer);
+    public function updateAddressAndCustomerDefaultAddresses(AddressInterface $addressTransfer);
 
     /**
      * @param AddressInterface $addressTransfer
      *
      * @return CustomerInterface
      */
-    public function createAddressAndUpdateCustomerDefaults(AddressInterface $addressTransfer);
+    public function createAddressAndUpdateCustomerDefaultAddresses(AddressInterface $addressTransfer);
 
     /**
      * @param AddressInterface $addressTransfer
