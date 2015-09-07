@@ -15,4 +15,12 @@ class LumberjackFacade extends AbstractFacade
     {
         // @todo implement
     }
+
+    public function saveEvent()
+    {
+    }
+
+    protected function createEventJournal()
+    {
+    }
 }
