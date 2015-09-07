@@ -8,6 +8,7 @@ use SprykerFeature\Zed\Product\Business\ProductFacade;
 use SprykerFeature\Zed\Product\Communication\ProductDependencyContainer;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainer;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
+use SprykerFeature\Zed\Product\ProductDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -31,9 +32,21 @@ class IndexController extends AbstractController
         $abstractProduct = $this->getQueryContainer()->querySkuFromAbstractProductById($idAbstractProduct)->findOne();
         $concreteProducts = $this->getQueryContainer()->queryConcreteProductByAbstractProduct($abstractProduct)->find();
 
+        $currentLocale = $this->getDependencyContainer()->getProvidedDependency(ProductDependencyProvider::FACADE_LOCALE)->getCurrentLocale();
+
+        $attributesCollection = $this->getQueryContainer()->queryAbstractProductAttributeCollection($abstractProduct->getIdAbstractProduct(), $currentLocale->getIdLocale())->findOne();
+
+        $attributes = [
+            'name' => $attributesCollection->getName(),
+            'attributes' => json_decode($attributesCollection->getAttributes(), true),
+        ];
+
+//        $this->getQueryContainer()->
+
         return $this->viewResponse([
             'abstractProduct' => $abstractProduct,
             'concreteProducts' => $concreteProducts,
+            'attributes' => $attributes,
         ]);
     }
 }

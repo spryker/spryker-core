@@ -38,4 +38,18 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container)
+    {
+        $container[self::FACADE_LOCALE] = function (Container $container) {
+            return $container->getLocator()->locale()->facade();
+        };
+
+        return $container;
+    }
+
 }
