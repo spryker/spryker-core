@@ -16,6 +16,7 @@ class ProductSearchProcessor implements ProductSearchProcessorInterface
      * @var string
      */
     protected $storeName = '';
+
     /**
      * @var KeyBuilderInterface
      */
