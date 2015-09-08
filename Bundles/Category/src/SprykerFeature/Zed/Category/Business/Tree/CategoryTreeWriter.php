@@ -197,7 +197,7 @@ class CategoryTreeWriter
                 $this->deleteNode($childNode->getIdCategoryNode(), $locale, true);
             }
         }
-        
+
         $this->touchCategoryDeleted($idNode);
 
         $this->closureTableWriter->delete($idNode);
