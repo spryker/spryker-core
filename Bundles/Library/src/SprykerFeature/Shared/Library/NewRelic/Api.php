@@ -59,7 +59,7 @@ class Api
      *
      * @return $this
      */
-    public function noticeError($message, Exception $e)
+    public function noticeError($message, \Exception $e)
     {
         if ($this->active) {
             newrelic_notice_error($message, $e);
