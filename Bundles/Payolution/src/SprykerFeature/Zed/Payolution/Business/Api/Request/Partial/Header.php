@@ -5,18 +5,17 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Api\Request\Partial;
 
-
 use SprykerFeature\Zed\Payolution\Business\Api\Request\AbstractRequest;
 
 class Header extends AbstractRequest
 {
     /**
-     * @var string
+     * @var Security
      */
     protected $security;
 
     /**
-     * @return string
+     * @return Security
      */
     public function getSecurity()
     {
@@ -24,11 +23,10 @@ class Header extends AbstractRequest
     }
 
     /**
-     * @param string $security
+     * @param Security $security
      */
     public function setSecurity($security)
     {
         $this->security = $security;
     }
-
 }

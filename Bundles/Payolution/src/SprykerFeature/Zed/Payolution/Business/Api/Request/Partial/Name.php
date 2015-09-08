@@ -5,11 +5,14 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Api\Request\Partial;
 
-
 use SprykerFeature\Zed\Payolution\Business\Api\Request\AbstractRequest;
 
 class Name extends AbstractRequest
 {
+
+    const SEX_MALE = 'M';
+    const SEX_FEMALE = 'F';
+
     /**
      * @var string
      */
@@ -114,6 +117,5 @@ class Name extends AbstractRequest
     {
         $this->title = $title;
     }
-
 
 }
