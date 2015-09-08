@@ -38,13 +38,21 @@ class AbstractTransfer extends ParentAbstractTransfer
     protected $transfer;
 
     /**
-     * @var TransferInterface
+     * @var \ArrayObject|TransferInterface[]
      */
     protected $transferCollection;
 
     public function __construct()
     {
         $this->transferCollection = new \ArrayObject();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getNamespace()
+    {
+        return 'Unit\\SprykerEngine\\Shared\\Transfer\\Fixtures\\';
     }
 
     /**
@@ -153,7 +161,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @return TransferInterface
+     * @return AbstractTransfer[]
      */
     public function getTransferCollection()
     {
@@ -161,11 +169,11 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @param TransferInterface $transferCollection
+     * @param \ArrayObject|AbstractTransfer[] $transferCollection
      *
      * @return AbstractTransfer
      */
-    public function setTransferCollection(TransferInterface $transferCollection)
+    public function setTransferCollection(\ArrayObject $transferCollection)
     {
         $this->transferCollection = $transferCollection;
         $this->addModifiedProperty('transferCollection');

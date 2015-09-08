@@ -127,11 +127,21 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
                 $elementType = $this->getArrayTypeWithNamespace($getterReturn);
                 $transferObjectsArray = new \ArrayObject();
                 foreach ($value as $arrayElement) {
-                    $transferObject = new $elementType();
                     if (is_array($arrayElement)) {
-                        $transferObject->fromArray($arrayElement);
+                        if ($this->isAssociativeArray($arrayElement)) {
+                            $transferObject = new $elementType();
+                            $transferObject->fromArray($arrayElement);
+                            $transferObjectsArray->append($transferObject);
+                        } else {
+                            foreach ($arrayElement as $arrayElementItem) {
+                                $transferObject = new $elementType();
+                                $transferObject->fromArray($arrayElementItem);
+                                $transferObjectsArray->append($transferObject);
+                            }
+                        }
+                    } else {
+                        $transferObjectsArray->append(new $elementType());
                     }
-                    $transferObjectsArray->append($transferObject);
                 }
                 $value = $transferObjectsArray;
             }
@@ -158,6 +168,16 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
         }
 
         return $this;
+    }
+
+    /**
+     * @param array $arr
+     *
+     * @return bool
+     */
+    private function isAssociativeArray(array $arr)
+    {
+        return array_keys($arr) !== range(0, count($arr) - 1);
     }
 
     /**
@@ -204,7 +224,15 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
      */
     private function getArrayTypeWithNamespace($returnType)
     {
-        return 'Generated\\Shared\\Transfer\\' . str_replace('[]', '', $returnType);
+        return $this->getNamespace() . str_replace('[]', '', $returnType);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getNamespace()
+    {
+        return 'Generated\\Shared\\Transfer\\';
     }
 
     /**
