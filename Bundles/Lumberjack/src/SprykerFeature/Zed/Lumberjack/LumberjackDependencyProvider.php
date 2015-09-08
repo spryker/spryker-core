@@ -12,7 +12,6 @@ use SprykerEngine\Zed\Kernel\Container;
 class LumberjackDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-
     /**
      * @param Container $container
      *

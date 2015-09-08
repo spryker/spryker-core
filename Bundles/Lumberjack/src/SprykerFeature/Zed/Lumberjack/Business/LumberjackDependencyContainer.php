@@ -14,11 +14,17 @@ use Generated\Zed\Ide\FactoryAutoCompletion\LumberjackBusiness;
 class LumberjackDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
+    /**
+     * @return Model\Event
+     */
     public function createEvent()
     {
         return $this->getFactory()->createModelEvent();
     }
 
+    /**
+     * @return Model\EventJournal
+     */
     public function createEventJournal() {
         return $this->getFactory()->createModelEventJournal();
     }
