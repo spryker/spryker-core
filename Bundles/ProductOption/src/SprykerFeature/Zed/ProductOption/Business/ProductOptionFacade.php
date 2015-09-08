@@ -30,6 +30,11 @@ class ProductOptionFacade extends AbstractFacade
         return $this->getDependencyContainer()->getProductOptionReaderModel()->getProductOption($idProductOptionValueUsage, $localeCode);
     }
 
+    public function getProductOptionsByIdProduct($idProduct, $localeCode)
+    {
+        return $this->getDependencyContainer()->getProductOptionReaderModel()->getProductOptionsByIdProduct($idProduct, $localeCode);
+    }
+
     /**
      * @param string $importKeyProductOptionType
      * @param array $localizedNames

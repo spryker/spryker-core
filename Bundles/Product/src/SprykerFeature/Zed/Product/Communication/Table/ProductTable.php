@@ -55,7 +55,7 @@ class ProductTable extends AbstractTable
             $abstractProducts[] = [
                 SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => $item[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT],
                 SpyAbstractProductTableMap::COL_SKU => $item[SpyAbstractProductTableMap::COL_SKU],
-                self::OPTIONS => $this->getViewUrl($item),
+                self::OPTIONS => $this->createActionColumn($item),
             ];
         }
 
@@ -67,13 +67,23 @@ class ProductTable extends AbstractTable
      *
      * @return string
      */
-    protected function getViewUrl(array $item)
+    protected function createActionColumn(array $item)
     {
-        return sprintf(
+        $urls = [];
+
+        $urls['viewUrl'] = sprintf(
             '<a href="/product/index/view/?id-abstract-product=%d" class="btn btn-sm btn-primary">%s</a>',
             $item[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT],
             'View'
         );
+
+        $urls['yvesProductUrl'] = sprintf(
+            '<a href="/product/index/view/?id-abstract-product=%d" class="btn btn-sm btn-info" target="_blank">%s</a>',
+            $item[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT],
+            'View in Shop'
+        );
+
+        return implode(' ', $urls);
     }
 
 }

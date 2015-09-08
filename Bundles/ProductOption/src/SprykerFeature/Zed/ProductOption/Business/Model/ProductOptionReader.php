@@ -92,6 +92,60 @@ class ProductOptionReader implements ProductOptionReaderInterface
         return $productOptionTransfer;
     }
 
+    public function getProductOptionsByIdProduct($idProduct, $localeCode)
+    {
+/*
+SELECT spotu.*, spot.import_key , spovu.fk_product_option_value, spovt.name, spovt.fk_locale
+FROM spy_product_option_type_usage AS spotu
+LEFT JOIN spy_product_option_type AS spot ON (spot.id_product_option_type = spotu.fk_product_option_type)
+LEFT JOIN spy_product_option_value_usage AS spovu ON (spovu.fk_product_option_type_usage = spotu.fk_product_option_type)
+LEFT JOIN spy_product_option_value_translation AS spovt ON (spovt.fk_product_option_value = spovu.fk_product_option_value AND spovt.fk_locale = 46)
+WHERE spotu.fk_product = 2
+#GROUP BY spotu.id_product_option_type_usage
+GROUP BY spotu.fk_product_option_type
+*/
+
+        $localeTransfer = $this->localeFacade->getLocale($localeCode);
+
+        $productOptionTransfer = new ProductOptionTransfer();
+        $productOptionTransfer->setIdOptionValueUsage($idProduct)
+            ->setLocaleCode($localeCode);
+
+        $result =  $this->queryContainer->queryProductOptionValueUsageWithAssociatedAttributes(
+            $idProduct, $localeTransfer->getIdLocale()
+        )->select([
+            self::COL_PRICE,
+            self::COL_TRANSLATION_TYPE,
+            self::COL_TRANSLATION_VALUE
+        ])->find();
+
+        dump($result);
+        die;
+
+        $productOptionTransfer->setLabelOptionType(
+            $result[self::COL_TRANSLATION_TYPE]
+        );
+
+        $productOptionTransfer->setLabelOptionValue(
+            $result[self::COL_TRANSLATION_VALUE]
+        );
+
+        $price = $result[self::COL_PRICE];
+        if (null === $price) {
+            $productOptionTransfer->setGrossPrice(0);
+        } else {
+            $productOptionTransfer->setGrossPrice((int) $price);
+        }
+
+        $taxSetEntity = $this->queryContainer->queryTaxSetForProductOptionValueUsage($idProduct)
+            ->findOne();
+        if (null !== $taxSetEntity) {
+            $this->addTaxesToProductOptionTransfer($productOptionTransfer, $taxSetEntity);
+        }
+
+        return $productOptionTransfer;
+    }
+
     /**
      * @param ProductOptionTransfer $productOptionTransfer
      * @param SpyTaxSet $taxSetEntity
