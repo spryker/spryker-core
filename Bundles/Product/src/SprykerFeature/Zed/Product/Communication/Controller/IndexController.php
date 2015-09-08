@@ -2,12 +2,14 @@
 
 namespace SprykerFeature\Zed\Product\Communication\Controller;
 
+use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Product\Business\ProductFacade;
 use SprykerFeature\Zed\Product\Communication\ProductDependencyContainer;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainer;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
 use SprykerFeature\Zed\Product\ProductDependencyProvider;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -19,9 +21,28 @@ class IndexController extends AbstractController
 {
     const ID_ABSTRACT_PRODUCT = 'id-abstract-product';
 
+    /**
+     * @return array
+     */
     public function indexAction()
     {
+        $table = $this->getDependencyContainer()->createProductTable();
 
+        return [
+            'products' => $table->render(),
+        ];
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function tableAction()
+    {
+        $table = $this->getDependencyContainer()->createProductTable();
+
+        return $this->jsonResponse(
+            $table->fetchData()
+        );
     }
 
     /**
@@ -37,23 +58,13 @@ class IndexController extends AbstractController
             ->querySkuFromAbstractProductById($idAbstractProduct)
             ->findOne()
         ;
+
         $concreteProductsCollenction = $this->getQueryContainer()
             ->queryConcreteProductByAbstractProduct($abstractProduct)
             ->find()
         ;
 
-        $concreteProducts = [];
-        foreach ($concreteProductsCollenction as $product) {
-            $concreteProducts[] = [
-                'sku' => $product->getSku(),
-                'format' => $product->getFormat(),
-                'weight' => $product->getWeight(),
-                'type' => $product->getType(),
-                'idProduct' => $product->getIdProduct(),
-                'isActive' => $product->getIsActive(),
-                'priceList' => $this->getProductPriceList($product),
-            ];
-        }
+        $concreteProducts = $this->createConcreteProductsCollection($concreteProductsCollenction);
 
         $currentLocale = $this->getDependencyContainer()
             ->getProvidedDependency(ProductDependencyProvider::FACADE_LOCALE)
@@ -67,14 +78,32 @@ class IndexController extends AbstractController
 
         $attributes = [
             'name' => $attributesCollection->getName(),
-            'attributes' => json_decode($attributesCollection->getAttributes(), true),
+            'attributes' => $this->mergeAttributes(
+                json_decode($attributesCollection->getAttributes(), true),
+                json_decode($abstractProduct->getAttributes(), true)
+            ),
         ];
 
-        return $this->viewResponse([
+        $out = $this->viewResponse([
             'abstractProduct' => $abstractProduct,
             'concreteProducts' => $concreteProducts,
             'attributes' => $attributes,
         ]);
+
+        return $out;
+    }
+
+    /**
+     * @param array $attributes
+     * @param array $prioritizedAttributes
+     *
+     * @return array
+     */
+    protected function mergeAttributes(array $attributes, array $prioritizedAttributes)
+    {
+        $attributes = array_merge($attributes, $prioritizedAttributes);
+
+        return $attributes;
     }
 
     /**
@@ -95,5 +124,28 @@ class IndexController extends AbstractController
         }
 
         return $priceList;
+    }
+
+    /**
+     * @param ObjectCollection $concreteProductsCollenction
+     *
+     * @return array
+     */
+    protected function createConcreteProductsCollection(ObjectCollection $concreteProductsCollenction)
+    {
+        $concreteProducts = [];
+        foreach ($concreteProductsCollenction as $product) {
+            $concreteProducts[] = [
+                'sku' => $product->getSku(),
+                'format' => $product->getFormat(),
+                'weight' => $product->getWeight(),
+                'type' => $product->getType(),
+                'idProduct' => $product->getIdProduct(),
+                'isActive' => $product->getIsActive(),
+                'priceList' => $this->getProductPriceList($product),
+            ];
+        }
+
+        return $concreteProducts;
     }
 }

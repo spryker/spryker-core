@@ -12,17 +12,7 @@
 
         {% block widget_content %}
 
-            <div class="fix-height">
-                <table class="footable table table-stripped toggle-arrow-tiny">
-                    {% for i in range(1,10) %}
-                    <tr>
-                        <td>Product {{ i }}</td>
-                        <td>Category {{ i }}</td>
-                        <td><a class="btn btn-sm btn-primary" href="/product/index/view?id-abstract-product={{ i }}">View</a></td>
-                    </tr>
-                    {% endfor %}
-                </table>
-            </div>
+            {{ products | raw }}
 
         {% endblock %}
 

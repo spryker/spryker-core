@@ -8,7 +8,12 @@ namespace SprykerFeature\Zed\Product\Communication;
 
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Product\Business\ProductFacade;
+use SprykerFeature\Zed\Product\Communication\Table\ProductTable;
+use SprykerFeature\Zed\Product\Persistence\ProductQueryContainer;
 
+/**
+ * @method ProductQueryContainer getQueryContainer()
+ */
 class ProductDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
@@ -20,10 +25,13 @@ class ProductDependencyContainer extends AbstractCommunicationDependencyContaine
         return $this->getLocator()->product()->facade();
     }
 
-    public function createProductForm() {
+    /**
+     * @return ProductTable
+     */
+    public function createProductTable()
+    {
+        $productQuery = $this->getQueryContainer()->queryAbstractProducts();
 
-        return $this->getFactory()->createFormProductForm($blankConstraint);
-
+        return $this->getFactory()->createTableProductTable($productQuery);
     }
-
 }
