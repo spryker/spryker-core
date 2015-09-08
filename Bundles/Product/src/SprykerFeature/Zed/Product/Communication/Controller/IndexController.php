@@ -3,7 +3,6 @@
 namespace SprykerFeature\Zed\Product\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceProduct;
 use SprykerFeature\Zed\Product\Business\ProductFacade;
 use SprykerFeature\Zed\Product\Communication\ProductDependencyContainer;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainer;
@@ -25,16 +24,46 @@ class IndexController extends AbstractController
 
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
     public function viewAction(Request $request)
     {
         $idAbstractProduct = $request->query->getInt(self::ID_ABSTRACT_PRODUCT);
 
-        $abstractProduct = $this->getQueryContainer()->querySkuFromAbstractProductById($idAbstractProduct)->findOne();
-        $concreteProducts = $this->getQueryContainer()->queryConcreteProductByAbstractProduct($abstractProduct)->find();
+        $abstractProduct = $this->getQueryContainer()
+            ->querySkuFromAbstractProductById($idAbstractProduct)
+            ->findOne()
+        ;
+        $concreteProductsCollenction = $this->getQueryContainer()
+            ->queryConcreteProductByAbstractProduct($abstractProduct)
+            ->find()
+        ;
 
-        $currentLocale = $this->getDependencyContainer()->getProvidedDependency(ProductDependencyProvider::FACADE_LOCALE)->getCurrentLocale();
+        $concreteProducts = [];
+        foreach ($concreteProductsCollenction as $product) {
+            $concreteProducts[] = [
+                'sku' => $product->getSku(),
+                'format' => $product->getFormat(),
+                'weight' => $product->getWeight(),
+                'type' => $product->getType(),
+                'idProduct' => $product->getIdProduct(),
+                'isActive' => $product->getIsActive(),
+                'priceList' => $this->getProductPriceList($product),
+            ];
+        }
 
-        $attributesCollection = $this->getQueryContainer()->queryAbstractProductAttributeCollection($abstractProduct->getIdAbstractProduct(), $currentLocale->getIdLocale())->findOne();
+        $currentLocale = $this->getDependencyContainer()
+            ->getProvidedDependency(ProductDependencyProvider::FACADE_LOCALE)
+            ->getCurrentLocale()
+        ;
+
+        $attributesCollection = $this->getQueryContainer()
+            ->queryAbstractProductAttributeCollection($abstractProduct->getIdAbstractProduct(), $currentLocale->getIdLocale())
+            ->findOne()
+        ;
 
         $attributes = [
             'name' => $attributesCollection->getName(),
@@ -46,5 +75,25 @@ class IndexController extends AbstractController
             'concreteProducts' => $concreteProducts,
             'attributes' => $attributes,
         ]);
+    }
+
+    /**
+     * @param SpyProduct $product
+     *
+     * @return array
+     */
+    protected function getProductPriceList(SpyProduct $product)
+    {
+        $productPricesCollection = $product->getPriceProductsJoinPriceType();
+
+        $priceList = [];
+        foreach ($productPricesCollection as $priceDefinition) {
+            $priceList[] = [
+                'name' => $priceDefinition->getPriceType()->getName(),
+                'value' => $priceDefinition->getPrice(),
+            ];
+        }
+
+        return $priceList;
     }
 }
