@@ -11,6 +11,9 @@ use SprykerEngine\Shared\Lumberjack\Model\Collector\DataCollectorInterface;
 class YvesDataCollector implements DataCollectorInterface
 {
 
+    /**
+     * @return array
+     */
     public function getData()
     {
         return ['session_id' => sha1(session_id())];
