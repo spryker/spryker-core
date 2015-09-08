@@ -7,6 +7,7 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Product\Business\ProductFacade;
 use SprykerFeature\Zed\Product\Communication\ProductDependencyContainer;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainer;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
 use SprykerFeature\Zed\Product\ProductDependencyProvider;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -20,6 +21,8 @@ use Symfony\Component\HttpFoundation\Request;
 class IndexController extends AbstractController
 {
     const ID_ABSTRACT_PRODUCT = 'id-abstract-product';
+    const COL_ID_PRODUCT_CATEGORY = 'id_product_category';
+    const COL_CATEGORY_NAME = 'category_name';
 
     /**
      * @return array
@@ -84,13 +87,14 @@ class IndexController extends AbstractController
             ),
         ];
 
-        $out = $this->viewResponse([
+        $categories = $this->getProductCategories($abstractProduct);
+
+        return $this->viewResponse([
             'abstractProduct' => $abstractProduct,
             'concreteProducts' => $concreteProducts,
             'attributes' => $attributes,
+            'categories' => $categories,
         ]);
-
-        return $out;
     }
 
     /**
@@ -115,8 +119,14 @@ class IndexController extends AbstractController
     {
         $productPricesCollection = $product->getPriceProductsJoinPriceType();
 
+        // @todo this is here for proof of concept, will be changed
+        $whiteListPrices = [1,5,10,20,50,100];
+
         $priceList = [];
         foreach ($productPricesCollection as $priceDefinition) {
+            if (!in_array($priceDefinition->getPriceType()->getName(), $whiteListPrices)) {
+                continue;
+            }
             $priceList[] = [
                 'name' => $priceDefinition->getPriceType()->getName(),
                 'value' => $priceDefinition->getPrice(),
@@ -147,5 +157,29 @@ class IndexController extends AbstractController
         }
 
         return $concreteProducts;
+    }
+
+    /**
+     * @param $abstractProduct
+     *
+     * @return array
+     */
+    protected function getProductCategories(SpyAbstractProduct $abstractProduct)
+    {
+        $categoriesCollection = $this->getDependencyContainer()
+            ->getProvidedDependency(ProductDependencyProvider::FACADE_PRODUCT_CATEGORIES)
+            ->getCategoriesByAbstractProduct($abstractProduct)
+            ->find()
+        ;
+
+        $categories = [];
+        foreach ($categoriesCollection as $category) {
+            $categories[] = [
+                self::COL_ID_PRODUCT_CATEGORY => $category->getIdProductCategory(),
+                self::COL_CATEGORY_NAME => $category->getVirtualColumn(self::COL_CATEGORY_NAME)
+            ];
+        }
+
+        return $categories;
     }
 }
