@@ -75,62 +75,6 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
-     * @param string $itemType
-     * @param LocaleTransfer $locale
-     * @param \DateTime $lastTouchedAt
-     
-     * @return SpyTouchQuery
-     * 
-     * @throws \Propel\Runtime\Exception\PropelException
-     */
-/*    public function createBasicExportableQueryForDeletion($itemType, LocaleTransfer $locale, \DateTime $lastTouchedAt)
-    {
-        $query = SpyTouchQuery::create();
-        $query
-            ->filterByItemType($itemType)
-            ->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
-            ->filterByTouched(['min' => $lastTouchedAt])
-            ->addJoin(
-                SpyTouchTableMap::COL_ID_TOUCH,
-                SpyTouchStorageTableMap::COL_FK_TOUCH,
-                Criteria::LEFT_JOIN
-            )
-            ->addJoin(
-                SpyTouchStorageTableMap::COL_FK_LOCALE,
-                SpyLocaleTableMap::COL_ID_LOCALE,
-                Criteria::LEFT_JOIN
-            )
-            ->addAnd(
-                SpyTouchStorageTableMap::COL_FK_LOCALE,
-                $locale->getIdLocale(),
-                Criteria::EQUAL
-            )
-            ->withColumn(
-                SpyTouchTableMap::COL_ITEM_ID,
-                'node_id'
-            )
-            ->withColumn(
-                SpyTouchStorageTableMap::COL_ID_TOUCH_STORAGE,
-                'storage_id'
-            )
-            ->withColumn(
-                SpyTouchStorageTableMap::COL_KEY,
-                'storage_key'
-            )
-            ->withColumn(
-                SpyTouchStorageTableMap::COL_FK_LOCALE,
-                'storage_locale'
-            )
-            ->withColumn(
-                SpyTouchTableMap::COL_ID_TOUCH,
-                'touch_id'
-            )
-        ;
-
-        return $query;
-    }*/
-
-    /**
      * @return SpyTouchQuery
      */
     public function queryExportTypes()
