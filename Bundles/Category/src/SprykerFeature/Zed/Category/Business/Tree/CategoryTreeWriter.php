@@ -94,7 +94,7 @@ class CategoryTreeWriter
         
         $this->touchNavigationActive();
 
-        $this->updateTouchTableRecursively($categoryNode);
+        $this->touchCategoryActiveRecursive($categoryNode);
         
         if ($createUrlPath) {
             $this->nodeUrlManager->createUrl($categoryNode, $locale);
@@ -124,6 +124,10 @@ class CategoryTreeWriter
             $this->deleteNode($node->getPrimaryKey(), $locale, true);
         }
         $this->categoryWriter->delete($idCategory);
+        
+        $this->touchCategoryDeleted($idNode);
+
+        $this->touchUrlDeleted($idNode);
 
         $connection->commit();
 
@@ -144,23 +148,35 @@ class CategoryTreeWriter
         $this->closureTableWriter->create($categoryNode);
         $this->nodeUrlManager->updateUrl($categoryNode, $locale);
 
-        $this->updateTouchTableRecursively($categoryNode);
+        $this->touchCategoryActiveRecursive($categoryNode);
         $this->touchNavigationActive();
 
         $connection->commit();
     }
-    
-    protected function updateTouchTableRecursively(NodeTransfer $categoryNode)
+
+    protected function touchCategoryActiveRecursive(NodeTransfer $categoryNode)
     {
         $closureQuery= new SpyCategoryClosureTableQuery();
         $nodes = $closureQuery->findByFkCategoryNodeDescendant($categoryNode->getFkParentCategoryNode());
 
         foreach($nodes as $node) {
-                $this->touchCategoryActive($node->getFkCategoryNode());
+            $this->touchCategoryActive($node->getFkCategoryNode());
         }
 
         $this->touchCategoryActive($categoryNode->getIdCategoryNode());
     }
+
+/*    protected function touchCategoryDeletedRecursive(NodeTransfer $categoryNode)
+    {
+        $closureQuery= new SpyCategoryClosureTableQuery();
+        $nodes = $closureQuery->findByFkCategoryNodeDescendant($categoryNode->getFkParentCategoryNode());
+
+        foreach($nodes as $node) {
+            $this->touchCategoryDeleted($node->getFkCategoryNode());
+        }
+
+        $this->touchCategoryDeleted($categoryNode->getIdCategoryNode());
+    }*/
 
     /**
      * @param int $idNode
@@ -177,6 +193,11 @@ class CategoryTreeWriter
                 $this->deleteNode($childNode->getIdCategoryNode(), $locale, true);
             }
         }
+        
+        $this->touchCategoryDeleted($idNode);
+
+        $this->touchUrlDeleted($idNode);
+        
         $this->closureTableWriter->delete($idNode);
 
         return $this->nodeWriter->delete($idNode);
@@ -189,9 +210,30 @@ class CategoryTreeWriter
     {
         $this->touchFacade->touchActive(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
     }
-    
+
+    /**
+     * @param $idCategoryNode
+     */
+    protected function touchCategoryDeleted($idCategoryNode)
+    {
+        $this->touchFacade->touchDeleted(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
+    }
+
     protected function touchNavigationActive()
     {
         $this->touchFacade->touchActive(CategoryConfig::RESOURCE_TYPE_NAVIGATION, self::ID_NAVIGATION);
+    }
+
+    protected function touchNavigationDeleted()
+    {
+        $this->touchFacade->touchDeleted(CategoryConfig::RESOURCE_TYPE_NAVIGATION, self::ID_NAVIGATION);
+    }
+
+    /**
+     * @param $idCategoryNode
+     */
+    protected function touchUrlDeleted($idCategoryNode)
+    {
+        $this->touchFacade->touchDeleted(CategoryConfig::RESOURCE_TYPE_URL, $idCategoryNode);
     }
 }

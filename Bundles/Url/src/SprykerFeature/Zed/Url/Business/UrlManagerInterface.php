@@ -89,6 +89,11 @@ interface UrlManagerInterface
     public function touchUrlActive($idUrl);
 
     /**
+     * @param $idUrl
+     */
+    public function touchUrlDeleted($idUrl);
+
+    /**
      * @param SpyUrl $urlEntity
      *
      * @throws MissingResourceException

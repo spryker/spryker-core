@@ -218,6 +218,14 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
+     * @param $idUrl
+     */
+    public function touchUrlDeleted($idUrl)
+    {
+        $this->touchFacade->touchDeleted(self::ITEM_TYPE_URL, $idUrl);
+    }
+
+    /**
      * @param UrlTransfer $url
      *
      * @throws UrlExistsException

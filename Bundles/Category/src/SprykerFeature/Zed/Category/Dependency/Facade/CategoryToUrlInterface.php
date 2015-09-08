@@ -34,6 +34,11 @@ interface CategoryToUrlInterface
     public function touchUrlActive($idUrl);
 
     /**
+     * @param int $idUrl
+     */
+    public function touchUrlDeleted($idUrl);
+
+    /**
      * @param UrlTransfer $url
      *
      * @return UrlTransfer
