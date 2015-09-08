@@ -74,7 +74,7 @@ class PreAuthorizationRequest extends AbstractRequest
     /**
      * @param Header $header
      */
-    public function setHeader($header)
+    public function setHeader(Header $header)
     {
         $this->header = $header;
     }
@@ -90,7 +90,7 @@ class PreAuthorizationRequest extends AbstractRequest
     /**
      * @param Transaction $transaction
      */
-    public function setTransaction($transaction)
+    public function setTransaction(Transaction $transaction)
     {
         $this->transaction = $transaction;
     }
@@ -106,7 +106,7 @@ class PreAuthorizationRequest extends AbstractRequest
     /**
      * @param User $user
      */
-    public function setUser($user)
+    public function setUser(User $user)
     {
         $this->user = $user;
     }
@@ -122,7 +122,7 @@ class PreAuthorizationRequest extends AbstractRequest
     /**
      * @param Identification $identification
      */
-    public function setIdentification($identification)
+    public function setIdentification(Identification $identification)
     {
         $this->identification = $identification;
     }
@@ -138,7 +138,7 @@ class PreAuthorizationRequest extends AbstractRequest
     /**
      * @param Payment $payment
      */
-    public function setPayment($payment)
+    public function setPayment(Payment $payment)
     {
         $this->payment = $payment;
     }
@@ -154,7 +154,7 @@ class PreAuthorizationRequest extends AbstractRequest
     /**
      * @param Customer $customer
      */
-    public function setCustomer($customer)
+    public function setCustomer(Customer $customer)
     {
         $this->customer = $customer;
     }
@@ -170,7 +170,7 @@ class PreAuthorizationRequest extends AbstractRequest
     /**
      * @param Account $account
      */
-    public function setAccount($account)
+    public function setAccount(Account $account)
     {
         $this->account = $account;
     }
@@ -186,7 +186,7 @@ class PreAuthorizationRequest extends AbstractRequest
     /**
      * @param Frontend $frontend
      */
-    public function setFrontend($frontend)
+    public function setFrontend(Frontend $frontend)
     {
         $this->frontend = $frontend;
     }
@@ -202,7 +202,7 @@ class PreAuthorizationRequest extends AbstractRequest
     /**
      * @param Analysis $analysis
      */
-    public function setAnalysis($analysis)
+    public function setAnalysis(Analysis $analysis)
     {
         $this->analysis = $analysis;
     }
