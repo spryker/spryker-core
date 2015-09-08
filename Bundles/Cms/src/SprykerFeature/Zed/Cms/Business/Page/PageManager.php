@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Cms\Business\Page;
 
+use Generated\Shared\Cms\CmsBlockInterface;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
@@ -260,17 +261,14 @@ class PageManager implements PageManagerInterface
 
     /**
      * @param PageTransfer $page
-     * @param string $blockName
+     * @param CmsBlockInterface $blockTransfer
      *
      * @return PageTransfer
      */
-    public function savePageBlockAndTouch(PageTransfer $page, $blockName)
+    public function savePageBlockAndTouch(PageTransfer $page, CmsBlockInterface $blockTransfer)
     {
         $pageTransfer = $this->savePage($page);
-
-        $blockTransfer = new CmsBlockTransfer();
-        $blockTransfer->setIdCmsPage($pageTransfer->getIdCmsPage());
-        $blockTransfer->setName($blockName);
+        $blockTransfer->setFkPage($pageTransfer->getIdCmsPage());
 
         $this->blockManager->saveBlockAndTouch($blockTransfer);
 

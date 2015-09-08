@@ -103,14 +103,14 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
 
     /**
      * @param string $formType
-     * @param int $idPage
+     * @param int $idCmsBlock
      *
      * @return CmsPageForm
      */
-    public function createCmsBlockForm($formType, $idPage = null)
+    public function createCmsBlockForm($formType, $idCmsBlock = null)
     {
         $blockPageByIdQuery = $this->getQueryContainer()
-            ->queryPageWithTemplatesAndBlocksByIdPage($idPage)
+            ->queryPageWithTemplatesAndBlocksById($idCmsBlock)
         ;
 
         $templateQuery = $this->getQueryContainer()
@@ -119,7 +119,7 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
 
         return $this->getFactory()
             ->createFormCmsBlockForm($templateQuery, $blockPageByIdQuery,
-                $this->getFactory()->createFormConstraintCmsConstraint(), $formType, $idPage)
+                $this->getFactory()->createFormConstraintCmsConstraint(), $formType, $idCmsBlock)
             ;
     }
 

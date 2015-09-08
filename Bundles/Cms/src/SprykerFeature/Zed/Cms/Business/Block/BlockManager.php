@@ -43,9 +43,9 @@ class BlockManager implements BlockManagerInterface
      */
     public function saveBlock(CmsBlockInterface $cmsBlockTransfer)
     {
-        $this->checkPageExists($cmsBlockTransfer->getIdCmsPage());
+        $this->checkPageExists($cmsBlockTransfer->getFkPage());
 
-        if (null === $this->getCmsBlockByIdPage($cmsBlockTransfer->getIdCmsPage())) {
+        if (null === $this->getCmsBlockByIdPage($cmsBlockTransfer->getFkPage())) {
             $block = $this->createBlock($cmsBlockTransfer);
         } else {
             $block = $this->updateBlock($cmsBlockTransfer);
@@ -85,7 +85,7 @@ class BlockManager implements BlockManagerInterface
      */
     public function touchBlockActive(CmsBlockInterface $cmsBlockTransfer)
     {
-        $this->touchFacade->touchActive(CmsConfig::RESOURCE_TYPE_BLOCK, $cmsBlockTransfer->getIdCmsPage());
+        $this->touchFacade->touchActive(CmsConfig::RESOURCE_TYPE_BLOCK, $cmsBlockTransfer->getIdCmsBlock());
     }
 
     /**
@@ -110,7 +110,7 @@ class BlockManager implements BlockManagerInterface
      */
     protected function updateBlock(CmsBlockInterface $cmsBlockTransfer)
     {
-        $blockEntity = $this->getCmsBlockByIdPage($cmsBlockTransfer->getIdCmsPage());
+        $blockEntity = $this->getCmsBlockByIdPage($cmsBlockTransfer->getFkPage());
         $blockEntity->fromArray($cmsBlockTransfer->toArray());
 
         if (!$blockEntity->isModified()) {
