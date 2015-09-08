@@ -93,6 +93,7 @@ abstract class AbstractCollector implements ExporterInterface
             $result->setProcessedCount(0);
             $result->setIsFailed(false);
             $result->setTotalCount(0);
+            $result->setDeletedCount(0);
 
             return $result;
         }
@@ -103,8 +104,11 @@ abstract class AbstractCollector implements ExporterInterface
 
         $baseQuery = $this->queryContainer->createBasicExportableQuery($type, $lastRunDatetime);
         $baseQuery->setFormatter($this->getFormatter());
-
         $collector->run($baseQuery, $locale, $result, $this->writer);
+
+        $baseQuery = $this->queryContainer->createBasicExportableQueryForDeletion($type, $lastRunDatetime);
+        $baseQuery->setFormatter($this->getFormatter());
+        $collector->postRun($baseQuery, $locale, $result, $this->writer);
 
         return $this->finishExport($result, $type);
     }

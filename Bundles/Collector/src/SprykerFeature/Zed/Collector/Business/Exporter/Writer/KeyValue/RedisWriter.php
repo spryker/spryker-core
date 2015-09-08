@@ -38,6 +38,16 @@ class RedisWriter implements WriterInterface
     }
 
     /**
+     * @param array $dataSet
+     *
+     * @return bool
+     */
+    public function delete(array $dataSet)
+    {
+        return $this->redis->deleteMulti($dataSet);
+    }
+
+    /**
      * @return string
      */
     public function getName()

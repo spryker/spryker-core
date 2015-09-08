@@ -65,6 +65,24 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     }
 
     /**
+     * @param string $itemType
+     * @param \DateTime $lastTouchedAt
+     *
+     * @return SpyTouchQuery
+     */
+    public function createBasicExportableQueryForDeletion($itemType, \DateTime $lastTouchedAt)
+    {
+        $query = SpyTouchQuery::create();
+        $query
+            ->filterByItemType($itemType)
+            ->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
+            ->filterByTouched(['min' => $lastTouchedAt])
+        ;
+
+        return $query;
+    }
+
+    /**
      * @return SpyTouchQuery
      */
     public function queryExportTypes()

@@ -42,6 +42,11 @@ class BatchResult implements BatchResultInterface
     protected $failedCount = 0;
 
     /**
+     * @var int
+     */
+    protected $deletedCount = 0;
+
+    /**
      * @var bool
      */
     protected $isFailed = false;
@@ -172,4 +177,27 @@ class BatchResult implements BatchResultInterface
         $this->processedCount += $amount;
     }
 
+    /**
+     * @return int
+     */
+    public function getDeletedCount()
+    {
+        return $this->deletedCount;
+    }
+
+    /**
+     * @param int $deletedCount
+     */
+    public function setDeletedCount($deletedCount)
+    {
+        $this->deletedCount = $deletedCount;
+    }
+
+    /**
+     * @param int $amount
+     */
+    public function increaseDeletedCount($amount)
+    {
+        $this->deletedCount += $amount;
+    }
 }

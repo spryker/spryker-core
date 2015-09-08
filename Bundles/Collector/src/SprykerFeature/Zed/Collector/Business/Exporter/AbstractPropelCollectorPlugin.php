@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Collector\Business\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
@@ -28,12 +29,12 @@ abstract class AbstractPropelCollectorPlugin
     public function run(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result, WriterInterface $dataWriter)
     {
         $query = $this->createQuery($baseQuery, $locale);
-
-        $resultSets = $this->getBatchIterator($query);
+        
+        $resultCollection = $this->getBatchIterator($query);
 
         $totalCount = 0;
-        foreach ($resultSets as $resultSet) {
-            $collectedData = $this->processData($resultSet, $locale);
+        foreach ($resultCollection as $resultItem) {
+            $collectedData = $this->processData($resultItem, $locale);
             $count = count($collectedData);
 
             $dataWriter->write($collectedData, $this->getTouchItemType());
@@ -44,6 +45,38 @@ abstract class AbstractPropelCollectorPlugin
 
         $result->setTotalCount($totalCount);
     }
+    
+    public function postRun(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result, WriterInterface $dataWriter)
+    {
+        $query = $this->createQuery($baseQuery, $locale);
+
+        $resultCollection = $this->getBatchIterator($query);
+
+        $totalCount = 0;
+        foreach ($resultCollection as $resultItem) {
+            $collectedData = $this->processData($resultItem, $locale);
+            $count = count($collectedData);
+            
+            $dataWriter->write($collectedData, $this->getTouchItemType());
+
+            $result->increaseProcessedCount($count);
+            $result->increaseDeletedCount($count);
+            $totalCount += $count;
+        }
+
+        $result->setTotalCount($totalCount);
+    }
+    
+/*    protected function flushDeletedItems(WriterInterface $dataWriter)
+    {
+        $query = new SpyTouchQuery();
+        $touchItemsToDelete = $query->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
+            ->find();
+        
+        foreach ($touchItemsToDelete as $touchItem) {
+            $touchItem->delete();
+        }
+    }*/
 
     /**
      * @param SpyTouchQuery $baseQuery

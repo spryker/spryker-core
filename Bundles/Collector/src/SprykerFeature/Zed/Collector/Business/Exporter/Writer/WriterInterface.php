@@ -18,6 +18,13 @@ interface WriterInterface
     public function write(array $dataSet, $type = '');
 
     /**
+     * @param array $dataSet
+     *
+     * @return bool
+     */
+    public function delete(array $dataSet);
+
+    /**
      * @return string
      */
     public function getName();
