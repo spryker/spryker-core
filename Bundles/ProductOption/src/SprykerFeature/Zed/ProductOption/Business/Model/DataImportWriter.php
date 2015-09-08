@@ -69,9 +69,9 @@ class DataImportWriter implements DataImportWriterInterface
             ->findOneOrCreate()
         ;
 
-        $productOptionTypeEntity->save();
         $this->createOrUpdateOptionTypeTranslations($productOptionTypeEntity, $localizedNames);
 
+        $productOptionTypeEntity->save();
 
         $associatedAbstractProductIds = $this->queryContainer
             ->queryAssociatedAbstractProductIdsForProductOptionType($productOptionTypeEntity->getIdProductOptionType())
