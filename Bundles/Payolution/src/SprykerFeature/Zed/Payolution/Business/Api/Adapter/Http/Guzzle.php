@@ -1,35 +1,48 @@
 <?php
 
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http;
 
-use Bundles\Payolution\src\SprykerFeature\Zed\Payolution\Business\Api\Request\AbstractRequest;
-use GuzzleHttp\Client;
+use Guzzle\Http\Client;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-
+use SprykerFeature\Zed\Payolution\Business\Api\Request\AbstractRequest;
 
 class Guzzle implements AdapterInterface
 {
 
+    const DEFAULT_TIMEOUT = 45;
+
+    /**
+     * @var Client
+     */
     protected $client;
 
     /**
-     * @param string $paymentGatewayUrl
+     * @var string
      */
-    public function __construct($paymentGatewayUrl)
-    {
-        parent::__construct($paymentGatewayUrl);
+    private $gatewayUrl;
 
+    /**
+     * @param string $gatewayUrl
+     */
+    public function __construct($gatewayUrl)
+    {
+        $this->gatewayUrl = $gatewayUrl;
         $this->client = new Client([
-            'timeout' => $this->getTimeout(),
+            'timeout' => self::DEFAULT_TIMEOUT,
         ]);
     }
 
+    /**
+     * @param AbstractRequest $request
+     */
     public function sendRequest(AbstractRequest $request)
     {
-        $url = 'https://test.ctpe.net/frontend/payment.prc';
-
-        $this->client->request('POST', $url, $request->toArray());
-
+        $response = $this->client->post($this->gatewayUrl, $headers = [], $request->toArray())->send();
+        var_dump($response);exit;
     }
 
 }

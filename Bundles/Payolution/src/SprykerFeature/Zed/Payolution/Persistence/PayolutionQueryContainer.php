@@ -6,6 +6,7 @@
 namespace SprykerFeature\Zed\Payolution\Persistence;
 
 
+use Generated\Zed\Ide\FactoryAutoCompletion\PayolutionPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Payolution\PayolutionDependencyProvider;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
@@ -21,7 +22,7 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
      */
     protected function getOsmQueryContainer()
     {
-        return $this->getProvidedDepency(PayolutionDependencyProvider::QUERY_CONTAINER_OSM);
+        return $this->getProvidedDependency(PayolutionDependencyProvider::QUERY_CONTAINER_OSM);
     }
 
     /**

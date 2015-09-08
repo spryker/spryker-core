@@ -1,19 +1,17 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payolution;
 
-
 use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
 use SprykerEngine\Zed\Kernel\Container;
 
-/**
- * @method Locator getLocator()
- */
 class PayolutionDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const QUERY_CONTAINER_OSM = 'query container osm';
 
     /**
@@ -24,9 +22,10 @@ class PayolutionDependencyProvider extends AbstractBundleDependencyProvider
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container[self::QUERY_CONTAINER_OSM] = function (Container $container) {
-            return $container->getLocator()->osm()->queryContainer();
+            return $container->getLocator()->oms()->queryContainer();
         };
 
         return $container;
     }
+
 }

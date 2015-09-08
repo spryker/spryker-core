@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\Payolution\Business\Api\Response;
 
 
-class PreAuthorizationResponse extends AbstractResponse
+abstract class AbstractResponse
 {
 
 }
