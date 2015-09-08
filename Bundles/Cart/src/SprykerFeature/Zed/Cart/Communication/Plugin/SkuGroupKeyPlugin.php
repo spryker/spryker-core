@@ -9,6 +9,7 @@ use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 
 class SkuGroupKeyPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
+
     /**
      * @param ChangeInterface $change
      *
@@ -35,9 +36,7 @@ class SkuGroupKeyPlugin extends AbstractPlugin implements ItemExpanderPluginInte
             return $cartItem->getSku();
         }
 
-        $groupKey = $groupKey . '-' . $cartItem->getSku();
-
         return $groupKey;
-
     }
+
 }
