@@ -85,8 +85,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $transfer = new AbstractTransfer();
         $transfer->fromArray($data, true);
     }
-
-    public function testFromArrayWithNestedTransferCollections()
+    public function testFromArrayWithNestedTransferCollectionShouldReturnValidDataFromEmbeddedTransferObjects()
     {
         $data = [
             'string' => 'level1',
@@ -114,6 +113,8 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $transfer = new AbstractTransfer();
         $transfer->fromArray($data);
 
+        $this->assertEquals('level1', $transfer->getString());
+        $this->assertEquals('level2', $transfer->getTransferCollection()[0]->getString());
         $this->assertEquals('level3', $transfer->getTransferCollection()[1]->getTransferCollection()[0]->getString());
     }
 

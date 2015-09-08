@@ -161,7 +161,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @return AbstractTransfer[]
+     * @return AbstractTransfer[]|\ArrayObject()
      */
     public function getTransferCollection()
     {

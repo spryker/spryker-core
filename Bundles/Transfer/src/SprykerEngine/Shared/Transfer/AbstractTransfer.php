@@ -123,27 +123,8 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
 
             // Process Array
             if (is_array($value) && $this->isArray($getterReturn) && $type === 'ArrayObject') {
-                /* @var TransferInterface $transferObject */
                 $elementType = $this->getArrayTypeWithNamespace($getterReturn);
-                $transferObjectsArray = new \ArrayObject();
-                foreach ($value as $arrayElement) {
-                    if (is_array($arrayElement)) {
-                        if ($this->isAssociativeArray($arrayElement)) {
-                            $transferObject = new $elementType();
-                            $transferObject->fromArray($arrayElement);
-                            $transferObjectsArray->append($transferObject);
-                        } else {
-                            foreach ($arrayElement as $arrayElementItem) {
-                                $transferObject = new $elementType();
-                                $transferObject->fromArray($arrayElementItem);
-                                $transferObjectsArray->append($transferObject);
-                            }
-                        }
-                    } else {
-                        $transferObjectsArray->append(new $elementType());
-                    }
-                }
-                $value = $transferObjectsArray;
+                $value = $this->processArrayObject($elementType, $value);
             }
 
             // Process nested Transfer Objects
@@ -171,13 +152,44 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     }
 
     /**
-     * @param array $arr
+     * @param string $elementType
+     * @param array $arrayObject
+     *
+     * @return \ArrayObject
+     */
+    protected function processArrayObject($elementType, array $arrayObject)
+    {
+        /* @var TransferInterface $transferObject */
+        $transferObjectsArray = new \ArrayObject();
+        foreach ($arrayObject as $arrayElement) {
+            if (is_array($arrayElement)) {
+                if ($this->isAssociativeArray($arrayElement)) {
+                    $transferObject = new $elementType();
+                    $transferObject->fromArray($arrayElement);
+                    $transferObjectsArray->append($transferObject);
+                } else {
+                    foreach ($arrayElement as $arrayElementItem) {
+                        $transferObject = new $elementType();
+                        $transferObject->fromArray($arrayElementItem);
+                        $transferObjectsArray->append($transferObject);
+                    }
+                }
+            } else {
+                $transferObjectsArray->append(new $elementType());
+            }
+        }
+
+        return $transferObjectsArray;
+    }
+
+    /**
+     * @param array $array
      *
      * @return bool
      */
-    private function isAssociativeArray(array $arr)
+    private function isAssociativeArray(array $array)
     {
-        return array_keys($arr) !== range(0, count($arr) - 1);
+        return array_values($array) !== $array;
     }
 
     /**
