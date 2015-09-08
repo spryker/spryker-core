@@ -38,7 +38,7 @@ class Event implements EventInterface
     }
 
     /**
-     * @param $data
+     * @param array|string $data
      *
      * @return bool
      */

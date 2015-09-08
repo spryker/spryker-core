@@ -10,8 +10,8 @@ interface EventInterface
 {
 
     /**
-     * @param $name
-     * @param $data
+     * @param string $name
+     * @param array|string $data
      *
      * @return mixed
      */
@@ -25,7 +25,7 @@ interface EventInterface
     public function addFields(array $fields);
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getFields();
 }
