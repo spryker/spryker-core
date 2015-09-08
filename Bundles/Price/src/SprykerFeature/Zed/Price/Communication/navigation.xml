@@ -11,7 +11,7 @@
                 <controller>index</controller>
                 <action>index</action>
                 <order>0</order>
-                <shortcut>c</shortcut>
+                <visible>0</visible>
             </price>
         </pages>
     </product>
