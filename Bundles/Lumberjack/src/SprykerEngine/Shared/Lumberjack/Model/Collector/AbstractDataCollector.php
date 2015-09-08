@@ -1,6 +1,5 @@
 <?php
 /*
- *
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
