@@ -141,4 +141,29 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
         return $query;
     }
 
+    /**
+     * @param int $idSalesOrder
+     * @param int $idCustomer
+     *
+     * @return SpySalesOrderQuery
+     */
+    public function querySalesOrderDetails($idSalesOrder, $idCustomer)
+    {
+        $query = SpySalesOrderQuery::create('order');
+        $query
+            ->filterByIdSalesOrder($idSalesOrder)
+            ->filterByFkCustomer($idCustomer)
+        ;
+
+        $query
+            ->innerJoinWith('order.BillingAddress billingAddress')
+            ->innerJoinWith('billingAddress.Country billingCountry')
+            ->innerJoinWith('order.ShippingAddress shippingAddress')
+            ->innerJoinWith('shippingAddress.Country shippingCountry')
+            ->innerJoinWithShipmentMethod()
+        ;
+
+        return $query;
+    }
+
 }

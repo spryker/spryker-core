@@ -7,6 +7,7 @@
 namespace SprykerFeature\Client\Sales\Service\Zed;
 
 use Generated\Shared\Sales\OrderListInterface;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Client\ZedRequest\Service\ZedRequestClient;
 
 class SalesStub implements SalesStubInterface
@@ -33,6 +34,16 @@ class SalesStub implements SalesStubInterface
     public function getOrders(OrderListInterface $orderListTransfer)
     {
         return $this->zedStub->call('/sales/gateway/get-orders', $orderListTransfer);
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return OrderTransfer
+     */
+    public function getOrderDetails(OrderTransfer $orderTransfer)
+    {
+        return $this->zedStub->call('/sales/gateway/get-order-details', $orderTransfer);
     }
 
 }
