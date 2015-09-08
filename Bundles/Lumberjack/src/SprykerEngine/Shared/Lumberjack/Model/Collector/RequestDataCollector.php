@@ -42,12 +42,20 @@ class RequestDataCollector extends AbstractDataCollector
         return $fields;
     }
 
+    /**
+     * @return array
+     */
     protected function getRequestParams()
     {
         return $this->applyBlackList($_REQUEST);
     }
 
-    protected function applyBlackList($requestParams)
+    /**
+     * @param $requestParams
+     *
+     * @return array
+     */
+    protected function applyBlackList(array $requestParams)
     {
         foreach ($requestParams as $name => &$value) {
             if (in_array($name, $this->options['param_blacklist'])) {
