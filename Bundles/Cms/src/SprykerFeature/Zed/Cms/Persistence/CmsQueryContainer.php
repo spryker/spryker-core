@@ -428,7 +428,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->queryCategoryNode($idLocale)
             ->useCategoryQuery()
                 ->useAttributeQuery()
-                    ->filterByName('%' . mb_strtolower($categoryName) . '%', Criteria::LIKE)
+                    ->filterByName('%' .$categoryName. '%', Criteria::LIKE)
                     ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::CATEGORY_NAME)
                 ->endUse()
             ->endUse()
