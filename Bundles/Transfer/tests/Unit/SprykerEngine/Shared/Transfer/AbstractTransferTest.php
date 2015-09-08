@@ -85,6 +85,38 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $transfer = new AbstractTransfer();
         $transfer->fromArray($data, true);
     }
+    public function testFromArrayWithNestedTransferCollectionShouldReturnValidDataFromEmbeddedTransferObjects()
+    {
+        $data = [
+            'string' => 'level1',
+            'integer' => 1,
+            'transfer_collection' => [
+                [
+                    'string' => 'level2',
+                    'integer' => 1,
+                ], [
+                    'string' => 'level2',
+                    'integer' => 2,
+                    'transfer_collection' => [
+                        [
+                            'string' => 'level3',
+                            'integer' => 1,
+                        ], [
+                            'string' => 'level3',
+                            'integer' => 2,
+                        ],
+                    ],
+                ],
+            ],
+        ];
+
+        $transfer = new AbstractTransfer();
+        $transfer->fromArray($data);
+
+        $this->assertEquals('level1', $transfer->getString());
+        $this->assertEquals('level2', $transfer->getTransferCollection()[0]->getString());
+        $this->assertEquals('level3', $transfer->getTransferCollection()[1]->getTransferCollection()[0]->getString());
+    }
 
     public function testToArrayShouldReturnArrayWithAllPropertyNamesAsKeysAndNullValuesWhenNoPropertyWasSet()
     {
