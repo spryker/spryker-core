@@ -21,8 +21,7 @@ abstract class AbstractContainer implements ContainerInterface
             }
             if ($value instanceof ContainerInterface) {
                 $result = array_merge($result, $value->toArray());
-            }
-            else {
+            } else {
                 $result[$key] = $value;
             }
         }

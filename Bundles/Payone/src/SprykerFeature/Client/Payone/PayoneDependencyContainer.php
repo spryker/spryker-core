@@ -6,7 +6,8 @@
 
 namespace SprykerFeature\Client\Payone;
 
-use Generated\Client\Ide\FactoryAutoCompletion\Payone;
+use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
+use Generated\Zed\Ide\Payone;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Payone\ClientApi\HashGeneratorInterface;
 use SprykerFeature\Shared\Payone\Dependency\HashInterface;
@@ -19,13 +20,14 @@ class PayoneDependencyContainer extends AbstractServiceDependencyContainer
 {
 
     /**
+     * @param array $defaults
+     *
      * @return HashGeneratorInterface
      */
-    public function createCreditCardCheckCall()
+    public function createCreditCardCheckCall(array $defaults)
     {
         return $this->getFactory()->createClientApiCallCreditCardCheck(
-            $this->createStandardParameter(),
-            $this->createHashProvider(),
+            $this->createStandardParameter($defaults),
             $this->createHashGenerator(),
             $this->createModeDetector()
         );
@@ -58,17 +60,20 @@ class PayoneDependencyContainer extends AbstractServiceDependencyContainer
     }
 
     /**
-     * @return StandardParameterTransfer
+     * @param array $defaults
+     *
+     * @return PayoneStandardParameterTransfer
      */
-    protected function createStandardParameter()
+    protected function createStandardParameter(array $defaults)
     {
-        $standardParameter = new StandardParameterTransfer();
+        $standardParameterTransfer = new PayoneStandardParameterTransfer();
+        $standardParameterTransfer->fromArray($defaults);
 
         /********************************
          * @todo get params from config (like in PayoneConfig zed bundle)
          ********************************/
 
-        return $standardParameter;
+        return $standardParameterTransfer;
     }
 
 }

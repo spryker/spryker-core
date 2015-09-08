@@ -15,6 +15,11 @@ abstract class AbstractRequestContainer extends AbstractContainer
     protected $mid;
 
     /**
+     * @var int
+     */
+    protected $aid;
+
+    /**
      * @var int payment portal id
      */
     protected $portalid;
@@ -71,6 +76,16 @@ abstract class AbstractRequestContainer extends AbstractContainer
      * @var string
      */
     protected $integrator_version;
+
+    /**
+     * @var string
+     */
+    protected $language;
+
+    /**
+     * @var string
+     */
+    protected $hash;
 
     /**
      * @param string $encoding
@@ -254,6 +269,54 @@ abstract class AbstractRequestContainer extends AbstractContainer
     public function getSolutionVersion()
     {
         return $this->solution_version;
+    }
+
+    /**
+     * @return int
+     */
+    public function getAid()
+    {
+        return $this->aid;
+    }
+
+    /**
+     * @param int $aid
+     */
+    public function setAid($aid)
+    {
+        $this->aid = $aid;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLanguage()
+    {
+        return $this->language;
+    }
+
+    /**
+     * @param string $language
+     */
+    public function setLanguage($language)
+    {
+        $this->language = $language;
+    }
+
+    /**
+     * @param string $hash
+     */
+    public function setHash($hash)
+    {
+        $this->hash = $hash;
+    }
+
+    /**
+     * @return string
+     */
+    public function getHash()
+    {
+        return $this->hash;
     }
 
 }

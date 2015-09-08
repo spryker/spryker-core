@@ -4,9 +4,9 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Payone\ClientApi\Call;
+namespace SprykerFeature\Zed\Payone\Business\Api\Call;
 
-use SprykerFeature\Client\Payone\ClientApi\Request\CreditCardCheck as CreditCardCheckContainer;
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CreditCardCheckContainer;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
 
 class CreditCardCheck extends AbstractCall
@@ -40,8 +40,13 @@ class CreditCardCheck extends AbstractCall
     {
         $container = new CreditCardCheckContainer();
         $this->applyStandardParameter($container);
+
+        if (null === $container->getStoreCardData()) {
+            $container->setStoreCardData($this->standardParameter->getStoreCardData());
+        }
+
         $securityKey = $this->standardParameter->getKey();
-        $hash = $this->hashGenerator->generateHash($container, $securityKey);
+        $hash = $this->hashGenerator->generateParamHash($container, $securityKey);
 
         $container->setHash($hash);
 

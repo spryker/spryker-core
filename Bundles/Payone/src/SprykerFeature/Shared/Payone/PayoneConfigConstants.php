@@ -23,4 +23,8 @@ interface PayoneConfigConstants extends ConfigInterface
     const PAYONE_REDIRECT_ERROR_URL = 'PAYONE_REDIRECT_ERROR_URL';
     const PAYONE_REDIRECT_BACK_URL = 'PAYONE_REDIRECT_BACK_URL';
 
+    const PAYONE_MODE = 'MODE';
+    const PAYONE_MODE_TEST = 'test';
+    const PAYONE_MODE_LIVE = 'live';
+
 }

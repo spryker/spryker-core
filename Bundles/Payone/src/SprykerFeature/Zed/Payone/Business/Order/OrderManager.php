@@ -62,6 +62,7 @@ class OrderManager implements OrderManagerInterface
         }
 
         $payment->save();
+
         return $payment;
     }
 

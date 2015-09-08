@@ -185,6 +185,7 @@ class ApiLogFinder
         if ($apiLog === null) {
             return false;
         }
+
         return $apiLog->getStatus() === $status;
     }
 

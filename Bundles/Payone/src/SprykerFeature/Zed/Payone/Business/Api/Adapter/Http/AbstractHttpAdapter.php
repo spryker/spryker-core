@@ -82,6 +82,7 @@ abstract class AbstractHttpAdapter implements AdapterInterface
             $fakeArray = [
                 'status' => 'TIMEOUT',
             ];
+
             return $fakeArray;
         }
     }
