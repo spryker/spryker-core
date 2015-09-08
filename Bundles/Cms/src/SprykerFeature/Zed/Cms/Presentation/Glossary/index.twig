@@ -59,7 +59,7 @@
                                 <div class="{{ 'error_' ~ loop.index }} red"></div>
                             </div>
                         </div>
-
+                        {{ form_widget(form.templateName, { 'attr': {'value' : title} }) }}
                         {{ form_end(form) }}
                     {% endfor %}
                     <div class="keyListCanvas"></div>
