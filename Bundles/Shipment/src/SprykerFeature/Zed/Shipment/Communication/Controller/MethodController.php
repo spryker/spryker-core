@@ -41,7 +41,8 @@ class MethodController extends AbstractController
                 ->createMethod($methodTransfer)
             ;
 
-            $this->addSuccessMessage('Shipment method '.$methodTransfer->getName().' saved');
+            $this->addSuccessMessage('Shipment method ' . $methodTransfer->getName() . ' saved');
+
             return $this->redirectResponse('/shipment/');
         }
 
@@ -73,7 +74,8 @@ class MethodController extends AbstractController
                 $this->getFacade()
                     ->updateMethod($methodTransfer)
                 ;
-                $this->addSuccessMessage('Shipment method '.$methodTransfer->getName().' updated');
+                $this->addSuccessMessage('Shipment method ' . $methodTransfer->getName() . ' updated');
+
                 return $this->redirectResponse('/shipment/');
             }
 
@@ -100,4 +102,5 @@ class MethodController extends AbstractController
 
         return $this->redirectResponse('/shipment/');
     }
+
 }

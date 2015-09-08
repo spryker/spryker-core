@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -16,4 +17,5 @@ interface ShipmentMethodDeliveryTimePluginInterface
      * @return int
      */
     public function getTime(ShipmentMethodAvailabilityInterface $shipmentMethodAvailability);
+
 }

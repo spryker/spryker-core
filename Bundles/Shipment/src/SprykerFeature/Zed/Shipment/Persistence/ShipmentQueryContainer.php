@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentMethodQuery;
  */
 class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQueryContainerInterface
 {
+
     /**
      * @return SpyShipmentCarrierQuery
      */
@@ -59,4 +61,5 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
 
         return $query;
     }
+
 }

@@ -62,4 +62,9 @@
         <property name="cart" type="Cart" />
     </transfer>
 
+    <transfer name="CheckoutRequest">
+        <property name="shipmentMethodId" type="int" />
+        <property name="shipmentMethod" type="ShipmentMethod" singular="shipmentMethod" />
+    </transfer>
+
 </transfers>

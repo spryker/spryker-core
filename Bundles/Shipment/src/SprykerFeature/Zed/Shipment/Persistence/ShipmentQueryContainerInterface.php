@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -37,4 +38,5 @@ interface ShipmentQueryContainerInterface
      * @return SpyShipmentMethodQuery
      */
     public function queryMethodByIdMethod($idMethod);
+
 }

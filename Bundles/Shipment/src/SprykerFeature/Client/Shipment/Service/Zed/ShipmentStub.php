@@ -35,4 +35,5 @@ class ShipmentStub implements ShipmentStubInterface
     {
         return $this->zedStub->call('/shipment/gateway/get-available-methods', $shipmentMethodAvailability, null, true);
     }
+
 }

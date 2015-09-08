@@ -97,21 +97,21 @@ class MethodForm extends AbstractForm
         ])
         ;
         $this->addText(self::NAME_FIELD, [
-            'label' => 'Name'
+            'label' => 'Name',
         ])
         ;
         $this->addAutosuggest(self::NAME_GLOSSARY_FIELD, [
             'label' => 'Name glossary key',
-            'url' => '/glossary/ajax/keys'
+            'url' => '/glossary/ajax/keys',
         ])
         ;
         $this->addAutosuggest(self::DESCRIPTION_GLOSSARY_FIELD, [
             'label' => 'Description glossary key',
-            'url' => '/glossary/ajax/keys'
+            'url' => '/glossary/ajax/keys',
         ])
         ;
         $this->addMoney(self::PRICE_FIELD, [
-            'label' => 'Price'
+            'label' => 'Price',
         ])
         ;
         $this->addChoice(self::AVAILABILITY_PLUGIN_FIELD, [
@@ -120,7 +120,7 @@ class MethodForm extends AbstractForm
             'choice_list' => new ChoiceList(
                 array_keys($this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS]),
                 array_keys($this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS])
-            )
+            ),
         ])
         ;
         $this->addChoice(self::PRICE_CALCULATION_PLUGIN_FIELD, [
@@ -129,7 +129,7 @@ class MethodForm extends AbstractForm
             'choice_list' => new ChoiceList(
                 array_keys($this->plugins[ShipmentDependencyProvider::PRICE_CALCULATION_PLUGINS]),
                 array_keys($this->plugins[ShipmentDependencyProvider::PRICE_CALCULATION_PLUGINS])
-            )
+            ),
         ])
         ;
         $this->addChoice(self::DELIVERY_TIME_PLUGIN_FIELD, [
@@ -138,7 +138,7 @@ class MethodForm extends AbstractForm
             'choice_list' => new ChoiceList(
                 array_keys($this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS]),
                 array_keys($this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS])
-            )
+            ),
         ])
         ;
         $this->addChoice(self::TAX_PLUGIN_FIELD, [
@@ -147,15 +147,14 @@ class MethodForm extends AbstractForm
             'choice_list' => new ChoiceList(
                 array_keys($this->plugins[ShipmentDependencyProvider::TAX_CALCULATION_PLUGINS]),
                 array_keys($this->plugins[ShipmentDependencyProvider::TAX_CALCULATION_PLUGINS])
-            )
+            ),
         ])
         ;
-
 
         $this->addChoice(self::TAX_SET, [
             'label' => 'Tax Set',
             'placeholder' => 'Select one',
-            'choices' => $this->loadTaxSets()
+            'choices' => $this->loadTaxSets(),
         ])
         ;
         $this->addCheckbox('isActive');
@@ -166,7 +165,6 @@ class MethodForm extends AbstractForm
 
         return $this;
     }
-
 
     /**
      * @return array
@@ -186,12 +184,14 @@ class MethodForm extends AbstractForm
     /**
      * Set price vom euro to cent
      */
-    public function getData(){
+    public function getData()
+    {
         $data = parent::getData();
-        if(isset($data[self::PRICE_FIELD])){
+        if (isset($data[self::PRICE_FIELD])) {
             $data[self::PRICE_FIELD] = CurrencyManager::getInstance()->convertDecimalToCent($data[self::PRICE_FIELD]);
             $data[self::PRICE_FIELD] = round($data[self::PRICE_FIELD]);
         }
+
         return $data;
     }
 
@@ -214,11 +214,11 @@ class MethodForm extends AbstractForm
                 self::PRICE_CALCULATION_PLUGIN_FIELD => $method->getPriceCalculationPlugin(),
                 self::DELIVERY_TIME_PLUGIN_FIELD => $method->getDeliveryTimePlugin(),
                 self::TAX_PLUGIN_FIELD => $method->getTaxCalculationPlugin(),
-                self::IS_ACTIVE_FIELD => $method->getIsActive()
+                self::IS_ACTIVE_FIELD => $method->getIsActive(),
             ];
 
             $taxSet = $method->getTaxSet();
-            if(isset($taxSet)){
+            if (isset($taxSet)) {
                 $data[self::TAX_SET] = $method->getTaxSet()->getIdTaxSet();
             }
 
@@ -238,6 +238,8 @@ class MethodForm extends AbstractForm
         foreach ($taxSets as $taxSet) {
             $taxSetsArray[$taxSet->getIdTaxSet()] = $taxSet->getName();
         }
+
         return $taxSetsArray;
     }
+
 }
