@@ -124,7 +124,7 @@ class File extends AbstractWriter
     }
 
     /**
-     * @param $handle
+     * @param resource $handle
      *
      * @return bool
      */
@@ -134,7 +134,7 @@ class File extends AbstractWriter
     }
 
     /**
-     * @param $handle
+     * @param resource $handle
      */
     protected function unlock($handle)
     {
