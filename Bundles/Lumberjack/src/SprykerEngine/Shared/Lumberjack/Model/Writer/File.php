@@ -19,7 +19,7 @@ class File extends AbstractWriter
     /**
      * @var resource
      */
-    static $preferedHandle;
+    static $preferredHandle;
 
     /**
      * @inheritdoc
@@ -59,14 +59,14 @@ class File extends AbstractWriter
         for ($i = 0; $i <= 9; $i++) {
             $handle = $this->getOrCreateRandomFileHandle();
             if ($this->acquireNonBlockingLock($handle)) {
-                self::$preferedHandle = $handle;
+                self::$preferredHandle = $handle;
                 // @todo add silent exception when this operation fails
                 fwrite($handle, $content);
                 $this->unlock($handle);
 
                 return true;
             }
-            self::$preferedHandle = null;
+            self::$preferredHandle = null;
         }
 
         return false;
@@ -77,8 +77,8 @@ class File extends AbstractWriter
      */
     protected function getOrCreateRandomFileHandle()
     {
-        if (null !== self::$preferedHandle) {
-            return self::$preferedHandle;
+        if (null !== self::$preferredHandle) {
+            return self::$preferredHandle;
         }
         $fileName = $this->getRandomFileName();
         if (!isset(static::$fileHandles[$fileName])) {
