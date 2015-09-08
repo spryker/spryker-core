@@ -67,7 +67,7 @@ class FormController extends AbstractController
             if (is_null($categoryNode->getIdCategoryNode())) {
                 $this->getFacade()->createCategoryNode($categoryNode, $locale);
             } else {
-                $this->getFacade()->moveCategoryNode($categoryNode);
+                $this->getFacade()->moveCategoryNode($categoryNode, $locale);
             }
         }
 

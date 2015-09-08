@@ -64,13 +64,12 @@ class EditController extends AddController
                 
                 if ($existingCategoryNode) {
                     $categoryNodeTransfer->setIdCategoryNode($existingCategoryNode->getIdCategoryNode());
-                    $this->getFacade()->moveCategoryNode($categoryNodeTransfer);
+                    $this->getFacade()->moveCategoryNode($categoryNodeTransfer, $locale);
                 }
                 else {
                     $new_data = $data;
                     unset($new_data['id_category_node']);
                     $categoryNodeTransfer = (new NodeTransfer())->fromArray($new_data, true);
-                    //die(dump($new_data, $categoryNodeTransfer));
                     $this->getFacade()->createCategoryNode($categoryNodeTransfer, $locale);
                 }
             }

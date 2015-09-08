@@ -13,6 +13,7 @@ use SprykerFeature\Shared\Category\CategoryConfig;
 use SprykerFeature\Zed\Category\Business\Manager\NodeUrlManagerInterface;
 use SprykerFeature\Zed\Category\Business\Model\CategoryWriterInterface;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
+use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTableQuery;
 
 class CategoryTreeWriter
 {
@@ -90,8 +91,11 @@ class CategoryTreeWriter
 
         $idNode = $this->nodeWriter->create($categoryNode);
         $this->closureTableWriter->create($categoryNode);
-        $this->touchCategoryActive($categoryNode->getIdCategoryNode());
+        
         $this->touchNavigationActive();
+
+        $this->updateTouchTableRecursively($categoryNode);
+        
         if ($createUrlPath) {
             $this->nodeUrlManager->createUrl($categoryNode, $locale);
         }
@@ -128,8 +132,9 @@ class CategoryTreeWriter
 
     /**
      * @param NodeTransfer $categoryNode
+     * @param LocaleTransfer $locale
      */
-    public function moveNode(NodeTransfer $categoryNode)
+    public function moveNode(NodeTransfer $categoryNode, LocaleTransfer $locale)
     {
         $connection = Propel::getConnection();
         $connection->beginTransaction();
@@ -137,11 +142,24 @@ class CategoryTreeWriter
         $this->closureTableWriter->delete($categoryNode->getIdCategoryNode());
         $this->nodeWriter->update($categoryNode);
         $this->closureTableWriter->create($categoryNode);
+        $this->nodeUrlManager->updateUrl($categoryNode, $locale);
 
-        $this->touchCategoryActive($categoryNode->getIdCategoryNode());
+        $this->updateTouchTableRecursively($categoryNode);
         $this->touchNavigationActive();
 
         $connection->commit();
+    }
+    
+    protected function updateTouchTableRecursively(NodeTransfer $categoryNode)
+    {
+        $closureQuery= new SpyCategoryClosureTableQuery();
+        $nodes = $closureQuery->findByFkCategoryNodeDescendant($categoryNode->getFkParentCategoryNode());
+
+        foreach($nodes as $node) {
+                $this->touchCategoryActive($node->getFkCategoryNode());
+        }
+
+        $this->touchCategoryActive($categoryNode->getIdCategoryNode());
     }
 
     /**
@@ -161,9 +179,6 @@ class CategoryTreeWriter
         }
         $this->closureTableWriter->delete($idNode);
 
-        $this->touchCategoryDeleted($idNode);
-        $this->touchNavigationDeleted();
-
         return $this->nodeWriter->delete($idNode);
     }
 
@@ -174,20 +189,9 @@ class CategoryTreeWriter
     {
         $this->touchFacade->touchActive(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
     }
-
-    protected function touchCategoryDeleted($idCategoryNode)
-    {
-        $this->touchFacade->touchDeleted(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
-    }
     
     protected function touchNavigationActive()
     {
         $this->touchFacade->touchActive(CategoryConfig::RESOURCE_TYPE_NAVIGATION, self::ID_NAVIGATION);
     }
-
-    protected function touchNavigationDeleted()
-    {
-        $this->touchFacade->touchDeleted(CategoryConfig::RESOURCE_TYPE_NAVIGATION, self::ID_NAVIGATION);
-    }
-
 }

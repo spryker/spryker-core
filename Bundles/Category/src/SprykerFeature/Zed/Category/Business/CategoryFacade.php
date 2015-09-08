@@ -156,13 +156,13 @@ class CategoryFacade extends AbstractFacade
     /**
      * @param NodeTransfer $categoryNode
      *
-     * @throws \ErrorException
+     * @param LocaleTransfer $locale
      */
-    public function moveCategoryNode(NodeTransfer $categoryNode)
+    public function moveCategoryNode(NodeTransfer $categoryNode, LocaleTransfer $locale)
     {
         $this->getDependencyContainer()
             ->createCategoryTreeWriter()
-            ->moveNode($categoryNode)
+            ->moveNode($categoryNode, $locale)
         ;
     }
 
