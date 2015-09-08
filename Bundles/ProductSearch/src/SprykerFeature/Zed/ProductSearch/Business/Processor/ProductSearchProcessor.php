@@ -16,6 +16,7 @@ class ProductSearchProcessor implements ProductSearchProcessorInterface
      * @var string
      */
     protected $storeName = '';
+
     /**
      * @var KeyBuilderInterface
      */
@@ -42,11 +43,11 @@ class ProductSearchProcessor implements ProductSearchProcessorInterface
      */
     public function buildProducts(array $productsRaw, array $processedProducts, LocaleTransfer $locale)
     {
-
         foreach ($productsRaw as $index => $productData) {
             $productKey = $this->keyBuilder->generateKey($productData['id_abstract_product'], $locale->getLocaleName());
             $processedProducts[$productKey] = $this->buildBaseProduct($productData, $locale);
         }
+
         return $processedProducts;
     }
 

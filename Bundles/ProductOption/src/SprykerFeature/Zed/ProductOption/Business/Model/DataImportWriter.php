@@ -69,9 +69,9 @@ class DataImportWriter implements DataImportWriterInterface
             ->findOneOrCreate()
         ;
 
+        $productOptionTypeEntity->save();
         $this->createOrUpdateOptionTypeTranslations($productOptionTypeEntity, $localizedNames);
 
-        $productOptionTypeEntity->save();
 
         $associatedAbstractProductIds = $this->queryContainer
             ->queryAssociatedAbstractProductIdsForProductOptionType($productOptionTypeEntity->getIdProductOptionType())
@@ -92,7 +92,6 @@ class DataImportWriter implements DataImportWriterInterface
     protected function createOrUpdateOptionTypeTranslations(SpyProductOptionType $productOptionTypeEntity, array $localizedNames)
     {
         foreach ($localizedNames as $localeName => $localizedOptionTypeName) {
-
             if (false === $this->localeFacade->hasLocale($localeName)) {
                 continue;
             }
@@ -155,7 +154,6 @@ class DataImportWriter implements DataImportWriterInterface
     protected function createOrUpdateOptionValueTranslations(SpyProductOptionValue $productOptionValueEntity, array $localizedNames)
     {
         foreach ($localizedNames as $localeName => $localizedOptionValueName) {
-
             if (false === $this->localeFacade->hasLocale($localeName)) {
                 continue;
             }
@@ -307,7 +305,7 @@ class DataImportWriter implements DataImportWriterInterface
         $optionValueConstraintEntity->save();
 
         $this->touchAbstractProductByConcreteSku($sku);
-     }
+    }
 
     /**
      * @param string $sku
