@@ -145,8 +145,7 @@ class IndexController extends AbstractController
 
             $productOptions = $this->getDependencyContainer()
                 ->getProvidedDependency(ProductDependencyProvider::FACADE_PRODUCT_OPTIONS)
-                ->getProductOptionsByIdProduct($product->getIdProduct(), $this->getCurrentLocale()->getLocaleName())
-//                ->getProductOption($product->getIdProduct(), $this->getCurrentLocale()->getLocaleName())
+                ->getProductOption($product->getIdProduct(), $this->getCurrentLocale()->getLocaleName())
             ;
 
             $concreteProducts[] = [
