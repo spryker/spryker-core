@@ -7,6 +7,12 @@
 
 {% block content %}
     <div id="spy-cms" class="glossary">
+        {% if isSynced %}
+            <div class="alert">
+                <div class="green">New template(s) detected and added to the template list.</div>
+            </div>
+        {% endif %}
+
         {% embed '@Gui/Partials/widget.twig' %}
 
             {% block widget_header_content %}
