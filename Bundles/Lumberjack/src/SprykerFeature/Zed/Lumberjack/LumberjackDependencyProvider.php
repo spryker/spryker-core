@@ -19,7 +19,7 @@ class LumberjackDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        parent::provideBusinessLayerDependencies($container);
+        $container = parent::provideBusinessLayerDependencies($container);
 
         return $container;
     }
