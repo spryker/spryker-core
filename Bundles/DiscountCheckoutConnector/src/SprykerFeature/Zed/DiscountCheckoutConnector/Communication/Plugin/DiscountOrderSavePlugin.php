@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\DiscountCheckoutConnector\Communication\Plugin;
 
-use Generated\Shared\DiscountCheckoutConnector\OrderInterface;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;

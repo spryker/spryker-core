@@ -1,6 +1,6 @@
 <?php
 
-namespace DiscountCalculationConnector\Codeception\Module;
+namespace DiscountCheckoutConnector\Codeception\Module;
 
 use Codeception\Module;
 use Codeception\TestCase;

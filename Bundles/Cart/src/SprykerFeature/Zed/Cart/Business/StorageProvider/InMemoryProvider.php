@@ -153,7 +153,7 @@ class InMemoryProvider implements StorageProviderInterface
      */
     public function addCouponCode(CartInterface $cart, ChangeInterface $change)
     {
-
+        $cart->addCouponCode($change->getCouponCode());
     }
 
     /**
@@ -164,26 +164,24 @@ class InMemoryProvider implements StorageProviderInterface
      */
     public function removeCouponCode(CartInterface $cart, ChangeInterface $change)
     {
-        $existingCouponCodes = $cart->getCouponCodes();
-        $codeToRemove = $change->getCouponCode();
-        foreach ($existingCouponCodes as $existingCouponCode) {
-            if ($existingCouponCode !== $codeToRemove) {
-                $cart->addCouponCode($existingCouponCode);
+        $couponCodes = [];
+        foreach ($cart->getCouponCodes() as $couponCode) {
+            if ($couponCode !== $change->getCouponCode()) {
+                $couponCodes[] = $couponCode;
             }
         }
 
-        $cart->reCouponCode($change->getCouponCode());
+        $cart->setCouponCodes($couponCodes);
     }
 
     /**
      * @param CartInterface $cart
-     * @param ChangeInterface $change
      *
      * @return CartInterface
      */
-    public function clearCouponCodes(CartInterface $cart, ChangeInterface $change)
+    public function clearCouponCodes(CartInterface $cart)
     {
-
+        $cart->setCouponCodes([]);
     }
 
 }

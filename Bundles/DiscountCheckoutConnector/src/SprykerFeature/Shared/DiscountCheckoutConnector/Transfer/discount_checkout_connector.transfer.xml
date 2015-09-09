@@ -24,7 +24,8 @@
     </transfer>
 
     <transfer name="Discount">
-        <property name="displayName" type="string" />
+        <property name="order" type="Order" />
+        <property name="usedCodes" type="array" singular="usedCode" />
     </transfer>
 
 </transfers>

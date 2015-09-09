@@ -16,10 +16,13 @@ use SprykerFeature\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
  * @group Zed
  * @group Cart
  * @group Business
- * @group InMemoryProviderTest
+ * @group InMemoryProvider
  */
 class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
 {
+
+    const COUPON_CODE_1 = 'coupon code 1';
+    const COUPON_CODE_2 = 'coupon code 2';
 
     /**
      * @var StorageProviderInterface
@@ -184,6 +187,45 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $change->addItem($newItem);
 
         $this->provider->removeItems($cart, $change);
+    }
+
+    public function testAddCouponCodeMustCopyCouponCopeFromChangeTransferToCartTransfer()
+    {
+        $changeTransfer = new ChangeTransfer();
+        $changeTransfer->setCouponCode(self::COUPON_CODE_1);
+
+        $cartTransfer = new CartTransfer();
+
+        $inMemoryProvider = new InMemoryProvider();
+        $inMemoryProvider->addCouponCode($cartTransfer, $changeTransfer);
+
+        $this->assertSame(self::COUPON_CODE_1, $cartTransfer->getCouponCodes()[0]);
+    }
+
+    public function testRemoveCouponCodeMustRemoveCouponCodeFromCartTransfer()
+    {
+        $changeTransfer = new ChangeTransfer();
+        $changeTransfer->setCouponCode(self::COUPON_CODE_1);
+
+        $cartTransfer = new CartTransfer();
+        $cartTransfer->addCouponCode(self::COUPON_CODE_1);
+        $cartTransfer->addCouponCode(self::COUPON_CODE_2);
+
+        $inMemoryProvider = new InMemoryProvider();
+        $inMemoryProvider->removeCouponCode($cartTransfer, $changeTransfer);
+
+        $this->assertSame(self::COUPON_CODE_2, $cartTransfer->getCouponCodes()[0]);
+    }
+
+    public function testClearCouponCodeMustRemoveAllCouponCodesFromCartTransfer()
+    {
+        $cartTransfer = new CartTransfer();
+        $cartTransfer->addCouponCode(self::COUPON_CODE_1);
+
+        $inMemoryProvider = new InMemoryProvider();
+        $inMemoryProvider->clearCouponCodes($cartTransfer);
+
+        $this->assertSame([], $cartTransfer->getCouponCodes());
     }
 
     /**

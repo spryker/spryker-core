@@ -12,7 +12,7 @@ use SprykerEngine\Zed\Kernel\Container;
 class DiscountCheckoutConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const FACADE_DISCOUNT = 'discount facade';
+    const QUERY_CONTAINER_DISCOUNT = 'discount query container';
 
     /**
      * @param Container $container
@@ -21,8 +21,8 @@ class DiscountCheckoutConnectorDependencyProvider extends AbstractBundleDependen
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::FACADE_DISCOUNT] = function (Container $container) {
-            return $container->getLocator()->discount()->facade();
+        $container[self::QUERY_CONTAINER_DISCOUNT] = function (Container $container) {
+            return $container->getLocator()->discount()->queryContainer();
         };
 
         return $container;

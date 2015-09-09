@@ -6,12 +6,12 @@
 
 namespace SprykerFeature\Zed\DiscountCheckoutConnector\Business\Model;
 
-use Generated\Shared\DiscountCheckoutConnector\CheckoutRequestInterface;
 use Generated\Shared\DiscountCheckoutConnector\DiscountInterface;
 use Generated\Shared\DiscountCheckoutConnector\OrderInterface;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
+use SprykerFeature\Zed\DiscountCheckoutConnector\Business\Exception\OrderNotSavedException;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesDiscount;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesDiscountCode;
 
@@ -33,32 +33,88 @@ class DiscountSaver implements DiscountSaverInterface
 
     /**
      * @param OrderInterface $orderTransfer
-     * @param CheckoutRequestInterface $request
+     * @param CheckoutResponseTransfer $checkoutResponseTransfer
      */
-    public function saveDiscounts(OrderInterface $orderTransfer, CheckoutRequestInterface $request)
+    public function saveDiscounts(OrderInterface $orderTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $idSalesOrder = $orderTransfer->getIdSalesOrder();
         $discountCollection = $orderTransfer->getDiscounts();
         foreach ($discountCollection as $discountTransfer) {
-            $this->saveDiscount($discountTransfer, $idSalesOrder);
+            $this->saveDiscount($discountTransfer, $orderTransfer);
         }
     }
 
     /**
      * @param DiscountInterface $discountTransfer
-     * @param int $idSalesOrder
+     * @param OrderInterface $orderTransfer
      */
-    private function saveDiscount(DiscountInterface $discountTransfer, $idSalesOrder)
+    protected function saveDiscount(DiscountInterface $discountTransfer, OrderInterface $orderTransfer)
     {
-        $discountEntity = $this->getDiscountVoucherEntityByCode($discountTransfer->getDisplayName());
-
         $salesDiscountEntity = $this->getSalesDiscountEntity();
-        $salesDiscountEntity->setFkSalesOrder($idSalesOrder);
         $salesDiscountEntity->fromArray($discountTransfer->toArray());
+        $salesDiscountEntity->setFkSalesOrder($orderTransfer->getIdSalesOrder());
 
-        $salesDiscountCodeEntity = $this->getSalesDiscountCodeEntity();
-        $salesDiscountCodeEntity->setDiscount($salesDiscountEntity);
+        $this->persistSalesDiscount($salesDiscountEntity);
 
+        if ($this->hasUsedCodes($discountTransfer)) {
+            $this->saveUsedCodes($discountTransfer, $salesDiscountEntity);
+        }
+    }
+
+    /**
+     * @return SpySalesDiscount
+     */
+    protected function getSalesDiscountEntity()
+    {
+        return new SpySalesDiscount();
+    }
+
+    /**
+     * @param SpySalesDiscount $salesDiscountEntity
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     */
+    protected function persistSalesDiscount(SpySalesDiscount $salesDiscountEntity)
+    {
+        $salesDiscountEntity->save();
+    }
+
+    /**
+     * @param DiscountInterface $discountTransfer
+     *
+     * @return bool
+     */
+    private function hasUsedCodes(DiscountInterface $discountTransfer)
+    {
+        $usedCodes = $discountTransfer->getUsedCodes();
+
+        return (count($usedCodes) > 0);
+    }
+
+    /**
+     * @param DiscountInterface $discountTransfer
+     * @param SpySalesDiscount $salesDiscountEntity
+     */
+    protected function saveUsedCodes(DiscountInterface $discountTransfer, SpySalesDiscount $salesDiscountEntity)
+    {
+        foreach ($discountTransfer->getUsedCodes() as $code) {
+            $discountVoucherEntity = $this->getDiscountVoucherEntityByCode($code);
+            if ($discountVoucherEntity) {
+                $salesDiscountCodeEntity = $this->getSalesDiscountCodeEntity();
+                $salesDiscountCodeEntity->fromArray($discountVoucherEntity->toArray());
+                $salesDiscountCodeEntity->setDiscount($salesDiscountEntity);
+
+                $this->persistSalesDiscountCode($salesDiscountCodeEntity);
+            }
+        }
+    }
+
+    /**
+     * @param SpySalesDiscountCode $salesDiscountCodeEntity
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     */
+    protected function persistSalesDiscountCode(SpySalesDiscountCode $salesDiscountCodeEntity)
+    {
         $salesDiscountCodeEntity->save();
     }
 
@@ -67,23 +123,15 @@ class DiscountSaver implements DiscountSaverInterface
      *
      * @return SpyDiscountVoucher
      */
-    private function getDiscountVoucherEntityByCode($code)
+    protected function getDiscountVoucherEntityByCode($code)
     {
         return $this->discountQueryContainer->queryVoucher($code)->findOne();
     }
 
     /**
-     * @return SpySalesDiscount
-     */
-    private function getSalesDiscountEntity()
-    {
-        return new SpySalesDiscount();
-    }
-
-    /**
      * @return SpySalesDiscountCode
      */
-    private function getSalesDiscountCodeEntity()
+    protected function getSalesDiscountCodeEntity()
     {
         return new SpySalesDiscountCode();
     }

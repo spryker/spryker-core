@@ -5,16 +5,16 @@
  */
 namespace SprykerFeature\Zed\DiscountCheckoutConnector\Business\Model;
 
-use Generated\Shared\DiscountCheckoutConnector\CheckoutRequestInterface;
 use Generated\Shared\DiscountCheckoutConnector\OrderInterface;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 
 interface DiscountSaverInterface
 {
 
     /**
      * @param OrderInterface $orderTransfer
-     * @param CheckoutRequestInterface $request
+     * @param CheckoutResponseTransfer $checkoutResponseTransfer
      */
-    public function saveDiscounts(OrderInterface $orderTransfer, CheckoutRequestInterface $request);
+    public function saveDiscounts(OrderInterface $orderTransfer, CheckoutResponseTransfer $checkoutResponseTransfer);
 
 }

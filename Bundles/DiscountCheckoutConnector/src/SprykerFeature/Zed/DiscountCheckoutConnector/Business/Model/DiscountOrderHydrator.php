@@ -14,25 +14,11 @@ class DiscountOrderHydrator implements DiscountOrderHydratorInterface
 {
 
     /**
-     * @var DiscountCheckoutConnectorToDiscountInterface
-     */
-    private $discountFacade;
-
-    /**
-     * @param DiscountCheckoutConnectorToDiscountInterface $discountFacade
-     */
-    public function __construct(DiscountCheckoutConnectorToDiscountInterface $discountFacade)
-    {
-        $this->discountQueFacade = $discountFacade;
-    }
-
-    /**
      * @param OrderInterface $orderTransfer
      * @param CheckoutRequestInterface $request
      */
     public function hydrateOrder(OrderInterface $orderTransfer, CheckoutRequestInterface $request)
     {
-
     }
 
 }

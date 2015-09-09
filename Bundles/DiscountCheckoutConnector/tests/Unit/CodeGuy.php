@@ -3,10 +3,10 @@
 // You should not change it manually as it will be overwritten on next build
 // @codingStandardsIgnoreFile
 
-namespace DiscountCalculationConnector;
+namespace DiscountCheckoutConnector;
 
 use \Codeception\Maybe;
-use DiscountCalculationConnector\Codeception\Module\CodeHelper;
+use DiscountCheckoutConnector\Codeception\Module\CodeHelper;
 
 /**
  * Inherited methods

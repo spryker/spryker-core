@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\DiscountCheckoutConnector\Business;
 use Generated\Shared\DiscountCheckoutConnector\CheckoutRequestInterface;
 use Generated\Shared\DiscountCheckoutConnector\CheckoutResponseInterface;
 use Generated\Shared\DiscountCheckoutConnector\OrderInterface;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -28,11 +29,11 @@ class DiscountCheckoutConnectorFacade extends AbstractFacade
 
     /**
      * @param OrderInterface $orderTransfer
-     * @param CheckoutResponseInterface $checkoutResponse
+     * @param CheckoutResponseTransfer $checkoutResponseTransfer
      */
-    public function saveDiscounts(OrderInterface $orderTransfer, CheckoutResponseInterface $checkoutResponse)
+    public function saveDiscounts(OrderInterface $orderTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
-        $this->getDependencyContainer()->createDicountSaver()->saveDiscounts($orderTransfer, $checkoutResponse);
+        $this->getDependencyContainer()->createDiscountSaver()->saveDiscounts($orderTransfer, $checkoutResponseTransfer);
     }
 
 }

@@ -23,17 +23,16 @@ class DiscountCheckoutConnectorDependencyContainer extends AbstractBusinessDepen
      */
     public function createOrderHydrator()
     {
-        return $this->getFactory()->createModelDiscountOrderHydrator(
-            $this->getProvidedDependency(DiscountCheckoutConnectorDependencyProvider::FACADE_DISCOUNT)
-        );
+        return $this->getFactory()->createModelDiscountOrderHydrator();
     }
+
     /**
      * @return DiscountSaverInterface
      */
-    public function createDicountSaver()
+    public function createDiscountSaver()
     {
         return $this->getFactory()->createModelDiscountSaver(
-            $this->getProvidedDependency(DiscountCheckoutConnectorDependencyProvider::FACADE_DISCOUNT)
+            $this->getProvidedDependency(DiscountCheckoutConnectorDependencyProvider::QUERY_CONTAINER_DISCOUNT)
         );
     }
 

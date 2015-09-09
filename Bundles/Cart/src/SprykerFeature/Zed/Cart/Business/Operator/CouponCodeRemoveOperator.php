@@ -10,7 +10,7 @@ use Generated\Shared\Cart\ChangeInterface;
 use SprykerFeature\Shared\Cart\Messages\Messages;
 use Generated\Shared\Cart\CartInterface;
 
-class AddCouponCodeOperator extends AbstractOperator
+class CouponCodeRemoveOperator extends AbstractOperator
 {
 
     /**
@@ -21,7 +21,7 @@ class AddCouponCodeOperator extends AbstractOperator
      */
     protected function changeCart(CartInterface $cart, ChangeInterface $change)
     {
-        $cart = $this->storageProvider->addItems($cart, $change);
+        $cart = $this->storageProvider->removeCouponCode($cart, $change);
 
         return $this->getGroupedCartItems($cart);
     }
@@ -31,7 +31,7 @@ class AddCouponCodeOperator extends AbstractOperator
      */
     protected function createSuccessMessage()
     {
-        return Messages::ADD_ITEMS_SUCCESS;
+        return Messages::COUPON_CODE_REMOVE_SUCCESS;
     }
 
 }

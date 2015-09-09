@@ -62,11 +62,10 @@ interface StorageProviderInterface
 
     /**
      * @param CartInterface $cart
-     * @param ChangeInterface $change
      *
      * @return CartInterface
      */
-    public function clearCouponCodes(CartInterface $cart, ChangeInterface $change);
+    public function clearCouponCodes(CartInterface $cart);
 
 
 }

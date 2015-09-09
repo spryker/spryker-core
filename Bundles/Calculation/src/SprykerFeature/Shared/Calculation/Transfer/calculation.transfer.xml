@@ -106,6 +106,7 @@
 
     <transfer name="CalculableContainer">
         <property name="items" type="Item[]" singular="item" />
+        <property name="couponCodes" type="array" singular="couponCode" />
     </transfer>
 
 </transfers>

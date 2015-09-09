@@ -12,9 +12,7 @@ use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
 use SprykerFeature\Zed\Cart\Business\Operator\OperatorInterface;
 use SprykerFeature\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use SprykerFeature\Zed\Cart\CartConfig;
-use SprykerFeature\Zed\Cart\CartDependencyProvider;
-use SprykerFeature\Zed\Cart\Business\Model;
-use SprykerFeature\Zed\ItemGrouper\Business\ItemGrouperFacade;
+use SprykerFeature\Zed\Cart\CartDependencyProvider;use SprykerFeature\Zed\ItemGrouper\Business\ItemGrouperFacade;
 
 /**
  * @method CartBusiness getFactory()
@@ -29,11 +27,10 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
     public function createAddOperator()
     {
         return $this->configureCartOperator(
-            $this->getFactory()
-                ->createOperatorAddOperator(
-                    $this->createStorageProvider(),
-                    $this->createCartCalculator(),
-                    $this->getItemGrouper()
+            $this->getFactory()->createOperatorAddOperator(
+                $this->createStorageProvider(),
+                $this->createCartCalculator(),
+                $this->getItemGrouper()
                 //@todo messenger
             )
         );
@@ -45,11 +42,10 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
     public function createIncreaseOperator()
     {
         return $this->configureCartOperator(
-            $this->getFactory()
-                ->createOperatorIncreaseOperator(
-                    $this->createStorageProvider(),
-                    $this->createCartCalculator(),
-                    $this->getItemGrouper()
+            $this->getFactory()->createOperatorIncreaseOperator(
+                $this->createStorageProvider(),
+                $this->createCartCalculator(),
+                $this->getItemGrouper()
                 //@todo messenger
             )
         );
@@ -61,11 +57,10 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
     public function createRemoveOperator()
     {
         return $this->configureCartOperator(
-            $this->getFactory()
-                ->createOperatorRemoveOperator(
-                    $this->createStorageProvider(),
-                    $this->createCartCalculator(),
-                    $this->getItemGrouper()
+            $this->getFactory()->createOperatorRemoveOperator(
+                $this->createStorageProvider(),
+                $this->createCartCalculator(),
+                $this->getItemGrouper()
                 //@todo messenger
             )
         );
@@ -77,11 +72,10 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
     public function createDecreaseOperator()
     {
         return $this->configureCartOperator(
-            $this->getFactory()
-                ->createOperatorDecreaseOperator(
-                    $this->createStorageProvider(),
-                    $this->createCartCalculator(),
-                    $this->getItemGrouper()
+            $this->getFactory()->createOperatorDecreaseOperator(
+                $this->createStorageProvider(),
+                $this->createCartCalculator(),
+                $this->getItemGrouper()
                 //@todo messenger
             )
         );
@@ -90,14 +84,43 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return OperatorInterface
      */
-    public function createAddCouponCodeOperator()
+    public function createCouponCodeAddOperator()
     {
         return $this->configureCartOperator(
-            $this->getFactory()
-                ->createOperatorDecreaseOperator(
-                    $this->createStorageProvider(),
-                    $this->createCartCalculator(),
-                    $this->getItemGrouper()
+            $this->getFactory()->createOperatorCouponCodeAddOperator(
+                $this->createStorageProvider(),
+                $this->createCartCalculator(),
+                $this->getItemGrouper()
+                //@todo messenger
+            )
+        );
+    }
+
+    /**
+     * @return OperatorInterface
+     */
+    public function createCouponCodeRemoveOperator()
+    {
+        return $this->configureCartOperator(
+            $this->getFactory()->createOperatorCouponCodeRemoveOperator(
+                $this->createStorageProvider(),
+                $this->createCartCalculator(),
+                $this->getItemGrouper()
+                //@todo messenger
+            )
+        );
+    }
+
+    /**
+     * @return OperatorInterface
+     */
+    public function createCouponCodeClearOperator()
+    {
+        return $this->configureCartOperator(
+            $this->getFactory()->createOperatorCouponCodeClearOperator(
+                $this->createStorageProvider(),
+                $this->createCartCalculator(),
+                $this->getItemGrouper()
                 //@todo messenger
             )
         );
@@ -142,4 +165,5 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
 
         return $operator;
     }
+
 }
