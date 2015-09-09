@@ -20,7 +20,7 @@ class GroupKeyProductOptionHydrationPlugin extends AbstractPlugin implements Che
      */
     public function hydrateOrder(OrderTransfer $orderTransfer, CheckoutRequestTransfer $checkoutRequest)
     {
-        foreach ($orderTransfer as $orderItem) {
+        foreach ($orderTransfer->getItems() as $orderItem) {
             $orderItem->setGroupKey($this->buildGroupKey($orderItem));
         }
     }
