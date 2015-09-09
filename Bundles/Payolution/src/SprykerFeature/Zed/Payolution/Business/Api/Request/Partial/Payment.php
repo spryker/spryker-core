@@ -58,4 +58,12 @@ class Payment extends AbstractRequest
         $this->presentation = $presentation;
     }
 
+    /**
+     * @return array
+     */
+    protected function getXmlAttributeProperties()
+    {
+        return ['code'];
+    }
+
 }

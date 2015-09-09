@@ -17,7 +17,7 @@ class User extends AbstractRequest
     /**
      * @var string
      */
-    protected $password;
+    protected $pwd;
 
     /**
      * @return string
@@ -38,18 +38,25 @@ class User extends AbstractRequest
     /**
      * @return string
      */
-    public function getPassword()
+    public function getPwd()
     {
-        return $this->password;
+        return $this->pwd;
     }
 
     /**
      * @param string $password
      */
-    public function setPassword($password)
+    public function setPwd($password)
     {
-        $this->password = $password;
+        $this->pwd = $password;
     }
 
+    /**
+     * @return array
+     */
+    protected function getXmlAttributeProperties()
+    {
+        return ['login', 'pwd'];
+    }
 
 }

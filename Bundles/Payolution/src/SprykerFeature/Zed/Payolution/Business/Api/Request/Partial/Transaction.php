@@ -209,4 +209,12 @@ class Transaction extends AbstractRequest
         $this->analysis = $analysis;
     }
 
+    /**
+     * @return array
+     */
+    protected function getXmlAttributeProperties()
+    {
+        return ['channel', 'mode'];
+    }
+
 }

@@ -5,11 +5,11 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Api\Request\Partial;
 
-
 use SprykerFeature\Zed\Payolution\Business\Api\Request\AbstractRequest;
 
 class Security extends AbstractRequest
 {
+
     /**
      * @var string
      */
@@ -30,4 +30,13 @@ class Security extends AbstractRequest
     {
         $this->sender = $sender;
     }
+
+    /**
+     * @return array
+     */
+    protected function getXmlAttributeProperties()
+    {
+        return ['sender'];
+    }
+
 }
