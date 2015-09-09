@@ -81,10 +81,12 @@
                                 </table>
                                 <table class="table small m-t-sm">
                                     <caption>{{ 'Product Options' | trans }}</caption>
+                                    {% for option in product.productOptions %}
                                     <tr>
-                                        <td>{{ product.productOptions.labelOptionType }}</td>
-                                        <td>{{ product.productOptions.labelOptionValue }}</td>
+                                        <td>{{ option.type }}</td>
+                                        <td>{{ option.value }}</td>
                                     </tr>
+                                    {% endfor %}
                                 </table>
                             </div>
                         </div>

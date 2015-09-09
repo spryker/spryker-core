@@ -14,4 +14,9 @@
         <property name="priceToPay" type="int" />
     </transfer>
 
+    <transfer name="ProductOptionsNameValue">
+        <property name="type" type="string"></property>
+        <property name="value" type="string"></property>
+    </transfer>
+
 </transfers>

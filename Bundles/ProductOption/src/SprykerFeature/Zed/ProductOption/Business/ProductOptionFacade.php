@@ -32,7 +32,7 @@ class ProductOptionFacade extends AbstractFacade
 
     public function getProductOptionsByIdProduct($idProduct, $localeCode)
     {
-        return $this->getDependencyContainer()->getProductOptionReaderModel()->getProductOptionsByIdProduct($idProduct, $localeCode);
+        return $this->getDependencyContainer()->getProductOptionReaderModel()->getProductOptionsByIdProductAndIdLocale($idProduct, $localeCode);
     }
 
     /**
