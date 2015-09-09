@@ -1,3 +1,4 @@
+"use strict";
 
 var xhr = null;
 var keyList = null;
@@ -11,6 +12,14 @@ function postForm( $form, id, successCallback ){
     $.each( $form.serializeArray(), function(i, field) {
         values[field.name] = field.value;
     });
+
+    if(!(/\S/.test(values['form[glossary_key]'])) && values['form[search_option]'] != 0){
+        id++;
+        $('.error_' + id).text('The glossary key cannot be empty!');
+        $('.waiting_' + id).text('');
+        return;
+    }
+
     $.ajax({
         type        : $form.attr( 'method' ),
         url         : '?id-page=' + $('#idPage').val() +'&id-form=' + id,
@@ -32,11 +41,20 @@ var ajaxifySubmmit = function(formId) {
         postForm( $(this),  (formId - 1),
             function( response ){
                 $('.waiting_' + formId).text('');
-            if(response.success != 'false'){
-                $('.success_' + formId).text('Successfully added.');
-            }else{
-                $('.error_' + formId).text(response.errorMessages);
-            }
+                if(response.success != 'false'){
+                    var form = $('.form_class_' + formId);
+                    var keyInput = form.find('#form_glossary_key');
+                    var keyType = form.find('#form_search_option');
+
+                    if (keyType.val() == 0) {
+                        keyInput.removeAttr('disabled');
+                        keyInput.val(response.glossaryKeyName);
+                        keyType.val(1);
+                    }
+                    $('.success_' + formId).text('Successfully added.');
+                }else{
+                    $('.error_' + formId).text(response.errorMessages);
+                }
         });
 
         return false;
@@ -55,7 +73,14 @@ function showAutoComplete(formId, type) {
 
     var keyInput = form.find('#form_glossary_key');
     var keyTranslation = form.find('#form_translation');
-    var ajaxUrl = type == 1 ? 'search/?key=' : 'search/?value=';
+
+    var ajaxUrl = '';
+
+    if (type == 2) {
+        ajaxUrl = 'search/?key=';
+    } else if(type == 3) {
+        ajaxUrl = 'search/?value=';
+    }
 
     keyList.find('option').remove();
     $('.loading-' + formId).show();
@@ -113,10 +138,25 @@ var addKeySearchEvent = function(formId) {
                 if(xhr && xhr.readystate != 4){
                     xhr.abort();
                 }
-                if (keyType.val() != 0) {
+                if (keyType.val() == 2 || keyType.val() == 3) {
                     showAutoComplete(formId, keyType.val());
                 }
             }, 500 );
+        }
+    });
+
+    if (keyType.val() == 0 && keyInput.val() == '') {
+        keyInput.attr('disabled','disabled');
+    } else {
+        keyType.val(1);
+    }
+
+
+    keyType.on('change', function() {
+        if (this.value == 0) {
+            keyInput.attr('disabled','disabled');
+        } else {
+            keyInput.removeAttr('disabled');
         }
     });
 

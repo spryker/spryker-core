@@ -92,4 +92,12 @@ interface GlossaryKeyMappingManagerInterface
      * @return bool
      */
     public function hasPagePlaceholderMapping($idPage, $placeholder);
+
+    /**
+     * @param string $templateName
+     * @param string $placeholder
+     *
+     * @return string
+     */
+    public function generateGlossaryKeyName($templateName, $placeholder);
 }

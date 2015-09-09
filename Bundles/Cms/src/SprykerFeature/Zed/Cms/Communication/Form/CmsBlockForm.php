@@ -80,7 +80,7 @@ class CmsBlockForm extends AbstractForm
      * @param SpyCmsBlockQuery $blockPageByIdQuery
      * @param CmsConstraint $constraints
      * @param string $formType
-     * @param int $idPage
+     * @param int $idCmsBlock
      */
     public function __construct(SpyCmsTemplateQuery $templateQuery, SpyCmsBlockQuery $blockPageByIdQuery, CmsConstraint $constraints, $formType, $idCmsBlock)
     {
@@ -105,7 +105,7 @@ class CmsBlockForm extends AbstractForm
                         $formData = $context->getRoot()->getViewData();
                         if (!empty($this->checkExistingBlock($name, $formData)) && ($this->blockName !== $name
                                             || $this->blockType !== $formData['type']
-                                            || $this->blockValue !== $formData['value'])
+                                            || $this->blockValue !== intval($formData['value']))
                         ) {
                             $context->addViolation('Block name with same Type and Value already exists.');
                         }

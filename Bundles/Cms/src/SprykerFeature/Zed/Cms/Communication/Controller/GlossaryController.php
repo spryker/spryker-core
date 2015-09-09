@@ -39,6 +39,11 @@ class GlossaryController extends AbstractController
     const TYPE = 'type';
 
     /**
+     * @var string
+     */
+    protected $glossaryKeyName = '';
+
+    /**
      * @param Request $request
      *
      * @return array
@@ -194,7 +199,7 @@ class GlossaryController extends AbstractController
             $pageKeyMappingTransfer->setIdCmsGlossaryKeyMapping($pageKeyMappingFound->getIdCmsGlossaryKeyMapping());
         }
         $glossaryKey = $this->getQueryContainer()
-            ->queryKey($data[CmsGlossaryForm::GLOSSARY_KEY])
+            ->queryKey($this->glossaryKeyName)
             ->findOne()
         ;
         $pageKeyMappingTransfer->setFkGlossaryKey($glossaryKey->getIdGlossaryKey());
@@ -289,6 +294,7 @@ class GlossaryController extends AbstractController
 
             return $this->jsonResponse([
                 'success' => 'true',
+                'glossaryKeyName' => $this->glossaryKeyName,
                 'data' => $data,
             ]);
         } else {
@@ -329,8 +335,16 @@ class GlossaryController extends AbstractController
      */
     private function createKeyTranslationTransfer(array $data, LocaleTransfer $localeTransfer)
     {
+        $this->glossaryKeyName = $data[CmsGlossaryForm::GLOSSARY_KEY];
+
+        if (null === $this->glossaryKeyName) {
+            $this->glossaryKeyName = $this->getFacade()
+                ->generateGlossaryKeyName($data[CmsGlossaryForm::TEMPLATE_NAME], $data[CmsGlossaryForm::PLACEHOLDER])
+            ;
+        }
+
         $keyTranslationTransfer = new KeyTranslationTransfer();
-        $keyTranslationTransfer->setGlossaryKey($data[CmsGlossaryForm::GLOSSARY_KEY]);
+        $keyTranslationTransfer->setGlossaryKey($this->glossaryKeyName);
 
         $keyTranslationTransfer->setLocales([
             $localeTransfer->getLocaleName() => $data[CmsGlossaryForm::TRANSLATION]
