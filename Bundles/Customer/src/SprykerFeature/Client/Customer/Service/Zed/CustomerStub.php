@@ -94,11 +94,21 @@ class CustomerStub implements CustomerStubInterface
     /**
      * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerInterface
+     * @return CustomerResponseTransfer
      */
     public function update(CustomerInterface $customerTransfer)
     {
         return $this->zedStub->call('/customer/gateway/update', $customerTransfer);
+    }
+
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return CustomerResponseTransfer
+     */
+    public function updatePassword(CustomerInterface $customerTransfer)
+    {
+        return $this->zedStub->call('/customer/gateway/update-password', $customerTransfer);
     }
 
     /**

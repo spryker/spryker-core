@@ -10,10 +10,13 @@ use Generated\Shared\Customer\AddressInterface;
 use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CustomerErrorTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+use SprykerFeature\Shared\Customer\Code\Messages;
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotUpdatedException;
@@ -302,18 +305,94 @@ class Customer
      * @throws CustomerNotFoundException
      * @throws CustomerNotUpdatedException
      *
-     * @return bool
+     * @return CustomerResponseTransfer
      */
     public function update(CustomerInterface $customerTransfer)
     {
+        $customerResponseTransfer = new CustomerResponseTransfer();
+
         $customerTransfer = $this->encryptPassword($customerTransfer);
 
         $customer = $this->getCustomer($customerTransfer);
         $customer->fromArray($customerTransfer->toArray());
 
+        if (!$this->isEmailAvailableForCustomer($customer)) {
+            $customerErrorTransfer = new CustomerErrorTransfer();
+            $customerErrorTransfer->setMessage(Messages::CUSTOMER_EMAIL_ALREADY_USED);
+
+            $customerResponseTransfer
+                ->addError($customerErrorTransfer)
+                ->setIsSuccess(false);
+
+            return $customerResponseTransfer;
+        }
+
         $changedRows = $customer->save();
 
-        return ($changedRows > 0);
+        $customerResponseTransfer
+            ->setIsSuccess($changedRows > 0)
+            ->setCustomerTransfer($customerTransfer)
+        ;
+
+        return $customerResponseTransfer;
+    }
+
+    /**
+     * @param SpyCustomer $customerEntity
+     *
+     * @return bool
+     */
+    protected function isEmailAvailableForCustomer(SpyCustomer $customerEntity)
+    {
+        $count = $this->queryContainer
+            ->queryCustomerByEmailApartFromIdCustomer($customerEntity->getEmail(), $customerEntity->getIdCustomer())
+            ->count()
+        ;
+
+        return ($count === 0);
+    }
+
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @throws PropelException
+     * @throws CustomerNotFoundException
+     * @throws CustomerNotUpdatedException
+     *
+     * @return CustomerResponseTransfer
+     */
+    public function updatePassword(CustomerInterface $customerTransfer)
+    {
+        $customerResponseTransfer = new CustomerResponseTransfer();
+
+        $customer = $this->getCustomer($customerTransfer);
+
+        if (!$this->isValidPassword($customer->getPassword(), $customerTransfer->getPassword())) {
+            $customerErrorTransfer = new CustomerErrorTransfer();
+            $customerErrorTransfer
+                ->setMessage(Messages::CUSTOMER_PASSWORD_INVALID)
+            ;
+            $customerResponseTransfer
+                ->setIsSuccess(false)
+                ->addError($customerErrorTransfer)
+            ;
+
+            return $customerResponseTransfer;
+        }
+
+        $customerTransfer = $this->encryptNewPassword($customerTransfer);
+        $customerTransfer->setPassword($customerTransfer->getNewPassword());
+
+        $customer->fromArray($customerTransfer->toArray());
+
+        $changedRows = $customer->save();
+
+        $customerResponseTransfer
+            ->setIsSuccess($changedRows > 0)
+            ->setCustomerTransfer($customerTransfer)
+        ;
+
+        return $customerResponseTransfer;
     }
 
     /**
@@ -324,11 +403,13 @@ class Customer
     protected function entityToTransfer(SpyCustomerAddress $customer)
     {
         $entity = new AddressTransfer();
+
         return $entity->fromArray($customer->toArray(), true);
     }
 
     /**
      * @param ObjectCollection $entities
+     * @param SpyCustomer $customer
      *
      * @return AddressesTransfer
      */
@@ -361,7 +442,7 @@ class Customer
     protected function getCustomer(CustomerInterface $customerTransfer)
     {
         $customerEntity = null;
-        
+
         if ($customerTransfer->getIdCustomer()) {
             $customerEntity = $this->queryContainer->queryCustomerById($customerTransfer->getIdCustomer())
                 ->findOne()
@@ -440,15 +521,40 @@ class Customer
     protected function encryptPassword(CustomerInterface $customerTransfer)
     {
         $currentPassword = $customerTransfer->getPassword();
+        $customerTransfer->setPassword($this->getEncodedPassword($currentPassword));
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return CustomerInterface
+     */
+    protected function encryptNewPassword(CustomerInterface $customerTransfer)
+    {
+        $currentPassword = $customerTransfer->getNewPassword();
+        $customerTransfer->setNewPassword($this->getEncodedPassword($currentPassword));
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @param $currentPassword
+     *
+     * @return string
+     */
+    protected function getEncodedPassword($currentPassword)
+    {
+        $newPassword = $currentPassword;
 
         if ('$2' !== mb_substr($currentPassword, 0, 2)) {
             $encoder = new BCryptPasswordEncoder(self::BCRYPT_FACTOR);
 
             $newPassword = $encoder->encodePassword($currentPassword, self::BCRYPT_SALT);
-            $customerTransfer->setPassword($newPassword);
         }
 
-        return $customerTransfer;
+        return $newPassword;
     }
 
     /**

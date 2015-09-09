@@ -9,6 +9,7 @@ namespace SprykerFeature\Client\Customer\Service;
 use Generated\Shared\Customer\AddressInterface;
 use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Transfer\AddressesTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
 use SprykerFeature\Client\ZedRequest\Service\Client\Response;
 
@@ -136,13 +137,25 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
     /**
      * @param CustomerInterface $customerTransfer
      * 
-     * @return CustomerInterface
+     * @return CustomerResponseTransfer
      */
     public function updateCustomer(CustomerInterface $customerTransfer)
     {
         return $this->getDependencyContainer()
             ->createZedCustomerStub()
             ->update($customerTransfer);
+    }
+
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return CustomerResponseTransfer
+     */
+    public function updateCustomerPassword(CustomerInterface $customerTransfer)
+    {
+        return $this->getDependencyContainer()
+            ->createZedCustomerStub()
+            ->updatePassword($customerTransfer);
     }
 
     /**

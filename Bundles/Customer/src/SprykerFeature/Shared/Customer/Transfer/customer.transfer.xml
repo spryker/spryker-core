@@ -58,9 +58,15 @@
         <property name="message" type="string" />
     </transfer>
 
+    <transfer name="CustomerError">
+        <property name="message" type="string" />
+    </transfer>
+
     <transfer name="CustomerResponse">
         <property name="hasCustomer" type="bool" />
         <property name="customerTransfer" type="Customer" />
+        <property name="isSuccess" type="bool" />
+        <property name="errors" type="CustomerError[]" singular="error" />
     </transfer>
 
 </transfers>

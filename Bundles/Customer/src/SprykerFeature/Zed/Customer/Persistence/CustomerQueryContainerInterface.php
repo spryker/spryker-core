@@ -24,6 +24,14 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
     public function queryCustomerByEmail($email);
 
     /**
+     * @param string $email
+     * @param int $exceptIdCustomer
+     *
+     * @return SpyCustomerQuery
+     */
+    public function queryCustomerByEmailApartFromIdCustomer($email, $exceptIdCustomer);
+
+    /**
      * @param int $id
      *
      * @return SpyCustomerQuery
