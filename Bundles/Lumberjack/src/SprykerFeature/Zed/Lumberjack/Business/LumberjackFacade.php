@@ -16,7 +16,7 @@ class LumberjackFacade extends AbstractFacade
 {
 
     /**
-     * @return Model\Event
+     * @return DTO\Event
      */
     public function createEvent()
     {
@@ -32,11 +32,20 @@ class LumberjackFacade extends AbstractFacade
     }
 
     /**
-     * @return Model\EventJournal
+     * @return DTO\EventJournal
      */
     public function createEventJournal()
     {
         return $this->getDependencyContainer()->createEventJournal();
+    }
+
+    /**
+     * @param array $fields
+     */
+    public function logEvent(array $fields) {
+        $this->saveEvent(
+            $this->createEvent()->addFields($fields)
+        );
     }
 
 }

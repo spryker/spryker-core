@@ -16,7 +16,7 @@ class LumberjackDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**
-     * @return Model\Event
+     * @return DTO\Event
      */
     public function createEvent()
     {
@@ -24,7 +24,7 @@ class LumberjackDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return Model\EventJournal
+     * @return DTO\EventJournal
      */
     public function createEventJournal()
     {
