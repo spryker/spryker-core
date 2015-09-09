@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  * (c) Copyright Spryker Systems GmbH 2015
@@ -18,4 +19,5 @@ interface DataCollectorInterface
      * @return string
      */
     public function getType();
+
 }

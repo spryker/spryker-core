@@ -1,6 +1,6 @@
 <?php
+
 /**
- *
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
@@ -25,8 +25,9 @@ abstract class AbstractWriter implements WriterInterface
     /**
      * @return string
      */
-    public function getType() {
+    public function getType()
+    {
         return static::TYPE;
     }
-}
 
+}

@@ -1,6 +1,6 @@
 <?php
+
 /**
- *
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
@@ -38,4 +38,5 @@ class LumberjackFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->createEventJournal();
     }
+
 }

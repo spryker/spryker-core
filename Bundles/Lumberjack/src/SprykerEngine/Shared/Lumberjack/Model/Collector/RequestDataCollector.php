@@ -1,6 +1,6 @@
 <?php
+
 /**
- *
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
@@ -16,7 +16,7 @@ class RequestDataCollector extends AbstractDataCollector
     /**
      * @var string
      */
-    static $idRequest;
+    public static $idRequest;
 
     public function __construct(array $options)
     {
@@ -35,8 +35,8 @@ class RequestDataCollector extends AbstractDataCollector
     public function getData()
     {
         $fields = [
-            'request_id'     => self::$idRequest,
-            'microtime'      => microtime(true),
+            'request_id' => self::$idRequest,
+            'microtime' => microtime(true),
             'request_params' => $this->getRequestParams(),
         ];
         $fields = array_merge($fields, $this->getModuleControllerAction());
@@ -76,10 +76,10 @@ class RequestDataCollector extends AbstractDataCollector
         $request = Request::createFromGlobals();
 
         return [
-            'route'      => $this->getRoute($request),
-            'module'     => $request->attributes->get('module'),
+            'route' => $this->getRoute($request),
+            'module' => $request->attributes->get('module'),
             'controller' => $request->attributes->get('controller'),
-            'action'     => $request->attributes->get('action'),
+            'action' => $request->attributes->get('action'),
         ];
     }
 
@@ -90,7 +90,7 @@ class RequestDataCollector extends AbstractDataCollector
      */
     protected function getRoute(Request $request)
     {
-        return sprintf("%s/%s/%s",
+        return sprintf('%s/%s/%s',
             $request->attributes->get('module'),
             $request->attributes->get('controller'),
             $request->attributes->get('action')
@@ -107,4 +107,5 @@ class RequestDataCollector extends AbstractDataCollector
             $this->options['filtered_content'] = '***FILTERED***';
         }
     }
+
 }

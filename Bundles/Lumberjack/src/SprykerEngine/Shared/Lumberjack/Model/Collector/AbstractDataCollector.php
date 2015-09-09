@@ -1,4 +1,5 @@
 <?php
+
 /*
  * (c) Copyright Spryker Systems GmbH 2015
  */
@@ -24,7 +25,9 @@ abstract class AbstractDataCollector implements DataCollectorInterface
     /**
      * @return string
      */
-    public function getType() {
+    public function getType()
+    {
         return static::TYPE;
     }
+
 }

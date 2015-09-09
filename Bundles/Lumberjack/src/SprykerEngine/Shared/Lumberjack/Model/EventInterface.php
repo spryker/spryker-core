@@ -1,6 +1,6 @@
 <?php
+
 /**
- *
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
@@ -26,4 +26,5 @@ interface EventInterface
      * @return array
      */
     public function getFields();
+
 }

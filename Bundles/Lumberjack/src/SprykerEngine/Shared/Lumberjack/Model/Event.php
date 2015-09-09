@@ -1,6 +1,6 @@
 <?php
+
 /**
- *
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
@@ -30,7 +30,7 @@ class Event implements EventInterface
     {
         if (!$this->isValidData($data)) {
             throw new DataInvalidException(sprintf(
-                "Data contains invalid elements (maybe objects) for key %s",
+                'Data contains invalid elements (maybe objects) for key %s',
                 $name
             ));
         }
@@ -75,4 +75,5 @@ class Event implements EventInterface
     {
         return $this->fields;
     }
+
 }

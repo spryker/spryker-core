@@ -1,6 +1,6 @@
 <?php
+
 /**
- *
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
@@ -94,4 +94,5 @@ abstract class AbstractEventJournal
             $writer->write($event);
         }
     }
+
 }

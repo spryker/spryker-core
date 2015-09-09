@@ -1,6 +1,6 @@
 <?php
+
 /**
- *
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
@@ -16,12 +16,12 @@ class File extends AbstractWriter
     /**
      * @var resource[]
      */
-    static $fileHandles = [];
+    public static $fileHandles = [];
 
     /**
      * @var resource
      */
-    static $preferredHandle;
+    public static $preferredHandle;
 
     /**
      * @inheritdoc

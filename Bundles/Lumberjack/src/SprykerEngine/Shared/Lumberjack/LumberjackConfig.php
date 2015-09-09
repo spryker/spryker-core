@@ -1,6 +1,6 @@
 <?php
+
 /**
- *
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
@@ -20,4 +20,5 @@ interface LumberjackConfig extends ConfigInterface
     const WRITER_OPTIONS = 'LUMBERJACK_WRITER_OPTIONS';
 
     const COLLECTOR_OPTIONS = 'LUMBERJACK_COLLECTOR_OPTIONS';
+
 }

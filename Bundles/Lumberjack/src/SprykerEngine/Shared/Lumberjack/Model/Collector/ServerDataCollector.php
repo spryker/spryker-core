@@ -1,6 +1,6 @@
 <?php
+
 /**
- *
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
@@ -19,13 +19,13 @@ class ServerDataCollector extends AbstractDataCollector
     public function getData()
     {
         return [
-            'url'            => $this->getUrl(),
-            'is_https'       => (int)$this->isSecureConnection(),
-            'host_name'      => $this->getHost(),
-            'user_agent'     => $this->getUserAgent(),
-            'user_ip'        => $this->getRemoteAddress(),
+            'url' => $this->getUrl(),
+            'is_https' => (int) $this->isSecureConnection(),
+            'host_name' => $this->getHost(),
+            'user_agent' => $this->getUserAgent(),
+            'user_ip' => $this->getRemoteAddress(),
             'request_method' => $this->getRequestMethod(),
-            'referer'        => $this->getHttpReferer(),
+            'referer' => $this->getHttpReferer(),
         ];
     }
 
@@ -51,8 +51,8 @@ class ServerDataCollector extends AbstractDataCollector
      */
     protected function isSecureConnection()
     {
-        if ((isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')
-            || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on')
+        if ((isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https')
+            || (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on')
         ) {
             return true;
         }
@@ -98,4 +98,3 @@ class ServerDataCollector extends AbstractDataCollector
     }
 
 }
-
