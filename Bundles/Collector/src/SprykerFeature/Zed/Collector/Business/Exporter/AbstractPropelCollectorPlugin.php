@@ -30,10 +30,10 @@ abstract class AbstractPropelCollectorPlugin
     {
         $query = $this->createQuery($baseQuery, $locale);
         
-        $resultCollection = $this->getBatchIterator($query);
+        $batchCollection = $this->getBatchIterator($query);
 
         $totalCount = $result->getTotalCount();
-        foreach ($resultCollection as $batch) {
+        foreach ($batchCollection as $batch) {
             $collectedData = $this->processData($batch, $locale);
             $count = count($collectedData);
 
@@ -49,12 +49,16 @@ abstract class AbstractPropelCollectorPlugin
     public function postRun(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result, WriterInterface $dataWriter)
     {
         $query = $this->createQueryForDeletion($baseQuery, $locale);
+        
+        if (null === $query) {
+            return; //TODO: stop processing here, if not implemented properly yet
+        }
 
-        $resultCollection = $this->getBatchIterator($query);
+        $batchCollection = $this->getBatchIterator($query);
 
-        $totalCount = 0;
-        foreach ($resultCollection as $resultItem) {
-            $collectedData = $this->processDataForDeletion($resultItem, $locale);
+        $totalCount = $result->getTotalCount();
+        foreach ($batchCollection as $batch) {
+            $collectedData = $this->processDataForDeletion($batch, $locale);
             $count = count($collectedData);
             
             $dataWriter->delete($collectedData);
@@ -65,8 +69,20 @@ abstract class AbstractPropelCollectorPlugin
         }
 
         $result->setTotalCount($totalCount);
-        
+
+        $this->flushDeletedItems($baseQuery, $locale);
         $this->flushDeletedTouchItems();
+    }
+
+    /**
+     * Collector specific cleanup of deleted items
+     * 
+     * @param SpyTouchQuery $deletionQuery
+     * @param LocaleTransfer $locale
+     */
+    protected function flushDeletedItems(SpyTouchQuery $deletionQuery, LocaleTransfer $locale)
+    {
+
     }
     
     protected function flushDeletedTouchItems()
