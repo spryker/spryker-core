@@ -21,9 +21,10 @@ interface MethodMapperInterface
 
     /**
      * @param SpySalesOrder $salesOrder
+     * @param string $clientIp
      *
      * @return PreAuthorizationRequest
      */
-    public function mapToPreAuthorization(SpySalesOrder $salesOrder);
+    public function mapToPreAuthorization(SpySalesOrder $salesOrder, $clientIp);
 
 }

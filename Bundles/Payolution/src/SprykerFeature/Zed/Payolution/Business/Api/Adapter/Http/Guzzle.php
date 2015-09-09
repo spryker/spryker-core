@@ -7,8 +7,10 @@
 namespace SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http;
 
 use Guzzle\Http\Client;
+use Guzzle\Http\Exception\RequestException;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\AbstractRequest;
+use SprykerFeature\Zed\Payolution\Business\Exception\ApiHttpRequestException;
 
 class Guzzle implements AdapterInterface
 {
@@ -39,17 +41,42 @@ class Guzzle implements AdapterInterface
     /**
      * @param AbstractRequest $request
      *
-     * @return \Guzzle\Http\Message\Response
+     * @throws ApiHttpRequestException
+     * @return mixed
      */
     public function sendRequest(AbstractRequest $request)
     {
-        return $this->client
+        /*$guzzleRequest = $this->client
             ->post(
                 $this->gatewayUrl,
-                $headers = [],
-                $request->toXml()->saveXML()
-            )
-            ->send();
+                $headers = null,
+                [
+                    'load' => $request->toXml()->saveXML()
+                ]
+            );
+
+        $response = $guzzleRequest->send();
+
+        echo $request->toXml()->saveXML();
+        echo  "++++++++++++++++++++++++++++++";
+        echo $response->getBody(true); exit;
+        */
+
+        $guzzleRequest = $this->client->post(
+          $this->gatewayUrl,
+            $headers = ['Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8'],
+            $request->toArray()
+        );
+
+        try {
+            $response = $guzzleRequest->send();
+        } catch (RequestException $requestException) {
+            throw new ApiHttpRequestException($requestException->getMessage());
+        }
+
+        parse_str($response->getBody(true), $out);
+
+        return $out;
     }
 
 }

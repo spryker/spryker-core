@@ -17,12 +17,13 @@ class PayolutionFacade extends AbstractFacade
 
     /**
      * @param int $idOrder
+     * @param string $clientIp
      *
      * @return PreAuthorizationResponse
      */
-    public function preAuthorizePaymentFromOrder($idOrder)
+    public function preAuthorizePaymentFromOrder($idOrder, $clientIp)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->preAuthorizePaymentFromOrder($idOrder);
+        return $this->getDependencyContainer()->createPaymentManager()->preAuthorizePaymentFromOrder($idOrder, $clientIp);
     }
 
 }

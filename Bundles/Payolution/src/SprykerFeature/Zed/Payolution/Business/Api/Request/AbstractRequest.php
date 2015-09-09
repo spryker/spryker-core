@@ -50,7 +50,8 @@ abstract class AbstractRequest
     public function toXml(\SimpleXMLElement $rootElement = null)
     {
         if ($rootElement === null) {
-            $rootElement = new \SimpleXMLElement('<Request version="1.0"></Request>');
+            $rootElement = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" ?><Request version="1.0"></Request>');
+
         }
 
         foreach ($this as $propertyName => $propertyValue) {

@@ -50,20 +50,24 @@ class PaymentManager implements PaymentManagerInterface
 
     /**
      * @param int $idOrder
+     * @param $clientIp
      *
      * @return PreAuthorizationResponse
      */
-    public function preAuthorizePaymentFromOrder($idOrder)
+    public function preAuthorizePaymentFromOrder($idOrder, $clientIp)
     {
         $orderEntity = $this->getOrderEntity($idOrder);
 
         $authorizationRequest = $this
             ->methodMappers[MethodMapperInterface::INVOICE]
-            ->mapToPreAuthorization($orderEntity);
+            ->mapToPreAuthorization($orderEntity, $clientIp);
 
         $authorizationResponse = $this->executionAdapter->sendRequest($authorizationRequest);
 
-        return $authorizationResponse;
+        $response = new PreAuthorizationResponse();
+        $response->initFromArray($authorizationResponse);
+
+        return $response;
     }
 
     /**

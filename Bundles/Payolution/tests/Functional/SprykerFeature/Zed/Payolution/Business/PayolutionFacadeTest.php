@@ -21,7 +21,12 @@ class PayolutionFacadeTest extends Test
     {
         $orderEntity = $this->setTestData();
         $facade = $this->getLocator()->payolution()->facade();
-        $facade->preAuthorizePaymentFromOrder($orderEntity->getIdSalesOrder());
+        $response = $facade->preAuthorizePaymentFromOrder($orderEntity->getIdSalesOrder(), '127.0.0.1');
+
+        $this->assertInstanceOf('SprykerFeature\Zed\Payolution\Business\Api\Response\PreAuthorizationResponse', $response);
+
+        //assert testdata
+        //assertIsNotNull (shortid,...)
     }
 
     /**
@@ -38,8 +43,8 @@ class PayolutionFacadeTest extends Test
             ->setLastName('Doe')
             ->setAddress1('Straße des 17. Juni 135')
             ->setCity('Berlin')
-            ->setZipCode('10623')
-            ->save();
+            ->setZipCode('10623');
+        $billingAddress->save();
 
         $customer = (new SpyCustomer())
             ->setFirstName('John')
@@ -55,10 +60,11 @@ class PayolutionFacadeTest extends Test
             ->setGrandTotal(100.00)
             ->setSubtotal(100.00)
             ->setIsTest(true)
-            ->setFkSalesOrderAddressBilling($billingAddress)
-            ->setFkSalesOrderAddressShipping($billingAddress)
+            ->setFkSalesOrderAddressBilling($billingAddress->getIdSalesOrderAddress())
+            ->setFkSalesOrderAddressShipping($billingAddress->getIdSalesOrderAddress())
             ->setCustomer($customer)
             ->setOrderReference('foo-bar-baz-2');
+
         $orderEntity->save();
 
         return $orderEntity;

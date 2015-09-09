@@ -70,23 +70,6 @@ abstract class AbstractHttpAdapter implements AdapterInterface
     }
 
     /**
-     * @param AbstractRequest $container
-     *
-     * @return array
-     */
-    public function sendRequest(AbstractRequest $container)
-    {
-        try {
-            return $this->sendRawRequest($container->toArray());
-        } catch (TimeoutException $e) {
-            $fakeArray = [
-                'status' => 'TIMEOUT',
-            ];
-            return $fakeArray;
-        }
-    }
-
-    /**
      * @param array $params
      *
      * @return array

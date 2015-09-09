@@ -11,9 +11,10 @@ interface PaymentManagerInterface
 {
     /**
      * @param int $idOrder
+     * @param string $clientIp
      *
      * @return PreAuthorizationResponse
      */
-    public function preAuthorizePaymentFromOrder($idOrder);
+    public function preAuthorizePaymentFromOrder($idOrder, $clientIp);
 
 }

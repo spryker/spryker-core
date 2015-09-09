@@ -6,6 +6,7 @@
 namespace SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
 
 use SprykerEngine\Shared\Kernel\Store;
+use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Account;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Address;
@@ -36,14 +37,11 @@ class Invoice extends AbstractMethodMapper
 
     /**
      * @param SpySalesOrder $salesOrder
-     *
+     * @param string $clientIp
      * @return PreAuthorizationRequest
      */
-    public function mapToPreAuthorization(SpySalesOrder $salesOrder)
+    public function mapToPreAuthorization(SpySalesOrder $salesOrder, $clientIp)
     {
-        // @todo where do we get the request ip?
-        $ip = 'i need to be replaced by the real ip';
-
         $request = new PreAuthorizationRequest();
         $request->setHeader($this->getHeaderPartialRequest());
 
@@ -59,7 +57,7 @@ class Invoice extends AbstractMethodMapper
 
         $address = $this->getAddressPartialRequest($salesOrder->getBillingAddress());
         $name = $this->getNamePartialRequest($salesOrder->getCustomer());
-        $contact = $this->getContactPartialRequest($salesOrder->getCustomer(), $ip);
+        $contact = $this->getContactPartialRequest($salesOrder->getCustomer(), $clientIp);
 
         $customer = $this->getCustomerPartialRequest($address, $name, $contact);
 
@@ -89,7 +87,7 @@ class Invoice extends AbstractMethodMapper
     private function getAddressPartialRequest(SpySalesOrderAddress $orderAddress)
     {
         $address = new Address();
-        $address->setCountry($orderAddress->getCountry()->getName());
+        $address->setCountry($orderAddress->getCountry()->getIso2Code());
         $address->setCity($orderAddress->getCity());
 
         // @todo which part of address is needed?
@@ -112,9 +110,11 @@ class Invoice extends AbstractMethodMapper
         $name->setGiven($customer->getFirstName());
 
         // @todo find out howto generate the date format
-        $name->setBirthdate($customer->getDateOfBirth('YYYY-mm-dd'));
+        $name->setBirthdate($customer->getDateOfBirth('Y-m-d'));
 
-        $name->setSex($customer->getGender());
+        $genderMap = [SpyCustomerTableMap::COL_GENDER_MALE => "M", SpyCustomerTableMap::COL_GENDER_FEMALE => "F"];
+
+        $name->setSex($genderMap[$customer->getGender()]);
         $name->setTitle($customer->getSalutation());
         return $name;
     }
