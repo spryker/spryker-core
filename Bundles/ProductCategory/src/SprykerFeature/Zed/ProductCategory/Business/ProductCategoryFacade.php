@@ -10,12 +10,14 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
 
 /**
  * @property ProductCategoryDependencyContainer $dependencyContainer
  * @method ProductCategoryDependencyContainer getDependencyContainer()
+ * @method ProductCategoryManager createProductManager()
  */
 class ProductCategoryFacade extends AbstractFacade
 {
@@ -52,6 +54,19 @@ class ProductCategoryFacade extends AbstractFacade
         return $this->getDependencyContainer()
             ->createProductCategoryManager()
             ->hasProductCategoryMapping($sku, $categoryName, $locale)
+        ;
+    }
+
+    /**
+     * @param SpyAbstractProduct $abstractProduct
+     *
+     * @return SpyProductCategoryQuery
+     */
+    public function getCategoriesByAbstractProduct(SpyAbstractProduct $abstractProduct)
+    {
+        return $this->getDependencyContainer()
+            ->createProductCategoryManager()
+            ->getCategoriesByAbstractProduct($abstractProduct)
         ;
     }
 

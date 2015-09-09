@@ -15,6 +15,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_LOCALE = 'facade locale';
     const FACADE_URL = 'facade url';
     const FACADE_TOUCH = 'facade touch';
+    const FACADE_PRODUCT_CATEGORIES = 'facade product categories';
 
     /**
      * @param Container $container
@@ -33,6 +34,24 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_TOUCH] = function (Container $container) {
             return $container->getLocator()->touch()->facade();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container)
+    {
+        $container[self::FACADE_LOCALE] = function (Container $container) {
+            return $container->getLocator()->locale()->facade();
+        };
+
+        $container[self::FACADE_PRODUCT_CATEGORIES] = function (Container $container) {
+            return $container->getLocator()->productCategory()->facade();
         };
 
         return $container;

@@ -12,6 +12,7 @@
                 <action>index</action>
                 <order>1</order>
                 <shortcut>p</shortcut>
+                <visible>0</visible>
             </search-page>
         </pages>
     </product>

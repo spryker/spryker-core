@@ -17,6 +17,7 @@ use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyLocalizedAbstractProductAttributesTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyLocalizedProductAttributesTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyProductTableMap;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyLocalizedAbstractProductAttributesQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyLocalizedProductAttributesQuery;
@@ -87,14 +88,23 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     }
 
     /**
+     * @return SpyProductQuery
+     */
+    public function queryAbstractProducts()
+    {
+        return SpyAbstractProductQuery::create();
+    }
+
+    /**
      * @param string $sku
      *
      * @return SpyProductQuery
      */
     public function queryConcreteProductBySku($sku)
     {
-        return SpyProductQuery::create()
-            ->filterBySku($sku);
+        return $this->queryAbstractProducts()
+            ->filterBySku($sku)
+        ;
     }
 
     /**
@@ -341,6 +351,14 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
         );
 
         return $this;
+    }
+
+    // @todo refactor queries from below
+
+    public function queryConcreteProductByAbstractProduct(SpyAbstractProduct $abstractProduct)
+    {
+        return SpyProductQuery::create()
+            ->filterByFkAbstractProduct($abstractProduct->getIdAbstractProduct());
     }
 
 }

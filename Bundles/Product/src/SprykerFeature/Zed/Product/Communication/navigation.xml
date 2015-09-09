@@ -2,6 +2,15 @@
 <config>
     <product>
         <pages>
+            <product>
+                <label>Product List</label>
+                <title>Product List</title>
+                <bundle>product</bundle>
+                <controller>index</controller>
+                <action>index</action>
+                <order>0</order>
+                <visible>0</visible>
+            </product>
             <import>
                 <label>Import/Update</label>
                 <title>Import/Update</title>

@@ -11,6 +11,7 @@ use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
@@ -123,6 +124,18 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
                 )
             );
         }
+    }
+
+    /**
+     * @param SpyAbstractProduct $abstractProduct
+     *
+     * @return SpyProductCategoryQuery
+     */
+    public function getCategoriesByAbstractProduct(SpyAbstractProduct $abstractProduct)
+    {
+        return $this->productCategoryQueryContainer
+            ->queryLocalizedProductCategoryMappingByProduct($abstractProduct)
+        ;
     }
 
 }
