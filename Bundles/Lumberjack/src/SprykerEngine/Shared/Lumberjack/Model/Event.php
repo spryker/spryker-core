@@ -17,6 +17,7 @@ class Event implements EventInterface
     public function __construct()
     {
         $this->addField('name', null);
+        $this->addField('_event_id', uniqid('', true));
     }
 
     /**

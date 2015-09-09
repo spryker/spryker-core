@@ -11,6 +11,8 @@ use SprykerEngine\Shared\Kernel\Store;
 class EnvironmentDataCollector extends AbstractDataCollector
 {
 
+    const TYPE = 'environment';
+
     /**
      * @return array
      */

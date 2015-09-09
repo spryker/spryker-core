@@ -20,4 +20,11 @@ abstract class AbstractDataCollector implements DataCollectorInterface
     {
         $this->options = $options;
     }
+
+    /**
+     * @return string
+     */
+    public function getType() {
+        return static::TYPE;
+    }
 }

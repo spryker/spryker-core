@@ -13,4 +13,9 @@ interface DataCollectorInterface
      * @return array
      */
     public function getData();
+
+    /**
+     * @return string
+     */
+    public function getType();
 }

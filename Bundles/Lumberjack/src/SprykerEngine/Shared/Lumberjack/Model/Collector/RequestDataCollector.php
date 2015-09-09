@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 class RequestDataCollector extends AbstractDataCollector
 {
 
+    const TYPE = 'request';
+
     /**
      * @var string
      */

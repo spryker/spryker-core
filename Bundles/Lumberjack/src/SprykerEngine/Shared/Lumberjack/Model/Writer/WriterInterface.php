@@ -16,4 +16,9 @@ interface WriterInterface
      * @return bool success or failure.
      */
     public function write(EventInterface $event);
+
+    /**
+     * @return string
+     */
+    public function getType();
 }

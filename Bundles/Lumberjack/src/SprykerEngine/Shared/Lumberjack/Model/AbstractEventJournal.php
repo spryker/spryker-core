@@ -36,7 +36,7 @@ abstract class AbstractEventJournal
         $collectorOptions = Config::get(LumberjackConfig::COLLECTOR_OPTIONS);
         foreach ($collectors[APPLICATION] as $collector) {
             $collectorConfig = isset($collectorOptions[$collector]) ? $collectorOptions[$collector] : [];
-            $this->addDataCollector(new $collector($collectorConfig));
+            $this->addOrReplaceDataCollector(new $collector($collectorConfig));
         }
     }
 
@@ -46,16 +46,16 @@ abstract class AbstractEventJournal
         $writerOptions = Config::get(LumberjackConfig::WRITER_OPTIONS);
         foreach ($writers[APPLICATION] as $writer) {
             $writerConfig = isset($writerOptions[$writer]) ? $writerOptions[$writer] : [];
-            $this->addEventWriter(new $writer($writerConfig));
+            $this->addOrReplaceEventWriter(new $writer($writerConfig));
         }
     }
 
     /**
      * @param DataCollectorInterface $dataCollector
      */
-    public function addDataCollector(DataCollectorInterface $dataCollector)
+    public function addOrReplaceDataCollector(DataCollectorInterface $dataCollector)
     {
-        $this->dataCollectors[get_class($dataCollector)] = $dataCollector;
+        $this->dataCollectors[$dataCollector->getType()] = $dataCollector;
     }
 
     /**
@@ -80,9 +80,9 @@ abstract class AbstractEventJournal
     /**
      * @param WriterInterface $writer
      */
-    public function addEventWriter(WriterInterface $writer)
+    public function addOrReplaceEventWriter(WriterInterface $writer)
     {
-        $this->eventWriters[get_class($writer)] = $writer;
+        $this->eventWriters[$writer->getType()] = $writer;
     }
 
     /**

@@ -12,6 +12,8 @@ use \SprykerFeature\Shared\Library\NewRelic\Api as NewRelicApi;
 class Newrelic extends AbstractWriter
 {
 
+    const TYPE = 'newrelic';
+
     public function write(EventInterface $event)
     {
         $api = NewRelicApi::getInstance();

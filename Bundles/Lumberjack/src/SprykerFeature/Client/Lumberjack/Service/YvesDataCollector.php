@@ -6,10 +6,13 @@
 
 namespace SprykerFeature\Client\Lumberjack\Service;
 
+use SprykerEngine\Shared\Lumberjack\Model\Collector\AbstractDataCollector;
 use SprykerEngine\Shared\Lumberjack\Model\Collector\DataCollectorInterface;
 
-class YvesDataCollector implements DataCollectorInterface
+class YvesDataCollector extends AbstractDataCollector implements DataCollectorInterface
 {
+
+    const TYPE = 'yves';
 
     /**
      * @return array

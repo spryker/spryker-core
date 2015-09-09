@@ -11,6 +11,8 @@ use SprykerFeature\Shared\Library\System;
 class ServerDataCollector extends AbstractDataCollector
 {
 
+    const TYPE = 'server';
+
     /**
      * @return array
      */

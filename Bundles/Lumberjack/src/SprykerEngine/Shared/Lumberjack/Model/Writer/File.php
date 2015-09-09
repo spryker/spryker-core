@@ -11,6 +11,8 @@ use SprykerEngine\Shared\Lumberjack\Model\EventInterface;
 class File extends AbstractWriter
 {
 
+    const TYPE = 'file';
+
     /**
      * @var resource[]
      */

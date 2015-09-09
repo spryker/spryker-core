@@ -21,5 +21,12 @@ abstract class AbstractWriter implements WriterInterface
     {
         $this->options = $options;
     }
+
+    /**
+     * @return string
+     */
+    public function getType() {
+        return static::TYPE;
+    }
 }
 
