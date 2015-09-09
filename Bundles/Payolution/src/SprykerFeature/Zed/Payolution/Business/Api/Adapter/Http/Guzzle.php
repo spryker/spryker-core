@@ -38,11 +38,18 @@ class Guzzle implements AdapterInterface
 
     /**
      * @param AbstractRequest $request
+     *
+     * @return \Guzzle\Http\Message\Response
      */
     public function sendRequest(AbstractRequest $request)
     {
-        $response = $this->client->post($this->gatewayUrl, $headers = [], $request->toArray())->send();
-        var_dump($response);exit;
+        return $this->client
+            ->post(
+                $this->gatewayUrl,
+                $headers = [],
+                $request->toXml()->saveXML()
+            )
+            ->send();
     }
 
 }
