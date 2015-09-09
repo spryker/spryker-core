@@ -11,13 +11,12 @@
     {% embed '@Gui/Partials/widget.twig' %}
 
         {% block widget_header_content %}
-            <a href="/shipment/carrier/add" class="btn btn-sm btn-primary "><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{ 'Add a new carrier company' | trans }}</a>
-            <a href="/shipment/method/add" class="btn btn-sm btn-primary "><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{ 'Add a new shipment method' | trans }}</a>
+            <a href="/refund/refund/add" class="btn btn-sm btn-primary "><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{ 'Add a refund' | trans }}</a>
         {% endblock %}
 
         {% block widget_content %}
 
-            {{ methodTable | raw }}
+
 
         {% endblock %}
 

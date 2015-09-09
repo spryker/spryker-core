@@ -18,6 +18,7 @@ class RefundCalculator
     /**
      * @param $orderItems
      * @param SpySalesOrder $orderEntity
+     *
      * @return int
      */
     public function calculateAmount($orderItems, SpySalesOrder $orderEntity) {
