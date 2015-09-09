@@ -8,9 +8,8 @@ namespace SprykerFeature\Zed\Url\Business;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Generated\Zed\Ide\AutoCompletion;
+use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Zed\Url\Business\Exception\MissingUrlException;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
@@ -36,31 +35,31 @@ class UrlManager implements UrlManagerInterface
     protected $localeFacade;
 
     /**
-     * @var AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @var UrlToTouchInterface
      */
-    private $touchFacade;
+    protected $touchFacade;
+
+    /**
+     * @var ConnectionInterface
+     */
+    protected $connection;
 
     /**
      * @param UrlQueryContainerInterface $urlQueryContainer
      * @param UrlToLocaleInterface $localeFacade
      * @param UrlToTouchInterface $touchFacade
-     * @param LocatorLocatorInterface $locator
+     * @param ConnectionInterface $connection
      */
     public function __construct(
         UrlQueryContainerInterface $urlQueryContainer,
         UrlToLocaleInterface $localeFacade,
         UrlToTouchInterface $touchFacade,
-        LocatorLocatorInterface $locator
+        ConnectionInterface $connection
     ) {
         $this->urlQueryContainer = $urlQueryContainer;
-        $this->locator = $locator;
         $this->localeFacade = $localeFacade;
         $this->touchFacade = $touchFacade;
+        $this->connection = $connection;
     }
 
     /**
@@ -244,8 +243,12 @@ class UrlManager implements UrlManagerInterface
      */
     public function saveUrlAndTouch(UrlTransfer $url)
     {
-        $urlTransfer  = $this->saveUrl($url);
+        $this->connection->beginTransaction();
+
+        $urlTransfer = $this->saveUrl($url);
         $this->touchUrlActive($url->getIdUrl());
+
+        $this->connection->commit();
 
         return $urlTransfer;
     }
@@ -263,7 +266,7 @@ class UrlManager implements UrlManagerInterface
     {
         $this->checkUrlDoesNotExist($url->getUrl());
 
-        $urlEntity = $this->locator->url()->entitySpyUrl();
+        $urlEntity = new SpyUrl();
         $this->syncUrlEntityWithTransfer($url, $urlEntity);
 
         $urlEntity->save();
@@ -308,7 +311,6 @@ class UrlManager implements UrlManagerInterface
      */
     protected function syncUrlEntityWithTransfer(UrlTransfer $urlTransfer, SpyUrl $urlEntity)
     {
-
         $urlEntity
             ->setFkLocale($urlTransfer->getFkLocale())
             ->setResource($urlTransfer->getResourceType(), $urlTransfer->getResourceId())

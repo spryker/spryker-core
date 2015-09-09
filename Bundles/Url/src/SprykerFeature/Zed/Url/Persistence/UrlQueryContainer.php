@@ -15,6 +15,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 
 class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContainerInterface
 {
+
     const TO_URL = 'toUrl';
     const STATUS = 'status';
 

@@ -8,12 +8,12 @@ namespace SprykerFeature\Zed\Url\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\UrlBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Url\Dependency\UrlToLocaleInterface;
-use SprykerFeature\Zed\Url\Dependency\UrlToTouchInterface;
 use SprykerFeature\Zed\Url\Persistence\UrlQueryContainerInterface;
+use SprykerFeature\Zed\Url\UrlDependencyProvider;
 
 /**
  * @method UrlBusiness getFactory()
+ * @method UrlQueryContainerInterface getQueryContainer()
  */
 class UrlDependencyContainer extends AbstractBusinessDependencyContainer
 {
@@ -24,35 +24,11 @@ class UrlDependencyContainer extends AbstractBusinessDependencyContainer
     public function getUrlManager()
     {
         return $this->getFactory()->createUrlManager(
-            $this->getUrlQueryContainer(),
-            $this->getLocaleFacade(),
-            $this->getTouchFacade(),
-            $this->getLocator()
+            $this->getQueryContainer(),
+            $this->getProvidedDependency(UrlDependencyProvider::FACADE_LOCALE),
+            $this->getProvidedDependency(UrlDependencyProvider::FACADE_TOUCH),
+            $this->getProvidedDependency(UrlDependencyProvider::PLUGIN_PROPEL_CONNECTION)
         );
-    }
-
-    /**
-     * @return UrlQueryContainerInterface
-     */
-    protected function getUrlQueryContainer()
-    {
-        return $this->getLocator()->url()->queryContainer();
-    }
-
-    /**
-     * @return UrlToLocaleInterface
-     */
-    protected function getLocaleFacade()
-    {
-        return $this->getLocator()->locale()->facade();
-    }
-
-    /**
-     * @return UrlToTouchInterface
-     */
-    protected function getTouchFacade()
-    {
-        return $this->getLocator()->touch()->facade();
     }
 
     /**
@@ -61,10 +37,10 @@ class UrlDependencyContainer extends AbstractBusinessDependencyContainer
     public function getRedirectManager()
     {
         return $this->getFactory()->createRedirectManager(
-            $this->getUrlQueryContainer(),
+            $this->getQueryContainer(),
             $this->getUrlManager(),
-            $this->getTouchFacade(),
-            $this->getLocator()
+            $this->getProvidedDependency(UrlDependencyProvider::FACADE_TOUCH),
+            $this->getProvidedDependency(UrlDependencyProvider::PLUGIN_PROPEL_CONNECTION)
         );
     }
 
