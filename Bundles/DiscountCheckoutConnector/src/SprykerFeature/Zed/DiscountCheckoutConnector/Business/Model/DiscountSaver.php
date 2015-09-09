@@ -9,8 +9,9 @@ namespace SprykerFeature\Zed\DiscountCheckoutConnector\Business\Model;
 use Generated\Shared\DiscountCheckoutConnector\CheckoutRequestInterface;
 use Generated\Shared\DiscountCheckoutConnector\DiscountInterface;
 use Generated\Shared\DiscountCheckoutConnector\OrderInterface;
+use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
-use SprykerFeature\Zed\DiscountCheckoutConnector\Dependency\Facade\DiscountCheckoutConnectorToDiscountInterface;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesDiscount;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesDiscountCode;
 
@@ -18,16 +19,16 @@ class DiscountSaver implements DiscountSaverInterface
 {
 
     /**
-     * @var DiscountCheckoutConnectorToDiscountInterface
+     * @var DiscountQueryContainerInterface
      */
-    private $discountFacade;
+    private $discountQueryContainer;
 
     /**
-     * @param DiscountCheckoutConnectorToDiscountInterface $discountFacade
+     * @param DiscountQueryContainerInterface $discountQueryContainer
      */
-    public function __construct(DiscountCheckoutConnectorToDiscountInterface $discountFacade)
+    public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
     {
-        $this->discountFacade = $discountFacade;
+        $this->discountQueryContainer = $discountQueryContainer;
     }
 
     /**
@@ -49,7 +50,7 @@ class DiscountSaver implements DiscountSaverInterface
      */
     private function saveDiscount(DiscountInterface $discountTransfer, $idSalesOrder)
     {
-        $discountEntity = $this->getDiscountEntityByDisplayName($discountTransfer->getDisplayName());
+        $discountEntity = $this->getDiscountVoucherEntityByCode($discountTransfer->getDisplayName());
 
         $salesDiscountEntity = $this->getSalesDiscountEntity();
         $salesDiscountEntity->setFkSalesOrder($idSalesOrder);
@@ -62,13 +63,13 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @param string $displayName
+     * @param string $code
      *
-     * @return SpyDiscount
+     * @return SpyDiscountVoucher
      */
-    private function getDiscountEntityByDisplayName($displayName)
+    private function getDiscountVoucherEntityByCode($code)
     {
-        return $this->discountFacade->getDiscountByDisplayName($displayName);
+        return $this->discountQueryContainer->queryVoucher($code)->findOne();
     }
 
     /**

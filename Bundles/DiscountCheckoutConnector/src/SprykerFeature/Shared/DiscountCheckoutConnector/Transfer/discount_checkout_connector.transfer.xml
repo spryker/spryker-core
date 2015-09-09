@@ -5,7 +5,7 @@
 
     <transfer name="Order">
         <property name="idSalesOrder" type="int" />
-        <property name="discounts" type="Discount[]" />
+        <property name="discounts" type="Discount[]" singular="discount" />
     </transfer>
 
     <transfer name="CheckoutError">

@@ -23,7 +23,7 @@ class DiscountOrderHydrator implements DiscountOrderHydratorInterface
      */
     public function __construct(DiscountCheckoutConnectorToDiscountInterface $discountFacade)
     {
-        $this->discountFacade = $discountFacade;
+        $this->discountQueFacade = $discountFacade;
     }
 
     /**

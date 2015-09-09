@@ -88,6 +88,22 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
+     * @return OperatorInterface
+     */
+    public function createAddCouponCodeOperator()
+    {
+        return $this->configureCartOperator(
+            $this->getFactory()
+                ->createOperatorDecreaseOperator(
+                    $this->createStorageProvider(),
+                    $this->createCartCalculator(),
+                    $this->getItemGrouper()
+                //@todo messenger
+            )
+        );
+    }
+
+    /**
      * @return StorageProviderInterface
      */
     protected function createStorageProvider()

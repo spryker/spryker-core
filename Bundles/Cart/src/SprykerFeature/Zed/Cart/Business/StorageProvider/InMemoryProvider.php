@@ -145,4 +145,45 @@ class InMemoryProvider implements StorageProviderInterface
         return true;
     }
 
+    /**
+     * @param CartInterface $cart
+     * @param ChangeInterface $change
+     *
+     * @return CartInterface
+     */
+    public function addCouponCode(CartInterface $cart, ChangeInterface $change)
+    {
+
+    }
+
+    /**
+     * @param CartInterface $cart
+     * @param ChangeInterface $change
+     *
+     * @return CartInterface
+     */
+    public function removeCouponCode(CartInterface $cart, ChangeInterface $change)
+    {
+        $existingCouponCodes = $cart->getCouponCodes();
+        $codeToRemove = $change->getCouponCode();
+        foreach ($existingCouponCodes as $existingCouponCode) {
+            if ($existingCouponCode !== $codeToRemove) {
+                $cart->addCouponCode($existingCouponCode);
+            }
+        }
+
+        $cart->reCouponCode($change->getCouponCode());
+    }
+
+    /**
+     * @param CartInterface $cart
+     * @param ChangeInterface $change
+     *
+     * @return CartInterface
+     */
+    public function clearCouponCodes(CartInterface $cart, ChangeInterface $change)
+    {
+
+    }
+
 }

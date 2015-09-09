@@ -32,7 +32,7 @@ class DiscountCheckoutConnectorFacade extends AbstractFacade
      */
     public function saveDiscounts(OrderInterface $orderTransfer, CheckoutResponseInterface $checkoutResponse)
     {
-        $this->getDependencyContainer()->createOrderHydrator()->hydrateOrder($orderTransfer, $checkoutResponse);
+        $this->getDependencyContainer()->createDicountSaver()->saveDiscounts($orderTransfer, $checkoutResponse);
     }
 
 }

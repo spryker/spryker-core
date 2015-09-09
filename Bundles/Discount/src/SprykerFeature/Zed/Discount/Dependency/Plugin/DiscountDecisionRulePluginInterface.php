@@ -17,7 +17,6 @@ interface DiscountDecisionRulePluginInterface
 
     /**
      * @param DiscountEntity $discountEntity
-     * @ param OrderInterface $discountableContainer
      *
      * @param CalculableInterface $discountableContainer
      * @param DecisionRuleEntity $decisionRuleEntity
@@ -26,7 +25,6 @@ interface DiscountDecisionRulePluginInterface
      */
     public function check(
         DiscountEntity $discountEntity,
-        //OrderInterface $discountableContainer,
         CalculableInterface $discountableContainer,
         DecisionRuleEntity $decisionRuleEntity = null
     );
