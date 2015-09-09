@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Library\Twig;
+namespace SprykerFeature\Shared\Library\Twig;
 
 use SprykerFeature\Shared\Library\DateFormatter;
 

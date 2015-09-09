@@ -167,4 +167,17 @@ class SalesFacade extends AbstractFacade
             ;
     }
 
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return OrderTransfer
+     */
+    public function getOrderDetails(OrderTransfer $orderTransfer)
+    {
+        return $this->getDependencyContainer()
+            ->createOrderDetailsManager()
+            ->getOrderDetails($orderTransfer)
+        ;
+    }
+
 }

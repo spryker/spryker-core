@@ -454,12 +454,15 @@ class Address
             $this->updateCustomerDefaultAddresses($addressTransfer, $customerEntity, $addressEntity);
 
             $connection->commit();
-
-            return $this->entityToCustomerTransfer($customerEntity);
         } catch (\Exception $e) {
             $connection->rollBack();
             throw $e;
         }
+
+        $customerTransfer = $this->entityToCustomerTransfer($customerEntity);
+        $customerTransfer->setAddresses($this->getAddresses($customerTransfer));
+
+        return $customerTransfer;
     }
 
     /**
@@ -482,12 +485,15 @@ class Address
             $this->updateCustomerDefaultAddresses($addressTransfer, $customerEntity, $addressEntity);
 
             $connection->commit();
-
-            return $this->entityToCustomerTransfer($customerEntity);
         } catch (\Exception $e) {
             $connection->rollBack();
             throw $e;
         }
+
+        $customerTransfer = $this->entityToCustomerTransfer($customerEntity);
+        $customerTransfer->setAddresses($this->getAddresses($customerTransfer));
+
+        return $customerTransfer;
     }
 
     /**

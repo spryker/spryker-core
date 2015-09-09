@@ -7,6 +7,7 @@
 namespace SprykerFeature\Client\Sales\Service;
 
 use Generated\Shared\Sales\OrderListInterface;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
 
 /**
@@ -27,4 +28,17 @@ class SalesClient extends AbstractClient implements SalesClientInterface
             ->getOrders($orderListTransfer)
         ;
     }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return mixed
+     */
+    public function getOrderDetails(OrderTransfer $orderTransfer)
+    {
+        return $this->getDependencyContainer()
+            ->createZedSalesStub()
+            ->getOrderDetails($orderTransfer);
+    }
+
 }
