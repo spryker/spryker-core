@@ -19,12 +19,17 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 abstract class AbstractController
 {
 
+    const FLASH_MESSAGES_SUCCESS = 'flash.messages.success';
+    const FLASH_MESSAGES_ERROR= 'flash.messages.error';
+    const FLASH_MESSAGES_INFO = 'flash.messages.info';
+
     const DEPENDENCY_CONTAINER = 'DependencyContainer';
-    
+
     /**
      * @var AutoCompletion
      */
@@ -46,6 +51,11 @@ abstract class AbstractController
     private $dependencyContainer;
 
     /**
+     * @var SessionInterface
+     */
+    private $session;
+
+    /**
      * @param Application $app
      * @param Factory $factory
      * @param LocatorLocatorInterface $locator
@@ -55,6 +65,7 @@ abstract class AbstractController
         $this->app = $app;
         $this->locator = $locator;
         $this->factory = $factory;
+        $this->session = $app['request']->getSession();
 
         if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
             $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator);
@@ -169,9 +180,9 @@ abstract class AbstractController
      *
      * @return $this
      */
-    protected function addMessageSuccess($message)
+    protected function addSuccessMessage($message)
     {
-        //$this->getMessenger()->success($message);
+        $this->addToSession(self::FLASH_MESSAGES_SUCCESS, $message);
 
         return $this;
     }
@@ -183,9 +194,9 @@ abstract class AbstractController
      *
      * @return $this
      */
-    protected function addMessageWarning($message)
+    protected function addInfoMessage($message)
     {
-        //$this->getMessenger()->warning($message);
+        $this->addToSession(self::FLASH_MESSAGES_INFO, $message);
 
         return $this;
     }
@@ -197,11 +208,20 @@ abstract class AbstractController
      *
      * @return $this
      */
-    protected function addMessageError($message)
+    protected function addErrorMessage($message)
     {
-        //$this->getMessenger()->error($message);
+        $this->addToSession(self::FLASH_MESSAGES_ERROR, $message);
 
         return $this;
+    }
+
+    /**
+     * @param string $key
+     * @param string $value
+     */
+    protected function addToSession($key, $value)
+    {
+        $this->session->getFlashBag()->add($key, $value);
     }
 
     /**
@@ -348,6 +368,5 @@ abstract class AbstractController
 
         return $twig;
     }
-
 
 }
