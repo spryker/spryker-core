@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Payolution;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerFeature\Shared\Payolution\PayolutionConfigConstants;
+use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Payment;
 
 class PayolutionConfig extends AbstractBundleConfig
 {
