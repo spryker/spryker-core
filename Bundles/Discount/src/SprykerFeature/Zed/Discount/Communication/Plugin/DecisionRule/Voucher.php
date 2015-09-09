@@ -38,6 +38,7 @@ class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePlugin
         $componentResult = new ModelResult();
 
         if (count($container->getCalculableObject()->getCouponCodes()) < 1) {
+            $componentResult->addError('Voucher not set.');
             return $componentResult;
         }
 
