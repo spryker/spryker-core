@@ -102,9 +102,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      */
     public function queryConcreteProductBySku($sku)
     {
-        return $this->queryAbstractProducts()
-            ->filterBySku($sku)
-        ;
+        return SpyProductQuery::create()
+            ->filterBySku($sku);
     }
 
     /**
