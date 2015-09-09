@@ -36,7 +36,7 @@ class Environment
 
     private static function buildClassMapIfNotPresent()
     {
-        if (!file_exists(APPLICATION_ROOT_DIR . '.class_map')) {
+        if (!file_exists(APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . '.class_map')) {
             $process = new Process('vendor/bin/build-class-map');
             $process->run();
         }
