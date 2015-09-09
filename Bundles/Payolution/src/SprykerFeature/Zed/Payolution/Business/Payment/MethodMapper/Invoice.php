@@ -89,7 +89,7 @@ class Invoice extends AbstractMethodMapper
     private function getAddressPartialRequest(SpySalesOrderAddress $orderAddress)
     {
         $address = new Address();
-        $address->setCountry($orderAddress->getCountry());
+        $address->setCountry($orderAddress->getCountry()->getName());
         $address->setCity($orderAddress->getCity());
 
         // @todo which part of address is needed?

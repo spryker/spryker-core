@@ -59,7 +59,7 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
     {
         $user = new User();
         $user->setLogin($this->getConfig()->getUserLogin());
-        $user->setPassword($this->getConfig()->getUserPassword());
+        $user->setPwd($this->getConfig()->getUserPassword());
         return $user;
     }
 }

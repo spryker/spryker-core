@@ -38,7 +38,7 @@ class PreAuthorizationRequestTest extends \PHPUnit_Framework_TestCase
                 'TRANSACTION.MODE' => Transaction::MODE_TEST,
                 'TRANSACTION.CHANNEL' => '0987654321',
                 'USER.LOGIN' => 'john.doe',
-                'USER.PASSWORD' => 'test123',
+                'USER.PWD' => 'test123',
                 'IDENTIFICATION.TRANSACTIONID' => '123',
                 'IDENTIFICATION.SHOPPERID' => 'customer123',
                 'PAYMENT.CODE' => Payment::CODE_PRE_AUTHORIZATION,
@@ -211,7 +211,7 @@ class PreAuthorizationRequestTest extends \PHPUnit_Framework_TestCase
     {
         $user = new User();
         $user->setLogin('john.doe');
-        $user->setPassword('test123');
+        $user->setPwd('test123');
         return $user;
     }
 }
