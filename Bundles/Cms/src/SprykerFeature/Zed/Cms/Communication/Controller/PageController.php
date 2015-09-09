@@ -24,6 +24,7 @@ class PageController extends AbstractController
 {
 
     const REDIRECT_ADDRESS = '/cms/glossary/';
+    const CMS_FOLDER_PATH = '@Cms/template/';
 
     /**
      * @return array
@@ -60,6 +61,8 @@ class PageController extends AbstractController
             ->createCmsPageForm('add')
         ;
 
+        $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
+
         $form->handleRequest();
 
         if ($form->isValid()) {
@@ -76,6 +79,7 @@ class PageController extends AbstractController
 
         return $this->viewResponse([
             'form' => $form->createView(),
+            'isSynced' => $isSynced
         ]);
     }
 
@@ -91,6 +95,8 @@ class PageController extends AbstractController
         $form = $this->getDependencyContainer()
             ->createCmsPageForm('update', $idPage)
         ;
+
+        $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
         $form->handleRequest();
         if ($form->isValid()) {
@@ -113,6 +119,7 @@ class PageController extends AbstractController
 
         return $this->viewResponse([
             'form' => $form->createView(),
+            'isSynced' => $isSynced
         ]);
     }
 

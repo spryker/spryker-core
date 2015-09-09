@@ -61,4 +61,11 @@ interface TemplateManagerInterface
      * @return CmsTemplateTransfer
      */
     public function getTemplateByPath($path);
+
+    /**
+     * @param string $cmsTemplateFolderPath
+     *
+     * @return bool
+     */
+    public function syncTemplate($cmsTemplateFolderPath);
 }

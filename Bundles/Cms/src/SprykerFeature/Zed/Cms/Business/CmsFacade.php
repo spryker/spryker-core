@@ -277,6 +277,18 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
+     * @param string $cmsTemplateFolderPath
+     *
+     * @return bool
+     */
+    public function syncTemplate($cmsTemplateFolderPath)
+    {
+        $templateManager = $this->getDependencyContainer()->getTemplateManager();
+
+        return $templateManager->syncTemplate($cmsTemplateFolderPath);
+    }
+
+    /**
      * @param string $templateName
      * @param string $placeholder
      *

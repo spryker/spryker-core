@@ -54,7 +54,8 @@ class CmsDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createTemplateTemplateManager(
             $this->getCmsQueryContainer(),
-            $this->getLocator()
+            $this->getLocator(),
+            $this->getConfig()
         );
     }
 

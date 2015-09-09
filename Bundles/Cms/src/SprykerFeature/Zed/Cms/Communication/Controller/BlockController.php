@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
+use SprykerFeature\Zed\Cms\Business\Exception\MissingTemplateException;
 use SprykerFeature\Zed\Cms\CmsDependencyProvider;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsBlockForm;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsPageForm;
@@ -27,6 +28,7 @@ class BlockController extends AbstractController
 
     const REDIRECT_ADDRESS = '/cms/glossary/';
     const SEARCH_LIMIT = 15;
+    const CMS_FOLDER_PATH = '@Cms/template/';
 
     /**
      * @return array
@@ -62,6 +64,7 @@ class BlockController extends AbstractController
         $form = $this->getDependencyContainer()
             ->createCmsBlockForm('add')
         ;
+        $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
         $form->handleRequest();
 
@@ -80,6 +83,7 @@ class BlockController extends AbstractController
 
         return $this->viewResponse([
             'form' => $form->createView(),
+            'isSynced' => $isSynced
         ]);
     }
 
@@ -95,6 +99,8 @@ class BlockController extends AbstractController
         $form = $this->getDependencyContainer()
             ->createCmsBlockForm('update', $idBlock)
         ;
+
+        $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
         $form->handleRequest();
         if ($form->isValid()) {
@@ -112,6 +118,7 @@ class BlockController extends AbstractController
 
         return $this->viewResponse([
             'form' => $form->createView(),
+            'isSynced' => $isSynced
         ]);
     }
 

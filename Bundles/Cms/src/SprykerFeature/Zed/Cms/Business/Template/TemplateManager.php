@@ -12,6 +12,7 @@ use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingTemplateException;
 use SprykerFeature\Zed\Cms\Business\Exception\TemplateExistsException;
+use SprykerFeature\Zed\Cms\CmsConfig;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use SprykerFeature\Zed\Cms\Persistence\Propel\Map\SpyCmsTemplateTableMap;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplate;
@@ -29,15 +30,23 @@ class TemplateManager implements TemplateManagerInterface
     protected $locator;
 
     /**
+     * @var CmsConfig
+     */
+    protected $config;
+
+    /**
      * @param CmsQueryContainerInterface $cmsQueryContainer
-     * @param LocatorLocatorInterface    $locator
+     * @param LocatorLocatorInterface $locator
+     * @param CmsConfig $config
      */
     public function __construct(
         CmsQueryContainerInterface $cmsQueryContainer,
-        LocatorLocatorInterface $locator
+        LocatorLocatorInterface $locator,
+        CmsConfig $config
     ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->locator = $locator;
+        $this->config = $config;
     }
 
     /**
@@ -233,4 +242,32 @@ class TemplateManager implements TemplateManagerInterface
 
         return $templateEntity;
     }
+
+    /**
+     * @param string $cmsTemplateFolderPath
+     *
+     * @return bool
+     */
+    public function syncTemplate($cmsTemplateFolderPath)
+    {
+        $templateFolder = $this->config->getTemplateRealPath($cmsTemplateFolderPath);
+        $files = scandir($templateFolder);
+        $isSynced = false;
+
+        foreach ($files as $file) {
+            try {
+                $this->getTemplateByPath($cmsTemplateFolderPath . $file);
+            } catch (MissingTemplateException $e) {
+                $fileName = basename($templateFolder . $file, ".twig");
+
+                if ($fileName !== '.' && $fileName !== '..') {
+                    $this->createTemplate($fileName, $cmsTemplateFolderPath . $file);
+                    $isSynced = true;
+                }
+            }
+        }
+
+        return $isSynced;
+    }
+
 }
