@@ -32,9 +32,9 @@ abstract class AbstractPropelCollectorPlugin
         
         $resultCollection = $this->getBatchIterator($query);
 
-        $totalCount = 0;
-        foreach ($resultCollection as $resultItem) {
-            $collectedData = $this->processData($resultItem, $locale);
+        $totalCount = $result->getTotalCount();
+        foreach ($resultCollection as $batch) {
+            $collectedData = $this->processData($batch, $locale);
             $count = count($collectedData);
 
             $dataWriter->write($collectedData, $this->getTouchItemType());
@@ -48,16 +48,16 @@ abstract class AbstractPropelCollectorPlugin
     
     public function postRun(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result, WriterInterface $dataWriter)
     {
-        $query = $this->createQuery($baseQuery, $locale);
+        $query = $this->createQueryForDeletion($baseQuery, $locale);
 
         $resultCollection = $this->getBatchIterator($query);
 
         $totalCount = 0;
         foreach ($resultCollection as $resultItem) {
-            $collectedData = $this->processData($resultItem, $locale);
+            $collectedData = $this->processDataForDeletion($resultItem, $locale);
             $count = count($collectedData);
             
-            $dataWriter->write($collectedData, $this->getTouchItemType());
+            $dataWriter->delete($collectedData);
 
             $result->increaseProcessedCount($count);
             $result->increaseDeletedCount($count);
@@ -65,9 +65,11 @@ abstract class AbstractPropelCollectorPlugin
         }
 
         $result->setTotalCount($totalCount);
+        
+        $this->flushDeletedTouchItems();
     }
     
-/*    protected function flushDeletedItems(WriterInterface $dataWriter)
+    protected function flushDeletedTouchItems()
     {
         $query = new SpyTouchQuery();
         $touchItemsToDelete = $query->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
@@ -76,7 +78,7 @@ abstract class AbstractPropelCollectorPlugin
         foreach ($touchItemsToDelete as $touchItem) {
             $touchItem->delete();
         }
-    }*/
+    }
 
     /**
      * @param SpyTouchQuery $baseQuery
@@ -85,6 +87,7 @@ abstract class AbstractPropelCollectorPlugin
      * @return SpyTouchQuery
      */
     abstract protected function createQuery(SpyTouchQuery $baseQuery, LocaleTransfer $locale);
+    abstract protected function createQueryForDeletion(SpyTouchQuery $baseQuery, LocaleTransfer $locale);
 
     /**
      * @param $baseQuery
@@ -103,6 +106,7 @@ abstract class AbstractPropelCollectorPlugin
      * @return array
      */
     abstract protected function processData($resultSet, LocaleTransfer $locale);
+    abstract protected function processDataForDeletion($resultSet, LocaleTransfer $locale);
 
     /**
      * @return string

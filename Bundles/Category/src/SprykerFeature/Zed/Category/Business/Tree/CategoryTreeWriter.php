@@ -116,6 +116,9 @@ class CategoryTreeWriter
         $connection = Propel::getConnection();
         $connection->beginTransaction();
 
+        //order of execution matters, this must be called before node is deleted
+        $this->touchUrlDeleted($idNode, $locale);
+
         $nodeEntity = $this->categoryTreeReader->getNodeById($idNode);
         $idCategory = $nodeEntity->getFkCategory();
         $categoryNodes = $this->categoryTreeReader->getNodesByIdCategory($idCategory);
@@ -126,8 +129,6 @@ class CategoryTreeWriter
         $this->categoryWriter->delete($idCategory);
         
         $this->touchCategoryDeleted($idNode);
-
-        $this->touchUrlDeleted($idNode);
 
         $connection->commit();
 
@@ -187,6 +188,9 @@ class CategoryTreeWriter
      */
     public function deleteNode($idNode, LocaleTransfer $locale, $deleteChildren = false)
     {
+        //order of execution matters, this must be called before node is deleted
+        $this->touchUrlDeleted($idNode, $locale);
+        
         if ($this->categoryTreeReader->hasChildren($idNode) && $deleteChildren) {
             $childNodes = $this->categoryTreeReader->getChildren($idNode, $locale);
             foreach ($childNodes as $childNode) {
@@ -196,8 +200,6 @@ class CategoryTreeWriter
         
         $this->touchCategoryDeleted($idNode);
 
-        $this->touchUrlDeleted($idNode);
-        
         $this->closureTableWriter->delete($idNode);
 
         return $this->nodeWriter->delete($idNode);
@@ -232,8 +234,10 @@ class CategoryTreeWriter
     /**
      * @param $idCategoryNode
      */
-    protected function touchUrlDeleted($idCategoryNode)
+    protected function touchUrlDeleted($idCategoryNode, LocaleTransfer $locale)
     {
-        $this->touchFacade->touchDeleted(CategoryConfig::RESOURCE_TYPE_URL, $idCategoryNode);
+        $node = $this->categoryTreeReader->getNodeById($idCategoryNode);
+        $nodeTransfer = (new NodeTransfer())->fromArray($node->toArray());
+        $this->nodeUrlManager->removeUrl($nodeTransfer, $locale);
     }
 }
