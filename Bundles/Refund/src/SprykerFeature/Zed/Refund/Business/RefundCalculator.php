@@ -23,10 +23,12 @@ class RefundCalculator
     public function calculateAmount($orderItems, SpySalesOrder $orderEntity) {
         $amount = 0;
 
-        $paymentPayones = $orderEntity->getRefunds();
-        foreach ($paymentPayones as $paymentPayone) {
-
+        $refunds = $orderEntity->getSpyRefunds();
+        $refundAmount = 0;
+        foreach ($refunds as $refund) {
+            $refundAmount += $refund->getAmount();
         }
+        //TODO: TBD how to check if expenses have to be also refunded (last item?)
 
         /** @var SpySalesOrderItem $orderItem */
         foreach ($orderItems as $orderItem) {

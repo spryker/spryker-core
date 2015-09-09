@@ -20,12 +20,4 @@ use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainerInterface;
 class RefundDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
-    /**
-     * @return RefundCalculationPlugin
-     */
-    public function createRefundManager()
-    {
-        return $this->getFactory()->createPluginRefundCalculationPlugin();
-    }
-
 }

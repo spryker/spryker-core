@@ -36,7 +36,6 @@ class RefundPlugin extends AbstractPlugin implements CommandByOrderInterface
         $amount = $this->getDependencyContainer()
             ->createRefundFacade()
             ->calculateAmount($orderItems, $orderEntity);
-        //$amount = $this->calculateAmount($orderItems);
         $refundTransfer->setAmount($amount * -1);
 
         $narrativeText = $this->getDependencyContainer()->getConfig()->getNarrativeText($orderItems, $orderEntity, $data);
