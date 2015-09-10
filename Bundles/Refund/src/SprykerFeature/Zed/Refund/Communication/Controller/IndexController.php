@@ -22,11 +22,29 @@ class IndexController extends AbstractController
     public function indexAction(Request $request)
     {
         $idOrder = $request->query->get('id-sales-order');
-        /*
-        $manager = $this->getDependencyContainer()
-            ->createRefundManager()
-        ;
-        */
+
+        $table = $this->getDependencyContainer()->createRefundsTable();
+
+        return [
+            'orders' => $table->render(),
+        ];
+    }
+
+    /**
+     * @return JsonResponse
+     */
+    public function tableAction()
+    {
+        $table = $this->getDependencyContainer()->createRefundsTable();
+
+        return $this->jsonResponse(
+            $table->fetchData()
+        );
+    }
+
+    public function addAction(Request $request)
+    {
+        $idOrder = $request->query->get('id-sales-order');
 
         $form = $this->getDependencyContainer()
             ->createRefundForm()
@@ -48,5 +66,4 @@ class IndexController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
 }

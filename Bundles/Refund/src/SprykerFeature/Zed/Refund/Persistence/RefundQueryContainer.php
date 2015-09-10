@@ -11,10 +11,19 @@ use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Refund\Persistence\Propel\SpyRefundQuery;
 
 /**
- * @method ShipmentPersistence getFactory()
+ * @method RefundPersistence getFactory()
  */
 class RefundQueryContainer extends AbstractQueryContainer implements RefundQueryContainerInterface
 {
+
+    /**
+     * @return SpyRefundQuery
+     */
+    public function queryRefund()
+    {
+        $query = $this->queryMethods();
+        return $query;
+    }
 
     /**
      * @param int $idMethod

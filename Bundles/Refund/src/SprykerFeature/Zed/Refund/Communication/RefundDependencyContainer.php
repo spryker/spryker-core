@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Refund\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\RefundCommunication;
+use Pyz\Zed\Refund\Communication\Table\RefundsTable;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Refund\Communication\Form\RefundForm;
 use SprykerFeature\Zed\Refund\Communication\Plugin\RefundCalculationPlugin;
@@ -26,9 +27,23 @@ class RefundDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createRefundForm()
     {
-        //$refundQuery = $this->getQueryContainer()->queryRefundByIdRefund();
+        $refundQuery = $this->getQueryContainer()->queryRefund();
 
-        return $this->getFactory()->createFormRefundForm();
+        return $this->getFactory()->createFormRefundForm($refundQuery);
+    }
+
+    /**
+     * @return RefundsTable
+     */
+    public function createRefundsTable()
+    {
+        $refundQuery = $this->getQueryContainer()->queryRefund();
+
+        return $this->getFactory()->createTableRefundsTable(
+            $refundQuery,
+            $this->getRefundFacade(),
+            new DateFormatter(Context::getInstance())
+        );
     }
 
 }

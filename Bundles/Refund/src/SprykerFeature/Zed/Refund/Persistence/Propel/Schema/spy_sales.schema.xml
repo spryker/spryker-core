@@ -16,6 +16,14 @@
         </foreign-key>
     </table>
 
+    <table name="spy_sales_expense">
+        <column name="fk_refund" type="INTEGER"/>
+
+        <foreign-key foreignTable="spy_refund">
+            <reference local="fk_refund" foreign="id_refund"/>
+        </foreign-key>
+    </table>
+
 </database>
 
 
