@@ -9,6 +9,8 @@ namespace SprykerFeature\Zed\Collector\Business\Exporter;
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
+use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchStorageQuery;
+use SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
 
@@ -26,7 +28,7 @@ abstract class AbstractPropelCollectorPlugin
      * @param BatchResultInterface $result
      * @param WriterInterface $dataWriter
      */
-    public function run(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result, WriterInterface $dataWriter)
+    public function run(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result, WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater)
     {
         $query = $this->createQuery($baseQuery, $locale);
         
@@ -37,6 +39,12 @@ abstract class AbstractPropelCollectorPlugin
             $collectedData = $this->processData($batch, $locale);
             $count = count($collectedData);
 
+            /*$touchUpdater should do this thing
+            $query = SpyTouchStorageQuery::create();
+            $query->filterByFkTouch();
+            $query->filterByFkLocale();
+            $query->findOneOrCreate()*/
+            
             $dataWriter->write($collectedData, $this->getTouchItemType());
 
             $result->increaseProcessedCount($count);
@@ -46,7 +54,7 @@ abstract class AbstractPropelCollectorPlugin
         $result->setTotalCount($totalCount);
     }
     
-    public function postRun(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result, WriterInterface $dataWriter)
+    public function postRun(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result, WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater)
     {
         $query = $this->createQueryForDeletion($baseQuery, $locale);
         

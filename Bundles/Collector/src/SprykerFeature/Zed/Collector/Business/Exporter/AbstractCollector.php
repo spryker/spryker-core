@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Collector\Business\Exporter;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Formatter\AbstractFormatter;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainer;
+use SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
 use SprykerFeature\Zed\Collector\Business\Model\FailedResultInterface;
@@ -39,6 +40,11 @@ abstract class AbstractCollector implements ExporterInterface
     protected $writer;
 
     /**
+     * @var TouchUpdaterInterface
+     */
+    protected $touchUpdater;
+
+    /**
      * @var MarkerInterface
      */
     protected $marker;
@@ -54,19 +60,22 @@ abstract class AbstractCollector implements ExporterInterface
      * @param MarkerInterface $marker
      * @param FailedResultInterface $failedResultPrototype
      * @param BatchResultInterface $batchResultPrototype
+     * @param TouchUpdaterInterface $touchUpdater
      */
     public function __construct(
         TouchQueryContainer $queryContainer,
         WriterInterface $writer,
         MarkerInterface $marker,
         FailedResultInterface $failedResultPrototype,
-        BatchResultInterface $batchResultPrototype
+        BatchResultInterface $batchResultPrototype,
+        TouchUpdaterInterface $touchUpdater
     ) {
         $this->queryContainer = $queryContainer;
         $this->writer = $writer;
         $this->marker = $marker;
         $this->failedResultPrototype = $failedResultPrototype;
         $this->batchResultPrototype = $batchResultPrototype;
+        $this->touchUpdater = $touchUpdater;
     }
 
     /**
@@ -104,11 +113,11 @@ abstract class AbstractCollector implements ExporterInterface
 
         $baseQuery = $this->queryContainer->createBasicExportableQuery($type, $lastRunDatetime);
         $baseQuery->setFormatter($this->getFormatter());
-        $collector->run($baseQuery, $locale, $result, $this->writer);
+        $collector->run($baseQuery, $locale, $result, $this->writer, $this->touchUpdater);
 
         $baseQuery = $this->queryContainer->createBasicExportableQueryForDeletion($type, $lastRunDatetime);
         $baseQuery->setFormatter($this->getFormatter());
-        $collector->postRun($baseQuery, $locale, $result, $this->writer);
+        $collector->postRun($baseQuery, $locale, $result, $this->writer, $this->touchUpdater);
 
         return $this->finishExport($result, $type);
     }

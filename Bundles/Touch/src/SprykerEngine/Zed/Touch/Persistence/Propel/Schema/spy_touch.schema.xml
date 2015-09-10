@@ -28,4 +28,40 @@
             <parameter name="backend" value="custom" />
         </behavior>
     </table>
+
+    <table name="spy_touch_storage" phpName="SpyTouchStorage">
+        <column name="id_touch_search" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_locale" type="INTEGER" required="true"/>
+        <column name="fk_touch" type="INTEGER" required="true"/>
+        <column name="key" type="VARCHAR" required="true"/>
+        <unique>
+            <unique-column name="fk_locale"/>
+            <unique-column name="key"/>
+        </unique>
+        <index>
+            <index-column name="key"/>
+        </index>
+        <id-method-parameter value="spy_touch_storage_pk_seq"/>
+        <behavior name="query_cache">
+            <parameter name="backend" value="custom" />
+        </behavior>
+    </table>
+
+    <table name="spy_touch_search" phpName="SpyTouchSearch">
+        <column name="id_touch_search" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_locale" type="INTEGER" required="true"/>
+        <column name="fk_touch" type="INTEGER" required="true"/>
+        <column name="key" type="VARCHAR" required="true"/>
+        <unique>
+            <unique-column name="fk_locale"/>
+            <unique-column name="key"/>
+        </unique>
+        <index>
+            <index-column name="key"/>
+        </index>
+        <id-method-parameter value="spy_touch_search_pk_seq"/>
+        <behavior name="query_cache">
+            <parameter name="backend" value="custom" />
+        </behavior>
+    </table>
 </database>

@@ -8,7 +8,7 @@
 
     <table name="spy_url" phpName="SpyUrl">
         <column name="fk_resource_categorynode" type="INTEGER"/>
-        <foreign-key foreignTable="spy_category_node" phpName="SpyCategoryNode" onDelete="NO ACTION">
+        <foreign-key foreignTable="spy_category_node" phpName="SpyCategoryNode" onDelete="CASCADE">
             <reference foreign="id_category_node" local="fk_resource_categorynode"/>
         </foreign-key>
     </table>
