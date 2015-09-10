@@ -220,19 +220,22 @@ class PayoneFacade extends AbstractFacade
             ->isPaymentNotificationAvailable($idSalesOrder, $idSalesOrderItem);
     }
 
-    public function isPaymentPaid($idSalesOrder, $idSalesOrderItem) {
+    public function isPaymentPaid($idSalesOrder, $idSalesOrderItem)
+    {
         return $this->getDependencyContainer()
             ->createTransactionStatusManager()
             ->isPaymentPaid($idSalesOrder, $idSalesOrderItem);
     }
 
-    public function isPaymentOverpaid($idSalesOrder, $idSalesOrderItem) {
+    public function isPaymentOverpaid($idSalesOrder, $idSalesOrderItem)
+    {
         return $this->getDependencyContainer()
             ->createTransactionStatusManager()
             ->isPaymentOverpaid($idSalesOrder, $idSalesOrderItem);
     }
 
-    public function isPaymentUnderpaid($idSalesOrder, $idSalesOrderItem) {
+    public function isPaymentUnderpaid($idSalesOrder, $idSalesOrderItem)
+    {
         return $this->getDependencyContainer()
             ->createTransactionStatusManager()
             ->isPaymentUnderpaid($idSalesOrder, $idSalesOrderItem);
@@ -245,13 +248,15 @@ class PayoneFacade extends AbstractFacade
             ->isPaymentAppointed($idSalesOrder, $idSalesOrderItem);
     }
 
-    public function isPaymentOther($idSalesOrder, $idSalesOrderItem) {
+    public function isPaymentOther($idSalesOrder, $idSalesOrderItem)
+    {
         return $this->getDependencyContainer()
             ->createTransactionStatusManager()
             ->isPaymentOther($idSalesOrder, $idSalesOrderItem);
     }
 
-    public function isPaymentCapture($idSalesOrder, $idSalesOrderItem) {
+    public function isPaymentCapture($idSalesOrder, $idSalesOrderItem)
+    {
         return $this->getDependencyContainer()
             ->createTransactionStatusManager()
             ->isPaymentCapture($idSalesOrder, $idSalesOrderItem);

@@ -42,7 +42,7 @@ class TransactionStatusResponse
     public function __toString()
     {
         $output = $this->getStatus();
-        if($this->isError() && $this->getErrorMessage()) {
+        if ($this->isError() && $this->getErrorMessage()) {
             $output .= ' : ' . $this->getErrorMessage();
         }
 

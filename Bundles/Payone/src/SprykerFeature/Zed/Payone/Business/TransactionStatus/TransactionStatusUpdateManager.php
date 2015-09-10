@@ -7,11 +7,11 @@
 namespace SprykerFeature\Zed\Payone\Business\TransactionStatus;
 
 use Generated\Shared\Payone\PayoneStandardParameterInterface;
-use SprykerFeature\Shared\Payone\Dependency\HashInterface;
 use SprykerFeature\Shared\Payone\Dependency\TransactionStatusUpdateInterface;
 use SprykerFeature\Shared\Payone\PayoneTransactionStatusConstants;
 use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusRequest;
 use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
+use SprykerFeature\Zed\Payone\Business\Key\HashGenerator;
 use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLog;
@@ -29,23 +29,23 @@ class TransactionStatusUpdateManager
      */
     protected $standardParameter;
     /**
-     * @var HashInterface
+     * @var HashGenerator
      */
-    protected $hashProvider;
+    protected $hashGenerator;
 
     /**
      * @param PayoneQueryContainerInterface $queryContainer
      * @param PayoneStandardParameterInterface $standardParameter
-     * @param HashInterface $hashProvider
+     * @param HashGenerator $hashGenerator
      */
     public function __construct(
         PayoneQueryContainerInterface $queryContainer,
         PayoneStandardParameterInterface $standardParameter,
-        HashInterface $hashProvider)
+        HashGenerator $hashGenerator)
     {
         $this->queryContainer = $queryContainer;
         $this->standardParameter = $standardParameter;
-        $this->hashProvider = $hashProvider;
+        $this->hashGenerator = $hashGenerator;
     }
 
     /**
@@ -91,7 +91,7 @@ class TransactionStatusUpdateManager
 
     public function getPaymentStatus($order)
     {
-//        @todo implement
+        //        @todo implement
 //        $order->getTransactionId();
 //        $this->findPaymentByTransactionId();
 //        $paymentStatus = new PaymentStatusTransfer();
@@ -132,7 +132,7 @@ class TransactionStatusUpdateManager
      */
     protected function validate(TransactionStatusUpdateInterface $request)
     {
-        $systemHashedKey = $this->hashProvider->hash($this->standardParameter->getKey());
+        $systemHashedKey = $this->hashGenerator->hash($this->standardParameter->getKey());
         if ($request->getKey() !== $systemHashedKey) {
             return $this->createErrorResponse('Payone transaction status update: Given and internal key do not match!');
         }
@@ -200,6 +200,7 @@ class TransactionStatusUpdateManager
     public function isPaymentCapture($idSalesOrder, $idSalesOrderItem)
     {
         $status = PayoneTransactionStatusConstants::TXACTION_CAPTURE;
+
         return $this->isPayment($idSalesOrder, $idSalesOrderItem, $status);
     }
 
@@ -222,12 +223,14 @@ class TransactionStatusUpdateManager
     public function isPaymentUnderpaid($idSalesOrder, $idSalesOrderItem)
     {
         $status = PayoneTransactionStatusConstants::TXACTION_UNDERPAID;
+
         return $this->isPayment($idSalesOrder, $idSalesOrderItem, $status);
     }
 
     public function isPaymentAppointed($idSalesOrder, $idSalesOrderItem)
     {
         $status = PayoneTransactionStatusConstants::TXACTION_APPOINTED;
+
         return $this->isPayment($idSalesOrder, $idSalesOrderItem, $status);
     }
 
@@ -280,7 +283,8 @@ class TransactionStatusUpdateManager
      *
      * @return bool
      */
-    private function hasUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem) {
+    private function hasUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem)
+    {
         $records = $this->getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem);
 
         return !empty($records);
@@ -293,7 +297,8 @@ class TransactionStatusUpdateManager
      *
      * @return SpyPaymentPayoneTransactionStatusLog
      */
-    private function getFirstUnprocessedTransactionStatusLog($idSalesOrder, $idSalesOrderItem, $status) {
+    private function getFirstUnprocessedTransactionStatusLog($idSalesOrder, $idSalesOrderItem, $status)
+    {
         $records = $this->getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem);
 
         if (empty($records)) {
@@ -316,7 +321,8 @@ class TransactionStatusUpdateManager
      *
      * @return SpyPaymentPayoneTransactionStatusLog[]
      */
-    private function getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem) {
+    private function getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem)
+    {
         $transactionStatusLogs = $this->queryContainer->getTransactionStatusLogsBySalesOrder($idSalesOrder)->find();
 
         $ids = [];

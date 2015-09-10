@@ -138,6 +138,7 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
             ->filterByIdPaymentPayoneTransactionStatusLog($ids)
             ->filterByIdSalesOrderItem($idSalesOrderItem)
         ;
+
         return $relations;
     }
 

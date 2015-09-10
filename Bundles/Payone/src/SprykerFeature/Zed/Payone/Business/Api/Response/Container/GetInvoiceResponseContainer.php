@@ -37,8 +37,7 @@ class GetInvoiceResponseContainer extends AbstractResponseContainer
     {
         if ($this->isError()) {
             $result = parent::__toString();
-        }
-        else {
+        } else {
             $stringArray = ['status=' . $this->getStatus(), 'data=PDF-Content'];
             $result = implode('|', $stringArray);
         }

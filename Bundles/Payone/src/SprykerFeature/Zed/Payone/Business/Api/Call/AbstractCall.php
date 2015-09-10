@@ -4,11 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Client\Payone\ClientApi\Call;
+namespace SprykerFeature\Zed\Payone\Business\Api\Call;
 
 use Generated\Shared\Payone\PayoneStandardParameterInterface;
-use SprykerFeature\Client\Payone\ClientApi\HashGeneratorInterface;
-use SprykerFeature\Client\Payone\ClientApi\Request\AbstractRequest;
+use SprykerFeature\Zed\Payone\Business\Key\HashGeneratorInterface;
+use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AbstractRequestContainer;
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
 
 abstract class AbstractCall
@@ -45,9 +45,9 @@ abstract class AbstractCall
     }
 
     /**
-     * @param AbstractRequest $container
+     * @param AbstractRequestContainer $container
      */
-    protected function applyStandardParameter(AbstractRequest $container)
+    protected function applyStandardParameter(AbstractRequestContainer $container)
     {
         if (null === $container->getPortalid()) {
             $container->setPortalid($this->standardParameter->getPortalId());
@@ -66,6 +66,9 @@ abstract class AbstractCall
         }
         if (null === $container->getLanguage()) {
             $container->setLanguage($this->standardParameter->getLanguage());
+        }
+        if (null === $container->getApiVersion()) {
+            $container->setApiVersion($this->standardParameter->getApiVersion());
         }
     }
 

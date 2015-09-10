@@ -14,8 +14,8 @@ use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
-use SprykerFeature\Shared\Payone\Dependency\HashInterface;
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
+use SprykerFeature\Zed\Payone\Business\Api\Call\CreditCardCheck;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\RefundContainer;
 use SprykerFeature\Zed\Payone\Business\Exception\InvalidPaymentMethodException;
@@ -27,6 +27,8 @@ use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CaptureResponseCon
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
+use SprykerFeature\Zed\Payone\Business\Key\HashGenerator;
+use SprykerFeature\Zed\Payone\Business\Mode\ModeDetector;
 use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
@@ -44,26 +46,27 @@ class PaymentManager implements PaymentManagerInterface
      * @var AdapterInterface
      */
     protected $executionAdapter;
+
     /**
      * @var PayoneQueryContainerInterface
      */
     protected $queryContainer;
+
     /**
      * @var PayoneStandardParameterInterface
      */
     protected $standardParameter;
-    /**
-     * @var HashInterface
-     */
-    protected $hashProvider;
+
     /**
      * @var SequenceNumberProviderInterface
      */
     protected $sequenceNumberProvider;
+
     /**
      * @var ModeDetectorInterface
      */
     protected $modeDetector;
+
     /**
      * @var PaymentMethodMapperInterface[]
      */
@@ -73,7 +76,7 @@ class PaymentManager implements PaymentManagerInterface
      * @param AdapterInterface $executionAdapter
      * @param PayoneQueryContainerInterface $queryContainer
      * @param PayoneStandardParameterInterface $standardParameter
-     * @param HashInterface $hashProvider
+     * @param HashGenerator $hashGenerator
      * @param SequenceNumberProviderInterface $sequenceNumberProvider
      * @param ModeDetectorInterface $modeDetector
      */
@@ -81,14 +84,14 @@ class PaymentManager implements PaymentManagerInterface
         AdapterInterface $executionAdapter,
         PayoneQueryContainerInterface $queryContainer,
         PayoneStandardParameterInterface $standardParameter,
-        HashInterface $hashProvider,
+        HashGenerator $hashGenerator,
         SequenceNumberProviderInterface $sequenceNumberProvider,
         ModeDetectorInterface $modeDetector)
     {
         $this->executionAdapter = $executionAdapter;
         $this->queryContainer = $queryContainer;
         $this->standardParameter = $standardParameter;
-        $this->hashProvider = $hashProvider;
+        $this->hashGenerator = $hashGenerator;
         $this->sequenceNumberProvider = $sequenceNumberProvider;
         $this->modeDetector = $modeDetector;
     }
@@ -427,7 +430,8 @@ class PaymentManager implements PaymentManagerInterface
     {
         $container->setApiVersion(PayoneApiConstants::API_VERSION_3_9);
         $container->setEncoding($this->standardParameter->getEncoding());
-        $container->setKey($this->hashProvider->hash($this->standardParameter->getKey()));
+        $container->setKey($this->hashGenerator->hash($this->standardParameter->getKey()));
+        //$container->setKey($this->standardParameter->getKey());
         $container->setMid($this->standardParameter->getMid());
         $container->setPortalid($this->standardParameter->getPortalId());
         $container->setMode($this->modeDetector->getMode());
@@ -467,6 +471,22 @@ class PaymentManager implements PaymentManagerInterface
         ksort($logs);
 
         return $logs;
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    public function getCreditCardCheckRequestData(array $data)
+    {
+        $this->standardParameter->fromArray($data, true);
+
+        $creditCardCheck = new CreditCardCheck($this->standardParameter, $this->hashGenerator, $this->modeDetector);
+
+        $data = $creditCardCheck->mapCreditCardCheckData();
+
+        return $data->toArray();
     }
 
 }

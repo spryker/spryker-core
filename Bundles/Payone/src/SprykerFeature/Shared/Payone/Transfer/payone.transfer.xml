@@ -79,13 +79,14 @@
         <property name="aid" type="string" />
         <property name="portalId" type="string" />
         <property name="key" type="string" />
-        <property name="api_version" type="string" />
+        <property name="apiVersion" type="string" />
         <property name="paymentGatewayUrl" type="string" />
         <property name="currency" type="string" />
         <property name="language" type="string" />
         <property name="redirectSuccessUrl" type="string" />
         <property name="redirectBackUrl" type="string" />
         <property name="redirectErrorUrl" type="string" />
+        <property name="storeCardData" type="string" />
     </transfer>
 
     <transfer name="PayoneApiCallResponseCheck">

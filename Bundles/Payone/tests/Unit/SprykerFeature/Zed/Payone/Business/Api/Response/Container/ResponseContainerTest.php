@@ -42,7 +42,6 @@ class ResponseContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('creditorname', $container->getCreditorName());
         $this->assertEquals('creditorstreet', $container->getCreditorStreet());
         $this->assertEquals('creditorzip', $container->getCreditorZip());
-
     }
 
     protected function getAuthorizationResponseParams()
