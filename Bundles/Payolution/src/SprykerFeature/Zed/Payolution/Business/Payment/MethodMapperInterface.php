@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\Payolution\Business\Payment;
 
 use SprykerFeature\Zed\Payolution\Business\Api\Request\PreAuthorizationRequest;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
+use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 
 interface MethodMapperInterface
 {
@@ -20,11 +20,10 @@ interface MethodMapperInterface
     public function getName();
 
     /**
-     * @param SpySalesOrder $salesOrder
-     * @param string $clientIp
+     * @param SpyPaymentPayolution $payment
      *
      * @return PreAuthorizationRequest
      */
-    public function mapToPreAuthorization(SpySalesOrder $salesOrder, $clientIp);
+    public function mapToPreAuthorization(SpyPaymentPayolution $paymentEntity);
 
 }

@@ -6,11 +6,11 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Payment;
 
+use Generated\Shared\Transfer\OrderListTransfer;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\PreAuthorizationRequest;
 use SprykerFeature\Zed\Payolution\Business\Api\Response\PreAuthorizationResponse;
-use SprykerFeature\Zed\Payolution\Business\Payment\EntityToRequestMapper\EntityToRequestMapperInterface;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
+use SprykerFeature\Zed\Sales\Business\SalesFacade;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 
 class PaymentManager implements PaymentManagerInterface
@@ -35,8 +35,8 @@ class PaymentManager implements PaymentManagerInterface
         AdapterInterface $executionAdapter,
         PayolutionQueryContainerInterface $queryContainer
     ) {
-        $this->queryContainer = $queryContainer;
         $this->executionAdapter = $executionAdapter;
+        $this->queryContainer = $queryContainer;
     }
 
 
@@ -49,18 +49,17 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param int $idOrder
-     * @param $clientIp
+     * @param int $idPayment
      *
      * @return PreAuthorizationResponse
      */
-    public function preAuthorizePaymentFromOrder($idOrder, $clientIp)
+    public function preAuthorizePayment($idPayment)
     {
-        $orderEntity = $this->getOrderEntity($idOrder);
+        $paymentEntity = $this->queryContainer->queryPaymentById($idPayment);
 
         $authorizationRequest = $this
             ->methodMappers[MethodMapperInterface::INVOICE]
-            ->mapToPreAuthorization($orderEntity, $clientIp);
+            ->mapToPreAuthorization($paymentEntity);
 
         $authorizationResponse = $this->executionAdapter->sendRequest($authorizationRequest);
 
@@ -68,16 +67,6 @@ class PaymentManager implements PaymentManagerInterface
         $response->initFromArray($authorizationResponse);
 
         return $response;
-    }
-
-    /**
-     * @param $idOrder
-     *
-     * @return SpySalesOrder
-     */
-    private function getOrderEntity($idOrder)
-    {
-        return $this->queryContainer->querySalesOrderById($idOrder)->findOne();
     }
 
 }

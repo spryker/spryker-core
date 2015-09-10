@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<database
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    name="zed"
+    defaultIdMethod="native"
+    defaultPhpNamingMethod="underscore"
+    xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
+    identifierQuoting="true"
+    namespace="SprykerFeature\Zed\Payolution\Persistence\Propel"
+    package="vendor.spryker.spryker.Bundles.Payolution.src.SprykerFeature.Zed.Payolution.Persistence.Propel"
+>
+    <table name="spy_payment_payolution" phpName="SpyPaymentPayolution">
+        <column name="id_payment_payolution" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_sales_order" required="true" type="INTEGER"/>
+
+        <column name="payment_code" required="true" type="VARCHAR"/>
+        <column name="transaction_id" required="true" type="VARCHAR"/>
+        <column name="account_brand" required="true" type="VARCHAR"/>
+        <column name="client_ip" required="true" type="VARCHAR"/>
+
+        <foreign-key foreignTable="spy_sales_order" phpName="SpySalesOrder">
+            <reference foreign="id_sales_order" local="fk_sales_order"/>
+        </foreign-key>
+
+        <behavior name="timestampable"/>
+        <id-method-parameter value="spy_payment_payolution_pk_seq"/>
+    </table>
+
+    <table name="spy_payment_payolution_api_log">
+        <column name="id_payment_payolution_api_log" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="fk_payment_payolution" required="true" type="INTEGER"/>
+
+        <column name="request" required="true" type="VARCHAR"/>
+        <column name="mode" required="true" type="VARCHAR"/>
+        <column name="status" type="VARCHAR"/>
+        <column name="transaction_id" type="INTEGER"/>
+        <column name="unique_id" type="INTEGER"/>
+        <column name="sequence_number" type="INTEGER"/>
+        <column name="user_id" type="VARCHAR"/>
+        <column name="merchant_id" required="true" type="VARCHAR"/>
+
+        <column name="error_code" type="VARCHAR"/>
+        <column name="error_message_internal" type="VARCHAR"/>
+        <column name="error_message_user" type="VARCHAR"/>
+
+        <foreign-key foreignTable="spy_payment_payolution">
+            <reference foreign="id_payment_payolution" local="fk_payment_payolution"/>
+        </foreign-key>
+
+        <behavior name="timestampable"/>
+        <id-method-parameter value="spy_payment_payolution_api_log_pk_seq"/>
+    </table>
+</database>

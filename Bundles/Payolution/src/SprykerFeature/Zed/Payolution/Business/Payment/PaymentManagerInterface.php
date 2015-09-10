@@ -10,11 +10,10 @@ use SprykerFeature\Zed\Payolution\Business\Api\Response\PreAuthorizationResponse
 interface PaymentManagerInterface
 {
     /**
-     * @param int $idOrder
-     * @param string $clientIp
+     * @param int $idPayment
      *
      * @return PreAuthorizationResponse
      */
-    public function preAuthorizePaymentFromOrder($idOrder, $clientIp);
+    public function preAuthorizePayment($idPayment);
 
 }

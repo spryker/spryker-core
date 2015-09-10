@@ -1,39 +1,32 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payolution\Persistence;
 
-
 use Generated\Zed\Ide\FactoryAutoCompletion\PayolutionPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Payolution\PayolutionDependencyProvider;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
-
+use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
+use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionQuery;
 
 /**
  * @method PayolutionPersistence getFactory()
  */
 class PayolutionQueryContainer extends AbstractQueryContainer implements PayolutionQueryContainerInterface
 {
-    /**
-     * @return SalesQueryContainerInterface
-     */
-    protected function getOsmQueryContainer()
-    {
-        return $this->getProvidedDependency(PayolutionDependencyProvider::QUERY_CONTAINER_OSM);
-    }
 
     /**
-     * @param int $idOrder
+     * @param int $idPayment
      *
-     * @return SpySalesOrderQuery
+     * @return SpyPaymentPayolution
      */
-    public function querySalesOrderById($idOrder)
+    public function queryPaymentById($idPayment)
     {
-        return $this->getOsmQueryContainer()->querySalesOrderById($idOrder);
-    }
+        $query = SpyPaymentPayolutionQuery::create();
 
+        return $query->requireOneByIdPaymentPayolution($idPayment);
+    }
 
 }

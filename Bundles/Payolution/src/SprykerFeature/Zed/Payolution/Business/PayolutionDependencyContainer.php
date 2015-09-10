@@ -9,10 +9,13 @@ namespace SprykerFeature\Zed\Payolution\Business;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use Generated\Zed\Ide\FactoryAutoCompletion\PayolutionBusiness;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
+use SprykerFeature\Zed\Payolution\Business\Order\OrderManagerInterface;
 use SprykerFeature\Zed\Payolution\Business\Payment\EntityToRequestMapper\OrderToPreAuthorization;
 use SprykerFeature\Zed\Payolution\Business\Payment\PaymentManagerInterface;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
+use SprykerFeature\Zed\Payolution\PayolutionDependencyProvider;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
+use SprykerFeature\Zed\Payone\PayoneDependencyProvider;
 
 /**
  * @method PayolutionBusiness getFactory()
@@ -50,6 +53,14 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
         return $this
             ->getFactory()
             ->createApiAdapterHttpGuzzle($gatewayUrl);
+    }
+
+    /**
+     * @return OrderManagerInterface
+     */
+    public function createOrderManager()
+    {
+        return $this->getFactory()->createOrderOrderManager();
     }
 
 }

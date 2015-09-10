@@ -21,6 +21,7 @@ use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Transaction;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\User;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\PreAuthorizationRequest;
 use SprykerFeature\Zed\Payolution\Business\Payment\MethodMapperInterface;
+use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
 
@@ -36,28 +37,33 @@ class Invoice extends AbstractMethodMapper
     }
 
     /**
-     * @param SpySalesOrder $salesOrder
-     * @param string $clientIp
+     * @param SpyPaymentPayolution $payment
+     *
      * @return PreAuthorizationRequest
      */
-    public function mapToPreAuthorization(SpySalesOrder $salesOrder, $clientIp)
+    public function mapToPreAuthorization(SpyPaymentPayolution $paymentEntity)
     {
+        $orderEntity = $paymentEntity->getSpySalesOrder();
+
         $request = new PreAuthorizationRequest();
         $request->setHeader($this->getHeaderPartialRequest());
 
         // @todo  move to own method
         $presentation = new Presentation();
-        $presentation->setAmount($salesOrder->getGrandTotal());
+        $presentation->setAmount($orderEntity->getGrandTotal());
         $presentation->setCurrency(Store::getInstance()->getCurrencyIsoCode());
-        $presentation->setUsage($salesOrder->getIdSalesOrder());
+        $presentation->setUsage($orderEntity->getIdSalesOrder());
 
         $payment = $this->getPaymentPartialRequest($presentation, Payment::CODE_PRE_AUTHORIZATION);
         $user = $this->getUserPartialRequest();
-        $identification = $this->getIdentificationPartialRequest($salesOrder);
+        $identification = $this->getIdentificationPartialRequest($orderEntity);
 
-        $address = $this->getAddressPartialRequest($salesOrder->getBillingAddress());
-        $name = $this->getNamePartialRequest($salesOrder->getCustomer());
-        $contact = $this->getContactPartialRequest($salesOrder->getCustomer(), $clientIp);
+        $address = $this->getAddressPartialRequest($orderEntity->getBillingAddress());
+        $name = $this->getNamePartialRequest($orderEntity->getCustomer());
+        $contact = $this->getContactPartialRequest(
+            $orderEntity->getCustomer(),
+            $paymentEntity->getClientIp()
+        );
 
         $customer = $this->getCustomerPartialRequest($address, $name, $contact);
 
@@ -206,14 +212,14 @@ class Invoice extends AbstractMethodMapper
     }
 
     /**
-     * @param SpySalesOrder $salesOrder
+     * @param SpySalesOrder $orderEntity
      *
      * @return Identification
      */
-    protected function getIdentificationPartialRequest(SpySalesOrder $salesOrder)
+    protected function getIdentificationPartialRequest(SpySalesOrder $orderEntity)
     {
         $identification = new Identification();
-        $identification->setShopperID($salesOrder->getCustomer()->getCustomerReference());
+        $identification->setShopperID($orderEntity->getCustomer()->getCustomerReference());
 
         //@todo replace transID generation
         $identification->setTransactionID(uniqid('trans_'));

@@ -7,7 +7,7 @@ namespace SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
 
 use SprykerFeature\Zed\Payolution\Business\Api\Request\PreAuthorizationRequest;
 use SprykerFeature\Zed\Payolution\Business\Payment\MethodMapperInterface;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
+use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 
 class Installment extends AbstractMethodMapper
 {
@@ -21,11 +21,11 @@ class Installment extends AbstractMethodMapper
     }
 
     /**
-     * @param SpySalesOrder $salesOrder
+     * @param SpyPaymentPayolution $payment
      *
      * @return PreAuthorizationRequest
      */
-    public function mapToPreAuthorization(SpySalesOrder $salesOrder)
+    public function mapToPreAuthorization(SpyPaymentPayolution $payment)
     {
         $request = new PreAuthorizationRequest();
         return $request;

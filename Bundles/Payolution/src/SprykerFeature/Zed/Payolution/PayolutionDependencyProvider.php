@@ -8,24 +8,21 @@ namespace SprykerFeature\Zed\Payolution;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
 use SprykerEngine\Zed\Kernel\Container;
+use SprykerFeature\Zed\Sales\Business\SalesFacade;
 
 class PayolutionDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const QUERY_CONTAINER_OSM = 'query container osm';
+    const FACADE_SALES = 'facade sales';
 
     /**
      * @param Container $container
      *
-     * @return Container
+     * @return SalesFacade
      */
-    public function providePersistenceLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::QUERY_CONTAINER_OSM] = function (Container $container) {
-            return $container->getLocator()->oms()->queryContainer();
-        };
-
-        return $container;
+        return $container[self::FACADE_SALES] = $container->getLocator()->sales()->facade();
     }
 
 }

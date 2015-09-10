@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<transfers
+    xmlns="http://xsd.spryker.com"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd"
+>
+    <transfer name="PayolutionPayment">
+        <property name="fkSalesOrder" type="int" />
+        <property name="paymentCode" type="string" />
+        <property name="transactionId" type="string" />
+        <property name="accountBrand" type="string" />
+        <property name="clientIp" type="string" />
+    </transfer>
+
+    <transfer name="Order">
+        <property name="idSalesOrder" type="int" />
+        <property name="payolutionPayment" type="PayolutionPayment"/>
+    </transfer>
+
+    <transfer name="CheckoutRequest">
+        <property name="payolutionPayment" type="PayolutionPayment"/>
+    </transfer>
+</transfers>
