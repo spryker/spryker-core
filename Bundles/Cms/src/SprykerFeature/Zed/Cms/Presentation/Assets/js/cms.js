@@ -5,6 +5,7 @@ var keyList = null;
 var keyContainer = null;
 var itemList = null;
 var itemContainer = null;
+var successResponseCount = 0;
 
 function postForm( $form, id, successCallback ){
 
@@ -52,6 +53,7 @@ var ajaxifySubmmit = function(formId) {
                         keyType.val(1);
                     }
                     $('.success_' + formId).text('Successfully added.');
+                    successResponseCount++;
                 }else{
                     $('.error_' + formId).text(response.errorMessages);
                 }
@@ -283,13 +285,37 @@ var delay = (function(){
 })();
 
 $(document).ready(function(){
-
     addAutoCompleteSearchEvent('#form_selectValue');
 
     $('.cms_form').each(function(index, item){
         var formId = $(item).attr('data-index');
         ajaxifySubmmit(formId);
         addKeySearchEvent(formId);
+    });
+
+    $('#saveAll').on('click',function(){
+        $('.save-all-message').text('');
+        $('.save-all-loading').show();
+        var formCount = 0;
+        successResponseCount = 0;
+        $('.cms_form').each(function(index, item){
+            var formId = $(item).attr('data-index');
+            $('.form_class_' + formId).submit();
+            formCount++;
+        });
+
+        $(document).ajaxStop(function() {
+            $('.save-all-loading').hide();
+            $('.save-all-message').text(successResponseCount + ' of ' + formCount + ' is done.');
+            if (formCount == successResponseCount) {
+                $('.save-all-message').css('color','green');
+            } else if (formCount > successResponseCount && successResponseCount != 0) {
+                $('.save-all-message').css('color','orange');
+            } else {
+                $('.save-all-message').css('color','red');
+            }
+            $(this).unbind("ajaxStop");
+        });
     });
 });
 

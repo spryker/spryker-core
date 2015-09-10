@@ -30,7 +30,7 @@
         <property name="locale" type="Locale" />
         <property name="name" type="string" />
         <property name="type" type="string" />
-        <property name="value" type="string" />
+        <property name="value" type="int" />
     </transfer>
 
 </transfers>
