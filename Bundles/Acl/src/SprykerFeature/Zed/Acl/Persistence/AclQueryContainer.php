@@ -356,44 +356,6 @@ class AclQueryContainer extends AbstractQueryContainer
 
         $query->withColumn(SpyAclGroupTableMap::COL_NAME, self::GROUP_NAME);
         $query->withColumn(SpyAclGroupTableMap::COL_ID_ACL_GROUP, self::ID_ACL_GROUP);
-//        $query->addAsColumn(SpyAclUserHasGroupTableMap::COL_FK_ACL_GROUP, 'group');
-
-        return $query;
-    }
-
-    /**
-     * @param int $idGroup
-     *
-     * @return SpyUserQuery
-     */
-    public function queryUsersWithGroupByGroupId($idGroup)
-    {
-        $group = $this->queryGroup();//->findOneByIdAclGroup($idGroup);
-
-
-//        $sp = $this->queryUserHasGroupById(55, 0);
-//        dump($sp->toString());
-//        die;
-
-//        $query = $this->queryUsersWithGroup()
-        $query = $this->queryUsersWithGroup()
-//            ->filterBySpyAclGroup($group)
-//            ->where(SpyAclUserHasGroupTableMap::COL_FK_ACL_GROUP . ' = ?', 55)
-//            ->filterBySpyAclGroup($group)
-//            ->useSpyAclUserHasGroupQuery(null, Criteria::LEFT_JOIN)
-//                ->filterByFkAclGroup($idGroup)
-//            ->endUse()
-        ;
-        dump($query->toString());
-        die;
-//        $query->filterBySpyAclUserHasGroup();
-//        $query->useSpyAclUserHasGroupQuery()
-//        ->filterByPrimaryKeys($spyAclUserHasGroup->getPrimaryKeys())
-//        ->endUse();
-//        $query->filterBy(SpyAclUserHasGroupTableMap::COL_FK_ACL_GROUP, $idGroup);
-
-//        dump($query->toString());
-//        die;
 
         return $query;
     }

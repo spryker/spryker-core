@@ -13,6 +13,7 @@ use SprykerFeature\Zed\Acl\Communication\Form\GroupForm;
 use SprykerFeature\Zed\Acl\Communication\Form\RoleForm;
 use SprykerFeature\Zed\Acl\Communication\Form\RulesetForm;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use SprykerFeature\Zed\Acl\Communication\Table\GroupUsersTable;
 use SprykerFeature\Zed\Acl\Communication\Table\RoleTable;
 use SprykerFeature\Zed\Acl\Communication\Table\RulesetTable;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
@@ -75,7 +76,6 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
     {
         return $this->getFactory()->createTableGroupUsersTable(
             $this->getQueryContainer()->queryGroup(),
-            $this->getQueryContainer()->queryUsersWithGroupByGroupId($idGroup),
             $idGroup
         );
     }

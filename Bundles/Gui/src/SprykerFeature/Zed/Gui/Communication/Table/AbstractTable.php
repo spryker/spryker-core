@@ -92,7 +92,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @todo find a better solution (remove it)
+     * @todo CD-412 find a better solution (remove it)
      *
      * @param string $name
      *
@@ -337,7 +337,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @todo to be rafactored, does to many things and is hard to understand
+     * @todo CD-412 to be rafactored, does to many things and is hard to understand
      *
      * @param ModelCriteria $query
      * @param TableConfiguration $config
@@ -349,7 +349,11 @@ abstract class AbstractTable
         $limit = $config->getPageLength();
         $offset = $this->getOffset();
         $order = $this->getOrders();
-        $columns = array_keys($config->getHeader());
+        // @todo CD-412 refactor this class to allow unspecified header columns and to add flexibility
+        $columns = (!empty($config->getHeader()))
+            ? array_keys($config->getHeader())
+            : array_keys($query->getTableMap()->getColumns())
+        ;
         $orderColumn = $columns[$order[0]['column']];
         $this->total = $query->count();
         $query->orderBy($orderColumn, $order[0]['dir']);
