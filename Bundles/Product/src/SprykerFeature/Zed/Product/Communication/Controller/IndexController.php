@@ -144,7 +144,7 @@ class IndexController extends AbstractController
         foreach ($concreteProductsCollenction as $product) {
 
             $productOptions = $this->getDependencyContainer()
-                ->getProvidedDependency(ProductDependencyProvider::FACADE_PRODUCT_OPTIONS)
+                ->createProductOptionsFacade()
                 ->getProductOptionsByIdProduct(
                     $product->getIdProduct(),
                     $this->getCurrentLocale()->getIdLocale()
@@ -196,7 +196,10 @@ class IndexController extends AbstractController
      */
     protected function getCurrentLocale()
     {
-        $currentLocale = $this->getDependencyContainer()->getProvidedDependency(ProductDependencyProvider::FACADE_LOCALE)->getCurrentLocale();
+        $currentLocale = $this->getDependencyContainer()
+            ->createLocaleFacade()
+            ->getCurrentLocale()
+        ;
 
         return $currentLocale;
     }
