@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 abstract class AbstractController
 {
@@ -51,9 +51,9 @@ abstract class AbstractController
     private $dependencyContainer;
 
     /**
-     * @var SessionInterface
+     * @var FlashBagInterface
      */
-    private $session;
+    private $flashBag;
 
     /**
      * @param Application $app
@@ -65,7 +65,7 @@ abstract class AbstractController
         $this->app = $app;
         $this->locator = $locator;
         $this->factory = $factory;
-        $this->session = $app['request']->getSession();
+        $this->flashBag = $app['request']->getSession()->getFlashBag();
 
         if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
             $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator);
@@ -182,7 +182,7 @@ abstract class AbstractController
      */
     protected function addSuccessMessage($message)
     {
-        $this->addToSession(self::FLASH_MESSAGES_SUCCESS, $message);
+        $this->addToFlashBag(self::FLASH_MESSAGES_SUCCESS, $message);
 
         return $this;
     }
@@ -196,7 +196,7 @@ abstract class AbstractController
      */
     protected function addInfoMessage($message)
     {
-        $this->addToSession(self::FLASH_MESSAGES_INFO, $message);
+        $this->addToFlashBag(self::FLASH_MESSAGES_INFO, $message);
 
         return $this;
     }
@@ -210,7 +210,7 @@ abstract class AbstractController
      */
     protected function addErrorMessage($message)
     {
-        $this->addToSession(self::FLASH_MESSAGES_ERROR, $message);
+        $this->addToFlashBag(self::FLASH_MESSAGES_ERROR, $message);
 
         return $this;
     }
@@ -219,9 +219,9 @@ abstract class AbstractController
      * @param string $key
      * @param string $value
      */
-    protected function addToSession($key, $value)
+    protected function addToFlashBag($key, $value)
     {
-        $this->session->getFlashBag()->add($key, $value);
+        $this->flashBag->add($key, $value);
     }
 
     /**
