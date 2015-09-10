@@ -54,6 +54,14 @@ class ProductDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
+     * @return string
+     */
+    public function createYvesUrl()
+    {
+        return $this->getConfig()->getHostYves();
+    }
+
+    /**
      * @return FileImporter
      */
     public function createProductImporter()

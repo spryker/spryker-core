@@ -59,6 +59,10 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->productOption()->facade();
         };
 
+        $container[self::FACADE_URL] = function (Container $container) {
+            return $container->getLocator()->url()->facade();
+        };
+
         return $container;
     }
 

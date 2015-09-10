@@ -124,6 +124,8 @@ class ProductOptionReader implements ProductOptionReaderInterface
             ->endUse()
             ->withColumn(SpyProductOptionTypeTranslationTableMap::COL_NAME, self::COL_TRANSLATION_TYPE_ALIAS)
             ->withColumn(SpyProductOptionValueTranslationTableMap::COL_NAME, self::COL_TRANSLATION_VALUE_ALIAS)
+            ->clearGroupByColumns()
+            ->groupByFkProductOptionType()
         ;
 
         $productOptionsCollection = $query->find();
