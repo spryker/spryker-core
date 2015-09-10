@@ -6,7 +6,11 @@
 
 namespace SprykerEngine\Zed\Touch\Persistence;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
+use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchStorageTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
 use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
@@ -15,6 +19,10 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
 {
     const TOUCH_ENTRY_QUERY_KEY = 'search touch entry';
     const TOUCH_ENTRIES_QUERY_KEY = 'search touch entries';
+    
+    const TOUCH_TABLE_ID = 'touch_id';
+    const TOUCH_TABLE_ITEM_ID = 'touch_item_id';
+    const TOUCH_UPDATER_LOCALE_ID = 'touch_updater_locale_id';
 
     /**
      * @param string $itemType
@@ -41,24 +49,31 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         $query
             ->setQueryKey(self::TOUCH_ENTRY_QUERY_KEY)
             ->filterByItemType($itemType)
-            ->filterByItemId($itemId);
-
+            ->filterByItemId($itemId)
+        ;
+        
         return $query;
     }
 
     /**
      * @param string $itemType
+     * @param LocaleTransfer $locale
      * @param \DateTime $lastTouchedAt
-     *
+     * 
      * @return SpyTouchQuery
+     * 
+     * @throws \Propel\Runtime\Exception\PropelException
      */
-    public function createBasicExportableQuery($itemType, \DateTime $lastTouchedAt)
+    public function createBasicExportableQuery($itemType, LocaleTransfer $locale, \DateTime $lastTouchedAt)
     {
         $query = SpyTouchQuery::create();
         $query
             ->filterByItemType($itemType)
             ->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
             ->filterByTouched(['min' => $lastTouchedAt])
+            ->withColumn(SpyTouchTableMap::COL_ID_TOUCH, self::TOUCH_TABLE_ID)
+            ->withColumn(SpyTouchTableMap::COL_ITEM_ID, self::TOUCH_TABLE_ITEM_ID)
+            ->withColumn(SpyLocaleTableMap::COL_ID_LOCALE, self::TOUCH_UPDATER_LOCALE_ID)
         ;
 
         return $query;
@@ -66,17 +81,58 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
 
     /**
      * @param string $itemType
+     * @param LocaleTransfer $locale
      * @param \DateTime $lastTouchedAt
-     *
+     
      * @return SpyTouchQuery
+     * 
+     * @throws \Propel\Runtime\Exception\PropelException
      */
-    public function createBasicExportableQueryForDeletion($itemType, \DateTime $lastTouchedAt)
+    public function createBasicExportableQueryForDeletion($itemType, LocaleTransfer $locale, \DateTime $lastTouchedAt)
     {
         $query = SpyTouchQuery::create();
         $query
             ->filterByItemType($itemType)
             ->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
             ->filterByTouched(['min' => $lastTouchedAt])
+            ->withColumn(SpyTouchTableMap::COL_ID_TOUCH, self::TOUCH_TABLE_ID)
+            ->withColumn(SpyTouchTableMap::COL_ITEM_ID, self::TOUCH_TABLE_ITEM_ID)
+            ->withColumn(SpyLocaleTableMap::COL_ID_LOCALE, self::TOUCH_UPDATER_LOCALE_ID)
+            ->addJoin(
+                SpyTouchTableMap::COL_ID_TOUCH,
+                SpyTouchStorageTableMap::COL_FK_TOUCH,
+                Criteria::LEFT_JOIN
+            )
+            ->addJoin(
+                SpyTouchStorageTableMap::COL_FK_LOCALE,
+                SpyLocaleTableMap::COL_ID_LOCALE,
+                Criteria::LEFT_JOIN
+            )
+            ->addAnd(
+                SpyTouchStorageTableMap::COL_FK_LOCALE,
+                $locale->getIdLocale(),
+                Criteria::EQUAL
+            )
+            ->withColumn(
+                SpyTouchTableMap::COL_ITEM_ID,
+                'node_id'
+            )
+            ->withColumn(
+                SpyTouchStorageTableMap::COL_ID_TOUCH_STORAGE,
+                'storage_id'
+            )
+            ->withColumn(
+                SpyTouchStorageTableMap::COL_KEY,
+                'storage_key'
+            )
+            ->withColumn(
+                SpyTouchStorageTableMap::COL_FK_LOCALE,
+                'storage_locale'
+            )
+            ->withColumn(
+                SpyTouchTableMap::COL_ID_TOUCH,
+                'touch_id'
+            )
         ;
 
         return $query;

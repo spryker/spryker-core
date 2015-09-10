@@ -30,7 +30,7 @@
     </table>
 
     <table name="spy_touch_storage" phpName="SpyTouchStorage">
-        <column name="id_touch_search" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="id_touch_storage" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_locale" type="INTEGER" required="true"/>
         <column name="fk_touch" type="INTEGER" required="true"/>
         <column name="key" type="VARCHAR" required="true"/>

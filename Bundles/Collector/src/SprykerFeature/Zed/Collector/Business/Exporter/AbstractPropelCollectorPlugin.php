@@ -39,11 +39,7 @@ abstract class AbstractPropelCollectorPlugin
             $collectedData = $this->processData($batch, $locale);
             $count = count($collectedData);
 
-            /*$touchUpdater should do this thing
-            $query = SpyTouchStorageQuery::create();
-            $query->filterByFkTouch();
-            $query->filterByFkLocale();
-            $query->findOneOrCreate()*/
+            $touchUpdater->updateMulti($collectedData);
             
             $dataWriter->write($collectedData, $this->getTouchItemType());
 
@@ -78,8 +74,8 @@ abstract class AbstractPropelCollectorPlugin
 
         $result->setTotalCount($totalCount);
 
-        $this->flushDeletedItems($baseQuery, $locale);
-        $this->flushDeletedTouchItems();
+        //$this->flushDeletedItems($baseQuery, $locale);
+        //$this->flushDeletedTouchItems();
     }
 
     /**

@@ -111,11 +111,11 @@ abstract class AbstractCollector implements ExporterInterface
 
         $lastRunDatetime = $this->marker->getLastExportMarkByTypeAndLocale($type, $locale);
 
-        $baseQuery = $this->queryContainer->createBasicExportableQuery($type, $lastRunDatetime);
+        $baseQuery = $this->queryContainer->createBasicExportableQuery($type, $locale, $lastRunDatetime);
         $baseQuery->setFormatter($this->getFormatter());
         $collector->run($baseQuery, $locale, $result, $this->writer, $this->touchUpdater);
 
-        $baseQuery = $this->queryContainer->createBasicExportableQueryForDeletion($type, $lastRunDatetime);
+        $baseQuery = $this->queryContainer->createBasicExportableQueryForDeletion($type, $locale, $lastRunDatetime);
         $baseQuery->setFormatter($this->getFormatter());
         $collector->postRun($baseQuery, $locale, $result, $this->writer, $this->touchUpdater);
 
