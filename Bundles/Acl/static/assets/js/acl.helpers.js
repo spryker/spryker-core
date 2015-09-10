@@ -74,5 +74,18 @@ SprykerAjaxCallbacks.prototype.displayGroupRoles = function(ajaxResponse){
 };
 
 SprykerAjaxCallbacks.prototype.removeUserRowFromGroupTable = function(ajaxResponse){
+    if (ajaxResponse.code == this.codeSuccess) {
+        var tableRow = $('#row-' + ajaxResponse['id-user'] + '-' + ajaxResponse['id-group']).closest('tr');
+        tableRow.css({
+            'background': '#a00',
+            'color': '#fff'
+        });
+        tableRow.fadeOut('slow', function(){
+            tableRow.remove();
+        });
+        return false;
+    }
 
+    var spyAlert = new SprykerAlert();
+    spyAlert.error(ajaxResponse.message);
 };

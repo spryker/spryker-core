@@ -147,6 +147,7 @@ class GroupController extends AbstractController
         } catch (UserAndGroupNotFoundException $e) {
             $response = [
                 'code' => Response::HTTP_NOT_FOUND,
+                'message' => 'User and group not found',
             ];
         }
 
