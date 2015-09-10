@@ -62,10 +62,21 @@
                         {{ form_widget(form.templateName, { 'attr': {'value' : title} }) }}
                         {{ form_end(form) }}
                     {% endfor %}
+                    <div class="row">
+                        <div class="col-sm-1 small-padding">
+                            <input id="saveAll" type="submit" class="btn btn-success" value="{{ 'Save All' | trans }}" />
+                        </div>
+                        <div class="col-sm-10 small-padding alert">
+                            <div class="save-all-message"></div>
+                            <div class="save-all-loading small-padding" style="display: none">
+                                <img src="/bundles/images/loading.gif" width="20px">
+                                Waiting ...
+                            </div>
+                        </div>
+                    </div>
                     <div class="keyListCanvas"></div>
                    <input id="idPage" type="hidden" value="{{ idPage }}">
                 {% endblock %}
-
         {% endembed %}
     </div>
 {% endblock %}

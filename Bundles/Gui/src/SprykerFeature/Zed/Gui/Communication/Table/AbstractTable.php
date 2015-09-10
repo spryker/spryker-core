@@ -366,7 +366,8 @@ abstract class AbstractTable
                     $isFirst = false;
                 }
 
-                $query->where(sprintf("LOWER(%s) LIKE '%s'", $value, '%' . mb_strtolower($searchTerm['value']) . '%'));
+                // @todo fix this in CD-412
+                $query->where(sprintf("LOWER(%s::TEXT) LIKE '%s'", $value, '%' . mb_strtolower($searchTerm['value']) . '%'));
             }
 
             $this->filtered = $query->count();
