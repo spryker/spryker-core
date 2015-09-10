@@ -8,6 +8,8 @@ namespace SprykerFeature\Client\Customer\Service;
 
 use Generated\Shared\Customer\AddressInterface;
 use Generated\Shared\Customer\CustomerInterface;
+use Generated\Shared\Transfer\AddressesTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 
 interface CustomerClientInterface
 {
@@ -86,6 +88,13 @@ interface CustomerClientInterface
     /**
      * @param CustomerInterface $customerTransfer
      *
+     * @return AddressesTransfer
+     */
+    public function getAddresses(CustomerInterface $customerTransfer);
+
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
      * @return CustomerInterface
      */
     public function getCustomerByEmail(CustomerInterface $customerTransfer);
@@ -93,9 +102,16 @@ interface CustomerClientInterface
     /**
      * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerInterface
+     * @return CustomerResponseTransfer
      */
     public function updateCustomer(CustomerInterface $customerTransfer);
+
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return CustomerResponseTransfer
+     */
+    public function updateCustomerPassword(CustomerInterface $customerTransfer);
 
     /**
      * @param AddressInterface $addressTransfer

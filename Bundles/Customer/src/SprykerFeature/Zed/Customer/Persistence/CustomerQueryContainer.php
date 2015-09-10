@@ -29,6 +29,19 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     /**
      * @inheritdoc
      */
+    public function queryCustomerByEmailApartFromIdCustomer($email, $exceptIdCustomer)
+    {
+        $query = $this->getDependencyContainer()->createSpyCustomerQuery();
+        $query
+            ->filterByEmail($email)
+            ->filterByIdCustomer($exceptIdCustomer, Criteria::NOT_EQUAL);
+
+        return $query;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function queryCustomerById($id)
     {
         $query = $this->getDependencyContainer()->createSpyCustomerQuery();

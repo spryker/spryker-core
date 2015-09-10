@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Customer\Business;
 
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
@@ -111,13 +112,26 @@ class CustomerFacade extends AbstractFacade
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return bool
+     * @return CustomerResponseTransfer
      */
     public function updateCustomer(CustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()
             ->createCustomer()
             ->update($customerTransfer)
+        ;
+    }
+
+    /**
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return CustomerResponseTransfer
+     */
+    public function updateCustomerPassword(CustomerTransfer $customerTransfer)
+    {
+        return $this->getDependencyContainer()
+            ->createCustomer()
+            ->updatePassword($customerTransfer)
         ;
     }
 

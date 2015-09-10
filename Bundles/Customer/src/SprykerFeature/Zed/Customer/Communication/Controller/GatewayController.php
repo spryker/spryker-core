@@ -120,16 +120,31 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerResponseTransfer
      */
     public function updateAction(CustomerTransfer $customerTransfer)
     {
-        $result = $this->getFacade()
+        $response = $this->getFacade()
             ->updateCustomer($customerTransfer)
         ;
-        $this->setSuccess($result);
+        $this->setSuccess($response->getIsSuccess());
 
-        return $customerTransfer;
+        return $response;
+    }
+
+    /**
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return CustomerResponseTransfer
+     */
+    public function updatePasswordAction(CustomerTransfer $customerTransfer)
+    {
+        $response = $this->getFacade()
+            ->updateCustomerPassword($customerTransfer)
+        ;
+        $this->setSuccess($response->getIsSuccess());
+
+        return $response;
     }
 
     /**

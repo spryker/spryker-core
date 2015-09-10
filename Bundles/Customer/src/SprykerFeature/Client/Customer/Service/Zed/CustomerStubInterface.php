@@ -59,9 +59,16 @@ interface CustomerStubInterface
     /**
      * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerInterface
+     * @return CustomerResponseTransfer
      */
     public function update(CustomerInterface $customerTransfer);
+
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return CustomerResponseTransfer
+     */
+    public function updatePassword(CustomerInterface $customerTransfer);
 
     /**
      * @param CustomerInterface $customerTransfer
