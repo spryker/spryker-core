@@ -24,7 +24,7 @@ class CheckoutSaveOrderPlugin extends AbstractPlugin implements CheckoutSaveOrde
      */
     public function saveOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getDependencyContainer()->createPayolutionFacade()->saveOrder($orderTransfer);
+        $this->getDependencyContainer()->createPayolutionFacade()->saveOrderPayment($orderTransfer);
     }
 
 }
