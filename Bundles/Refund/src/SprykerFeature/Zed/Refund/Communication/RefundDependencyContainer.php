@@ -30,4 +30,5 @@ class RefundDependencyContainer extends AbstractCommunicationDependencyContainer
 
         return $this->getFactory()->createFormRefundForm();
     }
+
 }
