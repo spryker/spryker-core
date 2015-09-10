@@ -85,7 +85,7 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
         CalculableInterface $calculableContainer,
         $calculableItems
     ) {
-        if (!is_null($totalsTransfer->getDiscount()->getTotalAmount())) {
+        if (0 !== $totalsTransfer->getDiscount()->getTotalAmount()) {
             return $totalsTransfer->getDiscount()->getTotalAmount();
         } else {
             return $this->discountTotalsCalculator->calculateDiscount($calculableContainer, $calculableItems);

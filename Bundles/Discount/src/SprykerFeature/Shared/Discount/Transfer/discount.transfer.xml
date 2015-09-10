@@ -58,7 +58,7 @@
     </transfer>
 
     <transfer name="CalculableContainer">
-        <property name="couponCodes" type="array" />
+        <property name="couponCodes" type="array" singular="couponCode" />
     </transfer>
 
 </transfers>

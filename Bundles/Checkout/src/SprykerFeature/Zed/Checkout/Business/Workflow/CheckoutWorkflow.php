@@ -77,6 +77,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      */
     public function requestCheckout(CheckoutRequestTransfer $checkoutRequest)
     {
+        $array = $checkoutRequest->toArray();
         $checkoutResponse = new CheckoutResponseTransfer();
         $checkoutResponse->setIsSuccess(false);
 
