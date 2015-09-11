@@ -31,18 +31,18 @@ class AclFacade extends AbstractFacade
 
     /**
      * @param string $groupName
-     * @param array $rolesIdsArray
+     * @param RolesTransfer $rolesTransfer
      *
      * @return GroupTransfer
      */
-    public function addGroup($groupName, array $rolesIdsArray)
+    public function addGroup($groupName, RolesTransfer $rolesTransfer)
     {
         $groupTransfer = $this->getDependencyContainer()
             ->createGroupModel()
             ->addGroup($groupName);
 
-        if (!empty($rolesIdsArray)) {
-            $this->addRolesToGroup($groupTransfer, $rolesIdsArray);
+        if (!empty($rolesTransfer)) {
+            $this->addRolesToGroup($groupTransfer, $rolesTransfer);
         }
 
         return $groupTransfer;
@@ -50,18 +50,18 @@ class AclFacade extends AbstractFacade
 
     /**
      * @param GroupTransfer $transfer
-     * @param array $rolesIdsArray
+     * @param array $rolesTransfer
      *
      * @return GroupTransfer
      */
-    public function updateGroup(GroupTransfer $transfer, array $rolesIdsArray)
+    public function updateGroup(GroupTransfer $transfer, RolesTransfer $rolesTransfer)
     {
         $groupTransfer = $this->getDependencyContainer()
             ->createGroupModel()
             ->updateGroup($transfer);
 
-        if (!empty($rolesIdsArray)) {
-            $this->addRolesToGroup($groupTransfer, $rolesIdsArray);
+        if (!empty($rolesTransfer)) {
+            $this->addRolesToGroup($groupTransfer, $rolesTransfer);
         }
 
         return $groupTransfer;
@@ -367,17 +367,16 @@ class AclFacade extends AbstractFacade
 
     /**
      * @param GroupTransfer $groupTransfer
-     * @param array $rolesArray
+     * @param RolesTransfer $rolesTransfer
      */
-    public function addRolesToGroup(GroupTransfer $groupTransfer, array $rolesArray)
+    public function addRolesToGroup(GroupTransfer $groupTransfer, RolesTransfer $rolesTransfer)
     {
         $groupModel = $this->getDependencyContainer()->createGroupModel();
-
         $groupModel->removeRolesFromGroup($groupTransfer->getIdAclGroup());
 
-        foreach ($rolesArray as $idAclRole) {
-            if ((int) $idAclRole > 0) {
-                $groupModel->addRoleToGroup((int) $idAclRole, $groupTransfer->getIdAclGroup());
+        foreach ($rolesTransfer->getRoles() as $roleTransfer) {
+            if ($roleTransfer->getIdAclRole() > 0) {
+                $groupModel->addRoleToGroup($roleTransfer->getIdAclRole(), $groupTransfer->getIdAclGroup());
             }
         }
     }

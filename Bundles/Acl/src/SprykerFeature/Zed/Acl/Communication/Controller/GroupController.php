@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\Acl\Communication\Controller;
 
+use Generated\Shared\Transfer\RolesTransfer;
+use Generated\Shared\Transfer\RoleTransfer;
 use SprykerFeature\Zed\Acl\Business\AclFacade;
 use SprykerFeature\Zed\Acl\Business\Exception\UserAndGroupNotFoundException;
 use SprykerFeature\Zed\Acl\Communication\AclDependencyContainer;
@@ -68,9 +70,11 @@ class GroupController extends AbstractController
         if ($form->isValid()) {
             $formData = $form->getData();
 
+            $roles = $this->getRoleTransfersFromForm($form);
+
             $groupTransfer = $this->getFacade()->addGroup(
                 $formData[GroupForm::FIELD_TITLE],
-                $formData[GroupForm::FIELD_ROLES]
+                $roles
             );
 
             return $this->redirectResponse('/acl/group/edit?' . self::PARAMETER_ID_GROUP . '=' . $groupTransfer->getIdAclGroup());
@@ -100,12 +104,14 @@ class GroupController extends AbstractController
         if ($form->isValid()) {
             $formData = $form->getData();
 
+            $roles = $this->getRoleTransfersFromForm($form);
+
             $groupTransfer = $this->getFacade()->getGroup($idAclGroup);
             $groupTransfer->setName($formData[GroupForm::FIELD_TITLE]);
             $groupTransfer = $this->getFacade()
                 ->updateGroup(
                     $groupTransfer,
-                    $formData[GroupForm::FIELD_ROLES]
+                    $roles
                 );
 
             return $this->redirectResponse('/acl/group/edit?' . self::PARAMETER_ID_GROUP . '=' . $groupTransfer->getIdAclGroup());
@@ -117,6 +123,26 @@ class GroupController extends AbstractController
             'form' => $form->createView(),
             'users' => $usersTable->render(),
         ]);
+    }
+
+    /**
+     * @param GroupForm $form
+     *
+     * @return RolesTransfer
+     */
+    protected function getRoleTransfersFromForm(GroupForm $form)
+    {
+        $roles = new RolesTransfer();
+        $formData = $form->getData();
+
+        foreach ($formData[GroupForm::FIELD_ROLES] as $idRole) {
+            $roleTransfer = (new RoleTransfer())
+                ->setIdAclRole($idRole)
+            ;
+            $roles->addRole($roleTransfer);
+        }
+
+        return $roles;
     }
 
     /**

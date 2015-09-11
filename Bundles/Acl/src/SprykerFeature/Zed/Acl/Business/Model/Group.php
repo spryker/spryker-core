@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\RoleTransfer;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\GroupTransfer;
 use Generated\Shared\Transfer\GroupsTransfer;
+use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Acl\Business\Exception\UserAndGroupNotFoundException;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroup;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupsHasRoles;
@@ -222,9 +223,9 @@ class Group implements GroupInterface
      */
     public function removeRolesFromGroup($idAclGroup)
     {
-        $rolesForGroup = $this->queryContainer->queryGroupHasRole($idAclGroup)->find();
+        $groupRoles = $this->queryContainer->queryGroupHasRole($idAclGroup)->find();
 
-        foreach ($rolesForGroup as $role) {
+        foreach ($groupRoles as $role) {
             $role->delete();
         }
     }
