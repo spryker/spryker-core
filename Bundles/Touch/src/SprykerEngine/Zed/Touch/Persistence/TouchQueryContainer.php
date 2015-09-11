@@ -19,10 +19,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
 {
     const TOUCH_ENTRY_QUERY_KEY = 'search touch entry';
     const TOUCH_ENTRIES_QUERY_KEY = 'search touch entries';
-    
-    const TOUCH_TABLE_ID = 'touch_id';
-    const TOUCH_TABLE_ITEM_ID = 'touch_item_id';
-    const TOUCH_UPDATER_LOCALE_ID = 'touch_updater_locale_id';
+    const TOUCH_EXPORTER_ID = 'exporter_touch_id';
 
     /**
      * @param string $itemType
@@ -71,9 +68,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
             ->filterByItemType($itemType)
             ->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
             ->filterByTouched(['min' => $lastTouchedAt])
-            ->withColumn(SpyTouchTableMap::COL_ID_TOUCH, self::TOUCH_TABLE_ID)
-            ->withColumn(SpyTouchTableMap::COL_ITEM_ID, self::TOUCH_TABLE_ITEM_ID)
-            ->withColumn(SpyLocaleTableMap::COL_ID_LOCALE, self::TOUCH_UPDATER_LOCALE_ID)
+            ->withColumn(SpyTouchTableMap::COL_ID_TOUCH, self::TOUCH_EXPORTER_ID)
         ;
 
         return $query;
@@ -88,16 +83,13 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      * 
      * @throws \Propel\Runtime\Exception\PropelException
      */
-    public function createBasicExportableQueryForDeletion($itemType, LocaleTransfer $locale, \DateTime $lastTouchedAt)
+/*    public function createBasicExportableQueryForDeletion($itemType, LocaleTransfer $locale, \DateTime $lastTouchedAt)
     {
         $query = SpyTouchQuery::create();
         $query
             ->filterByItemType($itemType)
             ->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
             ->filterByTouched(['min' => $lastTouchedAt])
-            ->withColumn(SpyTouchTableMap::COL_ID_TOUCH, self::TOUCH_TABLE_ID)
-            ->withColumn(SpyTouchTableMap::COL_ITEM_ID, self::TOUCH_TABLE_ITEM_ID)
-            ->withColumn(SpyLocaleTableMap::COL_ID_LOCALE, self::TOUCH_UPDATER_LOCALE_ID)
             ->addJoin(
                 SpyTouchTableMap::COL_ID_TOUCH,
                 SpyTouchStorageTableMap::COL_FK_TOUCH,
@@ -136,7 +128,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         ;
 
         return $query;
-    }
+    }*/
 
     /**
      * @return SpyTouchQuery
