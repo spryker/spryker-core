@@ -15,6 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
 abstract class AbstractTable
 {
 
+    const TABLE_CLASS = 'gui-table-data';
+    const TABLE_CLASS_NO_SEARCH_SUFFIX = '-no-search';
+
     /**
      * @var Request
      */
@@ -58,7 +61,7 @@ abstract class AbstractTable
     /**
      * @var string
      */
-    protected $tableClass;
+    protected $tableClass = self::TABLE_CLASS;
 
     /**
      * @var bool
@@ -91,12 +94,18 @@ abstract class AbstractTable
         return $this;
     }
 
+    public function disableSearch()
+    {
+        $this->tableClass .= self::TABLE_CLASS_NO_SEARCH_SUFFIX;
+    }
+
     /**
      * @todo CD-412 find a better solution (remove it)
      *
      * @param string $name
      *
      * @return string
+     *
      * @deprecated this method should not be needed.
      */
     public function buildAlias($name)
@@ -234,8 +243,9 @@ abstract class AbstractTable
     }
 
     /**
-     * @return \Twig_Environment
      * @throws \LogicException
+     *
+     * @return \Twig_Environment
      */
     private function getTwig()
     {
@@ -429,4 +439,5 @@ abstract class AbstractTable
     {
         return str_replace(' ', '', ucwords(mb_strtolower(str_replace('_', ' ', $str))));
     }
+
 }

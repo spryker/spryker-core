@@ -30,27 +30,37 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @param string $name
+     * @param string $groupName
+     * @param array $rolesIdsArray
      *
      * @return GroupTransfer
      */
-    public function addGroup($name)
+    public function addGroup($groupName, array $rolesIdsArray)
     {
-        return $this->getDependencyContainer()
+        $groupTransfer = $this->getDependencyContainer()
             ->createGroupModel()
-            ->addGroup($name);
+            ->addGroup($groupName);
+
+        $this->addRolesToGroup($groupTransfer, $rolesIdsArray);
+
+        return $groupTransfer;
     }
 
     /**
-     * @param GroupTransfer $data
+     * @param GroupTransfer $transfer
+     * @param array $rolesIdsArray
      *
      * @return GroupTransfer
      */
-    public function updateGroup(GroupTransfer $data)
+    public function updateGroup(GroupTransfer $transfer, array $rolesIdsArray)
     {
-        return $this->getDependencyContainer()
+        $groupTransfer = $this->getDependencyContainer()
             ->createGroupModel()
-            ->updateGroup($data);
+            ->updateGroup($transfer);
+
+        $this->addRolesToGroup($groupTransfer, $rolesIdsArray);
+
+        return $groupTransfer;
     }
 
     /**
@@ -143,7 +153,7 @@ class AclFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->createRoleModel()->save($roleTransfer);
     }
-    
+
     /**
      * @param int $id
      *
@@ -207,7 +217,7 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @param integer $idUser
+     * @param int $idUser
      *
      * @return GroupsTransfer
      */
@@ -339,8 +349,8 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @param integer $idRole
-     * @param integer $idGroup
+     * @param int $idRole
+     * @param int $idGroup
      *
      * @return int
      */
@@ -352,17 +362,19 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @param int $idGroup
+     * @param GroupTransfer $groupTransfer
      * @param array $rolesArray
      */
-    public function assignRolesToGroup($idGroup, array $rolesArray)
+    public function addRolesToGroup(GroupTransfer $groupTransfer, array $rolesArray)
     {
         $groupModel = $this->getDependencyContainer()->createGroupModel();
 
-        $groupModel->removeRolesFromGroup($idGroup);
+        $groupModel->removeRolesFromGroup($groupTransfer->getIdAclGroup());
 
-        foreach ($rolesArray as $role) {
-            $groupModel->addRoleToGroup($role, $idGroup);
+        foreach ($rolesArray as $idAclRole) {
+            if ((int) $idAclRole > 0) {
+                $groupModel->addRoleToGroup((int) $idAclRole, $groupTransfer->getIdAclGroup());
+            }
         }
     }
 

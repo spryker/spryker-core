@@ -68,15 +68,15 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
     }
 
     /**
-     * @param int $idGroup
+     * @param int $idAclGroup
      *
      * @return GroupUsersTable
      */
-    public function createGroupUsersTable($idGroup)
+    public function createGroupUsersTable($idAclGroup)
     {
         return $this->getFactory()->createTableGroupUsersTable(
             $this->getQueryContainer()->queryGroup(),
-            $idGroup
+            $idAclGroup
         );
     }
 

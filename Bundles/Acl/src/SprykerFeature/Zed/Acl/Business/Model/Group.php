@@ -218,11 +218,11 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param int $idGroup
+     * @param int $idAclGroup
      */
-    public function removeRolesFromGroup($idGroup)
+    public function removeRolesFromGroup($idAclGroup)
     {
-        $rolesForGroup = $this->queryContainer->queryGroupHasRole($idGroup)->find();
+        $rolesForGroup = $this->queryContainer->queryGroupHasRole($idAclGroup)->find();
 
         foreach ($rolesForGroup as $role) {
             $role->delete();

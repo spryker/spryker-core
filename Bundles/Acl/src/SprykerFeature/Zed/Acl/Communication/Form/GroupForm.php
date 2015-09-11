@@ -22,44 +22,62 @@ class GroupForm extends AbstractForm
     const VALIDATE_ADD = 'add';
     const VALIDATE_EDIT = 'edit';
 
+    /**
+     * @var AclQueryContainer
+     */
     protected $queryContainer;
 
+    /**
+     * @var Request
+     */
     protected $request;
 
+    /**
+     * @param AclQueryContainer $queryContainer
+     * @param Request $request
+     */
     public function __construct(AclQueryContainer $queryContainer, Request $request)
     {
         $this->queryContainer = $queryContainer;
         $this->request = $request;
     }
 
+    /**
+     * @return GroupForm
+     */
     protected function buildFormFields()
     {
         $this->addText(self::FIELD_TITLE, [
             'constraints' => [
                 new Assert\NotBlank([
-                    'groups' => [self::VALIDATE_ADD, self::VALIDATE_EDIT]
+                    'groups' => [self::VALIDATE_ADD, self::VALIDATE_EDIT],
                 ]),
                 new Assert\Callback([
                     'groups' => [self::VALIDATE_ADD],
                     'methods' => [
-                        function($name, ExecutionContextInterface $contextInterface) {
+                        function ($name, ExecutionContextInterface $contextInterface) {
                             if ($this->queryContainer->queryGroupByName($name)->count() > 0) {
                                 $contextInterface->addViolation('Group name already in use');
                             }
                         },
                     ],
                 ]),
-            ]
+            ],
         ]);
 
         $this->add(self::FIELD_ROLES, 'choice', [
-            'label'       => 'Customer Group',
+            'label' => 'Customer Group',
             'empty_value' => false,
-            'multiple'    => true,
-            'choices'     => $this->getAvailableRoleList(),
+            'multiple' => true,
+            'choices' => $this->getAvailableRoleList(),
         ]);
+
+        return $this;
     }
 
+    /**
+     * @return array
+     */
     protected function populateFormFields()
     {
         $defaultData = [
@@ -79,13 +97,21 @@ class GroupForm extends AbstractForm
         return $defaultData;
     }
 
-    public function getAvailableRoleListByIdGroup($idGroup)
+    /**
+     * @param int $idAclGroup
+     *
+     * @return array
+     */
+    public function getAvailableRoleListByIdGroup($idAclGroup)
     {
-        $roleCollection = $this->queryContainer->queryGroupHasRole($idGroup)->find()->toArray();
+        $roleCollection = $this->queryContainer->queryGroupHasRole($idAclGroup)->find()->toArray();
 
         return array_column($roleCollection, 'FkAclRole');
     }
 
+    /**
+     * @return array
+     */
     public function getAvailableRoleList()
     {
         $roleCollection = $this->queryContainer->queryRole()->find()->toArray();

@@ -12,6 +12,7 @@ use SprykerFeature\Zed\Acl\Communication\AclDependencyContainer;
 use SprykerFeature\Zed\Acl\Communication\Form\GroupForm;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -31,7 +32,7 @@ class GroupController extends AbstractController
      */
     public function indexAction()
     {
-        $table = $this->createGroupTable();
+        $table = $this->getDependencyContainer()->createGroupTable();
 
         return $this->viewResponse([
             'table' => $table->render(),
@@ -43,7 +44,7 @@ class GroupController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->createGroupTable();
+        $table = $this->getDependencyContainer()->createGroupTable();
 
         return $this->jsonResponse(
             $table->fetchData()
@@ -53,7 +54,7 @@ class GroupController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return array|RedirectResponse
+     * @return array
      */
     public function addAction(Request $request)
     {
@@ -67,9 +68,10 @@ class GroupController extends AbstractController
         if ($form->isValid()) {
             $formData = $form->getData();
 
-            $groupTransfer = $this->getFacade()->addGroup($formData[GroupForm::FIELD_TITLE]);
-
-            $this->assignRolesToGroup($groupTransfer->getIdAclGroup(), $formData[GroupForm::FIELD_ROLES]);
+            $groupTransfer = $this->getFacade()->addGroup(
+                $formData[GroupForm::FIELD_TITLE],
+                $formData[GroupForm::FIELD_ROLES]
+            );
 
             return $this->redirectResponse('/acl/group/edit?' . self::PARAMETER_ID_GROUP . '=' . $groupTransfer->getIdAclGroup());
         }
@@ -82,11 +84,11 @@ class GroupController extends AbstractController
     /**
      * @param Request $request
      *
-     * @return array|RedirectResponse
+     * @return RedirectResponse
      */
     public function editAction(Request $request)
     {
-        $idGroup = $request->query->get(self::PARAMETER_ID_GROUP);
+        $idAclGroup = $request->query->get(self::PARAMETER_ID_GROUP);
 
         $form = $this->getDependencyContainer()->createGroupForm($request);
         $form->setOptions([
@@ -98,17 +100,18 @@ class GroupController extends AbstractController
         if ($form->isValid()) {
             $formData = $form->getData();
 
-            $groupTransfer = $this->getFacade()->getGroup($idGroup);
+            $groupTransfer = $this->getFacade()->getGroup($idAclGroup);
             $groupTransfer->setName($formData[GroupForm::FIELD_TITLE]);
-
-            $groupTransfer = $this->getFacade()->updateGroup($groupTransfer);
-
-            $this->assignRolesToGroup($groupTransfer->getIdAclGroup(), $formData[GroupForm::FIELD_ROLES]);
+            $groupTransfer = $this->getFacade()
+                ->updateGroup(
+                    $groupTransfer,
+                    $formData[GroupForm::FIELD_ROLES]
+                );
 
             return $this->redirectResponse('/acl/group/edit?' . self::PARAMETER_ID_GROUP . '=' . $groupTransfer->getIdAclGroup());
         }
 
-        $usersTable = $this->getDependencyContainer()->createGroupUsersTable($idGroup);
+        $usersTable = $this->getDependencyContainer()->createGroupUsersTable($idAclGroup);
 
         return $this->viewResponse([
             'form' => $form->createView(),
@@ -152,23 +155,6 @@ class GroupController extends AbstractController
         }
 
         return $this->jsonResponse($response);
-    }
-
-    /**
-     * @param int $idGroup
-     * @param array $rolesArray
-     */
-    protected function assignRolesToGroup($idGroup, array $rolesArray)
-    {
-        $this->getFacade()->assignRolesToGroup($idGroup, $rolesArray);
-    }
-
-    /**
-     * @return GroupTable
-     */
-    protected function createGroupTable()
-    {
-        return $this->getDependencyContainer()->createGroupTable();
     }
 
     /**

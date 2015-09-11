@@ -2,15 +2,12 @@
 
 namespace SprykerFeature\Zed\Acl\Communication\Table;
 
-use Propel\Runtime\ActiveQuery\Criteria;
-use SprykerFeature\Zed\Acl\Persistence\Propel\Base\SpyAclUserHasGroupQuery;
 use SprykerFeature\Zed\Acl\Persistence\Propel\Map\SpyAclGroupTableMap;
 use SprykerFeature\Zed\Acl\Persistence\Propel\Map\SpyAclUserHasGroupTableMap;
 use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupQuery;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\User\Persistence\Propel\Map\SpyUserTableMap;
-use SprykerFeature\Zed\User\Persistence\Propel\SpyUserQuery;
 
 class GroupUsersTable extends AbstractTable
 {
@@ -41,13 +38,12 @@ class GroupUsersTable extends AbstractTable
 
     /**
      * @param SpyAclGroupQuery $hasGroupQuery
-     * @param SpyUserQuery $spyUserQuery
-     * @param int $idGroup
+     * @param int $idAclGroup
      */
-    public function __construct(SpyAclGroupQuery $hasGroupQuery, $idGroup)
+    public function __construct(SpyAclGroupQuery $hasGroupQuery, $idAclGroup)
     {
         $this->hasGroupQuery = $hasGroupQuery;
-        $this->idGroup = $idGroup;
+        $this->idGroup = $idAclGroup;
     }
 
     /**
@@ -59,7 +55,7 @@ class GroupUsersTable extends AbstractTable
     {
         $config->setUrl('users?' . self::PARAMETER_ID_GROUP . '=' . $this->idGroup);
 
-        $this->tableClass = 'gui-table-data-no-search';
+        $this->disableSearch();
         $this->setTableIdentifier('users-in-group');
 
         $config->setHeader([
