@@ -11,6 +11,11 @@ use SprykerFeature\Zed\Payolution\Business\Api\Request\AbstractRequest;
 interface AdapterInterface
 {
 
-    public function sendRequest(AbstractRequest $request);
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
+    public function sendArrayDataRequest(array $data);
 
 }

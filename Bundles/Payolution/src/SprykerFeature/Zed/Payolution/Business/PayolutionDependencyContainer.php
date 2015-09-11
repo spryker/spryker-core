@@ -9,13 +9,11 @@ namespace SprykerFeature\Zed\Payolution\Business;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use Generated\Zed\Ide\FactoryAutoCompletion\PayolutionBusiness;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
+use SprykerFeature\Zed\Payolution\Business\Api\Request\ConverterInterface;
 use SprykerFeature\Zed\Payolution\Business\Order\OrderManagerInterface;
-use SprykerFeature\Zed\Payolution\Business\Payment\EntityToRequestMapper\OrderToPreAuthorization;
 use SprykerFeature\Zed\Payolution\Business\Payment\PaymentManagerInterface;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
-use SprykerFeature\Zed\Payolution\PayolutionDependencyProvider;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
-use SprykerFeature\Zed\Payone\PayoneDependencyProvider;
 
 /**
  * @method PayolutionBusiness getFactory()
@@ -34,7 +32,8 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
             ->getFactory()
             ->createPaymentPaymentManager(
                 $this->createExecutionAdapter(),
-                $this->getQueryContainer()
+                $this->getQueryContainer(),
+                $this->createRequestConverter()
             );
 
         $paymentManager->registerMethodMapper(
@@ -50,6 +49,7 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
     protected function createExecutionAdapter()
     {
         $gatewayUrl = $this->getConfig()->getGatewayUrl();
+
         return $this
             ->getFactory()
             ->createApiAdapterHttpGuzzle($gatewayUrl);
@@ -61,6 +61,14 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
     public function createOrderManager()
     {
         return $this->getFactory()->createOrderOrderManager();
+    }
+
+    /**
+     * @return ConverterInterface
+     */
+    public function createRequestConverter()
+    {
+        return $this->getFactory()->createApiRequestConverter();
     }
 
 }

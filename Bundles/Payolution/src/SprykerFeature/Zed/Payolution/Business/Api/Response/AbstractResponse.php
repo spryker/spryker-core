@@ -262,6 +262,7 @@ abstract class AbstractResponse
     public function setProcessingRiskScore($processing_risk_score)
     {
         $this->processing_risk_score = $processing_risk_score;
+
         return $this;
     }
 
@@ -281,6 +282,7 @@ abstract class AbstractResponse
     public function setP3Validation($p3_validation)
     {
         $this->p3_validation = $p3_validation;
+
         return $this;
     }
 
@@ -300,6 +302,7 @@ abstract class AbstractResponse
     public function setNameGiven($name_given)
     {
         $this->name_given = $name_given;
+
         return $this;
     }
 
@@ -319,6 +322,7 @@ abstract class AbstractResponse
     public function setIdentificationShopperid($identification_shopperid)
     {
         $this->identification_shopperid = $identification_shopperid;
+
         return $this;
     }
 
@@ -338,6 +342,7 @@ abstract class AbstractResponse
     public function setClearingDescriptor($clearing_descriptor)
     {
         $this->clearing_descriptor = $clearing_descriptor;
+
         return $this;
     }
 
@@ -357,6 +362,7 @@ abstract class AbstractResponse
     public function setProcessingConnectordetailConnectortxid1($processing_connectordetail_connectortxid1)
     {
         $this->processing_connectordetail_connectortxid1 = $processing_connectordetail_connectortxid1;
+
         return $this;
     }
 
@@ -376,6 +382,7 @@ abstract class AbstractResponse
     public function setTransactionChannel($transaction_channel)
     {
         $this->transaction_channel = $transaction_channel;
+
         return $this;
     }
 
@@ -395,6 +402,7 @@ abstract class AbstractResponse
     public function setProcessingReasonCode($processing_reason_code)
     {
         $this->processing_reason_code = $processing_reason_code;
+
         return $this;
     }
 
@@ -414,6 +422,7 @@ abstract class AbstractResponse
     public function setAddressCity($address_city)
     {
         $this->address_city = $address_city;
+
         return $this;
     }
 
@@ -433,6 +442,7 @@ abstract class AbstractResponse
     public function setFrontendRequestCancelled($frontend_request_cancelled)
     {
         $this->frontend_request_cancelled = $frontend_request_cancelled;
+
         return $this;
     }
 
@@ -452,6 +462,7 @@ abstract class AbstractResponse
     public function setProcessingCode($processing_code)
     {
         $this->processing_code = $processing_code;
+
         return $this;
     }
 
@@ -471,6 +482,7 @@ abstract class AbstractResponse
     public function setProcessingReason($processing_reason)
     {
         $this->processing_reason = $processing_reason;
+
         return $this;
     }
 
@@ -490,6 +502,7 @@ abstract class AbstractResponse
     public function setFrontendMode($frontend_mode)
     {
         $this->frontend_mode = $frontend_mode;
+
         return $this;
     }
 
@@ -509,6 +522,7 @@ abstract class AbstractResponse
     public function setClearingFxsource($clearing_fxsource)
     {
         $this->clearing_fxsource = $clearing_fxsource;
+
         return $this;
     }
 
@@ -528,6 +542,7 @@ abstract class AbstractResponse
     public function setClearingAmount($clearing_amount)
     {
         $this->clearing_amount = $clearing_amount;
+
         return $this;
     }
 
@@ -547,6 +562,7 @@ abstract class AbstractResponse
     public function setProcessingResult($processing_result)
     {
         $this->processing_result = $processing_result;
+
         return $this;
     }
 
@@ -566,6 +582,7 @@ abstract class AbstractResponse
     public function setNameSalutation($name_salutation)
     {
         $this->name_salutation = $name_salutation;
+
         return $this;
     }
 
@@ -585,6 +602,7 @@ abstract class AbstractResponse
     public function setPresentationUsage($presentation_usage)
     {
         $this->presentation_usage = $presentation_usage;
+
         return $this;
     }
 
@@ -604,6 +622,7 @@ abstract class AbstractResponse
     public function setPostValidation($post_validation)
     {
         $this->post_validation = $post_validation;
+
         return $this;
     }
 
@@ -623,6 +642,7 @@ abstract class AbstractResponse
     public function setContactEmail($contact_email)
     {
         $this->contact_email = $contact_email;
+
         return $this;
     }
 
@@ -642,6 +662,7 @@ abstract class AbstractResponse
     public function setClearingCurrency($clearing_currency)
     {
         $this->clearing_currency = $clearing_currency;
+
         return $this;
     }
 
@@ -661,6 +682,7 @@ abstract class AbstractResponse
     public function setFrontendSessionId($frontend_session_id)
     {
         $this->frontend_session_id = $frontend_session_id;
+
         return $this;
     }
 
@@ -680,6 +702,7 @@ abstract class AbstractResponse
     public function setProcessingStatusCode($processing_status_code)
     {
         $this->processing_status_code = $processing_status_code;
+
         return $this;
     }
 
@@ -699,6 +722,7 @@ abstract class AbstractResponse
     public function setPresentationCurrency($presentation_currency)
     {
         $this->presentation_currency = $presentation_currency;
+
         return $this;
     }
 
@@ -718,6 +742,7 @@ abstract class AbstractResponse
     public function setPaymentCode($payment_code)
     {
         $this->payment_code = $payment_code;
+
         return $this;
     }
 
@@ -737,6 +762,7 @@ abstract class AbstractResponse
     public function setNameBirthdate($name_birthdate)
     {
         $this->name_birthdate = $name_birthdate;
+
         return $this;
     }
 
@@ -756,6 +782,7 @@ abstract class AbstractResponse
     public function setProcessingReturnCode($processing_return_code)
     {
         $this->processing_return_code = $processing_return_code;
+
         return $this;
     }
 
@@ -775,6 +802,7 @@ abstract class AbstractResponse
     public function setContactIp($contact_ip)
     {
         $this->contact_ip = $contact_ip;
+
         return $this;
     }
 
@@ -794,6 +822,7 @@ abstract class AbstractResponse
     public function setNameFamily($name_family)
     {
         $this->name_family = $name_family;
+
         return $this;
     }
 
@@ -813,6 +842,7 @@ abstract class AbstractResponse
     public function setProcessingStatus($processing_status)
     {
         $this->processing_status = $processing_status;
+
         return $this;
     }
 
@@ -832,6 +862,7 @@ abstract class AbstractResponse
     public function setFrontendCcLogo($frontend_cc_logo)
     {
         $this->frontend_cc_logo = $frontend_cc_logo;
+
         return $this;
     }
 
@@ -851,6 +882,7 @@ abstract class AbstractResponse
     public function setPresentationAmount($presentation_amount)
     {
         $this->presentation_amount = $presentation_amount;
+
         return $this;
     }
 
@@ -870,6 +902,7 @@ abstract class AbstractResponse
     public function setIdentificationUniqueid($identification_uniqueid)
     {
         $this->identification_uniqueid = $identification_uniqueid;
+
         return $this;
     }
 
@@ -889,6 +922,7 @@ abstract class AbstractResponse
     public function setIdentificationTransactionid($identification_transactionid)
     {
         $this->identification_transactionid = $identification_transactionid;
+
         return $this;
     }
 
@@ -908,6 +942,7 @@ abstract class AbstractResponse
     public function setIdentificationShortid($identification_shortid)
     {
         $this->identification_shortid = $identification_shortid;
+
         return $this;
     }
 
@@ -927,6 +962,7 @@ abstract class AbstractResponse
     public function setClearingFxrate($clearing_fxrate)
     {
         $this->clearing_fxrate = $clearing_fxrate;
+
         return $this;
     }
 
@@ -946,6 +982,7 @@ abstract class AbstractResponse
     public function setProcessingTimestamp($processing_timestamp)
     {
         $this->processing_timestamp = $processing_timestamp;
+
         return $this;
     }
 
@@ -965,6 +1002,7 @@ abstract class AbstractResponse
     public function setAddressCountry($address_country)
     {
         $this->address_country = $address_country;
+
         return $this;
     }
 
@@ -984,6 +1022,7 @@ abstract class AbstractResponse
     public function setProcessingConnectordetailPaymentreference($processing_connectordetail_paymentreference)
     {
         $this->processing_connectordetail_paymentreference = $processing_connectordetail_paymentreference;
+
         return $this;
     }
 
@@ -1003,6 +1042,7 @@ abstract class AbstractResponse
     public function setResponseVersion($response_version)
     {
         $this->response_version = $response_version;
+
         return $this;
     }
 
@@ -1022,6 +1062,7 @@ abstract class AbstractResponse
     public function setTransactionMode($transaction_mode)
     {
         $this->transaction_mode = $transaction_mode;
+
         return $this;
     }
 
@@ -1041,6 +1082,7 @@ abstract class AbstractResponse
     public function setProcessingReturn($processing_return)
     {
         $this->processing_return = $processing_return;
+
         return $this;
     }
 
@@ -1060,6 +1102,7 @@ abstract class AbstractResponse
     public function setTransactionResponse($transaction_response)
     {
         $this->transaction_response = $transaction_response;
+
         return $this;
     }
 
@@ -1079,6 +1122,7 @@ abstract class AbstractResponse
     public function setAddressStreet($address_street)
     {
         $this->address_street = $address_street;
+
         return $this;
     }
 
@@ -1098,6 +1142,7 @@ abstract class AbstractResponse
     public function setNameSex($name_sex)
     {
         $this->name_sex = $name_sex;
+
         return $this;
     }
 
@@ -1117,6 +1162,7 @@ abstract class AbstractResponse
     public function setClearingFxdate($clearing_fxdate)
     {
         $this->clearing_fxdate = $clearing_fxdate;
+
         return $this;
     }
 
@@ -1136,6 +1182,7 @@ abstract class AbstractResponse
     public function setAddressZip($address_zip)
     {
         $this->address_zip = $address_zip;
+
         return $this;
     }
 
@@ -1146,6 +1193,7 @@ abstract class AbstractResponse
      */
     public function initFromArray($array)
     {
+        var_dump($array);
         foreach ($array as $key => $value) {
             $wordified = str_replace('_', ' ', $key);
             $lowerCase = strtolower($wordified);
@@ -1171,6 +1219,7 @@ abstract class AbstractResponse
         foreach ($this as $key => $value) {
             $result[$key] = $value;
         }
+
         return $result;
     }
 

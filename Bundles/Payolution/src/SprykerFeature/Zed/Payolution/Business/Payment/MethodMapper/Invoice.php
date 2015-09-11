@@ -5,11 +5,10 @@
  */
 namespace SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
 
+use Generated\Shared\Transfer\PayolutionRequestTransfer;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Account;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Payment;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\PreAuthorizationRequest;
+use SprykerFeature\Zed\Payolution\Business\Api\Constants;
 use SprykerFeature\Zed\Payolution\Business\Payment\MethodMapperInterface;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 
@@ -28,7 +27,8 @@ class Invoice extends AbstractMethodMapper
      * @param SpyPaymentPayolution $paymentEntity
      *
      * @throws \Propel\Runtime\Exception\PropelException
-     * @return PreAuthorizationRequest
+     *
+     * @return PayolutionRequestTransfer
      */
     public function mapToPreAuthorization(SpyPaymentPayolution $paymentEntity)
     {
@@ -36,18 +36,18 @@ class Invoice extends AbstractMethodMapper
         $addressEntity = $orderEntity->getBillingAddress();
         $customerEntity = $orderEntity->getCustomer();
 
-        $request = new PreAuthorizationRequest();
-        $request->setSecuritySender($this->getConfig()->getSecuritySender())
+        $requestTransfer = (new PayolutionRequestTransfer())
+            ->setSecuritySender($this->getConfig()->getSecuritySender())
             ->setUserLogin($this->getConfig()->getUserLogin())
-            ->setUserPassword($this->getConfig()->getUserPassword())
+            ->setUserPwd($this->getConfig()->getUserPassword())
             ->setPresentationAmount($orderEntity->getGrandTotal()/100)
             ->setPresentationCurrency(Store::getInstance()->getCurrencyIsoCode())
             ->setPresentationUsage($orderEntity->getIdSalesOrder())
-            ->setPaymentCode(Payment::CODE_PRE_AUTHORIZATION)
-            ->setAdressCountryIso2Code($addressEntity->getCountry()->getIso2Code())
-            ->setAdressCity($addressEntity->getCity())
-            ->setAdressZip($addressEntity->getZipCode())
-            ->setAdressStreet($addressEntity->getAddress1())
+            ->setPaymentCode(Constants::PAYMENT_CODE_PRE_AUTHORIZATION)
+            ->setAddressCountry($addressEntity->getCountry()->getIso2Code())
+            ->setAddressCity($addressEntity->getCity())
+            ->setAddressZip($addressEntity->getZipCode())
+            ->setAddressStreet($addressEntity->getAddress1())
             ->setNameFamily($customerEntity->getLastName())
             ->setNameGiven($customerEntity->getFirstName())
             ->setNameSex($this->mapGender($customerEntity->getGender()))
@@ -55,20 +55,25 @@ class Invoice extends AbstractMethodMapper
             ->setNameTitle($customerEntity->getSalutation())
             ->setContactIp($paymentEntity->getClientIp())
             ->setContactEmail($customerEntity->getEmail())
-            ->setAccountBrand(Account::BRAND_INVOICE)
+            ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE)
             ->setTransactionChannel($this->getConfig()->getChannelInvoice())
             ->setTransactionMode($this->getConfig()->getTransactionMode())
-            ->setIdentificationTransactionId(uniqid('tran_'))
-            ->setIdentificationShopperId($customerEntity->getIdCustomer());
+            ->setIdentificationTransactionid(uniqid('tran_'))
+            ->setIdentificationShopperid($customerEntity->getIdCustomer());
 
-        return $request;
+        return $requestTransfer;
     }
 
+    /**
+     * @param $gender
+     *
+     * @return string
+     */
     private function mapGender($gender)
     {
         $genderMap = [
-            SpyCustomerTableMap::COL_GENDER_MALE => "M",
-            SpyCustomerTableMap::COL_GENDER_FEMALE => "F",
+            SpyCustomerTableMap::COL_GENDER_MALE => 'M',
+            SpyCustomerTableMap::COL_GENDER_FEMALE => 'F',
         ];
 
         return $genderMap[$gender];

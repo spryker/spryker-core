@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<transfers
+<transfer
     xmlns="http://xsd.spryker.com"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd"
@@ -19,4 +19,48 @@
     <transfer name="CheckoutRequest">
         <property name="payolutionPayment" type="PayolutionPayment"/>
     </transfer>
-</transfers>
+
+    <transfer name="PayolutionRequest">
+        <property name="securitySender" type="string"/>
+
+        <property name="transactionMode" type="string"/>
+        <property name="transactionChannel" type="string"/>
+
+        <property name="userLogin" type="string"/>
+        <property name="userPwd" type="string"/>
+
+        <property name="identificationReferenceid" type="string"/>
+        <property name="identificationTransactionid" type="string"/>
+        <property name="identificationShopperid" type="string"/>
+
+        <property name="paymentCode" type="string"/>
+
+        <property name="presentationCurrency" type="string"/>
+        <property name="presentationUsage" type="string"/>
+        <property name="presentationAmount" type="string"/>
+
+        <property name="nameFamily" type="string"/>
+        <property name="nameGiven" type="string"/>
+        <property name="nameSex" type="string"/>
+        <property name="nameTitle" type="string"/>
+        <property name="nameBirthdate" type="string"/>
+
+        <property name="addressCountry" type="string"/>
+        <property name="addressCity" type="string"/>
+        <property name="addressStreet" type="string"/>
+        <property name="addressZip" type="string"/>
+
+        <property name="contactIp" type="string"/>
+        <property name="contactEmail" type="string"/>
+        <property name="contactPhone" type="string"/>
+        <property name="contactMobile" type="string"/>
+
+        <property name="accountBrand" type="string"/>
+
+        <property name="analysis" type="PayolutionRequestAnalysis"/>
+    </transfer>
+
+    <transfer name="PayolutionRequestAnalysis">
+        <property name="criteria" type="array"/>
+    </transfer>
+</transfer>

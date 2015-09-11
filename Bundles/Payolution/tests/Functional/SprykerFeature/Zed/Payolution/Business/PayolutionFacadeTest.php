@@ -13,8 +13,7 @@ use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
 use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Account;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Payment;
+use SprykerFeature\Zed\Payolution\Business\Api\Constants;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
@@ -36,8 +35,8 @@ class PayolutionFacadeTest extends Test
 
         $paymentTransfer = new PayolutionPaymentTransfer();
         $paymentTransfer->setFkSalesOrder($this->orderEntity->getIdSalesOrder());
-        $paymentTransfer->setPaymentCode(Payment::CODE_PRE_AUTHORIZATION);
-        $paymentTransfer->setAccountBrand(Account::BRAND_INVOICE);
+        $paymentTransfer->setPaymentCode(Constants::PAYMENT_CODE_PRE_AUTHORIZATION);
+        $paymentTransfer->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE);
         $paymentTransfer->setClientIp('127.0.0.1');
 
         // PayolutionCheckoutConnector-HydrateOrderPlugin emulation
@@ -52,8 +51,8 @@ class PayolutionFacadeTest extends Test
         $paymentEntity = $this->orderEntity->getSpyPaymentPayolutions()->getFirst();
 
         $this->assertInstanceOf('SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution', $paymentEntity);
-        $this->assertEquals(Payment::CODE_PRE_AUTHORIZATION, $paymentEntity->getPaymentCode());
-        $this->assertEquals(Account::BRAND_INVOICE, $paymentEntity->getAccountBrand());
+        $this->assertEquals(Constants::PAYMENT_CODE_PRE_AUTHORIZATION, $paymentEntity->getPaymentCode());
+        $this->assertEquals(Constants::ACCOUNT_BRAND_INVOICE, $paymentEntity->getAccountBrand());
         $this->assertEquals('127.0.0.1', $paymentEntity->getClientIp());
     }
 
@@ -66,8 +65,8 @@ class PayolutionFacadeTest extends Test
 
         $paymentEntity = (new SpyPaymentPayolution())
             ->setFkSalesOrder($this->orderEntity->getIdSalesOrder())
-            ->setPaymentCode(Payment::CODE_PRE_AUTHORIZATION)
-            ->setAccountBrand(Account::BRAND_INVOICE)
+            ->setPaymentCode(Constants::PAYMENT_CODE_PRE_AUTHORIZATION)
+            ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE)
             ->setClientIp('127.0.0.1');
         $paymentEntity->save();
 

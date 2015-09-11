@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http;
 use Guzzle\Http\Client;
 use Guzzle\Http\Exception\RequestException;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\AbstractRequest;
 use SprykerFeature\Zed\Payolution\Business\Exception\ApiHttpRequestException;
 
 class Guzzle implements AdapterInterface
@@ -39,33 +38,18 @@ class Guzzle implements AdapterInterface
     }
 
     /**
-     * @param AbstractRequest $request
+     * @param array $data
      *
      * @throws ApiHttpRequestException
-     * @return mixed
+     *
+     * @return array
      */
-    public function sendRequest(AbstractRequest $request)
+    public function sendArrayDataRequest(array $data)
     {
-        /*$guzzleRequest = $this->client
-            ->post(
-                $this->gatewayUrl,
-                $headers = null,
-                [
-                    'load' => $request->toXml()->saveXML()
-                ]
-            );
-
-        $response = $guzzleRequest->send();
-
-        echo $request->toXml()->saveXML();
-        echo  "++++++++++++++++++++++++++++++";
-        echo $response->getBody(true); exit;
-        */
-
         $guzzleRequest = $this->client->post(
           $this->gatewayUrl,
             $headers = ['Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8'],
-            $request->toArray()
+            $data
         );
 
         try {
@@ -74,9 +58,36 @@ class Guzzle implements AdapterInterface
             throw new ApiHttpRequestException($requestException->getMessage());
         }
 
-        parse_str($response->getBody(true), $out);
+        parse_str($response->getBody($asString = true), $out);
 
         return $out;
     }
+
+// @todo CD-408 Clarify if we want to support exchange via XML documents
+//    /**
+//     * @param \SimpleXMLElement $xmlElement
+//     *
+//     * @throws ApiHttpRequestException
+//     * @return string
+//     */
+//    public function sendXmlRequest(\SimpleXMLElement $xmlElement)
+//    {
+//        $guzzleRequest = $this->client
+//            ->post(
+//                $this->gatewayUrl,
+//                $headers = null,
+//                [
+//                    'load' => $xmlElement->saveXML()
+//                ]
+//            );
+//
+//        try {
+//            $response = $guzzleRequest->send();
+//        } catch (RequestException $requestException) {
+//            throw new ApiHttpRequestException($requestException->getMessage());
+//        }
+//
+//        return $response->getBody($asString = true);
+//    }
 
 }
