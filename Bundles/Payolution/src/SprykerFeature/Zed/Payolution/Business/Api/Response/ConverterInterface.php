@@ -1,19 +1,21 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Business\Payment;
+namespace SprykerFeature\Zed\Payolution\Business\Api\Response;
 
 use Generated\Shared\Transfer\PayolutionResponseTransfer;
 
-interface PaymentManagerInterface
+interface ConverterInterface
 {
+
     /**
-     * @param int $idPayment
+     * @param array $data
      *
      * @return PayolutionResponseTransfer
      */
-    public function preAuthorizePayment($idPayment);
+    public function fromArray(array $data);
 
 }

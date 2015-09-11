@@ -9,7 +9,8 @@ namespace SprykerFeature\Zed\Payolution\Business;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use Generated\Zed\Ide\FactoryAutoCompletion\PayolutionBusiness;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\ConverterInterface;
+use SprykerFeature\Zed\Payolution\Business\Api\Request\ConverterInterface as RequestConverterInterface;
+use SprykerFeature\Zed\Payolution\Business\Api\Response\ConverterInterface as ResponseConverterInterface;
 use SprykerFeature\Zed\Payolution\Business\Order\OrderManagerInterface;
 use SprykerFeature\Zed\Payolution\Business\Payment\PaymentManagerInterface;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
@@ -33,7 +34,8 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
             ->createPaymentPaymentManager(
                 $this->createExecutionAdapter(),
                 $this->getQueryContainer(),
-                $this->createRequestConverter()
+                $this->createRequestConverter(),
+                $this->createResponseConverter()
             );
 
         $paymentManager->registerMethodMapper(
@@ -64,11 +66,19 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return ConverterInterface
+     * @return RequestConverterInterface
      */
     public function createRequestConverter()
     {
         return $this->getFactory()->createApiRequestConverter();
+    }
+
+    /**
+     * @return ResponseConverterInterface
+     */
+    public function createResponseConverter()
+    {
+        return $this->getFactory()->createApiResponseConverter();
     }
 
 }

@@ -73,7 +73,7 @@ class PayolutionFacadeTest extends Test
         $facade = $this->getLocator()->payolution()->facade();
         $response = $facade->preAuthorizePayment($paymentEntity->getIdPaymentPayolution());
 
-        $this->assertInstanceOf('SprykerFeature\Zed\Payolution\Business\Api\Response\PreAuthorizationResponse', $response);
+        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
 
         // @todo CD-408 Assert persistent data
         // @todo CD-408 Assert response data

@@ -7,9 +7,10 @@
 namespace SprykerFeature\Zed\Payolution\Business\Payment;
 
 use Generated\Shared\Transfer\PayolutionRequestTransfer;
+use Generated\Shared\Transfer\PayolutionResponseTransfer;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\Converter;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\ConverterInterface;
+use SprykerFeature\Zed\Payolution\Business\Api\Request\ConverterInterface as RequestConverterInterface;
+use SprykerFeature\Zed\Payolution\Business\Api\Response\ConverterInterface as ResponseConverterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Response\AbstractResponse;
 use SprykerFeature\Zed\Payolution\Business\Api\Response\PreAuthorizationResponse;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
@@ -31,9 +32,14 @@ class PaymentManager implements PaymentManagerInterface
     private $queryContainer;
 
     /**
-     * @var Converter
+     * @var RequestConverterInterface
      */
     private $requestConverter;
+
+    /**
+     * @var ResponseConverterInterface
+     */
+    private $responseConverter;
 
     /**
      * @var array
@@ -43,16 +49,19 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param AdapterInterface $executionAdapter
      * @param PayolutionQueryContainerInterface $queryContainer
-     * @param ConverterInterface $requestConverter
+     * @param RequestConverterInterface $requestConverter
+     * @param ResponseConverterInterface $responseConverter
      */
     public function __construct(
         AdapterInterface $executionAdapter,
         PayolutionQueryContainerInterface $queryContainer,
-        ConverterInterface $requestConverter
+        RequestConverterInterface $requestConverter,
+        ResponseConverterInterface $responseConverter
     ) {
         $this->executionAdapter = $executionAdapter;
         $this->queryContainer = $queryContainer;
         $this->requestConverter = $requestConverter;
+        $this->responseConverter = $responseConverter;
     }
 
     /**
@@ -66,7 +75,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param int $idPayment
      *
-     * @return PreAuthorizationResponse
+     * @return PayolutionResponseTransfer
      */
     public function preAuthorizePayment($idPayment)
     {
@@ -81,16 +90,16 @@ class PaymentManager implements PaymentManagerInterface
         $requestData = $this->requestConverter->toArray($requestTransfer);
         $responseData = $this->executionAdapter->sendArrayDataRequest($requestData);
 
-        $response = new PreAuthorizationResponse();
-        $response->initFromArray($responseData);
+        $responseTransfer = $this->responseConverter->fromArray($responseData);
 
-        $this->logApiResponse($response, $paymentEntity);
+        $this->logApiResponse($responseTransfer, $paymentEntity);
 
-        return $response;
+        return $responseTransfer;
     }
 
     /**
-     * @param PayolutionRequestTransfer $request
+     * @param PayolutionRequestTransfer $requestTransfer
+     * @param SpyPaymentPayolution $paymentEntity
      *
      * @throws \Propel\Runtime\Exception\PropelException
      */
@@ -107,14 +116,15 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param AbstractResponse $response
+     * @param PayolutionResponseTransfer $responseTransfer
      * @param SpyPaymentPayolution $paymentEntity
+     *
      * @throws \Propel\Runtime\Exception\PropelException
      */
-    private function logApiResponse(AbstractResponse $response, SpyPaymentPayolution $paymentEntity)
+    private function logApiResponse(PayolutionResponseTransfer $responseTransfer, SpyPaymentPayolution $paymentEntity)
     {
         $logEntity = new SpyPaymentPayolutionTransactionStatusLog();
-        $logEntity->fromArray($response->toArray());
+        $logEntity->fromArray($responseTransfer->toArray());
         $logEntity->setFkPaymentPayolution($paymentEntity->getIdPaymentPayolution());
         $logEntity->save();
     }

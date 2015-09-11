@@ -63,4 +63,54 @@
     <transfer name="PayolutionRequestAnalysis">
         <property name="criteria" type="array"/>
     </transfer>
+
+    <transfer name="PayolutionResponse">
+        <property name="processingRiskScore" type="string"/>
+        <property name="p3Validation" type="string"/>
+        <property name="nameGiven" type="string"/>
+        <property name="identificationShopperid" type="string"/>
+        <property name="clearingDescriptor" type="string"/>
+        <property name="processingConnectordetailConnectortxid1" type="string"/>
+        <property name="transactionChannel" type="string"/>
+        <property name="processingReasonCode" type="string"/>
+        <property name="addressCity" type="string"/>
+        <property name="frontendRequestCancelled" type="string"/>
+        <property name="processingCode" type="string"/>
+        <property name="processingReason" type="string"/>
+        <property name="frontendMode" type="string"/>
+        <property name="clearingFxsource" type="string"/>
+        <property name="clearingAmount" type="string"/>
+        <property name="processingResult" type="string"/>
+        <property name="nameSalutation" type="string"/>
+        <property name="presentationUsage" type="string"/>
+        <property name="postValidation" type="string"/>
+        <property name="contactEmail" type="string"/>
+        <property name="clearingCurrency" type="string"/>
+        <property name="frontendSessionId" type="string"/>
+        <property name="processingStatusCode" type="string"/>
+        <property name="presentationCurrency" type="string"/>
+        <property name="paymentCode" type="string"/>
+        <property name="nameBirthdate" type="string"/>
+        <property name="processingReturnCode" type="string"/>
+        <property name="contactIp" type="string"/>
+        <property name="nameFamily" type="string"/>
+        <property name="processingStatus" type="string"/>
+        <property name="frontendCcLogo" type="string"/>
+        <property name="presentationAmount" type="string"/>
+        <property name="identificationUniqueid" type="string"/>
+        <property name="identificationTransactionid" type="string"/>
+        <property name="identificationShortid" type="string"/>
+        <property name="clearingFxrate" type="string"/>
+        <property name="processingTimestamp" type="string"/>
+        <property name="addressCountry" type="string"/>
+        <property name="processingConnectordetailPaymentreference" type="string"/>
+        <property name="responseVersion" type="string"/>
+        <property name="transactionMode" type="string"/>
+        <property name="processingReturn" type="string"/>
+        <property name="transactionResponse" type="string"/>
+        <property name="addressStreet" type="string"/>
+        <property name="nameSex" type="string"/>
+        <property name="clearingFxdate" type="string"/>
+        <property name="addressZip" type="string"/>
+    </transfer>
 </transfer>

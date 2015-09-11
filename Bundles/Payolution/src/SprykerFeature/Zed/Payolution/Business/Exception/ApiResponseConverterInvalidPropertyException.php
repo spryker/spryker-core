@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Exception;
 
-class ApiResponseInvalidPropertyException extends \ErrorException
+class ApiResponseConverterInvalidPropertyException extends \ErrorException
 {
 
 }
