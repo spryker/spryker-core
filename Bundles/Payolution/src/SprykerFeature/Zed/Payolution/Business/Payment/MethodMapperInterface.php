@@ -20,9 +20,9 @@ interface MethodMapperInterface
     public function getName();
 
     /**
-     * @param SpyPaymentPayolution $payment
+     * @param SpyPaymentPayolution $paymentEntity
      *
-     * @return PreAuthorizationRequest
+     * @return mixed
      */
     public function mapToPreAuthorization(SpyPaymentPayolution $paymentEntity);
 

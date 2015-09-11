@@ -7,7 +7,6 @@
     <transfer name="PayolutionPayment">
         <property name="fkSalesOrder" type="int" />
         <property name="paymentCode" type="string" />
-        <property name="transactionId" type="string" />
         <property name="accountBrand" type="string" />
         <property name="clientIp" type="string" />
     </transfer>

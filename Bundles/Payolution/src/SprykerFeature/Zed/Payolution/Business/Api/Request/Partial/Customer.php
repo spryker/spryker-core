@@ -6,9 +6,9 @@
 namespace SprykerFeature\Zed\Payolution\Business\Api\Request\Partial;
 
 
-use SprykerFeature\Zed\Payolution\Business\Api\Request\AbstractRequest;
+use SprykerFeature\Zed\Payolution\Business\Api\Request\AbstractRequestExporter;
 
-class Customer extends AbstractRequest
+class Customer extends AbstractRequestExporter
 {
     /**
      * @var Name
@@ -24,6 +24,13 @@ class Customer extends AbstractRequest
      * @var Contact
      */
     protected $contact;
+
+    public function __construct()
+    {
+        $this->setName(new Name());
+        $this->setAddress(new Address());
+        $this->setContact(new Contact());
+    }
 
     /**
      * @return Name

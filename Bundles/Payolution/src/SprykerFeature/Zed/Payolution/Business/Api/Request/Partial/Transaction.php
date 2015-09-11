@@ -5,7 +5,7 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Api\Request\Partial;
 
-use SprykerFeature\Zed\Payolution\Business\Api\Request\AbstractRequest;
+use SprykerFeature\Zed\Payolution\Business\Api\Request\AbstractRequestExporter;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Account;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Analysis;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Customer;
@@ -14,7 +14,7 @@ use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Identification;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Payment;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\User;
 
-class Transaction extends AbstractRequest
+class Transaction extends AbstractRequestExporter
 {
 
     const MODE_TEST = 'CONNECTOR_TEST';
@@ -64,6 +64,18 @@ class Transaction extends AbstractRequest
      * @var Analysis
      */
     protected $analysis;
+
+
+    public function __construct()
+    {
+        $this->setUser(new User());
+        $this->setIdentification(new Identification());
+        $this->setPayment(new Payment());
+        $this->setCustomer(new Customer());
+        $this->setAccount(new Account());
+        $this->setAnalysis(new Analysis());
+    }
+
 
     /**
      * @return string
@@ -216,5 +228,7 @@ class Transaction extends AbstractRequest
     {
         return ['channel', 'mode'];
     }
+
+
 
 }

@@ -6,9 +6,9 @@
 namespace SprykerFeature\Zed\Payolution\Business\Api\Request\Partial;
 
 
-use SprykerFeature\Zed\Payolution\Business\Api\Request\AbstractRequest;
+use SprykerFeature\Zed\Payolution\Business\Api\Request\AbstractRequestExporter;
 
-class Account extends AbstractRequest
+class Account extends AbstractRequestExporter
 {
     const BRAND_INVOICE = 'PAYOLUTION_INVOICE';
     const BRAND_INSTALLMENT = 'PAYOLUTION_INS';

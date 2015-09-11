@@ -6,9 +6,9 @@
 namespace SprykerFeature\Zed\Payolution\Business\Api\Request\Partial;
 
 
-use SprykerFeature\Zed\Payolution\Business\Api\Request\AbstractRequest;
+use SprykerFeature\Zed\Payolution\Business\Api\Request\AbstractRequestExporter;
 
-class Criterion extends AbstractRequest
+class Criterion extends AbstractRequestExporter
 {
 
 }

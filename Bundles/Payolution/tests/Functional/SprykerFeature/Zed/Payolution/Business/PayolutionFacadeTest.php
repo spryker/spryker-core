@@ -37,7 +37,6 @@ class PayolutionFacadeTest extends Test
         $paymentTransfer = new PayolutionPaymentTransfer();
         $paymentTransfer->setFkSalesOrder($this->orderEntity->getIdSalesOrder());
         $paymentTransfer->setPaymentCode(Payment::CODE_PRE_AUTHORIZATION);
-        $paymentTransfer->setTransactionId('dfgdsgdfg');
         $paymentTransfer->setAccountBrand(Account::BRAND_INVOICE);
         $paymentTransfer->setClientIp('127.0.0.1');
 
@@ -54,7 +53,6 @@ class PayolutionFacadeTest extends Test
 
         $this->assertInstanceOf('SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution', $paymentEntity);
         $this->assertEquals(Payment::CODE_PRE_AUTHORIZATION, $paymentEntity->getPaymentCode());
-        $this->assertEquals('dfgdsgdfg', $paymentEntity->getTransactionId());
         $this->assertEquals(Account::BRAND_INVOICE, $paymentEntity->getAccountBrand());
         $this->assertEquals('127.0.0.1', $paymentEntity->getClientIp());
     }
@@ -70,8 +68,7 @@ class PayolutionFacadeTest extends Test
             ->setFkSalesOrder($this->orderEntity->getIdSalesOrder())
             ->setPaymentCode(Payment::CODE_PRE_AUTHORIZATION)
             ->setAccountBrand(Account::BRAND_INVOICE)
-            ->setClientIp('127.0.0.1')
-            ->setTransactionId('asdökjfhsdkfa');
+            ->setClientIp('127.0.0.1');
         $paymentEntity->save();
 
         $facade = $this->getLocator()->payolution()->facade();
@@ -110,8 +107,8 @@ class PayolutionFacadeTest extends Test
 
         $this->orderEntity = (new SpySalesOrder())
             ->setEmail('john@doe.com')
-            ->setGrandTotal(100.00)
-            ->setSubtotal(100.00)
+            ->setGrandTotal(10000)
+            ->setSubtotal(10000)
             ->setIsTest(true)
             ->setFkSalesOrderAddressBilling($billingAddress->getIdSalesOrderAddress())
             ->setFkSalesOrderAddressShipping($billingAddress->getIdSalesOrderAddress())

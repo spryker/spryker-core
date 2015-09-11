@@ -5,9 +5,9 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Api\Request\Partial;
 
-use SprykerFeature\Zed\Payolution\Business\Api\Request\AbstractRequest;
+use SprykerFeature\Zed\Payolution\Business\Api\Request\AbstractRequestExporter;
 
-class Payment extends AbstractRequest
+class Payment extends AbstractRequestExporter
 {
 
     const CODE_PRE_AUTHORIZATION = 'VA.PA';
@@ -25,6 +25,12 @@ class Payment extends AbstractRequest
      * @var Presentation;
      */
     protected $presentation;
+
+    public function __construct()
+    {
+        $this->setPresentation(new Presentation());
+    }
+
 
     /**
      * @return string

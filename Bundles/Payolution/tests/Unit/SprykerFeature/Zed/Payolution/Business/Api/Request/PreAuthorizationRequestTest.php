@@ -26,7 +26,7 @@ class PreAuthorizationRequestTest extends \PHPUnit_Framework_TestCase
      * test public functionality of an abstract class in a concrete class.
      * Note: It should not be necessary to test this functionality again.
      */
-    public function testToArray()
+    public function brik_testToArray()
     {
         $preAuthorizationRequest = new PreAuthorizationRequest();
         $preAuthorizationRequest->setHeader($this->getHeaderPartialRequest());

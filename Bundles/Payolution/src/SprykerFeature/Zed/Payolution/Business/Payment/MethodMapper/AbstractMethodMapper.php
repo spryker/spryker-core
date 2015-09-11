@@ -33,30 +33,6 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
         return $this->config;
     }
 
-    /**
-     * @return Header
-     */
-    protected function getHeaderPartialRequest()
-    {
-        $security = new Security();
-        $security->setSender($this->getConfig()->getSecuritySender());
 
-        $header = new Header();
-        $header->setSecurity($security);
-
-        return $header;
-    }
-
-    /**
-     * @return User
-     */
-    protected function getUserPartialRequest()
-    {
-        $user = new User();
-        $user->setLogin($this->getConfig()->getUserLogin());
-        $user->setPwd($this->getConfig()->getUserPassword());
-
-        return $user;
-    }
 
 }
