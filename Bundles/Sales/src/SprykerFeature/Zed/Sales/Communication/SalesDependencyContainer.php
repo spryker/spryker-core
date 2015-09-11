@@ -9,9 +9,11 @@ namespace SprykerFeature\Zed\Sales\Communication;
 use Generated\Zed\Ide\FactoryAutoCompletion\SalesCommunication;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use SprykerFeature\Zed\Oms\Business\OmsFacade;
 use SprykerFeature\Zed\Sales\Communication\Form\OrderItemSplitForm\Collection;
 use SprykerFeature\Zed\Sales\Communication\Form\PaymentDetailForm;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
+use SprykerFeature\Zed\Sales\SalesDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Sales\Communication\Table\OrdersTable;
 use SprykerFeature\Zed\Sales\Communication\Form\CustomerForm;
@@ -140,6 +142,14 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
         $paymentDetailQuery = $this->getQueryContainer()->queryPaymentDetailByPaymentId($idPayment);
 
         return $this->getFactory()->createFormPaymentDetailForm($paymentDetailQuery);
+    }
+
+    /**
+     * @return OmsFacade
+     */
+    public function getOmsFacade()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_OMS);
     }
 
 }

@@ -64,6 +64,10 @@ class DetailsController extends AbstractController
 
         $refunds = $this->getFacade()->getRefunds($idOrder);
 
+        $itemsInProgress = $this->getDependencyContainer()->getOmsFacade()->getItemsWithFlag($orderEntity, 'in progress');
+        $itemsPaid = $this->getDependencyContainer()->getOmsFacade()->getItemsWithFlag($orderEntity, 'paid');
+        $itemsCancelled = $this->getDependencyContainer()->getOmsFacade()->getItemsWithFlag($orderEntity, 'cancelled');
+
         return [
             'idOrder' => $idOrder,
             'orderDetails' => $orderEntity,
@@ -76,6 +80,9 @@ class DetailsController extends AbstractController
             'billingAddress' => $billingAddress,
             'shippingAddress' => $shippingAddress,
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection->create(),
+            'itemsInProgress' => $itemsInProgress,
+            'itemsPaid' => $itemsPaid,
+            'itemsCancelled' => $itemsCancelled
         ];
     }
 
