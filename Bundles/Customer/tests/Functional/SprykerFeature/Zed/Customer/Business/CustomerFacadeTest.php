@@ -184,9 +184,10 @@ class CustomerFacadeTest extends Test
     {
         $customerTransfer = $this->createTestCustomer();
         $customerTransfer->setLastName(self::TESTER_NAME);
-        $customerResponseTransfer = $this->customerFacade->updateCustomer($customerTransfer);
-        $this->assertTrue($customerResponseTransfer->getIsSuccess());
-        $customerTransfer = $this->getTestCustomerTransfer($customerTransfer);
+        $customerResponse = $this->customerFacade->updateCustomer($customerTransfer);
+        $this->assertNotNull($customerResponse);
+        $this->assertTrue($customerResponse->getIsSuccess());
+        $customerTransfer = $customerResponse->getCustomerTransfer();
         $this->assertEquals(self::TESTER_NAME, $customerTransfer->getLastName());
     }
 
