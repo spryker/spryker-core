@@ -20,7 +20,6 @@ use SprykerFeature\Shared\Customer\Code\Messages;
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotUpdatedException;
-use SprykerFeature\Zed\Customer\Business\Exception\EmailAlreadyRegisteredException;
 use SprykerFeature\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface;
 use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPluginInterface;
 use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface;
@@ -137,22 +136,21 @@ class Customer
     /**
      * @param CustomerInterface $customerTransfer
      *
-     * @throws EmailAlreadyRegisteredException
      * @throws PropelException
      *
-     * @return CustomerInterface
+     * @return CustomerResponseTransfer
      */
     public function register(CustomerInterface $customerTransfer)
     {
-        if ($this->hasCustomer($customerTransfer)) {
-            throw new EmailAlreadyRegisteredException();
-        }
-
         $customerTransfer = $this->encryptPassword($customerTransfer);
 
         $customerEntity = new SpyCustomer();
-
         $customerEntity->fromArray($customerTransfer->toArray());
+
+        $customerResponseTransfer = $this->getCustomerEmailAlreadyUsedResponse($customerEntity);
+        if (!$customerResponseTransfer->getIsSuccess()) {
+            return $customerResponseTransfer;
+        }
 
         $customerEntity->setCustomerReference($this->customerReferenceGenerator->generateCustomerReference($customerTransfer));
         $customerEntity->setRegistrationKey($this->generateKey());
@@ -165,7 +163,11 @@ class Customer
 
         $this->sendRegistrationToken($customerTransfer);
 
-        return $customerTransfer;
+        $customerResponseTransfer
+            ->setIsSuccess(true)
+            ->setCustomerTransfer($customerTransfer);
+
+        return $customerResponseTransfer;
     }
 
     /**

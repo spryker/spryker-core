@@ -34,7 +34,7 @@ class CustomerFacade extends AbstractFacade
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerResponseTransfer
      */
     public function registerCustomer(CustomerTransfer $customerTransfer)
     {

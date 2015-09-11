@@ -23,7 +23,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerResponseTransfer
      */
     public function registerAction(CustomerTransfer $customerTransfer)
     {

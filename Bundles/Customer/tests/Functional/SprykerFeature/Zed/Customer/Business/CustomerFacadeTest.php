@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerEngine\Zed\Kernel\Locator;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
-use SprykerFeature\Zed\Customer\Business\Exception\EmailAlreadyRegisteredException;
 
 /**
  * @group SprykerFeature
@@ -81,8 +80,8 @@ class CustomerFacadeTest extends Test
     protected function createTestCustomer()
     {
         $customerTransfer = $this->createTestCustomerTransfer();
-        $customerTransfer = $this->customerFacade->registerCustomer($customerTransfer);
-        $customerTransfer = $this->customerFacade->confirmRegistration($customerTransfer);
+        $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
+        $customerTransfer = $this->customerFacade->confirmRegistration($customerResponseTransfer->getCustomerTransfer());
 
         return $customerTransfer;
     }
@@ -115,8 +114,8 @@ class CustomerFacadeTest extends Test
     public function testGetCustomer()
     {
         $customerTransfer = $this->createTestCustomerTransfer();
-        $customerTransfer = $this->customerFacade->registerCustomer($customerTransfer);
-        $customerTransfer = $this->customerFacade->confirmRegistration($customerTransfer);
+        $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
+        $customerTransfer = $this->customerFacade->confirmRegistration($customerResponseTransfer->getCustomerTransfer());
         $customerTransfer = $this->getTestCustomerTransfer($customerTransfer);
         $this->assertNotNull($customerTransfer->getIdCustomer());
     }
@@ -135,36 +134,34 @@ class CustomerFacadeTest extends Test
     public function testRegisterCustomer()
     {
         $customerTransfer = $this->createTestCustomerTransfer();
-        $customerTransfer = $this->customerFacade->registerCustomer($customerTransfer);
-        $this->assertNotNull($customerTransfer->getRegistrationKey());
+        $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
+        $this->assertNotNull($customerResponseTransfer->getCustomerTransfer()->getRegistrationKey());
     }
 
     public function testRegisterCustomerWithAlreadyExistingEmail()
     {
         $customerTransfer = $this->createTestCustomerTransfer();
-        $this->customerFacade->registerCustomer($customerTransfer);
-        $exceptionOccurred = false;
-        try {
-            $this->customerFacade->registerCustomer($customerTransfer);
-        } catch (EmailAlreadyRegisteredException $e) {
-            $exceptionOccurred = true;
-        }
-        $this->assertTrue($exceptionOccurred);
+        $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
+        $this->assertTrue($customerResponseTransfer->getIsSuccess());
+
+        $customerTransfer = $this->createTestCustomerTransfer();
+        $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
+        $this->assertFalse($customerResponseTransfer->getIsSuccess());
     }
 
     public function testConfirmRegistration()
     {
         $customerTransfer = $this->createTestCustomerTransfer();
-        $customerTransfer = $this->customerFacade->registerCustomer($customerTransfer);
-        $customerTransfer = $this->customerFacade->confirmRegistration($customerTransfer);
+        $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
+        $customerTransfer = $this->customerFacade->confirmRegistration($customerResponseTransfer->getCustomerTransfer());
         $this->assertNotNull($customerTransfer->getRegistered());
     }
 
     public function testForgotPassword()
     {
         $customerTransfer = $this->createTestCustomerTransfer();
-        $customerTransfer = $this->customerFacade->registerCustomer($customerTransfer);
-        $customerTransfer = $this->customerFacade->confirmRegistration($customerTransfer);
+        $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
+        $customerTransfer = $this->customerFacade->confirmRegistration($customerResponseTransfer->getCustomerTransfer());
         $isSuccess = $this->customerFacade->forgotPassword($customerTransfer);
         $this->assertTrue($isSuccess);
     }
@@ -172,8 +169,8 @@ class CustomerFacadeTest extends Test
     public function testRestorePassword()
     {
         $customerTransfer = $this->createTestCustomerTransfer();
-        $customerTransfer = $this->customerFacade->registerCustomer($customerTransfer);
-        $customerTransfer = $this->customerFacade->confirmRegistration($customerTransfer);
+        $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
+        $customerTransfer = $this->customerFacade->confirmRegistration($customerResponseTransfer->getCustomerTransfer());
         $this->customerFacade->forgotPassword($customerTransfer);
         $customerTransfer = $this->getTestCustomerTransfer($customerTransfer);
         $isSuccess = $this->customerFacade->restorePassword($customerTransfer);
