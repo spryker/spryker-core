@@ -41,7 +41,9 @@ class AclFacade extends AbstractFacade
             ->createGroupModel()
             ->addGroup($groupName);
 
-        $this->addRolesToGroup($groupTransfer, $rolesIdsArray);
+        if (!empty($rolesIdsArray)) {
+            $this->addRolesToGroup($groupTransfer, $rolesIdsArray);
+        }
 
         return $groupTransfer;
     }
@@ -58,7 +60,9 @@ class AclFacade extends AbstractFacade
             ->createGroupModel()
             ->updateGroup($transfer);
 
-        $this->addRolesToGroup($groupTransfer, $rolesIdsArray);
+        if (!empty($rolesIdsArray)) {
+            $this->addRolesToGroup($groupTransfer, $rolesIdsArray);
+        }
 
         return $groupTransfer;
     }
