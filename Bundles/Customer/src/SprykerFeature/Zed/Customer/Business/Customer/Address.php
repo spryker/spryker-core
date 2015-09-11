@@ -79,15 +79,35 @@ class Address
      */
     public function getAddress(AddressTransfer $addressTransfer)
     {
-        $entity = $this->queryContainer->queryAddress($addressTransfer->getIdCustomerAddress())
-            ->findOne()
-        ;
+        $idCustomer = $addressTransfer->getFkCustomer();
 
-        if (!$entity) {
+        return $this->getAddressTransferById($addressTransfer->getIdCustomerAddress(), $idCustomer);
+    }
+
+    /**
+     * @param int $idAddress
+     * @param int|null $idCustomer
+     *
+     * @throws AddressNotFoundException
+     *
+     * @return AddressTransfer
+     */
+    protected function getAddressTransferById($idAddress, $idCustomer = null)
+    {
+        $addressQuery = $this->queryContainer->queryAddress($idAddress);
+        if (null !== $idCustomer) {
+            $addressQuery->filterByFkCustomer($idCustomer);
+        }
+        $addressEntity = $addressQuery->findOne();
+
+        if ($addressEntity === null) {
             throw new AddressNotFoundException();
         }
 
-        return $this->entityToAddressTransfer($entity);
+        $addressTransfer = $this->entityToAddressTransfer($addressEntity);
+        $addressTransfer->setIso2Code($addressEntity->getCountry()->getIso2Code());
+
+        return $addressTransfer;
     }
 
     /**
@@ -321,16 +341,10 @@ class Address
      */
     public function getDefaultShippingAddress(CustomerTransfer $customerTransfer)
     {
-        $customer = $this->getCustomerFromCustomerTransfer($customerTransfer);
-        $idAddress = $customer->getDefaultShippingAddress();
-        $address = $this->queryContainer->queryAddress($idAddress)
-            ->findOne()
-        ;
-        if ($address === null) {
-            throw new AddressNotFoundException();
-        }
+        $customerEntity = $this->getCustomerFromCustomerTransfer($customerTransfer);
+        $idAddress = $customerEntity->getDefaultShippingAddress();
 
-        return $this->entityToAddressTransfer($address);
+        return $this->getAddressTransferById($idAddress);
     }
 
     /**
@@ -342,16 +356,10 @@ class Address
      */
     public function getDefaultBillingAddress(CustomerTransfer $customerTransfer)
     {
-        $customer = $this->getCustomerFromCustomerTransfer($customerTransfer);
-        $idAddress = $customer->getDefaultBillingAddress();
-        $address = $this->queryContainer->queryAddress($idAddress)
-            ->findOne()
-        ;
-        if ($address === null) {
-            throw new AddressNotFoundException();
-        }
+        $customerEntity = $this->getCustomerFromCustomerTransfer($customerTransfer);
+        $idAddress = $customerEntity->getDefaultBillingAddress();
 
-        return $this->entityToAddressTransfer($address);
+        return $this->getAddressTransferById($idAddress);
     }
 
     /**

@@ -92,6 +92,7 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     public function queryAddress($idAddress)
     {
         $query = $this->getDependencyContainer()->createSpyCustomerAddressQuery();
+        $query->joinWithCountry();
         $query->filterByIdCustomerAddress($idAddress);
 
         return $query;
