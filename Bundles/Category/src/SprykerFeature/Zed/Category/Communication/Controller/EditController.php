@@ -48,7 +48,7 @@ class EditController extends AddController
         ;
         $form->handleRequest();
 
-        if ($form->isValid()) {
+        if ($form->isValid()) { //TODO Ugly and dirty, some stuff must be moved into Facades
             $data = $form->getData();
             $categoryTransfer = (new CategoryTransfer())->fromArray($data, true);
             $this->getFacade()->updateCategory($categoryTransfer, $locale);
@@ -96,7 +96,6 @@ class EditController extends AddController
                     ->createProductCategoryFacade()
                     ->createProductCategoryMappings($categoryTransfer->getIdCategory(), explode(',', $data['products_to_be_assigned']));
             }
-
 
             $this->addSuccessMessage('The category was saved successfully.');
             
