@@ -79,7 +79,7 @@ class PageController extends AbstractController
 
         return $this->viewResponse([
             'form' => $form->createView(),
-            'isSynced' => $isSynced
+            'isSynced' => $isSynced,
         ]);
     }
 
@@ -104,6 +104,7 @@ class PageController extends AbstractController
 
             $pageTransfer = $this->createPageTransfer($data);
             $pageTransfer = $this->getFacade()->savePage($pageTransfer);
+            $this->getFacade()->touchPageActive($pageTransfer);
 
             if (intval($data[CmsPageForm::CURRENT_TEMPLATE]) !== intval($data[CmsPageForm::FK_TEMPLATE])) {
                 $this->getFacade()->deleteGlossaryKeysByIdPage($idPage);
@@ -119,7 +120,7 @@ class PageController extends AbstractController
 
         return $this->viewResponse([
             'form' => $form->createView(),
-            'isSynced' => $isSynced
+            'isSynced' => $isSynced,
         ]);
     }
 
@@ -170,4 +171,5 @@ class PageController extends AbstractController
 
         return $urlTransfer;
     }
+
 }
