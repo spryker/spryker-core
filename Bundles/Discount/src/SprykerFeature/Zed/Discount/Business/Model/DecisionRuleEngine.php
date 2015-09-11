@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
+use Generated\Shared\Discount\DiscountInterface;
 use Generated\Shared\Discount\OrderInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
@@ -16,7 +17,7 @@ class DecisionRuleEngine implements DecisionRuleInterface
 {
 
     /**
-     * @param SpyDiscount $discountEntity
+     * @param DiscountInterface $discountTransfer
      *
      * @param CalculableInterface $discountableContainer
      * @param DiscountDecisionRulePluginInterface[] $decisionRulePlugins
@@ -24,19 +25,19 @@ class DecisionRuleEngine implements DecisionRuleInterface
      * @return bool
      */
     public function evaluate(
-        SpyDiscount $discountEntity,
+        DiscountInterface $discountTransfer,
         CalculableInterface $discountableContainer,
         array $decisionRulePlugins
     ) {
         $errors = [];
         $result = new ModelResult();
         foreach ($decisionRulePlugins as $plugin) {
-            $errors = array_merge($errors, $plugin->check($discountEntity, $discountableContainer)->getErrors());
+            $errors = array_merge($errors, $plugin->check($discountTransfer, $discountableContainer)->getErrors());
         }
 
         $result->addErrors($errors);
 
-            return $result;
+        return $result;
     }
 
 }

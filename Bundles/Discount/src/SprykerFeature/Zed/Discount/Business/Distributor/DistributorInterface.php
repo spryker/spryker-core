@@ -6,16 +6,16 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Distributor;
 
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
+use Generated\Shared\Discount\DiscountInterface;
 
 interface DistributorInterface
 {
 
     /**
      * @param array $discountableObjects
-     * @param SpyDiscount $discountEntity
-     * @param $amount
+     * @param DiscountInterface $discountTransfer
+     * @param int $amount
      */
-    public function distribute(array $discountableObjects, SpyDiscount $discountEntity, $amount);
+    public function distribute(array $discountableObjects, DiscountInterface $discountTransfer, $amount);
 
 }

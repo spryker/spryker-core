@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\DiscountCheckoutConnector\Business\Model;
 use Generated\Shared\DiscountCheckoutConnector\DiscountInterface;
 use Generated\Shared\DiscountCheckoutConnector\OrderInterface;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesDiscount;
@@ -102,6 +103,12 @@ class DiscountSaver implements DiscountSaverInterface
             if ($discountVoucherEntity) {
                 $salesDiscountCodeEntity = $this->getSalesDiscountCodeEntity();
                 $salesDiscountCodeEntity->fromArray($discountVoucherEntity->toArray());
+                $salesDiscountCodeEntity->setCodepoolName(
+                    $discountVoucherEntity->getVoucherPool()->getName()
+                );
+                $salesDiscountCodeEntity->setIsReusable(
+                    $discountVoucherEntity->getVoucherPool()->getIsInfinitelyUsable()
+                );
                 $salesDiscountCodeEntity->setDiscount($salesDiscountEntity);
 
                 $this->persistSalesDiscountCode($salesDiscountCodeEntity);
@@ -112,7 +119,7 @@ class DiscountSaver implements DiscountSaverInterface
     /**
      * @param SpySalesDiscountCode $salesDiscountCodeEntity
      *
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws PropelException
      */
     protected function persistSalesDiscountCode(SpySalesDiscountCode $salesDiscountCodeEntity)
     {

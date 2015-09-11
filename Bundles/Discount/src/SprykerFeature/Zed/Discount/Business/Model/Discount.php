@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
 use Generated\Shared\Discount\OrderInterface;
+use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Distributor\DistributorInterface;
 use SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule\AbstractDecisionRule;
@@ -126,14 +127,16 @@ class Discount
         $errors = [];
 
         foreach ($discounts as $discount) {
+            $discountTransfer = new DiscountTransfer();
+            $discountTransfer->fromArray($discount->toArray(), true);
             $result = $this->decisionRule->evaluate(
-                $discount,
+                $discountTransfer,
                 $this->discountContainer,
                 $this->getDecisionRulePlugins($discount->getPrimaryKey())
             );
 
             if ($result->isSuccess()) {
-                $discountsToBeCalculated[] = $discount;
+                $discountsToBeCalculated[] = $discountTransfer;
             } else {
                 $errors = array_merge($errors, $result->getErrors());
             }

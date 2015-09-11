@@ -15,7 +15,7 @@ use Generated\Shared\Discount\OrderInterface;
 class Calculator implements CalculatorInterface
 {
 
-    const KEY_DISCOUNT_ENTITY = 'entity';
+    const KEY_DISCOUNT_TRANSFER = 'entity';
     const KEY_DISCOUNT_AMOUNT = 'amount';
     const KEY_DISCOUNT_REASON = 'reason';
 
@@ -50,7 +50,7 @@ class Calculator implements CalculatorInterface
             $discountAmount = $calculator->calculate($discountableObjects, $discount->getAmount());
 
             $calculatedDiscounts[] = [
-                self::KEY_DISCOUNT_ENTITY => $discount,
+                self::KEY_DISCOUNT_TRANSFER => $discount,
                 self::KEY_DISCOUNT_AMOUNT => $discountAmount,
             ];
         }
@@ -60,7 +60,7 @@ class Calculator implements CalculatorInterface
         foreach ($calculatedDiscounts as $discount) {
             $distributor->distribute(
                 $discountableObjects,
-                $discount[self::KEY_DISCOUNT_ENTITY],
+                $discount[self::KEY_DISCOUNT_TRANSFER],
                 $discount[self::KEY_DISCOUNT_AMOUNT]
             );
         }
@@ -126,7 +126,7 @@ class Calculator implements CalculatorInterface
      */
     protected function getDiscountEntity(array $discount)
     {
-        return $discount[self::KEY_DISCOUNT_ENTITY];
+        return $discount[self::KEY_DISCOUNT_TRANSFER];
     }
 
 }

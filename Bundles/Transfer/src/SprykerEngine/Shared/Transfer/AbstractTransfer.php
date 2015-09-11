@@ -42,7 +42,11 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
                     $values[$key] = $value->toArray($recursive);
                 } elseif ($recursive && $value instanceof \ArrayObject && count($value) >= 1) {
                     foreach ($value as $elementKey => $arrayElement) {
-                        $values[$key][$elementKey] = $arrayElement->toArray($recursive);
+                        if (is_array($arrayElement) || is_scalar($arrayElement)) {
+                            $values[$key][$elementKey] = $arrayElement;
+                        } else {
+                            $values[$key][$elementKey] = $arrayElement->toArray($recursive);
+                        }
                     }
                 } else {
                     $values[$key] = $value;

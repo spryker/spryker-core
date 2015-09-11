@@ -6,10 +6,10 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule;
 
+use Generated\Shared\Discount\DiscountInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount as DiscountEntity;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
 
 /**
@@ -19,13 +19,13 @@ class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePlugin
 {
 
     /**
-     * @param DiscountEntity $discountEntity
+     * @param DiscountInterface $discountTransfer
      * @param CalculableInterface $container
      *
      * @return ModelResult
      */
     public function check(
-        DiscountEntity $discountEntity,
+        DiscountInterface $discountTransfer,
         CalculableInterface $container
     ) {
         $componentResult = new ModelResult();
@@ -47,6 +47,9 @@ class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePlugin
             ;
 
             $result &= $response->isSuccess();
+            if ($response->isSuccess()) {
+                $discountTransfer->addUsedCode($code);
+            }
             $errors = array_merge($errors, $response->getErrors());
         }
 

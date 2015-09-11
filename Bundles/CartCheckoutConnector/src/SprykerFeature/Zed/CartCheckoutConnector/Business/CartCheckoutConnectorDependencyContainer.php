@@ -19,8 +19,7 @@ class CartCheckoutConnectorDependencyContainer extends AbstractBusinessDependenc
 
     public function createCartOrderHydrator()
     {
-        return $this->getFactory()->createCartOrderHydrator(
-        );
+        return $this->getFactory()->createCartOrderHydrator();
     }
 
 }
