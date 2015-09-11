@@ -79,7 +79,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
             return;
         }
 
-        $taxableAmount = $taxableItem->getPriceToPay();
+        $taxableAmount = $taxableItem->getGrossPrice();
 
         $taxRates = $taxSet->getTaxRates();
 
@@ -123,10 +123,8 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     {
         /** @var $groupedTotals TaxSetInterface[] **/
         $groupedTotals = [];
-
         foreach ($this->calculatedTaxSets as $taxSet) {
-
-            if (false == isset($groupedTotals[$taxSet->getIdTaxSet()])) {
+            if (!isset($groupedTotals[$taxSet->getIdTaxSet()])) {
                 $groupedTotals[$taxSet->getIdTaxSet()] = $taxSet;
                 continue;
             }
@@ -136,8 +134,18 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
         }
 
         $taxTotalsTransfer = new TaxTotalTransfer();
+        $totalEffectiveRate = 0;
         foreach ($groupedTotals as $taxSet) {
             $taxTotalsTransfer->addTaxSet($taxSet);
+            $totalEffectiveRate += $taxSet->getEffectiveRate();
+        }
+
+        if (!empty($totalEffectiveRate)) {
+            $taxAmountForTaxSet = $this->priceCalculationHelper->getTaxValueFromPrice(
+                $totalsTransfer->getGrandTotal(),
+                $totalEffectiveRate
+            );
+            $taxTotalsTransfer->setAmount($taxAmountForTaxSet);
         }
 
         $totalsTransfer->setTaxTotal($taxTotalsTransfer);
