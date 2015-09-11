@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Checkout\Business\Workflow;
 
+use Generated\Shared\Checkout\CartInterface;
 use Generated\Shared\Checkout\CheckoutRequestInterface;
 use Generated\Shared\Checkout\CheckoutResponseInterface;
 use Generated\Shared\Checkout\OrderInterface;
@@ -15,6 +16,8 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\Propel;
 use SprykerFeature\Shared\Checkout\CheckoutConfig;
+use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
+use SprykerFeature\Zed\Checkout\Business\Calculation\CalculableContainer;
 use SprykerFeature\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
@@ -50,24 +53,32 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     protected $omsFacade;
 
     /**
+     * @var CalculationFacade
+     */
+    protected $calculationFacade;
+
+    /**
      * @param CheckoutPreconditionInterface[] $preConditionStack
      * @param CheckoutOrderHydrationInterface[] $orderHydrationStack
      * @param CheckoutSaveOrderInterface[] $saveOrderStack
      * @param CheckoutPostSaveHookInterface[] $postSaveHookStack
      * @param CheckoutToOmsInterface $omsFacade
+     * @param CalculationFacade $calculationFacade
      */
     public function __construct(
         array $preConditionStack,
         array $orderHydrationStack,
         array $saveOrderStack,
         array $postSaveHookStack,
-        CheckoutToOmsInterface $omsFacade
+        CheckoutToOmsInterface $omsFacade,
+        CalculationFacade $calculationFacade
     ) {
         $this->preConditionStack = $preConditionStack;
         $this->postSaveHookStack = $postSaveHookStack;
         $this->orderHydrationStack = $orderHydrationStack;
         $this->saveOrderStack = $saveOrderStack;
         $this->omsFacade = $omsFacade;
+        $this->calculationFacade = $calculationFacade;
     }
 
     /**
@@ -77,15 +88,15 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      */
     public function requestCheckout(CheckoutRequestTransfer $checkoutRequest)
     {
-        $array = $checkoutRequest->toArray();
         $checkoutResponse = new CheckoutResponseTransfer();
         $checkoutResponse->setIsSuccess(false);
 
         $this->checkPreConditions($checkoutRequest, $checkoutResponse);
 
         if (!$this->hasErrors($checkoutResponse)) {
-            $orderTransfer = $this->getOrderTransfer();
+            $this->recalculate($checkoutRequest->getCart());
 
+            $orderTransfer = $this->getOrderTransfer();
             $this->hydrateOrder($orderTransfer, $checkoutRequest);
             $orderTransfer = $this->doSaveOrder($orderTransfer, $checkoutResponse);
             $checkoutResponse->setOrder($orderTransfer);
@@ -165,6 +176,21 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         }
 
         return $orderTransfer;
+    }
+
+    /**
+     * @todo add this as pre hooks and add plugins
+     *
+     * @param CartInterface $cartTransfer
+     *
+     * @return CartInterface
+     */
+    private function recalculate(CartInterface $cartTransfer)
+    {
+        $calculableCart = new CalculableContainer($cartTransfer);
+        $calculableCart = $this->calculationFacade->recalculate($calculableCart);
+
+        return $calculableCart->getCalculableObject();
     }
 
     /**

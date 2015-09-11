@@ -11,7 +11,6 @@ use Generated\Shared\DiscountCheckoutConnector\OrderInterface;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
-use SprykerFeature\Zed\DiscountCheckoutConnector\Business\Exception\OrderNotSavedException;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesDiscount;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesDiscountCode;
 
@@ -51,6 +50,8 @@ class DiscountSaver implements DiscountSaverInterface
     {
         $salesDiscountEntity = $this->getSalesDiscountEntity();
         $salesDiscountEntity->fromArray($discountTransfer->toArray());
+        $salesDiscountEntity->setName('');
+        $salesDiscountEntity->setAction('');
         $salesDiscountEntity->setFkSalesOrder($orderTransfer->getIdSalesOrder());
 
         $this->persistSalesDiscount($salesDiscountEntity);

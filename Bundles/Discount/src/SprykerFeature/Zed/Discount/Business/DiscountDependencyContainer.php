@@ -75,14 +75,6 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return array
-     */
-    public function createAvailableDecisionRulePlugins()
-    {
-        return $this->getConfig()->getAvailableDecisionRulePlugins();
-    }
-
-    /**
      * @return CalculatorInterface[]
      */
     public function createAvailableCalculatorPlugins()

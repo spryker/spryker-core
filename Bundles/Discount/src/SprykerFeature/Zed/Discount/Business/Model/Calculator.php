@@ -58,7 +58,11 @@ class Calculator implements CalculatorInterface
         $calculatedDiscounts = $this->filterOutNonPrivilegedDiscounts($calculatedDiscounts);
 
         foreach ($calculatedDiscounts as $discount) {
-            $distributor->distribute($discountableObjects, $discount[self::KEY_DISCOUNT_AMOUNT]);
+            $distributor->distribute(
+                $discountableObjects,
+                $discount[self::KEY_DISCOUNT_ENTITY],
+                $discount[self::KEY_DISCOUNT_AMOUNT]
+            );
         }
 
         return $calculatedDiscounts;

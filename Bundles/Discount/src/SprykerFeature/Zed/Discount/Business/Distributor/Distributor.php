@@ -9,6 +9,8 @@ namespace SprykerFeature\Zed\Discount\Business\Distributor;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
 
 class Distributor implements DistributorInterface
 {
@@ -19,10 +21,11 @@ class Distributor implements DistributorInterface
     protected $roundingError;
 
     /**
-     * @param DiscountableItemInterface[] $discountableObjects
-     * @param float $amount
+     * @param array $discountableObjects
+     * @param SpyDiscount $discountEntity
+     * @param int $amount
      */
-    public function distribute(array $discountableObjects, $amount)
+    public function distribute(array $discountableObjects, SpyDiscount $discountEntity, $amount)
     {
         foreach ($discountableObjects as $discountableObject) {
             $totalGrossPrice = $this->getGrossPriceOfDiscountableObjects($discountableObjects);
@@ -46,19 +49,21 @@ class Distributor implements DistributorInterface
             $discountAmount = $this->roundingError + $amount * $percentage;
             $discountAmountRounded = round($discountAmount, 2);
             $this->roundingError = $discountAmount - $discountAmountRounded;
-            $this->addDiscountToDiscounts($discountableObject->getDiscounts(), $discountAmountRounded);
+            $this->addDiscountToDiscounts($discountableObject->getDiscounts(), $discountEntity, $discountAmountRounded);
         }
     }
 
     /**
      * @param \ArrayObject $discounts
+     * @param SpyDiscount $discountEntity
      * @param int $discountAmount
      */
-    protected function addDiscountToDiscounts(\ArrayObject $discounts, $discountAmount)
+    protected function addDiscountToDiscounts(\ArrayObject $discounts, SpyDiscount $discountEntity, $discountAmount)
     {
-        $discount = new DiscountTransfer();
-        $discount->setAmount($discountAmount);
-        $discounts->append($discount);
+        $discountTransfer = new DiscountTransfer();
+        $discountTransfer->fromArray($discountEntity->toArray(), true);
+        $discountTransfer->setAmount($discountAmount);
+        $discounts->append($discountTransfer);
     }
 
     /**

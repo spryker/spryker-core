@@ -21,6 +21,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     const CHECKOUT_ORDERHYDRATORS = 'checkout_orderhydrators';
     const CHECKOUT_ORDERSAVERS = 'checkout_ordersavers';
     const FACADE_OMS = 'oms facade';
+    const FACADE_CALCULATION = 'calculation facade';
 
     public function provideBusinessLayerDependencies(Container $container)
     {
@@ -42,6 +43,10 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_OMS] = function (Container $container) {
             return $container->getLocator()->oms()->facade();
+        };
+
+        $container[self::FACADE_CALCULATION] = function (Container $container) {
+            return $container->getLocator()->calculation()->facade();
         };
 
         return $container;

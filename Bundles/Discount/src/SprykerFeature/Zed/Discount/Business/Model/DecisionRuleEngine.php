@@ -36,7 +36,7 @@ class DecisionRuleEngine implements DecisionRuleInterface
 
         $result->addErrors($errors);
 
-        return $result;
+            return $result;
     }
 
 }

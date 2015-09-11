@@ -21,6 +21,7 @@
 
     <transfer name="CheckoutRequest">
         <property name="discounts" type="Discount[]" />
+        <property name="cart" type="Cart" />
     </transfer>
 
     <transfer name="Discount">

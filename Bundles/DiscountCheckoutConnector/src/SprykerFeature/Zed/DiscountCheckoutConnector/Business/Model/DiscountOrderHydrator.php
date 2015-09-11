@@ -7,8 +7,8 @@
 namespace SprykerFeature\Zed\DiscountCheckoutConnector\Business\Model;
 
 use Generated\Shared\DiscountCheckoutConnector\CheckoutRequestInterface;
+use Generated\Shared\DiscountCheckoutConnector\DiscountInterface;
 use Generated\Shared\DiscountCheckoutConnector\OrderInterface;
-use SprykerFeature\Zed\DiscountCheckoutConnector\Dependency\Facade\DiscountCheckoutConnectorToDiscountInterface;
 
 class DiscountOrderHydrator implements DiscountOrderHydratorInterface
 {
@@ -19,6 +19,43 @@ class DiscountOrderHydrator implements DiscountOrderHydratorInterface
      */
     public function hydrateOrder(OrderInterface $orderTransfer, CheckoutRequestInterface $request)
     {
+        $this->addCartDiscountsToOrder($orderTransfer, $request);
+        $this->addCartItemsDiscountsToOrder($orderTransfer, $request);
+
+        $this->addDiscountsToOrder($orderTransfer, $request->getDiscounts());
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
+     * @param CheckoutRequestInterface $request
+     */
+    protected function addCartDiscountsToOrder(OrderInterface $orderTransfer, CheckoutRequestInterface $request)
+    {
+        $this->addDiscountsToOrder($orderTransfer, $request->getCart()->getDiscounts());
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
+     * @param CheckoutRequestInterface $request
+     */
+    protected function addCartItemsDiscountsToOrder(OrderInterface $orderTransfer, CheckoutRequestInterface $request)
+    {
+        $itemCollection = $request->getCart()->getItems();
+        foreach ($itemCollection as $itemTransfer) {
+            $discountCollection = $itemTransfer->getDiscounts();
+            $this->addDiscountsToOrder($orderTransfer, $discountCollection);
+        }
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
+     * @param DiscountInterface[] $discountCollection
+     */
+    protected function addDiscountsToOrder(OrderInterface $orderTransfer, $discountCollection)
+    {
+        foreach ($discountCollection as $discountTransfer) {
+            $orderTransfer->addDiscount($discountTransfer);
+        }
     }
 
 }

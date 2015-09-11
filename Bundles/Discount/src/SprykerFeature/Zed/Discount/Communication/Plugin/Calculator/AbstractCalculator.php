@@ -7,11 +7,14 @@
 namespace SprykerFeature\Zed\Discount\Communication\Plugin\Calculator;
 
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
+use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 
-abstract class AbstractCalculator extends AbstractPlugin implements
-    DiscountCalculatorPluginInterface
+/**
+ * @method DiscountDependencyContainer getDependencyContainer()
+ */
+abstract class AbstractCalculator extends AbstractPlugin implements DiscountCalculatorPluginInterface
 {
 
     /**
