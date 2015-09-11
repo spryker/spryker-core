@@ -79,7 +79,7 @@ class PageController extends AbstractController
 
         return $this->viewResponse([
             'form' => $form->createView(),
-            'isSynced' => $isSynced
+            'isSynced' => $isSynced,
         ]);
     }
 
@@ -120,7 +120,7 @@ class PageController extends AbstractController
 
         return $this->viewResponse([
             'form' => $form->createView(),
-            'isSynced' => $isSynced
+            'isSynced' => $isSynced,
         ]);
     }
 
@@ -171,4 +171,5 @@ class PageController extends AbstractController
 
         return $urlTransfer;
     }
+
 }
