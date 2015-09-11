@@ -221,7 +221,7 @@ class OrderManager
         $result = [];
         foreach ($ordersQuery as $order) {
             $result[] = (new OrderTransfer())
-                ->fromArray($order->toArray());
+                ->fromArray($order->toArray(), true);
         }
 
         $orderListTransfer->setOrders(new \ArrayObject($result));

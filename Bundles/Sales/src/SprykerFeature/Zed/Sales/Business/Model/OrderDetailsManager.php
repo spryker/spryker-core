@@ -148,7 +148,7 @@ class OrderDetailsManager
      *
      * @throws InvalidSalesOrderException
      *
-     * @return SpySalesOrder
+     * @return OrderTransfer
      */
     public function getOrderDetails(OrderTransfer $orderTransfer)
     {
@@ -174,7 +174,7 @@ class OrderDetailsManager
     protected function convertOrderDetailsEntityIntoTransfer(SpySalesOrder $orderEntity)
     {
         $orderTransfer = new OrderTransfer();
-        $orderTransfer->fromArray($orderEntity->toArray());
+        $orderTransfer->fromArray($orderEntity->toArray(), true);
 
         $this->addOrderItemsToOrderTransfer($orderEntity, $orderTransfer);
 
