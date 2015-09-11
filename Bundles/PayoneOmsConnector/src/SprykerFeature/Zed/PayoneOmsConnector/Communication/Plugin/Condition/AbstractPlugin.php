@@ -38,7 +38,7 @@ abstract class AbstractPlugin extends BaseAbstractPlugin implements ConditionInt
         }
 
         $orderTransfer = new OrderTransfer();
-        $orderTransfer->fromArray($order->toArray());
+        $orderTransfer->fromArray($order->toArray(), true);
 
         $isSuccess = $this->callFacade($orderTransfer);
         self::$resultCache[$order->getPrimaryKey()] = $isSuccess;
