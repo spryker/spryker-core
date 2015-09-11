@@ -160,12 +160,15 @@
         }
 
 
-        function TableHandler(sourceTable, destinationTable, checkBoxNamePrefix, labelCaption, labelId, removeHandlerName) {
+        function TableHandler(sourceTable, destinationTable, checkBoxNamePrefix, labelCaption, labelId, removeHandlerName, formFieldId) {
             var tableHandler = {
                 checkBoxNamePrefix: checkBoxNamePrefix,
                 labelId: labelId,
                 labelCaption: labelCaption,
                 removeHandlerName: removeHandlerName,
+                formFieldId: formFieldId,
+                sourceTable: sourceTable,
+                destinationTable: destinationTable
             };
             
             var destinationTableProductSelector = new ProductSelector();
@@ -226,6 +229,10 @@
 
             tableHandler.updateSelectedProductsLabelCount = function() {
                 $('#' + tableHandler.getLabelId()).text(labelCaption + ' (' + Object.keys(this.getSelector().getSelected()).length + ')');
+                var productIds = Object.keys(this.getSelector().getSelected());
+                var s = productIds.join(',');
+                var field = $('#' + tableHandler.getFormFieldId());
+                field.attr('value', s);
             }
             
             tableHandler.getCheckBoxNamePrefix = function() {
@@ -242,6 +249,18 @@
 
             tableHandler.getLabelCaption = function() {
                 return tableHandler.labelCaption;
+            }
+
+            tableHandler.getFormFieldId = function() {
+                return tableHandler.formFieldId;
+            }
+            
+            tableHandler.getSourceTable = function() {
+                return tableHandler.sourceTable;
+            }
+            
+            tableHandler.getDestinationTable = function() {
+                return tableHandler.destinationTable;
             }
 
             return tableHandler;
@@ -299,7 +318,7 @@
         }
 
         $(document).ready(function () {
-            allProductsTable = new TableHandler($('#product-table'), $('#selectedProductsTable'), 'all_products_checkbox_', 'Products to be assigned', 'assigned-tab-label', 'selectedProductClickRemoveSelected');
+            allProductsTable = new TableHandler($('#product-table'), $('#selectedProductsTable'), 'all_products_checkbox_', 'Products to be assigned', 'assigned-tab-label', 'selectedProductClickRemoveSelected', 'form_products_to_be_assigned');
             
             $('#product-table').dataTable({
                 destroy: true,
@@ -317,8 +336,18 @@
                 }
             });
 
-            productCategoryTable = new TableHandler($('#product-category-table'), $('#deselectedProductsTable'), 'product_category_checkbox_', 'Products to be deassigned', 'deassigned-tab-label', 'categoryTableClickRemoveSelected');
-/*            $('#product-category-table').dataTable({
+            productCategoryTable = new TableHandler($('#product-category-table'), $('#deselectedProductsTable'), 'product_category_checkbox_', 'Products to be deassigned', 'deassigned-tab-label', 'categoryTableClickRemoveSelected', 'form_products_to_be_de_assigned');
+            productCategoryTable.deSelectAll = function() {
+                var sourceTableData = productCategoryTable.getSourceTable().DataTable().rows().data();
+                var destinationTable = productCategoryTable.getDestinationTable();
+                var nodes = productCategoryTable.getSourceTable().dataTable().fnGetNodes();
+                $('input[type="checkbox"]', nodes).prop('checked', false);
+
+                sourceTableData.each(function (cellData, index) {
+                    productCategoryTable.addSelectedProduct(cellData[0], cellData[1], cellData[2]);
+                });
+            };
+            $('#product-category-table').dataTable({
                 destroy: true,
                 fnDrawCallback: function(settings) {
                     //this.fnDraw(false);
@@ -328,12 +357,11 @@
 
                         var selector = productCategoryTable.getSelector();
                         if (selector.isProductSelected(idProduct)) {
-                            $('#' + productCategoryTable.getCheckBoxNamePrefix() +idProduct).prop('checked', true);
+                            $('#' + productCategoryTable.getCheckBoxNamePrefix() +idProduct).prop('checked', false);
                         }
                     }
                 }
-            });*/
-            
+            });
 
 
             //parent
