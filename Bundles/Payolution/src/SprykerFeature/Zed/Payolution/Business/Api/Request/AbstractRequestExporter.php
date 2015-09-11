@@ -23,11 +23,11 @@ abstract class AbstractRequestExporter
                 continue;
             }
 
-            if ($propertyValue === null) {
+            if (null === $propertyValue) {
                 continue;
             }
 
-            $dataKey = sprintf('%s.%s', $segmentName, strtoupper($propertyName));
+            $dataKey = sprintf('%s.%s', $segmentName, mb_strtoupper($propertyName));
             $requestData[$dataKey] = $propertyValue;
         }
 
@@ -51,7 +51,7 @@ abstract class AbstractRequestExporter
      */
     public function toXml(\SimpleXMLElement $rootElement = null)
     {
-        if ($rootElement === null) {
+        if (null === $rootElement) {
             $rootElement = new \SimpleXMLElement('<?xml version="1.0" encoding="UTF-8" ?><Request version="1.0"></Request>');
         }
 
@@ -62,7 +62,7 @@ abstract class AbstractRequestExporter
                 continue;
             }
 
-            if ($propertyValue === null) {
+            if (null === $propertyValue) {
                 continue;
             }
 

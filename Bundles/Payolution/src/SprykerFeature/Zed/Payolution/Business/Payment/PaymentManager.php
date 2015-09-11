@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Payment;
 
-use Generated\Shared\Transfer\OrderListTransfer;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\AbstractRequest;
 use SprykerFeature\Zed\Payolution\Business\Api\Response\AbstractResponse;
@@ -16,8 +15,6 @@ use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionApiLog;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLog;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLog;
-use SprykerFeature\Zed\Sales\Business\SalesFacade;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 
 class PaymentManager implements PaymentManagerInterface
 {

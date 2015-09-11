@@ -7,23 +7,11 @@ namespace SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
 
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
-use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Account;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Address;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Analysis;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Contact;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Customer;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Identification;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Name;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Payment;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Presentation;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Transaction;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\User;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\PreAuthorizationRequest;
 use SprykerFeature\Zed\Payolution\Business\Payment\MethodMapperInterface;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
 
 class Invoice extends AbstractMethodMapper
 {
@@ -78,7 +66,10 @@ class Invoice extends AbstractMethodMapper
 
     private function mapGender($gender)
     {
-        $genderMap = [SpyCustomerTableMap::COL_GENDER_MALE => "M", SpyCustomerTableMap::COL_GENDER_FEMALE => "F"];
+        $genderMap = [
+            SpyCustomerTableMap::COL_GENDER_MALE => "M",
+            SpyCustomerTableMap::COL_GENDER_FEMALE => "F",
+        ];
 
         return $genderMap[$gender];
     }
