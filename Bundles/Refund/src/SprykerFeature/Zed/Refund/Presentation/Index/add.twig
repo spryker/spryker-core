@@ -1,25 +1,33 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Refund' %}
+{% set page_title = 'Refund' %}
 
-{% block head_title widget_title | trans %}
+{% block head_title page_title | trans %}
 
-{% block section_title widget_title | trans %}
+{% block section_title page_title | trans %}
+
+{% block action %}
+    <a href="/refund" class="btn btn-sm btn-primary "><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> {{ 'Back' | trans }}</a>
+{% endblock %}
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' %}
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Refund Memo Comments' }  %}
 
-        {% block widget_header_content %}
-            <a href="/refund" class="btn btn-sm btn-primary "><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> {{ 'Back' | trans }}</a>
-        {% endblock %}
+                {% block widget_content %}
 
-        {% block widget_content %}
+                    {{ form_start(form) }}
+                        {{ form_widget(form) }}
 
+                        <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+                    {{ form_end(form) }}
 
+                {% endblock %}
 
-        {% endblock %}
-
-    {% endembed %}
+            {% endembed %}
+        </div>
+    </div>
 
 {% endblock %}

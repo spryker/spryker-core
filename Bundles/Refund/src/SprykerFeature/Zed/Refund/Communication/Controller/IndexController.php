@@ -47,16 +47,20 @@ class IndexController extends AbstractController
         $idOrder = $request->query->get('id-sales-order');
 
         $form = $this->getDependencyContainer()
-            ->createRefundForm()
+            ->createRefundForm($request)
         ;
 
         $form->handleRequest();
 
         if ($form->isValid()) {
+            $formData = $form->getData();
+
+            dump($formData);
+            die;
             //$refundTransfer = (new RefundTransfer())->fromArray($form->getData(), true);
-            $this->getFacade()
-                //
-            ;
+//            $this->getFacade()
+//                //
+//            ;
 
             return $this->redirectResponse(sprintf('/sales/details/?id-sales-order=%d', $idOrder));
         }

@@ -21,8 +21,8 @@ class RefundQueryContainer extends AbstractQueryContainer implements RefundQuery
      */
     public function queryRefund()
     {
-        $query = $this->queryMethods();
-        return $query;
+//        $query = $this->queryMethods();
+//        return $query;
     }
 
     /**

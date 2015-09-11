@@ -14,6 +14,7 @@ use SprykerFeature\Zed\Refund\Communication\Plugin\RefundCalculationPlugin;
 use SprykerFeature\Zed\Refund\Persistence\RefundQueryContainer;
 use SprykerFeature\Zed\Refund\RefundDependencyProvider;
 use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method RefundCommunication getFactory()
@@ -25,11 +26,9 @@ class RefundDependencyContainer extends AbstractCommunicationDependencyContainer
     /**
      * @return RefundForm
      */
-    public function createRefundForm()
+    public function createRefundForm(Request $request)
     {
-        $refundQuery = $this->getQueryContainer()->queryRefund();
-
-        return $this->getFactory()->createFormRefundForm($refundQuery);
+        return $this->getFactory()->createFormRefundForm($request);
     }
 
     /**
