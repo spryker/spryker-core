@@ -30,18 +30,19 @@
         <column name="id_payment_payolution_api_log" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_payment_payolution" required="true" type="INTEGER"/>
 
-        <column name="request" required="true" type="VARCHAR"/>
-        <column name="mode" required="true" type="VARCHAR"/>
-        <column name="status" type="VARCHAR"/>
-        <column name="transaction_id" type="INTEGER"/>
-        <column name="unique_id" type="INTEGER"/>
-        <column name="sequence_number" type="INTEGER"/>
-        <column name="user_id" type="VARCHAR"/>
-        <column name="merchant_id" required="true" type="VARCHAR"/>
+        <column name="processing_code" required="true" type="VARCHAR"/>
+        <column name="processing_result" required="true" type="VARCHAR"/>
+        <column name="processing_status" required="true" type="VARCHAR"/>
+        <column name="processing_status_code" required="true" type="INTEGER"/>
+        <column name="processing_reason" required="true" type="VARCHAR"/>
+        <column name="processing_reason_code" required="true" type="INTEGER"/>
+        <column name="processing_return" required="true" type="VARCHAR"/>
+        <column name="processing_return_code" required="true" type="INTEGER"/>
 
-        <column name="error_code" type="VARCHAR"/>
-        <column name="error_message_internal" type="VARCHAR"/>
-        <column name="error_message_user" type="VARCHAR"/>
+        <column name="connector_detail_connectortxid1" required="true" type="VARCHAR"/>
+        <column name="connector_detail_payment_reference" required="true" type="VARCHAR"/>
+
+        <column name="timestamp" required="true" type="VARCHAR"/>
 
         <foreign-key foreignTable="spy_payment_payolution">
             <reference foreign="id_payment_payolution" local="fk_payment_payolution"/>
