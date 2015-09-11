@@ -134,6 +134,7 @@ class ProductOptionReader implements ProductOptionReaderInterface
         foreach ($productOptionsCollection as $productOptionsItem) {
             $objectHash = spl_object_hash($productOptionsItem);
 
+            // @todo CD-414 propel uses all columns in group by and it should not
             if (!$productList->offsetExists($objectHash)) {
                 $option = $productOptionsItem->toArray();
 
