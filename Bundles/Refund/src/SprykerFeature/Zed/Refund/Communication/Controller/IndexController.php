@@ -7,9 +7,11 @@
 namespace SprykerFeature\Zed\Refund\Communication\Controller;
 
 
+use Generated\Shared\Transfer\RefundCommentTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Refund\Business\RefundFacade;
 use SprykerFeature\Zed\Refund\Communication\RefundDependencyContainer;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -42,9 +44,14 @@ class IndexController extends AbstractController
         );
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
     public function addAction(Request $request)
     {
-        $idOrder = $request->query->get('id-sales-order');
+        $idSalesOrder = $request->query->get('id-sales-order');
 
         $form = $this->getDependencyContainer()
             ->createRefundForm($request)
@@ -55,18 +62,19 @@ class IndexController extends AbstractController
         if ($form->isValid()) {
             $formData = $form->getData();
 
-            dump($formData);
-            die;
-            //$refundTransfer = (new RefundTransfer())->fromArray($form->getData(), true);
-//            $this->getFacade()
-//                //
-//            ;
+            $orderTransfer = $this->getFacade()->getOrderByIdSalesOrder($idSalesOrder);
 
-            return $this->redirectResponse(sprintf('/sales/details/?id-sales-order=%d', $idOrder));
+            $refundCommentTransfer = (new RefundCommentTransfer())->fromArray($formData, true);
+            $refundCommentTransfer->setFkSalesOrder($orderTransfer);
+
+            $this->getFacade()->saveRefundComment($refundCommentTransfer);
+            $this->addSuccessMessage('Refund successfully saved');
+
+            return $this->redirectResponse(sprintf('/sales/details/?id-sales-order=%d', $idSalesOrder));
         }
 
         return $this->viewResponse([
-            'idOrder' => $idOrder,
+            'idOrder' => $idSalesOrder,
             'form' => $form->createView(),
         ]);
     }

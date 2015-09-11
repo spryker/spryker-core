@@ -78,6 +78,19 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
+     * @param int $idSalesOrder
+     *
+     * @return OrderTransfer
+     */
+    public function getOrderByIdSalesOrder($idSalesOrder)
+    {
+        return $this->getDependencyContainer()
+            ->createOrderManager()
+            ->getOrderByIdSalesOrder($idSalesOrder)
+        ;
+    }
+
+    /**
      * @param int $idOrderItem
      *
      * @deprecated
@@ -91,6 +104,7 @@ class SalesFacade extends AbstractFacade
             ->getOrderItemById($idOrderItem)
         ;
     }
+
     /**
      * @param OrderTransfer $orderTransfer
      *

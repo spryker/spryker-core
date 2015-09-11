@@ -11,7 +11,7 @@
         <property name="idRefund" type="integer" />
         <property name="fkSalesOrder" type="Order" />
         <property name="amount" type="integer" />
-        <property name="comment" type="text" />
+        <property name="comment" type="string" />
         <property name="createdAt" type="string" />
     </transfer>
 

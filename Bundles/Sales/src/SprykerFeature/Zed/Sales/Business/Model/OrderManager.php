@@ -233,6 +233,21 @@ class OrderManager
     }
 
     /**
+     * @param int $idSalesOrder
+     *
+     * @return OrderTransfer
+     */
+    public function getOrderByIdSalesOrder($idSalesOrder)
+    {
+        $orderEntity = $this->queryContainer
+            ->querySalesOrderById($idSalesOrder)
+            ->findOne()
+        ;
+
+        return (new OrderTransfer())->fromArray($orderEntity->toArray(), true);
+    }
+
+    /**
      * @param PayonePaymentDetailTransfer $paymentDetailTransfer
      * @param int $idPayment
      *

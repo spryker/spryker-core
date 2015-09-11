@@ -14,6 +14,22 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
 
     const QUERY_CONTAINER_REFUND = 'QUERY_CONTAINER_REFUND';
 
+    const FACADE_SALES = 'FACADE_SALES';
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $container[self::FACADE_SALES] = function (Container $container) {
+            return $container->getLocator()->sales()->facade();
+        };
+
+        return $container;
+    }
+
     /**
      * @param Container $container
      *
