@@ -4,10 +4,8 @@
 
 {% block head_title page_title | trans %}
 
-{% block section_title page_title | trans %}
-
 {% block action %}
-    <a href="/refund" class="btn btn-sm btn-primary "><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> {{ 'Back' | trans }}</a>
+    <a href="http://zed.de.spryker.dev/sales/details/?id-sales-order={{ idOrder }}" class="btn btn-sm btn-primary "><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> {{ 'Back to Order' | trans }}</a>
 {% endblock %}
 
 {% block content %}
