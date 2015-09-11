@@ -1,22 +1,18 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Unit\SprykerFeature\Zed\Payolution\Business\Api\Request;
 
-
-use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\PayolutionRequestTransfer;
 use SprykerFeature\Zed\Payolution\Business\Api\Constants;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\Converter;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Account;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Name;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Payment;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Transaction;
 
 class ConverterTest extends \PHPUnit_Framework_TestCase
 {
+
     public function testToArray()
     {
         $exporter = new Converter();
@@ -46,14 +42,14 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
                 'CONTACT.EMAIL' => 'john@doe.com',
                 'CONTACT.IP' => '127.0.0.1',
                 'CONTACT.PHONE' => '030 0815',
-                'ACCOUNT.BRAND' => Constants::ACCOUNT_BRAND_INVOICE
+                'ACCOUNT.BRAND' => Constants::ACCOUNT_BRAND_INVOICE,
             ],
             $requestArray
         );
     }
 
     /**
-     * @return PayolutionPaymentTransfer
+     * @return PayolutionRequestTransfer
      */
     private function getTestPaymentTransfer()
     {
@@ -83,4 +79,5 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
             ->setIdentificationShopperid('customer123')
             ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE);
     }
+
 }
