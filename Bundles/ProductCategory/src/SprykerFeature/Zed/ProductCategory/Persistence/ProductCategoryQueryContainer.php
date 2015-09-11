@@ -53,11 +53,12 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
-     * @param int $idAbstractProduct
      * @param int $idCategory
+     * @param int $idAbstractProduct
+     * 
      * @return SpyProductCategoryQuery
      */
-    public function queryProductCategoryMappingByIds($idAbstractProduct, $idCategory)
+    public function queryProductCategoryMappingByIds($idCategory, $idAbstractProduct)
     {
         $query = $this->queryProductCategoryMappings();
         $query
@@ -104,15 +105,16 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     {
         $query = $this->queryProductCategoryMappings();
         $query->filterByFkAbstractProduct($abstractProduct->getIdAbstractProduct())
-            ->useSpyCategoryNodeQuery()
-                ->useCategoryQuery()
-                    ->useAttributeQuery()
-                    ->endUse()
+            ->endUse()
+            ->endUse()
+            ->useCategoryQuery()
+                ->useAttributeQuery()
                     ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::COL_CATEGORY_NAME)
                 ->endUse()
             ->endUse()
+            ->endUse()
         ;
-
+        
         return $query;
     }
 

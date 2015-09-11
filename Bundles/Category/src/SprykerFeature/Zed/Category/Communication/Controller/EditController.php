@@ -49,10 +49,9 @@ class EditController extends AddController
         $form->handleRequest();
 
         if ($form->isValid()) {
-            $categoryTransfer = (new CategoryTransfer())->fromArray($form->getData(), true);
-            $this->getFacade()->updateCategory($categoryTransfer, $locale);
-
             $data = $form->getData();
+            $categoryTransfer = (new CategoryTransfer())->fromArray($data, true);
+            $this->getFacade()->updateCategory($categoryTransfer, $locale);
             $parentIdList = $form->getData()['fk_parent_category_node'];
             
             foreach ($parentIdList as $parentNodeId) {
@@ -83,6 +82,21 @@ class EditController extends AddController
                     $this->getFacade()->deleteNode($parent->getIdCategoryNode(), $locale);
                 }
             }
+            
+            if (trim($data['products_to_be_de_assigned']) !== '') {
+                //de assign products
+                $this->getDependencyContainer()
+                    ->createProductCategoryFacade()
+                    ->removeProductCategoryMappings($categoryTransfer->getIdCategory(), explode(',', $data['products_to_be_de_assigned']));
+            }
+
+            if (trim($data['products_to_be_assigned']) !== '') {
+                //assign products
+                $this->getDependencyContainer()
+                    ->createProductCategoryFacade()
+                    ->createProductCategoryMappings($categoryTransfer->getIdCategory(), explode(',', $data['products_to_be_assigned']));
+            }
+
 
             $this->addSuccessMessage('The category was saved successfully.');
             

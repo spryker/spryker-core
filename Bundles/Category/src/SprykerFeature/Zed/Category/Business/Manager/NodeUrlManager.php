@@ -78,6 +78,7 @@ class NodeUrlManager implements NodeUrlManagerInterface
             $urlTransfer->setResourceId($idNode);
             $urlTransfer->setResourceType(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE);
             $urlTransfer->setUrl($categoryUrl);
+            $urlTransfer->setFkLocale($locale->getIdLocale());
 
             $this->urlFacade->saveUrlAndTouch($urlTransfer);
         }

@@ -79,4 +79,44 @@ class ProductCategoryFacade extends AbstractFacade
         ;
     }
 
+    /**
+     * @param $idCategory
+     * @param $idAbstractProduct
+     *
+     * @return SpyProductCategoryQuery
+     */
+    public function getProductCategoryMappingById($idCategory, $idAbstractProduct)
+    {
+        return $this->getDependencyContainer()
+            ->createProductCategoryManager()
+            ->getProductCategoryMappingById($idCategory, $idAbstractProduct)
+        ;
+    }
+
+    /**
+     * @param $idCategory
+     * @param array $product_ids_to_assign
+     * 
+     * @throws PropelException
+     */
+    public function createProductCategoryMappings($idCategory, array $product_ids_to_assign)
+    {
+        $this->getDependencyContainer()
+            ->createProductCategoryManager()
+            ->createProductCategoryMappings($idCategory, $product_ids_to_assign)
+        ;
+    }
+
+    /**
+     * @param $idCategory
+     * @param array $product_ids_to_deassign
+     */
+    public function removeProductCategoryMappings($idCategory, array $product_ids_to_deassign)
+    {
+        $this->getDependencyContainer()
+            ->createProductCategoryManager()
+            ->removeProductCategoryMappings($idCategory, $product_ids_to_deassign)
+        ;
+    }
+
 }

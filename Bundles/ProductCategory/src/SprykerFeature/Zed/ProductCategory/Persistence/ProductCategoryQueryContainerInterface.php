@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\ProductCategory\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
 
 interface ProductCategoryQueryContainerInterface
@@ -39,6 +40,13 @@ interface ProductCategoryQueryContainerInterface
      * @return SpyProductCategoryQuery
      */
     public function queryLocalizedProductCategoryMappingBySkuAndCategoryName($sku, $categoryName, LocaleTransfer $locale);
+
+    /**
+     * @param SpyAbstractProduct $abstractProduct
+     *
+     * @return SpyProductCategoryQuery
+     */
+    public function queryLocalizedProductCategoryMappingByProduct(SpyAbstractProduct $abstractProduct);
 
     /**
      * @param $idCategory
