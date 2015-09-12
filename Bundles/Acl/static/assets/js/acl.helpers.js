@@ -76,10 +76,7 @@ SprykerAjaxCallbacks.prototype.displayGroupRoles = function(ajaxResponse){
 SprykerAjaxCallbacks.prototype.removeUserRowFromGroupTable = function(ajaxResponse){
     if (ajaxResponse.code == this.codeSuccess) {
         var tableRow = $('#row-' + ajaxResponse['id-user'] + '-' + ajaxResponse['id-group']).closest('tr');
-        tableRow.css({
-            'background': '#a00',
-            'color': '#fff'
-        });
+        tableRow.addClass('removed-group-user');
         tableRow.fadeOut('slow', function(){
             tableRow.remove();
         });

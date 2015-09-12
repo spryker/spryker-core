@@ -360,7 +360,11 @@ abstract class AbstractTable
         $offset = $this->getOffset();
         $order = $this->getOrders();
         // @todo CD-412 refactor this class to allow unspecified header columns and to add flexibility
-        $columns = (!empty($config->getHeader())) ? array_keys($config->getHeader()) : array_keys($query->getTableMap()->getColumns());
+        if (!empty($config->getHeader())) {
+            $columns = array_keys($config->getHeader());
+        } else {
+            $columns = array_keys($query->getTableMap()->getColumns());
+        }
         $orderColumn = $columns[$order[0]['column']];
         $this->total = $query->count();
         $query->orderBy($orderColumn, $order[0]['dir']);
