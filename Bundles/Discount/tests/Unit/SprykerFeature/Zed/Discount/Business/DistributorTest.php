@@ -151,9 +151,9 @@ class DistributorTest extends Test
 
         $this->discountFacade->distributeAmount($items, $discountTransfer);
 
-//        $this->assertEquals(0, $items[0]->getDiscounts()->count());
-//        $this->assertEquals(0, $items[1]->getDiscounts()->count());
-//        $this->assertEquals(0, $items[2]->getDiscounts()->count());
+        $this->assertEquals(0, $items[0]->getDiscounts()->count());
+        $this->assertEquals(0, $items[1]->getDiscounts()->count());
+        $this->assertEquals(0, $items[2]->getDiscounts()->count());
     }
 
     public function testDistributeShouldNotDistributeDiscountsForObjectsWithZeroGrossPrices()
@@ -171,9 +171,9 @@ class DistributorTest extends Test
 
         $this->discountFacade->distributeAmount($items, $discountTransfer);
 
-//        $this->assertEquals(0, $items[0]->getDiscounts()->count());
-//        $this->assertEquals(0, $items[1]->getDiscounts()->count());
-//        $this->assertEquals(0, $items[2]->getDiscounts()->count());
+        $this->assertEquals(0, $items[0]->getDiscounts()->count());
+        $this->assertEquals(0, $items[1]->getDiscounts()->count());
+        $this->assertEquals(0, $items[2]->getDiscounts()->count());
     }
 
     /**

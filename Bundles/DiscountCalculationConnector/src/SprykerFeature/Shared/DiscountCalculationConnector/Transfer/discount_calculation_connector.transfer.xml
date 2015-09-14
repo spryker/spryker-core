@@ -18,6 +18,13 @@
         <property name="discounts" type="Discount[]" singular="discount" />
     </transfer>
 
+    <transfer name="Item">
+        <property name="quantity" type="int" />
+        <property name="discounts" type="Discount[]" singular="discount" />
+        <property name="expenses" type="Expense[]" singular="expense" />
+        <property name="productOptions" type="ProductOption[]" singular="productOption" />
+    </transfer>
+
     <transfer name="ProductOption">
         <property name="taxSet" type="TaxSet" />
         <property name="discounts" type="Discount[]" singular="discount" />

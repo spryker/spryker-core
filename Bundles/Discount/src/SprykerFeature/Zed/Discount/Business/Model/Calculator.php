@@ -15,7 +15,7 @@ use Generated\Shared\Discount\OrderInterface;
 class Calculator implements CalculatorInterface
 {
 
-    const KEY_DISCOUNT_TRANSFER = 'entity';
+    const KEY_DISCOUNT_TRANSFER = 'transfer';
     const KEY_DISCOUNT_AMOUNT = 'amount';
     const KEY_DISCOUNT_REASON = 'reason';
 

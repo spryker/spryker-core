@@ -59,12 +59,8 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     protected $omsFacade;
 
     /**
-     * @var CalculationFacade
-     */
-    protected $calculationFacade;
-
-    /**
      * @param CheckoutPreconditionInterface[] $preConditionStack
+     * @param CheckoutPreHydrationInterface[] $preHydrationStack
      * @param CheckoutOrderHydrationInterface[] $orderHydrationStack
      * @param CheckoutSaveOrderInterface[] $saveOrderStack
      * @param CheckoutPostSaveHookInterface[] $postSaveHookStack
@@ -193,21 +189,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         }
 
         return $orderTransfer;
-    }
-
-    /**
-     * @todo add this as pre hooks and add plugins
-     *
-     * @param CartInterface $cartTransfer
-     *
-     * @return CartInterface
-     */
-    protected function recalculate(CartInterface $cartTransfer)
-    {
-        $calculableCart = new CalculableContainer($cartTransfer);
-        $calculableCart = $this->calculationFacade->recalculate($calculableCart);
-
-        return $calculableCart->getCalculableObject();
     }
 
     /**
