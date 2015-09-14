@@ -19,16 +19,16 @@ class PreSaveItemGroupingPlugin extends AbstractPlugin implements PreSavePluginI
 {
 
     /**
-     * @param ItemInterface[] $items
+     * @param ItemInterface[] $itemsCollection
      */
-    public function trigger(\ArrayObject $items)
+    public function trigger(\ArrayObject $itemsCollection)
     {
-        $groupAbleItems = new GroupableContainerTransfer();
-        $groupAbleItems->setItems($items);
-        $groupedItems = $this->getFacade()->groupOrderItems($groupAbleItems);
+        $groupAbleContainerTransfer = new GroupableContainerTransfer();
+        $groupAbleContainerTransfer->setItems($itemsCollection);
+        $groupAbleContainerTransfer = $this->getFacade()->groupOrderItems($groupAbleContainerTransfer);
 
-        if (count($groupedItems->getItems()) > 0) {
-            $items->exchangeArray((array) $groupedItems->getItems());
+        if (count($groupAbleContainerTransfer->getItems()) > 0) {
+            $itemsCollection->exchangeArray((array) $groupAbleContainerTransfer->getItems());
         }
     }
 
