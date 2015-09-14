@@ -13,19 +13,33 @@ class ServerDataCollector extends AbstractDataCollector
 
     const TYPE = 'server';
 
+    const FIELD_URL = 'url';
+
+    const FIELD_IS_HTTPS = 'is_https';
+
+    const FIELD_HOST_NAME = 'host_name';
+
+    const FIELD_USER_AGENT = 'user_agent';
+
+    const FIELD_USER_IP = 'user_ip';
+
+    const FIELD_REQUEST_METHOD = 'request_method';
+
+    const FIELD_REFERRER = 'referrer';
+
     /**
      * @return array
      */
     public function getData()
     {
         return [
-            'url' => $this->getUrl(),
-            'is_https' => (int) $this->isSecureConnection(),
-            'host_name' => $this->getHost(),
-            'user_agent' => $this->getUserAgent(),
-            'user_ip' => $this->getRemoteAddress(),
-            'request_method' => $this->getRequestMethod(),
-            'referer' => $this->getHttpReferer(),
+            self::FIELD_URL => $this->getUrl(),
+            self::FIELD_IS_HTTPS => (int) $this->isSecureConnection(),
+            self::FIELD_HOST_NAME => $this->getHost(),
+            self::FIELD_USER_AGENT => $this->getUserAgent(),
+            self::FIELD_USER_IP => $this->getRemoteAddress(),
+            self::FIELD_REQUEST_METHOD => $this->getRequestMethod(),
+            self::FIELD_REFERRER => $this->getHttpReferrer(),
         ];
     }
 
@@ -92,9 +106,9 @@ class ServerDataCollector extends AbstractDataCollector
     /**
      * @return string
      */
-    protected function getHttpReferer()
+    protected function getHttpReferrer()
     {
-        return isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : 'unknown';
+        return isset($_SERVER['HTTP_REFERRER']) ? $_SERVER['HTTP_REFERRER'] : 'unknown';
     }
 
 }

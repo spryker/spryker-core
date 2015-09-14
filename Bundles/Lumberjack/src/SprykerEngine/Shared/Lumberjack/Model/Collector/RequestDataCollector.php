@@ -13,6 +13,24 @@ class RequestDataCollector extends AbstractDataCollector
 
     const TYPE = 'request';
 
+    const FIELD_REQUEST_ID = 'request_id';
+
+    const FIELD_MICROTIME = 'microtime';
+
+    const FIELD_REQUEST_PARAMS = 'request_params';
+
+    const FIELD_ROUTE = 'route';
+
+    const FIELD_MODULE = 'module';
+
+    const FIELD_CONTROLLER = 'controller';
+
+    const FIELD_ACTION = 'action';
+
+    const OPTION_PARAM_BLACKLIST = 'param_blacklist';
+
+    const OPTION_FILTERED_CONTENT = 'filtered_content';
+
     /**
      * @var string
      */
@@ -35,9 +53,9 @@ class RequestDataCollector extends AbstractDataCollector
     public function getData()
     {
         $fields = [
-            'request_id' => self::$idRequest,
-            'microtime' => microtime(true),
-            'request_params' => $this->getRequestParams(),
+            self::FIELD_REQUEST_ID => self::$idRequest,
+            self::FIELD_MICROTIME => microtime(true),
+            self::FIELD_REQUEST_PARAMS => $this->getRequestParams(),
         ];
         $fields = array_merge($fields, $this->getModuleControllerAction());
 
@@ -60,8 +78,8 @@ class RequestDataCollector extends AbstractDataCollector
     protected function applyBlackList(array $requestParams)
     {
         foreach ($requestParams as $name => &$value) {
-            if (in_array($name, $this->options['param_blacklist'])) {
-                $value = $this->options['filtered_content'];
+            if (in_array($name, $this->options[self::OPTION_PARAM_BLACKLIST])) {
+                $value = $this->options[self::OPTION_FILTERED_CONTENT];
             }
         }
 
@@ -76,10 +94,10 @@ class RequestDataCollector extends AbstractDataCollector
         $request = Request::createFromGlobals();
 
         return [
-            'route' => $this->getRoute($request),
-            'module' => $request->attributes->get('module'),
-            'controller' => $request->attributes->get('controller'),
-            'action' => $request->attributes->get('action'),
+            self::FIELD_ROUTE => $this->getRoute($request),
+            self::FIELD_MODULE => $request->attributes->get(self::FIELD_MODULE),
+            self::FIELD_CONTROLLER => $request->attributes->get(self::FIELD_CONTROLLER),
+            self::FIELD_ACTION => $request->attributes->get(self::FIELD_ACTION),
         ];
     }
 
@@ -91,20 +109,20 @@ class RequestDataCollector extends AbstractDataCollector
     protected function getRoute(Request $request)
     {
         return sprintf('%s/%s/%s',
-            $request->attributes->get('module'),
-            $request->attributes->get('controller'),
-            $request->attributes->get('action')
+            $request->attributes->get(self::FIELD_MODULE),
+            $request->attributes->get(self::FIELD_CONTROLLER),
+            $request->attributes->get(self::FIELD_ACTION)
         );
     }
 
     protected function setDefaultOptions()
     {
-        if (!isset($this->options['param_blacklist'])) {
-            $this->options['param_blacklist'] = [];
+        if (!isset($this->options[self::OPTION_PARAM_BLACKLIST])) {
+            $this->options[self::OPTION_PARAM_BLACKLIST] = [];
         }
 
-        if (!isset($this->options['filtered_content'])) {
-            $this->options['filtered_content'] = '***FILTERED***';
+        if (!isset($this->options[self::OPTION_FILTERED_CONTENT])) {
+            $this->options[self::OPTION_FILTERED_CONTENT] = '***FILTERED***';
         }
     }
 
