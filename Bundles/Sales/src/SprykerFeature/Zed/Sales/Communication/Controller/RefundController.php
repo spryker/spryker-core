@@ -15,6 +15,7 @@ use SprykerFeature\Zed\Sales\Communication\SalesDependencyContainer;
 use SprykerFeature\Zed\Sales\Communication\Form\OrderItemSplitForm;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @method SalesDependencyContainer getDependencyContainer()
@@ -38,6 +39,9 @@ class RefundController extends AbstractController
         $orderEntity = $this->getQueryContainer()
             ->querySalesOrderById($idOrder)
             ->findOne();
+        if (null === $orderEntity) {
+            throw new NotFoundHttpException();
+        }
 
         $shippingAddress = $this->getQueryContainer()
             ->querySalesOrderAddressById($orderEntity->getFkSalesOrderAddressShipping())
