@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <config>
     <maintenance>
-        <label>maintenance</label>
+        <label>Maintenance</label>
         <title>Maintenance</title>
         <bundle>maintenance</bundle>
         <controller>index</controller>
@@ -14,6 +14,20 @@
                 <controller>index</controller>
                 <action>index</action>
             </packages>
+            <search>
+                <label>Search</label>
+                <title>Search index</title>
+                <bundle>maintenance</bundle>
+                <controller>data</controller>
+                <action>search</action>
+            </search>
+            <storage>
+                <label>Storage</label>
+                <title>Storage index</title>
+                <bundle>maintenance</bundle>
+                <controller>data</controller>
+                <action>storage</action>
+            </storage>
         </pages>
     </maintenance>
 </config>

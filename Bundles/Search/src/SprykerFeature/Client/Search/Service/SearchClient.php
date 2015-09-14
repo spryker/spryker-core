@@ -14,6 +14,9 @@ use SprykerEngine\Client\Kernel\Service\AbstractClient;
 class SearchClient extends AbstractClient
 {
 
+    /**
+     * @return \Elastica\Index
+     */
     public function getIndexClient()
     {
         return $this->getDependencyContainer()->createIndexClient();

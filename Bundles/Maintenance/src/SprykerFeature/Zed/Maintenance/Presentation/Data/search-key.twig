@@ -1,0 +1,10 @@
+{% extends '@Application/Layout/layout.twig' %}
+
+{% block body_class %}spy-page{% endblock %}
+
+{% block content %}
+    <a href="/maintenance/data/search">All keys</a>
+    <h1>{{ key }}</h1>
+    <pre>{{ value }}</pre>
+
+{% endblock %}
