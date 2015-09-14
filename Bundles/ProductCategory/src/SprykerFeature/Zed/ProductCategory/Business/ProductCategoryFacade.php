@@ -59,7 +59,7 @@ class ProductCategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param LocaleTransfer $locale
      * 
      * @return SpyProductCategoryQuery[]
