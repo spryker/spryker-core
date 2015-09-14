@@ -30,27 +30,41 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @param string $name
+     * @param string $groupName
+     * @param RolesTransfer $rolesTransfer
      *
      * @return GroupTransfer
      */
-    public function addGroup($name)
+    public function addGroup($groupName, RolesTransfer $rolesTransfer)
     {
-        return $this->getDependencyContainer()
+        $groupTransfer = $this->getDependencyContainer()
             ->createGroupModel()
-            ->addGroup($name);
+            ->addGroup($groupName);
+
+        if (!empty($rolesTransfer)) {
+            $this->addRolesToGroup($groupTransfer, $rolesTransfer);
+        }
+
+        return $groupTransfer;
     }
 
     /**
-     * @param GroupTransfer $data
+     * @param GroupTransfer $transfer
+     * @param array $rolesTransfer
      *
      * @return GroupTransfer
      */
-    public function updateGroup(GroupTransfer $data)
+    public function updateGroup(GroupTransfer $transfer, RolesTransfer $rolesTransfer)
     {
-        return $this->getDependencyContainer()
+        $groupTransfer = $this->getDependencyContainer()
             ->createGroupModel()
-            ->updateGroup($data);
+            ->updateGroup($transfer);
+
+        if (!empty($rolesTransfer)) {
+            $this->addRolesToGroup($groupTransfer, $rolesTransfer);
+        }
+
+        return $groupTransfer;
     }
 
     /**
@@ -143,7 +157,7 @@ class AclFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->createRoleModel()->save($roleTransfer);
     }
-    
+
     /**
      * @param int $id
      *
@@ -207,7 +221,7 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @param integer $idUser
+     * @param int $idUser
      *
      * @return GroupsTransfer
      */
@@ -339,8 +353,8 @@ class AclFacade extends AbstractFacade
     }
 
     /**
-     * @param integer $idRole
-     * @param integer $idGroup
+     * @param int $idRole
+     * @param int $idGroup
      *
      * @return int
      */
@@ -349,6 +363,22 @@ class AclFacade extends AbstractFacade
         return $this->getDependencyContainer()
             ->createGroupModel()
             ->addRoleToGroup($idRole, $idGroup);
+    }
+
+    /**
+     * @param GroupTransfer $groupTransfer
+     * @param RolesTransfer $rolesTransfer
+     */
+    public function addRolesToGroup(GroupTransfer $groupTransfer, RolesTransfer $rolesTransfer)
+    {
+        $groupModel = $this->getDependencyContainer()->createGroupModel();
+        $groupModel->removeRolesFromGroup($groupTransfer->getIdAclGroup());
+
+        foreach ($rolesTransfer->getRoles() as $roleTransfer) {
+            if ($roleTransfer->getIdAclRole() > 0) {
+                $groupModel->addRoleToGroup($roleTransfer->getIdAclRole(), $groupTransfer->getIdAclGroup());
+            }
+        }
     }
 
     /**

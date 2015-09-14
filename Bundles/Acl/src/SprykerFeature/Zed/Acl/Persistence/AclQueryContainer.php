@@ -343,7 +343,7 @@ class AclQueryContainer extends AbstractQueryContainer
         $query = $this->getDependencyContainer()->createUserQuery();
 
         $query->addJoin(
-            SpyUserTableMap::COL_ID_USER_USER,
+            SpyUserTableMap::COL_ID_USER,
             SpyAclUserHasGroupTableMap::COL_FK_USER,
             Criteria::LEFT_JOIN
         );
@@ -356,19 +356,6 @@ class AclQueryContainer extends AbstractQueryContainer
 
         $query->withColumn(SpyAclGroupTableMap::COL_NAME, self::GROUP_NAME);
         $query->withColumn(SpyAclGroupTableMap::COL_ID_ACL_GROUP, self::ID_ACL_GROUP);
-
-        return $query;
-    }
-
-    /**
-     * @param int $idGroup
-     *
-     * @return SpyUserQuery
-     */
-    public function queryUsersWithGroupByGroupId($idGroup)
-    {
-        $query = $this->queryUsersWithGroup();
-        $query->filterBy(SpyAclUserHasGroupTableMap::COL_FK_ACL_GROUP, $idGroup);
 
         return $query;
     }

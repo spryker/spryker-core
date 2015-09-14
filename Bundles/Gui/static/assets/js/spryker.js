@@ -8,6 +8,12 @@ $(document).ready(function() {
     /** Draw data tables */
     $('.gui-table-data').dataTable();
 
+    /** Draw data tables without search */
+    $('.gui-table-data-no-search').dataTable({
+        bFilter: false,
+        bInfo: false
+    });
+
     /** all elements with the same class will have the same height */
     $('.fix-height').sprykerFixHeight();
 

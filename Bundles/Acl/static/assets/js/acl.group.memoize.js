@@ -3,17 +3,17 @@
 function GroupModalMemoization(){
     var self = this;
 
-    self.cached = [];
+    var cached = {};
 
     self.hasMember = function(memberId){
-        return (memberId in self.cached);
+        return !!cached[memberId];
     };
 
     self.saveMember = function(memberId, data){
-        self.cached[memberId] = data;
+        cached[memberId] = data;
     };
 
     self.getMember = function(memberId){
-        return self.cached[memberId];
+        return cached[memberId];
     };
 }
