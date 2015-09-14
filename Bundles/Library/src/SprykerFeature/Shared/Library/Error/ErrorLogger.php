@@ -6,11 +6,13 @@
 
 namespace SprykerFeature\Shared\Library\Error;
 
-use SprykerEngine\Shared\Lumberjack\Model\EventInterface;
-use SprykerFeature\Shared\Library\Application\Version;
-use SprykerEngine\Shared\Lumberjack\Model\SharedEventJournal;
 use SprykerEngine\Shared\Lumberjack\Model\Event;
-
+use SprykerEngine\Shared\Lumberjack\Model\EventInterface;
+use SprykerEngine\Shared\Lumberjack\Model\EventJournalInterface;
+use SprykerEngine\Shared\Lumberjack\Model\SharedEventJournal;
+use SprykerFeature\Shared\Library\Application\Version;
+use SprykerFeature\Shared\Library\NewRelic\Api;
+use SprykerFeature\Shared\Library\NewRelic\ApiInterface;
 
 class ErrorLogger
 {
@@ -20,31 +22,36 @@ class ErrorLogger
      */
     public static function log(\Exception $exception)
     {
-        self::sendExceptionToFile($exception);
-        self::sendExceptionToNewRelic($exception);
-        self::sendExceptionToLumberjack($exception);
+        self::sendExceptionToFile($exception, new SharedEventJournal(), Api::getInstance());
+        self::sendExceptionToNewRelic($exception, false, new SharedEventJournal(), Api::getInstance());
+        self::sendExceptionToLumberjack($exception, new SharedEventJournal(), Api::getInstance());
     }
 
     /**
      * @param \Exception $exception
      * @param bool $ignoreInternalExceptions
+     * @param EventJournalInterface $eventJournal
+     * @param ApiInterface $newRelicApi
      */
-    protected static function sendExceptionToLumberjack(\Exception $exception, $ignoreInternalExceptions = false)
-    {
+    protected static function sendExceptionToLumberjack(
+        \Exception $exception,
+        $ignoreInternalExceptions = false,
+        EventJournalInterface $eventJournal,
+        ApiInterface $newRelicApi
+    ) {
         try {
-            $lumberjack = new SharedEventJournal();
             $event = new Event();
             $event->addField('message', $exception->getMessage());
             $event->addField('trace', $exception->getTraceAsString());
-            $event->addField('className', get_class($exception));
-            $event->addField('fileName', $exception->getFile());
+            $event->addField('class_name', get_class($exception));
+            $event->addField('file_name', $exception->getFile());
             $event->addField('line', $exception->getLine());
-            $event->addField('name', 'exception');
+            $event->addField(Event::FIELD_NAME, 'exception');
             self::addDeploymentInfo($event);
-            $lumberjack->saveEvent($event);
+            $eventJournal->saveEvent($event);
         } catch (\Exception $internalException) {
             if (!$ignoreInternalExceptions) {
-                self::sendExceptionToNewRelic($internalException, true);
+                self::sendExceptionToNewRelic($internalException, true, $newRelicApi);
             }
         }
     }
@@ -52,15 +59,21 @@ class ErrorLogger
     /**
      * @param \Exception $exception
      * @param bool $ignoreInternalExceptions
+     * @param EventJournalInterface $eventJournal
+     * @param ApiInterface $newRelicApi
      */
-    protected static function sendExceptionToNewRelic(\Exception $exception, $ignoreInternalExceptions = false)
-    {
+    protected static function sendExceptionToNewRelic(
+        \Exception $exception,
+        $ignoreInternalExceptions = false,
+        EventJournalInterface $eventJournal,
+        ApiInterface $newRelicApi
+    ) {
         try {
             $message = $message = get_class($exception) . ' - ' . $exception->getMessage() . ' in file "' . $exception->getFile() . '"';
-            \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->noticeError($message, $exception);
+            $newRelicApi->noticeError($message, $exception);
         } catch (\Exception $internalException) {
             if (!$ignoreInternalExceptions) {
-                self::sendExceptionToLumberjack($internalException, true);
+                self::sendExceptionToLumberjack($internalException, true, $eventJournal, $newRelicApi);
             }
         }
     }
@@ -77,15 +90,20 @@ class ErrorLogger
 
     /**
      * @param \Exception $exception
+     * @param EventJournalInterface $eventJournal
+     * @param ApiInterface $newRelicApi
      */
-    protected static function sendExceptionToFile(\Exception $exception)
-    {
+    protected static function sendExceptionToFile(
+        \Exception $exception,
+        EventJournalInterface $eventJournal,
+        ApiInterface $newRelicApi
+    ) {
         try {
             $message = ErrorRenderer::renderException($exception);
             \SprykerFeature_Shared_Library_Log::log($message, 'exception.log');
         } catch (\Exception $internalException) {
-            self::sendExceptionToLumberjack($internalException, true);
-            self::sendExceptionToNewRelic($internalException, true);
+            self::sendExceptionToLumberjack($internalException, true, $eventJournal, $newRelicApi);
+            self::sendExceptionToNewRelic($internalException, true, $eventJournal, $newRelicApi);
         }
     }
 
