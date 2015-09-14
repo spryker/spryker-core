@@ -57,7 +57,13 @@ class ProductCategoryFacade extends AbstractFacade
             ->hasProductCategoryMapping($sku, $categoryName, $locale)
         ;
     }
-    
+
+    /**
+     * @param $idCategory
+     * @param LocaleTransfer $locale
+     * 
+     * @return SpyProductCategoryQuery[]
+     */
     public function getProductsByCategory($idCategory, LocaleTransfer $locale)
     {
         return $this->getDependencyContainer()

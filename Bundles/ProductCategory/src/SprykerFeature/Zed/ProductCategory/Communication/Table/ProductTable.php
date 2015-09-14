@@ -9,7 +9,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
-use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
+use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyLocalizedAbstractProductAttributesTableMap;
 
@@ -19,9 +19,9 @@ class ProductTable extends AbstractTable
     const TABLE_IDENTIFIER = 'product-table';
 
     /**
-     * @var ProductQueryContainerInterface
+     * @var ProductCategoryQueryContainerInterface
      */
-    protected $productQueryContainer;
+    protected $productCategoryQueryContainer;
 
 
     /**
@@ -36,13 +36,13 @@ class ProductTable extends AbstractTable
 
 
     /**
-     * @param ProductQueryContainerInterface $productQueryContainer
+     * @param ProductCategoryQueryContainerInterface $productCategoryQueryContainer
      * @param LocaleTransfer $locale
      * @param int $idCategory
      */
-    public function __construct(ProductQueryContainerInterface $productQueryContainer, LocaleTransfer $locale, $idCategory)
+    public function __construct(ProductCategoryQueryContainerInterface $productCategoryQueryContainer, LocaleTransfer $locale, $idCategory)
     {
-        $this->productQueryContainer = $productQueryContainer;
+        $this->productCategoryQueryContainer = $productCategoryQueryContainer;
         $this->locale = $locale;
         $this->idCategory = (int)$idCategory;
         $this->defaultUrl = sprintf('productTable?%s=%d', ProductCategoryConfig::PARAM_ID_CATEGORY, $this->idCategory);
@@ -80,7 +80,7 @@ class ProductTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->productQueryContainer->queryAbstractProductsBySearchTerm(null, $this->locale, $this->idCategory);
+        $query = $this->productCategoryQueryContainer->queryAbstractProductsBySearchTerm(null, $this->locale, $this->idCategory);
         $query->setModelAlias('spy_abstract_product');
 
         $queryResults = $this->runQuery($query, $config);
