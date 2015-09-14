@@ -37,26 +37,24 @@ class EditController extends AddController
         }
 
         $locale = $this->getDependencyContainer()
-            ->createCurrentLocale()
-        ;
+            ->createCurrentLocale();
 
         /**
          * @var Form
          */
         $form = $this->getDependencyContainer()
-            ->createCategoryFormEdit($idCategory)
-        ;
+            ->createCategoryFormEdit($idCategory);
         $form->handleRequest();
 
         if ($form->isValid()) { //TODO Ugly and dirty, some stuff must be moved into Facades
-            $data             = $form->getData();
+            $data = $form->getData();
             $categoryTransfer = (new CategoryTransfer())->fromArray($data, true);
             $this->getFacade()->updateCategory($categoryTransfer, $locale);
             $parentIdList = $form->getData()['fk_parent_category_node'];
 
             foreach ($parentIdList as $parentNodeId) {
                 $data['fk_parent_category_node'] = $parentNodeId;
-                $data['fk_category']             = $categoryTransfer->getIdCategory();
+                $data['fk_category'] = $categoryTransfer->getIdCategory();
 
                 $categoryNodeTransfer = (new NodeTransfer())->fromArray($data, true);
                 $existingCategoryNode = $this->getFacade()->getNodeByIdCategoryAndParentNode($categoryTransfer->getIdCategory(), $parentNodeId);
@@ -73,7 +71,7 @@ class EditController extends AddController
             }
 
             $existingParents = $this->getFacade()->getNodesByIdCategory($categoryTransfer->getIdCategory());
-            $parentIdList    = array_flip($parentIdList);
+            $parentIdList = array_flip($parentIdList);
 
             //remove deselected parents
             foreach ($existingParents as $parent) {
@@ -102,18 +100,16 @@ class EditController extends AddController
         }
 
         $productCategories = $this->getDependencyContainer()
-            ->createProductCategoryTable($locale, $idCategory)
-        ;
+            ->createProductCategoryTable($locale, $idCategory);
 
         $products = $this->getDependencyContainer()
-            ->createProductTable($locale, $idCategory)
-        ;
+            ->createProductTable($locale, $idCategory);
 
         return $this->viewResponse([
-            'idCategory'             => $idCategory,
-            'form'                   => $form->createView(),
+            'idCategory' => $idCategory,
+            'form' => $form->createView(),
             'productCategoriesTable' => $productCategories->render(),
-            'productsTable'          => $products->render(),
+            'productsTable' => $products->render(),
         ]);
     }
 }

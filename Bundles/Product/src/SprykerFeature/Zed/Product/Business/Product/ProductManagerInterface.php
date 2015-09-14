@@ -164,9 +164,9 @@ interface ProductManagerInterface
     /**
      * @param $term
      * @param LocaleTransfer $locale
-     *
      * @param null $idExcludedCategory
-     * @return \SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct[]
+     * 
+     * @return SpyAbstractProduct[]
      */
     public function getAbstractProductsBySearchTerm($term, LocaleTransfer $locale, $idExcludedCategory = null);
 

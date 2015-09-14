@@ -112,39 +112,4 @@ class AddController extends AbstractController
         );
     }
 
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function productCategorySuggestProductAction(Request $request)
-    {
-        $term = $request->get(CategoryConfig::PARAM_PRODUCT_PHRASE_SUGGEST);
-        $idCategory = $request->get(CategoryConfig::PARAM_ID_CATEGORY);
-        
-        $locale = $this->getDependencyContainer()
-            ->createCurrentLocale()
-        ;
-
-        $resultSet = $this->getDependencyContainer()
-            ->createProductFacade()
-            ->getAbstractProductsBySearchTerm($term, $locale, $idCategory);
-        ;
-        
-        $results = [];
-        foreach ($resultSet as $searchItem) {
-            $item = $searchItem->toArray();
-            //fix for select 2
-            $item['id'] = $item['id_abstract_product'];
-            $item['text'] = $item['name'].' ('.$item['sku'].')';
-            $results[] = $item;
-        }
-        
-        return $this->jsonResponse([
-            'items' => $results,
-            "incomplete_results" => false,
-            'total_count' => count($results)
-        ]);
-    }
-
 }
