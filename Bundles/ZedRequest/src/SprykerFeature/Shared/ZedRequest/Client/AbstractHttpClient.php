@@ -18,8 +18,8 @@ use SprykerFeature\Client\Auth\Service\AuthClientInterface;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\Library\System;
 use SprykerFeature\Shared\Library\Zed\Exception\InvalidZedResponseException;
-use SprykerFeature\Shared\Lumberjack\Code\Lumberjack;
-use SprykerFeature\Shared\Lumberjack\Code\Log\Types;
+use SprykerEngine\Shared\Lumberjack\Model\SharedEventJournal;
+use SprykerEngine\Shared\Lumberjack\Model\Event;
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Shared\Yves\YvesConfig;
 use SprykerEngine\Shared\Transfer\TransferInterface;
@@ -179,9 +179,9 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
         $char = (strpos($pathInfo, '?') === false) ? '?' : ' &';
         /*
-         * @todo refactor this little hack. We just want to get the requestId here..
+         * @todo CD-417
          */
-        $eventJournal = new EventJournalClient();
+        $eventJournal = new SharedEventJournal();
         $event = new Event();
         $eventJournal->applyCollectors($event);
         $requestId = $event->getFields()['request_id'];
@@ -276,7 +276,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      */
     protected function logRequest($pathInfo, RequestInterface $requestTransfer, $rawBody)
     {
-        $this->doLog($pathInfo, Types::TRANSFER_REQUEST, $requestTransfer, $rawBody);
+        $this->doLog($pathInfo, 'transfer_request', $requestTransfer, $rawBody);
     }
 
     /**
@@ -286,7 +286,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      */
     protected function logResponse($pathInfo, ZedResponse $responseTransfer, $rawBody)
     {
-        $this->doLog($pathInfo, Types::TRANSFER_RESPONSE, $responseTransfer, $rawBody);
+        $this->doLog($pathInfo, 'transfer_response', $responseTransfer, $rawBody);
     }
 
     /**
@@ -297,7 +297,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      */
     protected function doLog($pathInfo, $subType, ObjectInterface $transfer, $rawBody)
     {
-        $lumberjack = new EventJournalClient();
+        $lumberjack = new SharedEventJournal();
         $event = new Event();
         $responseTransfer = $transfer->getTransfer();
         if ($responseTransfer instanceof TransferInterface) {
