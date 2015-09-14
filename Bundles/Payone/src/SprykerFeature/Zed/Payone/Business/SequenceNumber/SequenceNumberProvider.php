@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business\SequenceNumber;
 
+use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 
 class SequenceNumberProvider implements SequenceNumberProviderInterface
@@ -41,6 +42,8 @@ class SequenceNumberProvider implements SequenceNumberProviderInterface
     /**
      * @param string $transactionId
      *
+     * @throws PropelException
+     *
      * @return int
      */
     public function getCurrentSequenceNumber($transactionId)
@@ -49,9 +52,9 @@ class SequenceNumberProvider implements SequenceNumberProviderInterface
             ->getCurrentSequenceNumberQuery($transactionId)
             ->findOne();
 
-        // If we have a transactionId but no status log we need to return the -1 "fits always" number
+        // If we have a transactionId but no status log we throw an exception
         if (!$transactionEntity || !$transactionEntity->getSequenceNumber()) {
-            return -1;
+            throw new PropelException('No current sequence number found.');
         }
 
         return $transactionEntity->getSequencenumber();
