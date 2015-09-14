@@ -24,7 +24,7 @@ interface CustomerClientInterface
     /**
      * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerInterface
+     * @return CustomerResponseTransfer
      */
     public function registerCustomer(CustomerInterface $customerTransfer);
 

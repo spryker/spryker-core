@@ -9,7 +9,6 @@ use Generated\Shared\Customer\AddressInterface;
 use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Client\ZedRequest\Service\Client\Response;
 
 interface CustomerStubInterface
@@ -45,7 +44,7 @@ interface CustomerStubInterface
     /**
      * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerResponseTransfer
      */
     public function register(CustomerInterface $customerTransfer);
 

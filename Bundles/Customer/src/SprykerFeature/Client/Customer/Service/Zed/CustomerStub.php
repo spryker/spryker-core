@@ -74,7 +74,7 @@ class CustomerStub implements CustomerStubInterface
     /**
      * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerResponseTransfer
      */
     public function register(CustomerInterface $customerTransfer)
     {
