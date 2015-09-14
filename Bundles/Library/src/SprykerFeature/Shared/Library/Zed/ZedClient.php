@@ -154,7 +154,7 @@ class ZedClient
 
         $char = (strpos($pathInfo, '?') === false) ? '?' : '&';
         /*
-         * @todo refactor this little hack. We just want to get the requestId here..
+         * @todo CD-417
          */
         $eventJournal = new EventJournalClient();
         $event = new Event();
