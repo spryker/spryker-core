@@ -24,7 +24,7 @@ use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
 use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
 
-class CategoryQueryContainer extends AbstractQueryContainer
+class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQueryContainerInterface
 {
 
     /**

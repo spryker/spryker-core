@@ -10,18 +10,12 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Category\CategoryDependencyProvider;
-use SprykerFeature\Zed\Category\Communication\Form\CategoryFormAdd;
-use SprykerFeature\Zed\Category\Communication\Form\CategoryFormEdit;
 use SprykerFeature\Zed\Category\Communication\Form\CategoryNodeForm;
 use SprykerFeature\Zed\Category\Communication\Grid\CategoryGrid;
 use SprykerFeature\Zed\Category\Communication\Table\CategoryAttributeTable;
 use SprykerFeature\Zed\Category\Communication\Table\RootNodeTable;
 use SprykerFeature\Zed\Category\Communication\Table\UrlTable;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
-use SprykerFeature\Zed\Product\Business\ProductFacade;
-use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
-use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
-use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -41,24 +35,6 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
         return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_LOCALE)
             ->getCurrentLocale()
         ;
-    }
-
-    /**
-     * @return ProductCategoryFacade
-     * @throws \ErrorException
-     */
-    public function createProductCategoryFacade()
-    {
-        return $this->getLocator()->productCategory()->facade();
-    }
-
-    /**
-     * @return ProductFacade
-     * @throws \ErrorException
-     */
-    public function createProductFacade()
-    {
-        return $this->getLocator()->product()->facade();
     }
 
     /**
@@ -86,48 +62,6 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
             $this->getQueryContainer()->queryCategory($locale->getIdLocale()),
             $request
         );
-    }
-
-    /**
-     * @param LocaleTransfer $locale
-     * @param $idCategory
-     * 
-     * @return Table\ProductCategoryTable
-     */
-    public function createProductCategoryTable(LocaleTransfer $locale, $idCategory)
-    {
-        $productCategoryQueryContainer = $this->createProductCategoryQueryContainer();
-
-        return $this->getFactory()->createTableProductCategoryTable($productCategoryQueryContainer, $locale, $idCategory);
-    }
-
-    /**
-     * @param LocaleTransfer $locale
-     * @param $idCategory
-     * 
-     * @return Table\ProductTable
-     */
-    public function createProductTable(LocaleTransfer $locale, $idCategory)
-    {
-        $productQueryContainer = $this->createProductQueryContainer();
-
-        return $this->getFactory()->createTableProductTable($productQueryContainer, $locale, $idCategory);
-    }
-
-    /**
-     * @return ProductCategoryQueryContainerInterface
-     */
-    public function createProductCategoryQueryContainer()
-    {
-        return $this->getLocator()->productCategory()->queryContainer();
-    }
-
-    /**
-     * @return ProductQueryContainerInterface
-     */
-    public function createProductQueryContainer()
-    {
-        return $this->getLocator()->product()->queryContainer();
     }
 
     /**
@@ -177,34 +111,6 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
             ->queryUrlByIdCategoryNode($idCategoryNode)
         ;
         return $this->getFactory()->createTableUrlTable($urlQuery);
-    }
-
-    /**
-     * @return CategoryFormAdd
-     */
-    public function createCategoryFormAdd()
-    {
-        return $this->getFactory()->createFormCategoryFormAdd(
-            $this->getQueryContainer(),
-            $this->createProductCategoryFacade(),
-            $this->getCurrentLocale(),
-            null
-        );
-    }
-
-    /**
-     * @param int $idCategory
-     *
-     * @return CategoryFormEdit
-     */
-    public function createCategoryFormEdit($idCategory)
-    {
-        return $this->getFactory()->createFormCategoryFormEdit(
-            $this->getQueryContainer(),
-            $this->createProductCategoryFacade(),
-            $this->getCurrentLocale(),
-            $idCategory
-        );
     }
 
     /**

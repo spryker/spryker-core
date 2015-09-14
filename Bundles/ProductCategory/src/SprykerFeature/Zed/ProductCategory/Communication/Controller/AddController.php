@@ -1,23 +1,23 @@
 <?php
 
-namespace SprykerFeature\Zed\Category\Communication\Controller;
+namespace SprykerFeature\Zed\ProductCategory\Communication\Controller;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Pyz\Zed\ProductCategory\Business\ProductCategoryFacade;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Category\Business\CategoryFacade;
-use SprykerFeature\Zed\Category\CategoryConfig;
-use SprykerFeature\Zed\Category\Communication\CategoryDependencyContainer;
-use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
+use SprykerFeature\Zed\ProductCategory\Communication\ProductCategoryDependencyContainer;
+use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
+use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
- * @method CategoryFacade getFacade()
- * @method CategoryDependencyContainer getDependencyContainer()
- * @method CategoryQueryContainer getQueryContainer()
+ * @method ProductCategoryFacade getFacade()
+ * @method ProductCategoryDependencyContainer getDependencyContainer()
+ * @method ProductCategoryQueryContainer getQueryContainer()
  */
 class AddController extends AbstractController
 {
@@ -46,7 +46,8 @@ class AddController extends AbstractController
                 ->fromArray($form->getData(), true)
             ;
 
-            $idCategory = $this->getFacade()
+            $idCategory = $this->getDependencyContainer()
+                ->createCategoryFacade()
                 ->createCategory($categoryTransfer, $locale)
             ;
 
@@ -56,7 +57,8 @@ class AddController extends AbstractController
 
             $categoryNodeTransfer->setFkCategory($idCategory);
 
-            $this->getFacade()
+            $this->getDependencyContainer()
+                ->createCategoryFacade()
                 ->createCategoryNode($categoryNodeTransfer, $locale)
             ;
 
@@ -64,6 +66,7 @@ class AddController extends AbstractController
 
             return $this->redirectResponse('/category');
         }
+        
 
         return $this->viewResponse([
             'form' => $form->createView()
@@ -77,7 +80,7 @@ class AddController extends AbstractController
      */
     public function productCategoryTableAction(Request $request)
     {
-        $idCategory = $request->get(CategoryConfig::PARAM_ID_CATEGORY);
+        $idCategory = $request->get(ProductCategoryConfig::PARAM_ID_CATEGORY);
         $locale = $this->getDependencyContainer()
             ->createCurrentLocale()
         ;
@@ -98,7 +101,7 @@ class AddController extends AbstractController
      */
     public function productTableAction(Request $request)
     {
-        $idCategory = $request->get(CategoryConfig::PARAM_ID_CATEGORY);
+        $idCategory = $request->get(ProductCategoryConfig::PARAM_ID_CATEGORY);
         $locale = $this->getDependencyContainer()
             ->createCurrentLocale()
         ;

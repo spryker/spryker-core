@@ -3,10 +3,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Category\Communication\Table;
+namespace SprykerFeature\Zed\ProductCategory\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerFeature\Zed\Category\CategoryConfig;
+use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
@@ -45,7 +45,7 @@ class ProductTable extends AbstractTable
         $this->productQueryContainer = $productQueryContainer;
         $this->locale = $locale;
         $this->idCategory = (int)$idCategory;
-        $this->defaultUrl = sprintf('productTable?%s=%d', CategoryConfig::PARAM_ID_CATEGORY, $this->idCategory);
+        $this->defaultUrl = sprintf('productTable?%s=%d', ProductCategoryConfig::PARAM_ID_CATEGORY, $this->idCategory);
         $this->setTableIdentifier(self::TABLE_IDENTIFIER);
     }
 

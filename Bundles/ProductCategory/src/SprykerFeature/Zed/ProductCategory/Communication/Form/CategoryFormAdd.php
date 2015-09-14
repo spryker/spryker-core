@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Category\Communication\Form;
+namespace SprykerFeature\Zed\ProductCategory\Communication\Form;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;

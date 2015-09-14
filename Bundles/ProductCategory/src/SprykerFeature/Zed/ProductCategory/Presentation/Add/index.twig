@@ -26,7 +26,8 @@
 
             {{ form_start(form) }}
             {{ form_widget(form) }}
-
+            
+{% if idCategory > 0 %}
             <div class="tabs-container">
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#tab-1">Select products to assign</a></li>
@@ -107,7 +108,7 @@
                     </div>
                 </div>
             </div>
-
+{% endif %}
             <input type="submit" class="btn btn-primary" value="{{ submit_title | trans }}"/>
             {{ form_end(form) }}
 
