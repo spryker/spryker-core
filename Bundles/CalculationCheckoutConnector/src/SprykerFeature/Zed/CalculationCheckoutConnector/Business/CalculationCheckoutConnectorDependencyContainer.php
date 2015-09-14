@@ -6,11 +6,11 @@
 
 namespace SprykerFeature\Zed\CalculationCheckoutConnector\Business;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\CalculationCheckoutConnector\CalculationCheckoutConnectorDependencyProvider;
 use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
 
-class CalculationCheckoutConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
+class CalculationCheckoutConnectorDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**

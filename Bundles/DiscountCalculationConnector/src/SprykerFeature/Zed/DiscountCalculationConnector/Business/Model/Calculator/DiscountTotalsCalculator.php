@@ -49,10 +49,16 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
             $discountableItems = $discountableItems->getOrderItems();
         }
 
-        foreach ($discountableItems as $item) {
-            $discountAmount += $this->sumItemDiscounts($item->getDiscounts());
-            $discountAmount += $this->sumItemExpenseDiscounts($item->getExpenses());
-            $discountAmount += $this->sumOptionDiscounts($item->getProductOptions());
+        foreach ($discountableItems as $itemTransfer) {
+            $itemDiscountAmount = 0;
+
+            $itemDiscountAmount += $this->sumItemDiscounts($itemTransfer->getDiscounts());
+            $itemDiscountAmount += $this->sumItemExpenseDiscounts($itemTransfer->getExpenses());
+            $itemDiscountAmount += $this->sumOptionDiscounts($itemTransfer->getProductOptions());
+
+            $itemDiscountAmount = $itemDiscountAmount * $itemTransfer->getQuantity();
+
+            $discountAmount += $itemDiscountAmount;
         }
 
         $discountAmount += $this->sumTotalExpenseDiscounts($discountableContainer);

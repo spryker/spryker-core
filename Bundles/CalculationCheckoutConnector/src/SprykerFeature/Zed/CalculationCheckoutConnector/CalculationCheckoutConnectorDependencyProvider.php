@@ -14,10 +14,15 @@ class CalculationCheckoutConnectorDependencyProvider extends AbstractBundleDepen
 
     const FACADE_CALCULATION = 'calculation facade';
 
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[self::FACADE_CALCULATION] = function (Container $container) {
-            $container->getLocator()->calculation()->facade();
+            return $container->getLocator()->calculation()->facade();
         };
 
         return $container;
