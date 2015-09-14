@@ -32,6 +32,7 @@ class ItemPriceToPayCalculator implements CalculatorPluginInterface
                 $priceToPay = $item->getGrossPrice();
             }
 
+            //@todo add item expenses to priceToPay
             $priceToPay += $this->sumOptions($item->getProductOptions());
 
             $item->setPriceToPay($priceToPay);

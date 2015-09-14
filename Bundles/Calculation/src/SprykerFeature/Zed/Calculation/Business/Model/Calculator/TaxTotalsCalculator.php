@@ -60,13 +60,11 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     {
         foreach ($calculableItems as $item) {
             $this->calculateTax($item);
-            $this->calculateTaxForExpenses($item->getExpenses());
-            $this->calculateTaxForProductOptions($item->getProductOptions());
         }
 
         /** @var $order CartInterface|OrderInterface **/
         $order = $calculableContainer->getCalculableObject();
-        $this->calculateTaxForExpenses($order->getExpenses());
+        $this->calculateTaxForOrderExpenses($order->getExpenses());
     }
 
     /**
@@ -79,7 +77,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
             return;
         }
 
-        $taxableAmount = $taxableItem->getGrossPrice();
+        $taxableAmount = $taxableItem->getPriceToPay();
 
         $taxRates = $taxSet->getTaxRates();
 
@@ -99,22 +97,13 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     /**
      * @param \ArrayObject $expenses
      */
-    public function calculateTaxForExpenses(\ArrayObject $expenses)
+    public function calculateTaxForOrderExpenses(\ArrayObject $expenses)
     {
         foreach ($expenses as $expense) {
             $this->calculateTax($expense);
         }
     }
 
-    /**
-     *  @param ProductOptionInterface[] $options
-     */
-    public function calculateTaxForProductOptions($options)
-    {
-        foreach ($options as $option) {
-            $this->calculateTax($option);
-        }
-    }
 
     /**
      * @param TotalsInterface $totalsTransfer
