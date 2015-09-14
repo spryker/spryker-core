@@ -31,7 +31,11 @@ class SequenceNumberProvider implements SequenceNumberProviderInterface
      */
     public function getNextSequenceNumber($transactionId)
     {
-        return $this->getCurrentSequenceNumber($transactionId) + 1;
+        $current = $this->getCurrentSequenceNumber($transactionId);
+        if ($current < 0) {
+            return $current;
+        }
+        return  + 1;
     }
 
     /**
@@ -45,9 +49,9 @@ class SequenceNumberProvider implements SequenceNumberProviderInterface
             ->getCurrentSequenceNumberQuery($transactionId)
             ->findOne();
 
-        //@todo if we have a transactionId but no status log we probably shouldn't continue
+        // If we have a transactionId but no status log we need to return the -1 "fits always" number
         if (!$transactionEntity || !$transactionEntity->getSequenceNumber()) {
-            return 0;
+            return -1;
         }
 
         return $transactionEntity->getSequencenumber();
