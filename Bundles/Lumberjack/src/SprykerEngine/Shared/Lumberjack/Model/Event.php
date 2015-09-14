@@ -9,6 +9,10 @@ namespace SprykerEngine\Shared\Lumberjack\Model;
 class Event implements EventInterface
 {
 
+    const FIELD_NAME = 'name';
+
+    const FIELD_EVENT_ID = '_event_id';
+
     /**
      * @var array
      */
@@ -16,8 +20,8 @@ class Event implements EventInterface
 
     public function __construct()
     {
-        $this->addField('name', null);
-        $this->addField('_event_id', uniqid('', true));
+        $this->addField(self::FIELD_NAME, null);
+        $this->addField(self::FIELD_EVENT_ID, uniqid('', true));
     }
 
     /**

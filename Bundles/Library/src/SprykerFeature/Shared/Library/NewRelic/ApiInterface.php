@@ -1,9 +1,8 @@
 <?php
-
 /**
- * (c) Spryker Systems GmbH copyright protected
+ *
+ * (c) Copyright Spryker Systems GmbH 2015
  */
-
 namespace SprykerFeature\Shared\Library\NewRelic;
 
 /**
@@ -11,45 +10,15 @@ namespace SprykerFeature\Shared\Library\NewRelic;
  *
  * @link https://newrelic.com/docs/php/the-php-api
  */
-class Api implements ApiInterface
+interface ApiInterface
 {
-
-    /**
-     * @var
-     */
-    protected static $instance;
-
-    /**
-     * @var bool
-     */
-    protected $active = false;
-
-    /**
-     * @var string
-     */
-    protected $nameOfTransaction;
-
-    /**
-     * Protected Singleton-Constructor. Use \SprykerFeature\Shared\Library\NewRelic\Api::getInstance() instead.
-     */
-    protected function __construct()
-    {
-        $this->active = extension_loaded('newrelic');
-    }
 
     /**
      * @static
      *
      * @return $this
      */
-    public static function getInstance()
-    {
-        if (is_null(self::$instance)) {
-            self::$instance = new static;
-        }
-
-        return self::$instance;
-    }
+    public static function getInstance();
 
     /**
      * Report an error at this line of code, with a complete stack trace.
@@ -59,14 +28,7 @@ class Api implements ApiInterface
      *
      * @return $this
      */
-    public function noticeError($message, \Exception $e)
-    {
-        if ($this->active) {
-            newrelic_notice_error($message, $e);
-        }
-
-        return $this;
-    }
+    public function noticeError($message, \Exception $e);
 
     /**
      * Sets the name of the application to string. The string uses the same format as newrelic.appname and can set
@@ -80,14 +42,7 @@ class Api implements ApiInterface
      *
      * @return $this
      */
-    public function setAppName($name)
-    {
-        if ($this->active) {
-            newrelic_set_appname($name);
-        }
-
-        return $this;
-    }
+    public function setAppName($name);
 
     /**
      * Sets the name of the transaction to the specified string. This can be useful if you have implemented your own
@@ -105,24 +60,12 @@ class Api implements ApiInterface
      *
      * @return $this
      */
-    public function setNameOfTransaction($name)
-    {
-        $this->nameOfTransaction = $name;
-
-        if ($this->active) {
-            newrelic_name_transaction($name);
-        }
-
-        return $this;
-    }
+    public function setNameOfTransaction($name);
 
     /**
      * @return string
      */
-    public function getNameOfTransaction()
-    {
-        return $this->nameOfTransaction;
-    }
+    public function getNameOfTransaction();
 
     /**
      * Stop recording the web transaction immediately. Usually used when a page is done with all computation and is
@@ -134,14 +77,7 @@ class Api implements ApiInterface
      *
      * @return $this
      */
-    public function markEndOfTransaction()
-    {
-        if ($this->active) {
-            newrelic_end_of_transaction();
-        }
-
-        return $this;
-    }
+    public function markEndOfTransaction();
 
     /**
      * Do not generate metrics for this transaction. This is useful when you have transactions that are particularly
@@ -150,14 +86,7 @@ class Api implements ApiInterface
      *
      * @return $this
      */
-    public function markIgnoreTransaction()
-    {
-        if ($this->active) {
-            newrelic_ignore_transaction();
-        }
-
-        return $this;
-    }
+    public function markIgnoreTransaction();
 
     /**
      * Do not generate Apdex metrics for this transaction. This is useful when you have either very short or very long
@@ -165,14 +94,7 @@ class Api implements ApiInterface
      *
      * @return $this
      */
-    public function markIgnoreApdex()
-    {
-        if ($this->active) {
-            newrelic_ignore_apdex();
-        }
-
-        return $this;
-    }
+    public function markIgnoreApdex();
 
     /**
      * If no argument or true as an argument is given, mark the current transaction as a background job. If false is
@@ -182,15 +104,7 @@ class Api implements ApiInterface
      *
      * @return $this
      */
-    public function markAsBackgroundJob($flag = true)
-    {
-        assert(is_bool($flag));
-        if ($this->active) {
-            newrelic_background_job($flag);
-        }
-
-        return $this;
-    }
+    public function markAsBackgroundJob($flag = true);
 
     /**
      * Adds a custom metric with the specified name and value, which is of type double. These custom metrics can then
@@ -201,17 +115,7 @@ class Api implements ApiInterface
      *
      * @return $this
      */
-    public function addCustomMetric($metricName, $value)
-    {
-        if ($this->active) {
-            if(strpos($metricName, 'Custom/') !== 0) {
-                $metricName = 'Custom/' . $metricName;
-            }
-            newrelic_custom_metric($metricName, $value);
-        }
-
-        return $this;
-    }
+    public function addCustomMetric($metricName, $value);
 
     /**
      * Add a custom parameter to the current web transaction with the specified value. For example, you can add a
@@ -222,14 +126,7 @@ class Api implements ApiInterface
      *
      * @return $this
      */
-    public function addCustomParameter($key, $value)
-    {
-        if ($this->active) {
-            newrelic_add_custom_parameter($key, $value);
-        }
-
-        return $this;
-    }
+    public function addCustomParameter($key, $value);
 
     /**
      * API equivalent of the newrelic.transaction_tracer.customi setting. It allows you to add functions or methods to
@@ -239,14 +136,7 @@ class Api implements ApiInterface
      *
      * @return $this
      */
-    public function addCustomTracer($tracer = 'classname::function_name')
-    {
-        if ($this->active) {
-            newrelic_add_custom_tracer($tracer);
-        }
-
-        return $this;
-    }
+    public function addCustomTracer($tracer = 'classname::function_name');
 
     /**
      * Returns the JavaScript string to inject as part of the header for browser timing (real user monitoring). If flag
@@ -257,14 +147,7 @@ class Api implements ApiInterface
      *
      * @return $this
      */
-    public function getBrowserTimingHeader($flag = true)
-    {
-        if ($this->active) {
-            newrelic_get_browser_timing_header($flag);
-        }
-
-        return $this;
-    }
+    public function getBrowserTimingHeader($flag = true);
 
     /**
      * Returns the JavaScript string to inject at the very end of the HTML output for browser timing (real user
@@ -275,14 +158,7 @@ class Api implements ApiInterface
      *
      * @return $this
      */
-    public function getBrowserTimingFooter($flag = true)
-    {
-        if ($this->active) {
-            newrelic_get_browser_timing_footer($flag);
-        }
-
-        return $this;
-    }
+    public function getBrowserTimingFooter($flag = true);
 
     /**
      * Prevents the output filter from attempting to insert RUM JAvaScript for this current transaction. Useful for
@@ -290,13 +166,5 @@ class Api implements ApiInterface
      *
      * @return $this
      */
-    public function disableAutoRUM()
-    {
-        if ($this->active) {
-            newrelic_disable_autorum();
-        }
-
-        return $this;
-    }
-
+    public function disableAutoRUM();
 }

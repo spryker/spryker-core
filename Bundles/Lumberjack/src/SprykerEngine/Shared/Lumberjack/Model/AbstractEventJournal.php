@@ -11,7 +11,7 @@ use SprykerEngine\Shared\Lumberjack\LumberjackConfig;
 use SprykerEngine\Shared\Lumberjack\Model\Collector\DataCollectorInterface;
 use SprykerEngine\Shared\Lumberjack\Model\Writer\WriterInterface;
 
-abstract class AbstractEventJournal
+abstract class AbstractEventJournal implements EventJournalInterface
 {
 
     /**

@@ -11,11 +11,31 @@ use Silex\ServiceProviderInterface;
 use Silex\Application;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use SprykerEngine\Client\Lumberjack\Service\EventJournalClient;
+use SprykerEngine\Shared\Lumberjack\Model\EventJournalInterface;
 use SprykerEngine\Shared\Lumberjack\Model\Event;
+use SprykerFeature\Shared\Library\NewRelic\ApiInterface;
 
 class YvesLoggingServiceProvider implements ServiceProviderInterface
 {
+
+    /**
+     * @var EventJournalInterface
+     */
+    protected $eventJournal;
+
+    /**
+     * @var ApiInterface
+     */
+    protected $newRelicApi;
+
+    /**
+     * @param EventJournalInterface $eventJournal
+     * @param ApiInterface $newRelicApi
+     */
+    public function __construct(EventJournalInterface $eventJournal, ApiInterface $newRelicApi) {
+        $this->eventJournal = $eventJournal;
+        $this->newRelicApi = $newRelicApi;
+    }
 
     /**
      * Registers services on the given app.
@@ -67,9 +87,8 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
         $event->addField('route', $route);
         $event->addField('params.post', $request->request->all());
         $event->addField('params.get', $request->query->all());
-        $event->addField('name', 'request');
-        $eventJournal = new EventJournalClient();
-        $eventJournal->saveEvent($event);
+        $event->addField(Event::FIELD_NAME, 'request');
+        $this->eventJournal->saveEvent($event);
     }
 
     /**
@@ -81,13 +100,12 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
         $host = $request->server->get('COMPUTERNAME', System::getHostname());
         $requestUri = $request->getRequestUri();
 
-        $nr = \SprykerFeature\Shared\Library\NewRelic\Api::getInstance();
-        $nr->setNameOfTransaction($transactionName)
+        $this->newRelicApi->setNameOfTransaction($transactionName)
             ->addCustomParameter('request_uri', $requestUri)
             ->addCustomParameter('host', $host);
 
         if (strpos($transactionName, 'system/heartbeat') !== false) {
-            $nr->markIgnoreTransaction();
+            $this->newRelicApi->markIgnoreTransaction();
         }
     }
 
