@@ -32,14 +32,6 @@ class LumberjackFacade extends AbstractFacade
     }
 
     /**
-     * @return DTO\EventJournal
-     */
-    public function createEventJournal()
-    {
-        return $this->getDependencyContainer()->createEventJournal();
-    }
-
-    /**
      * @param array $fields
      */
     public function logEvent(array $fields) {
