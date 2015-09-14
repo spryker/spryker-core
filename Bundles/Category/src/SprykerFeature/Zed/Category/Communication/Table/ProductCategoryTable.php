@@ -65,7 +65,7 @@ class ProductCategoryTable extends AbstractTable
         ]);
         $config->setSortable([
             SpyAbstractProductTableMap::COL_SKU,
-            //SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
+            SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
         ]);
 
         return $config;
@@ -80,9 +80,9 @@ class ProductCategoryTable extends AbstractTable
     {
         $query = $this->productCategoryQueryContainer->queryProductsByCategoryId($this->idCategory, $this->locale);
         $query->setModelAlias('spy_abstract_product');
-        
+
         $queryResults = $this->runQuery($query, $config);
-        
+
         $results = [];
         foreach ($queryResults as $productCategory) {
             $results[] = [
@@ -90,7 +90,12 @@ class ProductCategoryTable extends AbstractTable
                 SpyAbstractProductTableMap::COL_SKU => $productCategory['sku'],
                 SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => $productCategory['name'],
                 SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => $productCategory[SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT],
-                'checkbox' => '<input id="product_category_checkbox_'.$productCategory['id_abstract_product'].'" type="checkbox" checked="checked" onclick="categoryTableClickMarkAsSelected(this, '.$productCategory['id_abstract_product'].', \''.$productCategory['sku'].'\', \''.urlencode($productCategory['name']).'\'); return" /> ',
+                'checkbox' => '<input id="product_category_checkbox_' .
+                    $productCategory['id_abstract_product'] . 
+                    '" type="checkbox" checked="checked" onclick="categoryTableClickMarkAsSelected(this, ' .
+                    $productCategory['id_abstract_product'] . ', \'' . 
+                    $productCategory['sku'] . '\', \'' .
+                    urlencode($productCategory['name']) . '\'); return" /> ',
             ];
         }
         unset($queryResults);

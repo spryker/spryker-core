@@ -49,7 +49,7 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createProductCategoryFacade()
     {
-        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_PRODUCT_CATEGORY);
+        return $this->getLocator()->productCategory()->facade();
     }
 
     /**
@@ -58,7 +58,7 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createProductFacade()
     {
-        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_PRODUCT);
+        return $this->getLocator()->product()->facade();
     }
 
     /**

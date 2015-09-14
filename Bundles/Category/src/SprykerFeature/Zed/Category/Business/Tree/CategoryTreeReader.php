@@ -323,7 +323,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
      *
      * @return array
      */
-    private function getTreeNodesRecursively(SpyCategoryNode $node = null, LocaleTransfer $localeTransfer, $isRoot = false)
+    protected function getTreeNodesRecursively(SpyCategoryNode $node = null, LocaleTransfer $localeTransfer, $isRoot = false)
     {
         $tree = [];
         if (null === $node) {
