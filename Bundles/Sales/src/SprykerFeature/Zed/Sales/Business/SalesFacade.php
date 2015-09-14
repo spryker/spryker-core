@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\PayonePaymentDetailTransfer;
+use Generated\Shared\Transfer\RefundTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
@@ -206,6 +207,19 @@ class SalesFacade extends AbstractFacade
         return $this->getDependencyContainer()
             ->createOrderDetailsManager()
             ->getOrderDetails($orderTransfer)
+        ;
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return RefundTransfer[]
+     */
+    public function getRefunds($idSalesOrder)
+    {
+        return $this->getDependencyContainer()
+            ->getProvidedDependency(SalesDependencyProvider::FACADE_REFUND)
+            ->getRefundsByIdSalesOrder($idSalesOrder)
         ;
     }
 

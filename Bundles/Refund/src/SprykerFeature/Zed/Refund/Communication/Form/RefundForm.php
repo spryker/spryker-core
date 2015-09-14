@@ -37,7 +37,7 @@ class RefundForm extends AbstractForm
     {
         $this
             ->addNumber(self::FIELD_AMMOUNT, [
-                'label' => 'Refund Amount',
+                'label' => 'Refund Amount (in Cents)',
                 'constraints' => [
                     new NotBlank(),
                 ],

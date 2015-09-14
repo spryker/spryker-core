@@ -6,8 +6,7 @@
 
 namespace SprykerFeature\Zed\Refund\Communication\Controller;
 
-
-use Generated\Shared\Transfer\RefundCommentTransfer;
+use Generated\Shared\Transfer\RefundTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Refund\Business\RefundFacade;
 use SprykerFeature\Zed\Refund\Communication\RefundDependencyContainer;
@@ -20,17 +19,6 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
-
-    public function indexAction(Request $request)
-    {
-        $idOrder = $request->query->get('id-sales-order');
-
-        $table = $this->getDependencyContainer()->createRefundsTable();
-
-        return [
-            'orders' => $table->render(),
-        ];
-    }
 
     /**
      * @return JsonResponse
@@ -64,10 +52,10 @@ class IndexController extends AbstractController
 
             $orderTransfer = $this->getFacade()->getOrderByIdSalesOrder($idSalesOrder);
 
-            $refundCommentTransfer = (new RefundCommentTransfer())->fromArray($formData, true);
-            $refundCommentTransfer->setFkSalesOrder($orderTransfer);
+            $refundTransfer = (new RefundTransfer())->fromArray($formData, true);
+            $refundTransfer->setFkSalesOrder($orderTransfer);
 
-            $this->getFacade()->saveRefundComment($refundCommentTransfer);
+            $this->getFacade()->saveRefund($refundTransfer);
             $this->addSuccessMessage('Refund successfully saved');
 
             return $this->redirectResponse(sprintf('/sales/details/?id-sales-order=%d', $idSalesOrder));

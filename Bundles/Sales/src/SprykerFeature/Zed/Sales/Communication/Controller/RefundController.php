@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method SalesDependencyContainer getDependencyContainer()
  * @method SalesQueryContainerInterface getQueryContainer()
  * @method SalesFacade getFacade()
+ * @deprecated ?
  */
 class RefundController extends AbstractController
 {

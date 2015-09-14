@@ -6,10 +6,10 @@
 
 namespace SprykerFeature\Zed\Refund\Business;
 
-use Bundles\Refund\src\SprykerFeature\Zed\Refund\Business\Model\RefundComment;
 use Generated\Zed\Ide\FactoryAutoCompletion\RefundBusiness;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use SprykerFeature\Zed\Refund\Business\Model\Refund;
 
 /**
  * @method Factory|RefundBusiness getFactory()
@@ -18,11 +18,11 @@ class RefundDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**
-     * @return RefundComment
+     * @return Refund
      */
-    public function createRefundCommentModel()
+    public function createRefundModel()
     {
-        return $this->getFactory()->createModelRefundComment();
+        return $this->getFactory()->createModelRefund();
     }
 
 }

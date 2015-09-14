@@ -27,6 +27,10 @@ class RefundDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->sales()->facade();
         };
 
+        $container[static::QUERY_CONTAINER_REFUND] = function (Container $container) {
+            return $container->getLocator()->refund()->queryContainer();
+        };
+
         return $container;
     }
 

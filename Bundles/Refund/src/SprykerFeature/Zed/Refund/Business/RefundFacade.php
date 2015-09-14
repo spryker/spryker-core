@@ -7,9 +7,10 @@
 namespace SprykerFeature\Zed\Refund\Business;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\RefundCommentTransfer;
+use Generated\Shared\Transfer\RefundTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Refund\Business\RefundDependencyContainer as SprykerRefundDependencyContainer;
+use SprykerFeature\Zed\Refund\Persistence\Propel\SpyRefund;
 use SprykerFeature\Zed\Refund\RefundDependencyProvider;
 use SprykerFeature\Zed\Sales\Business\SalesFacade;
 
@@ -33,6 +34,26 @@ class RefundFacade extends AbstractFacade
     /**
      * @param int $idSalesOrder
      *
+     * @return RefundTransfer[]
+     */
+    public function getRefundsByIdSalesOrder($idSalesOrder) {
+
+        $refundQueryContainer = $this->getDependencyContainer()->getProvidedDependency(RefundDependencyProvider::QUERY_CONTAINER_REFUND);
+
+        $refunds = $refundQueryContainer->queryRefundsByIdSalesOrder($idSalesOrder)->find();
+
+        $result = [];
+        /** @var SpyRefund $refund */
+        foreach ($refunds as $refund) {
+            $result[] = (new RefundTransfer())->fromArray($refund->toArray(), true);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
      * @return OrderTransfer
      */
     public function getOrderByIdSalesOrder($idSalesOrder)
@@ -44,15 +65,15 @@ class RefundFacade extends AbstractFacade
     }
 
     /**
-     * @param RefundCommentTransfer $refundCommentTransfer
+     * @param RefundTransfer $refundTransfer
      *
-     * @return RefundCommentTransfer
+     * @return RefundTransfer
      */
-    public function saveRefundComment(RefundCommentTransfer $refundCommentTransfer)
+    public function saveRefund(RefundTransfer $refundTransfer)
     {
         return $this->getDependencyContainer()
-            ->createRefundCommentModel()
-            ->saveRefundComment($refundCommentTransfer)
+            ->createRefundModel()
+            ->saveRefund($refundTransfer)
         ;
     }
 
