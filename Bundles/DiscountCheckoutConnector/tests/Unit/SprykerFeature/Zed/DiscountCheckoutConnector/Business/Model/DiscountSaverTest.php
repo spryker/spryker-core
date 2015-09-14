@@ -9,10 +9,13 @@ namespace Unit\SprykerFeature\Zed\DiscountCheckoutConnector\Business\Model;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
 use SprykerFeature\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaver;
+use SprykerFeature\Zed\Sales\Business\Model\Split\OrderItem;
 
 /**
  * @group SprykerFeature
@@ -47,6 +50,31 @@ class DiscountSaverTest extends \PHPUnit_Framework_TestCase
 
         $orderTransfer = new OrderTransfer();
         $orderTransfer->addDiscount($discountTransfer);
+        $checkoutResponseTransfer = new CheckoutResponseTransfer();
+
+        $discountSaver->saveDiscounts($orderTransfer, $checkoutResponseTransfer);
+    }
+
+    public function testSaveDiscountMustSaveSalesItemsDiscount()
+    {
+        $discountQueryContainerMock = $this->getDiscountQueryContainerMock();
+        $discountSaver = $this->getDiscountSaverMock(['persistSalesDiscount']);
+        $discountSaver->expects($this->once())
+            ->method('persistSalesDiscount')
+        ;
+
+        $orderTransfer = new OrderTransfer();
+
+        $discountTransfer = new DiscountTransfer();
+        $discountTransfer->setDisplayName(self::DISCOUNT_DISPLAY_NAME);
+        $discountTransfer->setAmount(self::DISCOUNT_AMOUNT);
+        $discountTransfer->setAction(self::DISCOUNT_ACTION);
+
+        $orderItemTransfer = new ItemTransfer();
+        $orderItemTransfer->addDiscount($discountTransfer);
+
+        $orderTransfer->addItem($orderItemTransfer);
+
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
         $discountSaver->saveDiscounts($orderTransfer, $checkoutResponseTransfer);
@@ -128,7 +156,11 @@ class DiscountSaverTest extends \PHPUnit_Framework_TestCase
      */
     public function getDiscountVoucherEntityByCode()
     {
-        return new SpyDiscountVoucher();
+        $discountVoucherEntity = new SpyDiscountVoucher();
+        $discountVoucherPoolEntity = new SpyDiscountVoucherPool();
+        $discountVoucherEntity->setVoucherPool($discountVoucherPoolEntity);
+
+        return $discountVoucherEntity;
     }
 
     /**

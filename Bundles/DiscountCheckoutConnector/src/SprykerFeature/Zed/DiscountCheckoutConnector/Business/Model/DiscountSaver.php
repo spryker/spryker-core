@@ -38,13 +38,7 @@ class DiscountSaver implements DiscountSaverInterface
     public function saveDiscounts(OrderInterface $orderTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         $this->saveOrderDiscounts($orderTransfer);
-        // Order expense discounts
         $this->saveOrderItemDiscounts($orderTransfer);
-        // Order item option discounts
-        $discountCollection = $orderTransfer->getDiscounts();
-        foreach ($discountCollection as $discountTransfer) {
-            $this->saveDiscount($discountTransfer, $orderTransfer);
-        }
     }
 
     /**
@@ -65,13 +59,13 @@ class DiscountSaver implements DiscountSaverInterface
      */
     protected function saveOrderItemDiscounts(OrderInterface $orderTransfer)
     {
-        $orderItems = $orderTransfer->getItems();
-        foreach ($orderItems as $orderItem) {
-            $discountCollection = $orderItem->getDiscounts();
+        $orderItemCollection = $orderTransfer->getItems();
+        foreach ($orderItemCollection as $orderItemTransfer) {
+            $discountCollection = $orderItemTransfer->getDiscounts();
             foreach ($discountCollection as $discountTransfer) {
                 $salesDiscountEntity = $this->createSalesDiscountEntity($discountTransfer);
                 $salesDiscountEntity->setFkSalesOrder($orderTransfer->getIdSalesOrder());
-                $salesDiscountEntity->setFkSalesOrderItem($orderTransfer->getIdSalesOrder());
+                $salesDiscountEntity->setFkSalesOrderItem($orderItemTransfer->getIdSalesOrderItem());
                 $this->saveDiscount($salesDiscountEntity, $discountTransfer);
             }
         }
@@ -116,7 +110,7 @@ class DiscountSaver implements DiscountSaverInterface
     /**
      * @param SpySalesDiscount $salesDiscountEntity
      *
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws PropelException
      */
     protected function persistSalesDiscount(SpySalesDiscount $salesDiscountEntity)
     {
