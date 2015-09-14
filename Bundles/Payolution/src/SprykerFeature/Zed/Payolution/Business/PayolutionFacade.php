@@ -34,4 +34,14 @@ class PayolutionFacade extends AbstractFacade
         return $this->getDependencyContainer()->createPaymentManager()->preAuthorizePayment($idPayment);
     }
 
+    /**
+     * @param int $idPayment
+     *
+     * @return PayolutionResponseTransfer
+     */
+    public function reAuthorizePayment($idPayment)
+    {
+        return $this->getDependencyContainer()->createPaymentManager()->reAuthorizePayment($idPayment);
+    }
+
 }

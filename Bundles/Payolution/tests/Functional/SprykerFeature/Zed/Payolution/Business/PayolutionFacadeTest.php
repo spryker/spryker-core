@@ -15,6 +15,8 @@ use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
 use SprykerFeature\Zed\Payolution\Business\Api\Constants;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
+use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLog;
+use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLog;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
 
@@ -27,15 +29,19 @@ class PayolutionFacadeTest extends Test
     private $orderEntity;
 
     /**
+     * @var SpyPaymentPayolution
+     */
+    private $paymentEntity;
+
+    /**
      * Test the saveOrderPayment() method of PayolutionFacade
      */
     public function testSaveOrderPayment()
     {
-        $this->setTestData();
+        $this->setBaseTestData();
 
         $paymentTransfer = new PayolutionPaymentTransfer();
         $paymentTransfer->setFkSalesOrder($this->orderEntity->getIdSalesOrder());
-        $paymentTransfer->setPaymentCode(Constants::PAYMENT_CODE_PRE_AUTHORIZATION);
         $paymentTransfer->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE);
         $paymentTransfer->setClientIp('127.0.0.1');
 
@@ -44,14 +50,12 @@ class PayolutionFacadeTest extends Test
         $orderTransfer->setIdSalesOrder($this->orderEntity->getIdSalesOrder());
         $orderTransfer->setPayolutionPayment($paymentTransfer);
 
-        // PayolutionCheckoutConnector-SaveOrderPlugin emulation
         $facade = $this->getLocator()->payolution()->facade();
         $facade->saveOrderPayment($orderTransfer);
 
         $paymentEntity = $this->orderEntity->getSpyPaymentPayolutions()->getFirst();
 
         $this->assertInstanceOf('SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution', $paymentEntity);
-        $this->assertEquals(Constants::PAYMENT_CODE_PRE_AUTHORIZATION, $paymentEntity->getPaymentCode());
         $this->assertEquals(Constants::ACCOUNT_BRAND_INVOICE, $paymentEntity->getAccountBrand());
         $this->assertEquals('127.0.0.1', $paymentEntity->getClientIp());
     }
@@ -61,22 +65,16 @@ class PayolutionFacadeTest extends Test
      */
     public function testPreAuthorizePayment()
     {
-        $this->setTestData();
-
-        $paymentEntity = (new SpyPaymentPayolution())
-            ->setFkSalesOrder($this->orderEntity->getIdSalesOrder())
-            ->setPaymentCode(Constants::PAYMENT_CODE_PRE_AUTHORIZATION)
-            ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE)
-            ->setClientIp('127.0.0.1');
-        $paymentEntity->save();
+        $this->setBaseTestData();
+        $this->setPaymentTestData();
 
         $facade = $this->getLocator()->payolution()->facade();
-        $response = $facade->preAuthorizePayment($paymentEntity->getIdPaymentPayolution());
+        $response = $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
 
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
 
         $this->assertEquals(0, $response->getProcessingRiskScore());
-        $this->assertEquals('unknown', $response->getP3Validation());
+        $this->assertEquals('ACK', $response->getP3Validation());
         $this->assertEquals($this->orderEntity->getFirstName(), $response->getNameGiven());
         $this->assertEquals('shopperID', $response->getIdentificationShopperid());
         $this->assertEquals('expected clearing', $response->getClearingDescriptor());
@@ -102,11 +100,11 @@ class PayolutionFacadeTest extends Test
         $this->assertEquals('exp payment code', $response->getPaymentCode());
         $this->assertEquals($this->orderEntity->getCustomer()->getDateOfBirth('Y-m-d'), $response->getNameBirthdate());
         $this->assertEquals('exp proc return code', $response->getProcessingReturnCode());
-        $this->assertEquals($paymentEntity->getClientIp(), $response->getContactIp());
+        $this->assertEquals($this->paymentEntity->getClientIp(), $response->getContactIp());
         $this->assertEquals($this->orderEntity->getLastName(), $response->getNameFamily());
         $this->assertEquals('exp proc stat', $response->getProcessingStatus());
         $this->assertEquals('exp frontend cc logo', $response->getFrontendCcLogo());
-        $this->assertEquals($paymentEntity->getSpySalesOrder()->getGrandTotal(), $response->getPresentationAmount());
+        $this->assertEquals($this->paymentEntity->getSpySalesOrder()->getGrandTotal(), $response->getPresentationAmount());
         $this->assertEquals('exp id unique', $response->getIdentificationUniqueid());
         $this->assertEquals('exp id trans id', $response->getIdentificationTransactionid());
         $this->assertEquals('exp  id short id', $response->getIdentificationShortid());
@@ -127,10 +125,48 @@ class PayolutionFacadeTest extends Test
         // @todo CD-408 Assert response data
     }
 
+    public function testReAuthorization()
+    {
+        $this->setBaseTestData();
+        $this->setPaymentTestData();
+
+        $facade = $this->getLocator()->payolution()->facade();
+        $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
+
+        /** @var SpyPaymentPayolutionTransactionStatusLog $preAuthorizationStatusLogEntity */
+        $preAuthorizationStatusLogEntity = $this->paymentEntity
+            ->getSpyPaymentPayolutionTransactionRequestLogs()
+            ->getFirst()
+            ->getSpyPaymentPayolutionTransactionStatusLogs()
+            ->getFirst();
+
+        $orderEntity = $this->paymentEntity->getSpySalesOrder();
+        $orderEntity
+            ->setGrandTotal(20000)
+            ->setSubtotal(20000)
+            ->save();
+
+        $responseTransfer = $facade->reAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
+        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $responseTransfer);
+
+        /** @var SpyPaymentPayolutionTransactionRequestLog $reAuthorizationRequestLogEntity */
+        $this->paymentEntity->clearSpyPaymentPayolutionTransactionRequestLogs();
+        $reAuthorizationRequestLogEntity = $this->paymentEntity
+            ->getSpyPaymentPayolutionTransactionRequestLogs()
+            ->getLast();
+
+        $this->assertEquals(
+            $preAuthorizationStatusLogEntity->getIdentificationUniqueid(),
+            $reAuthorizationRequestLogEntity->getReferenceId()
+        );
+
+        // @todo Test $responseTransfer fields
+    }
+
     /**
      * @throws \Propel\Runtime\Exception\PropelException
      */
-    private function setTestData()
+    private function setBaseTestData()
     {
         $country = SpyCountryQuery::create()->findOneByIso2Code('de');
 
@@ -162,6 +198,18 @@ class PayolutionFacadeTest extends Test
             ->setCustomer($customer)
             ->setOrderReference('foo-bar-baz-2');
         $this->orderEntity->save();
+    }
+
+    /**
+     * @throws \Propel\Runtime\Exception\PropelException
+     */
+    private function setPaymentTestData()
+    {
+        $this->paymentEntity = (new SpyPaymentPayolution())
+            ->setFkSalesOrder($this->orderEntity->getIdSalesOrder())
+            ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE)
+            ->setClientIp('127.0.0.1');
+        $this->paymentEntity->save();
     }
 
     /**

@@ -6,7 +6,6 @@
 >
     <transfer name="PayolutionPayment">
         <property name="fkSalesOrder" type="int" />
-        <property name="paymentCode" type="string" />
         <property name="accountBrand" type="string" />
         <property name="clientIp" type="string" />
     </transfer>
@@ -100,6 +99,7 @@
         <property name="identificationUniqueid" type="string"/>
         <property name="identificationTransactionid" type="string"/>
         <property name="identificationShortid" type="string"/>
+        <property name="identificationReferenceid" type="string"/>
         <property name="clearingFxrate" type="string"/>
         <property name="processingTimestamp" type="string"/>
         <property name="addressCountry" type="string"/>

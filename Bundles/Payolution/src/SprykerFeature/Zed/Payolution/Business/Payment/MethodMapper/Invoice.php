@@ -65,6 +65,33 @@ class Invoice extends AbstractMethodMapper
     }
 
     /**
+     * @param SpyPaymentPayolution $paymentEntity
+     * @param string $uniqueId
+     *
+     * @return PayolutionRequestTransfer
+     */
+    public function mapToReAuthorization(SpyPaymentPayolution $paymentEntity, $uniqueId)
+    {
+        $orderEntity = $paymentEntity->getSpySalesOrder();
+
+        $requestTransfer = (new PayolutionRequestTransfer())
+            ->setSecuritySender($this->getConfig()->getSecuritySender())
+            ->setUserLogin($this->getConfig()->getUserLogin())
+            ->setUserPwd($this->getConfig()->getUserPassword())
+            ->setPresentationAmount($orderEntity->getGrandTotal()/100)
+            ->setPresentationCurrency(Store::getInstance()->getCurrencyIsoCode())
+            ->setPresentationUsage($orderEntity->getIdSalesOrder())
+            ->setPaymentCode(Constants::PAYMENT_CODE_RE_AUTHORIZACTION)
+            ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE)
+            ->setTransactionChannel($this->getConfig()->getChannelInvoice())
+            ->setTransactionMode($this->getConfig()->getTransactionMode())
+            ->setIdentificationTransactionid(uniqid('tran_'))
+            ->setIdentificationReferenceid($uniqueId);
+
+        return $requestTransfer;
+    }
+
+    /**
      * @param $gender
      *
      * @return string

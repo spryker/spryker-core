@@ -13,8 +13,6 @@
         <column name="id_payment_payolution" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order" required="true" type="INTEGER"/>
 
-        <column name="payment_code" required="true" type="VARCHAR"/>
-
         <column name="account_brand" required="true" type="VARCHAR"/>
         <column name="client_ip" required="true" type="VARCHAR"/>
 
@@ -27,7 +25,7 @@
     </table>
 
     <table name="spy_payment_payolution_transaction_request_log">
-        <column name="id_payment_payolution_api_log" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
+        <column name="id_payment_payolution_transaction_request_log" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_payment_payolution" required="true" type="INTEGER"/>
 
         <column name="transaction_id" required="true" type="VARCHAR"/>
@@ -41,12 +39,13 @@
         </foreign-key>
 
         <behavior name="timestampable"/>
-        <id-method-parameter value="spy_payment_payolution_api_log_pk_seq"/>
+        <id-method-parameter value="spy_payment_payolution_transaction_request_log_pk_seq"/>
     </table>
 
     <table name="spy_payment_payolution_transaction_status_log">
         <column name="id_payment_payolution_transaction_status_log" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_payment_payolution" required="true" type="INTEGER"/>
+        <column name="fk_payment_payolution_transaction_request_log" required="true" type="INTEGER"/>
 
         <column name="processing_code" required="true" type="VARCHAR"/>
         <column name="processing_result" required="true" type="VARCHAR"/>
@@ -60,6 +59,7 @@
         <column name="identification_transactionid" required="true" type="VARCHAR"/>
         <column name="identification_uniqueid"  required="true" type="VARCHAR"/>
         <column name="identification_shortid"  required="true" type="VARCHAR"/>
+        <column name="identification_referenceid" type="VARCHAR"/>
 
         <column name="processing_connectordetail_connectortxid1" required="true" type="VARCHAR"/>
         <column name="processing_connectordetail_paymentreference" required="true" type="VARCHAR"/>
@@ -67,6 +67,13 @@
 
         <foreign-key foreignTable="spy_payment_payolution">
             <reference foreign="id_payment_payolution" local="fk_payment_payolution"/>
+        </foreign-key>
+
+        <foreign-key foreignTable="spy_payment_payolution_transaction_request_log">
+            <reference
+                foreign="id_payment_payolution_transaction_request_log"
+                local="fk_payment_payolution_transaction_request_log"
+            />
         </foreign-key>
 
         <behavior name="timestampable"/>

@@ -16,4 +16,11 @@ interface PaymentManagerInterface
      */
     public function preAuthorizePayment($idPayment);
 
+    /**
+     * @param int $idPayment
+     *
+     * @return PayolutionResponseTransfer
+     */
+    public function reAuthorizePayment($idPayment);
+
 }

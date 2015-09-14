@@ -1,11 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Payolution\Business\Payment;
 
-use SprykerFeature\Zed\Payolution\Business\Api\Request\PreAuthorizationRequest;
+use Generated\Shared\Transfer\PayolutionRequestTransfer;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 
 interface MethodMapperInterface
@@ -22,8 +23,16 @@ interface MethodMapperInterface
     /**
      * @param SpyPaymentPayolution $paymentEntity
      *
-     * @return mixed
+     * @return PayolutionRequestTransfer
      */
     public function mapToPreAuthorization(SpyPaymentPayolution $paymentEntity);
+
+    /**
+     * @param SpyPaymentPayolution $paymentEntity
+     * @param string $uniqueId
+     *
+     * @return PayolutionRequestTransfer
+     */
+    public function mapToReAuthorization(SpyPaymentPayolution $paymentEntity, $uniqueId);
 
 }

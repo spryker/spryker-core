@@ -9,10 +9,12 @@ namespace SprykerFeature\Zed\Payolution\Business\Payment;
 use Generated\Shared\Transfer\PayolutionRequestTransfer;
 use Generated\Shared\Transfer\PayolutionResponseTransfer;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
+use SprykerFeature\Zed\Payolution\Business\Api\Constants;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\ConverterInterface as RequestConverterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Response\ConverterInterface as ResponseConverterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Response\AbstractResponse;
 use SprykerFeature\Zed\Payolution\Business\Api\Response\PreAuthorizationResponse;
+use SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper\AbstractMethodMapper;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLog;
@@ -81,20 +83,60 @@ class PaymentManager implements PaymentManagerInterface
     {
         $paymentEntity = $this->queryContainer->queryPaymentById($idPayment);
 
-        $requestTransfer = $this
-            ->methodMappers[MethodMapperInterface::INVOICE]
-            ->mapToPreAuthorization($paymentEntity);
+        $requestTransfer = $this->getMethodMapper()->mapToPreAuthorization($paymentEntity);
 
-        $this->logApiRequest($requestTransfer, $paymentEntity);
+        $requestLogEntity = $this->logApiRequest($requestTransfer, $paymentEntity);
 
         $requestData = $this->requestConverter->toArray($requestTransfer);
         $responseData = $this->executionAdapter->sendArrayDataRequest($requestData);
 
         $responseTransfer = $this->responseConverter->fromArray($responseData);
 
-        $this->logApiResponse($responseTransfer, $paymentEntity);
+        $this->logApiResponse($responseTransfer, $paymentEntity, $requestLogEntity);
 
         return $responseTransfer;
+    }
+
+    /**
+     * @param int $idPayment
+     *
+     * @return PayolutionResponseTransfer
+     */
+    public function reAuthorizePayment($idPayment)
+    {
+        $paymentEntity = $this->queryContainer->queryPaymentById($idPayment);
+
+        $statusLogEntity = $this->queryContainer->queryLatestItemOfTransactionStatusLogByPaymentId($idPayment);
+        $requestLogEntity = $statusLogEntity->getSpyPaymentPayolutionTransactionRequestLog();
+        if (Constants::PAYMENT_CODE_PRE_AUTHORIZATION !== $requestLogEntity->getPaymentCode()) {
+            throw new \Exception(sprintf(
+                'Previous action need to be pre-authorization got %s instead',
+                $requestLogEntity->getPaymentCode()
+            ));
+        }
+
+        $requestTransfer = $this->getMethodMapper()->mapToReAuthorization(
+            $paymentEntity,
+            $statusLogEntity->getIdentificationUniqueid()
+        );
+        $requestLogEntity = $this->logApiRequest($requestTransfer, $paymentEntity);
+
+        $requestData = $this->requestConverter->toArray($requestTransfer);
+        $responseData = $this->executionAdapter->sendArrayDataRequest($requestData);
+
+        $responseTransfer = $this->responseConverter->fromArray($responseData);
+
+        $this->logApiResponse($responseTransfer, $paymentEntity, $requestLogEntity);
+
+        return $responseTransfer;
+    }
+
+    /**
+     * @return AbstractMethodMapper
+     */
+    private function getMethodMapper()
+    {
+        return $this->methodMappers[MethodMapperInterface::INVOICE];
     }
 
     /**
@@ -102,6 +144,7 @@ class PaymentManager implements PaymentManagerInterface
      * @param SpyPaymentPayolution $paymentEntity
      *
      * @throws \Propel\Runtime\Exception\PropelException
+     * @return SpyPaymentPayolutionTransactionRequestLog
      */
     private function logApiRequest(PayolutionRequestTransfer $requestTransfer, SpyPaymentPayolution $paymentEntity)
     {
@@ -113,19 +156,27 @@ class PaymentManager implements PaymentManagerInterface
             ->setReferenceId($requestTransfer->getIdentificationReferenceid())
             ->setFkPaymentPayolution($paymentEntity->getIdPaymentPayolution());
         $logEntity->save();
+        return $logEntity;
     }
 
     /**
      * @param PayolutionResponseTransfer $responseTransfer
      * @param SpyPaymentPayolution $paymentEntity
+     * @param SpyPaymentPayolutionTransactionRequestLog $requestLogEntity
      *
      * @throws \Propel\Runtime\Exception\PropelException
      */
-    private function logApiResponse(PayolutionResponseTransfer $responseTransfer, SpyPaymentPayolution $paymentEntity)
-    {
+    private function logApiResponse(
+        PayolutionResponseTransfer $responseTransfer,
+        SpyPaymentPayolution $paymentEntity,
+        SpyPaymentPayolutionTransactionRequestLog $requestLogEntity
+    ) {
         $logEntity = new SpyPaymentPayolutionTransactionStatusLog();
         $logEntity->fromArray($responseTransfer->toArray());
         $logEntity->setFkPaymentPayolution($paymentEntity->getIdPaymentPayolution());
+        $logEntity->setFkPaymentPayolutionTransactionRequestLog(
+            $requestLogEntity->getIdPaymentPayolutionTransactionRequestLog()
+        );
         $logEntity->save();
     }
 
