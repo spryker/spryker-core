@@ -22,7 +22,7 @@ class CurrentPasswordValidator extends ConstraintValidator
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\Password');
         }
 
-        if ($this->isProvidedPasswordEqualsToPersisted($value, $constraint)) {
+        if (!$this->isProvidedPasswordEqualsToPersisted($value, $constraint)) {
             $this->buildViolation($constraint->getMessage())
                 ->setParameter('{{ value }}', $this->formatValue($value))
                 ->addViolation();
