@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Category\Business;
 
 use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeFormatter;
-use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeFormat;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Locale\LocaleInterface;
@@ -35,6 +34,20 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
+     * @param int $idCategory
+     * @param $idParentNode
+     * 
+     * @return SpyCategoryNode
+     */
+    public function getNodeByIdCategoryAndParentNode($idCategory, $idParentNode)
+    {
+        return $this->getDependencyContainer()
+            ->createCategoryTreeReader()
+            ->getNodeByIdCategoryAndParentNode($idCategory, $idParentNode)
+        ;
+    }
+
+    /**
      * @param string $categoryName
      * @param LocaleTransfer $locale
      *
@@ -45,6 +58,32 @@ class CategoryFacade extends AbstractFacade
         return $this->getDependencyContainer()
             ->createCategoryTreeReader()
             ->getCategoryNodeIdentifier($categoryName, $locale)
+        ;
+    }
+
+    /**
+     * @param string $categoryName
+     * @param LocaleTransfer $locale
+     *
+     * @return int
+     */
+    public function getCategoryIdentifier($categoryName, LocaleTransfer $locale)
+    {
+        return $this->getDependencyContainer()
+            ->createCategoryTreeReader()
+            ->getCategoryIdentifier($categoryName, $locale)
+        ;
+    }
+
+    /**
+     * @param int $idCategory
+     * @return SpyCategoryNode[]
+     */
+    public function getNodesByIdCategory($idCategory)
+    {
+        return $this->getDependencyContainer()
+            ->createCategoryTreeReader()
+            ->getNodesByIdCategory($idCategory)
         ;
     }
 
@@ -111,19 +150,19 @@ class CategoryFacade extends AbstractFacade
         $this->getDependencyContainer()
             ->createNodeWriter()
             ->update($categoryNode)
-            ;
+        ;
     }
 
     /**
      * @param NodeTransfer $categoryNode
      *
-     * @throws \ErrorException
+     * @param LocaleTransfer $locale
      */
-    public function moveCategoryNode(NodeTransfer $categoryNode)
+    public function moveCategoryNode(NodeTransfer $categoryNode, LocaleTransfer $locale)
     {
         $this->getDependencyContainer()
             ->createCategoryTreeWriter()
-            ->moveNode($categoryNode)
+            ->moveNode($categoryNode, $locale)
         ;
     }
 
@@ -165,14 +204,13 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param LocaleTransfer $locale
      *
      * @return SpyCategoryNode[]
      */
     public function getTree($idCategory, LocaleTransfer $locale)
     {
-
         return $this->getDependencyContainer()
             ->createCategoryTreeReader()
             ->getTree($idCategory, $locale)

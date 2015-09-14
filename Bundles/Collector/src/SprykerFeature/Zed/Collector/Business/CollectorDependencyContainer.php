@@ -18,6 +18,7 @@ use SprykerFeature\Zed\Collector\Business\Exporter\ExporterInterface;
 use SprykerFeature\Zed\Collector\Business\Exporter\KeyBuilder\KvMarkerKeyBuilder;
 use SprykerFeature\Zed\Collector\Business\Exporter\KeyBuilder\SearchMarkerKeyBuilder;
 use SprykerFeature\Zed\Collector\Business\Exporter\MarkerInterface;
+use SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use SprykerFeature\Zed\Collector\Business\Internal\InstallElasticsearch;
 use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
@@ -62,7 +63,8 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
             $this->createKeyValueWriter(),
             $this->createKeyValueMarker(),
             $this->createFailedResultModel(),
-            $this->createBatchResultModel()
+            $this->createBatchResultModel(),
+            $this->createExporterWriterKeyValueTouchUpdater()
         );
 
         foreach ($this->getProvidedDependency(CollectorDependencyProvider::STORAGE_PLUGINS) as $touchItemType => $collectorPlugin) {
@@ -127,6 +129,22 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createModelBatchResult();
     }
+    
+    /**
+     * @return TouchUpdaterInterface
+     */
+    protected function createExporterWriterSearchTouchUpdater()
+    {
+        return $this->getFactory()->createExporterWriterSearchTouchUpdater();
+    }
+    
+    /**
+     * @return TouchUpdaterInterface
+     */
+    protected function createExporterWriterKeyValueTouchUpdater()
+    {
+        return $this->getFactory()->createExporterWriterKeyValueTouchUpdater();
+    }
 
     /**
      * @return Collector
@@ -172,7 +190,8 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
             $searchWriter,
             $this->createSearchMarker(),
             $this->createFailedResultModel(),
-            $this->createBatchResultModel()
+            $this->createBatchResultModel(),
+            $this->createExporterWriterSearchTouchUpdater()
         );
 
         foreach ($this->getProvidedDependency(CollectorDependencyProvider::SEARCH_PLUGINS) as $touchItemType => $collectorPlugin) {

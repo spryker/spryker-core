@@ -4,16 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Category\Communication\Form;
+namespace SprykerFeature\Zed\ProductCategory\Communication\Form;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
+use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategory;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CategoryFormAdd extends AbstractForm
@@ -30,6 +31,11 @@ class CategoryFormAdd extends AbstractForm
     protected $categoryQueryContainer;
 
     /**
+     * @var ProductCategoryFacade
+     */
+    protected $productCategoryFacade;
+
+    /**
      * @var LocaleTransfer
      */
     protected $locale;
@@ -44,9 +50,10 @@ class CategoryFormAdd extends AbstractForm
      * @param LocaleTransfer $locale
      * @param int $idCategory
      */
-    public function __construct(CategoryQueryContainer $categoryQueryContainer, LocaleTransfer $locale, $idCategory)
+    public function __construct(CategoryQueryContainer $categoryQueryContainer, ProductCategoryFacade $productCategoryFacade, LocaleTransfer $locale, $idCategory)
     {
         $this->categoryQueryContainer = $categoryQueryContainer;
+        $this->productCategoryFacade = $productCategoryFacade;
         $this->locale = $locale;
         $this->idCategory = $idCategory;
     }
@@ -85,6 +92,42 @@ class CategoryFormAdd extends AbstractForm
         $data = [];
         foreach ($categories as $category) {
             $data[$category[self::PK_CATEGORY]] = $category[self::NAME];
+        }
+
+        return $data;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getAssignedProducts()
+    {
+        $productList = $this->productCategoryFacade->getProductsByCategory($this->idCategory, $this->locale);
+
+        $data = [];
+        foreach ($productList as $product) {
+            /**
+             * @var SpyProductCategory $product
+             */
+            $data[] = $product->getIdProductCategory();
+        }
+
+        return $data;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getProducts()
+    {
+        $productList = $this->productCategoryFacade->getProductsByCategory($this->idCategory, $this->locale);
+
+        $data = [];
+        foreach ($productList as $product) {
+            /**
+             * @var SpyProductCategory $product
+             */
+            $data[$product->getIdProductCategory()] = $product->getName();
         }
 
         return $data;

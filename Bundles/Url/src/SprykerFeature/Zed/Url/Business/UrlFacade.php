@@ -133,6 +133,14 @@ class UrlFacade extends AbstractFacade
     }
 
     /**
+     * @param int $idUrl
+     */
+    public function touchUrlDeleted($idUrl)
+    {
+        $this->getDependencyContainer()->getUrlManager()->touchUrlDeleted($idUrl);
+    }
+
+    /**
      * @param string $toUrl
      * @param int $status
      *

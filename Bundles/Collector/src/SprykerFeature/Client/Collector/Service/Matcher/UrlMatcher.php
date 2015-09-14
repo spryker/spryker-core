@@ -40,6 +40,7 @@ class UrlMatcher implements UrlMatcherInterface
      */
     public function matchUrl($url, $localeName)
     {
+        $url = rawurldecode($url);
         $urlKey = $this->urlKeyBuilder->generateKey($url, $localeName);
         $urlDetails = $this->keyValueReader->get($urlKey);
         if ($urlDetails) {

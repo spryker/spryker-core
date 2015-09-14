@@ -68,10 +68,11 @@ class Collector
         if ($result->isFailed()) {
             throw new BatchResultException(
                 sprintf(
-                    'Processed %d from %d for locale %s, where %d failed.',
+                    'Processed %d from %d for locale %s, where %d were deleted and %d failed.',
                     $result->getProcessedCount(),
                     $result->getTotalCount(),
                     $result->getProcessedLocale(),
+                    $result->getDeletedCount(),
                     $result->getFailedCount()
                 )
             );

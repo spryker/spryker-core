@@ -87,11 +87,20 @@ class RedisReadWrite extends RedisRead implements ReadWriteInterface
 
     /**
      * @param array $keys
+     * @param string $prefix
+     * 
+     * @return void
      */
-    public function deleteMulti(array $keys)
+    public function deleteMulti(array $keys, $prefix = self::KV_PREFIX)
     {
-        $this->getResource()->del($keys);
-        $this->addMultiDeleteAccessStats($keys);
+        $items = [];
+        foreach ($keys as $key => $value) {
+            $dataKey = $this->getKeyName($key, $prefix);
+            $items[] = $dataKey;
+        }
+        
+        $this->getResource()->del($items);
+        $this->addMultiDeleteAccessStats($items);
     }
 
     /**

@@ -86,4 +86,19 @@ interface BatchResultInterface
      */
     public function setProcessedLocale(LocaleTransfer $processedLocale);
 
+    /**
+     * @return int
+     */
+    public function getDeletedCount();
+
+    /**
+     * @param int $deletedCount
+     */
+    public function setDeletedCount($deletedCount);
+
+    /**
+     * @param int $amount
+     */
+    public function increaseDeletedCount($amount);
+
 }

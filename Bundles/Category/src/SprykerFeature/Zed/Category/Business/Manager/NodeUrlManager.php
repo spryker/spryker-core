@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Category\Business\Manager;
 
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use SprykerFeature\Shared\Category\CategoryConfig;
 use SprykerFeature\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeReaderInterface;
@@ -60,4 +61,46 @@ class NodeUrlManager implements NodeUrlManagerInterface
         $this->urlFacade->touchUrlActive($url->getIdUrl());
     }
 
+
+    /**
+     * @param NodeTransfer   $categoryNode
+     * @param LocaleTransfer $locale
+     */
+    public function updateUrl(NodeTransfer $categoryNode, LocaleTransfer $locale)
+    {
+        $path = $this->categoryTreeReader->getPath($categoryNode->getIdCategoryNode(), $locale);
+        $categoryUrl = $this->urlPathGenerator->generate($path);
+        $idNode = $categoryNode->getIdCategoryNode();
+        
+        if (!$this->urlFacade->hasUrl($categoryUrl)) {
+            $urlTransfer = new UrlTransfer();
+            $urlTransfer->setFkPage(null);
+            $urlTransfer->setResourceId($idNode);
+            $urlTransfer->setResourceType(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE);
+            $urlTransfer->setUrl($categoryUrl);
+            $urlTransfer->setFkLocale($locale->getIdLocale());
+
+            $this->urlFacade->saveUrlAndTouch($urlTransfer);
+        }
+        else {
+            $url = $this->urlFacade->getUrlByPath($categoryUrl);
+            $this->urlFacade->touchUrlActive($url->getIdUrl());
+        }
+    }
+
+    /**
+     * @param NodeTransfer $categoryNode
+     * @param LocaleTransfer $locale
+     */
+    public function removeUrl(NodeTransfer $categoryNode, LocaleTransfer $locale)
+    {
+        $path = $this->categoryTreeReader->getPath($categoryNode->getIdCategoryNode(), $locale);
+        $categoryUrl = $this->urlPathGenerator->generate($path);
+        $idNode = $categoryNode->getIdCategoryNode();
+        
+        if ($this->urlFacade->hasUrl($categoryUrl)) {
+            $url = $this->urlFacade->getUrlByPath($categoryUrl);
+            $this->urlFacade->touchUrlDeleted($url->getIdUrl());
+        }
+    }
 }

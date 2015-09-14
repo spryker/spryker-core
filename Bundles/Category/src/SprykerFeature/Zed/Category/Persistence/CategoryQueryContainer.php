@@ -24,7 +24,7 @@ use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
 use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
 
-class CategoryQueryContainer extends AbstractQueryContainer
+class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQueryContainerInterface
 {
 
     /**
@@ -97,6 +97,23 @@ class CategoryQueryContainer extends AbstractQueryContainer
         return SpyCategoryNodeQuery::create()
             ->filterByFkParentCategoryNode($idNode)
             ;
+    }
+
+    /**
+     * @param int $idCategory
+     * @param $idParentNode
+     * 
+     * @return $this|ModelCriteria
+     */
+    public function queryNodeByIdCategoryAndParentNode($idCategory, $idParentNode)
+    {
+        return SpyCategoryNodeQuery::create()
+            ->filterByFkParentCategoryNode($idParentNode)
+            ->where(
+                SpyCategoryNodeTableMap::COL_FK_CATEGORY . ' = ?',
+                $idCategory
+            )
+        ; 
     }
 
     /**
@@ -680,7 +697,7 @@ class CategoryQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @param $idCategoryNode
+     * @param int $idCategoryNode
      *
      * @return SpyUrlQuery
      */
