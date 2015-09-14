@@ -18,10 +18,11 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
+ * //TODO: integrate back into OrdersDetails
+ *
  * @method SalesDependencyContainer getDependencyContainer()
  * @method SalesQueryContainerInterface getQueryContainer()
  * @method SalesFacade getFacade()
- * @deprecated ?
  */
 class RefundController extends AbstractController
 {
