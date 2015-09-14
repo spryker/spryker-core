@@ -28,7 +28,18 @@ class Installment extends AbstractMethodMapper
     public function mapToPreAuthorization(SpyPaymentPayolution $payment)
     {
         $request = new PreAuthorizationRequest();
+
         return $request;
+    }
+
+    /**
+     * @param SpyPaymentPayolution $paymentEntity
+     * @param string $uniqueId
+     *
+     * @return PayolutionRequestTransfer
+     */
+    public function mapToReAuthorization(SpyPaymentPayolution $paymentEntity, $uniqueId)
+    {
     }
 
     /**
