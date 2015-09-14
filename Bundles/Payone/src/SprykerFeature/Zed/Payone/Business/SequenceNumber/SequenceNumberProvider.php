@@ -18,11 +18,19 @@ class SequenceNumberProvider implements SequenceNumberProviderInterface
     protected $queryContainer;
 
     /**
-     * @param PayoneQueryContainerInterface $queryContainer
+     * @var int
      */
-    public function __construct(PayoneQueryContainerInterface $queryContainer)
+    protected $defaultEmptySequenceNumber;
+
+    /**
+     * @param PayoneQueryContainerInterface $queryContainer
+     * @param int $defaultEmptySequenceNumber
+     */
+    public function __construct(PayoneQueryContainerInterface $queryContainer, $defaultEmptySequenceNumber)
     {
         $this->queryContainer = $queryContainer;
+
+        $this->defaultEmptySequenceNumber = $defaultEmptySequenceNumber;
     }
 
     /**
@@ -42,8 +50,6 @@ class SequenceNumberProvider implements SequenceNumberProviderInterface
     /**
      * @param string $transactionId
      *
-     * @throws PropelException
-     *
      * @return int
      */
     public function getCurrentSequenceNumber($transactionId)
@@ -52,9 +58,9 @@ class SequenceNumberProvider implements SequenceNumberProviderInterface
             ->getCurrentSequenceNumberQuery($transactionId)
             ->findOne();
 
-        // If we have a transactionId but no status log we throw an exception
+        // If we have a transactionId but no status log we return the configured default
         if (!$transactionEntity || !$transactionEntity->getSequenceNumber()) {
-            throw new PropelException('No current sequence number found.');
+            return $this->defaultEmptySequenceNumber;
         }
 
         return $transactionEntity->getSequencenumber();
