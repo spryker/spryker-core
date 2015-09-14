@@ -73,20 +73,6 @@ class ProductCategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param int $idCategory
-     * @param LocaleTransfer $locale
-     * 
-     * @return SpyProductCategoryQuery[]
-     */
-    public function getProductsByCategory($idCategory, LocaleTransfer $locale)
-    {
-        return $this->getDependencyContainer()
-            ->createProductCategoryManager()
-            ->getProductsByCategory($idCategory, $locale)
-        ;
-    }
-
-    /**
      * @param SpyAbstractProduct $abstractProduct
      *
      * @return SpyProductCategoryQuery

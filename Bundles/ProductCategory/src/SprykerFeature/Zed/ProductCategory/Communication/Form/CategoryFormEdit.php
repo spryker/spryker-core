@@ -64,7 +64,8 @@ class CategoryFormEdit extends CategoryFormAdd
                 'choices' => $this->getCategories(),
                 'constraints' => [
                     new NotBlank(),
-                ]
+                ],
+                'multiple' => true,
             ])
             ->addHidden(self::PK_CATEGORY_NODE)
             ->addHidden('products_to_be_assigned', [
