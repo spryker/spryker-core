@@ -18,6 +18,9 @@ use SprykerFeature\Shared\Library\NewRelic\ApiInterface;
 class YvesLoggingServiceProvider implements ServiceProviderInterface
 {
 
+    const EVENT_FIELD_ROUTE;
+
+
     /**
      * @var EventJournalInterface
      */
@@ -84,9 +87,6 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
         }
 
         $event = new Event();
-        $event->addField('route', $route);
-        $event->addField('params.post', $request->request->all());
-        $event->addField('params.get', $request->query->all());
         $event->addField(Event::FIELD_NAME, 'request');
         $this->eventJournal->saveEvent($event);
     }
