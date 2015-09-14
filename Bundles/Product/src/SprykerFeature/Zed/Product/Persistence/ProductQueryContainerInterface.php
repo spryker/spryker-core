@@ -101,13 +101,4 @@ interface ProductQueryContainerInterface
      */
     public function joinProductQueryWithLocalizedAttributes(ModelCriteria $expandableQuery, LocaleTransfer $locale);
 
-    /**
-     * @param $term
-     * @param LocaleTransfer $locale
-     *
-     * @param null $idExcludedCategory
-     * @return SpyAbstractProductQuery
-     */
-    public function queryAbstractProductsBySearchTerm($term, LocaleTransfer $locale, $idExcludedCategory = null);
-
 }

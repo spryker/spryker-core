@@ -154,9 +154,9 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
      */
     public function createProductTable(LocaleTransfer $locale, $idCategory)
     {
-        $productQueryContainer = $this->createProductQueryContainer();
+        $productCategoryQueryContainer = $this->createProductCategoryQueryContainer();
 
-        return $this->getFactory()->createTableProductTable($productQueryContainer, $locale, $idCategory);
+        return $this->getFactory()->createTableProductTable($productCategoryQueryContainer, $locale, $idCategory);
     }
 
 }

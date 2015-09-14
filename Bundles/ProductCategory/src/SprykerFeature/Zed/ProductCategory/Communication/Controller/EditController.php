@@ -114,6 +114,11 @@ class EditController extends AddController
         ]);
     }
 
+    /**
+     * @param $existingCategoryNode
+     * @param NodeTransfer $categoryNodeTransfer
+     * @param LocaleTransfer $locale
+     */
     protected function createOrUpdateCategoryNode($existingCategoryNode, NodeTransfer $categoryNodeTransfer, LocaleTransfer $locale)
     {
         /**
@@ -134,6 +139,13 @@ class EditController extends AddController
         }
     }
 
+    /**
+     * @param CategoryTransfer $categoryTransfer
+     * @param LocaleTransfer $locale
+     * @param array $parentIdList
+     * @param array $addProductsMappingCollection
+     * @param array $removeProductMappingCollection
+     */
     protected function updateCategoryParents(
         CategoryTransfer $categoryTransfer, 
         LocaleTransfer $locale, 
@@ -166,7 +178,7 @@ class EditController extends AddController
             //assign products
             $this->getDependencyContainer()
                 ->createProductCategoryFacade()
-                ->createProductCategoryMappings($categoryTransfer->getIdCategory(), explode(',', $addProductsMappingCollection));
+                ->createProductCategoryMappings($categoryTransfer->getIdCategory(), $addProductsMappingCollection);
         }
     }
 }

@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\ProductCategory\Persistence;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
 use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
 
 interface ProductCategoryQueryContainerInterface
@@ -55,5 +56,14 @@ interface ProductCategoryQueryContainerInterface
      * @return SpyProductCategoryQuery
      */
     public function queryProductsByCategoryId($idCategory, LocaleTransfer $locale);
+
+    /**
+     * @param $term
+     * @param LocaleTransfer $locale
+     *
+     * @param null $idExcludedCategory
+     * @return SpyAbstractProductQuery
+     */
+    public function queryAbstractProductsBySearchTerm($term, LocaleTransfer $locale, $idExcludedCategory = null);
 
 }

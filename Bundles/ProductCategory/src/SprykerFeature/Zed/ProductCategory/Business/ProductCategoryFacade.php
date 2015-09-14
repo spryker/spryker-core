@@ -57,7 +57,13 @@ class ProductCategoryFacade extends AbstractFacade
             ->hasProductCategoryMapping($sku, $categoryName, $locale)
         ;
     }
-    
+
+    /**
+     * @param $idCategory
+     * @param LocaleTransfer $locale
+     * 
+     * @return SpyProductCategoryQuery[]
+     */
     public function getProductsByCategory($idCategory, LocaleTransfer $locale)
     {
         return $this->getDependencyContainer()
@@ -80,8 +86,8 @@ class ProductCategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param $idCategory
-     * @param $idAbstractProduct
+     * @param int $idCategory
+     * @param int $idAbstractProduct
      *
      * @return SpyProductCategoryQuery
      */
@@ -94,7 +100,7 @@ class ProductCategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param array $product_ids_to_assign
      * 
      * @throws PropelException
@@ -108,7 +114,7 @@ class ProductCategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param array $product_ids_to_deassign
      */
     public function removeProductCategoryMappings($idCategory, array $product_ids_to_deassign)
