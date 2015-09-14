@@ -6,20 +6,19 @@
 
 namespace SprykerEngine\Yves\Application\Communication\Plugin\ServiceProvider;
 
-use SprykerFeature\Shared\Library\System;
-use Silex\ServiceProviderInterface;
 use Silex\Application;
+use Silex\ServiceProviderInterface;
+use SprykerEngine\Shared\Lumberjack\Model\Event;
+use SprykerEngine\Shared\Lumberjack\Model\EventJournalInterface;
+use SprykerFeature\Shared\Library\NewRelic\ApiInterface;
+use SprykerFeature\Shared\Library\System;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use SprykerEngine\Shared\Lumberjack\Model\EventJournalInterface;
-use SprykerEngine\Shared\Lumberjack\Model\Event;
-use SprykerFeature\Shared\Library\NewRelic\ApiInterface;
 
 class YvesLoggingServiceProvider implements ServiceProviderInterface
 {
 
     const EVENT_FIELD_ROUTE;
-
 
     /**
      * @var EventJournalInterface
@@ -35,7 +34,8 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
      * @param EventJournalInterface $eventJournal
      * @param ApiInterface $newRelicApi
      */
-    public function __construct(EventJournalInterface $eventJournal, ApiInterface $newRelicApi) {
+    public function __construct(EventJournalInterface $eventJournal, ApiInterface $newRelicApi)
+    {
         $this->eventJournal = $eventJournal;
         $this->newRelicApi = $newRelicApi;
     }
