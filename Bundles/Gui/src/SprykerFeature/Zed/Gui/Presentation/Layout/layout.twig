@@ -55,7 +55,7 @@
         </div>
         {% if widget_title is not defined %}
         <div class="row wrapper border-bottom white-bg page-heading">
-            <div class="col-lg-10">
+            <div class="col-xs-12 col-md-6">
                 <h2>{% block section_title %}{{ section_title | default('') | trans }}{% endblock %}</h2>
                 <ol class="breadcrumb">
                     <li>
@@ -67,8 +67,13 @@
 
                 </ol>
             </div>
-            <div class="col-lg-2">
-
+            <div class="col-xs-12 col-md-6">
+                <div class="title-action">
+                    {% block action %}
+                        {# add here only links with classes "btn btn-sm btn-{color}" #}
+                        {# Example: <a href="" class="btn btn-sm btn-primary"><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> Back</a> #}
+                    {% endblock %}
+                </div>
             </div>
         </div>
         {% endif %}
