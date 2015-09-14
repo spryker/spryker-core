@@ -53,6 +53,13 @@
                         </div>
                         <div class="col-md-4">
                             <div class="product-desc">
+                                <div class="product-image">
+                                    [ 150x150 ]
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="product-desc">
                                 <table class="table small m-t-sm">
                                     <caption>{{ 'Product details' | trans }}</caption>
                                     <tr>
@@ -72,21 +79,12 @@
                                         <td>{{ product.weight }}</td>
                                     </tr>
                                 </table>
-                            </div>
-                            <div class="product-desc">
-                                <div class="product-image">
-                                    [ 150x150 ]
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="product-desc">
                                 <table class="table small m-t-sm">
                                     <caption>{{ 'Product Options' | trans }}</caption>
-                                    {% for i in range(1,9) %}
+                                    {% for option in product.productOptions %}
                                     <tr>
-                                        <td>Option {{ i }}</td>
-                                        <td>Option Value {{ i }}</td>
+                                        <td>{{ option.type }}</td>
+                                        <td>{{ option.value }}</td>
                                     </tr>
                                     {% endfor %}
                                 </table>

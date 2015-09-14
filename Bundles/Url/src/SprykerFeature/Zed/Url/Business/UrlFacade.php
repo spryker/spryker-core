@@ -241,4 +241,17 @@ class UrlFacade extends AbstractFacade
         return $redirectManager->saveRedirectAndTouch($redirect);
     }
 
+    /**
+     * @param int $idAbstractProduct
+     * @param int $idLocale
+     *
+     * @return UrlTransfer
+     */
+    public function getUrlByIdAbstractProductAndIdLocale($idAbstractProduct, $idLocale)
+    {
+        $urlManager = $this->getDependencyContainer()->getUrlManager();
+
+        return $urlManager->getUrlByIdAbstractProductAndIdLocale($idAbstractProduct, $idLocale);
+    }
+
 }

@@ -346,4 +346,26 @@ class UrlManager implements UrlManagerInterface
         return $urlEntity;
     }
 
+    /**
+     * @param int $idAbstractProduct
+     * @param int $idLocale
+     *
+     * @return UrlTransfer
+     */
+    public function getUrlByIdAbstractProductAndIdLocale($idAbstractProduct, $idLocale)
+    {
+        $urlEntity = $this->urlQueryContainer
+            ->queryUrls()
+            ->filterByFkResourceAbstractProduct($idAbstractProduct)
+            ->filterByFkLocale($idLocale)
+            ->findOne()
+        ;
+
+        if (!$urlEntity) {
+            return new UrlTransfer();
+        }
+
+        return (new UrlTransfer())->fromArray($urlEntity->toArray(), true);
+    }
+
 }

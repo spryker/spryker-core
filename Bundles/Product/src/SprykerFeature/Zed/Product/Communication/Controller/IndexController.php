@@ -69,10 +69,7 @@ class IndexController extends AbstractController
 
         $concreteProducts = $this->createConcreteProductsCollection($concreteProductsCollenction);
 
-        $currentLocale = $this->getDependencyContainer()
-            ->getProvidedDependency(ProductDependencyProvider::FACADE_LOCALE)
-            ->getCurrentLocale()
-        ;
+        $currentLocale = $this->getCurrentLocale();
 
         $attributesCollection = $this->getQueryContainer()
             ->queryAbstractProductAttributeCollection($abstractProduct->getIdAbstractProduct(), $currentLocale->getIdLocale())
@@ -145,6 +142,15 @@ class IndexController extends AbstractController
     {
         $concreteProducts = [];
         foreach ($concreteProductsCollenction as $product) {
+
+            $productOptions = $this->getDependencyContainer()
+                ->createProductOptionsFacade()
+                ->getProductOptionsByIdProduct(
+                    $product->getIdProduct(),
+                    $this->getCurrentLocale()->getIdLocale()
+                )
+            ;
+
             $concreteProducts[] = [
                 'sku' => $product->getSku(),
                 'format' => $product->getFormat(),
@@ -153,6 +159,7 @@ class IndexController extends AbstractController
                 'idProduct' => $product->getIdProduct(),
                 'isActive' => $product->getIsActive(),
                 'priceList' => $this->getProductPriceList($product),
+                'productOptions' => $productOptions,
             ];
         }
 
@@ -181,5 +188,19 @@ class IndexController extends AbstractController
         }
 
         return $categories;
+    }
+
+    /**
+     * @throws \ErrorException
+     * @return mixed
+     */
+    protected function getCurrentLocale()
+    {
+        $currentLocale = $this->getDependencyContainer()
+            ->createLocaleFacade()
+            ->getCurrentLocale()
+        ;
+
+        return $currentLocale;
     }
 }
