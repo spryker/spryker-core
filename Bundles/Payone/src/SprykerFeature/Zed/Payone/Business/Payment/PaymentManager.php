@@ -503,7 +503,6 @@ class PaymentManager implements PaymentManagerInterface
      */
     public function isRefundPossible($orderTransfer)
     {
-        //$idSalesOrder = $orderTransfer->getIdSalesOrder();
         $paymentTransfer = $this->getPayment($orderTransfer);
 
         // Return early if we don't need the iban or bic data
