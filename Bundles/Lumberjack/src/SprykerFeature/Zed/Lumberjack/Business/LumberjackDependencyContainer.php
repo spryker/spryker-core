@@ -20,11 +20,11 @@ class LumberjackDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createEvent()
     {
-        return $this->getFactory()->createModelEvent();
+        return $this->getFactory()->createDTOEvent();
     }
 
     /**
-     * @return DTO\EventJournal
+     * @return Model\EventJournal
      */
     public function createEventJournal()
     {
