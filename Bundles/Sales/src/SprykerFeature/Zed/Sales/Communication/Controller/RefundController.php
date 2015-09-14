@@ -28,7 +28,6 @@ class RefundController extends AbstractController
 {
 
     const SALES_ORDER_DETAIL_URL = '/sales/details?id-sales-order=%d';
-    //const SPLIT_SUCCESS_MESSAGE = 'Order item with "%d" was successfully split.';
 
     /**
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
@@ -81,7 +80,6 @@ class RefundController extends AbstractController
             'orderDetails' => $orderEntity,
             'billingAddress' => $billingAddress,
             'shippingAddress' => $shippingAddress,
-            //'orderItems' => $orderItems,
             'form' => $form->createView(),
         ];
     }

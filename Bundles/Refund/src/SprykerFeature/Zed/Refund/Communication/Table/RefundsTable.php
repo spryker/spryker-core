@@ -1,6 +1,6 @@
 <?php
 
-namespace Pyz\Zed\Refund\Communication\Table;
+namespace SprykerFeature\Zed\Refund\Communication\Table;
 
 use SprykerFeature\Shared\Library\Currency\CurrencyManager;
 use SprykerFeature\Shared\Library\DateFormatter;
@@ -25,9 +25,9 @@ class RefundsTable extends AbstractTable
     protected $dateFormatter;
 
     /**
-     * @param SpySalesOrderQuery $refundQuery
-     * @param RefundFacade        $refundFacade
-     * @param DateFormatter      $dateFormatter
+     * @param SpyRefundQuery $refundQuery
+     * @param RefundFacade $refundFacade
+     * @param DateFormatter $dateFormatter
      */
     public function __construct(SpyRefundQuery $refundQuery, RefundFacade $refundFacade, DateFormatter $dateFormatter)
     {
@@ -66,23 +66,22 @@ class RefundsTable extends AbstractTable
     }
 
     /**
-     * @param TableConfiguration $config
+     * @param l $config
      *
      * @return array
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query        = $this->salesQuery;
+        $query        = $this->refundQuery;
         $queryResults = $this->runQuery($query, $config);
         $results      = [];
         foreach ($queryResults as $item) {
             $results[] = [
-                SpyRefundTableMap::COL_ID_REFUND    => $item[SpyRefundTableMap::COL_ID_REFUND],
-                SpyRefundTableMap::COL_CREATED_AT        => $this->formatDate($item[SpyRefundTableMap::COL_CREATED_AT]),
-                SpyRefundTableMap::COL_AMOUNT       => $this->formatAmount($item[SpyRefundTableMap::COL_GRAND_TOTAL]),
-                SpyRefundTableMap::COL_COMMENT => $item[SpyRefundTableMap::COL_INVOICE_REFERENCE],
-                self::ACCOUNTING_STATUS                      => 'acounting status (fix me)',
-                self::URL                                    => sprintf(
+                SpyRefundTableMap::COL_ID_REFUND => $item[SpyRefundTableMap::COL_ID_REFUND],
+                SpyRefundTableMap::COL_CREATED_AT => $this->formatDate($item[SpyRefundTableMap::COL_CREATED_AT]),
+                SpyRefundTableMap::COL_AMOUNT => $this->formatAmount($item[SpyRefundTableMap::COL_AMOUNT]),
+                SpyRefundTableMap::COL_COMMENT => $item[SpyRefundTableMap::COL_COMMENT],
+                self::URL => sprintf(
                     '<a class="btn btn-primary" href="/refund/details/?id-refund=%d">View</a>',
                     $item[SpyRefundTableMap::COL_ID_REFUND]
                 ),
