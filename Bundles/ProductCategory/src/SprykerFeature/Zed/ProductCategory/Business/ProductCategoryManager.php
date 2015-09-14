@@ -17,7 +17,6 @@ use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMapping
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
-use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategory;
 use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
 
 class ProductCategoryManager implements ProductCategoryManagerInterface
@@ -103,24 +102,6 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         ;
 
         $mappingEntity->save();
-
-        return $mappingEntity->getPrimaryKey();
-    }
-
-    public function removeProductCategoryMapping($idCategory, $idProduct)
-    {
-        $this->checkMappingDoesNotExist($sku, $categoryName, $locale);
-
-        $idAbstractProduct = $this->productFacade->getAbstractProductIdBySku($sku);
-        $idCategory = $this->categoryFacade->getCategoryIdentifier($categoryName, $locale);
-
-        $mappingEntity = $this->locator->productCategory()->entitySpyProductCategory();
-        $mappingEntity
-            ->setFkAbstractProduct($idAbstractProduct)
-            ->setFkCategory($idCategory)
-        ;
-
-        $mappingEntity->delete();
 
         return $mappingEntity->getPrimaryKey();
     }
