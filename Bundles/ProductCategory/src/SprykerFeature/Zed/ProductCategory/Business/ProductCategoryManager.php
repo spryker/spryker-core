@@ -128,7 +128,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      *
      * @param LocaleTransfer $locale
      * @return array
@@ -155,8 +155,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
-     * @param $idCategory
-     * @param $idAbstractProduct
+     * @param int $idCategory
+     * @param int $idAbstractProduct
      * 
      * @return SpyProductCategoryQuery
      */
@@ -168,7 +168,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param array $product_ids_to_assign
      *
      * @throws PropelException
@@ -188,7 +188,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param array $product_ids_to_deassign
      */
     public function removeProductCategoryMappings($idCategory, array $product_ids_to_deassign)

@@ -34,7 +34,7 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param $idParentNode
      * 
      * @return SpyCategoryNode
@@ -76,7 +76,7 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @return SpyCategoryNode[]
      */
     public function getNodesByIdCategory($idCategory)
@@ -204,7 +204,7 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param LocaleTransfer $locale
      *
      * @return SpyCategoryNode[]

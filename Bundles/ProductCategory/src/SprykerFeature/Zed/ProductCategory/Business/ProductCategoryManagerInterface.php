@@ -42,7 +42,7 @@ interface ProductCategoryManagerInterface
     public function createProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale);
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      *
      * @param LocaleTransfer $locale
      * @return SpyProductCategoryQuery[]
@@ -57,15 +57,15 @@ interface ProductCategoryManagerInterface
     public function getCategoriesByAbstractProduct(SpyAbstractProduct $abstractProduct);
 
     /**
-     * @param $idCategory
-     * @param $idAbstractProduct
+     * @param int $idCategory
+     * @param int $idAbstractProduct
      *
      * @return SpyProductCategoryQuery
      */
     public function getProductCategoryMappingById($idCategory, $idAbstractProduct);
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param array $product_ids_to_assign
      *
      * @throws PropelException
@@ -73,7 +73,7 @@ interface ProductCategoryManagerInterface
     public function createProductCategoryMappings($idCategory, array $product_ids_to_assign);
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param array $product_ids_to_deassign
      */
     public function removeProductCategoryMappings($idCategory, array $product_ids_to_deassign);

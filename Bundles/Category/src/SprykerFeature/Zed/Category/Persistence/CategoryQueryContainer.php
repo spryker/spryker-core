@@ -100,7 +100,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param $idParentNode
      * 
      * @return $this|ModelCriteria
@@ -697,7 +697,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
-     * @param $idCategoryNode
+     * @param int $idCategoryNode
      *
      * @return SpyUrlQuery
      */

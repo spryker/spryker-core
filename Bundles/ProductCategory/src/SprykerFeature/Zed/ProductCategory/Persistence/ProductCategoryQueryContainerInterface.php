@@ -50,7 +50,7 @@ interface ProductCategoryQueryContainerInterface
     public function queryLocalizedProductCategoryMappingByProduct(SpyAbstractProduct $abstractProduct);
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      *
      * @param LocaleTransfer $locale
      * @return SpyProductCategoryQuery

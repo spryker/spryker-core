@@ -135,7 +135,7 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
 
     /**
      * @param LocaleTransfer $locale
-     * @param $idCategory
+     * @param int $idCategory
      *
      * @return ProductCategoryTable
      */
@@ -148,7 +148,7 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
 
     /**
      * @param LocaleTransfer $locale
-     * @param $idCategory
+     * @param int $idCategory
      *
      * @return ProductTable
      */

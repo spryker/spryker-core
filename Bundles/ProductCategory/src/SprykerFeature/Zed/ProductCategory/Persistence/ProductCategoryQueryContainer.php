@@ -121,7 +121,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param LocaleTransfer $locale
      * 
      * @return SpyProductCategoryQuery
