@@ -147,10 +147,13 @@ class Customer
         $customerEntity = new SpyCustomer();
         $customerEntity->fromArray($customerTransfer->toArray());
 
-        $customerResponseTransfer = $this->getCustomerEmailAlreadyUsedResponse($customerEntity);
-        if (!$customerResponseTransfer->getIsSuccess()) {
+        if (!$this->isEmailAvailableForCustomer($customerEntity)) {
+            $customerResponseTransfer = $this->createCustomerEmailAlreadyUsedResponse();
+
             return $customerResponseTransfer;
         }
+
+        $customerResponseTransfer = $this->createCustomerResponseTransfer();
 
         $customerEntity->setCustomerReference($this->customerReferenceGenerator->generateCustomerReference($customerTransfer));
         $customerEntity->setRegistrationKey($this->generateKey());
@@ -316,10 +319,13 @@ class Customer
         $customerEntity = $this->getCustomer($customerTransfer);
         $customerEntity->fromArray($customerTransfer->toArray());
 
-        $customerResponseTransfer = $this->getCustomerEmailAlreadyUsedResponse($customerEntity);
-        if (!$customerResponseTransfer->getIsSuccess()) {
+        if (!$this->isEmailAvailableForCustomer($customerEntity)) {
+            $customerResponseTransfer = $this->createCustomerEmailAlreadyUsedResponse();
+
             return $customerResponseTransfer;
         }
+
+        $customerResponseTransfer = $this->createCustomerResponseTransfer();
 
         $changedRows = $customerEntity->save();
 
@@ -332,23 +338,28 @@ class Customer
     }
 
     /**
-     * @param SpyCustomer $customerEntity
+     * @param bool $isSuccess
      *
      * @return CustomerResponseTransfer
      */
-    protected function getCustomerEmailAlreadyUsedResponse(SpyCustomer $customerEntity)
+    protected function createCustomerResponseTransfer($isSuccess = true)
     {
         $customerResponseTransfer = new CustomerResponseTransfer();
-        $customerResponseTransfer->setIsSuccess(true);
+        $customerResponseTransfer->setIsSuccess($isSuccess);
 
-        if (!$this->isEmailAvailableForCustomer($customerEntity)) {
-            $customerErrorTransfer = new CustomerErrorTransfer();
-            $customerErrorTransfer->setMessage(Messages::CUSTOMER_EMAIL_ALREADY_USED);
+        return $customerResponseTransfer;
+    }
 
-            $customerResponseTransfer
-                ->addError($customerErrorTransfer)
-                ->setIsSuccess(false);
-        }
+    /**
+     * @return CustomerResponseTransfer
+     */
+    protected function createCustomerEmailAlreadyUsedResponse()
+    {
+        $customerErrorTransfer = new CustomerErrorTransfer();
+        $customerErrorTransfer->setMessage(Messages::CUSTOMER_EMAIL_ALREADY_USED);
+
+        $customerResponseTransfer = $this->createCustomerResponseTransfer(false);
+        $customerResponseTransfer->addError($customerErrorTransfer);
 
         return $customerResponseTransfer;
     }
