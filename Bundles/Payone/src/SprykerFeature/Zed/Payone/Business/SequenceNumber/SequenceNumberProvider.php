@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Payone\Business\SequenceNumber;
 
-use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 
 class SequenceNumberProvider implements SequenceNumberProviderInterface
