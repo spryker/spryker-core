@@ -36,10 +36,9 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         $salesOrderEntity = $this->queryContainer->querySalesOrderById($orderTransfer->getIdSalesOrder())->findOne();
         $salesOrderEntity->setFkShipmentMethod($orderTransfer->getIdShipmentMethod());
 
-
         $expenses = $orderTransfer->getExpenses();
-        foreach($expenses as $expenseTransfer){
-            if(ShipmentConstants::SHIPMENT_EXPENSE_TYPE === $expenseTransfer->getType()){
+        foreach ($expenses as $expenseTransfer) {
+            if (ShipmentConstants::SHIPMENT_EXPENSE_TYPE === $expenseTransfer->getType()) {
                 $salesOrderExpense = new SpySalesExpense();
                 $salesOrderExpense->fromArray($expenseTransfer->toArray());
                 $salesOrderExpense->setTaxPercentage($expenseTransfer->getTaxSet()->getEffectiveRate());
@@ -51,6 +50,5 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
         $salesOrderEntity->save();
         Propel::getConnection()->commit();
     }
-
 
 }
