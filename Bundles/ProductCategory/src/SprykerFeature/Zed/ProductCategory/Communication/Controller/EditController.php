@@ -3,9 +3,7 @@
 namespace SprykerFeature\Zed\ProductCategory\Communication\Controller;
 
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
 use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
 use SprykerFeature\Zed\ProductCategory\Communication\ProductCategoryDependencyContainer;
@@ -48,19 +46,19 @@ class EditController extends AddController
          */
         $form = $this->getDependencyContainer()
             ->createCategoryFormEdit($idCategory);
-
+        
         $form->handleRequest();
 
         if ($form->isValid()) { //TODO Ugly and dirty, some stuff must be moved into Facades
             $data = $form->getData();
-
+            
             $categoryTransfer = (new CategoryTransfer())
                 ->fromArray($data, true);
-
+            
             $this->getDependencyContainer()
                 ->createCategoryFacade()
                 ->updateCategory($categoryTransfer, $locale);
-
+            
             $parentIdList = $form->getData()['fk_parent_category_node'];
             foreach ($parentIdList as $parentNodeId) {
                 $data['fk_parent_category_node'] = $parentNodeId;
@@ -68,32 +66,54 @@ class EditController extends AddController
 
                 $categoryNodeTransfer = (new NodeTransfer())
                     ->fromArray($data, true);
-
+                
                 $existingCategoryNode = $this->getDependencyContainer()
                     ->createCategoryFacade()
                     ->getNodeByIdCategoryAndParentNode($categoryTransfer->getIdCategory(), $parentNodeId);
 
-                $this->createOrUpdateCategoryNode($existingCategoryNode, $categoryNodeTransfer, $locale);
+                if ($existingCategoryNode) {
+                    $categoryNodeTransfer->setIdCategoryNode($existingCategoryNode->getIdCategoryNode());
+                    $this->getDependencyContainer()
+                        ->createCategoryFacade()
+                        ->moveCategoryNode($categoryNodeTransfer, $locale);
+                } else {
+                    $new_data = $data;
+                    unset($new_data['id_category_node']);
+                    $categoryNodeTransfer = (new NodeTransfer())->fromArray($new_data, true);
+                    $this->getDependencyContainer()
+                        ->createCategoryFacade()
+                        ->createCategoryNode($categoryNodeTransfer, $locale);
+                }
             }
 
+            $existingParents = $this->getDependencyContainer()
+                ->createCategoryFacade()
+                ->getNodesByIdCategory($categoryTransfer->getIdCategory());
+            
             $parentIdList = array_flip($parentIdList);
-            $addProductsMappingCollection = [];
-            $removeProductMappingCollection = [];
-            if (trim($data['products_to_be_assigned']) !== '') {
-                $addProductsMappingCollection = explode(',', $data['products_to_be_assigned']);
+            
+            //remove deselected parents
+            foreach ($existingParents as $parent) {
+                if (!array_key_exists($parent->getFkParentCategoryNode(), $parentIdList)) {
+                    $this->getDependencyContainer()
+                        ->createCategoryFacade()
+                        ->deleteNode($parent->getIdCategoryNode(), $locale);
+                }
             }
 
             if (trim($data['products_to_be_de_assigned']) !== '') {
-                $removeProductMappingCollection = explode(',', $data['products_to_be_de_assigned']);
+                //de assign products
+                $this->getDependencyContainer()
+                    ->createProductCategoryFacade()
+                    ->removeProductCategoryMappings($categoryTransfer->getIdCategory(), explode(',', $data['products_to_be_de_assigned']));
             }
 
-            $this->updateCategoryParents(
-                $categoryTransfer, 
-                $locale, 
-                $parentIdList, 
-                $addProductsMappingCollection, 
-                $removeProductMappingCollection
-            );
+            if (trim($data['products_to_be_assigned']) !== '') {
+                //assign products
+                $this->getDependencyContainer()
+                    ->createProductCategoryFacade()
+                    ->createProductCategoryMappings($categoryTransfer->getIdCategory(), explode(',', $data['products_to_be_assigned']));
+            }
 
             $this->addSuccessMessage('The category was saved successfully.');
 
@@ -112,73 +132,5 @@ class EditController extends AddController
             'productCategoriesTable' => $productCategories->render(),
             'productsTable' => $products->render(),
         ]);
-    }
-
-    /**
-     * @param $existingCategoryNode
-     * @param NodeTransfer $categoryNodeTransfer
-     * @param LocaleTransfer $locale
-     */
-    protected function createOrUpdateCategoryNode($existingCategoryNode, NodeTransfer $categoryNodeTransfer, LocaleTransfer $locale)
-    {
-        /**
-         * @var SpyCategoryNode $existingCategoryNode
-         */
-        if ($existingCategoryNode) {
-            $categoryNodeTransfer->setIdCategoryNode($existingCategoryNode->getIdCategoryNode());
-            $this->getDependencyContainer()
-                ->createCategoryFacade()
-                ->moveCategoryNode($categoryNodeTransfer, $locale);
-        } else {
-            $newData = $categoryNodeTransfer->toArray();
-            unset($newData['id_category_node']);
-            $categoryNodeTransfer = (new NodeTransfer())->fromArray($newData, true);
-            $this->getDependencyContainer()
-                ->createCategoryFacade()
-                ->createCategoryNode($categoryNodeTransfer, $locale);
-        }
-    }
-
-    /**
-     * @param CategoryTransfer $categoryTransfer
-     * @param LocaleTransfer $locale
-     * @param array $parentIdList
-     * @param array $addProductsMappingCollection
-     * @param array $removeProductMappingCollection
-     */
-    protected function updateCategoryParents(
-        CategoryTransfer $categoryTransfer, 
-        LocaleTransfer $locale, 
-        array $parentIdList, 
-        array $addProductsMappingCollection, 
-        array $removeProductMappingCollection
-    )
-    {
-        $existingParents = $this->getDependencyContainer()
-            ->createCategoryFacade()
-            ->getNodesByIdCategory($categoryTransfer->getIdCategory());
-
-        //remove deselected parents
-        foreach ($existingParents as $parent) {
-            if (!array_key_exists($parent->getFkParentCategoryNode(), $parentIdList)) {
-                $this->getDependencyContainer()
-                    ->createCategoryFacade()
-                    ->deleteNode($parent->getIdCategoryNode(), $locale);
-            }
-        }
-
-        if (!empty($removeProductMappingCollection)) {
-            //de assign products
-            $this->getDependencyContainer()
-                ->createProductCategoryFacade()
-                ->removeProductCategoryMappings($categoryTransfer->getIdCategory(), $removeProductMappingCollection);
-        }
-
-        if (!empty($addProductsMappingCollection)) {
-            //assign products
-            $this->getDependencyContainer()
-                ->createProductCategoryFacade()
-                ->createProductCategoryMappings($categoryTransfer->getIdCategory(), $addProductsMappingCollection);
-        }
     }
 }
