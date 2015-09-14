@@ -11,12 +11,14 @@ use SprykerEngine\Zed\Kernel\Container;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreconditionInterface;
+use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreHydrationInterface;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 
 class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const CHECKOUT_PRECONDITIONS = 'checkout_preconditions';
+    const CHECKOUT_PRE_HYDRATOR = 'checkout pre hydrator';
     const CHECKOUT_POSTHOOKS = 'checkout_posthooks';
     const CHECKOUT_ORDERHYDRATORS = 'checkout_orderhydrators';
     const CHECKOUT_ORDERSAVERS = 'checkout_ordersavers';
@@ -27,6 +29,10 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::CHECKOUT_PRECONDITIONS] = function (Container $container) {
             return $this->getCheckoutPreconditions($container);
+        };
+
+        $container[self::CHECKOUT_PRE_HYDRATOR] = function (Container $container) {
+            return $this->getCheckoutPreHydrator($container);
         };
 
         $container[self::CHECKOUT_ORDERHYDRATORS] = function (Container $container) {
@@ -58,6 +64,16 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
      * @return CheckoutPreconditionInterface[]
      */
     protected function getCheckoutPreconditions(Container $container)
+    {
+        return [];
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return CheckoutPreHydrationInterface[]
+     */
+    protected function getCheckoutPreHydrator(Container $container)
     {
         return [];
     }

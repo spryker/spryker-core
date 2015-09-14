@@ -4,12 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\CalculationCheckoutConnector\Communication\Plugin;
+namespace SprykerFeature\Zed\CalculationCheckoutConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use SprykerFeature\CalculationCheckoutConnector\Business\CalculationCheckoutConnectorFacade;
-use SprykerFeature\CalculationCheckoutConnector\CalculationCheckoutConnectorConfig;
+use SprykerFeature\Zed\CalculationCheckoutConnector\Business\CalculationCheckoutConnectorFacade;
+use SprykerFeature\Zed\CalculationCheckoutConnector\CalculationCheckoutConnectorConfig;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreconditionInterface;
 
 /**

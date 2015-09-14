@@ -24,10 +24,10 @@ class Distributor implements DistributorInterface
     /**
      * @param array $discountableObjects
      * @param DiscountInterface $discountTransfer
-     * @param int $amount
      */
-    public function distribute(array $discountableObjects, DiscountInterface $discountTransfer, $amount)
+    public function distribute(array $discountableObjects, DiscountInterface $discountTransfer)
     {
+        $amount = $discountTransfer->getAmount();
         foreach ($discountableObjects as $discountableObject) {
             $totalGrossPrice = $this->getGrossPriceOfDiscountableObjects($discountableObjects);
 
@@ -50,8 +50,11 @@ class Distributor implements DistributorInterface
             $discountAmount = $this->roundingError + $amount * $percentage;
             $discountAmountRounded = round($discountAmount, 2);
             $this->roundingError = $discountAmount - $discountAmountRounded;
-            $discountTransfer->setAmount($discountAmountRounded);
-            $this->addDiscountToDiscounts($discountableObject->getDiscounts(), $discountTransfer);
+
+            $distributedDiscountTransfer = clone $discountTransfer;
+            $distributedDiscountTransfer->setAmount($discountAmountRounded);
+
+            $this->addDiscountToDiscounts($discountableObject->getDiscounts(), $distributedDiscountTransfer);
         }
     }
 

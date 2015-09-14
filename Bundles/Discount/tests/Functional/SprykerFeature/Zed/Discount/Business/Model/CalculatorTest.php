@@ -4,9 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Discount\Business;
+namespace Functional\SprykerFeature\Zed\Discount\Business\Model;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
@@ -41,7 +42,8 @@ class CalculatorTest extends Test
 
     public function testOneDiscountShouldNotBeFilteredOut()
     {
-        $discount = $this->initializeDiscount(
+        $discountCollection = [];
+        $discountCollection[] = $discount = $this->initializeDiscount(
             'name 1',
             DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
@@ -55,14 +57,15 @@ class CalculatorTest extends Test
 
         $order = $this->getOrderWithTwoItems();
 
-        $result = $calculator->calculate([$discount], $order, $settings, new Distributor(Locator::getInstance()));
+        $result = $calculator->calculate($discountCollection, $order, $settings, new Distributor(Locator::getInstance()));
 
         $this->assertEquals(1, count($result));
     }
 
     public function testTwoDiscountsShouldNotBeFilteredOut()
     {
-        $this->initializeDiscount(
+        $discountCollection = [];
+        $discountCollection[] = $this->initializeDiscount(
             'name 1',
             DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
@@ -70,7 +73,7 @@ class CalculatorTest extends Test
             DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             true
         );
-        $this->initializeDiscount(
+        $discountCollection[] = $this->initializeDiscount(
             'name 2',
             DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
@@ -85,7 +88,7 @@ class CalculatorTest extends Test
 
         $order = $this->getOrderWithTwoItems();
         $result = $calculator->calculate(
-            $this->retrieveDiscounts(),
+            $discountCollection,
             $order,
             $settings,
             new Distributor(Locator::getInstance())
@@ -95,7 +98,8 @@ class CalculatorTest extends Test
 
     public function testFilterOutLowestUnprivilegedDiscountIfThereAreMoreThanOne()
     {
-        $this->initializeDiscount(
+        $discountCollection = [];
+        $discountCollection[] = $this->initializeDiscount(
             'name 1',
             DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
@@ -103,7 +107,7 @@ class CalculatorTest extends Test
             DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             true
         );
-        $this->initializeDiscount(
+        $discountCollection[] = $this->initializeDiscount(
             'name 2',
             DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
@@ -111,7 +115,7 @@ class CalculatorTest extends Test
             DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             false
         );
-        $this->initializeDiscount(
+        $discountCollection[] = $this->initializeDiscount(
             'name 3',
             DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             60,
@@ -125,7 +129,7 @@ class CalculatorTest extends Test
 
         $order = $this->getOrderWithTwoItems();
         $result = $calculator->calculate(
-            $this->retrieveDiscounts(),
+            $discountCollection,
             $order,
             $settings,
             new Distributor(Locator::getInstance())
@@ -135,7 +139,8 @@ class CalculatorTest extends Test
 
     public function testFilterOutLowestUnprivilegedDiscountIfThereAreMoreThanTwo()
     {
-        $this->initializeDiscount(
+        $discountCollection = [];
+        $discountCollection[] = $this->initializeDiscount(
             'name 1',
             DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
@@ -143,7 +148,7 @@ class CalculatorTest extends Test
             DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             true
         );
-        $this->initializeDiscount(
+        $discountCollection[] = $this->initializeDiscount(
             'name 2',
             DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
@@ -151,7 +156,7 @@ class CalculatorTest extends Test
             DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             false
         );
-        $this->initializeDiscount(
+        $discountCollection[] = $this->initializeDiscount(
             'name 3',
             DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             60,
@@ -159,7 +164,7 @@ class CalculatorTest extends Test
             DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             false
         );
-        $this->initializeDiscount(
+        $discountCollection[] = $this->initializeDiscount(
             'name 4',
             DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             70,
@@ -173,7 +178,7 @@ class CalculatorTest extends Test
 
         $order = $this->getOrderWithTwoItems();
         $result = $calculator->calculate(
-            $this->retrieveDiscounts(),
+            $discountCollection,
             $order,
             $settings,
             new Distributor(Locator::getInstance())
@@ -183,7 +188,8 @@ class CalculatorTest extends Test
 
     public function testFilterOutLowestUnprivilegedDiscountIfThereAreMoreThanTwoAndTwoPrivilegedOnes()
     {
-        $this->initializeDiscount(
+        $discountCollection = [];
+        $discountCollection[] = $this->initializeDiscount(
             'name 1',
             DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
@@ -191,7 +197,7 @@ class CalculatorTest extends Test
             DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             true
         );
-        $this->initializeDiscount(
+        $discountCollection[] = $this->initializeDiscount(
             'name 2',
             DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             50,
@@ -199,7 +205,7 @@ class CalculatorTest extends Test
             DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             true
         );
-        $this->initializeDiscount(
+        $discountCollection[] = $this->initializeDiscount(
             'name 3',
             DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             60,
@@ -207,7 +213,7 @@ class CalculatorTest extends Test
             DiscountConfig::PLUGIN_COLLECTOR_ITEM,
             false
         );
-        $this->initializeDiscount(
+        $discountCollection[] = $this->initializeDiscount(
             'name 4',
             DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE,
             70,
@@ -220,7 +226,7 @@ class CalculatorTest extends Test
         $calculator = new Calculator();
 
         $order = $this->getOrderWithTwoItems();
-        $result = $calculator->calculate($this->retrieveDiscounts(), $order, $settings, new Distributor(Locator::getInstance()));
+        $result = $calculator->calculate($discountCollection, $order, $settings, new Distributor(Locator::getInstance()));
         $this->assertEquals(3, count($result));
     }
 
@@ -232,7 +238,7 @@ class CalculatorTest extends Test
      * @param $collectorPlugin
      * @param bool $isPrivileged
      *
-     * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount
+     * @return DiscountTransfer
      */
     protected function initializeDiscount(
         $displayName,
@@ -242,16 +248,15 @@ class CalculatorTest extends Test
         $collectorPlugin,
         $isPrivileged = true
     ) {
-        $discount = new \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount();
-        $discount->setDisplayName($displayName);
-        $discount->setAmount($amount);
-        $discount->setIsActive($isActive);
-        $discount->setCalculatorPlugin($calculatorPlugin);
-        $discount->setCollectorPlugin($collectorPlugin);
-        $discount->setIsPrivileged($isPrivileged);
-        $discount->save();
+        $discountTransfer = new DiscountTransfer();
+        $discountTransfer->setDisplayName($displayName);
+        $discountTransfer->setAmount($amount);
+        $discountTransfer->setIsActive($isActive);
+        $discountTransfer->setCalculatorPlugin($calculatorPlugin);
+        $discountTransfer->setCollectorPlugin($collectorPlugin);
+        $discountTransfer->setIsPrivileged($isPrivileged);
 
-        return $discount;
+        return $discountTransfer;
     }
 
     /**
@@ -270,19 +275,6 @@ class CalculatorTest extends Test
         $order->setItems($itemCollection);
 
         return new CalculableContainer($order);
-    }
-
-    /**
-     * @return array
-     */
-    protected function retrieveDiscounts()
-    {
-        $result = [];
-        foreach ((new SpyDiscountQuery())->find() as $discount) {
-            $result[] = $discount;
-        }
-
-        return $result;
     }
 
 }

@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Dependency\Facade;
 
+use Generated\Shared\Discount\DiscountInterface;
 use Generated\Shared\Discount\OrderInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
@@ -72,9 +73,9 @@ interface DiscountFacadeInterface
 
     /**
      * @param DiscountableInterface[] $discountableObjects
-     * @param float $amount
+     * @param DiscountTransfer $discountTransfer
      */
-    public function distributeAmount(array $discountableObjects, $amount);
+    public function distributeAmount(array $discountableObjects, DiscountTransfer $discountTransfer);
 
     /**
      * @param int $amount

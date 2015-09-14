@@ -1,12 +1,14 @@
 <?php
 
-namespace SprykerFeature\CalculationCheckoutConnector\Business;
+namespace SprykerFeature\Zed\CalculationCheckoutConnector\Business;
 
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Shared\Checkout\CheckoutConfig;
+use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
+use SprykerFeature\Zed\Checkout\Business\Calculation\CalculableContainer;
 
 /**
  * @method CalculationCheckoutConnectorDependencyContainer getDependencyContainer()
@@ -36,6 +38,16 @@ class CalculationCheckoutConnectorFacade extends AbstractFacade
 
             $response->addError($error);
         }
+    }
+
+    /**
+     * @param CalculableContainer $calculableContainer
+     *
+     * @return CalculableInterface
+     */
+    public function recalculate(CalculableContainer $calculableContainer)
+    {
+        return $this->getDependencyContainer()->getCalculationFacade()->recalculate($calculableContainer);
     }
 
 }

@@ -99,11 +99,11 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 
     /**
      * @param DiscountableInterface[] $discountableObjects
-     * @param float $amount
+     * @param DiscountTransfer $discountTransfer
      */
-    public function distributeAmount(array $discountableObjects, $amount)
+    public function distributeAmount(array $discountableObjects, DiscountTransfer $discountTransfer)
     {
-        $this->getDependencyContainer()->createDistributor()->distribute($discountableObjects, $amount);
+        $this->getDependencyContainer()->createDistributor()->distribute($discountableObjects, $discountTransfer);
     }
 
     /**

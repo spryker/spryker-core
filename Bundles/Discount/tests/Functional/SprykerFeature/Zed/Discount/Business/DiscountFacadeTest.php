@@ -218,7 +218,10 @@ class DiscountFacadeTest extends Test
             ]
         );
 
-        $this->discountFacade->distributeAmount($items, self::DISCOUNT_AMOUNT_4000);
+        $discountTransfer = new DiscountTransfer();
+        $discountTransfer->setAmount(self::DISCOUNT_AMOUNT_4000);
+
+        $this->discountFacade->distributeAmount($items, $discountTransfer);
 
         $this->assertEquals($items[0]->getGrossPrice(), current($items[0]->getDiscounts())->getAmount());
         $this->assertEquals($items[1]->getGrossPrice(), current($items[1]->getDiscounts())->getAmount());

@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Plugin\Calculator;
 
+use Generated\Shared\Discount\DiscountInterface;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
@@ -26,14 +27,14 @@ abstract class AbstractCalculator extends AbstractPlugin implements DiscountCalc
     abstract public function calculate(array $discountableObjects, $number);
 
     /**
-     * @param DiscountableInterface[] $discountableObjects
-     * @param float $number
+     * @param array $discountableObjects
+     * @param DiscountInterface $discountTransfer
      */
-    public function distribute(array $discountableObjects, $number)
+    public function distribute(array $discountableObjects, DiscountInterface $discountTransfer)
     {
         $this->getDependencyContainer()
             ->getDiscountFacade()
-            ->distributeAmount($discountableObjects, $number);
+            ->distributeAmount($discountableObjects, $discountTransfer);
     }
 
 }

@@ -22,6 +22,7 @@ use SprykerFeature\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreconditionInterface;
+use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreHydrationInterface;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 
 class CheckoutWorkflow implements CheckoutWorkflowInterface
@@ -31,6 +32,11 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      * @var CheckoutPreconditionInterface[]
      */
     protected $preConditionStack;
+
+    /**
+     * @var CheckoutPreHydrationInterface[]
+     */
+    protected $preHydrationStack;
 
     /**
      * @var CheckoutOrderHydrationInterface[]
@@ -63,22 +69,21 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      * @param CheckoutSaveOrderInterface[] $saveOrderStack
      * @param CheckoutPostSaveHookInterface[] $postSaveHookStack
      * @param CheckoutToOmsInterface $omsFacade
-     * @param CalculationFacade $calculationFacade
      */
     public function __construct(
         array $preConditionStack,
+        array $preHydrationStack,
         array $orderHydrationStack,
         array $saveOrderStack,
         array $postSaveHookStack,
-        CheckoutToOmsInterface $omsFacade,
-        CalculationFacade $calculationFacade
+        CheckoutToOmsInterface $omsFacade
     ) {
         $this->preConditionStack = $preConditionStack;
+        $this->preHydrationStack = $preHydrationStack;
         $this->postSaveHookStack = $postSaveHookStack;
         $this->orderHydrationStack = $orderHydrationStack;
         $this->saveOrderStack = $saveOrderStack;
         $this->omsFacade = $omsFacade;
-        $this->calculationFacade = $calculationFacade;
     }
 
     /**
@@ -94,7 +99,8 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         $this->checkPreConditions($checkoutRequest, $checkoutResponse);
 
         if (!$this->hasErrors($checkoutResponse)) {
-            $this->recalculate($checkoutRequest->getCart());
+
+            $this->preHydrate($checkoutRequest, $checkoutResponse);
 
             $orderTransfer = $this->getOrderTransfer();
             $this->hydrateOrder($orderTransfer, $checkoutRequest);
@@ -110,6 +116,17 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         }
 
         return $checkoutResponse;
+    }
+
+    /**
+     * @param CheckoutRequestInterface $checkoutRequest
+     * @param CheckoutResponseInterface $checkoutResponse
+     */
+    protected function preHydrate(CheckoutRequestInterface $checkoutRequest, CheckoutResponseInterface $checkoutResponse)
+    {
+        foreach ($this->preHydrationStack as $preHydrator) {
+            $preHydrator->execute($checkoutRequest, $checkoutResponse);
+        }
     }
 
     /**
@@ -185,7 +202,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      *
      * @return CartInterface
      */
-    private function recalculate(CartInterface $cartTransfer)
+    protected function recalculate(CartInterface $cartTransfer)
     {
         $calculableCart = new CalculableContainer($cartTransfer);
         $calculableCart = $this->calculationFacade->recalculate($calculableCart);

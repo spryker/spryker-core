@@ -46,7 +46,7 @@ class CheckoutWorkflowTest extends Test
             $this->equalTo($checkoutResponse)
         );
 
-        $checkoutWorkflow = new CheckoutWorkflow([$mock1, $mock2], [], [], [], $omsMock);
+        $checkoutWorkflow = new CheckoutWorkflow([$mock1, $mock2], [], [], [], [], $omsMock);
 
         $checkoutWorkflow->requestCheckout($checkoutRequest);
     }
@@ -70,7 +70,7 @@ class CheckoutWorkflowTest extends Test
             $this->equalTo($checkoutRequest)
         );
 
-        $checkoutWorkflow = new CheckoutWorkflow([], [$mock1, $mock2], [], [], $omsMock);
+        $checkoutWorkflow = new CheckoutWorkflow([], [], [$mock1, $mock2], [], [], $omsMock);
 
         $checkoutWorkflow->requestCheckout($checkoutRequest);
     }
@@ -95,7 +95,7 @@ class CheckoutWorkflowTest extends Test
             $this->equalTo($checkoutResponse)
         );
 
-        $checkoutWorkflow = new CheckoutWorkflow([], [], [$mock1, $mock2], [], $omsMock);
+        $checkoutWorkflow = new CheckoutWorkflow([], [], [], [$mock1, $mock2], [], $omsMock);
 
         $checkoutWorkflow->requestCheckout($checkoutRequest);
     }
@@ -120,7 +120,7 @@ class CheckoutWorkflowTest extends Test
             $this->equalTo($checkoutResponse)
         );
 
-        $checkoutWorkflow = new CheckoutWorkflow([], [], [], [$mock1, $mock2], $omsMock);
+        $checkoutWorkflow = new CheckoutWorkflow([], [], [], [], [$mock1, $mock2], $omsMock);
 
         $checkoutWorkflow->requestCheckout($checkoutRequest);
     }
@@ -140,7 +140,7 @@ class CheckoutWorkflowTest extends Test
         $checkoutRequest = new CheckoutRequestTransfer();
         $order = new OrderTransfer();
 
-        $checkoutWorkflow = new CheckoutWorkflow([$mock1], [], [$mock2], [], $omsMock);
+        $checkoutWorkflow = new CheckoutWorkflow([$mock1], [], [], [$mock2], [], $omsMock);
 
         $mock2->expects($this->once())->method('saveOrder')->with(
             $this->equalTo($order),
@@ -164,7 +164,7 @@ class CheckoutWorkflowTest extends Test
         $mock2 = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutSaveOrderInterface');
         $omsMock = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Facade\\CheckoutToOmsInterface');
 
-        $checkoutWorkflow = new CheckoutWorkflow([$mock1], [], [$mock2], [], $omsMock);
+        $checkoutWorkflow = new CheckoutWorkflow([$mock1], [], [], [$mock2], [], $omsMock);
         $checkoutRequest = new CheckoutRequestTransfer();
 
         $mock2->expects($this->never())->method('saveOrder');
@@ -187,7 +187,7 @@ class CheckoutWorkflowTest extends Test
         $mock2 = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutSaveOrderInterface');
         $omsMock = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Facade\\CheckoutToOmsInterface');
 
-        $checkoutWorkflow = new CheckoutWorkflow([], [$mock1], [$mock2], [], $omsMock);
+        $checkoutWorkflow = new CheckoutWorkflow([], [], [$mock1], [$mock2], [], $omsMock);
         $checkoutRequest = new CheckoutRequestTransfer();
 
         $mock2->expects($this->once())->method('saveOrder')->with(
@@ -212,7 +212,7 @@ class CheckoutWorkflowTest extends Test
         $mock2 = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPostSaveHookInterface');
         $omsMock = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Facade\\CheckoutToOmsInterface');
 
-        $checkoutWorkflow = new CheckoutWorkflow([], [], [$mock1], [$mock2], $omsMock);
+        $checkoutWorkflow = new CheckoutWorkflow([], [], [], [$mock1], [$mock2], $omsMock);
         $checkoutRequest = new CheckoutRequestTransfer();
 
         $mock2->expects($this->never())->method('executeHook');
@@ -234,7 +234,7 @@ class CheckoutWorkflowTest extends Test
         $mock = new MockPostHook($checkoutResponse);
         $omsMock = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Facade\\CheckoutToOmsInterface');
 
-        $checkoutWorkflow = new CheckoutWorkflow([], [], [], [$mock], $omsMock);
+        $checkoutWorkflow = new CheckoutWorkflow([], [], [], [], [$mock], $omsMock);
         $checkoutRequest = new CheckoutRequestTransfer();
 
         $result = $checkoutWorkflow->requestCheckout($checkoutRequest);

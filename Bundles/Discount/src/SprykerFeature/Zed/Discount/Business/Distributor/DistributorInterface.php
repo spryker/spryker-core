@@ -14,8 +14,7 @@ interface DistributorInterface
     /**
      * @param array $discountableObjects
      * @param DiscountInterface $discountTransfer
-     * @param int $amount
      */
-    public function distribute(array $discountableObjects, DiscountInterface $discountTransfer, $amount);
+    public function distribute(array $discountableObjects, DiscountInterface $discountTransfer);
 
 }

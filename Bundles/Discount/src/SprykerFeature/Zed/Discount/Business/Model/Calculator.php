@@ -25,7 +25,7 @@ class Calculator implements CalculatorInterface
     protected $calculatedDiscounts = [];
 
     /**
-     * @param SpyDiscount[] $discounts
+     * @param SpyDiscount[] $discountCollection
      *
      * @param CalculableInterface $container
      * @param DiscountConfigInterface $settings
@@ -34,7 +34,7 @@ class Calculator implements CalculatorInterface
      * @return SpyDiscount[]
      */
     public function calculate(
-        array $discounts,
+        array $discountCollection,
         CalculableInterface $container,
         DiscountConfigInterface $settings,
         DistributorInterface $distributor
@@ -42,26 +42,26 @@ class Calculator implements CalculatorInterface
         $discountableObjects = [];
         $calculatedDiscounts = [];
 
-        foreach ($discounts as $discount) {
-            $calculator = $settings->getCalculatorPluginByName($discount->getCalculatorPlugin());
-            $collector = $settings->getCollectorPluginByName($discount->getCollectorPlugin());
+        foreach ($discountCollection as $discountTransfer) {
+            $calculator = $settings->getCalculatorPluginByName($discountTransfer->getCalculatorPlugin());
+            $collector = $settings->getCollectorPluginByName($discountTransfer->getCollectorPlugin());
             $discountableObjects = $collector->collect($container);
 
-            $discountAmount = $calculator->calculate($discountableObjects, $discount->getAmount());
+            $discountAmount = $calculator->calculate($discountableObjects, $discountTransfer->getAmount());
+            $discountTransfer->setAmount($discountAmount);
 
             $calculatedDiscounts[] = [
-                self::KEY_DISCOUNT_TRANSFER => $discount,
-                self::KEY_DISCOUNT_AMOUNT => $discountAmount,
+                self::KEY_DISCOUNT_TRANSFER => $discountTransfer,
+                self::KEY_DISCOUNT_AMOUNT => $discountAmount
             ];
         }
 
         $calculatedDiscounts = $this->filterOutNonPrivilegedDiscounts($calculatedDiscounts);
 
-        foreach ($calculatedDiscounts as $discount) {
+        foreach ($calculatedDiscounts as $discountTransfer) {
             $distributor->distribute(
                 $discountableObjects,
-                $discount[self::KEY_DISCOUNT_TRANSFER],
-                $discount[self::KEY_DISCOUNT_AMOUNT]
+                $discountTransfer[self::KEY_DISCOUNT_TRANSFER]
             );
         }
 

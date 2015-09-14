@@ -4,17 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\CalculationCheckoutConnector\Business;
+namespace SprykerFeature\Zed\CalculationCheckoutConnector\Business;
 
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\CalculationCheckoutConnector\CalculationCheckoutConnectorDependencyProvider;
-use SprykerFeature\CalculationCheckoutConnector\Dependency\Facade\CalculationCheckoutConnectorToCalculationInterface;
+use SprykerFeature\Zed\CalculationCheckoutConnector\CalculationCheckoutConnectorDependencyProvider;
+use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
 
 class CalculationCheckoutConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**
-     * @return CalculationCheckoutConnectorToCalculationInterface
+     * @return CalculationFacade
      */
     public function getCalculationFacade()
     {
