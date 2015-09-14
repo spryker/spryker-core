@@ -37,6 +37,10 @@ class DiscountSaver implements DiscountSaverInterface
      */
     public function saveDiscounts(OrderInterface $orderTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
+        $this->saveOrderDiscounts($orderTransfer);
+        // Order expense discounts
+        $this->saveOrderItemDiscounts($orderTransfer);
+        // Order item option discounts
         $discountCollection = $orderTransfer->getDiscounts();
         foreach ($discountCollection as $discountTransfer) {
             $this->saveDiscount($discountTransfer, $orderTransfer);
@@ -44,17 +48,56 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @param DiscountInterface $discountTransfer
      * @param OrderInterface $orderTransfer
      */
-    protected function saveDiscount(DiscountInterface $discountTransfer, OrderInterface $orderTransfer)
+    protected function saveOrderDiscounts(OrderInterface $orderTransfer)
+    {
+        $discountCollection = $orderTransfer->getDiscounts();
+        foreach ($discountCollection as $discountTransfer) {
+            $salesDiscountEntity = $this->createSalesDiscountEntity($discountTransfer);
+            $salesDiscountEntity->setFkSalesOrder($orderTransfer->getIdSalesOrder());
+            $this->saveDiscount($salesDiscountEntity, $discountTransfer);
+        }
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
+     */
+    protected function saveOrderItemDiscounts(OrderInterface $orderTransfer)
+    {
+        $orderItems = $orderTransfer->getItems();
+        foreach ($orderItems as $orderItem) {
+            $discountCollection = $orderItem->getDiscounts();
+            foreach ($discountCollection as $discountTransfer) {
+                $salesDiscountEntity = $this->createSalesDiscountEntity($discountTransfer);
+                $salesDiscountEntity->setFkSalesOrder($orderTransfer->getIdSalesOrder());
+                $salesDiscountEntity->setFkSalesOrderItem($orderTransfer->getIdSalesOrder());
+                $this->saveDiscount($salesDiscountEntity, $discountTransfer);
+            }
+        }
+    }
+
+    /**
+     * @param DiscountInterface $discountTransfer
+     *
+     * @return SpySalesDiscount
+     */
+    protected function createSalesDiscountEntity(DiscountInterface $discountTransfer)
     {
         $salesDiscountEntity = $this->getSalesDiscountEntity();
         $salesDiscountEntity->fromArray($discountTransfer->toArray());
         $salesDiscountEntity->setName('');
         $salesDiscountEntity->setAction('');
-        $salesDiscountEntity->setFkSalesOrder($orderTransfer->getIdSalesOrder());
 
+        return $salesDiscountEntity;
+    }
+
+    /**
+     * @param SpySalesDiscount $salesDiscountEntity
+     * @param DiscountInterface $discountTransfer
+     */
+    protected function saveDiscount(SpySalesDiscount $salesDiscountEntity, DiscountInterface $discountTransfer)
+    {
         $this->persistSalesDiscount($salesDiscountEntity);
 
         if ($this->hasUsedCodes($discountTransfer)) {

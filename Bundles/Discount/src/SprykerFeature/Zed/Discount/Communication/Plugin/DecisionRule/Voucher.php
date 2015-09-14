@@ -24,10 +24,8 @@ class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePlugin
      *
      * @return ModelResult
      */
-    public function check(
-        DiscountInterface $discountTransfer,
-        CalculableInterface $container
-    ) {
+    public function check(DiscountInterface $discountTransfer, CalculableInterface $container)
+    {
         $componentResult = new ModelResult();
 
         if (count($container->getCalculableObject()->getCouponCodes()) < 1) {

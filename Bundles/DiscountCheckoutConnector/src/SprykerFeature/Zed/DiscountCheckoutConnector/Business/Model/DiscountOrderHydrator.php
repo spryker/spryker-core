@@ -19,10 +19,10 @@ class DiscountOrderHydrator implements DiscountOrderHydratorInterface
      */
     public function hydrateOrder(OrderInterface $orderTransfer, CheckoutRequestInterface $request)
     {
-        $this->addCartDiscountsToOrder($orderTransfer, $request);
-        $this->addCartItemsDiscountsToOrder($orderTransfer, $request);
-
-        $this->addDiscountsToOrder($orderTransfer, $request->getDiscounts());
+//        $this->addCartDiscountsToOrder($orderTransfer, $request);
+//        $this->addCartItemsDiscountsToOrder($orderTransfer, $request);
+//
+//        $this->addDiscountsToOrder($orderTransfer, $request->getDiscounts());
     }
 
     /**
