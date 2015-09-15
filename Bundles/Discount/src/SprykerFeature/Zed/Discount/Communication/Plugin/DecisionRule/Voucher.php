@@ -22,7 +22,6 @@ class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePlugin
 
     /**
      * @param DiscountEntity $discountEntity
-     * @ param OrderInterface $container
      *
      * @param CalculableInterface $container
      * @param DecisionRuleEntity $decisionRuleEntity
@@ -31,7 +30,6 @@ class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePlugin
      */
     public function check(
         DiscountEntity $discountEntity,
-        //OrderInterface $container,
         CalculableInterface $container,
         DecisionRuleEntity $decisionRuleEntity = null
     ) {
