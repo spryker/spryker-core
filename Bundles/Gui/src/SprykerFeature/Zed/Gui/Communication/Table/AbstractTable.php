@@ -442,4 +442,20 @@ abstract class AbstractTable
         return str_replace(' ', '', ucwords(mb_strtolower(str_replace('_', ' ', $str))));
     }
 
+    /**
+     * @param int $total
+     */
+    protected function setTotal($total)
+    {
+        $this->total = $total;
+    }
+
+    /**
+     * @param bool $filtered
+     */
+    protected function setFiltered($filtered)
+    {
+        $this->filtered = $filtered;
+    }
+
 }

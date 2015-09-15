@@ -1,0 +1,13 @@
+{% extends '@Application/Layout/layout.twig' %}
+
+{% block body_class %}spy-page{% endblock %}
+
+{% block content %}
+    <a href="/maintenance/storage">All keys</a>
+    <h1>{{ key }}</h1>
+    {% if referenceKey %}
+        <a href="/maintenance/storage/storage-key?key={{ referenceKey }}">{{ referenceKey }}</a>
+    {% endif %}
+    <pre>{{ value }}</pre>
+
+{% endblock %}
