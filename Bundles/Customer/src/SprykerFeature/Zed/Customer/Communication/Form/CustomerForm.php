@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Customer\Communication\Form;
 
 use Generated\Shared\Transfer\CustomerTransfer;
+use SprykerFeature\Zed\Country\Persistence\Propel\Map\SpyCountryTableMap;
 use SprykerFeature\Zed\Customer\Persistence\Propel\Base\SpyCustomerAddressQuery;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
 use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
@@ -182,10 +183,7 @@ class CustomerForm extends AbstractForm
      */
     protected function getGenderOptions()
     {
-        return [
-            SpyCustomerTableMap::COL_GENDER_MALE,
-            SpyCustomerTableMap::COL_GENDER_FEMALE,
-        ];
+        return SpyCustomerTableMap::getValueSet(SpyCustomerTableMap::COL_GENDER);
     }
 
     /**
@@ -193,11 +191,7 @@ class CustomerForm extends AbstractForm
      */
     protected function getSalutationOptions()
     {
-        return [
-            SpyCustomerTableMap::COL_SALUTATION_MR,
-            SpyCustomerTableMap::COL_SALUTATION_MRS,
-            SpyCustomerTableMap::COL_SALUTATION_DR,
-        ];
+        return SpyCustomerTableMap::getValueSet(SpyCustomerTableMap::COL_SALUTATION);
     }
 
     /**
