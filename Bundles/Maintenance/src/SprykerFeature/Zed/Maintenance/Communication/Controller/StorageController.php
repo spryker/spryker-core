@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class StorageController extends AbstractController
 {
+    const REFERENCE_KEY = 'reference_key';
 
     /**
      * @return array
@@ -52,7 +53,7 @@ class StorageController extends AbstractController
         $value = $this->getDependencyContainer()->getStorageClient()->get($key);
 
         return $this->viewResponse([
-            'value' => var_export($value, true),
+            'value' => $value,
             'key' => $key,
             'referenceKey' => $this->getReferenceKey($value),
         ]);
@@ -67,8 +68,8 @@ class StorageController extends AbstractController
     {
         $referenceKey = '';
 
-        if (is_array($value) && isset($value['reference_key'])) {
-            $referenceKey = $value['reference_key'];
+        if (is_array($value) && isset($value[self::REFERENCE_KEY])) {
+            $referenceKey = $value[self::REFERENCE_KEY];
         }
 
         return $referenceKey;

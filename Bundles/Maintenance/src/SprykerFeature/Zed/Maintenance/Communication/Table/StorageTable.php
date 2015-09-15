@@ -65,7 +65,7 @@ class StorageTable extends AbstractTable
             $value = print_r($value, true);
             $value = htmlentities($value);
 
-            if (is_string($value) && strlen($value) > 100) {
+            if (is_string($value) && mb_strlen($value) > 100) {
                 $value = mb_substr($value, 0, 255);
             }
 
