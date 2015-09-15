@@ -20,7 +20,6 @@
         <column name="default_billing_address" type="INTEGER"/>
         <column name="default_shipping_address" type="INTEGER"/>
         <behavior name="timestampable"/>
-        <behavior name="archivable"/>
         <unique>
             <unique-column name="email"/>
         </unique>
@@ -65,7 +64,6 @@
         </index>
 
         <behavior name="timestampable"/>
-        <behavior name="archivable"/>
 
     <id-method-parameter value="spy_customer_address_pk_seq"/></table>
 
