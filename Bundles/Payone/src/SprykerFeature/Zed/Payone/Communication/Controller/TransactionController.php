@@ -65,18 +65,20 @@ class TransactionController extends AbstractController
 
         $response = $this->getFacade()->processTransactionStatusUpdate($payoneTransactionStatusUpdateTransfer);
 
-        //TODO: Refactor as per CD-380
-        $orderItems = SpySalesOrderItemQuery::create()
-            ->useOrderQuery()
+        if ($response->isSuccess()) {
+            //TODO: Refactor as per CD-380
+            $orderItems = SpySalesOrderItemQuery::create()
+                ->useOrderQuery()
                 ->useSpyPaymentPayoneQuery()
-                    ->filterByTransactionId($payoneTransactionStatusUpdateTransfer->getTxid())
+                ->filterByTransactionId($payoneTransactionStatusUpdateTransfer->getTxid())
                 ->endUse()
-            ->endUse()
-            ->find();
-        $this->getDependencyContainer()->getOmsFacade()->triggerEvent('PaymentNotificationReceived', $orderItems, []);
+                ->endUse()
+                ->find();
+            $this->getDependencyContainer()->getOmsFacade()->triggerEvent('PaymentNotificationReceived', $orderItems, []);
 
-        if ($dataArray['txaction'] === 'appointed') {
-            $this->getDependencyContainer()->getOmsFacade()->triggerEvent('RedirectResponseAppointed', $orderItems, []);
+            if ($dataArray['txaction'] === 'appointed') {
+                $this->getDependencyContainer()->getOmsFacade()->triggerEvent('RedirectResponseAppointed', $orderItems, []);
+            }
         }
 
         $callback = function () use ($response) {
