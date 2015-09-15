@@ -34,7 +34,6 @@ class Invoice extends AbstractMethodMapper
     {
         $orderEntity = $paymentEntity->getSpySalesOrder();
         $addressEntity = $orderEntity->getBillingAddress();
-        $customerEntity = $orderEntity->getCustomer();
 
         $requestTransfer = (new PayolutionRequestTransfer())
             ->setSecuritySender($this->getConfig()->getSecuritySender())
@@ -48,18 +47,18 @@ class Invoice extends AbstractMethodMapper
             ->setAddressCity($addressEntity->getCity())
             ->setAddressZip($addressEntity->getZipCode())
             ->setAddressStreet($addressEntity->getAddress1())
-            ->setNameFamily($customerEntity->getLastName())
-            ->setNameGiven($customerEntity->getFirstName())
-            ->setNameSex($this->mapGender($customerEntity->getGender()))
-            ->setNameBirthdate($customerEntity->getDateOfBirth('Y-m-d'))
-            ->setNameTitle($customerEntity->getSalutation())
+            ->setNameFamily($paymentEntity->getLastName())
+            ->setNameGiven($paymentEntity->getFirstName())
+            ->setNameSex($this->mapGender($paymentEntity->getGender()))
+            ->setNameBirthdate($paymentEntity->getBirthdate())
+            ->setNameTitle($paymentEntity->getSalutation())
             ->setContactIp($paymentEntity->getClientIp())
-            ->setContactEmail($customerEntity->getEmail())
+            ->setContactEmail($paymentEntity->getEmail())
             ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE)
             ->setTransactionChannel($this->getConfig()->getChannelInvoice())
             ->setTransactionMode($this->getConfig()->getTransactionMode())
             ->setIdentificationTransactionid(uniqid('tran_'))
-            ->setIdentificationShopperid($customerEntity->getIdCustomer());
+            ->setIdentificationShopperid($orderEntity->getFkCustomer());
 
         return $requestTransfer;
     }

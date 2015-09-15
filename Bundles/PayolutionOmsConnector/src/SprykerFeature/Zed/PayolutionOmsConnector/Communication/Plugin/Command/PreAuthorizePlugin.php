@@ -31,6 +31,7 @@ class PreAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterfa
     {
         /** @var SpyPaymentPayolution $paymentEntity */
         $paymentEntity = $orderEntity->getSpyPaymentPayolutions()->getFirst();
+
         $this->getDependencyContainer()
             ->createPayolutionFacade()
             ->preAuthorizePayment($paymentEntity->getIdPaymentPayolution());

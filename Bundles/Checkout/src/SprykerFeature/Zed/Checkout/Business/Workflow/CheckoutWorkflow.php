@@ -101,8 +101,8 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
             $orderTransfer = $this->doSaveOrder($orderTransfer, $checkoutResponse);
 
             $checkoutResponse->setOrder($orderTransfer);
-
             if (!$this->hasErrors($checkoutResponse)) {
+
                 $this->triggerStateMachine($orderTransfer);
                 $this->executePostHooks($orderTransfer, $checkoutResponse);
 
@@ -177,6 +177,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
                 return $orderTransfer;
             }
         } catch (\Exception $e) {
+            var_dump($e);exit;
             Propel::getConnection()->rollBack();
 
             $error = $this->handleCheckoutError($e);

@@ -13,14 +13,18 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Shared\Payolution\PayolutionConfigConstants;
 use SprykerFeature\Zed\Checkout\CheckoutDependencyProvider;
 use SprykerFeature\Zed\Checkout\Business\CheckoutFacade;
 use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountry;
+use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
+use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
@@ -92,6 +96,7 @@ class PreAuthorizePluginTest extends Test
             ->setZipCode('80469')
             ->setCity('München');
 
+
         $checkoutRequestTransfer = (new CheckoutRequestTransfer())
             ->setGuest(false)
             ->setIdUser(null)
@@ -101,12 +106,25 @@ class PreAuthorizePluginTest extends Test
             ->setCart($cartTransfer);
 
 
+        $payment = new PayolutionPaymentTransfer();
+        $payment->setFirstName('John')
+            ->setLastName('Doe')
+            ->setSalutation(SpyCustomerTableMap::COL_SALUTATION_MR)
+            ->setGender(SpyCustomerTableMap::COL_GENDER_MALE)
+            ->setEmail('testst@tewst.com')
+            ->setBirthdate('1970-01-02')
+            ->setClientIp('127.0.0.1')
+            ->setAccountBrand(PayolutionConfigConstants::BRAND_INVOICE);
+
+        $checkoutRequestTransfer->setPayolutionPayment($payment);
+
+
         $checkoutFacade = $this->getCheckoutFacade();
         $checkoutFacade->requestCheckout($checkoutRequestTransfer);
 
-        $orderItem = SpySalesOrderItemQuery::create()->filterBySku('1234567890')->findOne();
+        $orderItem = SpySalesOrderItemQuery::create()->findOne();
 
-        var_dump($orderItem->getState());exit;
+        $this->assertEquals('waiting for payolution payment', $orderItem->getState()->getName());
     }
 
     /**
@@ -129,7 +147,8 @@ class PreAuthorizePluginTest extends Test
             return [
                 $container->getLocator()->customerCheckoutConnector()->pluginOrderCustomerHydrationPlugin(),
                 $container->getLocator()->cartCheckoutConnector()->pluginOrderCartHydrationPlugin(),
-                new OmsOrderHydrator()
+                $container->getLocator()->payolutionCheckoutConnector()->pluginCheckoutOrderHydrationPlugin(),
+                new OmsOrderHydrator(),
             ];
         };
 
@@ -137,6 +156,7 @@ class PreAuthorizePluginTest extends Test
             return [
                 $container->getLocator()->salesCheckoutConnector()->pluginSalesOrderSaverPlugin(),
                 $container->getLocator()->customerCheckoutConnector()->pluginOrderCustomerSavePlugin(),
+                $container->getLocator()->payolutionCheckoutConnector()->pluginCheckoutSaveOrderPlugin(),
             ];
         };
 
@@ -146,7 +166,7 @@ class PreAuthorizePluginTest extends Test
 
         $container[CheckoutDependencyProvider::FACADE_OMS] = function (Container $container) {
             $facade = $container->getLocator()->oms()->facade();
-            $dependencyContainer = new Container();
+
             return $facade;
         };
 

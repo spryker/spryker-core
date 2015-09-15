@@ -16,6 +16,13 @@
         <column name="account_brand" required="true" type="VARCHAR"/>
         <column name="client_ip" required="true" type="VARCHAR"/>
 
+        <column name="first_name" required="true" type="VARCHAR"/>
+        <column name="last_name" required="true" type="VARCHAR"/>
+        <column name="email" required="true" type="VARCHAR"/>
+        <column name="salutation" required="true" type="VARCHAR"/>
+        <column name="gender" required="true" type="VARCHAR"/>
+        <column name="birthdate" required="true" type="VARCHAR"/>
+
         <foreign-key foreignTable="spy_sales_order" phpName="SpySalesOrder">
             <reference foreign="id_sales_order" local="fk_sales_order"/>
         </foreign-key>

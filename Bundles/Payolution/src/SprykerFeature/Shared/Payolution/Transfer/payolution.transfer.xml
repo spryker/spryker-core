@@ -8,6 +8,12 @@
         <property name="fkSalesOrder" type="int" />
         <property name="accountBrand" type="string" />
         <property name="clientIp" type="string" />
+        <property name="firstName" type="string" />
+        <property name="lastName" type="string"/>
+        <property name="email" type="string"/>
+        <property name="salutation" type="string"/>
+        <property name="gender" type="string"/>
+        <property name="birthdate" type="string"/>
     </transfer>
 
     <transfer name="Order">
@@ -112,5 +118,6 @@
         <property name="nameSex" type="string"/>
         <property name="clearingFxdate" type="string"/>
         <property name="addressZip" type="string"/>
+        <property name="nameTitle" type="string"/>
     </transfer>
 </transfer>

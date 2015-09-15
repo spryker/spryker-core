@@ -17,19 +17,21 @@ class OrderManager implements OrderManagerInterface
      */
     public function saveOrderPayment(OrderInterface $orderTransfer)
     {
-        $paymentEntity = $this->savePayment($orderTransfer->getPayolutionPayment());
+        $paymentEntity = $this->savePayment($orderTransfer->getPayolutionPayment(), $orderTransfer->getIdSalesOrder());
     }
 
     /**
      * @param PayolutionPaymentInterface $paymentTransfer
+     * @param $idSalesOrder
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @return SpyPaymentPayolution
      */
-    private function savePayment(PayolutionPaymentInterface $paymentTransfer)
+    private function savePayment(PayolutionPaymentInterface $paymentTransfer, $idSalesOrder)
     {
         $paymentEntity = new SpyPaymentPayolution();
         $paymentEntity->fromArray($paymentTransfer->toArray());
+        $paymentEntity->setFkSalesOrder($idSalesOrder);
         $paymentEntity->save();
         return $paymentEntity;
     }
