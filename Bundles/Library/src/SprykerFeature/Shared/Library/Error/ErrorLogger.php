@@ -24,7 +24,7 @@ class ErrorLogger
     {
         self::sendExceptionToFile($exception, new SharedEventJournal(), Api::getInstance());
         self::sendExceptionToNewRelic($exception, false, new SharedEventJournal(), Api::getInstance());
-        self::sendExceptionToLumberjack($exception, new SharedEventJournal(), Api::getInstance());
+        self::sendExceptionToLumberjack($exception, false, new SharedEventJournal(), Api::getInstance());
     }
 
     /**

@@ -33,6 +33,18 @@ abstract class AbstractHttpClient implements HttpClientInterface
         'Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.'
     ;
 
+    const EVENT_FIELD_TRANSFER_DATA = 'transfer_data';
+
+    const EVENT_FIELD_TRANSFER_CLASS = 'transfer_class';
+
+    const EVENT_FIELD_PATH_INFO = 'path_info';
+
+    const EVENT_FIELD_SUB_TYPE = 'sub_type';
+
+    const EVENT_NAME_TRANSFER_REQUEST = 'transfer_request';
+
+    const EVENT_NAME_TRANSFER_RESPONSE = 'transfer_response';
+
     /**
      * @var bool
      */
@@ -121,7 +133,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
         $requestTransfer = $this->createRequestTransfer($transferObject, $metaTransfers);
         $request = $this->createGuzzleRequest($pathInfo, $requestTransfer, $timeoutInSeconds);
-        $this->logRequest($pathInfo, $requestTransfer, $request->getBody());
+        $this->logRequest($pathInfo, $requestTransfer, (string)$request->getBody());
         
         $this->forwardDebugSession($request);
         $response = $this->sendRequest($request);
@@ -276,7 +288,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      */
     protected function logRequest($pathInfo, RequestInterface $requestTransfer, $rawBody)
     {
-        $this->doLog($pathInfo, 'transfer_request', $requestTransfer, $rawBody);
+        $this->doLog($pathInfo, self::EVENT_NAME_TRANSFER_REQUEST, $requestTransfer, $rawBody);
     }
 
     /**
@@ -286,7 +298,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
      */
     protected function logResponse($pathInfo, ZedResponse $responseTransfer, $rawBody)
     {
-        $this->doLog($pathInfo, 'transfer_response', $responseTransfer, $rawBody);
+        $this->doLog($pathInfo, self::EVENT_NAME_TRANSFER_RESPONSE, $responseTransfer, $rawBody);
     }
 
     /**
@@ -301,17 +313,16 @@ abstract class AbstractHttpClient implements HttpClientInterface
         $event = new Event();
         $responseTransfer = $transfer->getTransfer();
         if ($responseTransfer instanceof TransferInterface) {
-            $event->addField('transfer_data', $responseTransfer->toArray());
-            $event->addField('transfer_class', get_class($responseTransfer));
+            $event->addField(self::EVENT_FIELD_TRANSFER_DATA, $responseTransfer->toArray());
+            $event->addField(self::EVENT_FIELD_TRANSFER_CLASS, get_class($responseTransfer));
         } else {
-            $event->addField('transfer_data', null);
-            $event->addField('transfer_class', null);
+            $event->addField(self::EVENT_FIELD_TRANSFER_DATA, null);
+            $event->addField(self::EVENT_FIELD_TRANSFER_CLASS, null);
         }
-        $event->addField('raw_body', $rawBody);
 
-        $event->addField('name', 'transfer');
-        $event->addField('path_info', $pathInfo);
-        $event->addField('sub_type', $subType);
+        $event->addField(Event::FIELD_NAME, 'transfer');
+        $event->addField(self::EVENT_FIELD_PATH_INFO, $pathInfo);
+        $event->addField(self::EVENT_FIELD_SUB_TYPE, $subType);
         $lumberjack->saveEvent($event);
     }
 
