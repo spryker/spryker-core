@@ -1,0 +1,25 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Refund' %}
+
+{% block head_title widget_title | trans %}
+
+{% block section_title widget_title | trans %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_header_content %}
+            <a href="/refund/index/add" class="btn btn-sm btn-primary "><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{ 'Add a refund' | trans }}</a>
+        {% endblock %}
+
+        {% block widget_content %}
+
+            {{ refunds | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

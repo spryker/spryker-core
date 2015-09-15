@@ -146,7 +146,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
             } catch (\Exception $e) {
                 if ($ignoreMissingProperty) {
                     throw new \InvalidArgumentException(
-                        sprintf('Missing property "%s" in "%s"', $property, get_class($this))
+                        sprintf('Missing property "%s" in "%s" (setter %s)', $property, get_class($this), $setter)
                     );
                 }
             }

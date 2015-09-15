@@ -10,6 +10,8 @@ use Generated\Shared\Payone\PayoneCreditCardInterface;
 use Generated\Shared\Payone\PayoneRefundInterface;
 use Generated\Shared\Payone\PayoneStandardParameterInterface;
 use Generated\Shared\Payone\OrderInterface;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PayonePaymentDetailTransfer;
 use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -304,9 +306,14 @@ class PaymentManager implements PaymentManagerInterface
     protected function getPayment(OrderInterface $orderTransfer)
     {
         $payment = $this->queryContainer->getPaymentByOrderId($orderTransfer->getIdSalesOrder())->findOne();
+        $paymentDetail = $payment->getSpyPaymentPayoneDetail();
+
+        $paymentDetailTransfer = new PayonePaymentDetailTransfer();
+        $paymentDetailTransfer->fromArray($paymentDetail->toArray(), true);
 
         $paymentTransfer = new PayonePaymentTransfer();
-        $paymentTransfer->fromArray($payment->toArray());
+        $paymentTransfer->fromArray($payment->toArray(), true);
+        $paymentTransfer->setPaymentDetail($paymentDetailTransfer);
 
         return $paymentTransfer;
     }
@@ -489,4 +496,27 @@ class PaymentManager implements PaymentManagerInterface
         return $data->toArray();
     }
 
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    public function isRefundPossible($orderTransfer)
+    {
+        $paymentTransfer = $this->getPayment($orderTransfer);
+
+        // Return early if we don't need the iban or bic data
+        $paymentMethod = $paymentTransfer->getPaymentMethod();
+        $whiteList = [
+            PayoneApiConstants::PAYMENT_METHOD_PAYPAL,
+            PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO
+        ];
+        if (in_array($paymentMethod, $whiteList)) {
+            return true;
+        }
+
+        $paymentDetailTransfer = $paymentTransfer->getPaymentDetail();
+
+        return $paymentDetailTransfer->getBic() && $paymentDetailTransfer->getIban();
+    }
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<database name="zed"
+          namespace="SprykerFeature\Zed\Sales\Persistence\Propel"
+          namespaceAutoPackage="false"
+          package="vendor.spryker.spryker.Bundles.Sales.src.SprykerFeature.Zed.Sales.Persistence.Propel"
+          defaultIdMethod="native"
+          defaultPhpNamingMethod="underscore"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd">
+
+    <table name="spy_sales_order_item">
+        <column name="fk_refund" type="INTEGER"/>
+
+        <foreign-key foreignTable="spy_refund">
+            <reference foreign="id_refund" local="fk_refund"/>
+        </foreign-key>
+    </table>
+
+    <table name="spy_sales_expense">
+        <column name="fk_refund" type="INTEGER"/>
+
+        <foreign-key foreignTable="spy_refund">
+            <reference local="fk_refund" foreign="id_refund"/>
+        </foreign-key>
+    </table>
+
+</database>
+
+
+

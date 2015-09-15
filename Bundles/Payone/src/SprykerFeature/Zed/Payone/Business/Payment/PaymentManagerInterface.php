@@ -79,4 +79,11 @@ interface PaymentManagerInterface
      */
     public function getCreditCardCheckRequestData(array $data);
 
+    /**
+     * @param $orderTransfer
+     *
+     * @return mixed
+     */
+    public function isRefundPossible($orderTransfer);
+
 }

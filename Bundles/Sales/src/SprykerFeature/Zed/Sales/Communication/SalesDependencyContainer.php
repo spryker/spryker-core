@@ -10,6 +10,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\SalesCommunication;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Sales\Communication\Form\OrderItemSplitForm\Collection;
+use SprykerFeature\Zed\Sales\Communication\Form\PaymentDetailForm;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Sales\Communication\Table\OrdersTable;
@@ -127,6 +128,18 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
         $orderQuery = $this->getQueryContainer()->querySalesOrder();
 
         return $this->getFactory()->createTableOrdersTable($orderQuery);
+    }
+
+    /**
+     * @param int $idPayment
+     *
+     * @return PaymentDetailForm
+     */
+    public function createPaymentDetailForm($idPayment)
+    {
+        $paymentDetailQuery = $this->getQueryContainer()->queryPaymentDetailByPaymentId($idPayment);
+
+        return $this->getFactory()->createFormPaymentDetailForm($paymentDetailQuery);
     }
 
 }

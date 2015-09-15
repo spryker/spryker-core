@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<transfers xmlns="http://xsd.spryker.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
+
+    <transfer name="Refund">
+        <property name="idRefund" type="integer" />
+        <property name="fkSalesOrder" type="integer" />
+        <property name="amount" type="integer" />
+        <property name="comment" type="string" />
+        <property name="createdAt" type="string" />
+    </transfer>
+
+</transfers>

@@ -9,11 +9,14 @@ namespace SprykerFeature\Zed\Sales\Business\Model;
 use Generated\Shared\Sales\OrderListInterface;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PayonePaymentDetailTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Generated\Shared\Transfer\AddressTransfer;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
 use SprykerEngine\Zed\Propel\PropelFilterCriteria;
+use SprykerFeature\Zed\Library\Copy;
+use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneDetail;
 use SprykerFeature\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use SprykerFeature\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
@@ -227,5 +230,36 @@ class OrderManager
         $orderListTransfer->setOrders(new \ArrayObject($result));
 
         return $orderListTransfer;
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return OrderTransfer
+     */
+    public function getOrderByIdSalesOrder($idSalesOrder)
+    {
+        $orderEntity = $this->queryContainer
+            ->querySalesOrderById($idSalesOrder)
+            ->findOne()
+        ;
+
+        return (new OrderTransfer())->fromArray($orderEntity->toArray(), true);
+    }
+
+    /**
+     * @param PayonePaymentDetailTransfer $paymentDetailTransfer
+     * @param int $idPayment
+     *
+     * @return SpyPaymentPayoneDetail
+     */
+    public function updatePaymentDetail($paymentDetailTransfer, $idPayment)
+    {
+        $paymentDetailEntity = $this->queryContainer->queryPaymentDetailByPaymentId($idPayment)->findOne();
+        Copy::transferToEntity($paymentDetailTransfer, $paymentDetailEntity);
+
+        $paymentDetailEntity->save();
+
+        return $paymentDetailEntity;
     }
 }

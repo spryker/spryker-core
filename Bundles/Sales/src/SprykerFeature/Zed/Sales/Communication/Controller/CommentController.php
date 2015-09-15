@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Sales\Communication\Controller;
 use Generated\Shared\Transfer\CommentTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Sales\Communication\SalesDependencyContainer;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -24,7 +25,7 @@ class CommentController extends AbstractController
      */
     public function addAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->getCommentForm($request);
+        $form = $this->getDependencyContainer()->getCommentForm();
 
         if ($form->isValid()) {
             $facade = $this->getFacade();

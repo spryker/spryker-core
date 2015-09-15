@@ -62,6 +62,8 @@ class DetailsController extends AbstractController
 
         $logs = $this->getFacade()->getPaymentLogs($idOrder);
 
+        $refunds = $this->getFacade()->getRefunds($idOrder);
+
         return [
             'idOrder' => $idOrder,
             'orderDetails' => $orderEntity,
@@ -70,6 +72,7 @@ class DetailsController extends AbstractController
             'allEvents' => $allEvents,
             'expenses' => $expenses,
             'logs' => $logs,
+            'refunds' => $refunds,
             'billingAddress' => $billingAddress,
             'shippingAddress' => $shippingAddress,
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection->create(),

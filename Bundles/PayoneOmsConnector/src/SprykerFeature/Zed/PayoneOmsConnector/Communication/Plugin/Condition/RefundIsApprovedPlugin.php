@@ -7,7 +7,11 @@
 namespace SprykerFeature\Zed\PayoneOmsConnector\Communication\Plugin\Condition;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use SprykerFeature\Zed\Payone\Communication\PayoneDependencyContainer;
 
+/**
+ * @method PayoneDependencyContainer getDependencyContainer()
+ */
 class RefundIsApprovedPlugin extends AbstractPlugin
 {
     const NAME = 'RefundIsApprovedPlugin';

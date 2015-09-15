@@ -9,6 +9,8 @@ namespace SprykerFeature\Zed\Sales\Persistence;
 use Generated\Zed\Ide\FactoryAutoCompletion\SalesPersistence;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use SprykerFeature\Zed\Payone\Persistence\Propel\Base\SpyPaymentPayoneDetailQuery;
+use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneDetail;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesExpenseQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddressQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderCommentQuery;
@@ -164,4 +166,16 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
         return $query;
     }
 
+    /**
+     * @param $idPayment
+     *
+     * @return SpyPaymentPayoneDetailQuery
+     */
+    public function queryPaymentDetailByPaymentId($idPayment)
+    {
+        $query = SpyPaymentPayoneDetailQuery::create();
+        $query->filterByIdPaymentPayone($idPayment);
+
+        return $query;
+    }
 }

@@ -12,6 +12,8 @@ use Generated\Shared\Transfer\OrderItemsTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\PayonePaymentDetailTransfer;
+use Generated\Shared\Transfer\RefundTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
@@ -77,6 +79,19 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
+     * @param int $idSalesOrder
+     *
+     * @return OrderTransfer
+     */
+    public function getOrderByIdSalesOrder($idSalesOrder)
+    {
+        return $this->getDependencyContainer()
+            ->createOrderManager()
+            ->getOrderByIdSalesOrder($idSalesOrder)
+        ;
+    }
+
+    /**
      * @param int $idOrderItem
      *
      * @deprecated
@@ -90,6 +105,7 @@ class SalesFacade extends AbstractFacade
             ->getOrderItemById($idOrderItem)
         ;
     }
+
     /**
      * @param OrderTransfer $orderTransfer
      *
@@ -168,6 +184,20 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
+     * @param PayonePaymentDetailTransfer $paymentDetailTransfer
+     * @param int $idPayment
+     *
+     * @return mixed
+     */
+    public function updatePaymentDetail(PayonePaymentDetailTransfer $paymentDetailTransfer, $idPayment)
+    {
+        return $this->getDependencyContainer()
+            ->createOrderManager()
+            ->updatePaymentDetail($paymentDetailTransfer, $idPayment)
+            ;
+    }
+
+    /**
      * @param OrderTransfer $orderTransfer
      *
      * @return OrderTransfer
@@ -177,6 +207,19 @@ class SalesFacade extends AbstractFacade
         return $this->getDependencyContainer()
             ->createOrderDetailsManager()
             ->getOrderDetails($orderTransfer)
+        ;
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return RefundTransfer[]
+     */
+    public function getRefunds($idSalesOrder)
+    {
+        return $this->getDependencyContainer()
+            ->getProvidedDependency(SalesDependencyProvider::FACADE_REFUND)
+            ->getRefundsByIdSalesOrder($idSalesOrder)
         ;
     }
 

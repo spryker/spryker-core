@@ -24,10 +24,12 @@ class TransactionStatusUpdateManager
      * @var PayoneQueryContainerInterface
      */
     protected $queryContainer;
+
     /**
      * @var PayoneStandardParameterInterface
      */
     protected $standardParameter;
+
     /**
      * @var HashGenerator
      */
@@ -197,6 +199,12 @@ class TransactionStatusUpdateManager
         return true;
     }
 
+    /**
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
+     *
+     * @return bool
+     */
     public function isPaymentCapture($idSalesOrder, $idSalesOrderItem)
     {
         $status = PayoneTransactionStatusConstants::TXACTION_CAPTURE;
@@ -204,6 +212,12 @@ class TransactionStatusUpdateManager
         return $this->isPayment($idSalesOrder, $idSalesOrderItem, $status);
     }
 
+    /**
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
+     *
+     * @return bool
+     */
     public function isPaymentOverpaid($idSalesOrder, $idSalesOrderItem)
     {
         $status = PayoneTransactionStatusConstants::TXACTION_PAID;
@@ -220,6 +234,12 @@ class TransactionStatusUpdateManager
         return true;
     }
 
+    /**
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
+     *
+     * @return bool
+     */
     public function isPaymentUnderpaid($idSalesOrder, $idSalesOrderItem)
     {
         $status = PayoneTransactionStatusConstants::TXACTION_UNDERPAID;
@@ -227,6 +247,12 @@ class TransactionStatusUpdateManager
         return $this->isPayment($idSalesOrder, $idSalesOrderItem, $status);
     }
 
+    /**
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
+     *
+     * @return bool
+     */
     public function isPaymentAppointed($idSalesOrder, $idSalesOrderItem)
     {
         $status = PayoneTransactionStatusConstants::TXACTION_APPOINTED;
@@ -234,6 +260,12 @@ class TransactionStatusUpdateManager
         return $this->isPayment($idSalesOrder, $idSalesOrderItem, $status);
     }
 
+    /**
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
+     *
+     * @return bool
+     */
     public function isPaymentOther($idSalesOrder, $idSalesOrderItem)
     {
         $statusLogs = $this->getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem);
@@ -287,7 +319,7 @@ class TransactionStatusUpdateManager
     {
         $records = $this->getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem);
 
-        return !empty($records);
+        return !empty($transactionStatusLogs);
     }
 
     /**
@@ -301,18 +333,18 @@ class TransactionStatusUpdateManager
     {
         $records = $this->getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem);
 
-        if (empty($records)) {
+        if (empty($transactionStatusLogs)) {
             return;
         }
 
-        /** @var SpyPaymentPayoneTransactionStatusLog $record */
-        $record = array_shift($records);
+        /** @var SpyPaymentPayoneTransactionStatusLog $transactionStatusLog */
+        $transactionStatusLog = array_shift($transactionStatusLogs);
 
-        if ($record->getStatus() !== $status) {
+        if ($transactionStatusLog->getStatus() !== $status) {
             return;
         }
 
-        return $record;
+        return $transactionStatusLog;
     }
 
     /**
@@ -327,9 +359,9 @@ class TransactionStatusUpdateManager
 
         $ids = [];
 
-        /* @var SpyPaymentPayoneTransactionStatusLog $record */
+        /* @var SpyPaymentPayoneTransactionStatusLog $transactionStatusLog */
         foreach ($transactionStatusLogs as $transactionStatusLog) {
-            $ids[$record->getIdPaymentPayoneTransactionStatusLog()] = $transactionStatusLog;
+            $ids[$transactionStatusLog->getIdPaymentPayoneTransactionStatusLog()] = $transactionStatusLog;
         }
 
         $relations = $this->queryContainer
