@@ -82,7 +82,7 @@ class NodeWriter implements NodeWriterInterface
             ->queryNodeById($categoryNode->getIdCategoryNode())
             ->findOne();
         if ($nodeEntity) {
-            $nodeEntity->setFkParentCategoryNode($categoryNode->getFkParentCategoryNode());
+            $nodeEntity->fromArray($categoryNode->toArray());
             $nodeEntity->save();
         }
     }
