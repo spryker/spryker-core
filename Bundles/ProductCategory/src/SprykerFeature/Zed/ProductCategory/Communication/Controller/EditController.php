@@ -54,29 +54,41 @@ class EditController extends AddController
         if ($form->isValid()) { //TODO Ugly and dirty, some stuff must be moved into Facades
             $data = $form->getData();
 
-            $categoryTransfer = (new CategoryTransfer())
+            $currentCategoryTransfer = (new CategoryTransfer())
                 ->fromArray($data, true);
 
             $this->getDependencyContainer()
                 ->createCategoryFacade()
-                ->updateCategory($categoryTransfer, $locale);
+                ->updateCategory($currentCategoryTransfer, $locale);
 
-            $parentIdList = $form->getData()['fk_parent_category_node'];
+            $currentCategoryNodeTransfer = (new NodeTransfer())
+                ->fromArray($data, true);
+            
+            $currentCategoryNodeTransfer->setIsMain(true);
+
+            $existingCategoryNode = $this->getDependencyContainer()
+                ->createCategoryFacade()
+                ->getNodeByIdCategoryAndParentNode($currentCategoryTransfer->getIdCategory(), $data['fk_parent_category_node']);
+
+            $this->createOrUpdateCategoryNode($existingCategoryNode, $currentCategoryNodeTransfer, $locale);
+
+            $parentIdList = $data['extra_parents'];
             foreach ($parentIdList as $parentNodeId) {
                 $data['fk_parent_category_node'] = $parentNodeId;
-                $data['fk_category'] = $categoryTransfer->getIdCategory();
+                $data['fk_category'] = $currentCategoryTransfer->getIdCategory();
 
-                $categoryNodeTransfer = (new NodeTransfer())
+                $nodeTransfer = (new NodeTransfer())
                     ->fromArray($data, true);
+
+                $nodeTransfer->setIsMain(false);
 
                 $existingCategoryNode = $this->getDependencyContainer()
                     ->createCategoryFacade()
-                    ->getNodeByIdCategoryAndParentNode($categoryTransfer->getIdCategory(), $parentNodeId);
+                    ->getNodeByIdCategoryAndParentNode($currentCategoryTransfer->getIdCategory(), $parentNodeId);
 
-                $this->createOrUpdateCategoryNode($existingCategoryNode, $categoryNodeTransfer, $locale);
+                $this->createOrUpdateCategoryNode($existingCategoryNode, $nodeTransfer, $locale);
             }
 
-            $parentIdList = array_flip($parentIdList);
             $addProductsMappingCollection = [];
             $removeProductMappingCollection = [];
             if (trim($data['products_to_be_assigned']) !== '') {
@@ -87,8 +99,11 @@ class EditController extends AddController
                 $removeProductMappingCollection = explode(',', $data['products_to_be_de_assigned']);
             }
 
+            $parentIdList[] = $currentCategoryNodeTransfer->getFkParentCategoryNode();
+            $parentIdList = array_flip($parentIdList);
+
             $this->updateCategoryParents(
-                $categoryTransfer, 
+                $currentCategoryTransfer, 
                 $locale, 
                 $parentIdList, 
                 $addProductsMappingCollection, 
@@ -126,6 +141,7 @@ class EditController extends AddController
          */
         if ($existingCategoryNode) {
             $categoryNodeTransfer->setIdCategoryNode($existingCategoryNode->getIdCategoryNode());
+            
             $this->getDependencyContainer()
                 ->createCategoryFacade()
                 ->moveCategoryNode($categoryNodeTransfer, $locale);
@@ -133,6 +149,7 @@ class EditController extends AddController
             $newData = $categoryNodeTransfer->toArray();
             unset($newData['id_category_node']);
             $categoryNodeTransfer = (new NodeTransfer())->fromArray($newData, true);
+            
             $this->getDependencyContainer()
                 ->createCategoryFacade()
                 ->createCategoryNode($categoryNodeTransfer, $locale);
@@ -157,7 +174,7 @@ class EditController extends AddController
         $existingParents = $this->getDependencyContainer()
             ->createCategoryFacade()
             ->getNodesByIdCategory($categoryTransfer->getIdCategory());
-
+        
         //remove deselected parents
         foreach ($existingParents as $parent) {
             if (!array_key_exists($parent->getFkParentCategoryNode(), $parentIdList)) {
