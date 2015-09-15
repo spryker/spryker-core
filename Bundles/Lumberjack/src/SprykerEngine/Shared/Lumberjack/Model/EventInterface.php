@@ -17,8 +17,6 @@ interface EventInterface
 
     /**
      * @param array $fields
-     *
-     * @return mixed
      */
     public function addFields(array $fields);
 
