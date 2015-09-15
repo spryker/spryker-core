@@ -189,37 +189,40 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
             SpyLocalizedAbstractProductAttributesTableMap::COL_FK_ABSTRACT_PRODUCT,
             Criteria::INNER_JOIN
         )
-            ->addJoin(
-                SpyLocalizedAbstractProductAttributesTableMap::COL_FK_LOCALE,
-                SpyLocaleTableMap::COL_ID_LOCALE,
-                Criteria::INNER_JOIN
-            )
-            ->addAnd(
-                SpyLocaleTableMap::COL_ID_LOCALE,
-                $locale->getIdLocale(),
-                Criteria::EQUAL
-            )
-            ->addAnd(
-                SpyLocaleTableMap::COL_IS_ACTIVE,
-                true,
-                Criteria::EQUAL
-            )
-            ->withColumn(
-                SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
-                'name'
-            )
-            ->withColumn(
-                SpyAbstractProductTableMap::COL_ATTRIBUTES,
-                'abstract_attributes'
-            )
-            ->withColumn(
-                SpyLocalizedAbstractProductAttributesTableMap::COL_ATTRIBUTES,
-                'abstract_localized_attributes'
-            )
-            ->withColumn(
-                SpyAbstractProductTableMap::COL_SKU,
-                'sku'
-            );
+        ->addJoin(
+            SpyLocalizedAbstractProductAttributesTableMap::COL_FK_LOCALE,
+            SpyLocaleTableMap::COL_ID_LOCALE,
+            Criteria::INNER_JOIN
+        )
+        ->addAnd(
+            SpyLocaleTableMap::COL_ID_LOCALE,
+            $locale->getIdLocale(),
+            Criteria::EQUAL
+        )
+        ->addAnd(
+            SpyLocaleTableMap::COL_IS_ACTIVE,
+            true,
+            Criteria::EQUAL
+        )
+        ->withColumn(
+            SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
+            'name'
+        )
+        ->withColumn(
+            SpyAbstractProductTableMap::COL_ATTRIBUTES,
+            'abstract_attributes'
+        )
+        ->withColumn(
+            SpyLocalizedAbstractProductAttributesTableMap::COL_ATTRIBUTES,
+            'abstract_localized_attributes'
+        )
+        ->withColumn(
+            SpyAbstractProductTableMap::COL_SKU,
+            'sku'
+        );
+
+        $query->groupByAttributes();
+        $query->groupByIdAbstractProduct();
 
         if ('' !== trim($term)) {
             $term = '%'.mb_strtoupper($term).'%';
