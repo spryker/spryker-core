@@ -6,12 +6,15 @@
             {% block widget_content %}
 
                 <table class="footable table table-striped toggle-arrow-tiny">
+                    <thead>
                     <tr>
                         <th>{{ 'Expense' | trans }}</th>
                         <th>{{ 'QTY' | trans }}</th>
                         <th>{{ 'Gross Price' | trans }}</th>
                         <th>{{ 'Price to pay' | trans }}</th>
                     </tr>
+                    </thead>
+                    <tbody>
                     {% for expense in expenses %}
                     <tr>
                         <td>{{ expense.name }}</td>
@@ -20,7 +23,7 @@
                         <td>{{ expense.priceToPay | currency }}</td>
                     </tr>
                     {% endfor %}
-
+                    </tbody>
                 </table>
 
             {% endblock %}
