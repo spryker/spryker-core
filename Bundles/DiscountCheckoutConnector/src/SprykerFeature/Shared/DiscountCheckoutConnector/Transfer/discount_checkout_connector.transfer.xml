@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<transfers xmlns="http://xsd.spryker.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
+
+    <transfer name="Order">
+        <property name="idSalesOrder" type="int" />
+        <property name="discounts" type="Discount[]" singular="discount" />
+        <property name="items" type="Item[]" singular="item" />
+    </transfer>
+
+    <transfer name="CheckoutError">
+        <property name="errorCode" type="int" />
+        <property name="message" type="string" />
+    </transfer>
+
+    <transfer name="CheckoutResponse">
+        <property name="isSuccess" type="bool" />
+        <property name="errors" type="CheckoutError[]" singular="error" />
+        <property name="discounts" type="Discount[]" />
+    </transfer>
+
+    <transfer name="CheckoutRequest">
+        <property name="discounts" type="Discount[]" />
+        <property name="cart" type="Cart" />
+    </transfer>
+
+    <transfer name="Discount">
+        <property name="order" type="Order" />
+        <property name="usedCodes" type="array" singular="usedCode" />
+    </transfer>
+
+</transfers>
+

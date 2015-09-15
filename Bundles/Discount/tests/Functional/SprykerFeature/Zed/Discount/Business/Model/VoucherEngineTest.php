@@ -7,6 +7,7 @@
 namespace Functional\SprykerFeature\Zed\Discount\Business\Model;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
@@ -63,7 +64,6 @@ class VoucherEngineTest extends Test
         $result = $calculator->calculate([$discount], $order, $settings, new Distributor(Locator::getInstance()));
 
         $this->assertEquals(1, count($result));
-        $discount->delete();
     }
 
     public function testTwoDiscountsShouldNotBeFilteredOut()
@@ -92,9 +92,6 @@ class VoucherEngineTest extends Test
         $order = $this->getOrderWithTwoItems();
         $result = $calculator->calculate([$discount1, $discount2], $order, $settings, new Distributor(Locator::getInstance()));
         $this->assertEquals(2, count($result));
-
-        $discount1->delete();
-        $discount2->delete();
     }
 
     public function testFilterOutLowestUnprivilegedDiscountIfThereAreMoreThanOne()
@@ -134,10 +131,6 @@ class VoucherEngineTest extends Test
             [$discount1, $discount2, $discount3], $order, $settings, new Distributor(Locator::getInstance())
         );
         $this->assertEquals(2, count($result));
-
-        $discount1->delete();
-        $discount2->delete();
-        $discount3->delete();
     }
 
     public function testFilterOutLowestUnprivilegedDiscountIfThereAreMoreThanTwo()
@@ -184,11 +177,6 @@ class VoucherEngineTest extends Test
         $order = $this->getOrderWithTwoItems();
         $result = $calculator->calculate([$discount1, $discount2, $discount3, $discount4], $order, $settings, new Distributor(Locator::getInstance()));
         $this->assertEquals(2, count($result));
-
-        $discount1->delete();
-        $discount2->delete();
-        $discount3->delete();
-        $discount4->delete();
     }
 
     public function testFilterOutLowestUnprivilegedDiscountIfThereAreMoreThanTwoAndTwoPrivilegedOnes()
@@ -244,12 +232,6 @@ class VoucherEngineTest extends Test
         $order = $this->getOrderWithTwoItems();
         $result = $calculator->calculate([$discount1, $discount2, $discount3, $discount4, $discount5], $order, $settings, new Distributor(Locator::getInstance()));
         $this->assertEquals(3, count($result));
-
-        $discount1->delete();
-        $discount2->delete();
-        $discount3->delete();
-        $discount4->delete();
-        $discount5->delete();
     }
 
     /**
@@ -279,7 +261,10 @@ class VoucherEngineTest extends Test
         $discount->setIsPrivileged($isPrivileged);
         $discount->save();
 
-        return $discount;
+        $discountTransfer = new DiscountTransfer();
+        $discountTransfer->fromArray($discount->toArray(), true);
+
+        return $discountTransfer;
     }
 
     /**

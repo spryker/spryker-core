@@ -80,4 +80,41 @@ class CartFacade extends AbstractFacade
 
         return $calculableContainer->getCalculableObject();
     }
+
+    /**
+     * @param ChangeInterface $cartChange
+     *
+     * @return CartInterface
+     */
+    public function addCouponCode(ChangeInterface $cartChange)
+    {
+        $addCouponCodeOperator = $this->getDependencyContainer()->createCouponCodeAddOperator();
+
+        return $addCouponCodeOperator->executeOperation($cartChange);
+    }
+
+    /**
+     * @param ChangeInterface $cartChange
+     *
+     * @return CartInterface
+     */
+    public function removeCouponCode(ChangeInterface $cartChange)
+    {
+        $removeCouponCodeOperator = $this->getDependencyContainer()->createCouponCodeRemoveOperator();
+
+        return $removeCouponCodeOperator->executeOperation($cartChange);
+    }
+
+    /**
+     * @param ChangeInterface $cartChange
+     *
+     * @return CartInterface
+     */
+    public function clearCouponCodes(ChangeInterface $cartChange)
+    {
+        $clearCouponCodesOperator = $this->getDependencyContainer()->createCouponCodeClearOperator();
+
+        return $clearCouponCodesOperator->executeOperation($cartChange);
+    }
+
 }

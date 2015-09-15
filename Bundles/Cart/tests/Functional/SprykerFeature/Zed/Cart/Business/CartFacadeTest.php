@@ -75,7 +75,7 @@ class CartFacadeTest extends AbstractFunctionalTest
         $mockFactory
             ->expects($this->any())
             ->method('create')
-            ->with("DependencyContainer")
+            ->with('DependencyContainer')
             ->will($this->returnValue($cartDependencyContainer));
 
         $this->cartFacade = new CartFacade(

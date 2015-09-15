@@ -18,6 +18,7 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
 {
 
     const PLUGIN_DECISION_RULE_VOUCHER = 'PLUGIN_DECISION_RULE_VOUCHER';
+    const PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL = 'PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL';
     const PLUGIN_COLLECTOR_ITEM = 'PLUGIN_COLLECTOR_ITEM';
     const PLUGIN_COLLECTOR_ORDER_EXPENSE = 'PLUGIN_COLLECTOR_ORDER_EXPENSE';
     const PLUGIN_COLLECTOR_ITEM_EXPENSE = 'PLUGIN_COLLECTOR_ITEM_EXPENSE';
@@ -46,6 +47,7 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
     {
         return [
             self::PLUGIN_DECISION_RULE_VOUCHER => $this->getLocator()->discount()->pluginDecisionRuleVoucher(),
+            self::PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL => $this->getLocator()->discount()->pluginDecisionRuleMinimumCartSubtotal(),
         ];
     }
 

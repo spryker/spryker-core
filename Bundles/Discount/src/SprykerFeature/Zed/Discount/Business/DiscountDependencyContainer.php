@@ -62,38 +62,22 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      *
      * @return Discount
      */
-    public function getDiscount(CalculableInterface $container)
+    public function createDiscount(CalculableInterface $container)
     {
         return $this->getFactory()->createModelDiscount(
             $container,
             $this->getQueryContainer(),
-            $this->getDecisionRule(),
+            $this->createDecisionRule(),
             $this->getConfig(),
-            $this->getCalculator(),
-            $this->getDistributor()
+            $this->createCalculator(),
+            $this->createDistributor()
         );
-    }
-
-    /**
-     * @return DiscountFacade
-     */
-    public function getDiscountFacade()
-    {
-        return $this->getLocator()->discount()->facade();
-    }
-
-    /**
-     * @return array
-     */
-    public function getAvailableDecisionRulePlugins()
-    {
-        return $this->getConfig()->getAvailableDecisionRulePlugins();
     }
 
     /**
      * @return CalculatorInterface[]
      */
-    public function getAvailableCalculatorPlugins()
+    public function createAvailableCalculatorPlugins()
     {
         return $this->getConfig()->getAvailableCalculatorPlugins();
     }
@@ -101,7 +85,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return CollectorInterface[]
      */
-    public function getAvailableCollectorPlugins()
+    public function createAvailableCollectorPlugins()
     {
         return $this->getConfig()->getAvailableCollectorPlugins();
     }
@@ -109,7 +93,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return Percentage
      */
-    public function getCalculatorPercentage()
+    public function createCalculatorPercentage()
     {
         return $this->getFactory()->createCalculatorPercentage();
     }
@@ -117,7 +101,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return Fixed
      */
-    public function getCalculatorFixed()
+    public function createCalculatorFixed()
     {
         return $this->getFactory()->createCalculatorFixed();
     }
@@ -125,7 +109,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return DiscountWriter
      */
-    public function getDiscountWriter()
+    public function createDiscountWriter()
     {
         return $this->getFactory()->createWriterDiscountWriter(
             $this->getQueryContainer()
@@ -135,7 +119,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return DiscountDecisionRuleWriter
      */
-    public function getDiscountDecisionRuleWriter()
+    public function createDiscountDecisionRuleWriter()
     {
         return $this->getFactory()->createWriterDiscountDecisionRuleWriter(
             $this->getQueryContainer()
@@ -145,7 +129,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return DiscountVoucherWriter
      */
-    public function getDiscountVoucherWriter()
+    public function createDiscountVoucherWriter()
     {
         return $this->getFactory()->createWriterDiscountVoucherWriter(
             $this->getQueryContainer()
@@ -155,7 +139,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return DiscountVoucherPoolWriter
      */
-    public function getDiscountVoucherPoolWriter()
+    public function createDiscountVoucherPoolWriter()
     {
         return $this->getFactory()->createWriterDiscountVoucherPoolWriter(
             $this->getQueryContainer()
@@ -165,7 +149,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return DiscountVoucherPoolCategoryWriter
      */
-    public function getDiscountVoucherPoolCategoryWriter()
+    public function createDiscountVoucherPoolCategoryWriter()
     {
         return $this->getFactory()->createWriterDiscountVoucherPoolCategoryWriter(
             $this->getQueryContainer()
@@ -175,7 +159,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return DecisionRuleEngine
      */
-    protected function getDecisionRule()
+    protected function createDecisionRule()
     {
         return $this->getFactory()->createModelDecisionRuleEngine();
     }
@@ -183,7 +167,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return Calculator
      */
-    protected function getCalculator()
+    protected function createCalculator()
     {
         return $this->getFactory()->createModelCalculator();
     }
@@ -191,7 +175,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return Distributor
      */
-    public function getDistributor()
+    public function createDistributor()
     {
         return $this->getFactory()->createDistributorDistributor();
     }
@@ -199,7 +183,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return VoucherEngine
      */
-    public function getVoucherEngine()
+    public function createVoucherEngine()
     {
         return $this->getFactory()->createModelVoucherEngine(
             $this->getConfig(),
@@ -210,7 +194,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return Item
      */
-    public function getItemCollector()
+    public function createItemCollector()
     {
         return $this->getFactory()->createCollectorItem();
     }
@@ -218,7 +202,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return ItemExpense
      */
-    public function getItemExpenseCollector()
+    public function createItemExpenseCollector()
     {
         return $this->getFactory()->createCollectorItemExpense();
     }
@@ -226,7 +210,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return Expense
      */
-    public function getOrderExpenseCollector()
+    public function createOrderExpenseCollector()
     {
         return $this->getFactory()->createCollectorExpense();
     }

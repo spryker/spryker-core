@@ -103,11 +103,9 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
-     * @param $orderId
-     *
      * @return SpySalesOrderCommentQuery
      */
-    public function queryComments($orderId)
+    public function queryComments()
     {
         $query = SpySalesOrderCommentQuery::create();
 
@@ -130,7 +128,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     /**
      * @param $idCustomer
      * @param Criteria|null $criteria
-     * 
+     *
      * @return SpySalesOrderQuery
      */
     public function querySalesOrdersByCustomerId($idCustomer, Criteria $criteria=null)

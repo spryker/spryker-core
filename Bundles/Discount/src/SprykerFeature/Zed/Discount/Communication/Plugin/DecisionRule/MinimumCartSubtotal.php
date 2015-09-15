@@ -6,12 +6,10 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule;
 
-use Generated\Shared\Discount\OrderInterface;
+use Generated\Shared\Discount\DiscountInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount as DiscountEntity;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule as DecisionRuleEntity;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
 
 /**
@@ -21,20 +19,16 @@ class MinimumCartSubtotal extends AbstractDecisionRule implements DiscountDecisi
 {
 
     /**
-     * @param DiscountEntity $discountEntity
-     * @ param OrderInterface $container
-     *
+     * @param DiscountInterface $discountTransfer
      * @param CalculableInterface $container
-     * @param DecisionRuleEntity $decisionRuleEntity
      *
      * @return $this|ModelResult
      */
     public function check(
-        DiscountEntity $discountEntity,
-        //OrderInterface $container,
-        CalculableInterface $container,
-        DecisionRuleEntity $decisionRuleEntity = null
+        DiscountInterface $discountTransfer,
+        CalculableInterface $container
     ) {
+        $decisionRuleEntity = $this->getContext()[self::KEY_ENTITY];
         return $this->getDependencyContainer()
             ->getDiscountFacade()
             ->isMinimumCartSubtotalReached($container, $decisionRuleEntity);

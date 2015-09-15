@@ -44,4 +44,28 @@ interface StorageProviderInterface
      */
     public function decreaseItems(CartInterface $cart, ChangeInterface $change);
 
+    /**
+     * @param CartInterface $cart
+     * @param ChangeInterface $change
+     *
+     * @return CartInterface
+     */
+    public function addCouponCode(CartInterface $cart, ChangeInterface $change);
+
+    /**
+     * @param CartInterface $cart
+     * @param ChangeInterface $change
+     *
+     * @return CartInterface
+     */
+    public function removeCouponCode(CartInterface $cart, ChangeInterface $change);
+
+    /**
+     * @param CartInterface $cart
+     *
+     * @return CartInterface
+     */
+    public function clearCouponCodes(CartInterface $cart);
+
+
 }

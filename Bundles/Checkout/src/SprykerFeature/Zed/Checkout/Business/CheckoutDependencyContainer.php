@@ -24,10 +24,12 @@ class CheckoutDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createWorkflowCheckoutWorkflow(
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_PRECONDITIONS),
+            $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_PRE_HYDRATOR),
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_ORDERHYDRATORS),
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_ORDERSAVERS),
             $this->getProvidedDependency(CheckoutDependencyProvider::CHECKOUT_POSTHOOKS),
-            $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_OMS)
+            $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_OMS),
+            $this->getProvidedDependency(CheckoutDependencyProvider::FACADE_CALCULATION)
         );
     }
 

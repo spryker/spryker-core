@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Dependency\Plugin;
 
+use Generated\Shared\Discount\DiscountInterface;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 
 interface DiscountCalculatorPluginInterface
@@ -21,9 +22,9 @@ interface DiscountCalculatorPluginInterface
 
     /**
      * @param DiscountableInterface[] $discountableObjects
-     * @param float $number
+     * @param DiscountInterface $discountTransfer
      */
-    public function distribute(array $discountableObjects, $number);
+    public function distribute(array $discountableObjects, DiscountInterface $discountTransfer);
 
     /**
      * @return float

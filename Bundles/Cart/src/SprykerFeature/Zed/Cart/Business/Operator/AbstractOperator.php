@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Cart\Business\Operator;
 
 use Generated\Shared\Cart\CartInterface;
-use Generated\Shared\Cart\ItemInterface;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
 use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
 use Generated\Shared\Cart\ChangeInterface;
@@ -39,6 +38,7 @@ abstract class AbstractOperator implements OperatorInterface
      * @var ItemExpanderPluginInterface[]
      */
     private $itemExpanderPlugins = [];
+
     /**
      * @var ItemGrouperFacade
      */
@@ -46,16 +46,17 @@ abstract class AbstractOperator implements OperatorInterface
 
     /**
      * @param StorageProviderInterface $storageProvider
-     * @param CalculationFacade        $cartCalculator
-     * @param ItemGrouperFacade        $itemGrouperFacade
-     * @param LoggerInterface          $messenger
+     * @param CalculationFacade $cartCalculator
+     * @param ItemGrouperFacade $itemGrouperFacade
+     * @param LoggerInterface $messenger
      */
     public function __construct(
         StorageProviderInterface $storageProvider,
         CalculationFacade $cartCalculator,
         ItemGrouperFacade $itemGrouperFacade,
         LoggerInterface $messenger = null //@todo to be discussed
-    ) {
+)
+    {
         $this->storageProvider = $storageProvider;
         $this->messenger = $messenger;
         $this->cartCalculator = $cartCalculator;

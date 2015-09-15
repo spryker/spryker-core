@@ -10,6 +10,7 @@ use Generated\Shared\Calculation\DiscountItemsInterface;
 use Generated\Shared\Calculation\TotalsInterface;
 use Generated\Shared\DiscountCalculationConnector\DiscountInterface;
 use Generated\Shared\DiscountCalculationConnector\ExpenseInterface;
+use Generated\Shared\DiscountCalculationConnector\ItemInterface;
 use Generated\Shared\DiscountCalculationConnector\ProductOptionInterface;
 use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\DiscountTotalItemTransfer;
@@ -29,8 +30,8 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
         CalculableInterface $discountableContainer,
         $discountableContainers
     ) {
-        $discount = $this->createDiscountTransfer($discountableContainer, $discountableContainers);
-        $totalsTransfer->setDiscount($discount);
+        $discountTransfer = $this->createDiscountTransfer($discountableContainer, $discountableContainers);
+        $totalsTransfer->setDiscount($discountTransfer);
     }
 
     /**
@@ -49,15 +50,31 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
             $discountableItems = $discountableItems->getOrderItems();
         }
 
-        foreach ($discountableItems as $item) {
-            $discountAmount += $this->sumItemDiscounts($item->getDiscounts());
-            $discountAmount += $this->sumItemExpenseDiscounts($item->getExpenses());
-            $discountAmount += $this->sumOptionDiscounts($item->getProductOptions());
+        foreach ($discountableItems as $itemTransfer) {
+            $discountAmount += $this->calculateItemDiscountAmount($itemTransfer);
         }
 
         $discountAmount += $this->sumTotalExpenseDiscounts($discountableContainer);
 
         return $discountAmount;
+    }
+
+    /**
+     * @param ItemInterface $itemTransfer
+     *
+     * @return int
+     */
+    protected function calculateItemDiscountAmount(ItemInterface $itemTransfer)
+    {
+        $itemDiscountAmount = 0;
+
+        $itemDiscountAmount += $this->sumItemDiscounts($itemTransfer->getDiscounts());
+        $itemDiscountAmount += $this->sumItemExpenseDiscounts($itemTransfer->getExpenses());
+        $itemDiscountAmount += $this->sumOptionDiscounts($itemTransfer->getProductOptions());
+
+        $itemDiscountAmount = $itemDiscountAmount * $itemTransfer->getQuantity();
+
+        return $itemDiscountAmount;
     }
 
     /**
