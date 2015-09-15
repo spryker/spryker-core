@@ -14,7 +14,6 @@
         <property name="shippingAddress" type="Address" />
         <property name="customer" type="Customer" />
         <property name="items" type="Item[]"  singular="item" />
-        <property name="paymentMethod" type="string" />
         <property name="process" type="string" />
         <property name="couponCodes" type="array" singular="couponCode" />
         <property name="createdAt" type="string" />
