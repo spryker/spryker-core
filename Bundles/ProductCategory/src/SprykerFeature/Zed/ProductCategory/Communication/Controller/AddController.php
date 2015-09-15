@@ -4,7 +4,7 @@ namespace SprykerFeature\Zed\ProductCategory\Communication\Controller;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Pyz\Zed\ProductCategory\Business\ProductCategoryFacade;
+use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\ProductCategory\Communication\ProductCategoryDependencyContainer;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
@@ -66,7 +66,7 @@ class AddController extends AbstractController
 
             return $this->redirectResponse('/category');
         }
-        
+
 
         return $this->viewResponse([
             'form' => $form->createView()

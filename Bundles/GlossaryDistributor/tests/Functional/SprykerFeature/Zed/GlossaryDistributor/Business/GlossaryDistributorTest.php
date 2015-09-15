@@ -7,7 +7,7 @@ use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use Propel\Runtime\Exception\PropelException;
-use Pyz\Zed\Glossary\Business\GlossaryFacade;
+use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;

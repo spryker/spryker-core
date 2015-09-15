@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\ProductCategory\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductCategoryCommunication;
-use Pyz\Zed\Category\Business\CategoryFacade;
+use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use SprykerFeature\Zed\ProductCategory\Communication\Table\ProductCategoryTable;

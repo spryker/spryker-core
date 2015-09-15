@@ -6,8 +6,9 @@
 
 namespace SprykerFeature\Shared\Library\SystemUnderTest;
 
-// @todo Pyz not allowed in vendor
 use Propel\Runtime\Propel;
+
+// This is the only place where Project namespace is allowed
 use Pyz\Yves\Application\Communication\YvesBootstrap;
 use Pyz\Zed\Application\Communication\ZedBootstrap;
 

@@ -3,7 +3,7 @@
 namespace SprykerFeature\Zed\Product\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Pyz\Shared\System\SystemConfig;
+use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
