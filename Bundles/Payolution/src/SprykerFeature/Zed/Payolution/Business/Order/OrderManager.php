@@ -25,6 +25,7 @@ class OrderManager implements OrderManagerInterface
      * @param $idSalesOrder
      *
      * @throws \Propel\Runtime\Exception\PropelException
+     *
      * @return SpyPaymentPayolution
      */
     private function savePayment(PayolutionPaymentInterface $paymentTransfer, $idSalesOrder)
@@ -33,6 +34,7 @@ class OrderManager implements OrderManagerInterface
         $paymentEntity->fromArray($paymentTransfer->toArray());
         $paymentEntity->setFkSalesOrder($idSalesOrder);
         $paymentEntity->save();
+
         return $paymentEntity;
     }
 

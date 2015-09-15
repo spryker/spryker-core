@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,6 +10,7 @@ use Generated\Shared\Transfer\PayolutionResponseTransfer;
 
 interface PaymentManagerInterface
 {
+
     /**
      * @param int $idPayment
      *

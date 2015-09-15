@@ -6,8 +6,6 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Api\Adapter;
 
-use SprykerFeature\Zed\Payolution\Business\Api\Request\AbstractRequest;
-
 interface AdapterInterface
 {
 

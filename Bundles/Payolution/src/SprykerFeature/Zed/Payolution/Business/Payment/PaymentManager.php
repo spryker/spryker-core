@@ -12,8 +12,6 @@ use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Constants;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\ConverterInterface as RequestConverterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Response\ConverterInterface as ResponseConverterInterface;
-use SprykerFeature\Zed\Payolution\Business\Api\Response\AbstractResponse;
-use SprykerFeature\Zed\Payolution\Business\Api\Response\PreAuthorizationResponse;
 use SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper\AbstractMethodMapper;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
@@ -100,6 +98,8 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param int $idPayment
      *
+     * @throws \Exception
+     *
      * @return PayolutionResponseTransfer
      */
     public function reAuthorizePayment($idPayment)
@@ -144,6 +144,7 @@ class PaymentManager implements PaymentManagerInterface
      * @param SpyPaymentPayolution $paymentEntity
      *
      * @throws \Propel\Runtime\Exception\PropelException
+     *
      * @return SpyPaymentPayolutionTransactionRequestLog
      */
     private function logApiRequest(PayolutionRequestTransfer $requestTransfer, SpyPaymentPayolution $paymentEntity)
@@ -156,6 +157,7 @@ class PaymentManager implements PaymentManagerInterface
             ->setReferenceId($requestTransfer->getIdentificationReferenceid())
             ->setFkPaymentPayolution($paymentEntity->getIdPaymentPayolution());
         $logEntity->save();
+
         return $logEntity;
     }
 

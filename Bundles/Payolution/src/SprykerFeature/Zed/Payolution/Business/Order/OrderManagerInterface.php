@@ -10,5 +10,7 @@ use Generated\Shared\Payolution\OrderInterface;
 
 interface OrderManagerInterface
 {
+
     public function saveOrderPayment(OrderInterface $orderTransfer);
+
 }

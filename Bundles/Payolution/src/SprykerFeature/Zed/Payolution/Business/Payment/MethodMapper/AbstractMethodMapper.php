@@ -6,9 +6,6 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
 
-use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Header;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\Security;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\Partial\User;
 use SprykerFeature\Zed\Payolution\Business\Payment\MethodMapperInterface;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
 
@@ -32,7 +29,5 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
     {
         return $this->config;
     }
-
-
 
 }

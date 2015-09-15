@@ -30,6 +30,7 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     {
         /** @var SpyPaymentPayolutionQuery $query */
         $query = SpyPaymentPayolutionQuery::create();
+
         return $query->requireOneByIdPaymentPayolution($idPayment);
     }
 
@@ -43,6 +44,7 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
         /** @var SpyPaymentPayolutionTransactionStatusLogQuery $query */
         $query = SpyPaymentPayolutionTransactionStatusLogQuery::create();
         $query->orderBy(SpyPaymentPayolutionTransactionStatusLogTableMap::COL_CREATED_AT, Criteria::DESC);
+
         return $query->requireOneByFkPaymentPayolution($idPayment);
     }
 

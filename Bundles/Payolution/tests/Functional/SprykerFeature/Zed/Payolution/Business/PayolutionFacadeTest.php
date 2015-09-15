@@ -120,7 +120,7 @@ class PayolutionFacadeTest extends Test
         $this->assertEquals($this->orderEntity->getCustomer()->getGender(), $response->getNameSex());
         $this->assertEquals('exp clear fx date', $response->getClearingFxdate());
         $this->assertEquals($this->orderEntity->getBillingAddress()->getZipCode(), $response->getAddressZip());
-        
+
         // @todo CD-408 Assert persistent data
         // @todo CD-408 Assert response data
     }
@@ -149,7 +149,7 @@ class PayolutionFacadeTest extends Test
         $responseTransfer = $facade->reAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $responseTransfer);
 
-        /** @var SpyPaymentPayolutionTransactionRequestLog $reAuthorizationRequestLogEntity */
+        /* @var SpyPaymentPayolutionTransactionRequestLog $reAuthorizationRequestLogEntity */
         $this->paymentEntity->clearSpyPaymentPayolutionTransactionRequestLogs();
         $reAuthorizationRequestLogEntity = $this->paymentEntity
             ->getSpyPaymentPayolutionTransactionRequestLogs()
@@ -160,7 +160,7 @@ class PayolutionFacadeTest extends Test
             $reAuthorizationRequestLogEntity->getReferenceId()
         );
 
-        // @todo Test $responseTransfer fields
+        // @todo CD-408 Test $responseTransfer fields
     }
 
     /**
