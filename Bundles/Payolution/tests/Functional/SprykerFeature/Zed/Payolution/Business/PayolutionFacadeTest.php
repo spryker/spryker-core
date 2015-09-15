@@ -41,9 +41,14 @@ class PayolutionFacadeTest extends Test
         $this->setBaseTestData();
 
         $paymentTransfer = new PayolutionPaymentTransfer();
-        $paymentTransfer->setFkSalesOrder($this->orderEntity->getIdSalesOrder());
-        $paymentTransfer->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE);
-        $paymentTransfer->setClientIp('127.0.0.1');
+        $paymentTransfer->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE)
+            ->setClientIp('127.0.0.1')
+            ->setFirstName('Jane')
+            ->setLastName('Doe')
+            ->setBirthdate('1970-01-02')
+            ->setEmail('jane@family-doe.org')
+            ->setGender(SpyCustomerTableMap::COL_GENDER_MALE)
+            ->setSalutation(SpyCustomerTableMap::COL_SALUTATION_MR);
 
         // PayolutionCheckoutConnector-HydrateOrderPlugin emulation
         $orderTransfer = new OrderTransfer();
@@ -72,57 +77,6 @@ class PayolutionFacadeTest extends Test
         $response = $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
 
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
-
-        $this->assertEquals(0, $response->getProcessingRiskScore());
-        $this->assertEquals('ACK', $response->getP3Validation());
-        $this->assertEquals($this->orderEntity->getFirstName(), $response->getNameGiven());
-        $this->assertEquals('shopperID', $response->getIdentificationShopperid());
-        $this->assertEquals('expected clearing', $response->getClearingDescriptor());
-        $this->assertEquals('expected connector xid1', $response->getProcessingConnectordetailConnectortxid1());
-        $this->assertEquals('expected channel', $response->getTransactionChannel());
-        $this->assertEquals('expected reasonCode', $response->getProcessingReason());
-        $this->assertEquals($this->orderEntity->getBillingAddress()->getCity(), $response->getAddressCity());
-        $this->assertEquals(0, $response->getFrontendRequestCancelled());
-        $this->assertEquals('expecetd proc code', $response->getProcessingCode());
-        $this->assertEquals('expec proc reason', $response->getProcessingReason());
-        $this->assertEquals('exp front  mode', $response->getFrontendMode());
-        $this->assertEquals('exp clearing fx', $response->setClearingFxsource());
-        $this->assertEquals('exp clear amount', $response->getClearingAmount());
-        $this->assertEquals('exp  proc result', $response->getProcessingResult());
-        $this->assertEquals('exp name saluation', $response->getNameSalutation());
-        $this->assertEquals('exp presen usage', $response->getPresentationUsage());
-        $this->assertEquals('exp post valida', $response->getPostValidation());
-        $this->assertEquals($this->orderEntity->getCustomer()->getEmail(), $response->getContactEmail());
-        $this->assertEquals('exp clear  currency', $response->getClearingCurrency());
-        $this->assertEquals('exp frontend session', $response->getFrontendSessionId());
-        $this->assertEquals('exp proc stat code', $response->getProcessingStatusCode());
-        $this->assertEquals('exp presentation currency', $response->getPresentationCurrency());
-        $this->assertEquals('exp payment code', $response->getPaymentCode());
-        $this->assertEquals($this->orderEntity->getCustomer()->getDateOfBirth('Y-m-d'), $response->getNameBirthdate());
-        $this->assertEquals('exp proc return code', $response->getProcessingReturnCode());
-        $this->assertEquals($this->paymentEntity->getClientIp(), $response->getContactIp());
-        $this->assertEquals($this->orderEntity->getLastName(), $response->getNameFamily());
-        $this->assertEquals('exp proc stat', $response->getProcessingStatus());
-        $this->assertEquals('exp frontend cc logo', $response->getFrontendCcLogo());
-        $this->assertEquals($this->paymentEntity->getSpySalesOrder()->getGrandTotal(), $response->getPresentationAmount());
-        $this->assertEquals('exp id unique', $response->getIdentificationUniqueid());
-        $this->assertEquals('exp id trans id', $response->getIdentificationTransactionid());
-        $this->assertEquals('exp  id short id', $response->getIdentificationShortid());
-        $this->assertEquals('exp clearingfx rate', $response->getClearingFxrate());
-        $this->assertEquals('exp proc timestamp', $response->getProcessingTimestamp());
-        $this->assertEquals($this->orderEntity->getBillingAddress()->getCountry(), $response->getAddressCountry());
-        $this->assertEquals('exp proc connectri detail pay ref', $response->getProcessingConnectordetailPaymentreference());
-        $this->assertEquals('exp resp version', $response->getResponseVersion());
-        $this->assertEquals('CONNECTOR TEST', $response->getTransactionMode());
-        $this->assertEquals('exp proc return',  $response->getProcessingReturn());
-        $this->assertEquals('exp trans response', $response->getTransactionResponse());
-        $this->assertEquals($this->orderEntity->getBillingAddress()->getAddress1(), $response->getAddressStreet());
-        $this->assertEquals($this->orderEntity->getCustomer()->getGender(), $response->getNameSex());
-        $this->assertEquals('exp clear fx date', $response->getClearingFxdate());
-        $this->assertEquals($this->orderEntity->getBillingAddress()->getZipCode(), $response->getAddressZip());
-
-        // @todo CD-408 Assert persistent data
-        // @todo CD-408 Assert response data
     }
 
     public function testReAuthorization()
@@ -208,7 +162,13 @@ class PayolutionFacadeTest extends Test
         $this->paymentEntity = (new SpyPaymentPayolution())
             ->setFkSalesOrder($this->orderEntity->getIdSalesOrder())
             ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE)
-            ->setClientIp('127.0.0.1');
+            ->setClientIp('127.0.0.1')
+            ->setFirstName('Jane')
+            ->setLastName('Doe')
+            ->setBirthdate('1970-01-02')
+            ->setEmail('jane@family-doe.org')
+            ->setGender(SpyCustomerTableMap::COL_GENDER_MALE)
+            ->setSalutation(SpyCustomerTableMap::COL_SALUTATION_MR);
         $this->paymentEntity->save();
     }
 
