@@ -182,7 +182,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
 
         $groupedTaxSets = $totalsTransfer->getTaxTotal()->getTaxSets();
         $this->assertCount(1, $groupedTaxSets);
-        $this->assertEquals(693, $groupedTaxSets[0]->getAmount());
+        $this->assertEquals(462, $groupedTaxSets[0]->getAmount());
         $this->assertEquals(30, $groupedTaxSets[0]->getEffectiveRate());
     }
 
@@ -226,7 +226,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
 
         $groupedTaxSets = $totalsTransfer->getTaxTotal()->getTaxSets();
         $this->assertCount(1, $groupedTaxSets);
-        $this->assertEquals(462, $groupedTaxSets[0]->getAmount());
+        $this->assertEquals(231, $groupedTaxSets[0]->getAmount());
         $this->assertEquals(30, $orderItemTaxSet->getEffectiveRate());
     }
 
