@@ -16,25 +16,25 @@ use Symfony\Component\HttpFoundation\Request;
  * @method MaintenanceFacade getFacade()
  * @method MaintenanceDependencyContainer getDependencyContainer()
  */
-class SearchDataController extends AbstractController
+class StorageController extends AbstractController
 {
 
     /**
      * @return array
      */
-    public function searchAction()
+    public function indexAction()
     {
-        $table = $this->getDependencyContainer()->createSearchTable();
+        $table = $this->getDependencyContainer()->createStorageTable();
 
-        return $this->viewResponse(['searchTable' => $table->render()]);
+        return $this->viewResponse(['table' => $table->render()]);
     }
 
     /**
      * @return JsonResponse
      */
-    public function searchTableAction()
+    public function tableAction()
     {
-        $table = $this->getDependencyContainer()->createSearchTable();
+        $table = $this->getDependencyContainer()->createStorageTable();
 
         return $this->jsonResponse(
             $table->fetchData()
@@ -46,20 +46,32 @@ class SearchDataController extends AbstractController
      *
      * @return array
      */
-    public function searchKeyAction(Request $request)
+    public function storageKeyAction(Request $request)
     {
         $key = $request->get('key');
-
-        $queryString = '{"query":{ "ids":{ "values": [ ' . $key . ' ] } } }';
-        $searchQuery = $this->getDependencyContainer()->getSearchClient()
-            ->getIndexClient()->search(json_decode($queryString, true));
-
-        $searchResult = $searchQuery->getResults();
+        $value = $this->getDependencyContainer()->getStorageClient()->get($key);
 
         return $this->viewResponse([
-            'value' => var_export($searchResult, true),
+            'value' => var_export($value, true),
             'key' => $key,
+            'referenceKey' => $this->getReferenceKey($value),
         ]);
+    }
+
+    /**
+     * @param $value
+     *
+     * @return string
+     */
+    protected function getReferenceKey($value)
+    {
+        $referenceKey = '';
+
+        if (is_array($value) && isset($value['reference_key'])) {
+            $referenceKey = $value['reference_key'];
+        }
+
+        return $referenceKey;
     }
 
 }

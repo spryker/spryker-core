@@ -18,15 +18,15 @@
                 <label>Search</label>
                 <title>Search index</title>
                 <bundle>maintenance</bundle>
-                <controller>search-data</controller>
-                <action>search</action>
+                <controller>search</controller>
+                <action>index</action>
             </search>
             <storage>
                 <label>Storage</label>
                 <title>Storage index</title>
                 <bundle>maintenance</bundle>
-                <controller>storage-data</controller>
-                <action>storage</action>
+                <controller>storage</controller>
+                <action>index</action>
             </storage>
         </pages>
     </maintenance>

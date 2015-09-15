@@ -70,7 +70,7 @@ class StorageTable extends AbstractTable
             }
 
             $result[] = [
-                'key' => '<a href="/maintenance/data/storage-key?key=' . $key . '">' . $key . '</a>',
+                'key' => '<a href="/maintenance/storage/storage-key?key=' . $key . '">' . $key . '</a>',
                 'value' => $value,
             ];
         }

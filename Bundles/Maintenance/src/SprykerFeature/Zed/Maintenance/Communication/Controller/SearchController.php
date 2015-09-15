@@ -16,25 +16,25 @@ use Symfony\Component\HttpFoundation\Request;
  * @method MaintenanceFacade getFacade()
  * @method MaintenanceDependencyContainer getDependencyContainer()
  */
-class StorageDataController extends AbstractController
+class SearchController extends AbstractController
 {
 
     /**
      * @return array
      */
-    public function storageAction()
+    public function indexAction()
     {
-        $table = $this->getDependencyContainer()->createStorageTable();
+        $table = $this->getDependencyContainer()->createSearchTable();
 
-        return $this->viewResponse(['table' => $table->render()]);
+        return $this->viewResponse(['searchTable' => $table->render()]);
     }
 
     /**
      * @return JsonResponse
      */
-    public function tableAction()
+    public function searchTableAction()
     {
-        $table = $this->getDependencyContainer()->createStorageTable();
+        $table = $this->getDependencyContainer()->createSearchTable();
 
         return $this->jsonResponse(
             $table->fetchData()
@@ -46,21 +46,19 @@ class StorageDataController extends AbstractController
      *
      * @return array
      */
-    public function storageKeyAction(Request $request)
+    public function searchKeyAction(Request $request)
     {
         $key = $request->get('key');
-        $value = $this->getDependencyContainer()->getStorageClient()->get($key);
 
-        $link = '';
+        $queryString = '{"query":{ "ids":{ "values": [ ' . $key . ' ] } } }';
+        $searchQuery = $this->getDependencyContainer()->getSearchClient()
+            ->getIndexClient()->search(json_decode($queryString, true));
 
-        if (is_array($value) && isset($value['reference_key'])) {
-            $link = '<a href="/maintenance/index/storage-key?key=' . $value['reference_key'] . '">' . $value['reference_key'] . '</a>';
-        }
+        $searchResult = $searchQuery->getResults();
 
         return $this->viewResponse([
-            'value' => var_export($value, true),
+            'value' => var_export($searchResult, true),
             'key' => $key,
-            'link' => $link,
         ]);
     }
 
