@@ -28,6 +28,16 @@ class PayoneConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return string
+     */
+    public function getEmptySequenceNumber()
+    {
+        $settings = $this->get(PayoneConfigConstants::PAYONE);
+
+        return $settings[PayoneConfigConstants::PAYONE_EMPTY_SEQUENCE_NUMBER];
+    }
+
+    /**
      * @return PayoneStandardParameterInterface
      */
     public function getRequestStandardParameter()

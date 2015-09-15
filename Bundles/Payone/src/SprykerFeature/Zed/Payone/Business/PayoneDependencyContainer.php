@@ -115,9 +115,12 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createSequenceNumberProvider()
     {
+        $defaultEmptySequenceNumber = $this->getConfig()->getEmptySequenceNumber();
+
         return $this->getFactory()
             ->createSequenceNumberSequenceNumberProvider(
-                $this->createQueryContainer()
+                $this->createQueryContainer(),
+                $defaultEmptySequenceNumber
             );
     }
 
