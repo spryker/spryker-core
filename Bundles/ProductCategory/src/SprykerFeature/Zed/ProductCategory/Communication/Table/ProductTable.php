@@ -86,7 +86,6 @@ class ProductTable extends AbstractTable
 
         $results = [];
         foreach ($queryResults as $product) {
-            //die(dump($product));
             $results[] = [
                 SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT],
                 SpyAbstractProductTableMap::COL_SKU => $product[SpyAbstractProductTableMap::COL_SKU],
