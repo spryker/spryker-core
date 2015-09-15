@@ -331,7 +331,7 @@ class TransactionStatusUpdateManager
      */
     private function getFirstUnprocessedTransactionStatusLog($idSalesOrder, $idSalesOrderItem, $status)
     {
-        $records = $this->getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem);
+        $transactionStatusLogs = $this->getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem);
 
         if (empty($transactionStatusLogs)) {
             return;
