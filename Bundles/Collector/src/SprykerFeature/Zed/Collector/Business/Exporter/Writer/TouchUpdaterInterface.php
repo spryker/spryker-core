@@ -12,8 +12,8 @@ interface TouchUpdaterInterface
 {
     /**
      * @param TouchUpdaterSet $touchUpdaterSet
-     * @param $locale_id
+     * @param $idLocale
      */
-    public function updateMulti(TouchUpdaterSet $touchUpdaterSet, $locale_id);
+    public function updateMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale);
 
 }
