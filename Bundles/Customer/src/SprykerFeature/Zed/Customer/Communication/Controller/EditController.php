@@ -90,7 +90,7 @@ class EditController extends AbstractController
      * @param int $idCustomer
      * @param int $defaultBillingAddress
      */
-    private function updateBillingAddress($idCustomer, $defaultBillingAddress)
+    protected function updateBillingAddress($idCustomer, $defaultBillingAddress)
     {
         $addressTransfer = $this->createCustomAddressTransfer($idCustomer, $defaultBillingAddress);
         $this->getFacade()
@@ -102,7 +102,7 @@ class EditController extends AbstractController
      * @param int $idCustomer
      * @param int $defaultShippingAddress
      */
-    private function updateShippingAddress($idCustomer, $defaultShippingAddress)
+    protected function updateShippingAddress($idCustomer, $defaultShippingAddress)
     {
         $addressTransfer = $this->createCustomAddressTransfer($idCustomer, $defaultShippingAddress);
         $this->getFacade()
@@ -116,7 +116,7 @@ class EditController extends AbstractController
      *
      * @return AddressTransfer
      */
-    private function createCustomAddressTransfer($idCustomer, $billingAddress)
+    protected function createCustomAddressTransfer($idCustomer, $billingAddress)
     {
         $addressTransfer = $this->createAddressTransfer();
 
