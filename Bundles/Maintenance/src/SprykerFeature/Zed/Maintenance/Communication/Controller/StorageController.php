@@ -53,7 +53,7 @@ class StorageController extends AbstractController
         $value = $this->getDependencyContainer()->getStorageClient()->get($key);
 
         return $this->viewResponse([
-            'value' => $value,
+            'value' => var_export($value, true),
             'key' => $key,
             'referenceKey' => $this->getReferenceKey($value),
         ]);
