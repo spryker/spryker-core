@@ -177,7 +177,7 @@ class EditController extends AddController
         $existingParents = $this->getDependencyContainer()
             ->createCategoryFacade()
             ->getNodesByIdCategory($categoryTransfer->getIdCategory());
-        
+
         //remove deselected parents
         foreach ($existingParents as $parent) {
             if (!array_key_exists($parent->getFkParentCategoryNode(), $parentIdList)) {
