@@ -14,19 +14,26 @@ use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method MaintenanceFacade getFacade()
- * * @method MaintenanceDependencyContainer getDependencyContainer()
+ * @method MaintenanceDependencyContainer getDependencyContainer()
  */
 class DataController extends AbstractController
 {
 
-    public function storageAction(){
+    /**
+     * @return array
+     */
+    public function storageAction()
+    {
 
         $table = $this->getDependencyContainer()->createStorageTable();
         return $this->viewResponse(['table' => $table->render()]);
     }
 
-    public function searchAction(){
-
+    /**
+     * @return array
+     */
+    public function searchAction()
+    {
         $table = $this->getDependencyContainer()->createSearchTable();
         return $this->viewResponse(['searchTable' => $table->render()]);
     }
@@ -44,8 +51,8 @@ class DataController extends AbstractController
     }
 
     /**
- * @return JsonResponse
- */
+     * @return JsonResponse
+     */
     public function searchTableAction()
     {
         $table = $this->getDependencyContainer()->createSearchTable();
@@ -55,11 +62,15 @@ class DataController extends AbstractController
         );
     }
 
+    /**
+     * @param Request $request
+     * @return array
+     */
     public function searchKeyAction(Request $request)
     {
         $key = $request->get('key');
 
-        $str = '{"query":{ "ids":{ "values": [ '.$key.' ] } } }';
+        $str = '{"query":{ "ids":{ "values": [ ' . $key . ' ] } } }';
         $query = $this->getDependencyContainer()->getSearchClient()
             ->getIndexClient()->search(json_decode($str, true));
 
@@ -71,19 +82,19 @@ class DataController extends AbstractController
         ]);
     }
 
-
-    public function storageKeyAction(Request $request){
+    /**
+     * @param Request $request
+     * @return array
+     */
+    public function storageKeyAction(Request $request)
+    {
         $key = $request->get('key');
         $value = $this->getDependencyContainer()->getStorageClient()->get($key);
 
         $link = '';
 
-        if(is_array($value)){
-            foreach($value as $k => $v){
-                if($k === 'reference_key'){
-                   $link = '<a href="/maintenance/index/storage-key?key='.$v.'">'.$v.'</a>';
-                }
-            }
+        if (is_array($value) && isset($value['reference_key'])) {
+            $link = '<a href="/maintenance/index/storage-key?key=' . $value['reference_key'] . '">' . $value['reference_key'] . '</a>';
         }
 
         return $this->viewResponse([
