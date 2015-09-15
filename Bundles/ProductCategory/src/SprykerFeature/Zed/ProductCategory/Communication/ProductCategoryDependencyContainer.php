@@ -28,6 +28,7 @@ use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer
  */
 class ProductCategoryDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @var LocaleTransfer
      */
@@ -43,8 +44,9 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
     }
 
     /**
-     * @return ProductFacade
      * @throws \ErrorException
+     *
+     * @return ProductFacade
      */
     public function createProductFacade()
     {
@@ -52,8 +54,9 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
     }
 
     /**
-     * @return CategoryFacade
      * @throws \ErrorException
+     *
+     * @return CategoryFacade
      */
     public function createCategoryFacade()
     {
@@ -61,8 +64,9 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
     }
 
     /**
-     * @return ProductCategoryFacade
      * @throws \ErrorException
+     *
+     * @return ProductCategoryFacade
      */
     public function createProductCategoryFacade()
     {

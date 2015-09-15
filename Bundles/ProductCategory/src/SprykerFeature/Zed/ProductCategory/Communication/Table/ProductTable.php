@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,16 +14,15 @@ use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyLocalizedAbstractProductAttributesTableMap;
 
-
 class ProductTable extends AbstractTable
 {
+
     const TABLE_IDENTIFIER = 'product-table';
 
     /**
      * @var ProductCategoryQueryContainerInterface
      */
     protected $productCategoryQueryContainer;
-
 
     /**
      * @var LocaleTransfer
@@ -34,7 +34,6 @@ class ProductTable extends AbstractTable
      */
     protected $idCategory;
 
-
     /**
      * @param ProductCategoryQueryContainerInterface $productCategoryQueryContainer
      * @param LocaleTransfer $locale
@@ -44,7 +43,7 @@ class ProductTable extends AbstractTable
     {
         $this->productCategoryQueryContainer = $productCategoryQueryContainer;
         $this->locale = $locale;
-        $this->idCategory = (int)$idCategory;
+        $this->idCategory = (int) $idCategory;
         $this->defaultUrl = sprintf('productTable?%s=%d', ProductCategoryConfig::PARAM_ID_CATEGORY, $this->idCategory);
         $this->setTableIdentifier(self::TABLE_IDENTIFIER);
     }
@@ -93,14 +92,16 @@ class ProductTable extends AbstractTable
                 SpyAbstractProductTableMap::COL_SKU => $product[SpyAbstractProductTableMap::COL_SKU],
                 SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => $product['name'],
                 'checkbox' => '<input id="all_products_checkbox_' .
-                    $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT] . 
-                    '" type="checkbox" onclick="allProductsClickMarkAsSelected(this.checked, ' . 
-                    $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT] . 
-                    ', \'' . $product[SpyAbstractProductTableMap::COL_SKU] . '\', \'' . 
+                    $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT] .
+                    '" type="checkbox" onclick="allProductsClickMarkAsSelected(this.checked, ' .
+                    $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT] .
+                    ', \'' . $product[SpyAbstractProductTableMap::COL_SKU] . '\', \'' .
                     urlencode($product['name']) . '\'); return" /> ',
             ];
         }
         unset($queryResults);
+
         return $results;
     }
+
 }

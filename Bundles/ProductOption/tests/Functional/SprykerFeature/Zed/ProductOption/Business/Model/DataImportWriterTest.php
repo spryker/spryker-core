@@ -8,7 +8,6 @@ namespace Functional\SprykerFeature\Zed\ProductOption\Business\Model;
 
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
-//use Pyz\Zed\ProductOption\Business\Internal\DemoData\Importer\Decorator\InMemoryProductOptionQueryContainer;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
@@ -51,7 +50,6 @@ class DataImportWriterTest extends AbstractFunctionalTest
         parent::setUp();
 
         $this->facade = $this->getFacade();
-//        InMemoryProductOptionQueryContainer::disable();
     }
 
     public function testImportProductOptionType()
