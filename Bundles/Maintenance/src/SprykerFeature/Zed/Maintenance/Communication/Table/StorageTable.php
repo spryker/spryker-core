@@ -63,10 +63,10 @@ class StorageTable extends AbstractTable
             $value = $this->storageClient->get($key);
 
             $value = print_r($value, true);
+            $value = htmlentities($value);
 
             if (is_string($value) && strlen($value) > 100) {
-                $value = htmlentities($value);
-                $value = substr($value, 0, 255);
+                $value = mb_substr($value, 0, 255);
             }
 
             $result[] = [
