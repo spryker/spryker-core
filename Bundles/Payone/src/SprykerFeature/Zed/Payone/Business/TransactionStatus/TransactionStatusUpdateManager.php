@@ -334,14 +334,14 @@ class TransactionStatusUpdateManager
         $transactionStatusLogs = $this->getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem);
 
         if (empty($transactionStatusLogs)) {
-            return;
+            return null;
         }
 
         /** @var SpyPaymentPayoneTransactionStatusLog $transactionStatusLog */
         $transactionStatusLog = array_shift($transactionStatusLogs);
 
         if ($transactionStatusLog->getStatus() !== $status) {
-            return;
+            return null;
         }
 
         return $transactionStatusLog;
