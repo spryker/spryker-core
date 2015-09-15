@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Request;
  * @method MaintenanceFacade getFacade()
  * @method MaintenanceDependencyContainer getDependencyContainer()
  */
-class DataController extends AbstractController
+class StorageDataController extends AbstractController
 {
 
     /**
@@ -24,18 +24,9 @@ class DataController extends AbstractController
      */
     public function storageAction()
     {
-
         $table = $this->getDependencyContainer()->createStorageTable();
-        return $this->viewResponse(['table' => $table->render()]);
-    }
 
-    /**
-     * @return array
-     */
-    public function searchAction()
-    {
-        $table = $this->getDependencyContainer()->createSearchTable();
-        return $this->viewResponse(['searchTable' => $table->render()]);
+        return $this->viewResponse(['table' => $table->render()]);
     }
 
     /**
@@ -51,39 +42,8 @@ class DataController extends AbstractController
     }
 
     /**
-     * @return JsonResponse
-     */
-    public function searchTableAction()
-    {
-        $table = $this->getDependencyContainer()->createSearchTable();
-
-        return $this->jsonResponse(
-            $table->fetchData()
-        );
-    }
-
-    /**
      * @param Request $request
-     * @return array
-     */
-    public function searchKeyAction(Request $request)
-    {
-        $key = $request->get('key');
-
-        $str = '{"query":{ "ids":{ "values": [ ' . $key . ' ] } } }';
-        $query = $this->getDependencyContainer()->getSearchClient()
-            ->getIndexClient()->search(json_decode($str, true));
-
-        $value = $query->getResults();
-
-        return $this->viewResponse([
-            'value' => var_export($value, true),
-            'key' => $key
-        ]);
-    }
-
-    /**
-     * @param Request $request
+     *
      * @return array
      */
     public function storageKeyAction(Request $request)
@@ -100,8 +60,7 @@ class DataController extends AbstractController
         return $this->viewResponse([
             'value' => var_export($value, true),
             'key' => $key,
-            'link' => $link
-
+            'link' => $link,
         ]);
     }
 

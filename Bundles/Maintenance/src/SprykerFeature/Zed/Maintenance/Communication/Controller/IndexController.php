@@ -12,7 +12,7 @@ use SprykerFeature\Zed\Maintenance\Communication\MaintenanceDependencyContainer;
 
 /**
  * @method MaintenanceFacade getFacade()
- * * @method MaintenanceDependencyContainer getDependencyContainer()
+ * @method MaintenanceDependencyContainer getDependencyContainer()
  */
 class IndexController extends AbstractController
 {

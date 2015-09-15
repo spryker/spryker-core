@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -14,6 +15,9 @@ class SearchTable extends AbstractTable
 
     const ACTIONS = 'Actions';
 
+    /**
+     * @var int
+     */
     protected $defaultLimit = 1000;
 
     /**
@@ -21,13 +25,18 @@ class SearchTable extends AbstractTable
      */
     protected $searchClient;
 
+    /**
+     * @param SearchClient $searchClient
+     */
     public function __construct(SearchClient $searchClient)
     {
         $this->searchClient = $searchClient;
     }
 
     /**
-     * @inheritDoc
+     * @param TableConfiguration $config
+     *
+     * @return TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -45,13 +54,13 @@ class SearchTable extends AbstractTable
         return $config;
     }
 
-
     /**
-     * @inheritDoc
+     * @param TableConfiguration $config
+     *
+     * @return array
      */
     protected function prepareData(TableConfiguration $config)
     {
-
         $query = $this->searchClient->getIndexClient()->search('*');
         $totalHits = $query->getTotalHits();
         $this->setTotal($totalHits);
@@ -71,9 +80,7 @@ class SearchTable extends AbstractTable
                 'type' => $result->getType(),
                 'score' => $result->getScore(),
             ];
-
         }
-
 
         return $tableData;
     }

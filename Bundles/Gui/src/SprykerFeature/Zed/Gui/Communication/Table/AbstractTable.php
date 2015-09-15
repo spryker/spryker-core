@@ -443,7 +443,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param $total
+     * @param int $total
      */
     protected function setTotal($total)
     {
@@ -451,10 +451,11 @@ abstract class AbstractTable
     }
 
     /**
-     * @param $filtered
+     * @param bool $filtered
      */
     protected function setFiltered($filtered)
     {
         $this->filtered = $filtered;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -19,14 +20,18 @@ class StorageTable extends AbstractTable
      */
     protected $storageClient;
 
+    /**
+     * @param StorageClientInterface $storageClient
+     */
     public function __construct(StorageClientInterface $storageClient)
     {
         $this->storageClient = $storageClient;
     }
 
-
     /**
-     * @inheritDoc
+     * @param TableConfiguration $config
+     *
+     * @return TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -41,13 +46,13 @@ class StorageTable extends AbstractTable
         return $config;
     }
 
-
     /**
-     * @inheritDoc
+     * @param TableConfiguration $config
+     *
+     * @return array
      */
     protected function prepareData(TableConfiguration $config)
     {
-
         $keys = $this->storageClient->getAllKeys();
 
         sort($keys);
@@ -66,7 +71,7 @@ class StorageTable extends AbstractTable
 
             $result[] = [
                 'key' => '<a href="/maintenance/data/storage-key?key=' . $key . '">' . $key . '</a>',
-                'value' => $value
+                'value' => $value,
             ];
         }
 
@@ -74,6 +79,5 @@ class StorageTable extends AbstractTable
 
         return $result;
     }
-
 
 }
