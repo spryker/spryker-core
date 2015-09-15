@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Lumberjack\Business;
 
+use SprykerEngine\Shared\Lumberjack\Model\Event;
 use SprykerEngine\Shared\Lumberjack\Model\EventInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
@@ -14,14 +15,6 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
  */
 class LumberjackFacade extends AbstractFacade
 {
-
-    /**
-     * @return DTO\Event
-     */
-    public function createEvent()
-    {
-        return $this->getDependencyContainer()->createEvent();
-    }
 
     /**
      * @param EventInterface $event
@@ -36,7 +29,7 @@ class LumberjackFacade extends AbstractFacade
      */
     public function logEvent(array $fields) {
         $this->saveEvent(
-            $this->createEvent()->addFields($fields)
+            (new Event())->addFields($fields)
         );
     }
 
