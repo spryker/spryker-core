@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Mail\Business;
 use Generated\Zed\Ide\FactoryAutoCompletion\MailBusiness;
 use SprykerFeature\Shared\Library\Config;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use Pyz\Shared\Mail\MailConfig;
+use SprykerFeature\Shared\Mail\MailConfig;
 
 /**
  * @method MailBusiness getFactory()

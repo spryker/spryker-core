@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\ProductCategory\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductCategoryCommunication;
-use Pyz\Zed\Category\Business\CategoryFacade;
+use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use SprykerFeature\Zed\ProductCategory\Communication\Table\ProductCategoryTable;
@@ -28,6 +28,7 @@ use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer
  */
 class ProductCategoryDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @var LocaleTransfer
      */
@@ -43,8 +44,9 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
     }
 
     /**
-     * @return ProductFacade
      * @throws \ErrorException
+     *
+     * @return ProductFacade
      */
     public function createProductFacade()
     {
@@ -52,8 +54,9 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
     }
 
     /**
-     * @return CategoryFacade
      * @throws \ErrorException
+     *
+     * @return CategoryFacade
      */
     public function createCategoryFacade()
     {
@@ -61,8 +64,9 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
     }
 
     /**
-     * @return ProductCategoryFacade
      * @throws \ErrorException
+     *
+     * @return ProductCategoryFacade
      */
     public function createProductCategoryFacade()
     {
