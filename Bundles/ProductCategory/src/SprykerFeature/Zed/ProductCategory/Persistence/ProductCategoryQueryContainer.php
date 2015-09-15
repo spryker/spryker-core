@@ -57,7 +57,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     /**
      * @param int $idCategory
      * @param int $idAbstractProduct
-     * 
+     *
      * @return SpyProductCategoryQuery
      */
     public function queryProductCategoryMappingByIds($idCategory, $idAbstractProduct)
@@ -85,12 +85,10 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
             ->useSpyAbstractProductQuery()
                 ->filterBySku($sku)
             ->endUse()
-            ->endUse()
-                ->useCategoryQuery()
-                    ->useAttributeQuery()
-                        ->filterByFkLocale($locale->getIdLocale())
-                        ->filterByName($categoryName)
-                    ->endUse()
+            ->useSpyCategoryQuery()
+                ->useAttributeQuery()
+                    ->filterByFkLocale($locale->getIdLocale())
+                    ->filterByName($categoryName)
                 ->endUse()
             ->endUse()
         ;
@@ -116,14 +114,14 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
             ->endUse()
             ->endUse()
         ;
-        
+
         return $query;
     }
 
     /**
      * @param int $idCategory
      * @param LocaleTransfer $locale
-     * 
+     *
      * @return SpyProductCategoryQuery
      */
     public function queryProductsByCategoryId($idCategory, LocaleTransfer $locale)
@@ -167,7 +165,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
                 'abstract_localized_attributes'
             )
             ->withColumn(
-                SpyAbstractProductTableMap::COL_SKU, 
+                SpyAbstractProductTableMap::COL_SKU,
                 'sku'
             )
             ->filterByFkCategory($idCategory)
