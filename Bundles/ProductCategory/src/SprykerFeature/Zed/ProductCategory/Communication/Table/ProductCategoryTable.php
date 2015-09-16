@@ -77,10 +77,6 @@ class ProductCategoryTable extends AbstractTable
             SpyAbstractProductTableMap::COL_SKU,
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
         ]);
-        $config->setSearchable([
-            SpyAbstractProductTableMap::COL_SKU,
-            SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
-        ]);
 
         return $config;
     }

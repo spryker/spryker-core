@@ -99,8 +99,6 @@ class EditController extends AddController
                 $removeProductMappingCollection = explode(',', $data['products_to_be_de_assigned']);
             }
 
-            $this->updateProductOrder($currentCategoryTransfer, (array) json_decode($data['product_order']));
-
             $this->updateProductCategoryPreconfig($currentCategoryTransfer, (array) json_decode($data['product_category_preconfig']));
 
             $parentIdList[] = $currentCategoryNodeTransfer->getFkParentCategoryNode();
@@ -112,6 +110,8 @@ class EditController extends AddController
                 $addProductsMappingCollection,
                 $removeProductMappingCollection
             );
+
+            $this->updateProductOrder($currentCategoryTransfer, (array) json_decode($data['product_order']));
 
             $this->addSuccessMessage('The category was saved successfully.');
 
