@@ -222,37 +222,12 @@
                         destinationTable.dataTable().fnDeleteRow(index);
                         var checkbox = $('#' + tableHandler.getCheckBoxNamePrefix() + idProduct);
                         checkbox.prop('checked', false);
-                        tableHandler.updateSelectedProductsLabelCount();
                     }
                 });
+
+                tableHandler.updateSelectedProductsLabelCount();
             };
 
-            tableHandler.disableSelectedProduct = function(idProduct) {
-                var selectedProductsData = sourceTable.DataTable().rows().data();
-                selectedProductsData.each(function (cellData, index) {
-                    var currentId = cellData[0];
-
-                    if (parseInt(currentId) == parseInt(idProduct)) {
-                        destinationTable.dataTable().fnDeleteRow(index);
-                        var checkbox = $('#' + tableHandler.getCheckBoxNamePrefix() + idProduct);
-                        checkbox.attr('disabled', true);
-                    }
-                });
-            };
-
-            tableHandler.enableSelectedProduct = function(idProduct) {
-                var selectedProductsData = sourceTable.DataTable().rows().data();
-                selectedProductsData.each(function (cellData, index) {
-                    var currentId = cellData[0];
-
-                    if (parseInt(currentId) == parseInt(idProduct)) {
-                        destinationTable.dataTable().fnDeleteRow(index);
-                        var checkbox = $('#' + tableHandler.getCheckBoxNamePrefix() + idProduct);
-                        checkbox.attr('disabled', false);
-                    }
-                });
-            };
-            
             tableHandler.getSelector = function() {
                 return destinationTableProductSelector; 
             };
@@ -331,11 +306,9 @@
             if (checked) {
                 productCategoryTable.removeSelectedProduct(idProduct);
                 allProductsTable.removeSelectedProduct(idProduct);
-                allProductsTable.disableSelectedProduct(idProduct);
             }
             else {
                 productCategoryTable.addSelectedProduct(idProduct, sku, name);
-                allProductsTable.enableSelectedProduct(idProduct);
             }
         }
 
@@ -348,22 +321,6 @@
             productCategoryTable.getSelector().removeProductFromSelection(idProduct);
             productCategoryTable.updateSelectedProductsLabelCount();
             $('#' + productCategoryTable.getCheckBoxNamePrefix() + idProduct).prop('checked', true);
-        }
-
-        function updateAllProductsTableCheckboxes() {
-            var productCategoryData = $('#product-category-table').DataTable().rows().data();
-            productCategoryData.each(function (cellData, index) {
-                var idProductCategoryProduct = parseInt(cellData[0]);
-
-                var selectedProductsData = $('#product-table').DataTable().rows().data();
-                selectedProductsData.each(function (cellData, index) {
-                    var idProduct = parseInt(cellData[0]);
-
-                    if (idProduct == idProductCategoryProduct) {
-                        allProductsTable.disableSelectedProduct(idProduct);
-                    }
-                })
-            });
         }
 
         function updateProductOrder(input, idProduct) {
@@ -401,7 +358,6 @@
                         }
                     }
 
-                    updateAllProductsTableCheckboxes();
                 }
             });
 
@@ -426,9 +382,10 @@
                         destinationTable.dataTable().fnDeleteRow(index);
                         var checkbox = $('#' + productCategoryTable.getCheckBoxNamePrefix() + idProduct);
                         checkbox.prop('checked', true);
-                        productCategoryTable.updateSelectedProductsLabelCount();
                     }
                 });
+
+                productCategoryTable.updateSelectedProductsLabelCount();
             };
 
             $('#product-category-table').dataTable({
@@ -454,8 +411,6 @@
                             $('#product_category_preconfig_' + idProduct).val(parseInt(productCategoryPreconfig[idProduct]) || 0);
                         }
                     }
-
-                    updateAllProductsTableCheckboxes();
                 }
             });
 
