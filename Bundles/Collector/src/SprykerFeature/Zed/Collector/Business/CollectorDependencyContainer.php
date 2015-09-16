@@ -7,14 +7,12 @@
 namespace SprykerFeature\Zed\Collector\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CollectorBusiness;
-use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainer;
 use SprykerFeature\Shared\Library\Storage\StorageInstanceBuilder;
 use SprykerFeature\Zed\Collector\Business\Exporter\Collector;
 use SprykerFeature\Zed\Collector\Business\Exporter\Reader\KeyValue\RedisReader;
 use SprykerFeature\Zed\Collector\Business\Exporter\Reader\Search\ElasticsearchMarkerReader;
-use SprykerFeature\Zed\Collector\Business\Exporter\Reader\Search\ElasticSearchReader;
 use SprykerFeature\Zed\Collector\Business\Exporter\SearchCollector;
 use SprykerFeature\Zed\Collector\Business\Exporter\ExporterInterface;
 use SprykerFeature\Zed\Collector\Business\Exporter\KeyBuilder\KvMarkerKeyBuilder;
