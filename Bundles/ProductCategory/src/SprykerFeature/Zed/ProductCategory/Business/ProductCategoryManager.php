@@ -16,8 +16,10 @@ use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeExc
 use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
+use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
+use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
 
 class ProductCategoryManager implements ProductCategoryManagerInterface
 {
@@ -38,6 +40,11 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     protected $categoryFacade;
 
     /**
+     * @var ProductCategoryToTouchInterface
+     */
+    protected $touchFacade;
+
+    /**
      * @var AutoCompletion
      */
     private $locator;
@@ -47,16 +54,19 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param ProductCategoryToProductInterface $productFacade
      * @param ProductCategoryToCategoryInterface $categoryFacade
      * @param LocatorLocatorInterface $locator
+     * @param ProductCategoryToTouchInterface $touchFacade
      */
     public function __construct(
         ProductCategoryQueryContainerInterface $productCategoryQueryContainer,
         ProductCategoryToProductInterface $productFacade,
         ProductCategoryToCategoryInterface $categoryFacade,
+        ProductCategoryToTouchInterface $touchFacade,
         LocatorLocatorInterface $locator
     ) {
         $this->productCategoryQueryContainer = $productCategoryQueryContainer;
         $this->productFacade = $productFacade;
         $this->categoryFacade = $categoryFacade;
+        $this->touchFacade = $touchFacade;
         $this->locator = $locator;
     }
 
@@ -183,6 +193,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
                 $mapping->setFkCategory($idCategory);
                 $mapping->setFkAbstractProduct($idProduct);
                 $mapping->save();
+
+                $this->touchAbstractProductActive($idProduct);
             }
         }
     }
@@ -199,6 +211,10 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
             if ($mapping) {
                 $mapping->delete();
+
+                //yes, Active is correct, it should update touch items, not mark them to delete
+                //it's just a change to the mappings and not an actual abstract product
+                $this->touchAbstractProductActive($idProduct);
             }
         }
     }
@@ -219,6 +235,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
                 $mapping->setFkAbstractProduct($idProduct);
                 $mapping->setProductOrder($order);
                 $mapping->save();
+
+                $this->touchAbstractProductActive($idProduct);
             }
         }
     }
@@ -239,8 +257,26 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
                 $mapping->setFkAbstractProduct($idProduct);
                 $mapping->setFkPreconfigProduct($idPreconfigProduct);
                 $mapping->save();
+
+                $this->touchAbstractProductActive($idProduct);
             }
         }
+    }
+
+    /**
+     * @param int $idAbstractProduct
+     */
+    protected function touchAbstractProductActive($idAbstractProduct)
+    {
+        $this->touchFacade->touchActive(ProductCategoryConfig::RESOURCE_TYPE_ABSTRACT_PRODUCT, $idAbstractProduct);
+    }
+
+    /**
+     * @param int $idAbstractProduct
+     */
+    protected function touchAbstractProductDeleted($idAbstractProduct)
+    {
+        $this->touchFacade->touchDeleted(ProductCategoryConfig::RESOURCE_TYPE_ABSTRACT_PRODUCT, $idAbstractProduct);
     }
 
 }

@@ -11,7 +11,9 @@ use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterface;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
+use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
+use SprykerFeature\Zed\ProductCategory\ProductCategoryDependencyProvider;
 
 /**
  * @method ProductCategoryBusiness getFactory()
@@ -28,6 +30,7 @@ class ProductCategoryDependencyContainer extends AbstractBusinessDependencyConta
             $this->createProductCategoryQueryContainer(),
             $this->createProductFacade(),
             $this->createCategoryFacade(),
+            $this->createTouchFacade(),
             $this->getLocator()
         );
     }
@@ -62,6 +65,14 @@ class ProductCategoryDependencyContainer extends AbstractBusinessDependencyConta
     protected function createCategoryFacade()
     {
         return $this->getLocator()->category()->facade();
+    }
+
+    /**
+     * @return ProductCategoryToTouchInterface
+     */
+    protected function createTouchFacade()
+    {
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_TOUCH);
     }
 
 }
