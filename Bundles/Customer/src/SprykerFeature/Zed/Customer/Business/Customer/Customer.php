@@ -164,7 +164,9 @@ class Customer
         $customerTransfer->setCustomerReference($customerEntity->getCustomerReference());
         $customerTransfer->setRegistrationKey($customerEntity->getRegistrationKey());
 
-        $this->sendRegistrationToken($customerTransfer);
+        if ($customerTransfer->getPasswordSend()) {
+            $this->sendRegistrationToken($customerTransfer);
+        }
 
         $customerResponseTransfer
             ->setIsSuccess(true)
@@ -333,6 +335,10 @@ class Customer
             ->setIsSuccess($changedRows > 0)
             ->setCustomerTransfer($customerTransfer)
         ;
+
+        if ($customerTransfer->getPasswordSend()) {
+            $this->sendRegistrationToken($customerTransfer);
+        }
 
         return $customerResponseTransfer;
     }
