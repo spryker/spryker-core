@@ -176,10 +176,6 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
                 'id_product_category'
             )
             ->withColumn(
-                SpyProductCategoryTableMap::COL_PRODUCT_ORDER,
-                'product_order'
-            )
-            ->withColumn(
                 SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT,
                 'preconfig_product'
             )
