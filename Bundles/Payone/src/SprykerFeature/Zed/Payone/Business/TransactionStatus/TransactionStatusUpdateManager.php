@@ -139,11 +139,11 @@ class TransactionStatusUpdateManager
             return $this->createErrorResponse('Payone transaction status update: Given and internal key do not match!');
         }
 
-        if ($request->getAid() !== $this->standardParameter->getAid()) {
+        if ((int) $request->getAid() !== (int) $this->standardParameter->getAid()) {
             return $this->createErrorResponse('Payone transaction status update: Invalid Aid! System: ' . $this->standardParameter->getAid() . ' Request: ' . $request->getAid());
         }
 
-        if ($request->getPortalid() !== $this->standardParameter->getPortalId()) {
+        if ((int) $request->getPortalid() !== (int) $this->standardParameter->getPortalId()) {
             return $this->createErrorResponse('Payone transaction status update: Invalid Portalid! System: ' . $this->standardParameter->getPortalId() . ' Request: ' . $request->getPortalid());
         }
 
@@ -331,17 +331,17 @@ class TransactionStatusUpdateManager
      */
     private function getFirstUnprocessedTransactionStatusLog($idSalesOrder, $idSalesOrderItem, $status)
     {
-        $records = $this->getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem);
+        $transactionStatusLogs = $this->getUnprocessedTransactionStatusLogs($idSalesOrder, $idSalesOrderItem);
 
         if (empty($transactionStatusLogs)) {
-            return;
+            return null;
         }
 
         /** @var SpyPaymentPayoneTransactionStatusLog $transactionStatusLog */
         $transactionStatusLog = array_shift($transactionStatusLogs);
 
         if ($transactionStatusLog->getStatus() !== $status) {
-            return;
+            return null;
         }
 
         return $transactionStatusLog;

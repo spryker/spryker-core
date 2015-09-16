@@ -6,6 +6,7 @@
             {% block widget_content %}
 
                 <table class="footable table table-striped toggle-arrow-tiny">
+                    <tbody>
                     {% for orderItem in orderItems %}
                         <tr>
                             <th>{{ orderItem.name }}</th>
@@ -39,6 +40,7 @@
                         <th>{{ 'Grand total' | trans }}</th>
                         <td class="text-right">{{ orderDetails.grandTotal | currency  }}</td>
                     </tr>
+                    <tbody>
                 </table>
 
             {% endblock %}

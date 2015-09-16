@@ -7,6 +7,7 @@
 
                 <div class="fix-height">
                     <table class="footable table table-striped toggle-arrow-tiny">
+                        <tbody>
                         <tr>
                             <td>Customer ID:</td>
                             <td>{{ orderDetails.fkCustomer }}</td>
@@ -19,6 +20,7 @@
                             <td>Name:</td>
                             <td>{{ orderDetails.firstName ~ ' ' ~ orderDetails.lastName }}</td>
                         </tr>
+                        </tbody>
                     </table>
                 </div>
                 <div class="text-center"><a class="btn btn-primary" href="/sales/edit/customer?id-sales-order={{ idOrder }}">{{ 'Edit' | trans }}</a></div>
