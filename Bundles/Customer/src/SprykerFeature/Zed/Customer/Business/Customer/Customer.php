@@ -164,7 +164,7 @@ class Customer
         $customerTransfer->setCustomerReference($customerEntity->getCustomerReference());
         $customerTransfer->setRegistrationKey($customerEntity->getRegistrationKey());
 
-        if ($customerTransfer->getPasswordSend()) {
+        if ($customerTransfer->getTriggerSendToken()) {
             $this->sendRegistrationToken($customerTransfer);
         }
 
@@ -336,7 +336,7 @@ class Customer
             ->setCustomerTransfer($customerTransfer)
         ;
 
-        if ($customerTransfer->getPasswordSend()) {
+        if ($customerTransfer->getTriggerSendToken()) {
             $this->sendRegistrationToken($customerTransfer);
         }
 

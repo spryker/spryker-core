@@ -30,6 +30,7 @@ class CustomerForm extends AbstractForm
     const SALUTATION = 'salutation';
     const GENDER = 'gender';
     const ID_CUSTOMER = 'id_customer';
+    const FIELD_TRIGGER_SEND_TOKEN = 'trigger_send_token';
 
     /**
      * @var SpyCustomerQuery
@@ -139,8 +140,8 @@ class CustomerForm extends AbstractForm
             ;
         }
 
-        $this->addCheckbox(self::FIELD_PASSWORD_SEND, [
-            'label' => 'Send password on email',
+        $this->addCheckbox(self::FIELD_TRIGGER_SEND_TOKEN, [
+            'label' => 'Send password token through email',
         ]);
 
         return $this;
