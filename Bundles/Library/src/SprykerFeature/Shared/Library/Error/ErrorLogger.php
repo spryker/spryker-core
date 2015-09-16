@@ -51,7 +51,7 @@ class ErrorLogger
             $eventJournal->saveEvent($event);
         } catch (\Exception $internalException) {
             if (!$ignoreInternalExceptions) {
-                self::sendExceptionToNewRelic($internalException, true, $newRelicApi);
+                self::sendExceptionToNewRelic($internalException, true, $eventJournal, $newRelicApi);
             }
         }
     }
