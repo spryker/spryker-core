@@ -21,6 +21,7 @@ use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
 use SprykerFeature\Zed\Checkout\CheckoutDependencyProvider;
 use SprykerFeature\Zed\Checkout\Business\CheckoutFacade;
+use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountry;
 use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;

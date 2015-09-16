@@ -5,7 +5,8 @@
  */
 namespace SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
 
-use SprykerFeature\Zed\Payolution\Business\Payment\MethodMapperInterface;
+use SprykerFeature\Zed\Payolution\Business\Api\Constants;
+use SprykerFeature\Zed\Payolution\Business\Exception\PaymentMethodMapperMethodNotAvailableException;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 
 class Installment extends AbstractMethodMapper
@@ -14,25 +15,22 @@ class Installment extends AbstractMethodMapper
     /**
      * @return string
      */
-    public function getName()
+    public function getAccountBrand()
     {
-        return MethodMapperInterface::INSTALLMENT;
+        return Constants::ACCOUNT_BRAND_INSTALLMENT;
     }
 
-    public function mapToPreAuthorization(SpyPaymentPayolution $payment)
-    {
-
-    }
-
-    public function mapToReAuthorization(SpyPaymentPayolution $paymentEntity, $uniqueId)
-    {
-
-    }
-
+    /**
+     * @param SpyPaymentPayolution $paymentEntity
+     * @param string $uniqueId
+     *
+     * @throws PaymentMethodMapperMethodNotAvailableException
+     */
     public function mapToCapture(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
-        // TODO: Implement mapToCapture() method.
+        throw new PaymentMethodMapperMethodNotAvailableException(
+            'Capture method is not allowed for installment payments'
+        );
     }
-
 
 }

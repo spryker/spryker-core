@@ -10,7 +10,15 @@ use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 class AdapterMock implements AdapterInterface
 {
 
+    /**
+     * @var bool
+     */
     protected $expectSuccess = true;
+
+    /**
+     * @var array
+     */
+    private $requestData = [];
 
     /**
      * @param bool $expectation
@@ -20,8 +28,15 @@ class AdapterMock implements AdapterInterface
         $this->expectSuccess = $expectation;
     }
 
+    /**
+     * @param array $data
+     *
+     * @return array
+     */
     public function sendArrayDataRequest(array $data)
     {
+        $this->requestData = $data;
+
         if ($this->expectSuccess){
             return $this->getPreauthorizationResponseSuccess();
         }
@@ -29,6 +44,9 @@ class AdapterMock implements AdapterInterface
         return $this->getPreauthorizationResponseFailure();
     }
 
+    /**
+     * @return array
+     */
     public function getPreauthorizationResponseSuccess()
     {
         return [
@@ -65,7 +83,7 @@ class AdapterMock implements AdapterInterface
             'FRONTEND_CC_LOGO' => 'images/visa_mc.gif',
             'PRESENTATION_AMOUNT' => '100.00',
             'IDENTIFICATION_UNIQUEID' => '8a82944a4fbc48bb014fbd1f3a544ace',
-            'IDENTIFICATION_TRANSACTIONID' => 'tran_55f2f9a314ed4',
+            'IDENTIFICATION_TRANSACTIONID' => $this->requestData['IDENTIFICATION.TRANSACTIONID'],
             'IDENTIFICATION_SHORTID' => '2214.7311.2738',
             'CLEARING_FXRATE' => '1.0',
             'PROCESSING_TIMESTAMP' => '2015-09-11 15:56:26',
@@ -81,7 +99,10 @@ class AdapterMock implements AdapterInterface
             'ADDRESS_ZIP' => '10623',
         ];
     }
-    
+
+    /**
+     * @return array
+     */
     public function getPreauthorizationResponseFailure()
     {
         return [
@@ -118,7 +139,7 @@ class AdapterMock implements AdapterInterface
             'frontend_cc_logo' => 'images/visa_mc.gif',
             'presentation_amount' => '100.00',
             'identification_uniqueid' => '8a8294494fd0cad9014fd1388b433e85',
-            'identification_transactionid' => 'tran_55f81edb6d1d7',
+            'identification_transactionid' => $this->requestData['IDENTIFICATION.TRANSACTIONID'],
             'identification_shortid' => '4485.8392.6434',
             'identification_referenceid' => '',
             'clearing_fxrate' => '1.0',

@@ -68,7 +68,7 @@ class TransactionStatusLog implements TransactionStatusLogInterface
 
         $logEntity = $this
             ->queryContainer
-            ->queryLatestItemOfTransactionStatusLogByPaymentIdAndPaymentCode(
+            ->queryTransactionStatusLogByPaymentIdAndPaymentCodeLatestFirst(
                 $paymentEntity->getIdPaymentPayolution(),
                 $paymentCode
             )

@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\PayolutionResponseTransfer;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\ConverterInterface as RequestConverterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Response\ConverterInterface as ResponseConverterInterface;
-use SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper\AbstractMethodMapper;
+use SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper\MethodMapperInterface;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLog;
@@ -68,7 +68,7 @@ class PaymentManager implements PaymentManagerInterface
      */
     public function registerMethodMapper(MethodMapperInterface $mapper)
     {
-        $this->methodMappers[$mapper->getName()] = $mapper;
+        $this->methodMappers[$mapper->getAccountBrand()] = $mapper;
     }
 
     /**
@@ -78,49 +78,27 @@ class PaymentManager implements PaymentManagerInterface
      */
     public function preAuthorizePayment($idPayment)
     {
-        $paymentEntity = $this->queryContainer->queryPaymentById($idPayment);
+        $paymentEntity = $this->getPaymentEntity($idPayment);
+        $requestTransfer = $this->getMethodMapper($paymentEntity)->mapToPreAuthorization($paymentEntity);
 
-        $requestTransfer = $this->getMethodMapper()->mapToPreAuthorization($paymentEntity);
-
-        $requestLogEntity = $this->logApiRequest($requestTransfer, $paymentEntity);
-
-        $requestData = $this->requestConverter->toArray($requestTransfer);
-        $responseData = $this->executionAdapter->sendArrayDataRequest($requestData);
-
-        $responseTransfer = $this->responseConverter->fromArray($responseData);
-
-        $this->logApiResponse($responseTransfer, $paymentEntity, $requestLogEntity);
-
-        return $responseTransfer;
+        return $this->sendRequest($requestTransfer, $paymentEntity);
     }
 
     /**
      * @param int $idPayment
      *
-     * @throws \Exception
-     *
      * @return PayolutionResponseTransfer
      */
     public function reAuthorizePayment($idPayment)
     {
-        $paymentEntity = $this->queryContainer->queryPaymentById($idPayment);
+        $paymentEntity = $this->getPaymentEntity($idPayment);
+        $statusLogEntity = $this->getLatestTransactionStatusLogItem($idPayment);
 
-        $statusLogEntity = $this->queryContainer->queryLatestItemOfTransactionStatusLogByPaymentId($idPayment);
+        $requestTransfer = $this
+            ->getMethodMapper($paymentEntity)
+            ->mapToReAuthorization($paymentEntity, $statusLogEntity->getIdentificationUniqueid());
 
-        $requestTransfer = $this->getMethodMapper()->mapToReAuthorization(
-            $paymentEntity,
-            $statusLogEntity->getIdentificationUniqueid()
-        );
-        $requestLogEntity = $this->logApiRequest($requestTransfer, $paymentEntity);
-
-        $requestData = $this->requestConverter->toArray($requestTransfer);
-        $responseData = $this->executionAdapter->sendArrayDataRequest($requestData);
-
-        $responseTransfer = $this->responseConverter->fromArray($responseData);
-
-        $this->logApiResponse($responseTransfer, $paymentEntity, $requestLogEntity);
-
-        return $responseTransfer;
+        return $this->sendRequest($requestTransfer, $paymentEntity);
     }
 
     /**
@@ -130,33 +108,66 @@ class PaymentManager implements PaymentManagerInterface
      */
     public function capturePayment($idPayment)
     {
-        $paymentEntity = $this->queryContainer->queryPaymentById($idPayment);
+        $paymentEntity = $this->getPaymentEntity($idPayment);
+        $statusLogEntity = $this->getLatestTransactionStatusLogItem($idPayment);
 
-        $statusLogEntity = $this->queryContainer->queryLatestItemOfTransactionStatusLogByPaymentId($idPayment);
+        $requestTransfer = $this
+            ->getMethodMapper($paymentEntity)
+            ->mapToCapture($paymentEntity, $statusLogEntity->getIdentificationUniqueid());
 
-        $requestTransfer = $this->getMethodMapper()->mapToCapture(
-            $paymentEntity,
-            $statusLogEntity->getIdentificationUniqueid()
-        );
-
-        $requestLogEntity = $this->logApiRequest($requestTransfer, $paymentEntity);
-
-        $requestData = $this->requestConverter->toArray($requestTransfer);
-        $responseData = $this->executionAdapter->sendArrayDataRequest($requestData);
-
-        $responseTransfer = $this->responseConverter->fromArray($responseData);
-
-        $this->logApiResponse($responseTransfer, $paymentEntity, $requestLogEntity);
-
-        return $responseTransfer;
+        return $this->sendRequest($requestTransfer, $paymentEntity);
     }
 
     /**
-     * @return AbstractMethodMapper
+     * @param int $idPayment
+     *
+     * @return SpyPaymentPayolution
      */
-    private function getMethodMapper()
+    private function getPaymentEntity($idPayment)
     {
-        return $this->methodMappers[MethodMapperInterface::INVOICE];
+        return $this->queryContainer->queryPaymentById($idPayment);
+    }
+
+    /**
+     * @param SpyPaymentPayolution $paymentEntity
+     *
+     * @return MethodMapperInterface
+     */
+    private function getMethodMapper(SpyPaymentPayolution $paymentEntity)
+    {
+        return $this->methodMappers[$paymentEntity->getAccountBrand()];
+    }
+
+    /**
+     * @param int $idPayment
+     *
+     * @return SpyPaymentPayolutionTransactionStatusLog
+     */
+    private function getLatestTransactionStatusLogItem($idPayment)
+    {
+        return $this
+            ->queryContainer
+            ->queryTransactionStatusLogByPaymentIdLatestFirst($idPayment)
+            ->findOne();
+    }
+
+    /**
+     * @param PayolutionRequestTransfer $requestTransfer
+     * @param SpyPaymentPayolution $paymentEntity
+     *
+     * @return PayolutionResponseTransfer
+     */
+    private function sendRequest(PayolutionRequestTransfer $requestTransfer, SpyPaymentPayolution $paymentEntity)
+    {
+        $this->logApiRequest($requestTransfer, $paymentEntity);
+
+        $requestData = $this->requestConverter->toArray($requestTransfer);
+        $responseData = $this->executionAdapter->sendArrayDataRequest($requestData);
+        $responseTransfer = $this->responseConverter->fromArray($responseData);
+
+        $this->logApiResponse($responseTransfer, $paymentEntity);
+
+        return $responseTransfer;
     }
 
     /**
@@ -164,47 +175,32 @@ class PaymentManager implements PaymentManagerInterface
      * @param SpyPaymentPayolution $paymentEntity
      *
      * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return SpyPaymentPayolutionTransactionRequestLog
      */
     private function logApiRequest(PayolutionRequestTransfer $requestTransfer, SpyPaymentPayolution $paymentEntity)
     {
-        $logEntity = (new SpyPaymentPayolutionTransactionRequestLog())
+        (new SpyPaymentPayolutionTransactionRequestLog())
             ->setPaymentCode($requestTransfer->getPaymentCode())
             ->setPresentationAmount($requestTransfer->getPresentationAmount())
             ->setPresentationCurrency($requestTransfer->getPresentationCurrency())
             ->setTransactionId($requestTransfer->getIdentificationTransactionid())
             ->setReferenceId($requestTransfer->getIdentificationReferenceid())
-            ->setFkPaymentPayolution($paymentEntity->getIdPaymentPayolution());
-        $logEntity->save();
-
-        return $logEntity;
+            ->setFkPaymentPayolution($paymentEntity->getIdPaymentPayolution())
+            ->save();
     }
 
     /**
      * @param PayolutionResponseTransfer $responseTransfer
      * @param SpyPaymentPayolution $paymentEntity
-     * @param SpyPaymentPayolutionTransactionRequestLog $requestLogEntity
      *
      * @throws \Propel\Runtime\Exception\PropelException
      */
-    private function logApiResponse(
-        PayolutionResponseTransfer $responseTransfer,
-        SpyPaymentPayolution $paymentEntity,
-        SpyPaymentPayolutionTransactionRequestLog $requestLogEntity
-    ) {
+    private function logApiResponse(PayolutionResponseTransfer $responseTransfer, SpyPaymentPayolution $paymentEntity)
+    {
         $logEntity = new SpyPaymentPayolutionTransactionStatusLog();
         $logEntity->fromArray($responseTransfer->toArray());
-        $logEntity->setFkPaymentPayolution($paymentEntity->getIdPaymentPayolution());
-        $logEntity->setFkPaymentPayolutionTransactionRequestLog(
-            $requestLogEntity->getIdPaymentPayolutionTransactionRequestLog()
-        );
-        try {
-            $logEntity->save();
-        } catch (\Exception $exception) {
-            var_dump($exception, $responseTransfer);
-            exit;
-        }
+        $logEntity
+            ->setFkPaymentPayolution($paymentEntity->getIdPaymentPayolution())
+            ->save();
     }
 
 }

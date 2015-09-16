@@ -52,7 +52,6 @@
     <table name="spy_payment_payolution_transaction_status_log">
         <column name="id_payment_payolution_transaction_status_log" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="fk_payment_payolution" required="true" type="INTEGER"/>
-        <column name="fk_payment_payolution_transaction_request_log" required="true" type="INTEGER"/>
 
         <column name="processing_code" required="true" type="VARCHAR"/>
         <column name="processing_result" required="true" type="VARCHAR"/>
@@ -78,8 +77,8 @@
 
         <foreign-key foreignTable="spy_payment_payolution_transaction_request_log">
             <reference
-                foreign="id_payment_payolution_transaction_request_log"
-                local="fk_payment_payolution_transaction_request_log"
+                foreign="transaction_id"
+                local="identification_transactionid"
             />
         </foreign-key>
 

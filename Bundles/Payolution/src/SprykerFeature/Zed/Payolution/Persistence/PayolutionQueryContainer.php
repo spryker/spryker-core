@@ -7,11 +7,8 @@
 namespace SprykerFeature\Zed\Payolution\Persistence;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\PayolutionPersistence;
-use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\Map\SpyPaymentPayolutionTransactionRequestLogTableMap;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\Map\SpyPaymentPayolutionTransactionStatusLogTableMap;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLog;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLogQuery;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionQuery;
@@ -38,20 +35,6 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     }
 
     /**
-     * @param $idPayment
-     *
-     * @return SpyPaymentPayolutionTransactionStatusLog
-     */
-    public function queryLatestItemOfTransactionStatusLogByPaymentId($idPayment)
-    {
-        /** @var SpyPaymentPayolutionTransactionStatusLogQuery $query */
-        $query = SpyPaymentPayolutionTransactionStatusLogQuery::create();
-        $query->orderBy(SpyPaymentPayolutionTransactionStatusLogTableMap::COL_CREATED_AT, Criteria::DESC);
-
-        return $query->requireOneByFkPaymentPayolution($idPayment);
-    }
-
-    /**
      * @param int $idSalesOrder
      *
      * @return SpyPaymentPayolutionQuery
@@ -65,23 +48,42 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
 
     /**
      * @param int $idPayment
+     *
+     * @return SpyPaymentPayolutionTransactionStatusLogQuery
+     */
+    public function queryTransactionStatusLogByPaymentId($idPayment)
+    {
+        /** @var SpyPaymentPayolutionTransactionStatusLogQuery $query */
+        $query = SpyPaymentPayolutionTransactionStatusLogQuery::create();
+        return $query->filterByFkPaymentPayolution($idPayment);
+
+    }
+
+    /**
+     * @param int $idPayment
+     *
+     * @return SpyPaymentPayolutionTransactionStatusLogQuery
+     */
+    public function queryTransactionStatusLogByPaymentIdLatestFirst($idPayment)
+    {
+        return $this->queryTransactionStatusLogByPaymentId($idPayment)
+            ->addDescendingOrderByColumn(SpyPaymentPayolutionTransactionStatusLogTableMap::COL_CREATED_AT);
+    }
+
+    /**
+     * @param int $idPayment
      * @param string $paymentCode
      *
      * @return SpyPaymentPayolutionTransactionStatusLogQuery
      */
-    public function queryLatestItemOfTransactionStatusLogByPaymentIdAndPaymentCode($idPayment, $paymentCode)
+    public function queryTransactionStatusLogByPaymentIdAndPaymentCodeLatestFirst($idPayment, $paymentCode)
     {
-        $query = SpyPaymentPayolutionTransactionStatusLogQuery::create();
-
-        return $query
+        return $this->queryTransactionStatusLogByPaymentIdLatestFirst($idPayment)
             // Payment code need to get checked in request log table
             ->joinSpyPaymentPayolutionTransactionRequestLog()
             ->useSpyPaymentPayolutionTransactionRequestLogQuery()
             ->filterByPaymentCode($paymentCode)
-            ->endUse()
-            // Filters for transaction log
-            ->filterByFkPaymentPayolution($idPayment)
-            ->addDescendingOrderByColumn(SpyPaymentPayolutionTransactionStatusLogTableMap::COL_CREATED_AT);
+            ->endUse();
     }
 
 }

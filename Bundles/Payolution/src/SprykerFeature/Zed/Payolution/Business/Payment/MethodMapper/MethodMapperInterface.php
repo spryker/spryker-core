@@ -4,21 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Business\Payment;
+namespace SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
 
 use Generated\Shared\Transfer\PayolutionRequestTransfer;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 
 interface MethodMapperInterface
 {
-
-    const INVOICE = 'INVOICE_METHOD_MAPPER';
-    const INSTALLMENT = 'INSTALLMENT_METHOD_MAPPER';
-
-    /**
-     * @return string
-     */
-    public function getName();
 
     /**
      * @param SpyPaymentPayolution $paymentEntity
@@ -42,5 +34,10 @@ interface MethodMapperInterface
      * @return PayolutionRequestTransfer
      */
     public function mapToCapture(SpyPaymentPayolution $paymentEntity, $uniqueId);
+
+    /**
+     * @return string
+     */
+    public function getAccountBrand();
 
 }

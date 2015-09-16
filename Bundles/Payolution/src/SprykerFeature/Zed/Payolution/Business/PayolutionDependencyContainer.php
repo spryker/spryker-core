@@ -42,6 +42,9 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
         $paymentManager->registerMethodMapper(
             $this->getFactory()->createPaymentMethodMapperInvoice($this->getConfig())
         );
+        $paymentManager->registerMethodMapper(
+            $this->getFactory()->createPaymentMethodMapperInstallment($this->getConfig())
+        );
 
         return $paymentManager;
     }
