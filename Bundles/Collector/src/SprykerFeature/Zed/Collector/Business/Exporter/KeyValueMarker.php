@@ -23,7 +23,6 @@ class KeyValueMarker implements MarkerInterface
      * @var ReaderInterface
      */
     private $reader;
-
     /**
      * @var KeyBuilderInterface
      */
