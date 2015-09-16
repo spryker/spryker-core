@@ -48,7 +48,7 @@ class ElasticsearchMarkerReader implements ReaderInterface
     /**
      * @param string $key
      *
-     * @return mixed
+     * @return string|bool
      */
     public function read($key)
     {
