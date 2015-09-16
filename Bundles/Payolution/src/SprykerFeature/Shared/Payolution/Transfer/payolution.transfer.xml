@@ -62,11 +62,12 @@
 
         <property name="accountBrand" type="string"/>
 
-        <property name="analysis" type="PayolutionRequestAnalysis"/>
+        <property name="analysis" type="array"/>
     </transfer>
 
-    <transfer name="PayolutionRequestAnalysis">
-        <property name="criteria" type="array"/>
+    <transfer name="PayolutionRequestAnalysisCriterion">
+        <property name="name" type="string"/>
+        <property name="value" type="string"/>
     </transfer>
 
     <transfer name="PayolutionResponse">

@@ -25,12 +25,41 @@ class Converter implements ConverterInterface
                 continue;
             }
 
-            $key = str_replace('_', '.', $propertyName);
-            $key = mb_strtoupper($key);
-            $result[$key] = $propertyValue;
+            if ($propertyName == 'analysis' && is_array($propertyValue)) {
+                $result = array_merge($this->getAnalysisCriteria($propertyValue), $result);
+                continue;
+            }
+
+            $result[$this->convertKey($propertyName)] = $propertyValue;
         }
 
         return $result;
+    }
+
+    /**
+     * @param array $criteria
+     *
+     * @return array
+     */
+    private function getAnalysisCriteria(array $criteria)
+    {
+        $result = [];
+        foreach ($criteria as $criterion) {
+            $key = 'CRITERION.' . $criterion['name'];
+            $result[$key] = $criterion['value'];
+        }
+        return $result;
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return string
+     */
+    private function convertKey($key)
+    {
+        $convertedKey = str_replace('_', '.', $key);
+        return mb_strtoupper($convertedKey);
     }
 
 }

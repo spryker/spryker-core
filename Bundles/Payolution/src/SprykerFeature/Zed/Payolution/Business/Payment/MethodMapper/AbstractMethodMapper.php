@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
 
+use Generated\Shared\Transfer\PayolutionRequestAnalysisCriterionTransfer;
 use Generated\Shared\Transfer\PayolutionRequestTransfer;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
@@ -64,6 +65,17 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
             ->setContactIp($paymentEntity->getClientIp())
             ->setContactEmail($paymentEntity->getEmail())
             ->setIdentificationShopperid($orderEntity->getFkCustomer());
+
+        $criteria = [
+            Constants::CRITERION_CUSTOMER_LANGUAGE => Store::getInstance()->getCurrentLanguage(),
+            Constants::CRITERION_DURATION => 12,
+        ];
+        foreach ($criteria as $name => $value) {
+            $criterionTransfer = (new PayolutionRequestAnalysisCriterionTransfer())
+                ->setName($name)
+                ->setValue($value);
+            $requestTransfer->addAnalysis($criterionTransfer);
+        }
 
         return $requestTransfer;
     }
