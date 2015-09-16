@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Collector\Business\Exporter\Writer\Search;
 
 use Elastica\Client;
-use Elastica\Document;
 use Elastica\Index;
 use Elastica\Type\Mapping;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
@@ -57,9 +56,13 @@ class ElasticsearchMarkerWriter implements WriterInterface
         }
     }
 
+    /**
+     * @param array $dataSet
+     *
+     * @return bool
+     */
     public function delete(array $dataSet)
     {
-
     }
 
     /**
