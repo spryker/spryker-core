@@ -164,9 +164,7 @@ class Customer
         $customerTransfer->setCustomerReference($customerEntity->getCustomerReference());
         $customerTransfer->setRegistrationKey($customerEntity->getRegistrationKey());
 
-        if ($customerTransfer->getTriggerSendToken()) {
-            $this->sendRegistrationToken($customerTransfer);
-        }
+        $this->sendRegistrationToken($customerTransfer);
 
         $customerResponseTransfer
             ->setIsSuccess(true)
@@ -197,13 +195,20 @@ class Customer
 
     /**
      * @param CustomerInterface $customerTransfer
+     *
+     * @return bool
      */
     protected function sendRegistrationToken(CustomerInterface $customerTransfer)
     {
+        if (!$customerTransfer->getTriggerSendToken()) {
+            return false;
+        }
         $link = $this->hostYves . '/register/confirm?token=' . $customerTransfer->getRegistrationKey();
         foreach ($this->registrationTokenSender as $sender) {
             $sender->send($customerTransfer->getEmail(), $link);
         }
+
+        return true;
     }
 
     /**
@@ -336,9 +341,7 @@ class Customer
             ->setCustomerTransfer($customerTransfer)
         ;
 
-        if ($customerTransfer->getTriggerSendToken()) {
-            $this->sendRegistrationToken($customerTransfer);
-        }
+        $this->sendRegistrationToken($customerTransfer);
 
         return $customerResponseTransfer;
     }
