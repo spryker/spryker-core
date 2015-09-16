@@ -18,4 +18,11 @@ interface TransactionStatusLogInterface
      */
     public function isPreAuthorizationApproved(OrderTransfer $orderTransfer);
 
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    public function isCaptureApproved(OrderTransfer $orderTransfer);
+
 }

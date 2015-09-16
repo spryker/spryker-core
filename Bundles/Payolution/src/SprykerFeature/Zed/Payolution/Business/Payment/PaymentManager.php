@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Payolution\Business\Payment;
 use Generated\Shared\Transfer\PayolutionRequestTransfer;
 use Generated\Shared\Transfer\PayolutionResponseTransfer;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use SprykerFeature\Zed\Payolution\Business\Api\Constants;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\ConverterInterface as RequestConverterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Response\ConverterInterface as ResponseConverterInterface;
 use SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper\AbstractMethodMapper;
@@ -124,6 +123,11 @@ class PaymentManager implements PaymentManagerInterface
         return $responseTransfer;
     }
 
+    /**
+     * @param int $idPayment
+     *
+     * @return PayolutionResponseTransfer
+     */
     public function capturePayment($idPayment)
     {
         $paymentEntity = $this->queryContainer->queryPaymentById($idPayment);
@@ -145,9 +149,6 @@ class PaymentManager implements PaymentManagerInterface
         $this->logApiResponse($responseTransfer, $paymentEntity, $requestLogEntity);
 
         return $responseTransfer;
-
-
-
     }
 
     /**
@@ -198,7 +199,12 @@ class PaymentManager implements PaymentManagerInterface
         $logEntity->setFkPaymentPayolutionTransactionRequestLog(
             $requestLogEntity->getIdPaymentPayolutionTransactionRequestLog()
         );
-        $logEntity->save();
+        try {
+            $logEntity->save();
+        } catch (\Exception $exception) {
+            var_dump($exception, $responseTransfer);
+            exit;
+        }
     }
 
 }

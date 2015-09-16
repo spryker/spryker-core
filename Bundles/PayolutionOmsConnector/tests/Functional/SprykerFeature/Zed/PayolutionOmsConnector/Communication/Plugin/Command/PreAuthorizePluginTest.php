@@ -21,7 +21,6 @@ use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
 use SprykerFeature\Zed\Checkout\CheckoutDependencyProvider;
 use SprykerFeature\Zed\Checkout\Business\CheckoutFacade;
-use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountry;
 use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
@@ -42,6 +41,11 @@ class PreAuthorizePluginTest extends Test
         $orderItem = SpySalesOrderItemQuery::create()->findOne();
 
         $this->assertEquals('waiting for payolution payment', $orderItem->getState()->getName());
+
+        $omsFacade = $this->getLocator()->oms()->facade();
+        $omsFacade->triggerEventForOneItem('capture', $orderItem, $logContext = []);
+
+        $this->assertEquals('paid', $orderItem->getState()->getName());
     }
 
     /**
@@ -50,6 +54,8 @@ class PreAuthorizePluginTest extends Test
     private function getCheckoutFacade()
     {
         $checkoutFacade = $this->getLocator()->checkout()->facade();
+
+        $checkoutDependencyProvider = new CheckoutDependencyProvider();
 
         $container = new Container();
 
@@ -77,14 +83,19 @@ class PreAuthorizePluginTest extends Test
             ];
         };
 
+        $container[CheckoutDependencyProvider::CHECKOUT_PRE_HYDRATOR] = function (Container $container) {
+            return [];
+        };
+
         $container[CheckoutDependencyProvider::CHECKOUT_POSTHOOKS] = function (Container $container) {
             return [];
         };
 
         $container[CheckoutDependencyProvider::FACADE_OMS] = function (Container $container) {
-            $facade = $container->getLocator()->oms()->facade();
-
-            return $facade;
+            return $container->getLocator()->oms()->facade();
+        };
+        $container[CheckoutDependencyProvider::FACADE_CALCULATION] = function (Container $container) {
+            return $container->getLocator()->calculation()->facade();
         };
 
         $checkoutFacade->setExternalDependencies($container);
@@ -102,10 +113,6 @@ class PreAuthorizePluginTest extends Test
 
     private function getCheckoutRequestTransfer()
     {
-        (new SpyCountry())
-            ->setIso2Code('xi')
-            ->save();
-
         $abstractProduct = (new SpyAbstractProduct())
             ->setSku('0987654321')
             ->setAttributes('{}');
@@ -142,7 +149,7 @@ class PreAuthorizePluginTest extends Test
             ->setTotals($totalsTransfer);
 
         $billingAddressTransfer = (new AddressTransfer())
-            ->setIso2Code('xi')
+            ->setIso2Code('de')
             ->setEmail('john@doe.com')
             ->setFirstName('John')
             ->setLastName('Doe')
@@ -152,7 +159,7 @@ class PreAuthorizePluginTest extends Test
             ->setCity('Berlin');
 
         $shippingAddressTransfer = (new AddressTransfer())
-            ->setIso2Code('xi')
+            ->setIso2Code('de')
             ->setEmail('john@doe.com')
             ->setFirstName('John')
             ->setLastName('Doe')

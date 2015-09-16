@@ -65,4 +65,14 @@ class PayolutionFacade extends AbstractFacade
         return $this->getDependencyContainer()->createTransactionStatusLog()->isPreAuthorizationApproved($orderTransfer);
     }
 
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    public function isCaptureApproved(OrderTransfer $orderTransfer)
+    {
+        return $this->getDependencyContainer()->createTransactionStatusLog()->isCaptureApproved($orderTransfer);
+    }
+
 }
