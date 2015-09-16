@@ -11,6 +11,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
+use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyProductTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
@@ -254,6 +255,37 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
         }
 
         return $query;
+    }
+
+    /**
+     * @param $idCategory
+     * @param $idAbstractProduct
+     *
+     * @return SpyProductCategoryQuery
+     */
+    public function queryProductCategoryPreconfig($idCategory, $idAbstractProduct)
+    {
+        return $this->queryProductCategoryMappings()
+            ->innerJoinSpyProduct()
+            ->filterByFkCategory($idCategory)
+            ->filterByFkAbstractProduct($idAbstractProduct)
+            ->withColumn(
+                SpyProductTableMap::COL_ID_PRODUCT,
+                'id_product'
+            )
+            ->withColumn(
+                SpyProductTableMap::COL_SKU,
+                'sku'
+            )
+            ->withColumn(
+                SpyProductTableMap::COL_FORMAT,
+                'sku'
+            )
+            ->withColumn(
+                SpyProductTableMap::COL_TYPE,
+                'sku'
+            )
+        ;
     }
 
 }

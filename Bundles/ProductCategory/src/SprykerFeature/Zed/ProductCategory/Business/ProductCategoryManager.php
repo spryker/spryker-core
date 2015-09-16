@@ -223,4 +223,12 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         }
     }
 
+    public function getProductCategoryPreconfig($idCategory, $idAbstractProduct)
+    {
+        $productCategoryMapping = $this->getProductCategoryMappingById($idCategory, $idAbstractProduct)
+            ->findOneOrCreate();
+
+
+    }
+
 }

@@ -91,12 +91,15 @@ class ProductCategoryTable extends AbstractTable
 
         $results = [];
         foreach ($queryResults as $productCategory) {
+            /*$preconfig_items = $this->productCategoryQueryContainer->queryProductCategoryPreconfig($this->idCategory, $productCategory['id_abstract_product']);
+            dump($preconfig_items->find()->toArray());*/
+
             $results[] = [
                 SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => $productCategory['id_abstract_product'],
                 SpyAbstractProductTableMap::COL_SKU => $productCategory['sku'],
                 SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => $productCategory['name'],
                 SpyProductCategoryTableMap::COL_PRODUCT_ORDER => '<input type="text" value="'.$productCategory['product_order'].'" id="product_category_order_'.$productCategory['id_abstract_product'].'" size="4" onchange="updateProductOrder(this, '.$productCategory['id_abstract_product'].')" />',
-                SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => $productCategory[SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT],
+                SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => '', //'<select id="product_category_preconfig_' . $productCategory['id_abstract_product'] . '"></select>',
                 'checkbox' => '<input id="product_category_checkbox_' .
                     $productCategory['id_abstract_product'] .
                     '" type="checkbox" checked="checked" onclick="categoryTableClickMarkAsSelected(this.checked, ' .
