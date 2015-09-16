@@ -96,6 +96,11 @@ class CategoryFormEdit extends CategoryFormAdd
                     'id' => 'product_order'
                 ]
             ])
+            ->addHidden('product_category_preconfig', [
+                'attr' => [
+                    'id' => 'product_category_preconfig'
+                ]
+            ])
         ;
     }
     

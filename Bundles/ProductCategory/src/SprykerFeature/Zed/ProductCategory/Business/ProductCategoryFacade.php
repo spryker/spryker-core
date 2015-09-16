@@ -126,7 +126,7 @@ class ProductCategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param array $product_order_list
      * @throws PropelException
      */
@@ -138,4 +138,15 @@ class ProductCategoryFacade extends AbstractFacade
         ;
     }
 
+    /**
+     * @param int $idCategory
+     * @param $product_preconfig
+     */
+    public function updateProductCategoryPreconfig($idCategory, array $product_preconfig)
+    {
+        $this->getDependencyContainer()
+            ->createProductCategoryManager()
+            ->updateProductMappingsPreconfig($idCategory, $product_preconfig)
+        ;
+    }
 }

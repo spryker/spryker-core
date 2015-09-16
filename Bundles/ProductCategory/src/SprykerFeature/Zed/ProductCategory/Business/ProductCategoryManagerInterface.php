@@ -85,4 +85,11 @@ interface ProductCategoryManagerInterface
      */
     public function updateProductMappingsOrder($idCategory, array $product_order_list);
 
+    /**
+     * @param int $idCategory
+     * @param array $product_preconfig_list
+     * @throws PropelException
+     */
+    public function updateProductMappingsPreconfig($idCategory, array $product_preconfig_list);
+
 }

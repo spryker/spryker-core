@@ -17,6 +17,7 @@ use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyLocalizedAbstractProductAttributesTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
+use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
 use SprykerFeature\Zed\ProductCategory\Persistence\Propel\Map\SpyProductCategoryTableMap;
 use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
 
@@ -178,6 +179,10 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
                 SpyProductCategoryTableMap::COL_PRODUCT_ORDER,
                 'product_order'
             )
+            ->withColumn(
+                SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT,
+                'preconfig_product'
+            )
             ->filterByFkCategory($idCategory)
         ;
     }
@@ -261,29 +266,16 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
      * @param $idCategory
      * @param $idAbstractProduct
      *
-     * @return SpyProductCategoryQuery
+     * @return SpyProductQuery
      */
     public function queryProductCategoryPreconfig($idCategory, $idAbstractProduct)
     {
-        return $this->queryProductCategoryMappings()
-            ->innerJoinSpyProduct()
-            ->filterByFkCategory($idCategory)
+        return SpyProductQuery::create()
             ->filterByFkAbstractProduct($idAbstractProduct)
-            ->withColumn(
-                SpyProductTableMap::COL_ID_PRODUCT,
-                'id_product'
-            )
-            ->withColumn(
-                SpyProductTableMap::COL_SKU,
-                'sku'
-            )
-            ->withColumn(
-                SpyProductTableMap::COL_FORMAT,
-                'sku'
-            )
-            ->withColumn(
-                SpyProductTableMap::COL_TYPE,
-                'sku'
+            ->addAnd(
+                SpyProductTableMap::COL_IS_ACTIVE,
+                true,
+                Criteria::EQUAL
             )
         ;
     }

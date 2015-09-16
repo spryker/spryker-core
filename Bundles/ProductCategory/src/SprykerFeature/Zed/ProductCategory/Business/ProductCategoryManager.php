@@ -175,13 +175,13 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      */
     public function createProductCategoryMappings($idCategory, array $product_ids_to_assign)
     {
-        foreach ($product_ids_to_assign as $product_id) {
-            $mapping = $this->getProductCategoryMappingById($idCategory, $product_id)
+        foreach ($product_ids_to_assign as $idProduct) {
+            $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
                 ->findOneOrCreate();
 
             if ($mapping) {
                 $mapping->setFkCategory($idCategory);
-                $mapping->setFkAbstractProduct($product_id);
+                $mapping->setFkAbstractProduct($idProduct);
                 $mapping->save();
             }
         }
@@ -193,8 +193,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      */
     public function removeProductCategoryMappings($idCategory, array $product_ids_to_deassign)
     {
-        foreach ($product_ids_to_deassign as $product_id) {
-            $mapping = $this->getProductCategoryMappingById($idCategory, $product_id)
+        foreach ($product_ids_to_deassign as $idProduct) {
+            $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
                 ->findOne();
 
             if ($mapping) {
@@ -204,31 +204,43 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param array $product_order_list
      * @throws PropelException
      */
     public function updateProductMappingsOrder($idCategory, array $product_order_list)
     {
-        foreach ($product_order_list as $product_id => $order) {
-            $mapping = $this->getProductCategoryMappingById($idCategory, $product_id)
+        foreach ($product_order_list as $idProduct => $order) {
+            $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
                 ->findOne();
 
             if ($mapping) {
                 $mapping->setFkCategory($idCategory);
-                $mapping->setFkAbstractProduct($product_id);
+                $mapping->setFkAbstractProduct($idProduct);
                 $mapping->setProductOrder($order);
                 $mapping->save();
             }
         }
     }
 
-    public function getProductCategoryPreconfig($idCategory, $idAbstractProduct)
+    /**
+     * @param int $idCategory
+     * @param array $product_preconfig_list
+     * @throws PropelException
+     */
+    public function updateProductMappingsPreconfig($idCategory, array $product_preconfig_list)
     {
-        $productCategoryMapping = $this->getProductCategoryMappingById($idCategory, $idAbstractProduct)
-            ->findOneOrCreate();
+        foreach ($product_preconfig_list as $idProduct => $idPreconfigProduct) {
+            $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
+                ->findOne();
 
-
+            if ($mapping) {
+                $mapping->setFkCategory($idCategory);
+                $mapping->setFkAbstractProduct($idProduct);
+                $mapping->setFkPreconfigProduct($idPreconfigProduct);
+                $mapping->save();
+            }
+        }
     }
 
 }

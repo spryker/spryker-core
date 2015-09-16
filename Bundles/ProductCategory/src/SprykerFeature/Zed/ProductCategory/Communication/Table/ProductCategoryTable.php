@@ -91,15 +91,14 @@ class ProductCategoryTable extends AbstractTable
 
         $results = [];
         foreach ($queryResults as $productCategory) {
-            /*$preconfig_items = $this->productCategoryQueryContainer->queryProductCategoryPreconfig($this->idCategory, $productCategory['id_abstract_product']);
-            dump($preconfig_items->find()->toArray());*/
+            $items = $this->getProductOptionsComboBoxItems($productCategory);
 
             $results[] = [
                 SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => $productCategory['id_abstract_product'],
                 SpyAbstractProductTableMap::COL_SKU => $productCategory['sku'],
                 SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => $productCategory['name'],
                 SpyProductCategoryTableMap::COL_PRODUCT_ORDER => '<input type="text" value="'.$productCategory['product_order'].'" id="product_category_order_'.$productCategory['id_abstract_product'].'" size="4" onchange="updateProductOrder(this, '.$productCategory['id_abstract_product'].')" />',
-                SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => '', //'<select id="product_category_preconfig_' . $productCategory['id_abstract_product'] . '"></select>',
+                SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => '<select id="product_category_preconfig_' . $productCategory['id_abstract_product'] . '" onchange="updateProductCategoryPreconfig(this, '.$productCategory['id_abstract_product'].')">'.$items.'</select>',
                 'checkbox' => '<input id="product_category_checkbox_' .
                     $productCategory['id_abstract_product'] .
                     '" type="checkbox" checked="checked" onclick="categoryTableClickMarkAsSelected(this.checked, ' .
@@ -110,5 +109,28 @@ class ProductCategoryTable extends AbstractTable
         }
         unset($queryResults);
         return $results;
+    }
+
+    /**
+     * @param $productCategory
+     * @return string
+     */
+    protected function getProductOptionsComboBoxItems($productCategory)
+    {
+        $preconfigQuery = $this->productCategoryQueryContainer->queryProductCategoryPreconfig($this->idCategory, $productCategory['id_abstract_product'])
+            ->orderByFormat();
+        $preconfigItems = $preconfigQuery->find();
+
+        $items = '<option value="default">Default</option>';
+        foreach ($preconfigItems as $preconfigItem) {
+            $selected = '';
+            if ($productCategory['preconfig_product'] == $preconfigItem->getIdProduct()) {
+                $selected = 'selected="selected"';
+            }
+
+            $items .= '<option value="'.$preconfigItem->getIdProduct().'" '.$selected.'>'.$preconfigItem->getFormat().'</option>';
+        }
+
+        return $items;
     }
 }

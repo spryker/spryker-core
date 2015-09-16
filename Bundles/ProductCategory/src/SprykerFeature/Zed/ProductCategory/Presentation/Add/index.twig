@@ -373,8 +373,16 @@
             hiddenField.attr('value', JSON.stringify(productOrder));
         }
 
+        function updateProductCategoryPreconfig(select, idProduct) {
+            var select = $(select);
+            productCategoryPreconfig[idProduct] = select.val();
+            var hiddenField = $('#form_product_category_preconfig');
+            hiddenField.attr('value', JSON.stringify(productCategoryPreconfig));
+        }
+
         $(document).ready(function () {
             productOrder = {};
+            productCategoryPreconfig = {};
             allProductsTable = new TableHandler($('#product-table'), $('#selectedProductsTable'), 'all_products_checkbox_', 'Products to be assigned', 'assigned-tab-label', 'selectedProductClickRemoveSelected', 'form_products_to_be_assigned');
             productCategoryTable = new TableHandler($('#product-category-table'), $('#deselectedProductsTable'), 'product_category_checkbox_', 'Products to be deassigned', 'deassigned-tab-label', 'categoryTableClickRemoveSelected', 'form_products_to_be_de_assigned');
 
@@ -388,7 +396,8 @@
 
                         var selector = allProductsTable.getSelector();
                         if (selector.isProductSelected(idProduct)) {
-                            $('#' + allProductsTable.getCheckBoxNamePrefix() +idProduct).prop('checked', true);
+                            var checkbox = $('#' + allProductsTable.getCheckBoxNamePrefix() +idProduct);
+                            checkbox.prop('checked', true);
                         }
                     }
 
@@ -435,8 +444,14 @@
                             $('#' + productCategoryTable.getCheckBoxNamePrefix() +idProduct).prop('checked', false);
                         }
 
+                        //update order inputs
                         if (productOrder.hasOwnProperty(idProduct)) {
                             $('#product_category_order_' + idProduct).val(parseInt(productOrder[idProduct]) || 0);
+                        }
+
+                        //update preconfig inputs
+                        if (productCategoryPreconfig.hasOwnProperty(idProduct)) {
+                            $('#product_category_preconfig_' + idProduct).val(parseInt(productCategoryPreconfig[idProduct]) || 0);
                         }
                     }
 

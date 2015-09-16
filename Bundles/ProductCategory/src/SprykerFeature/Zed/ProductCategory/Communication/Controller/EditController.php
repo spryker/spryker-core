@@ -99,18 +99,19 @@ class EditController extends AddController
                 $removeProductMappingCollection = explode(',', $data['products_to_be_de_assigned']);
             }
 
+            $this->updateProductOrder($currentCategoryTransfer, (array) json_decode($data['product_order']));
+
+            $this->updateProductCategoryPreconfig($currentCategoryTransfer, (array) json_decode($data['product_category_preconfig']));
+
             $parentIdList[] = $currentCategoryNodeTransfer->getFkParentCategoryNode();
             $parentIdList = array_flip($parentIdList);
-
             $this->updateCategoryParents(
-                $currentCategoryTransfer, 
-                $locale, 
-                $parentIdList, 
-                $addProductsMappingCollection, 
+                $currentCategoryTransfer,
+                $locale,
+                $parentIdList,
+                $addProductsMappingCollection,
                 $removeProductMappingCollection
             );
-
-            $this->updateProductOrder($currentCategoryTransfer, (array) json_decode($data['product_order']));
 
             $this->addSuccessMessage('The category was saved successfully.');
 
@@ -210,5 +211,16 @@ class EditController extends AddController
         $this->getDependencyContainer()
             ->createProductCategoryFacade()
             ->updateProductMappingsOrder($categoryTransfer->getIdCategory(), $product_order);
+    }
+
+    /**
+     * @param CategoryTransfer $categoryTransfer
+     * @param $product_preconfig
+     */
+    protected function updateProductCategoryPreconfig(CategoryTransfer $categoryTransfer, array $product_preconfig)
+    {
+        $this->getDependencyContainer()
+            ->createProductCategoryFacade()
+            ->updateProductCategoryPreconfig($categoryTransfer->getIdCategory(), $product_preconfig);
     }
 }
