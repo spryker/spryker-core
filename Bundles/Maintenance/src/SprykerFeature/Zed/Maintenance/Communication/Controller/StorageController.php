@@ -48,8 +48,8 @@ class StorageController extends AbstractController
      */
     public function deleteAllAction()
     {
-        $nr = $this->getDependencyContainer()->getStorageClient()->deleteAll();
-        $this->addInfoMessage('Removed '.$nr.' entries from storage.');
+        $numberOfDeletedEntried = $this->getDependencyContainer()->getStorageClient()->deleteAll();
+        $this->addInfoMessage('Removed '.$numberOfDeletedEntried.' entries from storage.');
         return $this->redirectResponse('/maintenance/storage');
     }
 
