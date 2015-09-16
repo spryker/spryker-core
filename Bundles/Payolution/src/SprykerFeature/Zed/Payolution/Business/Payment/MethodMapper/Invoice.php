@@ -35,13 +35,8 @@ class Invoice extends AbstractMethodMapper
         $orderEntity = $paymentEntity->getSpySalesOrder();
         $addressEntity = $orderEntity->getBillingAddress();
 
-        $requestTransfer = (new PayolutionRequestTransfer())
-            ->setSecuritySender($this->getConfig()->getSecuritySender())
-            ->setUserLogin($this->getConfig()->getUserLogin())
-            ->setUserPwd($this->getConfig()->getUserPassword())
-            ->setPresentationAmount($orderEntity->getGrandTotal()/100)
-            ->setPresentationCurrency(Store::getInstance()->getCurrencyIsoCode())
-            ->setPresentationUsage($orderEntity->getIdSalesOrder())
+        $requestTransfer = $this->getBaseRequestTransfer($paymentEntity);
+        $requestTransfer
             ->setPaymentCode(Constants::PAYMENT_CODE_PRE_AUTHORIZATION)
             ->setAddressCountry($addressEntity->getCountry()->getIso2Code())
             ->setAddressCity($addressEntity->getCity())
@@ -54,10 +49,6 @@ class Invoice extends AbstractMethodMapper
             ->setNameTitle($paymentEntity->getSalutation())
             ->setContactIp($paymentEntity->getClientIp())
             ->setContactEmail($paymentEntity->getEmail())
-            ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE)
-            ->setTransactionChannel($this->getConfig()->getChannelInvoice())
-            ->setTransactionMode($this->getConfig()->getTransactionMode())
-            ->setIdentificationTransactionid(uniqid('tran_'))
             ->setIdentificationShopperid($orderEntity->getFkCustomer());
 
         return $requestTransfer;
@@ -71,24 +62,52 @@ class Invoice extends AbstractMethodMapper
      */
     public function mapToReAuthorization(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
+        $requestTransfer = $this->getBaseRequestTransfer($paymentEntity);
+        $requestTransfer
+            ->setPaymentCode(Constants::PAYMENT_CODE_RE_AUTHORIZACTION)
+            ->setIdentificationReferenceid($uniqueId);
+
+        return $requestTransfer;
+    }
+
+    /**
+     * @param SpyPaymentPayolution $paymentEntity
+     * @param string $uniqueId
+     *
+     * @return PayolutionRequestTransfer
+     */
+    public function mapToCapture(SpyPaymentPayolution $paymentEntity, $uniqueId)
+    {
+        $requestTransfer = $this->getBaseRequestTransfer($paymentEntity);
+        $requestTransfer
+            ->setPaymentCode(Constants::PAYMENT_CODE_CAPTURE)
+            ->setIdentificationReferenceid($uniqueId);
+
+        return $requestTransfer;
+    }
+
+    /**
+     * @param SpyPaymentPayolution $paymentEntity
+     *
+     * @return PayolutionRequestTransfer
+     */
+    private function getBaseRequestTransfer(SpyPaymentPayolution $paymentEntity)
+    {
         $orderEntity = $paymentEntity->getSpySalesOrder();
 
-        $requestTransfer = (new PayolutionRequestTransfer())
+        return (new PayolutionRequestTransfer())
             ->setSecuritySender($this->getConfig()->getSecuritySender())
             ->setUserLogin($this->getConfig()->getUserLogin())
             ->setUserPwd($this->getConfig()->getUserPassword())
             ->setPresentationAmount($orderEntity->getGrandTotal()/100)
             ->setPresentationCurrency(Store::getInstance()->getCurrencyIsoCode())
             ->setPresentationUsage($orderEntity->getIdSalesOrder())
-            ->setPaymentCode(Constants::PAYMENT_CODE_RE_AUTHORIZACTION)
             ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE)
             ->setTransactionChannel($this->getConfig()->getChannelInvoice())
             ->setTransactionMode($this->getConfig()->getTransactionMode())
-            ->setIdentificationTransactionid(uniqid('tran_'))
-            ->setIdentificationReferenceid($uniqueId);
-
-        return $requestTransfer;
+            ->setIdentificationTransactionid(uniqid('tran_'));
     }
+
 
     /**
      * @param $gender

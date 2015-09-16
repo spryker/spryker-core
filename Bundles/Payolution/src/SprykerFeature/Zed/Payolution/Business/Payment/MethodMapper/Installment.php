@@ -5,7 +5,6 @@
  */
 namespace SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
 
-use SprykerFeature\Zed\Payolution\Business\Api\Request\PreAuthorizationRequest;
 use SprykerFeature\Zed\Payolution\Business\Payment\MethodMapperInterface;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 
@@ -20,34 +19,20 @@ class Installment extends AbstractMethodMapper
         return MethodMapperInterface::INSTALLMENT;
     }
 
-    /**
-     * @param SpyPaymentPayolution $payment
-     *
-     * @return PreAuthorizationRequest
-     */
     public function mapToPreAuthorization(SpyPaymentPayolution $payment)
     {
-        $request = new PreAuthorizationRequest();
 
-        return $request;
     }
 
-    /**
-     * @param SpyPaymentPayolution $paymentEntity
-     * @param string $uniqueId
-     *
-     * @return PayolutionRequestTransfer
-     */
     public function mapToReAuthorization(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
+
     }
 
-    /**
-     * @return string
-     */
-    protected function getChannel()
+    public function mapToCapture(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
-        return $this->getConfig()->getChannelInstallment();
+        // TODO: Implement mapToCapture() method.
     }
+
 
 }

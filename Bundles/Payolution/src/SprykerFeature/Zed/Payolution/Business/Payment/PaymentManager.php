@@ -107,13 +107,6 @@ class PaymentManager implements PaymentManagerInterface
         $paymentEntity = $this->queryContainer->queryPaymentById($idPayment);
 
         $statusLogEntity = $this->queryContainer->queryLatestItemOfTransactionStatusLogByPaymentId($idPayment);
-        $requestLogEntity = $statusLogEntity->getSpyPaymentPayolutionTransactionRequestLog();
-        if (Constants::PAYMENT_CODE_PRE_AUTHORIZATION !== $requestLogEntity->getPaymentCode()) {
-            throw new \Exception(sprintf(
-                'Previous action need to be pre-authorization got %s instead',
-                $requestLogEntity->getPaymentCode()
-            ));
-        }
 
         $requestTransfer = $this->getMethodMapper()->mapToReAuthorization(
             $paymentEntity,
@@ -129,6 +122,32 @@ class PaymentManager implements PaymentManagerInterface
         $this->logApiResponse($responseTransfer, $paymentEntity, $requestLogEntity);
 
         return $responseTransfer;
+    }
+
+    public function capturePayment($idPayment)
+    {
+        $paymentEntity = $this->queryContainer->queryPaymentById($idPayment);
+
+        $statusLogEntity = $this->queryContainer->queryLatestItemOfTransactionStatusLogByPaymentId($idPayment);
+
+        $requestTransfer = $this->getMethodMapper()->mapToCapture(
+            $paymentEntity,
+            $statusLogEntity->getIdentificationUniqueid()
+        );
+
+        $requestLogEntity = $this->logApiRequest($requestTransfer, $paymentEntity);
+
+        $requestData = $this->requestConverter->toArray($requestTransfer);
+        $responseData = $this->executionAdapter->sendArrayDataRequest($requestData);
+
+        $responseTransfer = $this->responseConverter->fromArray($responseData);
+
+        $this->logApiResponse($responseTransfer, $paymentEntity, $requestLogEntity);
+
+        return $responseTransfer;
+
+
+
     }
 
     /**

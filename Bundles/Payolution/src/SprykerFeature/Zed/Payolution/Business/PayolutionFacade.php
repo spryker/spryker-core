@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Payolution\Business;
 
 use Generated\Shared\Payolution\OrderInterface;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionResponseTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
@@ -42,6 +43,26 @@ class PayolutionFacade extends AbstractFacade
     public function reAuthorizePayment($idPayment)
     {
         return $this->getDependencyContainer()->createPaymentManager()->reAuthorizePayment($idPayment);
+    }
+
+    /**
+     * @param int $idPayment
+     *
+     * @return PayolutionResponseTransfer
+     */
+    public function capturePayment($idPayment)
+    {
+        return $this->getDependencyContainer()->createPaymentManager()->capturePayment($idPayment);
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    public function isPreAuthorizationApproved(OrderTransfer $orderTransfer)
+    {
+        return $this->getDependencyContainer()->createTransactionStatusLog()->isPreAuthorizationApproved($orderTransfer);
     }
 
 }

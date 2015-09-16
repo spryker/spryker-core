@@ -11,6 +11,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\PayolutionBusiness;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\ConverterInterface as RequestConverterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Response\ConverterInterface as ResponseConverterInterface;
+use SprykerFeature\Zed\Payolution\Business\Log\TransactionStatusLogInterface;
 use SprykerFeature\Zed\Payolution\Business\Order\OrderManagerInterface;
 use SprykerFeature\Zed\Payolution\Business\Payment\PaymentManagerInterface;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
@@ -79,6 +80,14 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
     public function createResponseConverter()
     {
         return $this->getFactory()->createApiResponseConverter();
+    }
+
+    /**
+     * @return TransactionStatusLogInterface
+     */
+    public function createTransactionStatusLog()
+    {
+        return $this->getFactory()->createLogTransactionStatusLog($this->getQueryContainer());
     }
 
 }

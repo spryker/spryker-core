@@ -177,7 +177,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
                 return $orderTransfer;
             }
         } catch (\Exception $e) {
-            var_dump($e);exit;
             Propel::getConnection()->rollBack();
 
             $error = $this->handleCheckoutError($e);

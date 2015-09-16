@@ -14,9 +14,11 @@ use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransac
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLogQuery;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionQuery;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
 
 /**
  * @method PayolutionPersistence getFactory()
+ * @todo CD-408 methods need to return only (prefiltered) queries and not result(-sets)
  */
 class PayolutionQueryContainer extends AbstractQueryContainer implements PayolutionQueryContainerInterface
 {
@@ -47,5 +49,26 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
 
         return $query->requireOneByFkPaymentPayolution($idPayment);
     }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return SpyPaymentPayolutionQuery
+     */
+    public function queryPaymentBySalesOrderId($idSalesOrder)
+    {
+        $query = SpyPaymentPayolutionQuery::create();
+
+        return $query->filterByFkSalesOrder($idSalesOrder);
+    }
+
+    /*public function queryLatestItemOfTransactionStatusLogByPaymentIdAndPaymentCode($idPayment, $paymentCode)
+    {
+        $query = SpyPaymentPayolutionTransactionStatusLogQuery::create();
+
+        return $query->filterByFkPaymentPayolution($idPayment)
+            ->filterBy
+    }*/
+
 
 }

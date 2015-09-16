@@ -35,4 +35,12 @@ interface MethodMapperInterface
      */
     public function mapToReAuthorization(SpyPaymentPayolution $paymentEntity, $uniqueId);
 
+    /**
+     * @param SpyPaymentPayolution $paymentEntity
+     * @param string $uniqueId
+     *
+     * @return PayolutionRequestTransfer
+     */
+    public function mapToCapture(SpyPaymentPayolution $paymentEntity, $uniqueId);
+
 }
