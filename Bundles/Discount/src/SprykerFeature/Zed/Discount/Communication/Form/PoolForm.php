@@ -10,7 +10,6 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolCategory;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use Symfony\Component\Validator\Constraints\Date;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
