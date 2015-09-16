@@ -57,12 +57,17 @@ class ProductTable extends AbstractTable
     {
         $config->setHeader([
             SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => 'ID',
-            SpyAbstractProductTableMap::COL_SKU => 'SKU',
+            SpyAbstractProductTableMap::COL_SKU => 'sku',
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => 'Name',
             'checkbox' => 'Selected',
-
         ]);
+
         $config->setSortable([
+            SpyAbstractProductTableMap::COL_SKU,
+            SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
+        ]);
+
+        $config->setSearchable([
             SpyAbstractProductTableMap::COL_SKU,
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
         ]);

@@ -22,5 +22,11 @@
         <property name="fkParentCategoryNode" type="int" />
     </transfer>
 
+    <transfer name="ProductCategory">
+        <property name="idProductCategory" type="int" />
+        <property name="fkAbstractProduct" type="int" />
+        <property name="fkCategory" type="int" />
+    </transfer>
+
 </transfers>
 
