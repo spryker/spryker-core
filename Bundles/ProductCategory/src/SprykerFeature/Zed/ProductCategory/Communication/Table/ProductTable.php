@@ -57,7 +57,7 @@ class ProductTable extends AbstractTable
     {
         $config->setHeader([
             SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => 'ID',
-            SpyAbstractProductTableMap::COL_SKU => 'sku',
+            SpyAbstractProductTableMap::COL_SKU => 'SKU',
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => 'Name',
             'checkbox' => 'Selected',
         ]);
