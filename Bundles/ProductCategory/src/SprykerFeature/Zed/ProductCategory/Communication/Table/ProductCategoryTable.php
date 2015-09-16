@@ -95,7 +95,7 @@ class ProductCategoryTable extends AbstractTable
                 SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => $productCategory['id_abstract_product'],
                 SpyAbstractProductTableMap::COL_SKU => $productCategory['sku'],
                 SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => $productCategory['name'],
-                SpyProductCategoryTableMap::COL_PRODUCT_ORDER => $productCategory['product_order'],
+                SpyProductCategoryTableMap::COL_PRODUCT_ORDER => '<input type="text" value="'.$productCategory['product_order'].'" id="product_category_order_'.$productCategory['id_abstract_product'].'" size="4" onchange="updateProductOrder(this, '.$productCategory['id_abstract_product'].')" />',
                 SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => $productCategory[SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT],
                 'checkbox' => '<input id="product_category_checkbox_' .
                     $productCategory['id_abstract_product'] .

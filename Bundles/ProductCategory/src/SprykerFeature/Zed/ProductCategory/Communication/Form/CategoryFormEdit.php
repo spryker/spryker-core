@@ -91,6 +91,11 @@ class CategoryFormEdit extends CategoryFormAdd
                     'id' => 'products_to_be_de_assigned'
                 ]
             ])
+            ->addHidden('product_order', [
+                'attr' => [
+                    'id' => 'product_order'
+                ]
+            ])
         ;
     }
     

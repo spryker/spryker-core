@@ -125,4 +125,17 @@ class ProductCategoryFacade extends AbstractFacade
         ;
     }
 
+    /**
+     * @param $idCategory
+     * @param array $product_order_list
+     * @throws PropelException
+     */
+    public function updateProductMappingsOrder($idCategory, array $product_order_list)
+    {
+        $this->getDependencyContainer()
+            ->createProductCategoryManager()
+            ->updateProductMappingsOrder($idCategory, $product_order_list)
+        ;
+    }
+
 }

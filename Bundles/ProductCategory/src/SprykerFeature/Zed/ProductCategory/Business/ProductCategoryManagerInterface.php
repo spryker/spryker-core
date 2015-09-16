@@ -78,4 +78,11 @@ interface ProductCategoryManagerInterface
      */
     public function removeProductCategoryMappings($idCategory, array $product_ids_to_deassign);
 
+    /**
+     * @param $idCategory
+     * @param array $product_order_list
+     * @throws PropelException
+     */
+    public function updateProductMappingsOrder($idCategory, array $product_order_list);
+
 }

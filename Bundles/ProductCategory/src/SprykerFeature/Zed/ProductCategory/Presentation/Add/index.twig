@@ -364,8 +364,15 @@
             });
         }
 
+        function updateProductOrder(input, idProduct) {
+            var input = $(input);
+            productOrder[idProduct] = input.val();
+            var hiddenField = $('#form_product_order');
+            hiddenField.attr('value', JSON.stringify(productOrder));
+        }
 
         $(document).ready(function () {
+            productOrder = {};
             allProductsTable = new TableHandler($('#product-table'), $('#selectedProductsTable'), 'all_products_checkbox_', 'Products to be assigned', 'assigned-tab-label', 'selectedProductClickRemoveSelected', 'form_products_to_be_assigned');
             productCategoryTable = new TableHandler($('#product-category-table'), $('#deselectedProductsTable'), 'product_category_checkbox_', 'Products to be deassigned', 'deassigned-tab-label', 'categoryTableClickRemoveSelected', 'form_products_to_be_de_assigned');
 
@@ -424,6 +431,10 @@
                         var selector = productCategoryTable.getSelector();
                         if (selector.isProductSelected(idProduct)) {
                             $('#' + productCategoryTable.getCheckBoxNamePrefix() +idProduct).prop('checked', false);
+                        }
+
+                        if (productOrder.hasOwnProperty(idProduct)) {
+                            $('#product_category_order_' + idProduct).val(parseInt(productOrder[idProduct]) || 0);
                         }
                     }
 

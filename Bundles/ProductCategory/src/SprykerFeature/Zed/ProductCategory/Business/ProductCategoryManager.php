@@ -203,4 +203,24 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         }
     }
 
+    /**
+     * @param $idCategory
+     * @param array $product_order_list
+     * @throws PropelException
+     */
+    public function updateProductMappingsOrder($idCategory, array $product_order_list)
+    {
+        foreach ($product_order_list as $product_id => $order) {
+            $mapping = $this->getProductCategoryMappingById($idCategory, $product_id)
+                ->findOne();
+
+            if ($mapping) {
+                $mapping->setFkCategory($idCategory);
+                $mapping->setFkAbstractProduct($product_id);
+                $mapping->setProductOrder($order);
+                $mapping->save();
+            }
+        }
+    }
+
 }

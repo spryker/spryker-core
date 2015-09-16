@@ -110,6 +110,8 @@ class EditController extends AddController
                 $removeProductMappingCollection
             );
 
+            $this->updateProductOrder($currentCategoryTransfer, (array) json_decode($data['product_order']));
+
             $this->addSuccessMessage('The category was saved successfully.');
 
             return $this->redirectResponse('/category');
@@ -197,5 +199,16 @@ class EditController extends AddController
                 ->createProductCategoryFacade()
                 ->createProductCategoryMappings($categoryTransfer->getIdCategory(), $addProductsMappingCollection);
         }
+    }
+
+    /**
+     * @param CategoryTransfer $categoryTransfer
+     * @param $product_order
+     */
+    protected function updateProductOrder(CategoryTransfer $categoryTransfer, array $product_order)
+    {
+        $this->getDependencyContainer()
+            ->createProductCategoryFacade()
+            ->updateProductMappingsOrder($categoryTransfer->getIdCategory(), $product_order);
     }
 }
