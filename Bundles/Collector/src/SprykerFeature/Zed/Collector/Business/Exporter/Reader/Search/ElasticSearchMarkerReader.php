@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Collector\Business\Exporter\Reader\Search;
 
 use Elastica\Client;
+use Elastica\Exception\ResponseException;
 use Elastica\Index;
 use Elastica\Type\Mapping;
 use SprykerFeature\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
@@ -51,7 +52,11 @@ class ElasticsearchMarkerReader implements ReaderInterface
      */
     public function read($key)
     {
-        $mapping = $this->index ->getType($this->type)->getMapping();
+        try {
+            $mapping = $this->index->getType($this->type)->getMapping();
+        } catch (ResponseException $e) {
+            return false;
+        }
 
         if (isset($mapping[$this->type][self::META_ATTRIBUTE][$key])) {
             return $mapping[$this->type][self::META_ATTRIBUTE][$key];

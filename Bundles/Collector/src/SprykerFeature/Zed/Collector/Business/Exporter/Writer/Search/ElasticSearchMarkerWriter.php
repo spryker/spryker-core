@@ -50,10 +50,10 @@ class ElasticsearchMarkerWriter implements WriterInterface
      */
     public function write(array $dataSet, $type = '')
     {
-        $settings = new Mapping($this->index->getType($this->type));
+        $mapping = new Mapping($this->index->getType($this->type));
 
         foreach ($dataSet as $key => $value) {
-            $settings->setMeta([$key => $value])->send();
+            $mapping->setMeta([$key => $value])->send();
         }
     }
 
