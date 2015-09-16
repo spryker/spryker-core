@@ -139,6 +139,10 @@ class CustomerForm extends AbstractForm
             ;
         }
 
+        $this->addCheckbox(self::FIELD_PASSWORD_SEND, [
+            'label' => 'Send password on email',
+        ]);
+
         return $this;
     }
 
