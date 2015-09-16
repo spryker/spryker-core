@@ -105,13 +105,10 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     {
         $query = $this->queryProductCategoryMappings();
         $query->filterByFkAbstractProduct($abstractProduct->getIdAbstractProduct())
-            ->endUse()
-            ->endUse()
-            ->useCategoryQuery()
+            ->useSpyCategoryQuery()
                 ->useAttributeQuery()
                     ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::COL_CATEGORY_NAME)
                 ->endUse()
-            ->endUse()
             ->endUse()
         ;
 

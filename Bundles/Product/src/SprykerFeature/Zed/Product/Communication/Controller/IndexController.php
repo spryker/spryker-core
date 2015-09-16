@@ -141,6 +141,7 @@ class IndexController extends AbstractController
     protected function createConcreteProductsCollection(ObjectCollection $concreteProductsCollenction)
     {
         $concreteProducts = [];
+        /** @var SpyProduct $product */
         foreach ($concreteProductsCollenction as $product) {
 
             $productOptions = $this->getDependencyContainer()
@@ -155,7 +156,7 @@ class IndexController extends AbstractController
                 'sku' => $product->getSku(),
                 'format' => $product->getFormat(),
                 'weight' => $product->getWeight(),
-                'type' => $product->getType(),
+                'type' => $product->getSpyAbstractProduct()->getType(),
                 'idProduct' => $product->getIdProduct(),
                 'isActive' => $product->getIsActive(),
                 'priceList' => $this->getProductPriceList($product),
@@ -183,7 +184,7 @@ class IndexController extends AbstractController
         foreach ($categoriesCollection as $category) {
             $categories[] = [
                 self::COL_ID_PRODUCT_CATEGORY => $category->getIdProductCategory(),
-                self::COL_CATEGORY_NAME => $category->getVirtualColumn(self::COL_CATEGORY_NAME)
+                self::COL_CATEGORY_NAME => $category->getVirtualColumn(self::COL_CATEGORY_NAME),
             ];
         }
 
