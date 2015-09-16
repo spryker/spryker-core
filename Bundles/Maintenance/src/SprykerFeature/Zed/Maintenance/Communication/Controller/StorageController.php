@@ -10,6 +10,7 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Maintenance\Business\MaintenanceFacade;
 use SprykerFeature\Zed\Maintenance\Communication\MaintenanceDependencyContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -40,6 +41,16 @@ class StorageController extends AbstractController
         return $this->jsonResponse(
             $table->fetchData()
         );
+    }
+
+    /**
+     * @return RedirectResponse
+     */
+    public function deleteAllAction()
+    {
+        $numberOfDeletedEntried = $this->getDependencyContainer()->getStorageClient()->deleteAll();
+        $this->addInfoMessage('Removed '.$numberOfDeletedEntried.' entries from storage.');
+        return $this->redirectResponse('/maintenance/storage');
     }
 
     /**

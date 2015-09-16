@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Client\Search\Service;
 
+use Elastica\Index;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
-use SprykerFeature\Client\ZedRequest\Service\Client\ZedClient;
 
 /**
  * @method SearchDependencyContainer getDependencyContainer()
@@ -16,7 +16,7 @@ class SearchClient extends AbstractClient
 {
 
     /**
-     * @return ZedClient
+     * @return Index
      */
     public function getIndexClient()
     {

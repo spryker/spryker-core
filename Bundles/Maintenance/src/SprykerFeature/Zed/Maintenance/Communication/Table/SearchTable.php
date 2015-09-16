@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Maintenance\Communication\Table;
 
+use Elastica\Exception\ResponseException;
 use SprykerFeature\Client\Search\Service\SearchClient;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
@@ -24,6 +25,7 @@ class SearchTable extends AbstractTable
      * @var SearchClient
      */
     protected $searchClient;
+
 
     /**
      * @param SearchClient $searchClient
@@ -61,25 +63,31 @@ class SearchTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->searchClient->getIndexClient()->search('*');
-        $totalHits = $query->getTotalHits();
-        $this->setTotal($totalHits);
-        $this->setFiltered($totalHits);
-
-        $offset = $this->getOffset();
-        $limit = $this->getLimit();
-
-        $results = $this->searchClient->getIndexClient()->search('*', ['limit' => $limit, 'from' => $offset])->getResults();
-
         $tableData = [];
 
-        foreach ($results as $result) {
-            $tableData[] = [
-                'id' => '<a href="/maintenance/search/search-key?key=' . $result->getId() . '">' . $result->getId() . '</a>',
-                'index' => $result->getIndex(),
-                'type' => $result->getType(),
-                'score' => $result->getScore(),
-            ];
+        try {
+            $query = $this->searchClient->getIndexClient()->search('*');
+            $totalHits = $query->getTotalHits();
+            $this->setTotal($totalHits);
+            $this->setFiltered($totalHits);
+
+            $offset = $this->getOffset();
+            $limit = $this->getLimit();
+
+            $results = $this->searchClient->getIndexClient()->search('*', ['limit' => $limit, 'from' => $offset])->getResults();
+
+
+            foreach ($results as $result) {
+                $tableData[] = [
+                    'id' => '<a href="/maintenance/search/search-key?key=' . $result->getId() . '">' . $result->getId() . '</a>',
+                    'index' => $result->getIndex(),
+                    'type' => $result->getType(),
+                    'score' => $result->getScore(),
+                ];
+            }
+
+        } catch (ResponseException $e) {
+            // allowed catch, because ElasticSearch index is not always there
         }
 
         return $tableData;
