@@ -6,16 +6,39 @@
 
 namespace SprykerEngine\Yves\Application\Communication\Plugin\ServiceProvider;
 
-use SprykerFeature\Shared\Library\System;
-use Silex\ServiceProviderInterface;
 use Silex\Application;
+use Silex\ServiceProviderInterface;
+use SprykerEngine\Shared\Lumberjack\Model\Event;
+use SprykerEngine\Shared\Lumberjack\Model\EventJournalInterface;
+use SprykerFeature\Shared\Library\NewRelic\ApiInterface;
+use SprykerFeature\Shared\Library\System;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use SprykerFeature\Shared\Lumberjack\Code\Lumberjack;
-use SprykerFeature\Shared\Lumberjack\Code\Log\Types;
 
 class YvesLoggingServiceProvider implements ServiceProviderInterface
 {
+
+    const EVENT_FIELD_ROUTE;
+
+    /**
+     * @var EventJournalInterface
+     */
+    protected $eventJournal;
+
+    /**
+     * @var ApiInterface
+     */
+    protected $newRelicApi;
+
+    /**
+     * @param EventJournalInterface $eventJournal
+     * @param ApiInterface $newRelicApi
+     */
+    public function __construct(EventJournalInterface $eventJournal, ApiInterface $newRelicApi)
+    {
+        $this->eventJournal = $eventJournal;
+        $this->newRelicApi = $newRelicApi;
+    }
 
     /**
      * Registers services on the given app.
@@ -57,19 +80,15 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
     protected function logRequest(Request $request)
     {
         $route = $request->attributes->get('_route', 'unknown');
-        Lumberjack::setRoute($route);
 
         // do not log the loadbalancer-heartbeat
         if (strpos($route, 'system/heartbeat') !== false) {
             return;
         }
 
-        $sessionId = substr(session_id(), 0, 4);
-        $lumberjack = Lumberjack::getInstance();
-        $lumberjack->addHttpUserAgent();
-        $lumberjack->addField('params.post', $request->request->all());
-        $lumberjack->addField('params.get', $request->query->all());
-        $lumberjack->send(Types::REQUEST, 'User ' . $sessionId . ' on /' . $route, $request->getMethod());
+        $event = new Event();
+        $event->addField(Event::FIELD_NAME, 'request');
+        $this->eventJournal->saveEvent($event);
     }
 
     /**
@@ -81,13 +100,12 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
         $host = $request->server->get('COMPUTERNAME', System::getHostname());
         $requestUri = $request->getRequestUri();
 
-        $nr = \SprykerFeature_Shared_Library_NewRelic_Api::getInstance();
-        $nr->setNameOfTransaction($transactionName)
+        $this->newRelicApi->setNameOfTransaction($transactionName)
             ->addCustomParameter('request_uri', $requestUri)
             ->addCustomParameter('host', $host);
 
         if (strpos($transactionName, 'system/heartbeat') !== false) {
-            $nr->markIgnoreTransaction();
+            $this->newRelicApi->markIgnoreTransaction();
         }
     }
 

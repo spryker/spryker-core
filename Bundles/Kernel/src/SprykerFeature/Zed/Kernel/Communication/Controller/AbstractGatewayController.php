@@ -6,14 +6,12 @@
 
 namespace SprykerFeature\Zed\Kernel\Communication\Controller;
 
-use Psr\Log\LogLevel;
 use Silex\Application;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\ZedRequest\Client\Message;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Lumberjack\Business\Model\Logger\RequestLogger;
-use Symfony\Component\HttpFoundation\Request;
+use \SprykerFeature\Shared\Library\NewRelic\Api;
 
 abstract class AbstractGatewayController extends AbstractController
 {
@@ -47,8 +45,7 @@ abstract class AbstractGatewayController extends AbstractController
         parent::__construct($application, $factory, $locator);
 
         // @todo this can be a plugin which listen for kernel.controller events
-        \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->addCustomParameter('Call_from', 'Yves');
-        (new RequestLogger())->log(LogLevel::INFO, Request::createFromGlobals(), ['yvesRequest' => true]);
+        Api::getInstance()->addCustomParameter('Call_from', 'Yves');
     }
 
     /**

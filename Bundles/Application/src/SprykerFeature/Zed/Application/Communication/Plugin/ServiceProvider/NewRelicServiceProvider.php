@@ -38,7 +38,7 @@ class NewRelicServiceProvider implements ServiceProviderInterface
 
             $host = isset($_SERVER['COMPUTERNAME']) ? $_SERVER['COMPUTERNAME'] : System::getHostname();
 
-            \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()
+            \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()
                 ->setNameOfTransaction($transactionName)
                 ->addCustomParameter('request_uri', $requestUri)
                 ->addCustomParameter('host', $host);

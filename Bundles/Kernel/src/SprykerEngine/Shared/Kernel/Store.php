@@ -117,7 +117,7 @@ class Store
         header('X-Store: ' . $this->getStoreName());
         header('X-Env: ' . APPLICATION_ENV);
 
-        $newRelicApi = \SprykerFeature_Shared_Library_NewRelic_Api::getInstance();
+        $newRelicApi = \SprykerFeature\Shared\Library\NewRelic\Api::getInstance();
         $newRelicApi->addCustomParameter('locale', $this->getCurrentLocale());
         $newRelicApi->addCustomParameter('store', $this->getStoreName());
     }
