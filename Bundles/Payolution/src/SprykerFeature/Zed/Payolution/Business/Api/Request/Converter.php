@@ -25,7 +25,7 @@ class Converter implements ConverterInterface
                 continue;
             }
 
-            if ($propertyName == 'analysis' && is_array($propertyValue)) {
+            if (mb_strtolower($propertyName) == 'analysis') {
                 $result = array_merge($this->getAnalysisCriteria($propertyValue), $result);
                 continue;
             }
@@ -37,11 +37,11 @@ class Converter implements ConverterInterface
     }
 
     /**
-     * @param array $criteria
+     * @param array|\ArrayObject $criteria
      *
      * @return array
      */
-    private function getAnalysisCriteria(array $criteria)
+    private function getAnalysisCriteria($criteria)
     {
         $result = [];
         foreach ($criteria as $criterion) {
