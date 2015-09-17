@@ -249,10 +249,12 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     public function updateProductMappingsPreconfig($idCategory, array $product_preconfig_list)
     {
         foreach ($product_preconfig_list as $idProduct => $idPreconfigProduct) {
+            $idPreconfigProduct = (int) $idPreconfigProduct;
             $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
                 ->findOne();
 
             if ($mapping) {
+                $idPreconfigProduct = $idPreconfigProduct <= 0 ? null : $idPreconfigProduct;
                 $mapping->setFkCategory($idCategory);
                 $mapping->setFkAbstractProduct($idProduct);
                 $mapping->setFkPreconfigProduct($idPreconfigProduct);

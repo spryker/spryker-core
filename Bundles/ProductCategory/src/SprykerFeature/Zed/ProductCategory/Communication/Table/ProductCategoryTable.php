@@ -121,7 +121,7 @@ class ProductCategoryTable extends AbstractTable
             ->orderByFormat();
         $preconfigItems = $preconfigQuery->find();
 
-        $items = '<option value="default">Default</option>';
+        $items = '<option value="0">Default</option>';
         foreach ($preconfigItems as $preconfigItem) {
             $selected = '';
             if ($productCategory['preconfig_product'] == $preconfigItem->getIdProduct()) {
