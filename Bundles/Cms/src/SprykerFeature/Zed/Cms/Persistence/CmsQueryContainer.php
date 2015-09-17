@@ -24,7 +24,6 @@ use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryKeyTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKeyQuery;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
 use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
 
 class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContainerInterface
@@ -370,6 +369,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      * @param string $value
      *
      * @throws \ErrorException
+     *
      * @return SpyGlossaryTranslationQuery
      */
     public function queryTranslationWithKeyByValue($value)
@@ -385,6 +385,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      * @param string $key
      *
      * @throws \ErrorException
+     *
      * @return SpyUrlQuery
      */
     public function queryKeyWithTranslationByKey($key)
@@ -430,6 +431,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      * @param $idLocale
      *
      * @throws \ErrorException
+     *
      * @return SpyCategoryNodeQuery
      */
     public function queryNodeByCategoryName($categoryName, $idLocale)
@@ -438,7 +440,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->queryCategoryNode($idLocale)
             ->useCategoryQuery()
                 ->useAttributeQuery()
-                    ->where('lower('.SpyCategoryAttributeTableMap::COL_NAME .') like ?' , '%'.mb_strtolower($categoryName).'%')
+                    ->where('lower(' . SpyCategoryAttributeTableMap::COL_NAME . ') like ?', '%' . mb_strtolower($categoryName) . '%')
                     ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::CATEGORY_NAME)
                 ->endUse()
             ->endUse()
@@ -448,4 +450,5 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->withColumn(SpyUrlTableMap::COL_URL, self::URL)
             ;
     }
+
 }
