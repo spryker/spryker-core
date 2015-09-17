@@ -101,7 +101,7 @@ class CategoryWriter implements CategoryWriterInterface
      */
     protected function persistCategoryAttribute(CategoryInterface $category, LocaleTransfer $locale)
     {
-        $categoryAttributeEntity = new SpyCategoryAttribute();
+        $categoryAttributeEntity = $this->queryContainer->queryAttributeByCategoryId($category->getIdCategory())->findOneOrCreate();
 
         $categoryAttributeEntity->fromArray($category->toArray());
 

@@ -169,6 +169,7 @@ class CategoryFormEdit extends CategoryFormAdd
                 //category
                 self::CATEGORY_IS_ACTIVE => $category[self::CATEGORY_IS_ACTIVE],
                 self::CATEGORY_IS_IN_MENU => $category[self::CATEGORY_IS_IN_MENU],
+                self::CATEGORY_IS_CLICKABLE => $category[self::CATEGORY_IS_CLICKABLE],
                 self::CATEGORY_NODE_IS_MAIN => $category[self::CATEGORY_NODE_IS_MAIN],
 
                 self::EXTRA_PARENTS => $nodeIds,
@@ -205,6 +206,7 @@ class CategoryFormEdit extends CategoryFormAdd
             //category
             self::CATEGORY_IS_ACTIVE => null,
             self::CATEGORY_IS_IN_MENU => null,
+            self::CATEGORY_IS_CLICKABLE => null,
             self::CATEGORY_NODE_IS_MAIN => null,
 
             self::EXTRA_PARENTS => null,
