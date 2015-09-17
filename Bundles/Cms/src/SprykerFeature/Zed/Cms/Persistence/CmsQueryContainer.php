@@ -24,7 +24,6 @@ use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryKeyTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKeyQuery;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
 use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
 
 class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContainerInterface
@@ -136,11 +135,16 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
                 ->endUse()
             ->addJoin(
                 SpyCmsBlockTableMap::COL_VALUE,
-                SpyCategoryAttributeTableMap::COL_ID_CATEGORY_ATTRIBUTE,
+                SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
                 Criteria::LEFT_JOIN
             )
             ->addJoin(
-                SpyCategoryAttributeTableMap::COL_ID_CATEGORY_ATTRIBUTE,
+                SpyCategoryNodeTableMap::COL_FK_CATEGORY,
+                SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
+                Criteria::LEFT_JOIN
+            )
+            ->addJoin(
+                SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
                 SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE,
                 Criteria::LEFT_JOIN
             )
@@ -166,7 +170,12 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
                 ->endUse()
             ->addJoin(
                 SpyCmsBlockTableMap::COL_VALUE,
-                SpyCategoryAttributeTableMap::COL_ID_CATEGORY_ATTRIBUTE,
+                SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
+                Criteria::LEFT_JOIN
+            )
+            ->addJoin(
+                SpyCategoryNodeTableMap::COL_FK_CATEGORY,
+                SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
                 Criteria::LEFT_JOIN
             )
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::CATEGORY_NAME)
@@ -360,6 +369,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      * @param string $value
      *
      * @throws \ErrorException
+     *
      * @return SpyGlossaryTranslationQuery
      */
     public function queryTranslationWithKeyByValue($value)
@@ -375,6 +385,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      * @param string $key
      *
      * @throws \ErrorException
+     *
      * @return SpyUrlQuery
      */
     public function queryKeyWithTranslationByKey($key)
@@ -420,6 +431,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
      * @param $idLocale
      *
      * @throws \ErrorException
+     *
      * @return SpyCategoryNodeQuery
      */
     public function queryNodeByCategoryName($categoryName, $idLocale)
@@ -428,7 +440,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->queryCategoryNode($idLocale)
             ->useCategoryQuery()
                 ->useAttributeQuery()
-                    ->where('lower('.SpyCategoryAttributeTableMap::COL_NAME .') like ?' , '%'.mb_strtolower($categoryName).'%')
+                    ->where('lower(' . SpyCategoryAttributeTableMap::COL_NAME . ') like ?', '%' . mb_strtolower($categoryName) . '%')
                     ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::CATEGORY_NAME)
                 ->endUse()
             ->endUse()
@@ -438,4 +450,5 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->withColumn(SpyUrlTableMap::COL_URL, self::URL)
             ;
     }
+
 }
