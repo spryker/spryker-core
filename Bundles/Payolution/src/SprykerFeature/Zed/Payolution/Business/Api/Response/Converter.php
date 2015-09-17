@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Payolution\Business\Api\Response;
 
 use Generated\Shared\Transfer\PayolutionResponseTransfer;
-use SprykerFeature\Zed\Payolution\Business\Exception\ApiResponseConverterInvalidPropertyException;
 
 class Converter implements ConverterInterface
 {
@@ -29,10 +28,7 @@ class Converter implements ConverterInterface
             $methodName = 'set' . $convertedKey;
 
             if (!method_exists($responseTransfer, $methodName)) {
-                throw new ApiResponseConverterInvalidPropertyException(sprintf(
-                    'Got unknown property "%s"',
-                    $key
-                ));
+                continue;
             }
 
             $responseTransfer->$methodName($value);
