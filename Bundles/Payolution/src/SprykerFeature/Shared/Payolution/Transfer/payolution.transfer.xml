@@ -62,7 +62,7 @@
 
         <property name="accountBrand" type="string"/>
 
-        <property name="analysis" type="array"/>
+        <property name="analysisCriteria" singular="analysisCriterion" type="PayolutionRequestAnalysisCriterion[]"/>
     </transfer>
 
     <transfer name="PayolutionRequestAnalysisCriterion">

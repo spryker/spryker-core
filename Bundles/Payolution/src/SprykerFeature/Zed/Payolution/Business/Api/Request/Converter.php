@@ -25,7 +25,7 @@ class Converter implements ConverterInterface
                 continue;
             }
 
-            if (mb_strtolower($propertyName) == 'analysis') {
+            if ('analysis_criteria' === $propertyName) {
                 $result = array_merge($this->getAnalysisCriteria($propertyValue), $result);
                 continue;
             }

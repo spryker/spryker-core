@@ -74,7 +74,7 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
             $criterionTransfer = (new PayolutionRequestAnalysisCriterionTransfer())
                 ->setName($name)
                 ->setValue($value);
-            $requestTransfer->addAnalysis($criterionTransfer);
+            $requestTransfer->addAnalysisCriterion($criterionTransfer);
         }
 
         return $requestTransfer;
