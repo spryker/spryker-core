@@ -54,7 +54,7 @@ class ErrorHandler
 
             $this->cleanOutputBuffer();
 
-            if ($this->isEchoOutput()) {
+            if ($this->showExceptionStackTrace()) {
                 $this->echoOutput($exception, $output);
             } else {
                 if ($exit) {
@@ -91,10 +91,9 @@ class ErrorHandler
     /**
      * @return bool
      */
-    protected function isEchoOutput()
+    protected function showExceptionStackTrace()
     {
-        return (APPLICATION === self::YVES && APPLICATION_ENV === self::DEVELOPMENT)
-        || APPLICATION === self::ZED;
+        return Config::get(YvesConfig::YVES_SHOW_EXCEPTION_STACK_TRACE);
     }
 
     /**
