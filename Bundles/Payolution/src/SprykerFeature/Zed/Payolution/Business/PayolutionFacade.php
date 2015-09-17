@@ -76,6 +76,16 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
+     * @param int $idPayment
+     *
+     * @return PayolutionResponseTransfer
+     */
+    public function refundPayment($idPayment)
+    {
+        return $this->getDependencyContainer()->createPaymentManager()->refundPayment($idPayment);
+    }
+
+    /**
      * @param OrderTransfer $orderTransfer
      *
      * @return bool

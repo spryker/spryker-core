@@ -118,6 +118,20 @@ class InvoiceTest extends Test
         $this->testForAbsentCustomerData($requestTransfer);
     }
 
+    public function testMapToRefund()
+    {
+        $uniqueId = uniqid('test_');
+        $methodMapper = new Invoice($this->getBundleConfigMock());
+        $paymentEntityMock = $this->getPaymentEntityMock();
+        $requestTransfer = $methodMapper->mapToRefund($paymentEntityMock, $uniqueId);
+
+        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionRequestTransfer', $requestTransfer);
+        $this->assertSame(PayolutionApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
+        $this->assertSame(Constants::PAYMENT_CODE_REFUND, $requestTransfer->getPaymentCode());
+        $this->assertSame($uniqueId, $requestTransfer->getIdentificationReferenceid());
+        $this->testForAbsentCustomerData($requestTransfer);
+    }
+
     /**
      * For some requests (e.g. re-authorization) we don't expect customer data
      *

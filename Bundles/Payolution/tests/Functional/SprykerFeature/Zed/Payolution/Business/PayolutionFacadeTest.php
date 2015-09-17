@@ -120,12 +120,12 @@ class PayolutionFacadeTest extends Test
         $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
 
         /** @var SpyPaymentPayolutionTransactionStatusLog $preAuthorizationStatusLogEntity */
-        $preAuthorizationStatusLogEntity = $this->paymentEntity
-            ->getSpyPaymentPayolutionTransactionRequestLogs()
-            ->getFirst()
+        $preAuthorizationStatusLogEntity = $this
+            ->paymentEntity
             ->getSpyPaymentPayolutionTransactionStatusLogs()
             ->getFirst();
 
+        // Emulate increase of order price
         $orderEntity = $this->paymentEntity->getSpySalesOrder();
         $orderEntity
             ->setGrandTotal(20000)
@@ -137,7 +137,8 @@ class PayolutionFacadeTest extends Test
 
         /* @var SpyPaymentPayolutionTransactionRequestLog $reAuthorizationRequestLogEntity */
         $this->paymentEntity->clearSpyPaymentPayolutionTransactionRequestLogs();
-        $reAuthorizationRequestLogEntity = $this->paymentEntity
+        $reAuthorizationRequestLogEntity = $this
+            ->paymentEntity
             ->getSpyPaymentPayolutionTransactionRequestLogs()
             ->getLast();
 
@@ -158,30 +159,46 @@ class PayolutionFacadeTest extends Test
         $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
 
         /** @var SpyPaymentPayolutionTransactionStatusLog $preAuthorizationStatusLogEntity */
-        $preAuthorizationStatusLogEntity = $this->paymentEntity
-            ->getSpyPaymentPayolutionTransactionRequestLogs()
-            ->getFirst()
+        $preAuthorizationStatusLogEntity = $this
+            ->paymentEntity
             ->getSpyPaymentPayolutionTransactionStatusLogs()
-            ->getFirst();
-
-        $orderEntity = $this->paymentEntity->getSpySalesOrder();
-        $orderEntity
-            ->setGrandTotal(20000)
-            ->setSubtotal(20000)
-            ->save();
+            ->getLast();
 
         $responseTransfer = $facade->revertPayment($this->paymentEntity->getIdPaymentPayolution());
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $responseTransfer);
 
         /* @var SpyPaymentPayolutionTransactionRequestLog $reAuthorizationRequestLogEntity */
         $this->paymentEntity->clearSpyPaymentPayolutionTransactionRequestLogs();
-        $reAuthorizationRequestLogEntity = $this->paymentEntity
-            ->getSpyPaymentPayolutionTransactionRequestLogs()
-            ->getLast();
+        $revertRequestLogEntity = $this->paymentEntity->getSpyPaymentPayolutionTransactionRequestLogs()->getLast();
 
         $this->assertEquals(
             $preAuthorizationStatusLogEntity->getIdentificationUniqueid(),
-            $reAuthorizationRequestLogEntity->getReferenceId()
+            $revertRequestLogEntity->getReferenceId()
+        );
+    }
+
+    public function testRefundPayment()
+    {
+        $this->setBaseTestData();
+        $this->setPaymentTestData();
+
+        $facade = $this->getLocator()->payolution()->facade();
+        $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
+        $facade->capturePayment($this->paymentEntity->getIdPaymentPayolution());
+
+        /** @var SpyPaymentPayolutionTransactionStatusLog $preAuthorizationStatusLogEntity */
+        $captureStatusLogEntity = $this->paymentEntity->getSpyPaymentPayolutionTransactionStatusLogs()->getLast();
+
+        $responseTransfer = $facade->refundPayment($this->paymentEntity->getIdPaymentPayolution());
+        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $responseTransfer);
+
+        /* @var SpyPaymentPayolutionTransactionRequestLog $reAuthorizationRequestLogEntity */
+        $this->paymentEntity->clearSpyPaymentPayolutionTransactionRequestLogs();
+        $refundRequestLogEntity = $this->paymentEntity->getSpyPaymentPayolutionTransactionRequestLogs()->getLast();
+
+        $this->assertEquals(
+            $captureStatusLogEntity->getIdentificationUniqueid(),
+            $refundRequestLogEntity->getReferenceId()
         );
     }
 

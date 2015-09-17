@@ -52,6 +52,14 @@ interface MethodMapperInterface
     public function mapToCapture(SpyPaymentPayolution $paymentEntity, $uniqueId);
 
     /**
+     * @param SpyPaymentPayolution $paymentEntity
+     * @param int $uniqueId
+     *
+     * @return PayolutionRequestTransfer
+     */
+    public function mapToRefund(SpyPaymentPayolution $paymentEntity, $uniqueId);
+
+    /**
      * @return string
      */
     public function getAccountBrand();

@@ -155,6 +155,24 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param int $idPayment
      *
+     * @return PayolutionResponseTransfer
+     */
+    public function refundPayment($idPayment)
+    {
+        $paymentEntity = $this->getPaymentEntity($idPayment);
+        $statusLogEntity = $this->getLatestTransactionStatusLogItem($idPayment);
+
+        $requestTransfer = $this
+            ->getMethodMapper($paymentEntity->getAccountBrand())
+            ->mapToRefund($paymentEntity, $statusLogEntity->getIdentificationUniqueid());
+
+        return $this->sendLoggedRequest($requestTransfer, $paymentEntity);
+    }
+
+
+    /**
+     * @param int $idPayment
+     *
      * @return SpyPaymentPayolution
      */
     private function getPaymentEntity($idPayment)

@@ -67,8 +67,8 @@
         <column name="identification_shortid"  required="true" type="VARCHAR"/>
         <column name="identification_referenceid" type="VARCHAR"/>
 
-        <column name="processing_connectordetail_connectortxid1" required="true" type="VARCHAR"/>
-        <column name="processing_connectordetail_paymentreference" required="true" type="VARCHAR"/>
+        <column name="processing_connectordetail_connectortxid1" type="VARCHAR"/>
+        <column name="processing_connectordetail_paymentreference" type="VARCHAR"/>
         <column name="processing_timestamp" required="true" type="VARCHAR"/>
 
         <foreign-key foreignTable="spy_payment_payolution">

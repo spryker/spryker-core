@@ -47,4 +47,11 @@ interface PaymentManagerInterface
      */
     public function capturePayment($idPayment);
 
+    /**
+     * @param int $idPayment
+     *
+     * @return PayolutionResponseTransfer
+     */
+    public function refundPayment($idPayment);
+
 }
