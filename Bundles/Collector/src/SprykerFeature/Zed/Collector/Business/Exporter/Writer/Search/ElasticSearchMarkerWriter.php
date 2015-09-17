@@ -59,10 +59,11 @@ class ElasticsearchMarkerWriter implements WriterInterface
     /**
      * @param array $dataSet
      *
-     * @return bool
+     * @throws \Exception
      */
     public function delete(array $dataSet)
     {
+        throw new \Exception('Not implemented');
     }
 
     /**
