@@ -150,7 +150,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         $nodeQuery = SpyCategoryNodeQuery::create()
             ->joinParentCategoryNode('parentNode')
             ->addJoin(
-                'parentNode.fk_category',
+                SpyCategoryNodeTableMap::COL_FK_CATEGORY,
                 SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
                 Criteria::INNER_JOIN
             )
