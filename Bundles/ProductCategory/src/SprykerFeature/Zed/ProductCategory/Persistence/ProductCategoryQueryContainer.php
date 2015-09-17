@@ -105,13 +105,10 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     {
         $query = $this->queryProductCategoryMappings();
         $query->filterByFkAbstractProduct($abstractProduct->getIdAbstractProduct())
-            ->endUse()
-            ->endUse()
-            ->useCategoryQuery()
+            ->useSpyCategoryQuery()
                 ->useAttributeQuery()
                     ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::COL_CATEGORY_NAME)
                 ->endUse()
-            ->endUse()
             ->endUse()
         ;
 
@@ -225,11 +222,11 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
         $query->groupByIdAbstractProduct();
 
         if ('' !== trim($term)) {
-            $term = '%'.mb_strtoupper($term).'%';
+            $term = '%' . mb_strtoupper($term) . '%';
 
-            $query->where('UPPER('.SpyAbstractProductTableMap::COL_SKU.') LIKE ?', $term, \PDO::PARAM_STR)
+            $query->where('UPPER(' . SpyAbstractProductTableMap::COL_SKU . ') LIKE ?', $term, \PDO::PARAM_STR)
                 ->_or()
-                ->where('UPPER('.SpyLocalizedAbstractProductAttributesTableMap::COL_NAME.') LIKE ?', $term, \PDO::PARAM_STR)
+                ->where('UPPER(' . SpyLocalizedAbstractProductAttributesTableMap::COL_NAME . ') LIKE ?', $term, \PDO::PARAM_STR)
             ;
         }
 
@@ -241,7 +238,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
                     Criteria::INNER_JOIN
                 )
                 ->_and()
-                ->where(SpyProductCategoryTableMap::COL_FK_CATEGORY.' <> ?', $idExcludedCategory, \PDO::PARAM_INT);
+                ->where(SpyProductCategoryTableMap::COL_FK_CATEGORY . ' <> ?', $idExcludedCategory, \PDO::PARAM_INT);
         }
 
         return $query;
