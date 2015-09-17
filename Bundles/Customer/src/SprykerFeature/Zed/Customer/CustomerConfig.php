@@ -69,4 +69,24 @@ class CustomerConfig extends AbstractBundleConfig
         return 42;
     }
 
+    /**
+     * @param string $token
+     *
+     * @return string
+     */
+    public function getCustomerPasswordRestoreTokenUrl($token)
+    {
+        return $this->getHostYves() . '/password/restore?token=' . $token;
+    }
+
+    /**
+     * @param string $token
+     *
+     * @return string
+     */
+    public function getRegisterConfirmTokenUrl($token)
+    {
+        return $this->getHostYves() . '/register/confirm?token=' . $token;
+    }
+
 }

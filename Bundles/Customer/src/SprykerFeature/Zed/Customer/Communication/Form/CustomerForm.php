@@ -6,8 +6,6 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Form;
 
-use Generated\Shared\Transfer\CustomerTransfer;
-use SprykerFeature\Zed\Country\Persistence\Propel\Map\SpyCountryTableMap;
 use SprykerFeature\Zed\Customer\Persistence\Propel\Base\SpyCustomerAddressQuery;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
 use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
@@ -20,7 +18,6 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Callback;
 use SprykerFeature\Zed\Customer\Business\Customer\Customer;
 use Symfony\Component\Validator\Context\ExecutionContext;
-use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 
 class CustomerForm extends AbstractForm
 {
@@ -30,7 +27,7 @@ class CustomerForm extends AbstractForm
     const SALUTATION = 'salutation';
     const GENDER = 'gender';
     const ID_CUSTOMER = 'id_customer';
-    const FIELD_TRIGGER_SEND_TOKEN = 'trigger_send_token';
+    const FIELD_SEND_PASSWORD_TOKEN = 'send_password_token';
 
     /**
      * @var SpyCustomerQuery
@@ -49,6 +46,8 @@ class CustomerForm extends AbstractForm
 
     /**
      * @param SpyCustomerQuery $customerQuery
+     * @param SpyCustomerAddressQuery $customerAddressQuery
+     * @param string $type
      */
     public function __construct(SpyCustomerQuery $customerQuery, SpyCustomerAddressQuery $customerAddressQuery, $type)
     {
@@ -87,7 +86,7 @@ class CustomerForm extends AbstractForm
             'constraints' => $emailConstraints,
         ];
 
-        if (self::UPDATE == $this->type) {
+        if (self::UPDATE === $this->type) {
             $emailParams['disabled'] = 'disabled';
         }
 
@@ -140,7 +139,7 @@ class CustomerForm extends AbstractForm
             ;
         }
 
-        $this->addCheckbox(self::FIELD_TRIGGER_SEND_TOKEN, [
+        $this->addCheckbox(self::FIELD_SEND_PASSWORD_TOKEN, [
             'label' => 'Send password token through email',
         ]);
 

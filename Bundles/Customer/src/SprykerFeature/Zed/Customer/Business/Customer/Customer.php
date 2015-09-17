@@ -21,6 +21,7 @@ use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotUpdatedException;
 use SprykerFeature\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface;
+use SprykerFeature\Zed\Customer\CustomerConfig;
 use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPluginInterface;
 use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface;
 use SprykerFeature\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
@@ -61,20 +62,20 @@ class Customer
     protected $registrationTokenSender = [];
 
     /**
-     * @var string
+     * @var CustomerConfig
      */
-    protected $hostYves = '';
+    protected $customerConfig;
 
     /**
      * @param QueryContainerInterface $queryContainer
      * @param CustomerReferenceGeneratorInterface $customerReferenceGenerator
-     * @param string $hostYves
+     * @param CustomerConfig $customerConfig
      */
-    public function __construct(QueryContainerInterface $queryContainer, CustomerReferenceGeneratorInterface $customerReferenceGenerator, $hostYves)
+    public function __construct(QueryContainerInterface $queryContainer, CustomerReferenceGeneratorInterface $customerReferenceGenerator, CustomerConfig $customerConfig)
     {
         $this->queryContainer = $queryContainer;
         $this->customerReferenceGenerator = $customerReferenceGenerator;
-        $this->hostYves = $hostYves;
+        $this->customerConfig = $customerConfig;
     }
 
     /**
@@ -187,9 +188,11 @@ class Customer
     protected function sendPasswordRestoreToken(CustomerInterface $customerTransfer)
     {
         $customerTransfer = $this->get($customerTransfer);
-        $link = $this->hostYves . '/password/restore?token=' . $customerTransfer->getRestorePasswordKey();
+        $confirmationLink = $this->customerConfig
+            ->getCustomerPasswordRestoreTokenUrl($customerTransfer->getRestorePasswordKey())
+        ;
         foreach ($this->passwordRestoreTokenSender as $sender) {
-            $sender->send($customerTransfer->getEmail(), $link);
+            $sender->send($customerTransfer->getEmail(), $confirmationLink);
         }
     }
 
@@ -200,12 +203,14 @@ class Customer
      */
     protected function sendRegistrationToken(CustomerInterface $customerTransfer)
     {
-        if (!$customerTransfer->getTriggerSendToken()) {
+        if (!$customerTransfer->getSendPasswordToken()) {
             return false;
         }
-        $link = $this->hostYves . '/register/confirm?token=' . $customerTransfer->getRegistrationKey();
+        $confirmationLink = $this->customerConfig
+            ->getRegisterConfirmTokenUrl($customerTransfer->getRegistrationKey())
+        ;
         foreach ($this->registrationTokenSender as $sender) {
-            $sender->send($customerTransfer->getEmail(), $link);
+            $sender->send($customerTransfer->getEmail(), $confirmationLink);
         }
 
         return true;
