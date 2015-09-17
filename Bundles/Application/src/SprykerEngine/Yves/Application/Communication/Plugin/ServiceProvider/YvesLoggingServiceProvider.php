@@ -18,8 +18,6 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 class YvesLoggingServiceProvider implements ServiceProviderInterface
 {
 
-    const EVENT_FIELD_ROUTE;
-
     /**
      * @var EventJournalInterface
      */
