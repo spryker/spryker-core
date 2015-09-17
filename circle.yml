@@ -8,7 +8,6 @@ machine:
     APPLICATION_STORE: DE
   services:
     - elasticsearch
-    
 test:
   override:
-    - bash ci_build.sh
+    - bash ci_build.sh ${CIRCLE_BRANCH}
