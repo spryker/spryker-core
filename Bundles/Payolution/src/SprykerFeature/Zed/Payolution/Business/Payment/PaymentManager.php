@@ -9,10 +9,12 @@ namespace SprykerFeature\Zed\Payolution\Business\Payment;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionRequestTransfer;
 use Generated\Shared\Transfer\PayolutionResponseTransfer;
+use SprykerEngine\Zed\Kernel\Business\DependencyContainer\DependencyContainerInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\ConverterInterface as RequestConverterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Response\ConverterInterface as ResponseConverterInterface;
 use SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper\MethodMapperInterface;
+use SprykerFeature\Zed\Payolution\Business\PayolutionDependencyContainer;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLog;
@@ -42,6 +44,11 @@ class PaymentManager implements PaymentManagerInterface
     private $responseConverter;
 
     /**
+     * @var DependencyContainerInterface
+     */
+    private $dependencyContainer;
+
+    /**
      * @var array
      */
     private $methodMappers = [];
@@ -56,12 +63,14 @@ class PaymentManager implements PaymentManagerInterface
         AdapterInterface $executionAdapter,
         PayolutionQueryContainerInterface $queryContainer,
         RequestConverterInterface $requestConverter,
-        ResponseConverterInterface $responseConverter
+        ResponseConverterInterface $responseConverter,
+        DependencyContainerInterface $dependencyContainer
     ) {
         $this->executionAdapter = $executionAdapter;
         $this->queryContainer = $queryContainer;
         $this->requestConverter = $requestConverter;
         $this->responseConverter = $responseConverter;
+        $this->dependencyContainer = $dependencyContainer;
     }
 
     /**
@@ -177,7 +186,7 @@ class PaymentManager implements PaymentManagerInterface
      */
     private function getPaymentEntity($idPayment)
     {
-        return $this->queryContainer->queryPaymentById($idPayment);
+        return $this->queryContainer->queryPaymentById($idPayment)->findOne();
     }
 
     /**
@@ -239,7 +248,7 @@ class PaymentManager implements PaymentManagerInterface
      */
     private function logApiRequest(PayolutionRequestTransfer $requestTransfer, SpyPaymentPayolution $paymentEntity)
     {
-        (new SpyPaymentPayolutionTransactionRequestLog())
+        $this->getDependencyContainer()->createTransactionRequestLogEntity()
             ->setPaymentCode($requestTransfer->getPaymentCode())
             ->setPresentationAmount($requestTransfer->getPresentationAmount())
             ->setPresentationCurrency($requestTransfer->getPresentationCurrency())
@@ -257,15 +266,19 @@ class PaymentManager implements PaymentManagerInterface
      */
     private function logApiResponse(PayolutionResponseTransfer $responseTransfer, SpyPaymentPayolution $paymentEntity)
     {
-        $logEntity = new SpyPaymentPayolutionTransactionStatusLog();
+        $logEntity = $this->getDependencyContainer()->createTransactionStatusLogEntity();
         $logEntity->fromArray($responseTransfer->toArray());
-        try {
-            $logEntity
-                ->setFkPaymentPayolution($paymentEntity->getIdPaymentPayolution())
-                ->save();
-        } catch (\Exception $exception) {
-            var_dump($exception);exit;
-        }
+        $logEntity
+            ->setFkPaymentPayolution($paymentEntity->getIdPaymentPayolution())
+            ->save();
+    }
+
+    /**
+     * @return PayolutionDependencyContainer
+     */
+    private function getDependencyContainer()
+    {
+        return $this->dependencyContainer;
     }
 
 }

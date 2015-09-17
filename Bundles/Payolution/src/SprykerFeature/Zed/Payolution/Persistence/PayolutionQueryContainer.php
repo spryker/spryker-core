@@ -10,7 +10,6 @@ use Generated\Zed\Ide\FactoryAutoCompletion\PayolutionPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\Map\SpyPaymentPayolutionTransactionStatusLogTableMap;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLogQuery;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionQuery;
 
 /**
@@ -24,14 +23,14 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     /**
      * @param int $idPayment
      *
-     * @return SpyPaymentPayolution
+     * @return SpyPaymentPayolutionQuery
      */
     public function queryPaymentById($idPayment)
     {
         /** @var SpyPaymentPayolutionQuery $query */
         $query = SpyPaymentPayolutionQuery::create();
 
-        return $query->requireOneByIdPaymentPayolution($idPayment);
+        return $query->filterByIdPaymentPayolution($idPayment);
     }
 
     /**
@@ -66,8 +65,7 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
      */
     public function queryTransactionStatusLogByPaymentIdLatestFirst($idPayment)
     {
-        return $this->queryTransactionStatusLogByPaymentId($idPayment)
-            ->addDescendingOrderByColumn(SpyPaymentPayolutionTransactionStatusLogTableMap::COL_CREATED_AT);
+        return $this->queryTransactionStatusLogByPaymentId($idPayment)->lastCreatedFirst();
     }
 
     /**
@@ -84,6 +82,14 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
             ->useSpyPaymentPayolutionTransactionRequestLogQuery()
             ->filterByPaymentCode($paymentCode)
             ->endUse();
+    }
+
+    /**
+     * @return SpyPaymentPayolutionTransactionStatusLogQuery
+     */
+    public function queryTransactionStatusLog()
+    {
+        return SpyPaymentPayolutionTransactionStatusLogQuery::create()->create();
     }
 
 }

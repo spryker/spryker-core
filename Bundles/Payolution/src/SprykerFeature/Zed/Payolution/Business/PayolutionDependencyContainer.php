@@ -16,6 +16,8 @@ use SprykerFeature\Zed\Payolution\Business\Order\OrderManagerInterface;
 use SprykerFeature\Zed\Payolution\Business\Payment\PaymentManagerInterface;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
+use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLog;
+use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLog;
 
 /**
  * @method PayolutionBusiness getFactory()
@@ -36,7 +38,8 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
                 $this->createExecutionAdapter(),
                 $this->getQueryContainer(),
                 $this->createRequestConverter(),
-                $this->createResponseConverter()
+                $this->createResponseConverter(),
+                $this
             );
 
         $paymentManager->registerMethodMapper(
@@ -91,6 +94,22 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
     public function createTransactionStatusLog()
     {
         return $this->getFactory()->createLogTransactionStatusLog($this->getQueryContainer());
+    }
+
+    /**
+     * @return SpyPaymentPayolutionTransactionRequestLog
+     */
+    public function createTransactionRequestLogEntity()
+    {
+        return new SpyPaymentPayolutionTransactionRequestLog();
+    }
+
+    /**
+     * @return SpyPaymentPayolutionTransactionStatusLog
+     */
+    public function createTransactionStatusLogEntity()
+    {
+        return new SpyPaymentPayolutionTransactionStatusLog();
     }
 
 }
