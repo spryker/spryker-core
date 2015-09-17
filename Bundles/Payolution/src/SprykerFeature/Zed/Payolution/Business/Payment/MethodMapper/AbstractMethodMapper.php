@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
 
+use Generated\Shared\Payolution\OrderInterface;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionRequestAnalysisCriterionTransfer;
 use Generated\Shared\Transfer\PayolutionRequestTransfer;
 use SprykerEngine\Shared\Kernel\Store;
@@ -39,6 +41,44 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
     }
 
     /**
+     * @param OrderInterface $orderTransfer
+     *
+     * @return PayolutionRequestTransfer
+     */
+    public function mapToPreCheck(OrderTransfer $orderTransfer)
+    {
+        $requestTransfer = $this->getBaseRequestTransfer(
+            $orderTransfer->getTotals()->getGrandTotal(),
+            $orderTransfer->getIdSalesOrder()
+        );
+        $requestTransfer->setPaymentCode(Constants::PAYMENT_CODE_PRE_CHECK);
+
+        $address = $orderTransfer->getBillingAddress();
+        $requestTransfer
+            ->setAddressZip($address->getZipCode())
+            ->setAddressCity($address->getCity())
+            //->setAddressCountry()
+            ->setAddressStreet($address->getAddress1());
+
+        $paymentTransfer = $orderTransfer->getPayolutionPayment();
+        $requestTransfer
+            ->setNameGiven($paymentTransfer->getFirstName())
+            ->setNameFamily($paymentTransfer->getLastName())
+            ->setNameTitle($paymentTransfer->getSalutation())
+            ->setNameSex($this->mapGender($paymentTransfer->getGender()))
+            ->setNameBirthdate($paymentTransfer->getBirthdate())
+            ->setContactEmail($paymentTransfer->getEmail())
+            ->setContactIp($paymentTransfer->getClientIp());
+
+        $criterionTransfer = (new PayolutionRequestAnalysisCriterionTransfer())
+            ->setName(Constants::CRITERION_PRE_CHECK)
+            ->setValue('TRUE');
+        $requestTransfer->addAnalysisCriterion($criterionTransfer);
+
+        return $requestTransfer;
+    }
+
+    /**
      * @param SpyPaymentPayolution $paymentEntity
      *
      * @throws \Propel\Runtime\Exception\PropelException
@@ -50,7 +90,7 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
         $orderEntity = $paymentEntity->getSpySalesOrder();
         $addressEntity = $orderEntity->getBillingAddress();
 
-        $requestTransfer = $this->getBaseRequestTransfer($paymentEntity);
+        $requestTransfer = $this->getBaseRequestTransferForPayment($paymentEntity);
         $requestTransfer
             ->setPaymentCode(Constants::PAYMENT_CODE_PRE_AUTHORIZATION)
             ->setAddressCountry($addressEntity->getCountry()->getIso2Code())
@@ -103,9 +143,9 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
      */
     public function mapToReAuthorization(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
-        $requestTransfer = $this->getBaseRequestTransfer($paymentEntity);
+        $requestTransfer = $this->getBaseRequestTransferForPayment($paymentEntity);
         $requestTransfer
-            ->setPaymentCode(Constants::PAYMENT_CODE_RE_AUTHORIZACTION)
+            ->setPaymentCode(Constants::PAYMENT_CODE_RE_AUTHORIZATION)
             ->setIdentificationReferenceid($uniqueId);
 
         return $requestTransfer;
@@ -116,17 +156,27 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
      *
      * @return PayolutionRequestTransfer
      */
-    protected function getBaseRequestTransfer(SpyPaymentPayolution $paymentEntity)
+    protected function getBaseRequestTransferForPayment(SpyPaymentPayolution $paymentEntity)
     {
         $orderEntity = $paymentEntity->getSpySalesOrder();
+        return $this->getBaseRequestTransfer($orderEntity->getGrandTotal(), $orderEntity->getIdSalesOrder());
+    }
 
+    /**
+     * @param int $grandTotal
+     * @param int $idOrder
+     *
+     * @return PayolutionRequestTransfer
+     */
+    protected function getBaseRequestTransfer($grandTotal, $idOrder)
+    {
         return (new PayolutionRequestTransfer())
             ->setSecuritySender($this->getConfig()->getSecuritySender())
             ->setUserLogin($this->getConfig()->getUserLogin())
             ->setUserPwd($this->getConfig()->getUserPassword())
-            ->setPresentationAmount($orderEntity->getGrandTotal()/100)
+            ->setPresentationAmount($grandTotal / 100)
             ->setPresentationCurrency(Store::getInstance()->getCurrencyIsoCode())
-            ->setPresentationUsage($orderEntity->getIdSalesOrder())
+            ->setPresentationUsage($idOrder)
             ->setAccountBrand($this->getAccountBrand())
             ->setTransactionChannel($this->getConfig()->getChannelInvoice())
             ->setTransactionMode($this->getConfig()->getTransactionMode())

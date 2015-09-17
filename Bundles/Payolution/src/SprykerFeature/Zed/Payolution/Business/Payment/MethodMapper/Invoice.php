@@ -20,7 +20,7 @@ class Invoice extends AbstractMethodMapper
      */
     public function mapToCapture(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
-        $requestTransfer = $this->getBaseRequestTransfer($paymentEntity);
+        $requestTransfer = $this->getBaseRequestTransferForPayment($paymentEntity);
         $requestTransfer
             ->setPaymentCode(Constants::PAYMENT_CODE_CAPTURE)
             ->setIdentificationReferenceid($uniqueId);

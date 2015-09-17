@@ -26,6 +26,16 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return PayolutionResponseTransfer
+     */
+    public function preCheckPayment(OrderTransfer $orderTransfer)
+    {
+        return $this->getDependencyContainer()->createPaymentManager()->preCheckPayment($orderTransfer);
+    }
+
+    /**
      * @param int $idPayment
      *
      * @return PayolutionResponseTransfer

@@ -13,7 +13,7 @@ interface Constants extends ConfigInterface
 
     const PAYMENT_CODE_PRE_CHECK = 'VA.PA';
     const PAYMENT_CODE_PRE_AUTHORIZATION = 'VA.PA';
-    const PAYMENT_CODE_RE_AUTHORIZACTION = 'VA.PA';
+    const PAYMENT_CODE_RE_AUTHORIZATION = 'VA.PA';
     const PAYMENT_CODE_CAPTURE = 'VA.CP';
     const PAYMENT_CODE_REVERSAL = 'VA.RV';
     const PAYMENT_CODE_REFUND = 'VA.RF';

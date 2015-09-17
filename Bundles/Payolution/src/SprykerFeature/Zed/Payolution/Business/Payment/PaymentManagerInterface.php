@@ -6,10 +6,18 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Payment;
 
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionResponseTransfer;
 
 interface PaymentManagerInterface
 {
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return PayolutionResponseTransfer
+     */
+    public function preCheckPayment(OrderTransfer $orderTransfer);
 
     /**
      * @param int $idPayment

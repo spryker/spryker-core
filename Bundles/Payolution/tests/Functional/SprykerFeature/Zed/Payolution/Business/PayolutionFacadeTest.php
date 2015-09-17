@@ -6,8 +6,10 @@
 namespace Functional\SprykerFeature\Zed\Payolution\Business;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
@@ -65,9 +67,39 @@ class PayolutionFacadeTest extends Test
         $this->assertEquals('127.0.0.1', $paymentEntity->getClientIp());
     }
 
-    /**
-     * @throws \Propel\Runtime\Exception\PropelException
-     */
+    public function testPreCheckPayment()
+    {
+        $this->setBaseTestData();
+
+        $totalsTransfer = (new TotalsTransfer())->setGrandTotal(10000);
+
+        $addressTransfer = (new AddressTransfer())
+            ->setCity('Berlin')
+            ->setZipCode('10623')
+            ->setAddress1('Straße des 17. Juni')
+            ->setAddress2('135');
+
+        $paymentTransfer = (new PayolutionPaymentTransfer())
+            ->setFirstName('John')
+            ->setLastName('Doe')
+            ->setGender('Male')
+            ->setSalutation('Mr')
+            ->setBirthdate('1970-01-01')
+            ->setClientIp('127.0.0.1')
+            ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE);
+
+        $orderTransfer = (new OrderTransfer())
+            ->setIdSalesOrder($this->orderEntity->getIdSalesOrder())
+            ->setPayolutionPayment($paymentTransfer)
+            ->setBillingAddress($addressTransfer)
+            ->setTotals($totalsTransfer);
+
+        $facade = $this->getLocator()->payolution()->facade();
+        $response = $facade->preCheckPayment($orderTransfer);
+
+        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
+    }
+
     public function testPreAuthorizePayment()
     {
         $this->setBaseTestData();
@@ -79,7 +111,7 @@ class PayolutionFacadeTest extends Test
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
     }
 
-    public function testReAuthorization()
+    public function testReAuthorizePayment()
     {
         $this->setBaseTestData();
         $this->setPaymentTestData();
