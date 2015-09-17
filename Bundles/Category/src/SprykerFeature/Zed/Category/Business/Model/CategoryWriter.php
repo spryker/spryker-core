@@ -105,6 +105,8 @@ class CategoryWriter implements CategoryWriterInterface
 
         $categoryAttributeEntity->fromArray($category->toArray());
 
+        $categoryAttributeEntity->fromArray($category->toArray());
+
         $categoryAttributeEntity->setFkCategory($category->getIdCategory());
         $categoryAttributeEntity->setFkLocale($locale->getIdLocale());
 
