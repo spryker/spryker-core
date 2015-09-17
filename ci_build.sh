@@ -14,4 +14,8 @@ post_data=$(cat <<EOF
 EOF
 )
 
-curl -H "Accept: application/json" -H "Content-Type: application/json" -d "${post_data}" -X POST ${trigger_build_url}
+curl \
+--header "Accept: application/json" \
+--header "Content-Type: application/json" \
+--data "${post_data}" \
+--request POST ${trigger_build_url}
