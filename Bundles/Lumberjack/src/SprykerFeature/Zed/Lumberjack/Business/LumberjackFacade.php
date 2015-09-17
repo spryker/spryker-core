@@ -1,40 +1,36 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Copyright Spryker Systems GmbH 2015
  */
 
 namespace SprykerFeature\Zed\Lumberjack\Business;
 
+use SprykerEngine\Shared\Lumberjack\Model\Event;
+use SprykerEngine\Shared\Lumberjack\Model\EventInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Zed\Lumberjack\Business\Model\ElasticSearch\Proxy;
 
+/**
+ * @method LumberjackDependencyContainer getDependencyContainer()
+ */
 class LumberjackFacade extends AbstractFacade
 {
 
     /**
-     * @param array $getParams
-     * @param array $postData
-     * @param string $type
-     *
-     * @return string
+     * @param EventInterface $event
      */
-    public function getSearch(array $getParams, array $postData, $type = Proxy::SEARCH_TYPE_SINGLE)
+    public function saveEvent(EventInterface $event)
     {
-        return $this->factory->createModelElasticSearchProxy()->getSearch($getParams, $postData, $type);
+        $this->createEventJournal()->saveEvent($event);
     }
 
     /**
-     * @param string $json
-     * @param string $fieldDelimiter
-     * @param string $stringDelimiter
-     *
-     * @return string
+     * @param array $fields
      */
-    public function getCsvFromElasticSearchJsonResponse($json, $fieldDelimiter = ';', $stringDelimiter = '"')
-    {
-        return $this->factory->createModelElasticSearchExportCsv()
-            ->getCsvFromElasticSearchJsonResponse($json, $fieldDelimiter, $stringDelimiter);
+    public function logEvent(array $fields) {
+        $this->saveEvent(
+            (new Event())->addFields($fields)
+        );
     }
 
 }

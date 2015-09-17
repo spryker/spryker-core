@@ -1,7 +1,0 @@
-{% extends '@Application/Layout/layout.twig' %}
-{% block content %}
-
-<link rel="stylesheet" type="text/css" href="{{ staticPath('Lumberjack/styles/lumberjack.css') }}" media="screen">
-<div id="lumberjack"></div>
-<script src="{{ requireJsPath }}" data-main="{{ lumberjackJsPath }}" data-lumberjack-config='{{ config }}'></script>
-{% endblock %}

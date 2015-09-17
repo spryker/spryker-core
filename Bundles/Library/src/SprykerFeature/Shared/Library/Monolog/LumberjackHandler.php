@@ -7,7 +7,8 @@
 namespace SprykerFeature\Shared\Library\Monolog;
 
 use Monolog\Handler\AbstractHandler;
-use SprykerFeature\Shared\Lumberjack\Code\Lumberjack;
+use SprykerEngine\Shared\Lumberjack\Model\SharedEventJournal;
+use SprykerEngine\Shared\Lumberjack\Model\Event;
 
 class LumberjackHandler extends AbstractHandler
 {
@@ -19,12 +20,16 @@ class LumberjackHandler extends AbstractHandler
      */
     public function handle(array $record)
     {
-        $lumberjack = Lumberjack::getInstance();
-        $lumberjack->addField('extra', $record['extra']);
-        $lumberjack->addField('context', $record['context']);
-        $lumberjack->addField('channel', $record['channel']);
-        $lumberjack->addField('context', $record['context']);
-        $lumberjack->send(self::MESSAGE_LOG_MONOLOG, $record['message'], $record['level_name']);
+        $journal = new SharedEventJournal();
+        $event = new Event();
+        $event->addField('extra', $record['extra']);
+        $event->addField('context', $record['context']);
+        $event->addField('channel', $record['channel']);
+        $event->addField('context', $record['context']);
+        $event->addField('message', $record['message']);
+        $event->addField('level', $record['level_name']);
+        $event->addField('name', self::MESSAGE_LOG_MONOLOG);
+        $journal->saveEvent($event);
     }
 
 }

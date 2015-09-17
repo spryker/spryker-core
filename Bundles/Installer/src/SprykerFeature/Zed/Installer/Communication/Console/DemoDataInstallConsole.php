@@ -39,7 +39,9 @@ class DemoDataInstallConsole extends Console
 
         foreach ($installerPlugins as $installer) {
             $installer->setMessenger($messenger);
+            $output->writeln(date('c').' Next importer '.get_class($installer));
             $installer->install();
+            $output->writeln('Done '.get_class($installer));
         }
     }
 
