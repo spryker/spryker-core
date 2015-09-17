@@ -57,7 +57,7 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
         $requestTransfer
             ->setAddressZip($address->getZipCode())
             ->setAddressCity($address->getCity())
-            //->setAddressCountry()
+            ->setAddressCountry($address->getIso2Code())
             ->setAddressStreet($address->getAddress1());
 
         $paymentTransfer = $orderTransfer->getPayolutionPayment();

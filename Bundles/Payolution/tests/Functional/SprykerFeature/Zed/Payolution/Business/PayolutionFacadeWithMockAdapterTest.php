@@ -9,6 +9,12 @@ namespace Functional\SprykerFeature\Zed\Payolution\Business;
 use Codeception\TestCase\Test;
 
 use Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http\AdapterMock;
+use Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http\PreAuthorizationAdapterMock;
+use Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http\PreCheckAdapterMock;
+use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PayolutionPaymentTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
@@ -28,6 +34,7 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
 
 class PayolutionFacadeWithMockAdapterTest extends Test
 {
+
     /**
      * @var SpySalesOrder
      */
@@ -38,23 +45,85 @@ class PayolutionFacadeWithMockAdapterTest extends Test
      */
     private $paymentEntity;
 
-    public function testPreAuthorizePaymentSuccess()
+    public function testPreCheckPaymentSuccess()
     {
-        $adapterMock = new AdapterMock();
+        $adapterMock = new PreCheckAdapterMock();
         $facade = $this->getFacadeMock($adapterMock);
-
-        $this->setBaseTestData();
-        $this->setPaymentTestData();
-
-        $response = $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
+        $response = $facade->preCheckPayment($this->getOrderTransfer());
 
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
-        $expectedResponseData = $adapterMock->getPreAuthorizationSuccessResponse();
 
+        $expectedResponseData = $adapterMock->getSuccessResponse();
         $expectedResponse = (new Converter())->fromArray($expectedResponseData);
 
         $this->assertEquals($expectedResponse, $response);
+        $this->assertSame($expectedResponse->getProcessingReasonCode(), $response->getProcessingReasonCode());
+        $this->assertSame($expectedResponse->getProcessingStatusCode(), $response->getProcessingStatusCode());
+    }
 
+    public function testPreCheckFailure()
+    {
+        $adapterMock = (new PreCheckAdapterMock())->expectFailure();
+        $facade = $this->getFacadeMock($adapterMock);
+        $response = $facade->preCheckPayment($this->getOrderTransfer());
+
+        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
+
+        $expectedResponseData = $adapterMock->getFailureResponse();
+        $expectedResponse = (new Converter())->fromArray($expectedResponseData);
+
+        $this->assertEquals($expectedResponse, $response);
+        $this->assertSame($expectedResponse->getProcessingReasonCode(), $response->getProcessingReasonCode());
+        $this->assertSame($expectedResponse->getProcessingStatusCode(), $response->getProcessingStatusCode());
+    }
+
+    /**
+     * @return OrderTransfer
+     */
+    private function getOrderTransfer()
+    {
+        $totalsTransfer = (new TotalsTransfer())->setGrandTotal(100000);
+
+        $addressTransfer = (new AddressTransfer())
+            ->setCity('Berlin')
+            ->setZipCode('10623')
+            ->setAddress1('Straße des 17. Juni 135')
+            ->setIso2Code('de');
+
+        $paymentTransfer = (new PayolutionPaymentTransfer())
+            ->setFirstName('John')
+            ->setLastName('Doe')
+            ->setGender('Male')
+            ->setSalutation('Mr')
+            ->setBirthdate('1970-01-01')
+            ->setClientIp('127.0.0.1')
+            ->setEmail('john@doe.com')
+            ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE);
+
+        $orderTransfer = (new OrderTransfer())
+            ->setIdSalesOrder(1)
+            ->setPayolutionPayment($paymentTransfer)
+            ->setBillingAddress($addressTransfer)
+            ->setTotals($totalsTransfer);
+
+        return $orderTransfer;
+    }
+
+    public function testPreAuthorizePaymentSuccess()
+    {
+        $this->setBaseTestData();
+        $this->setPaymentTestData();
+
+        $adapterMock = new PreAuthorizationAdapterMock();
+        $facade = $this->getFacadeMock($adapterMock);
+        $response = $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
+
+        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
+
+        $expectedResponseData = $adapterMock->getSuccessResponse();
+        $expectedResponse = (new Converter())->fromArray($expectedResponseData);
+
+        $this->assertEquals($expectedResponse, $response);
         $this->assertEquals(0, $expectedResponse->getProcessingRiskScore());
         $this->assertEquals('ACK', $expectedResponse->getP3Validation());
         $this->assertEquals('John', $expectedResponse->getNameGiven());
@@ -95,7 +164,10 @@ class PayolutionFacadeWithMockAdapterTest extends Test
         $this->assertEquals('RSRX-BWHY-JLDN', $expectedResponse->getProcessingConnectordetailPaymentreference());
         $this->assertEquals('1.0', $expectedResponse->getResponseVersion());
         $this->assertEquals('CONNECTOR_TEST', $expectedResponse->getTransactionMode());
-        $this->assertEquals('Request successfully processed in \'Merchant in Connector Test Mode\'',  $expectedResponse->getProcessingReturn());
+        $this->assertEquals(
+            'Request successfully processed in \'Merchant in Connector Test Mode\'',
+            $expectedResponse->getProcessingReturn()
+        );
         $this->assertEquals('SYNC', $expectedResponse->getTransactionResponse());
         $this->assertEquals('Straße des 17. Juni 135', $expectedResponse->getAddressStreet());
         $this->assertEquals('M', $expectedResponse->getNameSex());
@@ -106,17 +178,16 @@ class PayolutionFacadeWithMockAdapterTest extends Test
 
     public function testPreAuthorizePaymentFailure()
     {
-        $adapterMock = new AdapterMock();
-        $adapterMock->setExpectSuccess(false);
-
-        $facade = $this->getFacadeMock($adapterMock);
 
         $this->setBaseTestData();
         $this->setPaymentTestData();
 
+        $adapterMock = (new PreAuthorizationAdapterMock())->expectFailure();
+        $facade = $this->getFacadeMock($adapterMock);
+
         $response = $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
 
-        $expectedResponseData = $adapterMock->getPreAuthorizationFailureResponse();
+        $expectedResponseData = $adapterMock->getFailureResponse();
         $expectedResponse = (new Converter())->fromArray($expectedResponseData);
 
         $this->assertEquals($expectedResponse, $response);
@@ -161,10 +232,6 @@ class PayolutionFacadeWithMockAdapterTest extends Test
 
         return $facade;
     }
-
-
-
-
 
     /**
      * @throws \Propel\Runtime\Exception\PropelException
@@ -220,4 +287,5 @@ class PayolutionFacadeWithMockAdapterTest extends Test
             ->setSalutation(SpyCustomerTableMap::COL_SALUTATION_MR);
         $this->paymentEntity->save();
     }
+
 }

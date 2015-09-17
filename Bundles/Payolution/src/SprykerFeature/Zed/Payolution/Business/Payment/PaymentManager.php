@@ -17,7 +17,6 @@ use SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper\MethodMapperInte
 use SprykerFeature\Zed\Payolution\Business\PayolutionDependencyContainer;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLog;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLog;
 
 class PaymentManager implements PaymentManagerInterface
@@ -58,6 +57,7 @@ class PaymentManager implements PaymentManagerInterface
      * @param PayolutionQueryContainerInterface $queryContainer
      * @param RequestConverterInterface $requestConverter
      * @param ResponseConverterInterface $responseConverter
+     * @param DependencyContainerInterface $dependencyContainer
      */
     public function __construct(
         AdapterInterface $executionAdapter,

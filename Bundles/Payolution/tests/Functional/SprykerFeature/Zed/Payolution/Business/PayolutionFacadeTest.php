@@ -71,13 +71,13 @@ class PayolutionFacadeTest extends Test
     {
         $this->setBaseTestData();
 
-        $totalsTransfer = (new TotalsTransfer())->setGrandTotal(10000);
+        $totalsTransfer = (new TotalsTransfer())->setGrandTotal(10000000);
 
         $addressTransfer = (new AddressTransfer())
             ->setCity('Berlin')
             ->setZipCode('10623')
-            ->setAddress1('Straße des 17. Juni')
-            ->setAddress2('135');
+            ->setAddress1('Straße des 17. Juni 135')
+            ->setIso2Code('de');
 
         $paymentTransfer = (new PayolutionPaymentTransfer())
             ->setFirstName('John')
@@ -86,6 +86,7 @@ class PayolutionFacadeTest extends Test
             ->setSalutation('Mr')
             ->setBirthdate('1970-01-01')
             ->setClientIp('127.0.0.1')
+            ->setEmail('john@doe.com')
             ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE);
 
         $orderTransfer = (new OrderTransfer())

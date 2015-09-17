@@ -5,49 +5,13 @@
  */
 namespace Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http;
 
-use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-
-class AdapterMock implements AdapterInterface
+class PreAuthorizationAdapterMock extends AbstractAdapterMock
 {
 
     /**
-     * @var bool
-     */
-    protected $expectSuccess = true;
-
-    /**
-     * @var array
-     */
-    private $requestData = [];
-
-    /**
-     * @param bool $expectation
-     */
-    public function setExpectSuccess($expectation)
-    {
-        $this->expectSuccess = $expectation;
-    }
-
-    /**
-     * @param array $data
-     *
      * @return array
      */
-    public function sendArrayDataRequest(array $data)
-    {
-        $this->requestData = $data;
-
-        if ($this->expectSuccess){
-            return $this->getPreAuthorizationSuccessResponse();
-        }
-
-        return $this->getPreAuthorizationFailureResponse();
-    }
-
-    /**
-     * @return array
-     */
-    public function getPreAuthorizationSuccessResponse()
+    public function getSuccessResponse()
     {
         return [
             'PROCESSING_RISK_SCORE' => '0',
@@ -103,7 +67,7 @@ class AdapterMock implements AdapterInterface
     /**
      * @return array
      */
-    public function getPreAuthorizationFailureResponse()
+    public function getFailureResponse()
     {
         return [
             'processing_risk_score' => '0',
