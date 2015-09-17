@@ -60,6 +60,16 @@ class PayolutionFacade extends AbstractFacade
      *
      * @return PayolutionResponseTransfer
      */
+    public function revertPayment($idPayment)
+    {
+        return $this->getDependencyContainer()->createPaymentManager()->revertPayment($idPayment);
+    }
+
+    /**
+     * @param int $idPayment
+     *
+     * @return PayolutionResponseTransfer
+     */
     public function capturePayment($idPayment)
     {
         return $this->getDependencyContainer()->createPaymentManager()->capturePayment($idPayment);

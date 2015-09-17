@@ -147,9 +147,25 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
         $requestTransfer
             ->setPaymentCode(Constants::PAYMENT_CODE_RE_AUTHORIZATION)
             ->setIdentificationReferenceid($uniqueId);
-
         return $requestTransfer;
     }
+
+    /**
+     * @param SpyPaymentPayolution $paymentEntity
+     * @param int $uniqueId
+     *
+     * @return PayolutionRequestTransfer
+     */
+    public function mapToReversal(SpyPaymentPayolution $paymentEntity, $uniqueId)
+    {
+        $requestTransfer = $this->getBaseRequestTransferForPayment($paymentEntity);
+        $requestTransfer
+            ->setPaymentCode(Constants::PAYMENT_CODE_REVERSAL)
+            ->setIdentificationReferenceid($uniqueId);
+        return $requestTransfer;
+
+    }
+
 
     /**
      * @param SpyPaymentPayolution $paymentEntity

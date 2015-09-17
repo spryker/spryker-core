@@ -9,6 +9,7 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
+use Generated\Shared\Transfer\PayolutionRequestTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
 use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountry;
@@ -86,18 +87,21 @@ class InvoiceTest extends Test
         $this->assertSame(PayolutionApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
         $this->assertSame(Constants::PAYMENT_CODE_RE_AUTHORIZATION, $requestTransfer->getPaymentCode());
         $this->assertSame($uniqueId, $requestTransfer->getIdentificationReferenceid());
-        $this->assertNull($requestTransfer->getNameGiven());
-        $this->assertNull($requestTransfer->getNameFamily());
-        $this->assertNull($requestTransfer->getNameTitle());
-        $this->assertNull($requestTransfer->getNameSex());
-        $this->assertNull($requestTransfer->getNameBirthdate());
-        $this->assertNull($requestTransfer->getAddressCity());
-        $this->assertNull($requestTransfer->getAddressCountry());
-        $this->assertNull($requestTransfer->getAddressStreet());
-        $this->assertNull($requestTransfer->getAddressZip());
-        $this->assertNull($requestTransfer->getContactEmail());
-        $this->assertNull($requestTransfer->getContactIp());
-        $this->assertNull($requestTransfer->getIdentificationShopperid());
+        $this->testForAbsentCustomerData($requestTransfer);
+    }
+
+    public function testMapToReversal()
+    {
+        $uniqueId = uniqid('test_');
+        $methodMapper = new Invoice($this->getBundleConfigMock());
+        $paymentEntityMock = $this->getPaymentEntityMock();
+        $requestTransfer = $methodMapper->mapToReversal($paymentEntityMock, $uniqueId);
+
+        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionRequestTransfer', $requestTransfer);
+        $this->assertSame(PayolutionApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
+        $this->assertSame(Constants::PAYMENT_CODE_REVERSAL, $requestTransfer->getPaymentCode());
+        $this->assertSame($uniqueId, $requestTransfer->getIdentificationReferenceid());
+        $this->testForAbsentCustomerData($requestTransfer);
     }
 
     public function testMapToCapture()
@@ -111,6 +115,16 @@ class InvoiceTest extends Test
         $this->assertSame(PayolutionApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
         $this->assertSame(Constants::PAYMENT_CODE_CAPTURE, $requestTransfer->getPaymentCode());
         $this->assertSame($uniqueId, $requestTransfer->getIdentificationReferenceid());
+        $this->testForAbsentCustomerData($requestTransfer);
+    }
+
+    /**
+     * For some requests (e.g. re-authorization) we don't expect customer data
+     *
+     * @param PayolutionRequestTransfer $requestTransfer
+     */
+    private function testForAbsentCustomerData(PayolutionRequestTransfer $requestTransfer)
+    {
         $this->assertNull($requestTransfer->getNameGiven());
         $this->assertNull($requestTransfer->getNameFamily());
         $this->assertNull($requestTransfer->getNameTitle());

@@ -149,6 +149,42 @@ class PayolutionFacadeTest extends Test
         // @todo CD-408 Test $responseTransfer fields
     }
 
+    public function testRevertPayment()
+    {
+        $this->setBaseTestData();
+        $this->setPaymentTestData();
+
+        $facade = $this->getLocator()->payolution()->facade();
+        $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
+
+        /** @var SpyPaymentPayolutionTransactionStatusLog $preAuthorizationStatusLogEntity */
+        $preAuthorizationStatusLogEntity = $this->paymentEntity
+            ->getSpyPaymentPayolutionTransactionRequestLogs()
+            ->getFirst()
+            ->getSpyPaymentPayolutionTransactionStatusLogs()
+            ->getFirst();
+
+        $orderEntity = $this->paymentEntity->getSpySalesOrder();
+        $orderEntity
+            ->setGrandTotal(20000)
+            ->setSubtotal(20000)
+            ->save();
+
+        $responseTransfer = $facade->revertPayment($this->paymentEntity->getIdPaymentPayolution());
+        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $responseTransfer);
+
+        /* @var SpyPaymentPayolutionTransactionRequestLog $reAuthorizationRequestLogEntity */
+        $this->paymentEntity->clearSpyPaymentPayolutionTransactionRequestLogs();
+        $reAuthorizationRequestLogEntity = $this->paymentEntity
+            ->getSpyPaymentPayolutionTransactionRequestLogs()
+            ->getLast();
+
+        $this->assertEquals(
+            $preAuthorizationStatusLogEntity->getIdentificationUniqueid(),
+            $reAuthorizationRequestLogEntity->getReferenceId()
+        );
+    }
+
     /**
      * @throws \Propel\Runtime\Exception\PropelException
      */

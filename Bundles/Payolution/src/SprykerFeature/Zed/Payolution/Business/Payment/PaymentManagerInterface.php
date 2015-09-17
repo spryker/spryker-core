@@ -38,6 +38,13 @@ interface PaymentManagerInterface
      *
      * @return PayolutionResponseTransfer
      */
+    public function revertPayment($idPayment);
+
+    /**
+     * @param int $idPayment
+     *
+     * @return PayolutionResponseTransfer
+     */
     public function capturePayment($idPayment);
 
 }

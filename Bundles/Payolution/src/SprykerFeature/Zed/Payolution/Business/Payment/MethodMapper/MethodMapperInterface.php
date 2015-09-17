@@ -37,6 +37,14 @@ interface MethodMapperInterface
 
     /**
      * @param SpyPaymentPayolution $paymentEntity
+     * @param int $uniqueId
+     *
+     * @return PayolutionRequestTransfer
+     */
+    public function mapToReversal(SpyPaymentPayolution $paymentEntity, $uniqueId);
+
+    /**
+     * @param SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
      * @return PayolutionRequestTransfer
