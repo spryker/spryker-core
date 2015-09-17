@@ -35,12 +35,17 @@ class CategoryWriter implements CategoryWriterInterface
      *
      * @throws \ErrorException
      *
-     * @return SpyCategory
+     * @return int
      */
     public function create(CategoryInterface $category, LocaleTransfer $locale)
     {
-        $idCategory = $this->persistCategory();
+        $categoryEntity = new SpyCategory();
+        $categoryEntity->fromArray($category->toArray());
+        $categoryEntity->save();
+
+        $idCategory = $categoryEntity->getPrimaryKey();
         $category->setIdCategory($idCategory);
+
         $this->persistCategoryAttribute($category, $locale);
 
         return $idCategory;
@@ -49,18 +54,12 @@ class CategoryWriter implements CategoryWriterInterface
     /**
      * @param CategoryInterface $category
      * @param LocaleTransfer $locale
-     *
-     * @throws PropelException
-     *
-     * @return int
      */
     public function update(CategoryInterface $category, LocaleTransfer $locale)
     {
-        $attributeEntity = $this->getAttributeEntity($category->getIdCategory(), $locale);
-        $attributeEntity->fromArray($category->toArray());
-        $attributeEntity->save();
+        $this->persistCategoryAttribute($category, $locale);
 
-        return $this->saveCategory($category);
+        $this->saveCategory($category);
     }
 
     /**
@@ -80,29 +79,18 @@ class CategoryWriter implements CategoryWriterInterface
 
     /**
      * @param CategoryInterface $category
-     * @param LocaleTransfer $locale
+
+     * @return SpyCategory
+     *
+     * @throws PropelException
      */
     protected function saveCategory(CategoryInterface $category)
     {
         $categoryEntity = $this->getCategoryEntity($category->getIdCategory());
-        $categoryEntity->setIsActive($category->getIsActive());
-
-        $categoryEntity->save();
-    }
-
-    /**
-     * @throws PropelException
-     *
-     * @return int
-     */
-    protected function persistCategory()
-    {
-        $categoryEntity = new SpyCategory();
-
-        $categoryEntity->setIsActive(true);
+        $categoryEntity->fromArray($category->toArray());
         $categoryEntity->save();
 
-        return $categoryEntity->getPrimaryKey();
+        return $categoryEntity;
     }
 
     /**
@@ -115,9 +103,9 @@ class CategoryWriter implements CategoryWriterInterface
     {
         $categoryAttributeEntity = new SpyCategoryAttribute();
 
+        $categoryAttributeEntity->fromArray($category->toArray());
+
         $categoryAttributeEntity->setFkCategory($category->getIdCategory());
-        $categoryAttributeEntity->setName($category->getName());
-        $categoryAttributeEntity->setCategoryImageName($category->getImageName());
         $categoryAttributeEntity->setFkLocale($locale->getIdLocale());
 
         $categoryAttributeEntity->save();

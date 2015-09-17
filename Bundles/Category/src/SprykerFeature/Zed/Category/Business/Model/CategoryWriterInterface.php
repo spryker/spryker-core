@@ -23,8 +23,6 @@ interface CategoryWriterInterface
     /**
      * @param CategoryInterface $category
      * @param LocaleTransfer $locale
-     *
-     * @return int
      */
     public function update(CategoryInterface $category, LocaleTransfer $locale);
 
