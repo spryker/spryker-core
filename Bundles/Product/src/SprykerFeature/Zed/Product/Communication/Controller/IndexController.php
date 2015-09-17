@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class IndexController extends AbstractController
 {
+
     const ID_ABSTRACT_PRODUCT = 'id-abstract-product';
     const COL_ID_PRODUCT_CATEGORY = 'id_product_category';
     const COL_CATEGORY_NAME = 'category_name';
@@ -143,7 +144,6 @@ class IndexController extends AbstractController
         $concreteProducts = [];
         /** @var SpyProduct $product */
         foreach ($concreteProductsCollenction as $product) {
-
             $productOptions = $this->getDependencyContainer()
                 ->createProductOptionsFacade()
                 ->getProductOptionsByIdProduct(
@@ -193,6 +193,7 @@ class IndexController extends AbstractController
 
     /**
      * @throws \ErrorException
+     *
      * @return mixed
      */
     protected function getCurrentLocale()
@@ -204,4 +205,5 @@ class IndexController extends AbstractController
 
         return $currentLocale;
     }
+
 }
