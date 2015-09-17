@@ -136,11 +136,16 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
                 ->endUse()
             ->addJoin(
                 SpyCmsBlockTableMap::COL_VALUE,
-                SpyCategoryAttributeTableMap::COL_ID_CATEGORY_ATTRIBUTE,
+                SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
                 Criteria::LEFT_JOIN
             )
             ->addJoin(
-                SpyCategoryAttributeTableMap::COL_ID_CATEGORY_ATTRIBUTE,
+                SpyCategoryNodeTableMap::COL_FK_CATEGORY,
+                SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
+                Criteria::LEFT_JOIN
+            )
+            ->addJoin(
+                SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
                 SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE,
                 Criteria::LEFT_JOIN
             )
@@ -166,7 +171,12 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
                 ->endUse()
             ->addJoin(
                 SpyCmsBlockTableMap::COL_VALUE,
-                SpyCategoryAttributeTableMap::COL_ID_CATEGORY_ATTRIBUTE,
+                SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
+                Criteria::LEFT_JOIN
+            )
+            ->addJoin(
+                SpyCategoryNodeTableMap::COL_FK_CATEGORY,
+                SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
                 Criteria::LEFT_JOIN
             )
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::CATEGORY_NAME)
