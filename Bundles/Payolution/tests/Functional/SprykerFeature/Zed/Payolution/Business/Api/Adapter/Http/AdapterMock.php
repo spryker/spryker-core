@@ -38,16 +38,16 @@ class AdapterMock implements AdapterInterface
         $this->requestData = $data;
 
         if ($this->expectSuccess){
-            return $this->getPreauthorizationResponseSuccess();
+            return $this->getPreAuthorizationSuccessResponse();
         }
 
-        return $this->getPreauthorizationResponseFailure();
+        return $this->getPreAuthorizationFailureResponse();
     }
 
     /**
      * @return array
      */
-    public function getPreauthorizationResponseSuccess()
+    public function getPreAuthorizationSuccessResponse()
     {
         return [
             'PROCESSING_RISK_SCORE' => '0',
@@ -103,7 +103,7 @@ class AdapterMock implements AdapterInterface
     /**
      * @return array
      */
-    public function getPreauthorizationResponseFailure()
+    public function getPreAuthorizationFailureResponse()
     {
         return [
             'processing_risk_score' => '0',

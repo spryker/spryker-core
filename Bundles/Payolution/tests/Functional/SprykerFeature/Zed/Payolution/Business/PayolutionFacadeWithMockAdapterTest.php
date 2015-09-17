@@ -38,7 +38,7 @@ class PayolutionFacadeWithMockAdapterTest extends Test
      */
     private $paymentEntity;
 
-    public function testPreauthorization()
+    public function testPreAuthorizePaymentSuccess()
     {
         $adapterMock = new AdapterMock();
         $facade = $this->getFacadeMock($adapterMock);
@@ -49,7 +49,7 @@ class PayolutionFacadeWithMockAdapterTest extends Test
         $response = $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
 
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
-        $expectedResponseData = $adapterMock->getPreauthorizationResponseSuccess();
+        $expectedResponseData = $adapterMock->getPreAuthorizationSuccessResponse();
 
         $expectedResponse = (new Converter())->fromArray($expectedResponseData);
 
@@ -88,7 +88,6 @@ class PayolutionFacadeWithMockAdapterTest extends Test
         $this->assertEquals('images/visa_mc.gif', $expectedResponse->getFrontendCcLogo());
         $this->assertEquals('100.00', $expectedResponse->getPresentationAmount());
         $this->assertEquals('8a82944a4fbc48bb014fbd1f3a544ace', $expectedResponse->getIdentificationUniqueid());
-//        $this->assertEquals('tran_55f2f9a314ed4', $expectedResponse->getIdentificationTransactionid());
         $this->assertEquals('2214.7311.2738', $expectedResponse->getIdentificationShortid());
         $this->assertEquals('1.0', $expectedResponse->getClearingFxrate());
         $this->assertEquals('2015-09-11 15:56:26', $expectedResponse->getProcessingTimestamp());
@@ -105,7 +104,7 @@ class PayolutionFacadeWithMockAdapterTest extends Test
 
     }
 
-    public function testPreauthorizationFailure()
+    public function testPreAuthorizePaymentFailure()
     {
         $adapterMock = new AdapterMock();
         $adapterMock->setExpectSuccess(false);
@@ -117,7 +116,7 @@ class PayolutionFacadeWithMockAdapterTest extends Test
 
         $response = $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
 
-        $expectedResponseData = $adapterMock->getPreauthorizationResponseFailure();
+        $expectedResponseData = $adapterMock->getPreAuthorizationFailureResponse();
         $expectedResponse = (new Converter())->fromArray($expectedResponseData);
 
         $this->assertEquals($expectedResponse, $response);
