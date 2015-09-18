@@ -32,7 +32,7 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
      * @param EventJournalInterface $eventJournal
      * @param ApiInterface $newRelicApi
      */
-    public function __construct(EventJournalInterface $eventJournal, ApiInterface $newRelicApi, $test)
+    public function __construct(EventJournalInterface $eventJournal, ApiInterface $newRelicApi)
     {
         $this->eventJournal = $eventJournal;
         $this->newRelicApi = $newRelicApi;
