@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Collector\Business\Model\BatchResult;
+use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * @method CollectorDependencyContainer getDependencyContainer()
@@ -22,11 +23,11 @@ class CollectorFacade extends AbstractFacade
      *
      * @return array|BatchResult[]
      */
-    public function exportKeyValueForLocale(LocaleTransfer $locale)
+    public function exportKeyValueForLocale(LocaleTransfer $locale, OutputInterface $output = nul)
     {
         $exporter = $this->getDependencyContainer()->createYvesKeyValueExporter();
 
-        return $exporter->exportForLocale($locale);
+        return $exporter->exportForLocale($locale, $output);
     }
 
     /**

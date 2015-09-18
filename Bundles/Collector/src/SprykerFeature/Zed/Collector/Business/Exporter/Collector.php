@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainer;
 use SprykerFeature\Zed\Collector\Business\Exporter\Exception\BatchResultException;
 use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 
 class Collector
 {
@@ -41,16 +42,29 @@ class Collector
      *
      * @return BatchResultInterface[]
      */
-    public function exportForLocale(LocaleTransfer $locale)
+    public function exportForLocale(LocaleTransfer $locale, OutputInterface $output = null)
     {
         $types = $this->queryContainer->queryExportTypes()->find();
 
         $results = [];
 
         foreach ($types as $type) {
+
+            $startTime = microtime(true);
+
+            if(isset($output))
+            {
+                $output->writeln('Started export for type: '.$type);
+            }
+
             $result = $this->exporter->exportByType($type, $locale);
 
             $this->handleResult($result);
+
+            if(isset($output))
+            {
+                $output->writeln('Finished export for type: '.$type.' after '.number_format(microtime(true) - $startTime, 4).' s');
+            }
 
             if ($result instanceof BatchResultInterface) {
                 $results[$type] = $result;
