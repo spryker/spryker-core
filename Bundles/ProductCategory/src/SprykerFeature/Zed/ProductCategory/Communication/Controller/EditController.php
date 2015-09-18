@@ -115,7 +115,7 @@ class EditController extends AddController
 
             $this->addSuccessMessage('The category was saved successfully.');
 
-            return $this->redirectResponse('/category');
+            return $this->redirectResponse('/productCategory/edit?id-category='.$idCategory);
         }
 
         $productCategories = $this->getDependencyContainer()

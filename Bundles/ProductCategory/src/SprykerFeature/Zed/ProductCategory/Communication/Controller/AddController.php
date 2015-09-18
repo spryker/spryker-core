@@ -73,7 +73,7 @@ class AddController extends AbstractController
 
             $this->addSuccessMessage('The category was added successfully.');
 
-            return $this->redirectResponse('/category');
+            return $this->redirectResponse('/productCategory/edit?id-category='.$idCategory);
         }
 
         return $this->viewResponse([
