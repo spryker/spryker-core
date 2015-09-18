@@ -60,7 +60,7 @@
         <column name="processing_reason" required="true" type="VARCHAR"/>
         <column name="processing_reason_code" required="true" type="INTEGER"/>
         <column name="processing_return" required="true" type="VARCHAR"/>
-        <column name="processing_return_code" required="true" type="INTEGER"/>
+        <column name="processing_return_code" required="true" type="VARCHAR"/>
 
         <column name="identification_transactionid" required="true" type="VARCHAR"/>
         <column name="identification_uniqueid"  required="true" type="VARCHAR"/>

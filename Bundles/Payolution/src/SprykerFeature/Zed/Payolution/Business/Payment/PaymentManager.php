@@ -268,9 +268,13 @@ class PaymentManager implements PaymentManagerInterface
     {
         $logEntity = $this->getDependencyContainer()->createTransactionStatusLogEntity();
         $logEntity->fromArray($responseTransfer->toArray());
-        $logEntity
-            ->setFkPaymentPayolution($paymentEntity->getIdPaymentPayolution())
-            ->save();
+        try {
+            $logEntity
+                ->setFkPaymentPayolution($paymentEntity->getIdPaymentPayolution())
+                ->save();
+        } catch (\Exception $exception) {
+            var_dump($exception);exit;
+        }
     }
 
     /**

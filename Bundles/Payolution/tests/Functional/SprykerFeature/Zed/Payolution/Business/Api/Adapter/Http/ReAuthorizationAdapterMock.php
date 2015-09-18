@@ -1,18 +1,19 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
+
 namespace Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http;
 
-class PreAuthorizationAdapterMock extends AbstractAdapterMock
+
+class ReAuthorizationAdapterMock extends AbstractAdapterMock
 {
 
     /**
      * @return array
      */
     public function getSuccessResponse()
-    {
+    {var_dump($this->requestData);exit;
         return [
             'PROCESSING_RISK_SCORE' => '0',
             'P3_VALIDATION' => 'ACK',
@@ -46,7 +47,7 @@ class PreAuthorizationAdapterMock extends AbstractAdapterMock
             'PROCESSING_STATUS' => 'NEW',
             'FRONTEND_CC_LOGO' => 'images/visa_mc.gif',
             'PRESENTATION_AMOUNT' => '100.00',
-            'IDENTIFICATION_UNIQUEID' => '8a82944a4fbc48bb014fbd1f3a544ace',
+            'IDENTIFICATION_UNIQUEID' => $this->requestData['IDENTIFICATION.REFERENCEID'],
             // We need to set the request's transaction id to fulfil the foreign-key constraint
             'IDENTIFICATION_TRANSACTIONID' => $this->requestData['IDENTIFICATION.TRANSACTIONID'],
             'IDENTIFICATION_SHORTID' => '2214.7311.2738',
@@ -103,7 +104,7 @@ class PreAuthorizationAdapterMock extends AbstractAdapterMock
             'processing_status' => 'REJECTED_BANK',
             'frontend_cc_logo' => 'images/visa_mc.gif',
             'presentation_amount' => '100.00',
-            'identification_uniqueid' => '8a8294494fd0cad9014fd1388b433e85',
+            'identification_uniqueid' => $this->requestData['IDENTIFICATION.REFERENCEID'],
             // We need to set the request's transaction id to fulfil the foreign-key constraint
             'identification_transactionid' => $this->requestData['IDENTIFICATION.TRANSACTIONID'],
             'identification_shortid' => '4485.8392.6434',
@@ -123,5 +124,4 @@ class PreAuthorizationAdapterMock extends AbstractAdapterMock
             'name_title' => 'Mr'
         ];
     }
-
 }
