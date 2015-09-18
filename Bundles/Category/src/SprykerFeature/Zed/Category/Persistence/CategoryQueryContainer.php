@@ -171,36 +171,6 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
     /**
      * @param int $idNode
-     * @param int $idLocale
-     *
-     * @return SpyCategoryNodeQuery
-     */
-    public function queryFirstLevelChildrenWithAttributesByIdLocale($idNode, $idLocale)
-    {
-        $nodeQuery = SpyCategoryNodeQuery::create()
-            ->joinParentCategoryNode('parentNode')
-            ->addJoin(
-                'parentNode.fk_category',
-                SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
-                Criteria::INNER_JOIN
-            )
-            ->addAnd(
-                SpyCategoryAttributeTableMap::COL_FK_LOCALE,
-                $idLocale,
-                Criteria::EQUAL
-            )
-            ->addAnd(
-                SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE,
-                $idNode,
-                Criteria::EQUAL
-            )
-        ;
-
-        return $nodeQuery;
-    }
-
-    /**
-     * @param int $idNode
      *
      * @return SpyCategoryClosureTableQuery
      */
