@@ -53,19 +53,25 @@
 
             </nav>
         </div>
-        {% if widget_title is not defined %}
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-xs-12 col-md-6">
-                <h2>{% block section_title %}{{ section_title | default('') | trans }}{% endblock %}</h2>
+                <h2>{% block section_title %}{{ title|trans }}{% endblock %}</h2>
+                {% if navigation.path|length > 0 %}
                 <ol class="breadcrumb">
                     <li>
                         <a href="/">{{ 'Dashboard' | trans }}</a>
                     </li>
-
-                    {% block breadcrumb -%}
-                    {%- endblock %}
-
+                    {% for breadcrumbItem in navigation.path %}
+                    <li>
+                        {% if loop.last == true %}
+                            <strong>{{ breadcrumbItem.label }}</strong>
+                        {% else %}
+                            <a href="{{ breadcrumbItem.uri }}" title="{{ breadcrumbItem.title }}">{{ breadcrumbItem.label }}</a>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
                 </ol>
+                {% endif %}
             </div>
             <div class="col-xs-12 col-md-6">
                 <div class="title-action">
@@ -76,19 +82,17 @@
                 </div>
             </div>
         </div>
-        {% endif %}
+
         <div class="wrapper wrapper-content animated fadeInRight">
 
             {% include '@FlashMessenger/Partials/flash-messages.twig' %}
 
-            {% block content -%}
-
-            {%- endblock %}
+            {% block content -%}{%- endblock %}
 
         </div>
         <div class="footer">
             <div>
-                <strong>Copyright</strong> Spryker GmbH &copy; 2015
+                <strong>Copyright</strong> Spryker GmbH &copy; {{ 'now'|date('Y') }}
             </div>
         </div>
 
