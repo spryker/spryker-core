@@ -73,24 +73,24 @@ class DetailsController extends AbstractController
 
         /** @var SpyPaymentPayone $paymentPayoneEntity */
         $paymentPayoneEntity = $orderEntity->getSpyPaymentPayones()->getFirst();
-        $idPayment = $paymentPayoneEntity->getIdPaymentPayone();
+        if (null !== $paymentPayoneEntity) {
+            $idPayment = $paymentPayoneEntity->getIdPaymentPayone();
 
-        /** @var PaymentDetailForm $form */
-        $form = $this->getDependencyContainer()
-            ->createPaymentDetailForm($idPayment)
-        ;
-        $form->handleRequest();
-
-        if ($form->isValid()) {
-            $paymentDetailTransfer = (new PayonePaymentDetailTransfer())->fromArray($form->getData(), true);
-            $this->getFacade()
-                ->updatePaymentDetail($paymentDetailTransfer, $idPayment)
+            /** @var PaymentDetailForm $form */
+            $form = $this->getDependencyContainer()
+                ->createPaymentDetailForm($idPayment)
             ;
+            $form->handleRequest();
 
-            return $this->redirectResponse(sprintf('/sales/details/?id-sales-order=%d', $idOrder));
+            if ($form->isValid()) {
+                $paymentDetailTransfer = (new PayonePaymentDetailTransfer())->fromArray($form->getData(), true);
+                $this->getFacade()
+                    ->updatePaymentDetail($paymentDetailTransfer, $idPayment)
+                ;
+
+                return $this->redirectResponse(sprintf('/sales/details/?id-sales-order=%d', $idOrder));
+            }
         }
-
-        $data = $form->getData();
 
         return [
             'idOrder' => $idOrder,
@@ -107,7 +107,7 @@ class DetailsController extends AbstractController
             'itemsInProgress' => $itemsInProgress,
             'itemsPaid' => $itemsPaid,
             'itemsCancelled' => $itemsCancelled,
-            'form' => $form->createView(),
+            'form' => isset($form) ? $form->createView() : null,
         ];
     }
 
