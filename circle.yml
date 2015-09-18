@@ -10,4 +10,4 @@ machine:
     - elasticsearch
 test:
   override:
-    - bash ci_build.sh ${CIRCLE_BRANCH}
+    - bash circle_build.sh ${CIRCLE_BRANCH}
