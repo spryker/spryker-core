@@ -18,6 +18,13 @@ SprykerAjax.prototype.getCategoryTreeByCategoryId = function(idCategory) {
         .ajaxSubmit(options, 'categoryDisplayNodeTree');
 };
 
+SprykerAjax.prototype.updateCategoryNodesOrder = function(serializedCategoryNodeItems){
+    showLoaderBar();
+    this.setUrl('/category/node/reorder').ajaxSubmit({
+        'nodes': serializedCategoryNodeItems
+    }, 'updateCategoryNodesOrder');
+};
+
 /*
  * @param ajaxResponse
  * @returns string
@@ -26,4 +33,22 @@ SprykerAjaxCallbacks.prototype.categoryDisplayNodeTree = function(ajaxResponse){
     $('#category-node-tree').removeClass('hidden');
     $('#categories-list').html(ajaxResponse);
     closeLoaderBar();
+};
+
+SprykerAjaxCallbacks.prototype.updateCategoryNodesOrder = function(ajaxResponse){
+    closeLoaderBar();
+    if (ajaxResponse.code == this.codeSuccess) {
+        swal({
+            title: "Success",
+            text: ajaxResponse.message,
+            type: "success"
+        });
+        return true;
+    }
+
+    swal({
+        title: "Error",
+        text: ajaxResponse.message,
+        type: "error"
+    });
 };

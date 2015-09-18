@@ -28,4 +28,15 @@ $(document).ready(function() {
         }
     });
 
+    var updateOutput = function(e) {
+        var list = e.length ? e : $(e.target);
+        var serializedList = window.JSON.stringify(list.nestable('serialize'));
+        spyAj.updateCategoryNodesOrder(serializedList);
+    };
+
+    $('#nestable').nestable({
+        group: 1,
+        maxDepth: 1
+    }).on('change', updateOutput);
+
 });
