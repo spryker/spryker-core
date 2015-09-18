@@ -280,5 +280,4 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     {
         $this->touchFacade->touchDeleted(ProductCategoryConfig::RESOURCE_TYPE_ABSTRACT_PRODUCT, $idAbstractProduct);
     }
-
 }
