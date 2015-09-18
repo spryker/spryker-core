@@ -33,23 +33,23 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
      */
     public function saveOrder(OrderInterface $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $customer = $orderTransfer->getCustomer();
+        $customerTransfer = $orderTransfer->getCustomer();
 
-        if ($customer->getGuest()) {
+        if ($customerTransfer->getGuest()) {
             return;
         }
 
-        if (!is_null($customer->getIdCustomer())) {
-            $this->customerFacade->updateCustomer($customer);
+        if (!is_null($customerTransfer->getIdCustomer())) {
+            $this->customerFacade->updateCustomer($customerTransfer);
         } else {
-            $customer->setFirstName($orderTransfer->getBillingAddress()->getFirstName());
-            $customer->setLastName($orderTransfer->getBillingAddress()->getLastName());
-            $customer->setEmail($orderTransfer->getBillingAddress()->getEmail());
-            $customer = $this->customerFacade->registerCustomer($customer);
-            $orderTransfer->setCustomer($customer);
+            $customerTransfer->setFirstName($orderTransfer->getBillingAddress()->getFirstName());
+            $customerTransfer->setLastName($orderTransfer->getBillingAddress()->getLastName());
+            $customerTransfer->setEmail($orderTransfer->getBillingAddress()->getEmail());
+            $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
+            $orderTransfer->setCustomer($customerResponseTransfer->getCustomerTransfer());
         }
 
-        $this->persistAddresses($customer);
+        $this->persistAddresses($customerTransfer);
     }
 
     /**

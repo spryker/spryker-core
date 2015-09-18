@@ -7,25 +7,36 @@
 namespace SprykerFeature\Zed\Payone\Business\Mode;
 
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
+use SprykerFeature\Zed\Payone\PayoneConfig;
 
 class ModeDetector implements ModeDetectorInterface
 {
+
+    /**
+     * @var PayoneConfig
+     */
+    protected $config;
+
+    /**
+     * @param PayoneConfig $config
+     */
+    public function __construct(PayoneConfig $config)
+    {
+        $this->config = $config;
+    }
 
     /**
      * @return string
      */
     public function getMode()
     {
-        if(\SprykerFeature_Shared_Library_Environment::isNotProduction()) {
-            return self::MODE_TEST;
-        }
-        // @todo we need order transfer interface from sales...?!?!
-        // @todo do we still get is_test flag from order? can we rely on?
-        if ($this->orderInterface->getIsTest()) {
-            return  self::MODE_TEST;
+        $mode = $this->config->getMode();
+
+        if ($mode === static::MODE_LIVE) {
+            return static::MODE_LIVE;
         }
 
-        return self::MODE_LIVE;
+        return static::MODE_TEST;
     }
 
 }

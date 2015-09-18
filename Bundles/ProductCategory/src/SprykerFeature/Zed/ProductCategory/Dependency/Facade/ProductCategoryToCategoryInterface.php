@@ -27,4 +27,12 @@ interface ProductCategoryToCategoryInterface
      */
     public function getCategoryNodeIdentifier($categoryName, LocaleTransfer $locale);
 
+    /**
+     * @param string $categoryName
+     * @param LocaleTransfer $locale
+     *
+     * @return int
+     */
+    public function getCategoryIdentifier($categoryName, LocaleTransfer $locale);
+
 }

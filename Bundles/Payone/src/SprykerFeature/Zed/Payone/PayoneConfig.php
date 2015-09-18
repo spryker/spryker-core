@@ -18,6 +18,26 @@ class PayoneConfig extends AbstractBundleConfig
 {
 
     /**
+     * @return string
+     */
+    public function getMode()
+    {
+        $settings = $this->get(PayoneConfigConstants::PAYONE);
+
+        return $settings[PayoneConfigConstants::PAYONE_MODE];
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmptySequenceNumber()
+    {
+        $settings = $this->get(PayoneConfigConstants::PAYONE);
+
+        return $settings[PayoneConfigConstants::PAYONE_EMPTY_SEQUENCE_NUMBER];
+    }
+
+    /**
      * @return PayoneStandardParameterInterface
      */
     public function getRequestStandardParameter()
@@ -48,7 +68,8 @@ class PayoneConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function generatePayoneReference(PayonePaymentInterface $paymentTransfer, SpySalesOrder $orderEntity) {
+    public function generatePayoneReference(PayonePaymentInterface $paymentTransfer, SpySalesOrder $orderEntity)
+    {
         return $orderEntity->getOrderReference();
     }
 

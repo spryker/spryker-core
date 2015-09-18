@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Cms\Business\Page;
 
+use Generated\Shared\Cms\CmsBlockInterface;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
@@ -71,9 +72,9 @@ interface PageManagerInterface
 
     /**
      * @param PageTransfer $page
-     * @param string $blockName
+     * @param CmsBlockInterface $blockTransfer
      *
      * @return PageTransfer
      */
-    public function savePageBlockAndTouch(PageTransfer $page, $blockName);
+    public function savePageBlockAndTouch(PageTransfer $page, CmsBlockInterface $blockTransfer);
 }

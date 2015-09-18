@@ -69,9 +69,9 @@ class DataImportWriter implements DataImportWriterInterface
             ->findOneOrCreate()
         ;
 
-        $productOptionTypeEntity->save();
-
         $this->createOrUpdateOptionTypeTranslations($productOptionTypeEntity, $localizedNames);
+
+        $productOptionTypeEntity->save();
 
         $associatedAbstractProductIds = $this->queryContainer
             ->queryAssociatedAbstractProductIdsForProductOptionType($productOptionTypeEntity->getIdProductOptionType())
@@ -92,7 +92,6 @@ class DataImportWriter implements DataImportWriterInterface
     protected function createOrUpdateOptionTypeTranslations(SpyProductOptionType $productOptionTypeEntity, array $localizedNames)
     {
         foreach ($localizedNames as $localeName => $localizedOptionTypeName) {
-
             if (false === $this->localeFacade->hasLocale($localeName)) {
                 continue;
             }
@@ -104,6 +103,7 @@ class DataImportWriter implements DataImportWriterInterface
                 ->findOneOrCreate();
 
             $translationEntity->setName($localizedOptionTypeName);
+            $translationEntity->save();
 
             $productOptionTypeEntity->addSpyProductOptionTypeTranslation($translationEntity);
         }
@@ -133,9 +133,9 @@ class DataImportWriter implements DataImportWriterInterface
             $productOptionValueEntity->setSpyProductOptionValuePrice($priceEntity);
         }
 
-        $productOptionValueEntity->save();
-
         $this->createOrUpdateOptionValueTranslations($productOptionValueEntity, $localizedNames);
+
+        $productOptionValueEntity->save();
 
         $associatedAbstractProductIds = $this->queryContainer
             ->queryAssociatedAbstractProductIdsForProductOptionValue($productOptionValueEntity->getIdProductOptionValue())
@@ -155,7 +155,6 @@ class DataImportWriter implements DataImportWriterInterface
     protected function createOrUpdateOptionValueTranslations(SpyProductOptionValue $productOptionValueEntity, array $localizedNames)
     {
         foreach ($localizedNames as $localeName => $localizedOptionValueName) {
-
             if (false === $this->localeFacade->hasLocale($localeName)) {
                 continue;
             }
@@ -172,6 +171,7 @@ class DataImportWriter implements DataImportWriterInterface
             }
 
             $translationEntity->setName($localizedOptionValueName);
+            $translationEntity->save();
 
             $productOptionValueEntity->addSpyProductOptionValueTranslation($translationEntity);
         }
@@ -307,7 +307,7 @@ class DataImportWriter implements DataImportWriterInterface
         $optionValueConstraintEntity->save();
 
         $this->touchAbstractProductByConcreteSku($sku);
-     }
+    }
 
     /**
      * @param string $sku
@@ -380,13 +380,12 @@ class DataImportWriter implements DataImportWriterInterface
      */
     protected function getIdProductOptionType($importKeyProductOptionType)
     {
-        $idProductOptionType = $this->queryContainer
+        $productOptionType = $this->queryContainer
             ->queryProductOptionTypeByImportKey($importKeyProductOptionType)
             ->findOne()
-            ->getIdProductOptionType()
         ;
 
-        if (null === $idProductOptionType) {
+        if (null === $productOptionType) {
             throw new MissingProductOptionTypeException(
                 sprintf(
                     'Tried to retrieve a product option type with import key %s, but it does not exist.',
@@ -395,7 +394,7 @@ class DataImportWriter implements DataImportWriterInterface
             );
         }
 
-        return $idProductOptionType;
+        return $productOptionType->getIdProductOptionType();
     }
 
     /**

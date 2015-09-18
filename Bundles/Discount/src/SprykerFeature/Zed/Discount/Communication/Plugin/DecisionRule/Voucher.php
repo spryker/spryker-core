@@ -6,12 +6,10 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule;
 
-use Generated\Shared\Discount\OrderInterface;
+use Generated\Shared\Discount\DiscountInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount as DiscountEntity;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule as DecisionRuleEntity;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
 
 /**
@@ -21,23 +19,17 @@ class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePlugin
 {
 
     /**
-     * @param DiscountEntity $discountEntity
-     * @ param OrderInterface $container
-     *
+     * @param DiscountInterface $discountTransfer
      * @param CalculableInterface $container
-     * @param DecisionRuleEntity $decisionRuleEntity
      *
      * @return ModelResult
      */
-    public function check(
-        DiscountEntity $discountEntity,
-        //OrderInterface $container,
-        CalculableInterface $container,
-        DecisionRuleEntity $decisionRuleEntity = null
-    ) {
+    public function check(DiscountInterface $discountTransfer, CalculableInterface $container)
+    {
         $componentResult = new ModelResult();
 
         if (count($container->getCalculableObject()->getCouponCodes()) < 1) {
+            $componentResult->addError('Voucher not set.');
             return $componentResult;
         }
 
@@ -45,14 +37,17 @@ class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePlugin
         $result = true;
 
         foreach ($container->getCalculableObject()->getCouponCodes() as $code) {
-            $idVoucherCodePool = $this->getContext()[self::KEY_DATA];
+            $idDiscountVoucherPool = $this->getContext()[self::KEY_DATA];
             $response = $this
                 ->getDependencyContainer()
                 ->getDiscountFacade()
-                ->isVoucherUsable($code, $idVoucherCodePool)
+                ->isVoucherUsable($code, $idDiscountVoucherPool)
             ;
 
             $result &= $response->isSuccess();
+            if ($response->isSuccess()) {
+                $discountTransfer->addUsedCode($code);
+            }
             $errors = array_merge($errors, $response->getErrors());
         }
 

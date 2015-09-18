@@ -58,13 +58,43 @@ class GatewayController extends AbstractGatewayController
     }
 
     /**
-     * @param CartInterface $cart
+     * @param CartInterface $cartTransfer
      *
      * @return CartInterface
      */
-    public function recalculateAction(CartInterface $cart)
+    public function recalculateAction(CartInterface $cartTransfer)
     {
-        return $this->getFacade()->recalculate($cart);
+        return $this->getFacade()->recalculate($cartTransfer);
+    }
+
+    /**
+     * @param ChangeInterface $cartChange
+     *
+     * @return CartInterface
+     */
+    public function addCouponCodeAction(ChangeInterface $cartChange)
+    {
+        return $this->getFacade()->addCouponCode($cartChange);
+    }
+
+    /**
+     * @param ChangeInterface $cartChange
+     *
+     * @return CartInterface
+     */
+    public function removeCouponCodeAction(ChangeInterface $cartChange)
+    {
+        return $this->getFacade()->removeCouponCode($cartChange);
+    }
+
+    /**
+     * @param ChangeInterface $cartChange
+     *
+     * @return CartInterface
+     */
+    public function clearCouponCodesAction(ChangeInterface $cartChange)
+    {
+        return $this->getFacade()->clearCouponCodes($cartChange);
     }
 
 }

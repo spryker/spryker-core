@@ -18,6 +18,7 @@ class KeyValueMarker implements MarkerInterface
      * @var WriterInterface
      */
     private $writer;
+
     /**
      * @var ReaderInterface
      */

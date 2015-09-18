@@ -7,17 +7,20 @@
 namespace SprykerFeature\Zed\Collector\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CollectorBusiness;
-use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainer;
 use SprykerFeature\Shared\Library\Storage\StorageInstanceBuilder;
 use SprykerFeature\Zed\Collector\Business\Exporter\Collector;
 use SprykerFeature\Zed\Collector\Business\Exporter\Reader\KeyValue\RedisReader;
+use SprykerFeature\Zed\Collector\Business\Exporter\Reader\Search\ElasticsearchMarkerReader;
 use SprykerFeature\Zed\Collector\Business\Exporter\SearchCollector;
 use SprykerFeature\Zed\Collector\Business\Exporter\ExporterInterface;
 use SprykerFeature\Zed\Collector\Business\Exporter\KeyBuilder\KvMarkerKeyBuilder;
 use SprykerFeature\Zed\Collector\Business\Exporter\KeyBuilder\SearchMarkerKeyBuilder;
 use SprykerFeature\Zed\Collector\Business\Exporter\MarkerInterface;
+use SprykerFeature\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchMarkerWriter;
+use SprykerFeature\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchWriter;
+use SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use SprykerFeature\Zed\Collector\Business\Internal\InstallElasticsearch;
 use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
@@ -62,7 +65,8 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
             $this->createKeyValueWriter(),
             $this->createKeyValueMarker(),
             $this->createFailedResultModel(),
-            $this->createBatchResultModel()
+            $this->createBatchResultModel(),
+            $this->createExporterWriterKeyValueTouchUpdater()
         );
 
         foreach ($this->getProvidedDependency(CollectorDependencyProvider::STORAGE_PLUGINS) as $touchItemType => $collectorPlugin) {
@@ -129,12 +133,28 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
+     * @return TouchUpdaterInterface
+     */
+    protected function createExporterWriterSearchTouchUpdater()
+    {
+        return $this->getFactory()->createExporterWriterSearchTouchUpdater();
+    }
+
+    /**
+     * @return TouchUpdaterInterface
+     */
+    protected function createExporterWriterKeyValueTouchUpdater()
+    {
+        return $this->getFactory()->createExporterWriterKeyValueTouchUpdater();
+    }
+
+    /**
      * @return Collector
      */
     public function getYvesSearchExporter()
     {
-        $searchWriter = $this->createSearchWriter();
         $config = $this->getConfig();
+        $searchWriter = $this->createSearchWriter();
 
         return $this->getFactory()->createExporterCollector(
             $this->createTouchQueryContainer(),
@@ -172,7 +192,8 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
             $searchWriter,
             $this->createSearchMarker(),
             $this->createFailedResultModel(),
-            $this->createBatchResultModel()
+            $this->createBatchResultModel(),
+            $this->createExporterWriterSearchTouchUpdater()
         );
 
         foreach ($this->getProvidedDependency(CollectorDependencyProvider::SEARCH_PLUGINS) as $touchItemType => $collectorPlugin) {
@@ -183,19 +204,17 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return WriterInterface
+     * @return ElasticsearchWriter
      */
     protected function createSearchWriter()
     {
-        $settings = $this->getConfig();
-
-        $elasticsearchWriter = $this->getFactory()->createExporterWriterSearchElasticsearchWriter(
+        $elasticSearchWriter = $this->getFactory()->createExporterWriterSearchElasticsearchWriter(
             StorageInstanceBuilder::getElasticsearchInstance(),
-            $settings->getSearchIndexName(),
-            $settings->getSearchDocumentType()
+            $this->getConfig()->getSearchIndexName(),
+            $this->getConfig()->getSearchDocumentType()
         );
 
-        return $elasticsearchWriter;
+        return $elasticSearchWriter;
     }
 
     /**
@@ -220,10 +239,44 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
     protected function createSearchMarker()
     {
         return $this->getFactory()->createExporterKeyValueMarker(
-            $this->createKeyValueWriter(),
-            $this->createRedisReader(),
+            $this->createSearchMarkerWriter(),
+            $this->createSearchMarkerReader(),
             $this->createSearchMarkerKeyBuilder()
         );
+    }
+
+    /**
+     * @return ElasticsearchMarkerWriter
+     */
+    protected function createSearchMarkerWriter()
+    {
+        $elasticSearchWriter = $this->getFactory()->createExporterWriterSearchElasticsearchMarkerWriter(
+            StorageInstanceBuilder::getElasticsearchInstance(),
+            $this->getConfig()->getSearchIndexName(),
+            $this->getConfig()->getSearchDocumentType()
+        );
+
+        return $elasticSearchWriter;
+    }
+
+    /**
+     * @return ElasticsearchMarkerReader
+     */
+    protected function createSearchMarkerReader()
+    {
+        return $this->getFactory()->createExporterReaderSearchElasticsearchMarkerReader(
+            StorageInstanceBuilder::getElasticsearchInstance(),
+            $this->getConfig()->getSearchIndexName(),
+            $this->getConfig()->getSearchDocumentType()
+        );
+    }
+
+    /**
+     * @return SearchMarkerKeyBuilder
+     */
+    protected function createSearchMarkerKeyBuilder()
+    {
+        return $this->getFactory()->createExporterKeyBuilderSearchMarkerKeyBuilder();
     }
 
     /**
@@ -241,22 +294,6 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
         $installer->setMessenger($messenger);
 
         return $installer;
-    }
-
-    /**
-     * @return SearchMarkerKeyBuilder
-     */
-    protected function createSearchMarkerKeyBuilder()
-    {
-        return $this->getFactory()->createExporterKeyBuilderSearchMarkerKeyBuilder();
-    }
-
-    /**
-     * @return LocaleFacade
-     */
-    public function createLocaleFacade()
-    {
-        return $this->getProvidedDependency(CollectorDependencyProvider::FACADE_LOCALE);
     }
 
 }

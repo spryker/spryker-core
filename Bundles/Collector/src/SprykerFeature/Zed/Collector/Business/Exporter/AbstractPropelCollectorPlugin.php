@@ -8,11 +8,15 @@ namespace SprykerFeature\Zed\Collector\Business\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
+use SprykerFeature\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet;
+use SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
 
 abstract class AbstractPropelCollectorPlugin
 {
+
+    const TOUCH_EXPORTER_ID = 'exporter_touch_id';
 
     /**
      * @var int
@@ -24,17 +28,25 @@ abstract class AbstractPropelCollectorPlugin
      * @param LocaleTransfer $locale
      * @param BatchResultInterface $result
      * @param WriterInterface $dataWriter
+     * @param TouchUpdaterInterface $touchUpdater
      */
-    public function run(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result, WriterInterface $dataWriter)
-    {
+    public function run(SpyTouchQuery $baseQuery,
+        LocaleTransfer $locale,
+        BatchResultInterface $result,
+        WriterInterface $dataWriter,
+        TouchUpdaterInterface $touchUpdater
+    ) {
         $query = $this->createQuery($baseQuery, $locale);
 
-        $resultSets = $this->getBatchIterator($query);
+        $batchCollection = $this->getBatchIterator($query);
 
-        $totalCount = 0;
-        foreach ($resultSets as $resultSet) {
-            $collectedData = $this->processData($resultSet, $locale);
+        $totalCount = $result->getTotalCount();
+        foreach ($batchCollection as $batch) {
+            $touchUpdaterSet = new TouchUpdaterSet();
+            $collectedData = $this->processData($batch, $locale, $touchUpdaterSet);
             $count = count($collectedData);
+
+            $touchUpdater->updateMulti($touchUpdaterSet, $locale->getIdLocale());
 
             $dataWriter->write($collectedData, $this->getTouchItemType());
 
@@ -43,6 +55,10 @@ abstract class AbstractPropelCollectorPlugin
         }
 
         $result->setTotalCount($totalCount);
+    }
+
+    public function postRun(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result, WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater)
+    {
     }
 
     /**
@@ -66,10 +82,9 @@ abstract class AbstractPropelCollectorPlugin
     /**
      * @param array $resultSet
      * @param LocaleTransfer $locale
-     *
-     * @return array
+     * @param TouchUpdaterSet $touchUpdaterSet
      */
-    abstract protected function processData($resultSet, LocaleTransfer $locale);
+    abstract protected function processData($resultSet, LocaleTransfer $locale, TouchUpdaterSet $touchUpdaterSet);
 
     /**
      * @return string

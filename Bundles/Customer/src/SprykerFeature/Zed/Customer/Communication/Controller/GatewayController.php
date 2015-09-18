@@ -6,10 +6,12 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
+use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
+use SprykerFeature\Zed\Customer\Business\Exception\AddressNotFoundException;
 use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
 /**
@@ -21,7 +23,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerResponseTransfer
      */
     public function registerAction(CustomerTransfer $customerTransfer)
     {
@@ -119,16 +121,31 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerResponseTransfer
      */
     public function updateAction(CustomerTransfer $customerTransfer)
     {
-        $result = $this->getFacade()
+        $response = $this->getFacade()
             ->updateCustomer($customerTransfer)
         ;
-        $this->setSuccess($result);
+        $this->setSuccess($response->getIsSuccess());
 
-        return $customerTransfer;
+        return $response;
+    }
+
+    /**
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return CustomerResponseTransfer
+     */
+    public function updatePasswordAction(CustomerTransfer $customerTransfer)
+    {
+        $response = $this->getFacade()
+            ->updateCustomerPassword($customerTransfer)
+        ;
+        $this->setSuccess($response->getIsSuccess());
+
+        return $response;
     }
 
     /**
@@ -138,16 +155,35 @@ class GatewayController extends AbstractGatewayController
      */
     public function addressAction(AddressTransfer $addressTransfer)
     {
-        $addressTransfer = $this->getFacade()
-            ->getAddress($addressTransfer)
+        try {
+            $addressTransfer = $this->getFacade()
+                ->getAddress($addressTransfer)
+            ;
+        } catch (AddressNotFoundException $e) {
+            $this->setSuccess(false);
+            $addressTransfer = null;
+        }
+
+        return $addressTransfer;
+    }
+
+    /**
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return AddressesTransfer
+     */
+    public function addressesAction(CustomerTransfer $customerTransfer)
+    {
+        $addressesTransfer = $this->getFacade()
+            ->getAddresses($customerTransfer)
         ;
-        if (null === $addressTransfer) {
+        if (null === $addressesTransfer) {
             $this->setSuccess(false);
 
             return;
         }
 
-        return $addressTransfer;
+        return $addressesTransfer;
     }
 
     /**
@@ -163,6 +199,40 @@ class GatewayController extends AbstractGatewayController
         $this->setSuccess($result);
 
         return $addressTransfer;
+    }
+
+    /**
+     * @param AddressTransfer $addressTransfer
+     *
+     * @return CustomerTransfer
+     */
+    public function updateAddressAndCustomerDefaultAddressesAction(AddressTransfer $addressTransfer)
+    {
+        $customerTransfer = $this->getFacade()
+            ->updateAddressAndCustomerDefaultAddresses($addressTransfer)
+        ;
+
+        $isSuccess = (null !== $customerTransfer);
+        $this->setSuccess($isSuccess);
+
+        return $customerTransfer;
+    }
+
+    /**
+     * @param AddressTransfer $addressTransfer
+     *
+     * @return CustomerTransfer
+     */
+    public function createAddressAndUpdateCustomerDefaultAddressesAction(AddressTransfer $addressTransfer)
+    {
+        $customerTransfer = $this->getFacade()
+            ->createAddressAndUpdateCustomerDefaultAddresses($addressTransfer)
+        ;
+
+        $isSuccess = (null !== $customerTransfer);
+        $this->setSuccess($isSuccess);
+
+        return $customerTransfer;
     }
 
     /**
@@ -187,12 +257,14 @@ class GatewayController extends AbstractGatewayController
      */
     public function deleteAddressAction(AddressTransfer $addressTransfer)
     {
-        $result = $this->getFacade()
-            ->deleteAddress($addressTransfer)
-        ;
-        $this->setSuccess($result);
+        try {
+            $this->getFacade()->deleteAddress($addressTransfer);
+            return $addressTransfer;
+        } catch (AddressNotFoundException $e) {
+            $this->setSuccess(false);
+        }
 
-        return $addressTransfer;
+        return;
     }
 
     /**

@@ -538,6 +538,21 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     }
 
     /**
+     * @param int $idProduct
+     *
+     * @return SpyProductOptionTypeUsageQuery
+     */
+    public function queryProductOptionTypeUsageByIdProduct($idProduct)
+    {
+        $query = SpyProductOptionTypeUsageQuery::create();
+        $query->filterByFkProduct($idProduct)
+            ->setDistinct()
+        ;
+
+        return $query;
+    }
+
+    /**
      * @param int $idTypeUsage
      *
      * @return string|null

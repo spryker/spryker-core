@@ -133,6 +133,14 @@ class UrlFacade extends AbstractFacade
     }
 
     /**
+     * @param int $idUrl
+     */
+    public function touchUrlDeleted($idUrl)
+    {
+        $this->getDependencyContainer()->getUrlManager()->touchUrlDeleted($idUrl);
+    }
+
+    /**
      * @param string $toUrl
      * @param int $status
      *
@@ -239,6 +247,19 @@ class UrlFacade extends AbstractFacade
         $redirectManager = $this->getDependencyContainer()->getRedirectManager();
 
         return $redirectManager->saveRedirectAndTouch($redirect);
+    }
+
+    /**
+     * @param int $idAbstractProduct
+     * @param int $idLocale
+     *
+     * @return UrlTransfer
+     */
+    public function getUrlByIdAbstractProductAndIdLocale($idAbstractProduct, $idLocale)
+    {
+        $urlManager = $this->getDependencyContainer()->getUrlManager();
+
+        return $urlManager->getUrlByIdAbstractProductAndIdLocale($idAbstractProduct, $idLocale);
     }
 
 }

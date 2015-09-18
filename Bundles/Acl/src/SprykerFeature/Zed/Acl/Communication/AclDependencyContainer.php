@@ -13,6 +13,7 @@ use SprykerFeature\Zed\Acl\Communication\Form\GroupForm;
 use SprykerFeature\Zed\Acl\Communication\Form\RoleForm;
 use SprykerFeature\Zed\Acl\Communication\Form\RulesetForm;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use SprykerFeature\Zed\Acl\Communication\Table\GroupUsersTable;
 use SprykerFeature\Zed\Acl\Communication\Table\RoleTable;
 use SprykerFeature\Zed\Acl\Communication\Table\RulesetTable;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
@@ -67,18 +68,15 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
     }
 
     /**
-     * @param Request $request
+     * @param int $idAclGroup
      *
-     * @return RulesGrid
+     * @return GroupUsersTable
      */
-    public function createGroupsGrid(Request $request)
+    public function createGroupUsersTable($idAclGroup)
     {
-        $aclQueryContainer = $this->getQueryContainer();
-        $query = $aclQueryContainer->queryGroup();
-
-        return $this->getFactory()->createGridGroupGrid(
-            $query,
-            $request
+        return $this->getFactory()->createTableGroupUsersTable(
+            $this->getQueryContainer()->queryGroup(),
+            $idAclGroup
         );
     }
 
@@ -90,9 +88,8 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
     public function createGroupForm(Request $request)
     {
         return $this->getFactory()->createFormGroupForm(
-            $request,
-            $this->getFactory(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $request
         );
     }
 

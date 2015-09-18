@@ -9,7 +9,6 @@ namespace SprykerFeature\Client\Payone\ClientApi\Call;
 use Generated\Shared\Payone\PayoneStandardParameterInterface;
 use SprykerFeature\Client\Payone\ClientApi\HashGeneratorInterface;
 use SprykerFeature\Client\Payone\ClientApi\Request\AbstractRequest;
-use SprykerFeature\Shared\Payone\Dependency\HashInterface;
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
 
 abstract class AbstractCall
@@ -19,34 +18,28 @@ abstract class AbstractCall
      * @var PayoneStandardParameterInterface
      */
     protected $standardParameter;
-    /**
-     * @var HashInterface
-     */
-    protected $hashProvider;
+
     /**
      * @var HashGeneratorInterface
      */
     protected $hashGenerator;
+
     /**
      * @var ModeDetectorInterface
      */
     protected $modeDetector;
 
     /**
-     * @param PayoneStandardParameterInterface $standardParameter
-     * @param HashInterface $hashProvider
+     * @param PayoneStandardParameterInterface $standardParameterTransfer
      * @param HashGeneratorInterface $hashGenerator
      * @param ModeDetectorInterface $modeDetector
      */
     public function __construct(
         PayoneStandardParameterInterface $standardParameterTransfer,
-        HashInterface $hashProvider,
         HashGeneratorInterface $hashGenerator,
         ModeDetectorInterface $modeDetector
-    )
-    {
+    ) {
         $this->standardParameter = $standardParameterTransfer;
-        $this->hashProvider = $hashProvider;
         $this->hashGenerator = $hashGenerator;
         $this->modeDetector = $modeDetector;
     }
@@ -56,20 +49,24 @@ abstract class AbstractCall
      */
     protected function applyStandardParameter(AbstractRequest $container)
     {
-        $container->setPortalid($this->standardParameter->getPortalId());
-        $container->setAid($this->standardParameter->getAid());
-        $container->setMid($this->standardParameter->getMid());
-        $container->setEncoding($this->standardParameter->getEncoding());
-        $container->setMode($this->modeDetector->getMode());
-        $container->setLanguage($this->standardParameter->getLanguage());
-    }
-
-    /**
-     * @return HashInterface
-     */
-    protected function getHashProvider()
-    {
-        return $this->hashProvider;
+        if (null === $container->getPortalid()) {
+            $container->setPortalid($this->standardParameter->getPortalId());
+        }
+        if (null === $container->getAid()) {
+            $container->setAid($this->standardParameter->getAid());
+        }
+        if (null === $container->getMid()) {
+            $container->setMid($this->standardParameter->getMid());
+        }
+        if (null === $container->getEncoding()) {
+            $container->setEncoding($this->standardParameter->getEncoding());
+        }
+        if (null === $container->getMode()) {
+            $container->setMode($this->modeDetector->getMode());
+        }
+        if (null === $container->getLanguage()) {
+            $container->setLanguage($this->standardParameter->getLanguage());
+        }
     }
 
     /**

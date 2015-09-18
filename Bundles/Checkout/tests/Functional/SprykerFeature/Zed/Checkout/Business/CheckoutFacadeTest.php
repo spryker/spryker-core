@@ -64,7 +64,6 @@ class CheckoutFacadeTest extends Test
         $container = new Container();
 
         $container[CheckoutDependencyProvider::CHECKOUT_PRECONDITIONS] = function (Container $container) {
-
             return [
                 $container->getLocator()->customerCheckoutConnector()->pluginCustomerPreconditionCheckerPlugin(),
                 $container->getLocator()->availabilityCheckoutConnector()->pluginProductsAvailablePreconditionPlugin(),
@@ -72,7 +71,6 @@ class CheckoutFacadeTest extends Test
         };
 
         $container[CheckoutDependencyProvider::CHECKOUT_ORDERHYDRATORS] = function (Container $container) {
-
             return [
                 $container->getLocator()->customerCheckoutConnector()->pluginOrderCustomerHydrationPlugin(),
                 $container->getLocator()->cartCheckoutConnector()->pluginOrderCartHydrationPlugin(),
@@ -80,8 +78,11 @@ class CheckoutFacadeTest extends Test
             ];
         };
 
-        $container[CheckoutDependencyProvider::CHECKOUT_ORDERSAVERS] = function (Container $container) {
+        $container[CheckoutDependencyProvider::CHECKOUT_PRE_HYDRATOR] = function (Container $container) {
+            return [];
+        };
 
+        $container[CheckoutDependencyProvider::CHECKOUT_ORDERSAVERS] = function (Container $container) {
             return [
                 $container->getLocator()->salesCheckoutConnector()->pluginSalesOrderSaverPlugin(),
                 $container->getLocator()->customerCheckoutConnector()->pluginOrderCustomerSavePlugin(),
@@ -89,15 +90,16 @@ class CheckoutFacadeTest extends Test
         };
 
         $container[CheckoutDependencyProvider::CHECKOUT_POSTHOOKS] = function (Container $container) use ($locator) {
-
-            return [
-
-            ];
+            return [];
         };
 
         $container[CheckoutDependencyProvider::FACADE_OMS] = function (Container $container) {
             return $container->getLocator()->oms()->facade();
         };
+        $container[CheckoutDependencyProvider::FACADE_CALCULATION] = function (Container $container) {
+            return $container->getLocator()->calculation()->facade();
+        };
+
 
         $this->checkoutFacade->setExternalDependencies($container);
     }

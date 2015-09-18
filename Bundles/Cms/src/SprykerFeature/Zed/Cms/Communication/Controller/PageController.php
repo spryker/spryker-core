@@ -24,6 +24,7 @@ class PageController extends AbstractController
 {
 
     const REDIRECT_ADDRESS = '/cms/glossary/';
+    const CMS_FOLDER_PATH = '@Cms/template/';
 
     /**
      * @return array
@@ -60,6 +61,8 @@ class PageController extends AbstractController
             ->createCmsPageForm('add')
         ;
 
+        $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
+
         $form->handleRequest();
 
         if ($form->isValid()) {
@@ -76,6 +79,7 @@ class PageController extends AbstractController
 
         return $this->viewResponse([
             'form' => $form->createView(),
+            'isSynced' => $isSynced,
         ]);
     }
 
@@ -92,12 +96,15 @@ class PageController extends AbstractController
             ->createCmsPageForm('update', $idPage)
         ;
 
+        $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
+
         $form->handleRequest();
         if ($form->isValid()) {
             $data = $form->getData();
 
             $pageTransfer = $this->createPageTransfer($data);
             $pageTransfer = $this->getFacade()->savePage($pageTransfer);
+            $this->getFacade()->touchPageActive($pageTransfer);
 
             if (intval($data[CmsPageForm::CURRENT_TEMPLATE]) !== intval($data[CmsPageForm::FK_TEMPLATE])) {
                 $this->getFacade()->deleteGlossaryKeysByIdPage($idPage);
@@ -113,6 +120,7 @@ class PageController extends AbstractController
 
         return $this->viewResponse([
             'form' => $form->createView(),
+            'isSynced' => $isSynced,
         ]);
     }
 
@@ -163,4 +171,5 @@ class PageController extends AbstractController
 
         return $urlTransfer;
     }
+
 }

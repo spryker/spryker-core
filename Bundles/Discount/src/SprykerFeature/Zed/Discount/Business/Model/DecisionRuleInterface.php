@@ -6,24 +6,22 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
-use Generated\Shared\Discount\OrderInterface;
+use Generated\Shared\Discount\DiscountInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
 
 interface DecisionRuleInterface
 {
 
     /**
-     * @param SpyDiscount $discountEntity
-     *
+     * @param DiscountInterface $discountTransfer
      * @param CalculableInterface $discountableContainer
      * @param DiscountDecisionRulePluginInterface[] $decisionRulePlugins
      *
      * @return bool
      */
     public function evaluate(
-        SpyDiscount $discountEntity,
+        DiscountInterface $discountTransfer,
         CalculableInterface $discountableContainer,
         array $decisionRulePlugins
     );

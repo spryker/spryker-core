@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Product\Business\Importer\Reader\File;
 
 use League\Csv\Reader;
+use Symfony\Component\Filesystem\Exception\FileNotFoundException;
 
 class CsvReader implements IteratorReaderInterface
 {
@@ -41,7 +42,7 @@ class CsvReader implements IteratorReaderInterface
     /**
      * @param \SplFileInfo $file
      *
-     * @throws \FileNotFoundException
+     * @throws FileNotFoundException
      *
      * @return \Iterator
      */
@@ -67,7 +68,7 @@ class CsvReader implements IteratorReaderInterface
     /**
      * @param \SplFileInfo $file
      *
-     * @throws \FileNotFoundException
+     * @throws FileNotFoundException
      *
      * @return Reader
      */
@@ -75,7 +76,7 @@ class CsvReader implements IteratorReaderInterface
     {
         $path = $file->getRealPath();
         if (!file_exists($path)) {
-            throw new \FileNotFoundException('File not found: ' . $path);
+            throw new FileNotFoundException('File not found: ' . $path);
         }
 
         $reader = Reader::createFromPath($path);

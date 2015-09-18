@@ -6,11 +6,16 @@
 
 namespace SprykerFeature\Zed\ProductOption\Business\Model;
 
+use Generated\Shared\Transfer\ProductOptionsNameValueTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Collection\ArrayCollection;
 use SprykerFeature\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use SprykerFeature\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionTypeTranslationTableMap;
+use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionValueTranslationTableMap;
 use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
 
 class ProductOptionReader implements ProductOptionReaderInterface
@@ -21,6 +26,10 @@ class ProductOptionReader implements ProductOptionReaderInterface
     const COL_TRANSLATION_TYPE = 'SpyProductOptionTypeTranslation.Name';
 
     const COL_TRANSLATION_VALUE = 'SpyProductOptionValueTranslation.Name';
+
+    const COL_TRANSLATION_TYPE_ALIAS = 'type';
+
+    const COL_TRANSLATION_VALUE_ALIAS = 'value';
 
 
     /**
@@ -90,6 +99,54 @@ class ProductOptionReader implements ProductOptionReaderInterface
         }
 
         return $productOptionTransfer;
+    }
+
+    /**
+     * @param int $idProduct
+     * @param int $idLocale
+     *
+     * @return ArrayCollection
+     */
+    public function getProductOptionsByIdProductAndIdLocale($idProduct, $idLocale)
+    {
+        $query = $this->queryContainer
+            ->queryProductOptionTypeUsageByIdProduct($idProduct)
+            ->useSpyProductOptionTypeQuery(null, Criteria::LEFT_JOIN)
+                ->useSpyProductOptionTypeTranslationQuery(null, Criteria::LEFT_JOIN)
+                    ->filterByFkLocale($idLocale)
+                ->endUse()
+            ->endUse()
+            ->useSpyProductOptionValueUsageQuery(null, Criteria::LEFT_JOIN)
+                ->useSpyProductOptionValueQuery(null, Criteria::LEFT_JOIN)
+                    ->useSpyProductOptionValueTranslationQuery(null, Criteria::LEFT_JOIN)
+                    ->endUse()
+                ->endUse()
+            ->endUse()
+            ->withColumn(SpyProductOptionTypeTranslationTableMap::COL_NAME, self::COL_TRANSLATION_TYPE_ALIAS)
+            ->withColumn(SpyProductOptionValueTranslationTableMap::COL_NAME, self::COL_TRANSLATION_VALUE_ALIAS)
+            ->clearGroupByColumns()
+            ->groupByFkProductOptionType()
+        ;
+
+        $productOptionsCollection = $query->find();
+
+        $productList = new ArrayCollection();
+        foreach ($productOptionsCollection as $productOptionsItem) {
+            $objectHash = spl_object_hash($productOptionsItem);
+
+            // @todo CD-414 propel uses all columns in group by and it should not
+            if (!$productList->offsetExists($objectHash)) {
+                $option = $productOptionsItem->toArray();
+
+                $productOptions = new ProductOptionsNameValueTransfer();
+                $productOptions->setType($option[self::COL_TRANSLATION_TYPE_ALIAS]);
+                $productOptions->setValue($option[self::COL_TRANSLATION_VALUE_ALIAS]);
+
+                $productList[$objectHash] = $productOptions;
+            }
+        }
+
+        return $productList;
     }
 
     /**

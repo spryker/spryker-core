@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\ItemGrouperWishlistConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\GroupableContainerTransfer;
 use Generated\Shared\Wishlist\ItemInterface;
-use Generated\Shared\Wishlist\WishlistChangeInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\ItemGrouperWishlistConnector\Business\ItemGrouperWishlistConnectorFacade;
 use SprykerFeature\Zed\Wishlist\Dependency\PreSavePluginInterface;
@@ -18,14 +17,19 @@ use SprykerFeature\Zed\Wishlist\Dependency\PreSavePluginInterface;
  */
 class PreSaveItemGroupingPlugin extends AbstractPlugin implements PreSavePluginInterface
 {
+
     /**
-     * @param ItemInterface[] $items
+     * @param ItemInterface[] $itemsCollection
      */
-    public function trigger(\ArrayObject $items)
+    public function trigger(\ArrayObject $itemsCollection)
     {
-        $groupAbleItems = new GroupableContainerTransfer();
-        $groupAbleItems->setItems($items);
-        $groupedItems = $this->getFacade()->groupOrderItems($groupAbleItems);
-        $items->exchangeArray($groupedItems->getItems());
+        $groupAbleContainerTransfer = new GroupableContainerTransfer();
+        $groupAbleContainerTransfer->setItems($itemsCollection);
+        $groupAbleContainerTransfer = $this->getFacade()->groupOrderItems($groupAbleContainerTransfer);
+
+        if (count($groupAbleContainerTransfer->getItems()) > 0) {
+            $itemsCollection->exchangeArray((array) $groupAbleContainerTransfer->getItems());
+        }
     }
+
 }

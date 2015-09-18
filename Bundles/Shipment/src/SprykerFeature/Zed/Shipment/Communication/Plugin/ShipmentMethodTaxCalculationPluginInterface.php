@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,7 +14,9 @@ interface ShipmentMethodTaxCalculationPluginInterface
     /**
      * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailability
      * @param int $defaultEffectiveTaxRate
+     *
      * @return int $defaultEffectiveTaxRate
      */
     public function getTaxRate(ShipmentMethodAvailabilityInterface $shipmentMethodAvailability, $defaultEffectiveTaxRate);
+
 }

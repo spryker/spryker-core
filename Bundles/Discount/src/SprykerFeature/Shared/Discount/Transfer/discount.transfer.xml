@@ -20,6 +20,7 @@
         <property name="description" type="string" />
         <property name="amount" type="int" />
         <property name="type" type="string" />
+        <property name="usedCodes" type="array" singular="usedCode" />
         <property name="calculatorPlugin" type="string" />
         <property name="collectorPlugin" type="string" />
         <property name="isPrivileged" type="string" />
@@ -55,6 +56,10 @@
     <transfer name="VoucherPoolCategory">
         <property name="idDiscountVoucherPoolCategory" type="int" />
         <property name="name" type="string" />
+    </transfer>
+
+    <transfer name="CalculableContainer">
+        <property name="couponCodes" type="array" singular="couponCode" />
     </transfer>
 
 </transfers>

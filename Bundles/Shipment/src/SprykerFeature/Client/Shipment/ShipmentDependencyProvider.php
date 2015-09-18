@@ -32,4 +32,5 @@ class ShipmentDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
+
 }

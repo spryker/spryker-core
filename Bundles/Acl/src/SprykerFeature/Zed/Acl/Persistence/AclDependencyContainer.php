@@ -72,6 +72,14 @@ class AclDependencyContainer extends AbstractPersistenceDependencyContainer
     }
 
     /**
+     * @return SpyAclUserHasGroupQuery
+     */
+    public function createUserHasGroupQuery()
+    {
+        return $this->getFactory()->createPropelSpyAclUserHasGroupQuery();
+    }
+
+    /**
      * @throws \ErrorException
      *
      * @return UserQueryContainer

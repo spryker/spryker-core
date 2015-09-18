@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Cms\Business;
 
+use Generated\Shared\Cms\CmsBlockInterface;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
@@ -252,15 +253,15 @@ class CmsFacade extends AbstractFacade
 
     /**
      * @param PageTransfer $pageTransfer
-     * @param string $blockName
+     * @param CmsBlockTransfer $blockTransfer
      *
      * @return PageTransfer
      */
-    public function savePageBlockAndTouch(PageTransfer $pageTransfer, $blockName)
+    public function savePageBlockAndTouch(PageTransfer $pageTransfer, CmsBlockTransfer $blockTransfer)
     {
         $pageManager = $this->getDependencyContainer()->getPageManager();
 
-        return $pageManager->savePageBlockAndTouch($pageTransfer, $blockName);
+        return $pageManager->savePageBlockAndTouch($pageTransfer, $blockTransfer);
     }
 
     /**
@@ -273,5 +274,30 @@ class CmsFacade extends AbstractFacade
         $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
 
         return $glossaryKeyMappingManager->deleteGlossaryKeysByIdPage($idPage);
+    }
+
+    /**
+     * @param string $cmsTemplateFolderPath
+     *
+     * @return bool
+     */
+    public function syncTemplate($cmsTemplateFolderPath)
+    {
+        $templateManager = $this->getDependencyContainer()->getTemplateManager();
+
+        return $templateManager->syncTemplate($cmsTemplateFolderPath);
+    }
+
+    /**
+     * @param string $templateName
+     * @param string $placeholder
+     *
+     * @return string
+     */
+    public function generateGlossaryKeyName($templateName, $placeholder)
+    {
+        $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
+
+        return $glossaryKeyMappingManager->generateGlossaryKeyName($templateName, $placeholder);
     }
 }

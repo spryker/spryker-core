@@ -42,7 +42,11 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
                     $values[$key] = $value->toArray($recursive);
                 } elseif ($recursive && $value instanceof \ArrayObject && count($value) >= 1) {
                     foreach ($value as $elementKey => $arrayElement) {
-                        $values[$key][$elementKey] = $arrayElement->toArray($recursive);
+                        if (is_array($arrayElement) || is_scalar($arrayElement)) {
+                            $values[$key][$elementKey] = $arrayElement;
+                        } else {
+                            $values[$key][$elementKey] = $arrayElement->toArray($recursive);
+                        }
                     }
                 } else {
                     $values[$key] = $value;
@@ -123,17 +127,8 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
 
             // Process Array
             if (is_array($value) && $this->isArray($getterReturn) && $type === 'ArrayObject') {
-                /* @var TransferInterface $transferObject */
                 $elementType = $this->getArrayTypeWithNamespace($getterReturn);
-                $transferObjectsArray = new \ArrayObject();
-                foreach ($value as $arrayElement) {
-                    $transferObject = new $elementType();
-                    if (is_array($arrayElement)) {
-                        $transferObject->fromArray($arrayElement);
-                    }
-                    $transferObjectsArray->append($transferObject);
-                }
-                $value = $transferObjectsArray;
+                $value = $this->processArrayObject($elementType, $value);
             }
 
             // Process nested Transfer Objects
@@ -151,13 +146,54 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
             } catch (\Exception $e) {
                 if ($ignoreMissingProperty) {
                     throw new \InvalidArgumentException(
-                        sprintf('Missing property "%s" in "%s"', $property, get_class($this))
+                        sprintf('Missing property "%s" in "%s" (setter %s)', $property, get_class($this), $setter)
                     );
                 }
             }
         }
 
         return $this;
+    }
+
+    /**
+     * @param string $elementType
+     * @param array $arrayObject
+     *
+     * @return \ArrayObject
+     */
+    protected function processArrayObject($elementType, array $arrayObject)
+    {
+        /* @var TransferInterface $transferObject */
+        $transferObjectsArray = new \ArrayObject();
+        foreach ($arrayObject as $arrayElement) {
+            if (is_array($arrayElement)) {
+                if ($this->isAssociativeArray($arrayElement)) {
+                    $transferObject = new $elementType();
+                    $transferObject->fromArray($arrayElement);
+                    $transferObjectsArray->append($transferObject);
+                } else {
+                    foreach ($arrayElement as $arrayElementItem) {
+                        $transferObject = new $elementType();
+                        $transferObject->fromArray($arrayElementItem);
+                        $transferObjectsArray->append($transferObject);
+                    }
+                }
+            } else {
+                $transferObjectsArray->append(new $elementType());
+            }
+        }
+
+        return $transferObjectsArray;
+    }
+
+    /**
+     * @param array $array
+     *
+     * @return bool
+     */
+    private function isAssociativeArray(array $array)
+    {
+        return array_values($array) !== $array;
     }
 
     /**
@@ -204,7 +240,15 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
      */
     private function getArrayTypeWithNamespace($returnType)
     {
-        return 'Generated\\Shared\\Transfer\\' . str_replace('[]', '', $returnType);
+        return $this->getNamespace() . str_replace('[]', '', $returnType);
+    }
+
+    /**
+     * @return string
+     */
+    protected function getNamespace()
+    {
+        return 'Generated\\Shared\\Transfer\\';
     }
 
     /**

@@ -12,9 +12,11 @@ use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingTemplateException;
 use SprykerFeature\Zed\Cms\Business\Exception\TemplateExistsException;
+use SprykerFeature\Zed\Cms\CmsConfig;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use SprykerFeature\Zed\Cms\Persistence\Propel\Map\SpyCmsTemplateTableMap;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplate;
+use Symfony\Component\Finder\Finder;
 
 class TemplateManager implements TemplateManagerInterface
 {
@@ -29,15 +31,31 @@ class TemplateManager implements TemplateManagerInterface
     protected $locator;
 
     /**
+     * @var CmsConfig
+     */
+    protected $config;
+
+    /**
+     * @var Finder
+     */
+    protected $finder;
+
+    /**
      * @param CmsQueryContainerInterface $cmsQueryContainer
-     * @param LocatorLocatorInterface    $locator
+     * @param LocatorLocatorInterface $locator
+     * @param CmsConfig $config
+     * @param Finder $finder
      */
     public function __construct(
         CmsQueryContainerInterface $cmsQueryContainer,
-        LocatorLocatorInterface $locator
+        LocatorLocatorInterface $locator,
+        CmsConfig $config,
+        Finder $finder
     ) {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->locator = $locator;
+        $this->config = $config;
+        $this->finder = $finder;
     }
 
     /**
@@ -232,5 +250,35 @@ class TemplateManager implements TemplateManagerInterface
         }
 
         return $templateEntity;
+    }
+
+    /**
+     * @param string $cmsTemplateFolderPath
+     *
+     * @return bool
+     */
+    public function syncTemplate($cmsTemplateFolderPath)
+    {
+        $templateFolder = $this->config->getTemplateRealPath($cmsTemplateFolderPath);
+        $isSynced = false;
+
+        $this->finder->in($templateFolder)
+            ->name('*.twig')
+            ->depth('0')
+        ;
+
+        foreach ($this->finder->files() as $file) {
+            $fileFullName = $file->getRelativePathname();
+
+            try {
+                $this->getTemplateByPath($cmsTemplateFolderPath . $fileFullName);
+            } catch (MissingTemplateException $e) {
+                $fileName = basename($templateFolder . $fileFullName, ".twig");
+                $this->createTemplate($fileName, $cmsTemplateFolderPath . $fileFullName);
+                $isSynced = true;
+            }
+        }
+
+        return $isSynced;
     }
 }

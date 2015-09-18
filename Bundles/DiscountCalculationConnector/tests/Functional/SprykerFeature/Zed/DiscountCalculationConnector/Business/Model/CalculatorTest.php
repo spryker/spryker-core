@@ -81,15 +81,15 @@ class CalculatorTest extends AbstractFunctionalTest
         $item->setGrossPrice(self::ITEM_GROSS_PRICE);
         $item->setQuantity(1);
 
-        $discounts = $this->getPriceDiscountCollection();
+        $discountCollection = $this->getPriceDiscountCollection();
 
-        $discount = $this->getPriceDiscount();
-        $discount->setAmount(self::ITEM_COUPON_DISCOUNT_AMOUNT);
-        $discounts->addDiscount($discount);
+        $discountTransfer = $this->getPriceDiscount();
+        $discountTransfer->setAmount(self::ITEM_COUPON_DISCOUNT_AMOUNT);
+        $discountCollection->addDiscount($discountTransfer);
 
-        $discount = $this->getPriceDiscount();
-        $discount->setAmount(self::ITEM_DISCOUNT_AMOUNT);
-        $discounts->addDiscount($discount);
+        $discountTransfer = $this->getPriceDiscount();
+        $discountTransfer->setAmount(self::ITEM_DISCOUNT_AMOUNT);
+        $discountCollection->addDiscount($discountTransfer);
 
         $expense = $this->getExpenseWithFixtureData();
         $expense->setName(self::EXPENSE_NAME_SHIPPING_COSTS)
@@ -102,7 +102,7 @@ class CalculatorTest extends AbstractFunctionalTest
         $expensesCollection->addCalculationExpense($expense);
         $order->getCalculableObject()->setExpenses($expensesCollection);
 
-        $item->setDiscounts($discounts);
+        $item->setDiscounts($discountCollection);
         $items->addOrderItem($item);
         $order->getCalculableObject()->setItems($items);
 

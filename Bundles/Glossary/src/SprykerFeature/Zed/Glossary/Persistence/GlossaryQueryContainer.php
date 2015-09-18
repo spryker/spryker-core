@@ -380,13 +380,15 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
 
     /**
      * @param string $key
+     *
+     * @return SpyGlossaryKeyQuery
      */
     public function queryByKey($key)
     {
-        $keyQuery = $this->queryKeys();
-        $keyQuery->filterByKey('%' . mb_strtolower($key) . '%', Criteria::LIKE);
+        $query = $this->queryKeys();
+        $query->where('lower('.SpyGlossaryKeyTableMap::COL_KEY .') like ?' , '%' .mb_strtolower($key). '%');
 
-        return $keyQuery;
+        return $query;
     }
 
     /**
@@ -397,7 +399,8 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     public function queryTranslationByValue($value)
     {
         $query = $this->queryTranslations();
-        $query->filterByValue('%' . mb_strtolower($value) . '%', Criteria::LIKE);
+        $query->where('lower('.SpyGlossaryTranslationTableMap::COL_VALUE .') like ?' , '%' .mb_strtolower($value). '%');
+
         return $query;
     }
 }

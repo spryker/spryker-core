@@ -1,0 +1,21 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set section_title = 'Products List' %}
+
+{% block breadcrumb %}
+    <li><a href="/product">Products List</a></li>
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Customer data' } %}
+
+        {% block widget_content %}
+
+            {{ products | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

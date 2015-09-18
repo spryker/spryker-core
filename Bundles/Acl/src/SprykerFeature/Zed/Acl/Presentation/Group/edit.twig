@@ -1,0 +1,38 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set page_title = 'Edit Group' %}
+
+{% block head_title page_title %}
+{% block section_title page_title %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: page_title } %}
+
+        {% block widget_header_content %}
+            <a class="btn btn-sm btn-primary" href="/acl/group">{{ 'List Groups' | trans }}</a>
+        {% endblock %}
+
+        {% block widget_content %}
+
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+
+                <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+            {{ form_end(form) }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Users in Group' } %}
+
+        {% block widget_content %}
+
+            {{ users | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

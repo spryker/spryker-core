@@ -42,6 +42,7 @@ class CreditCardCheck extends AbstractCall
         $this->applyStandardParameter($container);
         $securityKey = $this->standardParameter->getKey();
         $hash = $this->hashGenerator->generateHash($container, $securityKey);
+
         $container->setHash($hash);
 
         return $container;

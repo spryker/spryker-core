@@ -69,17 +69,19 @@ class UrlForm extends AbstractForm
         $data = $this->getRequestData();
 
         if (isset($data['resource'])) {
-            if ($data['resource'][0] === 'A')
+            if ($data['resource'][0] === 'A') {
                 return [
                     'value' => 3,
                     'label' => 'Alalal',
                 ];
+            }
 
-            if ($data['resource'][0] === 'B')
+            if ($data['resource'][0] === 'B') {
                 return [
                     'value' => 3,
                     'label' => 'Bobobo',
                 ];
+            }
         }
 
         return [];

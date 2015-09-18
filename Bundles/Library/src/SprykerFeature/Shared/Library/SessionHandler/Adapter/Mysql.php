@@ -109,7 +109,7 @@ class Mysql implements \SessionHandlerInterface
         $statement = $this->connection->prepare($query);
         $statement->execute([$key, $store, $environment]);
         $result = $statement->fetch();
-        \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->addCustomMetric('Mysql/Session_read_time', microtime(true) - $startTime);
+        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->addCustomMetric('Mysql/Session_read_time', microtime(true) - $startTime);
 
         return $result ? json_decode($result['value'], true) : null;
     }
@@ -140,7 +140,7 @@ class Mysql implements \SessionHandlerInterface
         $statement = $this->connection->prepare($query);
         $result = $statement->execute([$key, $data, $storeName, $environment, $expires, $timestamp]);
 
-        \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->addCustomMetric('Mysql/Session_write_time', microtime(true) - $startTime);
+        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->addCustomMetric('Mysql/Session_write_time', microtime(true) - $startTime);
 
         return $result;
     }
@@ -155,7 +155,7 @@ class Mysql implements \SessionHandlerInterface
 
         $startTime = microtime(true);
         $result = $this->connection->delete($key);
-        \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->addCustomMetric('Couchbase/Session_delete_time', microtime(true) - $startTime);
+        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->addCustomMetric('Couchbase/Session_delete_time', microtime(true) - $startTime);
 
         return $result ? true : false;
     }

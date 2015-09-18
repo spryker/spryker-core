@@ -10,6 +10,7 @@
                 <bundle>stock</bundle>
                 <controller>index</controller>
                 <action>index</action>
+                <visible>0</visible>
                 <order>1</order>
                 <shortcut>s</shortcut>
             </stock>

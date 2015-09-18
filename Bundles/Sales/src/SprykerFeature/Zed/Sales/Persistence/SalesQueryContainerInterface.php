@@ -68,5 +68,15 @@ interface SalesQueryContainerInterface
      */
     public function querySalesOrdersByCustomerId($idCustomer, Criteria $criteria=null);
 
+    /**
+     * @param int $idSalesOrder
+     * @param int $idCustomer
+     *
+     * @return SpySalesOrderQuery
+     */
+    public function querySalesOrderDetails($idSalesOrder, $idCustomer);
     
+    public function queryPaymentDetailByPaymentId($idPayment);
+
+
 }

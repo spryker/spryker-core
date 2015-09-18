@@ -6,12 +6,12 @@
 
 namespace Functional\SprykerFeature\Zed\Url;
 
-use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Zed\Kernel\Business\Factory;
+use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerEngine\Zed\Kernel\Persistence\Factory;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainer;
 use SprykerFeature\Zed\Url\Business\UrlFacade;
@@ -24,7 +24,7 @@ use SprykerFeature\Zed\Url\Persistence\UrlQueryContainerInterface;
  * @group Url
  * @group UrlFacadeTest
  */
-class UrlFacadeTest extends Test
+class UrlFacadeTest extends AbstractFunctionalTest
 {
 
     /**
@@ -56,10 +56,10 @@ class UrlFacadeTest extends Test
     {
         parent::setUp();
         $this->locator = Locator::getInstance();
-        $this->urlFacade = new UrlFacade(new Factory('Url'), $this->locator);
-        $this->localeFacade = new LocaleFacade(new Factory('Locale'), $this->locator);
-        $this->urlQueryContainer = new UrlQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Url'), $this->locator);
-        $this->touchQueryContainer = new TouchQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Touch'), $this->locator);
+        $this->urlFacade = $this->getFacade();
+        $this->localeFacade = $this->getFacade('SprykerEngine', 'Locale');
+        $this->urlQueryContainer = new UrlQueryContainer(new Factory('Url'), $this->locator);
+        $this->touchQueryContainer = new TouchQueryContainer(new Factory('Touch'), $this->locator);
     }
 
     public function testCreateUrlInsertsAndReturnsSomething()
@@ -211,7 +211,7 @@ class UrlFacadeTest extends Test
 
     public function testSaveRedirectUpdatesSomething()
     {
-        $redirect = new \Generated\Shared\Transfer\RedirectTransfer();
+        $redirect = new RedirectTransfer();
         $redirect->setToUrl('/pageToUrl2');
         $redirect->setStatus(301);
 

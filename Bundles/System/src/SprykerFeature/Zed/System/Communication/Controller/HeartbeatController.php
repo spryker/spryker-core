@@ -21,8 +21,8 @@ class HeartbeatController extends AbstractController
 
     public function init()
     {
-        \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->markIgnoreApdex();
-        \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->markIgnoreTransaction();
+        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->markIgnoreApdex();
+        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->markIgnoreTransaction();
     }
 
     public function indexAction()

@@ -15,6 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
 abstract class AbstractTable
 {
 
+    const TABLE_CLASS = 'gui-table-data';
+    const TABLE_CLASS_NO_SEARCH_SUFFIX = '-no-search';
+
     /**
      * @var Request
      */
@@ -58,7 +61,7 @@ abstract class AbstractTable
     /**
      * @var string
      */
-    protected $tableClass;
+    protected $tableClass = self::TABLE_CLASS;
 
     /**
      * @var bool
@@ -91,12 +94,18 @@ abstract class AbstractTable
         return $this;
     }
 
+    public function disableSearch()
+    {
+        $this->tableClass .= self::TABLE_CLASS_NO_SEARCH_SUFFIX;
+    }
+
     /**
-     * @todo find a better solution (remove it)
+     * @todo CD-412 find a better solution (remove it)
      *
      * @param string $name
      *
      * @return string
+     *
      * @deprecated this method should not be needed.
      */
     public function buildAlias($name)
@@ -234,8 +243,9 @@ abstract class AbstractTable
     }
 
     /**
-     * @return \Twig_Environment
      * @throws \LogicException
+     *
+     * @return \Twig_Environment
      */
     private function getTwig()
     {
@@ -337,7 +347,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @todo to be rafactored, does to many things and is hard to understand
+     * @todo CD-412 to be rafactored, does to many things and is hard to understand
      *
      * @param ModelCriteria $query
      * @param TableConfiguration $config
@@ -346,10 +356,16 @@ abstract class AbstractTable
      */
     protected function runQuery(ModelCriteria $query, TableConfiguration $config)
     {
-        $limit = $config->getPageLength();
+        //$limit = $config->getPageLength();
+        $limit = $this->getLimit();
         $offset = $this->getOffset();
         $order = $this->getOrders();
-        $columns = array_keys($config->getHeader());
+        // @todo CD-412 refactor this class to allow unspecified header columns and to add flexibility
+        if (!empty($config->getHeader())) {
+            $columns = array_keys($config->getHeader());
+        } else {
+            $columns = array_keys($query->getTableMap()->getColumns());
+        }
         $orderColumn = $columns[$order[0]['column']];
         $this->total = $query->count();
         $query->orderBy($orderColumn, $order[0]['dir']);
@@ -366,7 +382,8 @@ abstract class AbstractTable
                     $isFirst = false;
                 }
 
-                $query->where(sprintf("LOWER(%s) LIKE '%s'", $value, '%' . mb_strtolower($searchTerm['value']) . '%'));
+                // @todo fix this in CD-412
+                $query->where(sprintf("LOWER(%s::TEXT) LIKE '%s'", $value, '%' . mb_strtolower($searchTerm['value']) . '%'));
             }
 
             $this->filtered = $query->count();
@@ -424,4 +441,21 @@ abstract class AbstractTable
     {
         return str_replace(' ', '', ucwords(mb_strtolower(str_replace('_', ' ', $str))));
     }
+
+    /**
+     * @param int $total
+     */
+    protected function setTotal($total)
+    {
+        $this->total = $total;
+    }
+
+    /**
+     * @param bool $filtered
+     */
+    protected function setFiltered($filtered)
+    {
+        $this->filtered = $filtered;
+    }
+
 }

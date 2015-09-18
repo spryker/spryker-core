@@ -6,7 +6,10 @@
 
 namespace SprykerFeature\Zed\Sales\Communication\Controller;
 
+use Generated\Shared\Transfer\PayonePaymentDetailTransfer;
+use SprykerFeature\Zed\Sales\Communication\Form\PaymentDetailForm;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
 use SprykerFeature\Zed\Sales\Communication\SalesDependencyContainer;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -62,6 +65,33 @@ class DetailsController extends AbstractController
 
         $logs = $this->getFacade()->getPaymentLogs($idOrder);
 
+        $refunds = $this->getFacade()->getRefunds($idOrder);
+
+        $itemsInProgress = $this->getDependencyContainer()->getOmsFacade()->getItemsWithFlag($orderEntity, 'in progress');
+        $itemsPaid = $this->getDependencyContainer()->getOmsFacade()->getItemsWithFlag($orderEntity, 'paid');
+        $itemsCancelled = $this->getDependencyContainer()->getOmsFacade()->getItemsWithFlag($orderEntity, 'cancelled');
+
+        /** @var SpyPaymentPayone $paymentPayoneEntity */
+        $paymentPayoneEntity = $orderEntity->getSpyPaymentPayones()->getFirst();
+        if (null !== $paymentPayoneEntity) {
+            $idPayment = $paymentPayoneEntity->getIdPaymentPayone();
+
+            /** @var PaymentDetailForm $form */
+            $form = $this->getDependencyContainer()
+                ->createPaymentDetailForm($idPayment)
+            ;
+            $form->handleRequest();
+
+            if ($form->isValid()) {
+                $paymentDetailTransfer = (new PayonePaymentDetailTransfer())->fromArray($form->getData(), true);
+                $this->getFacade()
+                    ->updatePaymentDetail($paymentDetailTransfer, $idPayment)
+                ;
+
+                return $this->redirectResponse(sprintf('/sales/details/?id-sales-order=%d', $idOrder));
+            }
+        }
+
         return [
             'idOrder' => $idOrder,
             'orderDetails' => $orderEntity,
@@ -70,9 +100,14 @@ class DetailsController extends AbstractController
             'allEvents' => $allEvents,
             'expenses' => $expenses,
             'logs' => $logs,
+            'refunds' => $refunds,
             'billingAddress' => $billingAddress,
             'shippingAddress' => $shippingAddress,
             'orderItemSplitFormCollection' => $orderItemSplitFormCollection->create(),
+            'itemsInProgress' => $itemsInProgress,
+            'itemsPaid' => $itemsPaid,
+            'itemsCancelled' => $itemsCancelled,
+            'form' => isset($form) ? $form->createView() : null,
         ];
     }
 

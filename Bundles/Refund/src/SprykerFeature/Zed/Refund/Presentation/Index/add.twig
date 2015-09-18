@@ -1,0 +1,31 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set page_title = 'Refund' %}
+
+{% block head_title page_title | trans %}
+
+{% block action %}
+    <a href="/sales/details/?id-sales-order={{ idOrder }}" class="btn btn-sm btn-primary "><span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span> {{ 'Back to Order' | trans }}</a>
+{% endblock %}
+
+{% block content %}
+
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Refund Memo Comments' }  %}
+
+                {% block widget_content %}
+
+                    {{ form_start(form) }}
+                        {{ form_widget(form) }}
+
+                        <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+                    {{ form_end(form) }}
+
+                {% endblock %}
+
+            {% endembed %}
+        </div>
+    </div>
+
+{% endblock %}

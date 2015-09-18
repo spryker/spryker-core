@@ -13,9 +13,11 @@ function spinnerCreate(elementId){
     }
     $(elementId).html(container);
 }
-function spinnerClear(elementId){
-    $(elementId).html('');
+
+function spinnerClear(){
+    $('.group-spinner-container').html('');
 }
+
 
 /**
  * @param int idGroup
@@ -35,6 +37,22 @@ SprykerAjax.prototype.getRolesForGroup = function(idGroup) {
     }
 };
 
+SprykerAjax.prototype.removeUserFromGroup = function(options){
+    var ajaxOptions = {
+        "id-group": parseInt(options.idGroup),
+        "id-user": parseInt(options.idUser)
+    };
+    if (!confirm('Are you sure you want to detele this user from this group ?')) {
+        return false;
+    }
+    if (ajaxOptions.idGroup < 1 || ajaxOptions.idUser < 1) {
+        var spyAlert = new SprykerAlert();
+        spyAlert.error('User Id and Group Id cannot be null');
+        return false;
+    }
+    this.setUrl('/acl/group/remove-user-from-group').ajaxSubmit(ajaxOptions, 'removeUserRowFromGroupTable');
+};
+
 /*
  * @param ajaxResponse
  * @returns string
@@ -49,8 +67,22 @@ SprykerAjaxCallbacks.prototype.displayGroupRoles = function(ajaxResponse){
             ajaxResponse.data.forEach(function(role){
                 groupModal.addGroupRoleElement(role);
             });
-            spinnerClear('#group-spinner-' + ajaxResponse.idGroup);
             groupModal.showModal();
         }
     }
+    spinnerClear();
+};
+
+SprykerAjaxCallbacks.prototype.removeUserRowFromGroupTable = function(ajaxResponse){
+    if (ajaxResponse.code == this.codeSuccess) {
+        var tableRow = $('#row-' + ajaxResponse['id-user'] + '-' + ajaxResponse['id-group']).closest('tr');
+        tableRow.addClass('removed-group-user');
+        tableRow.fadeOut('slow', function(){
+            tableRow.remove();
+        });
+        return false;
+    }
+
+    var spyAlert = new SprykerAlert();
+    spyAlert.error(ajaxResponse.message);
 };

@@ -64,8 +64,7 @@ abstract class AbstractResponseContainer
         foreach ($this as $key => $data) {
             if ($data === null) {
                 continue;
-            }
-            else {
+            } else {
                 $result[$key] = $data;
             }
         }
@@ -140,7 +139,7 @@ abstract class AbstractResponseContainer
      */
     public function isError()
     {
-        if($this->errorcode === null){
+        if ($this->errorcode === null) {
             return false;
         }
 

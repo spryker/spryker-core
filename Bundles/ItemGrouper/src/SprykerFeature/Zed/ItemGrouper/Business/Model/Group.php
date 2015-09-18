@@ -44,7 +44,11 @@ class Group
      */
     public function groupByKey(GroupableContainerInterface $groupableItems)
     {
-        if ($this->isThresholdReached($groupableItems)) {
+        if($this->neverGroup()){
+            return $groupableItems;
+        }
+
+        if (false === $this->isThresholdReached($groupableItems)) {
             return $groupableItems;
         }
 
@@ -80,7 +84,7 @@ class Group
      */
     protected function isThresholdReached(GroupableContainerInterface $groupableItems)
     {
-        return ($this->threshold > 0 && $this->threshold < count($groupableItems->getItems()));
+        return ($this->threshold < count($groupableItems->getItems()));
     }
 
     /**
@@ -91,5 +95,13 @@ class Group
         if (true === $this->regroupAllItemCollection) {
             $item->setQuantity(1);
         }
+    }
+
+    /**
+     * @return bool
+     */
+    protected function neverGroup()
+    {
+        return $this->threshold < 0;
     }
 }

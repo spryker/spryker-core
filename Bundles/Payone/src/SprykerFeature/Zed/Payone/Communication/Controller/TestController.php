@@ -46,7 +46,8 @@ class TestController extends AbstractController
 
         $result = $this->getFacade()->preAuthorize($authorization);
 
-        dump($result);die;
+        dump($result);
+        die;
     }
 
     public function vorAuthAction()
@@ -61,7 +62,8 @@ class TestController extends AbstractController
 
         $result = $this->getFacade()->preAuthorize($authorization);
 
-        dump($result);die;
+        dump($result);
+        die;
     }
 
     public function vorCaptureAction()
@@ -78,7 +80,8 @@ class TestController extends AbstractController
 
         $result = $this->getFacade()->capture($capture);
 
-        dump($result);die;
+        dump($result);
+        die;
     }
 
     public function vorDebitAction()
@@ -93,7 +96,8 @@ class TestController extends AbstractController
 
         $result = $this->getFacade()->debit($debit);
 
-        dump($result);die;
+        dump($result);
+        die;
     }
 
     public function vorRefundAction()
@@ -108,7 +112,8 @@ class TestController extends AbstractController
 
         $result = $this->getFacade()->refundPayment($refund);
 
-        dump($result);die;
+        dump($result);
+        die;
     }
 
     public function ccClientCheckAction()
@@ -126,7 +131,8 @@ class TestController extends AbstractController
 
         $result = $this->getFacade()->creditCardCheck($creditCard);
 
-        dump($result);die;
+        dump($result);
+        die;
     }
 
     public function ccPreAuthAction()
@@ -146,7 +152,8 @@ class TestController extends AbstractController
 
         $result = $this->getFacade()->preAuthorize($authorization);
 
-        dump($result);die;
+        dump($result);
+        die;
     }
 
     public function ccCheckAuthAction()
@@ -158,7 +165,8 @@ class TestController extends AbstractController
 
         $result = $this->getFacade()->getAuthorizationResponse($payment);
 
-        dump($result);die;
+        dump($result);
+        die;
     }
 
     public function ccAuthAction()
@@ -178,7 +186,8 @@ class TestController extends AbstractController
 
         $result = $this->getFacade()->authorize($authorization);
 
-        dump($result);die;
+        dump($result);
+        die;
     }
 
     public function ccCaptureAction()
@@ -196,7 +205,8 @@ class TestController extends AbstractController
 
         $result = $this->getFacade()->capture($capture);
 
-        dump($result);die;
+        dump($result);
+        die;
     }
 
     public function ccDebitAction()
@@ -211,7 +221,8 @@ class TestController extends AbstractController
 
         $result = $this->getFacade()->debit($debit);
 
-        dump($result);die;
+        dump($result);
+        die;
     }
 
     public function ccRefundAction()
@@ -230,7 +241,8 @@ class TestController extends AbstractController
 
         $result = $this->getFacade()->refundPayment($refund);
 
-        dump($result);die;
+        dump($result);
+        die;
     }
 
     public function ppCheckAuthAction()
@@ -242,7 +254,8 @@ class TestController extends AbstractController
 
         $result = $this->getFacade()->getAuthorizationResponse($payment);
 
-        dump($result);die;
+        dump($result);
+        die;
     }
 
     public function ppPreAuthAction()
@@ -259,7 +272,8 @@ class TestController extends AbstractController
         $result = $this->getFacade()->preAuthorize($authorization);
         header('Location: ' . $result->getRedirecturl());
 
-        dump($result);die;
+        dump($result);
+        die;
     }
 
     public function ppAuthAction()
@@ -276,7 +290,8 @@ class TestController extends AbstractController
         $result = $this->getFacade()->authorize($authorization);
         header('Location: ' . $result->getRedirecturl());
 
-        dump($result);die;
+        dump($result);
+        die;
     }
 
     public function ppCaptureAction()
@@ -293,7 +308,8 @@ class TestController extends AbstractController
 
         $result = $this->getFacade()->capture($capture);
 
-        dump($result);die;
+        dump($result);
+        die;
     }
 
     public function ppRefundAction()
@@ -310,7 +326,8 @@ class TestController extends AbstractController
 
         $result = $this->getFacade()->capture($capture);
 
-        dump($result);die;
+        dump($result);
+        die;
     }
 
     public function giropayPreAuthAction()
@@ -325,7 +342,8 @@ class TestController extends AbstractController
 
         $result = $this->getFacade()->preAuthorize($authorization);
 
-        dump($result);die;
+        dump($result);
+        die;
     }
 
     /**
@@ -381,7 +399,8 @@ class TestController extends AbstractController
 
         $r = $this->getFacade()->processTransactionStatusUpdate($transactionStatusUpdateTransfer);
 
-        echo '<pre>' . print_r($r, false) . '</pre>';die;
+        echo '<pre>' . print_r($r, false) . '</pre>';
+        die;
     }
 
     public function getPaymentStatus()
@@ -390,8 +409,8 @@ class TestController extends AbstractController
 
         $result = $this->getFacade()->getPaymentStatus($order);
 
-        dump($result);die;
-
+        dump($result);
+        die;
     }
 
     protected function rawResponseFromArray(array $request)

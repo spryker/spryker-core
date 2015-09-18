@@ -10,8 +10,6 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Category\CategoryDependencyProvider;
-use SprykerFeature\Zed\Category\Communication\Form\CategoryFormAdd;
-use SprykerFeature\Zed\Category\Communication\Form\CategoryFormEdit;
 use SprykerFeature\Zed\Category\Communication\Form\CategoryNodeForm;
 use SprykerFeature\Zed\Category\Communication\Grid\CategoryGrid;
 use SprykerFeature\Zed\Category\Communication\Table\CategoryAttributeTable;
@@ -67,7 +65,6 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
-     *
      * @return RootNodeTable
      */
     public function createRootNodeTable()
@@ -114,32 +111,6 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
             ->queryUrlByIdCategoryNode($idCategoryNode)
         ;
         return $this->getFactory()->createTableUrlTable($urlQuery);
-    }
-
-    /**
-     * @return CategoryFormAdd
-     */
-    public function createCategoryFormAdd()
-    {
-        return $this->getFactory()->createFormCategoryFormAdd(
-            $this->getQueryContainer(),
-            $this->getCurrentLocale(),
-            null
-        );
-    }
-
-    /**
-     * @param int $idCategory
-     *
-     * @return CategoryFormEdit
-     */
-    public function createCategoryFormEdit($idCategory)
-    {
-        return $this->getFactory()->createFormCategoryFormEdit(
-            $this->getQueryContainer(),
-            $this->getCurrentLocale(),
-            $idCategory
-        );
     }
 
     /**

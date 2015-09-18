@@ -15,6 +15,6 @@ class ItemGrouperConfig extends AbstractBundleConfig
      */
     public function getGroupingThreshold()
     {
-        return -1;
+        return 1;
     }
 }

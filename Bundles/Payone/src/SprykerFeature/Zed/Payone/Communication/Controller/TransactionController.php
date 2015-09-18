@@ -7,7 +7,9 @@
 namespace SprykerFeature\Zed\Payone\Communication\Controller;
 
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
+use SprykerFeature\Shared\Payone\PayoneConfigConstants;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
 use SprykerFeature\Zed\Payone\Business\PayoneFacade;
 use SprykerFeature\Zed\Payone\Communication\PayoneDependencyContainer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
@@ -65,25 +67,42 @@ class TransactionController extends AbstractController
 
         $response = $this->getFacade()->processTransactionStatusUpdate($payoneTransactionStatusUpdateTransfer);
 
-        //TODO: Refactor as per CD-380
-        $orderItems = SpySalesOrderItemQuery::create()
-            ->useOrderQuery()
-                ->useSpyPaymentPayoneQuery()
-                    ->filterByTransactionId($payoneTransactionStatusUpdateTransfer->getTxid())
-                ->endUse()
-            ->endUse()
-            ->find();
-        $this->getDependencyContainer()->getOmsFacade()->triggerEvent('PaymentNotificationReceived', $orderItems, []);
-
-        if ($dataArray['txaction'] === 'appointed') {
-            $this->getDependencyContainer()->getOmsFacade()->triggerEvent('RedirectResponseAppointed', $orderItems, []);
-        }
+        $transactionId = $payoneTransactionStatusUpdateTransfer->getTxid();
+        $this->triggerEventsOnSuccess($response, $transactionId, $dataArray);
 
         $callback = function () use ($response) {
             echo $response;
         };
 
         return $this->streamedResponse($callback);
+    }
+
+    /**
+     * @param TransactionStatusResponse $response
+     * @param int $transactionId
+     * @param array $dataArray
+     *
+     * @return null
+     */
+    protected function triggerEventsOnSuccess(TransactionStatusResponse $response, $transactionId, array $dataArray)
+    {
+        if (!$response->isSuccess()) {
+            return null;
+        }
+
+        //TODO: Refactor as per CD-380
+        $orderItems = SpySalesOrderItemQuery::create()
+            ->useOrderQuery()
+            ->useSpyPaymentPayoneQuery()
+            ->filterByTransactionId($transactionId)
+            ->endUse()
+            ->endUse()
+            ->find();
+        $this->getDependencyContainer()->getOmsFacade()->triggerEvent('PaymentNotificationReceived', $orderItems, []);
+
+        if ($dataArray['txaction'] === PayoneConfigConstants::PAYONE_TXACTION_APPOINTED) {
+            $this->getDependencyContainer()->getOmsFacade()->triggerEvent('RedirectResponseAppointed', $orderItems, []);
+        }
     }
 
 }

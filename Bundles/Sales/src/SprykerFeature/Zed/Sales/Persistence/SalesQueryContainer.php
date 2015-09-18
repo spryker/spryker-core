@@ -9,6 +9,8 @@ namespace SprykerFeature\Zed\Sales\Persistence;
 use Generated\Zed\Ide\FactoryAutoCompletion\SalesPersistence;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use SprykerFeature\Zed\Payone\Persistence\Propel\Base\SpyPaymentPayoneDetailQuery;
+use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneDetail;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesExpenseQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddressQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderCommentQuery;
@@ -103,11 +105,9 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
-     * @param $orderId
-     *
      * @return SpySalesOrderCommentQuery
      */
-    public function queryComments($orderId)
+    public function queryComments()
     {
         $query = SpySalesOrderCommentQuery::create();
 
@@ -130,7 +130,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     /**
      * @param $idCustomer
      * @param Criteria|null $criteria
-     * 
+     *
      * @return SpySalesOrderQuery
      */
     public function querySalesOrdersByCustomerId($idCustomer, Criteria $criteria=null)
@@ -141,4 +141,41 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
         return $query;
     }
 
+    /**
+     * @param int $idSalesOrder
+     * @param int $idCustomer
+     *
+     * @return SpySalesOrderQuery
+     */
+    public function querySalesOrderDetails($idSalesOrder, $idCustomer)
+    {
+        $query = SpySalesOrderQuery::create('order');
+        $query
+            ->filterByIdSalesOrder($idSalesOrder)
+            ->filterByFkCustomer($idCustomer)
+        ;
+
+        $query
+            ->innerJoinWith('order.BillingAddress billingAddress')
+            ->innerJoinWith('billingAddress.Country billingCountry')
+            ->innerJoinWith('order.ShippingAddress shippingAddress')
+            ->innerJoinWith('shippingAddress.Country shippingCountry')
+            ->innerJoinWithShipmentMethod()
+        ;
+
+        return $query;
+    }
+
+    /**
+     * @param $idPayment
+     *
+     * @return SpyPaymentPayoneDetailQuery
+     */
+    public function queryPaymentDetailByPaymentId($idPayment)
+    {
+        $query = SpyPaymentPayoneDetailQuery::create();
+        $query->filterByIdPaymentPayone($idPayment);
+
+        return $query;
+    }
 }

@@ -18,4 +18,16 @@ interface NodeUrlManagerInterface
      */
     public function createUrl(NodeTransfer $categoryNode, LocaleTransfer $locale);
 
+    /**
+     * @param NodeTransfer   $categoryNode
+     * @param LocaleTransfer $locale
+     */
+    public function updateUrl(NodeTransfer $categoryNode, LocaleTransfer $locale);
+
+    /**
+     * @param NodeTransfer $categoryNode
+     * @param LocaleTransfer $locale
+     */
+    public function removeUrl(NodeTransfer $categoryNode, LocaleTransfer $locale);
+
 }

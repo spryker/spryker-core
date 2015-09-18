@@ -20,6 +20,7 @@ use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainerInterface;
  */
 class ShipmentDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return MethodTable
      */
@@ -43,8 +44,9 @@ class ShipmentDependencyContainer extends AbstractCommunicationDependencyContain
     /**
      * @param int|null $idMethod
      *
-     * @return CarrierForm
      * @throws \ErrorException
+     *
+     * @return CarrierForm
      */
     public function createMethodForm($idMethod = null)
     {
@@ -73,4 +75,5 @@ class ShipmentDependencyContainer extends AbstractCommunicationDependencyContain
     {
         return $this->getProvidedDependency(ShipmentDependencyProvider::QUERY_CONTAINER_TAX);
     }
+
 }

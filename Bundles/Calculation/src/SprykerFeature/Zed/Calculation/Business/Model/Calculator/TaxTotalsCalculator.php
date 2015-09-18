@@ -60,13 +60,11 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     {
         foreach ($calculableItems as $item) {
             $this->calculateTax($item);
-            $this->calculateTaxForExpenses($item->getExpenses());
-            $this->calculateTaxForProductOptions($item->getProductOptions());
         }
 
         /** @var $order CartInterface|OrderInterface **/
         $order = $calculableContainer->getCalculableObject();
-        $this->calculateTaxForExpenses($order->getExpenses());
+        $this->calculateTaxForOrderExpenses($order->getExpenses());
     }
 
     /**
@@ -99,22 +97,13 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     /**
      * @param \ArrayObject $expenses
      */
-    public function calculateTaxForExpenses(\ArrayObject $expenses)
+    public function calculateTaxForOrderExpenses(\ArrayObject $expenses)
     {
         foreach ($expenses as $expense) {
             $this->calculateTax($expense);
         }
     }
 
-    /**
-     *  @param ProductOptionInterface[] $options
-     */
-    public function calculateTaxForProductOptions($options)
-    {
-        foreach ($options as $option) {
-            $this->calculateTax($option);
-        }
-    }
 
     /**
      * @param TotalsInterface $totalsTransfer
@@ -123,10 +112,8 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     {
         /** @var $groupedTotals TaxSetInterface[] **/
         $groupedTotals = [];
-
         foreach ($this->calculatedTaxSets as $taxSet) {
-
-            if (false == isset($groupedTotals[$taxSet->getIdTaxSet()])) {
+            if (!isset($groupedTotals[$taxSet->getIdTaxSet()])) {
                 $groupedTotals[$taxSet->getIdTaxSet()] = $taxSet;
                 continue;
             }
@@ -136,8 +123,18 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
         }
 
         $taxTotalsTransfer = new TaxTotalTransfer();
+        $totalEffectiveRate = 0;
         foreach ($groupedTotals as $taxSet) {
             $taxTotalsTransfer->addTaxSet($taxSet);
+            $totalEffectiveRate += $taxSet->getEffectiveRate();
+        }
+
+        if (!empty($totalEffectiveRate)) {
+            $taxAmountForTaxSet = $this->priceCalculationHelper->getTaxValueFromPrice(
+                $totalsTransfer->getGrandTotal(),
+                $totalEffectiveRate
+            );
+            $taxTotalsTransfer->setAmount($taxAmountForTaxSet);
         }
 
         $totalsTransfer->setTaxTotal($taxTotalsTransfer);

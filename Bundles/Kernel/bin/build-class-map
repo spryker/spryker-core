@@ -9,6 +9,8 @@ use Symfony\Component\Finder\SplFileInfo;
 class ClassMapBuilder
 {
 
+    const CLASS_MAP_FILE_NAME = '.class_map';
+
     const CLASS_PART_NAMESPACE = 1;
     const CLASS_PART_APPLICATION = 2;
     const CLASS_PART_BUNDLE = 3;

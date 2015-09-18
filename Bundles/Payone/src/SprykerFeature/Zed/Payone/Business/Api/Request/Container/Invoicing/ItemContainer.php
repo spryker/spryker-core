@@ -58,14 +58,30 @@ class ItemContainer extends AbstractContainer
     public function toArrayByKey($key)
     {
         $data = [];
-        if (isset($this->id)) $data['id[' . $key . ']'] = $this->getId();
-        if (isset($this->pr)) $data['pr[' . $key . ']'] = $this->getPr();
-        if (isset($this->no)) $data['no[' . $key . ']'] = $this->getNo();
-        if (isset($this->de)) $data['de[' . $key . ']'] = $this->getDe();
-        if (isset($this->it)) $data['it[' . $key . ']'] = $this->getIt();
-        if (isset($this->va)) $data['va[' . $key . ']'] = $this->getVa();
-        if (isset($this->sd)) $data['sd[' . $key . ']'] = $this->getSd();
-        if (isset($this->ed)) $data['ed[' . $key . ']'] = $this->getEd();
+        if (isset($this->id)) {
+            $data['id[' . $key . ']'] = $this->getId();
+        }
+        if (isset($this->pr)) {
+            $data['pr[' . $key . ']'] = $this->getPr();
+        }
+        if (isset($this->no)) {
+            $data['no[' . $key . ']'] = $this->getNo();
+        }
+        if (isset($this->de)) {
+            $data['de[' . $key . ']'] = $this->getDe();
+        }
+        if (isset($this->it)) {
+            $data['it[' . $key . ']'] = $this->getIt();
+        }
+        if (isset($this->va)) {
+            $data['va[' . $key . ']'] = $this->getVa();
+        }
+        if (isset($this->sd)) {
+            $data['sd[' . $key . ']'] = $this->getSd();
+        }
+        if (isset($this->ed)) {
+            $data['ed[' . $key . ']'] = $this->getEd();
+        }
 
         return $data;
     }

@@ -8,6 +8,9 @@ namespace SprykerFeature\Client\Payone\ClientApi\Mode;
 
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
 
+/**
+ * @deprecated Use Zed one instead
+ */
 class ModeDetector implements ModeDetectorInterface
 {
 
@@ -16,7 +19,7 @@ class ModeDetector implements ModeDetectorInterface
      */
     public function getMode()
     {
-        if(\SprykerFeature_Shared_Library_Environment::isNotProduction()) {
+        if (\SprykerFeature_Shared_Library_Environment::isNotProduction()) {
             return self::MODE_TEST;
         }
 

@@ -22,5 +22,7 @@ interface Messages
     const CUSTOMER_PASSWORD_RECOVERY_MAIL_SENT = 'customer.password.recovery.mail.sent';
     const CUSTOMER_DELETE_FAILED = 'customer.delete.failed';
     const CUSTOMER_AUTHORIZATION_SUCCESS = 'customer.authorization.success';
-    const CUSTOMER_AUTHORIZATION_FAILED= 'customer.authorization.failed';
+    const CUSTOMER_AUTHORIZATION_FAILED = 'customer.authorization.failed';
+    const CUSTOMER_PASSWORD_INVALID = 'customer.password.invalid';
+    const CUSTOMER_EMAIL_ALREADY_USED = 'customer.email.already.used';
 }

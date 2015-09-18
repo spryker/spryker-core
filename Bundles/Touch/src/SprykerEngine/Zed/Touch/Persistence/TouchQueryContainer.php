@@ -6,7 +6,11 @@
 
 namespace SprykerEngine\Zed\Touch\Persistence;
 
+use Generated\Shared\Transfer\LocaleTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
+use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchStorageTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
 use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
@@ -15,6 +19,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
 {
     const TOUCH_ENTRY_QUERY_KEY = 'search touch entry';
     const TOUCH_ENTRIES_QUERY_KEY = 'search touch entries';
+    const TOUCH_EXPORTER_ID = 'exporter_touch_id';
 
     /**
      * @param string $itemType
@@ -41,24 +46,29 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         $query
             ->setQueryKey(self::TOUCH_ENTRY_QUERY_KEY)
             ->filterByItemType($itemType)
-            ->filterByItemId($itemId);
-
+            ->filterByItemId($itemId)
+        ;
+        
         return $query;
     }
 
     /**
      * @param string $itemType
+     * @param LocaleTransfer $locale
      * @param \DateTime $lastTouchedAt
-     *
+     * 
      * @return SpyTouchQuery
+     * 
+     * @throws \Propel\Runtime\Exception\PropelException
      */
-    public function createBasicExportableQuery($itemType, \DateTime $lastTouchedAt)
+    public function createBasicExportableQuery($itemType, LocaleTransfer $locale, \DateTime $lastTouchedAt)
     {
         $query = SpyTouchQuery::create();
         $query
             ->filterByItemType($itemType)
             ->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
             ->filterByTouched(['min' => $lastTouchedAt])
+            ->withColumn(SpyTouchTableMap::COL_ID_TOUCH, self::TOUCH_EXPORTER_ID)
         ;
 
         return $query;

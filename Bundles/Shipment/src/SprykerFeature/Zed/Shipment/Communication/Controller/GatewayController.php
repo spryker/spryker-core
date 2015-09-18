@@ -28,4 +28,5 @@ class GatewayController extends AbstractGatewayController
             ->getAvailableMethods($shipmentMethodAvailability)
             ;
     }
+
 }

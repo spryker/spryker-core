@@ -89,7 +89,6 @@ class StorageInstanceBuilder
      */
     private static function getStorageInstance($type, $debug = false)
     {
-
         $kvAdapter = Config::get(SystemConfig::STORAGE_KV_SOURCE);
 
         $storageAdapter = self::createStorageAdapterName($type, $kvAdapter);

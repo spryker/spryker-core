@@ -38,12 +38,15 @@ class YvesGuy extends \Codeception\AbstractGuy
      *
      * @return \Codeception\Maybe
      */
-    public function getName() {
+    public function getName()
+    {
         $this->scenario->addStep(new \Codeception\Step\Action('getName', func_get_args()));
         if ($this->scenario->running()) {
             $result = $this->scenario->runStep();
+
             return new Maybe($result);
         }
+
         return new Maybe();
     }
 

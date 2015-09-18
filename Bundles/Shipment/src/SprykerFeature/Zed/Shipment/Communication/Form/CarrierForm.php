@@ -37,16 +37,16 @@ class CarrierForm extends AbstractForm
     protected function buildFormFields()
     {
         $this->addText(self::NAME_FIELD, [
-                'label' => 'Name'
+                'label' => 'Name',
             ])
         ;
         $this->addAutosuggest(self::NAME_GLOSSARY_FIELD, [
                 'label' => 'Name glossary key',
-                'url' => '/glossary/ajax/keys'
+                'url' => '/glossary/ajax/keys',
             ])
         ;
         $this->addCheckbox(self::IS_ACTIVE_FIELD, [
-                'label' => 'Enabled?'
+                'label' => 'Enabled?',
             ])
         ;
 
@@ -65,10 +65,11 @@ class CarrierForm extends AbstractForm
             $carrier = $this->carrierQuery->findOneByIdShipmentCarrier($carrierId);
             $result = [
                 self::NAME_FIELD => $carrier->getFkGlossaryKeyCarrierName(),
-                self::IS_ACTIVE_FIELD => $carrier->getIsActive()
+                self::IS_ACTIVE_FIELD => $carrier->getIsActive(),
             ];
         }
 
         return $result;
     }
+
 }

@@ -6,11 +6,16 @@
 
 namespace SprykerFeature\Zed\Cms\Communication\Controller;
 
+use Functional\SprykerFeature\Zed\ProductOption\Mock\LocaleFacade;
+use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
+use SprykerFeature\Zed\Cms\Business\Exception\MissingTemplateException;
+use SprykerFeature\Zed\Cms\CmsDependencyProvider;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsBlockForm;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsPageForm;
+use SprykerFeature\Zed\Cms\Communication\Table\CmsBlockTable;
 use SprykerFeature\Zed\Cms\Communication\Table\CmsPageTable;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -22,6 +27,8 @@ class BlockController extends AbstractController
 {
 
     const REDIRECT_ADDRESS = '/cms/glossary/';
+    const SEARCH_LIMIT = 15;
+    const CMS_FOLDER_PATH = '@Cms/template/';
 
     /**
      * @return array
@@ -57,15 +64,17 @@ class BlockController extends AbstractController
         $form = $this->getDependencyContainer()
             ->createCmsBlockForm('add')
         ;
+        $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
         $form->handleRequest();
 
         if ($form->isValid()) {
             $data = $form->getData();
             $pageTransfer = $this->createPageTransfer($data);
+            $blockTransfer = $this->createBlockTransfer($data);
 
             $this->getFacade()
-                ->savePageBlockAndTouch($pageTransfer, $data[CmsBlockForm::BLOCK])
+                ->savePageBlockAndTouch($pageTransfer, $blockTransfer)
             ;
             $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 
@@ -74,6 +83,7 @@ class BlockController extends AbstractController
 
         return $this->viewResponse([
             'form' => $form->createView(),
+            'isSynced' => $isSynced
         ]);
     }
 
@@ -84,22 +94,22 @@ class BlockController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
+        $idBlock = $request->get(CmsBlockTable::REQUEST_ID_BLOCK);
 
         $form = $this->getDependencyContainer()
-            ->createCmsBlockForm('update', $idPage)
+            ->createCmsBlockForm('update', $idBlock)
         ;
+
+        $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
         $form->handleRequest();
         if ($form->isValid()) {
             $data = $form->getData();
 
             $pageTransfer = $this->createPageTransfer($data);
-            $pageTransfer = $this->getFacade()
-                ->savePage($pageTransfer)
-            ;
+            $pageTransfer->setIdCmsPage($data[CmsBlockForm::FK_PAGE]);
 
-            $this->updatePageAndBlock($data, $idPage, $pageTransfer);
+            $this->updatePageAndBlock($data, $pageTransfer);
 
             $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 
@@ -108,6 +118,7 @@ class BlockController extends AbstractController
 
         return $this->viewResponse([
             'form' => $form->createView(),
+            'isSynced' => $isSynced
         ]);
     }
 
@@ -126,19 +137,67 @@ class BlockController extends AbstractController
 
     /**
      * @param array $data
-     * @param int $idPage
+     * @param int $idBlock
      * @param PageTransfer $pageTransfer
      */
-    protected function updatePageAndBlock(array $data, $idPage, $pageTransfer)
+    protected function updatePageAndBlock(array $data, $pageTransfer)
     {
         if (intval($data[CmsPageForm::CURRENT_TEMPLATE]) !== intval($data[CmsPageForm::FK_TEMPLATE])) {
             $this->getFacade()
-                ->deleteGlossaryKeysByIdPage($idPage)
+                ->deleteGlossaryKeysByIdPage($data[CmsBlockForm::FK_PAGE])
             ;
         }
+        $blockTransfer = $this->createBlockTransfer($data);
 
         $this->getFacade()
-            ->savePageBlockAndTouch($pageTransfer, $data[CmsBlockForm::BLOCK])
+            ->savePageBlockAndTouch($pageTransfer, $blockTransfer)
         ;
+    }
+
+    /**
+     * @param $data
+     *
+     * @return CmsBlockTransfer
+     */
+    private function createBlockTransfer($data)
+    {
+        $blockTransfer = new CmsBlockTransfer();
+        $blockTransfer->fromArray($data, true);
+        if ($data[CmsBlockForm::TYPE] === 'static') {
+            $blockTransfer->setValue(0);
+        }
+
+        return $blockTransfer;
+    }
+
+    /**
+     * @return LocaleFacade
+     */
+    private function getLocaleFacade()
+    {
+        return $this->getDependencyContainer()
+            ->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE)
+            ;
+    }
+
+    public function searchCategoryAction(Request $request)
+    {
+        $term = $request->get('term');
+        $localId = $this->getLocaleFacade()->getCurrentLocale()->getIdLocale();
+
+        $searchedItems = $this->getQueryContainer()->queryNodeByCategoryName($term,$localId)
+            ->limit(self::SEARCH_LIMIT)
+            ->find();
+
+        $result = [];
+        foreach ($searchedItems as $category) {
+            $result[] = [
+                'id' => $category->getCategoryNodeId(),
+                'name' => $category->getCategoryName(),
+                'url' => $category->getUrl(),
+            ];
+        }
+
+        return $this->jsonResponse($result);
     }
 }

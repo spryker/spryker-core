@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Checkout\Business\Workflow;
 
+use Generated\Shared\Checkout\CartInterface;
 use Generated\Shared\Checkout\CheckoutRequestInterface;
 use Generated\Shared\Checkout\CheckoutResponseInterface;
 use Generated\Shared\Checkout\OrderInterface;
@@ -15,10 +16,13 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\Propel;
 use SprykerFeature\Shared\Checkout\CheckoutConfig;
+use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
+use SprykerFeature\Zed\Checkout\Business\Calculation\CalculableContainer;
 use SprykerFeature\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreconditionInterface;
+use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreHydrationInterface;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 
 class CheckoutWorkflow implements CheckoutWorkflowInterface
@@ -28,6 +32,11 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      * @var CheckoutPreconditionInterface[]
      */
     protected $preConditionStack;
+
+    /**
+     * @var CheckoutPreHydrationInterface[]
+     */
+    protected $preHydrationStack;
 
     /**
      * @var CheckoutOrderHydrationInterface[]
@@ -51,6 +60,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
     /**
      * @param CheckoutPreconditionInterface[] $preConditionStack
+     * @param CheckoutPreHydrationInterface[] $preHydrationStack
      * @param CheckoutOrderHydrationInterface[] $orderHydrationStack
      * @param CheckoutSaveOrderInterface[] $saveOrderStack
      * @param CheckoutPostSaveHookInterface[] $postSaveHookStack
@@ -58,12 +68,14 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      */
     public function __construct(
         array $preConditionStack,
+        array $preHydrationStack,
         array $orderHydrationStack,
         array $saveOrderStack,
         array $postSaveHookStack,
         CheckoutToOmsInterface $omsFacade
     ) {
         $this->preConditionStack = $preConditionStack;
+        $this->preHydrationStack = $preHydrationStack;
         $this->postSaveHookStack = $postSaveHookStack;
         $this->orderHydrationStack = $orderHydrationStack;
         $this->saveOrderStack = $saveOrderStack;
@@ -83,8 +95,10 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         $this->checkPreConditions($checkoutRequest, $checkoutResponse);
 
         if (!$this->hasErrors($checkoutResponse)) {
-            $orderTransfer = $this->getOrderTransfer();
 
+            $this->preHydrate($checkoutRequest, $checkoutResponse);
+
+            $orderTransfer = $this->getOrderTransfer();
             $this->hydrateOrder($orderTransfer, $checkoutRequest);
             $orderTransfer = $this->doSaveOrder($orderTransfer, $checkoutResponse);
             $checkoutResponse->setOrder($orderTransfer);
@@ -98,6 +112,17 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         }
 
         return $checkoutResponse;
+    }
+
+    /**
+     * @param CheckoutRequestInterface $checkoutRequest
+     * @param CheckoutResponseInterface $checkoutResponse
+     */
+    protected function preHydrate(CheckoutRequestInterface $checkoutRequest, CheckoutResponseInterface $checkoutResponse)
+    {
+        foreach ($this->preHydrationStack as $preHydrator) {
+            $preHydrator->execute($checkoutRequest, $checkoutResponse);
+        }
     }
 
     /**

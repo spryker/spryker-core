@@ -7,8 +7,8 @@ namespace SprykerFeature\Client\Customer\Service\Zed;
 
 use Generated\Shared\Customer\AddressInterface;
 use Generated\Shared\Customer\CustomerInterface;
+use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Client\ZedRequest\Service\Client\Response;
 
 interface CustomerStubInterface
@@ -44,7 +44,7 @@ interface CustomerStubInterface
     /**
      * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerResponseTransfer
      */
     public function register(CustomerInterface $customerTransfer);
 
@@ -58,9 +58,16 @@ interface CustomerStubInterface
     /**
      * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerInterface
+     * @return CustomerResponseTransfer
      */
     public function update(CustomerInterface $customerTransfer);
+
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return CustomerResponseTransfer
+     */
+    public function updatePassword(CustomerInterface $customerTransfer);
 
     /**
      * @param CustomerInterface $customerTransfer
@@ -79,9 +86,23 @@ interface CustomerStubInterface
     /**
      * @param AddressInterface $addressTransfer
      *
-     * @return Response
+     * @return AddressInterface
      */
     public function updateAddress(AddressInterface $addressTransfer);
+
+    /**
+     * @param AddressInterface $addressTransfer
+     *
+     * @return CustomerInterface
+     */
+    public function updateAddressAndCustomerDefaultAddresses(AddressInterface $addressTransfer);
+
+    /**
+     * @param AddressInterface $addressTransfer
+     *
+     * @return CustomerInterface
+     */
+    public function createAddressAndUpdateCustomerDefaultAddresses(AddressInterface $addressTransfer);
 
     /**
      * @param AddressInterface $addressTransfer
@@ -89,6 +110,13 @@ interface CustomerStubInterface
      * @return AddressInterface
      */
     public function getAddress(AddressInterface $addressTransfer);
+
+    /**
+     * @param CustomerInterface $customerTransfer
+     *
+     * @return AddressesTransfer
+     */
+    public function getAddresses(CustomerInterface $customerTransfer);
 
     /**
      * @param AddressInterface $addressTransfer

@@ -47,7 +47,7 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
         $customer = $this->getFactory()->createCustomerCustomer(
             $this->createQueryContainer(),
             $this->createCustomerReferenceGenerator(),
-            $config->getHostYves()
+            $config
         );
 
         foreach ($senderPlugins[CustomerDependencyProvider::REGISTRATION_TOKEN_SENDERS] as $sender) {

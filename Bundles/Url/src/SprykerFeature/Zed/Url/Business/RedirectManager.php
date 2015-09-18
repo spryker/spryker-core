@@ -9,10 +9,8 @@ namespace SprykerFeature\Zed\Url\Business;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
-use Generated\Zed\Ide\AutoCompletion;
+use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
-use Propel\Runtime\Propel;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Zed\Url\Business\Exception\MissingRedirectException;
 use SprykerFeature\Zed\Url\Business\Exception\RedirectExistsException;
@@ -37,31 +35,31 @@ class RedirectManager implements RedirectManagerInterface
     protected $urlQueryContainer;
 
     /**
-     * @var AutoCompletion
-     */
-    protected $locator;
-
-    /**
      * @var UrlToTouchInterface
      */
     protected $touchFacade;
 
     /**
+     * @var ConnectionInterface
+     */
+    protected $connection;
+
+    /**
      * @param UrlQueryContainerInterface $urlQueryContainer
      * @param UrlManagerInterface $urlManager
      * @param UrlToTouchInterface $touchFacade
-     * @param LocatorLocatorInterface $locator
+     * @param ConnectionInterface $connection
      */
     public function __construct(
         UrlQueryContainerInterface $urlQueryContainer,
         UrlManagerInterface $urlManager,
         UrlToTouchInterface $touchFacade,
-        LocatorLocatorInterface $locator
+        ConnectionInterface $connection
     ) {
         $this->urlManager = $urlManager;
         $this->urlQueryContainer = $urlQueryContainer;
-        $this->locator = $locator;
         $this->touchFacade = $touchFacade;
+        $this->connection = $connection;
     }
 
     /**
@@ -76,9 +74,9 @@ class RedirectManager implements RedirectManagerInterface
      */
     public function createRedirect($toUrl, $status = 301)
     {
-        Propel::getConnection()->beginTransaction();
+        $this->connection->beginTransaction();
 
-        $redirect = $this->locator->url()->entitySpyRedirect();
+        $redirect = new SpyRedirect();
 
         $redirect
             ->setToUrl($toUrl)
@@ -87,7 +85,7 @@ class RedirectManager implements RedirectManagerInterface
             ->save()
         ;
 
-        Propel::getConnection()->commit();
+        $this->connection->commit();
 
         return $redirect;
     }
@@ -106,7 +104,6 @@ class RedirectManager implements RedirectManagerInterface
         $this->touchRedirectActive($redirectTransfer);
 
         return $redirectTransfer;
-
     }
 
     /**
@@ -162,14 +159,14 @@ class RedirectManager implements RedirectManagerInterface
      */
     protected function createRedirectFromTransfer(RedirectTransfer $redirectTransfer)
     {
-        $redirectEntity = $this->locator->url()->entitySpyRedirect();
+        $redirectEntity = new SpyRedirect();
 
-        Propel::getConnection()->beginTransaction();
+        $this->connection->beginTransaction();
 
         $redirectEntity->fromArray($redirectTransfer->toArray());
 
         $redirectEntity->save();
-        Propel::getConnection()->commit();
+        $this->connection->commit();
 
         $redirectTransfer->setIdRedirect($redirectEntity->getIdRedirect());
 
@@ -257,7 +254,7 @@ class RedirectManager implements RedirectManagerInterface
      */
     public function saveRedirectUrlAndTouch($url, LocaleTransfer $locale, $idRedirect)
     {
-        $urlTransfer  = $this->createRedirectUrl($url, $locale, $idRedirect);
+        $urlTransfer = $this->createRedirectUrl($url, $locale, $idRedirect);
         $this->urlManager->touchUrlActive($urlTransfer->getIdUrl());
 
         return $urlTransfer;

@@ -21,11 +21,13 @@ class CmsGlossaryForm extends AbstractForm
     const PLACEHOLDER = 'placeholder';
     const GLOSSARY_KEY = 'glossary_key';
     const ID_KEY_MAPPING = 'idCmsGlossaryKeyMapping';
+    const AUTO_GLOSSARY = 'Auto';
     const SEARCH_OPTION = 'search_option';
     const GLOSSARY_NEW = 'New glossary';
     const GLOSSARY_FIND = 'Find glossary';
     const FULLTEXT_SEARCH = 'Full text';
     const TRANSLATION = 'translation';
+    const TEMPLATE_NAME = 'templateName';
 
     /**
      * @var SpyCmsGlossaryKeyMappingQuery
@@ -105,18 +107,18 @@ class CmsGlossaryForm extends AbstractForm
 
         return $this->addHidden(self::FK_PAGE)
             ->addHidden(self::ID_KEY_MAPPING)
+            ->addHidden(self::TEMPLATE_NAME)
             ->addText(self::PLACEHOLDER, $placeholderParams)
             ->addChoice(self::SEARCH_OPTION, [
                 'label' => 'Search Type',
                 'choices' => [
+                    self::AUTO_GLOSSARY,
                     self::GLOSSARY_NEW,
                     self::GLOSSARY_FIND,
                     self::FULLTEXT_SEARCH,
                 ],
             ])
-            ->addText(self::GLOSSARY_KEY, [
-                'constraints' => $this->constraints->getRequiredConstraints(),
-            ])
+            ->addText(self::GLOSSARY_KEY)
             ->addTextarea(self::TRANSLATION,[
                 'label' => 'Content',
                 'constraints' => $this->constraints->getRequiredConstraints(),

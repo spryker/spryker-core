@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Stock\Communication\Controller;
 use Generated\Shared\Transfer\TypeTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Stock\Communication\StockDependencyContainer;
-use Pyz\Zed\Stock\Business\StockFacade;
+use SprykerFeature\Zed\Stock\Business\StockFacade;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 

@@ -14,6 +14,7 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
 
     const FACADE_COUNTRY = 'FACADE_COUNTRY';
     const FACADE_OMS = 'FACADE_OMS';
+    const FACADE_REFUND = 'FACADE_REFUND';
     const FACADE_LOCALE = 'FACADE_LOCALE';
 
     const PLUGINS_PAYMENT_LOGS = 'PLUGINS_PAYMENT_LOGS';
@@ -31,6 +32,10 @@ class SalesDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_OMS] = function (Container $container) {
             return $container->getLocator()->oms()->facade();
+        };
+
+        $container[self::FACADE_REFUND] = function (Container $container) {
+            return $container->getLocator()->refund()->facade();
         };
 
         $container[self::PLUGINS_PAYMENT_LOGS] = function (Container $container) {

@@ -72,7 +72,7 @@ class Redis implements \SessionHandlerInterface
         $key = $this->keyPrefix . $sessionId;
         $startTime = microtime(true);
         $result = $this->connection->get($key);
-        \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->addCustomMetric('Redis/Session_read_time', microtime(true) - $startTime);
+        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->addCustomMetric('Redis/Session_read_time', microtime(true) - $startTime);
 
         return $result ? json_decode($result, true) : null;
     }
@@ -92,7 +92,7 @@ class Redis implements \SessionHandlerInterface
 
         $startTime = microtime(true);
         $result = $this->connection->setex($key, $this->lifetime, json_encode($sessionData));
-        \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->addCustomMetric('Redis/Session_write_time', microtime(true) - $startTime);
+        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->addCustomMetric('Redis/Session_write_time', microtime(true) - $startTime);
 
         return $result ? true : false;
     }
@@ -107,7 +107,7 @@ class Redis implements \SessionHandlerInterface
 
         $startTime = microtime(true);
         $result = $this->connection->del($key);
-        \SprykerFeature_Shared_Library_NewRelic_Api::getInstance()->addCustomMetric('Redis/Session_delete_time', microtime(true) - $startTime);
+        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->addCustomMetric('Redis/Session_delete_time', microtime(true) - $startTime);
 
         return $result ? true : false;
     }

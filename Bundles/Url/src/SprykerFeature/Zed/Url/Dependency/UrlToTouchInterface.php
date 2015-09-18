@@ -17,4 +17,12 @@ interface UrlToTouchInterface
      */
     public function touchActive($itemType, $itemId);
 
+    /**
+     * @param string $itemType
+     * @param int $itemId
+     *
+     * @return bool
+     */
+    public function touchDeleted($itemType, $itemId);
+
 }

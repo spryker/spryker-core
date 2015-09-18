@@ -18,8 +18,9 @@ use Generated\Shared\Transfer\OrderTransfer;
  */
 class OrderItemGroupingHydrationPlugin extends AbstractPlugin implements CheckoutOrderHydrationInterface
 {
+
     /**
-     * @param OrderTransfer           $orderTransfer
+     * @param OrderTransfer $orderTransfer
      * @param CheckoutRequestTransfer $checkoutRequest
      */
     public function hydrateOrder(OrderTransfer $orderTransfer, CheckoutRequestTransfer $checkoutRequest)
@@ -29,4 +30,5 @@ class OrderItemGroupingHydrationPlugin extends AbstractPlugin implements Checkou
         $groupedOrderItems = $this->getFacade()->groupOrderItems($groupAbleItems);
         $orderTransfer->setItems($groupedOrderItems->getItems());
     }
+
 }

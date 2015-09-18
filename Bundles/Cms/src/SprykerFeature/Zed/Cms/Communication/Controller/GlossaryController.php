@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Cms\Communication\Controller;
 
+use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
@@ -19,6 +20,7 @@ use SprykerFeature\Zed\Cms\Communication\Form\CmsGlossaryForm;
 use SprykerFeature\Zed\Cms\Communication\Table\CmsGlossaryTable;
 use SprykerFeature\Zed\Cms\Communication\Table\CmsPageTable;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
+use SprykerFeature\Zed\Cms\Persistence\Propel\Base\SpyCmsBlock;
 use SprykerFeature\Zed\Cms\Persistence\Propel\Base\SpyCmsPage;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -35,6 +37,11 @@ class GlossaryController extends AbstractController
     const SEARCH_LIMIT = 10;
     const ID_FORM = 'id-form';
     const TYPE = 'type';
+
+    /**
+     * @var string
+     */
+    protected $glossaryKeyName = '';
 
     /**
      * @param Request $request
@@ -60,6 +67,7 @@ class GlossaryController extends AbstractController
 
         $placeholders = $this->findPagePlaceholders($cmsPage);
         $glossaryMappingArray = $this->extractGlossaryMapping($idPage, $localeTransfer);
+        $this->touchNecessaryBlock($idPage);
         $forms = [];
         $formViews = [];
 
@@ -117,7 +125,7 @@ class GlossaryController extends AbstractController
         if (file_exists($tempFile)) {
             $fileContent = file_get_contents($tempFile);
 
-            preg_match_all('/<!-- CMS_PLACEHOLDER : "[a-zA-Z0-9]*" -->/', $fileContent, $cmsPlaceholderLine);
+            preg_match_all('/<!-- CMS_PLACEHOLDER : "[a-zA-Z0-9_-]*" -->/', $fileContent, $cmsPlaceholderLine);
             preg_match_all('/"([^"]+)"/', implode(' ', $cmsPlaceholderLine[0]), $placeholderMap);
 
             return $placeholderMap[1];
@@ -191,7 +199,7 @@ class GlossaryController extends AbstractController
             $pageKeyMappingTransfer->setIdCmsGlossaryKeyMapping($pageKeyMappingFound->getIdCmsGlossaryKeyMapping());
         }
         $glossaryKey = $this->getQueryContainer()
-            ->queryKey($data[CmsGlossaryForm::GLOSSARY_KEY])
+            ->queryKey($this->glossaryKeyName)
             ->findOne()
         ;
         $pageKeyMappingTransfer->setFkGlossaryKey($glossaryKey->getIdGlossaryKey());
@@ -286,6 +294,7 @@ class GlossaryController extends AbstractController
 
             return $this->jsonResponse([
                 'success' => 'true',
+                'glossaryKeyName' => $this->glossaryKeyName,
                 'data' => $data,
             ]);
         } else {
@@ -326,8 +335,16 @@ class GlossaryController extends AbstractController
      */
     private function createKeyTranslationTransfer(array $data, LocaleTransfer $localeTransfer)
     {
+        $this->glossaryKeyName = $data[CmsGlossaryForm::GLOSSARY_KEY];
+
+        if (null === $this->glossaryKeyName) {
+            $this->glossaryKeyName = $this->getFacade()
+                ->generateGlossaryKeyName($data[CmsGlossaryForm::TEMPLATE_NAME], $data[CmsGlossaryForm::PLACEHOLDER])
+            ;
+        }
+
         $keyTranslationTransfer = new KeyTranslationTransfer();
-        $keyTranslationTransfer->setGlossaryKey($data[CmsGlossaryForm::GLOSSARY_KEY]);
+        $keyTranslationTransfer->setGlossaryKey($this->glossaryKeyName);
 
         $keyTranslationTransfer->setLocales([
             $localeTransfer->getLocaleName() => $data[CmsGlossaryForm::TRANSLATION]
@@ -358,4 +375,34 @@ class GlossaryController extends AbstractController
         return $cmsPage;
     }
 
+    /**
+     * @param int $idPage
+     */
+    protected function touchNecessaryBlock($idPage)
+    {
+        $blockEntity = $this->getQueryContainer()
+            ->queryBlockByIdPage($idPage)
+            ->findOne()
+        ;
+
+        if (null !== $blockEntity) {
+            $blockTransfer = $this->createBlockTransfer($blockEntity);
+            $this->getFacade()
+                ->touchBlockActive($blockTransfer)
+            ;
+        }
+    }
+
+    /**
+     * @param SpyCmsBlock $blockEntity
+     *
+     * @return CmsBlockTransfer
+     */
+    protected function createBlockTransfer(SpyCmsBlock $blockEntity)
+    {
+        $blockTransfer = new CmsBlockTransfer();
+        $blockTransfer->fromArray($blockEntity->toArray());
+
+        return $blockTransfer;
+    }
 }

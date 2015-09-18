@@ -6,85 +6,42 @@
 
 namespace SprykerFeature\Zed\Url\Communication;
 
+use Generated\Zed\Ide\FactoryAutoCompletion\UrlCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerEngine\Zed\Locale\Business\LocaleFacade;
-use SprykerFeature\Zed\Glossary\Communication\Grid\TranslationGrid;
-use Symfony\Component\HttpFoundation\Request;
+use SprykerFeature\Zed\Url\Communication\Form\UrlForm;
+use SprykerFeature\Zed\Url\Communication\Grid\TranslationGrid;
+use SprykerFeature\Zed\Url\Communication\Grid\UrlGrid;
+use SprykerFeature\Zed\Url\Persistence\UrlQueryContainerInterface;
 
+/**
+ * @method UrlCommunication getFactory()
+ * @method UrlQueryContainerInterface getQueryContainer()
+ */
 class UrlDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**
-     * @param Request $request
-     *
      * @return UrlGrid
      */
-    public function createUrlGrid(Request $request)
+    public function createUrlGrid()
     {
-        return $this->getFactory()->createGridUrlGrid(
-            $this->getQueryContainer()->queryUrls(),
-            $request
-        );
+        return $this->getFactory()->createGridUrlGrid();
     }
 
     /**
-     * @return UrlQueryContainerInterface
+     * @return UrlForm
      */
-    public function getQueryContainer()
+    public function getUrlForm()
     {
-        return $this->getLocator()->url()->queryContainer();
+        return $this->getFactory()->createFormUrlForm();
     }
 
     /**
-     * @param Request $request
-     *
-     * @return mixed
-     */
-    public function getUrlForm(Request $request)
-    {
-        return $this->getFactory()->createFormUrlForm(
-            $request,
-            $this->getQueryContainer(),
-            $this->getLocaleFacade()
-        );
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return mixed
-     */
-    public function getDemoForm(Request $request)
-    {
-        return $this->getFactory()->createFormDemoForm(
-            $request,
-            $this->getQueryContainer(),
-            $this->getLocaleFacade()
-        );
-    }
-
-    /**
-     * @param Request $request
-     *
      * @return TranslationGrid
      */
-    public function getUrlKeyTranslationGrid(Request $request)
+    public function getUrlKeyTranslationGrid()
     {
-        $urlQueryContainer = $this->getQueryContainer();
-        $translationQuery = $urlQueryContainer->joinLocales();
-
-        return $this->getFactory()->createGridTranslationGrid(
-            $translationQuery,
-            $request
-        );
-    }
-
-    /**
-     * @return LocaleFacade
-     */
-    public function getLocaleFacade()
-    {
-        return $this->getLocator()->locale()->facade();
+        return $this->getFactory()->createGridTranslationGrid();
     }
 
 }

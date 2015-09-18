@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<database
+     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     name="zed"
+     defaultIdMethod="native"
+     defaultPhpNamingMethod="underscore"
+     xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
+     identifierQuoting="true"
+     namespace="SprykerFeature\Zed\Refund\Persistence\Propel"
+     package="vendor.spryker.spryker.Bundles.Refund.src.SprykerFeature.Zed.Refund.Persistence.Propel">
+
+    <table name="spy_refund">
+        <column name="id_refund" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="fk_sales_order" required="true" type="INTEGER"/>
+
+        <column name="amount" required="true" type="INTEGER"/>
+        <column name="comment" type="VARCHAR"/>
+
+        <foreign-key foreignTable="spy_sales_order">
+            <reference foreign="id_sales_order" local="fk_sales_order"/>
+        </foreign-key>
+
+        <behavior name="timestampable">
+            <parameter name="disable_updated_at" value="true"/>
+        </behavior>
+        <id-method-parameter value="spy_refund_pk_seq"/>
+    </table>
+
+</database>
