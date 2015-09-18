@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Payone\Business\Payment;
 
 use Generated\Shared\Payone\PayoneCreditCardInterface;
 use Generated\Shared\Payone\PayoneRefundInterface;
+use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CaptureResponseContainer;
@@ -73,11 +74,11 @@ interface PaymentManagerInterface
     public function getPaymentLogs(ObjectCollection $orders);
 
     /**
-     * @param array $data
+     * @param PayoneCreditCardCheckRequestDataTransfer $creditCardCheckRequestDataTransfer
      *
      * @return array
      */
-    public function getCreditCardCheckRequestData(array $data);
+    public function getCreditCardCheckRequestData(PayoneCreditCardCheckRequestDataTransfer $creditCardCheckRequestDataTransfer);
 
     /**
      * @param $orderTransfer

@@ -49,12 +49,12 @@ class RefundContainer extends AbstractRequestContainer
     protected $use_customerdata;
 
     /**
-     * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Refund\PaymentMethod\BankAccountContainer
+     * @var BankAccountContainer
      */
     protected $paymentMethod;
 
     /**
-     * @var \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer
+     * @var TransactionContainer
      */
     protected $invoicing;
 
@@ -99,10 +99,14 @@ class RefundContainer extends AbstractRequestContainer
      * cent). The amount must be less than or equal to
      * the amount of the corresponding booking.
      * (Always provide a negative amount)
+     *
+     * @return $this
      */
     public function setAmount($amount)
     {
         $this->amount = $amount;
+
+        return $this;
     }
 
     /**
@@ -115,10 +119,14 @@ class RefundContainer extends AbstractRequestContainer
 
     /**
      * @param string $currency
+     *
+     * @return $this
      */
     public function setCurrency($currency)
     {
         $this->currency = $currency;
+
+        return $this;
     }
 
     /**
@@ -131,10 +139,14 @@ class RefundContainer extends AbstractRequestContainer
 
     /**
      * @param string $narrative_text
+     *
+     * @return $this
      */
     public function setNarrativeText($narrative_text)
     {
         $this->narrative_text = $narrative_text;
+
+        return $this;
     }
 
     /**
@@ -146,15 +158,19 @@ class RefundContainer extends AbstractRequestContainer
     }
 
     /**
-     * @param Invoicing\TransactionContainer $invoicing
+     * @param TransactionContainer $invoicing
+     *
+     * @return $this
      */
     public function setInvoicing(TransactionContainer $invoicing)
     {
         $this->invoicing = $invoicing;
+
+        return $this;
     }
 
     /**
-     * @return Invoicing\TransactionContainer
+     * @return TransactionContainer
      */
     public function getInvoicing()
     {
@@ -162,15 +178,19 @@ class RefundContainer extends AbstractRequestContainer
     }
 
     /**
-     * @param Refund\PaymentMethod\BankAccountContainer $paymentMethod
+     * @param BankAccountContainer $paymentMethod
+     *
+     * @return $this;
      */
     public function setPaymentMethod(BankAccountContainer $paymentMethod)
     {
         $this->paymentMethod = $paymentMethod;
+
+        return $this;
     }
 
     /**
-     * @return Refund\PaymentMethod\BankAccountContainer
+     * @return BankAccountContainer
      */
     public function getPaymentMethod()
     {
@@ -179,10 +199,14 @@ class RefundContainer extends AbstractRequestContainer
 
     /**
      * @param int $sequencenumber
+     *
+     * @return $this
      */
     public function setSequenceNumber($sequencenumber)
     {
         $this->sequencenumber = $sequencenumber;
+
+        return $this;
     }
 
     /**
@@ -195,10 +219,14 @@ class RefundContainer extends AbstractRequestContainer
 
     /**
      * @param string $txid
+     *
+     * @return $this
      */
     public function setTxid($txid)
     {
         $this->txid = $txid;
+
+        return $this;
     }
 
     /**
@@ -211,10 +239,14 @@ class RefundContainer extends AbstractRequestContainer
 
     /**
      * @param string $use_customerdata
+     *
+     * @return $this
      */
     public function setUseCustomerData($use_customerdata)
     {
         $this->use_customerdata = $use_customerdata;
+
+        return $this;
     }
 
     /**
@@ -235,10 +267,14 @@ class RefundContainer extends AbstractRequestContainer
 
     /**
      * @param string $bankcountry
+     *
+     * @return $this
      */
     public function setBankcountry($bankcountry)
     {
         $this->bankcountry = $bankcountry;
+
+        return $this;
     }
 
     /**
@@ -251,10 +287,14 @@ class RefundContainer extends AbstractRequestContainer
 
     /**
      * @param string $bankaccount
+     *
+     * @return $this
      */
     public function setBankaccount($bankaccount)
     {
         $this->bankaccount = $bankaccount;
+
+        return $this;
     }
 
     /**
@@ -267,10 +307,14 @@ class RefundContainer extends AbstractRequestContainer
 
     /**
      * @param string $bankcode
+     *
+     * @return $this
      */
     public function setBankcode($bankcode)
     {
         $this->bankcode = $bankcode;
+
+        return $this;
     }
 
     /**
@@ -283,10 +327,14 @@ class RefundContainer extends AbstractRequestContainer
 
     /**
      * @param string $bankbranchcode
+     *
+     * @return $this
      */
     public function setBankbranchcode($bankbranchcode)
     {
         $this->bankbranchcode = $bankbranchcode;
+
+        return $this;
     }
 
     /**
@@ -299,10 +347,14 @@ class RefundContainer extends AbstractRequestContainer
 
     /**
      * @param string $bankcheckdigit
+     *
+     * @return $this
      */
     public function setBankcheckdigit($bankcheckdigit)
     {
         $this->bankcheckdigit = $bankcheckdigit;
+
+        return $this;
     }
 
     /**
@@ -315,10 +367,14 @@ class RefundContainer extends AbstractRequestContainer
 
     /**
      * @param string $iban
+     *
+     * @return $this
      */
     public function setIban($iban)
     {
         $this->iban = $iban;
+
+        return $this;
     }
 
     /**
@@ -331,10 +387,14 @@ class RefundContainer extends AbstractRequestContainer
 
     /**
      * @param string $bic
+     *
+     * @return $this
      */
     public function setBic($bic)
     {
         $this->bic = $bic;
+
+        return $this;
     }
 
 }

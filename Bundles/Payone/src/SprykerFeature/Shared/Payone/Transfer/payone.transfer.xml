@@ -87,6 +87,12 @@
         <property name="redirectBackUrl" type="string" />
         <property name="redirectErrorUrl" type="string" />
         <property name="storeCardData" type="string" />
+        <property name="responseType" type="string" />
+    </transfer>
+
+    <transfer name="PayoneCreditCardCheckRequestData">
+        <property name="storeCardData" type="string" />
+        <property name="responseType" type="string" />
     </transfer>
 
     <transfer name="PayoneApiCallResponseCheck">

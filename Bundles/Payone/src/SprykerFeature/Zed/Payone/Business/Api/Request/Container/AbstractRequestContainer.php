@@ -88,11 +88,20 @@ abstract class AbstractRequestContainer extends AbstractContainer
     protected $hash;
 
     /**
+     * @var string
+     */
+    protected $responsetype;
+
+    /**
      * @param string $encoding
+     *
+     * @return $this
      */
     public function setEncoding($encoding)
     {
         $this->encoding = $encoding;
+
+        return $this;
     }
 
     /**
@@ -105,10 +114,14 @@ abstract class AbstractRequestContainer extends AbstractContainer
 
     /**
      * @param string $key
+     *
+     * @return $this
      */
     public function setKey($key)
     {
         $this->key = $key;
+
+        return $this;
     }
 
     /**
@@ -121,10 +134,14 @@ abstract class AbstractRequestContainer extends AbstractContainer
 
     /**
      * @param string $api_version
+     *
+     * @return $this
      */
     public function setApiVersion($api_version)
     {
         $this->api_version = $api_version;
+
+        return $this;
     }
 
     /**
@@ -137,10 +154,14 @@ abstract class AbstractRequestContainer extends AbstractContainer
 
     /**
      * @param int $mid
+     *
+     * @return $this
      */
     public function setMid($mid)
     {
         $this->mid = $mid;
+
+        return $this;
     }
 
     /**
@@ -153,10 +174,14 @@ abstract class AbstractRequestContainer extends AbstractContainer
 
     /**
      * @param string $mode
+     *
+     * @return $this
      */
     public function setMode($mode)
     {
         $this->mode = $mode;
+
+        return $this;
     }
 
     /**
@@ -169,10 +194,14 @@ abstract class AbstractRequestContainer extends AbstractContainer
 
     /**
      * @param int $portalid
+     *
+     * @return $this
      */
     public function setPortalid($portalid)
     {
         $this->portalid = $portalid;
+
+        return $this;
     }
 
     /**
@@ -185,10 +214,14 @@ abstract class AbstractRequestContainer extends AbstractContainer
 
     /**
      * @param string $request
+     *
+     * @return $this
      */
     public function setRequest($request)
     {
         $this->request = $request;
+
+        return $this;
     }
 
     /**
@@ -203,10 +236,14 @@ abstract class AbstractRequestContainer extends AbstractContainer
      * set the system-Name
      *
      * @param string $integrator_name
+     *
+     * @return $this
      */
     public function setIntegratorName($integrator_name)
     {
         $this->integrator_name = $integrator_name;
+
+        return $this;
     }
 
     /**
@@ -221,10 +258,14 @@ abstract class AbstractRequestContainer extends AbstractContainer
      * set the system-version
      *
      * @param string $integrator_version
+     *
+     * @return $this
      */
     public function setIntegratorVersion($integrator_version)
     {
         $this->integrator_version = $integrator_version;
+
+        return $this;
     }
 
     /**
@@ -239,10 +280,14 @@ abstract class AbstractRequestContainer extends AbstractContainer
      * set the name of the solution-partner (company)
      *
      * @param string $solution_name
+     *
+     * @return $this
      */
     public function setSolutionName($solution_name)
     {
         $this->solution_name = $solution_name;
+
+        return $this;
     }
 
     /**
@@ -257,10 +302,14 @@ abstract class AbstractRequestContainer extends AbstractContainer
      * set the version of the solution-partner's app / extension / plugin / etc..
      *
      * @param string $solution_version
+     *
+     * @return $this
      */
     public function setSolutionVersion($solution_version)
     {
         $this->solution_version = $solution_version;
+
+        return $this;
     }
 
     /**
@@ -281,10 +330,14 @@ abstract class AbstractRequestContainer extends AbstractContainer
 
     /**
      * @param int $aid
+     *
+     * @return $this
      */
     public function setAid($aid)
     {
         $this->aid = $aid;
+
+        return $this;
     }
 
     /**
@@ -297,18 +350,26 @@ abstract class AbstractRequestContainer extends AbstractContainer
 
     /**
      * @param string $language
+     *
+     * @return $this
      */
     public function setLanguage($language)
     {
         $this->language = $language;
+
+        return $this;
     }
 
     /**
      * @param string $hash
+     *
+     * @return $this
      */
     public function setHash($hash)
     {
         $this->hash = $hash;
+
+        return $this;
     }
 
     /**
@@ -317,6 +378,26 @@ abstract class AbstractRequestContainer extends AbstractContainer
     public function getHash()
     {
         return $this->hash;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResponsetype()
+    {
+        return $this->responsetype;
+    }
+
+    /**
+     * @param string $responsetype
+     *
+     * @return $this
+     */
+    public function setResponsetype($responsetype)
+    {
+        $this->responsetype = $responsetype;
+
+        return $this;
     }
 
 }

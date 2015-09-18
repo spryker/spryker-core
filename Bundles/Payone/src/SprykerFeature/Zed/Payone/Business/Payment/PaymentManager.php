@@ -11,6 +11,7 @@ use Generated\Shared\Payone\PayoneRefundInterface;
 use Generated\Shared\Payone\PayoneStandardParameterInterface;
 use Generated\Shared\Payone\OrderInterface;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
 use Generated\Shared\Transfer\PayonePaymentDetailTransfer;
 use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
@@ -481,13 +482,13 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param array $data
+     * @param PayoneCreditCardCheckRequestDataTransfer $creditCardCheckRequestDataTransfer
      *
      * @return array
      */
-    public function getCreditCardCheckRequestData(array $data)
+    public function getCreditCardCheckRequestData(PayoneCreditCardCheckRequestDataTransfer $creditCardCheckRequestDataTransfer)
     {
-        $this->standardParameter->fromArray($data, true);
+        $this->standardParameter->fromArray($creditCardCheckRequestDataTransfer->toArray(), true);
 
         $creditCardCheck = new CreditCardCheck($this->standardParameter, $this->hashGenerator, $this->modeDetector);
 
