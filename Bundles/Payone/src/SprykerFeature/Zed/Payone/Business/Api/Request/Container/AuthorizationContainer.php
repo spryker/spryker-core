@@ -25,10 +25,14 @@ class AuthorizationContainer extends AbstractAuthorizationContainer
 
     /**
      * @param BusinessContainer $business
+     *
+     * @return $this
      */
     public function setBusiness(BusinessContainer $business)
     {
         $this->business = $business;
+
+        return $this;
     }
 
     /**
