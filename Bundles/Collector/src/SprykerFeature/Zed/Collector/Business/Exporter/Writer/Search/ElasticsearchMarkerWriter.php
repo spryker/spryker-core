@@ -30,6 +30,12 @@ class ElasticsearchMarkerWriter implements WriterInterface
     protected $type;
 
     /**
+     * TODO this has state...
+     * @var
+     */
+    protected $metaData = [];
+
+    /**
      * @param Client $searchClient
      * @param string $indexName
      * @param string $type
@@ -49,11 +55,25 @@ class ElasticsearchMarkerWriter implements WriterInterface
      */
     public function write(array $dataSet, $type = '')
     {
-        $mapping = new Mapping($this->index->getType($this->type));
-
         foreach ($dataSet as $key => $value) {
-            $mapping->setMeta([$key => $value])->send();
+            $this->metaData[$key] = $value;
         }
+
+
+//        $mapping = new Mapping($this->index->getType($this->type));
+//
+//        foreach ($dataSet as $key => $value) {
+//            $mapping->setMeta([$key => $value])->send(); // This always overrides the timestamp
+//        }
+    }
+
+    /**
+     * TODO
+     * This should not be __destruct
+     */
+    public function __destruct(){
+        $mapping = new Mapping($this->index->getType($this->type));
+        $mapping->setMeta($this->metaData)->send();
     }
 
     /**

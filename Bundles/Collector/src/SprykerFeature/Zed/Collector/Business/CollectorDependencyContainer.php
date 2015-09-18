@@ -238,7 +238,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createSearchMarker()
     {
-        return $this->getFactory()->createExporterKeyValueMarker(
+        return $this->getFactory()->createExporterKeyValueMarker( // TODO it uses the KV marker for Search?
             $this->createSearchMarkerWriter(),
             $this->createSearchMarkerReader(),
             $this->createSearchMarkerKeyBuilder()
