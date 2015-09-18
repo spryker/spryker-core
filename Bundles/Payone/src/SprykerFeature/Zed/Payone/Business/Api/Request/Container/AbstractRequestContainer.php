@@ -88,6 +88,11 @@ abstract class AbstractRequestContainer extends AbstractContainer
     protected $hash;
 
     /**
+     * @var string
+     */
+    protected $responsetype;
+
+    /**
      * @param string $encoding
      */
     public function setEncoding($encoding)
@@ -317,6 +322,22 @@ abstract class AbstractRequestContainer extends AbstractContainer
     public function getHash()
     {
         return $this->hash;
+    }
+
+    /**
+     * @return string
+     */
+    public function getResponsetype()
+    {
+        return $this->responsetype;
+    }
+
+    /**
+     * @param string $responsetype
+     */
+    public function setResponsetype($responsetype)
+    {
+        $this->responsetype = $responsetype;
     }
 
 }

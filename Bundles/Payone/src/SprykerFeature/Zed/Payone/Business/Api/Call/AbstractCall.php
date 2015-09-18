@@ -70,6 +70,9 @@ abstract class AbstractCall
         if (null === $container->getApiVersion()) {
             $container->setApiVersion($this->standardParameter->getApiVersion());
         }
+        if (null === $container->getResponsetype()) {
+            $container->setResponsetype($this->standardParameter->getResponseType());
+        }
     }
 
     /**
