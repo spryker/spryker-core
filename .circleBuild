@@ -72,7 +72,7 @@ class CircleCiBuilder
         $curlResource = curl_init();
         curl_setopt($curlResource, CURLOPT_URL, $this->getUrl($branchName));
         curl_setopt($curlResource, CURLOPT_CUSTOMREQUEST, 'POST');
-        curl_setopt($curlResource, CURLOPT_POSTFIELDS, json_decode($buildRequestData));
+        curl_setopt($curlResource, CURLOPT_POSTFIELDS, json_encode($buildRequestData));
         curl_setopt($curlResource, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($curlResource, CURLOPT_HTTPHEADER, [
             'Content-Type: application/json',
