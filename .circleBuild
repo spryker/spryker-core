@@ -1,0 +1,99 @@
+#!/usr/bin/env php
+<?php
+
+class CircleCiBuilder
+{
+
+    const BRANCH_NAME = 1;
+    const CIRCLE_CI_TOKEN = 2;
+    const DEFAULT_BRANCH = 'develop';
+
+    /**
+     * @var string
+     */
+    private $circleCiToken;
+
+    /**
+     * @var string
+     */
+    private $branchName;
+
+    public function __construct()
+    {
+        $this->branchName = $_SERVER['argv'][self::BRANCH_NAME];
+        $this->circleCiToken = $_SERVER['argv'][self::CIRCLE_CI_TOKEN];
+    }
+
+    public function runParentBuild()
+    {
+        if ($this->hasCurrentBranchAParentBranch()) {
+            $this->triggerBuildForBranch($this->branchName);
+        } else {
+            $this->triggerBuildForBranch(self::DEFAULT_BRANCH);
+        }
+    }
+
+    public function hasCurrentBranchAParentBranch()
+    {
+        $curlResource = curl_init();
+        curl_setopt($curlResource, CURLOPT_URL, $this->getUrl($this->branchName));
+        curl_setopt($curlResource, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($curlResource, CURLOPT_HTTPGET, true);
+        curl_setopt($curlResource, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            'Accept: application/json'
+        ]);
+
+        $output = curl_exec($curlResource);
+        curl_close($curlResource);
+        $response = json_decode($output);
+
+        if (count($response) > 0) {
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param string $branchName
+     *
+     * @return bool
+     */
+    private function triggerBuildForBranch($branchName)
+    {
+        $buildRequestData = [
+            'build_parameters' => [
+                'RUN_NIGHTLY_BUILD' => true,
+                'SPRYKER_BRANCH' => $branchName
+            ]
+        ];
+
+        $curlResource = curl_init();
+        curl_setopt($curlResource, CURLOPT_URL, $this->getUrl($branchName));
+        curl_setopt($curlResource, CURLOPT_CUSTOMREQUEST, 'POST');
+        curl_setopt($curlResource, CURLOPT_POSTFIELDS, json_decode($buildRequestData));
+        curl_setopt($curlResource, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($curlResource, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            'Accept: application/json'
+        ]);
+
+        curl_exec($curlResource);
+        curl_close($curlResource);
+    }
+
+    /**
+     * @param $branchName
+     *
+     * @return string
+     */
+    private function getUrl($branchName)
+    {
+        return 'https://circleci.com/api/v1/project/spryker/demoshop/tree/' . $branchName . '?circle-token=' . $this->circleCiToken;
+    }
+
+}
+
+$circleCiBuilder = new CircleCiBuilder();
+$circleCiBuilder->runParentBuild();
