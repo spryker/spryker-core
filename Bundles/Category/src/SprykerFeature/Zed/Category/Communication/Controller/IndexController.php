@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Zed\Category\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
@@ -12,7 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class IndexController extends AbstractController
 {
 
-    const PARAM_ID_CATEGORY = 'id-category';
+    const PARAM_ID_CATEGORY_NODE = 'id-node';
 
     /**
      * @return array
@@ -49,7 +53,7 @@ class IndexController extends AbstractController
      */
     public function nodeAction(Request $request)
     {
-        $idCategory = $request->get(self::PARAM_ID_CATEGORY);
+        $idCategory = $request->get(self::PARAM_ID_CATEGORY_NODE);
 
         $categories = $this->getCategoryChildrenByIdCategory($idCategory);
 
@@ -90,7 +94,7 @@ class IndexController extends AbstractController
      */
     public function attributesAction(Request $request)
     {
-        $idCategory = $request->get(self::PARAM_ID_CATEGORY);
+        $idCategory = $request->get(self::PARAM_ID_CATEGORY_NODE);
 
         /* @var CategoryAttributeTable $table */
         $table = $this->getDependencyContainer()
@@ -109,7 +113,7 @@ class IndexController extends AbstractController
      */
     public function urlsAction(Request $request)
     {
-        $idCategory = $request->get(self::PARAM_ID_CATEGORY);
+        $idCategory = $request->get(self::PARAM_ID_CATEGORY_NODE);
 
         $table = $this->getDependencyContainer()
             ->createUrlTable($idCategory)

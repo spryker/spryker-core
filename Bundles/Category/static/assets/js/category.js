@@ -6,15 +6,15 @@ $(document).ready(function() {
 
     $('#root-node-table').on('click', 'tr', function(){
         showLoaderBar();
-        var idCategory = $(this).children('td:first').text();
-        spyAj.getCategoryTreeByCategoryId(idCategory);
+        var idNode = $(this).children('td:first').text();
+        spyAj.getCategoryTreeByIdNode(idNode);
     });
 
     $('#category-node-tree').on('click', '.category-tree', function(event){
         event.preventDefault();
         showLoaderBar();
-        var idCategory = $(this).attr('id').replace('categ-', '');
-        spyAj.getCategoryTreeByCategoryId(idCategory);
+        var idNode = $(this).attr('id').replace('node-', '');
+        spyAj.getCategoryTreeByIdNode(idNode);
     });
 
     $('.gui-table-data-category').dataTable({
@@ -22,21 +22,25 @@ $(document).ready(function() {
             if (triggeredFirstEvent === false) {
                 showLoaderBar();
                 var idCategory = data[0];
-                spyAj.getCategoryTreeByCategoryId(idCategory);
+                spyAj.getCategoryTreeByIdNode(idCategory);
                 triggeredFirstEvent = true;
             }
         }
     });
 
+    var serializedList = {};
     var updateOutput = function(e) {
         var list = e.length ? e : $(e.target);
-        var serializedList = window.JSON.stringify(list.nestable('serialize'));
-        spyAj.updateCategoryNodesOrder(serializedList);
+        serializedList = window.JSON.stringify(list.nestable('serialize'));
     };
 
     $('#nestable').nestable({
         group: 1,
         maxDepth: 1
     }).on('change', updateOutput);
+
+    $('.save-categories-order').click(function(){
+        spyAj.updateCategoryNodesOrder(serializedList);
+    });
 
 });

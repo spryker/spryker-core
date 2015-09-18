@@ -8,9 +8,9 @@ function closeLoaderBar(){
     $('#category-loader').addClass('hidden');
 }
 
-SprykerAjax.prototype.getCategoryTreeByCategoryId = function(idCategory) {
+SprykerAjax.prototype.getCategoryTreeByIdNode = function(idNode) {
     var options = {
-        'id-category': idCategory
+        'id-node': idNode
     };
     this
         .setUrl('/category/index/node')
