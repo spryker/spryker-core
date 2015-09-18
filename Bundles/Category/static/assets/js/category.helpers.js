@@ -8,20 +8,20 @@ function closeLoaderBar(){
     $('#category-loader').addClass('hidden');
 }
 
-SprykerAjax.prototype.getCategoryTreeByIdNode = function(idNode) {
+SprykerAjax.prototype.getCategoryTreeByIdCategoryNode = function(idCategoryNode) {
     var options = {
-        'id-node': idNode
+        'id-category-node': idCategoryNode
     };
     this
         .setUrl('/category/index/node')
         .setDataType('html')
-        .ajaxSubmit(options, 'categoryDisplayNodeTree');
+        .ajaxSubmit(options, 'displayCategoryNodesTree');
 };
 
-SprykerAjax.prototype.updateCategoryNodesOrder = function(serializedCategoryNodeItems){
+SprykerAjax.prototype.updateCategoryNodesOrder = function(serializedCategoryNodes){
     showLoaderBar();
     this.setUrl('/category/node/reorder').ajaxSubmit({
-        'nodes': serializedCategoryNodeItems
+        'nodes': serializedCategoryNodes
     }, 'updateCategoryNodesOrder');
 };
 
@@ -29,7 +29,7 @@ SprykerAjax.prototype.updateCategoryNodesOrder = function(serializedCategoryNode
  * @param ajaxResponse
  * @returns string
  */
-SprykerAjaxCallbacks.prototype.categoryDisplayNodeTree = function(ajaxResponse){
+SprykerAjaxCallbacks.prototype.displayCategoryNodesTree = function(ajaxResponse){
     $('#category-node-tree').removeClass('hidden');
     $('#categories-list').html(ajaxResponse);
     closeLoaderBar();
@@ -37,7 +37,7 @@ SprykerAjaxCallbacks.prototype.categoryDisplayNodeTree = function(ajaxResponse){
 
 SprykerAjaxCallbacks.prototype.updateCategoryNodesOrder = function(ajaxResponse){
     closeLoaderBar();
-    if (ajaxResponse.code == this.codeSuccess) {
+    if (ajaxResponse.code === this.codeSuccess) {
         swal({
             title: "Success",
             text: ajaxResponse.message,

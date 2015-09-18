@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class IndexController extends AbstractController
 {
 
-    const PARAM_ID_CATEGORY_NODE = 'id-node';
+    const PARAM_ID_CATEGORY_NODE = 'id-category-node';
 
     /**
      * @return array
@@ -53,14 +53,14 @@ class IndexController extends AbstractController
      */
     public function nodeAction(Request $request)
     {
-        $idCategory = $request->get(self::PARAM_ID_CATEGORY_NODE);
+        $idCategoryNode = $request->get(self::PARAM_ID_CATEGORY_NODE);
 
-        $categories = $this->getCategoryChildrenByIdCategory($idCategory);
+        $categories = $this->getCategoryChildrenByIdCategory($idCategoryNode);
 
         return $this->viewResponse([
             'code' => Response::HTTP_OK,
             'categories' => $categories,
-            'idCategory' => $idCategory,
+            'idCategoryNode' => $idCategoryNode,
         ]);
     }
 
@@ -83,7 +83,7 @@ class IndexController extends AbstractController
         return $this->jsonResponse([
             'code' => Response::HTTP_OK,
             'data' => $children,
-            'idCategory' => $idCategory,
+            'idCategoryNode' => $idCategory,
         ]);
     }
 

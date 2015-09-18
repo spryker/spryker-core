@@ -1,28 +1,28 @@
 'use strict';
 
 $(document).ready(function() {
-    var spyAj = new SprykerAjax();
+    var sprykerAjax = new SprykerAjax();
     var triggeredFirstEvent = false;
 
     $('#root-node-table').on('click', 'tr', function(){
         showLoaderBar();
-        var idNode = $(this).children('td:first').text();
-        spyAj.getCategoryTreeByIdNode(idNode);
+        var idCategoryNode = $(this).children('td:first').text();
+        sprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
     });
 
     $('#category-node-tree').on('click', '.category-tree', function(event){
         event.preventDefault();
         showLoaderBar();
-        var idNode = $(this).attr('id').replace('node-', '');
-        spyAj.getCategoryTreeByIdNode(idNode);
+        var idCategoryNode = $(this).attr('id').replace('node-', '');
+        sprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
     });
 
     $('.gui-table-data-category').dataTable({
         "createdRow": function(row, data, index){
             if (triggeredFirstEvent === false) {
                 showLoaderBar();
-                var idCategory = data[0];
-                spyAj.getCategoryTreeByIdNode(idCategory);
+                var idCategoryNode = data[0];
+                sprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
                 triggeredFirstEvent = true;
             }
         }
@@ -40,7 +40,7 @@ $(document).ready(function() {
     }).on('change', updateOutput);
 
     $('.save-categories-order').click(function(){
-        spyAj.updateCategoryNodesOrder(serializedList);
+        sprykerAjax.updateCategoryNodesOrder(serializedList);
     });
 
 });
