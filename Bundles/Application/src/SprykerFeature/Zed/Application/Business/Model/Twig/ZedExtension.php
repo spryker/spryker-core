@@ -52,6 +52,7 @@ class ZedExtension extends \Twig_Extension
             $locator->gui()->pluginTwigInspiniaBackActionButton(),
             $locator->gui()->pluginTwigInspiniaCreateActionButton(),
             $locator->gui()->pluginTwigInspiniaViewActionButton(),
+            $locator->gui()->pluginTwigInspiniaEditActionButton(),
         ];
 
         return $functions;

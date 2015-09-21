@@ -2,10 +2,24 @@
 
 namespace SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia;
 
-use SprykerFeature\Zed\Library\Twig\TwigFunction;
-
-class BackActionButton extends TwigFunction
+class BackActionButton extends AbstractActionButton
 {
+
+    /**
+     * @return string
+     */
+    protected function getButtonClass()
+    {
+        return 'btn-primary';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getIcon()
+    {
+        return '<i class="fa fa-angle-double-left"></i> ';
+    }
 
     /**
      * @return string
@@ -13,16 +27,6 @@ class BackActionButton extends TwigFunction
     protected function getFunctionName()
     {
         return 'backActionButton';
-    }
-
-    /**
-     * @return callable
-     */
-    protected function getFunction()
-    {
-        return function($url, $title) {
-            return '<a class="btn btn-sm btn-primary btn-outline" href="' . $url . '">' . $title . '</a>';
-        };
     }
 
 }

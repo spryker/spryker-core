@@ -2,10 +2,25 @@
 
 namespace SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia;
 
-use SprykerFeature\Zed\Library\Twig\TwigFunction;
-
-class CreateActionButton extends TwigFunction
+class CreateActionButton extends AbstractActionButton
 {
+
+    /**
+     * @return string
+     */
+    protected function getButtonClass()
+    {
+        return 'btn-success';
+    }
+
+    /**
+     * @return string
+     */
+    protected function getIcon()
+    {
+        return '<i class="fa fa-plus"></i> ';
+    }
+
 
     /**
      * @return string
@@ -13,21 +28,6 @@ class CreateActionButton extends TwigFunction
     protected function getFunctionName()
     {
         return 'createActionButton';
-    }
-
-    /**
-     * @return callable
-     */
-    protected function getFunction()
-    {
-        return function($url, $title) {
-            $html = '<a class="btn btn-sm btn-success btn-outline" href="' . $url . '">';
-            $html .= '<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> ';
-            $html .= $title;
-            $html .= '</a>';
-
-            return $html;
-        };
     }
 
 }
