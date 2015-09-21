@@ -21,7 +21,12 @@ class CreateActionButton extends TwigFunction
     protected function getFunction()
     {
         return function($url, $title) {
-            return '<a class="btn btn-sm btn-success btn-outline" href="' . $url . '">' . $title . '</a>';
+            $html = '<a class="btn btn-sm btn-success btn-outline" href="' . $url . '">';
+            $html .= '<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> ';
+            $html .= $title;
+            $html .= '</a>';
+
+            return $html;
         };
     }
 
