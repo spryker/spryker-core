@@ -38,12 +38,13 @@ class RevertAdapterMock extends AbstractAdapterMock
             'PAYMENT_CODE' => 'VA.RV',
             'PROCESSING_RETURN_CODE' => '000.100.112',
             'CONTACT_IP' => '5.145.176.11',
-            'IDENTIFICATION_REFERENCEID' => '8a82944a4fd6d7cd014fdf668c67314a',
+            'IDENTIFICATION_REFERENCEID' => $this->requestData['IDENTIFICATION.REFERENCEID'],
             'PROCESSING_STATUS' => 'NEW',
             'FRONTEND_CC_LOGO' => 'images/visa_mc.gif',
             'PRESENTATION_AMOUNT' => '100.00',
             'IDENTIFICATION_UNIQUEID' => '8a82944a4fd6d7cd014fdf6a203e3858',
-            'IDENTIFICATION_TRANSACTIONID' => 'tran_55fbc10dcf3ed',
+            // We need to set the request's transaction id to fulfil the foreign-key constraint
+            'IDENTIFICATION_TRANSACTIONID' => $this->requestData['IDENTIFICATION.TRANSACTIONID'],
             'IDENTIFICATION_SHORTID' => '4259.5775.3506',
             'CLEARING_FXRATE' => '1.0',
             'PROCESSING_TIMESTAMP' => '2015-09-18 07:45:18',
@@ -53,7 +54,7 @@ class RevertAdapterMock extends AbstractAdapterMock
             'TRANSACTION_MODE' => 'CONNECTOR_TEST',
             'TRANSACTION_RESPONSE' => 'SYNC',
             'PROCESSING_RETURN' => 'Request successfully processed in \'Merchant in Connector Test Mode\'',
-'CLEARING_FXDATE' => "2015-09-18 07:45:18\r\n",
+            'CLEARING_FXDATE' => "2015-09-18 07:45:18\r\n",
         ];
     }
 
@@ -81,7 +82,7 @@ class RevertAdapterMock extends AbstractAdapterMock
             'PROCESSING_TIMESTAMP' => '2015-09-18 08:12:47',
             'PROCESSING_RETURN_CODE' => '100.350.100',
             'RESPONSE_VERSION' => '1.0',
-            'IDENTIFICATION_REFERENCEID' => '8a82944a4fd6d7cd014fdf83352b6be1',
+            'IDENTIFICATION_REFERENCEID' => $this->requestData['IDENTIFICATION.REFERENCEID'],
             'TRANSACTION_RESPONSE' => 'SYNC',
             'P3_VALIDATION' => 'ACK',
             'PROCESSING_CODE' => 'VA.RV.70.64',
@@ -91,7 +92,8 @@ class RevertAdapterMock extends AbstractAdapterMock
             'PRESENTATION_USAGE' => '812',
             'NAME_SALUTATION' => 'NONE',
             'PROCESSING_RESULT' => 'NOK',
-            'IDENTIFICATION_TRANSACTIONID' => 'tran_55fbc77f6b102',
+            // We need to set the request's transaction id to fulfil the foreign-key constraint
+            'IDENTIFICATION_TRANSACTIONID' => $this->requestData['IDENTIFICATION.TRANSACTIONID'],
             'PRESENTATION_AMOUNT' => '10000.00',
             'ADDRESS_COUNTRY' => "DE\r\n",
         ];

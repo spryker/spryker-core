@@ -26,10 +26,10 @@ class PayolutionFacadePreAuthorizeTest extends AbstractFacadeTest
         $expectedResponse = $this->getResponseConverter()->fromArray($expectedResponseData);
 
         $this->assertEquals($expectedResponse, $response);
-        $this->assertEquals(Constants::PAYMENT_CODE_PRE_AUTHORIZATION, $expectedResponse->getPaymentCode());
-        $this->assertEquals('ACK', $expectedResponse->getProcessingResult());
-        $this->assertEquals('00', $expectedResponse->getProcessingReasonCode());
-        $this->assertEquals('90', $expectedResponse->getProcessingStatusCode());
+        $this->assertEquals($expectedResponse->getPaymentCode(), $response->getPaymentCode());
+        $this->assertEquals($expectedResponse->getProcessingResult(), $response->getProcessingResult());
+        $this->assertEquals($expectedResponse->getProcessingReasonCode(), $response->getProcessingReasonCode());
+        $this->assertEquals($expectedResponse->getProcessingStatusCode(), $response->getProcessingStatusCode());
 
         /** @var SpyPaymentPayolutionTransactionRequestLog $requestLog */
         $requestLog = $this->getRequestLogCollectionForPayment()->getLast();
@@ -56,10 +56,10 @@ class PayolutionFacadePreAuthorizeTest extends AbstractFacadeTest
         $expectedResponse = $this->getResponseConverter()->fromArray($expectedResponseData);
 
         $this->assertEquals($expectedResponse, $response);
-        $this->assertEquals(Constants::PAYMENT_CODE_PRE_AUTHORIZATION, $expectedResponse->getPaymentCode());
-        $this->assertEquals('NOK', $expectedResponse->getProcessingResult());
-        $this->assertEquals('95', $expectedResponse->getProcessingReasonCode());
-        $this->assertEquals('60', $expectedResponse->getProcessingStatusCode());
+        $this->assertEquals($expectedResponse->getPaymentCode(), $response->getPaymentCode());
+        $this->assertEquals($expectedResponse->getProcessingResult(), $response->getProcessingResult());
+        $this->assertEquals($expectedResponse->getProcessingReasonCode(), $response->getProcessingReasonCode());
+        $this->assertEquals($expectedResponse->getProcessingStatusCode(), $response->getProcessingStatusCode());
 
         /** @var SpyPaymentPayolutionTransactionStatusLog $statusLog */
         $statusLog = $this->getStatusLogCollectionForPayment()->getLast();
