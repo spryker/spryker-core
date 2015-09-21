@@ -2,19 +2,14 @@
 
 {% set section_title = 'Create Multiple Vouchers' %}
 
-{% block breadcrumb %}
-    <li><a href="/discount/voucher">{{ 'Vouchers' | trans }}</a></li>
-    <li class="active"><strong>{{ 'Create Multiple Vouchers' | trans }}</strong></li>
+{% block action %}
+    {{ backActionButton('/discount/voucher', 'List Vouchers' | trans) }}
+    {{ createActionButton('/discount/voucher/create-single', 'Create Single Voucher' | trans) }}
 {% endblock %}
 
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: section_title } %}
-
-        {% block widget_header_content %}
-            <a class="btn btn-sm btn-default" href="/discount/voucher">{{ 'List Vouchers' | trans }}</a>
-            <a class="btn btn-sm btn-primary" href="/discount/voucher/create-single">{{ 'Create Single Voucher' | trans }}</a>
-        {% endblock %}
 
         {% block widget_content %}
 

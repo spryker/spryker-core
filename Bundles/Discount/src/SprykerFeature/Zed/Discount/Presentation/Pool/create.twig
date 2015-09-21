@@ -4,18 +4,13 @@
 {% set section_title = 'Create Pool' %}
 {% endif %}
 
-{% block breadcrumb %}
-    <li><a href="/discount/pool">{{ 'Pools' | trans }}</a></li>
-    <li class="active"><strong>{{ section_title | trans }}</strong></li>
+{% block action %}
+    {{ backActionButton('/discount/pool', 'View Pools' | trans) }}
 {% endblock %}
 
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: section_title } %}
-
-        {% block widget_header_content %}
-            <a class="btn btn-sm btn-primary" href="/discount/pool">{{ 'View Pools' | trans }}</a>
-        {% endblock %}
 
         {% block widget_content %}
 

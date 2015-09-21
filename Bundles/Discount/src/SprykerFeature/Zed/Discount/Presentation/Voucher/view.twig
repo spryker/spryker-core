@@ -2,18 +2,14 @@
 
 {% set section_title = 'Generated Vouchers View' %}
 
-{% block breadcrumb %}
-    <li class="active"><strong>{{ section_title | trans }}</strong></li>
+{% block action %}
+    {{ backActionButton('/discount/voucher/', 'List Vouchers' | trans }}
+    {{ viewActionButton('/discount/voucher/export?id-pool=' ~ idPool ~ '&generated-on=' ~ generatedOn, 'Export' | trans }}
 {% endblock %}
 
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: section_title } %}
-
-        {% block widget_header_content %}
-            <a class="btn btn-sm btn-default" href="/discount/voucher/">{{ 'List Vouchers' | trans }}</a>
-            <a class="btn btn-sm btn-success" href="/discount/voucher/export?id-pool={{ idPool }}&generated-on={{ generatedOn }}" target="_blank">{{ 'Export' | trans }}</a>
-        {% endblock %}
 
         {% block widget_content %}
 
