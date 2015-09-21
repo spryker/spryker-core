@@ -9,10 +9,6 @@ namespace Functional\SprykerFeature\Zed\Payolution\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\PayolutionResponseTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
 use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
@@ -20,8 +16,6 @@ use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Constants;
 use SprykerFeature\Zed\Payolution\Business\Api\Response\Converter as ResponseConverter;
 use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;
-use SprykerFeature\Zed\Payolution\PayolutionConfig;
-use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainer;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\Map\SpyPaymentPayolutionTableMap;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLog;
@@ -191,44 +185,7 @@ class AbstractFacadeTest extends Test
      */
     protected function getFacadeMock(AdapterInterface $adapter)
     {
-        // Mock dependency container to override return value of createExecutionAdapter to
-        // place a mocked adapter that doesn't establish an actual connection.
-        $factory = new Factory('Payolution');
-        $locator = Locator::getInstance();
-        $config = Config::getInstance();
-        $payolutionConfig = new PayolutionConfig($config, $locator);
-        $dependencyContainerMock = $this->getMock(
-            'SprykerFeature\Zed\Payolution\Business\PayolutionDependencyContainer',
-            ['createExecutionAdapter'],
-            [
-                $factory,
-                $locator,
-                $payolutionConfig,
-            ]
-        );
-        $dependencyContainerMock
-            ->expects($this->any())
-            ->method('createExecutionAdapter')
-            ->will($this->returnValue($adapter));
-
-        // Dependency container always requires a valid query container. Since we're creating
-        // functional/integration tests there's no need to mock the database layer.
-        $persistenceFactory = new PersistenceFactory('Payolution');
-        $queryContainer = new PayolutionQueryContainer($persistenceFactory, $locator);
-        $dependencyContainerMock->setQueryContainer($queryContainer);
-
-        // Mock the facade to override getDependencyContainer() and have it return out
-        // previously created mock.
-        $facade = $this->getMock(
-            'SprykerFeature\Zed\Payolution\Business\PayolutionFacade',
-            ['getDependencyContainer'],
-            [$factory, $locator]
-        );
-        $facade->expects($this->any())
-            ->method('getDependencyContainer')
-            ->will($this->returnValue($dependencyContainerMock));
-
-        return $facade;
+        return PayolutionFacadeMockBuilder::build($adapter, $this);
     }
 
     /**
