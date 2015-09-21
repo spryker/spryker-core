@@ -48,6 +48,7 @@ class Converter implements ConverterInterface
             $key = 'CRITERION.' . $criterion['name'];
             $result[$key] = $criterion['value'];
         }
+
         return $result;
     }
 
@@ -59,6 +60,7 @@ class Converter implements ConverterInterface
     private function convertKey($key)
     {
         $convertedKey = str_replace('_', '.', $key);
+
         return mb_strtoupper($convertedKey);
     }
 

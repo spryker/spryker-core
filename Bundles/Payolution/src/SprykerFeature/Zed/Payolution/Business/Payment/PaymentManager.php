@@ -91,9 +91,9 @@ class PaymentManager implements PaymentManagerInterface
         $requestTransfer = $this
             ->getMethodMapper($orderTransfer->getPayolutionPayment()->getAccountBrand())
             ->mapToPreCheck($orderTransfer);
+
         return $this->sendRequest($requestTransfer);
     }
-
 
     /**
      * @param int $idPayment
@@ -178,7 +178,6 @@ class PaymentManager implements PaymentManagerInterface
         return $this->sendLoggedRequest($requestTransfer, $paymentEntity);
     }
 
-
     /**
      * @param int $idPayment
      *
@@ -237,6 +236,7 @@ class PaymentManager implements PaymentManagerInterface
         $requestData = $this->requestConverter->toArray($requestTransfer);
         $responseData = $this->executionAdapter->sendArrayDataRequest($requestData);
         $responseTransfer = $this->responseConverter->fromArray($responseData);
+
         return $responseTransfer;
     }
 
@@ -268,13 +268,9 @@ class PaymentManager implements PaymentManagerInterface
     {
         $logEntity = $this->getDependencyContainer()->createTransactionStatusLogEntity();
         $logEntity->fromArray($responseTransfer->toArray());
-        try {
-            $logEntity
-                ->setFkPaymentPayolution($paymentEntity->getIdPaymentPayolution())
-                ->save();
-        } catch (\Exception $exception) {
-            var_dump($exception);exit;
-        }
+        $logEntity
+            ->setFkPaymentPayolution($paymentEntity->getIdPaymentPayolution())
+            ->save();
     }
 
     /**

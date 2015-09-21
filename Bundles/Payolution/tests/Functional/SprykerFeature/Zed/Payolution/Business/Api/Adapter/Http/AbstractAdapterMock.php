@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -26,6 +27,7 @@ abstract class AbstractAdapterMock implements AdapterInterface
     public function expectSuccess()
     {
         $this->expectSuccess = true;
+
         return $this;
     }
 
@@ -35,6 +37,7 @@ abstract class AbstractAdapterMock implements AdapterInterface
     public function expectFailure()
     {
         $this->expectSuccess = false;
+
         return $this;
     }
 
@@ -47,7 +50,7 @@ abstract class AbstractAdapterMock implements AdapterInterface
     {
         $this->requestData = $data;
 
-        if (true === $this->expectSuccess){
+        if (true === $this->expectSuccess) {
             return $this->getSuccessResponse();
         }
 

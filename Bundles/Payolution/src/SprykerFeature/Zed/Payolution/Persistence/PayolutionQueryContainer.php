@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Payolution\Persistence;
 use Generated\Zed\Ide\FactoryAutoCompletion\PayolutionPersistence;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\Map\SpyPaymentPayolutionTransactionStatusLogTableMap;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLogQuery;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionQuery;
 
@@ -55,8 +54,8 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     {
         /** @var SpyPaymentPayolutionTransactionStatusLogQuery $query */
         $query = SpyPaymentPayolutionTransactionStatusLogQuery::create();
-        return $query->filterByFkPaymentPayolution($idPayment);
 
+        return $query->filterByFkPaymentPayolution($idPayment);
     }
 
     /**

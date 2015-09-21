@@ -1,10 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http;
-
 
 class ReAuthorizationAdapterMock extends AbstractAdapterMock
 {
@@ -100,4 +100,5 @@ class ReAuthorizationAdapterMock extends AbstractAdapterMock
             'ADDRESS_COUNTRY' => "DE\r\n",
         ];
     }
+
 }

@@ -28,7 +28,7 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
  * servers. Gateway environment is defined in the configuration files.
  * Test can be enabled/disabled using the $enableTests member variable.
  */
-class PayolutionFacadeTest extends Test
+class PayolutionFacadeGatewayTest extends Test
 {
 
     /**
@@ -222,7 +222,7 @@ class PayolutionFacadeTest extends Test
         $facade->preAuthorizePayment($this->paymentEntity->getIdPaymentPayolution());
         $facade->capturePayment($this->paymentEntity->getIdPaymentPayolution());
 
-        /** @var SpyPaymentPayolutionTransactionStatusLog $preAuthorizationStatusLogEntity */
+        /* @var SpyPaymentPayolutionTransactionStatusLog $preAuthorizationStatusLogEntity */
         $captureStatusLogEntity = $this->paymentEntity->getSpyPaymentPayolutionTransactionStatusLogs()->getLast();
 
         $responseTransfer = $facade->refundPayment($this->paymentEntity->getIdPaymentPayolution());

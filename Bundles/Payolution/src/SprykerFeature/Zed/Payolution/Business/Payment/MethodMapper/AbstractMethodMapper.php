@@ -10,7 +10,6 @@ use Generated\Shared\Payolution\OrderInterface;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionRequestAnalysisCriterionTransfer;
 use Generated\Shared\Transfer\PayolutionRequestTransfer;
-use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
 use SprykerFeature\Zed\Payolution\Business\Api\Constants;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
@@ -147,6 +146,7 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
         $requestTransfer
             ->setPaymentCode(Constants::PAYMENT_CODE_RE_AUTHORIZATION)
             ->setIdentificationReferenceid($uniqueId);
+
         return $requestTransfer;
     }
 
@@ -162,8 +162,8 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
         $requestTransfer
             ->setPaymentCode(Constants::PAYMENT_CODE_REVERSAL)
             ->setIdentificationReferenceid($uniqueId);
-        return $requestTransfer;
 
+        return $requestTransfer;
     }
 
     /**
@@ -178,9 +178,9 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
         $requestTransfer
             ->setPaymentCode(Constants::PAYMENT_CODE_REFUND)
             ->setIdentificationReferenceid($uniqueId);
+
         return $requestTransfer;
     }
-
 
     /**
      * @param SpyPaymentPayolution $paymentEntity
@@ -195,6 +195,7 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
             $orderEntity->getIdSalesOrder()
         );
         $requestTransfer->setPresentationCurrency($paymentEntity->getCurrencyIso3Code());
+
         return $requestTransfer;
     }
 

@@ -16,7 +16,6 @@ use SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper\Invoice;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\Map\SpyPaymentPayolutionTableMap;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
 
 class InvoiceTest extends Test
 {

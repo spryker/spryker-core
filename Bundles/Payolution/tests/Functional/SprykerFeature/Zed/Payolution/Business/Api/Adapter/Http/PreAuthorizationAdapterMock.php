@@ -120,7 +120,7 @@ class PreAuthorizationAdapterMock extends AbstractAdapterMock
             'name_sex' => 'M',
             'clearing_fxdate' => '2015-09-15 13:36:28',
             'address_zip' => '10623',
-            'name_title' => 'Mr'
+            'name_title' => 'Mr',
         ];
     }
 
