@@ -200,7 +200,7 @@ class EditController extends AddController
     /**
      * @param LocaleTransfer $locale
      * @param array $data
-     * @return $this
+     * @return CategoryTransfer
      */
     protected function updateCategory(LocaleTransfer $locale, array $data)
     {
@@ -218,7 +218,7 @@ class EditController extends AddController
      * @param CategoryTransfer $categoryTransfer
      * @param LocaleTransfer $locale
      * @param array $data
-     * @return $this
+     * @return NodeTransfer
      */
     protected function updateCategoryNode(CategoryTransfer $categoryTransfer, LocaleTransfer $locale, array $data)
     {
@@ -240,7 +240,7 @@ class EditController extends AddController
      * @param CategoryTransfer $categoryTransfer
      * @param LocaleTransfer $locale
      * @param array $data
-     * @return $this
+     * @return NodeTransfer
      */
     protected function updateCategoryNodeChild(CategoryTransfer $categoryTransfer, LocaleTransfer $locale, array $data)
     {
