@@ -51,7 +51,7 @@ class EditController extends AddController
 
         $form->handleRequest();
 
-        if ($form->isValid()) { //TODO Ugly and dirty, some stuff must be moved into Facades
+        if ($form->isValid()) {
             $data = $form->getData();
 
             $currentCategoryTransfer = $this->updateCategory($locale, $data);
