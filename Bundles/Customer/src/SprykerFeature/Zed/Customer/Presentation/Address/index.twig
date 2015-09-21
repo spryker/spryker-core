@@ -9,7 +9,7 @@
     {{ backActionButton('/customer', 'List Customers' | trans) }}
     {{ createActionButton('/customer/address/add?id_customer=' ~ id_customer, 'Add new Address' | trans) }}
     {{ viewActionButton('/customer/view/?id_customer=' ~ id_customer, 'View Customer' | trans) }}
-    {{ viewActionButton('/customer/edit/?id_customer=' ~ id_customer, 'Edit Customer' | trans) }}
+    {{ editActionButton('/customer/edit/?id_customer=' ~ id_customer, 'Edit Customer' | trans) }}
 {% endblock %}
 
 {% block content %}

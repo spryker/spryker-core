@@ -10,10 +10,10 @@
 
             <table class="table table-striped table-bordered table-hover">
                 <tr>
-                    <td>Name</td>
-                    <td>License</td>
-                    <td>Version</td>
-                    <td>Type</td>
+                    <td>{{ 'Name' | trans }}</td>
+                    <td>{{ 'License' | trans }}</td>
+                    <td>{{ 'Version' | trans }}</td>
+                    <td>{{ 'Type' | trans }}</td>
                 </tr>
                 {% for installedPackage in installedPackages.packages %}
                     <tr>

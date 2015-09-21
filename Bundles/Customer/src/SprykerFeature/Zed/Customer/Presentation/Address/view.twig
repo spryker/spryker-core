@@ -8,7 +8,7 @@
 {% block action %}
     {{ backActionButton('/customer/address/?id_customer=' ~ id_customer, 'Back to Manage Addresses' | trans) }}
     {{ createActionButton('/customer/address/add?id_customer=' ~ id_customer, 'Add new Address' | trans) }}
-    {{ viewActionButton('/customer/address/edit?id_customer_address=' ~ id_customer_address, 'Edit Address' | trans) }}
+    {{ editActionButton('/customer/address/edit?id_customer_address=' ~ id_customer_address, 'Edit Address' | trans) }}
 {% endblock %}
 
 {% block content %}

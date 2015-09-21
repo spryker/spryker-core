@@ -6,8 +6,17 @@ use SprykerFeature\Zed\Library\Twig\TwigFunction;
 
 abstract class AbstractActionButton extends TwigFunction
 {
+    const PARAM_ID = 'id';
+    const PARAM_CLASS = 'class';
+
+    /**
+     * @return string
+     */
     protected abstract function getButtonClass();
 
+    /**
+     * @return string
+     */
     protected abstract function getIcon();
 
     /**
@@ -18,21 +27,30 @@ abstract class AbstractActionButton extends TwigFunction
     protected function getId(array $options)
     {
         $id = '';
-        if (array_key_exists('id', $options)) {
-            $id = ' id="' . $options['id'] . '"';
+        if (array_key_exists(self::PARAM_ID, $options)) {
+            $id = ' id="' . $options[self::PARAM_ID] . '"';
         }
 
         return $id;
     }
 
     /**
-     * @param string $className
+     * @param array $options
      *
      * @return string
      */
-    protected function getClass($className)
+    protected function getClass(array $options = [])
     {
-        return ' class="btn btn-sm btn-outline ' . $className . '"';
+        $extraClasses = '';
+        if (array_key_exists(self::PARAM_CLASS, $options)) {
+            $extraClasses = ' ' . $options[self::PARAM_CLASS];
+        }
+
+        return ' class="btn btn-sm btn-outline '
+            . $this->getButtonClass()
+            . $extraClasses
+            . '"'
+        ;
     }
 
     /**
@@ -43,13 +61,7 @@ abstract class AbstractActionButton extends TwigFunction
      */
     protected function generateAnchor($url, array $options = [])
     {
-        $buttonClass = $this->getButtonClass();
-
-        $html = '<a' . $this->getClass($buttonClass, $options);
-        $html .= $this->getId($options);
-        $html .= ' href="' . $url . '">';
-
-        return $html;
+        return '<a' . $this->getClass($options) . $this->getId($options) . ' href="' . $url . '">';
     }
 
     /**
