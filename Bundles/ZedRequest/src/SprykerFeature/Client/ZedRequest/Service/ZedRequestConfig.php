@@ -6,37 +6,49 @@
 
 namespace SprykerFeature\Client\ZedRequest\Service;
 
-use SprykerFeature\Client\Auth\Service\AuthClientInterface;
+use SprykerEngine\Shared\Config;
 use SprykerFeature\Shared\Auth\AuthConfig;
-use SprykerFeature\Shared\Library\Config;
+use SprykerFeature\Shared\System\SystemConfig;
 
 class ZedRequestConfig
 {
 
     /**
-     * @var AuthClientInterface
+     * @var Config
      */
-    private $authClient;
+    protected $config;
 
     /**
-     * @param AuthClientInterface $authClient
+     * @param Config $config
      */
-    public function __construct(AuthClientInterface $authClient)
+    public function __construct(Config $config)
     {
-        $this->authClient = $authClient;
+        $this->config = $config;
     }
 
     /**
-     * @return array
+     * @return string
      */
-    public function getHeaders()
+    public function getRawToken()
     {
-        $authConfig = Config::get(AuthConfig::AUTH_DEFAULT_CREDENTIALS);
+        $authConfig = $this->config->get(AuthConfig::AUTH_DEFAULT_CREDENTIALS);
         $rawToken = $authConfig['yves_system']['token'];
 
-        $headers['Auth-Token'] = $this->authClient->generateToken($rawToken);
+        return $rawToken;
+    }
 
-        return $headers;
+    /**
+     * @return string
+     */
+    public function getZedRequestBaseUrl()
+    {
+        $sslEnabled = $this->config->get(SystemConfig::ZED_API_SSL_ENABLED);
+
+        if ($sslEnabled === true) {
+            return 'https://' . $this->config->get(SystemConfig::HOST_SSL_ZED_API);
+        } else {
+            return 'http://' . $this->config->get(SystemConfig::HOST_ZED_API);
+        }
     }
 
 }

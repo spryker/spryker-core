@@ -6,26 +6,45 @@
 
 namespace SprykerFeature\Client\ZedRequest\Service\Client;
 
+use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
+use SprykerFeature\Client\Auth\Service\AuthClientInterface;
 use SprykerFeature\Shared\ZedRequest\Client\AbstractHttpClient;
-use SprykerFeature\Client\ZedRequest\Service\ZedRequestConfig;
 
 class HttpClient extends AbstractHttpClient
 {
+
+    /**
+     * @var string
+     */
+    protected $rawToken;
+
+    /**
+     * @param FactoryInterface $factory
+     * @param AuthClientInterface $authClient
+     * @param string $baseUrl
+     * @param string $rawToken
+     */
+    public function __construct(
+        FactoryInterface $factory,
+        AuthClientInterface $authClient,
+        $baseUrl,
+        $rawToken
+    )
+    {
+        parent::__construct($factory, $authClient, $baseUrl);
+        $this->rawToken = $rawToken;
+    }
 
     /**
      * @return array
      */
     public function getHeaders()
     {
-        return $this->getSettings()->getHeaders();
-    }
+        $headers = [
+            'Auth-Token' => $this->authClient->generateToken($this->rawToken)
+        ];
 
-    /**
-     * @return ZedRequestConfig
-     */
-    protected function getSettings()
-    {
-        return $this->factory->createZedRequestConfig($this->authClient);
+        return $headers;
     }
 
 }
