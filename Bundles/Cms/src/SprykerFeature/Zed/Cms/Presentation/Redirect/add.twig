@@ -5,15 +5,13 @@
 {% block head_title widget_title %}
 {% block section_title widget_title %}
 
+{% block action %}
+    {{ backActionButton('/cms/redirect/', 'Back to CMS' | trans) }}
+{% endblock %}
+
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' %}
-
-        {% block widget_header_content %}
-
-            <a href="/cms/redirect/" class="btn btn-sm btn-default">{{ 'Back to CMS' | trans }}</a>
-
-        {% endblock %}
 
         {% block widget_content %}
 
