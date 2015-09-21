@@ -23,6 +23,7 @@ use SprykerFeature\Zed\Checkout\CheckoutDependencyProvider;
 use SprykerFeature\Zed\Checkout\Business\CheckoutFacade;
 use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountry;
 use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
+use SprykerFeature\Zed\Payolution\Persistence\Propel\Map\SpyPaymentPayolutionTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
@@ -178,12 +179,17 @@ class PreAuthorizePluginTest extends Test
             ->setCart($cartTransfer);
 
         $payment = new PayolutionPaymentTransfer();
-        $payment->setFirstName('John')
+        $payment
+            ->setFirstName('John')
             ->setLastName('Doe')
-            ->setSalutation(SpyCustomerTableMap::COL_SALUTATION_MR)
-            ->setGender(SpyCustomerTableMap::COL_GENDER_MALE)
+            ->setSalutation(SpyPaymentPayolutionTableMap::COL_SALUTATION_MR)
+            ->setGender(SpyPaymentPayolutionTableMap::COL_GENDER_MALE)
             ->setEmail('testst@tewst.com')
-            ->setBirthdate('1970-01-02')
+            ->setDateOfBirth('1970-01-02')
+            ->setCountryIso2Code('de')
+            ->setCity('Berlin')
+            ->setStreet('Straße des 17. Juni 135')
+            ->setZipCode('10623')
             ->setClientIp('127.0.0.1')
             ->setAccountBrand(PayolutionApiConstants::BRAND_INVOICE);
 

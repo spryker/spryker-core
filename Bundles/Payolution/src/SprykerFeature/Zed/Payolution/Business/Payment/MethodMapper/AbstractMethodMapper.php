@@ -53,21 +53,20 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
         );
         $requestTransfer->setPaymentCode(Constants::PAYMENT_CODE_PRE_CHECK);
 
-        $address = $orderTransfer->getBillingAddress();
-        $requestTransfer
-            ->setAddressZip($address->getZipCode())
-            ->setAddressCity($address->getCity())
-            ->setAddressCountry($address->getIso2Code())
-            ->setAddressStreet($address->getAddress1());
-
         $paymentTransfer = $orderTransfer->getPayolutionPayment();
         $requestTransfer
             ->setNameGiven($paymentTransfer->getFirstName())
             ->setNameFamily($paymentTransfer->getLastName())
             ->setNameTitle($paymentTransfer->getSalutation())
             ->setNameSex($this->mapGender($paymentTransfer->getGender()))
-            ->setNameBirthdate($paymentTransfer->getBirthdate())
+            ->setNameBirthdate($paymentTransfer->getDateOfBirth())
+            ->setAddressZip($paymentTransfer->getZipCode())
+            ->setAddressCity($paymentTransfer->getCity())
+            ->setAddressCountry($paymentTransfer->getCountryIso2Code())
+            ->setAddressStreet($paymentTransfer->getStreet())
             ->setContactEmail($paymentTransfer->getEmail())
+            ->setContactPhone($paymentTransfer->getPhone())
+            ->setContactMobile($paymentTransfer->getCellPhone())
             ->setContactIp($paymentTransfer->getClientIp());
 
         $criterionTransfer = (new PayolutionRequestAnalysisCriterionTransfer())
@@ -88,22 +87,23 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
     public function mapToPreAuthorization(SpyPaymentPayolution $paymentEntity)
     {
         $orderEntity = $paymentEntity->getSpySalesOrder();
-        $addressEntity = $orderEntity->getBillingAddress();
 
         $requestTransfer = $this->getBaseRequestTransferForPayment($paymentEntity);
         $requestTransfer
             ->setPaymentCode(Constants::PAYMENT_CODE_PRE_AUTHORIZATION)
-            ->setAddressCountry($addressEntity->getCountry()->getIso2Code())
-            ->setAddressCity($addressEntity->getCity())
-            ->setAddressZip($addressEntity->getZipCode())
-            ->setAddressStreet($addressEntity->getAddress1())
+            ->setAddressCountry($paymentEntity->getCountryIso2Code())
+            ->setAddressCity($paymentEntity->getCity())
+            ->setAddressZip($paymentEntity->getZipCode())
+            ->setAddressStreet($paymentEntity->getStreet())
             ->setNameFamily($paymentEntity->getLastName())
             ->setNameGiven($paymentEntity->getFirstName())
             ->setNameSex($this->mapGender($paymentEntity->getGender()))
-            ->setNameBirthdate($paymentEntity->getBirthdate())
+            ->setNameBirthdate($paymentEntity->getDateOfBirth('Y-m-d'))
             ->setNameTitle($paymentEntity->getSalutation())
             ->setContactIp($paymentEntity->getClientIp())
             ->setContactEmail($paymentEntity->getEmail())
+            ->setContactPhone($paymentEntity->getPhone())
+            ->setContactMobile($paymentEntity->getCellPhone())
             ->setIdentificationShopperid($orderEntity->getFkCustomer());
 
         $criteria = [

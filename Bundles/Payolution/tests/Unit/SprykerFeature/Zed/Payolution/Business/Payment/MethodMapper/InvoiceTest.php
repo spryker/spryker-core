@@ -6,17 +6,15 @@
 namespace Unit\SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\PayolutionRequestTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
-use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountry;
-use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
 use SprykerFeature\Zed\Payolution\Business\Api\Constants;
 use SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper\Invoice;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
+use SprykerFeature\Zed\Payolution\Persistence\Propel\Map\SpyPaymentPayolutionTableMap;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
 
@@ -29,25 +27,22 @@ class InvoiceTest extends Test
 
         $totalsTransfer = (new TotalsTransfer())->setGrandTotal(10000);
 
-        $addressTransfer = (new AddressTransfer())
-            ->setCity('Berlin')
-            ->setZipCode('10623')
-            ->setAddress1('Straße des 17. Juni')
-            ->setAddress2('135');
-
         $paymentTransfer = (new PayolutionPaymentTransfer())
             ->setFirstName('John')
             ->setLastName('Doe')
             ->setGender('Male')
             ->setSalutation('Mr')
-            ->setBirthdate('1970-01-01')
+            ->setDateOfBirth('1970-01-01')
+            ->setCountryIso2Code('de')
+            ->setCity('Berlin')
+            ->setStreet('Straße des 17. Juni 135')
+            ->setZipCode('10623')
             ->setClientIp('127.0.0.1')
             ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE);
 
         $orderTransfer = (new OrderTransfer())
             ->setIdSalesOrder($paymentEntityMock->getSpySalesOrder()->getIdSalesOrder())
             ->setPayolutionPayment($paymentTransfer)
-            ->setBillingAddress($addressTransfer)
             ->setTotals($totalsTransfer);
 
         $methodMapper = new Invoice($this->getBundleConfigMock());
@@ -172,30 +167,10 @@ class InvoiceTest extends Test
      */
     private function getPaymentEntityMock()
     {
-        $countryEntity = (new SpyCountry())
-            ->setIso2Code('de');
-
-        $addressEntity = (new SpySalesOrderAddress())
-            ->setFirstName('Jane')
-            ->setLastName('Doe')
-            ->setSalutation('Mrs')
-            ->setEmail('jane@doe.com')
-            ->setCountry($countryEntity)
-            ->setCity('Berlin')
-            ->setAddress1('Straße des 17. Juni')
-            ->setAddress2('135')
-            ->setZipCode('10623');
-
         $orderEntityMock = $this->getMock(
             'SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder',
-            $methods = [
-                'getBillingAddress',
-            ]
+            $methods = []
         );
-        $orderEntityMock
-            ->expects($this->any())
-            ->method('getBillingAddress')
-            ->will($this->returnValue($addressEntity));
 
         $paymentEntityMock = $this->getMock(
             'SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution',
@@ -216,8 +191,12 @@ class InvoiceTest extends Test
             ->setLastName('Doe')
             ->setEmail('john@doe.com')
             ->setSalutation('Mr')
-            ->setBirthdate('1970-01-01')
-            ->setGender(SpyCustomerTableMap::COL_GENDER_FEMALE);
+            ->setDateOfBirth('1970-01-01')
+            ->setCountryIso2Code('de')
+            ->setCity('Berlin')
+            ->setStreet('Straße des 17. Juni 135')
+            ->setZipCode('10623')
+            ->setGender(SpyPaymentPayolutionTableMap::COL_GENDER_FEMALE);
 
         return $paymentEntityMock;
     }

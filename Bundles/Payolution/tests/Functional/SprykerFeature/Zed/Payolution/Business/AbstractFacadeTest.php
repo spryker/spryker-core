@@ -22,6 +22,7 @@ use SprykerFeature\Zed\Payolution\Business\Api\Response\Converter as ResponseCon
 use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainer;
+use SprykerFeature\Zed\Payolution\Persistence\Propel\Map\SpyPaymentPayolutionTableMap;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLog;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLogQuery;
@@ -110,10 +111,14 @@ class AbstractFacadeTest extends Test
             ->setClientIp('127.0.0.1')
             ->setFirstName('Jane')
             ->setLastName('Doe')
-            ->setBirthdate('1970-01-02')
+            ->setDateOfBirth('1970-01-02')
             ->setEmail('jane@family-doe.org')
-            ->setGender(SpyCustomerTableMap::COL_GENDER_MALE)
-            ->setSalutation(SpyCustomerTableMap::COL_SALUTATION_MR);
+            ->setGender(SpyPaymentPayolutionTableMap::COL_GENDER_MALE)
+            ->setSalutation(SpyPaymentPayolutionTableMap::COL_SALUTATION_MR)
+            ->setCountryIso2Code('de')
+            ->setCity('Berlin')
+            ->setStreet('Straße des 17. Juni 135')
+            ->setZipCode('10623');
         $this->paymentEntity->save();
     }
 
