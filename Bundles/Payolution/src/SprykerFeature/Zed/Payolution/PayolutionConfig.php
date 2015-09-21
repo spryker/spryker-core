@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Payolution;
 
+use SprykerEngine\Shared\Kernel\Store;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerFeature\Shared\Payolution\PayolutionConfigConstants;
 

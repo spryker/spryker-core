@@ -191,7 +191,9 @@ class PreAuthorizePluginTest extends Test
             ->setStreet('Straße des 17. Juni 135')
             ->setZipCode('10623')
             ->setClientIp('127.0.0.1')
-            ->setAccountBrand(PayolutionApiConstants::BRAND_INVOICE);
+            ->setAccountBrand(PayolutionApiConstants::BRAND_INVOICE)
+            ->setLanguageIso2Code('de')
+            ->setCurrencyIso3Code('EUR');
 
         $checkoutRequestTransfer->setPayolutionPayment($payment);
 

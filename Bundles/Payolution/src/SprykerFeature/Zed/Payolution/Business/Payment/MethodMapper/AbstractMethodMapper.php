@@ -107,7 +107,7 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
             ->setIdentificationShopperid($orderEntity->getFkCustomer());
 
         $criteria = [
-            Constants::CRITERION_CUSTOMER_LANGUAGE => Store::getInstance()->getCurrentLanguage(),
+            Constants::CRITERION_CUSTOMER_LANGUAGE => $paymentEntity->getLanguageIso2Code(),
             Constants::CRITERION_DURATION => 12,
         ];
         foreach ($criteria as $name => $value) {
@@ -190,7 +190,12 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
     protected function getBaseRequestTransferForPayment(SpyPaymentPayolution $paymentEntity)
     {
         $orderEntity = $paymentEntity->getSpySalesOrder();
-        return $this->getBaseRequestTransfer($orderEntity->getGrandTotal(), $orderEntity->getIdSalesOrder());
+        $requestTransfer = $this->getBaseRequestTransfer(
+            $orderEntity->getGrandTotal(),
+            $orderEntity->getIdSalesOrder()
+        );
+        $requestTransfer->setPresentationCurrency($paymentEntity->getCurrencyIso3Code());
+        return $requestTransfer;
     }
 
     /**
@@ -206,7 +211,6 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
             ->setUserLogin($this->getConfig()->getUserLogin())
             ->setUserPwd($this->getConfig()->getUserPassword())
             ->setPresentationAmount($grandTotal / 100)
-            ->setPresentationCurrency(Store::getInstance()->getCurrencyIsoCode())
             ->setPresentationUsage($idOrder)
             ->setAccountBrand($this->getAccountBrand())
             ->setTransactionChannel($this->getConfig()->getChannelInvoice())

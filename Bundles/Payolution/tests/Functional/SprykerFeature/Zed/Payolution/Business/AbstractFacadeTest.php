@@ -118,7 +118,9 @@ class AbstractFacadeTest extends Test
             ->setCountryIso2Code('de')
             ->setCity('Berlin')
             ->setStreet('Straße des 17. Juni 135')
-            ->setZipCode('10623');
+            ->setZipCode('10623')
+            ->setLanguageIso2Code('de')
+            ->setCurrencyIso3Code('EUR');
         $this->paymentEntity->save();
     }
 

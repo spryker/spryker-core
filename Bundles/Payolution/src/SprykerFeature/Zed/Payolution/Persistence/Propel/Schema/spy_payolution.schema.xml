@@ -26,6 +26,8 @@
         <column name="email" required="true" type="VARCHAR" size="255"/>
         <column name="phone" type="VARCHAR" size="255" />
         <column name="cell_phone" type="VARCHAR" size="255" />
+        <column name="language_iso2_code" required="true" type="CHAR" size="2"/>
+        <column name="currency_iso3_code" required="true" type="CHAR" size="3"/>
         <foreign-key foreignTable="spy_sales_order" phpName="SpySalesOrder">
             <reference foreign="id_sales_order" local="fk_sales_order"/>
         </foreign-key>
