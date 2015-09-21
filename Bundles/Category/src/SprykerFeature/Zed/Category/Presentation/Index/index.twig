@@ -3,8 +3,11 @@
 {% set widget_title = 'Category' %}
 {% block section_title %}{{ widget_title }}{% endblock %}
 
-{% block content %}
+{% block action %}
+    {{ createActionButton('/productCategory/add', 'Create Category' | trans) }}
+{% endblock %}
 
+{% block content %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Root nodes listing' } %}
 
