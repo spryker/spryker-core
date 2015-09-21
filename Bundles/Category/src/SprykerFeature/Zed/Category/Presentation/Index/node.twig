@@ -3,9 +3,15 @@
     <li class="dd-item" id="node-{{ item.id }}">
         <div class="dd-handle">{{ item.text }}
             <div class="pull-right">
+                {% if item.children is defined and item.children|length > 0 %}
+                <a href="/category/node/view?id-node={{ item.id }}" id="node-{{ item.id }}" class="btn btn-xs btn-success">
+                    <i class="fa fa-sitemap"></i>
+                </a>
+                {% endif %}
                 <a href="/productCategory/add" class="btn btn-xs btn-success"><i class="fa fa-plus"></i></a>
-                <a href="#" id="categ-{{ item.id }}" class="category-tree btn btn-xs btn-primary"><i class="fa fa-sitemap"></i></a>
-                <a href="/productCategory/edit?id-category={{ item.id_category }}" class="btn btn-xs btn-primary"><i class="fa fa-pencil"></i></a>
+                <a href="/productCategory/edit?id-category={{ item.id_category }}" class="btn btn-xs btn-primary">
+                    <i class="fa fa-pencil"></i>
+                </a>
             </div>
         </div>
         {% if item.children is defined and item.children|length > 0 %}
