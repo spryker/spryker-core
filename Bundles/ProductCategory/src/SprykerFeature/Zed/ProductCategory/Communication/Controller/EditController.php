@@ -65,16 +65,6 @@ class EditController extends AddController
                 $this->updateCategoryNodeChild($currentCategoryTransfer, $locale, $data);
             }
 
-            $addProductsMappingCollection = [];
-            $removeProductMappingCollection = [];
-            if (trim($data['products_to_be_assigned']) !== '') {
-                $addProductsMappingCollection = explode(',', $data['products_to_be_assigned']);
-            }
-
-            if (trim($data['products_to_be_de_assigned']) !== '') {
-                $removeProductMappingCollection = explode(',', $data['products_to_be_de_assigned']);
-            }
-
             $this->updateProductCategoryPreconfig($currentCategoryTransfer, (array) json_decode($data['product_category_preconfig']));
 
             $parentIdList[] = $currentCategoryNodeTransfer->getFkParentCategoryNode();
@@ -83,8 +73,7 @@ class EditController extends AddController
                 $currentCategoryTransfer,
                 $locale,
                 $parentIdList,
-                $addProductsMappingCollection,
-                $removeProductMappingCollection
+                $data
             );
 
             $this->updateProductOrder($currentCategoryTransfer, (array) json_decode($data['product_order']));
@@ -139,17 +128,25 @@ class EditController extends AddController
      * @param CategoryTransfer $categoryTransfer
      * @param LocaleTransfer $locale
      * @param array $parentIdList
-     * @param array $addProductsMappingCollection
-     * @param array $removeProductMappingCollection
+     * @param array $data
      */
     protected function updateCategoryParents(
         CategoryTransfer $categoryTransfer, 
         LocaleTransfer $locale, 
         array $parentIdList, 
-        array $addProductsMappingCollection, 
-        array $removeProductMappingCollection
+        array $data
     )
     {
+        $addProductsMappingCollection = [];
+        $removeProductMappingCollection = [];
+        if (trim($data['products_to_be_assigned']) !== '') {
+            $addProductsMappingCollection = explode(',', $data['products_to_be_assigned']);
+        }
+
+        if (trim($data['products_to_be_de_assigned']) !== '') {
+            $removeProductMappingCollection = explode(',', $data['products_to_be_de_assigned']);
+        }
+
         $existingParents = $this->getDependencyContainer()
             ->createCategoryFacade()
             ->getNodesByIdCategory($categoryTransfer->getIdCategory());
@@ -200,6 +197,11 @@ class EditController extends AddController
             ->updateProductCategoryPreconfig($categoryTransfer->getIdCategory(), $product_preconfig);
     }
 
+    /**
+     * @param LocaleTransfer $locale
+     * @param array $data
+     * @return $this
+     */
     protected function updateCategory(LocaleTransfer $locale, array $data)
     {
         $currentCategoryTransfer = (new CategoryTransfer())
@@ -212,6 +214,12 @@ class EditController extends AddController
         return $currentCategoryTransfer;
     }
 
+    /**
+     * @param CategoryTransfer $categoryTransfer
+     * @param LocaleTransfer $locale
+     * @param array $data
+     * @return $this
+     */
     protected function updateCategoryNode(CategoryTransfer $categoryTransfer, LocaleTransfer $locale, array $data)
     {
         $currentCategoryNodeTransfer = (new NodeTransfer())
@@ -228,6 +236,12 @@ class EditController extends AddController
         return $currentCategoryNodeTransfer;
     }
 
+    /**
+     * @param CategoryTransfer $categoryTransfer
+     * @param LocaleTransfer $locale
+     * @param array $data
+     * @return $this
+     */
     protected function updateCategoryNodeChild(CategoryTransfer $categoryTransfer, LocaleTransfer $locale, array $data)
     {
         $nodeTransfer = (new NodeTransfer())
