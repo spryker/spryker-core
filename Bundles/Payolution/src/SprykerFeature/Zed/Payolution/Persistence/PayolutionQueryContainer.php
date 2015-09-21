@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Payolution\Persistence;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\PayolutionPersistence;
+use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\Map\SpyPaymentPayolutionTransactionStatusLogTableMap;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLogQuery;
@@ -65,7 +66,9 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
      */
     public function queryTransactionStatusLogByPaymentIdLatestFirst($idPayment)
     {
-        return $this->queryTransactionStatusLogByPaymentId($idPayment)->lastCreatedFirst();
+        return $this
+            ->queryTransactionStatusLogByPaymentId($idPayment)
+            ->orderByIdPaymentPayolutionTransactionStatusLog(Criteria::DESC);
     }
 
     /**
