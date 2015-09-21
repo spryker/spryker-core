@@ -3,6 +3,10 @@
 {% set page_title = 'Category' %}
 {% block section_title %}{{ page_title }}{% endblock %}
 
+{% block action %}
+    {{ backActionButton('/category', 'List Categories' | trans) }}
+{% endblock %}
+
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Order Categories children' } %}
