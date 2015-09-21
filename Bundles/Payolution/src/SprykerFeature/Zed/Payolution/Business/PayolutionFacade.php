@@ -92,7 +92,36 @@ class PayolutionFacade extends AbstractFacade
      */
     public function isPreAuthorizationApproved(OrderTransfer $orderTransfer)
     {
-        return $this->getDependencyContainer()->createTransactionStatusLog()->isPreAuthorizationApproved($orderTransfer);
+        return $this
+            ->getDependencyContainer()
+            ->createTransactionStatusLog()
+            ->isPreAuthorizationApproved($orderTransfer);
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    public function isReAuthorizationApproved(OrderTransfer $orderTransfer)
+    {
+        return $this
+            ->getDependencyContainer()
+            ->createTransactionStatusLog()
+            ->isReAuthorizationApproved($orderTransfer);
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    public function isReversalApproved(OrderTransfer $orderTransfer)
+    {
+        return $this
+            ->getDependencyContainer()
+            ->createTransactionStatusLog()
+            ->isReversalApproved($orderTransfer);
     }
 
     /**
@@ -102,7 +131,23 @@ class PayolutionFacade extends AbstractFacade
      */
     public function isCaptureApproved(OrderTransfer $orderTransfer)
     {
-        return $this->getDependencyContainer()->createTransactionStatusLog()->isCaptureApproved($orderTransfer);
+        return $this
+            ->getDependencyContainer()
+            ->createTransactionStatusLog()
+            ->isCaptureApproved($orderTransfer);
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    public function isRefundApproved(OrderTransfer $orderTransfer)
+    {
+        return $this
+            ->getDependencyContainer()
+            ->createTransactionStatusLog()
+            ->isRefundApproved($orderTransfer);
     }
 
 }

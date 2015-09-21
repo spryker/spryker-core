@@ -45,11 +45,53 @@ class TransactionStatusLog implements TransactionStatusLogInterface
      *
      * @return bool
      */
+    public function isReAuthorizationApproved(OrderTransfer $orderTransfer)
+    {
+        return $this->hasTransactionLogStatus(
+            $orderTransfer,
+            Constants::PAYMENT_CODE_RE_AUTHORIZATION,
+            Constants::STATUS_REASON_CODE_SUCCESS
+        );
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    public function isReversalApproved(OrderTransfer $orderTransfer)
+    {
+        return $this->hasTransactionLogStatus(
+            $orderTransfer,
+            Constants::PAYMENT_CODE_REVERSAL,
+            Constants::STATUS_REASON_CODE_SUCCESS
+        );
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
     public function isCaptureApproved(OrderTransfer $orderTransfer)
     {
         return $this->hasTransactionLogStatus(
             $orderTransfer,
             Constants::PAYMENT_CODE_CAPTURE,
+            Constants::STATUS_REASON_CODE_SUCCESS
+        );
+    }
+
+    /**
+     * @param OrderTransfer $orderTransfer
+     *
+     * @return bool
+     */
+    public function isRefundApproved(OrderTransfer $orderTransfer)
+    {
+        return $this->hasTransactionLogStatus(
+            $orderTransfer,
+            Constants::PAYMENT_CODE_REFUND,
             Constants::STATUS_REASON_CODE_SUCCESS
         );
     }
