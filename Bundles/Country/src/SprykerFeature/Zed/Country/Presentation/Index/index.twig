@@ -2,6 +2,16 @@
 
 {% block content %}
 
-    {{ countryTable | raw }}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Country List' } %}
+
+        {% block widget_content %}
+
+            {{ countryTable | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+
 
 {% endblock %}
