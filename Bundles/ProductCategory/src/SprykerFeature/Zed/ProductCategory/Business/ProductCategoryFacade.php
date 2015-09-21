@@ -101,52 +101,52 @@ class ProductCategoryFacade extends AbstractFacade
 
     /**
      * @param int $idCategory
-     * @param array $product_ids_to_assign
+     * @param array $productIdsToAssign
      * 
      * @throws PropelException
      */
-    public function createProductCategoryMappings($idCategory, array $product_ids_to_assign)
+    public function createProductCategoryMappings($idCategory, array $productIdsToAssign)
     {
         $this->getDependencyContainer()
             ->createProductCategoryManager()
-            ->createProductCategoryMappings($idCategory, $product_ids_to_assign)
+            ->createProductCategoryMappings($idCategory, $productIdsToAssign)
         ;
     }
 
     /**
      * @param int $idCategory
-     * @param array $product_ids_to_deassign
+     * @param array $productIdsToDeassign
      */
-    public function removeProductCategoryMappings($idCategory, array $product_ids_to_deassign)
+    public function removeProductCategoryMappings($idCategory, array $productIdsToDeassign)
     {
         $this->getDependencyContainer()
             ->createProductCategoryManager()
-            ->removeProductCategoryMappings($idCategory, $product_ids_to_deassign)
+            ->removeProductCategoryMappings($idCategory, $productIdsToDeassign)
         ;
     }
 
     /**
      * @param int $idCategory
-     * @param array $product_order_list
+     * @param array $productOrderList
      * @throws PropelException
      */
-    public function updateProductMappingsOrder($idCategory, array $product_order_list)
+    public function updateProductMappingsOrder($idCategory, array $productOrderList)
     {
         $this->getDependencyContainer()
             ->createProductCategoryManager()
-            ->updateProductMappingsOrder($idCategory, $product_order_list)
+            ->updateProductMappingsOrder($idCategory, $productOrderList)
         ;
     }
 
     /**
      * @param int $idCategory
-     * @param $product_preconfig
+     * @param $productPreconfig
      */
-    public function updateProductCategoryPreconfig($idCategory, array $product_preconfig)
+    public function updateProductCategoryPreconfig($idCategory, array $productPreconfig)
     {
         $this->getDependencyContainer()
             ->createProductCategoryManager()
-            ->updateProductMappingsPreconfig($idCategory, $product_preconfig)
+            ->updateProductMappingsPreconfig($idCategory, $productPreconfig)
         ;
     }
 }

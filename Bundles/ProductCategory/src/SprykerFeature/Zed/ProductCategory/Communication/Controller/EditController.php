@@ -65,7 +65,8 @@ class EditController extends AddController
                 $this->updateCategoryNodeChild($currentCategoryTransfer, $locale, $data);
             }
 
-            $this->updateProductCategoryPreconfig($currentCategoryTransfer, (array) json_decode($data['product_category_preconfig'], true));
+            $this->updateProductCategoryPreconfig($currentCategoryTransfer, (array) json_decode($data['product_category_preconfig']));
+            $this->updateProductOrder($currentCategoryTransfer, (array) json_decode($data['product_order'], true));
 
             $parentIdList[] = $currentCategoryNodeTransfer->getFkParentCategoryNode();
             $parentIdList = array_flip($parentIdList);
@@ -75,8 +76,6 @@ class EditController extends AddController
                 $parentIdList,
                 $data
             );
-
-            $this->updateProductOrder($currentCategoryTransfer, (array) json_decode($data['product_order'], true));
 
             $this->addSuccessMessage('The category was saved successfully.');
 
@@ -177,24 +176,24 @@ class EditController extends AddController
 
     /**
      * @param CategoryTransfer $categoryTransfer
-     * @param $product_order
+     * @param $productOrder
      */
-    protected function updateProductOrder(CategoryTransfer $categoryTransfer, array $product_order)
+    protected function updateProductOrder(CategoryTransfer $categoryTransfer, array $productOrder)
     {
         $this->getDependencyContainer()
             ->createProductCategoryFacade()
-            ->updateProductMappingsOrder($categoryTransfer->getIdCategory(), $product_order);
+            ->updateProductMappingsOrder($categoryTransfer->getIdCategory(), $productOrder);
     }
 
     /**
      * @param CategoryTransfer $categoryTransfer
-     * @param $product_preconfig
+     * @param $productPreconfig
      */
-    protected function updateProductCategoryPreconfig(CategoryTransfer $categoryTransfer, array $product_preconfig)
+    protected function updateProductCategoryPreconfig(CategoryTransfer $categoryTransfer, array $productPreconfig)
     {
         $this->getDependencyContainer()
             ->createProductCategoryFacade()
-            ->updateProductCategoryPreconfig($categoryTransfer->getIdCategory(), $product_preconfig);
+            ->updateProductCategoryPreconfig($categoryTransfer->getIdCategory(), $productPreconfig);
     }
 
     /**
