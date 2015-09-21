@@ -2,15 +2,13 @@
 
 {% set widget_title = 'Users List' %}
 
-{% block head_title widget_title | trans %}
+{% block action %}
+    {{ createActionButton('/user/edit/create', 'Add New User' | trans) }}
+{% endblock %}
 
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' %}
-
-        {% block widget_header_content %}
-            <a href="/user/edit/create" class="btn btn-sm btn-primary ">{{ 'Add new user' | trans }}</a>
-        {% endblock %}
 
         {% block widget_content %}
 

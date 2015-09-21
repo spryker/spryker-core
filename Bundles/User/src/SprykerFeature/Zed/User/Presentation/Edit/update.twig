@@ -2,7 +2,10 @@
 
 {% set widget_title = 'Update user #' ~ idUser   %}
 
-{% block head_title widget_title | trans %}
+{% block action %}
+    {{ backActionButton('/user', 'List Users' | trans) }}
+    {{ createActionButton('/user/edit/create', 'Add User' | trans) }}
+{% endblock %}
 
 {% block content %}
 
