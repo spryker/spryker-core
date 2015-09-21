@@ -6,7 +6,7 @@
 {% block section_title widget_title %}
 
 {% block action %}
-    <a class="btn btn-sm btn-primary" href="/acl/group/add">{{ 'Create Group' | trans }}</a>
+    {{ createActionButton('/acl/group/add', 'Create Group' | trans) }}
 {% endblock %}
 
 {% block content %}

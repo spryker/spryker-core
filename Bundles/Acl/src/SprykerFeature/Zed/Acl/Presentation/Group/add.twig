@@ -6,7 +6,7 @@
 {% block section_title page_title %}
 
 {% block action %}
-    <a href="/acl/group/" class="btn btn-sm btn-default">{{ 'List Groups' | trans }}</a>
+    {{ backActionButton('/acl/group', 'List Groups' | trans) }}
 {% endblock %}
 
 {% block content %}
