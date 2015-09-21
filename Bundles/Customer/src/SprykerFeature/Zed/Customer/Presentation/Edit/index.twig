@@ -5,15 +5,15 @@
 {% block head_title widget_title %}
 {% block section_title widget_title %}
 
+{% block action %}
+    {{ backActionButton('/customer/', 'Back to Customers' | trans) }}
+    {{ viewActionButton('/customer/view?id_customer=' ~ id_customer, 'View Customer' | trans) }}
+    {{ viewActionButton('/customer/address/?id_customer=' ~ id_customer, 'Manage Addresses' | trans) }}
+{% endblock %}
+
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' %}
-
-        {% block widget_header_content %}
-            <a href="/customer/" class="btn btn-sm btn-default">{{ 'Back to Customers' | trans }}</a>&nbsp;&nbsp;&nbsp;
-            <a href="/customer/view?id_customer={{ id_customer }}" class="btn btn-sm btn-primary">{{ 'View Customer' | trans }}</a>&nbsp;&nbsp;&nbsp;
-            <a href="/customer/address/?id_customer={{ id_customer }}" class="btn btn-sm btn-primary ">{{ 'Manage Addresses' | trans }}</a>
-        {% endblock %}
 
         {% block widget_content %}
 
