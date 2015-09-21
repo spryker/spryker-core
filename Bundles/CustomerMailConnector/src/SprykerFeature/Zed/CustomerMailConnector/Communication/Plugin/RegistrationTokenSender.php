@@ -18,7 +18,7 @@ class RegistrationTokenSender extends AbstractSender implements RegistrationToke
 {
 
     const SUBJECT = 'registration.token.sender.subject';
-    const TEMPLATE = 'registration.token';
+    const TEMPLATE = 'spryker-registration-token';
 
     /**
      * @param string $email
