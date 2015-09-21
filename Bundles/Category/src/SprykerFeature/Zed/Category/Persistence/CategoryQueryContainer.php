@@ -629,12 +629,16 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             'category_name'
         );
         $expandableQuery->withColumn(
-            $tableAlias . '.meta_keywords',
-            'category_meta_keywords'
+            $tableAlias . '.meta_title',
+            'category_meta_title'
         );
         $expandableQuery->withColumn(
             $tableAlias . '.meta_description',
             'category_meta_description'
+        );
+        $expandableQuery->withColumn(
+            $tableAlias . '.meta_keywords',
+            'category_meta_keywords'
         );
         $expandableQuery->withColumn(
             $tableAlias . '.category_image_name',
