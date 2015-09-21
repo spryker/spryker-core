@@ -1,5 +1,9 @@
 {% extends '@Application/Layout/layout.twig' %}
 
+{% block action %}
+    {{ backActionButton('/cms/' ~ type ~ '/', 'Back to CMS ' ~ type | trans ) }}
+{% endblock %}
+
 {% block content %}
     <div id="spy-cms" class="glossary">
         <h4>
@@ -12,11 +16,6 @@
         </h4>
         {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Page glossary mapping' } %}
 
-                {% block widget_header_content %}
-
-                    <a href="/cms/{{ type }}/" class="btn btn-sm btn-default">{{ 'Back to CMS ' ~ type | trans }}</a>
-
-                {% endblock %}
 
                 {% block widget_content %}
 
