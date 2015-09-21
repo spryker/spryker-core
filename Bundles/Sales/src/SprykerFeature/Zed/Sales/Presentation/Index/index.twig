@@ -1,12 +1,8 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Orders List' %}
-
-{% block head_title widget_title | trans %}
-
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Orders List' } %}
 
         {% block widget_content %}
 
