@@ -15,9 +15,9 @@ class CustomerMailConnectorConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getRegistrationTemplate()
+    public function getRegistrationToken()
     {
-        return MailConfig::REGISTRATION_TEMPLATE;
+        return MailConfig::REGISTRATION_TOKEN;
     }
 
     /**
