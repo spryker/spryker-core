@@ -12,7 +12,6 @@ use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
-use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategory;
 use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
 
 interface ProductCategoryManagerInterface
@@ -66,30 +65,30 @@ interface ProductCategoryManagerInterface
 
     /**
      * @param int $idCategory
-     * @param array $product_ids_to_assign
+     * @param array $productIdsToAssign
      *
      * @throws PropelException
      */
-    public function createProductCategoryMappings($idCategory, array $product_ids_to_assign);
+    public function createProductCategoryMappings($idCategory, array $productIdsToAssign);
 
     /**
      * @param int $idCategory
-     * @param array $product_ids_to_deassign
+     * @param array $productIdsToDeassign
      */
-    public function removeProductCategoryMappings($idCategory, array $product_ids_to_deassign);
+    public function removeProductCategoryMappings($idCategory, array $productIdsToDeassign);
 
     /**
      * @param $idCategory
-     * @param array $product_order_list
+     * @param array $productOrderList
      * @throws PropelException
      */
-    public function updateProductMappingsOrder($idCategory, array $product_order_list);
+    public function updateProductMappingsOrder($idCategory, array $productOrderList);
 
     /**
      * @param int $idCategory
-     * @param array $product_preconfig_list
+     * @param array $productPreconfigList
      * @throws PropelException
      */
-    public function updateProductMappingsPreconfig($idCategory, array $product_preconfig_list);
+    public function updateProductMappingsPreconfig($idCategory, array $productPreconfigList);
 
 }

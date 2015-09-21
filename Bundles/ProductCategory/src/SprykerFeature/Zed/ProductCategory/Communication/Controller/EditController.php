@@ -54,39 +54,15 @@ class EditController extends AddController
         if ($form->isValid()) { //TODO Ugly and dirty, some stuff must be moved into Facades
             $data = $form->getData();
 
-            $currentCategoryTransfer = (new CategoryTransfer())
-                ->fromArray($data, true);
-
-            $this->getDependencyContainer()
-                ->createCategoryFacade()
-                ->updateCategory($currentCategoryTransfer, $locale);
-
-            $currentCategoryNodeTransfer = (new NodeTransfer())
-                ->fromArray($data, true);
-            
-            $currentCategoryNodeTransfer->setIsMain(true);
-
-            $existingCategoryNode = $this->getDependencyContainer()
-                ->createCategoryFacade()
-                ->getNodeByIdCategoryAndParentNode($currentCategoryTransfer->getIdCategory(), $data['fk_parent_category_node']);
-
-            $this->createOrUpdateCategoryNode($existingCategoryNode, $currentCategoryNodeTransfer, $locale);
+            $currentCategoryTransfer = $this->updateCategory($locale, $data);
+            $currentCategoryNodeTransfer = $this->updateCategoryNode($currentCategoryTransfer, $locale, $data);
 
             $parentIdList = $data['extra_parents'];
             foreach ($parentIdList as $parentNodeId) {
                 $data['fk_parent_category_node'] = $parentNodeId;
                 $data['fk_category'] = $currentCategoryTransfer->getIdCategory();
 
-                $nodeTransfer = (new NodeTransfer())
-                    ->fromArray($data, true);
-
-                $nodeTransfer->setIsMain(false);
-
-                $existingCategoryNode = $this->getDependencyContainer()
-                    ->createCategoryFacade()
-                    ->getNodeByIdCategoryAndParentNode($currentCategoryTransfer->getIdCategory(), $parentNodeId);
-
-                $this->createOrUpdateCategoryNode($existingCategoryNode, $nodeTransfer, $locale);
+                $this->updateCategoryNodeChild($currentCategoryTransfer, $locale, $data);
             }
 
             $addProductsMappingCollection = [];
@@ -223,4 +199,49 @@ class EditController extends AddController
             ->createProductCategoryFacade()
             ->updateProductCategoryPreconfig($categoryTransfer->getIdCategory(), $product_preconfig);
     }
+
+    protected function updateCategory(LocaleTransfer $locale, array $data)
+    {
+        $currentCategoryTransfer = (new CategoryTransfer())
+            ->fromArray($data, true);
+
+        $this->getDependencyContainer()
+            ->createCategoryFacade()
+            ->updateCategory($currentCategoryTransfer, $locale);
+
+        return $currentCategoryTransfer;
+    }
+
+    protected function updateCategoryNode(CategoryTransfer $categoryTransfer, LocaleTransfer $locale, array $data)
+    {
+        $currentCategoryNodeTransfer = (new NodeTransfer())
+            ->fromArray($data, true);
+
+        $currentCategoryNodeTransfer->setIsMain(true);
+
+        $existingCategoryNode = $this->getDependencyContainer()
+            ->createCategoryFacade()
+            ->getNodeByIdCategoryAndParentNode($categoryTransfer->getIdCategory(), $data['fk_parent_category_node']);
+
+        $this->createOrUpdateCategoryNode($existingCategoryNode, $currentCategoryNodeTransfer, $locale);
+
+        return $currentCategoryNodeTransfer;
+    }
+
+    protected function updateCategoryNodeChild(CategoryTransfer $categoryTransfer, LocaleTransfer $locale, array $data)
+    {
+        $nodeTransfer = (new NodeTransfer())
+            ->fromArray($data, true);
+
+        $nodeTransfer->setIsMain(false);
+
+        $existingCategoryNode = $this->getDependencyContainer()
+            ->createCategoryFacade()
+            ->getNodeByIdCategoryAndParentNode($categoryTransfer->getIdCategory(), $data['fk_parent_category_node']);
+
+        $this->createOrUpdateCategoryNode($existingCategoryNode, $nodeTransfer, $locale);
+
+        return $nodeTransfer;
+    }
+
 }

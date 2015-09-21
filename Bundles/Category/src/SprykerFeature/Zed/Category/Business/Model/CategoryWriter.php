@@ -104,9 +104,6 @@ class CategoryWriter implements CategoryWriterInterface
         $categoryAttributeEntity = $this->queryContainer->queryAttributeByCategoryId($category->getIdCategory())->findOneOrCreate();
 
         $categoryAttributeEntity->fromArray($category->toArray());
-
-        $categoryAttributeEntity->fromArray($category->toArray());
-
         $categoryAttributeEntity->setFkCategory($category->getIdCategory());
         $categoryAttributeEntity->setFkLocale($locale->getIdLocale());
 
@@ -135,7 +132,7 @@ class CategoryWriter implements CategoryWriterInterface
         return $this->queryContainer
             ->queryAttributeByCategoryIdAndLocale($idCategory, $locale->getIdLocale())
             ->findOne()
-            ;
+        ;
     }
 
     /**

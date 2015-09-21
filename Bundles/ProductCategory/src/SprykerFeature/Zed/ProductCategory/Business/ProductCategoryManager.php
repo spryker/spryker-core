@@ -47,7 +47,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     /**
      * @var AutoCompletion
      */
-    private $locator;
+    protected $locator;
 
     /**
      * @param ProductCategoryQueryContainerInterface $productCategoryQueryContainer
@@ -174,94 +174,102 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     {
         return $this->productCategoryQueryContainer
             ->queryProductCategoryMappingByIds($idCategory, $idAbstractProduct)
-            ;
+        ;
     }
 
     /**
      * @param int $idCategory
-     * @param array $product_ids_to_assign
+     * @param array $productIdsToAssign
      *
      * @throws PropelException
      */
-    public function createProductCategoryMappings($idCategory, array $product_ids_to_assign)
+    public function createProductCategoryMappings($idCategory, array $productIdsToAssign)
     {
-        foreach ($product_ids_to_assign as $idProduct) {
+        foreach ($productIdsToAssign as $idProduct) {
             $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
                 ->findOneOrCreate();
 
-            if ($mapping) {
-                $mapping->setFkCategory($idCategory);
-                $mapping->setFkAbstractProduct($idProduct);
-                $mapping->save();
-
-                $this->touchAbstractProductActive($idProduct);
+            if (null === $mapping) {
+                continue;
             }
+
+            $mapping->setFkCategory($idCategory);
+            $mapping->setFkAbstractProduct($idProduct);
+            $mapping->save();
+
+            $this->touchAbstractProductActive($idProduct);
         }
     }
 
     /**
      * @param int $idCategory
-     * @param array $product_ids_to_deassign
+     * @param array $productIdsToDeassign
      */
-    public function removeProductCategoryMappings($idCategory, array $product_ids_to_deassign)
+    public function removeProductCategoryMappings($idCategory, array $productIdsToDeassign)
     {
-        foreach ($product_ids_to_deassign as $idProduct) {
+        foreach ($productIdsToDeassign as $idProduct) {
             $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
                 ->findOne();
 
-            if ($mapping) {
-                $mapping->delete();
-
-                //yes, Active is correct, it should update touch items, not mark them to delete
-                //it's just a change to the mappings and not an actual abstract product
-                $this->touchAbstractProductActive($idProduct);
+            if (null === $mapping) {
+                continue;
             }
+
+            $mapping->delete();
+
+            //yes, Active is correct, it should update touch items, not mark them to delete
+            //it's just a change to the mappings and not an actual abstract product
+            $this->touchAbstractProductActive($idProduct);
         }
     }
 
     /**
      * @param int $idCategory
-     * @param array $product_order_list
+     * @param array $productOrderList
      * @throws PropelException
      */
-    public function updateProductMappingsOrder($idCategory, array $product_order_list)
+    public function updateProductMappingsOrder($idCategory, array $productOrderList)
     {
-        foreach ($product_order_list as $idProduct => $order) {
+        foreach ($productOrderList as $idProduct => $order) {
             $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
                 ->findOne();
 
-            if ($mapping) {
-                $mapping->setFkCategory($idCategory);
-                $mapping->setFkAbstractProduct($idProduct);
-                $mapping->setProductOrder($order);
-                $mapping->save();
-
-                $this->touchAbstractProductActive($idProduct);
+            if (null === $mapping) {
+                continue;
             }
+
+            $mapping->setFkCategory($idCategory);
+            $mapping->setFkAbstractProduct($idProduct);
+            $mapping->setProductOrder($order);
+            $mapping->save();
+
+            $this->touchAbstractProductActive($idProduct);
         }
     }
 
     /**
      * @param int $idCategory
-     * @param array $product_preconfig_list
+     * @param array $productPreconfigList
      * @throws PropelException
      */
-    public function updateProductMappingsPreconfig($idCategory, array $product_preconfig_list)
+    public function updateProductMappingsPreconfig($idCategory, array $productPreconfigList)
     {
-        foreach ($product_preconfig_list as $idProduct => $idPreconfigProduct) {
+        foreach ($productPreconfigList as $idProduct => $idPreconfigProduct) {
             $idPreconfigProduct = (int) $idPreconfigProduct;
             $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
                 ->findOne();
 
-            if ($mapping) {
-                $idPreconfigProduct = $idPreconfigProduct <= 0 ? null : $idPreconfigProduct;
-                $mapping->setFkCategory($idCategory);
-                $mapping->setFkAbstractProduct($idProduct);
-                $mapping->setFkPreconfigProduct($idPreconfigProduct);
-                $mapping->save();
-
-                $this->touchAbstractProductActive($idProduct);
+            if (null === $mapping) {
+                continue;
             }
+
+            $idPreconfigProduct = $idPreconfigProduct <= 0 ? null : $idPreconfigProduct;
+            $mapping->setFkCategory($idCategory);
+            $mapping->setFkAbstractProduct($idProduct);
+            $mapping->setFkPreconfigProduct($idPreconfigProduct);
+            $mapping->save();
+
+            $this->touchAbstractProductActive($idProduct);
         }
     }
 

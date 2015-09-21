@@ -62,11 +62,6 @@ class ProductTable extends AbstractTable
             'checkbox' => 'Selected',
         ]);
 
-        $config->setSortable([
-            //SpyAbstractProductTableMap::COL_SKU,
-            //SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
-        ]);
-
         $config->setSearchable([
             SpyAbstractProductTableMap::COL_SKU,
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,

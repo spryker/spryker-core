@@ -64,11 +64,6 @@ class ProductCategoryTable extends AbstractTable
             SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => 'Preconfig',
             'checkbox' => 'Selected',
         ]);
-        $config->setSortable([
-            //SpyAbstractProductTableMap::COL_SKU,
-            //SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
-            //SpyProductCategoryTableMap::COL_PRODUCT_ORDER,
-        ]);
         $config->setSearchable([
             SpyAbstractProductTableMap::COL_SKU,
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
@@ -121,14 +116,16 @@ class ProductCategoryTable extends AbstractTable
      */
     protected function getProductOptionsComboBoxItems($productCategory)
     {
-        $preconfigQuery = $this->productCategoryQueryContainer->queryProductCategoryPreconfig($this->idCategory, $productCategory['id_abstract_product'])
+        $preconfigQuery = $this->productCategoryQueryContainer
+            ->queryProductCategoryPreconfig($this->idCategory, $productCategory['id_abstract_product'])
             ->orderByFormat();
+
         $preconfigItems = $preconfigQuery->find();
 
         $items = '<option value="0">Default</option>';
         foreach ($preconfigItems as $preconfigItem) {
             $selected = '';
-            if ($productCategory['preconfig_product'] == $preconfigItem->getIdProduct()) {
+            if ((int) $productCategory['preconfig_product'] === (int) $preconfigItem->getIdProduct()) {
                 $selected = 'selected="selected"';
             }
 
