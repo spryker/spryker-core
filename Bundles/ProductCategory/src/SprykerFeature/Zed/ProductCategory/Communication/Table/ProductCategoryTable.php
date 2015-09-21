@@ -68,10 +68,6 @@ class ProductCategoryTable extends AbstractTable
             SpyAbstractProductTableMap::COL_SKU,
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
         ]);
-        $config->setSearchable([
-            SpyAbstractProductTableMap::COL_SKU,
-            SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
-        ]);
 
         return $config;
     }
@@ -92,18 +88,35 @@ class ProductCategoryTable extends AbstractTable
         foreach ($queryResults as $productCategory) {
             $items = $this->getProductOptionsComboBoxItems($productCategory);
 
+            $select_html = sprintf(
+                '<select id="product_category_preconfig_%d" onchange="updateProductCategoryPreconfig(this, %d)">%s</select>',
+                $productCategory['id_abstract_product'],
+                $productCategory['id_abstract_product'],
+                $items
+            );
+
+            $checkbox_html  = sprintf(
+                '<input id="product_category_checkbox_%d" type="checkbox" checked="checked" onclick="categoryTableClickMarkAsSelected(this.checked, %d, \'%s\', \'%s\'); return" /> ',
+                $productCategory['id_abstract_product'],
+                $productCategory['id_abstract_product'],
+                $productCategory['sku'],
+                urlencode($productCategory['name'])
+            );
+
+            $order_html = sprintf(
+                '<input type="text" value="%d" id="product_category_order_%d" size="4" onchange="updateProductOrder(this, %d)" />',
+                $productCategory['product_order'],
+                $productCategory['id_abstract_product'],
+                $productCategory['id_abstract_product']
+            );
+
             $results[] = [
                 SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => $productCategory['id_abstract_product'],
                 SpyAbstractProductTableMap::COL_SKU => $productCategory['sku'],
                 SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => $productCategory['name'],
-                SpyProductCategoryTableMap::COL_PRODUCT_ORDER => '<input type="text" value="'.$productCategory['product_order'].'" id="product_category_order_'.$productCategory['id_abstract_product'].'" size="4" onchange="updateProductOrder(this, '.$productCategory['id_abstract_product'].')" />',
-                SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => '<select id="product_category_preconfig_' . $productCategory['id_abstract_product'] . '" onchange="updateProductCategoryPreconfig(this, '.$productCategory['id_abstract_product'].')">'.$items.'</select>',
-                'checkbox' => '<input id="product_category_checkbox_' .
-                    $productCategory['id_abstract_product'] .
-                    '" type="checkbox" checked="checked" onclick="categoryTableClickMarkAsSelected(this.checked, ' .
-                    $productCategory['id_abstract_product'] . ', \'' .
-                    $productCategory['sku'] . '\', \'' .
-                    urlencode($productCategory['name']) . '\'); return" /> ',
+                SpyProductCategoryTableMap::COL_PRODUCT_ORDER => $order_html, //'<input type="text" value="'.$productCategory['product_order'].'" id="product_category_order_'.$productCategory['id_abstract_product'].'" size="4" onchange="updateProductOrder(this, '.$productCategory['id_abstract_product'].')" />',
+                SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => $select_html,
+                'checkbox' => $checkbox_html
             ];
         }
         unset($queryResults);

@@ -67,16 +67,6 @@ class ProductTable extends AbstractTable
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
         ]);
 
-        $config->setSearchable([
-            SpyAbstractProductTableMap::COL_SKU,
-            SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
-        ]);
-
-        $config->setSearchable([
-            SpyAbstractProductTableMap::COL_SKU,
-            SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
-        ]);
-
         $config->setPageLength(10);
 
         return $config;
@@ -96,16 +86,24 @@ class ProductTable extends AbstractTable
 
         $results = [];
         foreach ($queryResults as $product) {
+            $checkbox_html  = sprintf(
+                '<input id="all_products_checkbox_%d" type="checkbox" checked="checked" onclick="allProductsClickMarkAsSelected(this.checked, %d, \'%s\', \'%s\'); return" /> ',
+                $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT],
+                $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT],
+                $product[SpyAbstractProductTableMap::COL_SKU],
+                urlencode($product['name'])
+            );
+
             $results[] = [
                 SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT],
                 SpyAbstractProductTableMap::COL_SKU => $product[SpyAbstractProductTableMap::COL_SKU],
                 SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => $product['name'],
-                'checkbox' => '<input id="all_products_checkbox_' .
+                'checkbox' => $checkbox_html /*'<input id="all_products_checkbox_' .
                     $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT] .
                     '" type="checkbox" onclick="allProductsClickMarkAsSelected(this.checked, ' .
                     $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT] .
                     ', \'' . $product[SpyAbstractProductTableMap::COL_SKU] . '\', \'' .
-                    urlencode($product['name']) . '\'); return" /> ',
+                    urlencode($product['name']) . '\'); return" /> ',*/
             ];
         }
         unset($queryResults);

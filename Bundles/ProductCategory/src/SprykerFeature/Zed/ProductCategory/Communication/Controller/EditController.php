@@ -65,7 +65,7 @@ class EditController extends AddController
                 $this->updateCategoryNodeChild($currentCategoryTransfer, $locale, $data);
             }
 
-            $this->updateProductCategoryPreconfig($currentCategoryTransfer, (array) json_decode($data['product_category_preconfig']));
+            $this->updateProductCategoryPreconfig($currentCategoryTransfer, (array) json_decode($data['product_category_preconfig'], true));
 
             $parentIdList[] = $currentCategoryNodeTransfer->getFkParentCategoryNode();
             $parentIdList = array_flip($parentIdList);
@@ -76,7 +76,7 @@ class EditController extends AddController
                 $data
             );
 
-            $this->updateProductOrder($currentCategoryTransfer, (array) json_decode($data['product_order']));
+            $this->updateProductOrder($currentCategoryTransfer, (array) json_decode($data['product_order'], true));
 
             $this->addSuccessMessage('The category was saved successfully.');
 
