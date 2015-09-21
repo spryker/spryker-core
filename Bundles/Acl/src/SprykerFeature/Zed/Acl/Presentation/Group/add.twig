@@ -5,6 +5,10 @@
 {% block head_title page_title %}
 {% block section_title page_title %}
 
+{% block action %}
+    <a href="/acl/group/" class="btn btn-sm btn-default">{{ 'List Groups' | trans }}</a>
+{% endblock %}
+
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: page_title } %}
