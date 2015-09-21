@@ -29,8 +29,7 @@ class HttpClient extends AbstractHttpClient
         AuthClientInterface $authClient,
         $baseUrl,
         $rawToken
-    )
-    {
+    ) {
         parent::__construct($factory, $authClient, $baseUrl);
         $this->rawToken = $rawToken;
     }
@@ -41,7 +40,7 @@ class HttpClient extends AbstractHttpClient
     public function getHeaders()
     {
         $headers = [
-            'Auth-Token' => $this->authClient->generateToken($this->rawToken)
+            'Auth-Token' => $this->authClient->generateToken($this->rawToken),
         ];
 
         return $headers;

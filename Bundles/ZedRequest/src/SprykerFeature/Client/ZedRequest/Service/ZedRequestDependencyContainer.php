@@ -7,7 +7,6 @@
 namespace SprykerFeature\Client\ZedRequest\Service;
 
 use Generated\Client\Ide\FactoryAutoCompletion\ZedRequestService;
-use SprykerEngine\Client\Kernel\Locator;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerEngine\Shared\Config;
 use SprykerFeature\Client\ZedRequest\Service\Client\HttpClient;
@@ -32,6 +31,7 @@ class ZedRequestDependencyContainer extends AbstractServiceDependencyContainer
 
     /**
      * @return HttpClient
+     *
      * @todo remove Factory usage: https://spryker.atlassian.net/browse/CD-439
      */
     protected function createHttpClient()
