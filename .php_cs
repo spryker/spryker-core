@@ -26,7 +26,7 @@ return Symfony\CS\Config\Config::create()
             'double_arrow_multiline_whitespaces',
             'duplicate_semicolon',
             'empty_enclosing_lines',
-            'empty_return',
+            '-empty_return',
             'encoding',
             'extra_empty_lines',
             'include',
@@ -68,6 +68,7 @@ return Symfony\CS\Config\Config::create()
             'unary_operators_spaces',
             'unused_use',
             'whitespacy_lines',
+            'return_fixer',
         ]
     )
     ->addCustomFixer(new \SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\EmptyEnclosingLinesFixer())
