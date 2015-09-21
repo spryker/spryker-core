@@ -6,15 +6,14 @@
 
 {% block content %}
 
-        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'CMS blocks' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'CMS blocks' } %}
 
+        {% block widget_content %}
 
-                {% block widget_content %}
+            {{ blocks | raw }}
+            
+        {% endblock %}
 
-                        {{ blocks | raw }}
-
-                {% endblock %}
-
-        {% endembed %}
+    {% endembed %}
 
 {% endblock %}
