@@ -40,7 +40,7 @@ class Api implements ApiInterface
     /**
      * @static
      *
-     * @return $this
+     * @return self
      */
     public static function getInstance()
     {
@@ -55,9 +55,9 @@ class Api implements ApiInterface
      * Report an error at this line of code, with a complete stack trace.
      *
      * @param $message
-     * @param Exception $e
+     * @param \Exception $e
      *
-     * @return $this
+     * @return self
      */
     public function noticeError($message, \Exception $e)
     {
@@ -78,7 +78,7 @@ class Api implements ApiInterface
      *
      * @param $name
      *
-     * @return $this
+     * @return self
      */
     public function setAppName($name)
     {
@@ -103,7 +103,7 @@ class Api implements ApiInterface
      *
      * @param $name
      *
-     * @return $this
+     * @return self
      */
     public function setNameOfTransaction($name)
     {
@@ -132,7 +132,7 @@ class Api implements ApiInterface
      * very long time to download even small files, and you wouldn't want that download time to skew the real
      * transaction time.
      *
-     * @return $this
+     * @return self
      */
     public function markEndOfTransaction()
     {
@@ -148,7 +148,7 @@ class Api implements ApiInterface
      * slow for known reasons and you do not want them always being reported as the transaction trace or skewing your
      * site averages.
      *
-     * @return $this
+     * @return self
      */
     public function markIgnoreTransaction()
     {
@@ -163,7 +163,7 @@ class Api implements ApiInterface
      * Do not generate Apdex metrics for this transaction. This is useful when you have either very short or very long
      * transactions (such as file downloads) that can skew your apdex score.
      *
-     * @return $this
+     * @return self
      */
     public function markIgnoreApdex()
     {
@@ -180,7 +180,7 @@ class Api implements ApiInterface
      *
      * @param $flag
      *
-     * @return $this
+     * @return self
      */
     public function markAsBackgroundJob($flag = true)
     {
@@ -199,7 +199,7 @@ class Api implements ApiInterface
      * @param $metricName
      * @param $value
      *
-     * @return $this
+     * @return self
      */
     public function addCustomMetric($metricName, $value)
     {
@@ -220,7 +220,7 @@ class Api implements ApiInterface
      * @param $key
      * @param $value
      *
-     * @return $this
+     * @return self
      */
     public function addCustomParameter($key, $value)
     {
@@ -237,7 +237,7 @@ class Api implements ApiInterface
      *
      * @param string $tracer
      *
-     * @return $this
+     * @return self
      */
     public function addCustomTracer($tracer = 'classname::function_name')
     {
@@ -255,7 +255,7 @@ class Api implements ApiInterface
      *
      * @param bool $flag
      *
-     * @return $this
+     * @return self
      */
     public function getBrowserTimingHeader($flag = true)
     {
@@ -273,7 +273,7 @@ class Api implements ApiInterface
      *
      * @param bool $flag
      *
-     * @return $this
+     * @return self
      */
     public function getBrowserTimingFooter($flag = true)
     {
@@ -288,7 +288,7 @@ class Api implements ApiInterface
      * Prevents the output filter from attempting to insert RUM JAvaScript for this current transaction. Useful for
      * AJAX calls, for example.
      *
-     * @return $this
+     * @return self
      */
     public function disableAutoRUM()
     {

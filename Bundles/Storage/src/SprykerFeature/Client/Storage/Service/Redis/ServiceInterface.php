@@ -14,14 +14,14 @@ interface ServiceInterface extends StorageClientInterface
     /**
      * @param array $config
      *
-     * @return $this
+     * @return self
      */
     public function setConfig(array $config);
 
     /**
      * @param $debug
      *
-     * @return $this
+     * @return self
      */
     public function setDebug($debug);
 

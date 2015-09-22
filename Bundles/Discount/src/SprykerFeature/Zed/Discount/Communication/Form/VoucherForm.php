@@ -37,7 +37,7 @@ class VoucherForm extends AbstractForm
     /**
      * Prepares form
      *
-     * @return VoucherForm
+     * @return self
      */
     protected function buildFormFields()
     {
@@ -85,7 +85,7 @@ class VoucherForm extends AbstractForm
     /**
      * Set the values for fields
      *
-     * @return $this
+     * @return array
      */
     protected function populateFormFields()
     {

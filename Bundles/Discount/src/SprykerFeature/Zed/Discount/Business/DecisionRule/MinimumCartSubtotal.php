@@ -18,7 +18,7 @@ class MinimumCartSubtotal // @TODO Missing interface
      * @param CalculableInterface $order
      * @param SpyDiscountDecisionRule $decisionRule
      *
-     * @return $this|ModelResult
+     * @return self|ModelResult
      */
     public function isMinimumCartSubtotalReached(CalculableInterface $order, SpyDiscountDecisionRule $decisionRule)
     {

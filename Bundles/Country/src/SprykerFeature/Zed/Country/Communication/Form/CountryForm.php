@@ -31,7 +31,7 @@ class CountryForm extends AbstractForm
     }
 
     /**
-     * @return $this
+     * @return self
      */
     protected function buildFormFields()
     {

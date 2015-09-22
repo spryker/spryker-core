@@ -80,7 +80,7 @@ class Service implements ServiceInterface
     /**
      * @param array $config
      *
-     * @return $this
+     * @return self
      */
     public function setConfig(array $config)
     {
@@ -100,7 +100,7 @@ class Service implements ServiceInterface
     /**
      * @param $resource
      *
-     * @return $this
+     * @return self
      */
     private function setResource($resource)
     {
@@ -134,7 +134,7 @@ class Service implements ServiceInterface
     /**
      * @param $debug
      *
-     * @return $this
+     * @return self
      */
     public function setDebug($debug)
     {

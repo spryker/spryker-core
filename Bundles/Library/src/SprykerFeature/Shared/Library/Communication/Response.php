@@ -70,7 +70,7 @@ class Response extends AbstractObject implements
     /**
      * @param array $errorMessages
      *
-     * @return $this
+     * @return self
      */
     public function addErrorMessages(array $errorMessages)
     {
@@ -84,7 +84,7 @@ class Response extends AbstractObject implements
     /**
      * @param Message $errorMessage
      *
-     * @return $this
+     * @return self
      */
     public function addErrorMessage(Message $errorMessage)
     {
@@ -121,7 +121,7 @@ class Response extends AbstractObject implements
     /**
      * @param Message $message
      *
-     * @return $this
+     * @return self
      */
     public function addMessage(Message $message)
     {
@@ -133,7 +133,7 @@ class Response extends AbstractObject implements
     /**
      * @param array $messages
      *
-     * @return $this
+     * @return self
      */
     public function addMessages(array $messages)
     {
@@ -155,7 +155,7 @@ class Response extends AbstractObject implements
     /**
      * @param bool $success
      *
-     * @return $this
+     * @return self
      */
     public function setSuccess($success)
     {
@@ -182,7 +182,7 @@ class Response extends AbstractObject implements
     /**
      * @param TransferInterface $transferObject
      *
-     * @return $this
+     * @return self
      */
     public function setTransfer(TransferInterface $transferObject)
     {

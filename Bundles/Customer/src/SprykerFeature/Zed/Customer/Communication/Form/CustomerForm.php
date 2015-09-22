@@ -57,7 +57,7 @@ class CustomerForm extends AbstractForm
     }
 
     /**
-     * @return $this
+     * @return self
      */
     public function buildFormFields()
     {
