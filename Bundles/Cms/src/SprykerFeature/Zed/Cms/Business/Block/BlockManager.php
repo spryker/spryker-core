@@ -9,9 +9,11 @@ namespace SprykerFeature\Zed\Cms\Business\Block;
 use Generated\Shared\Cms\CmsBlockInterface;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use SprykerFeature\Shared\Cms\CmsConfig;
+use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
 use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlock;
+use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlockQuery;
 
 class BlockManager implements BlockManagerInterface
 {
@@ -90,6 +92,14 @@ class BlockManager implements BlockManagerInterface
 
     /**
      * @param CmsBlockInterface $cmsBlockTransfer
+     */
+    public function touchBlockDelete(CmsBlockInterface $cmsBlockTransfer)
+    {
+        $this->touchFacade->touchDeleted(CmsConfig::RESOURCE_TYPE_BLOCK, $cmsBlockTransfer->getIdCmsBlock());
+    }
+
+    /**
+     * @param CmsBlockInterface $cmsBlockTransfer
      *
      * @return SpyCmsBlock
      */
@@ -116,6 +126,8 @@ class BlockManager implements BlockManagerInterface
         if (!$blockEntity->isModified()) {
             return $blockEntity;
         }
+
+        $this->touchBlockDeleteNecessary($cmsBlockTransfer, $blockEntity);
 
         $blockEntity->save();
 
@@ -148,5 +160,19 @@ class BlockManager implements BlockManagerInterface
         ;
 
         return $blockEntity;
+    }
+
+    /**
+     * @param CmsBlockInterface $cmsBlockTransfer
+     * @param SpyCmsBlock $blockEntity
+     */
+    protected function touchBlockDeleteNecessary(CmsBlockInterface $cmsBlockTransfer,SpyCmsBlock $blockEntity)
+    {
+        $blockName = $blockEntity->getName() . '-' . $blockEntity->getType() . '-' . $blockEntity->getValue();
+        $newBlockName = $cmsBlockTransfer->getName() . '-' . $cmsBlockTransfer->getType() . '-' . $cmsBlockTransfer->getValue();
+
+        if ($blockName !== $newBlockName) {
+            $this->touchBlockDelete($cmsBlockTransfer);
+        }
     }
 }
