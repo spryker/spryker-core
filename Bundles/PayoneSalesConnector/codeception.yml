@@ -1,4 +1,4 @@
-namespace: PayoneSalesConnectorToPayone
+namespace: PayoneSalesConnector
 
 paths:
     tests: tests
