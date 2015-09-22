@@ -11,7 +11,7 @@
     <transfer name="PageElement">
         <property name="idSearchPageElement" type="int" />
         <property name="elementKey" type="string" />
-        <property name="isElementActive" type="boolean" />
+        <property name="isElementActive" type="bool" />
         <property name="fkSearchDocumentAttribute" type="int" />
         <property name="fkSearchPageElementTemplate" type="int" />
     </transfer>
