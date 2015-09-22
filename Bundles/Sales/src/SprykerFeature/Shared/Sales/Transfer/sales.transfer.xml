@@ -110,6 +110,11 @@
         <property name="orderItems" type="Item[]" singular="orderItem" />
     </transfer>
 
+    <transfer name="OrderItemsAndExpenses">
+        <property name="orderItems" type="Item[]" singular="orderItem" />
+        <property name="expenses" type="Expense[]" singular="expense" />
+    </transfer>
+
     <transfer name="ProductOption">
         <property name="idOptionValueUsage" type="int" />
         <property name="labelOptionType" type="string" />
@@ -163,7 +168,13 @@
         <property name="orderId" type="string" />
     </transfer>
 
+    <transfer name="ItemSplit">
+        <property name="idOrderItem" type="integer" />
+        <property name="quantity" type="integer" />
+    </transfer>
+
     <transfer name="ItemSplitResponse">
+        <property name="idOrderItem" type="integer" />
         <property name="success" type="boolean" />
         <property name="validationMessages" type="array" singular="code" />
         <property name="successMessage" type="string" />

@@ -40,6 +40,14 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
+     * @return SpySalesExpenseQuery
+     */
+    public function querySalesExpense()
+    {
+        return $this->getFactory()->createPropelSpySalesExpenseQuery();
+    }
+
+    /**
      * @var int
      *
      * @return SpySalesOrderItemQuery

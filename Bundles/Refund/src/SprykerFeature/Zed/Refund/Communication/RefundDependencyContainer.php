@@ -7,13 +7,16 @@
 namespace SprykerFeature\Zed\Refund\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\RefundCommunication;
-use SprykerEngine\Zed\Refund\Communication\Table\RefundsTable;
+use Propel\Runtime\Collection\ObjectCollection;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use SprykerFeature\Shared\Library\Context;
+use SprykerFeature\Shared\Library\DateFormatter;
+use SprykerFeature\Zed\Refund\Business\RefundFacade;
 use SprykerFeature\Zed\Refund\Communication\Form\RefundForm;
+use SprykerFeature\Zed\Refund\Communication\Table\RefundsTable;
 use SprykerFeature\Zed\Refund\Persistence\RefundQueryContainer;
 use SprykerFeature\Zed\Refund\RefundDependencyProvider;
-use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
+use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainer;
 
 /**
  * @method RefundCommunication getFactory()
@@ -23,11 +26,14 @@ class RefundDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**
+     * @param ObjectCollection $orderItems
+     * @param ObjectCollection $expenses
+     *
      * @return RefundForm
      */
-    public function createRefundForm(Request $request)
+    public function createRefundForm(ObjectCollection $orderItems, ObjectCollection $expenses)
     {
-        return $this->getFactory()->createFormRefundForm($request);
+        return $this->getFactory()->createFormRefundForm($orderItems, $expenses);
     }
 
     /**
@@ -42,6 +48,22 @@ class RefundDependencyContainer extends AbstractCommunicationDependencyContainer
             $this->getRefundFacade(),
             new DateFormatter(Context::getInstance())
         );
+    }
+
+    /**
+     * @return SalesQueryContainer
+     */
+    public function getSalesQueryContainer()
+    {
+        return $this->getProvidedDependency(RefundDependencyProvider::QUERY_CONTAINER_SALES);
+    }
+
+    /**
+     * @return RefundFacade
+     */
+    protected function getRefundFacade()
+    {
+        return $this->getProvidedDependency(RefundDependencyProvider::FACADE_REFUND);
     }
 
 }

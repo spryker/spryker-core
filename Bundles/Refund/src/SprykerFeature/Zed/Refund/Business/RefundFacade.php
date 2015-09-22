@@ -27,7 +27,7 @@ class RefundFacade extends AbstractFacade
      */
     public function calculateAmount($orderItems, $orderEntity)
     {
-        $this->getDependencyContainer()->getRefundCalculator()->calculateAmount($orderItems, $orderEntity);
+        $this->getDependencyContainer()->createRefundCalculator()->calculateAmount($orderItems, $orderEntity);
     }
 
     /**

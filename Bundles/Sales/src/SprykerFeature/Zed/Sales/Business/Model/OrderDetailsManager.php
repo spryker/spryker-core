@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Sales\Business\Model;
 use Generated\Shared\Transfer\ExpensesTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\OrderItemsAndExpensesTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
@@ -259,6 +260,32 @@ class OrderDetailsManager
             $expensesTransfer->addCalculationExpense($expenseTransfer);
         }
         $orderTransfer->setExpenses($expensesTransfer);
+    }
+
+    /**
+     * @param int $idRefund
+     * @param OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer
+     */
+    public function updateOrderItemsAndExpensesAfterRefund($idRefund, $orderItemsAndExpensesTransfer)
+    {
+        foreach ($orderItemsAndExpensesTransfer->getOrderItems() as $orderItem) {
+            $orderItemEntity = $this->queryContainer
+                ->querySalesOrderItem()
+                ->filterByIdSalesOrderItem($orderItem->getIdSalesOrderItem())
+                ->findOne();
+
+            $orderItemEntity->setFkRefund($idRefund);
+            $orderItemEntity->save();
+        }
+        foreach ($orderItemsAndExpensesTransfer->getExpenses()  as $expense) {
+            $expenseEntity = $this->queryContainer
+                ->querySalesExpense()
+                ->filterByIdSalesExpense($expense->getIdExpense())
+                ->findOne();
+
+            $expenseEntity->setFkRefund($idRefund);
+            $expenseEntity->save();
+        }
     }
 
 }

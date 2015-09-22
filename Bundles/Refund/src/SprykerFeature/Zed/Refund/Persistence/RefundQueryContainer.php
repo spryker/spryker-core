@@ -16,6 +16,14 @@ use SprykerFeature\Zed\Refund\Persistence\Propel\SpyRefundQuery;
 class RefundQueryContainer extends AbstractQueryContainer implements RefundQueryContainerInterface
 {
 
+    /**
+     * @return SpyRefundQuery
+     */
+    public function queryRefund()
+    {
+        return (new Propel\SpyRefundQuery());
+    }
+
     public function queryRefundsByIdSalesOrder($idSalesOrder)
     {
         $query = SpyRefundQuery::create();
@@ -31,7 +39,7 @@ class RefundQueryContainer extends AbstractQueryContainer implements RefundQuery
      */
     public function queryRefundByIdRefund($idMethod)
     {
-        $query = $this->queryMethods();
+        $query = $this->queryRefund();
         $query->filterByIdRefund($idMethod);
 
         return $query;

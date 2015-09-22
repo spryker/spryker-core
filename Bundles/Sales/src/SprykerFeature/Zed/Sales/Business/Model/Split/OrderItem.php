@@ -78,17 +78,17 @@ class OrderItem implements ItemInterface
 
         try {
             $this->getConnection()->beginTransaction();
-            $this->copy($salesOrderItem, $quantityToSplit);
+            $newSalesOrderItem = $this->copy($salesOrderItem, $quantityToSplit);
             $this->updateParentQuantity($salesOrderItem, $quantityToSplit);
 
             $this->getConnection()->commit();
 
             return $splitResponse
                 ->setSuccess(true)
+                ->setIdOrderItem($newSalesOrderItem->getIdSalesOrderItem())
                 ->setSuccessMessage(
                     sprintf(Validation\Messages::SPLIT_SUCCESS_MESSAGE, $salesOrderItem->getIdSalesOrderItem())
                 );
-
         } catch (\Exception $e) {
             $this->getConnection()->rollBack();
             throw $e;
@@ -118,6 +118,8 @@ class OrderItem implements ItemInterface
     /**
      * @param SpySalesOrderItem $salesOrderItem
      * @param int $quantity
+     *
+     * @return SpySalesOrderItem;
      */
     protected function copy(SpySalesOrderItem $salesOrderItem, $quantity)
     {
@@ -126,6 +128,8 @@ class OrderItem implements ItemInterface
         foreach ($salesOrderItem->getOptions() as $salesOrderItemOption) {
             $this->createOrderItemOptionCopy($salesOrderItemOption, $copyOfSalesOrderItem);
         }
+
+        return $copyOfSalesOrderItem;
     }
 
     /**

@@ -29,6 +29,7 @@
     </transfer>
 
     <transfer name="Expense">
+        <property name="idExpense" type="int" />
         <property name="type" type="string" />
         <property name="grossPrice" type="int" />
         <property name="priceToPay" type="int" />

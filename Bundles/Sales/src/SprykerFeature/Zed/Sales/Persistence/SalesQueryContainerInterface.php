@@ -47,6 +47,11 @@ interface SalesQueryContainerInterface
     public function querySalesOrderItem();
 
     /**
+     * @return SpySalesExpenseQuery
+     */
+    public function querySalesExpense();
+
+    /**
      * @param int $orderId
      *
      * @return SpySalesExpenseQuery
