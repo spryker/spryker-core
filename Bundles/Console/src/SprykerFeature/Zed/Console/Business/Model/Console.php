@@ -105,7 +105,7 @@ class Console extends SymfonyCommand
     /**
      * @param AbstractQueryContainer $queryContainer
      *
-     * @return $this
+     * @return self
      */
     public function setQueryContainer(AbstractQueryContainer $queryContainer)
     {

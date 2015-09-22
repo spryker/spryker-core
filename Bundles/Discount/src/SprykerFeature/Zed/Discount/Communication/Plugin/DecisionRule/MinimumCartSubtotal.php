@@ -22,7 +22,7 @@ class MinimumCartSubtotal extends AbstractDecisionRule implements DiscountDecisi
      * @param DiscountInterface $discountTransfer
      * @param CalculableInterface $container
      *
-     * @return $this|ModelResult
+     * @return ModelResult
      */
     public function check(
         DiscountInterface $discountTransfer,

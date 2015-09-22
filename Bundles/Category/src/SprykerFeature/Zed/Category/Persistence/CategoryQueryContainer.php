@@ -103,7 +103,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @param int $idCategory
      * @param $idParentNode
      * 
-     * @return $this|ModelCriteria
+     * @return SpyCategoryNodeQuery
      */
     public function queryNodeByIdCategoryAndParentNode($idCategory, $idParentNode)
     {

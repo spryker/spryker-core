@@ -65,7 +65,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      * @param CalculableInterface $container
      * @param DecisionRule $decisionRule
      *
-     * @return $this|ModelResult
+     * @return ModelResult
      */
     public function isMinimumCartSubtotalReached(CalculableInterface $container, DecisionRule $decisionRule)
     {

@@ -30,7 +30,7 @@ trait AdapterTrait
     /**
      * @param array $config
      *
-     * @return $this
+     * @return self
      */
     public function setConfig(array $config)
     {
@@ -50,7 +50,7 @@ trait AdapterTrait
     /**
      * @param $resource
      *
-     * @return $this
+     * @return self
      */
     protected function setResource($resource)
     {
@@ -84,7 +84,7 @@ trait AdapterTrait
     /**
      * @param $debug
      *
-     * @return $this
+     * @return self
      */
     public function setDebug($debug)
     {

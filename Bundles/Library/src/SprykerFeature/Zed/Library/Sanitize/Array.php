@@ -64,7 +64,7 @@ class SprykerFeature_Zed_Library_Sanitize_Array implements Iterator, Countable, 
      * @param array $array
      * @param $filterSet
      *
-     * @return $this
+     * @return self
      */
     public static function fromArray(array $array, $filterSet)
     {

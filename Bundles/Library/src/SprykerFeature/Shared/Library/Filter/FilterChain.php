@@ -49,7 +49,7 @@ class FilterChain implements FilterInterface
     /**
      * @param FilterInterface|Callable $filter
      *
-     * @return $this
+     * @return self
      */
     public function addFilter($filter)
     {

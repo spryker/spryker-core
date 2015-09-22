@@ -224,7 +224,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
     /**
      * @param ModelCriteria $expandableQuery
      *
-     * @return $this
+     * @return self
      */
     public function joinConcreteProducts(ModelCriteria $expandableQuery)
     {
@@ -257,7 +257,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
      * @param ModelCriteria $expandableQuery
      * @param LocaleTransfer $locale
      *
-     * @return $this
+     * @return self
      */
     public function joinProductQueryWithLocalizedAttributes(ModelCriteria $expandableQuery, LocaleTransfer $locale)
     {

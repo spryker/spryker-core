@@ -44,7 +44,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @param array $definition
      *
-     * @return $this
+     * @return self
      */
     public function setDefinition(array $definition)
     {
@@ -66,7 +66,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @param string $name
      *
-     * @return $this
+     * @return self
      */
     private function setName($name)
     {
@@ -89,7 +89,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @param array $interfaces
      *
-     * @return $this
+     * @return self
      */
     private function addInterfaces(array $interfaces)
     {

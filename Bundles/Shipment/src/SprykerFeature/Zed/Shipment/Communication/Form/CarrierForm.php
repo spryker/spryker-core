@@ -24,7 +24,6 @@ class CarrierForm extends AbstractForm
 
     /**
      * @param SpyShipmentCarrierQuery $carrierQuery
-     * @param string $type
      */
     public function __construct(SpyShipmentCarrierQuery $carrierQuery)
     {
@@ -32,7 +31,7 @@ class CarrierForm extends AbstractForm
     }
 
     /**
-     * @return $this
+     * @return self
      */
     protected function buildFormFields()
     {
@@ -61,7 +60,7 @@ class CarrierForm extends AbstractForm
         $result = [];
         $carrierId = $this->request->get(self::CARRIER_ID);
 
-        if (is_null($carrierId) === false) {
+        if (null !== $carrierId) {
             $carrier = $this->carrierQuery->findOneByIdShipmentCarrier($carrierId);
             $result = [
                 self::NAME_FIELD => $carrier->getFkGlossaryKeyCarrierName(),
