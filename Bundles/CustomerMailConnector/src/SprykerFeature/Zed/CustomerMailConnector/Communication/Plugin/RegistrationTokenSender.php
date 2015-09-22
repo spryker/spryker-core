@@ -16,7 +16,6 @@ use SprykerFeature\Zed\CustomerMailConnector\Communication\CustomerMailConnector
  */
 class RegistrationTokenSender extends AbstractSender implements RegistrationTokenSenderPluginInterface
 {
-
     /**
      * @param string $email
      * @param string $token

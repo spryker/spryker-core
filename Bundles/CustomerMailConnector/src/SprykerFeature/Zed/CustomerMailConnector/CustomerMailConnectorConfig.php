@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\CustomerMailConnector;
 
-use Pyz\Shared\Mail\MailConfig;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use SprykerFeature\Shared\Customer\CustomerConfig;
 
 class CustomerMailConnectorConfig extends AbstractBundleConfig
 {
@@ -17,7 +17,7 @@ class CustomerMailConnectorConfig extends AbstractBundleConfig
      */
     public function getRegistrationToken()
     {
-        return MailConfig::REGISTRATION_TOKEN;
+        return $this->get(CustomerConfig::SHOP_MAIL_REGISTRATION_TOKEN);
     }
 
     /**
@@ -25,6 +25,6 @@ class CustomerMailConnectorConfig extends AbstractBundleConfig
      */
     public function getRegistrationSubject()
     {
-        return MailConfig::REGISTRATION_SUBJECT;
+        return $this->get(CustomerConfig::SHOP_MAIL_REGISTRATION_SUBJECT);
     }
 }
