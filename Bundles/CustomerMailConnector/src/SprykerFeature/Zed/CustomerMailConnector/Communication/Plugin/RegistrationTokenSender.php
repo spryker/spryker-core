@@ -16,10 +16,6 @@ use SprykerFeature\Zed\CustomerMailConnector\Communication\CustomerMailConnector
  */
 class RegistrationTokenSender extends AbstractSender implements RegistrationTokenSenderPluginInterface
 {
-
-    const SUBJECT = 'registration.token.sender.subject';
-    const TEMPLATE = 'registration.token';
-
     /**
      * @param string $email
      * @param string $token
@@ -28,13 +24,15 @@ class RegistrationTokenSender extends AbstractSender implements RegistrationToke
      */
     public function send($email, $token)
     {
+        $config = $this->getDependencyContainer()->getConfig();
+
         $mailTransfer = new MailTransfer();
         $mailRecipientTransfer = new MailRecipientTransfer();
         $mailRecipientTransfer->setEmail($email);
 
         $mailTransfer->addRecipient($mailRecipientTransfer);
-        $mailTransfer->setSubject(self::SUBJECT);
-        $mailTransfer->setTemplateName(self::TEMPLATE);
+        $mailTransfer->setSubject($config->getRegistrationSubject());
+        $mailTransfer->setTemplateName($config->getRegistrationToken());
         $mailTransfer->setMerge(true);
         $mailTransfer->setMergeLanguage('handlebars');
         $globalMergeVars = [
