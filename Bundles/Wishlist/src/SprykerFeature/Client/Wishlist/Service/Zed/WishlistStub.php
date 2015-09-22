@@ -19,11 +19,11 @@ class WishlistStub implements WishlistStubInterface
     protected $zedStub;
 
     /**
-     * @param ZedRequestClient $zedClientStub
+     * @param ZedRequestClient $zedStub
      */
-    public function __construct(ZedRequestClient $zedClientStub)
+    public function __construct(ZedRequestClient $zedStub)
     {
-        $this->zedStub = $zedClientStub;
+        $this->zedStub = $zedStub;
     }
 
     /**
