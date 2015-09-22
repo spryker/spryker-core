@@ -16,14 +16,14 @@ class WishlistStub implements WishlistStubInterface
     /**
      * @var ZedRequestClient
      */
-    private $zedClientStub;
+    protected $zedStub;
 
     /**
-     * @param ZedRequestClient $zedClientStub
+     * @param ZedRequestClient $zedStub
      */
-    public function __construct(ZedRequestClient $zedClientStub)
+    public function __construct(ZedRequestClient $zedStub)
     {
-        $this->zedClientStub = $zedClientStub;
+        $this->zedStub = $zedStub;
     }
 
     /**
@@ -33,7 +33,7 @@ class WishlistStub implements WishlistStubInterface
      */
     public function addItem(WishlistChangeInterface $wishlistChange)
     {
-        return $this->zedClientStub->call('/wishlist/gateway/add-item', $wishlistChange);
+        return $this->zedStub->call('/wishlist/gateway/add-item', $wishlistChange);
     }
 
     /**
@@ -43,7 +43,7 @@ class WishlistStub implements WishlistStubInterface
      */
     public function removeItem(WishlistChangeInterface $wishlistChange)
     {
-        return $this->zedClientStub->call('/wishlist/gateway/remove-item', $wishlistChange);
+        return $this->zedStub->call('/wishlist/gateway/remove-item', $wishlistChange);
     }
 
     /**
@@ -53,7 +53,7 @@ class WishlistStub implements WishlistStubInterface
      */
     public function descreaseQuantity(WishlistChangeInterface $wishlistChange)
     {
-        return $this->zedClientStub->call('/wishlist/gateway/decrease-quantity', $wishlistChange);
+        return $this->zedStub->call('/wishlist/gateway/decrease-quantity', $wishlistChange);
     }
 
     /**
@@ -63,7 +63,7 @@ class WishlistStub implements WishlistStubInterface
      */
     public function increaseQuantity(WishlistChangeInterface $wishlistChange)
     {
-        return $this->zedClientStub->call('/wishlist/gateway/increase-quantity', $wishlistChange);
+        return $this->zedStub->call('/wishlist/gateway/increase-quantity', $wishlistChange);
     }
 
     /**
@@ -73,7 +73,7 @@ class WishlistStub implements WishlistStubInterface
      */
     public function getCustomerWishlist(CustomerInterface $customer)
     {
-        return $this->zedClientStub->call('/wishlist/gateway/get-customer-wishlist', $customer);
+        return $this->zedStub->call('/wishlist/gateway/get-customer-wishlist', $customer);
     }
 
 
