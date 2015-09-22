@@ -13,7 +13,6 @@ use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
 use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlock;
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlockQuery;
 
 class BlockManager implements BlockManagerInterface
 {
@@ -128,8 +127,6 @@ class BlockManager implements BlockManagerInterface
             return $blockEntity;
         }
 
-
-
         $blockEntity->save();
 
         return $blockEntity;
@@ -167,7 +164,7 @@ class BlockManager implements BlockManagerInterface
      * @param CmsBlockInterface $cmsBlockTransfer
      * @param SpyCmsBlock $blockEntity
      */
-    protected function touchBlockDeleteNecessary(CmsBlockInterface $cmsBlockTransfer,SpyCmsBlock $blockEntity)
+    protected function touchBlockDeleteNecessary(CmsBlockInterface $cmsBlockTransfer, SpyCmsBlock $blockEntity)
     {
         $blockName = $blockEntity->getName() . '-' . $blockEntity->getType() . '-' . $blockEntity->getValue();
         $newBlockName = $cmsBlockTransfer->getName() . '-' . $cmsBlockTransfer->getType() . '-' . $cmsBlockTransfer->getValue();
@@ -177,4 +174,5 @@ class BlockManager implements BlockManagerInterface
             $this->touchBlockDelete($cmsBlockTransfer);
         }
     }
+
 }
