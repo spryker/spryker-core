@@ -150,37 +150,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         $nodeQuery = SpyCategoryNodeQuery::create()
             ->joinParentCategoryNode('parentNode')
             ->addJoin(
-                'parentNode.fk_category',
-                SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
-                Criteria::INNER_JOIN
-            )
-            ->addAnd(
-                SpyCategoryAttributeTableMap::COL_FK_LOCALE,
-                $idLocale,
-                Criteria::EQUAL
-            )
-            ->addAnd(
-                SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE,
-                $idNode,
-                Criteria::EQUAL
-            )
-        ;
-
-        return $nodeQuery;
-    }
-
-    /**
-     * @param int $idNode
-     * @param int $idLocale
-     *
-     * @return SpyCategoryNodeQuery
-     */
-    public function queryFirstLevelChildrenWithAttributesByIdLocale($idNode, $idLocale)
-    {
-        $nodeQuery = SpyCategoryNodeQuery::create()
-            ->joinParentCategoryNode('parentNode')
-            ->addJoin(
-                'parentNode.fk_category',
+                SpyCategoryNodeTableMap::COL_FK_CATEGORY,
                 SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
                 Criteria::INNER_JOIN
             )
@@ -659,12 +629,16 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             'category_name'
         );
         $expandableQuery->withColumn(
-            $tableAlias . '.meta_keywords',
-            'category_meta_keywords'
+            $tableAlias . '.meta_title',
+            'category_meta_title'
         );
         $expandableQuery->withColumn(
             $tableAlias . '.meta_description',
             'category_meta_description'
+        );
+        $expandableQuery->withColumn(
+            $tableAlias . '.meta_keywords',
+            'category_meta_keywords'
         );
         $expandableQuery->withColumn(
             $tableAlias . '.category_image_name',

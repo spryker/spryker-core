@@ -4,11 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Category\Dependency\Facade;
+namespace SprykerFeature\Zed\ProductCategory\Dependency\Facade;
 
-interface CategoryToTouchInterface
+interface ProductCategoryToTouchInterface
 {
-
     /**
      * @param string $itemType
      * @param int $itemId
@@ -24,5 +23,4 @@ interface CategoryToTouchInterface
      * @return bool
      */
     public function touchDeleted($itemType, $itemId);
-
 }

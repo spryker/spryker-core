@@ -16,8 +16,10 @@ use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeExc
 use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
+use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
+use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
 
 class ProductCategoryManager implements ProductCategoryManagerInterface
 {
@@ -38,25 +40,33 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     protected $categoryFacade;
 
     /**
+     * @var ProductCategoryToTouchInterface
+     */
+    protected $touchFacade;
+
+    /**
      * @var AutoCompletion
      */
-    private $locator;
+    protected $locator;
 
     /**
      * @param ProductCategoryQueryContainerInterface $productCategoryQueryContainer
      * @param ProductCategoryToProductInterface $productFacade
      * @param ProductCategoryToCategoryInterface $categoryFacade
      * @param LocatorLocatorInterface $locator
+     * @param ProductCategoryToTouchInterface $touchFacade
      */
     public function __construct(
         ProductCategoryQueryContainerInterface $productCategoryQueryContainer,
         ProductCategoryToProductInterface $productFacade,
         ProductCategoryToCategoryInterface $categoryFacade,
+        ProductCategoryToTouchInterface $touchFacade,
         LocatorLocatorInterface $locator
     ) {
         $this->productCategoryQueryContainer = $productCategoryQueryContainer;
         $this->productFacade = $productFacade;
         $this->categoryFacade = $categoryFacade;
+        $this->touchFacade = $touchFacade;
         $this->locator = $locator;
     }
 
@@ -164,43 +174,118 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     {
         return $this->productCategoryQueryContainer
             ->queryProductCategoryMappingByIds($idCategory, $idAbstractProduct)
-            ;
+        ;
     }
 
     /**
      * @param int $idCategory
-     * @param array $product_ids_to_assign
+     * @param array $productIdsToAssign
      *
      * @throws PropelException
      */
-    public function createProductCategoryMappings($idCategory, array $product_ids_to_assign)
+    public function createProductCategoryMappings($idCategory, array $productIdsToAssign)
     {
-        foreach ($product_ids_to_assign as $product_id) {
-            $mapping = $this->getProductCategoryMappingById($idCategory, $product_id)
+        foreach ($productIdsToAssign as $idProduct) {
+            $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
                 ->findOneOrCreate();
 
-            if ($mapping) {
-                $mapping->setFkCategory($idCategory);
-                $mapping->setFkAbstractProduct($product_id);
-                $mapping->save();
+            if (null === $mapping) {
+                continue;
             }
+
+            $mapping->setFkCategory($idCategory);
+            $mapping->setFkAbstractProduct($idProduct);
+            $mapping->save();
+
+            $this->touchAbstractProductActive($idProduct);
         }
     }
 
     /**
      * @param int $idCategory
-     * @param array $product_ids_to_deassign
+     * @param array $productIdsToDeassign
      */
-    public function removeProductCategoryMappings($idCategory, array $product_ids_to_deassign)
+    public function removeProductCategoryMappings($idCategory, array $productIdsToDeassign)
     {
-        foreach ($product_ids_to_deassign as $product_id) {
-            $mapping = $this->getProductCategoryMappingById($idCategory, $product_id)
+        foreach ($productIdsToDeassign as $idProduct) {
+            $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
                 ->findOne();
 
-            if ($mapping) {
-                $mapping->delete();
+            if (null === $mapping) {
+                continue;
             }
+
+            $mapping->delete();
+
+            //yes, Active is correct, it should update touch items, not mark them to delete
+            //it's just a change to the mappings and not an actual abstract product
+            $this->touchAbstractProductActive($idProduct);
         }
     }
 
+    /**
+     * @param int $idCategory
+     * @param array $productOrderList
+     * @throws PropelException
+     */
+    public function updateProductMappingsOrder($idCategory, array $productOrderList)
+    {
+        foreach ($productOrderList as $idProduct => $order) {
+            $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
+                ->findOne();
+
+            if (null === $mapping) {
+                continue;
+            }
+
+            $mapping->setFkCategory($idCategory);
+            $mapping->setFkAbstractProduct($idProduct);
+            $mapping->setProductOrder($order);
+            $mapping->save();
+
+            $this->touchAbstractProductActive($idProduct);
+        }
+    }
+
+    /**
+     * @param int $idCategory
+     * @param array $productPreconfigList
+     * @throws PropelException
+     */
+    public function updateProductMappingsPreconfig($idCategory, array $productPreconfigList)
+    {
+        foreach ($productPreconfigList as $idProduct => $idPreconfigProduct) {
+            $idPreconfigProduct = (int) $idPreconfigProduct;
+            $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
+                ->findOne();
+
+            if (null === $mapping) {
+                continue;
+            }
+
+            $idPreconfigProduct = $idPreconfigProduct <= 0 ? null : $idPreconfigProduct;
+            $mapping->setFkCategory($idCategory);
+            $mapping->setFkAbstractProduct($idProduct);
+            $mapping->setFkPreconfigProduct($idPreconfigProduct);
+            $mapping->save();
+
+            $this->touchAbstractProductActive($idProduct);
+        }
+    }
+
+    /**
+     * @param int $idAbstractProduct
+     */
+    protected function touchAbstractProductActive($idAbstractProduct)
+    {
+        $this->touchFacade->touchActive(ProductCategoryConfig::RESOURCE_TYPE_ABSTRACT_PRODUCT, $idAbstractProduct);
+    }
+
+    /**
+     * @param int $idAbstractProduct
+     */
+    protected function touchAbstractProductDeleted($idAbstractProduct)
+    {
+        $this->touchFacade->touchDeleted(ProductCategoryConfig::RESOURCE_TYPE_ABSTRACT_PRODUCT, $idAbstractProduct);
+    }
 }

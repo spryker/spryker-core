@@ -24,6 +24,10 @@ class CategoryFormEdit extends CategoryFormAdd
     
     const CATEGORY_IS_ACTIVE = 'is_active';
     const CATEGORY_IS_IN_MENU = 'is_in_menu';
+    const CATEGORY_IS_CLICKABLE = 'is_clickable';
+    const CATEGORY_NODE_IS_MAIN = 'is_main';
+    
+    const EXTRA_PARENTS = 'extra_parents';
 
     /**
      * @return CategoryFormAdd
@@ -34,7 +38,7 @@ class CategoryFormEdit extends CategoryFormAdd
             'constraints' => [
                 new NotBlank(),
             ],
-        ])
+            ])
             ->addText(self::ATTRIBUTE_META_TITLE, [
                 'label' => 'Meta Title',
             ])
@@ -59,15 +63,24 @@ class CategoryFormEdit extends CategoryFormAdd
             ->addCheckbox(self::CATEGORY_IS_IN_MENU, [
                 'label' => 'Show in Menu',
             ])
+            ->addCheckbox(self::CATEGORY_IS_CLICKABLE, [
+                'label' => 'Clickable',
+            ])
             ->addSelect2ComboBox(self::FK_PARENT_CATEGORY_NODE, [
                 'label' => 'Parent',
                 'choices' => $this->getCategories(),
                 'constraints' => [
                     new NotBlank(),
                 ],
+                'multiple' => false,
+            ])
+            ->addSelect2ComboBox(self::EXTRA_PARENTS, [
+                'label' => 'Extra Categories',
+                'choices' => $this->getCategories(),
                 'multiple' => true,
             ])
             ->addHidden(self::PK_CATEGORY_NODE)
+            ->addHidden(self::FK_NODE_CATEGORY)
             ->addHidden('products_to_be_assigned', [
                 'attr' => [
                     'id' => 'products_to_be_assigned'
@@ -76,6 +89,16 @@ class CategoryFormEdit extends CategoryFormAdd
             ->addHidden('products_to_be_de_assigned', [
                 'attr' => [
                     'id' => 'products_to_be_de_assigned'
+                ]
+            ])
+            ->addHidden('product_order', [
+                'attr' => [
+                    'id' => 'product_order'
+                ]
+            ])
+            ->addHidden('product_category_preconfig', [
+                'attr' => [
+                    'id' => 'product_category_preconfig'
                 ]
             ])
         ;
@@ -104,11 +127,19 @@ class CategoryFormEdit extends CategoryFormAdd
             ->innerJoinNode()
             ->withColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE, self::FK_PARENT_CATEGORY_NODE)
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, self::PK_CATEGORY_NODE)
+            ->withColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY, self::FK_NODE_CATEGORY)
+            ->withColumn(SpyCategoryNodeTableMap::COL_IS_MAIN, self::CATEGORY_NODE_IS_MAIN)
             ->findOne()
         ;
         
         if ($category) {
+            $category = $category->toArray();
+            
             $nodeList = $this->categoryQueryContainer->queryNodesByCategoryId($this->idCategory)
+                ->where(
+                    SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE . ' <> ?',
+                    $category[self::PK_CATEGORY_NODE]
+                )
                 ->find()
             ;
             
@@ -117,12 +148,13 @@ class CategoryFormEdit extends CategoryFormAdd
                 $nodeIds[] = $node->getFkParentCategoryNode();
             }
             
-            $category = $category->toArray();
+            
 
             $fields = [
                 self::PK_CATEGORY => $category[self::PK_CATEGORY],
                 self::PK_CATEGORY_NODE => $category[self::PK_CATEGORY_NODE],
-                self::FK_PARENT_CATEGORY_NODE => $nodeIds,
+                self::FK_PARENT_CATEGORY_NODE => $category[self::FK_PARENT_CATEGORY_NODE],
+                self::FK_NODE_CATEGORY => $category[self::FK_NODE_CATEGORY],
                 self::NAME => $category[self::NAME],
                 //meta
                 self::ATTRIBUTE_META_TITLE => $category[self::ATTRIBUTE_META_TITLE],
@@ -137,6 +169,10 @@ class CategoryFormEdit extends CategoryFormAdd
                 //category
                 self::CATEGORY_IS_ACTIVE => $category[self::CATEGORY_IS_ACTIVE],
                 self::CATEGORY_IS_IN_MENU => $category[self::CATEGORY_IS_IN_MENU],
+                self::CATEGORY_IS_CLICKABLE => $category[self::CATEGORY_IS_CLICKABLE],
+                self::CATEGORY_NODE_IS_MAIN => $category[self::CATEGORY_NODE_IS_MAIN],
+
+                self::EXTRA_PARENTS => $nodeIds,
             ];
         }
 
@@ -152,19 +188,28 @@ class CategoryFormEdit extends CategoryFormAdd
         $fields = parent::getDefaultFormFields();
 
         return array_merge($fields, [
+            self::PK_CATEGORY => null,
+            self::PK_CATEGORY_NODE => null,
+            self::FK_PARENT_CATEGORY_NODE => null,
+            self::FK_NODE_CATEGORY => null,
+            self::NAME => null,
             //meta
-            self::ATTRIBUTE_META_TITLE => '',
-            self::ATTRIBUTE_META_DESCRIPTION => '',
-            self::ATTRIBUTE_META_KEYWORDS => '',
+            self::ATTRIBUTE_META_TITLE => null,
+            self::ATTRIBUTE_META_DESCRIPTION => null,
+            self::ATTRIBUTE_META_KEYWORDS => null,
             //image
-            self::ATTRIBUTE_CATEGORY_IMAGE_NAME => '',
+            self::ATTRIBUTE_CATEGORY_IMAGE_NAME => null,
             //seo
-            self::ATTRIBUTE_CATEGORY_ROBOTS => '',
-            self::ATTRIBUTE_CATEGORY_CANONICAL => '',
-            self::ATTRIBUTE_CATEGORY_ALTERNATE_TAG => '',
+            self::ATTRIBUTE_CATEGORY_ROBOTS => null,
+            self::ATTRIBUTE_CATEGORY_CANONICAL => null,
+            self::ATTRIBUTE_CATEGORY_ALTERNATE_TAG => null,
             //category
-            self::CATEGORY_IS_ACTIVE => '',
-            self::CATEGORY_IS_IN_MENU => '',
+            self::CATEGORY_IS_ACTIVE => null,
+            self::CATEGORY_IS_IN_MENU => null,
+            self::CATEGORY_IS_CLICKABLE => null,
+            self::CATEGORY_NODE_IS_MAIN => null,
+
+            self::EXTRA_PARENTS => null,
         ]);
     }
 

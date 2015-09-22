@@ -50,6 +50,10 @@ class AddController extends AbstractController
                 ->fromArray($form->getData(), true)
             ;
 
+            $categoryTransfer->setIsActive(true);
+            $categoryTransfer->setIsInMenu(true);
+            $categoryTransfer->setIsClickable(true);
+
             $idCategory = $this->getDependencyContainer()
                 ->createCategoryFacade()
                 ->createCategory($categoryTransfer, $locale)
@@ -60,6 +64,7 @@ class AddController extends AbstractController
             ;
 
             $categoryNodeTransfer->setFkCategory($idCategory);
+            $categoryNodeTransfer->setIsMain(true);
 
             $this->getDependencyContainer()
                 ->createCategoryFacade()
@@ -68,7 +73,7 @@ class AddController extends AbstractController
 
             $this->addSuccessMessage('The category was added successfully.');
 
-            return $this->redirectResponse('/category');
+            return $this->redirectResponse('/productCategory/edit?id-category='.$idCategory);
         }
 
         return $this->viewResponse([

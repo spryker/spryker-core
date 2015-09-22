@@ -64,14 +64,6 @@ interface CategoryQueryContainerInterface
 
     /**
      * @param int $idNode
-     * @param int $idLocale
-     *
-     * @return SpyCategoryNodeQuery
-     */
-    public function queryFirstLevelChildrenWithAttributesByIdLocale($idNode, $idLocale);
-
-    /**
-     * @param int $idNode
      *
      * @return SpyCategoryClosureTableQuery
      */

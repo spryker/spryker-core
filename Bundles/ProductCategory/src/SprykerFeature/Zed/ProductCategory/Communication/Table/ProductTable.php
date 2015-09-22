@@ -60,9 +60,9 @@ class ProductTable extends AbstractTable
             SpyAbstractProductTableMap::COL_SKU => 'SKU',
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => 'Name',
             'checkbox' => 'Selected',
-
         ]);
-        $config->setSortable([
+
+        $config->setSearchable([
             SpyAbstractProductTableMap::COL_SKU,
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
         ]);
@@ -86,17 +86,19 @@ class ProductTable extends AbstractTable
 
         $results = [];
         foreach ($queryResults as $product) {
-            //die(dump($product));
+            $checkbox_html  = sprintf(
+                '<input id="all_products_checkbox_%d" type="checkbox" onclick="allProductsClickMarkAsSelected(this.checked, %d, \'%s\', \'%s\'); return" /> ',
+                $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT],
+                $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT],
+                $product[SpyAbstractProductTableMap::COL_SKU],
+                urlencode($product['name'])
+            );
+
             $results[] = [
                 SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT],
                 SpyAbstractProductTableMap::COL_SKU => $product[SpyAbstractProductTableMap::COL_SKU],
                 SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => $product['name'],
-                'checkbox' => '<input id="all_products_checkbox_' .
-                    $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT] .
-                    '" type="checkbox" onclick="allProductsClickMarkAsSelected(this.checked, ' .
-                    $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT] .
-                    ', \'' . $product[SpyAbstractProductTableMap::COL_SKU] . '\', \'' .
-                    urlencode($product['name']) . '\'); return" /> ',
+                'checkbox' => $checkbox_html
             ];
         }
         unset($queryResults);

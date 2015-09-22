@@ -60,10 +60,11 @@ class ProductCategoryTable extends AbstractTable
             SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => 'ID',
             SpyAbstractProductTableMap::COL_SKU => 'SKU',
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => 'Name',
+            SpyProductCategoryTableMap::COL_PRODUCT_ORDER => 'Order',
             SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => 'Preconfig',
             'checkbox' => 'Selected',
         ]);
-        $config->setSortable([
+        $config->setSearchable([
             SpyAbstractProductTableMap::COL_SKU,
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME,
         ]);
@@ -85,20 +86,65 @@ class ProductCategoryTable extends AbstractTable
 
         $results = [];
         foreach ($queryResults as $productCategory) {
+            $items = $this->getProductOptionsComboBoxItems($productCategory);
+
+            $select_html = sprintf(
+                '<select id="product_category_preconfig_%d" onchange="updateProductCategoryPreconfig(this, %d)">%s</select>',
+                $productCategory['id_abstract_product'],
+                $productCategory['id_abstract_product'],
+                $items
+            );
+
+            $checkbox_html  = sprintf(
+                '<input id="product_category_checkbox_%d" type="checkbox" checked="checked" onclick="categoryTableClickMarkAsSelected(this.checked, %d, \'%s\', \'%s\'); return" /> ',
+                $productCategory['id_abstract_product'],
+                $productCategory['id_abstract_product'],
+                $productCategory['sku'],
+                urlencode($productCategory['name'])
+            );
+
+            $order_html = sprintf(
+                '<input type="text" value="%d" id="product_category_order_%d" size="4" onchange="updateProductOrder(this, %d)" />',
+                $productCategory['product_order'],
+                $productCategory['id_abstract_product'],
+                $productCategory['id_abstract_product']
+            );
+
             $results[] = [
                 SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => $productCategory['id_abstract_product'],
                 SpyAbstractProductTableMap::COL_SKU => $productCategory['sku'],
                 SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => $productCategory['name'],
-                SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => $productCategory[SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT],
-                'checkbox' => '<input id="product_category_checkbox_' .
-                    $productCategory['id_abstract_product'] .
-                    '" type="checkbox" checked="checked" onclick="categoryTableClickMarkAsSelected(this, ' .
-                    $productCategory['id_abstract_product'] . ', \'' .
-                    $productCategory['sku'] . '\', \'' .
-                    urlencode($productCategory['name']) . '\'); return" /> ',
+                SpyProductCategoryTableMap::COL_PRODUCT_ORDER => $order_html, //'<input type="text" value="'.$productCategory['product_order'].'" id="product_category_order_'.$productCategory['id_abstract_product'].'" size="4" onchange="updateProductOrder(this, '.$productCategory['id_abstract_product'].')" />',
+                SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => $select_html,
+                'checkbox' => $checkbox_html
             ];
         }
         unset($queryResults);
         return $results;
+    }
+
+    /**
+     * @param $productCategory
+     * @return string
+     */
+    protected function getProductOptionsComboBoxItems($productCategory)
+    {
+        $preconfigQuery = $this->productCategoryQueryContainer
+            ->queryProductCategoryPreconfig($this->idCategory, $productCategory['id_abstract_product'])
+            ->orderByFormat();
+
+        $preconfigItems = $preconfigQuery->find();
+
+        $items = '<option value="0">Default</option>';
+        foreach ($preconfigItems as $preconfigItem) {
+            $selected = '';
+            if ((int) $productCategory['preconfig_product'] === (int) $preconfigItem->getIdProduct()) {
+                $selected = 'selected="selected"';
+            }
+
+            $items .= '<option value="'.$preconfigItem->getIdProduct().'" '.$selected.'>'.$preconfigItem->getFormat().'</option>';
+        }
+
+        return $items;
     }
 }

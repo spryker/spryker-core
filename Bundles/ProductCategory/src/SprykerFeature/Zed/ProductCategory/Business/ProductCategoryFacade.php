@@ -101,28 +101,52 @@ class ProductCategoryFacade extends AbstractFacade
 
     /**
      * @param int $idCategory
-     * @param array $product_ids_to_assign
+     * @param array $productIdsToAssign
      * 
      * @throws PropelException
      */
-    public function createProductCategoryMappings($idCategory, array $product_ids_to_assign)
+    public function createProductCategoryMappings($idCategory, array $productIdsToAssign)
     {
         $this->getDependencyContainer()
             ->createProductCategoryManager()
-            ->createProductCategoryMappings($idCategory, $product_ids_to_assign)
+            ->createProductCategoryMappings($idCategory, $productIdsToAssign)
         ;
     }
 
     /**
      * @param int $idCategory
-     * @param array $product_ids_to_deassign
+     * @param array $productIdsToDeassign
      */
-    public function removeProductCategoryMappings($idCategory, array $product_ids_to_deassign)
+    public function removeProductCategoryMappings($idCategory, array $productIdsToDeassign)
     {
         $this->getDependencyContainer()
             ->createProductCategoryManager()
-            ->removeProductCategoryMappings($idCategory, $product_ids_to_deassign)
+            ->removeProductCategoryMappings($idCategory, $productIdsToDeassign)
         ;
     }
 
+    /**
+     * @param int $idCategory
+     * @param array $productOrderList
+     * @throws PropelException
+     */
+    public function updateProductMappingsOrder($idCategory, array $productOrderList)
+    {
+        $this->getDependencyContainer()
+            ->createProductCategoryManager()
+            ->updateProductMappingsOrder($idCategory, $productOrderList)
+        ;
+    }
+
+    /**
+     * @param int $idCategory
+     * @param $productPreconfig
+     */
+    public function updateProductCategoryPreconfig($idCategory, array $productPreconfig)
+    {
+        $this->getDependencyContainer()
+            ->createProductCategoryManager()
+            ->updateProductMappingsPreconfig($idCategory, $productPreconfig)
+        ;
+    }
 }

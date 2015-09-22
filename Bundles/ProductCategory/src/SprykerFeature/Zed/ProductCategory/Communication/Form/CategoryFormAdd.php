@@ -24,6 +24,7 @@ class CategoryFormAdd extends AbstractForm
     const PK_CATEGORY = 'id_category';
     const PK_CATEGORY_NODE = 'id_category_node';
     const FK_PARENT_CATEGORY_NODE = 'fk_parent_category_node';
+    const FK_NODE_CATEGORY = 'fk_category';
 
     /**
      * @var CategoryQueryContainer

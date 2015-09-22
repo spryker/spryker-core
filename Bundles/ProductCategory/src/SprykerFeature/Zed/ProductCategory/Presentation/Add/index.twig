@@ -109,6 +109,8 @@
                 </div>
             </div>
 {% endif %}
+            <br/>
+            <br/>
             <input type="submit" class="btn btn-primary" value="{{ submit_title | trans }}"/>
             {{ form_end(form) }}
 
@@ -125,6 +127,7 @@
 {% block footer_js %}
     {{ parent() }}
     <script>
+        //TODO fix later, see here: https://spryker.atlassian.net/browse/CD-446
         function ProductSelector() {
             var productSelector = {};
             var selectedProducts = {};
@@ -215,15 +218,17 @@
                 selectedProductsData.each(function (cellData, index) {
                     var currentId = cellData[0];
 
-                    if (parseInt(currentId) == parseInt(idProduct)) {
+                    if (parseInt(currentId) === parseInt(idProduct)) {
                         destinationTableProductSelector.removeProductFromSelection(idProduct);
                         destinationTable.dataTable().fnDeleteRow(index);
-                        $('#' + tableHandler.getCheckBoxNamePrefix() + idProduct).prop('checked', false);
-                        tableHandler.updateSelectedProductsLabelCount();
+                        var checkbox = $('#' + tableHandler.getCheckBoxNamePrefix() + idProduct);
+                        checkbox.prop('checked', false);
                     }
                 });
+
+                tableHandler.updateSelectedProductsLabelCount();
             };
-            
+
             tableHandler.getSelector = function() {
                 return destinationTableProductSelector; 
             };
@@ -234,35 +239,35 @@
                 var s = productIds.join(',');
                 var field = $('#' + tableHandler.getFormFieldId());
                 field.attr('value', s);
-            }
+            };
             
             tableHandler.getCheckBoxNamePrefix = function() {
                 return tableHandler.checkBoxNamePrefix;
-            }
+            };
 
             tableHandler.getLabelId = function() {
                 return tableHandler.labelId;
-            }
+            };
 
             tableHandler.getRemoveHandlerName = function() {
                 return tableHandler.removeHandlerName;
-            }
+            };
 
             tableHandler.getLabelCaption = function() {
                 return tableHandler.labelCaption;
-            }
+            };
 
             tableHandler.getFormFieldId = function() {
                 return tableHandler.formFieldId;
-            }
+            };
             
             tableHandler.getSourceTable = function() {
                 return tableHandler.sourceTable;
-            }
+            };
             
             tableHandler.getDestinationTable = function() {
                 return tableHandler.destinationTable;
-            }
+            };
 
             return tableHandler;
         }
@@ -300,10 +305,11 @@
         
         function categoryTableClickMarkAsSelected(checked, idProduct, sku, name) {
             if (checked) {
-                productCategoryTable.addSelectedProduct(idProduct, sku, name);
+                productCategoryTable.removeSelectedProduct(idProduct);
+                allProductsTable.removeSelectedProduct(idProduct);
             }
             else {
-                productCategoryTable.removeSelectedProduct(idProduct);   
+                productCategoryTable.addSelectedProduct(idProduct, sku, name);
             }
         }
 
@@ -318,29 +324,45 @@
             $('#' + productCategoryTable.getCheckBoxNamePrefix() + idProduct).prop('checked', true);
         }
 
+        function updateProductOrder(input, idProduct) {
+            var input = $(input);
+            productOrder[idProduct] = input.val();
+            var hiddenField = $('#form_product_order');
+            hiddenField.attr('value', JSON.stringify(productOrder));
+        }
+
+        function updateProductCategoryPreconfig(select, idProduct) {
+            var select = $(select);
+            productCategoryPreconfig[idProduct] = select.val();
+            var hiddenField = $('#form_product_category_preconfig');
+            hiddenField.attr('value', JSON.stringify(productCategoryPreconfig));
+        }
+
         $(document).ready(function () {
+            productOrder = {};
+            productCategoryPreconfig = {};
             allProductsTable = new TableHandler($('#product-table'), $('#selectedProductsTable'), 'all_products_checkbox_', 'Products to be assigned', 'assigned-tab-label', 'selectedProductClickRemoveSelected', 'form_products_to_be_assigned');
-            
+            productCategoryTable = new TableHandler($('#product-category-table'), $('#deselectedProductsTable'), 'product_category_checkbox_', 'Products to be deassigned', 'deassigned-tab-label', 'categoryTableClickRemoveSelected', 'form_products_to_be_de_assigned');
+
             $('#product-table').dataTable({
                 destroy: true,
                 fnDrawCallback: function(settings) {
-                    //this.fnDraw(false);
                     for (var i=0; i<settings.json.data.length; i++) {
                         var product = settings.json.data[i];
                         var idProduct = parseInt(product[0]);
 
                         var selector = allProductsTable.getSelector();
                         if (selector.isProductSelected(idProduct)) {
-                            $('#' + allProductsTable.getCheckBoxNamePrefix() +idProduct).prop('checked', true);
+                            var checkbox = $('#' + allProductsTable.getCheckBoxNamePrefix() +idProduct);
+                            checkbox.prop('checked', true);
                         }
                     }
+
                 }
             });
 
-            productCategoryTable = new TableHandler($('#product-category-table'), $('#deselectedProductsTable'), 'product_category_checkbox_', 'Products to be deassigned', 'deassigned-tab-label', 'categoryTableClickRemoveSelected', 'form_products_to_be_de_assigned');
             productCategoryTable.deSelectAll = function() {
                 var sourceTableData = productCategoryTable.getSourceTable().DataTable().rows().data();
-                var destinationTable = productCategoryTable.getDestinationTable();
                 var nodes = productCategoryTable.getSourceTable().dataTable().fnGetNodes();
                 $('input[type="checkbox"]', nodes).prop('checked', false);
 
@@ -348,6 +370,24 @@
                     productCategoryTable.addSelectedProduct(cellData[0], cellData[1], cellData[2]);
                 });
             };
+
+            productCategoryTable.removeSelectedProduct = function(idProduct) {
+                var destinationTable = productCategoryTable.destinationTable;
+                var selectedProductsData = destinationTable.DataTable().rows().data();
+                selectedProductsData.each(function (cellData, index) {
+                    var currentId = cellData[0];
+
+                    if (parseInt(currentId) === parseInt(idProduct)) {
+                        productCategoryTable.getSelector().removeProductFromSelection(idProduct);
+                        destinationTable.dataTable().fnDeleteRow(index);
+                        var checkbox = $('#' + productCategoryTable.getCheckBoxNamePrefix() + idProduct);
+                        checkbox.prop('checked', true);
+                    }
+                });
+
+                productCategoryTable.updateSelectedProductsLabelCount();
+            };
+
             $('#product-category-table').dataTable({
                 destroy: true,
                 fnDrawCallback: function(settings) {
@@ -359,6 +399,14 @@
                         var selector = productCategoryTable.getSelector();
                         if (selector.isProductSelected(idProduct)) {
                             $('#' + productCategoryTable.getCheckBoxNamePrefix() +idProduct).prop('checked', false);
+                        }
+
+                        if (productOrder.hasOwnProperty(idProduct)) {
+                            $('#product_category_order_' + idProduct).val(parseInt(productOrder[idProduct]) || 0);
+                        }
+
+                        if (productCategoryPreconfig.hasOwnProperty(idProduct)) {
+                            $('#product_category_preconfig_' + idProduct).val(parseInt(productCategoryPreconfig[idProduct]) || 0);
                         }
                     }
                 }
