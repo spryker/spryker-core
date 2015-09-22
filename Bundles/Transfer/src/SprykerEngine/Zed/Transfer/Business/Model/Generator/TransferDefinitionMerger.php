@@ -70,7 +70,7 @@ class TransferDefinitionMerger
             if (!array_key_exists($property['name'], $mergedProperties)) {
                 $mergedProperties[$property['name']] = $property;
             } elseif (!$this->propertiesAreIdentically($property, $mergedProperties[$property['name']])) {
-                throw new \Exception('Property "' . $property['name'] . '" defined more than once with different attributes!');
+                throw new \Exception('Property "' . $property['name'] . '" from "' . $property['bundle'] . '" bundle is defined more than once with different attributes!');
             }
         }
 
