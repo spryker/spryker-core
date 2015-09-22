@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\ProductCategory\Communication\Controller;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Propel\Runtime\Propel;
 use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\ProductCategory\Communication\ProductCategoryDependencyContainer;
@@ -42,6 +43,8 @@ class AddController extends AbstractController
         $form->handleRequest();
 
         if ($form->isValid()) {
+            $connection = Propel::getConnection();
+
             $locale = $this->getDependencyContainer()
                 ->createCurrentLocale()
             ;
@@ -72,6 +75,8 @@ class AddController extends AbstractController
             ;
 
             $this->addSuccessMessage('The category was added successfully.');
+
+            $connection->commit();
 
             return $this->redirectResponse('/productCategory/edit?id-category='.$idCategory);
         }

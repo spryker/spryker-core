@@ -341,6 +341,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     {
         return SpyCategoryQuery::create()
             ->joinAttribute()
+            ->innerJoinNode()
             ->addAnd(
                 SpyCategoryAttributeTableMap::COL_FK_LOCALE,
                 $idLocale,
@@ -348,6 +349,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             )
             ->withColumn(SpyCategoryTableMap::COL_ID_CATEGORY, 'id_category')
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
+            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, 'id_category_node')
         ;
     }
 
