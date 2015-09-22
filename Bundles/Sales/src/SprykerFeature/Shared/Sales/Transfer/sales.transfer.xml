@@ -175,7 +175,7 @@
 
     <transfer name="ItemSplitResponse">
         <property name="idOrderItem" type="integer" />
-        <property name="success" type="boolean" />
+        <property name="success" type="bool" />
         <property name="validationMessages" type="array" singular="code" />
         <property name="successMessage" type="string" />
     </transfer>

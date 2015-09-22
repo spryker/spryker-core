@@ -5,7 +5,7 @@
 
     <transfer name="Category">
         <property name="idCategory" type="int" />
-        <property name="isActive" type="boolean" />
+        <property name="isActive" type="bool" />
         <property name="name" type="string" />
         <property name="url" type="string" />
         <property name="imageName" type="string" />
@@ -16,7 +16,7 @@
     </transfer>
 
     <transfer name="Node">
-        <property name="isRoot" type="boolean" />
+        <property name="isRoot" type="bool" />
         <property name="idCategoryNode" type="int" />
         <property name="fkCategory" type="int" />
         <property name="fkParentCategoryNode" type="int" />
