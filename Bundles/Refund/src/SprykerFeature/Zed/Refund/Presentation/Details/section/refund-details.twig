@@ -1,11 +1,9 @@
-{% embed '@Gui/Partials/widget.twig' with { widget_title: 'Refunds' } %}
-
-    {% block widget_content %}
+<div class="row">
+    <div class="col-sm-12">
 
         <table class="footable table table-striped toggle-arrow-tiny">
             <thead>
             <tr class="text-left">
-                <th>{{ "Refund ID" | trans }}</th>
                 <th>{{ "Amount" | trans }}</th>
                 <th>{{ "Adjustment Fee" | trans }}</th>
                 <th>{{ "Comment" | trans }}</th>
@@ -13,21 +11,14 @@
             </tr>
             </thead>
             <tbody>
-            {% for refund in refunds %}
                 <tr>
-                    <td>{{ refund.IdRefund }}</td>
                     <td>{{ refund.Amount | currency }}</td>
                     <td>{{ refund.AdjustmentFee | currency }}</td>
                     <td>{{ refund.Comment }}</td>
                     <td>{{ refund.CreatedAt | date }}</td>
                 </tr>
-            {% endfor %}
             </tbody>
-
         </table>
 
-
-
-    {% endblock %}
-
-{% endembed %}
+    </div>
+</div>
