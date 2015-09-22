@@ -44,7 +44,7 @@ interface CategoryQueryContainerInterface
      * @param $idCategory
      * @param $idParentNode
      *
-     * @return self|ModelCriteria
+     * @return SpyCategoryNodeQuery
      */
     public function queryNodeByIdCategoryAndParentNode($idCategory, $idParentNode);
 
