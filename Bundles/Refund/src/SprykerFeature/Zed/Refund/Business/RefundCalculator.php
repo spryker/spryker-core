@@ -9,9 +9,6 @@ namespace SprykerFeature\Zed\Refund\Business;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 
-/**
- *
- */
 class RefundCalculator
 {
 
@@ -21,21 +18,27 @@ class RefundCalculator
      *
      * @return int
      */
-    public function calculateAmount($orderItems, SpySalesOrder $orderEntity) {
-        $amount = 0;
+    public function calculateAmount($orderItems, SpySalesOrder $orderEntity)
+    {
+        $allRefunds = $orderEntity->getSpyRefunds();
 
-        $refunds = $orderEntity->getSpyRefunds();
-        $refundAmount = 0;
-        foreach ($refunds as $refund) {
-            $refundAmount += $refund->getAmount();
-        }
-        //TODO: TBD how to check if expenses have to be also refunded (last item?)
-
+        $idRefund = null;
         /** @var SpySalesOrderItem $orderItem */
         foreach ($orderItems as $orderItem) {
-            $amount += $orderItem->getPriceToPay();
+            $idRefund = $orderItem->getFkRefund();
+            break;
         }
-        return $amount;
+
+        $refundAmount = 0;
+        foreach ($allRefunds as $refund) {
+            if ($refund->getIdRefund() !== $idRefund) {
+                continue;
+            }
+            $refundAmount = $refund->getAmount();
+            break;
+        }
+
+        return $refundAmount;
     }
 
 }

@@ -14,6 +14,7 @@ use SprykerFeature\Zed\Payone\Communication\PayoneDependencyContainer;
  */
 class RefundIsApprovedPlugin extends AbstractPlugin
 {
+
     const NAME = 'RefundIsApprovedPlugin';
 
     /**

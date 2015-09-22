@@ -22,4 +22,5 @@ class PaymentIsOverpaid extends AbstractCondition
             ->createPayoneFacade()
             ->isPaymentOverpaid($orderItem->getFkSalesOrder(), $orderItem->getIdSalesOrderItem());
     }
+
 }

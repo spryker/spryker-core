@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class CaptureIsErrorPlugin extends AbstractPlugin
 {
+
     const NAME = 'CaptureIsErrorPlugin';
 
     /**

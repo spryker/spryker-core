@@ -72,7 +72,6 @@ abstract class AbstractItemGrouper
                 $index[$groupKey]->setQuantity($index[$groupKey]->getQuantity() + 1);
                 $index[$groupKey]->setGrossPrice($index[$groupKey]->getGrossPrice() + $item->getGrossPrice());
                 $index[$groupKey]->setPriceToPay($index[$groupKey]->getPriceToPay() + $item->getPriceToPay());
-
             } else {
                 $newItem = clone $item;
                 $newItem->setUnitGrossPrice($newItem->getGrossPrice());

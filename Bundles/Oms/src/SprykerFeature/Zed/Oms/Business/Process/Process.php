@@ -361,7 +361,7 @@ class Process implements ProcessInterface
      */
     public function hasFile()
     {
-       return isset($this->file);
+        return isset($this->file);
     }
 
     /**

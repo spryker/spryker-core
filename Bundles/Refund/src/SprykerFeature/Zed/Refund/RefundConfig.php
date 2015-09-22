@@ -10,5 +10,5 @@ use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class RefundConfig extends AbstractBundleConfig
 {
-}
 
+}

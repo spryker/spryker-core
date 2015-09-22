@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class PreauthorizationIsRedirectPlugin extends AbstractPlugin
 {
+
     const NAME = 'PreauthorizationIsErrorPlugin';
 
     /**

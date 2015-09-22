@@ -32,7 +32,7 @@ class SalesOrderSaver implements SalesOrderSaverInterface
      */
     public function saveOrder(OrderInterface $order, CheckoutResponseTransfer $checkoutResponse)
     {
-         $this->salesFacade->saveOrder($order);
+        $this->salesFacade->saveOrder($order);
     }
 
 }

@@ -55,7 +55,6 @@ class AddressForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-
         return $this
             ->addChoice(self::SALUTATION, [
                 'label' => 'Salutation',

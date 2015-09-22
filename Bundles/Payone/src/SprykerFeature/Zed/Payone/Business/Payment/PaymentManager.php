@@ -510,7 +510,7 @@ class PaymentManager implements PaymentManagerInterface
         $paymentMethod = $paymentTransfer->getPaymentMethod();
         $whiteList = [
             PayoneApiConstants::PAYMENT_METHOD_PAYPAL,
-            PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO
+            PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO,
         ];
         if (in_array($paymentMethod, $whiteList)) {
             return true;
@@ -520,4 +520,5 @@ class PaymentManager implements PaymentManagerInterface
 
         return $paymentDetailTransfer->getBic() && $paymentDetailTransfer->getIban();
     }
+
 }

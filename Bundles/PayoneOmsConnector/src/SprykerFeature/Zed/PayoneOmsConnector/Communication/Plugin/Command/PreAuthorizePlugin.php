@@ -17,6 +17,7 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
  */
 class PreAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterface
 {
+
     /**
      * @param array $orderItems
      * @param SpySalesOrder $orderEntity
@@ -31,4 +32,5 @@ class PreAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterfa
 
         return [];
     }
+
 }

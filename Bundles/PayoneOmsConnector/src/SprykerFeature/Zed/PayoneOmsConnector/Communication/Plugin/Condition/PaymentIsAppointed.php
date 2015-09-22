@@ -24,4 +24,5 @@ class PaymentIsAppointed extends AbstractCondition
 
         return $res;
     }
+
 }

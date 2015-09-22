@@ -228,7 +228,6 @@ class Builder implements BuilderInterface
             if ($process->getMain()) {
                 $mainProcess = $process;
             }
-
         }
 
         return [$processMap, $mainProcess];

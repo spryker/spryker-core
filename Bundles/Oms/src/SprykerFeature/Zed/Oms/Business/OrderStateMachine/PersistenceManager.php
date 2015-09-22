@@ -69,7 +69,6 @@ class PersistenceManager implements PersistenceManagerInterface
         $processBuffer[$processName] = $processEntity;
 
         return $processEntity;
-
     }
 
     /**

@@ -12,7 +12,6 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Refund\Business\RefundDependencyContainer as SprykerRefundDependencyContainer;
 use SprykerFeature\Zed\Refund\Persistence\Propel\SpyRefund;
 use SprykerFeature\Zed\Refund\RefundDependencyProvider;
-use SprykerFeature\Zed\Sales\Business\SalesFacade;
 
 /**
  * @method SprykerRefundDependencyContainer getDependencyContainer()
@@ -28,7 +27,7 @@ class RefundFacade extends AbstractFacade
      */
     public function calculateAmount($orderItems, $orderEntity)
     {
-        $this->getDependencyContainer()->getRefundCalculator()->calculateAmount($orderItems, $orderEntity);
+        $this->getDependencyContainer()->createRefundCalculator()->calculateAmount($orderItems, $orderEntity);
     }
 
     /**
@@ -36,8 +35,8 @@ class RefundFacade extends AbstractFacade
      *
      * @return RefundTransfer[]
      */
-    public function getRefundsByIdSalesOrder($idSalesOrder) {
-
+    public function getRefundsByIdSalesOrder($idSalesOrder)
+    {
         $refundQueryContainer = $this->getDependencyContainer()->getProvidedDependency(RefundDependencyProvider::QUERY_CONTAINER_REFUND);
 
         $refunds = $refundQueryContainer->queryRefundsByIdSalesOrder($idSalesOrder)->find();

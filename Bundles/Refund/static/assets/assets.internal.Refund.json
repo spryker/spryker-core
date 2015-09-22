@@ -1,0 +1,11 @@
+[{
+    "priority": 50,
+    "assets": {
+        "js": [
+            "/js/refund.js"
+        ],
+        "css": [],
+        "images": [],
+        "fonts": []
+    }
+}]

@@ -17,6 +17,7 @@ use Generated\Shared\Transfer\OrderTransfer;
  */
 abstract class AbstractPlugin extends BaseAbstractPlugin implements ConditionInterface
 {
+
     const NAME = 'AbstractPlugin';
 
     /**

@@ -10,7 +10,6 @@ use Generated\Zed\Ide\FactoryAutoCompletion\SalesPersistence;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Payone\Persistence\Propel\Base\SpyPaymentPayoneDetailQuery;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneDetail;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesExpenseQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddressQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderCommentQuery;
@@ -37,6 +36,14 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     public function querySalesOrderItem()
     {
         return $this->getFactory()->createPropelSpySalesOrderItemQuery();
+    }
+
+    /**
+     * @return SpySalesExpenseQuery
+     */
+    public function querySalesExpense()
+    {
+        return $this->getFactory()->createPropelSpySalesExpenseQuery();
     }
 
     /**
@@ -79,14 +86,14 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
     }
 
     /**
-     * @param int $orderId
+     * @param int $idOrder
      *
      * @return SpySalesExpenseQuery
      */
-    public function querySalesExpensesByOrderId($orderId)
+    public function querySalesExpensesByOrderId($idOrder)
     {
         $query = $this->getFactory()->createPropelSpySalesExpenseQuery();
-        $query->filterByFkSalesOrder($orderId);
+        $query->filterByFkSalesOrder($idOrder);
 
         return $query;
     }
@@ -133,7 +140,7 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
      *
      * @return SpySalesOrderQuery
      */
-    public function querySalesOrdersByCustomerId($idCustomer, Criteria $criteria=null)
+    public function querySalesOrdersByCustomerId($idCustomer, Criteria $criteria = null)
     {
         $query = SpySalesOrderQuery::create(null, $criteria);
         $query->filterByFkCustomer($idCustomer);
@@ -178,4 +185,5 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
 
         return $query;
     }
+
 }

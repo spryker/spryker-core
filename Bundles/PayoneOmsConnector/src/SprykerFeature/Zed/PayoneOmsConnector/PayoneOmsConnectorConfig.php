@@ -17,9 +17,11 @@ class PayoneOmsConnectorConfig extends AbstractBundleConfig
      * @param array $orderItems
      * @param SpySalesOrder $orderEntity
      * @param ReadOnlyArrayObject $data
+     *
      * @return string
      */
-    public function getNarrativeText(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data) {
+    public function getNarrativeText(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
+    {
         return $orderEntity->getOrderReference();
     }
 

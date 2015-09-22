@@ -14,7 +14,6 @@ use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use SprykerFeature\Zed\PayoneOmsConnector\Communication\PayoneOmsConnectorDependencyContainer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 
 /**
  * @method PayoneOmsConnectorDependencyContainer getDependencyContainer()
@@ -49,6 +48,7 @@ class RefundPlugin extends AbstractPlugin implements CommandByOrderInterface
         $refundTransfer->setPayment($payonePaymentTransfer);
 
         $this->getDependencyContainer()->createPayoneFacade()->refundPayment($refundTransfer);
+
         return [];
     }
 

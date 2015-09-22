@@ -22,4 +22,5 @@ class OmsFacade extends SprykerOmsFacade implements CheckoutToOmsInterface
     {
         return 'CheckoutTest01';
     }
+
 }

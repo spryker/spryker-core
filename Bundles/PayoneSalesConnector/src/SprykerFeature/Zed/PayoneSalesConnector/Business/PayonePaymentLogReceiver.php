@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -8,14 +9,16 @@ use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Zed\PayoneSalesConnector\Dependency\Facade\PayoneSalesConnectorToPayoneInterface;
 
-class PayonePaymentLogReceiver {
+class PayonePaymentLogReceiver
+{
 
     /**
      * @var PayoneSalesConnectorToPayoneInterface
      */
     private $payoneFacade;
 
-    public function __construct(PayoneSalesConnectorToPayoneInterface $payoneSalesConnectorToPayoneInterface) {
+    public function __construct(PayoneSalesConnectorToPayoneInterface $payoneSalesConnectorToPayoneInterface)
+    {
         $this->payoneFacade = $payoneSalesConnectorToPayoneInterface;
     }
 
@@ -24,7 +27,8 @@ class PayonePaymentLogReceiver {
      *
      * @return PayonePaymentLogTransfer[]
      */
-    public function getPaymentLogs(ObjectCollection $orders) {
+    public function getPaymentLogs(ObjectCollection $orders)
+    {
         return $this->payoneFacade->getPaymentLogs($orders);
     }
 

@@ -416,7 +416,6 @@ class OrderStateMachine implements OrderStateMachineInterface
             return self::BY_ITEM;
         } else {
             throw new LogicException('Unknown type of command: ' . get_class($command));
-
         }
     }
 
@@ -653,7 +652,6 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     protected function triggerOnEnterEvents(array $orderItemsWithOnEnterEvent, ReadOnlyArrayObject $data)
     {
-
         if (count($orderItemsWithOnEnterEvent) > 0) {
             foreach ($orderItemsWithOnEnterEvent as $eventId => $orderItems) {
                 $this->triggerEvent($eventId, $orderItems, $data);

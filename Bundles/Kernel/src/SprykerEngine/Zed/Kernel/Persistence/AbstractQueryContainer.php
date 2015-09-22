@@ -112,4 +112,5 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     {
         return $this->getProvidedDependency(self::PROPEL_CONNECTION);
     }
+
 }

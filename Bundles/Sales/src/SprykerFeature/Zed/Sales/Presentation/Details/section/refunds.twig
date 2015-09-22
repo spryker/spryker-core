@@ -7,6 +7,7 @@
             <tr class="text-left">
                 <th>{{ "Refund ID" | trans }}</th>
                 <th>{{ "Amount" | trans }}</th>
+                <th>{{ "Adjustment Fee" | trans }}</th>
                 <th>{{ "Comment" | trans }}</th>
                 <th>{{ "Time" | trans }}</th>
             </tr>
@@ -16,6 +17,7 @@
                 <tr>
                     <td>{{ refund.IdRefund }}</td>
                     <td>{{ refund.Amount | currency }}</td>
+                    <td>{{ refund.AdjustmentFee | currency }}</td>
                     <td>{{ refund.Comment }}</td>
                     <td>{{ refund.CreatedAt | date }}</td>
                 </tr>

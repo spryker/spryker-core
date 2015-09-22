@@ -22,4 +22,5 @@ class PaymentIsPaid extends AbstractCondition
             ->createPayoneFacade()
             ->isPaymentPaid($orderItem->getFkSalesOrder(), $orderItem->getIdSalesOrderItem());
     }
+
 }

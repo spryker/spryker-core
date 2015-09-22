@@ -7,8 +7,21 @@
         <property name="idRefund" type="integer" />
         <property name="fkSalesOrder" type="integer" />
         <property name="amount" type="integer" />
+        <property name="adjustmentFee" type="integer" />
         <property name="comment" type="string" />
         <property name="createdAt" type="string" />
+        <property name="orderItems" singular="orderItem" type="RefundOrderItem[]" />
+        <property name="expenses" singular="expense" type="RefundExpense[]" />
+    </transfer>
+
+    <transfer name="RefundOrderItem">
+        <property name="idOrderItem" type="integer" />
+        <property name="quantity" type="integer" />
+    </transfer>
+
+    <transfer name="RefundExpense">
+        <property name="idExpense" type="integer" />
+        <property name="quantity" type="integer" />
     </transfer>
 
 </transfers>

@@ -12,11 +12,65 @@
 
     <div class="row">
         <div class="col-sm-12 col-md-12">
-            {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Refund Memo Comments' }  %}
+            {% embed '@Gui/Partials/widget.twig' with { widget_title: 'New Refund' }  %}
 
                 {% block widget_content %}
-
                     {{ form_start(form) }}
+
+                        <h6>{{ 'Order Items' | trans }}</h6>
+                        <table class="footable table table-striped">
+                            <thead>
+                            <tr>
+                                <th>{{ 'Name' | trans }}</th>
+                                <th>{{ 'Quantity' | trans }}</th>
+                                <th>{{ 'Gross Price' | trans }}</th>
+                                <th>{{ 'Price to pay' | trans }}</th>
+                                <th>{{ 'Quantity to refund' | trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for key, orderItemField in form.order_items %}
+                            <tr>
+                                <td>{{ orderItems[key].Name }}</td>
+                                <td>{{ orderItems[key].Quantity }}</td>
+                                <td>{{ orderItems[key].GrossPrice | currency }}</td>
+                                <td>{{ orderItems[key].PriceToPay | currency }}</td>
+                                <td>
+                                    {{ form_errors(orderItemField) }}
+                                    {{ form_widget(orderItemField, {'type': 'number', 'attr': {'data-price': orderItems[key].PriceToPay, 'data-quantity': orderItems[key].Quantity}}) }}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
+                        <h6>{{ 'Expenses' | trans }}</h6>
+                        <table class="footable table table-striped">
+                            <thead>
+                            <tr>
+                                <th>{{ 'Expense' | trans }}</th>
+                                <th>{{ 'Quantity' | trans }}</th>
+                                <th>{{ 'Gross Price' | trans }}</th>
+                                <th>{{ 'Price to pay' | trans }}</th>
+                                <th>{{ 'Quantity to refund' | trans }}</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for key, expenseField in form.expenses %}
+                                <tr>
+                                    <td>{{ expenses[key].Name }}</td>
+                                    <td>1</td>
+                                    <td>{{ expenses[key].GrossPrice | currency }}</td>
+                                    <td>{{ expenses[key].PriceToPay | currency }}</td>
+                                    <td>
+                                        {{ form_errors(expenseField) }}
+                                        {{ form_widget(expenseField, {'type': 'number', 'attr': {'data-price': expenses[key].PriceToPay, 'data-quantity': 1}}) }}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+
                         {{ form_widget(form) }}
 
                         <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />

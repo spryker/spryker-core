@@ -9,10 +9,11 @@ use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\Refund\Business\RefundFacade;
 use SprykerFeature\Zed\Refund\Persistence\Propel\Map\SpyRefundTableMap;
 use SprykerFeature\Zed\Refund\Persistence\Propel\SpyRefundQuery;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
 
 class RefundsTable extends AbstractTable
 {
+
+    const ACTIONS = 'Actions';
 
     /**
      * @var RefundFacade
@@ -31,8 +32,8 @@ class RefundsTable extends AbstractTable
      */
     public function __construct(SpyRefundQuery $refundQuery, RefundFacade $refundFacade, DateFormatter $dateFormatter)
     {
-        $this->refundQuery    = $refundQuery;
-        $this->refundFacade   = $refundFacade;
+        $this->refundQuery = $refundQuery;
+        $this->refundFacade = $refundFacade;
         $this->dateFormatter = $dateFormatter;
     }
 
@@ -48,7 +49,7 @@ class RefundsTable extends AbstractTable
             SpyRefundTableMap::COL_CREATED_AT => 'Refund date',
             SpyRefundTableMap::COL_AMOUNT => 'Amount',
             SpyRefundTableMap::COL_COMMENT => 'Comment',
-            self::URL => 'Actions',
+            self::ACTIONS => self::ACTIONS,
         ]);
 
         $config->setSortable([
@@ -66,22 +67,22 @@ class RefundsTable extends AbstractTable
     }
 
     /**
-     * @param l $config
+     * @param TableConfiguration $config
      *
      * @return array
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query        = $this->refundQuery;
+        $query = $this->refundQuery;
         $queryResults = $this->runQuery($query, $config);
-        $results      = [];
+        $results = [];
         foreach ($queryResults as $item) {
             $results[] = [
                 SpyRefundTableMap::COL_ID_REFUND => $item[SpyRefundTableMap::COL_ID_REFUND],
                 SpyRefundTableMap::COL_CREATED_AT => $this->formatDate($item[SpyRefundTableMap::COL_CREATED_AT]),
                 SpyRefundTableMap::COL_AMOUNT => $this->formatAmount($item[SpyRefundTableMap::COL_AMOUNT]),
                 SpyRefundTableMap::COL_COMMENT => $item[SpyRefundTableMap::COL_COMMENT],
-                self::URL => sprintf(
+                self::ACTIONS => sprintf(
                     '<a class="btn btn-primary" href="/refund/details/?id-refund=%d">View</a>',
                     $item[SpyRefundTableMap::COL_ID_REFUND]
                 ),
@@ -100,7 +101,7 @@ class RefundsTable extends AbstractTable
     protected function formatAmount($value, $includeSymbol = true)
     {
         $currencyManager = CurrencyManager::getInstance();
-        $value           = $currencyManager->convertCentToDecimal($value);
+        $value = $currencyManager->convertCentToDecimal($value);
 
         return $currencyManager->format($value, $includeSymbol);
     }

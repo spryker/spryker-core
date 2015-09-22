@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class RefundIsPossiblePlugin extends AbstractPlugin
 {
+
     const NAME = 'RefundIsPossiblePlugin';
 
     /**

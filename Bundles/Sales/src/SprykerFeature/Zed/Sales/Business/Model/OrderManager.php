@@ -27,6 +27,7 @@ use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderManager
 {
+
     /**
      * @var SalesQueryContainerInterface
      */
@@ -262,4 +263,5 @@ class OrderManager
 
         return $paymentDetailEntity;
     }
+
 }

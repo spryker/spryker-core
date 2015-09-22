@@ -30,7 +30,6 @@ class EditController extends AbstractController
         $form->handleRequest();
 
         if ($form->isValid()) {
-
             $orderTransfer = (new OrderTransfer())->fromArray($form->getData(), true);
             $this->getFacade()
                 ->updateOrderCustomer($orderTransfer, $idOrder)
@@ -61,7 +60,6 @@ class EditController extends AbstractController
         $form->handleRequest();
 
         if ($form->isValid()) {
-
             $addressTransfer = (new AddressTransfer())->fromArray($form->getData(), true);
             $this->getFacade()
                 ->updateOrderAddress($addressTransfer, $idOrderAddress)

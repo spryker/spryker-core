@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class AuthorizationIsErrorPlugin extends AbstractPlugin
 {
+
     const NAME = 'AuthorizationIsErrorPlugin';
 
     /**

@@ -13,7 +13,7 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 /**
  * @method PayoneDependencyContainer getDependencyContainer()
  */
-class PaymentIsUnderpaid extends AbstractCondition
+class PaymentIsUnderPaid extends AbstractCondition
 {
 
     public function check(SpySalesOrderItem $orderItem)
@@ -22,4 +22,5 @@ class PaymentIsUnderpaid extends AbstractCondition
             ->createPayoneFacade()
             ->isPaymentUnderpaid($orderItem->getFkSalesOrder(), $orderItem->getIdSalesOrderItem());
     }
+
 }
