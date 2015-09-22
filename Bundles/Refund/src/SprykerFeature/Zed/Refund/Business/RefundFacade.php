@@ -35,8 +35,8 @@ class RefundFacade extends AbstractFacade
      *
      * @return RefundTransfer[]
      */
-    public function getRefundsByIdSalesOrder($idSalesOrder) {
-
+    public function getRefundsByIdSalesOrder($idSalesOrder)
+    {
         $refundQueryContainer = $this->getDependencyContainer()->getProvidedDependency(RefundDependencyProvider::QUERY_CONTAINER_REFUND);
 
         $refunds = $refundQueryContainer->queryRefundsByIdSalesOrder($idSalesOrder)->find();
