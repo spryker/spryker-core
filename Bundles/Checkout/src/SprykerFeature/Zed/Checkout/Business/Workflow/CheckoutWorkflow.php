@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Checkout\Business\Workflow;
 
-use Generated\Shared\Checkout\CartInterface;
 use Generated\Shared\Checkout\CheckoutRequestInterface;
 use Generated\Shared\Checkout\CheckoutResponseInterface;
 use Generated\Shared\Checkout\OrderInterface;
@@ -16,8 +15,6 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\Propel;
 use SprykerFeature\Shared\Checkout\CheckoutConfig;
-use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
-use SprykerFeature\Zed\Checkout\Business\Calculation\CalculableContainer;
 use SprykerFeature\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
@@ -95,7 +92,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         $this->checkPreConditions($checkoutRequest, $checkoutResponse);
 
         if (!$this->hasErrors($checkoutResponse)) {
-
             $this->preHydrate($checkoutRequest, $checkoutResponse);
 
             $orderTransfer = $this->getOrderTransfer();

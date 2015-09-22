@@ -134,10 +134,8 @@ class Dummy implements DummyInterface
                     'orderId' => $i,
                 ];
                 $c++;
-break 2;
-
+                break 2;
             }
-
         }
 
         return $orderItemsArray;

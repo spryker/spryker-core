@@ -10,6 +10,7 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Map\TableMap;
 use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKey;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKeyQuery;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslationQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;

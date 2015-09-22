@@ -207,7 +207,6 @@ class PayoneFacade extends AbstractFacade
         return $this->getDependencyContainer()->createPaymentManager()->isRefundPossible($orderTransfer);
     }
 
-
     /**
      * @param PayonePaymentInterface $payment
      *

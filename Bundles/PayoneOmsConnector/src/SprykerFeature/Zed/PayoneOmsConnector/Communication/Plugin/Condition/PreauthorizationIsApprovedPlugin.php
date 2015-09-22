@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 
 class PreauthorizationIsApprovedPlugin extends AbstractPlugin
 {
+
     const NAME = 'PreauthorizationIsApprovedPlugin';
 
     /**

@@ -157,7 +157,6 @@ class OrderItem implements ItemInterface
         SpySalesOrderItemOption $salesOrderItemOption,
         SpySalesOrderItem $copyOfSalesOrderItem
     ) {
-
         $copyOfOrderItemOption = $salesOrderItemOption->copy(false);
 
         $copyOfOrderItemOption->setCreatedAt(new \DateTime());

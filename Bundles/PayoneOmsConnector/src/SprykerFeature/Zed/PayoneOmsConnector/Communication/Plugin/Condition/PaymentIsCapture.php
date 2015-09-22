@@ -22,4 +22,5 @@ class PaymentIsCapture extends AbstractCondition
             ->createPayoneFacade()
             ->isPaymentCapture($orderItem->getFkSalesOrder(), $orderItem->getIdSalesOrderItem());
     }
+
 }

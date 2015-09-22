@@ -12,7 +12,6 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Refund\Business\RefundDependencyContainer as SprykerRefundDependencyContainer;
 use SprykerFeature\Zed\Refund\Persistence\Propel\SpyRefund;
 use SprykerFeature\Zed\Refund\RefundDependencyProvider;
-use SprykerFeature\Zed\Sales\Business\SalesFacade;
 
 /**
  * @method SprykerRefundDependencyContainer getDependencyContainer()

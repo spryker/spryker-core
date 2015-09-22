@@ -67,16 +67,16 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
         $options = $spySalesOrderItem->getOptions();
 
         foreach ($options as $option) {
-             $oldOption = $this->filterOutNotCopiedFields(
+            $oldOption = $this->filterOutNotCopiedFields(
                  $option->toArray(),
                  $this->notCopiedOrderItemOptionFields
              );
-             $copyOfOptions = $this->filterOutNotCopiedFields(
+            $copyOfOptions = $this->filterOutNotCopiedFields(
                  $option->getCreatedCopy()->toArray(),
                  $this->notCopiedOrderItemOptionFields
              );
 
-             $this->assertEquals($oldOption, $copyOfOptions);
+            $this->assertEquals($oldOption, $copyOfOptions);
         }
     }
 
@@ -129,6 +129,7 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
             )
             ->disableOriginalConstructor()
             ->getMock();
+
         return $validatorMock;
     }
 
@@ -155,6 +156,7 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
             ->setMethods(['findOneByIdSalesOrderItem'])
             ->disableOriginalConstructor()
             ->getMock();
+
         return $salesOrderItemQueryMock;
     }
 
@@ -170,6 +172,7 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
             )
             ->disableOriginalConstructor()
             ->getMock();
+
         return $calculatorMock;
     }
 
@@ -181,6 +184,7 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
         $databaseConnectionMock = $this
             ->getMockBuilder('Propel\Runtime\Connection\ConnectionInterface')
             ->getMock();
+
         return $databaseConnectionMock;
     }
 
@@ -189,7 +193,6 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
      */
     protected function filterOutNotCopiedFields($salesOrderItems, $notCopiedFields)
     {
-
         foreach ($salesOrderItems as $key => $value) {
             if (in_array($key, $notCopiedFields)) {
                 unset($salesOrderItems[$key]);

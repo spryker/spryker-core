@@ -81,7 +81,6 @@ class Drawer implements DrawerInterface
      */
     public function draw(ProcessInterface $process, $highlightState = null, $format = null, $fontsize = null)
     {
-
         $this->init($format, $fontsize);
 
         $this->drawStates($process, $highlightState);
@@ -137,7 +136,6 @@ class Drawer implements DrawerInterface
                 foreach ($transitions as $transition) {
                     $this->addEdge($transition, self::EDGE_LOWER_HALF, [], $diamondId);
                 }
-
             } else {
                 $this->addEdge(current($transitions), self::EDGE_FULL);
             }
@@ -234,7 +232,6 @@ class Drawer implements DrawerInterface
      */
     protected function addEdge(TransitionInterface $transition, $type = self::EDGE_FULL, $attributes = [], $fromName = null, $toName = null)
     {
-
         $label = [];
 
         if ($type !== self::EDGE_LOWER_HALF) {
@@ -269,7 +266,6 @@ class Drawer implements DrawerInterface
             }
 
             $label[] = $conditionLabel;
-
         }
 
         return $label;
@@ -315,7 +311,6 @@ class Drawer implements DrawerInterface
             if ($event->isManual()) {
                 $label[] = 'manually executable';
             }
-
         } else {
             $label[] = '&infin;';
         }

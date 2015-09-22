@@ -239,7 +239,7 @@ class ProductFacade extends AbstractFacade
      * @throws UrlExistsException
      * @throws MissingProductException
      *
-     * @return Url
+     * @return UrlTransfer
      */
     public function createAndTouchProductUrl($sku, $url, LocaleTransfer $locale)
     {

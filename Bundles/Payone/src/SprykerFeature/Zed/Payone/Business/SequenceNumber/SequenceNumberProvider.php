@@ -43,6 +43,7 @@ class SequenceNumberProvider implements SequenceNumberProviderInterface
         if ($current < 0) {
             return $current;
         }
+
         return $current + 1;
     }
 

@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Checkout\Communication\Controller;
 
-use Generated\Shared\Checkout\CheckoutRequestInterface;
 use Generated\Shared\Checkout\CheckoutResponseInterface;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use SprykerFeature\Zed\Checkout\Business\CheckoutFacade;

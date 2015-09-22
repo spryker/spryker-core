@@ -75,8 +75,7 @@ interface SalesQueryContainerInterface
      * @return SpySalesOrderQuery
      */
     public function querySalesOrderDetails($idSalesOrder, $idCustomer);
-    
-    public function queryPaymentDetailByPaymentId($idPayment);
 
+    public function queryPaymentDetailByPaymentId($idPayment);
 
 }

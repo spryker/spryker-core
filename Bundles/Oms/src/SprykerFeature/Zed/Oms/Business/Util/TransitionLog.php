@@ -169,7 +169,6 @@ class TransitionLog implements TransitionLogInterface
                 $eventStr .= ' (on enter)';
             }
             $logItem->setEvent($eventStr);
-
         }
         $itemId = $orderItem->getIdSalesOrderItem();
 
@@ -224,7 +223,6 @@ class TransitionLog implements TransitionLogInterface
         $logItem->setErrorMessage($this->errorMessage);
 
         $logItem->save();
-
     }
 
     /**

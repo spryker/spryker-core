@@ -178,4 +178,5 @@ class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryCo
 
         return $query;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -30,7 +31,7 @@ class AuthorizePlugin extends AbstractPlugin implements CommandByOrderInterface
         /** @var SpyPaymentPayone $paymentEntity */
         $paymentEntity = $orderEntity->getSpyPaymentPayones()->getFirst();
         $this->getDependencyContainer()->createPayoneFacade()->authorizePayment($paymentEntity->getFkSalesOrder());
-        
+
         return [];
     }
 

@@ -100,7 +100,6 @@ class CheckoutFacadeTest extends Test
             return $container->getLocator()->calculation()->facade();
         };
 
-
         $this->checkoutFacade->setExternalDependencies($container);
     }
 

@@ -6,8 +6,6 @@
 
 namespace SprykerFeature\Zed\PayoneSalesConnector\Business;
 
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;

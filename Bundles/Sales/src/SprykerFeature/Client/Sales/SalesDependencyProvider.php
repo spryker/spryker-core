@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Client\Sales;
 
-
 use SprykerEngine\Client\Kernel\AbstractDependencyProvider;
 use SprykerEngine\Client\Kernel\Container;
 

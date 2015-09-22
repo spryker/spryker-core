@@ -50,6 +50,7 @@ class Validator implements ValidatorInterface
     {
         if ($quantityToSplit < 1 || $salesOrderItem->getQuantity() <= $quantityToSplit) {
             $this->messages[] = Messages::VALIDATE_QUANTITY_MESSAGE;
+
             return false;
         }
 
@@ -65,6 +66,7 @@ class Validator implements ValidatorInterface
     {
         if (null !== $salesOrderItem->getFkSalesOrderItemBundle()) {
             $this->messages[] = Messages::VALIDATE_BUNDLE_MESSAGE;
+
             return true;
         }
 
@@ -80,6 +82,7 @@ class Validator implements ValidatorInterface
     {
         if ($salesOrderItem->countDiscounts() > 0) {
             $this->messages[] = Messages::VALIDATE_DISCOUNTED_MESSAGE;
+
             return true;
         }
 
@@ -100,6 +103,7 @@ class Validator implements ValidatorInterface
         foreach ($salesOrderItem->getOptions() as $orderItemOption) {
             if ($orderItemOption->countDiscounts() > 0) {
                 $this->messages[] = Messages::VALIDATE_DISCOUNTED_OPTION_MESSAGE;
+
                 return true;
             }
         }

@@ -6,12 +6,11 @@
 
 namespace SprykerFeature\Zed\PayoneSalesConnector\Business;
 
-use Generated\Shared\Sales\OrderInterface;
 use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Zed\PayoneSalesConnector\Dependency\Facade\PayoneSalesConnectorToPayoneInterface;
 
-class PayoneSalesConnectorToPayone
+class PayoneSalesConnector
 {
 
     /**
@@ -34,7 +33,7 @@ class PayoneSalesConnectorToPayone
      */
     public function getPaymentLogs(ObjectCollection $orders)
     {
-         $this->payoneFacade->getPaymentLogs($orders);
+        $this->payoneFacade->getPaymentLogs($orders);
     }
 
 }
