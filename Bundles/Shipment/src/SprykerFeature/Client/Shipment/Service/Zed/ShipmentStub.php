@@ -16,7 +16,7 @@ class ShipmentStub implements ShipmentStubInterface
     /**
      * @var ZedRequestClient
      */
-    private $zedStub;
+    protected $zedStub;
 
     /**
      * @param ZedRequestClient $zedStub
