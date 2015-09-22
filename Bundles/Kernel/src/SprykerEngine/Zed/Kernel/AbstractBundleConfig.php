@@ -47,6 +47,8 @@ abstract class AbstractBundleConfig
 
     /**
      * @return AutoCompletion|LocatorLocatorInterface
+     *
+     * @deprecated Do not use the locator in the config anymore. If you need to configure a plugin stack, use the dependency provider for that.
      */
     protected function getLocator()
     {

@@ -48,6 +48,7 @@ interface SystemConfig extends ConfigInterface
      */
     const ZED_SSL_ENABLED = 'ZED_SSL_ENABLED';
     const ZED_SSL_EXCLUDED = 'ZED_SSL_EXCLUDED';
+    const ZED_API_SSL_ENABLED = 'ZED_API_SSL_ENABLED';
 
     /**
      * Database - DB
