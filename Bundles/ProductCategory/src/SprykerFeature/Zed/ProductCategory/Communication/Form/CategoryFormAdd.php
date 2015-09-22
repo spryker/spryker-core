@@ -92,7 +92,7 @@ class CategoryFormAdd extends AbstractForm
 
         $data = [];
         foreach ($categories as $category) {
-            $data[$category[self::PK_CATEGORY]] = $category[self::NAME];
+            $data[$category[self::PK_CATEGORY_NODE]] = $category[self::NAME];
         }
 
         return $data;

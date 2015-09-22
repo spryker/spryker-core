@@ -5,6 +5,7 @@ namespace SprykerFeature\Zed\ProductCategory\Communication\Controller;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Propel\Runtime\Propel;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
 use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
@@ -52,6 +53,8 @@ class EditController extends AddController
         $form->handleRequest();
 
         if ($form->isValid()) {
+            $connection = Propel::getConnection();
+
             $data = $form->getData();
 
             $currentCategoryTransfer = $this->updateCategory($locale, $data);
@@ -78,6 +81,8 @@ class EditController extends AddController
             );
 
             $this->addSuccessMessage('The category was saved successfully.');
+
+            $connection->commit();
 
             return $this->redirectResponse('/productCategory/edit?id-category='.$idCategory);
         }
