@@ -121,13 +121,14 @@ class BlockManager implements BlockManagerInterface
     protected function updateBlock(CmsBlockInterface $cmsBlockTransfer)
     {
         $blockEntity = $this->getCmsBlockByIdPage($cmsBlockTransfer->getFkPage());
+        $this->touchBlockDeleteNecessary($cmsBlockTransfer, $blockEntity);
         $blockEntity->fromArray($cmsBlockTransfer->toArray());
 
         if (!$blockEntity->isModified()) {
             return $blockEntity;
         }
 
-        $this->touchBlockDeleteNecessary($cmsBlockTransfer, $blockEntity);
+
 
         $blockEntity->save();
 
@@ -172,6 +173,7 @@ class BlockManager implements BlockManagerInterface
         $newBlockName = $cmsBlockTransfer->getName() . '-' . $cmsBlockTransfer->getType() . '-' . $cmsBlockTransfer->getValue();
 
         if ($blockName !== $newBlockName) {
+            $cmsBlockTransfer->setIdCmsBlock($blockEntity->getIdCmsBlock());
             $this->touchBlockDelete($cmsBlockTransfer);
         }
     }
