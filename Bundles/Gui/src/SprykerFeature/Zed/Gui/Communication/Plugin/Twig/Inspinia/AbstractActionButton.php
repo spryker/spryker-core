@@ -71,8 +71,8 @@ abstract class AbstractActionButton extends TwigFunction
     {
         $button = $this;
 
+        // @todo CD-450 use twig to render html
         return function($url, $title, $options = []) use ($button) {
-
             $html = $button->generateAnchor($url, $options);
             $html .= $this->getIcon();
             $html .= $title;
@@ -81,4 +81,5 @@ abstract class AbstractActionButton extends TwigFunction
             return $html;
         };
     }
+
 }
