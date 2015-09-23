@@ -72,7 +72,6 @@ class ClosureTableWriter implements ClosureTableWriterInterface
             $obsoleteEntity->delete();
         }
 
-
         $nodeEntities = $this->queryContainer
             ->queryClosureTableFilterByIdNode($categoryNode->getIdCategoryNode())
             ->find()
