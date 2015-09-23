@@ -196,37 +196,48 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     public function queryClosureTableParentEntries($idNode)
     {
         $query = SpyCategoryClosureTableQuery::create('node');
+
+        $join1 = new Join(
+            'node.fk_category_node_descendant',
+            'descendants.fk_category_node_descendant',
+            Criteria::JOIN
+        );
+        $join1
+            ->setRightTableName('spy_category_closure_table')
+            ->setRightTableAlias('descendants')
+            ->setLeftTableName('spy_category_closure_table')
+            ->setLeftTableAlias('node')
+
+        ;
+
+        $join2 = new Join(
+            'descendants.fk_category_node',
+            'ascendants.fk_category_node',
+            Criteria::LEFT_JOIN
+        );
+
+        $join2
+            ->setRightTableName('spy_category_closure_table')
+            ->setRightTableAlias('ascendants')
+            ->setLeftTableName('spy_category_closure_table')
+            ->setLeftTableAlias('descendants')
+
+        ;
+
+        $query->addJoinObject($join1);
+        $query->addJoinObject($join2, 'ascendantsJoin');
+
         $query
-            ->addJoinObject(
-                (new Join(
-                    'node.fk_category_node_descendant',
-                    SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT,
-                    Criteria::JOIN
-                )
-                )->setRightTableAlias('descendants')
-            )
-            ->addJoinObject(
-                (new Join(
-                    'node.fk_category_node',
-                    SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE,
-                    Criteria::LEFT_JOIN
-                )
-                )->setRightTableAlias('ascendants'),
-                'ascendantsJoin'
-            )
-                ->addJoinCondition(
+            ->addJoinCondition(
                     'ascendantsJoin',
                     'ascendants.fk_category_node_descendant = node.fk_category_node'
-                )
-            ->addAnd(
-                'descendants.fk_category_node',
-                $idNode,
-                Criteria::EQUAL
+                );
+        $query
+            ->where(
+                'descendants.fk_category_node = ' . $idNode
             )
-            ->addAnd(
-                'ascendants.fk_category_node',
-                null,
-                Criteria::ISNULL
+            ->where(
+                'ascendants.fk_category_node IS NULL'
             )
         ;
 
