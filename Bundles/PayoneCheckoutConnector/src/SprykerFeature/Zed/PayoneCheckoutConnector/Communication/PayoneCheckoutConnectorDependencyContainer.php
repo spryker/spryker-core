@@ -5,10 +5,11 @@
 
 namespace SprykerFeature\Zed\PayoneCheckoutConnector\Communication;
 
+use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Payone\Business\PayoneFacade;
 use SprykerFeature\Zed\PayoneCheckoutConnector\PayoneCheckoutConnectorDependencyProvider;
 
-class PayoneCheckoutConnectorDependencyContainer
+class PayoneCheckoutConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**
