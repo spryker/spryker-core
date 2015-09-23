@@ -12,10 +12,10 @@ function calculateTotalRefundAmount() {
     });
 
     var adjustmentFee = parseInt($('#form_adjustment_fee').val(), 10) || 0;
-    console.log(adjustmentFee);
     sum = sum + adjustmentFee;
 
-    $('#form_amount').val(sum);
+    // @todo CD-462 make this run only in refund pages. This is global scope and affects all pages
+    //$('#form_amount').val(sum);
 }
 
 $(document).ready(function() {
