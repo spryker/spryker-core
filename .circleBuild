@@ -32,6 +32,9 @@ class CircleCiBuilder
             return;
         }
 
+
+        echo '<pre>' . PHP_EOL . var_dump($this) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+
         if ($this->hasCurrentBranchAParentBranch()) {
             $this->triggerBuildForBranch($this->branchName);
         } else {
