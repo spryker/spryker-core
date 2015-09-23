@@ -32,17 +32,17 @@ abstract class AbstractOperator implements OperatorInterface
     /**
      * @var CalculationFacade
      */
-    private $cartCalculator;
+    protected $cartCalculator;
 
     /**
      * @var ItemExpanderPluginInterface[]
      */
-    private $itemExpanderPlugins = [];
+    protected $itemExpanderPlugins = [];
 
     /**
      * @var ItemGrouperFacade
      */
-    private $itemGrouperFacade;
+    protected $itemGrouperFacade;
 
     /**
      * @param StorageProviderInterface $storageProvider
