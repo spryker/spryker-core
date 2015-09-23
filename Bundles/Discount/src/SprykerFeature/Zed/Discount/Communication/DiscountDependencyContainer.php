@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Communication;
 
+use Bundles\Discount\src\SprykerFeature\Zed\Discount\Communication\Table\DiscountsTable;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\DiscountCommunication;
@@ -55,6 +56,16 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
         $poolCategoriesQuery = $this->getQueryContainer()->queryDiscountVoucherPoolCategory();
 
         return $this->getFactory()->createTableVoucherPoolCategoryTable($poolCategoriesQuery);
+    }
+
+    /**
+     * @return DiscountsTable
+     */
+    public function createDiscountsTable()
+    {
+        $discountQuery = $this->getQueryContainer()->queryDiscount();
+
+        return $this->getFactory()->createTableDiscountsTable($discountQuery);
     }
 
     /**
