@@ -1,19 +1,13 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Shipment' %}
-
-{% block head_title widget_title | trans %}
-
-{% block section_title widget_title | trans %}
+{% block action %}
+    {{ createActionButton('/shipment/carrier/add', 'Add new Carrier Company' | trans) }}
+    {{ createActionButton('/shipment/method/add', 'Add new Shipment Method' | trans) }}
+{% endblock %}
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' %}
-
-        {% block widget_header_content %}
-            <a href="/shipment/carrier/add" class="btn btn-sm btn-primary "><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{ 'Add a new carrier company' | trans }}</a>
-            <a href="/shipment/method/add" class="btn btn-sm btn-primary "><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> {{ 'Add a new shipment method' | trans }}</a>
-        {% endblock %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Shipment' } %}
 
         {% block widget_content %}
 

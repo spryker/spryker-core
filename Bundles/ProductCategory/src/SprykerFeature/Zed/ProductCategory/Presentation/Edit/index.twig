@@ -1,3 +1,8 @@
 {% extends '@ProductCategory/Add/index.twig' %}
 {% set submit_title = 'Save' %}
 {% set widget_title = 'Category Edit' %}
+
+{% block action %}
+    {{ parent() }}
+    {{ createActionButton('/productCategory/add', 'Create Category' | trans) }}
+{% endblock %}

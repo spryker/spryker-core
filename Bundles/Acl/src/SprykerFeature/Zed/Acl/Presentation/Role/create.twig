@@ -4,6 +4,10 @@
 
 {% block head_title widget_title | trans %}
 
+{% block action %}
+    {{ backActionButton('/acl/role', 'List Roles' | trans) }}
+{% endblock %}
+
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' %}

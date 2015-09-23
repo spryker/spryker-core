@@ -5,13 +5,16 @@
 {% block head_title widget_title | trans %}
 {% block section_title widget_title | trans %}
 
+{% block action %}
+    {{ backActionButton('/customer/address/?id_customer=' ~ id_customer, 'Back to Manage Addresses' | trans) }}
+    {{ createActionButton('/customer/address/add?id_customer=' ~ id_customer, 'Add new Address' | trans) }}
+    {{ viewActionButton('/customer/view/?id_customer=' ~ id_customer, 'View Customer' | trans) }}
+    {{ editActionButton('/customer/edit/?id_customer=' ~ id_customer, 'Edit Customer' | trans) }}
+{% endblock %}
+
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' %}
-
-        {% block widget_header_content %}
-            <a href="/customer/address/?id_customer={{ id_customer }}" class="btn btn-sm btn-default">{{ 'Back to Manage Addresses' | trans }}</a>
-        {% endblock %}
 
         {% block widget_content %}
 

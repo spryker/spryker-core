@@ -6,13 +6,13 @@
 
 {% block section_title widget_title | trans %}
 
+{% block action %}
+    {{ createActionButton('/customer/add', 'Add Customer' | trans) }}
+{% endblock %}
+
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' %}
-
-        {% block widget_header_content %}
-            <a href="/customer/add" class="btn btn-sm btn-primary ">{{ 'Add a new customer' | trans }}</a>
-        {% endblock %}
 
         {% block widget_content %}
 

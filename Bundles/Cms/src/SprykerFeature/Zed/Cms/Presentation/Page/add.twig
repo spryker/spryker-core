@@ -5,6 +5,10 @@
 {% block head_title widget_title %}
 {% block section_title widget_title %}
 
+{% block action %}
+    {{ backActionButton('/cms/page/', 'Back to CMS' | trans) }}
+{% endblock %}
+
 {% block content %}
 <div id="spy-cms" class="glossary">
     {% if isSynced %}
@@ -15,11 +19,6 @@
 
     {% embed '@Gui/Partials/widget.twig' %}
 
-        {% block widget_header_content %}
-
-            <a href="/cms/page/" class="btn btn-sm btn-default">{{ 'Back to CMS' | trans }}</a>
-
-        {% endblock %}
 
         {% block widget_content %}
 

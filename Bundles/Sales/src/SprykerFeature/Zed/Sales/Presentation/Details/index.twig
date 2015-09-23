@@ -4,8 +4,6 @@
     {{ 'Order ID:' | trans }} {{ idOrder }} ({{ orderDetails.CreatedAt.date | date('Y-m-d G:i:s', false) }})
 {% endblock %}
 
-{% block breadcrumb_body '' %}
-
 {% block content %}
 
     {% include '@Sales/Details/section/customer-details.twig' %}

@@ -3,20 +3,31 @@
 {% block body_class %}spy-page{% endblock %}
 
 {% block content %}
-    <table>
-        <tr>
-            <td>Name</td>
-            <td>License</td>
-            <td>Version</td>
-            <td>Type</td>
-        </tr>
-        {% for installedPackage in installedPackages.packages %}
-            <tr>
-                <td><a href="{{ installedPackage.url }}">{{ installedPackage.name }}</a></td>
-                <td>{{ installedPackage.license|join(', ') }}</td>
-                <td>{{ installedPackage.version }}</td>
-                <td>{{ installedPackage.type }}</td>
-            </tr>
-        {% endfor %}
-    </table>
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Installed Packages' } %}
+
+        {% block widget_content %}
+
+            <table class="table table-striped table-bordered table-hover">
+                <tr>
+                    <td>{{ 'Name' | trans }}</td>
+                    <td>{{ 'License' | trans }}</td>
+                    <td>{{ 'Version' | trans }}</td>
+                    <td>{{ 'Type' | trans }}</td>
+                </tr>
+                {% for installedPackage in installedPackages.packages %}
+                    <tr>
+                        <td><a href="{{ installedPackage.url }}">{{ installedPackage.name }}</a></td>
+                        <td>{{ installedPackage.license|join(', ') }}</td>
+                        <td>{{ installedPackage.version }}</td>
+                        <td>{{ installedPackage.type }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+
+        {% endblock %}
+
+    {% endembed %}
+
+
 {% endblock %}

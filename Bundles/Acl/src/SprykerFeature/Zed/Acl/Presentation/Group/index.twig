@@ -5,13 +5,14 @@
 {% block head_title widget_title %}
 {% block section_title widget_title %}
 
+{% block action %}
+    {{ createActionButton('/acl/group/add', 'Create Group' | trans) }}
+{% endblock %}
+
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' %}
 
-        {% block widget_header_content %}
-            <a class="btn btn-sm btn-primary" href="/acl/group/add">{{ 'Create Group' | trans }}</a>
-        {% endblock %}
 
         {% block widget_content %}
 

@@ -1,3 +1,8 @@
 {% extends '@Discount/Pool/create.twig' %}
 
 {% set section_title = 'Update Pool' %}
+
+{% block action %}
+    {{ parent() }}
+    {{ createActionButton('/discount/pool/create', 'Create Pool') }}
+{% endblock %}

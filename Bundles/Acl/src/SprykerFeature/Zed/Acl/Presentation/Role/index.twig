@@ -4,13 +4,13 @@
 
 {% block head_title widget_title | trans %}
 
+{% block action %}
+    {{ createActionButton('/acl/role/create', 'Add new Role' | trans) }}
+{% endblock %}
+
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' %}
-
-        {% block widget_header_content %}
-            <a href="/acl/role/create" class="btn btn-sm btn-primary ">{{ 'Add new role' | trans }}</a>
-        {% endblock %}
 
         {% block widget_content %}
 

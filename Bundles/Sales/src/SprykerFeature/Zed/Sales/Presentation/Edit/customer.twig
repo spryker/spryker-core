@@ -1,16 +1,12 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set widget_title = 'Customer details' %}
-
-{% block head_title widget_title | trans %}
+{% block action %}
+    {{ viewActionButton('/sales/details/?id-sales-order=' ~ idOrder, 'View Order' | trans) }}
+{% endblock %}
 
 {% block content %}
 
-    {% embed '@Gui/Partials/widget.twig' %}
-
-        {% block widget_header_content %}
-            <a class="btn btn-primary" href="/sales/details/?id-sales-order={{ idOrder }}">{{ 'View Order' | trans }}</a>
-        {% endblock %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Customer Details' } %}
 
         {% block widget_content %}
 

@@ -1,21 +1,19 @@
 {% extends '@Application/Layout/layout.twig' %}
 
+{% block action %}
+    {{ createActionButton('/cms/redirect/add/', 'Add CMS Redirect' | trans) }}
+{% endblock %}
+
 {% block content %}
 
-        {% embed '@Gui/Partials/widget.twig' with { widget_title: 'CMS Redirect' } %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'CMS Redirect' } %}
 
-                {% block widget_header_content %}
+        {% block widget_content %}
 
-                        <a class="btn btn-sm btn-primary" href="/cms/redirect/add/">{{ 'Add CMS Redirect' | trans }}</a>
+            {{ redirects | raw }}
 
-                {% endblock %}
+        {% endblock %}
 
-                {% block widget_content %}
-
-                        {{ redirects | raw }}
-
-                {% endblock %}
-
-        {% endembed %}
+    {% endembed %}
 
 {% endblock %}

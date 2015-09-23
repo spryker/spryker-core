@@ -1,10 +1,29 @@
 {% extends '@Application/Layout/layout.twig' %}
-{% block content %}
 
-{% for process in processes %}
-    <h1>Processes</h1>
-    <a href="/oms/index/draw?process={{ process.name }}" target="_blank">{{ process.name }}</a>
-    <a style="font-size:10px;" href="/oms/index/draw-preview-version?process={{ process.name }}" target="_blank">[preview-version]</a>
-    <br >
-{% endfor %}
+{% block content %}
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Processes' } %}
+
+        {% block widget_content %}
+
+            <div class="row">
+                {% for process in processes %}
+                    <div class="col-md-4">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h1>Processes</h1>
+                            </div>
+                            <div class="panel-body">
+                                <a href="/oms/index/draw?process={{ process.name }}" target="_blank">{{ process.name }}</a>
+                                <a style="font-size:10px;" href="/oms/index/draw-preview-version?process={{ process.name }}" target="_blank">[preview-version]</a>
+                            </div>
+
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+
+        {% endblock %}
+
+    {% endembed %}
+
 {% endblock %}
