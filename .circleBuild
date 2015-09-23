@@ -12,12 +12,17 @@ class CircleCiBuilder
     /**
      * @var string
      */
-    private $circleCiToken;
+    private $branchName;
 
     /**
      * @var string
      */
-    private $branchName;
+    private $branchAuthor;
+
+    /**
+     * @var string
+     */
+    private $circleCiToken;
 
     public function __construct()
     {
@@ -90,8 +95,7 @@ class CircleCiBuilder
             'Accept: application/json'
         ]);
 
-        $output = curl_exec($curlResource);
-        var_dump($output);
+        curl_exec($curlResource);
         curl_close($curlResource);
     }
 
