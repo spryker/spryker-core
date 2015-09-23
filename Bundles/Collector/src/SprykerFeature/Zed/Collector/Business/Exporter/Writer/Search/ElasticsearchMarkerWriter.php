@@ -14,10 +14,7 @@ use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 class ElasticsearchMarkerWriter implements WriterInterface
 {
 
-    /**
-     * @var Client
-     */
-    protected $client;
+    const WRITER_NAME = 'elasticsearch-marker-writer';
 
     /**
      * @var Index
@@ -25,26 +22,12 @@ class ElasticsearchMarkerWriter implements WriterInterface
     protected $index;
 
     /**
-     * @var string
-     */
-    protected $type;
-
-    /**
-     * TODO this has state...
-     * @var
-     */
-    protected $metaData = [];
-
-    /**
      * @param Client $searchClient
      * @param string $indexName
-     * @param string $type
      */
-    public function __construct(Client $searchClient, $indexName, $type)
+    public function __construct(Client $searchClient, $indexName)
     {
-        $this->client = $searchClient;
-        $this->index = $this->client->getIndex($indexName);
-        $this->type = $type;
+        $this->index = $searchClient->getIndex($indexName);
     }
 
     /**
@@ -55,25 +38,11 @@ class ElasticsearchMarkerWriter implements WriterInterface
      */
     public function write(array $dataSet, $type = '')
     {
+        $mapping = new Mapping($this->index->getType($type));
+
         foreach ($dataSet as $key => $value) {
-            $this->metaData[$key] = $value;
+            $mapping->setMeta([$key => $value])->send();
         }
-
-
-//        $mapping = new Mapping($this->index->getType($this->type));
-//
-//        foreach ($dataSet as $key => $value) {
-//            $mapping->setMeta([$key => $value])->send(); // This always overrides the timestamp
-//        }
-    }
-
-    /**
-     * TODO
-     * This should not be __destruct
-     */
-    public function __destruct(){
-        $mapping = new Mapping($this->index->getType($this->type));
-        $mapping->setMeta($this->metaData)->send();
     }
 
     /**
@@ -91,7 +60,7 @@ class ElasticsearchMarkerWriter implements WriterInterface
      */
     public function getName()
     {
-        return 'elasticsearch-marker-writer';
+        return self::WRITER_NAME;
     }
 
 }

@@ -27,10 +27,11 @@ class RedisReader implements ReaderInterface
 
     /**
      * @param string $key
+     * @param string $type
      *
-     * @return mixed
+     * @return string
      */
-    public function read($key)
+    public function read($key, $type = '')
     {
         return $this->redis->get($key);
     }

@@ -11,10 +11,11 @@ interface ReaderInterface
 
     /**
      * @param string $key
+     * @param string $type
      *
-     * @return mixed
+     * @return string
      */
-    public function read($key);
+    public function read($key, $type = '');
 
     /**
      * @return string

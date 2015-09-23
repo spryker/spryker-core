@@ -11,7 +11,7 @@ use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerFeature\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 
-class KeyValueMarker implements MarkerInterface
+class ExportMarker implements MarkerInterface
 {
 
     /**
@@ -23,6 +23,7 @@ class KeyValueMarker implements MarkerInterface
      * @var ReaderInterface
      */
     private $reader;
+
     /**
      * @var KeyBuilderInterface
      */
@@ -51,7 +52,7 @@ class KeyValueMarker implements MarkerInterface
      */
     public function getLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $locale)
     {
-        $lastTimeStamp = $this->reader->read($this->keyBuilder->generateKey($exportType, $locale->getLocaleName()));
+        $lastTimeStamp = $this->reader->read($this->keyBuilder->generateKey($exportType, $locale->getLocaleName()), $exportType);
 
         if ($lastTimeStamp) {
             $lastDateTime = \DateTime::createFromFormat('Y-m-d H:i:s', $lastTimeStamp);
@@ -69,7 +70,7 @@ class KeyValueMarker implements MarkerInterface
     public function setLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $locale)
     {
         $timestampKey = $this->keyBuilder->generateKey($exportType, $locale->getLocaleName());
-        $this->writer->write([$timestampKey => (new \DateTime())->format('Y-m-d H:i:s')]);
+        $this->writer->write([$timestampKey => (new \DateTime())->format('Y-m-d H:i:s')], $exportType);
     }
 
 }

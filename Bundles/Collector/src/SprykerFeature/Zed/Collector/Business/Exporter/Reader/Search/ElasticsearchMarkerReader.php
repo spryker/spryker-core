@@ -47,19 +47,20 @@ class ElasticsearchMarkerReader implements ReaderInterface
 
     /**
      * @param string $key
+     * @param string $type
      *
-     * @return string|bool
+     * @return bool|string
      */
-    public function read($key)
+    public function read($key, $type = '')
     {
         try {
-            $mapping = $this->index->getType($this->type)->getMapping();
+            $mapping = $this->index->getType($type)->getMapping();
         } catch (ResponseException $e) {
             return false;
         }
 
-        if (isset($mapping[$this->type][self::META_ATTRIBUTE][$key])) {
-            return $mapping[$this->type][self::META_ATTRIBUTE][$key];
+        if (isset($mapping[$type][self::META_ATTRIBUTE][$key])) {
+            return $mapping[$type][self::META_ATTRIBUTE][$key];
         }
 
         return false;

@@ -238,7 +238,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createSearchMarker()
     {
-        return $this->getFactory()->createExporterKeyValueMarker( // TODO it uses the KV marker for Search?
+        return $this->getFactory()->createExporterExportMarker(
             $this->createSearchMarkerWriter(),
             $this->createSearchMarkerReader(),
             $this->createSearchMarkerKeyBuilder()
@@ -252,8 +252,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $elasticSearchWriter = $this->getFactory()->createExporterWriterSearchElasticsearchMarkerWriter(
             StorageInstanceBuilder::getElasticsearchInstance(),
-            $this->getConfig()->getSearchIndexName(),
-            $this->getConfig()->getSearchDocumentType()
+            $this->getConfig()->getSearchIndexName()
         );
 
         return $elasticSearchWriter;
