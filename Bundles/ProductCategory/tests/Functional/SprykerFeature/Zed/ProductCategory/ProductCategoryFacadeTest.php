@@ -28,6 +28,7 @@ use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use Propel\Runtime\Propel;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
+use SprykerFeature\Zed\ProductCategory\ProductCategoryDependencyProvider;
 use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
 
 /**
@@ -78,7 +79,13 @@ class ProductCategoryFacadeTest extends AbstractFunctionalTest
         $this->productFacade = $this->locator->product()->facade();
         $this->categoryFacade = $this->locator->category()->facade();
         $this->productCategoryFacade = new ProductCategoryFacade(new Factory('ProductCategory'), $this->locator);
-        $this->productCategoryFacade->setExternalDependencies(new Container());
+
+        $container = new Container();
+        $container[ProductCategoryDependencyProvider::FACADE_TOUCH] = function (Container $container) {
+            return $this->getMock('SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface');
+        };
+
+        $this->productCategoryFacade->setExternalDependencies($container);
         $this->productCategoryQueryContainer = new ProductQueryContainer(
             new PersistenceFactory('ProductCategory'),
             $this->locator

@@ -35,14 +35,13 @@ class TransferDefinitionMergerTest extends \PHPUnit_Framework_TestCase
 
     public function testMergeShouldThrowExceptionIfTwoPropertiesWithSameNameDefineDifferentAttributes()
     {
-        $this->setExpectedException('\Exception', 'Property "propertyA" defined more than once with different attributes!');
         $helper = new TransferDefinitionMergerHelper();
         $property1 = $helper->getTransferDefinition1();
 
         $property1['property'] = [
             [
                 'name' => 'propertyA',
-                'type' => 'int',
+                'type' => 'int'
             ],
         ];
 
@@ -55,6 +54,8 @@ class TransferDefinitionMergerTest extends \PHPUnit_Framework_TestCase
         $expected['Transfer'] = $helper->getExpectedTransfer();
 
         $merger = new TransferDefinitionMerger();
+
+        $this->setExpectedException('\Exception', 'Property "propertyA" defined more than once with different attributes! To fix this, search for "property name="propertyA"" in the code base and fix the wrong one.');
         $merger->merge($transferDefinitions);
     }
 

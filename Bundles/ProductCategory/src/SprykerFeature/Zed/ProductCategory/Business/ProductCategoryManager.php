@@ -108,7 +108,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         $mappingEntity = $this->locator->productCategory()->entitySpyProductCategory();
         $mappingEntity
             ->setFkAbstractProduct($idAbstractProduct)
-            ->setFkCategory($idCategory)    
+            ->setFkCategory($idCategory)
         ;
 
         $mappingEntity->save();
@@ -167,7 +167,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     /**
      * @param int $idCategory
      * @param int $idAbstractProduct
-     * 
+     *
      * @return SpyProductCategoryQuery
      */
     public function getProductCategoryMappingById($idCategory, $idAbstractProduct)
