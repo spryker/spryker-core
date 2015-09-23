@@ -6,12 +6,15 @@
 
 namespace SprykerFeature\Zed\Maintenance\Communication\Controller;
 
+use SprykerEngine\Shared\Config;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Maintenance\Business\MaintenanceFacade;
 use SprykerFeature\Zed\Maintenance\Communication\MaintenanceDependencyContainer;
+use SprykerFeature\Shared\System\SystemConfig;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+
 
 /**
  * @method MaintenanceFacade getFacade()
@@ -62,14 +65,13 @@ class SearchController extends AbstractController
     {
         $key = $request->get('key');
 
-        $queryString = '{"query":{ "ids":{ "values": [ ' . $key . ' ]}}}';
-        $searchQuery = $this->getDependencyContainer()->getSearchClient()
-            ->getIndexClient()->search(json_decode($queryString, true));
+        $type = Config::get(SystemConfig::ELASTICA_PARAMETER__DOCUMENT_TYPE); // TODO FIXME
 
-        $searchResult = $searchQuery->getResults();
+        $doc = $this->getDependencyContainer()->getSearchClient()
+            ->getIndexClient()->getType($type)->getDocument($key);
 
         return $this->viewResponse([
-            'value' => var_export($searchResult, true),
+            'value' => var_export($doc->getData(), true),
             'key' => $key,
         ]);
     }
