@@ -21,14 +21,15 @@ class TouchFacade extends AbstractFacade
      *
      * @return bool
      */
-    public function touchActive($itemType, $idItem)
+    public function touchActive($itemType, $idItem, $keyChange = false)
     {
         $touchRecordModel = $this->getDependencyContainer()->getTouchRecordModel();
 
         return $touchRecordModel->saveTouchRecord(
             $itemType,
             SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE,
-            $idItem
+            $idItem,
+            $keyChange
         );
     }
 

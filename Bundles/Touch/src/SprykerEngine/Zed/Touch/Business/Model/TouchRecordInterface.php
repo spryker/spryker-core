@@ -15,13 +15,14 @@ interface TouchRecordInterface
      * @param string $itemType
      * @param string $itemEvent
      * @param int $idItem
+     * @param bool $keyChange
      *
      * @throws \Exception
      * @throws PropelException
      *
      * @return bool
      */
-    public function saveTouchRecord($itemType, $itemEvent, $idItem);
+    public function saveTouchRecord($itemType, $itemEvent, $idItem, $keyChange = false);
 
     /**
      * @param string $itemType
