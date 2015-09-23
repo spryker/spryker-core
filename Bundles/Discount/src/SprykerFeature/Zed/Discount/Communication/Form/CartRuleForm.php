@@ -147,7 +147,7 @@ class CartRuleForm extends AbstractForm
             $decisionRuleName
         );
 
-        return ucfirst(strtolower($decisionRuleName));
+        return mb_convert_case($decisionRuleName, MB_CASE_TITLE, "UTF-8");
     }
 
     /**
