@@ -45,6 +45,12 @@
         <behavior name="query_cache">
             <parameter name="backend" value="custom" />
         </behavior>
+        <foreign-key foreignTable="spy_touch" phpName="Touch" refPhpName="TouchStorage">
+            <reference foreign="id_touch" local="fk_touch"/>
+        </foreign-key>
+        <foreign-key foreignTable="spy_locale" phpName="Locale" refPhpName="TouchStorage">
+            <reference foreign="id_locale" local="fk_locale"/>
+        </foreign-key>
     </table>
 
     <table name="spy_touch_search" phpName="SpyTouchSearch">
@@ -63,5 +69,11 @@
         <behavior name="query_cache">
             <parameter name="backend" value="custom" />
         </behavior>
+        <foreign-key foreignTable="spy_touch" phpName="Touch" refPhpName="TouchSearch">
+            <reference foreign="id_touch" local="fk_touch"/>
+        </foreign-key>
+        <foreign-key foreignTable="spy_locale" phpName="Locale" refPhpName="TouchSearch">
+            <reference foreign="id_locale" local="fk_locale"/>
+        </foreign-key>
     </table>
 </database>
