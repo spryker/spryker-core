@@ -259,8 +259,8 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
-     * @param $idCategory
-     * @param $idAbstractProduct
+     * @param int $idCategory
+     * @param int $idAbstractProduct
      *
      * @return SpyProductQuery
      */

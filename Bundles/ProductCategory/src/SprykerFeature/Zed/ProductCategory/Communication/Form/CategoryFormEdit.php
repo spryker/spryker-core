@@ -27,7 +27,7 @@ class CategoryFormEdit extends CategoryFormAdd
     const CATEGORY_IS_IN_MENU = 'is_in_menu';
     const CATEGORY_IS_CLICKABLE = 'is_clickable';
     const CATEGORY_NODE_IS_MAIN = 'is_main';
-    
+
     const EXTRA_PARENTS = 'extra_parents';
 
     /**
@@ -69,6 +69,9 @@ class CategoryFormEdit extends CategoryFormAdd
             ])
             ->addCheckbox(self::CATEGORY_IS_CLICKABLE, [
                 'label' => 'Clickable',
+            ])
+            ->addCheckbox(self::CATEGORY_NODE_IS_MAIN, [
+                'label' => 'Main',
             ])
             ->addSelect2ComboBox(self::FK_PARENT_CATEGORY_NODE, [
                 'label' => 'Parent',
@@ -153,8 +156,6 @@ class CategoryFormEdit extends CategoryFormAdd
                 $nodeIds[] = $node->getFkParentCategoryNode();
             }
             
-            
-
             $fields = [
                 self::PK_CATEGORY => $category[self::PK_CATEGORY],
                 self::PK_CATEGORY_NODE => $category[self::PK_CATEGORY_NODE],

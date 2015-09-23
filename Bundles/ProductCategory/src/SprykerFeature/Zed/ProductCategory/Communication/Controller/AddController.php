@@ -14,7 +14,6 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\ProductCategory\Communication\ProductCategoryDependencyContainer;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -34,11 +33,13 @@ class AddController extends AbstractController
      */
     public function indexAction(Request $request)
     {
+        $idParentNode = $request->get(ProductCategoryConfig::PARAM_ID_PARENT_NODE);
+
         /*
          * @var Form
          */
         $form = $this->getDependencyContainer()
-            ->createCategoryFormAdd()
+            ->createCategoryFormAdd($idParentNode)
         ;
         $form->handleRequest();
 
@@ -67,7 +68,6 @@ class AddController extends AbstractController
             ;
 
             $categoryNodeTransfer->setFkCategory($idCategory);
-            $categoryNodeTransfer->setIsMain(true);
 
             $this->getDependencyContainer()
                 ->createCategoryFacade()

@@ -8,7 +8,7 @@
                     <i class="fa fa-sitemap"></i>
                 </a>
                 {% endif %}
-                <a href="/productCategory/add" class="btn btn-xs btn-success"><i class="fa fa-plus"></i></a>
+                <a href="/productCategory/add?id-parent-node={{ item.id }}" class="btn btn-xs btn-success"><i class="fa fa-plus"></i></a>
                 <a href="/productCategory/edit?id-category={{ item.id_category }}" class="btn btn-xs btn-primary">
                     <i class="fa fa-pencil"></i>
                 </a>

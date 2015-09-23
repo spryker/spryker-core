@@ -154,19 +154,25 @@ class CategoryTreeWriter
         $connection->commit();
     }
 
+    /**
+     * @param NodeTransfer $categoryNode
+     */
     protected function touchCategoryActiveRecursive(NodeTransfer $categoryNode)
     {
         $closureQuery= new SpyCategoryClosureTableQuery();
         $nodes = $closureQuery->findByFkCategoryNodeDescendant($categoryNode->getFkParentCategoryNode());
 
-        foreach ($nodes as $node) {
+        foreach($nodes as $node) {
             $this->touchCategoryActive($node->getFkCategoryNode());
         }
 
         $this->touchCategoryActive($categoryNode->getIdCategoryNode());
     }
 
-/*    protected function touchCategoryDeletedRecursive(NodeTransfer $categoryNode)
+    /**
+     * @param NodeTransfer $categoryNode
+     */
+    protected function touchCategoryDeletedRecursive(NodeTransfer $categoryNode)
     {
         $closureQuery= new SpyCategoryClosureTableQuery();
         $nodes = $closureQuery->findByFkCategoryNodeDescendant($categoryNode->getFkParentCategoryNode());
@@ -176,7 +182,7 @@ class CategoryTreeWriter
         }
 
         $this->touchCategoryDeleted($categoryNode->getIdCategoryNode());
-    }*/
+    }
 
     /**
      * @param int $idNode

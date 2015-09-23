@@ -63,10 +63,13 @@ class ClosureTableWriter implements ClosureTableWriterInterface
      */
     public function moveNode(NodeTransfer $categoryNode)
     {
-        $this->queryContainer
+        dump($categoryNode->toArray());
+        $nodesToDelete = $this->queryContainer
             ->queryClosureTableParentEntries($categoryNode->getIdCategoryNode())
-            ->delete()
+            ->find()
         ;
+
+        die(dump($nodesToDelete));
 
         $nodeEntities = $this->queryContainer
             ->queryClosureTableFilterByIdNode($categoryNode->getIdCategoryNode())
