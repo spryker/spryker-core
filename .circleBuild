@@ -32,9 +32,6 @@ class CircleCiBuilder
             return;
         }
 
-
-        echo '<pre>' . PHP_EOL . var_dump($this) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
-
         if ($this->hasCurrentBranchAParentBranch()) {
             $this->triggerBuildForBranch($this->branchName);
         } else {
@@ -78,6 +75,7 @@ class CircleCiBuilder
             'build_parameters' => [
                 'RUN_NIGHTLY_BUILD' => true,
                 'SPRYKER_BRANCH' => $branchName,
+                'BRANCH' => $this->branchName,
                 'BRANCH_AUTHOR' => $this->branchAuthor,
             ]
         ];
@@ -92,7 +90,8 @@ class CircleCiBuilder
             'Accept: application/json'
         ]);
 
-        curl_exec($curlResource);
+        $output = curl_exec($curlResource);
+        var_dump($output);
         curl_close($curlResource);
     }
 
