@@ -15,8 +15,6 @@ use SprykerFeature\Zed\Discount\DiscountDependencyProvider;
 use SprykerFeature\Zed\Discount\Communication\Table\DiscountVoucherTable;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
-use SprykerFeature\Zed\Library\Copy;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolCategoryTable;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolTable;
@@ -100,6 +98,23 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
         ;
 
         return $this->getFactory()->createFormPoolCategoryForm($poolCategoryQuery, $idPoolCategory);
+    }
+
+    public function createCartRuleForm($idDiscount)
+    {
+        $discountQuery = $this->getQueryContainer()
+            ->queryDiscount()
+            ->filterByIdDiscount($idDiscount)
+        ;
+        $decisionRuleQuery = $this->getQueryContainer()
+            ->queryDecisionRules($idDiscount)
+        ;
+
+        return $this->getFactory()->createFormCartRuleForm(
+            $discountQuery,
+            $this->getConfig(),
+            $decisionRuleQuery
+        );
     }
 
     /**

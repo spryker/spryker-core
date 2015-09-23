@@ -1,0 +1,24 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block action %}
+    {{ backActionButton('/discount/cart-rule/', 'List Cart Rules' | trans) }}
+    {{ createActionButton('/discount/cart-rule/create', 'Create Cart Rule' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Cart Rules' } %}
+
+        {% block widget_content %}
+
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+
+                <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+            {{ form_end(form) }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
