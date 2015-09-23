@@ -189,6 +189,71 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
     /**
      * @param int $idNode
+     *
+     * @throws PropelException
+     * @return SpyCategoryClosureTableQuery
+     */
+    public function queryClosureTableParentEntries($idNode)
+    {
+        $query = SpyCategoryClosureTableQuery::create();
+        $query
+            ->addJoinObject(
+                (new Join(
+                    SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT,
+                    SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT,
+                    Criteria::JOIN
+                ))->setRightTableAlias('descendants'))
+            ->addJoinObject(
+                (new Join(
+                    SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE,
+                    SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE,
+                    Criteria::LEFT_JOIN
+                ))->setRightTableAlias('ascendants'), 'ascendantsJoin')
+            ->addJoinCondition(
+                'ascendantsJoin',
+                'ascendants.fk_category_node = ' .
+                SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT
+            )
+            ->addAnd(
+                'descendants.fk_category_node',
+                $idNode,
+                Criteria::EQUAL
+            )
+            ->addAnd(
+                'ascendants.fk_category_node',
+                null,
+                Criteria::ISNULL
+            )
+        ;
+
+        return $query;
+
+    }
+
+    /**
+     * @param int $idNode
+     *
+     * @return $this|SpyCategoryClosureTableQuery
+     */
+    public function queryClosureTableFilterByIdNode($idNode)
+    {
+        return SpyCategoryClosureTableQuery::create()
+            ->filterByFkCategoryNode($idNode);
+    }
+
+    /**
+     * @param int $idNodeDescendant
+     *
+     * @return $this|SpyCategoryClosureTableQuery
+     */
+    public function queryClosureTableFilterByIdNodeDescendant($idNodeDescendant)
+    {
+        return SpyCategoryClosureTableQuery::create()
+            ->filterByFkCategoryNodeDescendant($idNodeDescendant);
+    }
+
+    /**
+     * @param int $idNode
      * @param string $idLocale
      * @param bool $onlyOneLevel
      * @param bool $excludeStartNode

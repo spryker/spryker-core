@@ -59,6 +59,41 @@ class ClosureTableWriter implements ClosureTableWriterInterface
 
     /**
      * @param NodeTransfer $categoryNode
+     * @throws PropelException
+     */
+    public function moveNode(NodeTransfer $categoryNode)
+    {
+        $this->queryContainer
+            ->queryClosureTableParentEntries($categoryNode->getIdCategoryNode())
+            ->delete()
+        ;
+
+        $nodeEntities = $this->queryContainer
+            ->queryClosureTableFilterByIdNode($categoryNode->getIdCategoryNode())
+            ->find()
+        ;
+
+        $parentEntities = $this->queryContainer
+            ->queryClosureTableFilterByIdNodeDescendant($categoryNode->getFkParentCategoryNode())
+            ->find()
+        ;
+
+        foreach ($nodeEntities as $nodeEntity) {
+            foreach ($parentEntities as $parentEntity) {
+                $depth = $nodeEntity->getDepth() + $parentEntity->getDepth() + 1;
+
+                $closureTableEntity = new SpyCategoryClosureTable();
+                $closureTableEntity->setFkCategoryNode($parentEntity->getFkCategoryNode());
+                $closureTableEntity->setFkCategoryNodeDescendant($nodeEntity->getFkCategoryNodeDescendant());
+                $closureTableEntity->setDepth($depth);
+
+                $closureTableEntity->save();
+            }
+        }
+    }
+
+    /**
+     * @param NodeTransfer $categoryNode
      *
      * @throws PropelException
      */
@@ -83,7 +118,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
         $closureQuery= new SpyCategoryClosureTableQuery();
         $nodes = $closureQuery->findByFkCategoryNodeDescendant($parentId);
 
-        foreach($nodes as $node) {
+        foreach ($nodes as $node) {
             $entity = new SpyCategoryClosureTable();
             $entity->setFkCategoryNode($node->getFkCategoryNode());
             $entity->setFkCategoryNodeDescendant($nodeId);

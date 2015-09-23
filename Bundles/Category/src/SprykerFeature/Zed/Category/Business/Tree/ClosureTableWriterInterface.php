@@ -17,6 +17,11 @@ interface ClosureTableWriterInterface
     public function create(NodeTransfer $categoryNode);
 
     /**
+     * @param NodeTransfer $categoryNode
+     */
+    public function moveNode(NodeTransfer $categoryNode);
+
+    /**
      * @param int $nodeId
      */
     public function delete($nodeId);
