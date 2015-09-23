@@ -5,7 +5,8 @@ class CircleCiBuilder
 {
 
     const BRANCH_NAME = 1;
-    const CIRCLE_CI_TOKEN = 2;
+    const BRANCH_AUTHOR = 2;
+    const CIRCLE_CI_TOKEN = 3;
     const DEFAULT_BRANCH = 'develop';
 
     /**
@@ -21,11 +22,16 @@ class CircleCiBuilder
     public function __construct()
     {
         $this->branchName = $_SERVER['argv'][self::BRANCH_NAME];
+        $this->branchAuthor = $_SERVER['argv'][self::BRANCH_AUTHOR];
         $this->circleCiToken = $_SERVER['argv'][self::CIRCLE_CI_TOKEN];
     }
 
     public function runParentBuild()
     {
+        if ($this->branchName === self::DEFAULT_BRANCH) {
+            return;
+        }
+
         if ($this->hasCurrentBranchAParentBranch()) {
             $this->triggerBuildForBranch($this->branchName);
         } else {
@@ -33,6 +39,9 @@ class CircleCiBuilder
         }
     }
 
+    /**
+     * @return bool
+     */
     public function hasCurrentBranchAParentBranch()
     {
         $curlResource = curl_init();
@@ -65,7 +74,8 @@ class CircleCiBuilder
         $buildRequestData = [
             'build_parameters' => [
                 'RUN_NIGHTLY_BUILD' => true,
-                'SPRYKER_BRANCH' => $branchName
+                'SPRYKER_BRANCH' => $branchName,
+                'BRANCH_AUTHOR' => $this->branchAuthor,
             ]
         ];
 

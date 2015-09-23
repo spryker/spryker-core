@@ -8,4 +8,4 @@ machine:
     - elasticsearch
 test:
   override:
-    - bash php .circleBuild ${CIRCLE_BRANCH} ${API_TOKEN}
+    - bash php .circleBuild ${CIRCLE_BRANCH} ${CIRCLE_USERNAME} ${API_TOKEN}
