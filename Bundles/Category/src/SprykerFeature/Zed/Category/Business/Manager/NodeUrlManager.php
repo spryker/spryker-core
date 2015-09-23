@@ -89,19 +89,7 @@ class NodeUrlManager implements NodeUrlManagerInterface
             $this->urlFacade->saveUrlAndTouch($url);
         }
 
-        //TODO Uncomment and test to fix: //https://spryker.atlassian.net/browse/CD-459
-/*      $nodes = $this->categoryTreeReader->getChildren($idNode, $locale);
-        foreach ($nodes as $child) {
-            $childTransfer = (new NodeTransfer())->fromArray($child->toArray());
-            $this->updateUrl($childTransfer, $locale);
-
-            $url = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($child->getIdCategoryNode(), $locale);
-            $childPath = $this->categoryTreeReader->getPath($child->getIdCategoryNode(), $locale);
-            $childPath = array_merge($path, $childPath);
-            $categoryUrl = $this->urlPathGenerator->generate($childPath);
-            $url->setUrl($categoryUrl);
-            $this->urlFacade->saveUrlAndTouch($url);
-        }*/
+        //TODO implement deep fix //https://spryker.atlassian.net/browse/CD-459
     }
 
     /**
