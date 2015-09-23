@@ -100,7 +100,12 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
         return $this->getFactory()->createFormPoolCategoryForm($poolCategoryQuery, $idPoolCategory);
     }
 
-    public function createCartRuleForm($idDiscount)
+    /**
+     * @param int $idDiscount
+     *
+     * @return mixed
+     */
+    public function createCartRuleForm($idDiscount=0)
     {
         $discountQuery = $this->getQueryContainer()
             ->queryDiscount()

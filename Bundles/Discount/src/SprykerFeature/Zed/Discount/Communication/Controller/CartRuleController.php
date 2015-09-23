@@ -6,9 +6,8 @@ use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Discount\Communication\Form\CartRuleForm;
-use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRuleQuery;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class CartRuleController extends AbstractController
@@ -39,6 +38,43 @@ class CartRuleController extends AbstractController
         );
     }
 
+    /**
+     * @return array|RedirectResponse
+     */
+    public function createAction()
+    {
+        /** @var CartRuleForm $form */
+        $form = $this->getDependencyContainer()->createCartRuleForm(0);
+        $form->handleRequest();
+
+        if ($form->isValid()) {
+            $formData = $form->getData();
+
+            $discountTransfer = (new DiscountTransfer())->fromArray($formData, true);
+            $discountTransfer->setCollectorPlugin('default');
+            $discountTransfer->setAmount($formData[CartRuleForm::FIELD_AMOUNT]);
+
+            $discount = $this->getFacade()->createDiscount($discountTransfer);
+
+            $decisionRuleTransfer = (new DecisionRuleTransfer())->fromArray($formData, true);
+            $decisionRuleTransfer->setFkDiscount($discount->getIdDiscount());
+            $decisionRuleTransfer->setName($discount->getDisplayName());
+
+            $this->getFacade()->createDiscountDecisionRule($decisionRuleTransfer);
+
+            return $this->redirectResponse('/discount/cart-rule/edit/?' . self::PARAM_ID_DISCOUNT . '=' . $discount->getIdDiscount());
+        }
+
+        return [
+            'form' => $form->createView(),
+        ];
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return array|RedirectResponse
+     */
     public function editAction(Request $request)
     {
         $idDiscount = $request->query->getInt(self::PARAM_ID_DISCOUNT);
@@ -69,6 +105,7 @@ class CartRuleController extends AbstractController
 
         $discountTransfer = (new DiscountTransfer())->fromArray($discountEntity->toArray(), true);
         $discountTransfer->fromArray($formData, true);
+        $discountTransfer->setAmount($formData[CartRuleForm::FIELD_AMOUNT]);
 
         $this->getFacade()->updateDiscount($discountTransfer);
 

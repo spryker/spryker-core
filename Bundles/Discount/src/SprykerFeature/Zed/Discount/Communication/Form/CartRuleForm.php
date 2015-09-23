@@ -5,7 +5,6 @@ namespace SprykerFeature\Zed\Discount\Communication\Form;
 use Pyz\Shared\Validator\Constraints\NotBlank;
 use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRuleQuery;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
@@ -17,7 +16,7 @@ class CartRuleForm extends AbstractForm
 
     const FIELD_DISPLAY_NAME = 'display_name';
     const FIELD_DESCRIPTION = 'description';
-    const FIELD_AMOUNT = 'amount';
+    const FIELD_AMOUNT = 'discount_amount';
     const FIELD_TYPE = 'type';
     const FIELD_VALID_FROM = 'valid_from';
     const FIELD_VALID_TO = 'valid_to';
@@ -29,12 +28,26 @@ class CartRuleForm extends AbstractForm
 
     const DECISION_RULES_PREFIX = 'PLUGIN_DECISION_RULE_';
 
+    /**
+     * @var SpyDiscountQuery
+     */
     protected $discountQuery;
 
+    /**
+     * @var SpyDiscountDecisionRuleQuery
+     */
     protected $decisionRuleQuery;
 
+    /**
+     * @var DiscountConfig
+     */
     protected $discountConfig;
 
+    /**
+     * @param SpyDiscountQuery $discountQuery
+     * @param DiscountConfig $discountConfig
+     * @param SpyDiscountDecisionRuleQuery $decisionRuleQuery
+     */
     public function __construct(SpyDiscountQuery $discountQuery, DiscountConfig $discountConfig, SpyDiscountDecisionRuleQuery $decisionRuleQuery)
     {
         $this->discountQuery = $discountQuery;
@@ -51,7 +64,8 @@ class CartRuleForm extends AbstractForm
                 ],
             ])
             ->addTextarea(self::FIELD_DESCRIPTION)
-            ->addInteger(self::FIELD_AMOUNT, [
+            ->addText(self::FIELD_AMOUNT, [
+                'label' => 'Amount',
                 'constraints' => [
                     new GreaterThan([
                         'value' => 0,
@@ -62,7 +76,10 @@ class CartRuleForm extends AbstractForm
                 'label' => 'Value Type',
                 'multiple' => false,
                 'expanded' => true,
-                'choices' => $this->getDiscountTypeSelectChoices(),
+                'choices' => [
+                    SpyDiscountTableMap::COL_TYPE_FIXED => SpyDiscountTableMap::COL_TYPE_FIXED,
+                    SpyDiscountTableMap::COL_TYPE_PERCENT => SpyDiscountTableMap::COL_TYPE_PERCENT,
+                ],
                 'constraints' => [
                     new Required(),
                 ],
@@ -89,6 +106,9 @@ class CartRuleForm extends AbstractForm
         ;
     }
 
+    /**
+     * @return array
+     */
     protected function getDecisionRuleOptions()
     {
         $decisionRules = [];
@@ -101,30 +121,25 @@ class CartRuleForm extends AbstractForm
         return $decisionRules;
     }
 
+    /**
+     * @param string $decisionRuleName
+     *
+     * @return string
+     */
     protected function filterDecisionRuleName($decisionRuleName)
     {
-        $decisionRuleName = str_replace([self::DECISION_RULES_PREFIX, '_'], ['', ' '], $decisionRuleName);
+        $decisionRuleName = str_replace(
+            [self::DECISION_RULES_PREFIX, '_'],
+            ['', ' '],
+            $decisionRuleName
+        );
 
         return ucfirst(strtolower($decisionRuleName));
     }
 
-    protected function getDiscountTypeSelectChoices()
-    {
-        $options = SpyDiscountTableMap::getValueSet(SpyDiscountTableMap::COL_TYPE);
-
-        $choices = [];
-        foreach ($options as $option) {
-            $choices[$option] = $option;
-        }
-
-        return $choices;
-    }
-
-    protected function getSelectedType(SpyDiscount $discount)
-    {
-        return array_search($discount->getType(), SpyDiscountTableMap::getValueSet(SpyDiscountTableMap::COL_TYPE));
-    }
-
+    /**
+     * @return array
+     */
     protected function populateFormFields()
     {
         $discount = $this->discountQuery->findOne();
@@ -132,16 +147,19 @@ class CartRuleForm extends AbstractForm
             return [];
         }
 
-        $discountType = $this->getSelectedType($discount);
+        $decisionRule = $discount->getDecisionRules()[0];
+
         $defaultData = [
             self::FIELD_DISPLAY_NAME => $discount->getDisplayName(),
             self::FIELD_DESCRIPTION => $discount->getDescription(),
-            self::FIELD_AMOUNT => $discount->getAmount(),
-            self::FIELD_TYPE => ($discountType) ?: null,
+            self::FIELD_AMOUNT => (int) $discount->getAmount(),
+            self::FIELD_TYPE => $discount->getType(),
             self::FIELD_VALID_FROM => $discount->getValidFrom(),
             self::FIELD_VALID_TO => $discount->getValidTo(),
             self::FIELD_IS_PRIVILEGED => $discount->getIsPrivileged(),
             self::FIELD_IS_ACTIVE => $discount->getIsActive(),
+            self::FIELD_DECISION_RULE_PLUGIN => $decisionRule->getDecisionRulePlugin(),
+            self::FIELD_DECISION_RULE_VALUE => $decisionRule->getValue(),
         ];
 
         return $defaultData;
