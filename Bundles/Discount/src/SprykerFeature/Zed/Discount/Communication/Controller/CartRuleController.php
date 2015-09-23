@@ -52,7 +52,6 @@ class CartRuleController extends AbstractController
 
             $discountTransfer = (new DiscountTransfer())->fromArray($formData, true);
             $discountTransfer->setCollectorPlugin('default');
-            $discountTransfer->setAmount($formData[CartRuleForm::FIELD_AMOUNT]);
 
             $discount = $this->getFacade()->createDiscount($discountTransfer);
 
@@ -105,7 +104,6 @@ class CartRuleController extends AbstractController
 
         $discountTransfer = (new DiscountTransfer())->fromArray($discountEntity->toArray(), true);
         $discountTransfer->fromArray($formData, true);
-        $discountTransfer->setAmount($formData[CartRuleForm::FIELD_AMOUNT]);
 
         $this->getFacade()->updateDiscount($discountTransfer);
 

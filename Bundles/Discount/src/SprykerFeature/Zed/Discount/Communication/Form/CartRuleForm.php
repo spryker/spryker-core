@@ -17,12 +17,13 @@ class CartRuleForm extends AbstractForm
 
     const FIELD_DISPLAY_NAME = 'display_name';
     const FIELD_DESCRIPTION = 'description';
-    const FIELD_AMOUNT = 'discount_amount';
+    const FIELD_AMOUNT = 'amount';
     const FIELD_TYPE = 'type';
     const FIELD_VALID_FROM = 'valid_from';
     const FIELD_VALID_TO = 'valid_to';
     const FIELD_IS_PRIVILEGED = 'is_privileged';
     const FIELD_IS_ACTIVE = 'is_active';
+    const FIELD_COLLECTOR_PLUGIN = 'collector_plugin';
 
     const DATE_NOW = 'now';
     const DATE_PERIOD_YEARS = 3;
@@ -31,6 +32,7 @@ class CartRuleForm extends AbstractForm
     const FIELD_DECISION_RULE_VALUE = 'value';
 
     const DECISION_RULES_PREFIX = 'PLUGIN_DECISION_RULE_';
+    const DECISION_COLLECTOR_PREFIX = 'PLUGIN_COLLECTOR_';
 
     /**
      * @var SpyDiscountQuery
@@ -85,6 +87,10 @@ class CartRuleForm extends AbstractForm
                     ])
                 ]
             ])
+            ->addChoice(self::FIELD_COLLECTOR_PLUGIN, [
+                'label' => 'Collector Plugin',
+                'choices' => $this->getAvailableCollectorPlugins()
+            ])
             ->addChoice(self::FIELD_TYPE, [
                 'label' => 'Value Type',
                 'multiple' => false,
@@ -119,6 +125,18 @@ class CartRuleForm extends AbstractForm
         ;
     }
 
+    protected function getAvailableCollectorPlugins()
+    {
+        $plugins = [];
+        $availablePlugins = array_keys($this->discountConfig->getAvailableCollectorPlugins());
+
+        foreach ($availablePlugins as $plugin) {
+            $plugins[$plugin] = $this->filterChoicesLabels($plugin);
+        }
+
+        return $plugins;
+    }
+
     /**
      * @return array
      */
@@ -128,7 +146,7 @@ class CartRuleForm extends AbstractForm
         $decisionRulesKeys = array_keys($this->discountConfig->getAvailableDecisionRulePlugins());
 
         foreach ($decisionRulesKeys as $key) {
-            $decisionRules[$key] = $this->filterDecisionRuleName($key);
+            $decisionRules[$key] = $this->filterChoicesLabels($key);
         }
 
         return $decisionRules;
@@ -139,11 +157,11 @@ class CartRuleForm extends AbstractForm
      *
      * @return string
      */
-    protected function filterDecisionRuleName($decisionRuleName)
+    protected function filterChoicesLabels($decisionRuleName)
     {
         $decisionRuleName = str_replace(
-            [self::DECISION_RULES_PREFIX, '_'],
-            ['', ' '],
+            [self::DECISION_RULES_PREFIX, self::DECISION_COLLECTOR_PREFIX, '_'],
+            ['', '', ' '],
             $decisionRuleName
         );
 
