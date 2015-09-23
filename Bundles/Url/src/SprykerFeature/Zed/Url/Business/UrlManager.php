@@ -198,6 +198,19 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
+     * @param int $idCategoryNode
+     * @param int $idLocale
+     *
+     * @return SpyUrl
+     */
+    public function getResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale)
+    {
+        return $this->urlQueryContainer
+            ->queryResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale)
+            ->findOne();
+    }
+
+    /**
      * @param int $idUrl
      *
      * @return bool

@@ -60,7 +60,13 @@ interface CategoryToUrlInterface
      * @return UrlTransfer
      */
     public function getUrlByPath($urlString);
-    
-    
 
+    /**
+     * @param int $idCategoryNode
+     * @param LocaleTransfer $locale
+     *
+     * @return UrlTransfer
+     */
+    public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale);
+    
 }

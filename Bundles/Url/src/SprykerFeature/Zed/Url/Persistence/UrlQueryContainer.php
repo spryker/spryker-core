@@ -128,4 +128,19 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
         return $query;
     }
 
+    /**
+     * @param int $idCategoryNode
+     * @param int $idLocale
+     *
+     * @return SpyUrlQuery
+     */
+    public function queryResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale)
+    {
+        $query = SpyUrlQuery::create();
+        $query->filterByFkResourceCategorynode($idCategoryNode);
+        $query->filterByFkLocale($idLocale);
+
+        return $query;
+    }
+
 }

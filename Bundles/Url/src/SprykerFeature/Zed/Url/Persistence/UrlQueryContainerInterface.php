@@ -43,4 +43,12 @@ interface UrlQueryContainerInterface
      */
     public function queryRedirectById($idRedirect);
 
+    /**
+     * @param int $idCategoryNode
+     * @param int $idLocale
+     *
+     * @return SpyUrlQuery
+     */
+    public function queryResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale);
+
 }

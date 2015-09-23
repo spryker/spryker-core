@@ -84,6 +84,14 @@ interface UrlManagerInterface
     public function getUrlById($idUrl);
 
     /**
+     * @param int $idCategoryNode
+     * @param int $idLocale
+     *
+     * @return SpyUrl
+     */
+    public function getResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $idLocale);
+
+    /**
      * @param int $idUrl
      */
     public function touchUrlActive($idUrl);

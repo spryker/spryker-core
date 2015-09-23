@@ -21,7 +21,8 @@ class CategoryFormEdit extends CategoryFormAdd
     const ATTRIBUTE_CATEGORY_ROBOTS = 'robots';
     const ATTRIBUTE_CATEGORY_CANONICAL = 'canonical';
     const ATTRIBUTE_CATEGORY_ALTERNATE_TAG = 'alternate_tag';
-    
+    const ATTRIBUTE_CATEGORY_URL_KEY = 'url_key';
+
     const CATEGORY_IS_ACTIVE = 'is_active';
     const CATEGORY_IS_IN_MENU = 'is_in_menu';
     const CATEGORY_IS_CLICKABLE = 'is_clickable';
@@ -38,6 +39,9 @@ class CategoryFormEdit extends CategoryFormAdd
             'constraints' => [
                 new NotBlank(),
             ],
+            ])
+            ->addText(self::ATTRIBUTE_CATEGORY_URL_KEY, [
+                'label' => 'Url Key',
             ])
             ->addText(self::ATTRIBUTE_META_TITLE, [
                 'label' => 'Meta Title',
@@ -124,6 +128,7 @@ class CategoryFormEdit extends CategoryFormAdd
             ->withColumn(SpyCategoryAttributeTableMap::COL_ROBOTS, self::ATTRIBUTE_CATEGORY_ROBOTS)
             ->withColumn(SpyCategoryAttributeTableMap::COL_CANONICAL, self::ATTRIBUTE_CATEGORY_CANONICAL)
             ->withColumn(SpyCategoryAttributeTableMap::COL_ALTERNATE_TAG, self::ATTRIBUTE_CATEGORY_ALTERNATE_TAG)
+            ->withColumn(SpyCategoryAttributeTableMap::COL_URL_KEY, self::ATTRIBUTE_CATEGORY_URL_KEY)
             ->innerJoinNode()
             ->withColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE, self::FK_PARENT_CATEGORY_NODE)
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, self::PK_CATEGORY_NODE)
@@ -166,6 +171,7 @@ class CategoryFormEdit extends CategoryFormAdd
                 self::ATTRIBUTE_CATEGORY_ROBOTS => $category[self::ATTRIBUTE_CATEGORY_ROBOTS],
                 self::ATTRIBUTE_CATEGORY_CANONICAL => $category[self::ATTRIBUTE_CATEGORY_CANONICAL],
                 self::ATTRIBUTE_CATEGORY_ALTERNATE_TAG => $category[self::ATTRIBUTE_CATEGORY_ALTERNATE_TAG],
+                self::ATTRIBUTE_CATEGORY_URL_KEY => $category[self::ATTRIBUTE_CATEGORY_URL_KEY],
                 //category
                 self::CATEGORY_IS_ACTIVE => $category[self::CATEGORY_IS_ACTIVE],
                 self::CATEGORY_IS_IN_MENU => $category[self::CATEGORY_IS_IN_MENU],
@@ -203,6 +209,7 @@ class CategoryFormEdit extends CategoryFormAdd
             self::ATTRIBUTE_CATEGORY_ROBOTS => null,
             self::ATTRIBUTE_CATEGORY_CANONICAL => null,
             self::ATTRIBUTE_CATEGORY_ALTERNATE_TAG => null,
+            self::ATTRIBUTE_CATEGORY_URL_KEY => null,
             //category
             self::CATEGORY_IS_ACTIVE => null,
             self::CATEGORY_IS_IN_MENU => null,

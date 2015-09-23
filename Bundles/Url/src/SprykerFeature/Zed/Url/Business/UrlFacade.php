@@ -125,6 +125,20 @@ class UrlFacade extends AbstractFacade
     }
 
     /**
+     * @param int $idCategoryNode
+     * @param LocaleTransfer $locale
+     *
+     * @return UrlTransfer
+     */
+    public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale)
+    {
+        $urlManager = $this->getDependencyContainer()->getUrlManager();
+        $urlEntity = $urlManager->getResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $locale->getIdLocale());
+
+        return $urlManager->convertUrlEntityToTransfer($urlEntity);
+    }
+
+    /**
      * @param int $idUrl
      */
     public function touchUrlActive($idUrl)

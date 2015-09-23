@@ -11,6 +11,7 @@ namespace SprykerFeature\Zed\Category\Business\Generator;
  */
 class UrlPathGenerator implements UrlPathGeneratorInterface
 {
+    const CATEGORY_NAME = 'name';
 
     /**
      * @param array $categoryPath
@@ -22,9 +23,10 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
         $formattedPath = [];
 
         foreach ($categoryPath as $category) {
-            if (isset($category['name'])) {
-                $categoryName = $category['name'];
-                $formattedPath[] = strtolower(str_replace(' ', '-', trim($categoryName)));
+            $categoryName = trim($category[self::CATEGORY_NAME]);
+
+            if ('' !== $categoryName) {
+                $formattedPath[] = mb_strtolower(str_replace(' ', '-', $categoryName));
             }
         }
 
