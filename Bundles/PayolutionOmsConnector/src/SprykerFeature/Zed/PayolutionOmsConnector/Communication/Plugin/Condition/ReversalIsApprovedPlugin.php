@@ -15,6 +15,8 @@ use SprykerFeature\Zed\PayolutionOmsConnector\Communication\PayolutionOmsConnect
 class ReversalIsApprovedPlugin extends AbstractPlugin
 {
 
+    const NAME = 'ReversalPlugin';
+
     /**
      * @param OrderTransfer $orderTransfer
      *

@@ -15,6 +15,8 @@ use SprykerFeature\Zed\PayolutionOmsConnector\Communication\PayolutionOmsConnect
 class RefundIsApprovedPlugin extends AbstractPlugin
 {
 
+    const NAME = 'RefundPlugin';
+
     /**
      * @param OrderTransfer $orderTransfer
      *

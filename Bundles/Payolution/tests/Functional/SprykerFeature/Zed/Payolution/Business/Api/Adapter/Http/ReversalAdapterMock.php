@@ -6,7 +6,7 @@
 
 namespace Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http;
 
-class RevertAdapterMock extends AbstractAdapterMock
+class ReversalAdapterMock extends AbstractAdapterMock
 {
 
     /**
