@@ -139,8 +139,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
     /**
      * @param int $idCategory
-     *
      * @param LocaleTransfer $locale
+     *
      * @return array
      */
     public function getProductsByCategory($idCategory, LocaleTransfer $locale)
@@ -226,6 +226,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     /**
      * @param int $idCategory
      * @param array $productOrderList
+     *
      * @throws PropelException
      */
     public function updateProductMappingsOrder($idCategory, array $productOrderList)
@@ -250,6 +251,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     /**
      * @param int $idCategory
      * @param array $productPreconfigList
+     *
      * @throws PropelException
      */
     public function updateProductMappingsPreconfig($idCategory, array $productPreconfigList)
@@ -288,4 +290,5 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     {
         $this->touchFacade->touchDeleted(ProductCategoryConfig::RESOURCE_TYPE_ABSTRACT_PRODUCT, $idAbstractProduct);
     }
+
 }

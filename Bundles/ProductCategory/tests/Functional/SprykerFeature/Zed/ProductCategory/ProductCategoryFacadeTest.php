@@ -15,10 +15,6 @@ use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryAttributeQuery;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTableQuery;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNodeQuery;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryQuery;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -26,10 +22,8 @@ use SprykerFeature\Zed\Product\Business\ProductFacade;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainer;
 use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
-use Propel\Runtime\Propel;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerFeature\Zed\ProductCategory\ProductCategoryDependencyProvider;
-use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
 
 /**
  * @group SprykerFeature

@@ -41,7 +41,7 @@ class TransferDefinitionMergerTest extends \PHPUnit_Framework_TestCase
         $property1['property'] = [
             [
                 'name' => 'propertyA',
-                'type' => 'int'
+                'type' => 'int',
             ],
         ];
 
