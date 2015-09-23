@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
 use Pyz\Shared\Validator\Constraints\NotBlank;
+use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRuleQuery;
@@ -22,6 +23,9 @@ class CartRuleForm extends AbstractForm
     const FIELD_VALID_TO = 'valid_to';
     const FIELD_IS_PRIVILEGED = 'is_privileged';
     const FIELD_IS_ACTIVE = 'is_active';
+
+    const DATE_NOW = 'now';
+    const DATE_PERIOD_YEARS = 3;
 
     const FIELD_DECISION_RULE_PLUGIN = 'decision_rule_plugin';
     const FIELD_DECISION_RULE_VALUE = 'value';
@@ -44,15 +48,24 @@ class CartRuleForm extends AbstractForm
     protected $discountConfig;
 
     /**
+     * @var Store
+     */
+    protected $store;
+
+    /**
      * @param SpyDiscountQuery $discountQuery
      * @param DiscountConfig $discountConfig
      * @param SpyDiscountDecisionRuleQuery $decisionRuleQuery
      */
-    public function __construct(SpyDiscountQuery $discountQuery, DiscountConfig $discountConfig, SpyDiscountDecisionRuleQuery $decisionRuleQuery)
-    {
+    public function __construct(SpyDiscountQuery $discountQuery,
+        DiscountConfig $discountConfig,
+        SpyDiscountDecisionRuleQuery $decisionRuleQuery,
+        Store $store
+    ) {
         $this->discountQuery = $discountQuery;
         $this->decisionRuleQuery = $decisionRuleQuery;
         $this->discountConfig = $discountConfig;
+        $this->store = $store;
     }
 
     protected function buildFormFields()
@@ -144,7 +157,21 @@ class CartRuleForm extends AbstractForm
     {
         $discount = $this->discountQuery->findOne();
         if (null === $discount) {
-            return [];
+            $validFrom = new \DateTime(
+                self::DATE_NOW,
+                new \DateTimeZone($this->store->getTimezone())
+            );
+            $validUntil = (new \DateTime(
+                self::DATE_NOW,
+                new \DateTimeZone($this->store->getTimezone())
+            ))
+                ->add(new \DateInterval('P' . self::DATE_PERIOD_YEARS . 'Y'))
+            ;
+
+            return [
+                self::FIELD_VALID_FROM => $validFrom,
+                self::FIELD_VALID_TO => $validUntil,
+            ];
         }
 
         $decisionRule = $discount->getDecisionRules()[0];

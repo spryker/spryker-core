@@ -114,11 +114,13 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
         $decisionRuleQuery = $this->getQueryContainer()
             ->queryDecisionRules($idDiscount)
         ;
+        $store = $this->getProvidedDependency(DiscountDependencyProvider::STORE_CONFIG);
 
         return $this->getFactory()->createFormCartRuleForm(
             $discountQuery,
             $this->getConfig(),
-            $decisionRuleQuery
+            $decisionRuleQuery,
+            $store
         );
     }
 
