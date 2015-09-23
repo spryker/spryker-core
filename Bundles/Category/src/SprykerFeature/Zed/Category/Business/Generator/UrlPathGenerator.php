@@ -26,7 +26,7 @@ class UrlPathGenerator implements UrlPathGeneratorInterface
             $categoryName = trim($category[self::CATEGORY_NAME]);
 
             if ('' !== $categoryName) {
-                $formattedPath[] = strtolower(str_replace(' ', '-', trim($categoryName)));
+                $formattedPath[] = mb_strtolower(str_replace(' ', '-', $categoryName));
             }
         }
 
