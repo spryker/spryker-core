@@ -9,6 +9,10 @@ namespace SprykerEngine\Zed\Transfer\Business\Model\Generator;
 class TransferDefinitionMerger
 {
 
+    const ERROR_MESSAGE_PROPERTIES_NOT_IDENTICALLY =
+        'Property "%1$s" defined more than once with different attributes! To fix this, search for "property name="%1$s"" in the code base and fix the wrong one.'
+    ;
+
     /**
      * @var array
      */
@@ -70,7 +74,7 @@ class TransferDefinitionMerger
             if (!array_key_exists($property['name'], $mergedProperties)) {
                 $mergedProperties[$property['name']] = $property;
             } elseif (!$this->propertiesAreIdentically($property, $mergedProperties[$property['name']])) {
-                throw new \Exception('Property "' . $property['name'] . '" from "' . $property['bundle'] . '" bundle is defined more than once with different attributes!');
+                throw new \Exception(sprintf(self::ERROR_MESSAGE_PROPERTIES_NOT_IDENTICALLY, $property['name']));
             }
         }
 
