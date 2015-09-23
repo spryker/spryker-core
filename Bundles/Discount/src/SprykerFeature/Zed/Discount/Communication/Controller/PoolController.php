@@ -14,6 +14,7 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Discount\Communication\Form\PoolForm;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolTable;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherPoolCategoryTableMap;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;

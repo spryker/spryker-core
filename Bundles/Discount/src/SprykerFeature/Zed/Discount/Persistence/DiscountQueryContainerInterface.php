@@ -68,4 +68,10 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
      */
     public function queryDiscountVoucherPoolCategory();
 
+    /**
+     * @param array|string[] $couponCodes
+     *
+     * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountQuery
+     */
+    public function queryCartRulesIncludingSpecifiedVouchers(array $couponCodes = []);
 }
