@@ -200,20 +200,25 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             ->addJoinObject(
                 (new Join(
                     SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT,
-                    SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT,
+                    'descendants.fk_category_node_descendant',
                     Criteria::JOIN
-                ))->setRightTableAlias('descendants'))
+                )
+                )->setRightTableAlias('descendants')
+            )
             ->addJoinObject(
                 (new Join(
                     SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE,
-                    SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE,
+                    'ascendants.fk_category_node',
                     Criteria::LEFT_JOIN
-                ))->setRightTableAlias('ascendants'), 'ascendantsJoin')
-            ->addJoinCondition(
-                'ascendantsJoin',
-                'ascendants.fk_category_node = ' .
-                SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT
+                )
+                )->setRightTableAlias('ascendants'),
+                'ascendantsJoin'
             )
+                ->addJoinCondition(
+                    'ascendantsJoin',
+                    'ascendants.fk_category_node = ' .
+                    SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT
+                )
             ->addAnd(
                 'descendants.fk_category_node',
                 $idNode,
