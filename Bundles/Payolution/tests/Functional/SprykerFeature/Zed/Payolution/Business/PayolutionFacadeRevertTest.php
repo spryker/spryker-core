@@ -7,7 +7,7 @@
 namespace Functional\SprykerFeature\Zed\Payolution\Business;
 
 use Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http\PreAuthorizationAdapterMock;
-use Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http\RevertAdapterMock;
+use Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http\ReversalAdapterMock;
 use SprykerFeature\Zed\Payolution\Business\Api\Constants;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\Base\SpyPaymentPayolutionTransactionStatusLog;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLog;
@@ -22,7 +22,7 @@ class PayolutionFacadeRevertTest extends AbstractFacadeTest
         $facade = $this->getFacadeMock($preAuthorizationAdapterMock);
         $preAuthorizationResponse = $facade->preAuthorizePayment($idPayment);
 
-        $adapterMock = new RevertAdapterMock();
+        $adapterMock = new ReversalAdapterMock();
         $facade = $this->getFacadeMock($adapterMock);
         $response = $facade->revertPayment($idPayment);
 
@@ -63,7 +63,7 @@ class PayolutionFacadeRevertTest extends AbstractFacadeTest
         $facade = $this->getFacadeMock($adapterMock);
         $preAuthorizationResponse = $facade->preAuthorizePayment($idPayment);
 
-        $adapterMock = new RevertAdapterMock();
+        $adapterMock = new ReversalAdapterMock();
         $adapterMock->expectFailure();
         $facade = $this->getFacadeMock($adapterMock);
         $response = $facade->revertPayment($idPayment);
