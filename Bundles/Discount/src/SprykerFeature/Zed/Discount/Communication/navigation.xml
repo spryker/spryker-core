@@ -19,6 +19,13 @@
                 <controller>pool</controller>
                 <action>index</action>
             </pool>
+            <cart-rules>
+                <label>Cart Rules</label>
+                <title>Cart Rules</title>
+                <bundle>discount</bundle>
+                <controller>cart-rule</controller>
+                <action>index</action>
+            </cart-rules>
         </pages>
     </discount>
 </config>
