@@ -71,8 +71,10 @@ class NodeUrlManager implements NodeUrlManagerInterface
         $path = $this->categoryTreeReader->getPath($categoryNode->getIdCategoryNode(), $locale);
         $categoryUrl = $this->urlPathGenerator->generate($path);
         $idNode = $categoryNode->getIdCategoryNode();
+
+        $url = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($idNode, $locale);
         
-        if (!$this->urlFacade->hasUrl($categoryUrl)) {
+        if (!$url) {
             $urlTransfer = new UrlTransfer();
             $urlTransfer->setFkPage(null);
             $urlTransfer->setResourceId($idNode);
@@ -83,9 +85,23 @@ class NodeUrlManager implements NodeUrlManagerInterface
             $this->urlFacade->saveUrlAndTouch($urlTransfer);
         }
         else {
-            $url = $this->urlFacade->getUrlByPath($categoryUrl);
-            $this->urlFacade->touchUrlActive($url->getIdUrl());
+            $url->setUrl($categoryUrl);
+            $this->urlFacade->saveUrlAndTouch($url);
         }
+
+        //TODO Uncomment and test to fix: //https://spryker.atlassian.net/browse/CD-459
+/*      $nodes = $this->categoryTreeReader->getChildren($idNode, $locale);
+        foreach ($nodes as $child) {
+            $childTransfer = (new NodeTransfer())->fromArray($child->toArray());
+            $this->updateUrl($childTransfer, $locale);
+
+            $url = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($child->getIdCategoryNode(), $locale);
+            $childPath = $this->categoryTreeReader->getPath($child->getIdCategoryNode(), $locale);
+            $childPath = array_merge($path, $childPath);
+            $categoryUrl = $this->urlPathGenerator->generate($childPath);
+            $url->setUrl($categoryUrl);
+            $this->urlFacade->saveUrlAndTouch($url);
+        }*/
     }
 
     /**
