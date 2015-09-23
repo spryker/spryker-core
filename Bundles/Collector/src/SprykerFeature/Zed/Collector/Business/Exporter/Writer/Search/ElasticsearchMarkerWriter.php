@@ -17,17 +17,35 @@ class ElasticsearchMarkerWriter implements WriterInterface
     const WRITER_NAME = 'elasticsearch-marker-writer';
 
     /**
+     * @var Client
+     */
+    protected $client;
+
+    /**
      * @var Index
      */
     protected $index;
 
     /**
+     * @var string
+     */
+    protected $type;
+
+    /**
+     * @var array
+     */
+    protected $metaData = [];
+
+    /**
      * @param Client $searchClient
      * @param string $indexName
+     * @param string $type
      */
-    public function __construct(Client $searchClient, $indexName)
+    public function __construct(Client $searchClient, $indexName, $type)
     {
-        $this->index = $searchClient->getIndex($indexName);
+        $this->client = $searchClient;
+        $this->index = $this->client->getIndex($indexName);
+        $this->type = $type;
     }
 
     /**
@@ -38,11 +56,26 @@ class ElasticsearchMarkerWriter implements WriterInterface
      */
     public function write(array $dataSet, $type = '')
     {
-        $mapping = new Mapping($this->index->getType($type));
-
+        // @todo when we make use of types loop can be removed
         foreach ($dataSet as $key => $value) {
-            $mapping->setMeta([$key => $value])->send();
+            $this->metaData[$key] = $value;
         }
+
+        // @todo when we make use of types commented code can be uncommented and __destruct can be removed
+//        $mapping = new Mapping($this->index->getType($this->type));
+//
+//        foreach ($dataSet as $key => $value) {
+//            $mapping->setMeta([$key => $value])->send();
+//        }
+    }
+
+    /**
+     * @todo when we make use of types commented code in write can be uncommented and __destruct can be removed
+     */
+    public function __destruct()
+    {
+        $mapping = new Mapping($this->index->getType($this->type));
+        $mapping->setMeta($this->metaData)->send();
     }
 
     /**

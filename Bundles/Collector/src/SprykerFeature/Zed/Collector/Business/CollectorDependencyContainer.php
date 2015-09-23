@@ -252,7 +252,8 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $elasticSearchWriter = $this->getFactory()->createExporterWriterSearchElasticsearchMarkerWriter(
             StorageInstanceBuilder::getElasticsearchInstance(),
-            $this->getConfig()->getSearchIndexName()
+            $this->getConfig()->getSearchIndexName(),
+            $this->getConfig()->getSearchDocumentType()
         );
 
         return $elasticSearchWriter;
