@@ -276,7 +276,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
     /**
      * @param int $idParentNode
-     * @param bool|true $excludeRoot
+     * @param bool $excludeRoot
      *
      * @return SpyCategoryClosureTableQuery
      */
@@ -297,7 +297,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
     /**
      * @param int $idChildNode
-     * @param bool|true $excludeRoot
+     * @param bool $excludeRoot
      *
      * @return SpyCategoryClosureTableQuery
      */
