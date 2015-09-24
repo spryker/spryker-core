@@ -38,6 +38,7 @@ class PropelConfig extends AbstractBundleConfig
     public function getPropelSchemaPathPatterns()
     {
         return [
+            APPLICATION_SOURCE_DIR . '/Pyz/Zed/*/Persistence/Propel/Schema/',
             APPLICATION_VENDOR_DIR . '/*/*/*/*/src/*/Zed/*/Persistence/Propel/Schema/'
         ];
     }
