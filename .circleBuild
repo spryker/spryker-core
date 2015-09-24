@@ -71,16 +71,14 @@ class CircleCiBuilder
 
     /**
      * @param string $branchName
-     *
-     * @return bool
      */
     private function triggerBuildForBranch($branchName)
     {
         $buildRequestData = [
             'build_parameters' => [
-                'RUN_NIGHTLY_BUILD' => true,
-                'SPRYKER_BRANCH' => $branchName,
+                'RUN_SPRYKER_BUILD' => true,
                 'BRANCH' => $this->branchName,
+                'BRANCH_PARENT' => $branchName,
                 'BRANCH_AUTHOR' => $this->branchAuthor,
             ]
         ];
