@@ -91,7 +91,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createKeyValueMarker()
     {
-        return $this->getFactory()->createExporterKeyValueMarker(
+        return $this->getFactory()->createExporterExportMarker(
             $this->createKeyValueWriter(),
             $this->createRedisReader(),
             $this->createKvMarkerKeyBuilder()
@@ -238,7 +238,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createSearchMarker()
     {
-        return $this->getFactory()->createExporterKeyValueMarker(
+        return $this->getFactory()->createExporterExportMarker(
             $this->createSearchMarkerWriter(),
             $this->createSearchMarkerReader(),
             $this->createSearchMarkerKeyBuilder()

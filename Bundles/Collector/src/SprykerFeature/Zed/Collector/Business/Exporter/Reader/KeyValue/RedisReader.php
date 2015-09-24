@@ -12,6 +12,8 @@ use SprykerFeature\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 class RedisReader implements ReaderInterface
 {
 
+    const READER_NAME = 'redis-reader';
+
     /**
      * @var ReadInterface
      */
@@ -27,10 +29,11 @@ class RedisReader implements ReaderInterface
 
     /**
      * @param string $key
+     * @param string $type
      *
-     * @return mixed
+     * @return string
      */
-    public function read($key)
+    public function read($key, $type = '')
     {
         return $this->redis->get($key);
     }
@@ -40,7 +43,7 @@ class RedisReader implements ReaderInterface
      */
     public function getName()
     {
-        return 'redis-reader';
+        return self::READER_NAME;
     }
 
 }

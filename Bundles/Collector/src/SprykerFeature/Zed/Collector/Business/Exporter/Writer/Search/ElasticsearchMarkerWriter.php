@@ -14,6 +14,8 @@ use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 class ElasticsearchMarkerWriter implements WriterInterface
 {
 
+    const WRITER_NAME = 'elasticsearch-marker-writer';
+
     /**
      * @var Client
      */
@@ -28,6 +30,11 @@ class ElasticsearchMarkerWriter implements WriterInterface
      * @var string
      */
     protected $type;
+
+    /**
+     * @var array
+     */
+    protected $metaData = [];
 
     /**
      * @param Client $searchClient
@@ -49,11 +56,15 @@ class ElasticsearchMarkerWriter implements WriterInterface
      */
     public function write(array $dataSet, $type = '')
     {
-        $mapping = new Mapping($this->index->getType($this->type));
-
         foreach ($dataSet as $key => $value) {
-            $mapping->setMeta([$key => $value])->send();
+            $this->metaData[$key] = $value;
         }
+    }
+
+    public function __destruct()
+    {
+        $mapping = new Mapping($this->index->getType($this->type));
+        $mapping->setMeta($this->metaData)->send();
     }
 
     /**
@@ -71,7 +82,7 @@ class ElasticsearchMarkerWriter implements WriterInterface
      */
     public function getName()
     {
-        return 'elasticsearch-marker-writer';
+        return self::WRITER_NAME;
     }
 
 }
