@@ -243,7 +243,7 @@ class Customer
             throw new CustomerNotFoundException('Customer not found.');
         }
 
-        $customerEntity->setRegistered(new \DateTime('now', new \DateTimeZone(Config::get(SystemConfig::PROJECT_TIMEZONE))));
+        $customerEntity->setRegistered(new \DateTime());
         $customerEntity->setRegistrationKey(null);
 
         $customerEntity->save();
@@ -263,7 +263,7 @@ class Customer
     public function forgotPassword(CustomerInterface $customerTransfer)
     {
         $customerEntity = $this->getCustomer($customerTransfer);
-        $customerEntity->setRestorePasswordDate(new \DateTime('now', new \DateTimeZone(Config::get(SystemConfig::PROJECT_TIMEZONE))));
+        $customerEntity->setRestorePasswordDate(new \DateTime());
         $customerEntity->setRestorePasswordKey($this->generateKey());
 
         $customerEntity->save();

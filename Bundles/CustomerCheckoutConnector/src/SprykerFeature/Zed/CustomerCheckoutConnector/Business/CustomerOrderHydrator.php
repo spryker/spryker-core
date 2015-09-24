@@ -43,7 +43,7 @@ class CustomerOrderHydrator implements CustomerOrderHydratorInterface
             $customerTransfer->setEmail($request->getEmail());
             $customerTransfer = $this->customerFacade->getCustomer($customerTransfer);
         } else {
-            $customerTransfer->setGuest($request->getGuest());
+            $customerTransfer->setIsGuest($request->getIsGuest());
         }
 
         $billingAddress = $request->getBillingAddress();
