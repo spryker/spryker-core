@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Payolution\Business\Api;
 
 use SprykerFeature\Shared\Library\ConfigInterface;
+use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
 
 interface Constants extends ConfigInterface
 {
@@ -24,8 +25,8 @@ interface Constants extends ConfigInterface
     const SEX_MALE = 'M';
     const SEX_FEMALE = 'F';
 
-    const ACCOUNT_BRAND_INVOICE = 'PAYOLUTION_INVOICE';
-    const ACCOUNT_BRAND_INSTALLMENT = 'PAYOLUTION_INS';
+    const ACCOUNT_BRAND_INVOICE = PayolutionApiConstants::BRAND_INVOICE;
+    const ACCOUNT_BRAND_INSTALLMENT = PayolutionApiConstants::BRAND_INSTALLMENT;
 
     const STATUS_CODE_SUCCESS = '90';
     const REASON_CODE_SUCCESS = '00';
