@@ -23,6 +23,7 @@ class CartRuleForm extends AbstractForm
     const FIELD_VALID_TO = 'valid_to';
     const FIELD_IS_PRIVILEGED = 'is_privileged';
     const FIELD_IS_ACTIVE = 'is_active';
+    const FIELD_CALCULATOR_PLUGIN = 'calculator_plugin';
     const FIELD_COLLECTOR_PLUGIN = 'collector_plugin';
 
     const DATE_NOW = 'now';
@@ -54,6 +55,10 @@ class CartRuleForm extends AbstractForm
      */
     protected $store;
 
+    protected $options = [
+        'allow_extra_fields' => true,
+    ];
+
     /**
      * @param SpyDiscountQuery $discountQuery
      * @param DiscountConfig $discountConfig
@@ -72,6 +77,11 @@ class CartRuleForm extends AbstractForm
 
     protected function buildFormFields()
     {
+        $this->options['allow_extra_fields'] = true;
+
+//        dump($this);
+//        die;
+
         $this
             ->addText(self::FIELD_DISPLAY_NAME, [
                 'constraints' => [
@@ -87,9 +97,16 @@ class CartRuleForm extends AbstractForm
                     ])
                 ]
             ])
+            ->addChoice(self::FIELD_CALCULATOR_PLUGIN, [
+                'label' => 'Collector Plugin',
+                'choices' => $this->getAvailableCalculatorPlugins(),
+                'empty_data' => null,
+                'required' => false,
+                'placeholder' => 'Default',
+            ])
             ->addChoice(self::FIELD_COLLECTOR_PLUGIN, [
                 'label' => 'Collector Plugin',
-                'choices' => $this->getAvailableCollectorPlugins()
+                'choices' => $this->getAvailableCollectorPlugins(),
             ])
             ->addChoice(self::FIELD_TYPE, [
                 'label' => 'Value Type',
@@ -111,18 +128,72 @@ class CartRuleForm extends AbstractForm
             ->addCheckbox(self::FIELD_IS_ACTIVE, [
                 'label' => 'Is Active',
             ])
-            ->addSelect(self::FIELD_DECISION_RULE_PLUGIN, [
-                'label' => 'Decision Rule',
-                'choices' => $this->getDecisionRuleOptions(),
-            ])
-            ->addNumber(self::FIELD_DECISION_RULE_VALUE, [
-                'constraints' => [
-                    new GreaterThan([
-                        'value' => 0,
-                    ])
-                ]
-            ])
+
+//            ->add('rules', 'collection', array(
+//                'type'   => 'choice',
+//                'label' => 'Rules',
+//                'data' => [],
+//                'options'  => array(
+//                    'choices'  => array(
+//                        'nashville' => 'Nashville',
+//                        'paris'     => 'Paris',
+//                        'berlin'    => 'Berlin',
+//                        'london'    => 'London',
+//                    ),
+//                ),
+//            ));
+
+            ->addCollection('decision_rules', $this->buildRulesCollection())
+            ->addCollection('decision_rules_values', $this->buildRulesValuesCollection())
+
+//            ->addSelect(self::FIELD_DECISION_RULE_PLUGIN, [
+//                'label' => 'Decision Rule',
+//                'choices' => $this->getDecisionRuleOptions(),
+//            ])
+//            ->addNumber(self::FIELD_DECISION_RULE_VALUE, [
+//                'constraints' => [
+//                    new GreaterThan([
+//                        'value' => 0,
+//                    ])
+//                ]
+//            ])
         ;
+    }
+
+    protected function buildRulesCollection()
+    {
+        return [
+            'type' => 'text',
+            'data' => [
+                'a' => 'string 1',
+                'b' => 'string 2',
+                'c' => 'string 3',
+            ],
+        ];
+    }
+
+    protected function buildRulesValuesCollection()
+    {
+        return [
+            'type' => 'text',
+            'data' => [
+                'a' => 'str 1',
+                'b' => 'str 2',
+                'c' => 'str 3',
+            ],
+        ];
+    }
+
+    protected function getAvailableCalculatorPlugins()
+    {
+        $plugins = [];
+        $availablePlugins = array_keys($this->discountConfig->getAvailableCalculatorPlugins());
+
+        foreach ($availablePlugins as $plugin) {
+            $plugins[$plugin] = $this->filterChoicesLabels($plugin);
+        }
+
+        return $plugins;
     }
 
     protected function getAvailableCollectorPlugins()

@@ -11,9 +11,46 @@
         {% block widget_content %}
 
             {{ form_start(form) }}
-                {{ form_widget(form) }}
 
-                <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
+                {{ form_errors(form) }}
+
+                {{ form_row(form.display_name) }}
+                {{ form_row(form.description) }}
+                {{ form_row(form.amount) }}
+                {{ form_row(form.calculator_plugin) }}
+                {{ form_row(form.collector_plugin) }}
+                {{ form_row(form.type) }}
+                {{ form_row(form.valid_from) }}
+                {{ form_row(form.valid_to) }}
+                {{ form_row(form.is_privileged) }}
+                {{ form_row(form.is_active) }}
+
+            {% for key, rule in form.decision_rules %}
+                <div style="background: lightblue;" class="row">
+                    <div class="col-md-6">
+                        {{ form_row(rule) }}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_row(form.decision_rules_values[key]) }}
+                    </div>
+                </div>
+            {% endfor %}
+            {#{{ form_row(form.decision_rules) }}#}
+
+            {#
+                <div class="form-group">
+                    <label for="form_decision_rule_plugin" class="control-label required">Decision Rule</label>
+                    <select
+                            class="form-control" novalidate="novalidate" required="required"
+                            name="form[decision_rule_plugin][]">
+                        <option value="">Select value</option>
+                        <option selected="selected" value="PLUGIN_DECISION_RULE_VOUCHER">Voucher</option>
+                        <option value="PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL">Minimum Cart Sub Total</option>
+                    </select>
+                </div>
+            #}
+
+                <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}"/>
             {{ form_end(form) }}
 
         {% endblock %}
