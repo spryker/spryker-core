@@ -86,7 +86,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         return $property;
     }
 
-    public function testIfMoreThenOnePropertyIsSetGetPropertiesShouldReturnArrayWithOneProperty()
+    public function testIfMoreThenOnePropertyIsSetGetPropertiesShouldReturnArrayWithAllProperties()
     {
         $transferDefinition = [
             'name' => 'name',
@@ -116,6 +116,22 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $transferDefinition = [
             'name' => 'name',
             'property' => [$this->getProperty('property1', 'array')],
+        ];
+
+        $classDefinition = new ClassDefinition();
+        $classDefinition->setDefinition($transferDefinition);
+
+        $properties = $classDefinition->getProperties();
+        $givenProperty = $properties['property1'];
+        $expectedProperty = $this->getProperty('property1', 'array');
+        $this->assertEquals($expectedProperty, $givenProperty);
+    }
+
+    public function testIfPropertyNameIsCapitalizedNameShouldBeNormalized()
+    {
+        $transferDefinition = [
+            'name' => 'name',
+            'property' => [$this->getProperty('Property1', 'array')],
         ];
 
         $classDefinition = new ClassDefinition();
