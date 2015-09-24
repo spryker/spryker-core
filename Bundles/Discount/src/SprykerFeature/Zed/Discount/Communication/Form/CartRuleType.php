@@ -7,6 +7,7 @@ use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\Required;
 
@@ -45,6 +46,13 @@ class CartRuleType extends AbstractType
     public function __construct(DiscountConfig $discountConfig)
     {
         $this->discountConfig = $discountConfig;
+    }
+
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults([
+            'allow_extra_fields' => true,
+        ]);
     }
 
     /**
@@ -103,6 +111,7 @@ class CartRuleType extends AbstractType
                 'type' => new DecisionRuleType($this->discountConfig),
                 'label' => null,
                 'allow_add' => true,
+                'allow_extra_fields' => true,
             ])
         ;
     }
