@@ -19,7 +19,7 @@ function calculateTotalRefundAmount() {
 }
 
 $(document).ready(function() {
-    $('table.table').on('change', 'input', function(e) {
+    $('table.add-refund').on('change', 'input', function(e) {
         var quantity = parseInt($(this).val(), 10);
         if (quantity < 0) {
             quantity = 0;
