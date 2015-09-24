@@ -17,4 +17,6 @@ interface ApplicationConfig extends ConfigInterface
 
     const YVES_TWIG_OPTIONS = 'YVES_TWIG_OPTIONS';
 
+    const SHOW_SYMFONY_TOOLBAR = 'SHOW_SYMFONY_TOOLBAR';
+
 }

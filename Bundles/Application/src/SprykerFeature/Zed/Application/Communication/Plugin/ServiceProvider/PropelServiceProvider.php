@@ -6,15 +6,13 @@
 
 namespace SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider;
 
-use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\System\SystemConfig;
 use Propel\Runtime\Connection\ConnectionManagerSingle;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ServiceContainer\StandardServiceContainer;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Monolog\Logger;
-use Monolog\Handler\StreamHandler;
+use SprykerEngine\Shared\Config;
+use SprykerFeature\Shared\System\SystemConfig;
 
 class PropelServiceProvider implements ServiceProviderInterface
 {
@@ -42,6 +40,13 @@ class PropelServiceProvider implements ServiceProviderInterface
         $serviceContainer->setDefaultDatasource('zed');
 
         $this->addLogger($serviceContainer);
+
+        $debug = Config::get(SystemConfig::PROPEL_DEBUG);
+
+        if (true === $debug) {
+            $con = Propel::getConnection();
+            $con->useDebug(true);
+        }
     }
 
     /**
@@ -56,26 +61,24 @@ class PropelServiceProvider implements ServiceProviderInterface
         $propelConfig['password'] = Config::get(SystemConfig::ZED_DB_PASSWORD);
         $propelConfig['dsn'] = Config::get(SystemConfig::PROPEL)['database']['connections']['default']['dsn'];
 
+
         return $propelConfig;
     }
 
     /**
      * @param StandardServiceContainer $serviceContainer
+     * @throws \ErrorException
      */
     private function addLogger(StandardServiceContainer $serviceContainer)
     {
-        $defaultLogger = new Logger('defaultLogger');
-        $pathToLogFile = APPLICATION_ROOT_DIR . '/data/'
-            . \SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName()
-            . '/logs/ZED/propel.log'
-        ;
+        $loggers = Config::get(SystemConfig::PROPEL_LOGGER);
 
-        $defaultLogger->pushHandler(new StreamHandler(
-            $pathToLogFile,
-            Logger::WARNING
-        ));
-
-        $serviceContainer->setLogger('defaultLogger', $defaultLogger);
+        if (is_array($loggers)) {
+            foreach ($loggers as $logger) {
+                $serviceContainer->setLogger($logger->getName(), $logger);
+            }
+        } else {
+            throw new \ErrorException('PROPEL_LOGGER must be an array');
+        }
     }
-
 }
