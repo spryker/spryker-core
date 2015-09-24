@@ -90,7 +90,7 @@ interface CategoryQueryContainerInterface
 
     /**
      * @param int $idParentNode
-     * @param bool|true $excludeRoot
+     * @param bool $excludeRoot
      *
      * @return SpyCategoryClosureTableQuery
      */
@@ -98,7 +98,7 @@ interface CategoryQueryContainerInterface
 
     /**
      * @param int $idChildNode
-     * @param bool|true $excludeRoot
+     * @param bool $excludeRoot
      *
      * @return SpyCategoryClosureTableQuery
      */
