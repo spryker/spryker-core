@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Maintenance;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use SprykerFeature\Shared\System\SystemConfig;
 
 class MaintenanceConfig extends AbstractBundleConfig
 {
@@ -55,6 +56,11 @@ class MaintenanceConfig extends AbstractBundleConfig
     public function getPathToFossFile()
     {
         return APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'FOSS.md';
+    }
+
+    public function getElasticaDocumentType()
+    {
+        return $this->get(SystemConfig::ELASTICA_PARAMETER__DOCUMENT_TYPE);
     }
 
 }

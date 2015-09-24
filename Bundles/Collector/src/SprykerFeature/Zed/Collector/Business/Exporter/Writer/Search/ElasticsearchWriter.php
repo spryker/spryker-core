@@ -65,8 +65,7 @@ class ElasticsearchWriter implements WriterInterface
         }
 
         $this->index->deleteDocuments($docs);
-//        $this->index->refresh();
-        $this->index->flush(true); // TODO ???
+        $this->index->flush(true);
     }
 
     /**

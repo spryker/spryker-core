@@ -65,7 +65,7 @@ class SearchController extends AbstractController
     {
         $key = $request->get('key');
 
-        $type = Config::get(SystemConfig::ELASTICA_PARAMETER__DOCUMENT_TYPE); // TODO FIXME
+        $type = $this->getDependencyContainer()->getElasticaDocumentType();
 
         $doc = $this->getDependencyContainer()->getSearchClient()
             ->getIndexClient()->getType($type)->getDocument($key);

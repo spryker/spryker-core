@@ -10,10 +10,12 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouch;
 use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
+use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
+use RuntimeException;
 
 abstract class AbstractPropelCollectorPlugin
 {
@@ -24,6 +26,11 @@ abstract class AbstractPropelCollectorPlugin
      * @var int
      */
     private $chunkSize = 100;
+
+    /**
+     * @var SpyTouchQuery
+     */
+    protected $touchQueryContainer;
 
     /**
      * @param SpyTouchQuery $baseQuery
@@ -41,8 +48,20 @@ abstract class AbstractPropelCollectorPlugin
     {
         $itemType = $baseQuery->get(SpyTouchTableMap::COL_ITEM_TYPE);
 
+        if (null === $this->touchQueryContainer) {
+            throw new \RuntimeException(sprintf('touchQueryContainer does not exist in %s', get_class($this)));
+        }
+
         $this->runDeletion($locale, $result, $dataWriter, $touchUpdater, $itemType);
         $this->runInsertion($baseQuery, $locale, $result, $dataWriter, $touchUpdater);
+    }
+
+    /**
+     * @param TouchQueryContainerInterface $touchQueryContainer
+     */
+    public function setTouchQueryContainer(TouchQueryContainerInterface $touchQueryContainer)
+    {
+        $this->touchQueryContainer = $touchQueryContainer;
     }
 
     /**
@@ -53,14 +72,7 @@ abstract class AbstractPropelCollectorPlugin
      */
     public function removeDeletedRows($itemType)
     {
-        $deleteQuery = new SpyTouchQuery(); // FIXME Should be done via query container
-        $deleteQuery->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
-        $deleteQuery->filterByItemType($itemType);
-        $deleteQuery->leftJoinTouchSearch();
-        $deleteQuery->leftJoinTouchStorage();
-        $deleteQuery->where('spy_touch_search.fk_touch IS NULL');
-        $deleteQuery->where('spy_touch_storage.fk_touch IS NULL');
-
+        $deleteQuery = $this->touchQueryContainer->queryTouchDeleteStorageAndSearch($itemType);
         $entities = $deleteQuery->find();
         $deletedCount = 0;
         foreach ($entities as $e) {
@@ -72,7 +84,6 @@ abstract class AbstractPropelCollectorPlugin
     }
 
     /**
-     * TODO needs cleanup!!!
      * @param $itemType
      * @param WriterInterface $dataWriter
      * @param TouchUpdaterInterface $touchUpdater
@@ -81,11 +92,8 @@ abstract class AbstractPropelCollectorPlugin
     public function delete($itemType, WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater, $locale)
     {
 
-        $deleteQuery = new SpyTouchQuery(); // FIXME Should be done via query container
-        $deleteQuery->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
-        $deleteQuery->filterByItemType($itemType);
+        $deleteQuery = $this->touchQueryContainer->queryTouchDeleteOnlyByItemType($itemType);
         $entities = $deleteQuery->find();
-
 
         foreach ($entities as $entity) {
             /* @var $entity SpyTouch */

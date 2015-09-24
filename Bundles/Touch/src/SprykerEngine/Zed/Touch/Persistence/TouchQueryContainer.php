@@ -125,4 +125,32 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         return $query;
     }
 
+    /**
+     * @param string $itemType
+     *
+     * @return SpyTouchQuery
+     */
+    public function queryTouchDeleteStorageAndSearch($itemType)
+    {
+        $query = SpyTouchQuery::create();
+        $query->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
+            ->filterByItemType($itemType)
+            ->leftJoinTouchSearch()
+            ->leftJoinTouchStorage()
+            ->where('spy_touch_search.fk_touch IS NULL')
+            ->where('spy_touch_storage.fk_touch IS NULL')
+        ;
+
+        return $query;
+    }
+
+    public function queryTouchDeleteOnlyByItemType($itemType)
+    {
+        $query = SpyTouchQuery::create();
+        $query->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
+            ->filterByItemType($itemType)
+        ;
+
+        return $query;
+    }
 }
