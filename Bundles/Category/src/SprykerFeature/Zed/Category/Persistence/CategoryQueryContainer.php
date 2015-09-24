@@ -197,12 +197,12 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     {
         $query = SpyCategoryClosureTableQuery::create('node');
 
-        $join1 = new Join(
+        $joinCategoryNodeDescendant = new Join(
             'node.fk_category_node_descendant',
             'descendants.fk_category_node_descendant',
             Criteria::JOIN
         );
-        $join1
+        $joinCategoryNodeDescendant
             ->setRightTableName('spy_category_closure_table')
             ->setRightTableAlias('descendants')
             ->setLeftTableName('spy_category_closure_table')
@@ -210,13 +210,13 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
         ;
 
-        $join2 = new Join(
+        $joinCategoryNodeAscendant = new Join(
             'descendants.fk_category_node',
             'ascendants.fk_category_node',
             Criteria::LEFT_JOIN
         );
 
-        $join2
+        $joinCategoryNodeAscendant
             ->setRightTableName('spy_category_closure_table')
             ->setRightTableAlias('ascendants')
             ->setLeftTableName('spy_category_closure_table')
@@ -224,8 +224,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
         ;
 
-        $query->addJoinObject($join1);
-        $query->addJoinObject($join2, 'ascendantsJoin');
+        $query->addJoinObject($joinCategoryNodeDescendant);
+        $query->addJoinObject($joinCategoryNodeAscendant, 'ascendantsJoin');
 
         $query
             ->addJoinCondition(
