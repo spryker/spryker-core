@@ -18,7 +18,6 @@ class DefinitionNormalizer
     {
         $normalizedDefinitions = [];
         foreach ($transferDefinitions as $transferDefinition) {
-
             $normalizedDefinition = [
                 'bundle' => $transferDefinition['bundle'],
                 'name' => $transferDefinition['name'],

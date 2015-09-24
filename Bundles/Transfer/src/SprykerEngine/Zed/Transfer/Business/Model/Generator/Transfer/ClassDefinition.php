@@ -145,6 +145,7 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function addProperty(array $property)
     {
+        $property['name'] = lcfirst($property['name']);
         $propertyInfo = [
             'name' => $property['name'],
             'type' => $this->getPropertyType($property),
