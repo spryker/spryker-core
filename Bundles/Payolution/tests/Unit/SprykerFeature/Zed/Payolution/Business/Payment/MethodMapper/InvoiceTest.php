@@ -6,6 +6,7 @@
 namespace Unit\SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\PayolutionRequestTransfer;
@@ -26,18 +27,22 @@ class InvoiceTest extends Test
 
         $totalsTransfer = (new TotalsTransfer())->setGrandTotal(10000);
 
-        $paymentTransfer = (new PayolutionPaymentTransfer())
+        $addressTransfer = (new AddressTransfer())
             ->setFirstName('John')
             ->setLastName('Doe')
-            ->setGender('Male')
             ->setSalutation('Mr')
-            ->setDateOfBirth('1970-01-01')
-            ->setCountryIso2Code('de')
             ->setCity('Berlin')
-            ->setStreet('Straße des 17. Juni 135')
-            ->setZipCode('10623')
+            ->setIso2Code('de')
+            ->setAddress1('Straße des 17. Juni')
+            ->setAddress2('135')
+            ->setZipCode('10623');
+
+        $paymentTransfer = (new PayolutionPaymentTransfer())
+            ->setGender('Male')
+            ->setDateOfBirth('1970-01-01')
             ->setClientIp('127.0.0.1')
-            ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE);
+            ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE)
+            ->setAddress($addressTransfer);
 
         $orderTransfer = (new OrderTransfer())
             ->setIdSalesOrder($paymentEntityMock->getSpySalesOrder()->getIdSalesOrder())
@@ -50,6 +55,10 @@ class InvoiceTest extends Test
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionRequestTransfer', $requestTransfer);
         $this->assertSame(PayolutionApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
         $this->assertSame(Constants::PAYMENT_CODE_PRE_CHECK, $requestTransfer->getPaymentCode());
+        $this->assertSame(
+            sprintf('%s %s', $addressTransfer->getAddress1(), $addressTransfer->getAddress2()),
+            $requestTransfer->getAddressStreet()
+        );
 
         $criteria = $requestTransfer->getAnalysisCriteria();
         $this->assertCount(1, $criteria);

@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
 
 use Generated\Shared\Payolution\OrderInterface;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionRequestAnalysisCriterionTransfer;
 use Generated\Shared\Transfer\PayolutionRequestTransfer;
@@ -53,19 +54,20 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
         $requestTransfer->setPaymentCode(Constants::PAYMENT_CODE_PRE_CHECK);
 
         $paymentTransfer = $orderTransfer->getPayolutionPayment();
+        $addressTransfer = $paymentTransfer->getAddress();
         $requestTransfer
-            ->setNameGiven($paymentTransfer->getFirstName())
-            ->setNameFamily($paymentTransfer->getLastName())
-            ->setNameTitle($paymentTransfer->getSalutation())
+            ->setNameGiven($addressTransfer->getFirstName())
+            ->setNameFamily($addressTransfer->getLastName())
+            ->setNameTitle($addressTransfer->getSalutation())
             ->setNameSex($this->mapGender($paymentTransfer->getGender()))
             ->setNameBirthdate($paymentTransfer->getDateOfBirth())
-            ->setAddressZip($paymentTransfer->getZipCode())
-            ->setAddressCity($paymentTransfer->getCity())
-            ->setAddressCountry($paymentTransfer->getCountryIso2Code())
-            ->setAddressStreet($paymentTransfer->getStreet())
-            ->setContactEmail($paymentTransfer->getEmail())
-            ->setContactPhone($paymentTransfer->getPhone())
-            ->setContactMobile($paymentTransfer->getCellPhone())
+            ->setAddressZip($addressTransfer->getZipCode())
+            ->setAddressCity($addressTransfer->getCity())
+            ->setAddressCountry($addressTransfer->getIso2Code())
+            ->setAddressStreet(sprintf('%s %s', $addressTransfer->getAddress1(), $addressTransfer->getAddress2()))
+            ->setContactEmail($addressTransfer->getEmail())
+            ->setContactPhone($addressTransfer->getPhone())
+            ->setContactMobile($addressTransfer->getCellPhone())
             ->setContactIp($paymentTransfer->getClientIp());
 
         $criterionTransfer = (new PayolutionRequestAnalysisCriterionTransfer())

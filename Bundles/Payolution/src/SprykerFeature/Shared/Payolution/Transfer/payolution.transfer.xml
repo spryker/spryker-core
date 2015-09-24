@@ -8,20 +8,11 @@
         <property name="fkSalesOrder" type="int" />
         <property name="accountBrand" type="string" />
         <property name="clientIp" type="string" />
-        <property name="firstName" type="string" />
-        <property name="lastName" type="string"/>
-        <property name="salutation" type="string"/>
         <property name="gender" type="string"/>
         <property name="dateOfBirth" type="string"/>
-        <property name="countryIso2Code" type="string"/>
-        <property name="city" type="string"/>
-        <property name="street" type="string"/>
-        <property name="zipCode" type="string"/>
-        <property name="email" type="string"/>
-        <property name="phone" type="string"/>
-        <property name="cellPhone" type="string"/>
         <property name="languageIso2Code" type="string"/>
         <property name="currencyIso3Code" type="string"/>
+        <property name="address" type="Address"/>
     </transfer>
 
     <transfer name="Order">

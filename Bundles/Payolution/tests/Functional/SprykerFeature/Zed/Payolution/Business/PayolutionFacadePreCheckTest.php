@@ -7,6 +7,7 @@
 namespace Functional\SprykerFeature\Zed\Payolution\Business;
 
 use Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http\PreCheckAdapterMock;
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -54,19 +55,23 @@ class PayolutionFacadePreCheckTest extends AbstractFacadeTest
     {
         $totalsTransfer = (new TotalsTransfer())->setGrandTotal(100000);
 
-        $paymentTransfer = (new PayolutionPaymentTransfer())
+        $addressTransfer = (new AddressTransfer())
             ->setFirstName('John')
             ->setLastName('Doe')
-            ->setGender('Male')
             ->setSalutation('Mr')
-            ->setDateOfBirth('1970-01-01')
-            ->setCountryIso2Code('de')
-            ->setCity('Berlin')
-            ->setStreet('Straße des 17. Juni 135')
-            ->setZipCode('10623')
-            ->setClientIp('127.0.0.1')
             ->setEmail('john@doe.com')
-            ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE);
+            ->setCity('Berlin')
+            ->setIso2Code('de')
+            ->setAddress1('Straße des 17. Juni')
+            ->setAddress2('135')
+            ->setZipCode('10623');
+
+        $paymentTransfer = (new PayolutionPaymentTransfer())
+            ->setGender('Male')
+            ->setDateOfBirth('1970-01-01')
+            ->setClientIp('127.0.0.1')
+            ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE)
+            ->setAddress($addressTransfer);
 
         $orderTransfer = (new OrderTransfer())
             ->setIdSalesOrder(1)

@@ -17,7 +17,7 @@ class OrderManager implements OrderManagerInterface
      */
     public function saveOrderPayment(OrderInterface $orderTransfer)
     {
-        $paymentEntity = $this->savePayment($orderTransfer->getPayolutionPayment(), $orderTransfer->getIdSalesOrder());
+        $this->savePayment($orderTransfer->getPayolutionPayment(), $orderTransfer->getIdSalesOrder());
     }
 
     /**
@@ -32,6 +32,16 @@ class OrderManager implements OrderManagerInterface
     {
         $paymentEntity = new SpyPaymentPayolution();
         $paymentEntity->fromArray($paymentTransfer->toArray());
+
+        // Take over fields from address transfer
+        $addressTransfer = $paymentTransfer->getAddress();
+        $paymentEntity->fromArray($addressTransfer->toArray());
+        $paymentEntity->setCountryIso2Code($addressTransfer->getIso2Code());
+
+        // Payolution requires a simple string for the street address
+        $formattedStreet = sprintf('%s %s', $addressTransfer->getAddress1(), $addressTransfer->getAddress2());
+        $paymentEntity->setStreet($formattedStreet);
+
         $paymentEntity->setFkSalesOrder($idSalesOrder);
         $paymentEntity->save();
 
