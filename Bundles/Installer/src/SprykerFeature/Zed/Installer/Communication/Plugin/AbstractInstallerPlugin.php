@@ -11,4 +11,6 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 abstract class AbstractInstallerPlugin extends AbstractPlugin
 {
 
+    abstract public function install();
+
 }

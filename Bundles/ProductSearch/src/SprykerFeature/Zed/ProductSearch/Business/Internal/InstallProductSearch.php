@@ -38,21 +38,18 @@ class InstallProductSearch extends AbstractInstaller
         $indexName,
         $indexType
     ) {
-
         $this->client = $client;
         $this->indexName = $indexName;
         $this->indexType = $indexType;
     }
 
-    /**
-     */
     public function install()
     {
+        $this->messenger->info('Start install');
+        die();
         $this->createProductType();
     }
 
-    /**
-     */
     protected function createProductType()
     {
         $index = $this->client->getIndex($this->indexName);
