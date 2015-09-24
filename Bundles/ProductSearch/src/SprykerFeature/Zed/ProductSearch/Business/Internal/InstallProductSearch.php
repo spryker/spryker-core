@@ -45,8 +45,6 @@ class InstallProductSearch extends AbstractInstaller
 
     public function install()
     {
-        $this->messenger->info('Start install');
-        die();
         $this->createProductType();
     }
 
