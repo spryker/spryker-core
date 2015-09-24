@@ -4,15 +4,31 @@ namespace SprykerFeature\Zed\Discount\Communication\Controller;
 
 use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Discount\Communication\Form\CartRuleForm;
+use SprykerFeature\Zed\Discount\Communication\Form\CartRuleType;
+use SprykerFeature\Zed\Discount\DiscountDependencyProvider;
+use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class CartRuleController extends AbstractController
 {
     const PARAM_ID_DISCOUNT = 'id-discount';
+
+    const CART_RULES_ITERATOR = 'rule_';
+    const ITERATOR_FIRST = 1;
+
+    /**
+     * @var array
+     */
+    protected $dateTypeFields = [
+        'valid_from',
+        'valid_to',
+        'created_at',
+        'updated_at',
+    ];
 
     /**
      * @return array
@@ -39,29 +55,61 @@ class CartRuleController extends AbstractController
     }
 
     /**
-     * @return array|RedirectResponse
+     * @todo CD-474 refactor Form Generator
+     *
+     * @param array|null $defaultData
+     *
+     * @return FormInterface
      */
-    public function createAction()
+    protected function getCartRulesForm(array $defaultData = null)
     {
-        /** @var CartRuleForm $form */
-        $form = $this->getDependencyContainer()->createCartRuleForm(0);
-        $form->handleRequest();
+        if (null === $defaultData) {
+            $defaultData = [
+                'cart_rules' => [
+                    self::CART_RULES_ITERATOR . self::ITERATOR_FIRST => [
+                        'value' => '',
+                        'rules' => '',
+                    ],
+                ]
+            ];
+        }
+
+        /** @var FormFactory $formFactory */
+        $formFactory = $this->getApplication()['form.factory'];
+
+        $discountConfig = $this->getDependencyContainer()->getConfig();
+
+        return $formFactory->create(new CartRuleType($discountConfig), $defaultData);
+    }
+
+    /**
+     * @todo CD-474 refactor Form Generator
+     *
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function createAction(Request $request)
+    {
+        $form = $this->getCartRulesForm();
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $formData = $form->getData();
 
             $discountTransfer = (new DiscountTransfer())->fromArray($formData, true);
-            $discountTransfer->setCollectorPlugin('default');
 
             $discount = $this->getFacade()->createDiscount($discountTransfer);
 
-            $decisionRuleTransfer = (new DecisionRuleTransfer())->fromArray($formData, true);
-            $decisionRuleTransfer->setFkDiscount($discount->getIdDiscount());
-            $decisionRuleTransfer->setName($discount->getDisplayName());
+            foreach ($formData[CartRuleType::FIELD_CART_RULES] as $cartRules) {
+                $decisionRuleTransfer = (new DecisionRuleTransfer())->fromArray($cartRules, true);
+                $decisionRuleTransfer->setFkDiscount($discount->getIdDiscount());
+                $decisionRuleTransfer->setName($discount->getDisplayName());
 
-            $this->getFacade()->createDiscountDecisionRule($decisionRuleTransfer);
+                $this->getFacade()->createDiscountDecisionRule($decisionRuleTransfer);
 
-            return $this->redirectResponse('/discount/cart-rule/edit/?' . self::PARAM_ID_DISCOUNT . '=' . $discount->getIdDiscount());
+                return $this->redirectResponse('/discount/cart-rule/edit/?' . self::PARAM_ID_DISCOUNT . '=' . $discount->getIdDiscount());
+            }
         }
 
         return [
@@ -70,23 +118,36 @@ class CartRuleController extends AbstractController
     }
 
     /**
+     * @todo CD-474 refactor Form Generator
+     *
      * @param Request $request
      *
-     * @return array|RedirectResponse
+     * @return array
      */
     public function editAction(Request $request)
     {
         $idDiscount = $request->query->getInt(self::PARAM_ID_DISCOUNT);
 
-        /** @var CartRuleForm $form */
-        $form = $this->getDependencyContainer()->createCartRuleForm($idDiscount);
-        $form->handleRequest();
+        $form = $this->getCartRulesForm(
+            $this->getCurrentCartRulesDetailsByIdDiscount($idDiscount)
+        );
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $formData = $form->getData();
-            $this->updateDiscount($formData, $idDiscount);
 
-            return $this->redirectResponse('/discount/cart-rule/edit/?' . self::PARAM_ID_DISCOUNT . '=' . $idDiscount);
+            $discountTransfer = (new DiscountTransfer())->fromArray($formData, true);
+            $discount = $this->getFacade()->updateDiscount($discountTransfer);
+
+            foreach ($formData[CartRuleType::FIELD_CART_RULES] as $cartRules) {
+                $decisionRuleTransfer = (new DecisionRuleTransfer())->fromArray($cartRules, true);
+                $decisionRuleTransfer->setFkDiscount($discount->getIdDiscount());
+                $decisionRuleTransfer->setName($discount->getDisplayName());
+
+                $this->getFacade()->updateDiscountDecisionRule($decisionRuleTransfer);
+
+                return $this->redirectResponse('/discount/cart-rule/edit/?' . self::PARAM_ID_DISCOUNT . '=' . $discount->getIdDiscount());
+            }
         }
 
         return [
@@ -94,36 +155,55 @@ class CartRuleController extends AbstractController
         ];
     }
 
-    /**`
-     * @param array $formData
-     * @param int $idDiscount
+    /**
+     * @todo CD-474 refactor Form Generator
+     *
+     * @param $idDiscount
+     *
+     * @return array
      */
-    protected function updateDiscount(array $formData, $idDiscount)
+    protected function getCurrentCartRulesDetailsByIdDiscount($idDiscount)
     {
-        $discountEntity = $this->getQueryContainer()->queryDiscount()->findOneByIdDiscount($idDiscount);
+        $discount = $this->getQueryContainer()->queryDiscount()->findOneByIdDiscount($idDiscount);
 
-        $discountTransfer = (new DiscountTransfer())->fromArray($discountEntity->toArray(), true);
-        $discountTransfer->fromArray($formData, true);
+        $defaultData = $this->fixDateFormats($discount->toArray());
 
-        $this->getFacade()->updateDiscount($discountTransfer);
+        /** @var ObjectCollection $rules */
+        $rules = $this->getQueryContainer()->queryDecisionRules($idDiscount)->find();
 
-        $this->updateDecisionRule($discountTransfer, $formData, $idDiscount);
+        if ($rules->count() > 0) {
+            $i = self::ITERATOR_FIRST;
+            foreach ($rules as $decisionRule) {
+                $defaultData[CartRuleType::FIELD_CART_RULES][self::CART_RULES_ITERATOR . $i] = $this->fixDateFormats($decisionRule->toArray());
+                $i++;
+            }
+        }
+
+        return $defaultData;
     }
 
     /**
-     * @param DiscountTransfer $discountTransfer
-     * @param array $formData
-     * @param int $idDiscount
+     * @todo CD-474 refactor Form Generator
+     *
+     * @param array $entityArray
+     *
+     * @return array
      */
-    protected function updateDecisionRule(DiscountTransfer $discountTransfer, array $formData, $idDiscount)
+    protected function fixDateFormats(array $entityArray)
     {
-        $decisionRuleEntity = $this->getQueryContainer()->queryDecisionRules($idDiscount)->findOne();
+        $store = $this->getDependencyContainer()
+            ->getProvidedDependency(DiscountDependencyProvider::STORE_CONFIG)
+        ;
 
-        $decisionRuleTransfer = (new DecisionRuleTransfer())->fromArray($decisionRuleEntity->toArray(), true);
-        $decisionRuleTransfer->fromArray($formData, true);
-        $decisionRuleTransfer->setName($discountTransfer->getDisplayName());
+        foreach ($entityArray as $key => &$value) {
+            if (in_array($key, $this->dateTypeFields)) {
+                if (!($value instanceof \DateTime)) {
+                    $value = \DateTime::createFromFormat('Y-m-d\TG:i:s\Z', $value, new \DateTimeZone($store->getTimezone()));
+                }
+            }
+        }
 
-        $this->getFacade()->updateDiscountDecisionRule($decisionRuleTransfer);
+        return $entityArray;
     }
 
 }
