@@ -15,7 +15,7 @@ class TouchUpdater implements TouchUpdaterInterface
 
     /**
      * @param TouchUpdaterSet $touchUpdaterSet
-     * @param $idLocale
+     * @param int $idLocale
      */
     public function updateMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale)
     {
@@ -31,15 +31,15 @@ class TouchUpdater implements TouchUpdaterInterface
     }
 
     /**
-     * @param int $id
+     * @param int $idTouch
      * @param LocaleTransfer $locale
      *
      * @return SpyTouchStorage
      */
-    public function getKeyById($id, LocaleTransfer $locale)
+    public function getKeyById($idTouch, LocaleTransfer $locale)
     {
         $query = SpyTouchStorageQuery::create();
-        $query->filterByFkTouch($id);
+        $query->filterByFkTouch($idTouch);
         $query->filterByFkLocale($locale->getIdLocale());
 
         return $query->findOne();

@@ -31,14 +31,14 @@ class TouchUpdater implements TouchUpdaterInterface
     }
 
     /**
-     * @param int $id
+     * @param int $idTouch
      * @param LocaleTransfer $locale
      *
      * @return SpyTouchSearch
      */
-    public function getKeyById($id, LocaleTransfer $locale){
+    public function getKeyById($idTouch, LocaleTransfer $locale){
         $query = SpyTouchSearchQuery::create();
-        $query->filterByFkTouch($id);
+        $query->filterByFkTouch($idTouch);
         $query->filterByFkLocale($locale->getIdLocale());
         return $query->findOne();
     }

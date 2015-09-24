@@ -120,8 +120,9 @@ class TouchRecord implements TouchRecordInterface
             $touchActiveEntity = $this->touchQueryContainer->queryUpdateTouchEntry($itemType, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
                     ->findOne()
                 ;
-            $touchActiveEntity->delete();
-
+            if (null !== $touchActiveEntity) {
+                $touchActiveEntity->delete();
+            }
             return true;
         }
 

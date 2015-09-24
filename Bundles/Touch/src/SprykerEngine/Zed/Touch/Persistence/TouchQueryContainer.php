@@ -7,6 +7,7 @@
 namespace SprykerEngine\Zed\Touch\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
@@ -142,6 +143,12 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         return $query;
     }
 
+    /**
+     * @param string $itemType
+     *
+     * @throws PropelException
+     * @return SpyTouchQuery
+     */
     public function queryTouchDeleteOnlyByItemType($itemType)
     {
         $query = SpyTouchQuery::create();
