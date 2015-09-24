@@ -7,16 +7,14 @@
 namespace SprykerEngine\Zed\Touch\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
-use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchStorageTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
 use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 
 class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryContainerInterface
 {
+
     const TOUCH_ENTRY_QUERY_KEY = 'search touch entry';
     const TOUCH_ENTRIES_QUERY_KEY = 'search touch entries';
     const TOUCH_EXPORTER_ID = 'exporter_touch_id';
@@ -48,7 +46,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
             ->filterByItemType($itemType)
             ->filterByItemId($itemId)
         ;
-        
+
         return $query;
     }
 
@@ -76,9 +74,9 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      * @param LocaleTransfer $locale
      * @param \DateTime $lastTouchedAt
      * 
-     * @return SpyTouchQuery
-     * 
      * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return SpyTouchQuery
      */
     public function createBasicExportableQuery($itemType, LocaleTransfer $locale, \DateTime $lastTouchedAt)
     {
@@ -153,4 +151,5 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
 
         return $query;
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -11,7 +12,6 @@ use SprykerFeature\Client\Search\Service\SearchClient;
 use SprykerFeature\Client\Storage\Service\StorageClient;
 use SprykerFeature\Zed\Maintenance\Communication\Table\StorageTable;
 use SprykerFeature\Zed\Maintenance\MaintenanceDependencyProvider;
-use Symfony\Component\Validator\Validator;
 
 /**
  * @method MaintenanceCommunication getFactory()
@@ -19,20 +19,23 @@ use Symfony\Component\Validator\Validator;
 class MaintenanceDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
-
     /**
      * @return StorageTable
      */
-    public function createStorageTable(){
+    public function createStorageTable()
+    {
         $storageClient = $this->getStorageClient();
+
         return $this->getFactory()->createTableStorageTable($storageClient);
     }
 
     /**
      * @return StorageTable
      */
-    public function createSearchTable(){
+    public function createSearchTable()
+    {
         $searchClient = $this->getSearchClient();
+
         return $this->getFactory()->createTableSearchTable($searchClient);
     }
 

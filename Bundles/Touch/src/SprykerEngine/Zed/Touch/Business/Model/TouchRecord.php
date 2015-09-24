@@ -66,7 +66,6 @@ class TouchRecord implements TouchRecordInterface
             $this->saveTouchEntity($itemType, $idItem, $itemEvent, $touchEntity);
         }
 
-
         $this->connection->commit();
 
         return true;

@@ -6,15 +6,12 @@
 
 namespace SprykerFeature\Zed\Maintenance\Communication\Controller;
 
-use SprykerEngine\Shared\Config;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Maintenance\Business\MaintenanceFacade;
 use SprykerFeature\Zed\Maintenance\Communication\MaintenanceDependencyContainer;
-use SprykerFeature\Shared\System\SystemConfig;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-
 
 /**
  * @method MaintenanceFacade getFacade()

@@ -11,6 +11,7 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class TouchDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
 
     /**
@@ -26,4 +27,5 @@ class TouchDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
+
 }

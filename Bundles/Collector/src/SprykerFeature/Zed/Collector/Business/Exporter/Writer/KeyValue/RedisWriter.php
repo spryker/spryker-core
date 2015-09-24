@@ -45,9 +45,10 @@ class RedisWriter implements WriterInterface
     public function delete(array $dataSet)
     {
         $dataSetAssociate = [];
-        foreach($dataSet as $key){
+        foreach ($dataSet as $key) {
             $dataSetAssociate[$key] = true;
         }
+
         return $this->redis->deleteMulti($dataSetAssociate);
     }
 

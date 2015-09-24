@@ -15,7 +15,6 @@ use SprykerFeature\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterS
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
-use RuntimeException;
 
 abstract class AbstractPropelCollectorPlugin
 {
@@ -44,8 +43,7 @@ abstract class AbstractPropelCollectorPlugin
                         BatchResultInterface $result,
                         WriterInterface $dataWriter,
                         TouchUpdaterInterface $touchUpdater
-    )
-    {
+    ) {
         $itemType = $baseQuery->get(SpyTouchTableMap::COL_ITEM_TYPE);
 
         if (null === $this->touchQueryContainer) {
@@ -68,6 +66,7 @@ abstract class AbstractPropelCollectorPlugin
      * Remove orphans (marked as 'deleted' and without any keys)
      *
      * @param $itemType
+     *
      * @return int
      */
     public function removeDeletedRows($itemType)
@@ -91,7 +90,6 @@ abstract class AbstractPropelCollectorPlugin
      */
     public function delete($itemType, WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater, $locale)
     {
-
         $deleteQuery = $this->touchQueryContainer->queryTouchDeleteOnlyByItemType($itemType);
         $entities = $deleteQuery->find();
 
@@ -105,7 +103,6 @@ abstract class AbstractPropelCollectorPlugin
                 $keyEntity->delete();
             }
         }
-
     }
 
     public function postRun(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result, WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater)
@@ -188,7 +185,6 @@ abstract class AbstractPropelCollectorPlugin
 
         $totalCount = $result->getTotalCount();
         foreach ($batchCollection as $batch) {
-
             $touchUpdaterSet = new TouchUpdaterSet();
             $collectedData = $this->processData($batch, $locale, $touchUpdaterSet);
             $count = count($collectedData);
