@@ -56,22 +56,11 @@ class ElasticsearchMarkerWriter implements WriterInterface
      */
     public function write(array $dataSet, $type = '')
     {
-        // @todo when we make use of types loop can be removed
         foreach ($dataSet as $key => $value) {
             $this->metaData[$key] = $value;
         }
-
-        // @todo when we make use of types commented code can be uncommented and __destruct can be removed
-//        $mapping = new Mapping($this->index->getType($this->type));
-//
-//        foreach ($dataSet as $key => $value) {
-//            $mapping->setMeta([$key => $value])->send();
-//        }
     }
 
-    /**
-     * @todo when we make use of types commented code in write can be uncommented and __destruct can be removed
-     */
     public function __destruct()
     {
         $mapping = new Mapping($this->index->getType($this->type));
