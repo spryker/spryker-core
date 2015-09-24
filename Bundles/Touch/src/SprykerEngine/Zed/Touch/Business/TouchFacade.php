@@ -18,6 +18,7 @@ class TouchFacade extends AbstractFacade
     /**
      * @param string $itemType
      * @param int $idItem
+     * @param bool $keyChange
      *
      * @return bool
      */

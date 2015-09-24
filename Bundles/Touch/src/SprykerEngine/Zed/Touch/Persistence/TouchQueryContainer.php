@@ -52,6 +52,13 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         return $query;
     }
 
+    /**
+     * @param string $itemType
+     * @param string $itemId
+     * @param string $itemEvent
+     *
+     * @return SpyTouchQuery
+     */
     public function queryUpdateTouchEntry($itemType, $itemId, $itemEvent)
     {
         $query = SpyTouchQuery::create();

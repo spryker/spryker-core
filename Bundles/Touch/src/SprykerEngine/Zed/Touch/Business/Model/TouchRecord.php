@@ -7,14 +7,14 @@
 namespace SprykerEngine\Zed\Touch\Business\Model;
 
 use DateTime;
+use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
-use Propel\Runtime\Propel;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
-use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouch;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 class TouchRecord implements TouchRecordInterface
 {
+
     const BULK_UPDATE_CHUNK_SIZE = 250;
 
     /**
@@ -23,11 +23,18 @@ class TouchRecord implements TouchRecordInterface
     protected $touchQueryContainer;
 
     /**
-     * @param TouchQueryContainerInterface $queryContainer
+     * @var ConnectionInterface
      */
-    public function __construct(TouchQueryContainerInterface $queryContainer)
+    protected $connection;
+
+    /**
+     * @param TouchQueryContainerInterface $queryContainer
+     * @param ConnectionInterface $connection
+     */
+    public function __construct(TouchQueryContainerInterface $queryContainer, ConnectionInterface $connection)
     {
         $this->touchQueryContainer = $queryContainer;
+        $this->connection = $connection;
     }
 
     /**
@@ -43,55 +50,24 @@ class TouchRecord implements TouchRecordInterface
      */
     public function saveTouchRecord($itemType, $itemEvent, $idItem, $keyChange = false)
     {
-
-//        Propel::getConnection()
-//            ->beginTransaction()
-//        ;
-        //TODO clean query and move it to QueryContainer
-        $touchQuery = $this->touchQueryContainer->queryTouchEntry($itemType, $idItem);
-        $touchKeyChangeQuery = clone $touchQuery;
+        $this->connection->beginTransaction();
 
         if ($keyChange) {
-            $touchKeyChangeQuery->setQueryKey('keyChange');
-            $touchKeyChangeQuery = $touchKeyChangeQuery->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
-            $touchOldEntity = $touchKeyChangeQuery->findOne();
-
-
-            //TODO clean query and move it to QueryContainer
-            if (null !== $touchOldEntity) {
-                $touchDeletedQuery = clone $touchQuery;
-                $touchDeletedQuery->setQueryKey('deleteQuery');
-                $touchDeletedQuery ->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED);
-                $touchDeletedEntity = $touchDeletedQuery->findOne();
-
-
-                if (null === $touchDeletedEntity) {
-
-                    // TODO make it clean
-                    $touchOldEntity
-                        ->setItemType($itemType)
-                        ->setItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
-                        ->setItemId($idItem)
-                        ->setTouched(new DateTime());
-                    $touchOldEntity->save();
-                }
-            }
+            $this->insertKeyChangeRecord($itemType, $idItem);
         }
 
-        $touchQuery = $this->touchQueryContainer->queryUpdateTouchEntry($itemType, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
-        $touchEntity = $touchQuery->findOneOrCreate();
+        if ($itemEvent === SpyTouchTableMap::COL_ITEM_EVENT_DELETED) {
+            if (!$this->deleteKeyChangeActiveRecord($itemType, $idItem)) {
+                $touchEntity = $this->touchQueryContainer->queryUpdateTouchEntry($itemType, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)->findOneOrCreate();
+                $this->saveTouchEntity($itemType, $idItem, $itemEvent, $touchEntity);
+            }
+        } else {
+            $touchEntity = $this->touchQueryContainer->queryUpdateTouchEntry($itemType, $idItem, $itemEvent)->findOneOrCreate();
+            $this->saveTouchEntity($itemType, $idItem, $itemEvent, $touchEntity);
+        }
 
-        $touchEntity
-            ->setItemType($itemType)
-            ->setItemEvent($itemEvent)
-            ->setItemId($idItem)
-            ->setTouched(new DateTime());
 
-        $touchEntity->save();
-
-//        Propel::getConnection()
-//            ->commit()
-//        ;
+        $this->connection->commit();
 
         return true;
     }
@@ -114,4 +90,63 @@ class TouchRecord implements TouchRecordInterface
 
         return $updated;
     }
+
+    /**
+     * @param $itemType
+     * @param $idItem
+     * @param $itemEvent
+     * @param $touchEntity
+     */
+    protected function saveTouchEntity($itemType, $idItem, $itemEvent, $touchEntity)
+    {
+        $touchEntity->setItemType($itemType)
+            ->setItemEvent($itemEvent)
+            ->setItemId($idItem)
+            ->setTouched(new DateTime())
+        ;
+        $touchEntity->save();
+    }
+
+    /**
+     * @param $itemType
+     * @param $idItem
+     *
+     * @return bool
+     */
+    protected function deleteKeyChangeActiveRecord($itemType, $idItem)
+    {
+        $touchDeletedEntity = $this->touchQueryContainer->queryUpdateTouchEntry($itemType, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
+                ->findOne()
+            ;
+        if (null !== $touchDeletedEntity) {
+            $touchActiveEntity = $this->touchQueryContainer->queryUpdateTouchEntry($itemType, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
+                    ->findOne()
+                ;
+            $touchActiveEntity->delete();
+
+            return true;
+        }
+
+        return false;
+    }
+
+    /**
+     * @param $itemType
+     * @param $idItem
+     */
+    protected function insertKeyChangeRecord($itemType, $idItem)
+    {
+        $touchOldEntity = $this->touchQueryContainer->queryUpdateTouchEntry($itemType, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
+            ->findOne()
+        ;
+        if (null !== $touchOldEntity) {
+            $touchDeletedEntity = $this->touchQueryContainer->queryUpdateTouchEntry($itemType, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
+                ->findOne()
+            ;
+            if (null === $touchDeletedEntity) {
+                $this->saveTouchEntity($itemType, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $touchOldEntity);
+            }
+        }
+    }
+
 }
