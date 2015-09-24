@@ -6,12 +6,12 @@
 namespace SprykerFeature\Zed\ProductCategory\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyLocalizedAbstractProductAttributesTableMap;
-use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 use SprykerFeature\Zed\ProductCategory\Persistence\Propel\Map\SpyProductCategoryTableMap;
 
 
@@ -20,7 +20,7 @@ class ProductCategoryTable extends AbstractTable
     const TABLE_IDENTIFIER = 'product-category-table';
 
     /**
-     * @var ProductCategoryQueryContainer
+     * @var ProductCategoryQueryContainerInterface
      */
     protected $productCategoryQueryContainer;
 
@@ -36,11 +36,11 @@ class ProductCategoryTable extends AbstractTable
     protected $idCategory;
 
     /**
-     * @param ProductCategoryQueryContainer $productCategoryQueryContainer
+     * @param ProductCategoryQueryContainerInterface $productCategoryQueryContainer
      * @param LocaleTransfer $locale
      * @param int $idCategory
      */
-    public function __construct(ProductCategoryQueryContainer $productCategoryQueryContainer, LocaleTransfer $locale, $idCategory)
+    public function __construct(ProductCategoryQueryContainerInterface $productCategoryQueryContainer, LocaleTransfer $locale, $idCategory)
     {
         $this->productCategoryQueryContainer = $productCategoryQueryContainer;
         $this->locale = $locale;

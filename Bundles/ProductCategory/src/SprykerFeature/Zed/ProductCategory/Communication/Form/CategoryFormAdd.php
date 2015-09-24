@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\ProductCategory\Communication\Form;
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
+use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
@@ -27,7 +28,7 @@ class CategoryFormAdd extends AbstractForm
     const FK_NODE_CATEGORY = 'fk_category';
 
     /**
-     * @var CategoryQueryContainer
+     * @var CategoryQueryContainerInterface
      */
     protected $categoryQueryContainer;
 
@@ -47,16 +48,28 @@ class CategoryFormAdd extends AbstractForm
     protected $idCategory;
 
     /**
-     * @param CategoryQueryContainer $categoryQueryContainer
+     * @var int
+     */
+    protected $idParentNode;
+
+    /**
+     * @param CategoryQueryContainerInterface $categoryQueryContainer
      * @param LocaleTransfer $locale
      * @param int $idCategory
      */
-    public function __construct(CategoryQueryContainer $categoryQueryContainer, ProductCategoryFacade $productCategoryFacade, LocaleTransfer $locale, $idCategory)
+    public function __construct(
+        CategoryQueryContainerInterface $categoryQueryContainer,
+        ProductCategoryFacade $productCategoryFacade,
+        LocaleTransfer $locale,
+        $idCategory,
+        $idParentNode
+    )
     {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productCategoryFacade = $productCategoryFacade;
         $this->locale = $locale;
         $this->idCategory = $idCategory;
+        $this->idParentNode = $idParentNode;
     }
 
     /**
@@ -77,7 +90,7 @@ class CategoryFormAdd extends AbstractForm
                 ]
             ])
             ->addHidden(self::PK_CATEGORY_NODE)
-            ;
+        ;
     }
 
     /**
@@ -160,6 +173,7 @@ class CategoryFormAdd extends AbstractForm
                 self::PK_CATEGORY => $category[self::PK_CATEGORY],
                 self::PK_CATEGORY_NODE => $category[self::PK_CATEGORY_NODE],
                 self::FK_PARENT_CATEGORY_NODE => $category[self::FK_PARENT_CATEGORY_NODE],
+                self::FK_PARENT_CATEGORY_NODE => $category[self::FK_PARENT_CATEGORY_NODE],
                 self::NAME => $category[self::NAME],
             ];
         }
@@ -175,7 +189,7 @@ class CategoryFormAdd extends AbstractForm
         return [
             self::PK_CATEGORY => null,
             self::PK_CATEGORY_NODE => null,
-            self::FK_PARENT_CATEGORY_NODE => null,
+            self::FK_PARENT_CATEGORY_NODE => $this->idParentNode,
             self::NAME => ''
         ];
     }

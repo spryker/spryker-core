@@ -144,9 +144,8 @@ class CategoryTreeWriter
         $connection = Propel::getConnection();
         $connection->beginTransaction();
 
-        $this->closureTableWriter->delete($categoryNode->getIdCategoryNode());
         $this->nodeWriter->update($categoryNode);
-        $this->closureTableWriter->create($categoryNode);
+        $this->closureTableWriter->moveNode($categoryNode);
         $this->nodeUrlManager->updateUrl($categoryNode, $locale);
 
         $this->touchCategoryActiveRecursive($categoryNode);
@@ -155,6 +154,9 @@ class CategoryTreeWriter
         $connection->commit();
     }
 
+    /**
+     * @param NodeTransfer $categoryNode
+     */
     protected function touchCategoryActiveRecursive(NodeTransfer $categoryNode)
     {
         $closureQuery= new SpyCategoryClosureTableQuery();
@@ -167,7 +169,10 @@ class CategoryTreeWriter
         $this->touchCategoryActive($categoryNode->getIdCategoryNode());
     }
 
-/*    protected function touchCategoryDeletedRecursive(NodeTransfer $categoryNode)
+    /**
+     * @param NodeTransfer $categoryNode
+     */
+    protected function touchCategoryDeletedRecursive(NodeTransfer $categoryNode)
     {
         $closureQuery= new SpyCategoryClosureTableQuery();
         $nodes = $closureQuery->findByFkCategoryNodeDescendant($categoryNode->getFkParentCategoryNode());
@@ -177,7 +182,7 @@ class CategoryTreeWriter
         }
 
         $this->touchCategoryDeleted($categoryNode->getIdCategoryNode());
-    }*/
+    }
 
     /**
      * @param int $idNode

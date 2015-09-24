@@ -110,15 +110,18 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
     }
 
     /**
+     * @param int $idParentNode
+     *
      * @return CategoryFormAdd
      */
-    public function createCategoryFormAdd()
+    public function createCategoryFormAdd($idParentNode)
     {
         return $this->getFactory()->createFormCategoryFormAdd(
             $this->createCategoryQueryContainer(),
             $this->createProductCategoryFacade(),
             $this->getCurrentLocale(),
-            null
+            null,
+            $idParentNode
         );
     }
 
@@ -133,7 +136,8 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
             $this->createCategoryQueryContainer(),
             $this->createProductCategoryFacade(),
             $this->getCurrentLocale(),
-            $idCategory
+            $idCategory,
+            null
         );
     }
 
