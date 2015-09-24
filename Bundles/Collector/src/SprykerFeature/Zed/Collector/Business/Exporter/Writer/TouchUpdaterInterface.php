@@ -20,6 +20,12 @@ interface TouchUpdaterInterface
      */
     public function updateMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale);
 
+    /**
+     * @param int $id
+     * @param LocaleTransfer $locale
+     *
+     * @return SpyTouchSearch
+     */
     public function getKeyById($id, LocaleTransfer $locale);
 
 }

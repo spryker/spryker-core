@@ -62,13 +62,13 @@ class SearchController extends AbstractController
     {
         $key = $request->get('key');
 
-        $type = $this->getDependencyContainer()->getElasticaDocumentType();
+        $documentType = $this->getDependencyContainer()->getElasticaDocumentType();
 
-        $doc = $this->getDependencyContainer()->getSearchClient()
-            ->getIndexClient()->getType($type)->getDocument($key);
+        $document = $this->getDependencyContainer()->getSearchClient()
+            ->getIndexClient()->getType($documentType)->getDocument($key);
 
         return $this->viewResponse([
-            'value' => var_export($doc->getData(), true),
+            'value' => var_export($document->getData(), true),
             'key' => $key,
         ]);
     }

@@ -57,14 +57,17 @@ class ElasticsearchWriter implements WriterInterface
         return $response->isOk();
     }
 
+    /**
+     * @param array $dataSet
+     */
     public function delete(array $dataSet)
     {
-        $docs = [];
+        $documents = [];
         foreach ($dataSet as $key) {
-            $docs[] = $this->index->getType($this->type)->getDocument($key);
+            $documents[] = $this->index->getType($this->type)->getDocument($key);
         }
 
-        $this->index->deleteDocuments($docs);
+        $this->index->deleteDocuments($documents);
         $this->index->flush(true);
     }
 

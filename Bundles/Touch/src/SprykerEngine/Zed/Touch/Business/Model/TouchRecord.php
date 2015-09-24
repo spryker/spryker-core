@@ -10,6 +10,7 @@ use DateTime;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
+use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouch;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 class TouchRecord implements TouchRecordInterface
@@ -58,12 +59,10 @@ class TouchRecord implements TouchRecordInterface
 
         if ($itemEvent === SpyTouchTableMap::COL_ITEM_EVENT_DELETED) {
             if (!$this->deleteKeyChangeActiveRecord($itemType, $idItem)) {
-                $touchEntity = $this->touchQueryContainer->queryUpdateTouchEntry($itemType, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)->findOneOrCreate();
-                $this->saveTouchEntity($itemType, $idItem, $itemEvent, $touchEntity);
+                $this->insertTouchRecord($itemType, $itemEvent, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE);
             }
         } else {
-            $touchEntity = $this->touchQueryContainer->queryUpdateTouchEntry($itemType, $idItem, $itemEvent)->findOneOrCreate();
-            $this->saveTouchEntity($itemType, $idItem, $itemEvent, $touchEntity);
+            $this->insertTouchRecord($itemType, $itemEvent, $idItem);
         }
 
         $this->connection->commit();
@@ -91,12 +90,12 @@ class TouchRecord implements TouchRecordInterface
     }
 
     /**
-     * @param $itemType
-     * @param $idItem
-     * @param $itemEvent
-     * @param $touchEntity
+     * @param string $itemType
+     * @param int $idItem
+     * @param string $itemEvent
+     * @param SpyTouch $touchEntity
      */
-    protected function saveTouchEntity($itemType, $idItem, $itemEvent, $touchEntity)
+    protected function saveTouchEntity($itemType, $idItem, $itemEvent,SpyTouch $touchEntity)
     {
         $touchEntity->setItemType($itemType)
             ->setItemEvent($itemEvent)
@@ -107,8 +106,8 @@ class TouchRecord implements TouchRecordInterface
     }
 
     /**
-     * @param $itemType
-     * @param $idItem
+     * @param string $itemType
+     * @param int $idItem
      *
      * @return bool
      */
@@ -130,8 +129,8 @@ class TouchRecord implements TouchRecordInterface
     }
 
     /**
-     * @param $itemType
-     * @param $idItem
+     * @param string $itemType
+     * @param string $idItem
      */
     protected function insertKeyChangeRecord($itemType, $idItem)
     {
@@ -148,4 +147,20 @@ class TouchRecord implements TouchRecordInterface
         }
     }
 
+    /**
+     * @param string $itemType
+     * @param string $itemEvent
+     * @param string $idItem
+     * @param string $type;
+     */
+    protected function insertTouchRecord($itemType, $itemEvent, $idItem, $type = null)
+    {
+        if (null === $type) {
+            $type = $itemEvent;
+        }
+        $touchEntity = $this->touchQueryContainer->queryUpdateTouchEntry($itemType, $idItem, $type)
+            ->findOneOrCreate()
+        ;
+        $this->saveTouchEntity($itemType, $idItem, $itemEvent, $touchEntity);
+    }
 }

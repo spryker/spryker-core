@@ -11,6 +11,7 @@ use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouch;
 use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
+use SprykerFeature\Zed\Collector\Business\Exporter\Exception\DependencyException;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
@@ -39,15 +40,15 @@ abstract class AbstractPropelCollectorPlugin
      * @param TouchUpdaterInterface $touchUpdater
      */
     public function run(SpyTouchQuery $baseQuery,
-                        LocaleTransfer $locale,
-                        BatchResultInterface $result,
-                        WriterInterface $dataWriter,
-                        TouchUpdaterInterface $touchUpdater
-    ) {
+        LocaleTransfer $locale,
+        BatchResultInterface $result,
+        WriterInterface $dataWriter,
+        TouchUpdaterInterface $touchUpdater
+) {
         $itemType = $baseQuery->get(SpyTouchTableMap::COL_ITEM_TYPE);
 
         if (null === $this->touchQueryContainer) {
-            throw new \RuntimeException(sprintf('touchQueryContainer does not exist in %s', get_class($this)));
+            throw new DependencyException(sprintf('touchQueryContainer does not exist in %s', get_class($this)));
         }
 
         $this->runDeletion($locale, $result, $dataWriter, $touchUpdater, $itemType);
@@ -65,7 +66,7 @@ abstract class AbstractPropelCollectorPlugin
     /**
      * Remove orphans (marked as 'deleted' and without any keys)
      *
-     * @param $itemType
+     * @param string $itemType
      *
      * @return int
      */
@@ -74,8 +75,8 @@ abstract class AbstractPropelCollectorPlugin
         $deleteQuery = $this->touchQueryContainer->queryTouchDeleteStorageAndSearch($itemType);
         $entities = $deleteQuery->find();
         $deletedCount = 0;
-        foreach ($entities as $e) {
-            $e->delete();
+        foreach ($entities as $entity) {
+            $entity->delete();
             $deletedCount++;
         }
 
@@ -83,7 +84,7 @@ abstract class AbstractPropelCollectorPlugin
     }
 
     /**
-     * @param $itemType
+     * @param string $itemType
      * @param WriterInterface $dataWriter
      * @param TouchUpdaterInterface $touchUpdater
      * @param $locale
@@ -160,7 +161,7 @@ abstract class AbstractPropelCollectorPlugin
      * @param BatchResultInterface $result
      * @param WriterInterface $dataWriter
      * @param TouchUpdaterInterface $touchUpdater
-     * @param $itemType
+     * @param string $itemType
      */
     protected function runDeletion(LocaleTransfer $locale, BatchResultInterface $result, WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater, $itemType)
     {
@@ -187,14 +188,14 @@ abstract class AbstractPropelCollectorPlugin
         foreach ($batchCollection as $batch) {
             $touchUpdaterSet = new TouchUpdaterSet();
             $collectedData = $this->processData($batch, $locale, $touchUpdaterSet);
-            $count = count($collectedData);
+            $collectedDataCount = count($collectedData);
 
             $touchUpdater->updateMulti($touchUpdaterSet, $locale->getIdLocale());
 
             $dataWriter->write($collectedData, $this->getTouchItemType());
 
-            $result->increaseProcessedCount($count);
-            $totalCount += $count;
+            $result->increaseProcessedCount($collectedDataCount);
+            $totalCount += $collectedDataCount;
         }
 
         $result->setTotalCount($totalCount);
