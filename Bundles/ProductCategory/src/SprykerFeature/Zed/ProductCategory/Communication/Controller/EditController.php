@@ -263,6 +263,8 @@ class EditController extends AddController
         $nodeTransfer = (new NodeTransfer())
             ->fromArray($data, true);
 
+        $nodeTransfer->setIsMain(false);
+
         $existingCategoryNode = $this->getDependencyContainer()
             ->createCategoryFacade()
             ->getNodeByIdCategoryAndParentNode($categoryTransfer->getIdCategory(), $data['fk_parent_category_node']);
