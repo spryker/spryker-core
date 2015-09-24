@@ -51,6 +51,22 @@ interface CategoryTreeReaderInterface
     public function getPath($idNode, LocaleTransfer $locale, $excludeRootNode = true, $onlyParents = false);
 
     /**
+     * @param int $idParentNode
+     * @param bool $excludeRoot
+     *
+     * @return array
+     */
+    public function getPathChildren($idParentNode, $excludeRoot = true);
+
+    /**
+     * @param int $idChildNode
+     * @param bool $excludeRoot
+     *
+     * @return array
+     */
+    public function getPathParents($idChildNode, $excludeRoot = true);
+
+    /**
      * @param int $idNode
      * @param LocaleTransfer $locale
      * @param bool $excludeRootNode

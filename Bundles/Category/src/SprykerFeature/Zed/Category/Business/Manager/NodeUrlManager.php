@@ -13,11 +13,7 @@ use SprykerFeature\Shared\Category\CategoryConfig;
 use SprykerFeature\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeReaderInterface;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
-use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
-use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryClosureTableTableMap;
-use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTableQuery;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNodeQuery;
+use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTable;
 
 class NodeUrlManager implements NodeUrlManagerInterface
 {
@@ -69,9 +65,8 @@ class NodeUrlManager implements NodeUrlManagerInterface
     /**
      * @param NodeTransfer $categoryNode
      * @param LocaleTransfer $locale
-     * @param NodeTransfer|null $parentNode
      */
-    public function updateUrl(NodeTransfer $categoryNode, LocaleTransfer $locale, NodeTransfer $parentNode=null)
+    public function updateUrl(NodeTransfer $categoryNode, LocaleTransfer $locale)
     {
         $path = $this->categoryTreeReader->getPath($categoryNode->getIdCategoryNode(), $locale);
         $categoryUrl = $this->urlPathGenerator->generate($path);
@@ -94,60 +89,36 @@ class NodeUrlManager implements NodeUrlManagerInterface
             $this->urlFacade->saveUrlAndTouch($url);
         }
 
-        //TODO implement deep fix //https://spryker.atlassian.net/browse/CD-459
-        //$nodes = $this->categoryTreeReader->getChildren($idNode, $locale);
+        $this->updateChildrenUrls($categoryNode, $locale);
+    }
 
-
-        $query = new SpyCategoryClosureTableQuery();
-            $query->filterByFkCategoryNode($categoryNode->getIdCategoryNode())
-            //->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, 'id_category_node')
-            //->withColumn(SpyCategoryClosureTableTableMap::COL_ID_CATEGORY_CLOSURE_TABLE, 'id_category_closure_table')
-            //->withColumn(SpyCategoryClosureTableTableMap::COL_DEPTH, 'depth')
-            ->where(SpyCategoryClosureTableTableMap::COL_DEPTH . '> ?', 0)
-        ;
-
-        $nodes = $query->find();
-        foreach ($nodes as $child) {
-            //$childTransfer = (new nodeTransfer())->fromArray($child->toArray());
-
-            $query = new SpyCategoryClosureTableQuery();
-            $query->filterByFkCategoryNodeDescendant($child->getFkCategoryNodeDescendant())
-                ->innerJoinNode()
-                ->useNodeQuery()
-                  ->innerJoinCategory()
-                  ->useCategoryQuery()
-                    ->innerJoinAttribute()
-                  ->endUse()
-                ->endUse()
-                //->where(SpyCategoryClosureTableTableMap::COL_DEPTH . ' > ?', 0)
-                ->where(SpyCategoryNodeTableMap::COL_IS_ROOT . ' = false')
-                ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
-                ->withColumn(SpyCategoryAttributeTableMap::COL_URL_KEY, 'url_key')
-                ->orderBy(SpyCategoryClosureTableTableMap::COL_DEPTH, 'DESC')
-            ;
-
-            $parents = $query->find();
-            $nodes = [];
-            foreach ($parents as $parent) {
-                $nodes[] = $parent->toArray();
+    /**
+     * @param NodeTransfer $categoryNode
+     * @param LocaleTransfer $locale
+     */
+    protected function updateChildrenUrls(NodeTransfer $categoryNode, LocaleTransfer $locale)
+    {
+        $children = $this->categoryTreeReader->getPathChildren($categoryNode->getIdCategoryNode());
+        foreach ($children as $child) {
+            /**
+             * @var SpyCategoryClosureTable $child
+             * @var SpyCategoryClosureTable $parent
+             */
+            $urlTransfer = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($child->getFkCategoryNodeDescendant(), $locale);
+            if (!$urlTransfer) {
+                continue;
             }
 
-            //$nodes[] = $categoryNode->toArray();
-            dump($nodes);
+            $parentList = $this->categoryTreeReader->getPathParents($child->getFkCategoryNodeDescendant());
+            $pathTokens = [];
+            foreach ($parentList as $parent) {
+                $pathTokens[] = $parent->toArray();
+            }
 
-            $categoryUrl = $this->urlPathGenerator->generate($nodes);
-            dump($categoryUrl);
-
-            //$childPath = array_merge($path, $childPath);
-/*            $categoryUrl = $this->urlPathGenerator->generate($childPath);
-            $url->setUrl($categoryUrl);
-            $this->urlFacade->saveUrlAndTouch($url);*/
-            //$childTransfer = (new NodeTransfer())->fromArray($child->toArray());
-            //$this->updateUrl($childTransfer, $locale);
-
+            $childUrl = $this->urlPathGenerator->generate($pathTokens);
+            $urlTransfer->setUrl($childUrl);
+            $this->urlFacade->saveUrlAndTouch($urlTransfer);
         }
-
-        die();
     }
 
     /**

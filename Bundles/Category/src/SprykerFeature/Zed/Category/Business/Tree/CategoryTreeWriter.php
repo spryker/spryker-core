@@ -144,9 +144,9 @@ class CategoryTreeWriter
         $connection = Propel::getConnection();
         $connection->beginTransaction();
 
-        //$this->closureTableWriter->delete($categoryNode->getIdCategoryNode());
+        $this->closureTableWriter->delete($categoryNode->getIdCategoryNode());
         $this->nodeWriter->update($categoryNode);
-        //$this->closureTableWriter->create($categoryNode);
+        $this->closureTableWriter->create($categoryNode);
         $this->nodeUrlManager->updateUrl($categoryNode, $locale);
 
         $this->touchCategoryActiveRecursive($categoryNode);

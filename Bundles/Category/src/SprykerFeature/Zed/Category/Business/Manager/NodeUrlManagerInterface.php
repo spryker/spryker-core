@@ -22,7 +22,7 @@ interface NodeUrlManagerInterface
      * @param NodeTransfer   $categoryNode
      * @param LocaleTransfer $locale
      */
-    public function updateUrl(NodeTransfer $categoryNode, LocaleTransfer $locale, NodeTransfer $parentNode=null);
+    public function updateUrl(NodeTransfer $categoryNode, LocaleTransfer $locale);
 
     /**
      * @param NodeTransfer $categoryNode
