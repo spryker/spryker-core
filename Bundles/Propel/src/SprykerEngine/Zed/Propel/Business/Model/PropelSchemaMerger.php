@@ -96,8 +96,6 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     {
         return new \SimpleXMLElement(sprintf('<database
             name="%s"
-            defaultIdMethod="native"
-            defaultPhpNamingMethod="underscore"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
             namespace="%s"
