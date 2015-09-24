@@ -152,9 +152,10 @@ interface SystemConfig extends ConfigInterface
     const HOST_SSL_STATIC_MEDIA = 'HOST_SSL_STATIC_MEDIA';
 
     const LOG_LEVEL = 'LOG_LEVEL';
-    const LOG_PROPEL_SQL = 'LOG_PROPEL_SQL';
 
     const PROPEL = 'PROPEL';
+    const PROPEL_DEBUG = 'PROPEL_DEBUG';
+    const PROPEL_LOGGER = 'PROPEL_LOGGER';
 
     const CODE_GENERATORS = 'CODE_GENERATORS';
 
