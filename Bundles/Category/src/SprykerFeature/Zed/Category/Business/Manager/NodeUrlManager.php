@@ -13,6 +13,7 @@ use SprykerFeature\Shared\Category\CategoryConfig;
 use SprykerFeature\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeReaderInterface;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
+use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTable;
 
 class NodeUrlManager implements NodeUrlManagerInterface
 {
@@ -61,9 +62,8 @@ class NodeUrlManager implements NodeUrlManagerInterface
         $this->urlFacade->touchUrlActive($url->getIdUrl());
     }
 
-
     /**
-     * @param NodeTransfer   $categoryNode
+     * @param NodeTransfer $categoryNode
      * @param LocaleTransfer $locale
      */
     public function updateUrl(NodeTransfer $categoryNode, LocaleTransfer $locale)
@@ -89,7 +89,36 @@ class NodeUrlManager implements NodeUrlManagerInterface
             $this->urlFacade->saveUrlAndTouch($url);
         }
 
-        //TODO implement deep fix //https://spryker.atlassian.net/browse/CD-459
+        $this->updateChildrenUrls($categoryNode, $locale);
+    }
+
+    /**
+     * @param NodeTransfer $categoryNode
+     * @param LocaleTransfer $locale
+     */
+    protected function updateChildrenUrls(NodeTransfer $categoryNode, LocaleTransfer $locale)
+    {
+        $children = $this->categoryTreeReader->getPathChildren($categoryNode->getIdCategoryNode());
+        foreach ($children as $child) {
+            /**
+             * @var SpyCategoryClosureTable $child
+             * @var SpyCategoryClosureTable $parent
+             */
+            $urlTransfer = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($child->getFkCategoryNodeDescendant(), $locale);
+            if (!$urlTransfer) {
+                continue;
+            }
+
+            $parentList = $this->categoryTreeReader->getPathParents($child->getFkCategoryNodeDescendant());
+            $pathTokens = [];
+            foreach ($parentList as $parent) {
+                $pathTokens[] = $parent->toArray();
+            }
+
+            $childUrl = $this->urlPathGenerator->generate($pathTokens);
+            $urlTransfer->setUrl($childUrl);
+            $this->urlFacade->saveUrlAndTouch($urlTransfer);
+        }
     }
 
     /**

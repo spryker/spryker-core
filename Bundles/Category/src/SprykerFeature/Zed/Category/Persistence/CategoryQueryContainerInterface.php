@@ -1,9 +1,6 @@
 <?php
 /**
- * Created by PhpStorm.
- * User: oli
- * Date: 14/09/15
- * Time: 16:57
+ * (c) Spryker Systems GmbH copyright protected
  */
 namespace SprykerFeature\Zed\Category\Persistence;
 
@@ -90,6 +87,22 @@ interface CategoryQueryContainerInterface
      * @return SpyCategoryNodeQuery
      */
     public function queryPath($idNode, $idLocale, $excludeRootNode = true, $onlyParents = false);
+
+    /**
+     * @param int $idParentNode
+     * @param bool $excludeRoot
+     *
+     * @return SpyCategoryClosureTableQuery
+     */
+    public function getChildrenPath($idParentNode, $excludeRoot = true);
+
+    /**
+     * @param int $idChildNode
+     * @param bool $excludeRoot
+     *
+     * @return SpyCategoryClosureTableQuery
+     */
+    public function getParentPath($idChildNode, $excludeRoot = true);
 
     /**
      * @return SpyCategoryNodeQuery

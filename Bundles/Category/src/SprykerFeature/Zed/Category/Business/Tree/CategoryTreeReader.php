@@ -80,6 +80,34 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
+     * @param int $idParentNode
+     * @param bool $excludeRoot
+     *
+     * @return array
+     */
+    public function getPathChildren($idParentNode, $excludeRoot = true)
+    {
+        return $this->queryContainer
+            ->getChildrenPath($idParentNode, $excludeRoot)
+            ->find()
+        ;
+    }
+
+    /**
+     * @param int $idChildNode
+     * @param bool $excludeRoot
+     *
+     * @return array
+     */
+    public function getPathParents($idChildNode, $excludeRoot = true)
+    {
+        return $this->queryContainer
+            ->getParentPath($idChildNode, $excludeRoot)
+            ->find()
+        ;
+    }
+
+    /**
      * @param int $idNode
      * @param LocaleTransfer $locale
      * @param bool $excludeRootNode

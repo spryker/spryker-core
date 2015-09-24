@@ -275,6 +275,56 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * @param int $idParentNode
+     * @param bool $excludeRoot
+     *
+     * @return SpyCategoryClosureTableQuery
+     */
+    public function getChildrenPath($idParentNode, $excludeRoot = true)
+    {
+        $query = new SpyCategoryClosureTableQuery();
+        $query->filterByFkCategoryNode($idParentNode)
+            ->innerJoinNode()
+            ->where(SpyCategoryClosureTableTableMap::COL_DEPTH . '> ?', 0)
+        ;
+
+        if ($excludeRoot) {
+            $query->where(SpyCategoryNodeTableMap::COL_IS_ROOT . ' = false');
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param int $idChildNode
+     * @param bool $excludeRoot
+     *
+     * @return SpyCategoryClosureTableQuery
+     */
+    public function getParentPath($idChildNode, $excludeRoot = true)
+    {
+        $query = new SpyCategoryClosureTableQuery();
+        $query->filterByFkCategoryNodeDescendant($idChildNode)
+            ->innerJoinNode()
+            ->useNodeQuery()
+                ->innerJoinCategory()
+                    ->useCategoryQuery()
+                        ->innerJoinAttribute()
+                    ->endUse()
+                ->endUse()
+            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
+            ->withColumn(SpyCategoryAttributeTableMap::COL_URL_KEY, 'url_key')
+            ->orderBy(SpyCategoryClosureTableTableMap::COL_DEPTH, 'DESC')
+        ;
+
+        if ($excludeRoot) {
+            $query->where(SpyCategoryNodeTableMap::COL_IS_ROOT . ' = false');
+        }
+
+        return $query;
+    }
+
+    /**
      * @return SpyCategoryNodeQuery
      */
     public function queryRootNode()
