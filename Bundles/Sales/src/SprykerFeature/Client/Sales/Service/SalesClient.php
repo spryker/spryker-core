@@ -32,7 +32,7 @@ class SalesClient extends AbstractClient implements SalesClientInterface
     /**
      * @param OrderTransfer $orderTransfer
      *
-     * @return mixed
+     * @return OrderTransfer
      */
     public function getOrderDetails(OrderTransfer $orderTransfer)
     {
