@@ -1,6 +1,7 @@
 <div class="col-md-6" style="border: 1px solid red;">
     <div class="form-group">
         <div novalidate="novalidate" id="cart_rule_cart_rules_rule_{{ elementsCount }}">
+            {% do form._token.setRendered %}
             {{ form_row(form) }}
         </div>
     </div>

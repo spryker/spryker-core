@@ -96,7 +96,9 @@ class CartRuleController extends AbstractController
         $discountConfig = $this->getDependencyContainer()->getConfig();
         $formType = new DecisionRuleType($discountConfig, 'cart_rule[cart_rules][rule_' . $elements . ']');
 
-        $form = $this->createSymfonyForm($formType);
+        $form = $this->createSymfonyForm($formType, [
+            'csrf_protection' => false,
+        ]);
         $form->handleRequest($request);
 
         return [
@@ -154,16 +156,8 @@ class CartRuleController extends AbstractController
     {
         $idDiscount = $request->query->getInt(self::PARAM_ID_DISCOUNT);
 
-        $defaultData = null;
-
-        if ($request->isMethod(Request::METHOD_POST)) {
-            $defaultData = $request->request->all();
-            dump($defaultData);
-            die;
-        }
-
         $discountConfig = $this->getDependencyContainer()->getConfig();
-        $formType = new CartRuleType($discountConfig, $defaultData);
+        $formType = new CartRuleType($discountConfig);
 
         $form = $this->createSymfonyForm(
             $formType,
