@@ -64,8 +64,6 @@ abstract class AbstractPropelCollectorPlugin
     }
 
     /**
-     * Remove orphans (marked as 'deleted' and without any keys)
-     *
      * @param string $itemType
      *
      * @return int
@@ -73,9 +71,9 @@ abstract class AbstractPropelCollectorPlugin
     public function removeDeletedRows($itemType)
     {
         $deleteQuery = $this->touchQueryContainer->queryTouchDeleteStorageAndSearch($itemType);
-        $entities = $deleteQuery->find();
+        $entityCollection = $deleteQuery->find();
         $deletedCount = 0;
-        foreach ($entities as $entity) {
+        foreach ($entityCollection as $entity) {
             $entity->delete();
             $deletedCount++;
         }
