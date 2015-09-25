@@ -35,12 +35,11 @@ class CustomerOrderHydrator implements CustomerOrderHydratorInterface
     public function hydrateOrderTransfer(OrderInterface $orderTransfer, CheckoutRequestInterface $request)
     {
         $customerTransfer = new CustomerTransfer();
+        $customerTransfer->setEmail($request->getEmail());
 
         $idUser = $request->getIdUser();
         if (null !== $idUser) {
             $customerTransfer->setIdCustomer($idUser);
-
-            $customerTransfer->setEmail($request->getEmail());
             $customerTransfer = $this->customerFacade->getCustomer($customerTransfer);
         } else {
             $customerTransfer->setIsGuest($request->getIsGuest());
