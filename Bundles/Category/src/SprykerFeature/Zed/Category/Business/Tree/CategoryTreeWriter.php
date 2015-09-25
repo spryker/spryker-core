@@ -121,7 +121,7 @@ class CategoryTreeWriter
 
         $nodeEntity = $this->categoryTreeReader->getNodeById($idNode);
         $idCategory = $nodeEntity->getFkCategory();
-        $categoryNodes = $this->categoryTreeReader->getNodesByIdCategory($idCategory);
+        $categoryNodes = $this->categoryTreeReader->getAllNodesByIdCategory($idCategory);
 
         foreach ($categoryNodes as $node) {
             $this->deleteNode($node->getPrimaryKey(), $locale, true);
@@ -139,7 +139,7 @@ class CategoryTreeWriter
      * @param NodeTransfer $categoryNode
      * @param LocaleTransfer $locale
      */
-    public function moveNode(NodeTransfer $categoryNode, LocaleTransfer $locale)
+    public function updateNode(NodeTransfer $categoryNode, LocaleTransfer $locale)
     {
         $connection = Propel::getConnection();
         $connection->beginTransaction();
