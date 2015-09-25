@@ -50,6 +50,7 @@ class DecisionRuleType extends AbstractType
             ->add(self::FIELD_VALUE, 'text', [
                 'label' => 'Amount',
                 'constraints' => [
+                    new NotBlank(),
                     new GreaterThan([
                         'value' => 0,
                     ])

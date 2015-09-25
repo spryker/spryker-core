@@ -58,9 +58,10 @@ class CartRuleType extends AbstractType
                 ],
             ])
             ->add(self::FIELD_DESCRIPTION, 'textarea')
-            ->add(self::FIELD_AMOUNT, 'text', [
+            ->add(self::FIELD_AMOUNT, 'number', [
                 'label' => 'Amount',
                 'constraints' => [
+                    new NotBlank(),
                     new GreaterThan([
                         'value' => 0,
                     ])

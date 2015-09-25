@@ -147,13 +147,12 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function getApplicationFormFactory()
     {
+        /** @var FormFactory $formFactory */
         $formFactory = Locator::getInstance()
             ->application()
             ->pluginPimple()
             ->getApplication()['form.factory']
         ;
-        $validator = Validation::createValidator();
-        $formFactory->addExtension(new ValidatorExtension($validator));
 
         return $formFactory;
     }
