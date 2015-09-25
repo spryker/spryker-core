@@ -112,7 +112,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
                 SpyCategoryNodeTableMap::COL_FK_CATEGORY . ' = ?',
                 $idCategory
             )
-            ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC);
+        ;
     }
 
     /**
@@ -594,7 +594,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             );
 
         $expandableQuery->withColumn(
-            'GROUP_CONCAT(' . $rightTableAlias . '.id_category_node ORDER BY ' . SpyCategoryNodeTableMap::COL_NODE_ORDER . ' ' . Criteria::DESC . ')',
+            'GROUP_CONCAT(' . $rightTableAlias . '.id_category_node)',
             'category_' . $fieldIdentifier . '_ids'
         );
 
@@ -657,7 +657,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         }
 
         $expandableQuery->withColumn(
-            'GROUP_CONCAT(' . $relationTableAlias . '.id_category_node ORDER BY ' . SpyCategoryNodeTableMap::COL_NODE_ORDER . ' ' . Criteria::DESC . ')',
+            'GROUP_CONCAT(' . $relationTableAlias . '.id_category_node)',
             'category_' . $fieldIdentifier . '_ids'
         );
         $expandableQuery->withColumn(
