@@ -6,18 +6,18 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
 
-use Generated\Shared\Payolution\OrderInterface;
-use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionRequestAnalysisCriterionTransfer;
 use Generated\Shared\Transfer\PayolutionRequestTransfer;
-use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
 use SprykerFeature\Zed\Payolution\Business\Api\Constants;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
+use SprykerFeature\Zed\Payolution\Persistence\Propel\Map\SpyPaymentPayolutionTableMap;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 
 abstract class AbstractMethodMapper implements MethodMapperInterface
 {
+
+    const PAYOLUTION_DATE_FORMAT = 'Y-m-d';
 
     /**
      * @var PayolutionConfig
@@ -41,7 +41,7 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return PayolutionRequestTransfer
      */
@@ -64,11 +64,19 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
             ->setAddressZip($addressTransfer->getZipCode())
             ->setAddressCity($addressTransfer->getCity())
             ->setAddressCountry($addressTransfer->getIso2Code())
-            ->setAddressStreet(sprintf('%s %s', $addressTransfer->getAddress1(), $addressTransfer->getAddress2()))
             ->setContactEmail($addressTransfer->getEmail())
             ->setContactPhone($addressTransfer->getPhone())
             ->setContactMobile($addressTransfer->getCellPhone())
             ->setContactIp($paymentTransfer->getClientIp());
+
+        // Payolution requires a single street address string
+        $formattedStreet = trim(sprintf(
+            '%s %s %s',
+            $addressTransfer->getAddress1(),
+            $addressTransfer->getAddress2(),
+            $addressTransfer->getAddress3()
+        ));
+        $requestTransfer->setAddressStreet($formattedStreet);
 
         $criterionTransfer = (new PayolutionRequestAnalysisCriterionTransfer())
             ->setName(Constants::CRITERION_PRE_CHECK)
@@ -99,7 +107,7 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
             ->setNameFamily($paymentEntity->getLastName())
             ->setNameGiven($paymentEntity->getFirstName())
             ->setNameSex($this->mapGender($paymentEntity->getGender()))
-            ->setNameBirthdate($paymentEntity->getDateOfBirth('Y-m-d'))
+            ->setNameBirthdate($paymentEntity->getDateOfBirth(self::PAYOLUTION_DATE_FORMAT))
             ->setNameTitle($paymentEntity->getSalutation())
             ->setContactIp($paymentEntity->getClientIp())
             ->setContactEmail($paymentEntity->getEmail())
@@ -121,15 +129,15 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
     }
 
     /**
-     * @param $gender
+     * @param string $gender
      *
      * @return string
      */
     private function mapGender($gender)
     {
         $genderMap = [
-            SpyCustomerTableMap::COL_GENDER_MALE => 'M',
-            SpyCustomerTableMap::COL_GENDER_FEMALE => 'F',
+            SpyPaymentPayolutionTableMap::COL_GENDER_MALE => 'M',
+            SpyPaymentPayolutionTableMap::COL_GENDER_FEMALE => 'F',
         ];
 
         return $genderMap[$gender];
@@ -208,7 +216,8 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
      */
     protected function getBaseRequestTransfer($grandTotal, $idOrder)
     {
-        return (new PayolutionRequestTransfer())
+        $requestTransfer = new PayolutionRequestTransfer();
+        $requestTransfer
             ->setSecuritySender($this->getConfig()->getSecuritySender())
             ->setUserLogin($this->getConfig()->getUserLogin())
             ->setUserPwd($this->getConfig()->getUserPassword())
@@ -218,6 +227,8 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
             ->setTransactionChannel($this->getConfig()->getChannelInvoice())
             ->setTransactionMode($this->getConfig()->getTransactionMode())
             ->setIdentificationTransactionid(uniqid('tran_'));
+
+        return $requestTransfer;
     }
 
     /**
