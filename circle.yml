@@ -6,6 +6,11 @@ machine:
     APPLICATION_STORE: DE
   services:
     - elasticsearch
+
+dependencies:
+  override:
+    - exit 0
+
 test:
   override:
     - bash php .circleBuild ${CIRCLE_BRANCH} ${CIRCLE_USERNAME} ${API_TOKEN}
