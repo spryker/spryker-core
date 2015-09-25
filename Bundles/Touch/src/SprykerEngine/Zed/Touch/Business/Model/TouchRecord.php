@@ -113,21 +113,25 @@ class TouchRecord implements TouchRecordInterface
      */
     protected function deleteKeyChangeActiveRecord($itemType, $idItem)
     {
-        $touchDeletedEntity = $this->touchQueryContainer->queryUpdateTouchEntry($itemType, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
-                ->findOne()
-            ;
-        if (null !== $touchDeletedEntity) {
-            $touchActiveEntity = $this->touchQueryContainer->queryUpdateTouchEntry($itemType, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
-                    ->findOne()
-                ;
-            if (null !== $touchActiveEntity) {
-                $touchActiveEntity->delete();
-            }
+        $touchDeletedEntity = $this->touchQueryContainer
+            ->queryUpdateTouchEntry($itemType, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
+            ->findOne()
+        ;
 
-            return true;
+        if (null === $touchDeletedEntity) {
+            return false;
         }
 
-        return false;
+        $touchActiveEntity = $this->touchQueryContainer
+            ->queryUpdateTouchEntry($itemType, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
+            ->findOne()
+        ;
+
+        if (null !== $touchActiveEntity) {
+            $touchActiveEntity->delete();
+        }
+
+        return true;
     }
 
     /**

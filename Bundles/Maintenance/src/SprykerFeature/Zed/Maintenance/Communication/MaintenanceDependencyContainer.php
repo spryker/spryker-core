@@ -11,10 +11,12 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContai
 use SprykerFeature\Client\Search\Service\SearchClient;
 use SprykerFeature\Client\Storage\Service\StorageClient;
 use SprykerFeature\Zed\Maintenance\Communication\Table\StorageTable;
+use SprykerFeature\Zed\Maintenance\MaintenanceConfig;
 use SprykerFeature\Zed\Maintenance\MaintenanceDependencyProvider;
 
 /**
  * @method MaintenanceCommunication getFactory()
+ * @method MaintenanceConfig getConfig()
  */
 class MaintenanceDependencyContainer extends AbstractCommunicationDependencyContainer
 {
@@ -24,7 +26,7 @@ class MaintenanceDependencyContainer extends AbstractCommunicationDependencyCont
      */
     public function createStorageTable()
     {
-        $storageClient = $this->getStorageClient();
+        $storageClient = $this->createStorageClient();
 
         return $this->getFactory()->createTableStorageTable($storageClient);
     }
@@ -34,7 +36,7 @@ class MaintenanceDependencyContainer extends AbstractCommunicationDependencyCont
      */
     public function createSearchTable()
     {
-        $searchClient = $this->getSearchClient();
+        $searchClient = $this->createSearchClient();
 
         return $this->getFactory()->createTableSearchTable($searchClient);
     }
@@ -42,7 +44,7 @@ class MaintenanceDependencyContainer extends AbstractCommunicationDependencyCont
     /**
      * @return SearchClient
      */
-    public function getSearchClient()
+    public function createSearchClient()
     {
         return $this->getProvidedDependency(MaintenanceDependencyProvider::SEARCH_CLIENT);
     }
@@ -50,17 +52,9 @@ class MaintenanceDependencyContainer extends AbstractCommunicationDependencyCont
     /**
      * @return StorageClient
      */
-    public function getStorageClient()
+    public function createStorageClient()
     {
         return $this->getProvidedDependency(MaintenanceDependencyProvider::STORAGE_CLIENT);
-    }
-
-    /**
-     * @return string
-     */
-    public function getElasticaDocumentType()
-    {
-        return $this->getConfig()->getElasticaDocumentType();
     }
 
 }

@@ -47,7 +47,7 @@ class SearchController extends AbstractController
      */
     public function deleteAllAction()
     {
-        $elasticaResponse = $this->getDependencyContainer()->getSearchClient()->getIndexClient()->delete();
+        $elasticaResponse = $this->getDependencyContainer()->createSearchClient()->getIndexClient()->delete();
         $this->addInfoMessage('Response: ' . var_export($elasticaResponse->getData(), true));
 
         return $this->redirectResponse('/maintenance/search');
@@ -62,9 +62,9 @@ class SearchController extends AbstractController
     {
         $key = $request->get('key');
 
-        $documentType = $this->getDependencyContainer()->getElasticaDocumentType();
+        $documentType = $this->getDependencyContainer()->getConfig()->getElasticaDocumentType();
 
-        $document = $this->getDependencyContainer()->getSearchClient()
+        $document = $this->getDependencyContainer()->createSearchClient()
             ->getIndexClient()->getType($documentType)->getDocument($key);
 
         return $this->viewResponse([

@@ -7,11 +7,15 @@
 namespace SprykerEngine\Zed\Touch\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchSearchTableMap;
+use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchStorageTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
 use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
+use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchStorage;
 
 class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryContainerInterface
 {
@@ -136,8 +140,8 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
             ->filterByItemType($itemType)
             ->leftJoinTouchSearch()
             ->leftJoinTouchStorage()
-            ->where('spy_touch_search.fk_touch IS NULL')
-            ->where('spy_touch_storage.fk_touch IS NULL')
+            ->addAnd(SpyTouchSearchTableMap::COL_FK_TOUCH, null, Criteria::ISNULL)
+            ->addAnd(SpyTouchStorageTableMap::COL_FK_TOUCH, null, Criteria::ISNULL)
         ;
 
         return $query;

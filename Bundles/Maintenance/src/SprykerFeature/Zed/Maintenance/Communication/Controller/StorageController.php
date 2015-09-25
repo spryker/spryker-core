@@ -48,7 +48,7 @@ class StorageController extends AbstractController
      */
     public function deleteAllAction()
     {
-        $numberOfDeletedEntried = $this->getDependencyContainer()->getStorageClient()->deleteAll();
+        $numberOfDeletedEntried = $this->getDependencyContainer()->createStorageClient()->deleteAll();
         $this->addInfoMessage('Removed '.$numberOfDeletedEntried.' entries from storage.');
         return $this->redirectResponse('/maintenance/storage');
     }
@@ -61,7 +61,7 @@ class StorageController extends AbstractController
     public function storageKeyAction(Request $request)
     {
         $key = $request->get('key');
-        $value = $this->getDependencyContainer()->getStorageClient()->get($key);
+        $value = $this->getDependencyContainer()->createStorageClient()->get($key);
 
         return $this->viewResponse([
             'value' => var_export($value, true),
