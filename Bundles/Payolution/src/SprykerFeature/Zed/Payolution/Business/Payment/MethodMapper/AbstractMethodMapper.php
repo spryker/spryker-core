@@ -109,7 +109,6 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
 
         $criteria = [
             Constants::CRITERION_CUSTOMER_LANGUAGE => $paymentEntity->getLanguageIso2Code(),
-            Constants::CRITERION_DURATION => 12,
         ];
         foreach ($criteria as $name => $value) {
             $criterionTransfer = (new PayolutionRequestAnalysisCriterionTransfer())
