@@ -10,6 +10,11 @@ interface AdapterInterface
 {
 
     /**
+     * @param $gatewayUrl
+     */
+    public function __construct($gatewayUrl);
+
+    /**
      * @param array $data
      *
      * @return array
