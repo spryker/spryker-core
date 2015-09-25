@@ -17,6 +17,7 @@ use SprykerFeature\Zed\Discount\DiscountDependencyProvider;
 use SprykerFeature\Zed\Discount\Communication\Table\DiscountVoucherTable;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,6 +25,7 @@ use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolCategoryTable;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolTable;
 use SprykerFeature\Zed\Discount\Communication\Form\PoolCategoryForm;
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
+use Symfony\Component\Validator\Validation;
 
 /**
  * @method DiscountCommunication getFactory()
@@ -145,11 +147,15 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function getApplicationFormFactory()
     {
-        return Locator::getInstance()
+        $formFactory = Locator::getInstance()
             ->application()
             ->pluginPimple()
             ->getApplication()['form.factory']
         ;
+        $validator = Validation::createValidator();
+        $formFactory->addExtension(new ValidatorExtension($validator));
+
+        return $formFactory;
     }
 
     /**
