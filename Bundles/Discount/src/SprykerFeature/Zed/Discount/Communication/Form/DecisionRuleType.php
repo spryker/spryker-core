@@ -2,22 +2,16 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
-use SprykerFeature\Zed\Discount\DiscountConfig;
-use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
-class DecisionRuleType extends AbstractType
+class DecisionRuleType extends AbstractRuleType
 {
 
     const FIELD_DECISION_RULE_PLUGIN = 'decision_rule_plugin';
     const FIELD_VALUE = 'value';
-
-    const DECISION_RULES_PREFIX = 'PLUGIN_DECISION_RULE_';
-    const DECISION_COLLECTOR_PREFIX = 'PLUGIN_COLLECTOR_';
 
     /**
      * @var array
@@ -74,22 +68,6 @@ class DecisionRuleType extends AbstractType
         }
 
         return $decisionRules;
-    }
-
-    /**
-     * @param string $decisionRuleName
-     *
-     * @return string
-     */
-    protected function filterChoicesLabels($decisionRuleName)
-    {
-        $decisionRuleName = str_replace(
-            [self::DECISION_RULES_PREFIX, self::DECISION_COLLECTOR_PREFIX, '_'],
-            ['', '', ' '],
-            $decisionRuleName
-        );
-
-        return mb_convert_case($decisionRuleName, MB_CASE_TITLE, "UTF-8");
     }
 
     /**

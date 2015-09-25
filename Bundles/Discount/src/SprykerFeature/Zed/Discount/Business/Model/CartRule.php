@@ -113,7 +113,7 @@ class CartRule implements CartRuleInterface
     protected function fixDateFormats(array $entityArray)
     {
         foreach ($entityArray as $key => $value) {
-            if (!in_array($key, $this->dateTypeFields)) {
+            if (false === in_array($key, $this->dateTypeFields)) {
                 continue;
             }
             if (false === ($value instanceof \DateTime)) {

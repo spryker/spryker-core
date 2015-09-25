@@ -2,15 +2,13 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
-use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
-use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
-class CartRuleType extends AbstractType
+class CartRuleType extends AbstractRuleType
 {
 
     const FIELD_DISPLAY_NAME = 'display_name';
@@ -26,10 +24,6 @@ class CartRuleType extends AbstractType
     const FIELD_DECISION_RULES = 'decision_rules';
 
     const DATE_NOW = 'now';
-    const DATE_PERIOD_YEARS = 3;
-
-    const DECISION_RULES_PREFIX = 'PLUGIN_DECISION_RULE_';
-    const DECISION_COLLECTOR_PREFIX = 'PLUGIN_COLLECTOR_';
 
     /**
      * @var array
@@ -149,22 +143,6 @@ class CartRuleType extends AbstractType
         }
 
         return $plugins;
-    }
-
-    /**
-     * @param string $decisionRuleName
-     *
-     * @return string
-     */
-    protected function filterChoicesLabels($decisionRuleName)
-    {
-        $decisionRuleName = str_replace(
-            [self::DECISION_RULES_PREFIX, self::DECISION_COLLECTOR_PREFIX, '_'],
-            ['', '', ' '],
-            $decisionRuleName
-        );
-
-        return mb_convert_case($decisionRuleName, MB_CASE_TITLE, "UTF-8");
     }
 
     /**
