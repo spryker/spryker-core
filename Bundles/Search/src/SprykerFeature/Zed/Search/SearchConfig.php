@@ -17,7 +17,7 @@ class SearchConfig extends AbstractBundleConfig
      */
     public function getInstaller()
     {
-        return [];
+        return [$this->getLocator()->productSearch()->pluginInstaller()];
     }
 
 }
