@@ -45,13 +45,6 @@ class CartRuleType extends AbstractType
         $this->discountConfig = $discountConfig;
     }
 
-    public function setDefaultOptions(OptionsResolverInterface $resolver)
-    {
-        $resolver->setDefaults([
-            'allow_extra_fields' => true,
-        ]);
-    }
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options

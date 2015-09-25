@@ -49,4 +49,22 @@ class DiscountDecisionRuleWriter extends AbstractWriter
         return $discountDecisionRuleEntity;
     }
 
+    /**
+     * @param DecisionRuleTransfer $decisionRuleTransfer
+     *
+     * @return null|SpyDiscountDecisionRule
+     */
+    public function saveDiscountDecisionRule(DecisionRuleTransfer $decisionRuleTransfer)
+    {
+        if (null === $decisionRuleTransfer->getValue()) {
+            return null;
+        }
+
+        if (null === $decisionRuleTransfer->getIdDiscountDecisionRule()) {
+            return $this->create($decisionRuleTransfer);
+        }
+
+        return $this->update($decisionRuleTransfer);
+    }
+
 }

@@ -172,6 +172,16 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
+     * @param DecisionRuleTransfer $decisionRuleTransfer
+     *
+     * @return DecisionRule
+     */
+    public function saveDiscountDecisionRule(DecisionRuleTransfer $decisionRuleTransfer)
+    {
+        return $this->getDependencyContainer()->createDiscountDecisionRuleWriter()->saveDiscountDecisionRule($decisionRuleTransfer);
+    }
+
+    /**
      * @param DecisionRuleTransfer $discountDecisionRuleTransfer
      *
      * @return SpyDiscountDecisionRule

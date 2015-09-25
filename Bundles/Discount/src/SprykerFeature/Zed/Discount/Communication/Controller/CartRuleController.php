@@ -88,7 +88,8 @@ class CartRuleController extends AbstractController
                 $decisionRuleTransfer->setFkDiscount($discount->getIdDiscount());
                 $decisionRuleTransfer->setName($discount->getDisplayName());
 
-                $this->getFacade()->createDiscountDecisionRule($decisionRuleTransfer);
+                $this->getDependencyContainer()->saveDiscountDecisionRule($decisionRuleTransfer);
+
             }
             return $this->redirectResponse('/discount/cart-rule/edit/?' . self::PARAM_ID_DISCOUNT . '=' . $discount->getIdDiscount());
         }
@@ -126,12 +127,10 @@ class CartRuleController extends AbstractController
                 $decisionRuleTransfer = (new DecisionRuleTransfer())->fromArray($cartRules, true);
                 $decisionRuleTransfer->setFkDiscount($discount->getIdDiscount());
                 $decisionRuleTransfer->setName($discount->getDisplayName());
-                if (null === $decisionRuleTransfer->getIdDiscountDecisionRule()) {
-                    $this->getFacade()->createDiscountDecisionRule($decisionRuleTransfer);
-                    continue;
-                }
-                $this->getFacade()->updateDiscountDecisionRule($decisionRuleTransfer);
+
+                $this->getDependencyContainer()->saveDiscountDecisionRule($decisionRuleTransfer);
             }
+
             return $this->redirectResponse('/discount/cart-rule/edit/?' . self::PARAM_ID_DISCOUNT . '=' . $discount->getIdDiscount());
         }
 

@@ -77,10 +77,11 @@ class CartRule
     protected function fixDateFormats(array $entityArray)
     {
         foreach ($entityArray as $key => &$value) {
-            if (in_array($key, $this->dateTypeFields)) {
-                if (!($value instanceof \DateTime)) {
-                    $value = \DateTime::createFromFormat(self::DATABASE_DATE_FORMAT, $value, new \DateTimeZone($this->store->getTimezone()));
-                }
+            if (!in_array($key, $this->dateTypeFields)) {
+                continue;
+            }
+            if (!($value instanceof \DateTime)) {
+                $value = \DateTime::createFromFormat(self::DATABASE_DATE_FORMAT, $value, new \DateTimeZone($this->store->getTimezone()));
             }
         }
 

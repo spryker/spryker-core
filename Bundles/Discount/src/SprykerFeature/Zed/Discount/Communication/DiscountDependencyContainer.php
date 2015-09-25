@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Discount\Communication;
 
 use Bundles\Discount\src\SprykerFeature\Zed\Discount\Communication\Table\DiscountsTable;
+use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\DiscountCommunication;
@@ -127,6 +128,16 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
         return $formFactory->create($form, $defaultData, [
             'allow_extra_fields' => true,
         ]);
+    }
+
+    /**
+     * @param DecisionRuleTransfer $decisionRuleTransfer
+     *
+     * @return SpyDiscountDecisionRule
+     */
+    public function saveDiscountDecisionRule(DecisionRuleTransfer $decisionRuleTransfer)
+    {
+        return $this->getDiscountFacade()->saveDiscountDecisionRule($decisionRuleTransfer);
     }
 
     /**
