@@ -127,7 +127,7 @@ class CheckoutFacadeTest extends Test
     public function testRegistrationDoesNotCreateACustomerIfGuest()
     {
         $checkoutRequest = $this->getBaseCheckoutTransfer();
-        $checkoutRequest->setGuest(true);
+        $checkoutRequest->setIsGuest(true);
 
         $result = $this->checkoutFacade->requestCheckout($checkoutRequest);
 
@@ -366,7 +366,7 @@ class CheckoutFacadeTest extends Test
 
         $checkoutRequest = new CheckoutRequestTransfer();
         $checkoutRequest
-            ->setGuest(false)
+            ->setIsGuest(false)
             ->setEmail('max@mustermann.de')
             ->setIdUser(null)
             ->setCart($cart)

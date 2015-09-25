@@ -272,7 +272,7 @@ abstract class AbstractController
     }
 
     /**
-     * @return \Pimple
+     * @return Application
      */
     protected function getApplication()
     {

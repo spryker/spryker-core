@@ -35,7 +35,7 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     {
         $customerTransfer = $orderTransfer->getCustomer();
 
-        if ($customerTransfer->getGuest()) {
+        if ($customerTransfer->getIsGuest()) {
             return;
         }
 

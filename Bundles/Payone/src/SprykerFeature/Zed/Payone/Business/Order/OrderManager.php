@@ -38,6 +38,7 @@ class OrderManager implements OrderManagerInterface
         Propel::getConnection()->beginTransaction();
 
         $paymentTransfer = $orderTransfer->getPayonePayment();
+        $paymentTransfer->setFkSalesOrder($orderTransfer->getIdSalesOrder());
         $payment = $this->savePayment($paymentTransfer);
 
         $paymentDetailTransfer = $paymentTransfer->getPaymentDetail();

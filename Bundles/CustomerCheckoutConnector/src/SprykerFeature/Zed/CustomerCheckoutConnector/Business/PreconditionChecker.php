@@ -38,6 +38,10 @@ class PreconditionChecker implements PreconditionCheckerInterface
             return;
         }
 
+        if ($request->getIsGuest()) {
+            return;
+        }
+
         if ($this->customerFacade->hasEmail($request->getEmail())) {
             $error = new CheckoutErrorTransfer();
             $error

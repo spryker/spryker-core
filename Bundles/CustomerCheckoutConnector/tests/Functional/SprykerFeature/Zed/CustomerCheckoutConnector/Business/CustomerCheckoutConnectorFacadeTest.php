@@ -80,7 +80,7 @@ class CustomerCheckoutConnectorFacadeTest extends Test
 
         $checkoutRequest
             ->setIdUser(null)
-            ->setGuest(true)
+            ->setIsGuest(true)
             ->setEmail('max@sprykermann.de')
             ->setBillingAddress(new AddressTransfer())
             ->setShippingAddress(new AddressTransfer())
@@ -90,7 +90,7 @@ class CustomerCheckoutConnectorFacadeTest extends Test
 
         $this->assertNotNull($orderTransfer->getCustomer());
         $this->assertSame($checkoutRequest->getEmail(), $orderTransfer->getCustomer()->getEmail());
-        $this->assertSame($checkoutRequest->getGuest(), $orderTransfer->getCustomer()->getGuest());
+        $this->assertSame($checkoutRequest->getIsGuest(), $orderTransfer->getCustomer()->getIsGuest());
     }
 
     public function testHydrateOrderConvertsAddressesCorrectly()
