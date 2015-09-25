@@ -16,6 +16,8 @@ use SprykerFeature\Zed\Payolution\Business\Order\OrderManagerInterface;
 use SprykerFeature\Zed\Payolution\Business\Payment\PaymentManagerInterface;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
+use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
+use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionOrderItem;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLog;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLog;
 
@@ -69,7 +71,7 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createOrderManager()
     {
-        return $this->getFactory()->createOrderOrderManager();
+        return $this->getFactory()->createOrderOrderManager($this);
     }
 
     /**
@@ -110,6 +112,22 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
     public function createTransactionStatusLogEntity()
     {
         return new SpyPaymentPayolutionTransactionStatusLog();
+    }
+
+    /**
+     * @return SpyPaymentPayolution
+     */
+    public function createPaymentEntity()
+    {
+        return new SpyPaymentPayolution();
+    }
+
+    /**
+     * @return SpyPaymentPayolutionOrderItem
+     */
+    public function createPaymentOrderItemEntity()
+    {
+        return new SpyPaymentPayolutionOrderItem();
     }
 
 }

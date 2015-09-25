@@ -90,4 +90,18 @@
         <behavior name="timestampable"/>
         <id-method-parameter value="spy_payment_payolution_transaction_status_log_pk_seq"/>
     </table>
+
+    <table name="spy_payment_payolution_order_item">
+        <column name="fk_payment_payolution" type="INTEGER" primaryKey="true"/>
+        <column name="fk_sales_order_item" type="INTEGER" primaryKey="true"/>
+        <behavior name="timestampable">
+            <parameter name="disable_updated_at" value="true"/>
+        </behavior>
+        <foreign-key foreignTable="spy_payment_payolution">
+            <reference foreign="id_payment_payolution" local="fk_payment_payolution"/>
+        </foreign-key>
+        <foreign-key foreignTable="spy_sales_order_item">
+            <reference foreign="id_sales_order_item" local="fk_sales_order_item"/>
+        </foreign-key>
+    </table>
 </database>

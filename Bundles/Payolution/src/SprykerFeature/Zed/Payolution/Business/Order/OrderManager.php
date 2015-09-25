@@ -7,30 +7,51 @@ namespace SprykerFeature\Zed\Payolution\Business\Order;
 
 use Generated\Shared\Payolution\PayolutionPaymentInterface;
 use Generated\Shared\Payolution\OrderInterface;
+use Generated\Shared\Transfer\ItemTransfer;
+use SprykerFeature\Zed\Payolution\Business\PayolutionDependencyContainer;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 
 class OrderManager implements OrderManagerInterface
 {
 
     /**
+     * @var PayolutionDependencyContainer
+     */
+    private $dependencyContainer;
+
+    /**
+     * @param PayolutionDependencyContainer $dependencyContainer
+     */
+    public function __construct(PayolutionDependencyContainer $dependencyContainer)
+    {
+        $this->dependencyContainer = $dependencyContainer;
+    }
+
+    /**
      * @param OrderInterface $orderTransfer
      */
     public function saveOrderPayment(OrderInterface $orderTransfer)
     {
-        $this->savePayment($orderTransfer->getPayolutionPayment(), $orderTransfer->getIdSalesOrder());
+        $paymentEntity = $this->savePaymentForOrder(
+            $orderTransfer->getPayolutionPayment(),
+            $orderTransfer->getIdSalesOrder()
+        );
+
+        $this->savePaymentForOrderItems(
+            $orderTransfer->getItems(),
+            $paymentEntity->getIdPaymentPayolution()
+        );
     }
 
     /**
      * @param PayolutionPaymentInterface $paymentTransfer
-     * @param $idSalesOrder
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @param int $idSalesOrder
      *
      * @return SpyPaymentPayolution
      */
-    private function savePayment(PayolutionPaymentInterface $paymentTransfer, $idSalesOrder)
+    private function savePaymentForOrder(PayolutionPaymentInterface $paymentTransfer, $idSalesOrder)
     {
-        $paymentEntity = new SpyPaymentPayolution();
+        $paymentEntity = $this->dependencyContainer->createPaymentEntity();
         $paymentEntity->fromArray($paymentTransfer->toArray());
 
         // Take over fields from address transfer
@@ -39,13 +60,34 @@ class OrderManager implements OrderManagerInterface
         $paymentEntity->setCountryIso2Code($addressTransfer->getIso2Code());
 
         // Payolution requires a simple string for the street address
-        $formattedStreet = sprintf('%s %s', $addressTransfer->getAddress1(), $addressTransfer->getAddress2());
+        $formattedStreet = trim(sprintf(
+            '%s %s %s',
+            $addressTransfer->getAddress1(),
+            $addressTransfer->getAddress2(),
+            $addressTransfer->getAddress3()
+        ));
         $paymentEntity->setStreet($formattedStreet);
 
         $paymentEntity->setFkSalesOrder($idSalesOrder);
         $paymentEntity->save();
 
         return $paymentEntity;
+    }
+
+    /**
+     * @param ItemTransfer[] $orderItemTransfers
+     * @param int $idPayment
+     */
+    private function savePaymentForOrderItems($orderItemTransfers, $idPayment)
+    {
+        /** @var ItemTransfer $orderItemTransfer */
+        foreach ($orderItemTransfers as $orderItemTransfer) {
+            $paymentOrderItemEntity = $this->dependencyContainer->createPaymentOrderItemEntity();
+            $paymentOrderItemEntity
+                ->setFkPaymentPayolution($idPayment)
+                ->setFkSalesOrderItem($orderItemTransfer->getIdSalesOrderItem());
+            $paymentOrderItemEntity->save();
+        }
     }
 
 }
