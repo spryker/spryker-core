@@ -2,8 +2,12 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
-use SprykerFeature\Zed\Discount\Business\Model\CartRuleInterface;
+use Generated\Shared\Transfer\CartRuleFormTransfer;
+use Generated\Shared\Transfer\DecisionRuleTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerEngine\Shared\Kernel\Store;
+use SprykerFeature\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter;
+use SprykerFeature\Zed\Discount\Business\Writer\DiscountWriter;
 use SprykerFeature\Zed\Discount\Communication\Form\CartRuleType;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 
@@ -24,6 +28,16 @@ class CartRule implements CartRuleInterface
     protected $store;
 
     /**
+     * @var DiscountDecisionRuleWriter
+     */
+    protected $discountDecisionRuleWriter;
+
+    /**
+     * @var DiscountWriter
+     */
+    protected $discountWriter;
+
+    /**
      * @var array
      */
     protected $dateTypeFields = [
@@ -37,10 +51,34 @@ class CartRule implements CartRuleInterface
      * @param DiscountQueryContainer $queryContainer
      * @param Store $store
      */
-    public function __construct(DiscountQueryContainer $queryContainer, Store $store)
+    public function __construct(DiscountQueryContainer $queryContainer, Store $store, DiscountDecisionRuleWriter $discountDecisionRuleWriter, DiscountWriter $discountWriter)
     {
         $this->queryContainer = $queryContainer;
         $this->store = $store;
+        $this->discountDecisionRuleWriter = $discountDecisionRuleWriter;
+        $this->discountWriter = $discountWriter;
+    }
+
+    /**
+     * @param CartRuleFormTransfer $cartRuleFormTransfer
+     *
+     * @return DiscountTransfer
+     */
+    public function saveCartRule(CartRuleFormTransfer $cartRuleFormTransfer)
+    {
+        $formData = $cartRuleFormTransfer->toArray();
+        $discountTransfer = (new DiscountTransfer())->fromArray($formData, true);
+        $discount = $this->saveDiscount($discountTransfer);
+
+        foreach ($formData[CartRuleType::FIELD_DECISION_RULES] as $cartRules) {
+            $decisionRuleTransfer = (new DecisionRuleTransfer())->fromArray($cartRules, true);
+            $decisionRuleTransfer->setFkDiscount($discount->getIdDiscount());
+            $decisionRuleTransfer->setName($discount->getDisplayName());
+
+            $this->discountDecisionRuleWriter->saveDiscountDecisionRule($decisionRuleTransfer);
+        }
+
+        return $discountTransfer->fromArray($discount->toArray(), true);
     }
 
     /**
@@ -56,10 +94,12 @@ class CartRule implements CartRuleInterface
 
         $rules = $this->queryContainer->queryDecisionRules($idDiscount)->find();
 
-        if ($rules->count() > 0) {
-            foreach ($rules as $i => $decisionRule) {
-                $defaultData[CartRuleType::FIELD_CART_RULES][self::CART_RULES_ITERATOR . (+$i)] = $this->fixDateFormats($decisionRule->toArray());
-            }
+        if ($rules->count() < 1) {
+            return $defaultData;
+        }
+
+        foreach ($rules as $i => $decisionRule) {
+            $defaultData[CartRuleType::FIELD_DECISION_RULES][self::CART_RULES_ITERATOR . (+$i)] = $this->fixDateFormats($decisionRule->toArray());
         }
 
         return $defaultData;
@@ -73,7 +113,7 @@ class CartRule implements CartRuleInterface
     protected function fixDateFormats(array $entityArray)
     {
         foreach ($entityArray as $key => $value) {
-            if (false === in_array($key, $this->dateTypeFields)) {
+            if (!in_array($key, $this->dateTypeFields)) {
                 continue;
             }
             if (false === ($value instanceof \DateTime)) {
@@ -82,5 +122,19 @@ class CartRule implements CartRuleInterface
         }
 
         return $entityArray;
+    }
+
+    /**
+     * @param DiscountTransfer $discountTransfer
+     *
+     * @return SpyDiscount
+     */
+    protected function saveDiscount($discountTransfer)
+    {
+        if (null === $discountTransfer->getIdDiscount()) {
+            return $this->discountWriter->create($discountTransfer);
+        }
+
+        return $this->discountWriter->update($discountTransfer);
     }
 }

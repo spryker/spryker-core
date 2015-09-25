@@ -6,7 +6,6 @@ use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
@@ -24,7 +23,7 @@ class CartRuleType extends AbstractType
     const FIELD_IS_ACTIVE = 'is_active';
     const FIELD_CALCULATOR_PLUGIN = 'calculator_plugin';
     const FIELD_COLLECTOR_PLUGIN = 'collector_plugin';
-    const FIELD_CART_RULES = 'cart_rules';
+    const FIELD_DECISION_RULES = 'decision_rules';
 
     const DATE_NOW = 'now';
     const DATE_PERIOD_YEARS = 3;
@@ -33,16 +32,31 @@ class CartRuleType extends AbstractType
     const DECISION_COLLECTOR_PREFIX = 'PLUGIN_COLLECTOR_';
 
     /**
-     * @var DiscountConfig
+     * @var array
      */
-    protected $discountConfig;
+    protected $availableCalculatorPlugins;
 
     /**
-     * @param DiscountConfig $discountConfig
+     * @var array
      */
-    public function __construct(DiscountConfig $discountConfig)
+    protected $availableCollectorPlugins;
+
+    /**
+     * @var array
+     */
+    protected $availableDecisionRulePlugins;
+
+    /**
+     * CartRuleType constructor.
+     *
+     * @param array $availableCalculatorPlugins
+     * @param array $availableCollectorPlugins
+     */
+    public function __construct(array $availableCalculatorPlugins, array $availableCollectorPlugins, array $availableDecisionRulePlugins)
     {
-        $this->discountConfig = $discountConfig;
+        $this->availableCalculatorPlugins = $availableCalculatorPlugins;
+        $this->availableCollectorPlugins = $availableCollectorPlugins;
+        $this->availableDecisionRulePlugins = $availableDecisionRulePlugins;
     }
 
     /**
@@ -98,8 +112,8 @@ class CartRuleType extends AbstractType
             ->add(self::FIELD_IS_ACTIVE, 'checkbox', [
                 'label' => 'Is Active',
             ])
-            ->add('cart_rules', 'collection', [
-                'type' => new DecisionRuleType($this->discountConfig),
+            ->add(self::FIELD_DECISION_RULES, 'collection', [
+                'type' => new DecisionRuleType($this->availableDecisionRulePlugins),
                 'label' => null,
                 'allow_add' => true,
                 'allow_extra_fields' => true,
@@ -113,7 +127,7 @@ class CartRuleType extends AbstractType
     protected function getAvailableCalculatorPlugins()
     {
         $plugins = [];
-        $availablePlugins = array_keys($this->discountConfig->getAvailableCalculatorPlugins());
+        $availablePlugins = array_keys($this->availableCalculatorPlugins);
 
         foreach ($availablePlugins as $plugin) {
             $plugins[$plugin] = $this->filterChoicesLabels($plugin);
@@ -128,7 +142,7 @@ class CartRuleType extends AbstractType
     protected function getAvailableCollectorPlugins()
     {
         $plugins = [];
-        $availablePlugins = array_keys($this->discountConfig->getAvailableCollectorPlugins());
+        $availablePlugins = array_keys($this->availableCollectorPlugins);
 
         foreach ($availablePlugins as $plugin) {
             $plugins[$plugin] = $this->filterChoicesLabels($plugin);

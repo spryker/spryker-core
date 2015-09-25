@@ -13,10 +13,14 @@ use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\DiscountCommunication;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
+use SprykerFeature\Zed\Discount\Communication\Form\CartRuleType;
+use SprykerFeature\Zed\Discount\Communication\Form\DecisionRuleType;
+use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\DiscountDependencyProvider;
 use SprykerFeature\Zed\Discount\Communication\Table\DiscountVoucherTable;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormTypeInterface;
@@ -29,6 +33,7 @@ use Symfony\Component\Validator\Validation;
 
 /**
  * @method DiscountCommunication getFactory()
+ * @method DiscountConfig getConfig()
  */
 class DiscountDependencyContainer extends AbstractCommunicationDependencyContainer
 {
@@ -110,13 +115,13 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
      * @param FormTypeInterface $form
      * @param array $defaultData
      *
-     * @return mixed
+     * @return CartRuleType
      */
-    public function createSymfonyForm(FormTypeInterface $form, array $defaultData = null)
+    public function createCartRuleForm(FormTypeInterface $form, array $defaultData = null)
     {
         if (null === $defaultData) {
             $defaultData = [
-                'cart_rules' => [
+                'decision_rules' => [
                     'rule_1' => [
                         'value' => '',
                         'rules' => '',
@@ -130,6 +135,26 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
         return $formFactory->create($form, $defaultData, [
             'allow_extra_fields' => true,
         ]);
+    }
+
+    /**
+     * @return CartRuleType
+     */
+    public function createCartRuleFormType()
+    {
+        return new CartRuleType(
+            $this->getConfig()->getAvailableCalculatorPlugins(),
+            $this->getConfig()->getAvailableCollectorPlugins(),
+            $this->getConfig()->getAvailableDecisionRulePlugins()
+        );
+    }
+
+    /**
+     * @return DecisionRuleType
+     */
+    public function createDecisionRuleFormType()
+    {
+        return new DecisionRuleType($this->getConfig()->getAvailableDecisionRulePlugins());
     }
 
     /**

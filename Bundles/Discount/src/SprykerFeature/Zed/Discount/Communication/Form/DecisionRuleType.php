@@ -20,16 +20,18 @@ class DecisionRuleType extends AbstractType
     const DECISION_COLLECTOR_PREFIX = 'PLUGIN_COLLECTOR_';
 
     /**
-     * @var DiscountConfig
+     * @var array
      */
-    protected $discountConfig;
+    protected $availableDecisionRulePlugins;
 
     /**
-     * @param DiscountConfig $discountConfig
+     * DecisionRuleType constructor.
+     *
+     * @param array $availableDecisionRulePlugins
      */
-    public function __construct(DiscountConfig $discountConfig)
+    public function __construct(array $availableDecisionRulePlugins)
     {
-        $this->discountConfig = $discountConfig;
+        $this->availableDecisionRulePlugins = $availableDecisionRulePlugins;
     }
 
     /**
@@ -65,7 +67,7 @@ class DecisionRuleType extends AbstractType
     protected function getDecisionRuleOptions()
     {
         $decisionRules = [];
-        $decisionRulesKeys = array_keys($this->discountConfig->getAvailableDecisionRulePlugins());
+        $decisionRulesKeys = array_keys($this->availableDecisionRulePlugins);
 
         foreach ($decisionRulesKeys as $key) {
             $decisionRules[$key] = $this->filterChoicesLabels($key);

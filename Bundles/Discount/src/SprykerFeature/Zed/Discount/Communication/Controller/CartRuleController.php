@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Controller;
 
+use Generated\Shared\Transfer\CartRuleFormTransfer;
 use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
@@ -56,10 +57,9 @@ class CartRuleController extends AbstractController
     {
         $elements = $request->request->getInt(self::PARAM_CURRENT_ELEMENTS_COUNT);
 
-        $discountConfig = $this->getDependencyContainer()->getConfig();
-        $formType = new DecisionRuleType($discountConfig);
+        $formType = $this->getDependencyContainer()->createDecisionRuleFormType();
 
-        $form = $this->getDependencyContainer()->createSymfonyForm($formType);
+        $form = $this->getDependencyContainer()->createCartRuleForm($formType);
         $form->handleRequest($request);
 
         return [
@@ -76,27 +76,16 @@ class CartRuleController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $discountConfig = $this->getDependencyContainer()->getConfig();
-        $formType = new CartRuleType($discountConfig);
+        $formType = $this->getDependencyContainer()->createCartRuleFormType();
 
-        $form = $this->getDependencyContainer()->createSymfonyForm($formType);
+        $form = $this->getDependencyContainer()->createCartRuleForm($formType);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $formData = $form->getData();
+            $cartRuleFormTransfer = (new CartRuleFormTransfer())->fromArray($formData, true);
+            $discount = $this->getFacade()->saveCartRules($cartRuleFormTransfer);
 
-            $discountTransfer = (new DiscountTransfer())->fromArray($formData, true);
-
-            $discount = $this->getFacade()->createDiscount($discountTransfer);
-
-            foreach ($formData[CartRuleType::FIELD_CART_RULES] as $cartRules) {
-                $decisionRuleTransfer = (new DecisionRuleTransfer())->fromArray($cartRules, true);
-                $decisionRuleTransfer->setFkDiscount($discount->getIdDiscount());
-                $decisionRuleTransfer->setName($discount->getDisplayName());
-
-                $this->getDependencyContainer()->saveDiscountDecisionRule($decisionRuleTransfer);
-
-            }
             return $this->redirectResponse('/discount/cart-rule/edit/?' . self::PARAM_ID_DISCOUNT . '=' . $discount->getIdDiscount());
         }
 
@@ -114,31 +103,16 @@ class CartRuleController extends AbstractController
     {
         $idDiscount = $request->query->getInt(self::PARAM_ID_DISCOUNT);
 
-        $discountConfig = $this->getDependencyContainer()->getConfig();
-        $formType = new CartRuleType($discountConfig);
-
-        $form = $this->getDependencyContainer()->createSymfonyForm(
-            $formType,
+        $form = $this->getDependencyContainer()->createCartRuleForm(
+            $this->getDependencyContainer()->createCartRuleFormType(),
             $this->getFacade()->getCurrentCartRulesDetailsByIdDiscount($idDiscount)
         );
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $formData = $form->getData();
-
-            dump($formData);
-            die;
-
-            $discountTransfer = (new DiscountTransfer())->fromArray($formData, true);
-            $discount = $this->getFacade()->updateDiscount($discountTransfer);
-
-            foreach ($formData[CartRuleType::FIELD_CART_RULES] as $cartRules) {
-                $decisionRuleTransfer = (new DecisionRuleTransfer())->fromArray($cartRules, true);
-                $decisionRuleTransfer->setFkDiscount($discount->getIdDiscount());
-                $decisionRuleTransfer->setName($discount->getDisplayName());
-
-                $this->getFacade()->saveDiscountDecisionRule($decisionRuleTransfer);
-            }
+            $cartRuleFormTransfer = (new CartRuleFormTransfer())->fromArray($formData, true);
+            $discount = $this->getFacade()->saveCartRules($cartRuleFormTransfer);
 
             return $this->redirectResponse('/discount/cart-rule/edit/?' . self::PARAM_ID_DISCOUNT . '=' . $discount->getIdDiscount());
         }

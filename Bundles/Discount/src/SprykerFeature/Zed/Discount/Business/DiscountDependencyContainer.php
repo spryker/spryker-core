@@ -85,7 +85,9 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
 
         return $this->getFactory()->createModelCartRule(
             $this->getQueryContainer(),
-            $store
+            $store,
+            $this->createDiscountDecisionRuleWriter(),
+            $this->createDiscountWriter()
         );
     }
 

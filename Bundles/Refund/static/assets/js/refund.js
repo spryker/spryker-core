@@ -12,7 +12,6 @@ function calculateTotalRefundAmount() {
     });
 
     var adjustmentFee = parseInt($('#form_adjustment_fee').val(), 10) || 0;
-    console.log(adjustmentFee);
     sum = sum + adjustmentFee;
 
     $('#form_amount').val(sum);
