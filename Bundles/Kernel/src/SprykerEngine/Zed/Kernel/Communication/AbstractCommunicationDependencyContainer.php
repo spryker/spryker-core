@@ -10,9 +10,12 @@ use SprykerEngine\Zed\Kernel\AbstractDependencyContainer as BaseDependencyContai
 use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use Symfony\Component\Form\FormFactory;
 
 abstract class AbstractCommunicationDependencyContainer extends BaseDependencyContainer implements DependencyContainerInterface
 {
+
+    const FORM_FACTORY = 'form.factory';
 
     /**
      * External dependencies
@@ -68,6 +71,14 @@ abstract class AbstractCommunicationDependencyContainer extends BaseDependencyCo
     public function setQueryContainer($queryContainer)
     {
         $this->queryContainer = $queryContainer;
+    }
+
+    /**
+     * @return FormFactory
+     */
+    public function getFormFactory()
+    {
+        return $this->getProvidedDependency(self::FORM_FACTORY);
     }
 
 }

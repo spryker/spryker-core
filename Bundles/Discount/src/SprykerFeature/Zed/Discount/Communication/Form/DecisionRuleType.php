@@ -2,12 +2,12 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
-use Pyz\Shared\Validator\Constraints\NotBlank;
 use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\GreaterThan;
+use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
 class DecisionRuleType extends AbstractType

@@ -97,6 +97,8 @@ class ControllerLocator implements ControllerLocatorInterface
         $bundleBuilder = $bundleConfigLocator->locate($this->bundle, $locator);
 
         $container = new Container();
+        $container = $this->addDefaultDependencies($container);
+
         $bundleBuilder->provideCommunicationLayerDependencies($container);
         $resolvedController->setExternalDependencies($container);
 
@@ -119,6 +121,21 @@ class ControllerLocator implements ControllerLocatorInterface
     public function canLocate()
     {
         return ClassMapFactory::getInstance()->has('Zed', $this->bundle, 'Controller' . $this->controller . 'Controller', 'Communication');
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function addDefaultDependencies(Container $container)
+    {
+        $container[AbstractCommunicationDependencyContainer::FORM_FACTORY] = function (Container $container) {
+            return $container->getLocator()->application()->pluginPimple()
+                ->getApplication()[AbstractCommunicationDependencyContainer::FORM_FACTORY];
+        };
+
+        return $container;
     }
 
 }

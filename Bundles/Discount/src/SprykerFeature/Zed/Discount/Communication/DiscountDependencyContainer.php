@@ -125,7 +125,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
             ];
         }
 
-        $formFactory = $this->getApplicationFormFactory();
+        $formFactory = $this->getFormFactory();
 
         return $formFactory->create($form, $defaultData, [
             'allow_extra_fields' => true,
@@ -133,18 +133,23 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
-     * @return FormFactory
+     * @param DecisionRuleTransfer $decisionRuleTransfer
+     *
+     * @return SpyDiscountDecisionRule
      */
-    public function getApplicationFormFactory()
+    public function saveDiscountDecisionRule(DecisionRuleTransfer $decisionRuleTransfer)
     {
-        /** @var FormFactory $formFactory */
-        $formFactory = Locator::getInstance()
-            ->application()
-            ->pluginPimple()
-            ->getApplication()['form.factory']
-        ;
+        return $this->getDiscountFacade()->saveDiscountDecisionRule($decisionRuleTransfer);
+    }
 
-        return $formFactory;
+    /**
+     * @param int $idDiscount
+     *
+     * @return array
+     */
+    public function getCurrentCartRulesDetailsByIdDiscount($idDiscount)
+    {
+        return $this->getDiscountFacade()->getCurrentCartRulesDetailsByIdDiscount($idDiscount);
     }
 
     /**
