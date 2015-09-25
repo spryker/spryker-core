@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Shared\Session\Business\Handler;
 
+use Propel\Runtime\Collection\Collection;
 use SprykerFeature\Shared\Library\NewRelic\Api;
 
 class SessionHandlerFile implements \SessionHandlerInterface
@@ -50,7 +51,7 @@ class SessionHandlerFile implements \SessionHandlerInterface
     {
         $this->savePath = $savePath;
         if (!is_dir($this->savePath)) {
-            mkdir($this->savePath, 0777);
+            mkdir($this->savePath, 0777, true);
         }
 
         return true;
@@ -98,7 +99,7 @@ class SessionHandlerFile implements \SessionHandlerInterface
         $result = file_put_contents($this->savePath . DIRECTORY_SEPARATOR . $key, $sessionData);
         Api::getInstance()->addCustomMetric(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
 
-        return $result;
+        return $result > 0;
     }
 
     /**
