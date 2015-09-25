@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider;
+namespace SprykerEngine\Zed\Propel\Communication\Plugin\ServiceProvider;
 
 use Propel\Runtime\Connection\ConnectionManagerSingle;
 use Propel\Runtime\Propel;
@@ -12,10 +12,25 @@ use Propel\Runtime\ServiceContainer\StandardServiceContainer;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use SprykerEngine\Shared\Config;
+use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerEngine\Zed\Kernel\Communication\Factory;
+use SprykerEngine\Zed\Kernel\Locator;
+use SprykerEngine\Zed\Propel\Communication\PropelDependencyContainer;
+use SprykerEngine\Zed\Propel\PropelConfig;
 use SprykerFeature\Shared\System\SystemConfig;
 
-class PropelServiceProvider implements ServiceProviderInterface
+/**
+ * @method PropelDependencyContainer getDependencyContainer()
+ */
+class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
+
+    const BUNDLE = 'Propel';
+
+    public function __construct()
+    {
+        parent::__construct(new Factory(self::BUNDLE), Locator::getInstance());
+    }
 
     /**
      * @param Application $app
@@ -41,12 +56,10 @@ class PropelServiceProvider implements ServiceProviderInterface
 
         $this->addLogger($serviceContainer);
 
-        $debug = Config::get(SystemConfig::PROPEL_DEBUG);
-
-        if (true === $debug) {
-            $con = Propel::getConnection();
-            $con->useDebug(true);
-        }
+//        if (Config::get(SystemConfig::PROPEL_DEBUG)) {
+//            $connection = Propel::getConnection();
+//            $connection->useDebug(true);
+//        }
     }
 
     /**
@@ -71,14 +84,10 @@ class PropelServiceProvider implements ServiceProviderInterface
      */
     private function addLogger(StandardServiceContainer $serviceContainer)
     {
-        $loggers = Config::get(SystemConfig::PROPEL_LOGGER);
+        $loggerCollection = $this->getDependencyContainer()->createLogger();
 
-        if (is_array($loggers)) {
-            foreach ($loggers as $logger) {
-                $serviceContainer->setLogger($logger->getName(), $logger);
-            }
-        } else {
-            throw new \ErrorException('PROPEL_LOGGER must be an array');
+        foreach ($loggerCollection as $logger) {
+            $serviceContainer->setLogger($logger->getName(), $logger);
         }
     }
 }

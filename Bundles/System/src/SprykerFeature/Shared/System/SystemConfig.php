@@ -78,7 +78,7 @@ interface SystemConfig extends ConfigInterface
      * @deprecated
      */
     const ZED_MYSQL_PORT = 'ZED_MYSQL_PORT';
-    
+
     /**
      * Database
      */
