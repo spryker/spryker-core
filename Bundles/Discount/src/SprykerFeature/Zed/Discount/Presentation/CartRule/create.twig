@@ -32,7 +32,11 @@
                     </div>
                 {% endfor %}
                 </div>
-                <p><a href="#" id="add-rules-container">{{ 'Add New Rule' | trans }}</a></p>
+                <div class="clearfix"></div>
+                <div class="load-cart-rules">
+                    <div class="ajax-loader hidden"></div>
+                    <a href="#" id="add-rules-container">{{ 'Add New Rule' | trans }}</a>
+                </div>
 
                 <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}"/>
             {{ form_end(form) }}
@@ -41,34 +45,4 @@
 
     {% endembed %}
 
-{% endblock %}
-
-{% block footer_js %}
-    {{ parent() }}
-    <script>
-        $(function(){
-
-            SprykerAjax.prototype.loadDecisionRulesOptions = function(){
-                var elementsCount = $('#rules-container > .col-md-6').length;
-                var nextElementIndex = elementsCount + 1;
-                this.setUrl('/discount/cart-rule/decision-rule/').setDataType('html').ajaxSubmit({
-                    elements: nextElementIndex
-                }, 'displayNewDecisionRulesOptions', {
-                    elementIndex: nextElementIndex
-                });
-            };
-
-            SprykerAjaxCallbacks.prototype.displayNewDecisionRulesOptions = function(htmlResponse, options){
-                var html = htmlResponse.replace(/decision_rule\[/g, 'cart_rule[cart_rules][rule_' + options.elementIndex + '][');
-                $('#rules-container').append(html);
-            };
-
-            $('#add-rules-container').click(function(e){
-                e.preventDefault();
-                var sprykerAjax = new SprykerAjax();
-                sprykerAjax.loadDecisionRulesOptions();
-            });
-
-        });
-    </script>
 {% endblock %}

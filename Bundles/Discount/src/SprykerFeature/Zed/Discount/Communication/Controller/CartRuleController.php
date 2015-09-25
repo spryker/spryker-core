@@ -4,13 +4,9 @@ namespace SprykerFeature\Zed\Discount\Communication\Controller;
 
 use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Discount\Communication\Form\CartRuleType;
 use SprykerFeature\Zed\Discount\Communication\Form\DecisionRuleType;
-use SprykerFeature\Zed\Discount\DiscountDependencyProvider;
-use Symfony\Component\Form\FormFactory;
-use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -18,10 +14,6 @@ class CartRuleController extends AbstractController
 {
     const PARAM_ID_DISCOUNT = 'id-discount';
     const PARAM_CURRENT_ELEMENTS_COUNT = 'elements';
-
-
-
-
 
     /**
      * @return array
@@ -72,8 +64,6 @@ class CartRuleController extends AbstractController
     }
 
     /**
-     * @todo CD-474 refactor Form Generator
-     *
      * @param Request $request
      *
      * @return array
@@ -109,8 +99,6 @@ class CartRuleController extends AbstractController
     }
 
     /**
-     * @todo CD-474 refactor Form Generator
-     *
      * @param Request $request
      *
      * @return array
