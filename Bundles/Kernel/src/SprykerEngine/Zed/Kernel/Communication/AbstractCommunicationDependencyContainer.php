@@ -76,7 +76,7 @@ abstract class AbstractCommunicationDependencyContainer extends BaseDependencyCo
     /**
      * @return FormFactory
      */
-    public function getFormFactory()
+    protected function getFormFactory()
     {
         return $this->getProvidedDependency(self::FORM_FACTORY);
     }
