@@ -41,10 +41,9 @@ class CartRuleType extends AbstractRuleType
     protected $availableDecisionRulePlugins;
 
     /**
-     * CartRuleType constructor.
-     *
      * @param array $availableCalculatorPlugins
      * @param array $availableCollectorPlugins
+     * @param array $availableDecisionRulePlugins
      */
     public function __construct(array $availableCalculatorPlugins, array $availableCollectorPlugins, array $availableDecisionRulePlugins)
     {
