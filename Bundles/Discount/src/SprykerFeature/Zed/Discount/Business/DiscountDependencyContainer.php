@@ -15,7 +15,7 @@ use SprykerFeature\Zed\Discount\Business\Collector\ItemExpense;
 use SprykerFeature\Zed\Discount\Business\Collector\Expense;
 use SprykerFeature\Zed\Discount\Business\Distributor\Distributor;
 use SprykerFeature\Zed\Discount\Business\Model\Calculator;
-use SprykerFeature\Zed\Discount\Business\Model\CartRule;
+use SprykerFeature\Zed\Discount\Business\Model\CartRuleInterface;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountVoucherWriter;
@@ -77,7 +77,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return CartRule
+     * @return CartRuleInterface
      */
     public function createCartRule()
     {

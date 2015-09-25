@@ -2,16 +2,15 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
-use Propel\Runtime\Collection\ObjectCollection;
+use SprykerFeature\Zed\Discount\Business\Model\CartRuleInterface;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Zed\Discount\Communication\Form\CartRuleType;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 
-class CartRule
+class CartRule implements CartRuleInterface
 {
 
     const CART_RULES_ITERATOR = 'rule_';
-    const ITERATOR_FIRST = 1;
     const DATABASE_DATE_FORMAT = 'Y-m-d\TG:i:s\Z';
 
     /**
@@ -55,14 +54,11 @@ class CartRule
 
         $defaultData = $this->fixDateFormats($discount->toArray());
 
-        /** @var ObjectCollection $rules */
         $rules = $this->queryContainer->queryDecisionRules($idDiscount)->find();
 
         if ($rules->count() > 0) {
-            $i = self::ITERATOR_FIRST;
-            foreach ($rules as $decisionRule) {
-                $defaultData[CartRuleType::FIELD_CART_RULES][self::CART_RULES_ITERATOR . $i] = $this->fixDateFormats($decisionRule->toArray());
-                $i++;
+            foreach ($rules as $i => $decisionRule) {
+                $defaultData[CartRuleType::FIELD_CART_RULES][self::CART_RULES_ITERATOR . (+$i)] = $this->fixDateFormats($decisionRule->toArray());
             }
         }
 
@@ -76,12 +72,12 @@ class CartRule
      */
     protected function fixDateFormats(array $entityArray)
     {
-        foreach ($entityArray as $key => &$value) {
-            if (!in_array($key, $this->dateTypeFields)) {
+        foreach ($entityArray as $key => $value) {
+            if (false === in_array($key, $this->dateTypeFields)) {
                 continue;
             }
-            if (!($value instanceof \DateTime)) {
-                $value = \DateTime::createFromFormat(self::DATABASE_DATE_FORMAT, $value, new \DateTimeZone($this->store->getTimezone()));
+            if (false === ($value instanceof \DateTime)) {
+                $entityArray[$key] = \DateTime::createFromFormat(self::DATABASE_DATE_FORMAT, $value, new \DateTimeZone($this->store->getTimezone()));
             }
         }
 

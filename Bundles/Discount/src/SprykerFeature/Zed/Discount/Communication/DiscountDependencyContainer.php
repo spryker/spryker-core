@@ -133,16 +133,6 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
-     * @param DecisionRuleTransfer $decisionRuleTransfer
-     *
-     * @return SpyDiscountDecisionRule
-     */
-    public function saveDiscountDecisionRule(DecisionRuleTransfer $decisionRuleTransfer)
-    {
-        return $this->getDiscountFacade()->saveDiscountDecisionRule($decisionRuleTransfer);
-    }
-
-    /**
      * @return FormFactory
      */
     public function getApplicationFormFactory()
@@ -155,16 +145,6 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
         ;
 
         return $formFactory;
-    }
-
-    /**
-     * @param int $idDiscount
-     *
-     * @return array
-     */
-    public function getCurrentCartRulesDetailsByIdDiscount($idDiscount)
-    {
-        return $this->getDiscountFacade()->getCurrentCartRulesDetailsByIdDiscount($idDiscount);
     }
 
     /**
