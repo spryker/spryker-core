@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\User\Communication\Form;
 class UserCreateForm extends UserForm
 {
     /**
-     * @return $this
+     * @return self
      */
     protected function buildFormFields()
     {

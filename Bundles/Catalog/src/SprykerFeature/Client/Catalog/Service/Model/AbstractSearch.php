@@ -201,7 +201,7 @@ abstract class AbstractSearch
     /**
      * @param Query $query
      *
-     * @return $this
+     * @return self
      */
     protected function addSortingToQuery(Query $query)
     {

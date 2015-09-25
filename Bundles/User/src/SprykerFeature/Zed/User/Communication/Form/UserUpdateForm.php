@@ -21,7 +21,7 @@ class UserUpdateForm extends UserForm
     }
 
     /**
-     * @return $this
+     * @return self
      */
     protected function buildFormFields()
     {
@@ -41,9 +41,9 @@ class UserUpdateForm extends UserForm
     protected function populateFormFields()
     {
         $userFacade = $this->getLocator()->user()->facade();
-        $userTransfter = $userFacade->getUserById($this->idUser);
+        $userTransfer = $userFacade->getUserById($this->idUser);
 
-        $formData = $userTransfter->toArray();
+        $formData = $userTransfer->toArray();
         $formData = $this->populateSelectedAclGroups($formData);
 
         return $formData;
