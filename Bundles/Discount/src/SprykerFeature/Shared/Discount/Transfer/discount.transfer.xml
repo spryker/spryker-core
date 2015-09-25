@@ -62,7 +62,7 @@
         <property name="couponCodes" type="array" singular="couponCode" />
     </transfer>
 
-    <transfer name="CartRuleForm">
+    <transfer name="CartRule">
         <property name="idDiscount" type="int"/>
         <property name="fkDiscountVoucherPool" type="int"/>
         <property name="displayName" type="string"/>

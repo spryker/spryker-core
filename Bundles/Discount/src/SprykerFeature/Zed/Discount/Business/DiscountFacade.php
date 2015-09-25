@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\Discount\Business;
 
 use Generated\Shared\Discount\OrderInterface;
-use Generated\Shared\Transfer\CartRuleFormTransfer;
+use Generated\Shared\Transfer\CartRuleTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
@@ -183,11 +183,11 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * @param CartRuleFormTransfer $cartRuleFormTransfer
+     * @param CartRuleTransfer $cartRuleFormTransfer
      *
      * @return DiscountTransfer
      */
-    public function saveCartRules(CartRuleFormTransfer $cartRuleFormTransfer)
+    public function saveCartRules(CartRuleTransfer $cartRuleFormTransfer)
     {
         return $this->getDependencyContainer()->createCartRule()->saveCartRule($cartRuleFormTransfer);
     }

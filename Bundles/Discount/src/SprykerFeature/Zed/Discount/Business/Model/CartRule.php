@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
-use Generated\Shared\Transfer\CartRuleFormTransfer;
+use Generated\Shared\Transfer\CartRuleTransfer;
 use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerEngine\Shared\Kernel\Store;
@@ -60,11 +60,11 @@ class CartRule implements CartRuleInterface
     }
 
     /**
-     * @param CartRuleFormTransfer $cartRuleFormTransfer
+     * @param CartRuleTransfer $cartRuleFormTransfer
      *
      * @return DiscountTransfer
      */
-    public function saveCartRule(CartRuleFormTransfer $cartRuleFormTransfer)
+    public function saveCartRule(CartRuleTransfer $cartRuleFormTransfer)
     {
         $formData = $cartRuleFormTransfer->toArray();
         $discountTransfer = (new DiscountTransfer())->fromArray($formData, true);

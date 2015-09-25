@@ -120,14 +120,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     public function createCartRuleForm(FormTypeInterface $form, array $defaultData = null)
     {
         if (null === $defaultData) {
-            $defaultData = [
-                'decision_rules' => [
-                    'rule_1' => [
-                        'value' => '',
-                        'rules' => '',
-                    ],
-                ]
-            ];
+            $defaultData = $this->getCartRuleDefaultData();
         }
 
         $formFactory = $this->getFormFactory();
@@ -135,6 +128,21 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
         return $formFactory->create($form, $defaultData, [
             'allow_extra_fields' => true,
         ]);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCartRuleDefaultData()
+    {
+        return [
+            'decision_rules' => [
+                'rule_1' => [
+                    'value' => '',
+                    'rules' => '',
+                ],
+            ]
+        ];
     }
 
     /**
