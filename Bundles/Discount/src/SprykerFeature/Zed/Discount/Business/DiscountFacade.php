@@ -182,6 +182,19 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
+     * @param int $idDiscount
+     *
+     * @return array
+     */
+    public function getCurrentCartRulesDetailsByIdDiscount($idDiscount)
+    {
+        return $this->getDependencyContainer()
+            ->createCartRule()
+            ->getCurrentCartRulesDetailsByIdDiscount($idDiscount)
+        ;
+    }
+
+    /**
      * @param DecisionRuleTransfer $discountDecisionRuleTransfer
      *
      * @return SpyDiscountDecisionRule

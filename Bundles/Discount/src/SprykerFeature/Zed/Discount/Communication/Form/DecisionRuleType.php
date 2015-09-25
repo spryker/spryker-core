@@ -10,9 +10,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\Required;
 
-/**
- * @todo CD-474 refactor Form Generator
- */
 class DecisionRuleType extends AbstractType
 {
 

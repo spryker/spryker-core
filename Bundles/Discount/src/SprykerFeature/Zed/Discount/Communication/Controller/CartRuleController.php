@@ -19,18 +19,9 @@ class CartRuleController extends AbstractController
     const PARAM_ID_DISCOUNT = 'id-discount';
     const PARAM_CURRENT_ELEMENTS_COUNT = 'elements';
 
-    const CART_RULES_ITERATOR = 'rule_';
-    const ITERATOR_FIRST = 1;
 
-    /**
-     * @var array
-     */
-    protected $dateTypeFields = [
-        'valid_from',
-        'valid_to',
-        'created_at',
-        'updated_at',
-    ];
+
+
 
     /**
      * @return array
@@ -57,34 +48,6 @@ class CartRuleController extends AbstractController
     }
 
     /**
-     * @todo CD-474 refactor Form Generator
-     *
-     * @param array|null $defaultData
-     *
-     * @return FormInterface
-     */
-    protected function createSymfonyForm(FormTypeInterface $form, array $defaultData = null)
-    {
-        if (null === $defaultData) {
-            $defaultData = [
-                'cart_rules' => [
-                    self::CART_RULES_ITERATOR . self::ITERATOR_FIRST => [
-                        'value' => '',
-                        'rules' => '',
-                    ],
-                ]
-            ];
-        }
-
-        /** @var FormFactory $formFactory */
-        $formFactory = $this->getApplication()['form.factory'];
-
-        return $formFactory->create($form, $defaultData, [
-            'allow_extra_fields' => true,
-        ]);
-    }
-
-    /**
      * @param Request $request
      *
      * @return array
@@ -94,9 +57,9 @@ class CartRuleController extends AbstractController
         $elements = $request->request->getInt(self::PARAM_CURRENT_ELEMENTS_COUNT);
 
         $discountConfig = $this->getDependencyContainer()->getConfig();
-        $formType = new DecisionRuleType($discountConfig, 'cart_rule[cart_rules][rule_' . $elements . ']');
+        $formType = new DecisionRuleType($discountConfig);
 
-        $form = $this->createSymfonyForm($formType, [
+        $form = $this->getDependencyContainer()->createSymfonyForm($formType, [
             'csrf_protection' => false,
         ]);
         $form->handleRequest($request);
@@ -120,7 +83,7 @@ class CartRuleController extends AbstractController
         $discountConfig = $this->getDependencyContainer()->getConfig();
         $formType = new CartRuleType($discountConfig);
 
-        $form = $this->createSymfonyForm($formType);
+        $form = $this->getDependencyContainer()->createSymfonyForm($formType);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -159,9 +122,9 @@ class CartRuleController extends AbstractController
         $discountConfig = $this->getDependencyContainer()->getConfig();
         $formType = new CartRuleType($discountConfig);
 
-        $form = $this->createSymfonyForm(
+        $form = $this->getDependencyContainer()->createSymfonyForm(
             $formType,
-            $this->getCurrentCartRulesDetailsByIdDiscount($idDiscount)
+            $this->getDependencyContainer()->getCurrentCartRulesDetailsByIdDiscount($idDiscount)
         );
         $form->handleRequest($request);
 
@@ -187,57 +150,6 @@ class CartRuleController extends AbstractController
         return [
             'form' => $form->createView(),
         ];
-    }
-
-    /**
-     * @todo CD-474 refactor Form Generator
-     *
-     * @param $idDiscount
-     *
-     * @return array
-     */
-    protected function getCurrentCartRulesDetailsByIdDiscount($idDiscount)
-    {
-        $discount = $this->getQueryContainer()->queryDiscount()->findOneByIdDiscount($idDiscount);
-
-        $defaultData = $this->fixDateFormats($discount->toArray());
-
-        /** @var ObjectCollection $rules */
-        $rules = $this->getQueryContainer()->queryDecisionRules($idDiscount)->find();
-
-        if ($rules->count() > 0) {
-            $i = self::ITERATOR_FIRST;
-            foreach ($rules as $decisionRule) {
-                $defaultData[CartRuleType::FIELD_CART_RULES][self::CART_RULES_ITERATOR . $i] = $this->fixDateFormats($decisionRule->toArray());
-                $i++;
-            }
-        }
-
-        return $defaultData;
-    }
-
-    /**
-     * @todo CD-474 refactor Form Generator
-     *
-     * @param array $entityArray
-     *
-     * @return array
-     */
-    protected function fixDateFormats(array $entityArray)
-    {
-        $store = $this->getDependencyContainer()
-            ->getProvidedDependency(DiscountDependencyProvider::STORE_CONFIG)
-        ;
-
-        foreach ($entityArray as $key => &$value) {
-            if (in_array($key, $this->dateTypeFields)) {
-                if (!($value instanceof \DateTime)) {
-                    $value = \DateTime::createFromFormat('Y-m-d\TG:i:s\Z', $value, new \DateTimeZone($store->getTimezone()));
-                }
-            }
-        }
-
-        return $entityArray;
     }
 
 }

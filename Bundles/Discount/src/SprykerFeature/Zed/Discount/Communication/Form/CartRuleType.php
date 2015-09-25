@@ -11,9 +11,6 @@ use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\Required;
 
-/**
- * @todo CD-474 refactor Form Generator
- */
 class CartRuleType extends AbstractType
 {
 

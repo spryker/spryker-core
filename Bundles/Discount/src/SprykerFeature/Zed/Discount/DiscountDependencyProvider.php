@@ -19,6 +19,20 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return Container
      */
+    public function provideBusinessLayerDependencies(Container $container)
+    {
+        $container[self::STORE_CONFIG] = function (Container $container) {
+            return Store::getInstance();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
     public function provideCommunicationLayerDependencies(Container $container)
     {
         $container[self::STORE_CONFIG] = function (Container $container) {

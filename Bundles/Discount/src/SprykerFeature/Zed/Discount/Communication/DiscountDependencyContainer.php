@@ -10,11 +10,14 @@ use Bundles\Discount\src\SprykerFeature\Zed\Discount\Communication\Table\Discoun
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\DiscountCommunication;
+use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\DiscountDependencyProvider;
 use SprykerFeature\Zed\Discount\Communication\Table\DiscountVoucherTable;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolCategoryTable;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolTable;
@@ -101,27 +104,51 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
-     * @param int $idDiscount
+     * @param FormTypeInterface $form
+     * @param array $defaultData
      *
      * @return mixed
      */
-    public function createCartRuleForm($idDiscount=0)
+    public function createSymfonyForm(FormTypeInterface $form, array $defaultData = null)
     {
-        $discountQuery = $this->getQueryContainer()
-            ->queryDiscount()
-            ->filterByIdDiscount($idDiscount)
-        ;
-        $decisionRuleQuery = $this->getQueryContainer()
-            ->queryDecisionRules($idDiscount)
-        ;
-        $store = $this->getProvidedDependency(DiscountDependencyProvider::STORE_CONFIG);
+        if (null === $defaultData) {
+            $defaultData = [
+                'cart_rules' => [
+                    'rule_1' => [
+                        'value' => '',
+                        'rules' => '',
+                    ],
+                ]
+            ];
+        }
 
-        return $this->getFactory()->createFormCartRuleForm(
-            $discountQuery,
-            $this->getConfig(),
-            $decisionRuleQuery,
-            $store
-        );
+        $formFactory = $this->getApplicationFormFactory();
+
+        return $formFactory->create($form, $defaultData, [
+            'allow_extra_fields' => true,
+        ]);
+    }
+
+    /**
+     * @return FormFactory
+     */
+    public function getApplicationFormFactory()
+    {
+        return Locator::getInstance()
+            ->application()
+            ->pluginPimple()
+            ->getApplication()['form.factory']
+        ;
+    }
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return array
+     */
+    public function getCurrentCartRulesDetailsByIdDiscount($idDiscount)
+    {
+        return $this->getDiscountFacade()->getCurrentCartRulesDetailsByIdDiscount($idDiscount);
     }
 
     /**
