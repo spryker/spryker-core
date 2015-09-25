@@ -4,16 +4,16 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\SessionHandler\Adapter;
+namespace SprykerFeature\Shared\Session\Business\Handler;
 
-class Couchbase implements \SessionHandlerInterface
+use SprykerFeature\Shared\Library\NewRelic\Api;
+
+class SessionHandlerCouchbase implements \SessionHandlerInterface
 {
 
-    const METRIC_COUCHBASE_SESSION_DELETE_TIME = 'Couchbase/Session_delete_time';
-
-    const METRIC_COUCHBASE_SESSION_WRITE_TIME = 'Couchbase/Session_write_time';
-
-    const METRIC_COUCHBASE_SESSION_READ_TIME = 'Couchbase/Session_read_time';
+    const METRIC_SESSION_DELETE_TIME = 'Couchbase/Session_delete_time';
+    const METRIC_SESSION_WRITE_TIME = 'Couchbase/Session_write_time';
+    const METRIC_SESSION_READ_TIME = 'Couchbase/Session_read_time';
 
     /**
      * @var \Couchbase
@@ -53,9 +53,9 @@ class Couchbase implements \SessionHandlerInterface
     protected $keyPrefix = 'session:';
 
     /**
-     * Define a default session lifetime time of 10 minutes.
+     * @var int
      */
-    protected $lifetime = 600;
+    protected $lifetime;
 
     /**
      * @param array $hosts
@@ -116,7 +116,7 @@ class Couchbase implements \SessionHandlerInterface
 
         $startTime = microtime(true);
         $result = $this->connection->getAndTouch($key, $this->lifetime);
-        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->addCustomMetric(self::METRIC_COUCHBASE_SESSION_READ_TIME,
+        Api::getInstance()->addCustomMetric(self::METRIC_SESSION_READ_TIME,
             microtime(true) - $startTime);
 
         return $result ? json_decode($result, true) : null;
@@ -138,7 +138,7 @@ class Couchbase implements \SessionHandlerInterface
 
         $startTime = microtime(true);
         $result = $this->connection->set($key, json_encode($sessionData), $this->lifetime);
-        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->addCustomMetric(self::METRIC_COUCHBASE_SESSION_WRITE_TIME,
+        Api::getInstance()->addCustomMetric(self::METRIC_SESSION_WRITE_TIME,
             microtime(true) - $startTime);
 
         return $result ? true : false;
@@ -155,7 +155,7 @@ class Couchbase implements \SessionHandlerInterface
 
         $startTime = microtime(true);
         $result = $this->connection->delete($key);
-        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->addCustomMetric(self::METRIC_COUCHBASE_SESSION_DELETE_TIME,
+        Api::getInstance()->addCustomMetric(self::METRIC_SESSION_DELETE_TIME,
             microtime(true) - $startTime);
 
         return $result ? true : false;

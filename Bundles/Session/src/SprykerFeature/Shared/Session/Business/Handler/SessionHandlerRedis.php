@@ -4,12 +4,17 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\SessionHandler\Adapter;
+namespace SprykerFeature\Shared\Session\Business\Handler;
 
 use Predis\Client;
+use SprykerFeature\Shared\Library\NewRelic\Api;
 
-class Redis implements \SessionHandlerInterface
+class SessionHandlerRedis implements \SessionHandlerInterface
 {
+
+    const METRIC_SESSION_DELETE_TIME = 'Redis/Session_delete_time';
+    const METRIC_SESSION_WRITE_TIME = 'Redis/Session_write_time';
+    const METRIC_SESSION_READ_TIME = 'Redis/Session_read_time';
 
     /**
      * @var Client
@@ -22,9 +27,9 @@ class Redis implements \SessionHandlerInterface
     protected $keyPrefix = 'session:';
 
     /**
-     * Define a default session lifetime time of 10 minutes.
+     * @var int
      */
-    protected $lifetime = 600;
+    protected $lifetime;
 
     /**
      * @var string
@@ -33,7 +38,7 @@ class Redis implements \SessionHandlerInterface
 
     /**
      * @param string $savePath
-     * @param integer $lifetime
+     * @param int $lifetime
      */
     public function __construct($savePath, $lifetime)
     {
@@ -57,7 +62,8 @@ class Redis implements \SessionHandlerInterface
     /**
      * @return bool
      */
-    public function close() {
+    public function close()
+    {
         unset($this->connection);
 
         return true;
@@ -68,11 +74,12 @@ class Redis implements \SessionHandlerInterface
      *
      * @return null|string
      */
-    public function read($sessionId) {
+    public function read($sessionId)
+    {
         $key = $this->keyPrefix . $sessionId;
         $startTime = microtime(true);
         $result = $this->connection->get($key);
-        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->addCustomMetric('Redis/Session_read_time', microtime(true) - $startTime);
+        Api::getInstance()->addCustomMetric(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
         return $result ? json_decode($result, true) : null;
     }
@@ -83,7 +90,8 @@ class Redis implements \SessionHandlerInterface
      *
      * @return bool
      */
-    public function write($sessionId, $sessionData) {
+    public function write($sessionId, $sessionData)
+    {
         $key = $this->keyPrefix . $sessionId;
 
         if (empty($sessionData)) {
@@ -92,7 +100,7 @@ class Redis implements \SessionHandlerInterface
 
         $startTime = microtime(true);
         $result = $this->connection->setex($key, $this->lifetime, json_encode($sessionData));
-        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->addCustomMetric('Redis/Session_write_time', microtime(true) - $startTime);
+        Api::getInstance()->addCustomMetric(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
 
         return $result ? true : false;
     }
@@ -102,12 +110,13 @@ class Redis implements \SessionHandlerInterface
      *
      * @return bool
      */
-    public function destroy($sessionId) {
+    public function destroy($sessionId)
+    {
         $key = $this->keyPrefix . $sessionId;
 
         $startTime = microtime(true);
         $result = $this->connection->del($key);
-        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->addCustomMetric('Redis/Session_delete_time', microtime(true) - $startTime);
+        Api::getInstance()->addCustomMetric(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
 
         return $result ? true : false;
     }
@@ -117,7 +126,8 @@ class Redis implements \SessionHandlerInterface
      *
      * @return bool
      */
-    public function gc($maxLifetime) {
+    public function gc($maxLifetime)
+    {
         return true;
     }
 

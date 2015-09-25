@@ -4,15 +4,20 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\SessionHandler\Adapter;
+namespace SprykerFeature\Shared\Session\Business\Handler;
 
-use PDO as PDO;
+use SprykerEngine\Shared\Kernel\Store;
+use SprykerFeature\Shared\Library\NewRelic\Api;
 
-class Mysql implements \SessionHandlerInterface
+class SessionHandlerMysql implements \SessionHandlerInterface
 {
 
+    const METRIC_SESSION_DELETE_TIME = 'Mysql/Session_delete_time';
+    const METRIC_SESSION_WRITE_TIME = 'Mysql/Session_write_time';
+    const METRIC_SESSION_READ_TIME = 'Mysql/Session_read_time';
+
     /**
-     * @var PDO
+     * @var \PDO
      */
     protected $connection = null;
 
@@ -37,9 +42,9 @@ class Mysql implements \SessionHandlerInterface
     protected $keyPrefix = 'session:';
 
     /**
-     * Define a default session lifetime time of 10 minutes.
+     * @var int
      */
-    protected $lifetime = 600;
+    protected $lifetime;
 
     /**
      * @var int
@@ -68,7 +73,7 @@ class Mysql implements \SessionHandlerInterface
 
         $databaseName = 'shared_data';
         $dsn = 'mysql:host=' . $this->host . ';port=' . $this->port . ';dbname=' . $databaseName;
-        $this->connection = new PDO($dsn, $this->user, $this->password);
+        $this->connection = new \PDO($dsn, $this->user, $this->password);
 
         $this->initDb();
     }
@@ -87,7 +92,8 @@ class Mysql implements \SessionHandlerInterface
     /**
      * @return bool
      */
-    public function close() {
+    public function close()
+    {
         unset($this->connection);
 
         return true;
@@ -98,18 +104,19 @@ class Mysql implements \SessionHandlerInterface
      *
      * @return null|string
      */
-    public function read($sessionId) {
+    public function read($sessionId)
+    {
         $key = $this->keyPrefix . $sessionId;
         $startTime = microtime(true);
 
-        $store = \SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName();
+        $store = Store::getInstance()->getStoreName();
         $environment = \SprykerFeature_Shared_Library_Environment::getInstance()->getEnvironment();
         $query = 'SELECT * FROM session WHERE session.key=? AND session.store=? AND session.environment=? AND session.expires >= session.updated_at + ' . $this->lifetime . ' LIMIT 1';
 
         $statement = $this->connection->prepare($query);
         $statement->execute([$key, $store, $environment]);
         $result = $statement->fetch();
-        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->addCustomMetric('Mysql/Session_read_time', microtime(true) - $startTime);
+        Api::getInstance()->addCustomMetric(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
         return $result ? json_decode($result['value'], true) : null;
     }
@@ -120,7 +127,8 @@ class Mysql implements \SessionHandlerInterface
      *
      * @return bool
      */
-    public function write($sessionId, $sessionData) {
+    public function write($sessionId, $sessionData)
+    {
         $key = $this->keyPrefix . $sessionId;
 
         if (empty($sessionData)) {
@@ -133,14 +141,14 @@ class Mysql implements \SessionHandlerInterface
         $expireTimestamp = time() + $this->lifetime;
         $expires = date('Y-m-d H:i:s', $expireTimestamp);
 
-        $storeName = \SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName();
+        $storeName = Store::getInstance()->getStoreName();
         $timestamp = date('Y-m-d H:i:s', time());
         $query = 'REPLACE INTO session (session.key, session.value, session.store, session.environment, session.expires, session.updated_at) VALUES (?,?,?,?,?,?)';
 
         $statement = $this->connection->prepare($query);
         $result = $statement->execute([$key, $data, $storeName, $environment, $expires, $timestamp]);
 
-        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->addCustomMetric('Mysql/Session_write_time', microtime(true) - $startTime);
+        Api::getInstance()->addCustomMetric(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
 
         return $result;
     }
@@ -150,12 +158,13 @@ class Mysql implements \SessionHandlerInterface
      *
      * @return bool
      */
-    public function destroy($sessionId) {
+    public function destroy($sessionId)
+    {
         $key = $this->keyPrefix . $sessionId;
 
         $startTime = microtime(true);
         $result = $this->connection->delete($key);
-        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->addCustomMetric('Couchbase/Session_delete_time', microtime(true) - $startTime);
+        Api::getInstance()->addCustomMetric(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
 
         return $result ? true : false;
     }
@@ -165,7 +174,8 @@ class Mysql implements \SessionHandlerInterface
      *
      * @return bool
      */
-    public function gc($maxLifetime) {
+    public function gc($maxLifetime)
+    {
         return true;
     }
 

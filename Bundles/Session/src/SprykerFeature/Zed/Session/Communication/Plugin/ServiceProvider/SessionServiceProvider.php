@@ -11,9 +11,9 @@ use Silex\ServiceProviderInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Client\Session\Service\SessionClientInterface;
 use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Library\Session;
 use SprykerFeature\Shared\Session\SessionConfig;
 use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Zed\Session\Business\Model\SessionHelper;
 
 class SessionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -51,22 +51,22 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
         $saveHandler = Config::get(SystemConfig::ZED_SESSION_SAVE_HANDLER);
         $savePath = $this->getSavePath($saveHandler);
 
+        $sessionHelper = new SessionHelper();
+
         switch ($saveHandler) {
             case SessionConfig::SESSION_HANDLER_COUCHBASE:
                 $savePath = isset($savePath) && !empty($savePath) ? $savePath : null;
-                $sessionHelper = new Session();
+
                 $sessionHelper->registerCouchbaseSessionHandler($savePath);
                 break;
 
             case SessionConfig::SESSION_HANDLER_MYSQL:
                 $savePath = isset($savePath) && !empty($savePath) ? $savePath : null;
-                $sessionHelper = new Session();
                 $sessionHelper->registerMysqlSessionHandler($savePath);
                 break;
 
             case SessionConfig::SESSION_HANDLER_REDIS:
                 $savePath = isset($savePath) && !empty($savePath) ? $savePath : null;
-                $sessionHelper = new Session();
                 $sessionHelper->registerRedisSessionHandler($savePath);
                 break;
 
@@ -97,6 +97,9 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
                 $path = Config::get(SystemConfig::ZED_STORAGE_SESSION_REDIS_PROTOCOL)
                     . '://' . Config::get(SystemConfig::ZED_STORAGE_SESSION_REDIS_HOST)
                     . ':' . Config::get(SystemConfig::ZED_STORAGE_SESSION_REDIS_PORT);
+                break;
+            case SessionConfig::SESSION_HANDLER_FILE:
+                $path = Config::get(SystemConfig::YVES_STORAGE_SESSION_REDIS_PROTOCOL);
                 break;
             default:
                 throw new \Exception('Needs implementation for mysql and couchbase!');
