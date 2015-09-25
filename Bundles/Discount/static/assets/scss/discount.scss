@@ -1,0 +1,21 @@
+.load-cart-rules {
+  height: 32px;
+  line-height: 32px;
+
+  .ajax-loader {
+    background: url('/bundles/images/ajax-loader.gif') top left no-repeat;
+    width: 32px;
+    height: 32px;
+  }
+}
+#rules-container {
+  > div {
+    padding-top: 10px;
+  }
+  > div > .form-group > label.control-label {
+    display: none;
+  }
+}
+.ajax-loaded > .form-group > div > .form-group > label {
+  display: none;
+}

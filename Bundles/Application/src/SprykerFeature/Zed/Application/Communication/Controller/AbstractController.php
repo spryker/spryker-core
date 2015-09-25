@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Application\Communication\Controller;
 
 use Generated\Zed\Ide\AutoCompletion;
 use Silex\Application;
-use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
@@ -193,7 +192,7 @@ abstract class AbstractController
      */
     protected function addSuccessMessage($message)
     {
-        $this->flashMessengerFacade->addSuccessMessage($message); 
+        $this->flashMessengerFacade->addSuccessMessage($message);
     }
 
     /**
@@ -205,7 +204,7 @@ abstract class AbstractController
      */
     protected function addInfoMessage($message)
     {
-        $this->flashMessengerFacade->addInfoMessage($message); 
+        $this->flashMessengerFacade->addInfoMessage($message);
 
         return $this;
     }
@@ -219,7 +218,7 @@ abstract class AbstractController
      */
     protected function addErrorMessage($message)
     {
-        $this->flashMessengerFacade->addErrorMessage($message); 
+        $this->flashMessengerFacade->addErrorMessage($message);
 
         return $this;
     }

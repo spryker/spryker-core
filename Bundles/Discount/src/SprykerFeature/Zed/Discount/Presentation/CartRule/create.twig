@@ -1,0 +1,48 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block action %}
+    {{ backActionButton('/discount/cart-rule/', 'List Cart Rules' | trans) }}
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Cart Rules' } %}
+
+        {% block widget_content %}
+
+            {{ form_start(form) }}
+
+                {{ form_errors(form) }}
+
+                {{ form_row(form.display_name) }}
+                {{ form_row(form.description) }}
+                {{ form_row(form.amount) }}
+                {{ form_row(form.type) }}
+                {{ form_row(form.calculator_plugin) }}
+                {{ form_row(form.collector_plugin) }}
+                {{ form_row(form.valid_from) }}
+                {{ form_row(form.valid_to) }}
+                {{ form_row(form.is_privileged) }}
+                {{ form_row(form.is_active) }}
+
+                <div class="row" id="rules-container">
+                {% for rule in form.decision_rules %}
+                    <div class="col-md-6">
+                        {{ form_row(rule) }}
+                    </div>
+                {% endfor %}
+                </div>
+                <div class="clearfix"></div>
+                <div class="load-cart-rules">
+                    <div class="ajax-loader hidden"></div>
+                    <a href="#" id="add-rules-container">{{ 'Add New Rule' | trans }}</a>
+                </div>
+
+                <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}"/>
+            {{ form_end(form) }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

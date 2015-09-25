@@ -6,6 +6,7 @@
 namespace SprykerFeature\Zed\Discount\Business;
 
 use Generated\Shared\Discount\OrderInterface;
+use Generated\Shared\Transfer\CartRuleTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
@@ -172,6 +173,26 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
+     * @param DecisionRuleTransfer $decisionRuleTransfer
+     *
+     * @return DecisionRule
+     */
+    public function saveDiscountDecisionRule(DecisionRuleTransfer $decisionRuleTransfer)
+    {
+        return $this->getDependencyContainer()->createDiscountDecisionRuleWriter()->saveDiscountDecisionRule($decisionRuleTransfer);
+    }
+
+    /**
+     * @param CartRuleTransfer $cartRuleFormTransfer
+     *
+     * @return DiscountTransfer
+     */
+    public function saveCartRules(CartRuleTransfer $cartRuleFormTransfer)
+    {
+        return $this->getDependencyContainer()->createCartRule()->saveCartRule($cartRuleFormTransfer);
+    }
+
+    /**
      * @param DecisionRuleTransfer $discountDecisionRuleTransfer
      *
      * @return SpyDiscountDecisionRule
@@ -179,6 +200,19 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     public function createDiscountDecisionRule(DecisionRuleTransfer $discountDecisionRuleTransfer)
     {
         return $this->getDependencyContainer()->createDiscountDecisionRuleWriter()->create($discountDecisionRuleTransfer);
+    }
+
+    /**
+     * @param int $idDiscount
+     *
+     * @return array
+     */
+    public function getCurrentCartRulesDetailsByIdDiscount($idDiscount)
+    {
+        return $this->getDependencyContainer()
+            ->createCartRule()
+            ->getCurrentCartRulesDetailsByIdDiscount($idDiscount)
+        ;
     }
 
     /**

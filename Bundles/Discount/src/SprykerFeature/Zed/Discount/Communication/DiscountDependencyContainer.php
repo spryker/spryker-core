@@ -7,24 +7,33 @@
 namespace SprykerFeature\Zed\Discount\Communication;
 
 use Bundles\Discount\src\SprykerFeature\Zed\Discount\Communication\Table\DiscountsTable;
+use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\DiscountCommunication;
+use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
+use SprykerFeature\Zed\Discount\Communication\Form\CartRuleType;
+use SprykerFeature\Zed\Discount\Communication\Form\DecisionRuleType;
+use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\DiscountDependencyProvider;
 use SprykerFeature\Zed\Discount\Communication\Table\DiscountVoucherTable;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
-use SprykerFeature\Zed\Library\Copy;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
+use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
+use Symfony\Component\Form\FormFactory;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolCategoryTable;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolTable;
 use SprykerFeature\Zed\Discount\Communication\Form\PoolCategoryForm;
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
+use Symfony\Component\Validator\Validation;
 
 /**
  * @method DiscountCommunication getFactory()
+ * @method DiscountConfig getConfig()
  */
 class DiscountDependencyContainer extends AbstractCommunicationDependencyContainer
 {
@@ -100,6 +109,60 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
         ;
 
         return $this->getFactory()->createFormPoolCategoryForm($poolCategoryQuery, $idPoolCategory);
+    }
+
+    /**
+     * @param FormTypeInterface $form
+     * @param array $defaultData
+     *
+     * @return CartRuleType
+     */
+    public function createCartRuleForm(FormTypeInterface $form, array $defaultData = null)
+    {
+        if (null === $defaultData) {
+            $defaultData = $this->getCartRuleDefaultData();
+        }
+
+        $formFactory = $this->getFormFactory();
+
+        return $formFactory->create($form, $defaultData, [
+            'allow_extra_fields' => true,
+        ]);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCartRuleDefaultData()
+    {
+        return [
+            'decision_rules' => [
+                'rule_1' => [
+                    'value' => '',
+                    'rules' => '',
+                ],
+            ]
+        ];
+    }
+
+    /**
+     * @return CartRuleType
+     */
+    public function createCartRuleFormType()
+    {
+        return new CartRuleType(
+            $this->getConfig()->getAvailableCalculatorPlugins(),
+            $this->getConfig()->getAvailableCollectorPlugins(),
+            $this->getConfig()->getAvailableDecisionRulePlugins()
+        );
+    }
+
+    /**
+     * @return DecisionRuleType
+     */
+    public function createDecisionRuleFormType()
+    {
+        return new DecisionRuleType($this->getConfig()->getAvailableDecisionRulePlugins());
     }
 
     /**

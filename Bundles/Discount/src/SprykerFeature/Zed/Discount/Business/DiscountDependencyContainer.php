@@ -15,6 +15,7 @@ use SprykerFeature\Zed\Discount\Business\Collector\ItemExpense;
 use SprykerFeature\Zed\Discount\Business\Collector\Expense;
 use SprykerFeature\Zed\Discount\Business\Distributor\Distributor;
 use SprykerFeature\Zed\Discount\Business\Model\Calculator;
+use SprykerFeature\Zed\Discount\Business\Model\CartRuleInterface;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountVoucherWriter;
@@ -23,6 +24,7 @@ use SprykerFeature\Zed\Discount\Business\Writer\DiscountVoucherPoolWriter;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Discount\Business\DecisionRule\Voucher;
 use SprykerFeature\Zed\Discount\DiscountConfig;
+use SprykerFeature\Zed\Discount\DiscountDependencyProvider;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerFeature\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal;
 use SprykerFeature\Zed\Discount\Business\Model\Discount;
@@ -71,6 +73,21 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
             $this->getConfig(),
             $this->createCalculator(),
             $this->createDistributor()
+        );
+    }
+
+    /**
+     * @return CartRuleInterface
+     */
+    public function createCartRule()
+    {
+        $store = $this->getProvidedDependency(DiscountDependencyProvider::STORE_CONFIG);
+
+        return $this->getFactory()->createModelCartRule(
+            $this->getQueryContainer(),
+            $store,
+            $this->createDiscountDecisionRuleWriter(),
+            $this->createDiscountWriter()
         );
     }
 

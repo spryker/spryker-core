@@ -1,0 +1,13 @@
+[{
+    "priority": 80,
+    "assets": {
+        "js": [
+            "/js/discount.js"
+        ],
+        "css": [
+            "/scss/discount.scss"
+        ],
+        "images": [],
+        "fonts": []
+    }
+}]

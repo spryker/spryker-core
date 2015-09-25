@@ -62,5 +62,23 @@
         <property name="couponCodes" type="array" singular="couponCode" />
     </transfer>
 
+    <transfer name="CartRule">
+        <property name="idDiscount" type="int"/>
+        <property name="fkDiscountVoucherPool" type="int"/>
+        <property name="displayName" type="string"/>
+        <property name="description" type="string"/>
+        <property name="amount" type="int"/>
+        <property name="type" type="string"/>
+        <property name="calculatorPlugin" type="string"/>
+        <property name="collectorPlugin" type="string"/>
+        <property name="isPrivileged" type="bool"/>
+        <property name="isActive" type="bool"/>
+        <property name="validFrom" type="string"/>
+        <property name="validTo" type="string"/>
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
+        <property name="decisionRules" type="array"/>
+    </transfer>
+
 </transfers>
 

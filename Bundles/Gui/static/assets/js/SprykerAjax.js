@@ -32,7 +32,7 @@ function SprykerAjax() {
      * @param json object options
      * @param callbackFunction
      */
-    self.ajaxSubmit = function(options, callbackFunction) {
+    self.ajaxSubmit = function(options, callbackFunction, parameters) {
         $.ajax({
             url: this.url,
             type: 'post',
@@ -41,7 +41,7 @@ function SprykerAjax() {
         })
         .done(function(response){
             var call = new SprykerAjaxCallbacks();
-            return call[callbackFunction](response);
+            return call[callbackFunction](response, parameters);
         });
     };
 
