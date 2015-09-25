@@ -15,7 +15,7 @@ class ResetPasswordForm extends AbstractForm
     /**
      * Prepares form
      *
-     * @return $this
+     * @return self
      */
     protected function buildFormFields()
     {

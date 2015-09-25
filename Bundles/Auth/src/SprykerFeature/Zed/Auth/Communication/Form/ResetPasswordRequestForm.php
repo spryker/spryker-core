@@ -16,7 +16,7 @@ class ResetPasswordRequestForm extends AbstractForm
     const LOGIN = 'login';
 
     /**
-     * @return $this;
+     * @return self;
      */
     protected function buildFormFields()
     {

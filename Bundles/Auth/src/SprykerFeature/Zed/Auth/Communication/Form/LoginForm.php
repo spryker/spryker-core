@@ -15,7 +15,7 @@ class LoginForm extends AbstractForm
     const PASSWORD = 'password';
 
     /**
-     * @return $this
+     * @return self
      */
     protected function buildFormFields()
     {
@@ -36,7 +36,7 @@ class LoginForm extends AbstractForm
     }
 
     /**
-     * @return $this
+     * @return array
      */
     protected function populateFormFields()
     {
