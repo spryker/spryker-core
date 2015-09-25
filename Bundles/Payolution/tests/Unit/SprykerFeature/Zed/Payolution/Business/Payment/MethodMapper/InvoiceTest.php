@@ -76,7 +76,7 @@ class InvoiceTest extends Test
         $this->assertSame($paymentEntityMock->getEmail(), $requestTransfer->getContactEmail());
         $this->assertSame(PayolutionApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
         $this->assertSame(Constants::PAYMENT_CODE_PRE_AUTHORIZATION, $requestTransfer->getPaymentCode());
-        $this->assertCount(2, $requestTransfer->getAnalysisCriteria());
+        $this->assertCount(1, $requestTransfer->getAnalysisCriteria());
     }
 
     public function testMapToReAuthorization()
