@@ -35,7 +35,7 @@ class ShipmentCheckoutConnectorQueryContainer extends AbstractQueryContainer imp
      */
     public function queryShipmentOrderById($idShipmentMethod)
     {
-        return $this->getSipmentQueryContainer()->queryMethodByIdMethod($idShipmentMethod);
+        return $this->getShipmentQueryContainer()->queryMethodByIdMethod($idShipmentMethod);
     }
 
     /**
@@ -49,7 +49,7 @@ class ShipmentCheckoutConnectorQueryContainer extends AbstractQueryContainer imp
     /**
      * @return ShipmentQueryContainerInterface
      */
-    protected function getSipmentQueryContainer()
+    protected function getShipmentQueryContainer()
     {
         return $this->getProvidedDependency(ShipmentCheckoutConnectorDependencyProvider::QUERY_CONTAINER_SHIPMENT);
     }
