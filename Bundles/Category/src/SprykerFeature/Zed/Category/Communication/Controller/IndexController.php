@@ -7,12 +7,20 @@
 namespace SprykerFeature\Zed\Category\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\Category\Business\CategoryFacade;
+use SprykerFeature\Zed\Category\Communication\CategoryDependencyContainer;
 use SprykerFeature\Zed\Category\Communication\Table\CategoryAttributeTable;
+use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
+/**
+ * @method CategoryFacade getFacade()
+ * @method CategoryDependencyContainer getDependencyContainer()
+ * @method CategoryQueryContainer getQueryContainer()
+ */
 class IndexController extends AbstractController
 {
 

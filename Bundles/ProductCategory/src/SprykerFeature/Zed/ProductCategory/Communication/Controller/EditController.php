@@ -74,7 +74,7 @@ class EditController extends AddController
 
             $parentIdList[] = $currentCategoryNodeTransfer->getFkParentCategoryNode();
             $parentIdList = array_flip($parentIdList);
-            $this->removeDeselectedCategoryParents(
+            $this->removeDeselectedCategoryAdditionalParents(
                 $currentCategoryTransfer,
                 $locale,
                 $parentIdList
@@ -116,7 +116,7 @@ class EditController extends AddController
             
             $this->getDependencyContainer()
                 ->createCategoryFacade()
-                ->moveCategoryNode($categoryNodeTransfer, $locale);
+                ->updateCategoryNode($categoryNodeTransfer, $locale);
         } else {
             $newData = $categoryNodeTransfer->toArray();
             unset($newData['id_category_node']);
@@ -133,7 +133,7 @@ class EditController extends AddController
      * @param LocaleTransfer $locale
      * @param array $parentIdList
      */
-    protected function removeDeselectedCategoryParents(
+    protected function removeDeselectedCategoryAdditionalParents(
         CategoryTransfer $categoryTransfer,
         LocaleTransfer $locale,
         array $parentIdList
@@ -141,7 +141,7 @@ class EditController extends AddController
     {
         $existingParents = $this->getDependencyContainer()
             ->createCategoryFacade()
-            ->getNodesByIdCategory($categoryTransfer->getIdCategory());
+            ->getNotMainNodesByIdCategory($categoryTransfer->getIdCategory());
 
         foreach ($existingParents as $parent) {
             if (!array_key_exists($parent->getFkParentCategoryNode(), $parentIdList)) {
@@ -233,18 +233,14 @@ class EditController extends AddController
         $currentCategoryNodeTransfer = (new NodeTransfer())
             ->fromArray($data, true);
 
-        $currentCategoryNode = $this->getDependencyContainer()
-            ->createCategoryFacade()
-            ->getNodesByIdCategory($categoryTransfer->getIdCategory());
-
-        $currentCategoryNode = current($currentCategoryNode->getData());
+        $currentCategoryNodeTransfer->setIsMain(true);
 
         /**
          * @var SpyCategoryNode $currentCategoryNode
          */
         $existingCategoryNode = $this->getDependencyContainer()
             ->createCategoryFacade()
-            ->getNodeByIdCategoryAndParentNode($categoryTransfer->getIdCategory(), $currentCategoryNode->getFkParentCategoryNode());
+            ->getNodeByIdCategoryAndParentNode($categoryTransfer->getIdCategory(), $currentCategoryNodeTransfer->getFkParentCategoryNode());
 
         $this->createOrUpdateCategoryNode($existingCategoryNode, $currentCategoryNodeTransfer, $locale);
 
@@ -267,7 +263,7 @@ class EditController extends AddController
 
         $existingCategoryNode = $this->getDependencyContainer()
             ->createCategoryFacade()
-            ->getNodeByIdCategoryAndParentNode($categoryTransfer->getIdCategory(), $data['fk_parent_category_node']);
+            ->getNodeByIdCategoryAndParentNode($categoryTransfer->getIdCategory(), $nodeTransfer->getFkParentCategoryNode());
 
         $this->createOrUpdateCategoryNode($existingCategoryNode, $nodeTransfer, $locale);
 

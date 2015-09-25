@@ -70,9 +70,6 @@ class CategoryFormEdit extends CategoryFormAdd
             ->addCheckbox(self::CATEGORY_IS_CLICKABLE, [
                 'label' => 'Clickable',
             ])
-            ->addCheckbox(self::CATEGORY_NODE_IS_MAIN, [
-                'label' => 'Main',
-            ])
             ->addSelect2ComboBox(self::FK_PARENT_CATEGORY_NODE, [
                 'label' => 'Parent',
                 'choices' => $this->getCategories(),
@@ -82,7 +79,7 @@ class CategoryFormEdit extends CategoryFormAdd
                 'multiple' => false,
             ])
             ->addSelect2ComboBox(self::EXTRA_PARENTS, [
-                'label' => 'Extra Categories',
+                'label' => 'Additional Parents',
                 'choices' => $this->getCategories(),
                 'multiple' => true,
             ])
@@ -143,7 +140,7 @@ class CategoryFormEdit extends CategoryFormAdd
         if ($category) {
             $category = $category->toArray();
             
-            $nodeList = $this->categoryQueryContainer->queryNodesByCategoryId($this->idCategory)
+            $nodeList = $this->categoryQueryContainer->queryNotMainNodesByCategoryId($this->idCategory)
                 ->where(
                     SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE . ' <> ?',
                     $category[self::PK_CATEGORY_NODE]

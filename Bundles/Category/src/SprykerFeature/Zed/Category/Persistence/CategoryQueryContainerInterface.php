@@ -46,10 +46,11 @@ interface CategoryQueryContainerInterface
     public function queryNodeByIdCategoryAndParentNode($idCategory, $idParentNode);
 
     /**
+     * @param int $idLocale
      *
-     * @return SpyCategoryAttributeQuery
+     * @return SpyCategoryNodeQuery
      */
-    public function queryRootNodes();
+    public function queryRootNodes($idLocale);
 
     /**
      * @param int $idNode
@@ -128,7 +129,21 @@ interface CategoryQueryContainerInterface
      *
      * @return SpyCategoryNodeQuery
      */
-    public function queryNodesByCategoryId($idCategory);
+    public function queryAllNodesByCategoryId($idCategory);
+
+    /**
+     * @param int $idCategory
+     *
+     * @return SpyCategoryNodeQuery
+     */
+    public function queryMainNodesByCategoryId($idCategory);
+
+    /**
+     * @param int $idCategory
+     *
+     * @return SpyCategoryNodeQuery
+     */
+    public function queryNotMainNodesByCategoryId($idCategory);
 
     /**
      * @param int $idCategory
@@ -254,4 +269,12 @@ interface CategoryQueryContainerInterface
      * @return SpyUrlQuery
      */
     public function queryUrlByIdCategoryNode($idCategoryNode);
+
+    /**
+     * @param int $idParentNode
+     * @param int $idLocale
+     *
+     * @return SpyCategoryNodeQuery
+     */
+    public function getCategoryNodesWithOrder($idParentNode, $idLocale);
 }

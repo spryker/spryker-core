@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Category\Communication;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerFeature\Zed\Category\CategoryDependencyProvider;
 use SprykerFeature\Zed\Category\Communication\Form\CategoryNodeForm;
 use SprykerFeature\Zed\Category\Communication\Grid\CategoryGrid;
@@ -70,9 +71,9 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
     public function createRootNodeTable()
     {
         $categoryQueryContainer = $this->getQueryContainer();
-        $rootNodeQuery = $categoryQueryContainer->queryRootNodes();
+        $locale = $this->getCurrentLocale();
 
-        return $this->getFactory()->createTableRootNodeTable($rootNodeQuery);
+        return $this->getFactory()->createTableRootNodeTable($categoryQueryContainer, $locale->getIdLocale());
     }
 
     /**
@@ -143,6 +144,16 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
             $locale,
             $this->getQueryContainer()
         );
+    }
+
+    /**
+     * @throws \ErrorException
+     *
+     * @return CategoryFacade
+     */
+    public function createCategoryFacade()
+    {
+        return $this->getLocator()->category()->facade();
     }
 
 }
