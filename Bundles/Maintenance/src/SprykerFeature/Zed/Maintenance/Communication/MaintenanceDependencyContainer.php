@@ -55,6 +55,9 @@ class MaintenanceDependencyContainer extends AbstractCommunicationDependencyCont
         return $this->getProvidedDependency(MaintenanceDependencyProvider::STORAGE_CLIENT);
     }
 
+    /**
+     * @return string
+     */
     public function getElasticaDocumentType()
     {
         return $this->getConfig()->getElasticaDocumentType();

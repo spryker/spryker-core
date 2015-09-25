@@ -20,6 +20,7 @@ interface WriterInterface
     /**
      * @param array $dataSet
      *
+     * @return bool
      */
     public function delete(array $dataSet);
 

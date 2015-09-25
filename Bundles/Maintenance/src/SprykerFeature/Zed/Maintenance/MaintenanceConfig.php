@@ -58,6 +58,9 @@ class MaintenanceConfig extends AbstractBundleConfig
         return APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'FOSS.md';
     }
 
+    /**
+     * @return string
+     */
     public function getElasticaDocumentType()
     {
         return $this->get(SystemConfig::ELASTICA_PARAMETER__DOCUMENT_TYPE);

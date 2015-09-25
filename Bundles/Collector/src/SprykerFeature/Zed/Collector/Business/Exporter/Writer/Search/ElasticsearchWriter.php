@@ -59,6 +59,8 @@ class ElasticsearchWriter implements WriterInterface
 
     /**
      * @param array $dataSet
+     *
+     * @return bool
      */
     public function delete(array $dataSet)
     {
@@ -67,8 +69,10 @@ class ElasticsearchWriter implements WriterInterface
             $documents[] = $this->index->getType($this->type)->getDocument($key);
         }
 
-        $this->index->deleteDocuments($documents);
+        $response = $this->index->deleteDocuments($documents);
         $this->index->flush(true);
+
+        return $response->isOk();
     }
 
     /**

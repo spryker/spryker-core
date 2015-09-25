@@ -20,9 +20,9 @@ class TouchUpdater implements TouchUpdaterInterface
      */
     public function updateMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale)
     {
-        foreach ($touchUpdaterSet->getData() as $key => $data) {
+        foreach ($touchUpdaterSet->getData() as $key => $touchData) {
             $query = SpyTouchSearchQuery::create();
-            $query->filterByFkTouch($data[self::TOUCH_EXPORTER_ID]);
+            $query->filterByFkTouch($touchData[self::TOUCH_EXPORTER_ID]);
             $query->filterByFkLocale($idLocale);
             $entity = $query->findOneOrCreate();
             $entity->setKey($key);
