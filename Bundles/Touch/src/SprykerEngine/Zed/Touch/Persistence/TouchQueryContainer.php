@@ -8,15 +8,18 @@ namespace SprykerEngine\Zed\Touch\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
+use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchSearchTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchStorageTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
 use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
+use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchStorage;
 
 class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryContainerInterface
 {
+
     const TOUCH_ENTRY_QUERY_KEY = 'search touch entry';
     const TOUCH_ENTRIES_QUERY_KEY = 'search touch entries';
     const TOUCH_EXPORTER_ID = 'exporter_touch_id';
@@ -48,7 +51,26 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
             ->filterByItemType($itemType)
             ->filterByItemId($itemId)
         ;
-        
+
+        return $query;
+    }
+
+    /**
+     * @param string $itemType
+     * @param string $itemId
+     * @param string $itemEvent
+     *
+     * @return SpyTouchQuery
+     */
+    public function queryUpdateTouchEntry($itemType, $itemId, $itemEvent)
+    {
+        $query = SpyTouchQuery::create();
+        $query
+            ->filterByItemType($itemType)
+            ->filterByItemId($itemId)
+            ->filterByItemEvent($itemEvent)
+        ;
+
         return $query;
     }
 
@@ -57,9 +79,9 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      * @param LocaleTransfer $locale
      * @param \DateTime $lastTouchedAt
      * 
-     * @return SpyTouchQuery
-     * 
      * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return SpyTouchQuery
      */
     public function createBasicExportableQuery($itemType, LocaleTransfer $locale, \DateTime $lastTouchedAt)
     {
@@ -102,6 +124,41 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
             ->filterByItemType($itemType)
             ->filterByItemEvent($itemEvent)
             ->filterByItemId($itemIds);
+
+        return $query;
+    }
+
+    /**
+     * @param string $itemType
+     *
+     * @return SpyTouchQuery
+     */
+    public function queryTouchDeleteStorageAndSearch($itemType)
+    {
+        $query = SpyTouchQuery::create();
+        $query->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
+            ->filterByItemType($itemType)
+            ->leftJoinTouchSearch()
+            ->leftJoinTouchStorage()
+            ->addAnd(SpyTouchSearchTableMap::COL_FK_TOUCH, null, Criteria::ISNULL)
+            ->addAnd(SpyTouchStorageTableMap::COL_FK_TOUCH, null, Criteria::ISNULL)
+        ;
+
+        return $query;
+    }
+
+    /**
+     * @param string $itemType
+     *
+     * @throws PropelException
+     * @return SpyTouchQuery
+     */
+    public function queryTouchDeleteOnlyByItemType($itemType)
+    {
+        $query = SpyTouchQuery::create();
+        $query->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
+            ->filterByItemType($itemType)
+        ;
 
         return $query;
     }

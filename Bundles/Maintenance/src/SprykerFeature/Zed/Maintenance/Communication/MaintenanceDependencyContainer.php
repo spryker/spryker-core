@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,36 +11,40 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContai
 use SprykerFeature\Client\Search\Service\SearchClient;
 use SprykerFeature\Client\Storage\Service\StorageClient;
 use SprykerFeature\Zed\Maintenance\Communication\Table\StorageTable;
+use SprykerFeature\Zed\Maintenance\MaintenanceConfig;
 use SprykerFeature\Zed\Maintenance\MaintenanceDependencyProvider;
-use Symfony\Component\Validator\Validator;
 
 /**
  * @method MaintenanceCommunication getFactory()
+ * @method MaintenanceConfig getConfig()
  */
 class MaintenanceDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
-
     /**
      * @return StorageTable
      */
-    public function createStorageTable(){
-        $storageClient = $this->getStorageClient();
+    public function createStorageTable()
+    {
+        $storageClient = $this->createStorageClient();
+
         return $this->getFactory()->createTableStorageTable($storageClient);
     }
 
     /**
      * @return StorageTable
      */
-    public function createSearchTable(){
-        $searchClient = $this->getSearchClient();
+    public function createSearchTable()
+    {
+        $searchClient = $this->createSearchClient();
+
         return $this->getFactory()->createTableSearchTable($searchClient);
     }
 
     /**
      * @return SearchClient
      */
-    public function getSearchClient()
+    public function createSearchClient()
     {
         return $this->getProvidedDependency(MaintenanceDependencyProvider::SEARCH_CLIENT);
     }
@@ -47,10 +52,9 @@ class MaintenanceDependencyContainer extends AbstractCommunicationDependencyCont
     /**
      * @return StorageClient
      */
-    public function getStorageClient()
+    public function createStorageClient()
     {
         return $this->getProvidedDependency(MaintenanceDependencyProvider::STORAGE_CLIENT);
     }
-
 
 }
