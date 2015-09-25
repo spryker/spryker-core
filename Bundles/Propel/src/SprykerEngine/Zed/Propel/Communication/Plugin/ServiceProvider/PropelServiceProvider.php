@@ -84,7 +84,7 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
     private function hasConnection()
     {
         try {
-            $connection = Propel::getConnection();
+            Propel::getConnection();
 
             return true;
         } catch (\Exception $e) {
