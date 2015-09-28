@@ -63,10 +63,16 @@ class BlockManager implements BlockManagerInterface
     public function saveBlockAndTouch(CmsBlockInterface $cmsBlockTransfer)
     {
         $blockEntity = $this->getCmsBlockByIdPage($cmsBlockTransfer->getFkPage());
-        $blockTransfer = $this->saveBlock($cmsBlockTransfer);
+        $oldBlockEntity = null;
 
         if ($blockEntity !== null) {
-            $this->touchKeyChangeNecessary($blockTransfer, $blockEntity);
+            $oldBlockEntity = clone $blockEntity;
+        }
+
+        $blockTransfer = $this->saveBlock($cmsBlockTransfer);
+
+        if ($oldBlockEntity !== null) {
+            $this->touchKeyChangeNecessary($blockTransfer, $oldBlockEntity);
         } else {
             $this->touchBlockActive($blockTransfer);
         }
@@ -185,7 +191,7 @@ class BlockManager implements BlockManagerInterface
         if ($blockName !== $newBlockName) {
             $cmsBlockTransfer->setIdCmsBlock($blockEntity->getIdCmsBlock());
             $this->touchBlockActiveWithKeyChange($cmsBlockTransfer);
-        }else {
+        } else {
             $this->touchBlockActive($cmsBlockTransfer);
         }
     }
