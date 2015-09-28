@@ -153,7 +153,7 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createCategoryFacade()
     {
-        return $this->getLocator()->category()->facade();
+        return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_CATEGORY);
     }
 
 }
