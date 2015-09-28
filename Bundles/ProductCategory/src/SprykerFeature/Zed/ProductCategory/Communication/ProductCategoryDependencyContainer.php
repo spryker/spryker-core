@@ -98,7 +98,7 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
      */
     public function createCategoryQueryContainer()
     {
-        return $this->getProvidedDependency(ProductCategoryDependencyProvider::QUERY_CONTAINER_PRODUCT);
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::QUERY_CONTAINER_CATEGORY);
     }
 
     /**

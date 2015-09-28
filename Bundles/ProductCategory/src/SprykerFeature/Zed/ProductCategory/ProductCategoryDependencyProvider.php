@@ -53,7 +53,7 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
-            return $container->getLocator()->productCategory()->queryContainer();
+            return $container->getLocator()->category()->queryContainer();
         };
 
         $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
@@ -91,7 +91,7 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
-            return $container->getLocator()->productCategory()->queryContainer();
+            return $container->getLocator()->category()->queryContainer();
         };
 
         $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
