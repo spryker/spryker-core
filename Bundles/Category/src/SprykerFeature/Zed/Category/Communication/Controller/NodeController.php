@@ -74,11 +74,11 @@ class NodeController extends AbstractController
 
         $order = count($categoryNodesToReorder) - 1;
         foreach ($categoryNodesToReorder as $index => $nodeData) {
-            $id = $nodeData['id'];
+            $idNode = $nodeData['id'];
 
             $node = $this->getDependencyContainer()
                 ->createCategoryFacade()
-                ->getNodeById($id);
+                ->getNodeById($idNode);
 
             $nodeTransfer = (new NodeTransfer())
                 ->fromArray($node->toArray())

@@ -1,5 +1,6 @@
 'use strict';
 
+serializedList = {};
 $(document).ready(function() {
     var sprykerAjax = new SprykerAjax();
     var triggeredFirstEvent = false;
@@ -28,7 +29,7 @@ $(document).ready(function() {
         }
     });
 
-    serializedList = {}; //has to be global
+
     var updateOutput = function(e) {
         var list = e.length ? e : $(e.target);
         serializedList = window.JSON.stringify(list.nestable('serialize'));
