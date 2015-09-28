@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\ExpensesTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemsAndExpensesTransfer;
-use Generated\Shared\Transfer\OrderItemsTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\ProductOptionTransfer;
@@ -20,6 +19,7 @@ use SprykerFeature\Zed\Oms\Business\OmsFacade;
 use SprykerFeature\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use SprykerFeature\Zed\Sales\Dependency\Plugin\PaymentLogReceiverInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 
@@ -196,20 +196,29 @@ class OrderDetailsManager
      */
     protected function addOrderItemsToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
-        $orderItemsTransfer = new OrderItemsTransfer();
         foreach ($orderEntity->getItems() as $orderItemEntity) {
-            $itemTransfer = new ItemTransfer();
-            $itemTransfer->fromArray($orderItemEntity->toArray(), true);
-
-            foreach ($orderItemEntity->getOptions() as $orderItemOption) {
-                $productOptionsTransfer = new ProductOptionTransfer();
-                $productOptionsTransfer->fromArray($orderItemOption->toArray(), true);
-                $itemTransfer->addProductOption($productOptionsTransfer);
-            }
-
-            $orderItemsTransfer->addOrderItem($itemTransfer);
+            $itemTransfer = $this->createOrderItemTransfer($orderItemEntity);
+            $orderTransfer->addItem($itemTransfer);
         }
-        $orderTransfer->setItems($orderItemsTransfer);
+    }
+
+    /**
+     * @param SpySalesOrderItem $orderItemEntity
+     *
+     * @return ItemTransfer
+     */
+    protected function createOrderItemTransfer(SpySalesOrderItem $orderItemEntity)
+    {
+        $itemTransfer = new ItemTransfer();
+        $itemTransfer->fromArray($orderItemEntity->toArray(), true);
+
+        foreach ($orderItemEntity->getOptions() as $orderItemOption) {
+            $productOptionsTransfer = new ProductOptionTransfer();
+            $productOptionsTransfer->fromArray($orderItemOption->toArray(), true);
+            $itemTransfer->addProductOption($productOptionsTransfer);
+        }
+
+        return $itemTransfer;
     }
 
     /**
