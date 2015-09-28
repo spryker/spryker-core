@@ -205,9 +205,9 @@ class BlockManager implements BlockManagerInterface
      */
     protected function getCmsBlockKey($name, $type, $value)
     {
-        $blockName = $name . '-' . $type . '-' . $value;
+        $blockKey = $name . '-' . $type . '-' . $value;
 
-        return $blockName;
+        return $blockKey;
     }
 
 }
