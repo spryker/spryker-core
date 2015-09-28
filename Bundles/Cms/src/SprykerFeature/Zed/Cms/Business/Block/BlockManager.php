@@ -62,8 +62,14 @@ class BlockManager implements BlockManagerInterface
      */
     public function saveBlockAndTouch(CmsBlockInterface $cmsBlockTransfer)
     {
+        $blockEntity = $this->getCmsBlockByIdPage($cmsBlockTransfer->getFkPage());
         $blockTransfer = $this->saveBlock($cmsBlockTransfer);
-        $this->touchBlockActive($blockTransfer);
+
+        if ($blockEntity !== null) {
+            $this->touchKeyChangeNecessary($blockTransfer, $blockEntity);
+        } else {
+            $this->touchBlockActive($blockTransfer);
+        }
 
         return $blockTransfer;
     }
@@ -87,6 +93,14 @@ class BlockManager implements BlockManagerInterface
     public function touchBlockActive(CmsBlockInterface $cmsBlockTransfer)
     {
         $this->touchFacade->touchActive(CmsConfig::RESOURCE_TYPE_BLOCK, $cmsBlockTransfer->getIdCmsBlock());
+    }
+
+    /**
+     * @param CmsBlockInterface $cmsBlockTransfer
+     */
+    public function touchBlockActiveWithKeyChange(CmsBlockInterface $cmsBlockTransfer)
+    {
+        $this->touchFacade->touchActive(CmsConfig::RESOURCE_TYPE_BLOCK, $cmsBlockTransfer->getIdCmsBlock(), true);
     }
 
     /**
@@ -120,7 +134,6 @@ class BlockManager implements BlockManagerInterface
     protected function updateBlock(CmsBlockInterface $cmsBlockTransfer)
     {
         $blockEntity = $this->getCmsBlockByIdPage($cmsBlockTransfer->getFkPage());
-        $this->touchBlockDeleteNecessary($cmsBlockTransfer, $blockEntity);
         $blockEntity->fromArray($cmsBlockTransfer->toArray());
 
         if (!$blockEntity->isModified()) {
@@ -164,14 +177,16 @@ class BlockManager implements BlockManagerInterface
      * @param CmsBlockInterface $cmsBlockTransfer
      * @param SpyCmsBlock $blockEntity
      */
-    protected function touchBlockDeleteNecessary(CmsBlockInterface $cmsBlockTransfer, SpyCmsBlock $blockEntity)
+    protected function touchKeyChangeNecessary(CmsBlockInterface $cmsBlockTransfer, SpyCmsBlock $blockEntity)
     {
         $blockName = $blockEntity->getName() . '-' . $blockEntity->getType() . '-' . $blockEntity->getValue();
         $newBlockName = $cmsBlockTransfer->getName() . '-' . $cmsBlockTransfer->getType() . '-' . $cmsBlockTransfer->getValue();
 
         if ($blockName !== $newBlockName) {
             $cmsBlockTransfer->setIdCmsBlock($blockEntity->getIdCmsBlock());
-            $this->touchBlockDelete($cmsBlockTransfer);
+            $this->touchBlockActiveWithKeyChange($cmsBlockTransfer);
+        }else {
+            $this->touchBlockActive($cmsBlockTransfer);
         }
     }
 
