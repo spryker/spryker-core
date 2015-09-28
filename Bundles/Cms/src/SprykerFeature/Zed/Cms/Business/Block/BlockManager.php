@@ -185,8 +185,8 @@ class BlockManager implements BlockManagerInterface
      */
     protected function touchKeyChangeNecessary(CmsBlockInterface $cmsBlockTransfer, SpyCmsBlock $blockEntity)
     {
-        $blockName = $blockEntity->getName() . '-' . $blockEntity->getType() . '-' . $blockEntity->getValue();
-        $newBlockName = $cmsBlockTransfer->getName() . '-' . $cmsBlockTransfer->getType() . '-' . $cmsBlockTransfer->getValue();
+        $blockName = $this->getCmsBlockKey($blockEntity->getName(), $blockEntity->getType(), $blockEntity->getValue());
+        $newBlockName = $this->getCmsBlockKey($cmsBlockTransfer->getName(), $cmsBlockTransfer->getType(), $cmsBlockTransfer->getValue());
 
         if ($blockName !== $newBlockName) {
             $cmsBlockTransfer->setIdCmsBlock($blockEntity->getIdCmsBlock());
@@ -194,6 +194,20 @@ class BlockManager implements BlockManagerInterface
         } else {
             $this->touchBlockActive($cmsBlockTransfer);
         }
+    }
+
+    /**
+     * @param string $name
+     * @param string $type
+     * @param string $value
+     *
+     * @return string
+     */
+    protected function getCmsBlockKey($name, $type, $value)
+    {
+        $blockName = $name . '-' . $type . '-' . $value;
+
+        return $blockName;
     }
 
 }
