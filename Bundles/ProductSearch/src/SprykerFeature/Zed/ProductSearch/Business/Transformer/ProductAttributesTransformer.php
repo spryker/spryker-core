@@ -96,7 +96,7 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
                     ];
                 }
 
-                //TODO work in progress: https://kartenmacherei.atlassian.net/browse/KSP-1041
+                //TODO work in progress: https://kartenmacherei.atlassian.net/browse/KSP-868
                 //$abstractAttributes['product_order_1']= rand(1,10); //request in Yves, comes from DB xxx
                 //$abstractAttributes['product_order_2']= rand(1,10); //request in Yves, comes from DB xxx
                 //$abstractAttributes['product_order_3']= rand(1,10); //request in Yves, comes from DB xxx, _3 is category id
