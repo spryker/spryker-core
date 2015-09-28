@@ -167,7 +167,7 @@ interface CategoryQueryContainerInterface
      *
      * @return SpyCategoryAttributeQuery
      */
-    public function queryCategoryByName($name, $idLocale);
+    public function queryCategoryAttributesByName($name, $idLocale);
 
     /**
      * @param int $idLocale

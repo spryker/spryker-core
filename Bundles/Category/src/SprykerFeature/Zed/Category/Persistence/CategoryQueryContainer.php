@@ -507,7 +507,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      *
      * @return SpyCategoryAttributeQuery
      */
-    public function queryCategoryByName($name, $idLocale)
+    public function queryCategoryAttributesByName($name, $idLocale)
     {
         return SpyCategoryAttributeQuery::create()
             ->filterByName($name)
