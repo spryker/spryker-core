@@ -7,6 +7,8 @@ namespace Functional\SprykerFeature\Zed\Payolution\Business;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CartTransfer;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -16,6 +18,7 @@ use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
 use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
 use SprykerFeature\Zed\Payolution\Business\Api\Constants;
+use SprykerFeature\Zed\Payolution\Persistence\Propel\Map\SpyPaymentPayolutionTableMap;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLog;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLog;
@@ -57,15 +60,25 @@ class PayolutionFacadeGatewayTest extends Test
 
         $this->setBaseTestData();
 
+        $addressTransfer = (new AddressTransfer())
+            ->setCity('Berlin')
+            ->setZipCode('10623')
+            ->setAddress1('Straße des 17. Juni 135')
+            ->setFirstName('Jane')
+            ->setLastName('Doe')
+            ->setEmail('jane@family-doe.org')
+            ->setIso2Code('de')
+            ->setSalutation(SpyCustomerTableMap::COL_SALUTATION_MR);
+
         $paymentTransfer = new PayolutionPaymentTransfer();
         $paymentTransfer->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE)
             ->setClientIp('127.0.0.1')
-            ->setFirstName('Jane')
-            ->setLastName('Doe')
-            ->setBirthdate('1970-01-02')
-            ->setEmail('jane@family-doe.org')
+            ->setDateOfBirth('1970-01-02')
             ->setGender(SpyCustomerTableMap::COL_GENDER_MALE)
-            ->setSalutation(SpyCustomerTableMap::COL_SALUTATION_MR);
+            ->setAddress($addressTransfer)
+            ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE)
+            ->setLanguageIso2Code('de')
+            ->setCurrencyIso3Code('EUR');
 
         // PayolutionCheckoutConnector-HydrateOrderPlugin emulation
         $orderTransfer = new OrderTransfer();
@@ -90,32 +103,38 @@ class PayolutionFacadeGatewayTest extends Test
 
         $this->setBaseTestData();
 
-        $totalsTransfer = (new TotalsTransfer())->setGrandTotal(10000000);
+        $totals = new TotalsTransfer();
+        $totals->setGrandTotal(10000);
+
+        $cartTransfer = new CartTransfer();
+        $cartTransfer->setTotals($totals);
 
         $addressTransfer = (new AddressTransfer())
             ->setCity('Berlin')
             ->setZipCode('10623')
             ->setAddress1('Straße des 17. Juni 135')
+            ->setFirstName('John')
+            ->setLastName('Doe')
+            ->setSalutation('Mr')
+            ->setEmail('john@doe.com')
             ->setIso2Code('de');
 
         $paymentTransfer = (new PayolutionPaymentTransfer())
-            ->setFirstName('John')
-            ->setLastName('Doe')
             ->setGender('Male')
-            ->setSalutation('Mr')
-            ->setBirthdate('1970-01-01')
+            ->setDateOfBirth('1970-01-01')
             ->setClientIp('127.0.0.1')
-            ->setEmail('john@doe.com')
-            ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE);
+            ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE)
+            ->setAddress($addressTransfer)
+            ->setLanguageIso2Code('de')
+            ->setCurrencyIso3Code('EUR');
 
-        $orderTransfer = (new OrderTransfer())
-            ->setIdSalesOrder($this->orderEntity->getIdSalesOrder())
-            ->setPayolutionPayment($paymentTransfer)
-            ->setBillingAddress($addressTransfer)
-            ->setTotals($totalsTransfer);
+        $checkoutRequestTransfer = new CheckoutRequestTransfer();
+        $checkoutRequestTransfer
+            ->setCart($cartTransfer)
+            ->setPayolutionPayment($paymentTransfer);
 
         $facade = $this->getLocator()->payolution()->facade();
-        $response = $facade->preCheckPayment($orderTransfer);
+        $response = $facade->preCheckPayment($checkoutRequestTransfer);
 
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
     }
@@ -286,10 +305,16 @@ class PayolutionFacadeGatewayTest extends Test
             ->setClientIp('127.0.0.1')
             ->setFirstName('Jane')
             ->setLastName('Doe')
-            ->setBirthdate('1970-01-02')
+            ->setDateOfBirth('1970-01-02')
             ->setEmail('jane@family-doe.org')
-            ->setGender(SpyCustomerTableMap::COL_GENDER_MALE)
-            ->setSalutation(SpyCustomerTableMap::COL_SALUTATION_MR);
+            ->setGender(SpyPaymentPayolutionTableMap::COL_GENDER_MALE)
+            ->setSalutation(SpyPaymentPayolutionTableMap::COL_SALUTATION_MR)
+            ->setCountryIso2Code('de')
+            ->setCity('Berlin')
+            ->setStreet('Straße des 17. Juni 135')
+            ->setZipCode('10623')
+            ->setLanguageIso2Code('de')
+            ->setCurrencyIso3Code('EUR');
         $this->paymentEntity->save();
     }
 
