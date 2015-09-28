@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
 
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\PayolutionRequestTransfer;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 
@@ -14,11 +14,11 @@ interface MethodMapperInterface
 {
 
     /**
-     * @param  OrderTransfer $orderTransfer
+     * @param  CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return PayolutionRequestTransfer
      */
-    public function mapToPreCheck(OrderTransfer $orderTransfer);
+    public function mapToPreCheck(CheckoutRequestTransfer $checkoutRequestTransfer);
 
     /**
      * @param SpyPaymentPayolution $paymentEntity

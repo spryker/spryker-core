@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
 
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\PayolutionRequestAnalysisCriterionTransfer;
 use Generated\Shared\Transfer\PayolutionRequestTransfer;
 use SprykerFeature\Zed\Payolution\Business\Api\Constants;
@@ -41,33 +41,39 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return PayolutionRequestTransfer
      */
-    public function mapToPreCheck(OrderTransfer $orderTransfer)
+    public function mapToPreCheck(CheckoutRequestTransfer $checkoutRequestTransfer)
     {
+        $payolutionTransfer = $checkoutRequestTransfer->getPayolutionPayment();
+        $cart = $checkoutRequestTransfer->getCart();
+        $grandTotal = $cart->getTotals()->getGrandTotal();
         $requestTransfer = $this->getBaseRequestTransfer(
-            $orderTransfer->getTotals()->getGrandTotal(),
-            $orderTransfer->getIdSalesOrder()
+            $grandTotal,
+            $payolutionTransfer->getCurrencyIso3Code(),
+            $isSalesOrder = null
         );
         $requestTransfer->setPaymentCode(Constants::PAYMENT_CODE_PRE_CHECK);
 
-        $paymentTransfer = $orderTransfer->getPayolutionPayment();
-        $addressTransfer = $paymentTransfer->getAddress();
+        // Pre-check requires to set a specific transaction channel
+        $requestTransfer->setTransactionChannel($this->config->getTransactionChannelPreCheck());
+
+        $addressTransfer = $payolutionTransfer->getAddress();
         $requestTransfer
             ->setNameGiven($addressTransfer->getFirstName())
             ->setNameFamily($addressTransfer->getLastName())
             ->setNameTitle($addressTransfer->getSalutation())
-            ->setNameSex($this->mapGender($paymentTransfer->getGender()))
-            ->setNameBirthdate($paymentTransfer->getDateOfBirth())
+            ->setNameSex($this->mapGender($payolutionTransfer->getGender()))
+            ->setNameBirthdate($payolutionTransfer->getDateOfBirth())
             ->setAddressZip($addressTransfer->getZipCode())
             ->setAddressCity($addressTransfer->getCity())
             ->setAddressCountry($addressTransfer->getIso2Code())
             ->setContactEmail($addressTransfer->getEmail())
             ->setContactPhone($addressTransfer->getPhone())
             ->setContactMobile($addressTransfer->getCellPhone())
-            ->setContactIp($paymentTransfer->getClientIp());
+            ->setContactIp($payolutionTransfer->getClientIp());
 
         // Payolution requires a single street address string
         $formattedStreet = trim(sprintf(
@@ -78,11 +84,11 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
         ));
         $requestTransfer->setAddressStreet($formattedStreet);
 
-        $criterionTransfer = new PayolutionRequestAnalysisCriterionTransfer();
-        $criterionTransfer
-            ->setName(Constants::CRITERION_PRE_CHECK)
-            ->setValue('TRUE');
-        $requestTransfer->addAnalysisCriterion($criterionTransfer);
+        $criteria = [
+            Constants::CRITERION_PRE_CHECK => 'TRUE',
+            Constants::CRITERION_CUSTOMER_LANGUAGE => $payolutionTransfer->getLanguageIso2Code(),
+        ];
+        $this->addAnalysisCriteriaToRequestTransfer($criteria, $requestTransfer);
 
         return $requestTransfer;
     }
@@ -119,13 +125,7 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
         $criteria = [
             Constants::CRITERION_CUSTOMER_LANGUAGE => $paymentEntity->getLanguageIso2Code(),
         ];
-        foreach ($criteria as $name => $value) {
-            $criterionTransfer = new PayolutionRequestAnalysisCriterionTransfer();
-            $criterionTransfer
-                ->setName($name)
-                ->setValue($value);
-            $requestTransfer->addAnalysisCriterion($criterionTransfer);
-        }
+        $this->addAnalysisCriteriaToRequestTransfer($criteria, $requestTransfer);
 
         return $requestTransfer;
     }
@@ -203,6 +203,7 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
         $orderEntity = $paymentEntity->getSpySalesOrder();
         $requestTransfer = $this->getBaseRequestTransfer(
             $orderEntity->getGrandTotal(),
+            $paymentEntity->getCurrencyIso3Code(),
             $orderEntity->getIdSalesOrder()
         );
         $requestTransfer->setPresentationCurrency($paymentEntity->getCurrencyIso3Code());
@@ -212,11 +213,12 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
 
     /**
      * @param int $grandTotal
+     * @param string $currency
      * @param int $idOrder
      *
      * @return PayolutionRequestTransfer
      */
-    protected function getBaseRequestTransfer($grandTotal, $idOrder)
+    protected function getBaseRequestTransfer($grandTotal, $currency, $idOrder)
     {
         $requestTransfer = new PayolutionRequestTransfer();
         $requestTransfer
@@ -225,10 +227,30 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
             ->setUserPwd($this->getConfig()->getUserPassword())
             ->setPresentationAmount($grandTotal / 100)
             ->setPresentationUsage($idOrder)
+            ->setPresentationCurrency($currency)
             ->setAccountBrand($this->getAccountBrand())
-            ->setTransactionChannel($this->getConfig()->getChannelInvoice())
+            ->setTransactionChannel($this->getConfig()->getTransactionChannelSync())
             ->setTransactionMode($this->getConfig()->getTransactionMode())
             ->setIdentificationTransactionid(uniqid('tran_'));
+
+        return $requestTransfer;
+    }
+
+    /**
+     * @param string[] $criteria
+     * @param PayolutionRequestTransfer $requestTransfer
+     *
+     * @return PayolutionRequestTransfer
+     */
+    protected function addAnalysisCriteriaToRequestTransfer(array $criteria, PayolutionRequestTransfer $requestTransfer)
+    {
+        foreach ($criteria as $name => $value) {
+            $criterionTransfer = new PayolutionRequestAnalysisCriterionTransfer();
+            $criterionTransfer
+                ->setName($name)
+                ->setValue($value);
+            $requestTransfer->addAnalysisCriterion($criterionTransfer);
+        }
 
         return $requestTransfer;
     }

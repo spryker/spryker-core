@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Payment;
 
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\PayolutionRequestTransfer;
 use Generated\Shared\Transfer\PayolutionResponseTransfer;
 use SprykerEngine\Zed\Kernel\Business\DependencyContainer\DependencyContainerInterface;
@@ -83,17 +83,20 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return PayolutionResponseTransfer
      */
-    public function preCheckPayment(OrderTransfer $orderTransfer)
+    public function preCheckPayment(CheckoutRequestTransfer $checkoutRequestTransfer)
     {
+        $paymentTransfer = $checkoutRequestTransfer->getPayolutionPayment();
         $requestTransfer = $this
-            ->getMethodMapper($orderTransfer->getPayolutionPayment()->getAccountBrand())
-            ->mapToPreCheck($orderTransfer);
+            ->getMethodMapper($paymentTransfer->getAccountBrand())
+            ->mapToPreCheck($checkoutRequestTransfer);
 
-        return $this->sendRequest($requestTransfer);
+        $responseTransfer = $this->sendRequest($requestTransfer);
+
+        return $responseTransfer;
     }
 
     /**

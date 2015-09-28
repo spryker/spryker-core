@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Payolution\Business;
 
 use Generated\Shared\Payolution\OrderInterface;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayolutionResponseTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
@@ -29,16 +30,18 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return PayolutionResponseTransfer
      */
-    public function preCheckPayment(OrderTransfer $orderTransfer)
+    public function preCheckPayment(CheckoutRequestTransfer $checkoutRequestTransfer)
     {
-        return $this
+        $payolutionResponseTransfer = $this
             ->getDependencyContainer()
             ->createPaymentManager()
-            ->preCheckPayment($orderTransfer);
+            ->preCheckPayment($checkoutRequestTransfer);
+
+        return $payolutionResponseTransfer;
     }
 
     /**

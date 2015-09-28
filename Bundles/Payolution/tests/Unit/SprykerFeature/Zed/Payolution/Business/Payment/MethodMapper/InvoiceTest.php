@@ -7,7 +7,8 @@ namespace Unit\SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\CartTransfer;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\PayolutionRequestTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
@@ -23,11 +24,38 @@ class InvoiceTest extends Test
 
     public function testMapToPreCheck()
     {
-        $paymentEntityMock = $this->getPaymentEntityMock();
 
-        $totalsTransfer = (new TotalsTransfer())->setGrandTotal(10000);
+        $checkoutRequestTransfer = $this->getCheckoutRequestTransfer();
+        $methodMapper = new Invoice($this->getBundleConfigMock());
+        $requestTransfer = $methodMapper->mapToPreCheck($checkoutRequestTransfer);
 
-        $addressTransfer = (new AddressTransfer())
+        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionRequestTransfer', $requestTransfer);
+        $this->assertSame(PayolutionApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
+        $this->assertSame(Constants::PAYMENT_CODE_PRE_CHECK, $requestTransfer->getPaymentCode());
+        $this->assertSame('Straße des 17. Juni 135', $requestTransfer->getAddressStreet());
+
+        $criteria = $requestTransfer->getAnalysisCriteria();
+        $this->assertCount(2, $criteria);
+        $this->assertSame($criteria[0]->getName(), Constants::CRITERION_PRE_CHECK);
+        $this->assertSame($criteria[0]->getValue(), 'TRUE');
+    }
+
+    /**
+     * @return CheckoutRequestTransfer
+     */
+    private function getCheckoutRequestTransfer()
+    {
+        $totalsTransfer = new TotalsTransfer();
+        $totalsTransfer
+            ->setGrandTotal(10000)
+            ->setGrandTotalWithDiscounts(10000)
+            ->setSubtotal(10000);
+
+        $cartTransfer = new CartTransfer();
+        $cartTransfer->setTotals($totalsTransfer);
+
+        $addressTransfer = new AddressTransfer();
+        $addressTransfer
             ->setFirstName('John')
             ->setLastName('Doe')
             ->setSalutation('Mr')
@@ -37,33 +65,22 @@ class InvoiceTest extends Test
             ->setAddress2('135')
             ->setZipCode('10623');
 
-        $paymentTransfer = (new PayolutionPaymentTransfer())
+        $paymentTransfer = new PayolutionPaymentTransfer();
+        $paymentTransfer
             ->setGender('Male')
             ->setDateOfBirth('1970-01-01')
             ->setClientIp('127.0.0.1')
             ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE)
             ->setAddress($addressTransfer);
 
-        $orderTransfer = (new OrderTransfer())
-            ->setIdSalesOrder($paymentEntityMock->getSpySalesOrder()->getIdSalesOrder())
-            ->setPayolutionPayment($paymentTransfer)
-            ->setTotals($totalsTransfer);
+        $checkoutRequestTransfer = new CheckoutRequestTransfer();
+        $checkoutRequestTransfer
+            ->setIdUser(null)
+            ->setPaymentMethod('invoice')
+            ->setCart($cartTransfer)
+            ->setPayolutionPayment($paymentTransfer);
 
-        $methodMapper = new Invoice($this->getBundleConfigMock());
-        $requestTransfer = $methodMapper->mapToPreCheck($orderTransfer);
-
-        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionRequestTransfer', $requestTransfer);
-        $this->assertSame(PayolutionApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
-        $this->assertSame(Constants::PAYMENT_CODE_PRE_CHECK, $requestTransfer->getPaymentCode());
-        $this->assertSame(
-            sprintf('%s %s', $addressTransfer->getAddress1(), $addressTransfer->getAddress2()),
-            $requestTransfer->getAddressStreet()
-        );
-
-        $criteria = $requestTransfer->getAnalysisCriteria();
-        $this->assertCount(1, $criteria);
-        $this->assertSame($criteria[0]->getName(), Constants::CRITERION_PRE_CHECK);
-        $this->assertSame($criteria[0]->getValue(), 'TRUE');
+        return $checkoutRequestTransfer;
     }
 
     public function testMapToPreAuthorization()
@@ -180,6 +197,7 @@ class InvoiceTest extends Test
             $methods = []
         );
 
+        /** @var SpyPaymentPayolution|\PHPUnit_Framework_MockObject_MockObject $paymentEntityMock */
         $paymentEntityMock = $this->getMock(
             'SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution',
             $methods = [

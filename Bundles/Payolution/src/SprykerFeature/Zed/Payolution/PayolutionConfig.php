@@ -39,17 +39,33 @@ class PayolutionConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getChannelInvoice()
+    public function getTransactionChannelInvoice()
     {
-        return $this->get(PayolutionConfigConstants::CHANNEL_INVOICE);
+        return $this->get(PayolutionConfigConstants::TRANSACTION_CHANNEL_INVOICE);
     }
 
     /**
      * @return string
      */
-    public function getChannelInstallment()
+    public function getTransactionChannelInstallment()
     {
-        return $this->get(PayolutionConfigConstants::CHANNEL_INSTALLMENT);
+        return $this->get(PayolutionConfigConstants::TRANSACTION_CHANNEL_INSTALLMENT);
+    }
+
+    /**
+     * @return string
+     */
+    public function getTransactionChannelSync()
+    {
+        return $this->get(PayolutionConfigConstants::TRANSACTION_CHANNEL_SYNC);
+    }
+
+    /**
+     * @return string
+     */
+    public function getTransactionChannelPreCheck()
+    {
+        return $this->get(PayolutionConfigConstants::TRANSACTION_CHANNEL_PRE_CHECK);
     }
 
     /**
