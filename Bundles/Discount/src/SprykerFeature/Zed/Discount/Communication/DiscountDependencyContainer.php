@@ -6,7 +6,8 @@
 
 namespace SprykerFeature\Zed\Discount\Communication;
 
-use Bundles\Discount\src\SprykerFeature\Zed\Discount\Communication\Table\DiscountsTable;
+use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesType;
+use SprykerFeature\Zed\Discount\Communication\Table\DiscountsTable;
 use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
@@ -119,13 +120,16 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createCartRuleForm(FormTypeInterface $form, array $defaultData = null)
     {
-        if (null === $defaultData) {
-            $defaultData = $this->getCartRuleDefaultData();
+        $defaultDataArray = $this->getCartRuleDefaultData();
+        if (true === is_array($defaultData)) {
+            $defaultDataArray = array_merge($this->getCartRuleDefaultData(), $defaultData);
         }
+
+        $this->getDiscountFacade();
 
         $formFactory = $this->getFormFactory();
 
-        return $formFactory->create($form, $defaultData, [
+        return $formFactory->create($form, $defaultDataArray, [
             'allow_extra_fields' => true,
         ]);
     }
@@ -151,6 +155,15 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     public function createCartRuleFormType()
     {
         return new CartRuleType(
+            $this->getConfig()->getAvailableCalculatorPlugins(),
+            $this->getConfig()->getAvailableCollectorPlugins(),
+            $this->getConfig()->getAvailableDecisionRulePlugins()
+        );
+    }
+
+    public function createVoucherCodesFormType()
+    {
+        return new VoucherCodesType(
             $this->getConfig()->getAvailableCalculatorPlugins(),
             $this->getConfig()->getAvailableCollectorPlugins(),
             $this->getConfig()->getAvailableDecisionRulePlugins()

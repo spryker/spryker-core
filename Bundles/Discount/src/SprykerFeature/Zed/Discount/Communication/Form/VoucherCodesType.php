@@ -86,8 +86,12 @@ class VoucherCodesType extends AbstractRuleType
                 'label' => 'Collector Plugin',
                 'choices' => $this->getAvailableCollectorPlugins(),
             ])
+            ->add(self::FIELD_DECISION_RULES, 'collection', [
+                'type' => new DecisionRuleType($this->availableDecisionRulePlugins),
+                'label' => null,
+            ])
             ->add('group', 'text', [
-                'data' => 'to be changed'
+                'data' => 'Default'
             ])
         ;
     }

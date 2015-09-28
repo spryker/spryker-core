@@ -6,14 +6,12 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Controller;
 
-use Composer\DependencyResolver\Pool;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\VoucherCodesTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Discount\Communication\Form\PoolCategoryForm;
 use SprykerFeature\Zed\Discount\Communication\Form\PoolForm;
-use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolTable;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherPoolCategoryTableMap;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +24,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  * @method DiscountDependencyContainer getDependencyContainer()
  * @method DiscountQueryContainer getQueryContainer()
- * @var DiscountFacade $facade
+ * @method DiscountFacade getFacede()
  */
 class PoolController extends AbstractController
 {
@@ -37,7 +35,7 @@ class PoolController extends AbstractController
     /**
      * @return array|RedirectResponse
      */
-    public function createAction()
+    public function createAction2()
     {
         $form = $this->getDependencyContainer()->createPoolForm();
         $form->handleRequest();
@@ -70,13 +68,81 @@ class PoolController extends AbstractController
         ];
     }
 
+    public function createAction(Request $request)
+    {
+        $form = $this->getDependencyContainer()->createCartRuleForm(
+            $this->getDependencyContainer()->createVoucherCodesFormType()
+        );
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $formData = $form->getData();
+
+            $voucherCodesTransfer = (new VoucherCodesTransfer())->fromArray($formData, true);
+
+            $voucherPoolTransfer = $this->getFacade()->saveVoucherCode($voucherCodesTransfer);
+
+//            return $this->redirectResponse(sprintf(
+//                VoucherPoolTable::URL_DISCOUNT_POOL_EDIT,
+//                VoucherPoolTable::PARAM_ID_POOL,
+//                $voucherPoolTransfer->getIdDiscountVoucherPool()
+//            ));
+
+        }
+
+        return [
+            'form' => $form->createView(),
+        ];
+    }
+
+    public function editAction(Request $request)
+    {
+        $idPool = $request->query->get(VoucherPoolTable::PARAM_ID_POOL);
+
+        $pool = $this->getQueryContainer()
+            ->queryVoucherCodeByIdVoucherCode($idPool)
+            ->findOne()
+        ;
+
+        $decisionRules = $this->getQueryContainer()
+            ->queryDiscountDecisionRulesByIdPool($pool)
+            ->find()
+        ;
+
+        $defaultData = (new VoucherCodesTransfer())->fromArray($pool->toArray(), true);
+        $defaultData->setDecisionRules($decisionRules->toArray());
+
+//        dump($defaultData->toArray());
+
+        $form = $this->getDependencyContainer()->createCartRuleForm(
+            $this->getDependencyContainer()->createVoucherCodesFormType(),
+            $defaultData->toArray()
+        );
+        $form->handleRequest($request);
+
+        if ($form->isValid()) {
+            $formData = $form->getData();
+
+            $voucherCodesTransfer = (new VoucherCodesTransfer())->fromArray($formData, true);
+
+            $this->getFacade()->saveVoucherCode($voucherCodesTransfer);
+
+            // @todo redirect to edit page
+
+        }
+
+        return [
+            'form' => $form->createView(),
+        ];
+    }
+
     /**
      * @param Request $request
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @return array|RedirectResponse
      */
-    public function editAction(Request $request)
+    public function editAction2(Request $request)
     {
         $idPool = $request->query->get(VoucherPoolTable::PARAM_ID_POOL);
 
@@ -84,6 +150,7 @@ class PoolController extends AbstractController
         $form->handleRequest();
 
         if ($form->isValid()) {
+            /** @var DiscountFacade $facade */
             $facade = $this->getFacade();
             $formData = $form->getData();
 
