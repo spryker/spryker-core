@@ -20,6 +20,8 @@ class RootNodeTable extends AbstractTable
 
     const ID_CATEGORY_NODE = 'id_category_node';
     const LOCALE_NAME = 'locale_name';
+    const COL_REORDER = 'Reorder';
+
 
     /**
      * @var CategoryQueryContainerInterface
@@ -55,7 +57,7 @@ class RootNodeTable extends AbstractTable
             SpyCategoryAttributeTableMap::COL_FK_CATEGORY => 'Category Id',
             SpyCategoryAttributeTableMap::COL_NAME => 'Name',
             SpyLocaleTableMap::COL_LOCALE_NAME => 'Locale',
-            'Reorder' => ''
+            self::COL_REORDER => ''
         ]);
         $config->setSortable([
             SpyLocaleTableMap::COL_LOCALE_NAME,
@@ -81,25 +83,41 @@ class RootNodeTable extends AbstractTable
 
         $results = [];
         foreach ($queryResults as $rootNode) {
-            $reorderButtonHtml = sprintf(
-                '<a href="/category/node/view?id-node=%d" id="node-%d" class="btn btn-xs btn-success"><i class="fa fa-sitemap"></i></a>',
-                $rootNode[self::ID_CATEGORY_NODE],
-                $rootNode[self::ID_CATEGORY_NODE]
-            );
-
-            $addButtonHtml = sprintf(
-                '<a href="/productCategory/add?id-parent-node=%d" class="btn btn-xs btn-success"><i class="fa fa-plus"></i></a>',
-                $rootNode[self::ID_CATEGORY_NODE]
-            );
-
             $results[] = [
                 SpyCategoryAttributeTableMap::COL_FK_CATEGORY => $rootNode[SpyCategoryAttributeTableMap::COL_FK_CATEGORY],
                 SpyCategoryAttributeTableMap::COL_NAME => $rootNode[SpyCategoryAttributeTableMap::COL_NAME],
                 SpyLocaleTableMap::COL_LOCALE_NAME => $rootNode[self::LOCALE_NAME],
-                'Reorder' => $reorderButtonHtml.' '.$addButtonHtml
+                self::COL_REORDER => $this->getReorderButtonHtml($rootNode).' '.$this->getAddButtonHtml($rootNode)
             ];
         }
         unset($queryResults);
         return $results;
+    }
+
+    /**
+     * @param array $rootNode
+     *
+     * @return string
+     */
+    protected function getAddButtonHtml(array $rootNode)
+    {
+        return sprintf(
+            '<a href="/category/node/view?id-node=%d" id="node-%d" class="btn btn-xs btn-success"><i class="fa fa-sitemap"></i></a>',
+            $rootNode[self::ID_CATEGORY_NODE],
+            $rootNode[self::ID_CATEGORY_NODE]
+        );
+    }
+
+    /**
+     * @param array $rootNode
+     *
+     * @return string
+     */
+    protected function getReorderButtonHtml(array $rootNode)
+    {
+        return sprintf(
+            '<a href="/productCategory/add?id-parent-node=%d" class="btn btn-xs btn-success"><i class="fa fa-plus"></i></a>',
+            $rootNode[self::ID_CATEGORY_NODE]
+        );
     }
 }

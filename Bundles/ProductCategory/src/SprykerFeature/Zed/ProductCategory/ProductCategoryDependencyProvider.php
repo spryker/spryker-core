@@ -16,6 +16,10 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_URL = 'url facade';
     const FACADE_PRODUCT = 'product facade';
     const FACADE_CATEGORY = 'category facade';
+    const FACADE_PRODUCT_CATEGORY = 'product category facade';
+    const QUERY_CONTAINER_CATEGORY = 'category query container';
+    const QUERY_CONTAINER_PRODUCT = 'product query container';
+    const QUERY_CONTAINER_PRODUCT_CATEGORY = 'product category query container';
 
     /**
      * @var Container
@@ -44,6 +48,22 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->category()->facade();
         };
 
+        $container[self::FACADE_PRODUCT_CATEGORY] = function (Container $container) {
+            return $container->getLocator()->productCategory()->facade();
+        };
+
+        $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
+            return $container->getLocator()->productCategory()->queryContainer();
+        };
+
+        $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+            return $container->getLocator()->product()->queryContainer();
+        };
+
+        $container[self::QUERY_CONTAINER_PRODUCT_CATEGORY] = function (Container $container) {
+            return $container->getLocator()->productCategory()->queryContainer();
+        };
+
         return $container;
     }
 
@@ -64,6 +84,22 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_CATEGORY] = function (Container $container) {
             return $container->getLocator()->category()->facade();
+        };
+
+        $container[self::FACADE_PRODUCT_CATEGORY] = function (Container $container) {
+            return $container->getLocator()->productCategory()->facade();
+        };
+
+        $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
+            return $container->getLocator()->productCategory()->queryContainer();
+        };
+
+        $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+            return $container->getLocator()->product()->queryContainer();
+        };
+
+        $container[self::QUERY_CONTAINER_PRODUCT_CATEGORY] = function (Container $container) {
+            return $container->getLocator()->productCategory()->queryContainer();
         };
 
         return $container;
