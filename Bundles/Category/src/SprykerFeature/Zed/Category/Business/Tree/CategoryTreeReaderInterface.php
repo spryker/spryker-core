@@ -117,13 +117,6 @@ interface CategoryTreeReaderInterface
     public function getCategoryIdentifier($categoryName, LocaleTransfer $locale);
 
     /**
-     * @param $idNode
-     *
-     * @return CategoryTransfer
-     */
-    public function getCategoryTransferByIdNode($idNode);
-
-    /**
      * @param int $idNode
      *
      * @return SpyCategoryNode
@@ -132,10 +125,31 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int $idCategory
+     * @return SpyCategoryNode[]
+     */
+    public function getAllNodesByIdCategory($idCategory);
+
+    /**
+     * @param int $idCategory
      *
      * @return SpyCategoryNode[]
      */
-    public function getNodesByIdCategory($idCategory);
+    public function getMainNodesByIdCategory($idCategory);
+
+    /**
+     * @param int $idCategory
+     *
+     * @return SpyCategoryNode[]
+     */
+    public function getNotMainNodesByIdCategory($idCategory);
+
+    /**
+     * @param int $idParentNode
+     * @param int $idLocale
+     *
+     * @return SpyCategoryNode[]
+     */
+    public function getCategoryNodesWithOrder($idParentNode, $idLocale);
 
     /**
      * @return SpyCategoryNode[]

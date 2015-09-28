@@ -15,6 +15,7 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_TOUCH = 'touch facade';
     const FACADE_LOCALE = 'locale facade';
     const FACADE_URL = 'url facade';
+    const FACADE_CATEGORY = 'category facade';
 
     /**
      * @var Container
@@ -35,6 +36,10 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->url()->facade();
         };
 
+        $container[self::FACADE_CATEGORY] = function (Container $container) {
+            return $container->getLocator()->category()->facade();
+        };
+
         return $container;
     }
 
@@ -47,6 +52,10 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::FACADE_LOCALE] = function (Container $container) {
             return $container->getLocator()->locale()->facade();
+        };
+
+        $container[self::FACADE_CATEGORY] = function (Container $container) {
+            return $container->getLocator()->category()->facade();
         };
 
         return $container;

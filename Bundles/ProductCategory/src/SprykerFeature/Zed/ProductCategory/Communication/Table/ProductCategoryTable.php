@@ -19,6 +19,8 @@ class ProductCategoryTable extends AbstractTable
 {
     const TABLE_IDENTIFIER = 'product-category-table';
 
+    const COL_CHECKBOX = 'checkbox';
+
     /**
      * @var ProductCategoryQueryContainerInterface
      */
@@ -61,8 +63,7 @@ class ProductCategoryTable extends AbstractTable
             SpyAbstractProductTableMap::COL_SKU => 'SKU',
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => 'Name',
             SpyProductCategoryTableMap::COL_PRODUCT_ORDER => 'Order',
-            SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => 'Preconfig',
-            'checkbox' => 'Selected',
+            self::COL_CHECKBOX => 'Selected',
         ]);
         $config->setSearchable([
             SpyAbstractProductTableMap::COL_SKU,
@@ -86,37 +87,25 @@ class ProductCategoryTable extends AbstractTable
 
         $results = [];
         foreach ($queryResults as $productCategory) {
-            $items = $this->getProductOptionsComboBoxItems($productCategory);
+            //TODO fix when properly implementing product preconfig
+            //https://kartenmacherei.atlassian.net/browse/KSP-877
+            /*
+               $items = $this->getProductOptionsComboBoxItems($productCategory);
 
-            $select_html = sprintf(
-                '<select id="product_category_preconfig_%d" onchange="updateProductCategoryPreconfig(this, %d)">%s</select>',
-                $productCategory['id_abstract_product'],
-                $productCategory['id_abstract_product'],
-                $items
-            );
-
-            $checkbox_html  = sprintf(
-                '<input id="product_category_checkbox_%d" type="checkbox" checked="checked" onclick="categoryTableClickMarkAsSelected(this.checked, %d, \'%s\', \'%s\'); return" /> ',
-                $productCategory['id_abstract_product'],
-                $productCategory['id_abstract_product'],
-                $productCategory['sku'],
-                urlencode($productCategory['name'])
-            );
-
-            $order_html = sprintf(
-                '<input type="text" value="%d" id="product_category_order_%d" size="4" onchange="updateProductOrder(this, %d)" />',
-                $productCategory['product_order'],
-                $productCategory['id_abstract_product'],
-                $productCategory['id_abstract_product']
-            );
+                $select_html = sprintf(
+                    '<select id="product_category_preconfig_%d" onchange="updateProductCategoryPreconfig(this, %d)">%s</select>',
+                    $productCategory['id_abstract_product'],
+                    $productCategory['id_abstract_product'],
+                    $items
+                );
+            */
 
             $results[] = [
                 SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => $productCategory['id_abstract_product'],
                 SpyAbstractProductTableMap::COL_SKU => $productCategory['sku'],
                 SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => $productCategory['name'],
-                SpyProductCategoryTableMap::COL_PRODUCT_ORDER => $order_html, //'<input type="text" value="'.$productCategory['product_order'].'" id="product_category_order_'.$productCategory['id_abstract_product'].'" size="4" onchange="updateProductOrder(this, '.$productCategory['id_abstract_product'].')" />',
-                SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => $select_html,
-                'checkbox' => $checkbox_html
+                SpyProductCategoryTableMap::COL_PRODUCT_ORDER => $this->getOrderHtml($productCategory),
+                self::COL_CHECKBOX => $this->getCheckboxHtml($productCategory)
             ];
         }
         unset($queryResults);
@@ -146,5 +135,36 @@ class ProductCategoryTable extends AbstractTable
         }
 
         return $items;
+    }
+
+    /**
+     * @param array $productCategory
+     *
+     * @return string
+     */
+    protected function getCheckboxHtml(array $productCategory)
+    {
+        return  sprintf(
+            '<input id="product_category_checkbox_%d" type="checkbox" checked="checked" onclick="categoryTableClickMarkAsSelected(this.checked, %d, \'%s\', \'%s\'); return" /> ',
+            $productCategory['id_abstract_product'],
+            $productCategory['id_abstract_product'],
+            $productCategory['sku'],
+            urlencode($productCategory['name'])
+        );
+    }
+
+    /**
+     * @param array $productCategory
+     *
+     * @return string
+     */
+    protected function getOrderHtml(array $productCategory)
+    {
+        return sprintf(
+            '<input type="text" value="%d" id="product_category_order_%d" size="4" onchange="updateProductOrder(this, %d)" />',
+            $productCategory['product_order'],
+            $productCategory['id_abstract_product'],
+            $productCategory['id_abstract_product']
+        );
     }
 }

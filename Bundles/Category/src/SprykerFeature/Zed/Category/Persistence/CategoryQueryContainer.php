@@ -42,21 +42,21 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             );
         $query->addJoinObject(
             (
-                new Join(
-                    SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE,
-                    SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
-                    Criteria::LEFT_JOIN
-                )
+            new Join(
+                SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE,
+                SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
+                Criteria::LEFT_JOIN
+            )
             )->setRightTableAlias('parent'),
             'parentJoin'
         );
         $query->addJoinObject(
             (
-                new Join(
-                    'parent.fk_category',
-                    SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
-                    Criteria::LEFT_JOIN
-                )
+            new Join(
+                'parent.fk_category',
+                SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
+                Criteria::LEFT_JOIN
+            )
             )->setRightTableAlias('parentAttributes'),
             'parentAttributesJoin'
         );
@@ -71,8 +71,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             $idLocale
         );
         $query->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'category_name')
-            ->withColumn('parentAttributes.name', 'parent_category_name')
-        ;
+            ->withColumn('parentAttributes.name', 'parent_category_name');
 
         return $query;
     }
@@ -96,13 +95,13 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     {
         return SpyCategoryNodeQuery::create()
             ->filterByFkParentCategoryNode($idNode)
-            ;
+            ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC);
     }
 
     /**
      * @param int $idCategory
      * @param $idParentNode
-     * 
+     *
      * @return SpyCategoryNodeQuery
      */
     public function queryNodeByIdCategoryAndParentNode($idCategory, $idParentNode)
@@ -113,14 +112,15 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
                 SpyCategoryNodeTableMap::COL_FK_CATEGORY . ' = ?',
                 $idCategory
             )
-        ; 
+        ;
     }
 
     /**
+     * @param int $idLocale
      *
-     * @return SpyCategoryAttributeQuery
+     * @return SpyCategoryNodeQuery
      */
-    public function queryRootNodes()
+    public function queryRootNodes($idLocale)
     {
         return SpyCategoryAttributeQuery::create()
             ->joinLocale()
@@ -131,11 +131,16 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             )
             ->addAnd(
                 SpyCategoryNodeTableMap::COL_IS_ROOT,
-                1,
-            Criteria::EQUAL
+                true,
+                Criteria::EQUAL
             )
             ->withColumn(
-                SpyLocaleTableMap::COL_LOCALE_NAME
+                SpyLocaleTableMap::COL_LOCALE_NAME,
+                'locale_name'
+            )
+            ->withColumn(
+                SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
+                'id_category_node'
             );
     }
 
@@ -164,7 +169,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
                 $idNode,
                 Criteria::EQUAL
             )
-        ;
+            ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC);
 
         return $nodeQuery;
     }
@@ -206,9 +211,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             ->setRightTableName('spy_category_closure_table')
             ->setRightTableAlias('descendants')
             ->setLeftTableName('spy_category_closure_table')
-            ->setLeftTableAlias('node')
-
-        ;
+            ->setLeftTableAlias('node');
 
         $joinCategoryNodeAscendant = new Join(
             'descendants.fk_category_node',
@@ -220,26 +223,23 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             ->setRightTableName('spy_category_closure_table')
             ->setRightTableAlias('ascendants')
             ->setLeftTableName('spy_category_closure_table')
-            ->setLeftTableAlias('descendants')
-
-        ;
+            ->setLeftTableAlias('descendants');
 
         $query->addJoinObject($joinCategoryNodeDescendant);
         $query->addJoinObject($joinCategoryNodeAscendant, 'ascendantsJoin');
 
-        $query
-            ->addJoinCondition(
-                    'ascendantsJoin',
-                    'ascendants.fk_category_node_descendant = node.fk_category_node'
-                );
+        $query->addJoinCondition(
+            'ascendantsJoin',
+            'ascendants.fk_category_node_descendant = node.fk_category_node'
+        );
+
         $query
             ->where(
                 'descendants.fk_category_node = ' . $idNode
             )
             ->where(
                 'ascendants.fk_category_node IS NULL'
-            )
-        ;
+            );
 
         return $query;
 
@@ -285,12 +285,10 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             ->endUse()
             ->addSelectColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE)
             ->addSelectColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE)
-            ->addSelectColumn(SpyCategoryAttributeTableMap::COL_NAME)
-        ;
+            ->addSelectColumn(SpyCategoryAttributeTableMap::COL_NAME);
         $nodeQuery->useDescendantQuery()
             ->filterByFkCategoryNode($idNode)
-            ->endUse()
-        ;
+            ->endUse();
 
         if ($excludeStartNode) {
             $nodeQuery->filterByIdCategoryNode($idNode, Criteria::NOT_EQUAL);
@@ -298,9 +296,11 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
         if ($onlyOneLevel) {
             $nodeQuery->filterByIdCategoryNode($idNode)
-                        ->_or();
+                ->_or();
             $nodeQuery->filterByFkParentCategoryNode($idNode);
         }
+
+        $nodeQuery->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC);
 
         return $nodeQuery;
     }
@@ -329,14 +329,12 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             ->orderByDepth(Criteria::DESC)
             ->filterByFkCategoryNodeDescendant($idNode)
             ->filterByDepth($depth, Criteria::NOT_EQUAL)
-            ->endUse()
-        ;
+            ->endUse();
         $nodeQuery->useCategoryQuery()
             ->useAttributeQuery()
             ->filterByFkLocale($idLocale)
             ->endUse()
-            ->endUse()
-        ;
+            ->endUse();
 
         if ($excludeRootNode) {
             $nodeQuery->filterByIsRoot(0);
@@ -346,8 +344,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             ->addAsColumn('fk_category', SpyCategoryNodeTableMap::COL_FK_CATEGORY)
             ->addAsColumn('id_category_node', SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE)
             ->addAsColumn('fk_category_node_descendant', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT)
-            ->addAsColumn('name', SpyCategoryAttributeTableMap::COL_NAME)
-        ;
+            ->addAsColumn('name', SpyCategoryAttributeTableMap::COL_NAME);
 
         $nodeQuery->setFormatter(new PropelArraySetFormatter());
 
@@ -365,8 +362,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         $query = new SpyCategoryClosureTableQuery();
         $query->filterByFkCategoryNode($idParentNode)
             ->innerJoinNode()
-            ->where(SpyCategoryClosureTableTableMap::COL_DEPTH . '> ?', 0)
-        ;
+            ->where(SpyCategoryClosureTableTableMap::COL_DEPTH . '> ?', 0);
 
         if ($excludeRoot) {
             $query->where(SpyCategoryNodeTableMap::COL_IS_ROOT . ' = false');
@@ -387,15 +383,14 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         $query->filterByFkCategoryNodeDescendant($idChildNode)
             ->innerJoinNode()
             ->useNodeQuery()
-                ->innerJoinCategory()
-                    ->useCategoryQuery()
-                        ->innerJoinAttribute()
-                    ->endUse()
-                ->endUse()
+            ->innerJoinCategory()
+            ->useCategoryQuery()
+            ->innerJoinAttribute()
+            ->endUse()
+            ->endUse()
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
             ->withColumn(SpyCategoryAttributeTableMap::COL_URL_KEY, 'url_key')
-            ->orderBy(SpyCategoryClosureTableTableMap::COL_DEPTH, 'DESC')
-        ;
+            ->orderBy(SpyCategoryClosureTableTableMap::COL_DEPTH, 'DESC');
 
         if ($excludeRoot) {
             $query->where(SpyCategoryNodeTableMap::COL_IS_ROOT . ' = false');
@@ -409,7 +404,9 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      */
     public function queryRootNode()
     {
-        return SpyCategoryNodeQuery::create()->filterByIsRoot(1);
+        return SpyCategoryNodeQuery::create()
+            ->filterByIsRoot(true)
+            ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC);
     }
 
     /**
@@ -437,9 +434,47 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      *
      * @return SpyCategoryNodeQuery
      */
-    public function queryNodesByCategoryId($idCategory)
+    public function queryAllNodesByCategoryId($idCategory)
     {
-        return SpyCategoryNodeQuery::create()->filterByFkCategory($idCategory);
+        return $this->queryNodesByCategoryId($idCategory, null);
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return SpyCategoryNodeQuery
+     */
+    public function queryMainNodesByCategoryId($idCategory)
+    {
+        return $this->queryNodesByCategoryId($idCategory, true);
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return SpyCategoryNodeQuery
+     */
+    public function queryNotMainNodesByCategoryId($idCategory)
+    {
+        return $this->queryNodesByCategoryId($idCategory, false);
+    }
+
+    /**
+     * @param $idCategory
+     * @param mixed $isMain true|false|null
+     *
+     * @return SpyCategoryNodeQuery
+     */
+    protected function queryNodesByCategoryId($idCategory, $isMain)
+    {
+        $query = SpyCategoryNodeQuery::create()
+            ->filterByFkCategory($idCategory);
+
+        if (null !== $isMain) {
+            $query->filterByIsMain($isMain);
+        }
+
+        return $query;
     }
 
     /**
@@ -479,8 +514,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             )
             ->withColumn(SpyCategoryTableMap::COL_ID_CATEGORY, 'id_category')
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
-            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, 'id_category_node')
-        ;
+            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, 'id_category_node');
     }
 
     /**
@@ -495,8 +529,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             ->joinLocale()
             ->filterByFkLocale($idLocale)
             ->filterByFkCategory($idCategory)
-            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME)
-        ;
+            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME);
     }
 
     /**
@@ -511,8 +544,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     {
         return SpyCategoryAttributeQuery::create()
             ->filterByName($name)
-            ->filterByFkLocale($idLocale)
-        ;
+            ->filterByFkLocale($idLocale);
     }
 
     /**
@@ -529,12 +561,10 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             ->useAttributeQuery()
             ->filterByFkLocale($idLocale)
             ->endUse()
-            ->endUse()
-        ;
+            ->endUse();
         $nodeQuery
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, 'id_category_node')
-            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'category_name')
-        ;
+            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'category_name');
 
         return $nodeQuery;
     }
@@ -552,7 +582,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         $rightTableAlias = 'categoryChildren',
         $fieldIdentifier = 'child',
         $leftTableAlias = SpyCategoryNodeTableMap::TABLE_NAME
-    ) {
+    )
+    {
         $expandableQuery
             ->addJoinObject(
                 (new Join(
@@ -589,7 +620,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         $leftTableAlias = SpyCategoryNodeTableMap::TABLE_NAME,
         $relationTableAlias = 'categoryParents',
         $fieldIdentifier = 'parent'
-    ) {
+    )
+    {
         $expandableQuery
             ->addJoinObject(
                 (new Join(
@@ -649,7 +681,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     public function joinCategoryQueryWithUrls(
         ModelCriteria $expandableQuery,
         $leftAlias = SpyCategoryNodeTableMap::TABLE_NAME
-    ) {
+    )
+    {
         $expandableQuery
             ->addJoinObject(
                 (new Join(
@@ -685,7 +718,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         ModelCriteria $expandableQuery,
         $relationTableAlias,
         $fieldIdentifier
-    ) {
+    )
+    {
         $expandableQuery->addJoinObject(
             (new Join(
                 $relationTableAlias . '.fk_category',
@@ -722,7 +756,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         ModelCriteria $expandableQuery,
         $relationTableAlias,
         $fieldIdentifier
-    ) {
+    )
+    {
         $expandableQuery->addJoinObject(
             (new Join(
                 $relationTableAlias . '.id_category_node',
@@ -755,7 +790,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     public function selectCategoryAttributeColumns(
         ModelCriteria $expandableQuery,
         $tableAlias = SpyCategoryAttributeTableMap::TABLE_NAME
-    ) {
+    )
+    {
         $expandableQuery->withColumn(
             $tableAlias . '.name',
             'category_name'
@@ -796,8 +832,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             ->filterByName($categoryName)
             ->filterByFkLocale($idLocale)
             ->endUse()
-            ->endUse()
-        ;
+            ->endUse();
 
         return $nodeQuery;
     }
@@ -812,8 +847,28 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         return SpyUrlQuery::create()
             ->joinSpyLocale()
             ->filterByFkResourceCategorynode($idCategoryNode)
-            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME)
-        ;
+            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME);
+    }
+
+    /**
+     * @param int $idParentNode
+     * @param int $idLocale
+     *
+     * @return SpyCategoryNodeQuery
+     */
+    public function getCategoryNodesWithOrder($idParentNode, $idLocale)
+    {
+        return SpyCategoryNodeQuery::create()
+            ->filterByFkParentCategoryNode($idParentNode)
+            ->useCategoryQuery()
+            ->innerJoinAttribute()
+            ->addAnd(
+                SpyCategoryAttributeTableMap::COL_FK_LOCALE,
+                $idLocale,
+                Criteria::EQUAL
+            )
+            ->endUse()
+            ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC);
     }
 
 }

@@ -77,7 +77,7 @@ class CategoryTreeFormatter
     }
 
     /**
-     * @return CategoryTreeStructure
+     * @return CategoryTreeFormatter
      */
     protected function structureArray()
     {
@@ -87,7 +87,7 @@ class CategoryTreeFormatter
     }
 
     /**
-     * @param id $parent
+     * @param int $parent
      *
      * @return array
      */

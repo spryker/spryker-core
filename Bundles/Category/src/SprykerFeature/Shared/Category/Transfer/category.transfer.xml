@@ -20,6 +20,7 @@
         <property name="idCategoryNode" type="int" />
         <property name="fkCategory" type="int" />
         <property name="fkParentCategoryNode" type="int" />
+        <property name="nodeOrder" type="int" />
     </transfer>
 
 </transfers>

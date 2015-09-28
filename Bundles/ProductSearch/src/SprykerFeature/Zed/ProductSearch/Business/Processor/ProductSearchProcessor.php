@@ -83,6 +83,9 @@ class ProductSearchProcessor implements ProductSearchProcessorInterface
             'string-sort' => [
                 'name' => $productData['abstract_name'],
             ],
+/*            'integer-sort' => [ //TODO work in progress: https://kartenmacherei.atlassian.net/browse/KSP-1041
+                'name' => $productData['product_order'],
+            ],*/
             'store' => $this->storeName,
             'locale' => $locale->getLocaleName(),
         ];

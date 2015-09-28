@@ -50,7 +50,7 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
      */
     public function createProductFacade()
     {
-        return $this->getLocator()->product()->facade();
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_PRODUCT);
     }
 
     /**
@@ -60,7 +60,7 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
      */
     public function createCategoryFacade()
     {
-        return $this->getLocator()->category()->facade();
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_CATEGORY);
     }
 
     /**
@@ -70,7 +70,7 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
      */
     public function createProductCategoryFacade()
     {
-        return $this->getLocator()->productCategory()->facade();
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_PRODUCT_CATEGORY);
     }
 
     /**
@@ -90,7 +90,7 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
      */
     public function createProductCategoryQueryContainer()
     {
-        return $this->getLocator()->productCategory()->queryContainer();
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::QUERY_CONTAINER_PRODUCT_CATEGORY);
     }
 
     /**
@@ -98,7 +98,7 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
      */
     public function createCategoryQueryContainer()
     {
-        return $this->getLocator()->category()->queryContainer();
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::QUERY_CONTAINER_CATEGORY);
     }
 
     /**
@@ -106,7 +106,7 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
      */
     public function createProductQueryContainer()
     {
-        return $this->getLocator()->product()->queryContainer();
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::QUERY_CONTAINER_PRODUCT);
     }
 
     /**

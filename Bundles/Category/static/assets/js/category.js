@@ -1,10 +1,11 @@
 'use strict';
 
+serializedList = {};
 $(document).ready(function() {
     var sprykerAjax = new SprykerAjax();
     var triggeredFirstEvent = false;
 
-    $('#root-node-table').on('click', 'tr', function(){
+    $('#root-node-table').on('click', 'tbody.tr', function(){
         showLoaderBar();
         var idCategoryNode = $(this).children('td:first').text();
         sprykerAjax.getCategoryTreeByIdCategoryNode(idCategoryNode);
@@ -28,7 +29,7 @@ $(document).ready(function() {
         }
     });
 
-    var serializedList = {};
+
     var updateOutput = function(e) {
         var list = e.length ? e : $(e.target);
         serializedList = window.JSON.stringify(list.nestable('serialize'));

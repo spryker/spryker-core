@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
 use Generated\Shared\Locale\LocaleInterface;
-use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
@@ -23,6 +22,10 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     const ID_CATEGORY = 'id_category';
     const ID_PARENT = 'parent';
     const TEXT = 'text';
+    const IS_ACTIVE = 'is_active';
+    const IS_MAIN = 'is_main';
+    const IS_CLICKABLE = 'is_clickable';
+    const IS_IN_MENU = 'is_in_menu';
 
     /**
      * @var CategoryQueryContainer
@@ -284,26 +287,6 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @param $idNode
-     *
-     * @return CategoryTransfer
-     */
-    public function getCategoryTransferByIdNode($idNode)
-    {
-        /**
-         * @var SpyCategoryNode $categoryEntity
-         */
-        $categoryEntity = $this->getNodesByIdCategory($idNode);
-        $categoryTransfer = new CategoryTransfer();
-        foreach ($categoryEntity->getCategory()->getAttributes() as $attributeEntity) {
-            $categoryTransfer->setName($attributeEntity->getName());
-        }
-        $categoryTransfer->setIdCategory($categoryEntity->getFkCategory());
-
-        return $categoryTransfer;
-    }
-
-    /**
      * @return SpyCategoryNode[]
      */
     public function getRootNodes()
@@ -319,10 +302,50 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
      *
      * @return SpyCategoryNode[]
      */
-    public function getNodesByIdCategory($idCategory)
+    public function getAllNodesByIdCategory($idCategory)
     {
         return $this->queryContainer
-            ->queryNodesByCategoryId($idCategory)
+            ->queryAllNodesByCategoryId($idCategory)
+            ->find()
+        ;
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return SpyCategoryNode[]
+     */
+    public function getMainNodesByIdCategory($idCategory)
+    {
+        return $this->queryContainer
+            ->queryMainNodesByCategoryId($idCategory)
+            ->find()
+        ;
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return SpyCategoryNode[]
+     */
+    public function getNotMainNodesByIdCategory($idCategory)
+    {
+        return $this->queryContainer
+            ->queryNotMainNodesByCategoryId($idCategory)
+            ->find()
+        ;
+    }
+
+    /**
+     * @param int $idParentNode
+     * @param int $idLocale
+     *
+     * @return SpyCategoryNode[]
+     */
+    public function getCategoryNodesWithOrder($idParentNode, $idLocale)
+    {
+        return $this->queryContainer
+            ->getCategoryNodesWithOrder($idParentNode, $idLocale)
             ->find()
         ;
     }
@@ -335,7 +358,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
      */
     public function getTree($idCategory, LocaleTransfer $localeTransfer)
     {
-        $nodes = $this->getNodesByIdCategory($idCategory);
+        $nodes = $this->getAllNodesByIdCategory($idCategory);
         $categoryNodes = $nodes->getData();
         if ($categoryNodes) {
             return $this->getTreeNodesRecursively($categoryNodes[0], $localeTransfer, true);
@@ -370,6 +393,10 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
                 self::ID_CATEGORY => $child->getFkCategory(),
                 self::ID_PARENT => $idParent,
                 self::TEXT => $child->getCategory()->getAttributes()->getFirst()->getName(),
+                self::IS_MAIN => $child->getIsMain(),
+                self::IS_ACTIVE => $child->getCategory()->isActive(),
+                self::IS_IN_MENU => $child->getCategory()->getIsInMenu(),
+                self::IS_CLICKABLE => $child->getCategory()->getIsClickable(),
             ];
             if ($child->countDescendants() > 0) {
                 $tree = array_merge($tree, $this->getTreeNodesRecursively($child, $localeTransfer));
