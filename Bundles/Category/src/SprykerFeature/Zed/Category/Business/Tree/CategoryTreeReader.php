@@ -253,7 +253,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
             );
         }
 
-        return $category->getPrimaryKey();
+        return $category->getFkCategory();
     }
 
     /**
