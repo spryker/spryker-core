@@ -74,7 +74,12 @@ class SessionHandlerFile implements \SessionHandlerInterface
     {
         $startTime = microtime(true);
         $key = $this->keyPrefix . $sessionId;
-        $content = file_get_contents($this->savePath . DIRECTORY_SEPARATOR . $key);
+        $sessionFile = $this->savePath . DIRECTORY_SEPARATOR . $key;
+        if (!file_exists($sessionFile)) {
+            return null;
+        }
+
+        $content = file_get_contents($sessionFile);
 
         Api::getInstance()->addCustomMetric(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 

@@ -8,10 +8,11 @@ namespace SprykerFeature\Shared\Session\Business\Model;
 
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Shared\Session\Business\Handler\SessionHandlerCouchbase;
+use SprykerFeature\Shared\Session\Business\Handler\SessionHandlerFile;
 use SprykerFeature\Shared\Session\Business\Handler\SessionHandlerMysql;
 use SprykerFeature\Shared\Session\Business\Handler\SessionHandlerRedis;
 
-abstract class SessionHelper
+abstract class SessionFactory
 {
 
     const BUCKET_NAME_POSTFIX = 'sessions';
@@ -72,9 +73,38 @@ abstract class SessionHelper
     }
 
     /**
+     * @param string $savePath
+     *
+     * @return SessionHandlerFile
+     */
+    public function registerFileSessionHandler($savePath)
+    {
+        $lifetime = $this->getSessionLifetime();
+        $handler = new SessionHandlerFile($savePath, $lifetime);
+        $this->setSessionSaveHandler($handler);
+
+        return $handler;
+    }
+
+    /**
      * @return int
      */
     abstract protected function getSessionLifetime();
+
+    /**
+     * @param $handler
+     */
+    protected function setSessionSaveHandler($handler)
+    {
+        session_set_save_handler(
+            [$handler, 'open'],
+            [$handler, 'close'],
+            [$handler, 'read'],
+            [$handler, 'write'],
+            [$handler, 'destroy'],
+            [$handler, 'gc']
+        );
+    }
 
     /**
      * @return string
@@ -131,21 +161,6 @@ abstract class SessionHelper
         }
 
         return $hosts;
-    }
-
-    /**
-     * @param $handler
-     */
-    protected function setSessionSaveHandler($handler)
-    {
-        session_set_save_handler(
-            [$handler, 'open'],
-            [$handler, 'close'],
-            [$handler, 'read'],
-            [$handler, 'write'],
-            [$handler, 'destroy'],
-            [$handler, 'gc']
-        );
     }
 
 }

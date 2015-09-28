@@ -132,13 +132,21 @@ class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME);
         $sessionHandlerFile->open($this->getSavePath(), self::SESSION_NAME);
         $sessionHandlerFile->write(self::SESSION_ID, self::SESSION_DATA);
-        sleep(2);
+        $this->makeFileOlderThanItIs();
         $sessionHandlerFile->write(self::SESSION_ID_2, self::SESSION_DATA);
-        $sessionHandlerFile->gc(1);
 
         $finder = new Finder();
         $finder->in($this->getSavePath());
 
+        $this->assertCount(2, $finder);
+
+        $sessionHandlerFile->gc(1);
+
         $this->assertCount(1, $finder);
+    }
+
+    protected function makeFileOlderThanItIs()
+    {
+        touch($this->getSavePath() . DIRECTORY_SEPARATOR . 'session:' . self::SESSION_ID, time() - 10);
     }
 }

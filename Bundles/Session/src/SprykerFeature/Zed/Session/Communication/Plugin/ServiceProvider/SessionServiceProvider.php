@@ -13,7 +13,7 @@ use SprykerFeature\Client\Session\Service\SessionClientInterface;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\Session\SessionConfig;
 use SprykerFeature\Shared\System\SystemConfig;
-use SprykerFeature\Zed\Session\Business\Model\SessionHelper;
+use SprykerFeature\Zed\Session\Business\Model\SessionFactory;
 
 class SessionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
@@ -36,6 +36,10 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
      */
     public function register(Application $app)
     {
+        $app['session.storage.options'] = [
+            'cookie_lifetime' => Config::get(SystemConfig::ZED_STORAGE_SESSION_TIME_TO_LIVE),
+        ];
+
         $this->client->setContainer($app['session']);
     }
 
@@ -51,7 +55,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
         $saveHandler = Config::get(SystemConfig::ZED_SESSION_SAVE_HANDLER);
         $savePath = $this->getSavePath($saveHandler);
 
-        $sessionHelper = new SessionHelper();
+        $sessionHelper = new SessionFactory();
 
         switch ($saveHandler) {
             case SessionConfig::SESSION_HANDLER_COUCHBASE:
@@ -68,6 +72,11 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
             case SessionConfig::SESSION_HANDLER_REDIS:
                 $savePath = isset($savePath) && !empty($savePath) ? $savePath : null;
                 $sessionHelper->registerRedisSessionHandler($savePath);
+                break;
+
+            case SessionConfig::SESSION_HANDLER_FILE:
+                $savePath = isset($savePath) && !empty($savePath) ? $savePath : null;
+                $sessionHelper->registerFileSessionHandler($savePath);
                 break;
 
             default:
@@ -92,17 +101,16 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
     protected function getSavePath($saveHandler)
     {
         $path = null;
-        switch ($saveHandler) {
-            case SessionConfig::SESSION_HANDLER_REDIS:
-                $path = Config::get(SystemConfig::ZED_STORAGE_SESSION_REDIS_PROTOCOL)
-                    . '://' . Config::get(SystemConfig::ZED_STORAGE_SESSION_REDIS_HOST)
-                    . ':' . Config::get(SystemConfig::ZED_STORAGE_SESSION_REDIS_PORT);
-                break;
-            case SessionConfig::SESSION_HANDLER_FILE:
-                $path = Config::get(SystemConfig::YVES_STORAGE_SESSION_REDIS_PROTOCOL);
-                break;
-            default:
-                throw new \Exception('Needs implementation for mysql and couchbase!');
+
+        if (SessionConfig::SESSION_HANDLER_REDIS === $saveHandler) {
+            $path = Config::get(SystemConfig::ZED_STORAGE_SESSION_REDIS_PROTOCOL)
+                . '://' . Config::get(SystemConfig::ZED_STORAGE_SESSION_REDIS_HOST)
+                . ':' . Config::get(SystemConfig::ZED_STORAGE_SESSION_REDIS_PORT)
+            ;
+        }
+
+        if (SessionConfig::SESSION_HANDLER_FILE === $saveHandler) {
+            $path = Config::get(SystemConfig::ZED_STORAGE_SESSION_FILE_PATH);
         }
 
         return $path;
