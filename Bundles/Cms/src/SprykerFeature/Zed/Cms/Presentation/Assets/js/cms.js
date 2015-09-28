@@ -99,7 +99,7 @@ function showAutoComplete(formId, type) {
                     text : item.key
                 }));
 
-                keyContainer.css({ top: keyInput.offset().top - 137 });
+                keyContainer.css({ top: keyInput.offset().top - 217 });
                 keyContainer.css({ left: keyInput.offset().left - 230 });
                 keyContainer.css({ width: keyInput.width() + 25 });
                 keyContainer.show();
@@ -189,7 +189,7 @@ function showBlockAutoComplete(elementId, type) {
     itemList.find('option').remove();
 
     var loadingBlock = $('.block-loading');
-    loadingBlock.css({ top: elementInput.offset().top - 28, left: elementInput.offset().left - 235, position : 'absolute'});
+    loadingBlock.css({ top: elementInput.offset().top - 108, left: elementInput.offset().left - 235, position : 'absolute'});
     loadingBlock.show();
 
     xhr = $.ajax({
@@ -204,7 +204,7 @@ function showBlockAutoComplete(elementId, type) {
                     text : item.name + '  ->  ' + item.url,
                 }));
 
-                itemContainer.css({ top: elementInput.offset().top - 28 });
+                itemContainer.css({ top: elementInput.offset().top - 108 });
                 itemContainer.css({ left: elementInput.offset().left - 235 });
                 itemContainer.css({ width: elementInput.width() + 25 });
                 itemContainer.show();

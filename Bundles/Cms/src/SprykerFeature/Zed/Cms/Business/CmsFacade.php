@@ -239,6 +239,15 @@ class CmsFacade extends AbstractFacade
     }
 
     /**
+     * @param CmsBlockTransfer $cmsBlockTransfer
+     */
+    public function touchBlockDelete(CmsBlockTransfer $cmsBlockTransfer)
+    {
+        $blockManager = $this->getDependencyContainer()->getBlockManager();
+        $blockManager->touchBlockDelete($cmsBlockTransfer);
+    }
+
+    /**
      * @param PageTransfer $pageTransfer
      * @param string $url
      *

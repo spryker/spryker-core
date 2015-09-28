@@ -36,4 +36,14 @@ interface BlockManagerInterface
      * @param CmsBlockInterface $cmsBlockTransfer
      */
     public function touchBlockActive(CmsBlockInterface $cmsBlockTransfer);
+
+    /**
+     * @param CmsBlockInterface $cmsBlockTransfer
+     */
+    public function touchBlockActiveWithKeyChange(CmsBlockInterface $cmsBlockTransfer);
+
+    /**
+     * @param CmsBlockInterface $cmsBlockTransfer
+     */
+    public function touchBlockDelete(CmsBlockInterface $cmsBlockTransfer);
 }

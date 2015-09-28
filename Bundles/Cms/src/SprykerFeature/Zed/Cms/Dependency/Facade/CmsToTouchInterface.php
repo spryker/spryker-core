@@ -17,4 +17,20 @@ interface CmsToTouchInterface
      * @return bool
      */
     public function touchActive($itemType, $itemId, $keyChange = false);
+
+    /**
+     * @param string $itemType
+     * @param int $itemId
+     *
+     * @return bool
+     */
+    public function touchInactive($itemType, $itemId);
+
+    /**
+     * @param string $itemType
+     * @param int $itemId
+     *
+     * @return bool
+     */
+    public function touchDeleted($itemType, $itemId);
 }

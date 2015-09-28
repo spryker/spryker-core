@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Cms\Business\Block;
 use Generated\Shared\Cms\CmsBlockInterface;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use SprykerFeature\Shared\Cms\CmsConfig;
+use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
 use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlock;
@@ -61,8 +62,20 @@ class BlockManager implements BlockManagerInterface
      */
     public function saveBlockAndTouch(CmsBlockInterface $cmsBlockTransfer)
     {
+        $blockEntity = $this->getCmsBlockByIdPage($cmsBlockTransfer->getFkPage());
+        $oldBlockEntity = null;
+
+        if ($blockEntity !== null) {
+            $oldBlockEntity = clone $blockEntity;
+        }
+
         $blockTransfer = $this->saveBlock($cmsBlockTransfer);
-        $this->touchBlockActive($blockTransfer);
+
+        if ($oldBlockEntity !== null) {
+            $this->touchKeyChangeNecessary($blockTransfer, $oldBlockEntity);
+        } else {
+            $this->touchBlockActive($blockTransfer);
+        }
 
         return $blockTransfer;
     }
@@ -86,6 +99,22 @@ class BlockManager implements BlockManagerInterface
     public function touchBlockActive(CmsBlockInterface $cmsBlockTransfer)
     {
         $this->touchFacade->touchActive(CmsConfig::RESOURCE_TYPE_BLOCK, $cmsBlockTransfer->getIdCmsBlock());
+    }
+
+    /**
+     * @param CmsBlockInterface $cmsBlockTransfer
+     */
+    public function touchBlockActiveWithKeyChange(CmsBlockInterface $cmsBlockTransfer)
+    {
+        $this->touchFacade->touchActive(CmsConfig::RESOURCE_TYPE_BLOCK, $cmsBlockTransfer->getIdCmsBlock(), true);
+    }
+
+    /**
+     * @param CmsBlockInterface $cmsBlockTransfer
+     */
+    public function touchBlockDelete(CmsBlockInterface $cmsBlockTransfer)
+    {
+        $this->touchFacade->touchDeleted(CmsConfig::RESOURCE_TYPE_BLOCK, $cmsBlockTransfer->getIdCmsBlock());
     }
 
     /**
@@ -149,4 +178,36 @@ class BlockManager implements BlockManagerInterface
 
         return $blockEntity;
     }
+
+    /**
+     * @param CmsBlockInterface $cmsBlockTransfer
+     * @param SpyCmsBlock $blockEntity
+     */
+    protected function touchKeyChangeNecessary(CmsBlockInterface $cmsBlockTransfer, SpyCmsBlock $blockEntity)
+    {
+        $blockName = $this->getCmsBlockKey($blockEntity->getName(), $blockEntity->getType(), $blockEntity->getValue());
+        $newBlockName = $this->getCmsBlockKey($cmsBlockTransfer->getName(), $cmsBlockTransfer->getType(), $cmsBlockTransfer->getValue());
+
+        if ($blockName !== $newBlockName) {
+            $cmsBlockTransfer->setIdCmsBlock($blockEntity->getIdCmsBlock());
+            $this->touchBlockActiveWithKeyChange($cmsBlockTransfer);
+        } else {
+            $this->touchBlockActive($cmsBlockTransfer);
+        }
+    }
+
+    /**
+     * @param string $name
+     * @param string $type
+     * @param string $value
+     *
+     * @return string
+     */
+    protected function getCmsBlockKey($name, $type, $value)
+    {
+        $blockKey = $name . '-' . $type . '-' . $value;
+
+        return $blockKey;
+    }
+
 }
