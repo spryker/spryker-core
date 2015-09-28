@@ -61,7 +61,6 @@ class ProductCategoryTable extends AbstractTable
             SpyAbstractProductTableMap::COL_SKU => 'SKU',
             SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => 'Name',
             SpyProductCategoryTableMap::COL_PRODUCT_ORDER => 'Order',
-            SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => 'Preconfig',
             'checkbox' => 'Selected',
         ]);
         $config->setSearchable([
@@ -86,14 +85,16 @@ class ProductCategoryTable extends AbstractTable
 
         $results = [];
         foreach ($queryResults as $productCategory) {
-            $items = $this->getProductOptionsComboBoxItems($productCategory);
+            //TODO fix when properly implementing product preconfig
+            //https://kartenmacherei.atlassian.net/browse/KSP-877
+            /*            $items = $this->getProductOptionsComboBoxItems($productCategory);
 
-            $select_html = sprintf(
-                '<select id="product_category_preconfig_%d" onchange="updateProductCategoryPreconfig(this, %d)">%s</select>',
-                $productCategory['id_abstract_product'],
-                $productCategory['id_abstract_product'],
-                $items
-            );
+                        $select_html = sprintf(
+                            '<select id="product_category_preconfig_%d" onchange="updateProductCategoryPreconfig(this, %d)">%s</select>',
+                            $productCategory['id_abstract_product'],
+                            $productCategory['id_abstract_product'],
+                            $items
+                        );*/
 
             $checkbox_html  = sprintf(
                 '<input id="product_category_checkbox_%d" type="checkbox" checked="checked" onclick="categoryTableClickMarkAsSelected(this.checked, %d, \'%s\', \'%s\'); return" /> ',
@@ -115,7 +116,6 @@ class ProductCategoryTable extends AbstractTable
                 SpyAbstractProductTableMap::COL_SKU => $productCategory['sku'],
                 SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => $productCategory['name'],
                 SpyProductCategoryTableMap::COL_PRODUCT_ORDER => $order_html, //'<input type="text" value="'.$productCategory['product_order'].'" id="product_category_order_'.$productCategory['id_abstract_product'].'" size="4" onchange="updateProductOrder(this, '.$productCategory['id_abstract_product'].')" />',
-                SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT => $select_html,
                 'checkbox' => $checkbox_html
             ];
         }
