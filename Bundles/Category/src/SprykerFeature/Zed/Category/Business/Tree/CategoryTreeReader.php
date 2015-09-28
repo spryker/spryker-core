@@ -246,7 +246,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
         if (!$category) {
             throw new MissingCategoryException(
                 sprintf(
-                    'Tried to retrieve a missing category %s, locale %s',
+                    'Tried to retrieve missing attributes of category %s, locale %s',
                     $categoryName,
                     $locale->getLocaleName()
                 )
