@@ -240,20 +240,20 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
      */
     public function getCategoryIdentifier($categoryName, LocaleTransfer $locale)
     {
-        $categoryQuery = $this->queryContainer->queryCategoryByName($categoryName, $locale->getIdLocale());
+        $categoryQuery = $this->queryContainer->queryCategoryAttributesByName($categoryName, $locale->getIdLocale());
         $category = $categoryQuery->findOne();
 
         if (!$category) {
             throw new MissingCategoryException(
                 sprintf(
-                    'Tried to retrieve a missing category %s, locale %s',
+                    'Tried to retrieve missing attributes of category %s, locale %s',
                     $categoryName,
                     $locale->getLocaleName()
                 )
             );
         }
 
-        return $category->getPrimaryKey();
+        return $category->getFkCategory();
     }
 
     /**
