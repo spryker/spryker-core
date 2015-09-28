@@ -7,12 +7,14 @@ namespace Functional\SprykerFeature\Zed\Glossary;
 
 use Codeception\TestCase\Test;
 use Generated\Zed\Ide\AutoCompletion;
+use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Kernel\Business\Factory as BusinessFactory;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Generated\Shared\Transfer\TranslationTransfer;
+use SprykerEngine\Zed\Touch\TouchDependencyProvider;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface;
@@ -25,7 +27,7 @@ use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
  * @group Glossary
  * @group GlossaryTest
  */
-class GlossaryTest extends Test
+class GlossaryTest extends AbstractFunctionalTest
 {
     /**
      * @var GlossaryFacade
@@ -308,7 +310,13 @@ class GlossaryTest extends Test
             return $container->getLocator()->flashMessenger()->facade();
         };
 
+        $touchContainer = new Container();
+        $touchContainer[TouchDependencyProvider::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
+            return $container->getLocator()->propel()->pluginConnection()->get();
+        };
+
         $this->glossaryFacade->setExternalDependencies($container);
+        $this->touchFacade->setExternalDependencies($touchContainer);
 
         $this->glossaryFacade->setOwnQueryContainer($this->glossaryQueryContainer);
     }

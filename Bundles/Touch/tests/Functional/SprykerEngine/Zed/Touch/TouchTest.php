@@ -7,17 +7,24 @@
 namespace Functional\SprykerEngine\Zed\Touch;
 
 use Codeception\TestCase\Test;
+use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Touch\Business\TouchFacade;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainer;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
-class TouchTest extends Test
+/**
+ * @group Zed
+ * @group Touch
+ * @group Business
+ * @group TouchTest
+ */
+class TouchTest extends AbstractFunctionalTest
 {
 
     /**
-     * @var \SprykerEngine\Zed\Touch\Business\TouchFacade
+     * @var TouchFacade
      */
     protected $touchFacade;
 
@@ -30,14 +37,11 @@ class TouchTest extends Test
     {
         parent::setUp();
         $locator = Locator::getInstance();
-        $this->touchFacade = new TouchFacade(new Factory('Touch'), $locator);
+        $this->touchFacade = $this->getFacade('SprykerEngine', 'Touch');
 
         $this->touchQueryContainer = new TouchQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Touch'), $locator);
     }
 
-    /**
-     * @group Touch
-     */
     public function testTouchActiveInsertsSomething()
     {
         $touchEntityQuery = $this->touchQueryContainer->queryTouchListByItemType('ProductTranslationWhatever');
@@ -49,9 +53,6 @@ class TouchTest extends Test
         $this->assertTrue($touchCountAfterTouch > $touchCountBeforeTouch);
     }
 
-    /**
-     * @group Touch
-     */
     public function testTouchInactiveInsertsSomething()
     {
         $touchEntityQuery = $this->touchQueryContainer->queryTouchListByItemType('ProductTranslationWhatever');
@@ -63,9 +64,6 @@ class TouchTest extends Test
         $this->assertTrue($touchCountAfterTouch > $touchCountBeforeTouch);
     }
 
-    /**
-     * @group Touch
-     */
     public function testTouchDeletedInsertsSomething()
     {
         $touchEntityQuery = $this->touchQueryContainer->queryTouchListByItemType('ProductTranslationWhatever');
