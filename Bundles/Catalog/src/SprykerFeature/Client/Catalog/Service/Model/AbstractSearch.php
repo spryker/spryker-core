@@ -205,7 +205,7 @@ abstract class AbstractSearch
      */
     protected function addSortingToQuery(Query $query)
     {
-        if ($this->request->query->has('sort')) {//default sort order = product_order_<category_id>
+        if ($this->request->query->has('sort')) {//TODO default sort order = product_order_<category_id> KSP-1041
             $this->sortParam = $this->request->query->get('sort');
             $sortParam = $this->request->query->get('sort');
             $sortField = $this->facetConfig->getSortFieldFromParam($sortParam);
