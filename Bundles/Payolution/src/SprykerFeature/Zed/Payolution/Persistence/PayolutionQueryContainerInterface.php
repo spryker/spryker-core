@@ -49,4 +49,9 @@ interface PayolutionQueryContainerInterface
      */
     public function queryTransactionStatusLogByPaymentIdAndPaymentCodeLatestFirst($idPayment, $paymentCode);
 
+    /**
+     * @return SpyPaymentPayolutionTransactionStatusLogQuery
+     */
+    public function queryTransactionStatusLog();
+
 }

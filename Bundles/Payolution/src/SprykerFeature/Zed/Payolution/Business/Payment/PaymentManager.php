@@ -17,6 +17,7 @@ use SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper\MethodMapperInte
 use SprykerFeature\Zed\Payolution\Business\PayolutionDependencyContainer;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
+use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLog;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLog;
 
 class PaymentManager implements PaymentManagerInterface
@@ -48,7 +49,7 @@ class PaymentManager implements PaymentManagerInterface
     private $dependencyContainer;
 
     /**
-     * @var array
+     * @var MethodMapperInterface[]
      */
     private $methodMappers = [];
 
@@ -219,11 +220,32 @@ class PaymentManager implements PaymentManagerInterface
      */
     private function sendLoggedRequest(PayolutionRequestTransfer $requestTransfer, SpyPaymentPayolution $paymentEntity)
     {
-        $this->logApiRequest($requestTransfer, $paymentEntity);
+        $this->logApiRequest($requestTransfer, $paymentEntity->getIdPaymentPayolution());
         $responseTransfer = $this->sendRequest($requestTransfer);
-        $this->logApiResponse($responseTransfer, $paymentEntity);
+        $this->logApiResponse($responseTransfer, $paymentEntity->getIdPaymentPayolution());
 
         return $responseTransfer;
+    }
+
+    /**
+     * @param PayolutionRequestTransfer $requestTransfer
+     * @param int $idPayment
+     *
+     * @return SpyPaymentPayolutionTransactionRequestLog
+     */
+    private function logApiRequest(PayolutionRequestTransfer $requestTransfer, $idPayment)
+    {
+        $logEntity = $this->getDependencyContainer()->createTransactionRequestLogEntity();
+        $logEntity
+            ->setPaymentCode($requestTransfer->getPaymentCode())
+            ->setPresentationAmount($requestTransfer->getPresentationAmount())
+            ->setPresentationCurrency($requestTransfer->getPresentationCurrency())
+            ->setTransactionId($requestTransfer->getIdentificationTransactionid())
+            ->setReferenceId($requestTransfer->getIdentificationReferenceid())
+            ->setFkPaymentPayolution($idPayment);
+        $logEntity->save();
+
+        return $logEntity;
     }
 
     /**
@@ -241,36 +263,15 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param PayolutionRequestTransfer $requestTransfer
-     * @param SpyPaymentPayolution $paymentEntity
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     */
-    private function logApiRequest(PayolutionRequestTransfer $requestTransfer, SpyPaymentPayolution $paymentEntity)
-    {
-        $this->getDependencyContainer()->createTransactionRequestLogEntity()
-            ->setPaymentCode($requestTransfer->getPaymentCode())
-            ->setPresentationAmount($requestTransfer->getPresentationAmount())
-            ->setPresentationCurrency($requestTransfer->getPresentationCurrency())
-            ->setTransactionId($requestTransfer->getIdentificationTransactionid())
-            ->setReferenceId($requestTransfer->getIdentificationReferenceid())
-            ->setFkPaymentPayolution($paymentEntity->getIdPaymentPayolution())
-            ->save();
-    }
-
-    /**
      * @param PayolutionResponseTransfer $responseTransfer
-     * @param SpyPaymentPayolution $paymentEntity
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @param int $idPayment
      */
-    private function logApiResponse(PayolutionResponseTransfer $responseTransfer, SpyPaymentPayolution $paymentEntity)
+    private function logApiResponse(PayolutionResponseTransfer $responseTransfer, $idPayment)
     {
         $logEntity = $this->getDependencyContainer()->createTransactionStatusLogEntity();
         $logEntity->fromArray($responseTransfer->toArray());
-        $logEntity
-            ->setFkPaymentPayolution($paymentEntity->getIdPaymentPayolution())
-            ->save();
+        $logEntity->setFkPaymentPayolution($idPayment);
+        $logEntity->save();
     }
 
     /**

@@ -99,11 +99,11 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     /**
      * @param OrderTransfer $orderTransfer
      * @param string $paymentCode
-     * @param string $exectedResponse
+     * @param string $expectedStatusReasonCode
      *
      * @return bool
      */
-    private function hasTransactionLogStatus(OrderTransfer $orderTransfer, $paymentCode, $exectedStatusReasonCode)
+    private function hasTransactionLogStatus(OrderTransfer $orderTransfer, $paymentCode, $expectedStatusReasonCode)
     {
         $idSalesOrder = $orderTransfer->getIdSalesOrder();
         $paymentEntity = $this->queryContainer->queryPaymentBySalesOrderId($idSalesOrder)->findOne();
@@ -120,7 +120,7 @@ class TransactionStatusLog implements TransactionStatusLogInterface
             return false;
         }
 
-        $expectedProcessingCode = $paymentCode . '.' . $exectedStatusReasonCode;
+        $expectedProcessingCode = $paymentCode . '.' . $expectedStatusReasonCode;
 
         return ($expectedProcessingCode === $logEntity->getProcessingCode());
     }

@@ -5,6 +5,7 @@
  */
 namespace SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
 
+use Generated\Shared\Transfer\PayolutionRequestTransfer;
 use SprykerFeature\Zed\Payolution\Business\Api\Constants;
 use SprykerFeature\Zed\Payolution\Business\Exception\PaymentMethodMapperMethodNotAvailableException;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
@@ -25,6 +26,8 @@ class Installment extends AbstractMethodMapper
      * @param string $uniqueId
      *
      * @throws PaymentMethodMapperMethodNotAvailableException
+     *
+     * @return PayolutionRequestTransfer
      */
     public function mapToCapture(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {

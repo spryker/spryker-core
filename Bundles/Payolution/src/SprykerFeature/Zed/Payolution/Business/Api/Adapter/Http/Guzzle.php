@@ -46,6 +46,8 @@ class Guzzle implements AdapterInterface
      */
     public function sendArrayDataRequest(array $data)
     {
+        \SprykerFeature_Shared_Library_Log::logRaw(json_encode($data), 'payolution.log');
+
         $guzzleRequest = $this->client->post(
           $this->gatewayUrl,
             $headers = ['Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8'],
@@ -59,6 +61,8 @@ class Guzzle implements AdapterInterface
         }
 
         parse_str($response->getBody($asString = true), $out);
+
+        \SprykerFeature_Shared_Library_Log::logRaw(json_encode($out), 'payolution.log');
 
         return $out;
     }

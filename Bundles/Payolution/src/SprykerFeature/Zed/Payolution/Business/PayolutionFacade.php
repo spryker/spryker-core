@@ -22,7 +22,10 @@ class PayolutionFacade extends AbstractFacade
      */
     public function saveOrderPayment(OrderInterface $orderTransfer)
     {
-        return $this->getDependencyContainer()->createOrderManager()->saveOrderPayment($orderTransfer);
+        return $this
+            ->getDependencyContainer()
+            ->createOrderManager()
+            ->saveOrderPayment($orderTransfer);
     }
 
     /**
@@ -32,7 +35,10 @@ class PayolutionFacade extends AbstractFacade
      */
     public function preCheckPayment(OrderTransfer $orderTransfer)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->preCheckPayment($orderTransfer);
+        return $this
+            ->getDependencyContainer()
+            ->createPaymentManager()
+            ->preCheckPayment($orderTransfer);
     }
 
     /**
@@ -42,7 +48,10 @@ class PayolutionFacade extends AbstractFacade
      */
     public function preAuthorizePayment($idPayment)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->preAuthorizePayment($idPayment);
+        return $this
+            ->getDependencyContainer()
+            ->createPaymentManager()
+            ->preAuthorizePayment($idPayment);
     }
 
     /**
@@ -52,7 +61,10 @@ class PayolutionFacade extends AbstractFacade
      */
     public function reAuthorizePayment($idPayment)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->reAuthorizePayment($idPayment);
+        return $this
+            ->getDependencyContainer()
+            ->createPaymentManager()
+            ->reAuthorizePayment($idPayment);
     }
 
     /**
@@ -62,7 +74,10 @@ class PayolutionFacade extends AbstractFacade
      */
     public function revertPayment($idPayment)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->revertPayment($idPayment);
+        return $this
+            ->getDependencyContainer()
+            ->createPaymentManager()
+            ->revertPayment($idPayment);
     }
 
     /**
@@ -72,7 +87,10 @@ class PayolutionFacade extends AbstractFacade
      */
     public function capturePayment($idPayment)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->capturePayment($idPayment);
+        return $this
+            ->getDependencyContainer()
+            ->createPaymentManager()
+            ->capturePayment($idPayment);
     }
 
     /**
@@ -82,7 +100,10 @@ class PayolutionFacade extends AbstractFacade
      */
     public function refundPayment($idPayment)
     {
-        return $this->getDependencyContainer()->createPaymentManager()->refundPayment($idPayment);
+        return $this
+            ->getDependencyContainer()
+            ->createPaymentManager()
+            ->refundPayment($idPayment);
     }
 
     /**

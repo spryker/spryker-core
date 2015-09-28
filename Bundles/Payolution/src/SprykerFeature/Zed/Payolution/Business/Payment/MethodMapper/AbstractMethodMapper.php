@@ -78,7 +78,8 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
         ));
         $requestTransfer->setAddressStreet($formattedStreet);
 
-        $criterionTransfer = (new PayolutionRequestAnalysisCriterionTransfer())
+        $criterionTransfer = new PayolutionRequestAnalysisCriterionTransfer();
+        $criterionTransfer
             ->setName(Constants::CRITERION_PRE_CHECK)
             ->setValue('TRUE');
         $requestTransfer->addAnalysisCriterion($criterionTransfer);
@@ -119,7 +120,8 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
             Constants::CRITERION_CUSTOMER_LANGUAGE => $paymentEntity->getLanguageIso2Code(),
         ];
         foreach ($criteria as $name => $value) {
-            $criterionTransfer = (new PayolutionRequestAnalysisCriterionTransfer())
+            $criterionTransfer = new PayolutionRequestAnalysisCriterionTransfer();
+            $criterionTransfer
                 ->setName($name)
                 ->setValue($value);
             $requestTransfer->addAnalysisCriterion($criterionTransfer);
@@ -136,8 +138,8 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
     private function mapGender($gender)
     {
         $genderMap = [
-            SpyPaymentPayolutionTableMap::COL_GENDER_MALE => 'M',
-            SpyPaymentPayolutionTableMap::COL_GENDER_FEMALE => 'F',
+            SpyPaymentPayolutionTableMap::COL_GENDER_MALE => Constants::SEX_MALE,
+            SpyPaymentPayolutionTableMap::COL_GENDER_FEMALE => Constants::SEX_FEMALE,
         ];
 
         return $genderMap[$gender];
@@ -230,10 +232,5 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
 
         return $requestTransfer;
     }
-
-    /**
-     * @return string
-     */
-    abstract public function getAccountBrand();
 
 }

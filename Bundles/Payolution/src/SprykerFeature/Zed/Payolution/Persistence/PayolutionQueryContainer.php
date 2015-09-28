@@ -91,7 +91,7 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
      */
     public function queryTransactionStatusLog()
     {
-        return SpyPaymentPayolutionTransactionStatusLogQuery::create()->create();
+        return SpyPaymentPayolutionTransactionStatusLogQuery::create();
     }
 
 }

@@ -22,7 +22,7 @@ class Converter implements ConverterInterface
 
         foreach ($data as $key => $value) {
             $convertedKey = str_replace(['_', '.'], ' ', $key);
-            $convertedKey = strtolower($convertedKey);
+            $convertedKey = mb_strtolower($convertedKey);
             $convertedKey = ucwords($convertedKey);
             $convertedKey = str_replace(' ', '', $convertedKey);
             $methodName = 'set' . $convertedKey;

@@ -59,9 +59,9 @@ class Converter implements ConverterInterface
      */
     private function convertKey($key)
     {
-        $convertedKey = str_replace('_', '.', $key);
+        $convertedKey = mb_strtoupper(str_replace('_', '.', $key));
 
-        return mb_strtoupper($convertedKey);
+        return $convertedKey;
     }
 
 }

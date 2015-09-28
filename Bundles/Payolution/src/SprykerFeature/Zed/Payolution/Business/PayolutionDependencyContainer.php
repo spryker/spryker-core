@@ -34,15 +34,13 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createPaymentManager()
     {
-        $paymentManager = $this
-            ->getFactory()
-            ->createPaymentPaymentManager(
-                $this->createExecutionAdapter(),
-                $this->getQueryContainer(),
-                $this->createRequestConverter(),
-                $this->createResponseConverter(),
-                $this
-            );
+        $paymentManager = $this->getFactory()->createPaymentPaymentManager(
+            $this->createExecutionAdapter(),
+            $this->getQueryContainer(),
+            $this->createRequestConverter(),
+            $this->createResponseConverter(),
+            $this
+        );
 
         $paymentManager->registerMethodMapper(
             $this->getFactory()->createPaymentMethodMapperInvoice($this->getConfig())
@@ -61,9 +59,7 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $gatewayUrl = $this->getConfig()->getGatewayUrl();
 
-        return $this
-            ->getFactory()
-            ->createApiAdapterHttpGuzzle($gatewayUrl);
+        return $this->getFactory()->createApiAdapterHttpGuzzle($gatewayUrl);
     }
 
     /**
