@@ -196,12 +196,10 @@ class OrderDetailsManager
      */
     protected function addOrderItemsToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
-        $orderItemsTransfer = new \ArrayObject();
         foreach ($orderEntity->getItems() as $orderItemEntity) {
             $itemTransfer = $this->createOrderItemTransfer($orderItemEntity);
-            $orderItemsTransfer->append($itemTransfer);
+            $orderTransfer->addItem($itemTransfer);
         }
-        $orderTransfer->setItems($orderItemsTransfer);
     }
 
     /**
