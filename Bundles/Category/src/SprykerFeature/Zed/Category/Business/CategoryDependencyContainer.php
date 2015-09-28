@@ -14,6 +14,7 @@ use SprykerFeature\Zed\Category\Business\Renderer\CategoryTreeRenderer;
 use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeReader;
 use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeWriter;
 use SprykerFeature\Zed\Category\Business\Tree\ClosureTableWriterInterface;
+use SprykerFeature\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
 use SprykerFeature\Zed\Category\Business\Tree\NodeWriterInterface;
 use SprykerFeature\Zed\Category\CategoryDependencyProvider;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToLocaleInterface;
@@ -21,7 +22,6 @@ use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
-use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeFormatter;
 
 /**
  * @method CategoryBusiness getFactory()
