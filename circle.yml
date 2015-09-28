@@ -4,8 +4,6 @@ machine:
   environment:
     APPLICATION_ENV: development
     APPLICATION_STORE: DE
-  services:
-    - elasticsearch
 
 dependencies:
   override:
