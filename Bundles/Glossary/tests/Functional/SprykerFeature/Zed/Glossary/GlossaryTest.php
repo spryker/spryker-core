@@ -1,11 +1,11 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace Functional\SprykerFeature\Zed\Glossary;
 
-use Codeception\TestCase\Test;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Kernel\Business\Factory as BusinessFactory;
@@ -29,6 +29,7 @@ use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
  */
 class GlossaryTest extends AbstractFunctionalTest
 {
+
     /**
      * @var GlossaryFacade
      */
@@ -43,7 +44,6 @@ class GlossaryTest extends AbstractFunctionalTest
      * @var GlossaryToTouchInterface
      */
     private $touchFacade;
-
 
     /**
      * @var GlossaryQueryContainerInterface
@@ -68,6 +68,11 @@ class GlossaryTest extends AbstractFunctionalTest
 
         $this->localeFacade = new Mock\LocaleFacade(new BusinessFactory('Locale'), $this->locator);
         $this->touchFacade = new Mock\TouchFacade(new BusinessFactory('Touch'), $this->locator);
+        $container = new Container();
+        $touchDependencyProvider = new TouchDependencyProvider();
+        $touchDependencyProvider->provideBusinessLayerDependencies($container);
+        $this->touchFacade->setExternalDependencies($container);
+
         $this->glossaryQueryContainer = new Mock\GlossaryQueryContainer(new PersistenceFactory('Glossary'), $this->locator);
         $this->touchQueryContainer = new Mock\TouchQueryContainer(new PersistenceFactory('Touch'), $this->locator);
 
@@ -299,7 +304,7 @@ class GlossaryTest extends AbstractFunctionalTest
         $container = new Container();
 
         $container[GlossaryDependencyProvider::FACADE_TOUCH] = function (Container $container) {
-            return $this->touchFacade ;
+            return $this->touchFacade;
         };
 
         $container[GlossaryDependencyProvider::FACADE_LOCALE] = function (Container $container) {
@@ -320,4 +325,5 @@ class GlossaryTest extends AbstractFunctionalTest
 
         $this->glossaryFacade->setOwnQueryContainer($this->glossaryQueryContainer);
     }
+
 }
