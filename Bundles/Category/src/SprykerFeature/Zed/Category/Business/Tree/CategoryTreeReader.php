@@ -22,6 +22,10 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     const ID_CATEGORY = 'id_category';
     const ID_PARENT = 'parent';
     const TEXT = 'text';
+    const IS_ACTIVE = 'is_active';
+    const IS_MAIN = 'is_main';
+    const IS_CLICKABLE = 'is_clickable';
+    const IS_IN_MENU = 'is_in_menu';
 
     /**
      * @var CategoryQueryContainer
@@ -389,6 +393,10 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
                 self::ID_CATEGORY => $child->getFkCategory(),
                 self::ID_PARENT => $idParent,
                 self::TEXT => $child->getCategory()->getAttributes()->getFirst()->getName(),
+                self::IS_MAIN => $child->getIsMain(),
+                self::IS_ACTIVE => $child->getCategory()->isActive(),
+                self::IS_IN_MENU => $child->getCategory()->getIsInMenu(),
+                self::IS_CLICKABLE => $child->getCategory()->getIsClickable(),
             ];
             if ($child->countDescendants() > 0) {
                 $tree = array_merge($tree, $this->getTreeNodesRecursively($child, $localeTransfer));
