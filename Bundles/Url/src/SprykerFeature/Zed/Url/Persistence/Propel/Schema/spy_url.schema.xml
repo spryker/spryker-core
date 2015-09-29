@@ -16,7 +16,7 @@
             <reference foreign="id_redirect" local="fk_resource_redirect"/>
         </foreign-key>
 
-        <unique>
+        <unique name="spy_url_unique_key">
             <unique-column name="url"/>
         </unique>
 
