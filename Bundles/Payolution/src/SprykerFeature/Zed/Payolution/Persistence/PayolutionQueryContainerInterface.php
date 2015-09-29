@@ -6,17 +6,22 @@
 
 namespace SprykerFeature\Zed\Payolution\Persistence;
 
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionQuery;
+use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLogQuery;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLogQuery;
 
 interface PayolutionQueryContainerInterface
 {
 
     /**
+     * @return SpyPaymentPayolutionQuery
+     */
+    public function queryPayments();
+
+    /**
      * @param $idPayment
      *
-     * @return SpyPaymentPayolution
+     * @return SpyPaymentPayolutionQuery
      */
     public function queryPaymentById($idPayment);
 
@@ -26,6 +31,11 @@ interface PayolutionQueryContainerInterface
      * @return SpyPaymentPayolutionQuery
      */
     public function queryPaymentBySalesOrderId($idSalesOrder);
+
+    /**
+     * @return SpyPaymentPayolutionTransactionStatusLogQuery
+     */
+    public function queryTransactionStatusLog();
 
     /**
      * @param $idPayment
@@ -50,8 +60,10 @@ interface PayolutionQueryContainerInterface
     public function queryTransactionStatusLogByPaymentIdAndPaymentCodeLatestFirst($idPayment, $paymentCode);
 
     /**
-     * @return SpyPaymentPayolutionTransactionStatusLogQuery
+     * @param int $idPayment
+     *
+     * @return SpyPaymentPayolutionTransactionRequestLogQuery
      */
-    public function queryTransactionStatusLog();
+    public function queryTransactionRequestLogByPaymentId($idPayment);
 
 }
