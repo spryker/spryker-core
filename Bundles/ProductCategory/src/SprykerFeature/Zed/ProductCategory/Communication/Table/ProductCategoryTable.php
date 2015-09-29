@@ -6,6 +6,7 @@
 namespace SprykerFeature\Zed\ProductCategory\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
@@ -81,6 +82,13 @@ class ProductCategoryTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->productCategoryQueryContainer->queryProductsByCategoryId($this->idCategory, $this->locale);
+        //because datatables won't let use what's already defined in queryProductsByCategoryId()
+        //it wil complain that the column <INSERT_NAME> is not found in <table>
+        $query->withColumn(
+            SpyProductCategoryTableMap::COL_PRODUCT_ORDER,
+            'product_order_alias'
+        );
+        $query->orderBy('product_order_alias', Criteria::DESC);
         $query->setModelAlias('spy_abstract_product');
 
         $queryResults = $this->runQuery($query, $config);

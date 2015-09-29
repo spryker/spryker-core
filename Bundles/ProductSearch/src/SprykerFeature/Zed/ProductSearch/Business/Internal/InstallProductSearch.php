@@ -16,17 +16,17 @@ class InstallProductSearch extends AbstractInstaller
     /**
      * @var Client
      */
-    private $client;
+    protected $client;
 
     /**
      * @var string
      */
-    private $indexName;
+    protected $indexName;
 
     /**
      * @var string
      */
-    private $indexType;
+    protected $indexType;
 
     /**
      * @param Client $client
@@ -130,7 +130,7 @@ class InstallProductSearch extends AbstractInstaller
                     'type' => 'object',
                     'include_in_all' => false,
                     'properties' => [
-                        'name' => ['type' => 'integer'],
+                        '*' => ['type' => 'integer'],
                     ],
                 ],
                 'float-sort' => [

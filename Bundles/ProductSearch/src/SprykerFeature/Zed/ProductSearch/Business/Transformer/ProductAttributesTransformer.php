@@ -96,13 +96,7 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
                     ];
                 }
 
-                //TODO work in progress: https://kartenmacherei.atlassian.net/browse/KSP-1041
-                //$abstractAttributes['product_order_1']= rand(1,10); //request in Yves, comes from DB xxx
-                //$abstractAttributes['product_order_2']= rand(1,10); //request in Yves, comes from DB xxx
-                //$abstractAttributes['product_order_3']= rand(1,10); //request in Yves, comes from DB xxx, _3 is category id
                 $attributes = $this->mapProductAttributes($abstractAttributes);
-                //$attributes['integer-sort']['product'] = rand(1,10); //request in Yves
-
                 $searchableProducts[$index] = array_merge_recursive($searchableProducts[$index], $attributes);
             }
         }
