@@ -168,6 +168,17 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
+     * @return array
+     */
+    public function getVoucherPoolCategories()
+    {
+        return $this->getDependencyContainer()
+            ->createVoucherPoolCategory()
+            ->getAvailableVoucherPoolCategories()
+        ;
+    }
+
+    /**
      * @param int $idDiscountVoucher
      *
      * @return array

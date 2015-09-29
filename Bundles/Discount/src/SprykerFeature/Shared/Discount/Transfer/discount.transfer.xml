@@ -81,6 +81,7 @@
     </transfer>
 
     <transfer name="VoucherCodes">
+        <property name="idDiscount" type="int"/>
         <property name="idDiscountVoucherPool" type="int" />
         <property name="fkDiscountVoucherPoolCategory" type="int"/>
         <property name="name" type="string"/>
@@ -96,7 +97,6 @@
         <property name="isPrivileged" type="bool"/>
         <property name="calculatorPlugin" type="string"/>
         <property name="collectorPlugin" type="string"/>
-        <property name="group" type="string"/>
         <property name="decisionRules" type="array"/>
     </transfer>
 

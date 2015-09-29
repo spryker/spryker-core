@@ -54,41 +54,75 @@ class VoucherCodesWriter extends AbstractWriter
         parent::__construct($queryContainer);
     }
 
+    /**
+     * @param VoucherCodesTransfer $voucherCodesTransfer
+     *
+     * @return VoucherPoolTransfer
+     */
     public function saveVoucherCode(VoucherCodesTransfer $voucherCodesTransfer)
     {
-        // save discount voucher pool category
         $voucherPoolCategory = $this->discountVoucherPoolCategoryWriter
             ->getOrCreateByName($voucherCodesTransfer->getVoucherPoolCategory())
         ;
 
-        // save discount voucher pool
-        $voucherPoolTransfer = (new VoucherPoolTransfer())->fromArray($voucherCodesTransfer->toArray(), true);
-        $voucherPoolTransfer->setFkDiscountVoucherPoolCategory($voucherPoolCategory->getIdDiscountVoucherPoolCategory());
-        $voucherPool = $this->discountVoucherPoolWriter->save($voucherPoolTransfer);
-
-        // save discount
-        $discountTransfer = $this->createDiscountTransfer($voucherCodesTransfer);
-        $discountTransfer->setFkDiscountVoucherPool($voucherPool->getIdDiscountVoucherPool());
-        $discountTransfer->setDisplayName($voucherCodesTransfer->getName());
-        $spyDiscount = $this->discountWriter->save($discountTransfer);
-        $discount = (new DiscountTransfer())->fromArray($spyDiscount->toArray(), true);
-
-        // save discount decision rule
+        $voucherPool = $this->saveDiscountVoucherPool($voucherCodesTransfer, $voucherPoolCategory);
+        $discount = $this->saveDiscount($voucherCodesTransfer, $voucherPool);
         $this->saveDiscountDecisionRules($voucherCodesTransfer, $discount);
 
         return (new VoucherPoolTransfer())->fromArray($voucherPool->toArray(), true);
     }
 
+    /**
+     * @param VoucherCodesTransfer $voucherCodesTransfer
+     * @param DiscountTransfer $discountTransfer
+     *
+     * @return null
+     */
     protected function saveDiscountDecisionRules(VoucherCodesTransfer $voucherCodesTransfer, DiscountTransfer $discountTransfer)
     {
         $decisionRules = $voucherCodesTransfer->getDecisionRules();
-        if (count($decisionRules) > 0) {
-            foreach ($decisionRules as $rule) {
-                $decisionRuleTransfer = (new DecisionRuleTransfer())->fromArray($rule, true);
-                $decisionRuleTransfer->setFkDiscount($discountTransfer->getIdDiscount());
-                $this->discountDecisionRuleWriter->saveDiscountDecisionRule($decisionRuleTransfer);
-            }
+        if (count($decisionRules) < 1) {
+            return null;
         }
+        foreach ($decisionRules as $rule) {
+            $decisionRuleTransfer = (new DecisionRuleTransfer())->fromArray($rule, true);
+            $decisionRuleTransfer->setFkDiscount($discountTransfer->getIdDiscount());
+            $decisionRuleTransfer->setName($discountTransfer->getDisplayName());
+            $this->discountDecisionRuleWriter->saveDiscountDecisionRule($decisionRuleTransfer);
+        }
+    }
+
+    /**
+     * @param VoucherCodesTransfer $voucherCodesTransfer
+     * @param $voucherPoolCategory
+     *
+     * @return SpyDiscountVoucherPool
+     */
+    protected function saveDiscountVoucherPool(VoucherCodesTransfer $voucherCodesTransfer, $voucherPoolCategory)
+    {
+        $voucherPoolTransfer = (new VoucherPoolTransfer())->fromArray($voucherCodesTransfer->toArray(), true);
+        $voucherPoolTransfer->setFkDiscountVoucherPoolCategory($voucherPoolCategory->getIdDiscountVoucherPoolCategory());
+        $voucherPool = $this->discountVoucherPoolWriter->save($voucherPoolTransfer);
+
+        return $voucherPool;
+    }
+
+    /**
+     * @param VoucherCodesTransfer $voucherCodesTransfer
+     * @param $voucherPool
+     *
+     * @return DiscountTransfer
+     */
+    protected function saveDiscount(VoucherCodesTransfer $voucherCodesTransfer, $voucherPool)
+    {
+        $discountTransfer = $this->createDiscountTransfer($voucherCodesTransfer);
+        $discountTransfer->setFkDiscountVoucherPool($voucherPool->getIdDiscountVoucherPool());
+        $discountTransfer->setDisplayName($voucherCodesTransfer->getName());
+
+        $spyDiscount = $this->discountWriter->save($discountTransfer);
+        $discount = (new DiscountTransfer())->fromArray($spyDiscount->toArray(), true);
+
+        return $discount;
     }
 
     /**
@@ -100,15 +134,4 @@ class VoucherCodesWriter extends AbstractWriter
     {
         return (new DiscountTransfer())->fromArray($voucherCodesTransfer->toArray(), true);
     }
-
-    public function createVoucherCode(VoucherCodesTransfer $voucherCodesTransfer)
-    {
-        throw new \Exception('not implemented yet');
-    }
-
-    public function updateVoucherCode(VoucherCodesTransfer $voucherCodesTransfer)
-    {
-        throw new \Exception('not implemented yet');
-    }
-
 }

@@ -27,7 +27,7 @@ class DiscountVoucherTable extends AbstractTable
     protected $discountVoucherQuery;
 
     /**
-     * @param SpyDiscountQuery $discountQuery
+     * @param SpyDiscountVoucherQuery $discountQuery
      */
     public function __construct(SpyDiscountVoucherQuery $discountQuery)
     {

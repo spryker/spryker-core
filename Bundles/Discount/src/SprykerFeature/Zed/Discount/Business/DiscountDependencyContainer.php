@@ -135,6 +135,16 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
+     * @return VoucherPoolCategory
+     */
+    public function createVoucherPoolCategory()
+    {
+        return $this->getFactory()->createModelVoucherPoolCategory(
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
      * @return VoucherCodesWriter
      */
     public function createVoucherCodesWriter()

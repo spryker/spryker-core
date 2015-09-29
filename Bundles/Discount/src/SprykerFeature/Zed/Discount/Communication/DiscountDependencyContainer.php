@@ -31,6 +31,7 @@ use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolTable;
 use SprykerFeature\Zed\Discount\Communication\Form\PoolCategoryForm;
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
 use Symfony\Component\Validator\Validation;
+use Zend\Filter\Word\CamelCaseToUnderscore;
 
 /**
  * @method DiscountCommunication getFactory()
@@ -145,7 +146,8 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
                     'value' => '',
                     'rules' => '',
                 ],
-            ]
+            ],
+            'group' => [],
         ];
     }
 
@@ -166,8 +168,18 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
         return new VoucherCodesType(
             $this->getConfig()->getAvailableCalculatorPlugins(),
             $this->getConfig()->getAvailableCollectorPlugins(),
-            $this->getConfig()->getAvailableDecisionRulePlugins()
+            $this->getConfig()->getAvailableDecisionRulePlugins(),
+            $this->getDiscountFacade()->getVoucherPoolCategories(),
+            $this->createCamelCaseToUnderscoreFilter()
         );
+    }
+
+    /**
+     * @return CamelCaseToUnderscore
+     */
+    public function createCamelCaseToUnderscoreFilter()
+    {
+        return new CamelCaseToUnderscore();
     }
 
     /**

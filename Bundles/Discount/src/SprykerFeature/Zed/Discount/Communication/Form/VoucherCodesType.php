@@ -2,11 +2,13 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
+use SprykerFeature\Zed\Discount\Communication\Form\Transformers\DecisionRulesFormTransformer;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
 use SprykerFeature\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Zend\Filter\Word\CamelCaseToUnderscore;
 
 class VoucherCodesType extends AbstractRuleType
 {
@@ -27,6 +29,34 @@ class VoucherCodesType extends AbstractRuleType
     const FIELD_CALCULATOR_PLUGIN = 'calculator_plugin';
     const FIELD_COLLECTOR_PLUGIN = 'collector_plugin';
     const FIELD_DECISION_RULES = 'decision_rules';
+
+    /**
+     * @var array
+     */
+    protected $availablePoolCategories;
+
+    /**
+     * @var CamelCaseToUnderscore
+     */
+    protected $camelCaseToUnderscoreFilter;
+
+    /**
+     * @param array $availableCalculatorPlugins
+     * @param array $availableCollectorPlugins
+     * @param array $availableDecisionRulePlugins
+     * @param array $availablePoolCategories
+     */
+    public function __construct(
+        array $availableCalculatorPlugins,
+        array $availableCollectorPlugins,
+        array $availableDecisionRulePlugins,
+        array $availablePoolCategories,
+        CamelCaseToUnderscore $camelCaseToUnderscore
+    ) {
+        $this->availablePoolCategories = $availablePoolCategories;
+
+        parent::__construct($availableCalculatorPlugins, $availableCollectorPlugins, $availableDecisionRulePlugins);
+    }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -89,10 +119,10 @@ class VoucherCodesType extends AbstractRuleType
             ->add(self::FIELD_DECISION_RULES, 'collection', [
                 'type' => new DecisionRuleType($this->availableDecisionRulePlugins),
                 'label' => null,
+                'allow_add' => true,
+                'allow_extra_fields' => true,
             ])
-            ->add('group', 'text', [
-                'data' => 'Default'
-            ])
+            ->addModelTransformer(new DecisionRulesFormTransformer($this->camelCaseToUnderscoreFilter))
         ;
     }
 
