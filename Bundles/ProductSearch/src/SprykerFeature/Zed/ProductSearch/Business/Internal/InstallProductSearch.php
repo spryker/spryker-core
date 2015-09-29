@@ -130,7 +130,7 @@ class InstallProductSearch extends AbstractInstaller
                     'type' => 'object',
                     'include_in_all' => false,
                     'properties' => [
-                        '*' => ['type' => 'integer'],
+                        'name' => ['type' => 'integer'],
                     ],
                 ],
                 'float-sort' => [
