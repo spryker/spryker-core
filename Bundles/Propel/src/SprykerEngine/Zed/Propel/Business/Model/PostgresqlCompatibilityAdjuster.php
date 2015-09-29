@@ -39,7 +39,6 @@ class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjuster
             $dom = $this->createDomDocumentFromFile($file);
             $domChanged = 0;
             $domChanged += $this->adjustForIdMethodParameter($dom);
-            $domChanged += $this->adjustForNamedIndices($dom);
             if ($domChanged > 0) {
                 $dom->save($file);
             }
