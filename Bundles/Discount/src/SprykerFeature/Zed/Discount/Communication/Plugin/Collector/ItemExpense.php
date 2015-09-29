@@ -6,7 +6,9 @@
 namespace SprykerFeature\Zed\Discount\Communication\Plugin\Collector;
 
 use Generated\Shared\Discount\OrderInterface;
+use Generated\Shared\Discount\DiscountInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
+use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
@@ -18,13 +20,12 @@ class ItemExpense extends AbstractPlugin implements DiscountCollectorPluginInter
 {
 
     /**
-     * @ param OrderInterface $container
+     * @param DiscountInterface $discount
      * @param CalculableInterface $container
      *
-     * @return OrderInterface[]
+     * @return DiscountableInterface[]
      */
-    public function collect(CalculableInterface $container)
-    //public function collect(OrderInterface $container)
+    public function collect(DiscountInterface $discount, CalculableInterface $container)
     {
         return $this->getDependencyContainer()->getDiscountFacade()->getDiscountableItemExpenses($container);
     }
