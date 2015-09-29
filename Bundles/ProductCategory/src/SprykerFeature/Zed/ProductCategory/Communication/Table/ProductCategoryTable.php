@@ -82,9 +82,11 @@ class ProductCategoryTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->productCategoryQueryContainer->queryProductsByCategoryId($this->idCategory, $this->locale);
+        //because datatables won't let use what's already defined in queryProductsByCategoryId()
+        //it wil complain that the column <INSERT_NAME> is not found in <table>
         $query->withColumn(
             SpyProductCategoryTableMap::COL_PRODUCT_ORDER,
-            'product_order_alias' //because datatables
+            'product_order_alias'
         );
         $query->orderBy('product_order_alias', Criteria::DESC);
         $query->setModelAlias('spy_abstract_product');
