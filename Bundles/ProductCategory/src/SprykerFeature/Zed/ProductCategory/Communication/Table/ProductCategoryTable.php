@@ -6,6 +6,7 @@
 namespace SprykerFeature\Zed\ProductCategory\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
@@ -81,6 +82,11 @@ class ProductCategoryTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->productCategoryQueryContainer->queryProductsByCategoryId($this->idCategory, $this->locale);
+        $query->withColumn(
+            SpyProductCategoryTableMap::COL_PRODUCT_ORDER,
+            'product_order_alias' //because datatables
+        );
+        $query->orderBy('product_order_alias', Criteria::DESC);
         $query->setModelAlias('spy_abstract_product');
 
         $queryResults = $this->runQuery($query, $config);
