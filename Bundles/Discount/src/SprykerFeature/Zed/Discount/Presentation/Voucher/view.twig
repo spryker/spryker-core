@@ -3,8 +3,8 @@
 {% set section_title = 'Generated Vouchers View' %}
 
 {% block action %}
-    {{ backActionButton('/discount/voucher/', 'List Vouchers' | trans }}
-    {{ viewActionButton('/discount/voucher/export?id-pool=' ~ idPool ~ '&generated-on=' ~ generatedOn, 'Export' | trans }}
+    {{ backActionButton('/discount/voucher/', 'List Vouchers' | trans) }}
+    {{ viewActionButton('/discount/voucher/export?id-pool=' ~ idPool ~ '&generated-on=' ~ generatedOn, 'Export' | trans) }}
 {% endblock %}
 
 {% block content %}
