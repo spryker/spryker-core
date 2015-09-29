@@ -13,6 +13,7 @@ use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Application\Communication\Console\BuildNavigationConsole;
 use SprykerFeature\Zed\Cache\Communication\Console\DeleteAllCachesConsole;
 use SprykerFeature\Zed\Installer\Communication\Console\InitializeDatabaseConsole;
+use SprykerFeature\Zed\Search\Communication\Console\SearchConsole;
 use SprykerFeature\Zed\Setup\Communication\Console\GenerateIdeAutoCompletionConsole;
 use SprykerFeature\Zed\Setup\Communication\Console\Npm\RunnerConsole;
 use SprykerFeature\Zed\Setup\Communication\Console\RemoveGeneratedDirectoryConsole;
@@ -80,6 +81,7 @@ class SetupConfig extends AbstractBundleConfig
             GenerateIdeAutoCompletionConsole::COMMAND_NAME,
             RunnerConsole::COMMAND_NAME => ['--' . RunnerConsole::OPTION_TASK_BUILD_ALL],
             BuildNavigationConsole::COMMAND_NAME,
+            SearchConsole::COMMAND_NAME,
         ];
     }
 
