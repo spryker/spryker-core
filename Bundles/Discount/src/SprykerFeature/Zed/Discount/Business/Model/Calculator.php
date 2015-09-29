@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
+use Generated\Shared\Discount\DiscountInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Distributor\DistributorInterface;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
@@ -25,13 +26,12 @@ class Calculator implements CalculatorInterface
     protected $calculatedDiscounts = [];
 
     /**
-     * @param SpyDiscount[] $discountCollection
-     *
+     * @param DiscountInterface[] $discountCollection
      * @param CalculableInterface $container
      * @param DiscountConfigInterface $settings
      * @param DistributorInterface $distributor
      *
-     * @return SpyDiscount[]
+     * @return array
      */
     public function calculate(
         array $discountCollection,
@@ -45,7 +45,7 @@ class Calculator implements CalculatorInterface
         foreach ($discountCollection as $discountTransfer) {
             $calculator = $settings->getCalculatorPluginByName($discountTransfer->getCalculatorPlugin());
             $collector = $settings->getCollectorPluginByName($discountTransfer->getCollectorPlugin());
-            $discountableObjects = $collector->collect($container);
+            $discountableObjects = $collector->collect($discountTransfer, $container);
 
             $discountAmount = $calculator->calculate($discountableObjects, $discountTransfer->getAmount());
             $discountTransfer->setAmount($discountAmount);

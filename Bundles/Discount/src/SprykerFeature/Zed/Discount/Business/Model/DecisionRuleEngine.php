@@ -22,7 +22,7 @@ class DecisionRuleEngine implements DecisionRuleInterface
      * @param CalculableInterface $discountableContainer
      * @param DiscountDecisionRulePluginInterface[] $decisionRulePlugins
      *
-     * @return bool
+     * @return ModelResult
      */
     public function evaluate(
         DiscountInterface $discountTransfer,
