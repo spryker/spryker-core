@@ -59,19 +59,6 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
 
         foreach ($productsRaw as $index => $productData) {
             if (isset($searchableProducts[$index])) {
-
-                //TODO work in progress: https://kartenmacherei.atlassian.net/browse/KSP-868
-                $categoryParentIds = explode(',', $productData['category_parent_ids']); //16,104,104,104,104,2,2,2,16,16,16,2,8,8,8,8
-                $productOrders = explode(',', $productData['product_order']); //70,0,0,0,0,70,70,70,70,70,70,70,0,0,0,0
-                $nodeIdList = explode(',', $productData['node_id']); //2,16
-
-                $productOrderList = [];
-                for ($x=0; $x<count($productOrders); $x++) {
-                    $parent = $categoryParentIds[$x];
-                    $order = $productOrders[$x];
-                    $productOrderList[$parent] = $order;
-                }
-
                 $productUrls = explode(', ', $productData['product_urls']);
                 $productData['url'] = $productUrls[0];
 
@@ -85,16 +72,6 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
                 $concreteSkus = explode(',', $productData['concrete_skus']);
                 $concreteNames = explode(',', $productData['concrete_names']);
                 $productData['concrete_products'] = [];
-
-                foreach ($nodeIdList as $nodeId) {
-                    /*$s = [
-                        'facet-value' => $productOrderList[$nodeId],
-                        'facet-name' => 'product_order',
-                        'facet-key' => $nodeId,
-                    ];
-                    $abstractAttributes['product_order'][] = $s;*/
-                    $abstractAttributes['product_order_'.$nodeId] = $productOrderList[$nodeId];
-                }
 
                 $lastSku = '';
                 for ($i = 0, $l = count($concreteSkus); $i < $l; $i++) {
@@ -119,13 +96,7 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
                     ];
                 }
 
-                //TODO work in progress: https://kartenmacherei.atlassian.net/browse/KSP-868
-                //$abstractAttributes['product_order_1']= rand(1,10); //request in Yves, comes from DB xxx
-                //$abstractAttributes['product_order_2']= rand(1,10); //request in Yves, comes from DB xxx
-                //$abstractAttributes['product_order_3']= rand(1,10); //request in Yves, comes from DB xxx, _3 is category id
                 $attributes = $this->mapProductAttributes($abstractAttributes);
-                //$attributes['integer-sort']['product'] = rand(1,10); //request in Yves
-
                 $searchableProducts[$index] = array_merge_recursive($searchableProducts[$index], $attributes);
             }
         }
