@@ -30,6 +30,7 @@ include:
  - Bundles/Glossary/
  - Bundles/GlossaryDistributor/
  - Bundles/GlossaryQueue/
+ - Bundles/Doctor/
  - Bundles/Installer/
  - Bundles/Invoice/
  - Bundles/Kernel/

@@ -43,7 +43,7 @@ class TestHelper extends Module
 
     /**
      * @param TestCase $e
-     * @apram $fail
+     * @param $fail
      */
     public function _failed(TestCase $e, $fail)
     {

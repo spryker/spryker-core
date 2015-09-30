@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\System\Communication\Controller;
 
 use SprykerFeature\Shared\Library\Error\ErrorLogger;
 /*
- * Class Heartbeat
+ * Class Doctor
  * @package SprykerFeature\Zed\System\Communication\Controller
  */
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
@@ -18,12 +18,6 @@ class HeartbeatController extends AbstractController
 
     const HEARTBEAT_OK = 'heartbeat:ok';
     const ERROR_EMPTY_DATABASE = 'Empty database';
-
-    public function init()
-    {
-        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->markIgnoreApdex();
-        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->markIgnoreTransaction();
-    }
 
     public function indexAction()
     {

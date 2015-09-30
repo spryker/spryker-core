@@ -3,5 +3,8 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-$bootstrap = SprykerFeature\Shared\Library\SystemUnderTest\SystemUnderTestBootstrap::getInstance();
-$bootstrap->bootstrap('Zed');
+
+use SprykerFeature\Shared\Library\SystemUnderTest\SystemUnderTestBootstrap;
+
+$bootstrap = SystemUnderTestBootstrap::getInstance();
+$bootstrap->bootstrap(SystemUnderTestBootstrap::APPLICATION_ZED);
