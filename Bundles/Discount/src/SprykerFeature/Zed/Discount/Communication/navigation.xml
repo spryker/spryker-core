@@ -5,13 +5,6 @@
         <title>Discount</title>
         <bundle>discount</bundle>
         <pages>
-            <voucher>
-                <label>Vouchers List</label>
-                <title>Vouchers List</title>
-                <bundle>discount</bundle>
-                <controller>voucher</controller>
-                <action>index</action>
-            </voucher>
             <pool>
                 <label>Voucher Codes</label>
                 <title>Voucher Codes</title>
