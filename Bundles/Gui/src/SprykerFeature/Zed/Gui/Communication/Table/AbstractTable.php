@@ -10,6 +10,7 @@ use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractTable
@@ -359,7 +360,7 @@ abstract class AbstractTable
      *
      * @return array
      */
-    protected function runQuery(ModelCriteria $query, TableConfiguration $config)
+    protected function runQuery(ModelCriteria $query, TableConfiguration $config, $returnRawResults=false)
     {
         //$limit = $config->getPageLength();
         $limit = $this->getLimit();
@@ -400,6 +401,10 @@ abstract class AbstractTable
             ->limit($limit)
         ;
         $data = $query->find();
+
+        if (true === $returnRawResults) {
+            return $data;
+        }
 
         return $data->toArray(null, false, TableMap::TYPE_COLNAME);
     }
