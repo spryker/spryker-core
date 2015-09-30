@@ -44,4 +44,20 @@ interface TouchQueryContainerInterface
      */
     public function queryTouchEntries($itemType, $itemEvent, array $itemIds);
 
+    /**
+     * @param string $itemType
+     *
+     * @return SpyTouchQuery
+     */
+    public function queryTouchDeleteStorageAndSearch($itemType);
+
+    /**
+     * @param string $itemType
+     *
+     * @throws PropelException
+     *
+     * @return SpyTouchQuery
+     */
+    public function queryTouchDeleteOnlyByItemType($itemType);
+
 }
