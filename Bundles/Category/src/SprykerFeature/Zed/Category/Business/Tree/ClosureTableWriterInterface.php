@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 
 interface ClosureTableWriterInterface
@@ -25,5 +26,7 @@ interface ClosureTableWriterInterface
      * @param int $nodeId
      */
     public function delete($nodeId);
+
+    public function rebuildCategoryNodes();
 
 }

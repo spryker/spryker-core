@@ -8,11 +8,13 @@ namespace SprykerFeature\Zed\Category\Business\Tree;
 
 use Generated\Shared\Transfer\NodeTransfer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
-use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryClosureTableTableMap;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
+use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTable;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTableQuery;
+use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNodeQuery;
+
 
 class ClosureTableWriter implements ClosureTableWriterInterface
 {
@@ -135,6 +137,94 @@ class ClosureTableWriter implements ClosureTableWriterInterface
         $entity->setFkCategoryNodeDescendant($nodeId);
         $entity->setDepth(0);
         $entity->save();
+    }
+
+    public function rebuildCategoryNodes()
+    {
+        $connection = Propel::getConnection();
+
+        echo "<pre>";
+
+        $this->removeCircularRelations();
+
+        $query = SpyCategoryNodeQuery::create();
+        $query
+            ->orderByFkParentCategoryNode()
+            ->orderByNodeOrder('DESC')
+        ;
+
+        $categoryNodes = $query->find();
+
+        foreach ($categoryNodes as $nodeEntity) {
+            if ($nodeEntity->isRoot()) {
+                continue;
+            }
+
+            echo "Updated node closure table for: ".$nodeEntity->getIdCategoryNode().', parent: '.$nodeEntity->getFkParentCategoryNode()."<br/>\n";
+
+            $nodeToMove = (new NodeTransfer())->fromArray($nodeEntity->toArray());
+            $this->delete($nodeToMove->getIdCategoryNode());
+            $this->create($nodeToMove);
+            $this->moveNode($nodeToMove);
+        }
+
+        echo "Done updated ".$categoryNodes->count()." nodes.<br/>\n";
+
+        echo "</pre>";
+
+        $connection->commit();
+    }
+
+    protected function removeCircularRelations()
+    {
+        $query = SpyCategoryNodeQuery::create();
+        $query
+            ->innerJoinCategory()
+            ->useCategoryQuery()
+                ->innerJoinAttribute()
+            ->endUse()
+            ->orderByFkParentCategoryNode()
+            ->orderByNodeOrder('DESC')
+            ->where(SpyCategoryNodeTableMap::COL_FK_CATEGORY .' = '.SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE)
+            ->_and()
+            ->where(SpyCategoryNodeTableMap::COL_IS_ROOT .' = false')
+        ;
+
+        $badNodes = $query->find();
+        foreach ($badNodes as $entityToMoveToRoot) {
+            if ($entityToMoveToRoot->isRoot()) {
+                continue;
+            }
+
+            printf (
+                "Removing circular referenced node: %s from [%d]<br/>\n",
+                $entityToMoveToRoot->getCategory()->getAttributes()->getFirst()->getName(),
+                $entityToMoveToRoot->getFkParentCategoryNode()
+            );
+
+            $this->delete($entityToMoveToRoot->getIdCategoryNode());
+
+            $query = SpyCategoryNodeQuery::create();
+            $query
+                ->innerJoinCategory()
+                ->useCategoryQuery()
+                ->innerJoinAttribute()
+                ->endUse()
+                ->orderByFkParentCategoryNode()
+                ->orderByNodeOrder('DESC')
+                ->where(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE .' = ?', $entityToMoveToRoot->getIdCategoryNode())
+                ->_and()
+                ->where(SpyCategoryNodeTableMap::COL_IS_ROOT .' = false')
+            ;
+
+            $badChildrenToRemove = $query->find();
+            foreach ($badChildrenToRemove as $badChild) {
+                $this->delete($badChild->getIdCategoryNode());
+                $badChild->delete();
+            }
+
+            $entityToMoveToRoot->delete();
+        }
     }
 
 }
