@@ -193,6 +193,8 @@ class CategoryTreeWriter
      */
     public function deleteNode($idNode, LocaleTransfer $locale, $deleteChildren = false)
     {
+        $connection = Propel::getConnection();
+
         //order of execution matters, this must be called before node is deleted
         $this->touchUrlDeleted($idNode, $locale);
         
@@ -210,7 +212,16 @@ class CategoryTreeWriter
         $this->touchCategoryDeleted($idNode);
         $this->touchNavigationDeleted();
 
-        return $this->nodeWriter->delete($idNode);
+        $result =  $this->nodeWriter->delete($idNode);
+
+        $connection->commit();
+
+        return $result;
+    }
+
+    public function rebuildClosureTable()
+    {
+        $this->closureTableWriter->rebuildCategoryNodes();
     }
 
     /**

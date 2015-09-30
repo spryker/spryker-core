@@ -310,4 +310,12 @@ class CategoryFacade extends AbstractFacade
         ;
     }
 
+    public function rebuildClosureTable()
+    {
+        $this->getDependencyContainer()
+            ->createCategoryTreeWriter()
+            ->rebuildClosureTable()
+        ;
+    }
+
 }
