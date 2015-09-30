@@ -25,32 +25,7 @@ class CartRuleType extends AbstractRuleType
 
     const DATE_NOW = 'now';
 
-    /**
-     * @var array
-     */
-    protected $availableCalculatorPlugins;
 
-    /**
-     * @var array
-     */
-    protected $availableCollectorPlugins;
-
-    /**
-     * @var array
-     */
-    protected $availableDecisionRulePlugins;
-
-    /**
-     * @param array $availableCalculatorPlugins
-     * @param array $availableCollectorPlugins
-     * @param array $availableDecisionRulePlugins
-     */
-    public function __construct(array $availableCalculatorPlugins, array $availableCollectorPlugins, array $availableDecisionRulePlugins)
-    {
-        $this->availableCalculatorPlugins = $availableCalculatorPlugins;
-        $this->availableCollectorPlugins = $availableCollectorPlugins;
-        $this->availableDecisionRulePlugins = $availableDecisionRulePlugins;
-    }
 
     /**
      * @param FormBuilderInterface $builder
@@ -112,36 +87,6 @@ class CartRuleType extends AbstractRuleType
                 'allow_extra_fields' => true,
             ])
         ;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getAvailableCalculatorPlugins()
-    {
-        $plugins = [];
-        $availablePlugins = array_keys($this->availableCalculatorPlugins);
-
-        foreach ($availablePlugins as $plugin) {
-            $plugins[$plugin] = $this->filterChoicesLabels($plugin);
-        }
-
-        return $plugins;
-    }
-
-    /**
-     * @return array
-     */
-    protected function getAvailableCollectorPlugins()
-    {
-        $plugins = [];
-        $availablePlugins = array_keys($this->availableCollectorPlugins);
-
-        foreach ($availablePlugins as $plugin) {
-            $plugins[$plugin] = $this->filterChoicesLabels($plugin);
-        }
-
-        return $plugins;
     }
 
     /**

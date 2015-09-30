@@ -59,15 +59,10 @@ class DiscountVoucherPoolCategoryWriter extends AbstractWriter
     {
         $category = $this->getQueryContainer()
             ->queryDiscountVoucherPoolCategory()
-            ->findOneByName($discountPoolCategoryName)
+            ->filterByName($discountPoolCategoryName)
+            ->findOneOrCreate()
         ;
-
-        if (is_null($category)) {
-            $categoryTransfer = new VoucherPoolCategoryTransfer();
-            $categoryTransfer->setName($discountPoolCategoryName);
-
-            return $this->create($categoryTransfer);
-        }
+        $category->save();
 
         return $category;
     }

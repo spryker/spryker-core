@@ -80,5 +80,25 @@
         <property name="decisionRules" type="array"/>
     </transfer>
 
+    <transfer name="VoucherCodes">
+        <property name="idDiscount" type="int"/>
+        <property name="idDiscountVoucherPool" type="int" />
+        <property name="fkDiscountVoucherPoolCategory" type="int"/>
+        <property name="name" type="string"/>
+        <property name="template" type="string"/>
+        <property name="isActive" type="bool"/>
+        <property name="isInfinitelyUsable" type="bool"/>
+        <property name="voucherPoolCategory" type="string"/>
+        <property name="description" type="string"/>
+        <property name="amount" type="int"/>
+        <property name="type" type="string"/>
+        <property name="validFrom" type="string"/>
+        <property name="validTo" type="string"/>
+        <property name="isPrivileged" type="bool"/>
+        <property name="calculatorPlugin" type="string"/>
+        <property name="collectorPlugin" type="string"/>
+        <property name="decisionRules" type="array"/>
+    </transfer>
+
 </transfers>
 

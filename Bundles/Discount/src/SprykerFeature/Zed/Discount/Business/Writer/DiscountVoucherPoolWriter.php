@@ -47,4 +47,18 @@ class DiscountVoucherPoolWriter extends AbstractWriter
         return $discountVoucherPoolEntity;
     }
 
+    /**
+     * @param VoucherPoolTransfer $voucherPoolTransfer
+     *
+     * @return SpyDiscountVoucherPool
+     */
+    public function save(VoucherPoolTransfer $voucherPoolTransfer)
+    {
+        if ($voucherPoolTransfer->getIdDiscountVoucherPool() > 0) {
+            return $this->update($voucherPoolTransfer);
+        }
+
+        return $this->create($voucherPoolTransfer);
+    }
+
 }

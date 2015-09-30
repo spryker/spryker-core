@@ -23,6 +23,7 @@ use SprykerFeature\Zed\Discount\Business\Writer\DiscountVoucherPoolCategoryWrite
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountVoucherPoolWriter;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Discount\Business\DecisionRule\Voucher;
+use SprykerFeature\Zed\Discount\Business\Writer\VoucherCodesWriter;
 use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\DiscountDependencyProvider;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
@@ -130,6 +131,30 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createWriterDiscountWriter(
             $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return VoucherPoolCategory
+     */
+    public function createVoucherPoolCategory()
+    {
+        return $this->getFactory()->createModelVoucherPoolCategory(
+            $this->getQueryContainer()
+        );
+    }
+
+    /**
+     * @return VoucherCodesWriter
+     */
+    public function createVoucherCodesWriter()
+    {
+        return $this->getFactory()->createWriterVoucherCodesWriter(
+            $this->getQueryContainer(),
+            $this->createDiscountWriter(),
+            $this->createDiscountVoucherPoolWriter(),
+            $this->createDiscountVoucherPoolCategoryWriter(),
+            $this->createDiscountDecisionRuleWriter()
         );
     }
 

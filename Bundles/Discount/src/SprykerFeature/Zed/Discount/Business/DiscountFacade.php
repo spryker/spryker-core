@@ -9,6 +9,7 @@ use Generated\Shared\Discount\OrderInterface;
 use Generated\Shared\Transfer\CartRuleTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DecisionRuleTransfer;
+use Generated\Shared\Transfer\VoucherCodesTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
@@ -129,6 +130,16 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
+     * @param VoucherCodesTransfer $voucherCodesTransfer
+     *
+     * @return $this
+     */
+    public function saveVoucherCode(VoucherCodesTransfer $voucherCodesTransfer)
+    {
+        return $this->getDependencyContainer()->createVoucherCodesWriter()->saveVoucherCode($voucherCodesTransfer);
+    }
+
+    /**
      * @return array
      */
     public function getDecisionRulePluginNames()
@@ -154,6 +165,17 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     public function updateDiscount(DiscountTransfer $discountTransfer)
     {
         return $this->getDependencyContainer()->createDiscountWriter()->update($discountTransfer);
+    }
+
+    /**
+     * @return array
+     */
+    public function getVoucherPoolCategories()
+    {
+        return $this->getDependencyContainer()
+            ->createVoucherPoolCategory()
+            ->getAvailableVoucherPoolCategories()
+        ;
     }
 
     /**

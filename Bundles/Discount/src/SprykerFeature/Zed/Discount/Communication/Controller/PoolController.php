@@ -6,14 +6,12 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Controller;
 
-use Composer\DependencyResolver\Pool;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\VoucherCodesTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Discount\Communication\Form\PoolCategoryForm;
 use SprykerFeature\Zed\Discount\Communication\Form\PoolForm;
-use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolTable;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherPoolCategoryTableMap;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +24,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 /**
  * @method DiscountDependencyContainer getDependencyContainer()
  * @method DiscountQueryContainer getQueryContainer()
- * @var DiscountFacade $facade
+ * @method DiscountFacade getFacade()
  */
 class PoolController extends AbstractController
 {
@@ -34,35 +32,26 @@ class PoolController extends AbstractController
     const TERM = 'term';
     const BLANK = '';
 
-    /**
-     * @return array|RedirectResponse
-     */
-    public function createAction()
+    public function createAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createPoolForm();
-        $form->handleRequest();
+        $form = $this->getDependencyContainer()->createCartRuleForm(
+            $this->getDependencyContainer()->createVoucherCodesFormType()
+        );
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $facade = $this->getFacade();
             $formData = $form->getData();
 
-            $pool = new VoucherPoolTransfer();
-            $pool->fromArray($formData, true);
+            $voucherCodesTransfer = (new VoucherCodesTransfer())->fromArray($formData, true);
 
-            $category = $facade->getOrCreateDiscountVoucherPoolCategoryByName($formData[PoolForm::VOUCHER_POOL_CATEGORY]);
+            $voucherPoolTransfer = $this->getFacade()->saveVoucherCode($voucherCodesTransfer);
 
-            $pool->setFkDiscountVoucherPoolCategory($category->getIdDiscountVoucherPoolCategory());
-            $pool = $facade->createDiscountVoucherPool($pool);
+            return $this->redirectResponse(sprintf(
+                VoucherPoolTable::URL_DISCOUNT_POOL_EDIT,
+                VoucherPoolTable::PARAM_ID_POOL,
+                $voucherPoolTransfer->getIdDiscountVoucherPool()
+            ));
 
-            $discount = new DiscountTransfer();
-            $discount->fromArray($formData, true);
-            $discount->setDisplayName(self::BLANK);
-            $discount->setCollectorPlugin(self::BLANK);
-            $discount->setFkDiscountVoucherPool($pool->getIdDiscountVoucherPool());
-
-            $facade->createDiscount($discount);
-
-            return $this->redirectResponse('/discount/pool');
         }
 
         return [
@@ -70,48 +59,30 @@ class PoolController extends AbstractController
         ];
     }
 
-    /**
-     * @param Request $request
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     * @return array|RedirectResponse
-     */
     public function editAction(Request $request)
     {
         $idPool = $request->query->get(VoucherPoolTable::PARAM_ID_POOL);
 
-        $form = $this->getDependencyContainer()->createPoolForm($idPool);
-        $form->handleRequest();
+        $defaultData = $this->getVoucherCodeDefaultData($idPool);
+
+        $form = $this->getDependencyContainer()->createCartRuleForm(
+            $this->getDependencyContainer()->createVoucherCodesFormType(),
+            $defaultData->toArray()
+        );
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
-            $facade = $this->getFacade();
             $formData = $form->getData();
 
-            $pool = $this->getQueryContainer()->queryDiscountVoucherPool()->findOneByIdDiscountVoucherPool($idPool);
-            $poolTransfer = new VoucherPoolTransfer();
-            $poolTransfer->fromArray(array_merge($pool->toArray(), $formData), true);
-
-            $category = $facade->getOrCreateDiscountVoucherPoolCategoryByName($formData[PoolForm::VOUCHER_POOL_CATEGORY]);
-            $poolTransfer->setFkDiscountVoucherPoolCategory($category->getIdDiscountVoucherPoolCategory());
-
-            $facade->updateDiscountVoucherPool($poolTransfer);
-
-            $discount = $this->getQueryContainer()->queryDiscount()->findOneByFkDiscountVoucherPool($idPool);
-            $discount->setAmount($formData[PoolForm::AMOUNT]);
-            $discount->setType($formData[PoolForm::AMOUNT_TYPE]);
-            $discount->setDescription($formData[PoolForm::DESCRIPTION]);
-            $discount->setIsPrivileged($formData[PoolForm::IS_PRIVILEGED]);
-
-            $discountTransfer = new DiscountTransfer();
-            $discountTransfer->fromArray($discount->toArray(), true);
-
-            $facade->updateDiscount($discountTransfer);
+            $voucherCodesTransfer = (new VoucherCodesTransfer())->fromArray($formData, true);
+            $voucherPoolTransfer = $this->getFacade()->saveVoucherCode($voucherCodesTransfer);
 
             return $this->redirectResponse(sprintf(
                 VoucherPoolTable::URL_DISCOUNT_POOL_EDIT,
                 VoucherPoolTable::PARAM_ID_POOL,
-                $idPool
+                $voucherPoolTransfer->getIdDiscountVoucherPool()
             ));
+
         }
 
         return [
@@ -229,6 +200,39 @@ class PoolController extends AbstractController
         }
 
         return $this->jsonResponse($result);
+    }
+
+    /**
+     * @param int $idPool
+     *
+     * @return array
+     */
+    protected function getVoucherCodeDefaultData($idPool)
+    {
+        $discountVoucherPool = $this->getQueryContainer()->queryVoucherCodeByIdVoucherCode($idPool)->findOne();
+
+        $discount = $this->getDiscountByIdVoucherPool($idPool);
+
+        $decisionRules = $this->getQueryContainer()->queryDiscountDecisionRulesByIdPool($discountVoucherPool)->find();
+
+        $defaultData = (new VoucherCodesTransfer())->fromArray($discountVoucherPool->toArray(), true);
+        $defaultData->setDecisionRules($decisionRules->toArray());
+        $defaultData->setCalculatorPlugin($discount->getCalculatorPlugin());
+        $defaultData->setCollectorPlugin($discount->getCollectorPlugin());
+        $defaultData->setIsPrivileged((bool) $discount->getIsPrivileged());
+        $defaultData->setValidFrom($discount->getValidFrom());
+        $defaultData->setValidTo($discount->getValidTo());
+
+        return $defaultData;
+    }
+
+    protected function getDiscountByIdVoucherPool($idVoucherPool)
+    {
+        return $this->getQueryContainer()
+            ->queryDiscount()
+            ->filterByFkDiscountVoucherPool($idVoucherPool)
+            ->findOne()
+        ;
     }
 
 }

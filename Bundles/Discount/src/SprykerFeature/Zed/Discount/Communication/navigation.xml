@@ -13,8 +13,8 @@
                 <action>index</action>
             </voucher>
             <pool>
-                <label>Pool List</label>
-                <title>Pool List</title>
+                <label>Voucher Codes</label>
+                <title>Voucher Codes</title>
                 <bundle>discount</bundle>
                 <controller>pool</controller>
                 <action>index</action>

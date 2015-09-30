@@ -44,5 +44,18 @@ class DiscountWriter extends AbstractWriter
         return $discountEntity;
     }
 
+    /**
+     * @param DiscountTransfer $discountTransfer
+     *
+     * @return SpyDiscount
+     */
+    public function save(DiscountTransfer $discountTransfer)
+    {
+        if ($discountTransfer->getIdDiscount() > 0) {
+            return $this->update($discountTransfer);
+        }
+
+        return $this->create($discountTransfer);
+    }
 
 }
