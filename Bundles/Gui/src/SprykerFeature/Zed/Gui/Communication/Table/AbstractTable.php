@@ -18,6 +18,11 @@ abstract class AbstractTable
     const TABLE_CLASS = 'gui-table-data';
     const TABLE_CLASS_NO_SEARCH_SUFFIX = '-no-search';
 
+    const BUTTON_CLASS = 'class';
+    const BUTTON_HREF = 'href';
+    const BUTTON_DEFAULT_CLASS = 'btn-default';
+    const BUTTON_ICON = 'icon';
+
     /**
      * @var Request
      */
@@ -458,4 +463,156 @@ abstract class AbstractTable
         $this->filtered = $filtered;
     }
 
+
+    /**
+     * @param string $url
+     * @param string $title
+     * @param array|null $options
+     *
+     * @return string
+     */
+    protected function generateCreateButton($url, $title, array $options = null)
+    {
+        $defaultOptions = [
+            'class' => 'btn-primary',
+            'icon' => 'fa-plus',
+        ];
+
+        return $this->generateButton($url, $title, $defaultOptions, $options);
+    }
+
+    /**
+     * @param string $url
+     * @param string $title
+     * @param array|null $options
+     *
+     * @return string
+     */
+    protected function generateEditButton($url, $title, array $options = null)
+    {
+        $defaultOptions = [
+            'class' => 'btn-success',
+            'icon' => 'fa-pencil-square-o',
+        ];
+
+        return $this->generateButton($url, $title, $defaultOptions, $options);
+    }
+
+    /**
+     * @param string $url
+     * @param string $title
+     * @param array|null $options
+     *
+     * @return string
+     */
+    protected function generateViewButton($url, $title, array $options = null)
+    {
+        $defaultOptions = [
+            'class' => 'btn-info',
+            'icon' => 'fa-caret-right',
+        ];
+
+        return $this->generateButton($url, $title, $defaultOptions, $options);
+    }
+
+    /**
+     * @param string $url
+     * @param string $title
+     * @param array|null $options
+     *
+     * @return string
+     */
+    protected function generateRemoveButton($url, $title, array $options = null)
+    {
+        $defaultOptions = [
+            'class' => 'btn-danger',
+            'icon' => 'fa-trash',
+        ];
+
+        return $this->generateButton($url, $title, $defaultOptions, $options);
+    }
+
+    /**
+     * @param string $url
+     * @param string $title
+     * @param array $defaultOptions
+     * @param array $customOptions
+     *
+     * @return string
+     */
+    private function generateButton($url, $title, array $defaultOptions, array $customOptions = null)
+    {
+        $buttonOptions = $this->generateButtonOptions($defaultOptions, $customOptions);
+
+        $class = $this->getButtonClass($defaultOptions, $customOptions);
+        $parameters = $this->getButtonParameters($buttonOptions);
+
+        $html = '<a href="' . $url . '" class="btn btn-xs btn-outline ' . $class . '"'. $parameters . '>';
+
+        if (true === array_key_exists(self::BUTTON_ICON, $buttonOptions) && null !== $buttonOptions[self::BUTTON_ICON]) {
+            $html .= '<i class="fa ' . $buttonOptions[self::BUTTON_ICON] . '"></i> ';
+        }
+
+        $html .= $title;
+        $html .= '</a>';
+
+        return $html;
+    }
+
+    /**
+     * @param array $defaultOptions
+     *
+     * @return string
+     */
+    private function getButtonClass(array $defaultOptions, array $options = null)
+    {
+        $class = '';
+
+        if (array_key_exists(self::BUTTON_CLASS, $defaultOptions)) {
+            $class .= ' ' . $defaultOptions[self::BUTTON_CLASS];
+        }
+        if (null !== $options && array_key_exists(self::BUTTON_CLASS, $options)) {
+            $class .= ' ' . $options[self::BUTTON_CLASS];
+        }
+
+        if (true === empty($class)) {
+            return self::BUTTON_DEFAULT_CLASS;
+        }
+
+        return $class;
+    }
+
+    /**
+     * @param array $buttonOptions
+     *
+     * @return string
+     */
+    private function getButtonParameters(array $buttonOptions)
+    {
+        $parameters = '';
+        foreach ($buttonOptions as $argument => $value) {
+            if (true === in_array($argument, [self::BUTTON_CLASS, self::BUTTON_HREF, self::BUTTON_ICON])) {
+                continue;
+            }
+            $parameters .= sprintf(' %s="%s"', $argument, $value);
+        }
+
+        return $parameters;
+    }
+
+    /**
+     * @param array $defaultOptions
+     * @param array $options
+     *
+     * @return array
+     */
+    private function generateButtonOptions(array $defaultOptions, array $options = null)
+    {
+        $buttonOptions = $defaultOptions;
+        if (true === is_array($options)) {
+            $buttonOptions = array_merge($defaultOptions, $options);
+        }
+
+        return $buttonOptions;
+    }
 }
