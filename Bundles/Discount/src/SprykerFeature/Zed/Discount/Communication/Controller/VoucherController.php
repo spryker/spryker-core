@@ -87,7 +87,6 @@ class VoucherController extends AbstractController
     {
         $idPool = $request->query->get(self::ID_POOL_PARAMETER);
 
-        $vouchersCreatedAt = $this->getSession()->get(self::SESSION_TIME);
 
         $pool = $this->getDependencyContainer()
             ->getVoucherPoolById($idPool)
@@ -98,12 +97,11 @@ class VoucherController extends AbstractController
         ;
 
         $countVouchers = $this->getDependencyContainer()
-            ->getGeneratedVouchersCountByIdPoolAndTimestamp($pool->getIdDiscountVoucherPool(), $vouchersCreatedAt)
+            ->getGeneratedVouchersCountByIdPool($pool->getIdDiscountVoucherPool())
         ;
 
         return $this->viewResponse([
             'idPool' => $idPool,
-            'generatedOn' => $vouchersCreatedAt->getTimestamp(),
             'pool' => $pool,
             'discount' => $discount,
             'countVouchers' => $countVouchers,
@@ -125,43 +123,6 @@ class VoucherController extends AbstractController
         $createdAt->setTimestamp($timestamp);
 
         return $this->generateCsvFromVouchers($idPool, $createdAt);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return JsonResponse
-     */
-    public function statusAction(Request $request)
-    {
-        $discountId = $request->request->get('id');
-        $response = $this->getFacade()->toggleDiscountActiveStatus($discountId);
-
-        return $this->jsonResponse($response);
-    }
-
-    /**
-     * @return array
-     */
-    public function indexAction()
-    {
-        $table = $this->getDependencyContainer()->createDiscountVoucherTable();
-
-        return [
-            'vouchers' => $table->render(),
-        ];
-    }
-
-    /**
-     * @return JsonResponse
-     */
-    public function tableAction()
-    {
-        $table = $this->getDependencyContainer()->createDiscountVoucherTable();
-
-        return $this->jsonResponse(
-            $table->fetchData()
-        );
     }
 
     /**

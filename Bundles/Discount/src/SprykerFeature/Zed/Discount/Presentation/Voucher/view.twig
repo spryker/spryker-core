@@ -4,7 +4,7 @@
 
 {% block action %}
     {{ backActionButton('/discount/pool', 'Back to Vouchers' | trans) }}
-    {{ viewActionButton('/discount/voucher/export?id-pool=' ~ idPool ~ '&generated-on=' ~ generatedOn, 'Export' | trans) }}
+    {{ viewActionButton('/discount/voucher/export?id-pool=' ~ idPool, 'Export' | trans) }}
 {% endblock %}
 
 {% block content %}

@@ -407,7 +407,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
      *
      * @return int
      */
-    public function getGeneratedVouchersCountByIdPoolAndTimestamp($idPool)
+    public function getGeneratedVouchersCountByIdPool($idPool)
     {
         return $this->getQueryForGeneratedVouchersByIdPool($idPool)
             ->count()
