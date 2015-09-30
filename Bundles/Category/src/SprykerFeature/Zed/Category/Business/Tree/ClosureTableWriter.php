@@ -139,6 +139,9 @@ class ClosureTableWriter implements ClosureTableWriterInterface
         $entity->save();
     }
 
+    /**
+     * Quick fix to regenerate broken closure table based on category node table
+     */
     public function rebuildCategoryNodes()
     {
         $connection = Propel::getConnection();
@@ -175,6 +178,9 @@ class ClosureTableWriter implements ClosureTableWriterInterface
         $connection->commit();
     }
 
+    /**
+     * Fix problem when category node has its fk_parent_category_node set to itself
+     */
     protected function removeCircularRelations()
     {
         $query = SpyCategoryNodeQuery::create();
