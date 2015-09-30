@@ -196,14 +196,13 @@ class VoucherController extends AbstractController
 
     /**
      * @param int $idPool
-     * @param \DateTime $createdAt
      *
      * @return Response
      */
-    protected function generateCsvFromVouchers($idPool, \DateTime $createdAt)
+    protected function generateCsvFromVouchers($idPool)
     {
         $generatedVouchers = $this->getDependencyContainer()
-            ->getQueryForGeneratedVouchersByIdPoolAndTimestamp($idPool, $createdAt)
+            ->getQueryForGeneratedVouchersByIdPool($idPool)
             ->find()
         ;
 

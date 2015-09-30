@@ -22,6 +22,7 @@ use SprykerFeature\Zed\Discount\Communication\Table\DiscountVoucherTable;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherQuery;
 use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormTypeInterface;
@@ -403,31 +404,26 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
 
     /**
      * @param int $idPool
-     * @param \DateTime $dateTime
      *
      * @return int
      */
-    public function getGeneratedVouchersCountByIdPoolAndTimestamp($idPool, \DateTime $dateTime)
+    public function getGeneratedVouchersCountByIdPoolAndTimestamp($idPool)
     {
-        return $this->getQueryForGeneratedVouchersByIdPoolAndTimestamp($idPool, $dateTime)
+        return $this->getQueryForGeneratedVouchersByIdPool($idPool)
             ->count()
         ;
     }
 
     /**
      * @param int $idPool
-     * @param \DateTime $dateTime
      *
      * @return SpyDiscountVoucherQuery
      */
-    public function getQueryForGeneratedVouchersByIdPoolAndTimestamp($idPool, \DateTime $dateTime)
+    public function getQueryForGeneratedVouchersByIdPool($idPool)
     {
         return $this->getQueryContainer()
             ->queryDiscountVoucher()
             ->filterByFkDiscountVoucherPool($idPool)
-            ->filterByCreatedAt([
-                'min' => $dateTime
-            ])
         ;
     }
 
