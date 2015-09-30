@@ -135,7 +135,7 @@ class IndexController extends AbstractController
     public function rebuildClosureTableAction(Request $request)
     {
         $this->getFacade()
-            ->rebuildCloseTable()
+            ->rebuildClosureTable()
         ;
 
         die("<br/>Done");

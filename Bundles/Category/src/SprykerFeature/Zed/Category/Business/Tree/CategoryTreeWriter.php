@@ -219,7 +219,7 @@ class CategoryTreeWriter
         return $result;
     }
 
-    public function rebuildCloseTable()
+    public function rebuildClosureTable()
     {
         $this->closureTableWriter->rebuildCategoryNodes();
     }
