@@ -21,6 +21,7 @@ class VoucherPoolTable extends AbstractTable
     const PARAM_ID_POOL = 'id-pool';
     const CONTROLLER_TABLE_ACTION = 'poolTable';
 
+    const DATE_FORMAT = 'Y-m-d';
     const SPACE_SEPARATOR = ' ';
 
 
@@ -50,7 +51,7 @@ class VoucherPoolTable extends AbstractTable
             SpyDiscountVoucherPoolTableMap::COL_CREATED_AT => 'Date Created',
             SpyDiscountVoucherPoolTableMap::COL_NAME => 'Pool Name',
             self::COL_CATEGORY_NAME => 'Category Name',
-            self::COL_VOUCHERS_COUNT => 'Vouchers',
+            self::COL_VOUCHERS_COUNT => 'Codes Vouchers',
             self::COL_OPTIONS => 'Options',
         ]);
 
@@ -68,25 +69,26 @@ class VoucherPoolTable extends AbstractTable
 
         $query = $this->poolQuery
             ->withColumn(SpyDiscountVoucherPoolCategoryTableMap::COL_NAME, 'category_name')
-            ->useVoucherPoolCategoryQuery()
-            ->endUse()
+            ->withColumn('COUNT(' . SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL . ')', self::COL_VOUCHERS_COUNT)
             ->useDiscountVoucherQuery()
-                ->withColumn('COUNT(' . SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL . ')', self::COL_VOUCHERS_COUNT)
+            ->endUse()
+            ->useVoucherPoolCategoryQuery()
             ->endUse()
             ->groupByIdDiscountVoucherPool()
         ;
 
 
-        $queryResults = $this->runQuery($query, $config);
+        $queryResults = $this->runQuery($query, $config, true);
 
-        foreach ($queryResults as $item) {
+        /** @var SpyDiscountVoucherPool $discountVoucherPool */
+        foreach ($queryResults as $discountVoucherPool) {
 
             $results[] = [
-                SpyDiscountVoucherPoolTableMap::COL_CREATED_AT => $item[SpyDiscountVoucherPoolTableMap::COL_CREATED_AT],
-                SpyDiscountVoucherPoolTableMap::COL_NAME => $item[SpyDiscountVoucherPoolTableMap::COL_NAME],
-                self::COL_CATEGORY_NAME => $item[self::COL_CATEGORY_NAME],
-                self::COL_VOUCHERS_COUNT => $item[self::COL_VOUCHERS_COUNT],
-                self::COL_OPTIONS => $this->createRowOptions($item),
+                SpyDiscountVoucherPoolTableMap::COL_CREATED_AT => $discountVoucherPool->getCreatedAt(self::DATE_FORMAT),
+                SpyDiscountVoucherPoolTableMap::COL_NAME => $discountVoucherPool->getName(),
+                self::COL_CATEGORY_NAME => $discountVoucherPool->getVoucherPoolCategory()->getName(),
+                self::COL_VOUCHERS_COUNT => $discountVoucherPool->getDiscountVouchers()->count(),
+                self::COL_OPTIONS => $this->createRowOptions($discountVoucherPool),
             ];
         }
 
@@ -94,31 +96,31 @@ class VoucherPoolTable extends AbstractTable
     }
 
     /**
-     * @param array $item
+     * @param SpyDiscountVoucherPool $discountVoucherPool
      *
      * @return string
      */
-    private function getEditUrl(array $item)
+    private function getEditUrl(SpyDiscountVoucherPool $discountVoucherPool)
     {
         return sprintf(
             self::URL_DISCOUNT_POOL_EDIT,
             self::PARAM_ID_POOL,
-            $item[SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL]
+            $discountVoucherPool->getIdDiscountVoucherPool()
         );
     }
 
     /**
-     * @param array $item
+     * @param SpyDiscountVoucherPool $discountVoucherPool
      *
      * @return string
      */
-    protected function createRowOptions(array $item)
+    protected function createRowOptions(SpyDiscountVoucherPool $discountVoucherPool)
     {
-        $editUrl = $this->getEditUrl($item);
+        $editUrl = $this->getEditUrl($discountVoucherPool);
 
         return $this->generateEditButton($editUrl, 'Edit Voucher')
             . self::SPACE_SEPARATOR
-            . $this->generateViewButton('/discount/voucher/view/?' . self::PARAM_ID_POOL . '=' . $item[SpyDiscountVoucherPoolTableMap::COL_ID_DISCOUNT_VOUCHER_POOL], 'View Codes')
+            . $this->generateViewButton('/discount/voucher/view/?' . self::PARAM_ID_POOL . '=' . $discountVoucherPool->getIdDiscountVoucherPool(), 'View Codes')
             . self::SPACE_SEPARATOR
             . $this->generateCreateButton('/discount/voucher/create-single', 'Add Single Voucher')
             . self::SPACE_SEPARATOR
