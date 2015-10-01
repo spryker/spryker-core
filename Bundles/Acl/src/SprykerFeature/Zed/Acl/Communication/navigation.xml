@@ -11,7 +11,16 @@
                 <bundle>acl</bundle>
                 <controller>role</controller>
                 <action>index</action>
+                <icon>fa-user-secret</icon>
             </roles>
+            <groups>
+                <label>Groups</label>
+                <title>Groups</title>
+                <bundle>acl</bundle>
+                <controller>group</controller>
+                <action>index</action>
+                <icon>fa-users</icon>
+            </groups>
         </pages>
     </acl>
 </config>
