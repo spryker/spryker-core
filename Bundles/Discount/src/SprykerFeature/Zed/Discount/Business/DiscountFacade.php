@@ -348,6 +348,26 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
+     * @param CalculableInterface $container
+     *
+     * @return OrderInterface[]
+     */
+    public function getDiscountableItemProductOptions(CalculableInterface $container)
+    {
+        return $this->getDependencyContainer()->createItemProductOptionCollector()->collect($container);
+    }
+
+    /**
+     * @param CalculableInterface $container
+     *
+     * @return OrderInterface[]
+     */
+    public function getDiscountableItemsFromCollectorAggregate(CalculableInterface $container)
+    {
+        return $this->getDependencyContainer()->createAggregateCollector()->collect($container);
+    }
+
+    /**
      * @return array
      */
     public function getDiscountCollectors()
@@ -361,6 +381,16 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     public function getDiscountCalculators()
     {
         return array_keys($this->getDependencyContainer()->createAvailableCalculatorPlugins());
+    }
+
+    /**
+     * @param array $codes
+     *
+     * @return bool
+     */
+    public function enableVoucherCodes(array $codes)
+    {
+        return $this->getDependencyContainer()->createVoucherCode()->enableCodes($codes);
     }
 
 }

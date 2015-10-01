@@ -77,5 +77,13 @@
         <property name="couponCodes" type="array" singular="couponCode" />
     </transfer>
 
+    <transfer name="ProductOption">
+        <property name="idSalesOrderItemOption" type="int" />
+    </transfer>
+
+    <transfer name="Expense">
+        <property name="idSalesExpense" type="int" />
+    </transfer>
+
 </transfers>
 

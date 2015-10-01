@@ -191,16 +191,18 @@ class OrderManager
      */
     protected function saveProductOptions(ItemTransfer $item)
     {
-        foreach ($item->getProductOptions() as $productOption) {
+        foreach ($item->getProductOptions() as $productOptionTransfer) {
             $optionEntity = new SpySalesOrderItemOption();
 
-            $optionEntity->fromArray($productOption->toArray());
+            $optionEntity->fromArray($productOptionTransfer->toArray());
 
             $optionEntity->setFkSalesOrderItem($item->getIdSalesOrderItem());
-            $optionEntity->setTaxPercentage($productOption->getTaxSet()
+            $optionEntity->setTaxPercentage($productOptionTransfer->getTaxSet()
                 ->getEffectiveRate());
 
             $optionEntity->save();
+
+            $productOptionTransfer->setIdSalesOrderItemOption($optionEntity->getIdSalesOrderItemOption());
         }
     }
 

@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\ProductOptionCheckoutConnector\Business;
 use Generated\Shared\ProductOptionCheckoutConnector\CheckoutRequestInterface;
 use Generated\Shared\ProductOptionCheckoutConnector\OrderInterface;
 use Generated\Shared\ProductOptionCheckoutConnector\ItemInterface;
+use \ArrayObject;
 
 class ProductOptionOrderHydrator implements ProductOptionOrderHydratorInterface
 {
@@ -50,7 +51,10 @@ class ProductOptionOrderHydrator implements ProductOptionOrderHydratorInterface
                 continue;
             }
 
-            $orderItem->setProductOptions(clone $cartItem->getProductOptions());
+            $orderItem->setProductOptions(new ArrayObject());
+            foreach ($cartItem->getProductOptions() as $productOptionTransfer) {
+                $orderItem->addProductOption(clone $productOptionTransfer);
+            }
         }
     }
 

@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Discount;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerFeature\Zed\Discount\Business\Collector\CollectorInterface;
-use SprykerFeature\Zed\Discount\DiscountConfigInterface;
 use SprykerFeature\Zed\Discount\Business\Model\CalculatorInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
@@ -20,6 +19,8 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
     const PLUGIN_DECISION_RULE_VOUCHER = 'PLUGIN_DECISION_RULE_VOUCHER';
     const PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL = 'PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL';
     const PLUGIN_COLLECTOR_ITEM = 'PLUGIN_COLLECTOR_ITEM';
+    const PLUGIN_COLLECTOR_ITEM_PRODUCT_OPTION = 'PLUGIN_COLLECTOR_ITEM_PRODUCT_OPTION';
+    const PLUGIN_COLLECTOR_AGGREGATE = 'PLUGIN_COLLECTOR_AGGREGATE';
     const PLUGIN_COLLECTOR_ORDER_EXPENSE = 'PLUGIN_COLLECTOR_ORDER_EXPENSE';
     const PLUGIN_COLLECTOR_ITEM_EXPENSE = 'PLUGIN_COLLECTOR_ITEM_EXPENSE';
     const PLUGIN_CALCULATOR_PERCENTAGE = 'PLUGIN_CALCULATOR_PERCENTAGE';
@@ -71,6 +72,8 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
             self::PLUGIN_COLLECTOR_ITEM => $this->getLocator()->discount()->pluginCollectorItem(),
             self::PLUGIN_COLLECTOR_ORDER_EXPENSE => $this->getLocator()->discount()->pluginCollectorOrderExpense(),
             self::PLUGIN_COLLECTOR_ITEM_EXPENSE => $this->getLocator()->discount()->pluginCollectorItemExpense(),
+            self::PLUGIN_COLLECTOR_ITEM_PRODUCT_OPTION => $this->getLocator()->discount()->pluginCollectorItemProductOption(),
+            self::PLUGIN_COLLECTOR_AGGREGATE => $this->getLocator()->discount()->pluginCollectorAggregate(),
         ];
     }
 

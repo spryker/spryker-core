@@ -12,6 +12,7 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountQuery;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherPoolCategoryTableMap;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherQuery;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolQuery;
 
@@ -51,14 +52,16 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      */
     public function queryActiveAndRunningDiscounts()
     {
+        $now = new \DateTime();
+
         $query = (new SpyDiscountQuery())
             ->filterByIsActive(true)
             ->where(
                 '(' . SpyDiscountTableMap::COL_VALID_FROM . ' <= ? AND '
                 . SpyDiscountTableMap::COL_VALID_TO . ' >= ? )',
                 [
-                    time(),
-                    time(),
+                    $now->format('Y-m-d H:i:s'),
+                    $now->format('Y-m-d H:i:s')
                 ]
             )->_or()->where(
                 SpyDiscountTableMap::COL_VALID_FROM . ' IS NULL AND '
@@ -67,6 +70,24 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
 
         return $query;
     }
+
+    /**
+     * @param array|string[] $couponCodes
+     *
+     * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountQuery
+     */
+    public function queryCartRulesIncludingSpecifiedVouchers(array $couponCodes = [])
+    {
+        return $this->queryActiveAndRunningDiscounts()
+            ->useVoucherPoolQuery()
+                ->useDiscountVoucherQuery()
+                    ->filterByCode(array_unique($couponCodes))
+                ->endUse()
+            ->endUse()
+            ->_or()
+            ->filterByFkDiscountVoucherPool(null);
+    }
+
 
     /**
      * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolQuery
@@ -129,6 +150,18 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     public function queryDiscountVoucherPoolCategory()
     {
         return (new Propel\SpyDiscountVoucherPoolCategoryQuery());
+    }
+
+    /**
+     * @param array $codes
+     *
+     * @return SpyDiscountVoucherQuery
+     */
+    public function queryVoucherPoolByVoucherCodes(array $codes)
+    {
+        return $this->queryDiscountVoucher()
+            ->joinWithVoucherPool()
+            ->filterByCode($codes);
     }
 
     /**

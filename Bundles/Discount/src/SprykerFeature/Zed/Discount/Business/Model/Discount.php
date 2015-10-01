@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
-use Generated\Shared\Discount\OrderInterface;
 use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Distributor\DistributorInterface;
@@ -110,11 +109,13 @@ class Discount
     }
 
     /**
+     * @param array|string[] $couponCodes
+     *
      * @return SpyDiscount[]
      */
-    public function retrieveActiveAndRunningDiscounts()
+    public function retrieveActiveCartAndVoucherDiscounts(array $couponCodes = [])
     {
-        return $this->queryContainer->queryActiveAndRunningDiscounts()->find();
+        return $this->queryContainer->queryCartRulesIncludingSpecifiedVouchers($couponCodes)->find();
     }
 
     /**
@@ -122,7 +123,9 @@ class Discount
      */
     protected function retrieveDiscountsToBeCalculated()
     {
-        $discounts = $this->retrieveActiveAndRunningDiscounts();
+        $discounts = $this->retrieveActiveCartAndVoucherDiscounts(
+            $this->getCouponCodes()
+        );
         $discountsToBeCalculated = [];
         $errors = [];
 
@@ -201,7 +204,7 @@ class Discount
     protected function getDefaultVoucherDecisionRulePluginIfNeeded($idDiscount)
     {
         if (count($this->discountContainer->getCalculableObject()->getCouponCodes()) === 0) {
-            return;
+            return null;
         }
 
         $discount = $this->queryContainer->queryDiscount()->findPk($idDiscount);
@@ -217,7 +220,21 @@ class Discount
             return $plugin;
         }
 
-        return;
+        return null;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCouponCodes()
+    {
+        $couponCodes = $this->discountContainer->getCalculableObject()->getCouponCodes();
+
+        if (0 === count($couponCodes)) {
+            return [];
+        }
+
+        return $couponCodes;
     }
 
 }

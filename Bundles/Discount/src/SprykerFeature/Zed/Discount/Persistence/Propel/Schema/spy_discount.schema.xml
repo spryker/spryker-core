@@ -6,7 +6,7 @@
         <column name="fk_discount_voucher_pool" type="INTEGER" required="false"/>
         <column name="display_name" type="VARCHAR" size="255" required="true"/>
         <column name="description" type="VARCHAR" size="1024"/>
-        <column name="amount" type="FLOAT" required="true"/>
+        <column name="amount" type="INTEGER" required="true"/>
         <column name="type" type="ENUM" valueSet="fixed, percent"/>
         <column name="calculator_plugin" type="VARCHAR" size="255"/>
         <column name="collector_plugin" type="VARCHAR" size="255" required="true"/>
@@ -20,6 +20,10 @@
         <foreign-key foreignTable="spy_discount_voucher_pool" phpName="VoucherPool" refPhpName="Discount">
             <reference local="fk_discount_voucher_pool" foreign="id_discount_voucher_pool"/>
         </foreign-key>
+
+        <unique>
+            <unique-column name="fk_discount_voucher_pool" />
+        </unique>
     <id-method-parameter value="spy_discount_pk_seq"/></table>
 
     <table name="spy_discount_decision_rule" phpName="SpyDiscountDecisionRule">
