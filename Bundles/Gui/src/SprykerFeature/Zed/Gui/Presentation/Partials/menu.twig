@@ -53,14 +53,14 @@
 {%- endmacro -%}
 
 {%- macro getNodeIcon(node) -%}
-    {% set defaultIcon = 'fa-angle-double-right' %}
-
+    {%- set defaultIcon = 'fa-angle-double-right' -%}
+    <div class="icon-holder">
     {%- if node.icon is defined and node.icon != '' -%}
-        <i class="fa {{ node.icon }}"></i>
+        <span class="fa {{ node.icon }}"></span>
     {%- else -%}
-        <i class="fa {{ defaultIcon }}"></i>
+        <span class="fa {{ defaultIcon }}"></span>
     {%- endif -%}
-
+    </div>
 {%- endmacro -%}
 
 {%- import _self as menu -%}
@@ -78,10 +78,18 @@
                     </ul>
                 </div>
                 <div class="logo-element">
-                    IN+
+                    SP
                 </div>
             </li>
             {{ menu.tree(navigation.menu) }}
         </ul>
     </div>
 </nav>
+
+<style>
+.icon-holder {
+    float: left;
+    width: 19px;
+    overflow: hidden;
+}
+</style>
