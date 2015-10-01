@@ -21,7 +21,6 @@
             <reference local="fk_discount_voucher_pool" foreign="id_discount_voucher_pool"/>
         </foreign-key>
 
-        <!-- with postgresql this is fine, but with MySQL it will lead to problem cause null is there not excluded from the index-->
         <unique>
             <unique-column name="fk_discount_voucher_pool" />
         </unique>

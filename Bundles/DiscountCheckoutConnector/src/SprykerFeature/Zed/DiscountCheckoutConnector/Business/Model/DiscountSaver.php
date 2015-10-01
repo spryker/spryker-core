@@ -80,8 +80,8 @@ class DiscountSaver implements DiscountSaverInterface
 
     /**
      * @param ItemInterface $orderItemTransfer
-     * @param integer       $idSalesOrder
-     * @param integer       $idSalesOrderItem
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
      *
      * @throws PropelException
      */
