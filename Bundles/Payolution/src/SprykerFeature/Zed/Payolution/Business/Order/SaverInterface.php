@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Payolution\Business\Order;
 
 use Generated\Shared\Payolution\OrderInterface;
 
-interface OrderManagerInterface
+interface SaverInterface
 {
 
     /**

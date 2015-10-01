@@ -19,7 +19,7 @@ use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemState;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcess;
-use SprykerFeature\Zed\Payolution\Business\Order\OrderManager;
+use SprykerFeature\Zed\Payolution\Business\Order\Saver;
 use SprykerFeature\Zed\Payolution\Business\PayolutionDependencyContainer;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
@@ -31,13 +31,13 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemBundle;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemBundleItem;
 
-class OrderManagerTest extends Test
+class SaverTest extends Test
 {
 
     public function testSaveOrderPaymentCreatesPersistentPaymentData()
     {
         $orderTransfer = $this->getOrderTransfer();
-        $orderManager = new OrderManager($this->getPayolutionBusinessDependencyContainer());
+        $orderManager = new Saver($this->getPayolutionBusinessDependencyContainer());
         $orderManager->saveOrderPayment($orderTransfer);
 
         $paymentEntity = SpyPaymentPayolutionQuery::create()->findOneByFkSalesOrder($orderTransfer->getIdSalesOrder());
@@ -53,7 +53,7 @@ class OrderManagerTest extends Test
     public function testSaveOrderPaymentHasAddressData()
     {
         $orderTransfer = $this->getOrderTransfer();
-        $orderManager = new OrderManager($this->getPayolutionBusinessDependencyContainer());
+        $orderManager = new Saver($this->getPayolutionBusinessDependencyContainer());
         $orderManager->saveOrderPayment($orderTransfer);
 
         $paymentTransfer = $orderTransfer->getPayolutionPayment();

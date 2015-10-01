@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Payolution\Business\Payment;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\PayolutionResponseTransfer;
 
-interface PaymentManagerInterface
+interface CommunicatorInterface
 {
 
     /**

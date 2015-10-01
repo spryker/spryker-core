@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use SprykerFeature\Zed\Payolution\Business\PayolutionDependencyContainer;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 
-class OrderManager implements OrderManagerInterface
+class Saver implements SaverInterface
 {
 
     /**

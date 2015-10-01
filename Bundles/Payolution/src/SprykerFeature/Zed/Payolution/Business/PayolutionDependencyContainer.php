@@ -8,12 +8,12 @@ namespace SprykerFeature\Zed\Payolution\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use Generated\Zed\Ide\FactoryAutoCompletion\PayolutionBusiness;
+use SprykerFeature\Zed\CustomerCheckoutConnector\Business\CustomerOrderSaverInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\ConverterInterface as RequestConverterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Response\ConverterInterface as ResponseConverterInterface;
 use SprykerFeature\Zed\Payolution\Business\Log\TransactionStatusLogInterface;
-use SprykerFeature\Zed\Payolution\Business\Order\OrderManagerInterface;
-use SprykerFeature\Zed\Payolution\Business\Payment\PaymentManagerInterface;
+use SprykerFeature\Zed\Payolution\Business\Payment\CommunicatorInterface;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
@@ -30,11 +30,11 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**
-     * @return PaymentManagerInterface
+     * @return CommunicatorInterface
      */
-    public function createPaymentManager()
+    public function createPaymentCommunicator()
     {
-        $paymentManager = $this->getFactory()->createPaymentPaymentManager(
+        $paymentManager = $this->getFactory()->createPaymentCommunicator(
             $this->createExecutionAdapter(),
             $this->getQueryContainer(),
             $this->createRequestConverter(),
@@ -63,11 +63,11 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return OrderManagerInterface
+     * @return CustomerOrderSaverInterface
      */
-    public function createOrderManager()
+    public function createOrderSaver()
     {
-        return $this->getFactory()->createOrderOrderManager($this);
+        return $this->getFactory()->createOrderSaver($this);
     }
 
     /**

@@ -25,7 +25,7 @@ class PayolutionFacade extends AbstractFacade
     {
         return $this
             ->getDependencyContainer()
-            ->createOrderManager()
+            ->createOrderSaver()
             ->saveOrderPayment($orderTransfer);
     }
 
@@ -38,7 +38,7 @@ class PayolutionFacade extends AbstractFacade
     {
         $payolutionResponseTransfer = $this
             ->getDependencyContainer()
-            ->createPaymentManager()
+            ->createPaymentCommunicator()
             ->preCheckPayment($checkoutRequestTransfer);
 
         return $payolutionResponseTransfer;
@@ -53,7 +53,7 @@ class PayolutionFacade extends AbstractFacade
     {
         return $this
             ->getDependencyContainer()
-            ->createPaymentManager()
+            ->createPaymentCommunicator()
             ->preAuthorizePayment($idPayment);
     }
 
@@ -66,7 +66,7 @@ class PayolutionFacade extends AbstractFacade
     {
         return $this
             ->getDependencyContainer()
-            ->createPaymentManager()
+            ->createPaymentCommunicator()
             ->reAuthorizePayment($idPayment);
     }
 
@@ -79,7 +79,7 @@ class PayolutionFacade extends AbstractFacade
     {
         return $this
             ->getDependencyContainer()
-            ->createPaymentManager()
+            ->createPaymentCommunicator()
             ->revertPayment($idPayment);
     }
 
@@ -92,7 +92,7 @@ class PayolutionFacade extends AbstractFacade
     {
         return $this
             ->getDependencyContainer()
-            ->createPaymentManager()
+            ->createPaymentCommunicator()
             ->capturePayment($idPayment);
     }
 
@@ -105,7 +105,7 @@ class PayolutionFacade extends AbstractFacade
     {
         return $this
             ->getDependencyContainer()
-            ->createPaymentManager()
+            ->createPaymentCommunicator()
             ->refundPayment($idPayment);
     }
 

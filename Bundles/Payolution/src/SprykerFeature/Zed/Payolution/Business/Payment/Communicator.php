@@ -20,7 +20,7 @@ use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLog;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLog;
 
-class PaymentManager implements PaymentManagerInterface
+class Communicator implements CommunicatorInterface
 {
 
     /**
