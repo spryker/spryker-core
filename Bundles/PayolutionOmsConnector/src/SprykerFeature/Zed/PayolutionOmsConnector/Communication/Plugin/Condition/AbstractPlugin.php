@@ -14,13 +14,6 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 abstract class AbstractPlugin extends BaseAbstractPlugin implements ConditionInterface
 {
 
-    const NAME = 'AbstractPlugin';
-
-    /**
-     * @var array[]
-     */
-    private static $resultCache = [];
-
     /**
      * @param SpySalesOrderItem $orderItem
      *
@@ -30,25 +23,12 @@ abstract class AbstractPlugin extends BaseAbstractPlugin implements ConditionInt
     {
         $orderEntity = $orderItem->getOrder();
 
-        if (isset(self::$resultCache[$this->getName()][$orderEntity->getPrimaryKey()])) {
-            return self::$resultCache[$this->getName()][$orderEntity->getPrimaryKey()];
-        }
-
         $orderTransfer = new OrderTransfer();
         $orderTransfer->fromArray($orderEntity->toArray(), $ignoreMissingProperties = true);
 
         $isSuccess = $this->callFacade($orderTransfer);
-        self::$resultCache[$this->getName()][$orderEntity->getPrimaryKey()] = $isSuccess;
 
         return $isSuccess;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getName()
-    {
-        return static::NAME;
     }
 
     /**

@@ -14,8 +14,6 @@ use SprykerFeature\Zed\PayolutionOmsConnector\Communication\PayolutionOmsConnect
 class PreAuthorizationIsApprovedPlugin extends AbstractPlugin
 {
 
-    const NAME = 'PreAuthorizationPlugin';
-
     /**
      * @param OrderTransfer $orderTransfer
      *
