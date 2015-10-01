@@ -28,6 +28,11 @@
     src: local('Open Sans Bold'), local('OpenSans-Bold'), url(../fonts/OpenSansBold.ttf) format('truetype');
 }
 
+.icon-holder {
+  float: left;
+  width: 19px;
+  overflow: hidden;
+}
 
 /* Login .. */
 
