@@ -113,7 +113,7 @@ class Discount
      *
      * @return SpyDiscount[]
      */
-    public function retrieveActiveCartAndVoucherDiscounts(array $couponCodes)
+    public function retrieveActiveCartAndVoucherDiscounts(array $couponCodes = [])
     {
         return $this->queryContainer->queryCartRulesIncludingSpecifiedVouchers($couponCodes)->find();
     }
@@ -124,7 +124,7 @@ class Discount
     protected function retrieveDiscountsToBeCalculated()
     {
         $discounts = $this->retrieveActiveCartAndVoucherDiscounts(
-            $this->discountContainer->getCalculableObject()->getCouponCodes()
+            $this->getCouponCodes()
         );
         $discountsToBeCalculated = [];
         $errors = [];
@@ -221,6 +221,20 @@ class Discount
         }
 
         return null;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCouponCodes()
+    {
+        $couponCodes = $this->discountContainer->getCalculableObject()->getCouponCodes();
+
+        if (0 === count($couponCodes)) {
+            return [];
+        }
+
+        return $couponCodes;
     }
 
 }

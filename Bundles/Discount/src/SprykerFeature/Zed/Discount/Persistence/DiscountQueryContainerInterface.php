@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Discount\Persistence;
 
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherQuery;
 
 /**
  * Class DiscountQueryContainer
@@ -74,4 +75,11 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
      * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountQuery
      */
     public function queryCartRulesIncludingSpecifiedVouchers(array $couponCodes = []);
+
+    /**
+     * @param array $codes
+     *
+     * @return SpyDiscountVoucherQuery
+     */
+    public function queryVoucherPoolByVoucherCodes(array $codes);
 }

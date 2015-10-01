@@ -1,21 +1,24 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Discount\Business;
 
-use Generated\Shared\Discount\OrderInterface;
 use Generated\Zed\Ide\FactoryAutoCompletion\DiscountBusiness;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Calculator\Fixed;
 use SprykerFeature\Zed\Discount\Business\Calculator\Percentage;
+use SprykerFeature\Zed\Discount\Business\Collector\Aggregate;
 use SprykerFeature\Zed\Discount\Business\Collector\Item;
 use SprykerFeature\Zed\Discount\Business\Collector\ItemExpense;
 use SprykerFeature\Zed\Discount\Business\Collector\Expense;
+use SprykerFeature\Zed\Discount\Business\Collector\ItemProductOption;
 use SprykerFeature\Zed\Discount\Business\Distributor\Distributor;
 use SprykerFeature\Zed\Discount\Business\Model\Calculator;
 use SprykerFeature\Zed\Discount\Business\Model\CartRuleInterface;
+use SprykerFeature\Zed\Discount\Business\Model\VoucherCodeInterface;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountVoucherWriter;
@@ -255,6 +258,37 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     public function createOrderExpenseCollector()
     {
         return $this->getFactory()->createCollectorExpense();
+    }
+
+    /**
+     * @return ItemProductOption
+     */
+    public function createItemProductOptionCollector()
+    {
+        return $this->getFactory()->createCollectorItemProductOption();
+    }
+
+    /**
+     * @return Aggregate
+     */
+    public function createAggregateCollector()
+    {
+        return $this->getFactory()
+            ->createCollectorAggregate([
+                $this->createItemCollector(),
+                $this->createItemProductOptionCollector(),
+                $this->createItemExpenseCollector(),
+                $this->createOrderExpenseCollector(),
+            ]
+        );
+    }
+
+    /**
+     * @return VoucherCodeInterface
+     */
+    public function createVoucherCode()
+    {
+        return $this->getFactory()->createModelVoucherCode($this->getQueryContainer());
     }
 
 }

@@ -131,7 +131,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
 
         if (!empty($totalEffectiveRate)) {
             $taxAmountForTaxSet = $this->priceCalculationHelper->getTaxValueFromPrice(
-                $totalsTransfer->getGrandTotal(),
+                $totalsTransfer->getGrandTotalWithDiscounts(),
                 $totalEffectiveRate
             );
             $taxTotalsTransfer->setAmount($taxAmountForTaxSet);

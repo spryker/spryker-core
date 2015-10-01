@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\DiscountCheckoutConnector\Business\Model;
 
 use Generated\Shared\DiscountCheckoutConnector\DiscountInterface;
 use Generated\Shared\DiscountCheckoutConnector\OrderInterface;
+use Generated\Shared\Sales\ItemInterface;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
@@ -39,6 +40,7 @@ class DiscountSaver implements DiscountSaverInterface
     {
         $this->saveOrderDiscounts($orderTransfer);
         $this->saveOrderItemDiscounts($orderTransfer);
+        $this->saveOrderExpenseDiscounts($orderTransfer);
     }
 
     /**
@@ -67,6 +69,31 @@ class DiscountSaver implements DiscountSaverInterface
                 $salesDiscountEntity->setFkSalesOrder($orderTransfer->getIdSalesOrder());
                 $salesDiscountEntity->setFkSalesOrderItem($orderItemTransfer->getIdSalesOrderItem());
                 $this->saveDiscount($salesDiscountEntity, $discountTransfer);
+            }
+            $this->saveOrderItemOptionDiscounts(
+                $orderItemTransfer,
+                $orderTransfer->getIdSalesOrder(),
+                $orderItemTransfer->getIdSalesOrderItem()
+            );
+        }
+    }
+
+    /**
+     * @param ItemInterface $orderItemTransfer
+     * @param integer       $idSalesOrder
+     * @param integer       $idSalesOrderItem
+     *
+     * @throws PropelException
+     */
+    protected function saveOrderItemOptionDiscounts(ItemInterface $orderItemTransfer, $idSalesOrder, $idSalesOrderItem)
+    {
+        foreach ($orderItemTransfer->getProductOptions() as $productOptionTransfer) {
+            foreach ($productOptionTransfer->getDiscounts() as $productOptionDiscountTransfer) {
+                $salesDiscountEntity = $this->createSalesDiscountEntity($productOptionDiscountTransfer);
+                $salesDiscountEntity->setFkSalesOrder($idSalesOrder);
+                $salesDiscountEntity->setFkSalesOrderItem($idSalesOrderItem);
+                $salesDiscountEntity->setFkSalesOrderItemOption($productOptionTransfer->getIdSalesOrderItemOption());
+                $salesDiscountEntity->save();
             }
         }
     }
@@ -148,6 +175,11 @@ class DiscountSaver implements DiscountSaverInterface
                 );
                 $salesDiscountCodeEntity->setDiscount($salesDiscountEntity);
 
+                if (!$discountVoucherEntity->getVoucherPool()->getIsInfinitelyUsable()) {
+                    $discountVoucherEntity->setIsActive(false);
+                    $discountVoucherEntity->save();
+                }
+
                 $this->persistSalesDiscountCode($salesDiscountCodeEntity);
             }
         }
@@ -179,6 +211,21 @@ class DiscountSaver implements DiscountSaverInterface
     protected function getSalesDiscountCodeEntity()
     {
         return new SpySalesDiscountCode();
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
+     */
+    protected function saveOrderExpenseDiscounts(OrderInterface $orderTransfer)
+    {
+        foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
+            foreach ($expenseTransfer->getDiscounts() as $discountTransfer) {
+                $salesDiscountEntity = $this->createSalesDiscountEntity($discountTransfer);
+                $salesDiscountEntity->setFkSalesOrder($orderTransfer->getIdSalesOrder());
+                $salesDiscountEntity->setFkSalesExpense($expenseTransfer->getIdSalesExpense());
+                $salesDiscountEntity->save();
+            }
+        }
     }
 
 }

@@ -11,13 +11,15 @@ use Generated\Shared\DiscountCheckoutConnector\OrderInterface;
 
 class DiscountOrderHydrator implements DiscountOrderHydratorInterface
 {
-
     /**
      * @param OrderInterface $orderTransfer
      * @param CheckoutRequestInterface $request
      */
     public function hydrateOrder(OrderInterface $orderTransfer, CheckoutRequestInterface $request)
     {
+        foreach ($request->getCart()->getCouponCodes() as $couponCode) {
+            $orderTransfer->addCouponCode($couponCode);
+        }
     }
 
 }

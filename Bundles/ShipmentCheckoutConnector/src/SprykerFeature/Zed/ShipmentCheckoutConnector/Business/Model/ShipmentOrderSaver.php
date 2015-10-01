@@ -43,6 +43,7 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
                 $salesOrderExpense->fromArray($expenseTransfer->toArray());
                 $salesOrderExpense->setTaxPercentage($expenseTransfer->getTaxSet()->getEffectiveRate());
                 $salesOrderExpense->save();
+                $expenseTransfer->setIdSalesExpense($salesOrderExpense->getIdSalesExpense());
 
                 $salesOrderEntity->addExpense($salesOrderExpense);
             }

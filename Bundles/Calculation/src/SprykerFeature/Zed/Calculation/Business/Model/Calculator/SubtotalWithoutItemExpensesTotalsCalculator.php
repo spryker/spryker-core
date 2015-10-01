@@ -37,24 +37,24 @@ class SubtotalWithoutItemExpensesTotalsCalculator implements
     protected function calculateSubtotalWithoutItemExpense($calculableItems)
     {
         $subtotal = 0;
-        foreach ($calculableItems as $item) {
-            $subtotal += $item->getGrossPrice();
-            $subtotal += $this->sumOptions($item);
+        foreach ($calculableItems as $itemTransfer) {
+            $subtotal += $itemTransfer->getGrossPrice() * $itemTransfer->getQuantity();
+            $subtotal += $this->sumOptions($itemTransfer);
         }
 
         return $subtotal;
     }
 
     /**
-     * @param ItemInterface $item
+     * @param ItemInterface $itemTransfer
      *
      * @return int
      */
-    protected function sumOptions($item)
+    protected function sumOptions(ItemInterface $itemTransfer)
     {
         $optionsPrice = 0;
-        foreach ($item->getProductOptions() as $option) {
-            $optionsPrice += $option->getGrossPrice();
+        foreach ($itemTransfer->getProductOptions() as $optionTransfer) {
+            $optionsPrice += $optionTransfer->getGrossPrice() * $itemTransfer->getQuantity();
         }
 
         return $optionsPrice;
