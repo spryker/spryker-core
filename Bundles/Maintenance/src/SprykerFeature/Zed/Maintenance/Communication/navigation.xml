@@ -6,6 +6,7 @@
         <bundle>maintenance</bundle>
         <controller>index</controller>
         <action>index</action>
+        <icon>fa-wrench</icon>
         <pages>
             <packages>
                 <label>packages</label>
@@ -13,6 +14,7 @@
                 <bundle>maintenance</bundle>
                 <controller>index</controller>
                 <action>index</action>
+                <icon>fa-archive</icon>
             </packages>
             <search>
                 <label>Search</label>
@@ -20,6 +22,7 @@
                 <bundle>maintenance</bundle>
                 <controller>search</controller>
                 <action>index</action>
+                <icon>fa-search</icon>
             </search>
             <storage>
                 <label>Storage</label>
@@ -27,6 +30,7 @@
                 <bundle>maintenance</bundle>
                 <controller>storage</controller>
                 <action>index</action>
+                <icon>fa-hdd-o</icon>
             </storage>
         </pages>
     </maintenance>

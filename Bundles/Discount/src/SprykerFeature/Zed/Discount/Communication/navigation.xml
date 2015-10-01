@@ -11,6 +11,7 @@
                 <bundle>discount</bundle>
                 <controller>pool</controller>
                 <action>index</action>
+                <icon>fa-file-code-o</icon>
             </pool>
             <cart-rules>
                 <label>Cart Rules</label>
@@ -18,6 +19,7 @@
                 <bundle>discount</bundle>
                 <controller>cart-rule</controller>
                 <action>index</action>
+                <icon>fa-thumb-tack</icon>
             </cart-rules>
         </pages>
     </discount>

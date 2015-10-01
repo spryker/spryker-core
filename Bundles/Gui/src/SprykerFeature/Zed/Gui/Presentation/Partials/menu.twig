@@ -1,4 +1,6 @@
 {%- macro leaf(node, depth=0) -%}
+    {%- import _self as menu -%}
+
     {%- if node is defined %}
         {%- if menu_highlight is defined -%}
             {%- if menu_highlight == node.uri -%}
@@ -13,7 +15,7 @@
                 href="{{ node.uri }}"
                 {% if node.shortcut is defined %}data-hotkey="{{ node.shortcut }}"{% endif %}
                 >
-            <i class="fa fa-flask"></i>
+            {{ menu.getNodeIcon(node) }}
             <span class="nav-label">{{ node.label }}</span>
         </a>
         </li>
@@ -26,7 +28,7 @@
     {%- if node is defined %}
         <li class="{{ node.is_active is defined and node.is_active ? " active" : "" }}">
             <a href="javascript:void(0)">
-                <i class="fa fa-flask"></i>
+                {{ menu.getNodeIcon(node) }}
                 <span class="nav-label">{{ node.label }}</span>
                 <span class="fa arrow"></span>
             </a>
@@ -50,6 +52,17 @@
     {%- endfor -%}
 {%- endmacro -%}
 
+{%- macro getNodeIcon(node) -%}
+    {%- set defaultIcon = 'fa-angle-double-right' -%}
+    <div class="icon-holder">
+    {%- if node.icon is defined and node.icon != '' -%}
+        <span class="fa {{ node.icon }}"></span>
+    {%- else -%}
+        <span class="fa {{ defaultIcon }}"></span>
+    {%- endif -%}
+    </div>
+{%- endmacro -%}
+
 {%- import _self as menu -%}
 
 <nav class="navbar-default navbar-static-side" role="navigation">
@@ -61,15 +74,11 @@
                     <a href="/" style="background: url(/bundles/images/sprite.svg); width: 165px; height: 159px; display: block;"></a>
 
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="">Profile</a></li>
-                        <li><a href="">Contacts</a></li>
-                        <li><a href="">Mailbox</a></li>
-                        <li class="divider"></li>
-                        <li><a href="">Logout</a></li>
+                        <li><a href="/auth/logout">Logout</a></li>
                     </ul>
                 </div>
                 <div class="logo-element">
-                    IN+
+                    SP
                 </div>
             </li>
             {{ menu.tree(navigation.menu) }}
