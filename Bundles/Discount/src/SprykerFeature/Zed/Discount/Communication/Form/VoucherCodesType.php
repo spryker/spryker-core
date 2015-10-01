@@ -106,7 +106,7 @@ class VoucherCodesType extends AbstractRuleType
                 'label' => 'Active',
             ])
             ->add(self::FIELD_CALCULATOR_PLUGIN, 'choice', [
-                'label' => 'Collector Plugin',
+                'label' => 'Calculator Plugin',
                 'choices' => $this->getAvailableCalculatorPlugins(),
                 'empty_data' => null,
                 'required' => false,
