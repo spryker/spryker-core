@@ -11,12 +11,9 @@
         {%- else-%}
             <li class="item{{ node.is_active is defined and node.is_active ? " active" : "" }}">
         {%- endif -%}
-        <a
-                href="{{ node.uri }}"
-                {% if node.shortcut is defined %}data-hotkey="{{ node.shortcut }}"{% endif %}
-                >
+        <a href="{{ node.uri }}"{% if node.shortcut is defined %} data-hotkey="{{ node.shortcut }}"{% endif %}>
             {{ menu.getNodeIcon(node) }}
-            <span class="nav-label">{{ node.label }}</span>
+            <span class="nav-label">{{ node.label | trans }}</span>
         </a>
         </li>
     {% endif -%}
@@ -29,7 +26,7 @@
         <li class="{{ node.is_active is defined and node.is_active ? " active" : "" }}">
             <a href="javascript:void(0)">
                 {{ menu.getNodeIcon(node) }}
-                <span class="nav-label">{{ node.label }}</span>
+                <span class="nav-label">{{ node.label | trans }}</span>
                 <span class="fa arrow"></span>
             </a>
 
@@ -74,7 +71,7 @@
                     <a href="/" style="background: url(/bundles/images/sprite.svg); width: 165px; height: 159px; display: block;"></a>
 
                     <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                        <li><a href="/auth/logout">Logout</a></li>
+                        <li><a href="/auth/logout">{{ 'Logout' | trans }}</a></li>
                     </ul>
                 </div>
                 <div class="logo-element">
