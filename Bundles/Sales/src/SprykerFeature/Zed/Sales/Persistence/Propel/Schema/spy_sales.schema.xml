@@ -10,7 +10,7 @@
         <column name="first_name" required="true" size="100" type="VARCHAR"/>
         <column name="middle_name" required="false" size="100" type="VARCHAR"/>
         <column name="last_name" required="true" size="100" type="VARCHAR"/>
-        <column name="address1" required="true" size="255" type="VARCHAR"/>
+        <column name="address1" size="255" type="VARCHAR"/>
         <column name="address2" size="255" type="VARCHAR"/>
         <column name="address3" size="255" type="VARCHAR"/>
         <column name="company" size="255" type="VARCHAR"/>
@@ -45,7 +45,7 @@
         <column name="first_name" required="true" size="100" type="VARCHAR"/>
         <column name="middle_name" required="false" size="100" type="VARCHAR"/>
         <column name="last_name" required="true" size="100" type="VARCHAR"/>
-        <column name="address1" required="true" size="255" type="VARCHAR"/>
+        <column name="address1" size="255" type="VARCHAR"/>
         <column name="address2" size="255" type="VARCHAR"/>
         <column name="address3" size="255" type="VARCHAR"/>
         <column name="company" size="255" type="VARCHAR"/>
