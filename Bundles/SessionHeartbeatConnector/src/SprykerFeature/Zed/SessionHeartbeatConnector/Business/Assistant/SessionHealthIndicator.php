@@ -16,6 +16,7 @@ class SessionHealthIndicator implements HealthIndicatorInterface
 
     const HEALTH_MESSAGE_UNABLE_TO_WRITE_SESSION = 'Unable to write session';
     const HEALTH_MESSAGE_UNABLE_TO_READ_SESSION = 'Unable to read session';
+    const KEY_HEARTBEAT = 'heartbeat';
 
     /**
      * @param HealthReportTransfer $healthReportTransfer
@@ -48,7 +49,7 @@ class SessionHealthIndicator implements HealthIndicatorInterface
     private function canWriteSession()
     {
         try {
-            $_SESSION['heartbeat'] = 'ok';
+            $_SESSION[self::KEY_HEARTBEAT] = 'ok';
         } catch (\Exception $e) {
             return false;
         }
@@ -62,7 +63,7 @@ class SessionHealthIndicator implements HealthIndicatorInterface
     private function canReadSession()
     {
         try {
-            $status = $_SESSION['heartbeat'];
+            $status = $_SESSION[self::KEY_HEARTBEAT];
         } catch (\Exception $e) {
             return false;
         }
