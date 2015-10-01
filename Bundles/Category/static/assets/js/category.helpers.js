@@ -33,7 +33,6 @@ SprykerAjaxCallbacks.prototype.displayCategoryNodesTree = function(ajaxResponse)
     $('#category-node-tree').removeClass('hidden');
     $('#categories-list').html(ajaxResponse);
     closeLoaderBar();
-    $('[data-toggle="tooltip"]').tooltip();
 };
 
 SprykerAjaxCallbacks.prototype.updateCategoryNodesOrder = function(ajaxResponse){
