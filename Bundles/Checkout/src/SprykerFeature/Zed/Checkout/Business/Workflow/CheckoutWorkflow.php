@@ -15,6 +15,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\Propel;
 use SprykerFeature\Shared\Checkout\CheckoutConfig;
+use SprykerFeature\Shared\Library\Error\ErrorHandler;
 use SprykerFeature\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
@@ -96,7 +97,9 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
             $orderTransfer = $this->getOrderTransfer();
             $this->hydrateOrder($orderTransfer, $checkoutRequest);
+
             $orderTransfer = $this->doSaveOrder($orderTransfer, $checkoutResponse);
+
             $checkoutResponse->setOrder($orderTransfer);
 
             if (!$this->hasErrors($checkoutResponse)) {
@@ -132,7 +135,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
                 $preCondition->checkCondition($checkoutRequest, $checkoutResponse);
             }
         } catch (\Exception $e) {
-            $error = $this->createInternalErrorTransfer();
+            $error = $this->handleCheckoutError($e);
 
             $checkoutResponse
                 ->addError($error)
@@ -176,7 +179,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
         } catch (\Exception $e) {
             Propel::getConnection()->rollBack();
 
-            $error = $this->createInternalErrorTransfer();
+            $error = $this->handleCheckoutError($e);
 
             $checkoutResponse
                 ->addError($error)
@@ -231,7 +234,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
                 $postSaveHook->executeHook($orderTransfer, $checkoutResponse);
             }
         } catch (\Exception $e) {
-            $error = $this->createInternalErrorTransfer();
+            $error = $this->handleCheckoutError($e);
 
             $checkoutResponse
                 ->addError($error)
@@ -241,14 +244,20 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
+     * @param \Exception $exception
      * @return CheckoutErrorTransfer
      */
-    protected function createInternalErrorTransfer()
+    protected function handleCheckoutError(\Exception $exception)
     {
+        ErrorHandler::initialize()->handleException($exception, false, false);
+
         $error = new CheckoutErrorTransfer();
+
         $error
-            ->setMessage(CheckoutConfig::ERROR_MESSAGE_INTERNAL_ERROR)
+            ->setMessage($exception->getMessage())
             ->setErrorCode(CheckoutConfig::ERROR_CODE_UNKNOWN_ERROR)
+            ->setType(get_class($exception))
+            ->setTrace($exception->getTraceAsString())
         ;
 
         return $error;
