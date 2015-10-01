@@ -39,7 +39,7 @@
     <transfer name="TaxRate">
         <property name="idTaxRate" type="int" />
         <property name="name" type="string" />
-        <property name="rate" type="int" />
+        <property name="rate" type="float" />
     </transfer>
 
 </transfers>
