@@ -6,8 +6,10 @@
 
 namespace SprykerFeature\Zed\Heartbeat\Business;
 
+use Generated\Shared\Transfer\HealthReportTransfer;
+use Generated\Zed\Ide\FactoryAutoCompletion\HeartbeatBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Heartbeat\Business\Check\Doctor;
+use SprykerFeature\Zed\Heartbeat\Business\Ambulance\Doctor;
 use SprykerFeature\Zed\Heartbeat\HeartbeatConfig;
 
 /**
@@ -20,10 +22,11 @@ class HeartbeatDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return Doctor
      */
-    public function createHeartbeatChecker()
+    public function createDoctor()
     {
-        return $this->getFactory()->createCheckHeartbeat(
-            $this->getConfig()->getHeartbeatChecker()
+        return $this->getFactory()->createAmbulanceDoctor(
+            new HealthReportTransfer(),
+            $this->getConfig()->getHealthIndicator()
         );
     }
 

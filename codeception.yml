@@ -30,7 +30,7 @@ include:
  - Bundles/Glossary/
  - Bundles/GlossaryDistributor/
  - Bundles/GlossaryQueue/
- - Bundles/Doctor/
+ - Bundles/Heartbeat/
  - Bundles/Installer/
  - Bundles/Invoice/
  - Bundles/Kernel/
@@ -55,11 +55,14 @@ include:
  - Bundles/RedirectExporter/
  - Bundles/Sales/
  - Bundles/Search/
+ - Bundles/SearchHeartbeatConnector/
  - Bundles/Setup/
  - Bundles/Session/
+ - Bundles/SessionHeartbeatConnector/
  - Bundles/Stock/
  - Bundles/StockSalesConnector/
  - Bundles/Storage/
+ - Bundles/StorageHeartbeatConnector/
  - Bundles/System/
  - Bundles/Tax/
  - Bundles/TaxProductConnector/

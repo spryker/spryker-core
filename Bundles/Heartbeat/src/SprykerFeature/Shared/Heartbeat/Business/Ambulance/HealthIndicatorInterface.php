@@ -6,12 +6,14 @@
 
 namespace SprykerFeature\Shared\Heartbeat\Business\Ambulance;
 
+use Generated\Shared\Transfer\HealthReportTransfer;
+
 interface HealthIndicatorInterface
 {
 
     /**
-     * @return bool
+     * @param HealthReportTransfer $healthReportTransfer
      */
-    public function check();
+    public function doHealthCheck(HealthReportTransfer $healthReportTransfer);
 
 }

@@ -4,39 +4,76 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Heartbeat\Business\Check;
+namespace SprykerFeature\Zed\Heartbeat\Business\Ambulance;
 
-use SprykerFeature\Shared\Heartbeat\Business\Ambulance\HealthIndicatorInterface;
+use Generated\Shared\Heartbeat\HealthReportInterface;
+use SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface;
 
-class Doctor implements HealthIndicatorInterface
+class Doctor
 {
+
+    /**
+     * @var HealthReportInterface
+     */
+    protected $healthReport;
 
     /**
      * @var HealthIndicatorInterface[]
      */
-    protected $heartbeatChecker;
+    protected $healthIndicator;
 
     /**
-     * @param HealthIndicatorInterface[] $heartbeatChecker
+     * @param HealthReportInterface $healthReport
+     * @param HealthIndicatorInterface[] $healthIndicator
      */
-    public function __construct(array $heartbeatChecker)
+    public function __construct(HealthReportInterface $healthReport, array $healthIndicator)
     {
-        $this->heartbeatChecker = $heartbeatChecker;
+        $this->healthReport = $healthReport;
+        $this->healthIndicator = $healthIndicator;
+    }
+
+    /**
+     * @return self
+     */
+    public function doHealthCheck()
+    {
+        foreach ($this->healthIndicator as $healthIndicator) {
+            $this->check($healthIndicator);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param HealthIndicatorInterface $healthIndicator
+     */
+    private function check(HealthIndicatorInterface $healthIndicator)
+    {
+        $healthIndicator->doHealthCheck($this->healthReport);
+    }
+
+    /**
+     * @return HealthReportInterface
+     */
+    public function getReport()
+    {
+        return $this->healthReport;
     }
 
     /**
      * @return bool
      */
-    public function check()
+    public function isPatientAlive()
     {
-        $heartbeats = true;
-        foreach ($this->heartbeatChecker as $heartbeatChecker) {
-            if (!$heartbeatChecker->check()) {
-                $heartbeats = false;
+        $patientIsAlive = true;
+
+        foreach ($this->healthReport->getHealthIndicatorReport() as $healthIndicatorReport) {
+            if (!$healthIndicatorReport->getStatus()) {
+                $patientIsAlive = false;
             }
         }
 
-        return $heartbeats;
+        return $patientIsAlive;
     }
 
 }

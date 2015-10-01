@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\Heartbeat\Business;
 
+use Generated\Shared\Heartbeat\HealthReportInterface;
+use Generated\Shared\Transfer\HealthReportTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -17,9 +19,17 @@ class HeartbeatFacade extends AbstractFacade
     /**
      * @return bool
      */
-    public function check()
+    public function isSystemAlive()
     {
-        return $this->getDependencyContainer()->createHeartbeatChecker()->check();
+        return $this->getDependencyContainer()->createDoctor()->doHealthCheck()->isPatientAlive();
+    }
+
+    /**
+     * @return HealthReportTransfer
+     */
+    public function getReport()
+    {
+        return $this->getDependencyContainer()->createDoctor()->doHealthCheck()->getReport();
     }
 
 }

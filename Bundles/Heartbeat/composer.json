@@ -2,7 +2,7 @@
   "name": "spryker/heartbeat",
   "autoload": {
     "psr-0": {
-      "SprykerEngine": "src/",
+      "SprykerFeature": "src/",
       "ZedUnit": "tests/"
     }
   },
