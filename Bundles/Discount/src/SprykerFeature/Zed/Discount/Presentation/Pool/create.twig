@@ -1,11 +1,11 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% if section_title is not defined %}
-{% set section_title = 'Create Pool' %}
+{% set section_title = 'Create Voucher' %}
 {% endif %}
 
 {% block action %}
-    {{ backActionButton('/discount/pool', 'View Pools' | trans) }}
+    {{ backActionButton('/discount/pool', 'View Vouchers' | trans) }}
 {% endblock %}
 
 {% block content %}

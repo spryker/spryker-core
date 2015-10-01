@@ -14,6 +14,7 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Discount\Communication\Form\PoolForm;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolTable;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherPoolCategoryTableMap;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use Propel\Runtime\Map\TableMap;
@@ -51,7 +52,6 @@ class PoolController extends AbstractController
                 VoucherPoolTable::PARAM_ID_POOL,
                 $voucherPoolTransfer->getIdDiscountVoucherPool()
             ));
-
         }
 
         return [
@@ -59,6 +59,11 @@ class PoolController extends AbstractController
         ];
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
     public function editAction(Request $request)
     {
         $idPool = $request->query->get(VoucherPoolTable::PARAM_ID_POOL);
@@ -82,7 +87,6 @@ class PoolController extends AbstractController
                 VoucherPoolTable::PARAM_ID_POOL,
                 $voucherPoolTransfer->getIdDiscountVoucherPool()
             ));
-
         }
 
         return [
@@ -226,6 +230,11 @@ class PoolController extends AbstractController
         return $defaultData;
     }
 
+    /**
+     * @param $idVoucherPool
+     *
+     * @return SpyDiscount
+     */
     protected function getDiscountByIdVoucherPool($idVoucherPool)
     {
         return $this->getQueryContainer()

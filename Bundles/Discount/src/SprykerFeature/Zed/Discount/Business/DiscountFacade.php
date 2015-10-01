@@ -179,22 +179,6 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * @param int $idDiscountVoucher
-     *
-     * @return array
-     */
-    public function toggleDiscountActiveStatus($idDiscountVoucher)
-    {
-        $response = $this->getDependencyContainer()->createDiscountVoucherWriter()->toggleActiveStatus($idDiscountVoucher);
-
-        return [
-            'code' => Response::HTTP_OK,
-            'id' => $response->getIdDiscountVoucher(),
-            'newStaus' => $response->getIsActive(),
-        ];
-    }
-
-    /**
      * @param DecisionRuleTransfer $decisionRuleTransfer
      *
      * @return DecisionRule

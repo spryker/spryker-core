@@ -48,22 +48,4 @@ class DiscountVoucherWriter extends AbstractWriter
         return $discountVoucherEntity;
     }
 
-    /**
-     * @param int $idDiscountVoucher
-     *
-     * @return VoucherTransfer
-     */
-    public function toggleActiveStatus($idDiscountVoucher)
-    {
-        $queryContainer = $this->getQueryContainer();
-        $voucherEntity = $queryContainer->queryDiscountVoucher()->findPk($idDiscountVoucher);
-        if (!$voucherEntity->isActive()) {
-            $voucherEntity->setIsActive(true);
-        } else {
-            $voucherEntity->setIsActive(false);
-        }
-        $voucherEntity->save();
-
-        return (new VoucherTransfer())->fromArray($voucherEntity->toArray(), true);
-    }
 }

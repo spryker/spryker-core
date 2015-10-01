@@ -1,15 +1,14 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set section_title = 'Pool list' %}
+{% set section_title = 'Vouchers List' %}
 
 {% block action %}
-    {{ createActionButton('/discount/pool/create', 'Create Pool' | trans) }}
+    {{ createActionButton('/discount/pool/create', 'Create Voucher' | trans) }}
 {% endblock %}
 
 {% block content %}
 
     {% embed '@Gui/Partials/widget.twig' with { widget_title: section_title } %}
-
 
         {% block widget_content %}
 
