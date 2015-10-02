@@ -134,7 +134,9 @@ EOM
         foreach ($tasks as $task) {
             $exists = $this->input->getOption($task);
 
-            if ($exists) return $task;
+            if ($exists) {
+                return $task;
+            }
         }
 
         return self::OPTION_TASK_BUILD_ALL;

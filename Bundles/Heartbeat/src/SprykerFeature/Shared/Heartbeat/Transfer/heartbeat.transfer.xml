@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<transfers xmlns="http://xsd.spryker.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
+
+    <transfer name="HealthReport">
+        <property name="healthIndicatorReport" type="HealthIndicatorReport[]" />
+    </transfer>
+
+    <transfer name="HealthIndicatorReport">
+        <property name="name" type="string" />
+        <property name="status" type="bool" />
+        <property name="healthDetails" type="HealthDetail[]" singular="healthDetail" />
+    </transfer>
+
+    <transfer name="HealthDetail">
+        <property name="message" type="string" />
+    </transfer>
+
+</transfers>

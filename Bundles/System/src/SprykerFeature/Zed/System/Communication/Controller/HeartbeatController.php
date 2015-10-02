@@ -7,61 +7,37 @@
 namespace SprykerFeature\Zed\System\Communication\Controller;
 
 use SprykerFeature\Shared\Library\Error\ErrorLogger;
-/*
- * Class Heartbeat
- * @package SprykerFeature\Zed\System\Communication\Controller
- */
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\System\Communication\SystemDependencyContainer;
+use SprykerFeature\Zed\System\SystemDependencyProvider;
+use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @method SystemDependencyContainer getDependencyContainer()
+ */
 class HeartbeatController extends AbstractController
 {
 
-    const HEARTBEAT_OK = 'heartbeat:ok';
-    const ERROR_EMPTY_DATABASE = 'Empty database';
-
-    public function init()
-    {
-        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->markIgnoreApdex();
-        \SprykerFeature\Shared\Library\NewRelic\Api::getInstance()->markIgnoreTransaction();
-    }
+    const SYSTEM_UP = 'UP';
+    const SYSTEM_DOWN = 'DOWN';
+    const SYSTEM_STATUS = 'status';
+    const STATUS_REPORT = 'report';
 
     public function indexAction()
     {
-        try {
-            $errors = [];
-            $statement = \Propel\Runtime\Propel::getConnection()->query('SHOW TABLES');
-            $data = $statement->fetchAll();
+        $heartbeatFacade = $this->getDependencyContainer()->createHeartbeatFacade();
 
-            if (count($data) < 10) {
-                $errors[] = self::ERROR_EMPTY_DATABASE;
-            }
-
-            if (count($errors) === 0) {
-                echo self::HEARTBEAT_OK;
-            } else {
-                $this->printError($errors);
-            }
-        } catch (\Exception $e) {
-            $this->printError([$e->getMessage()]);
-            ErrorLogger::log($e);
+        if ($heartbeatFacade->isSystemAlive()) {
+            return $this->jsonResponse(
+                [self::SYSTEM_STATUS => self::SYSTEM_UP],
+                Response::HTTP_OK
+            );
+        } else {
+            return $this->jsonResponse(
+                [self::SYSTEM_STATUS => self::SYSTEM_DOWN, self::STATUS_REPORT => $heartbeatFacade->getReport()->toArray()],
+                Response::HTTP_SERVICE_UNAVAILABLE
+            );
         }
-        die;
-    }
-
-    /**
-     * Output format in case of error is fixed and parsed for Nagios
-     * "<h1>Critical Errors</h1><ul><li>Solr: Is not reachable!</li></ul>
-     */
-    protected function printError($messages)
-    {
-        header('HTTP/1.0 503 Service Unavailable');
-        echo '<h1>Critical Errors</h1>';
-
-        echo '<ul>';
-        foreach ($messages as $message) {
-            echo '<li>' . $message . '</li>';
-        }
-        echo '</ul>';
     }
 
 }

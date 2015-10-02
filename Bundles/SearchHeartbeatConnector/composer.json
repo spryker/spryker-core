@@ -1,0 +1,12 @@
+{
+  "name": "spryker/search-heartbeat-connector",
+  "autoload": {
+    "psr-0": {
+      "SprykerFeature": "src/"
+    }
+  },
+  "require": {
+  },
+  "require-dev": {
+  }
+}

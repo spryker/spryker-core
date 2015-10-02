@@ -1,0 +1,13 @@
+{
+  "name": "spryker/heartbeat",
+  "autoload": {
+    "psr-0": {
+      "SprykerFeature": "src/",
+      "ZedUnit": "tests/"
+    }
+  },
+  "require": {
+  },
+  "require-dev": {
+  }
+}
