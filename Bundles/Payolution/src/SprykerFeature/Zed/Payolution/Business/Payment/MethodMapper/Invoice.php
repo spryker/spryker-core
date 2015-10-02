@@ -5,7 +5,7 @@
  */
 namespace SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
 
-use Generated\Shared\Transfer\PayolutionRequestTransfer;
+use Generated\Shared\Payolution\PayolutionRequestInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Constants;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 
@@ -16,7 +16,7 @@ class Invoice extends AbstractMethodMapper
      * @param SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
-     * @return PayolutionRequestTransfer
+     * @return PayolutionRequestInterface
      */
     public function mapToCapture(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {

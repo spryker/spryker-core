@@ -6,16 +6,16 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Api\Request;
 
-use Generated\Shared\Transfer\PayolutionRequestTransfer;
+use Generated\Shared\Payolution\PayolutionRequestInterface;
 
 interface ConverterInterface
 {
 
     /**
-     * @param PayolutionRequestTransfer $requestTransfer
+     * @param PayolutionRequestInterface $requestTransfer
      *
      * @return mixed
      */
-    public function toArray(PayolutionRequestTransfer $requestTransfer);
+    public function toArray(PayolutionRequestInterface $requestTransfer);
 
 }

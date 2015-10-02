@@ -6,8 +6,9 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Payment;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use Generated\Shared\Transfer\PayolutionRequestTransfer;
+use Generated\Shared\Payolution\CheckoutRequestInterface;
+use Generated\Shared\Payolution\PayolutionRequestInterface;
+use Generated\Shared\Payolution\PayolutionResponseInterface;
 use Generated\Shared\Transfer\PayolutionResponseTransfer;
 use SprykerEngine\Zed\Kernel\Business\DependencyContainer\DependencyContainerInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
@@ -83,11 +84,11 @@ class Communicator implements CommunicatorInterface
     }
 
     /**
-     * @param CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param CheckoutRequestInterface $checkoutRequestTransfer
      *
-     * @return PayolutionResponseTransfer
+     * @return PayolutionResponseInterface
      */
-    public function preCheckPayment(CheckoutRequestTransfer $checkoutRequestTransfer)
+    public function preCheckPayment(CheckoutRequestInterface $checkoutRequestTransfer)
     {
         $paymentTransfer = $checkoutRequestTransfer->getPayolutionPayment();
         $requestTransfer = $this
@@ -102,7 +103,7 @@ class Communicator implements CommunicatorInterface
     /**
      * @param int $idPayment
      *
-     * @return PayolutionResponseTransfer
+     * @return PayolutionResponseInterface
      */
     public function preAuthorizePayment($idPayment)
     {
@@ -117,7 +118,7 @@ class Communicator implements CommunicatorInterface
     /**
      * @param int $idPayment
      *
-     * @return PayolutionResponseTransfer
+     * @return PayolutionResponseInterface
      */
     public function reAuthorizePayment($idPayment)
     {
@@ -134,7 +135,7 @@ class Communicator implements CommunicatorInterface
     /**
      * @param int $idPayment
      *
-     * @return PayolutionRequestTransfer
+     * @return PayolutionRequestInterface
      */
     public function revertPayment($idPayment)
     {
@@ -151,7 +152,7 @@ class Communicator implements CommunicatorInterface
     /**
      * @param int $idPayment
      *
-     * @return PayolutionResponseTransfer
+     * @return PayolutionResponseInterface
      */
     public function capturePayment($idPayment)
     {
@@ -168,7 +169,7 @@ class Communicator implements CommunicatorInterface
     /**
      * @param int $idPayment
      *
-     * @return PayolutionResponseTransfer
+     * @return PayolutionResponseInterface
      */
     public function refundPayment($idPayment)
     {
@@ -216,12 +217,12 @@ class Communicator implements CommunicatorInterface
     }
 
     /**
-     * @param PayolutionRequestTransfer $requestTransfer
+     * @param PayolutionRequestInterface $requestTransfer
      * @param SpyPaymentPayolution $paymentEntity
      *
      * @return PayolutionResponseTransfer
      */
-    private function sendLoggedRequest(PayolutionRequestTransfer $requestTransfer, SpyPaymentPayolution $paymentEntity)
+    private function sendLoggedRequest(PayolutionRequestInterface $requestTransfer, SpyPaymentPayolution $paymentEntity)
     {
         $this->logApiRequest($requestTransfer, $paymentEntity->getIdPaymentPayolution());
         $responseTransfer = $this->sendRequest($requestTransfer);
@@ -231,12 +232,12 @@ class Communicator implements CommunicatorInterface
     }
 
     /**
-     * @param PayolutionRequestTransfer $requestTransfer
+     * @param PayolutionRequestInterface $requestTransfer
      * @param int $idPayment
      *
      * @return SpyPaymentPayolutionTransactionRequestLog
      */
-    private function logApiRequest(PayolutionRequestTransfer $requestTransfer, $idPayment)
+    private function logApiRequest(PayolutionRequestInterface $requestTransfer, $idPayment)
     {
         $logEntity = $this->getDependencyContainer()->createTransactionRequestLogEntity();
         $logEntity
@@ -252,11 +253,11 @@ class Communicator implements CommunicatorInterface
     }
 
     /**
-     * @param PayolutionRequestTransfer $requestTransfer
+     * @param PayolutionRequestInterface $requestTransfer
      *
-     * @return PayolutionResponseTransfer
+     * @return PayolutionResponseInterface
      */
-    private function sendRequest(PayolutionRequestTransfer $requestTransfer)
+    private function sendRequest(PayolutionRequestInterface $requestTransfer)
     {
         $requestData = $this->requestConverter->toArray($requestTransfer);
         $responseData = $this->executionAdapter->sendArrayDataRequest($requestData);
@@ -266,10 +267,10 @@ class Communicator implements CommunicatorInterface
     }
 
     /**
-     * @param PayolutionResponseTransfer $responseTransfer
+     * @param PayolutionResponseInterface $responseTransfer
      * @param int $idPayment
      */
-    private function logApiResponse(PayolutionResponseTransfer $responseTransfer, $idPayment)
+    private function logApiResponse(PayolutionResponseInterface $responseTransfer, $idPayment)
     {
         $logEntity = $this->getDependencyContainer()->createTransactionStatusLogEntity();
         $logEntity->fromArray($responseTransfer->toArray());

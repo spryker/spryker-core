@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Log;
 
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Payolution\OrderInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Constants;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 
@@ -27,11 +27,11 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param OrderInterface $orderTransfer
      *
      * @return bool
      */
-    public function isPreAuthorizationApproved(OrderTransfer $orderTransfer)
+    public function isPreAuthorizationApproved(OrderInterface $orderTransfer)
     {
         return $this->hasTransactionLogStatus(
             $orderTransfer,
@@ -41,11 +41,11 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param OrderInterface $orderTransfer
      *
      * @return bool
      */
-    public function isReAuthorizationApproved(OrderTransfer $orderTransfer)
+    public function isReAuthorizationApproved(OrderInterface $orderTransfer)
     {
         return $this->hasTransactionLogStatus(
             $orderTransfer,
@@ -55,11 +55,11 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param OrderInterface $orderTransfer
      *
      * @return bool
      */
-    public function isReversalApproved(OrderTransfer $orderTransfer)
+    public function isReversalApproved(OrderInterface $orderTransfer)
     {
         return $this->hasTransactionLogStatus(
             $orderTransfer,
@@ -69,11 +69,11 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param OrderInterface $orderTransfer
      *
      * @return bool
      */
-    public function isCaptureApproved(OrderTransfer $orderTransfer)
+    public function isCaptureApproved(OrderInterface $orderTransfer)
     {
         return $this->hasTransactionLogStatus(
             $orderTransfer,
@@ -83,11 +83,11 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param OrderInterface $orderTransfer
      *
      * @return bool
      */
-    public function isRefundApproved(OrderTransfer $orderTransfer)
+    public function isRefundApproved(OrderInterface $orderTransfer)
     {
         return $this->hasTransactionLogStatus(
             $orderTransfer,
@@ -97,13 +97,13 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param OrderInterface $orderTransfer
      * @param string $paymentCode
      * @param string $expectedStatusReasonCode
      *
      * @return bool
      */
-    private function hasTransactionLogStatus(OrderTransfer $orderTransfer, $paymentCode, $expectedStatusReasonCode)
+    private function hasTransactionLogStatus(OrderInterface $orderTransfer, $paymentCode, $expectedStatusReasonCode)
     {
         $idSalesOrder = $orderTransfer->getIdSalesOrder();
         $paymentEntity = $this->queryContainer->queryPaymentBySalesOrderId($idSalesOrder)->findOne();

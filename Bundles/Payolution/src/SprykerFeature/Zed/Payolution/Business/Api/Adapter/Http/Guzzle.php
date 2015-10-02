@@ -46,8 +46,6 @@ class Guzzle implements AdapterInterface
      */
     public function sendArrayDataRequest(array $data)
     {
-        \SprykerFeature_Shared_Library_Log::logRaw(json_encode($data), 'payolution.log');
-
         $guzzleRequest = $this->client->post(
           $this->gatewayUrl,
             $headers = ['Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8'],
@@ -62,36 +60,7 @@ class Guzzle implements AdapterInterface
 
         parse_str($response->getBody($asString = true), $out);
 
-        \SprykerFeature_Shared_Library_Log::logRaw(json_encode($out), 'payolution.log');
-
         return $out;
     }
-
-// @todo CD-408 Clarify if we want to support exchange via XML documents
-//    /**
-//     * @param \SimpleXMLElement $xmlElement
-//     *
-//     * @throws ApiHttpRequestException
-//     * @return string
-//     */
-//    public function sendXmlRequest(\SimpleXMLElement $xmlElement)
-//    {
-//        $guzzleRequest = $this->client
-//            ->post(
-//                $this->gatewayUrl,
-//                $headers = null,
-//                [
-//                    'load' => $xmlElement->saveXML()
-//                ]
-//            );
-//
-//        try {
-//            $response = $guzzleRequest->send();
-//        } catch (RequestException $requestException) {
-//            throw new ApiHttpRequestException($requestException->getMessage());
-//        }
-//
-//        return $response->getBody($asString = true);
-//    }
 
 }

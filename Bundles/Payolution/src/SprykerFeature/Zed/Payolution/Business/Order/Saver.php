@@ -5,9 +5,9 @@
  */
 namespace SprykerFeature\Zed\Payolution\Business\Order;
 
+use Generated\Shared\Payolution\ItemInterface;
 use Generated\Shared\Payolution\PayolutionPaymentInterface;
 use Generated\Shared\Payolution\OrderInterface;
-use Generated\Shared\Transfer\ItemTransfer;
 use SprykerFeature\Zed\Payolution\Business\PayolutionDependencyContainer;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 
@@ -75,12 +75,12 @@ class Saver implements SaverInterface
     }
 
     /**
-     * @param ItemTransfer[] $orderItemTransfers
+     * @param ItemInterface[] $orderItemTransfers
      * @param int $idPayment
      */
     private function savePaymentForOrderItems($orderItemTransfers, $idPayment)
     {
-        /** @var ItemTransfer $orderItemTransfer */
+        /** @var ItemInterface $orderItemTransfer */
         foreach ($orderItemTransfers as $orderItemTransfer) {
             $paymentOrderItemEntity = $this->dependencyContainer->createPaymentOrderItemEntity();
             $paymentOrderItemEntity

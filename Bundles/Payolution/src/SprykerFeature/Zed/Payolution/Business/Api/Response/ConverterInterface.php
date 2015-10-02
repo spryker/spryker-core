@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Api\Response;
 
-use Generated\Shared\Transfer\PayolutionResponseTransfer;
+use Generated\Shared\Payolution\PayolutionResponseInterface;
 
 interface ConverterInterface
 {
@@ -14,7 +14,7 @@ interface ConverterInterface
     /**
      * @param array $data
      *
-     * @return PayolutionResponseTransfer
+     * @return PayolutionResponseInterface
      */
     public function fromArray(array $data);
 

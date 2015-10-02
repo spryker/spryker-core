@@ -6,7 +6,8 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
 
-use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Payolution\CheckoutRequestInterface;
+use Generated\Shared\Payolution\PayolutionRequestInterface;
 use Generated\Shared\Transfer\PayolutionRequestAnalysisCriterionTransfer;
 use Generated\Shared\Transfer\PayolutionRequestTransfer;
 use SprykerFeature\Zed\Payolution\Business\Api\Constants;
@@ -41,11 +42,11 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
     }
 
     /**
-     * @param CheckoutRequestTransfer $checkoutRequestTransfer
+     * @param CheckoutRequestInterface $checkoutRequestTransfer
      *
-     * @return PayolutionRequestTransfer
+     * @return PayolutionRequestInterface
      */
-    public function mapToPreCheck(CheckoutRequestTransfer $checkoutRequestTransfer)
+    public function mapToPreCheck(CheckoutRequestInterface $checkoutRequestTransfer)
     {
         $payolutionTransfer = $checkoutRequestTransfer->getPayolutionPayment();
         $cart = $checkoutRequestTransfer->getCart();
@@ -96,9 +97,7 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
     /**
      * @param SpyPaymentPayolution $paymentEntity
      *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return PayolutionRequestTransfer
+     * @return PayolutionRequestInterface
      */
     public function mapToPreAuthorization(SpyPaymentPayolution $paymentEntity)
     {
@@ -149,7 +148,7 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
      * @param SpyPaymentPayolution $paymentEntity
      * @param string $uniqueId
      *
-     * @return PayolutionRequestTransfer
+     * @return PayolutionRequestInterface
      */
     public function mapToReAuthorization(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
@@ -165,7 +164,7 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
      * @param SpyPaymentPayolution $paymentEntity
      * @param int $uniqueId
      *
-     * @return PayolutionRequestTransfer
+     * @return PayolutionRequestInterface
      */
     public function mapToReversal(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
@@ -181,7 +180,7 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
      * @param SpyPaymentPayolution $paymentEntity
      * @param int $uniqueId
      *
-     * @return PayolutionRequestTransfer
+     * @return PayolutionRequestInterface
      */
     public function mapToRefund(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
@@ -196,7 +195,7 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
     /**
      * @param SpyPaymentPayolution $paymentEntity
      *
-     * @return PayolutionRequestTransfer
+     * @return PayolutionRequestInterface
      */
     protected function getBaseRequestTransferForPayment(SpyPaymentPayolution $paymentEntity)
     {
@@ -216,7 +215,7 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
      * @param string $currency
      * @param int $idOrder
      *
-     * @return PayolutionRequestTransfer
+     * @return PayolutionRequestInterface
      */
     protected function getBaseRequestTransfer($grandTotal, $currency, $idOrder)
     {
@@ -238,12 +237,14 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
 
     /**
      * @param string[] $criteria
-     * @param PayolutionRequestTransfer $requestTransfer
+     * @param PayolutionRequestInterface $requestTransfer
      *
-     * @return PayolutionRequestTransfer
+     * @return PayolutionRequestInterface
      */
-    protected function addAnalysisCriteriaToRequestTransfer(array $criteria, PayolutionRequestTransfer $requestTransfer)
-    {
+    protected function addAnalysisCriteriaToRequestTransfer(
+        array $criteria,
+        PayolutionRequestInterface $requestTransfer
+    ) {
         foreach ($criteria as $name => $value) {
             $criterionTransfer = new PayolutionRequestAnalysisCriterionTransfer();
             $criterionTransfer

@@ -12,6 +12,7 @@ use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterf
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 use SprykerFeature\Zed\PayolutionOmsConnector\Communication\PayolutionOmsConnectorDependencyContainer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 
 /**
  * @method PayolutionOmsConnectorDependencyContainer getDependencyContainer()
@@ -19,6 +20,13 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 class CapturePlugin extends AbstractPlugin implements CommandByOrderInterface
 {
 
+    /**
+     * @param SpySalesOrderItem[] $orderItems
+     * @param SpySalesOrder $orderEntity
+     * @param ReadOnlyArrayObject $data
+     *
+     * @return array
+     */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
         /** @var SpyPaymentPayolution $paymentEntity */
