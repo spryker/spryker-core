@@ -3,26 +3,22 @@
     <li class="dd-item" id="node-{{ item.id }}">
         <div class="dd-handle">{{ item.text }}
             <div class="pull-right">
-                {% set category_active = 'Inactive' %}
-                {% set category_in_menu = 'Not in Menu' %}
-                {% set category_clickable = 'Not Clickable' %}
-
-                {% if item.is_active == '1' %}
-                    <span class="label" title="Active">A</span>
+                {% if item.is_active %}
+                    <span class="label" title="{{ 'Active' | trans }}">A</span>
                 {% else %}
-                    <span class="label" title="Inactive" style="background-color: slategray !important">A</span>
+                    <span class="label" title="{{ 'Inactive' | trans }}" style="background-color: slategray !important">A</span>
                 {% endif %}
 
-                {% if item.is_in_menu == '1' %}
-                    <span class="label" title="In Menu">M</span>
+                {% if item.is_in_menu %}
+                    <span class="label" title="{{ 'In Menu' | trans }}">M</span>
                 {% else %}
-                    <span class="label" title="Not in Menu" style="background-color: slategray !important">M</span>
+                    <span class="label" title="{{ 'Not in Menu' | trans }}" style="background-color: slategray !important">M</span>
                 {% endif %}
 
-                {% if item.is_clickable == '1' %}
-                    <span class="label" title="Clickable">C</span>
+                {% if item.is_clickable %}
+                    <span class="label" title="{{ 'Clickable' | trans }}">C</span>
                 {% else %}
-                    <span class="label" title="Not clickable" style="background-color: slategray !important">C</span>
+                    <span class="label" title="{{ 'Not clickable' | trans }}" style="background-color: slategray !important">C</span>
                 {% endif %}
 
                 {% if item.children is defined and item.children|length > 0 %}
