@@ -16,10 +16,11 @@ use SprykerFeature\Zed\SequenceNumber\Persistence\Propel\SpySequenceNumberQuery;
 class SequenceNumber implements SequenceNumberInterface
 {
 
-    const SEQUENCE_NAME = 'Reference';
-
     /** @var RandomNumberGenerator */
     protected $randomNumberGenerator;
+
+    /** @var string */
+    protected $name;
 
     /** @var int */
     protected $minimumNumber;
@@ -29,12 +30,14 @@ class SequenceNumber implements SequenceNumberInterface
 
     /**
      * @param RandomNumberGeneratorInterface $randomNumberGenerator
+     * @param string $name
      * @param int $minimumNumber
      * @param int $numberLength
      */
-    public function __construct(RandomNumberGeneratorInterface $randomNumberGenerator, $minimumNumber, $numberLength)
+    public function __construct(RandomNumberGeneratorInterface $randomNumberGenerator, $name, $minimumNumber, $numberLength)
     {
         $this->randomNumberGenerator = $randomNumberGenerator;
+        $this->name = $name;
         $this->minimumNumber = $minimumNumber;
         $this->numberLength = $numberLength;
     }
@@ -90,11 +93,11 @@ class SequenceNumber implements SequenceNumberInterface
     protected function getSequence($transaction)
     {
         $sequence = SpySequenceNumberQuery::create()
-            ->findOneByName(self::SEQUENCE_NAME, $transaction);
+            ->findOneByName($this->name, $transaction);
 
         if ($sequence === null) {
             $sequence = new SpySequenceNumber();
-            $sequence->setName(self::SEQUENCE_NAME);
+            $sequence->setName($this->name);
             $sequence->setCurrentId($this->minimumNumber);
         }
 

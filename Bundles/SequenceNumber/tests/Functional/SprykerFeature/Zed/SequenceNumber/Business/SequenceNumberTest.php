@@ -55,6 +55,7 @@ class SequenceNumberTest extends Test
         /** @var SequenceNumber $sequenceNumber */
         $sequenceNumber = $factory->createModelSequenceNumber(
             $generator,
+            'Sequence',
             10,
             3
         );

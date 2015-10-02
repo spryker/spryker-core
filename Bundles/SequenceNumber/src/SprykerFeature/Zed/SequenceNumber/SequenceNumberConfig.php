@@ -21,7 +21,7 @@ class SequenceNumberConfig extends AbstractBundleConfig
     /**
      * @return int
      */
-    public function getMinimumNumber()
+    public function getNumberMinimum()
     {
         return 1;
     }
@@ -40,6 +40,12 @@ class SequenceNumberConfig extends AbstractBundleConfig
     public function getNumberIncrementMax()
     {
         return 1;
+    }
+
+    /** @return string */
+    public function getSequenceName()
+    {
+        return 'Sequence';
     }
 
 }

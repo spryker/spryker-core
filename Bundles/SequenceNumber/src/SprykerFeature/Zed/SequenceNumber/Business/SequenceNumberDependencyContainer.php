@@ -44,7 +44,8 @@ class SequenceNumberDependencyContainer extends AbstractBusinessDependencyContai
         return $this->getFactory()
             ->createModelSequenceNumber(
                 $generator,
-                $this->getConfig()->getMinimumNumber(),
+                $this->getConfig()->getSequenceName(),
+                $this->getConfig()->getNumberMinimum(),
                 $this->getConfig()->getNumberLength()
             )
         ;
