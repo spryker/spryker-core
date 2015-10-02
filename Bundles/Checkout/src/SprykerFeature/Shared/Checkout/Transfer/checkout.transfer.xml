@@ -19,6 +19,8 @@
         <property name="errorCode" type="int" />
         <property name="message" type="string" />
         <property name="step" type="string" />
+        <property name="trace" type="string" />
+        <property name="type" type="string" />
     </transfer>
 
     <transfer name="CheckoutResponse">
