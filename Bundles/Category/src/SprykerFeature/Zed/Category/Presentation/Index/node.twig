@@ -3,6 +3,24 @@
     <li class="dd-item" id="node-{{ item.id }}">
         <div class="dd-handle">{{ item.text }}
             <div class="pull-right">
+                {% if item.is_active %}
+                    <span class="label" title="{{ 'Active' | trans }}">A</span>
+                {% else %}
+                    <span class="label" title="{{ 'Inactive' | trans }}" style="background-color: slategray !important">A</span>
+                {% endif %}
+
+                {% if item.is_in_menu %}
+                    <span class="label" title="{{ 'In Menu' | trans }}">M</span>
+                {% else %}
+                    <span class="label" title="{{ 'Not in Menu' | trans }}" style="background-color: slategray !important">M</span>
+                {% endif %}
+
+                {% if item.is_clickable %}
+                    <span class="label" title="{{ 'Clickable' | trans }}">C</span>
+                {% else %}
+                    <span class="label" title="{{ 'Not clickable' | trans }}" style="background-color: slategray !important">C</span>
+                {% endif %}
+
                 {% if item.children is defined and item.children|length > 0 %}
                 <a href="/category/node/view?id-node={{ item.id }}" id="node-{{ item.id }}" class="btn btn-xs btn-success">
                     <i class="fa fa-sitemap"></i>
