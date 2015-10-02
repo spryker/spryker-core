@@ -25,6 +25,7 @@
         <property name="invoiceReference" type="string" />
         <property name="invoiceCreatedAt" type="string" />
         <property name="fkShipmentMethod" type="int" />
+        <property name="fkCustomer" type="int" />
     </transfer>
 
     <transfer name="OrderList">
