@@ -19,6 +19,10 @@ class CustomerTable extends AbstractTable
     const FORMAT = 'Y-m-d G:i:s';
     const ACTIONS = 'Actions';
 
+    const COL_ZIP_CODE = 'zip_code';
+    const COL_CITY = 'city';
+    const COL_FK_COUNTRY = 'country';
+
     /**
      * @var SpyCustomerQuery
      */
@@ -45,9 +49,9 @@ class CustomerTable extends AbstractTable
             SpyCustomerTableMap::COL_EMAIL => 'Email',
             SpyCustomerTableMap::COL_LAST_NAME => 'Last Name',
             SpyCustomerTableMap::COL_FIRST_NAME => 'First Name',
-            $this->buildAlias(SpyCustomerAddressTableMap::COL_ZIP_CODE) => 'Zip Code',
-            $this->buildAlias(SpyCustomerAddressTableMap::COL_CITY) => 'City',
-            $this->buildAlias(SpyCustomerAddressTableMap::COL_FK_COUNTRY) => 'Country',
+            self::COL_ZIP_CODE => 'Zip Code',
+            self::COL_CITY => 'City',
+            self::COL_FK_COUNTRY => 'Country',
             self::ACTIONS => self::ACTIONS,
         ]);
 
@@ -57,8 +61,8 @@ class CustomerTable extends AbstractTable
             SpyCustomerTableMap::COL_EMAIL,
             SpyCustomerTableMap::COL_LAST_NAME,
             SpyCustomerTableMap::COL_FIRST_NAME,
-            $this->buildAlias(SpyCustomerAddressTableMap::COL_ZIP_CODE),
-            $this->buildAlias(SpyCustomerAddressTableMap::COL_CITY),
+            self::COL_ZIP_CODE,
+            self::COL_CITY,
         ]);
 
         $config->setUrl('table');
@@ -66,6 +70,10 @@ class CustomerTable extends AbstractTable
         $config->setSearchable([
             SpyCustomerTableMap::COL_ID_CUSTOMER,
             SpyCustomerTableMap::COL_EMAIL,
+            SpyCustomerTableMap::COL_FIRST_NAME,
+            SpyCustomerTableMap::COL_LAST_NAME,
+            SpyCustomerAddressTableMap::COL_ZIP_CODE,
+            SpyCustomerAddressTableMap::COL_CITY,
         ]);
 
         return $config;
@@ -79,9 +87,9 @@ class CustomerTable extends AbstractTable
     protected function prepareData(TableConfiguration $config)
     {
         $query = $this->customerQuery->leftJoinBillingAddress()
-            ->withColumn(SpyCustomerAddressTableMap::COL_ZIP_CODE)
-            ->withColumn(SpyCustomerAddressTableMap::COL_CITY)
-            ->withColumn(SpyCustomerAddressTableMap::COL_FK_COUNTRY)
+            ->withColumn(SpyCustomerAddressTableMap::COL_ZIP_CODE, self::COL_ZIP_CODE)
+            ->withColumn(SpyCustomerAddressTableMap::COL_CITY, self::COL_CITY)
+            ->withColumn(SpyCustomerAddressTableMap::COL_FK_COUNTRY, self::COL_FK_COUNTRY)
         ;
 
         $lines = $this->runQuery($query, $config);
@@ -91,11 +99,11 @@ class CustomerTable extends AbstractTable
 
                 $country = $this->customerQuery->useAddressQuery()
                     ->useCountryQuery()
-                    ->findOneByIdCountry($lines[$key][$this->buildAlias(SpyCustomerAddressTableMap::COL_FK_COUNTRY)])
+                    ->findOneByIdCountry($lines[$key][self::COL_FK_COUNTRY])
                 ;
 
-                $lines[$key][$this->buildAlias(SpyCustomerAddressTableMap::COL_FK_COUNTRY)] = $country ? $country->getName() : '';
-                $lines[$key][$this->buildAlias(SpyCustomerTableMap::COL_CREATED_AT)] = gmdate(
+                $lines[$key][self::COL_FK_COUNTRY] = $country ? $country->getName() : '';
+                $lines[$key][SpyCustomerTableMap::COL_CREATED_AT] = gmdate(
                     self::FORMAT,
                     strtotime($value[SpyCustomerTableMap::COL_CREATED_AT])
                 );
@@ -107,31 +115,23 @@ class CustomerTable extends AbstractTable
     }
 
     /**
-     * @param $details
+     * @param array $details
      *
-     * @return array|string
+     * @return string
      */
-    private function buildLinks($details)
+    private function buildLinks(array $details)
     {
-        $result = '';
-
-        $idCustomer = !empty($details[SpyCustomerTableMap::COL_ID_CUSTOMER]) ? $details[SpyCustomerTableMap::COL_ID_CUSTOMER] : false;
-        if (false !== $idCustomer) {
-            $links = [
-                'View' => '/customer/view/?id_customer=',
-                'Edit' => '/customer/edit/?id_customer=',
-                'Manage addresses' => '/customer/address/?id_customer=',
-            ];
-
-            $result = [];
-            foreach ($links as $label => $url) {
-                $result[] = '<a href="' . $url . $idCustomer . '" class="btn btn-xs btn-white">' . $label . '</a>';
-            }
-
-            $result = implode('&nbsp;&nbsp;&nbsp;', $result);
+        if (false === array_key_exists(SpyCustomerTableMap::COL_ID_CUSTOMER, $details)
+            || true === empty($details[SpyCustomerTableMap::COL_ID_CUSTOMER])
+        ) {
+            return '';
         }
+        $idCustomer = $details[SpyCustomerTableMap::COL_ID_CUSTOMER];
 
-        return $result;
+        return $this->generateViewButton('/customer/view/?id_customer=' . $idCustomer, 'View')
+            . ' ' . $this->generateEditButton('/customer/edit/?id_customer=' . $idCustomer, 'Edit')
+            . ' ' . $this->generateViewButton('/customer/address/?id_customer=' . $idCustomer, 'Manage Addresses')
+        ;
     }
 
 }
