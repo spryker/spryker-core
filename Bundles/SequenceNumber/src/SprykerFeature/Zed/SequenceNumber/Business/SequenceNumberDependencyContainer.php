@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\SequenceNumber\Business;
 
+use Generated\Shared\SequenceNumber\SequenceNumberSettingsInterface;
+use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\SequenceNumberBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface;
@@ -22,31 +24,37 @@ class SequenceNumberDependencyContainer extends AbstractBusinessDependencyContai
 {
 
     /**
+     * @param int $min
+     * @param int $max
+     *
      * @return RandomNumberGeneratorInterface
      */
-    public function createRandomNumberGenerator()
+    public function createRandomNumberGenerator($min = 1, $max = 1)
     {
         return $this->getFactory()
             ->createGeneratorRandomNumberGenerator(
-                $this->getConfig()->getNumberIncrementMin(),
-                $this->getConfig()->getNumberIncrementMax()
+                $min,
+                $max
             )
         ;
     }
 
     /**
+     * @param SequenceNumberSettingsInterface $sequenceNumberSettings
+     *
      * @return SequenceNumberInterface
      */
-    public function createSequenceNumber()
+    public function createSequenceNumber(SequenceNumberSettingsInterface $sequenceNumberSettings)
     {
-        $generator = $this->createRandomNumberGenerator();
+        $settings = $this->getConfig()->getDefaultSettings();
+        $settings->fromArray($sequenceNumberSettings->toArray());
+
+        $generator = $this->createRandomNumberGenerator($settings->getIncrementMinimum(), $settings->getIncrementMaximum());
 
         return $this->getFactory()
             ->createModelSequenceNumber(
                 $generator,
-                $this->getConfig()->getSequenceName(),
-                $this->getConfig()->getNumberMinimum(),
-                $this->getConfig()->getNumberLength()
+                $settings
             )
         ;
     }

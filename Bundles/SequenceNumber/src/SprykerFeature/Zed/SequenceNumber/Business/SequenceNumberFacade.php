@@ -6,12 +6,8 @@
 
 namespace SprykerFeature\Zed\SequenceNumber\Business;
 
-use Generated\Shared\Shipment\ShipmentInterface;
-use Generated\Shared\Shipment\ShipmentMethodAvailabilityInterface;
-use Generated\Shared\Transfer\ShipmentCarrierTransfer;
-use Generated\Shared\Transfer\ShipmentMethodTransfer;
+use Generated\Shared\SequenceNumber\SequenceNumberSettingsInterface;
 use Generated\Zed\Ide\FactoryAutoCompletion\SequenceNumberBusiness;
-use Generated\Zed\Ide\FactoryAutoCompletion\ShipmentBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -22,12 +18,14 @@ class SequenceNumberFacade extends AbstractFacade
 {
 
     /***
+     * @param SequenceNumberSettingsInterface $sequenceNumberSettings
+     *
      * @return string
      */
-    public function generate()
+    public function generate(SequenceNumberSettingsInterface $sequenceNumberSettings)
     {
         $sequenceNumber = $this->getDependencyContainer()
-            ->createSequenceNumber()
+            ->createSequenceNumber($sequenceNumberSettings)
         ;
 
         return $sequenceNumber->generate();

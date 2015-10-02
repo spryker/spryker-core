@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\SequenceNumber\Business\Model;
 
+use Generated\Shared\SequenceNumber\SequenceNumberSettingsInterface;
 use Propel\Runtime\Propel;
 use Propel\Runtime\Connection\ConnectionInterface;
 use SprykerFeature\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
@@ -19,27 +20,17 @@ class SequenceNumber implements SequenceNumberInterface
     /** @var RandomNumberGenerator */
     protected $randomNumberGenerator;
 
-    /** @var string */
-    protected $name;
-
-    /** @var int */
-    protected $minimumNumber;
-
-    /** @var int */
-    protected $numberLength;
+    /** @var SequenceNumberSettingsInterface */
+    protected $sequenceNumberSettings;
 
     /**
      * @param RandomNumberGeneratorInterface $randomNumberGenerator
-     * @param string $name
-     * @param int $minimumNumber
-     * @param int $numberLength
+     * @param SequenceNumberSettingsInterface $sequenceNumberSettings
      */
-    public function __construct(RandomNumberGeneratorInterface $randomNumberGenerator, $name, $minimumNumber, $numberLength)
+    public function __construct(RandomNumberGeneratorInterface $randomNumberGenerator, SequenceNumberSettingsInterface $sequenceNumberSettings)
     {
         $this->randomNumberGenerator = $randomNumberGenerator;
-        $this->name = $name;
-        $this->minimumNumber = $minimumNumber;
-        $this->numberLength = $numberLength;
+        $this->sequenceNumberSettings = $sequenceNumberSettings;
     }
 
     /**
@@ -47,16 +38,19 @@ class SequenceNumber implements SequenceNumberInterface
      */
     public function generate()
     {
-        $idCurrent = 0;
-
-        while ($idCurrent < 1) {
-            $idCurrent = $this->createNumber();
+        $idCurrent = $this->createNumber();
+        if ($idCurrent < 1) {
+            throw new \Exception('X');
         }
 
-        if ($this->numberLength > 0) {
-            return sprintf('%1$0' . $this->numberLength . 'd', $idCurrent);
+        $padding = $this->sequenceNumberSettings->getPadding();
+        if ($padding > 0) {
+            $number = sprintf('%1$0' . $padding . 'd', $idCurrent);
+        } else {
+            $number = sprintf('%s', $idCurrent);
         }
-        return sprintf('%s', $idCurrent);
+
+        return $this->sequenceNumberSettings->getPrefix() . $number;
     }
 
     /**
@@ -93,12 +87,12 @@ class SequenceNumber implements SequenceNumberInterface
     protected function getSequence($transaction)
     {
         $sequence = SpySequenceNumberQuery::create()
-            ->findOneByName($this->name, $transaction);
+            ->findOneByName($this->sequenceNumberSettings->getName(), $transaction);
 
         if ($sequence === null) {
             $sequence = new SpySequenceNumber();
-            $sequence->setName($this->name);
-            $sequence->setCurrentId($this->minimumNumber);
+            $sequence->setName($this->sequenceNumberSettings->getName());
+            $sequence->setCurrentId($this->sequenceNumberSettings->getMinimumNumber());
         }
 
         return $sequence;

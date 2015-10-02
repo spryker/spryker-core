@@ -9,8 +9,10 @@ namespace SprykerFeature\Zed\SequenceNumber\Business\Generator;
 class RandomNumberGenerator implements RandomNumberGeneratorInterface
 {
 
+    /** @var int */
     protected $min;
 
+    /** @var int */
     protected $max;
 
     /**
