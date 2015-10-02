@@ -11,6 +11,7 @@ use Generated\Shared\DiscountCheckoutConnector\OrderInterface;
 use Generated\Shared\Sales\ItemInterface;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Propel\Runtime\Exception\PropelException;
+use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesDiscount;
@@ -25,11 +26,23 @@ class DiscountSaver implements DiscountSaverInterface
     private $discountQueryContainer;
 
     /**
-     * @param DiscountQueryContainerInterface $discountQueryContainer
+     * @var array|string[]
      */
-    public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
+    private $voucherCodesUsed = [];
+
+    /**
+     * @var DiscountFacade
+     */
+    private $discountFacade;
+
+    /**
+     * @param DiscountQueryContainerInterface $discountQueryContainer
+     * @param DiscountFacade                  $discountFacade
+     */
+    public function __construct(DiscountQueryContainerInterface $discountQueryContainer, DiscountFacade $discountFacade)
     {
         $this->discountQueryContainer = $discountQueryContainer;
+        $this->discountFacade = $discountFacade;
     }
 
     /**
@@ -41,6 +54,7 @@ class DiscountSaver implements DiscountSaverInterface
         $this->saveOrderDiscounts($orderTransfer);
         $this->saveOrderItemDiscounts($orderTransfer);
         $this->saveOrderExpenseDiscounts($orderTransfer);
+        $this->discountFacade->useVoucherCodes($this->voucherCodesUsed);
     }
 
     /**
@@ -175,9 +189,8 @@ class DiscountSaver implements DiscountSaverInterface
                 );
                 $salesDiscountCodeEntity->setDiscount($salesDiscountEntity);
 
-                if (!$discountVoucherEntity->getVoucherPool()->getIsInfinitelyUsable()) {
-                    $discountVoucherEntity->setIsActive(false);
-                    $discountVoucherEntity->save();
+                if (!isset($this->voucherCodesUsed[$code])) {
+                    $this->voucherCodesUsed[$code] = $code;
                 }
 
                 $this->persistSalesDiscountCode($salesDiscountCodeEntity);
@@ -227,5 +240,4 @@ class DiscountSaver implements DiscountSaverInterface
             }
         }
     }
-
 }

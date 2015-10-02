@@ -87,12 +87,6 @@ settings:
     memory_limit: 1024M
     log: true
 
-extensions:
-  enabled:
-    - Codeception\Extension\RemoteDebug
-  config:
-    Codeception\Extension\RemoteDebug:
-      sessionName: phpstorm
 
 modules:
     config:

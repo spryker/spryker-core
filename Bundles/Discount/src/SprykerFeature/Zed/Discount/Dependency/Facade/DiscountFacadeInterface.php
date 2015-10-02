@@ -6,8 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Dependency\Facade;
 
-use Generated\Shared\Discount\DiscountInterface;
-use Generated\Shared\Discount\OrderInterface;
+use Generated\Shared\Discount\VoucherCreateInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 use Generated\Shared\Transfer\DiscountTransfer;
@@ -27,14 +26,11 @@ interface DiscountFacadeInterface
 {
 
     /**
-     * @ param OrderInterface $container
-     *
      * @param CalculableInterface $container
      *
      * @return array
      */
     public function calculateDiscounts(CalculableInterface $container);
-    //public function calculateDiscounts(OrderInterface $container);
 
     /**
      * @param string $code
@@ -45,15 +41,12 @@ interface DiscountFacadeInterface
     public function isVoucherUsable($code, $idDiscountVoucherPool);
 
     /**
-     * @ param OrderInterface $container
-     *
      * @param CalculableInterface $container
      * @param DecisionRule $decisionRule
      *
      * @return ModelResult
      */
     public function isMinimumCartSubtotalReached(CalculableInterface $container, DecisionRule $decisionRule);
-    //public function isMinimumCartSubtotalReached(OrderInterface $container, DecisionRule $decisionRule);
 
     /**
      * @param DiscountableInterface[] $discountableObjects
@@ -78,19 +71,18 @@ interface DiscountFacadeInterface
     public function distributeAmount(array $discountableObjects, DiscountTransfer $discountTransfer);
 
     /**
-     * @param int $amount
-     * @param int $idVoucherPool
-     * @param bool $includeTemplate
+     * @param VoucherCreateInterface $voucherTransfer
+     *
+     * @return void
      */
-    public function createVoucherCodes($amount, $idVoucherPool, $includeTemplate = true);
+    public function createVoucherCodes(VoucherCreateInterface $voucherTransfer);
 
     /**
-     * @param string $code
-     * @param int $idVoucherPool
+     * @param VoucherCreateInterface $voucherTransfer
      *
-     * @return SpyDiscountVoucher
+     * @return void
      */
-    public function createVoucherCode($code, $idVoucherPool);
+    public function createVoucherCode(VoucherCreateInterface $voucherTransfer);
 
     /**
      * @return array
@@ -175,34 +167,25 @@ interface DiscountFacadeInterface
     public function getCalculatorPluginByName($pluginName);
 
     /**
-     * @ param OrderInterface $container
-     *
      * @param CalculableInterface $container
      *
      * @return DiscountableInterface[]
      */
     public function getDiscountableItems(CalculableInterface $container);
-    //public function getDiscountableItems(OrderInterface $container);
 
     /**
-     * @ param OrderInterface $container
-     *
      * @param CalculableInterface $container
      *
      * @return DiscountableInterface[]
      */
     public function getDiscountableItemExpenses(CalculableInterface $container);
-    //public function getDiscountableItemExpenses(OrderInterface $container);
 
     /**
-     * @ param OrderInterface $container
-     *
      * @param CalculableInterface $container
      *
      * @return DiscountableInterface[]
      */
     public function getDiscountableOrderExpenses(CalculableInterface $container);
-    //public function getDiscountableOrderExpenses(OrderInterface $container);
 
     /**
      * @return array

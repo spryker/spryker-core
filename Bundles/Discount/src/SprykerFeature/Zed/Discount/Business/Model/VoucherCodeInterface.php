@@ -7,9 +7,16 @@ namespace SprykerFeature\Zed\Discount\Business\Model;
 interface VoucherCodeInterface
 {
     /**
-     * @param array $codes
+     * @param array|string[] $codes
      *
      * @return bool
      */
-    public function enableCodes(array $codes);
+    public function releaseCodes(array $codes);
+
+    /**
+     * @param array|string[] $codes
+     *
+     * @return bool
+     */
+    public function useCodes(array $codes);
 }

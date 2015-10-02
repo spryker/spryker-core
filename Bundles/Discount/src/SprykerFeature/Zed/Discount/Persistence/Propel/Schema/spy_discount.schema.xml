@@ -59,6 +59,7 @@
         <column name="id_discount_voucher" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_discount_voucher_pool" type="INTEGER" required="false"/>
         <column name="code" type="VARCHAR" size="255" required="true"/>
+        <column name="number_of_uses" type="INTEGER" required="false"/>
         <column name="is_active" type="BOOLEAN" default="false"/>
 
         <behavior name="timestampable"/>

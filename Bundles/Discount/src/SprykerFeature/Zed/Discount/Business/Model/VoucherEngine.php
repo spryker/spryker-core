@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
+use Generated\Shared\Discount\VoucherCreateInterface;
 use SprykerFeature\Zed\Discount\DiscountConfigInterface;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
@@ -38,50 +39,55 @@ class VoucherEngine
     }
 
     /**
-     * @param int $amount
-     * @param int $idVoucherPool
-     * @param bool $includeTemplate
+     * @param VoucherCreateInterface $voucherCreateTransfer
      */
-    public function createVoucherCodes($amount, $idVoucherPool, $includeTemplate = true)
+    public function createVoucherCodes(VoucherCreateInterface $voucherCreateTransfer)
     {
         $codeCollisions = 0;
-        $voucherPoolEntity = $this->queryContainer->queryVoucherPool()->findPk($idVoucherPool);
+        $voucherPoolEntity = $this->queryContainer
+            ->queryVoucherPool()
+            ->findPk($voucherCreateTransfer->getIdVoucherPool());
+
         $length = $this->settings->getVoucherCodeLength();
 
-        for ($i = 0; $i < $amount; $i++) {
+        for ($i = 0; $i < $voucherCreateTransfer->getAmount(); $i++) {
             try {
                 $code = $this->getRandomVoucherCode($length);
 
-                if ($includeTemplate) {
+                if ($voucherCreateTransfer->getIncludeTemplate()) {
                     $code = $this->getCodeWithTemplate($voucherPoolEntity, $code);
                 }
 
-                $this->createVoucherCode($code, $idVoucherPool);
+                $voucherCreateTransfer->setCode($code);
+
+                $this->createVoucherCode($voucherCreateTransfer);
             } catch (\Exception $e) {
                 $codeCollisions++;
             }
         }
 
         if ($codeCollisions > 0) {
-            $this->createVoucherCodes($codeCollisions, $idVoucherPool, $includeTemplate);
+            $voucherCreateTransfer->setAmount($codeCollisions);
+            $this->createVoucherCodes($voucherCreateTransfer);
         }
     }
 
+
     /**
-     * @param string $code
-     * @param int $idVoucherPool
+     * @param VoucherCreateInterface $voucherCreateTransfer
      *
+     * @throws \Propel\Runtime\Exception\PropelException
      * @return SpyDiscountVoucher
      */
-    public function createVoucherCode($code, $idVoucherPool)
+    public function createVoucherCode(VoucherCreateInterface $voucherCreateTransfer)
     {
         $voucherEntity = new SpyDiscountVoucher();
+        $voucherEntity->fromArray($voucherCreateTransfer->toArray());
+
         $voucherEntity
-            ->setFkDiscountVoucherPool($idVoucherPool)
+            ->setFkDiscountVoucherPool($voucherCreateTransfer->getIdVoucherPool())
             ->setIsActive(true)
-            ->setCode($code)
-            ->save()
-        ;
+            ->save();
 
         return $voucherEntity;
     }
