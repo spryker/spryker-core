@@ -30,6 +30,9 @@ class ResetPasswordForm extends AbstractForm
                 'second_options' => ['label' => 'Repeat Password'],
                 'required' => true,
                 'type' => 'password',
+                'attr' => [
+                    'class' => 'btn btn-default btn-block btn-outline',
+                ]
             ]
         );
     }
