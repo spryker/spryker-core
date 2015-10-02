@@ -61,8 +61,26 @@ class SequenceNumberTest extends Test
         );
 
         $number = $sequenceNumber->generate();
-
         $this->assertSame("011", $number);
+
+        $number = $sequenceNumber->generate();
+        $this->assertSame("012", $number);
+
+        // Make sure other sequences don't interfere
+
+        /** @var SequenceNumber $sequenceNumber */
+        $sequenceNumberOther = $factory->createModelSequenceNumber(
+            $generator,
+            'Other',
+            2,
+            0
+        );
+
+        $number = $sequenceNumberOther->generate();
+        $this->assertSame("3", $number);
+
+        $number = $sequenceNumber->generate();
+        $this->assertSame("013", $number);
     }
 
 }
