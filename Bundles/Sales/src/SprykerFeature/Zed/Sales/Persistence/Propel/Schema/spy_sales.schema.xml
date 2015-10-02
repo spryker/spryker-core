@@ -275,14 +275,4 @@
         </foreign-key>
     <id-method-parameter value="spy_sales_order_item_bundle_item_pk_seq"/></table>
 
-    <table name="spy_sales_order_number_sequence" phpName="SpySalesOrderNumberSequence">
-        <column name="id_sales_order_number_sequence" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" type="VARCHAR" size="255" required="true"/>
-        <column name="current_id" type="INTEGER" required="true"/>
-        <unique>
-            <unique-column name="name"/>
-        </unique>
-    <id-method-parameter value="spy_sales_order_number_sequence_pk_seq"/></table>
-
-
 </database>

@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Sales\Business\Model;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use SprykerFeature\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
 
 class OrderNumberGeneratorTest extends \PHPUnit_Framework_TestCase
 {
@@ -65,7 +66,7 @@ class OrderNumberGeneratorTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('P-TEST-1234', $orderReference);
     }
 
-    public function testOrderReferenceForDevelopement()
+    public function testOrderReferenceForDevelopment()
     {
         $transferOrder = new OrderTransfer();
         $orderReference = $this->createDevelopmentOrderReferenceGenerator()->generateOrderReference($transferOrder);

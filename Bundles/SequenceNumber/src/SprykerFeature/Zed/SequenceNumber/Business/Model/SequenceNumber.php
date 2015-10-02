@@ -4,30 +4,39 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Sales\Business\Model;
+namespace SprykerFeature\Zed\SequenceNumber\Business\Model;
 
 use Propel\Runtime\Propel;
 use Propel\Runtime\Connection\ConnectionInterface;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderNumberSequence;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderNumberSequenceQuery;
 use SprykerFeature\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
 use SprykerFeature\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface;
+use SprykerFeature\Zed\SequenceNumber\Persistence\Propel\SpySequenceNumber;
+use SprykerFeature\Zed\SequenceNumber\Persistence\Propel\SpySequenceNumberQuery;
 
-class OrderSequence implements OrderSequenceInterface
+class SequenceNumber implements SequenceNumberInterface
 {
 
-    const SEQUENCE_NAME = 'OrderReferenceGenerator';
-
-    /** @var int */
-    protected $minimumOrderNumber;
+    const SEQUENCE_NAME = 'Reference';
 
     /** @var RandomNumberGenerator */
     protected $randomNumberGenerator;
 
-    public function __construct(RandomNumberGeneratorInterface $randomNumberGenerator, $minimumOrderNumber)
+    /** @var int */
+    protected $minimumNumber;
+
+    /** @var int */
+    protected $numberLength;
+
+    /**
+     * @param RandomNumberGeneratorInterface $randomNumberGenerator
+     * @param int $minimumNumber
+     * @param int $numberLength
+     */
+    public function __construct(RandomNumberGeneratorInterface $randomNumberGenerator, $minimumNumber, $numberLength)
     {
         $this->randomNumberGenerator = $randomNumberGenerator;
-        $this->minimumOrderNumber = $minimumOrderNumber;
+        $this->minimumNumber = $minimumNumber;
+        $this->numberLength = $numberLength;
     }
 
     /**
@@ -35,25 +44,24 @@ class OrderSequence implements OrderSequenceInterface
      */
     public function generate()
     {
-        $idCurrent = null;
-        $gotNoOrderNumber = true;
+        $idCurrent = 0;
 
-        while ($gotNoOrderNumber) {
-            $idCurrent = $this->createOrderNumber();
-            if ($idCurrent !== null) {
-                $gotNoOrderNumber = false;
-            }
+        while ($idCurrent < 1) {
+            $idCurrent = $this->createNumber();
         }
 
+        if ($this->numberLength > 0) {
+            return sprintf('%1$0' . $this->numberLength . 'd', $idCurrent);
+        }
         return sprintf('%s', $idCurrent);
     }
 
     /**
      * @return int
      */
-    protected function createOrderNumber()
+    protected function createNumber()
     {
-        $idCurrent = null;
+        $idCurrent = 0;
         $transaction = Propel::getConnection();
 
         try {
@@ -68,7 +76,7 @@ class OrderSequence implements OrderSequenceInterface
             $transaction->commit();
         } catch (\Exception $e) {
             $transaction->rollback();
-            $idCurrent = null;
+            $idCurrent = 0;
         }
 
         return $idCurrent;
@@ -77,17 +85,17 @@ class OrderSequence implements OrderSequenceInterface
     /**
      * @param ConnectionInterface $transaction
      *
-     * @return SpySalesOrderNumberSequence
+     * @return SpySequenceNumber
      */
     protected function getSequence($transaction)
     {
-        $sequence = SpySalesOrderNumberSequenceQuery::create()
+        $sequence = SpySequenceNumberQuery::create()
             ->findOneByName(self::SEQUENCE_NAME, $transaction);
 
         if ($sequence === null) {
-            $sequence = new SpySalesOrderNumberSequence();
+            $sequence = new SpySequenceNumber();
             $sequence->setName(self::SEQUENCE_NAME);
-            $sequence->setCurrentId($this->minimumOrderNumber);
+            $sequence->setCurrentId($this->minimumNumber);
         }
 
         return $sequence;

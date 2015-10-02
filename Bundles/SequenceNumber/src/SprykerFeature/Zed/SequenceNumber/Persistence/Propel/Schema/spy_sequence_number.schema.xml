@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" namespace="SprykerFeature\Zed\SequenceNumber\Persistence\Propel" namespaceAutoPackage="false" package="vendor.spryker.spryker.Bundles.SequenceNumber.src.SprykerFeature.Zed.SequenceNumber.Persistence.Propel" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd">
+
+    <table name="spy_sequence_number">
+        <column name="id_sequence_number" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="name" type="VARCHAR" size="255" required="true"/>
+        <column name="current_id" type="INTEGER" required="true"/>
+        <unique>
+            <unique-column name="name"/>
+        </unique>
+    <id-method-parameter value="spy_sequence_number_pk_seq"/></table>
+
+</database>

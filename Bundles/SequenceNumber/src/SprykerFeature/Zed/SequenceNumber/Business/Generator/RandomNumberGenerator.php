@@ -1,9 +1,10 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Customer\Business\ReferenceGenerator;
+namespace SprykerFeature\Zed\SequenceNumber\Business\Generator;
 
 class RandomNumberGenerator implements RandomNumberGeneratorInterface
 {
@@ -27,6 +28,11 @@ class RandomNumberGenerator implements RandomNumberGeneratorInterface
      */
     public function generate()
     {
+        if ($this->min === $this->max) {
+            return $this->max;
+        }
+
         return rand($this->min, $this->max);
     }
+
 }
