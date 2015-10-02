@@ -4,13 +4,15 @@
     <table name="spy_tax_set" idMethod="native" allowPkInsert="true" phpName="SpyTaxSet">
         <column name="id_tax_set" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
-    <id-method-parameter value="spy_tax_set_pk_seq"/></table>
+        <id-method-parameter value="spy_tax_set_pk_seq"/>
+    </table>
 
     <table name="spy_tax_rate" idMethod="native" allowPkInsert="true" phpName="SpyTaxRate">
         <column name="id_tax_rate" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
-        <column name="rate" type="INTEGER" required="true"/>
-    <id-method-parameter value="spy_tax_rate_pk_seq"/></table>
+        <column name="rate" type="DECIMAL" size="8" scale="2" required="true" default="0.0"/>
+        <id-method-parameter value="spy_tax_rate_pk_seq"/>
+    </table>
 
     <table name="spy_tax_set_tax" isCrossRef="true">
         <column name="fk_tax_set" type="integer" primaryKey="true"/>

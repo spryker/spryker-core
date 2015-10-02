@@ -159,7 +159,7 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
     {
         $normalizedProperties = [];
         foreach ($properties as $property) {
-            if (!preg_match('/^int|integer|string|array|bool|boolean/', $property['type'])) {
+            if (!preg_match('/^int|integer|float|string|array|bool|boolean/', $property['type'])) {
                 if (preg_match('/\[\]$/', $property['type'])) {
                     $property['type'] = str_replace('[]', '', $property['type']) . 'Transfer[]';
                 } else {
@@ -179,7 +179,7 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
      */
     private function isTransfer(array $property)
     {
-        return !preg_match('/^int|integer|string|array|bool|boolean/', $property['type']);
+        return !preg_match('/^int|integer|float|string|array|bool|boolean/', $property['type']);
     }
 
     /**
@@ -337,7 +337,7 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
             return 'array';
         }
 
-        if (preg_match('/(string|int|bool|boolean)/', $property['type'])) {
+        if (preg_match('/(string|int|float|bool|boolean)/', $property['type'])) {
             return false;
         }
 
@@ -355,7 +355,7 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
      */
     private function getAddTypeHint(array $property)
     {
-        if (preg_match('/^(string|int|bool|boolean|array|\[\])/', $property['type'])) {
+        if (preg_match('/^(string|int|float|bool|boolean|array|\[\])/', $property['type'])) {
             return false;
         } else {
             return str_replace('[]', '', $property['type']);

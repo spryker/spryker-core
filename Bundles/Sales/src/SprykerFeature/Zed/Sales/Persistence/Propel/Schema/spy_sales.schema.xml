@@ -140,7 +140,7 @@
         <column name="label_option_value" type="VARCHAR" required="true"/>
         <column name="gross_price" type="INTEGER" required="true" default="0"/>
         <column name="price_to_pay" type="INTEGER" required="true" default="0"/>
-        <column name="tax_percentage" type="INTEGER" required="true" default="0"/>
+        <column name="tax_percentage" type="DECIMAL" size="8" scale="2" required="true" default="0.0"/>
 
         <behavior name="timestampable"/>
 
@@ -185,7 +185,7 @@
         <column name="name" type="VARCHAR" size="255"/>
         <column name="gross_price" type="INTEGER" required="true"/>
         <column name="price_to_pay" type="INTEGER" required="true"/>
-        <column name="tax_percentage" type="INTEGER" required="false"/>
+        <column name="tax_percentage" type="DECIMAL" size="8" scale="2" required="false"/>
 
         <behavior name="timestampable"/>
 
@@ -255,7 +255,7 @@
         <column name="sku" type="VARCHAR" size="255" required="true"/>
         <column name="gross_price" type="INTEGER" required="true" description="/price for one unit including tax, without shipping, coupons/"/>
         <column name="price_to_pay" type="INTEGER" required="true" description="/value that the customer has to pay./"/>
-        <column name="tax_percentage" type="DECIMAL" size="8" scale="4" required="false"/>
+        <column name="tax_percentage" type="DECIMAL" size="8" scale="2" required="false"/>
         <column name="bundle_type" type="ENUM" valueSet="NonSplitBundle, SplitBundle" required="true"/>
         <behavior name="timestampable"/>
     <id-method-parameter value="spy_sales_order_item_bundle_pk_seq"/></table>
@@ -267,7 +267,7 @@
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="sku" type="VARCHAR" size="255" required="true"/>
         <column name="gross_price" type="INTEGER" required="true"/>
-        <column name="tax_percentage" type="DECIMAL" size="8" scale="4" required="false"/>
+        <column name="tax_percentage" type="DECIMAL" size="8" scale="2" required="false"/>
         <column name="variety" type="ENUM" valueSet="Single, Config, Simple, Bundle" required="true"/>
         <behavior name="timestampable"/>
         <foreign-key foreignTable="spy_sales_order_item_bundle" phpName="SalesOrderItemBundle" refPhpName="SalesOrderItemBundleItem">
