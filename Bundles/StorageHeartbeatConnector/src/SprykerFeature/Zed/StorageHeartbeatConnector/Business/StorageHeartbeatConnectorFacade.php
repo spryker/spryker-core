@@ -7,8 +7,6 @@
 namespace SprykerFeature\Zed\StorageHeartbeatConnector\Business;
 
 use Generated\Shared\Heartbeat\HealthIndicatorReportInterface;
-use Generated\Shared\Transfer\HealthIndicatorReportTransfer;
-use Generated\Shared\Transfer\HealthReportTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface;
 
@@ -19,11 +17,11 @@ class StorageHeartbeatConnectorFacade extends AbstractFacade implements HealthIn
 {
 
     /**
-     * @param HealthReportTransfer $healthReportTransfer
+     * @return HealthIndicatorReportInterface
      */
-    public function doHealthCheck(HealthReportTransfer $healthReportTransfer)
+    public function doHealthCheck()
     {
-        $this->getDependencyContainer()->createHealthIndicator()->doHealthCheck($healthReportTransfer);
+        return $this->getDependencyContainer()->createHealthIndicator()->doHealthCheck();
     }
 
 }

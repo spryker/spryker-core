@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Heartbeat\Business\Ambulance;
 
 use Generated\Shared\Heartbeat\HealthReportInterface;
+use Generated\Shared\Transfer\HealthReportTransfer;
 use SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface;
 
 class Doctor
@@ -23,12 +24,11 @@ class Doctor
     protected $healthIndicator;
 
     /**
-     * @param HealthReportInterface $healthReport
      * @param HealthIndicatorInterface[] $healthIndicator
      */
-    public function __construct(HealthReportInterface $healthReport, array $healthIndicator)
+    public function __construct(array $healthIndicator)
     {
-        $this->healthReport = $healthReport;
+        $this->healthReport = new HealthReportTransfer();
         $this->healthIndicator = $healthIndicator;
     }
 
@@ -49,7 +49,8 @@ class Doctor
      */
     private function check(HealthIndicatorInterface $healthIndicator)
     {
-        $healthIndicator->doHealthCheck($this->healthReport);
+        $healthReport = $healthIndicator->doHealthCheck();
+        $this->healthReport->addHealthIndicatorReport($healthReport);
     }
 
     /**

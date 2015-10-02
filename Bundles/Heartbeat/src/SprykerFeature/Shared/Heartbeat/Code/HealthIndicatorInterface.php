@@ -6,14 +6,14 @@
 
 namespace SprykerFeature\Shared\Heartbeat\Code;
 
-use Generated\Shared\Transfer\HealthReportTransfer;
+use Generated\Shared\Heartbeat\HealthIndicatorReportInterface;
 
 interface HealthIndicatorInterface
 {
 
     /**
-     * @param HealthReportTransfer $healthReportTransfer
+     * @return HealthIndicatorReportInterface
      */
-    public function doHealthCheck(HealthReportTransfer $healthReportTransfer);
+    public function doHealthCheck();
 
 }

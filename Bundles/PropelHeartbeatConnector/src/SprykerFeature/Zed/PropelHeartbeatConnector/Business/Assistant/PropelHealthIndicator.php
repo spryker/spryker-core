@@ -6,41 +6,22 @@
 
 namespace SprykerFeature\Zed\PropelHeartbeatConnector\Business\Assistant;
 
-use Generated\Shared\Transfer\HealthDetailTransfer;
-use Generated\Shared\Transfer\HealthIndicatorReportTransfer;
-use Generated\Shared\Transfer\HealthReportTransfer;
 use Propel\Runtime\Exception\PropelException;
+use SprykerFeature\Shared\Heartbeat\Code\AbstractHealthIndicator;
 use SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface;
-use SprykerFeature\Zed\ProductSearch\Persistence\Propel\SpyPropelHeartbeat;
+use SprykerFeature\Zed\PropelHeartbeatConnector\Persistence\Propel\SpyPropelHeartbeat;
 
-class PropelHealthIndicator implements HealthIndicatorInterface
+class PropelHealthIndicator extends AbstractHealthIndicator implements HealthIndicatorInterface
 {
 
     const HEALTH_MESSAGE_UNABLE_TO_WRITE_TO_DATABASE = 'Unable to write to database';
 
-    /**
-     * @param HealthReportTransfer $healthReportTransfer
-     */
-    public function doHealthCheck(HealthReportTransfer $healthReportTransfer)
+    public function healthCheck()
     {
-        $healthIndicatorReport = new HealthIndicatorReportTransfer();
-        $healthIndicatorReport->setName(get_class($this));
-        $healthIndicatorReport->setStatus(true);
-
-        if (!$this->canWriteToDatabase()) {
-            $healthIndicatorReport->setStatus(false);
-            $healthDetail = new HealthDetailTransfer();
-            $healthDetail->setMessage(self::HEALTH_MESSAGE_UNABLE_TO_WRITE_TO_DATABASE);
-            $healthIndicatorReport->addHealthDetail($healthDetail);
-        }
-
-        $healthReportTransfer->addHealthIndicatorReport($healthIndicatorReport);
+        $this->checkWriteToDatabase();
     }
 
-    /**
-     * @return bool
-     */
-    private function canWriteToDatabase()
+    private function checkWriteToDatabase()
     {
         try {
             $entity = new SpyPropelHeartbeat();
@@ -48,10 +29,9 @@ class PropelHealthIndicator implements HealthIndicatorInterface
             $entity->save();
             $entity->delete();
         } catch (PropelException $e) {
-            return false;
+            $this->addDysfunction(self::HEALTH_MESSAGE_UNABLE_TO_WRITE_TO_DATABASE);
+            $this->addDysfunction($e->getMessage());
         }
-
-        return true;
     }
 
 }

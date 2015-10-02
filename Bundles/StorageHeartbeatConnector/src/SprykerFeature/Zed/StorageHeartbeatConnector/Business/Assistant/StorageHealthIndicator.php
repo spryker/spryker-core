@@ -6,13 +6,11 @@
 
 namespace SprykerFeature\Zed\StorageHeartbeatConnector\Business\Assistant;
 
-use Generated\Shared\Transfer\HealthDetailTransfer;
-use Generated\Shared\Transfer\HealthIndicatorReportTransfer;
-use Generated\Shared\Transfer\HealthReportTransfer;
 use Predis\Client;
+use SprykerFeature\Shared\Heartbeat\Code\AbstractHealthIndicator;
 use SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface;
 
-class StorageHealthIndicator implements HealthIndicatorInterface
+class StorageHealthIndicator extends AbstractHealthIndicator implements HealthIndicatorInterface
 {
 
     const HEALTH_MESSAGE_UNABLE_TO_WRITE_TO_STORAGE = 'Unable to write to storage';
@@ -32,58 +30,30 @@ class StorageHealthIndicator implements HealthIndicatorInterface
         $this->client = $client;
     }
 
-    /**
-     * @param HealthReportTransfer $healthReportTransfer
-     */
-    public function doHealthCheck(HealthReportTransfer $healthReportTransfer)
+    public function healthCheck()
     {
-        $healthIndicatorReport = new HealthIndicatorReportTransfer();
-        $healthIndicatorReport->setName(get_class($this));
-        $healthIndicatorReport->setStatus(true);
-
-        if (!$this->canWriteToStorage()) {
-            $healthIndicatorReport->setStatus(false);
-            $healthDetail = new HealthDetailTransfer();
-            $healthDetail->setMessage(self::HEALTH_MESSAGE_UNABLE_TO_WRITE_TO_STORAGE);
-            $healthIndicatorReport->addHealthDetail($healthDetail);
-        }
-
-        if (!$this->canReadFromStorage()) {
-            $healthIndicatorReport->setStatus(false);
-            $healthDetail = new HealthDetailTransfer();
-            $healthDetail->setMessage(self::HEALTH_MESSAGE_UNABLE_TO_READ_FROM_STORAGE);
-            $healthIndicatorReport->addHealthDetail($healthDetail);
-        }
-
-        $healthReportTransfer->addHealthIndicatorReport($healthIndicatorReport);
+        $this->checkWriteToStorage();
+        $this->checkReadFromStorage();
     }
 
-    /**
-     * @return bool
-     */
-    private function canWriteToStorage()
+    private function checkWriteToStorage()
     {
         try {
             $this->client->set(self::KEY_HEARTBEAT, 'ok');
         } catch (\Exception $e) {
-            return false;
+            $this->addDysfunction(self::HEALTH_MESSAGE_UNABLE_TO_WRITE_TO_STORAGE);
+            $this->addDysfunction($e->getMessage());
         }
-
-        return true;
     }
 
-    /**
-     * @return bool
-     */
-    private function canReadFromStorage()
+    private function checkReadFromStorage()
     {
         try {
             $this->client->get(self::KEY_HEARTBEAT);
         } catch (\Exception $e) {
-            return false;
+            $this->addDysfunction(self::HEALTH_MESSAGE_UNABLE_TO_READ_FROM_STORAGE);
+            $this->addDysfunction($e->getMessage());
         }
-
-        return true;
     }
 
 }
