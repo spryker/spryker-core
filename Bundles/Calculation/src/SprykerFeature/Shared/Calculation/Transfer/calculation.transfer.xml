@@ -69,7 +69,7 @@
     <transfer name="Totals">
         <property name="subtotal" type="int" />
         <property name="subtotalWithoutItemExpenses" type="int" />
-        <property name="expenses" type="ExpenseTotals[]" />
+        <property name="expenses" type="ExpenseTotals" />
         <property name="discount" type="DiscountTotals" />
         <property name="taxTotal" type="TaxTotal" />
         <property name="grandTotalWithDiscounts" type="int" />
