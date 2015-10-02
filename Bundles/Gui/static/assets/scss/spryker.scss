@@ -35,42 +35,49 @@
 }
 
 /* Login .. */
-
 body.login {
-    background: #262d36 none repeat scroll 0 0;
-    color: #f5f6f8;
-    font-family: "Fira Sans", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-    font-size: 15px;
-    font-weight: 300;
-    height: 100vh;
-    line-height: 21px;
-    margin: 0;
-    position: relative;
-    .spryker-logo {
-        padding-bottom: 20px;
-    }
-    .container {
-        margin-top: 7%;
-    }
-    .form-control,
-    .input-group-addon {
-        background: #262d36;
-        border: 0;
-        border-bottom: 1px solid #ccc;
-        border-color: #434e62;
-    }
-    .input-group-addon a {
-        color: #434e62;
-        border: 1px solid #434e62;
-        padding: 4px 6px;
-    }
-    .slogan {
-        font-size: 13px;
-        font-family: "Fira Sans", "HelveticaNeue", "Helvetica", "Arial", sans-serif;
-    }
-    .form-group {
-        padding-bottom: 10px;
-    }
-}
 
+    .login-spryker-logo {
+        margin: 0 auto;
+        width: 165px;
+        padding-top: 100px;
+
+        span {
+            background: url(/bundles/images/sprite.svg);
+            width: 165px;
+            height: 159px;
+            display: block;
+        }
+    }
+
+    .loginColumns {
+        padding-top: 30px;
+    }
+
+    .spryker-login {
+        width: 380px;
+        margin: 0 auto;
+    }
+
+    input,
+    .input-group-addon {
+        background: #2f4050;
+        border: 0;
+        border-bottom: 1px solid #888888;
+        color: #fff;
+
+        &:focus {
+            border-color: #888888 !important;
+        }
+    }
+
+  .forgot {
+      text-align: center;
+      font-size: 80%;
+
+      a:hover {
+          color: #eee;
+      }
+  }
+}
 /* .. Login */

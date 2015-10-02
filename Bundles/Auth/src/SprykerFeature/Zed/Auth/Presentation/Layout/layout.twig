@@ -14,10 +14,17 @@
     {% endblock %}
 
 </head>
-<body>
+<body class="login">
 
 <div class="row">
-    <div class="col-md-4 col-md-offset-4">
+    <div class="spryker-login">
+        <div class="login-spryker-logo animated fadeInLeft">
+            <span></span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="spryker-login">
         <div class="wrapper wrapper-content animated fadeInRight loginColumns">
             {% include '@FlashMessenger/Partials/flash-messages.twig' %}
             {% block content %}{% endblock %}
