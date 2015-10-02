@@ -24,12 +24,18 @@ class LoginForm extends AbstractForm
                 'constraints' => [
                     new Assert\Required(),
                     new Assert\NotBlank(),
+                ],
+                'attr' => [
+                    'placeholder' => 'Email Address',
                 ]
             ])
             ->addPassword(self::PASSWORD, [
                 'constraints' => [
                     new Assert\Required(),
                     new Assert\NotBlank(),
+                ],
+                'attr' => [
+                    'placeholder' => 'Password',
                 ]
             ])
         ;

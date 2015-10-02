@@ -26,18 +26,21 @@ class ResetPasswordRequestForm extends AbstractForm
                     new Assert\NotBlank(),
                     new Assert\Required(),
                     new Assert\Email(),
-                ]
+                ],
+                'attr' => [
+                    'placeholder' => 'Email Address'
+                ],
             ])
             ->addSubmit(self::SUBMIT, [
                 'label' => 'Recover password',
                 'attr' => [
-                    'class' => 'btn btn-success btn-block btn-outline',
+                    'class' => 'btn btn-primary btn-block btn-outline',
                 ]
             ])
             ->addUrl(self::LOGIN, [
                 'attr' => [
                     'href' => '/auth/login',
-                    'class' => 'btn btn-default btn-block btn-outline',
+                    'class' => 'btn btn-success btn-block btn-outline',
                     'title' => 'Login',
                 ]
             ])
