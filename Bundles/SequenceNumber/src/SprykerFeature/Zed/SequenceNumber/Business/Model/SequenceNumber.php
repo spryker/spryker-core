@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\SequenceNumber\Business\Model;
 use Generated\Shared\SequenceNumber\SequenceNumberSettingsInterface;
 use Propel\Runtime\Propel;
 use Propel\Runtime\Connection\ConnectionInterface;
+use SprykerFeature\Zed\SequenceNumber\Business\Exception\InvalidSequenceNumberException;
 use SprykerFeature\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
 use SprykerFeature\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface;
 use SprykerFeature\Zed\SequenceNumber\Persistence\Propel\SpySequenceNumber;
@@ -34,13 +35,15 @@ class SequenceNumber implements SequenceNumberInterface
     }
 
     /**
+     * @throws InvalidSequenceNumberException
+     *
      * @return string
      */
     public function generate()
     {
         $idCurrent = $this->createNumber();
         if ($idCurrent < 1) {
-            throw new \Exception('X');
+            throw new InvalidSequenceNumberException('Could not generate sequence number. Make sure your settings are complete.');
         }
 
         $padding = $this->sequenceNumberSettings->getPadding();
