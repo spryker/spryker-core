@@ -109,7 +109,7 @@ class TouchFacade extends AbstractFacade
     }
 
     /**
-     * @param $itemType
+     * @param string $itemType
      *
      * @return TouchTransfer[]
      */
