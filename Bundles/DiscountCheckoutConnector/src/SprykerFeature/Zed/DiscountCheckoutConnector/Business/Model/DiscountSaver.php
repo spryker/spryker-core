@@ -23,17 +23,17 @@ class DiscountSaver implements DiscountSaverInterface
     /**
      * @var DiscountQueryContainerInterface
      */
-    private $discountQueryContainer;
+    protected $discountQueryContainer;
 
     /**
      * @var array|string[]
      */
-    private $voucherCodesUsed = [];
+    protected $voucherCodesUsed = [];
 
     /**
      * @var DiscountFacade
      */
-    private $discountFacade;
+    protected $discountFacade;
 
     /**
      * @param DiscountQueryContainerInterface $discountQueryContainer

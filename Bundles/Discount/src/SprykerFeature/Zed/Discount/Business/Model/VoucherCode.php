@@ -6,14 +6,14 @@
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
-use SprykerFeature\Zed\Discount\Persistence\Propel\Base\SpyDiscountVoucher;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
 
 class VoucherCode implements VoucherCodeInterface
 {
     /**
      * @var DiscountQueryContainerInterface
      */
-    private $discountQueryContainer;
+    protected $discountQueryContainer;
 
     /**
      * @param DiscountQueryContainerInterface $discountQueryContainer
@@ -32,7 +32,7 @@ class VoucherCode implements VoucherCodeInterface
     {
         $voucherEntityList = $this->discountQueryContainer->queryVoucherPoolByVoucherCodes($codes)->find();
 
-        if (0 === count($voucherEntityList)) {
+        if (count($voucherEntityList) === 0) {
             return false;
         }
 
@@ -42,7 +42,7 @@ class VoucherCode implements VoucherCodeInterface
             }
 
             $discountVoucherEntity->setIsActive(true);
-            $discountVoucherEntity->save();
+            $this->saveDiscountVoucherEntity($discountVoucherEntity);
         }
 
         return true;
@@ -57,7 +57,7 @@ class VoucherCode implements VoucherCodeInterface
     {
         $voucherEntityList = $this->discountQueryContainer->queryVoucherPoolByVoucherCodes($codes)->find();
 
-        if (0 === count($voucherEntityList)) {
+        if (count($voucherEntityList) === 0) {
             return false;
         }
 
@@ -79,7 +79,7 @@ class VoucherCode implements VoucherCodeInterface
                 $discountVoucherEntity->setIsActive(false);
             }
 
-            $discountVoucherEntity->save();
+            $this->saveDiscountVoucherEntity($discountVoucherEntity);
         }
 
 
@@ -113,12 +113,20 @@ class VoucherCode implements VoucherCodeInterface
     {
         $numberOfUses = $voucherEntity->getNumberOfUses();
 
-        if (null !== $numberOfUses) {
+        if ($numberOfUses !== null) {
             return true;
         }
 
         return false;
 
+    }
+
+    /**
+     * @param SpyDiscountVoucher $discountVoucherEntity
+     */
+    protected function saveDiscountVoucherEntity(SpyDiscountVoucher $discountVoucherEntity)
+    {
+        $discountVoucherEntity->save();
     }
 
 }
