@@ -60,7 +60,6 @@ class SequenceNumber implements SequenceNumberInterface
      */
     protected function createNumber()
     {
-        $idCurrent = 0;
         $transaction = Propel::getConnection();
 
         try {

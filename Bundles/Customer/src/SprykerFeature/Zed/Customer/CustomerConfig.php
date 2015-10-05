@@ -96,7 +96,8 @@ class CustomerConfig extends AbstractBundleConfig
     /**
      * @return SequenceNumberSettingsInterface
      */
-    public function getCustomerReferenceDefaults() {
+    public function getCustomerReferenceDefaults()
+    {
         $sequenceNumberSettingsTransfer = new SequenceNumberSettingsTransfer();
 
         $sequenceNumberSettingsTransfer->setName(self::NAME_CUSTOMER_REFERENCE);
