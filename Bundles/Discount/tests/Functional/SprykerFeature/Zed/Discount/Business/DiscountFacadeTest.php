@@ -81,9 +81,6 @@ class DiscountFacadeTest extends Test
         $this->discountFacade = $this->locator->discount()->facade();
     }
 
-    /**
-     * @after removeVoucher
-     */
     public function testIsVoucherUsable()
     {
         $voucherPool = $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_1);

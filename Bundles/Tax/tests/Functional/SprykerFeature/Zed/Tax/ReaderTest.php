@@ -52,14 +52,13 @@ class ReaderTest extends Test
     {
         $this->loadFixtures();
         $taxRateCollectionTransfer = $this->taxFacade->getTaxRates();
-        $this->assertNotEmpty($taxRateCollectionTransfer->getTaxRates());
+        $this->assertTrue(count($taxRateCollectionTransfer->getTaxRates()) > 0);
     }
 
     public function testGetTaxRate()
     {
         $persistedTaxSet = $this->loadFixtures();
         $result = $this->taxFacade->getTaxRate($persistedTaxSet->getSpyTaxRates()[0]->getIdTaxRate());
-        $this->assertNotEmpty($result);
         $this->assertEquals(self::DUMMY_TAX_RATE1_NAME, $result->getName());
         $this->assertEquals(self::DUMMY_TAX_RATE1_PERCENTAGE, $result->getRate());
     }
@@ -82,7 +81,6 @@ class ReaderTest extends Test
     {
         $persistedTaxSet = $this->loadFixtures();
         $result = $this->taxFacade->getTaxSet($persistedTaxSet->getIdTaxSet());
-        $this->assertNotEmpty($result);
         $this->assertEquals(self::DUMMY_TAX_SET_NAME, $result->getName());
     }
 

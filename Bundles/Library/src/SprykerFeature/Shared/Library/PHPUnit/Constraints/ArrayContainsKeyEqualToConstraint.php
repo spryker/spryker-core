@@ -6,6 +6,9 @@
 
 namespace SprykerFeature\Shared\Library\PHPUnit\Constraints;
 
+use SebastianBergmann\Comparator\ComparisonFailure;
+use SebastianBergmann\Comparator\Factory;
+
 class ArrayContainsKeyEqualToConstraint extends \PHPUnit_Framework_Constraint
 {
 
@@ -58,7 +61,7 @@ class ArrayContainsKeyEqualToConstraint extends \PHPUnit_Framework_Constraint
             );
         }
 
-        $comparatorFactory = \PHPUnit_Framework_ComparatorFactory::getDefaultInstance();
+        $comparatorFactory = Factory::getInstance();
 
         try {
             $comparator = $comparatorFactory->getComparatorFor(
@@ -70,7 +73,7 @@ class ArrayContainsKeyEqualToConstraint extends \PHPUnit_Framework_Constraint
                 $this->value,
                 $other[$this->key]
             );
-        } catch (\PHPUnit_Framework_ComparisonFailure $f) {
+        } catch (ComparisonFailure $f) {
             if ($returnResult) {
                 return false;
             }
