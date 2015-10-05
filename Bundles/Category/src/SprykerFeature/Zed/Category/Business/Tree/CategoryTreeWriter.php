@@ -18,8 +18,6 @@ use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTableQuery;
 class CategoryTreeWriter
 {
 
-    const ID_NAVIGATION = 1;
-
     /**
      * @var CategoryWriterInterface
      */
@@ -242,12 +240,20 @@ class CategoryTreeWriter
 
     protected function touchNavigationActive()
     {
-        $this->touchFacade->touchActive(CategoryConfig::RESOURCE_TYPE_NAVIGATION, self::ID_NAVIGATION);
+        $navigationItems = $this->touchFacade->getItemsByType(CategoryConfig::RESOURCE_TYPE_NAVIGATION);
+
+        $itemIds = array_keys($navigationItems);
+
+        $this->touchFacade->bulkTouchActive(CategoryConfig::RESOURCE_TYPE_NAVIGATION, $itemIds);
     }
 
     protected function touchNavigationDeleted()
     {
-        $this->touchFacade->touchDeleted(CategoryConfig::RESOURCE_TYPE_NAVIGATION, self::ID_NAVIGATION);
+        $navigationItems = $this->touchFacade->getItemsByType(CategoryConfig::RESOURCE_TYPE_NAVIGATION);
+
+        $itemIds = array_keys($navigationItems);
+
+        $this->touchFacade->bulkTouchInactive(CategoryConfig::RESOURCE_TYPE_NAVIGATION, $itemIds);
     }
 
     /**
