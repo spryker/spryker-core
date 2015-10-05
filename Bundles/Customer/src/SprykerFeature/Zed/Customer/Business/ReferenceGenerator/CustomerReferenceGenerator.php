@@ -6,52 +6,28 @@
 namespace SprykerFeature\Zed\Customer\Business\ReferenceGenerator;
 
 use Generated\Shared\Customer\CustomerInterface;
+use Generated\Shared\SequenceNumber\SequenceNumberSettingsInterface;
+use SprykerFeature\Zed\SequenceNumber\Business\SequenceNumberFacade;
 
 class CustomerReferenceGenerator implements CustomerReferenceGeneratorInterface
 {
 
-    const SEQUENCE_NAME = 'OrderReferenceGenerator';
+    /** @var SequenceNumberFacade */
+    protected $facadeSequenceNumber;
 
-    const PREFIX_STAGING = 'S';
-    const PREFIX_DEVELOPMENT = 'D';
-    const PREFIX_PRODUCTION = 'P';
-
-    /**
-     * @var CustomerSequenceInterface
-     */
-    protected $customerSequence;
+    /** @var SequenceNumberSettingsInterface */
+    protected $sequenceNumberSettings;
 
     /**
-     * @var bool
-     */
-    protected $isDevelopment;
-
-    /**
-     * @var bool
-     */
-    protected $isStaging;
-
-    /**
-     * @var string
-     */
-    protected $storeName;
-
-    /**
-     * @param CustomerSequenceInterface $customerSequence
-     * @param bool $isDevelopment
-     * @param bool $isStaging
-     * @param string $storeName
+     * @param SequenceNumberFacade $sequenceNumberFacade
+     * @param SequenceNumberSettingsInterface $sequenceNumberSettings
      */
     public function __construct(
-        CustomerSequenceInterface $customerSequence,
-        $isDevelopment,
-        $isStaging,
-        $storeName
+        SequenceNumberFacade $sequenceNumberFacade,
+        SequenceNumberSettingsInterface $sequenceNumberSettings
     ) {
-        $this->customerSequence = $customerSequence;
-        $this->isDevelopment = $isDevelopment;
-        $this->isStaging = $isStaging;
-        $this->storeName = $storeName;
+        $this->facadeSequenceNumber = $sequenceNumberFacade;
+        $this->sequenceNumberSettings = $sequenceNumberSettings;
     }
 
     /**
@@ -61,46 +37,7 @@ class CustomerReferenceGenerator implements CustomerReferenceGeneratorInterface
      */
     public function generateCustomerReference(CustomerInterface $orderTransfer)
     {
-        $customerReferenceParts = [
-            $this->getEnvironmentPrefix(),
-            $this->storeName,
-        ];
-
-        if ($this->isDevelopment) {
-            $customerReferenceParts[] = $this->getTimestamp();
-        } else {
-            $customerReferenceParts[] = $this->customerSequence->generate();
-        }
-
-        return implode('-', $customerReferenceParts);
+        return $this->facadeSequenceNumber->generate($this->sequenceNumberSettings);
     }
 
-    /**
-     * @return string
-     */
-    protected function getEnvironmentPrefix()
-    {
-        if ($this->isStaging) {
-            return self::PREFIX_STAGING;
-        }
-
-        if ($this->isDevelopment) {
-            return self::PREFIX_DEVELOPMENT;
-        }
-
-        return self::PREFIX_PRODUCTION;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getTimestamp()
-    {
-        $ts = strtr(microtime(), [
-            '.' => '',
-            ' ' => '',
-        ]);
-
-        return $ts;
-    }
 }

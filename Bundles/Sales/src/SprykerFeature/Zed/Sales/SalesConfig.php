@@ -6,10 +6,15 @@
 
 namespace SprykerFeature\Zed\Sales;
 
+use Generated\Shared\SequenceNumber\SequenceNumberSettingsInterface;
+use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
+use SprykerEngine\Shared\Kernel\Store;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class SalesConfig extends AbstractBundleConfig
 {
+
+    const NAME_ORDER_REFERENCE = 'OrderReference';
 
     /**
      * @return string
@@ -100,7 +105,7 @@ class SalesConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getUniqueIdentifierSeperator()
+    public function getUniqueIdentifierSeparator()
     {
         return '-';
     }
@@ -118,27 +123,49 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return int
+     * @return SequenceNumberSettingsInterface
      */
-    public function getMinimumOrderNumber()
-    {
-        return 100;
+    public function getOrderReferenceDefaults() {
+        $sequenceNumberSettingsTransfer = new SequenceNumberSettingsTransfer();
+
+        $sequenceNumberSettingsTransfer->setName(self::NAME_ORDER_REFERENCE);
+
+        $storeName = Store::getInstance()->getStoreName();
+        $prefix = $storeName . $this->getUniqueIdentifierSeparator() . $this->getEnvironmentPrefix();
+        $sequenceNumberSettingsTransfer->setPrefix($prefix);
+
+        return $sequenceNumberSettingsTransfer;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getOrderNumberIncrementMin()
+    protected function getEnvironmentPrefix()
     {
-        return 23;
+        $environment = \SprykerFeature_Shared_Library_Environment::getInstance();
+
+        if ($environment->isStaging()) {
+            return 'S';
+        }
+
+        if ($environment->isDevelopment()) {
+            return 'D' . $this->getUniqueIdentifierSeparator() . $this->getTimestamp();
+        }
+
+        return 'P';
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getOrderNumberIncrementMax()
+    protected function getTimestamp()
     {
-        return 42;
+        $ts = strtr(microtime(), [
+            '.' => '',
+            ' ' => '',
+        ]);
+
+        return $ts;
     }
 
 }

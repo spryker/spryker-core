@@ -1,17 +1,14 @@
 <?php
-
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Sales\Business\Model;
+namespace SprykerFeature\Zed\Oms\Business\ReferenceGenerator;
 
 use Generated\Shared\SequenceNumber\SequenceNumberSettingsInterface;
-use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use SprykerFeature\Zed\SequenceNumber\Business\SequenceNumberFacade;
 
-class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
+class CreditMemoReferenceGenerator implements CreditMemoReferenceGeneratorInterface
 {
 
     /** @var SequenceNumberFacade */
@@ -33,11 +30,9 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
-     *
      * @return string
      */
-    public function generateOrderReference(OrderTransfer $orderTransfer)
+    public function generateCreditMemoReference()
     {
         return $this->facadeSequenceNumber->generate($this->sequenceNumberSettings);
     }

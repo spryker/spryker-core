@@ -16,11 +16,16 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     const PASSWORD_RESTORE_TOKEN_SENDERS = 'Password Restore TokenSenders';
     const PASSWORD_RESTORED_CONFIRMATION_SENDERS = 'Password RestoredConfirmation Senders';
     const SENDER_PLUGINS = 'sender plugins';
+    const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
 
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[self::SENDER_PLUGINS] = function (Container $container) {
             return $this->getSenderPlugins($container);
+        };
+
+        $container[self::FACADE_SEQUENCE_NUMBER] = function (Container $container) {
+            return $container->getLocator()->sequenceNumber()->facade();
         };
 
         return $container;
