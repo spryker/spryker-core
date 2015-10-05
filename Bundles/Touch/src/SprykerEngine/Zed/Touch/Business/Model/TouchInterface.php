@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\TouchTransfer;
 interface TouchInterface
 {
     /**
-     * @param $itemType
+     * @param string $itemType
      *
      * @return TouchTransfer[]
      */

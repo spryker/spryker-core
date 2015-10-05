@@ -56,7 +56,7 @@ class Touch implements TouchInterface
     }
 
     /**
-     * @param $itemType
+     * @param string $itemType
      *
      * @return TouchTransfer[]
      */
