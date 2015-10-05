@@ -1,0 +1,40 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'PHP Info' } %}
+
+        {% block widget_content %}
+
+            {{ phpinfo | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
+
+{% block head_css %}
+    {{ parent() }}
+    <style>
+        .phpinfo-content  {background-color: #fff; color: #222; font-family: sans-serif;}
+        .phpinfo-content pre {margin: 0; font-family: monospace;}
+        .phpinfo-content a {color: #009; text-decoration: none; background-color: #fff;}
+        .phpinfo-content a:link {color: #009; text-decoration: none; background-color: #fff;}
+        .phpinfo-content a:hover {text-decoration: underline;}
+        .phpinfo-content table {border-collapse: collapse; border: 0; width: 934px; box-shadow: 1px 2px 3px #ccc;}
+        .phpinfo-content .center {text-align: center;}
+        .phpinfo-content .center table {margin: 1em auto; text-align: left;}
+        .phpinfo-content .center th {text-align: center !important;}
+        .phpinfo-content td, .phpinfo-content th {border: 1px solid #666; vertical-align: baseline; padding: 4px 5px;}
+        .phpinfo-content h1 {font-size: 150%;}
+        .phpinfo-content h2 {font-size: 125%; margin: 15px 0 5px;}
+        .phpinfo-content .p {text-align: left;}
+        .phpinfo-content .e {background-color: #ccf; width: 300px; font-weight: bold;}
+        .phpinfo-content .h {background-color: #99c; font-weight: bold;}
+        .phpinfo-content .v {background-color: #ddd; max-width: 300px; overflow-x: auto;}
+        .phpinfo-content .v i {color: #999;}
+        .phpinfo-content img {float: right; border: 0;}
+        .phpinfo-content hr {background-color: #ccc; border: 0; height: 1px;}
+    </style>
+{% endblock %}

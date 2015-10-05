@@ -32,6 +32,14 @@
                 <action>index</action>
                 <icon>fa-hdd-o</icon>
             </storage>
+            <phpinfo>
+                <label>PHP Info</label>
+                <title>PHP Info</title>
+                <bundle>maintenance</bundle>
+                <controller>phpinfo</controller>
+                <action>index</action>
+                <icon>fa-heartbeat</icon>
+            </phpinfo>
         </pages>
     </maintenance>
 </config>
