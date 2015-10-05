@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\CustomerMailConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\MailRecipientTransfer;
+use SprykerFeature\Shared\Mail\MailConfig;
 use SprykerFeature\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
 use Generated\Shared\Transfer\MailTransfer;
 use SprykerFeature\Zed\CustomerMailConnector\Communication\CustomerMailConnectorDependencyContainer;
@@ -16,6 +17,7 @@ use SprykerFeature\Zed\CustomerMailConnector\Communication\CustomerMailConnector
  */
 class RegistrationTokenSender extends AbstractSender implements RegistrationTokenSenderPluginInterface
 {
+
     /**
      * @param string $email
      * @param string $token
@@ -31,12 +33,14 @@ class RegistrationTokenSender extends AbstractSender implements RegistrationToke
         $mailRecipientTransfer->setEmail($email);
 
         $mailTransfer->addRecipient($mailRecipientTransfer);
+        $mailTransfer->setFromName($config->getFromEmailName());
+        $mailTransfer->setFromEmail($config->getFromEmailAddress());
         $mailTransfer->setSubject($config->getRegistrationSubject());
         $mailTransfer->setTemplateName($config->getRegistrationToken());
         $mailTransfer->setMerge(true);
-        $mailTransfer->setMergeLanguage('handlebars');
+        $mailTransfer->setMergeLanguage(MailConfig::MERGE_LANGUAGE_HANDLEBARS);
         $globalMergeVars = [
-                'registration_token_url' => $token,
+            'registration_token_url' => $token,
         ];
         $mailTransfer->setGlobalMergeVars($globalMergeVars);
 

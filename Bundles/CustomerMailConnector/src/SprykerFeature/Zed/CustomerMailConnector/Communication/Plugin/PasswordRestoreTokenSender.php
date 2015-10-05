@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\CustomerMailConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailTransfer;
+use SprykerFeature\Shared\Mail\MailConfig;
 use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface;
 use SprykerFeature\Zed\CustomerMailConnector\Communication\CustomerMailConnectorDependencyContainer;
 
@@ -17,9 +18,6 @@ use SprykerFeature\Zed\CustomerMailConnector\Communication\CustomerMailConnector
 class PasswordRestoreTokenSender extends AbstractSender implements PasswordRestoreTokenSenderPluginInterface
 {
 
-    const SUBJECT = 'password.restore.sender.subject';
-    const TEMPLATE = 'password.restore';
-
     /**
      * @param string $email
      * @param string $token
@@ -28,15 +26,19 @@ class PasswordRestoreTokenSender extends AbstractSender implements PasswordResto
      */
     public function send($email, $token)
     {
+        $config = $this->getDependencyContainer()->getConfig();
+
         $mailTransfer = new MailTransfer();
         $mailRecipientTransfer = new MailRecipientTransfer();
         $mailRecipientTransfer->setEmail($email);
 
         $mailTransfer->addRecipient($mailRecipientTransfer);
-        $mailTransfer->setSubject(self::SUBJECT);
-        $mailTransfer->setTemplateName(self::TEMPLATE);
+        $mailTransfer->setFromName($config->getFromEmailName());
+        $mailTransfer->setFromEmail($config->getFromEmailAddress());
+        $mailTransfer->setSubject($config->getPasswordRestoreSubject());
+        $mailTransfer->setTemplateName($config->getPasswordRestoreToken());
         $mailTransfer->setMerge(true);
-        $mailTransfer->setMergeLanguage('handlebars');
+        $mailTransfer->setMergeLanguage(MailConfig::MERGE_LANGUAGE_HANDLEBARS);
         $globalMergeVars = [
             'reset_password_token_url' => $token,
         ];

@@ -47,7 +47,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerResponseTransfer
      */
     public function forgotPasswordAction(CustomerTransfer $customerTransfer)
     {
@@ -59,7 +59,7 @@ class GatewayController extends AbstractGatewayController
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerResponseTransfer
      */
     public function restorePasswordAction(CustomerTransfer $customerTransfer)
     {

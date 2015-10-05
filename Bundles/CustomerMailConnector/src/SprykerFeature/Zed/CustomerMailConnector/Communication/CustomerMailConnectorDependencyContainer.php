@@ -8,9 +8,13 @@ namespace SprykerFeature\Zed\CustomerMailConnector\Communication;
 
 use Generated\Shared\Transfer\MailTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use SprykerFeature\Zed\CustomerMailConnector\CustomerMailConnectorConfig;
 use SprykerFeature\Zed\Mail\Business\MailFacade;
 use SprykerFeature\Zed\CustomerMailConnector\CustomerMailConnectorDependencyProvider;
 
+/**
+ * @method CustomerMailConnectorConfig  getConfig()
+ */
 class CustomerMailConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
