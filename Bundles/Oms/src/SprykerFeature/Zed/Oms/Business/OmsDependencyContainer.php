@@ -189,7 +189,7 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return CreditMemoReferenceGenerator
      */
-    protected function createCustomerReferenceGenerator()
+    protected function createCreditMemoReferenceGenerator()
     {
         return $this->getFactory()->createReferenceGeneratorCreditMemoReferenceGenerator(
             $this->createSequenceNumberFacade(),
