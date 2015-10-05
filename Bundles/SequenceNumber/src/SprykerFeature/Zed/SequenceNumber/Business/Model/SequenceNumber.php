@@ -42,9 +42,6 @@ class SequenceNumber implements SequenceNumberInterface
     public function generate()
     {
         $idCurrent = $this->createNumber();
-        if ($idCurrent < 1) {
-            throw new InvalidSequenceNumberException('Could not generate sequence number. Make sure your settings are complete.');
-        }
 
         $padding = $this->sequenceNumberSettings->getPadding();
         if ($padding > 0) {
@@ -57,6 +54,8 @@ class SequenceNumber implements SequenceNumberInterface
     }
 
     /**
+     * @throws InvalidSequenceNumberException
+     *
      * @return int
      */
     protected function createNumber()
@@ -76,7 +75,8 @@ class SequenceNumber implements SequenceNumberInterface
             $transaction->commit();
         } catch (\Exception $e) {
             $transaction->rollback();
-            $idCurrent = 0;
+
+            throw new InvalidSequenceNumberException('Could not generate sequence number. Make sure your settings are complete.');
         }
 
         return $idCurrent;
