@@ -60,7 +60,7 @@ class CustomerFacade extends AbstractFacade
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return bool
+     * @return CustomerResponseTransfer
      */
     public function forgotPassword(CustomerTransfer $customerTransfer)
     {
@@ -73,7 +73,7 @@ class CustomerFacade extends AbstractFacade
     /**
      * @param CustomerTransfer $customerTransfer
      *
-     * @return bool
+     * @return CustomerResponseTransfer
      */
     public function restorePassword(CustomerTransfer $customerTransfer)
     {

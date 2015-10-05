@@ -14,10 +14,8 @@ use Generated\Shared\Transfer\CustomerErrorTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use SprykerFeature\Shared\Customer\Code\Messages;
-use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotFoundException;
 use SprykerFeature\Zed\Customer\Business\Exception\CustomerNotUpdatedException;
 use SprykerFeature\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGeneratorInterface;
@@ -258,20 +256,36 @@ class Customer
      * @throws CustomerNotFoundException
      * @throws PropelException
      *
-     * @return bool
+     * @return CustomerResponseTransfer
      */
     public function forgotPassword(CustomerInterface $customerTransfer)
     {
-        $customerEntity = $this->getCustomer($customerTransfer);
+        $customerResponseTransfer = $this->createCustomerResponseTransfer();
+
+        try {
+            $customerEntity = $this->getCustomer($customerTransfer);
+        } catch (CustomerNotFoundException $e) {
+            $customerError = new CustomerErrorTransfer();
+            $customerError->setMessage(Messages::CUSTOMER_EMAIL_INVALID);
+
+            $customerResponseTransfer
+                ->setIsSuccess(false)
+                ->addError($customerError);
+
+            return $customerResponseTransfer;
+        }
+
         $customerEntity->setRestorePasswordDate(new \DateTime());
         $customerEntity->setRestorePasswordKey($this->generateKey());
 
         $customerEntity->save();
 
-        $customerTransfer->fromArray($customerEntity->toArray());
+        $customerTransfer->fromArray($customerEntity->toArray(), true);
         $this->sendPasswordRestoreToken($customerTransfer);
 
-        return true;
+        $customerResponseTransfer->setCustomerTransfer($customerTransfer);
+
+        return $customerResponseTransfer;
     }
 
     /**
@@ -280,13 +294,26 @@ class Customer
      * @throws PropelException
      * @throws CustomerNotFoundException
      *
-     * @return bool
+     * @return CustomerResponseTransfer
      */
     public function restorePassword(CustomerInterface $customerTransfer)
     {
         $customerTransfer = $this->encryptPassword($customerTransfer);
 
-        $customerEntity = $this->getCustomer($customerTransfer);
+        $customerResponseTransfer = $this->createCustomerResponseTransfer();
+
+        try {
+            $customerEntity = $this->getCustomer($customerTransfer);
+        } catch (CustomerNotFoundException $e) {
+            $customerError = new CustomerErrorTransfer();
+            $customerError->setMessage(Messages::CUSTOMER_TOKEN_INVALID);
+
+            $customerResponseTransfer
+                ->setIsSuccess(false)
+                ->addError($customerError);
+
+            return $customerResponseTransfer;
+        }
 
         $customerEntity->setRestorePasswordDate(null);
         $customerEntity->setRestorePasswordKey(null);
@@ -294,9 +321,12 @@ class Customer
         $customerEntity->setPassword($customerTransfer->getPassword());
 
         $customerEntity->save();
+        $customerTransfer->fromArray($customerEntity->toArray(), true);
         $this->sendPasswordRestoreConfirmation($customerTransfer);
 
-        return true;
+        $customerResponseTransfer->setCustomerTransfer($customerTransfer);
+
+        return $customerResponseTransfer;
     }
 
     /**

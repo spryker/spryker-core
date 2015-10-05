@@ -44,7 +44,7 @@ class CustomerStub implements CustomerStubInterface
     /**
      * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerResponseTransfer
      */
     public function forgotPassword(CustomerInterface $customerTransfer)
     {
@@ -54,7 +54,7 @@ class CustomerStub implements CustomerStubInterface
     /**
      * @param CustomerInterface $customerTransfer
      *
-     * @return CustomerTransfer
+     * @return CustomerResponseTransfer
      */
     public function restorePassword(CustomerInterface $customerTransfer)
     {
