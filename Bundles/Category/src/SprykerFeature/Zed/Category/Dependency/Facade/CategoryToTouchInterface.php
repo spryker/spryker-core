@@ -20,7 +20,7 @@ interface CategoryToTouchInterface
     public function touchActive($itemType, $itemId);
 
     /**
-     * @param $itemType
+     * @param string $itemType
      * @param int $itemId
      *
      * @return bool
@@ -44,7 +44,7 @@ interface CategoryToTouchInterface
     public function bulkTouchInactive($itemType, array $itemIds = []);
 
     /**
-     * @param $itemType
+     * @param string $itemType
      *
      * @return TouchTransfer[]
      */
