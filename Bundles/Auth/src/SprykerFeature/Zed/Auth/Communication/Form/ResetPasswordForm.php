@@ -26,10 +26,23 @@ class ResetPasswordForm extends AbstractForm
                     new Constraints\NotBlank(),
                 ],
                 'invalid_message' => 'The password fields must match.',
-                'first_options' => ['label' => 'Password'],
-                'second_options' => ['label' => 'Repeat Password'],
+                'first_options' => [
+                    'label' => 'Password',
+                    'attr' => [
+                        'placeholder' => 'Password',
+                    ]
+                ],
+                'second_options' => [
+                    'label' => 'Repeat Password',
+                    'attr' => [
+                        'placeholder' => 'Repeat Password',
+                    ]
+                ],
                 'required' => true,
                 'type' => 'password',
+                'attr' => [
+                    'class' => 'btn btn-default btn-block btn-outline',
+                ]
             ]
         );
     }
