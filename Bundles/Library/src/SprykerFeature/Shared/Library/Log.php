@@ -59,7 +59,7 @@ class SprykerFeature_Shared_Library_Log
     {
         $filePath = self::getFilePath($fileName);
         $string = serialize($expression);
-        file_put_contents($filePath, $string, LOCK_EX);
+        file_put_contents($filePath, $string);
     }
 
     /**
