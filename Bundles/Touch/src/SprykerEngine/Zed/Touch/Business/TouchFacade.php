@@ -6,6 +6,7 @@
 
 namespace SprykerEngine\Zed\Touch\Business;
 
+use Generated\Shared\Transfer\TouchTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
 
@@ -76,9 +77,9 @@ class TouchFacade extends AbstractFacade
      */
     public function bulkTouchActive($itemType, array $itemIds = [])
     {
-        $touchRecordModel = $this->getDependencyContainer()->getTouchRecordModel();
+        $touchModel = $this->getDependencyContainer()->getTouchModel();
 
-        return $touchRecordModel->bulkUpdateTouchRecords($itemType, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, $itemIds);
+        return $touchModel->bulkUpdateTouchRecords($itemType, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE, $itemIds);
     }
 
     /**
@@ -89,9 +90,9 @@ class TouchFacade extends AbstractFacade
      */
     public function bulkTouchInactive($itemType, array $itemIds = [])
     {
-        $touchRecordModel = $this->getDependencyContainer()->getTouchRecordModel();
+        $touchModel = $this->getDependencyContainer()->getTouchModel();
 
-        return $touchRecordModel->bulkUpdateTouchRecords($itemType, SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, $itemIds);
+        return $touchModel->bulkUpdateTouchRecords($itemType, SpyTouchTableMap::COL_ITEM_EVENT_INACTIVE, $itemIds);
     }
 
     /**
@@ -102,9 +103,21 @@ class TouchFacade extends AbstractFacade
      */
     public function bulkTouchDeleted($itemType, array $itemIds = [])
     {
-        $touchRecordModel = $this->getDependencyContainer()->getTouchRecordModel();
+        $touchModel = $this->getDependencyContainer()->getTouchModel();
 
-        return $touchRecordModel->bulkUpdateTouchRecords($itemType, SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $itemIds);
+        return $touchModel->bulkUpdateTouchRecords($itemType, SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $itemIds);
+    }
+
+    /**
+     * @param $itemType
+     *
+     * @return TouchTransfer[]
+     */
+    public function getItemsByType($itemType)
+    {
+        $touchModel = $this->getDependencyContainer()->getTouchModel();
+
+        return $touchModel->getItemsByType($itemType);
     }
 
 }

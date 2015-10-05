@@ -24,13 +24,4 @@ interface TouchRecordInterface
      */
     public function saveTouchRecord($itemType, $itemEvent, $idItem, $keyChange = false);
 
-    /**
-     * @param string $itemType
-     * @param string $itemEvent
-     * @param array $itemIds
-     *
-     * @return int
-     */
-    public function bulkUpdateTouchRecords($itemType, $itemEvent, array $itemIds = []);
-
 }
