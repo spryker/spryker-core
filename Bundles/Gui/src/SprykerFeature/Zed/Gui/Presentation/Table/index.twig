@@ -5,6 +5,12 @@
     data-processing="true"
     data-server-side="true"
     data-state-save="true"
+    data-order='[
+    {% for order in config.order %}
+        ["{{ order.column }}", "{{ order.dir }}"]
+        {% if not loop.last %},{% endif %}
+    {% endfor %}
+    ]'
     id="{{ config.tableId }}"
     {% if config.pageLength is defined %}
         data-page-length="{{ config.pageLength }}"
