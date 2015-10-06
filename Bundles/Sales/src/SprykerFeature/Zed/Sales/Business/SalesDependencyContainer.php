@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Sales\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\SalesBusiness;
-use SprykerEngine\Shared\Kernel\Store;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Sales\Business\Model\CommentManager;
 use SprykerFeature\Zed\Sales\Business\Model\OrderDetailsManager;
@@ -17,7 +16,6 @@ use SprykerFeature\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
 use SprykerFeature\Zed\Sales\SalesConfig;
-use SprykerFeature\Zed\Sales\Business\Model\OrderSequenceInterface;
 use SprykerFeature\Zed\SequenceNumber\Business\SequenceNumberFacade;
 
 /**

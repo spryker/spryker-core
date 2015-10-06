@@ -125,7 +125,8 @@ class SalesConfig extends AbstractBundleConfig
     /**
      * @return SequenceNumberSettingsInterface
      */
-    public function getOrderReferenceDefaults() {
+    public function getOrderReferenceDefaults()
+    {
         $sequenceNumberSettingsTransfer = new SequenceNumberSettingsTransfer();
 
         $sequenceNumberSettingsTransfer->setName(self::NAME_ORDER_REFERENCE);

@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Sales\Business\Model;
 
 use Generated\Shared\SequenceNumber\SequenceNumberSettingsInterface;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use SprykerFeature\Zed\SequenceNumber\Business\SequenceNumberFacade;
 
 class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
