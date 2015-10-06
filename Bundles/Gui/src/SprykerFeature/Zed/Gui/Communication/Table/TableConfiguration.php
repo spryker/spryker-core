@@ -5,11 +5,11 @@
 
 namespace SprykerFeature\Zed\Gui\Communication\Table;
 
-use SprykerFeature\Zed\Gui\Communication\Table\TableOptionsInterface;
-use SprykerFeature\Zed\Gui\Communication\Table\TableOptions;
-
 class TableConfiguration
 {
+
+    const SORT_ASC = 'asc';
+    const SORT_DESC = 'desc';
 
     /**
      * @var string
@@ -35,6 +35,16 @@ class TableConfiguration
      * @var array
      */
     private $sortableFields;
+
+    /**
+     * @var string
+     */
+    private $defaultSortColumnIndex = 0;
+
+    /**
+     * @var string
+     */
+    private $defaultSortDirection = self::SORT_ASC;
 
     /**
      * @return array
@@ -119,6 +129,38 @@ class TableConfiguration
     public function setUrl($url)
     {
         $this->url = $url;
+    }
+
+    /**
+     * @param int $columnIndex
+     */
+    public function setDefaultSortColumnIndex($columnIndex)
+    {
+        $this->defaultSortColumnIndex = $columnIndex;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultSortColumnIndex()
+    {
+        return $this->defaultSortColumnIndex;
+    }
+
+    /**
+     * @param string $direction
+     */
+    public function setDefaultSortDirection($direction)
+    {
+        $this->defaultSortDirection = $direction;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDefaultSortDirection()
+    {
+        return $this->defaultSortDirection;
     }
 
     /**

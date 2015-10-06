@@ -10,7 +10,6 @@ use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractTable
@@ -281,14 +280,16 @@ abstract class AbstractTable
     }
 
     /**
-     * @return mixed
+     * @param TableConfiguration $config
+     *
+     * @return array
      */
-    public function getOrders()
+    public function getOrders(TableConfiguration $config)
     {
         return $this->request->query->get('order', [
             [
-                'column' => 0,
-                'dir' => 'asc',
+                'column' => $config->getDefaultSortColumnIndex(),
+                'dir' => $config->getDefaultSortDirection(),
             ],
         ]);
     }
@@ -335,6 +336,7 @@ abstract class AbstractTable
                 'tableId' => $this->getTableIdentifier(),
                 'class' => $this->tableClass,
                 'header' => $this->config->getHeader(),
+                'order' => $this->getOrders($this->config),
                 'searchable' => $this->config->getSearchable(),
                 'sortable' => $this->config->getSortable(),
                 'pageLength' => $this->config->getPageLength(),
@@ -357,6 +359,7 @@ abstract class AbstractTable
      *
      * @param ModelCriteria $query
      * @param TableConfiguration $config
+     * @param bool $returnRawResults
      *
      * @return array
      */
@@ -365,7 +368,7 @@ abstract class AbstractTable
         //$limit = $config->getPageLength();
         $limit = $this->getLimit();
         $offset = $this->getOffset();
-        $order = $this->getOrders();
+        $order = $this->getOrders($config);
         // @todo CD-412 refactor this class to allow unspecified header columns and to add flexibility
         if (!empty($config->getHeader())) {
             $columns = array_keys($config->getHeader());
@@ -468,7 +471,6 @@ abstract class AbstractTable
         $this->filtered = $filtered;
     }
 
-
     /**
      * @param string $url
      * @param string $title
@@ -552,7 +554,7 @@ abstract class AbstractTable
         $class = $this->getButtonClass($defaultOptions, $customOptions);
         $parameters = $this->getButtonParameters($buttonOptions);
 
-        $html = '<a href="' . $url . '" class="btn btn-xs btn-outline ' . $class . '"'. $parameters . '>';
+        $html = '<a href="' . $url . '" class="btn btn-xs btn-outline ' . $class . '"' . $parameters . '>';
 
         if (true === array_key_exists(self::BUTTON_ICON, $buttonOptions) && null !== $buttonOptions[self::BUTTON_ICON]) {
             $html .= '<i class="fa ' . $buttonOptions[self::BUTTON_ICON] . '"></i> ';
@@ -620,4 +622,5 @@ abstract class AbstractTable
 
         return $buttonOptions;
     }
+
 }
