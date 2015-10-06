@@ -6,11 +6,10 @@
 
 namespace SprykerFeature\Zed\CustomerMailConnector\Communication\Plugin;
 
-use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailTransfer;
-use SprykerFeature\Shared\Mail\MailConfig;
 use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPluginInterface;
 use SprykerFeature\Zed\CustomerMailConnector\Communication\CustomerMailConnectorDependencyContainer;
+use SprykerFeature\Zed\CustomerMailConnector\CustomerMailConnectorConfig;
 
 /**
  * @method CustomerMailConnectorDependencyContainer getDependencyContainer()
@@ -27,23 +26,29 @@ class PasswordRestoredConfirmationSender extends AbstractSender implements Passw
     {
         $config = $this->getDependencyContainer()->getConfig();
 
-        $mailTransfer = new MailTransfer();
-        $mailRecipientTransfer = new MailRecipientTransfer();
-        $mailRecipientTransfer->setEmail($email);
+        $mailTransfer = $this->createMailTransfer();
 
-        $mailTransfer->addRecipient($mailRecipientTransfer);
-        $mailTransfer->setFromName($config->getFromEmailName());
-        $mailTransfer->setFromEmail($config->getFromEmailAddress());
-        $mailTransfer->setSubject($config->getPasswordRestoredConfirmationSubject());
         $mailTransfer->setTemplateName($config->getPasswordRestoredConfirmationToken());
-        $mailTransfer->setMerge(true);
-        $mailTransfer->setMergeLanguage(MailConfig::MERGE_LANGUAGE_HANDLEBARS);
+
+        $this->addMailRecipient($mailTransfer, $email);
+        $this->setMailTransferFrom($mailTransfer, $config);
+        $this->setMailTransferSubject($mailTransfer, $config);
+        $this->setMailMergeData($mailTransfer);
 
         $result = $this->getDependencyContainer()
             ->createMailFacade()
             ->sendMail($mailTransfer);
 
         return $this->isMailSent($result);
+    }
+
+    /**
+     * @param MailTransfer $mailTransfer
+     * @param CustomerMailConnectorConfig $config
+     */
+    protected function setMailTransferSubject(MailTransfer $mailTransfer, CustomerMailConnectorConfig $config)
+    {
+        $mailTransfer->setSubject($this->translate($config->getPasswordRestoredConfirmationSubject()));
     }
 
 }

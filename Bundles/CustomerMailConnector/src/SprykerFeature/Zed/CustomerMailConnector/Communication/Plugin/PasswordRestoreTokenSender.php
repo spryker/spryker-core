@@ -6,11 +6,10 @@
 
 namespace SprykerFeature\Zed\CustomerMailConnector\Communication\Plugin;
 
-use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailTransfer;
-use SprykerFeature\Shared\Mail\MailConfig;
 use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface;
 use SprykerFeature\Zed\CustomerMailConnector\Communication\CustomerMailConnectorDependencyContainer;
+use SprykerFeature\Zed\CustomerMailConnector\CustomerMailConnectorConfig;
 
 /**
  * @method CustomerMailConnectorDependencyContainer getDependencyContainer()
@@ -28,27 +27,43 @@ class PasswordRestoreTokenSender extends AbstractSender implements PasswordResto
     {
         $config = $this->getDependencyContainer()->getConfig();
 
-        $mailTransfer = new MailTransfer();
-        $mailRecipientTransfer = new MailRecipientTransfer();
-        $mailRecipientTransfer->setEmail($email);
+        $mailTransfer = $this->createMailTransfer();
 
-        $mailTransfer->addRecipient($mailRecipientTransfer);
-        $mailTransfer->setFromName($config->getFromEmailName());
-        $mailTransfer->setFromEmail($config->getFromEmailAddress());
-        $mailTransfer->setSubject($config->getPasswordRestoreSubject());
         $mailTransfer->setTemplateName($config->getPasswordRestoreToken());
-        $mailTransfer->setMerge(true);
-        $mailTransfer->setMergeLanguage(MailConfig::MERGE_LANGUAGE_HANDLEBARS);
-        $globalMergeVars = [
-            'reset_password_token_url' => $token,
-        ];
-        $mailTransfer->setGlobalMergeVars($globalMergeVars);
+
+        $this->addMailRecipient($mailTransfer, $email);
+        $this->setMailTransferFrom($mailTransfer, $config);
+        $this->setMailTransferSubject($mailTransfer, $config);
+        $this->setMailMergeData($mailTransfer, $this->getMailGlobalMergeVars($token));
 
         $result = $this->getDependencyContainer()
             ->createMailFacade()
             ->sendMail($mailTransfer);
 
         return $this->isMailSent($result);
+    }
+
+    /**
+     * @param MailTransfer $mailTransfer
+     * @param CustomerMailConnectorConfig $config
+     */
+    protected function setMailTransferSubject(MailTransfer $mailTransfer, CustomerMailConnectorConfig $config)
+    {
+        $mailTransfer->setSubject($this->translate($config->getPasswordRestoreSubject()));
+    }
+
+    /**
+     * @param string $token
+     *
+     * @return array
+     */
+    protected function getMailGlobalMergeVars($token)
+    {
+        $globalMergeVars = [
+            'reset_password_token_url' => $token,
+        ];
+
+        return $globalMergeVars;
     }
 
 }

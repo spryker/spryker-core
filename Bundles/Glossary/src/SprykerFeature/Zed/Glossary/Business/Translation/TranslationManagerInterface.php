@@ -104,11 +104,11 @@ interface TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param LocaleTransfer|null $localeTransfer
      *
      * @return bool
      */
-    public function hasTranslation($keyName, LocaleTransfer $locale);
+    public function hasTranslation($keyName, LocaleTransfer $localeTransfer = null);
 
     /**
      * @param string $keyName
@@ -121,10 +121,11 @@ interface TranslationManagerInterface
     /**
      * @param string $keyName
      * @param array $data
+     * @param LocaleTransfer|null $localeTransfer
      *
      * @return string
      */
-    public function translate($keyName, array $data = []);
+    public function translate($keyName, array $data = [], LocaleTransfer $localeTransfer = null);
 
     /**
      * @param int $idKey

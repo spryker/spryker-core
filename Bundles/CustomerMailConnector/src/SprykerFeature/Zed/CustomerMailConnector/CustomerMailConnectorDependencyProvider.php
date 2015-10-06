@@ -13,6 +13,7 @@ class CustomerMailConnectorDependencyProvider extends AbstractBundleDependencyPr
 {
 
     const FACADE_MAIL = 'mail facade';
+    const FACADE_GLOSSARY = 'glossary facade';
 
     /**
      * @param Container $container
@@ -23,6 +24,9 @@ class CustomerMailConnectorDependencyProvider extends AbstractBundleDependencyPr
     {
         $container[self::FACADE_MAIL] = function (Container $container) {
             return $container->getLocator()->mail()->facade();
+        };
+        $container[self::FACADE_GLOSSARY] = function (Container $container) {
+            return $container->getLocator()->glossary()->facade();
         };
 
         return $container;
