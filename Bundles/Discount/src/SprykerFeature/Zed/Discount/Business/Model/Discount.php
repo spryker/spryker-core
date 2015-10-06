@@ -132,6 +132,10 @@ class Discount
         foreach ($discounts as $discount) {
             $discountTransfer = new DiscountTransfer();
             $discountTransfer->fromArray($discount->toArray(), true);
+            if ($discount->getUsedVoucherCode() !== null) {
+                $discountTransfer->addUsedCode($discount->getUsedVoucherCode());
+            }
+
             $result = $this->decisionRule->evaluate(
                 $discountTransfer,
                 $this->discountContainer,

@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Discount\Persistence;
 
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesType;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherPoolTableMap;
+use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherTableMap;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountQuery;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
@@ -25,6 +26,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     const ALIAS_COL_AMOUNT = 'amount';
     const ALIAS_COL_TYPE = 'type';
     const ALIAS_COL_DESCRIPTION = 'description';
+    const ALIAS_COL_USED_VOUCHER_CODE = 'UsedVoucherCode';
 
     /**
      * @param string $code
@@ -81,6 +83,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
         return $this->queryActiveAndRunningDiscounts()
             ->useVoucherPoolQuery()
                 ->useDiscountVoucherQuery()
+                    ->withColumn(SpyDiscountVoucherTableMap::COL_CODE, self::ALIAS_COL_USED_VOUCHER_CODE)
                     ->filterByCode(array_unique($couponCodes))
                 ->endUse()
             ->endUse()
