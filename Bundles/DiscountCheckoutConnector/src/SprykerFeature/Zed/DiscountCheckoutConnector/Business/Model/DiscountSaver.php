@@ -11,11 +11,11 @@ use Generated\Shared\DiscountCheckoutConnector\OrderInterface;
 use Generated\Shared\Sales\ItemInterface;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesDiscount;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesDiscountCode;
+use SprykerFeature\Zed\Discount\Dependency\Facade\DiscountFacadeInterface;
 
 class DiscountSaver implements DiscountSaverInterface
 {
@@ -31,16 +31,18 @@ class DiscountSaver implements DiscountSaverInterface
     protected $voucherCodesUsed = [];
 
     /**
-     * @var DiscountFacade
+     * @var DiscountFacadeInterface
      */
     protected $discountFacade;
 
     /**
      * @param DiscountQueryContainerInterface $discountQueryContainer
-     * @param DiscountFacade                  $discountFacade
+     * @param DiscountFacadeInterface $discountFacade
      */
-    public function __construct(DiscountQueryContainerInterface $discountQueryContainer, DiscountFacade $discountFacade)
-    {
+    public function __construct(
+        DiscountQueryContainerInterface $discountQueryContainer,
+        DiscountFacadeInterface $discountFacade
+    ) {
         $this->discountQueryContainer = $discountQueryContainer;
         $this->discountFacade = $discountFacade;
     }

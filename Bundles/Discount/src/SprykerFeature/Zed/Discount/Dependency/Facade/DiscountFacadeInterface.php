@@ -72,15 +72,11 @@ interface DiscountFacadeInterface
 
     /**
      * @param VoucherCreateInterface $voucherTransfer
-     *
-     * @return void
      */
     public function createVoucherCodes(VoucherCreateInterface $voucherTransfer);
 
     /**
      * @param VoucherCreateInterface $voucherTransfer
-     *
-     * @return void
      */
     public function createVoucherCode(VoucherCreateInterface $voucherTransfer);
 
@@ -196,5 +192,19 @@ interface DiscountFacadeInterface
      * @return array
      */
     public function getDiscountCalculators();
+
+    /**
+     * @param array $codes
+     *
+     * @return bool
+     */
+    public function releaseVoucherCodes(array $codes);
+
+    /**
+     * @param array|string[] $codes
+     *
+     * @return bool
+     */
+    public function useVoucherCodes(array $codes);
 
 }
