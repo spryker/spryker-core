@@ -39,19 +39,21 @@ class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePlugin
 
         $idDiscountVoucherPool = $this->getIdVoucherPool();
 
-        foreach ($container->getCalculableObject()->getCouponCodes() as $code) {
-
+        $validVoucherCodes = [];
+        foreach ($discountTransfer->getUsedCodes() as $voucherCode) {
             $response = $this
                 ->getDependencyContainer()
                 ->getDiscountFacade()
-                ->isVoucherUsable($code, $idDiscountVoucherPool);
+                ->isVoucherUsable($voucherCode, $idDiscountVoucherPool);
 
             $result &= $response->isSuccess();
             if ($response->isSuccess()) {
-                $discountTransfer->addUsedCode($code);
+                $validVoucherCodes[] = $voucherCode;
             }
             $errors = array_merge($errors, $response->getErrors());
         }
+
+        $discountTransfer->setUsedCodes($validVoucherCodes);
 
         $componentResult->addErrors($errors);
 
