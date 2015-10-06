@@ -10,6 +10,7 @@ use Generated\Shared\SequenceNumber\SequenceNumberSettingsInterface;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use SprykerFeature\Shared\SequenceNumber\SequenceNumberConstants;
 
 class SalesConfig extends AbstractBundleConfig
 {
@@ -143,17 +144,7 @@ class SalesConfig extends AbstractBundleConfig
      */
     protected function getEnvironmentPrefix()
     {
-        $environment = \SprykerFeature_Shared_Library_Environment::getInstance();
-
-        if ($environment->isStaging()) {
-            return 'S';
-        }
-
-        if ($environment->isDevelopment()) {
-            return 'D' . $this->getUniqueIdentifierSeparator() . $this->getTimestamp();
-        }
-
-        return 'P';
+        return $this->get(SequenceNumberConstants::ENVIRONMENT_PREFIX);
     }
 
     /**

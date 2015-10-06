@@ -65,16 +65,14 @@ class SequenceNumber implements SequenceNumberInterface
      */
     protected function createNumber()
     {
-        $transaction = Propel::getConnection();
-
         try {
             $this->connection->beginTransaction();
 
-            $sequence = $this->getSequence($transaction);
+            $sequence = $this->getSequence($this->connection);
             $idCurrent = $sequence->getCurrentId() + $this->randomNumberGenerator->generate();
 
             $sequence->setCurrentId($idCurrent);
-            $sequence->save($transaction);
+            $sequence->save($this->connection);
 
             $this->connection->commit();
         } catch (\Exception $e) {
