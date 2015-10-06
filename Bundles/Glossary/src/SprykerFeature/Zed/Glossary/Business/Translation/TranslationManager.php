@@ -193,13 +193,17 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param LocaleTransfer|null $localeTransfer
      *
      * @return bool
      */
-    public function hasTranslation($keyName, LocaleTransfer $locale)
+    public function hasTranslation($keyName, LocaleTransfer $localeTransfer = null)
     {
-        $translationCount = $this->glossaryQueryContainer->queryTranslationByNames($keyName, $locale->getLocaleName())
+        if (null === $localeTransfer) {
+            $localeTransfer = $this->localeFacade->getCurrentLocale();
+        }
+
+        $translationCount = $this->glossaryQueryContainer->queryTranslationByNames($keyName, $localeTransfer->getLocaleName())
             ->count()
         ;
 
@@ -339,14 +343,17 @@ class TranslationManager implements TranslationManagerInterface
     /**
      * @param string $keyName
      * @param array $data
+     * @param LocaleTransfer|null $localeTransfer
      *
      * @return string
-     * @throws MissingTranslationException
      */
-    public function translate($keyName, array $data = [])
+    public function translate($keyName, array $data = [], LocaleTransfer $localeTransfer = null)
     {
-        $locale = $this->localeFacade->getCurrentLocale();
-        $translation = $this->getTranslationByKeyName($keyName, $locale);
+        if (null === $localeTransfer) {
+            $localeTransfer = $this->localeFacade->getCurrentLocale();
+        }
+
+        $translation = $this->getTranslationByKeyName($keyName, $localeTransfer);
 
         return str_replace(array_keys($data), array_values($data), $translation->getValue());
     }

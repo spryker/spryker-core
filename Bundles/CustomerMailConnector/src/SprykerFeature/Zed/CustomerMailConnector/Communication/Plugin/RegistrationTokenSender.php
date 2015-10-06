@@ -6,11 +6,10 @@
 
 namespace SprykerFeature\Zed\CustomerMailConnector\Communication\Plugin;
 
-use Generated\Shared\Transfer\MailRecipientTransfer;
-use SprykerFeature\Shared\Mail\MailConfig;
-use SprykerFeature\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
 use Generated\Shared\Transfer\MailTransfer;
+use SprykerFeature\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
 use SprykerFeature\Zed\CustomerMailConnector\Communication\CustomerMailConnectorDependencyContainer;
+use SprykerFeature\Zed\CustomerMailConnector\CustomerMailConnectorConfig;
 
 /**
  * @method CustomerMailConnectorDependencyContainer getDependencyContainer()
@@ -28,27 +27,46 @@ class RegistrationTokenSender extends AbstractSender implements RegistrationToke
     {
         $config = $this->getDependencyContainer()->getConfig();
 
-        $mailTransfer = new MailTransfer();
-        $mailRecipientTransfer = new MailRecipientTransfer();
-        $mailRecipientTransfer->setEmail($email);
+        $mailTransfer = $this->createMailTransfer();
 
-        $mailTransfer->addRecipient($mailRecipientTransfer);
-        $mailTransfer->setFromName($config->getFromEmailName());
-        $mailTransfer->setFromEmail($config->getFromEmailAddress());
-        $mailTransfer->setSubject($config->getRegistrationSubject());
         $mailTransfer->setTemplateName($config->getRegistrationToken());
-        $mailTransfer->setMerge(true);
-        $mailTransfer->setMergeLanguage(MailConfig::MERGE_LANGUAGE_HANDLEBARS);
-        $globalMergeVars = [
-            'registration_token_url' => $token,
-        ];
-        $mailTransfer->setGlobalMergeVars($globalMergeVars);
+
+        $this->addMailRecipient($mailTransfer, $email);
+        $this->setMailTransferFrom($mailTransfer, $config);
+        $this->setMailTransferSubject($mailTransfer, $config);
+        $this->setMailMergeData($mailTransfer, $this->getMailGlobalMergeVars($token));
 
         $result = $this->getDependencyContainer()
             ->createMailFacade()
             ->sendMail($mailTransfer);
 
         return $this->isMailSent($result);
+    }
+
+    /**
+     * @param MailTransfer $mailTransfer
+     * @param CustomerMailConnectorConfig $config
+     */
+    protected function setMailTransferSubject(MailTransfer $mailTransfer, CustomerMailConnectorConfig $config)
+    {
+        $subject = $config->getRegistrationSubject();
+        if (null !== $subject) {
+            $mailTransfer->setSubject($this->translate($subject));
+        }
+    }
+
+    /**
+     * @param string $token
+     *
+     * @return array
+     */
+    protected function getMailGlobalMergeVars($token)
+    {
+        $globalMergeVars = [
+            'registration_token_url' => $token,
+        ];
+
+        return $globalMergeVars;
     }
 
 }

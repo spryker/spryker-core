@@ -140,11 +140,11 @@ class GlossaryFacade extends AbstractFacade
 
     /**
      * @param string $keyName
-     * @param LocaleTransfer $locale
+     * @param LocaleTransfer|null $locale
      *
      * @return bool
      */
-    public function hasTranslation($keyName, LocaleTransfer $locale)
+    public function hasTranslation($keyName, LocaleTransfer $locale = null)
     {
         $translationManager = $this->getDependencyContainer()->createTranslationManager();
 
