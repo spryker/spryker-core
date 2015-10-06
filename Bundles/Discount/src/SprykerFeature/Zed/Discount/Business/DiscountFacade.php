@@ -6,6 +6,7 @@
 namespace SprykerFeature\Zed\Discount\Business;
 
 use Generated\Shared\Discount\OrderInterface;
+use Generated\Shared\Discount\VoucherCreateInterface;
 use Generated\Shared\Transfer\CartRuleTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DecisionRuleTransfer;
@@ -24,7 +25,6 @@ use SprykerEngine\Zed\Kernel\Business\ModelResult;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule as DecisionRule;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method DiscountDependencyContainer getDependencyContainer()
@@ -109,24 +109,19 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * @param int $amount
-     * @param int $idVoucherPool
-     * @param bool $includeTemplate
+     * @param VoucherCreateInterface $voucherTransfer
      */
-    public function createVoucherCodes($amount, $idVoucherPool, $includeTemplate = true)
+    public function createVoucherCodes(VoucherCreateInterface $voucherTransfer)
     {
-        $this->getDependencyContainer()->createVoucherEngine()->createVoucherCodes($amount, $idVoucherPool, $includeTemplate);
+        $this->getDependencyContainer()->createVoucherEngine()->createVoucherCodes($voucherTransfer);
     }
 
     /**
-     * @param string $code
-     * @param int $idVoucherPool
-     *
-     * @return SpyDiscountVoucher
+     * @param VoucherCreateInterface $voucherTransfer
      */
-    public function createVoucherCode($code, $idVoucherPool)
+    public function createVoucherCode(VoucherCreateInterface $voucherTransfer)
     {
-        return $this->getDependencyContainer()->createVoucherEngine()->createVoucherCode($code, $idVoucherPool);
+        return $this->getDependencyContainer()->createVoucherEngine()->createVoucherCode($voucherTransfer);
     }
 
     /**
@@ -384,13 +379,23 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * @param array $codes
+     * @param array|string[] $codes
      *
      * @return bool
      */
-    public function enableVoucherCodes(array $codes)
+    public function releaseVoucherCodes(array $codes)
     {
-        return $this->getDependencyContainer()->createVoucherCode()->enableCodes($codes);
+        return $this->getDependencyContainer()->createVoucherCode()->releaseCodes($codes);
+    }
+
+    /**
+     * @param array|string[] $codes
+     *
+     * @return bool
+     */
+    public function useVoucherCodes(array $codes)
+    {
+        return $this->getDependencyContainer()->createVoucherCode()->useCodes($codes);
     }
 
 }

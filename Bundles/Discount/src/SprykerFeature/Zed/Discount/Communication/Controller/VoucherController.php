@@ -6,12 +6,12 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Controller;
 
+use Generated\Shared\Transfer\VoucherCreateTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use Symfony\Component\HttpFoundation\RedirectResponse;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,8 +22,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class VoucherController extends AbstractController
 {
-
-    const NR_VOUCHERS = 1;
     const SESSION_TIME = 'session_title';
     const ID_POOL_PARAMETER = 'id-pool';
     const GENERATED_ON_PARAMETER = 'generated-on';
@@ -39,13 +37,15 @@ class VoucherController extends AbstractController
         if ($form->isValid()) {
             $formData = $form->getData();
             $this->setSessionTimestampForVoucherGenerator();
-            $this->getFacade()->createVoucherCodes(
-                self::NR_VOUCHERS,
-                $formData[VoucherForm::FIELD_POOL],
-                false
-            );
 
-            return $this->redirectResponse('/discount/voucher/view/?' . self::ID_POOL_PARAMETER . '=' . (int) $formData[VoucherForm::FIELD_POOL]);
+            $voucherCreateTransfer = new VoucherCreateTransfer();
+            $voucherCreateTransfer->fromArray($formData, true);
+            $voucherCreateTransfer->setAmount(VoucherForm::ONE_VOUCHER);
+            $voucherCreateTransfer->setIncludeTemplate(false);
+
+            $this->getFacade()->createVoucherCodes($voucherCreateTransfer);
+
+            return $this->redirectResponse('/discount/voucher/view/?' . self::ID_POOL_PARAMETER . '=' . (int) $formData[VoucherForm::FIELD_ID_POOL]);
         }
 
         return [
@@ -64,13 +64,14 @@ class VoucherController extends AbstractController
         if ($form->isValid()) {
             $formData = $form->getData();
             $this->setSessionTimestampForVoucherGenerator();
-            $this->getFacade()->createVoucherCodes(
-                $formData[VoucherForm::FIELD_NUMBER],
-                $formData[VoucherForm::FIELD_POOL],
-                false
-            );
 
-            return $this->redirectResponse('/discount/voucher/view/?' . self::ID_POOL_PARAMETER . '=' . (int) $formData[VoucherForm::FIELD_POOL]);
+            $voucherCreateTransfer = new VoucherCreateTransfer();
+            $voucherCreateTransfer->fromArray($formData, true);
+            $voucherCreateTransfer->setIncludeTemplate(false);
+
+            $this->getFacade()->createVoucherCodes($voucherCreateTransfer);
+
+            return $this->redirectResponse('/discount/voucher/view/?' . self::ID_POOL_PARAMETER . '=' . (int) $formData[VoucherForm::FIELD_ID_POOL]);
         }
 
         return [

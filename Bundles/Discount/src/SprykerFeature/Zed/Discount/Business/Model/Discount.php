@@ -167,14 +167,14 @@ class Discount
         }
 
         $decisionRules = $this->retrieveDecisionRules($idDiscount);
-        foreach ($decisionRules as $decisionRule) {
+        foreach ($decisionRules as $decisionRuleEntity) {
             $decisionRulePlugin = $this->discountSettings->getDecisionRulePluginByName(
-                $decisionRule->getDecisionRulePlugin()
+                $decisionRuleEntity->getDecisionRulePlugin()
             );
 
             $decisionRulePlugin->setContext(
                 [
-                    AbstractDecisionRule::KEY_ENTITY => $decisionRule,
+                    AbstractDecisionRule::KEY_ENTITY => $decisionRuleEntity,
                 ]
             );
 

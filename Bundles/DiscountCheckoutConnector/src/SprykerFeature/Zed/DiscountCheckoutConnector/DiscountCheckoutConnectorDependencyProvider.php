@@ -13,6 +13,7 @@ class DiscountCheckoutConnectorDependencyProvider extends AbstractBundleDependen
 {
 
     const QUERY_CONTAINER_DISCOUNT = 'discount query container';
+    const FACADE_DISCOUNT = 'facade discount';
 
     /**
      * @param Container $container
@@ -23,6 +24,10 @@ class DiscountCheckoutConnectorDependencyProvider extends AbstractBundleDependen
     {
         $container[self::QUERY_CONTAINER_DISCOUNT] = function (Container $container) {
             return $container->getLocator()->discount()->queryContainer();
+        };
+
+        $container[self::FACADE_DISCOUNT] = function (Container $container) {
+            return $container->getLocator()->discount()->facade();
         };
 
         return $container;

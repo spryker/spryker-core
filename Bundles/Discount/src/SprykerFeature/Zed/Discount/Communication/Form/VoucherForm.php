@@ -9,11 +9,11 @@ use Symfony\Component\Validator\Constraints\GreaterThan;
 
 class VoucherForm extends AbstractForm
 {
-
-    const FIELD_POOL = 'pool';
-    const FIELD_NUMBER = 'number';
+    const FIELD_ID_POOL = 'id_voucher_pool';
+    const FIELD_AMOUNT = 'amount';
     const MINIMUM_VOUCHERS_TO_GENERATE = 2;
     const ONE_VOUCHER = 1;
+    const FIELD_NUMBER_OF_USES = 'number_of_uses';
 
     /**
      * @var SpyDiscountVoucherPoolQuery
@@ -27,8 +27,9 @@ class VoucherForm extends AbstractForm
 
     /**
      * @param SpyDiscountVoucherPoolQuery $poolQuery
+     * @param bool $isMultiple
      */
-    public function __construct(SpyDiscountVoucherPoolQuery $poolQuery, $isMultiple=false)
+    public function __construct(SpyDiscountVoucherPoolQuery $poolQuery, $isMultiple = false)
     {
         $this->poolQuery = $poolQuery;
         $this->isMultiple = $isMultiple;
@@ -43,7 +44,7 @@ class VoucherForm extends AbstractForm
     {
         if ($this->isMultiple) {
             $this
-                ->addText(static::FIELD_NUMBER, [
+                ->addText(static::FIELD_AMOUNT, [
                     'label' => 'Number',
                     'constraints' => [
                         new NotBlank(),
@@ -54,7 +55,10 @@ class VoucherForm extends AbstractForm
         }
 
         $this
-            ->addChoice(static::FIELD_POOL, [
+            ->addNumber(static::FIELD_NUMBER_OF_USES, [
+                'label' => 'Number of uses',
+            ])
+            ->addChoice(static::FIELD_ID_POOL, [
                 'label' => 'Pool',
                 'placeholder' => 'Select one',
                 'choices' => $this->getPools(),
@@ -90,7 +94,7 @@ class VoucherForm extends AbstractForm
     protected function populateFormFields()
     {
         return [
-            static::FIELD_NUMBER => ($this->isMultiple) ? static::MINIMUM_VOUCHERS_TO_GENERATE : static::ONE_VOUCHER,
+            static::FIELD_AMOUNT => ($this->isMultiple) ? static::MINIMUM_VOUCHERS_TO_GENERATE : static::ONE_VOUCHER,
         ];
     }
 
