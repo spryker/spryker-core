@@ -20,6 +20,8 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
 
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
+    const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
+
     /**
      * @param Container $container
      *
@@ -33,6 +35,10 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::COMMAND_PLUGINS] = function (Container $container) {
             return $this->getCommandPlugins($container);
+        };
+
+        $container[self::FACADE_SEQUENCE_NUMBER] = function (Container $container) {
+            return $container->getLocator()->sequenceNumber()->facade();
         };
 
         return $container;

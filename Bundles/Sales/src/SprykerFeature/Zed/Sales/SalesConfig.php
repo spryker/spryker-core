@@ -6,10 +6,16 @@
 
 namespace SprykerFeature\Zed\Sales;
 
+use Generated\Shared\SequenceNumber\SequenceNumberSettingsInterface;
+use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
+use SprykerEngine\Shared\Kernel\Store;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use SprykerFeature\Shared\SequenceNumber\SequenceNumberConstants;
 
 class SalesConfig extends AbstractBundleConfig
 {
+
+    const NAME_ORDER_REFERENCE = 'OrderReference';
 
     /**
      * @return string
@@ -100,7 +106,7 @@ class SalesConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getUniqueIdentifierSeperator()
+    public function getUniqueIdentifierSeparator()
     {
         return '-';
     }
@@ -118,27 +124,35 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return int
+     * @return SequenceNumberSettingsInterface
      */
-    public function getMinimumOrderNumber()
+    public function getOrderReferenceDefaults()
     {
-        return 100;
+        $sequenceNumberSettingsTransfer = new SequenceNumberSettingsTransfer();
+
+        $sequenceNumberSettingsTransfer->setName(self::NAME_ORDER_REFERENCE);
+
+        $storeName = Store::getInstance()->getStoreName();
+        $prefix = $storeName . $this->getUniqueIdentifierSeparator() . $this->getEnvironmentPrefix();
+        $sequenceNumberSettingsTransfer->setPrefix($prefix);
+
+        return $sequenceNumberSettingsTransfer;
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getOrderNumberIncrementMin()
+    protected function getEnvironmentPrefix()
     {
-        return 23;
+        return $this->get(SequenceNumberConstants::ENVIRONMENT_PREFIX);
     }
 
     /**
-     * @return int
+     * @return string
      */
-    public function getOrderNumberIncrementMax()
+    protected function getTimestamp()
     {
-        return 42;
+        return (string) time();
     }
 
 }

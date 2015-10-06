@@ -107,8 +107,6 @@ class OrderManager
         // catch-all save; this includes an optional fk_customer
         $orderEntity->fromArray($orderTransfer->toArray());
 
-        $orderEntity->setOrderReference($this->orderReferenceGenerator->generateOrderReference($orderTransfer));
-
         $orderEntity->setBillingAddress($this->saveAddressTransfer($orderTransfer->getBillingAddress()));
         $orderEntity->setShippingAddress($this->saveAddressTransfer($orderTransfer->getShippingAddress()));
 

@@ -14,6 +14,7 @@ class OmsConfig extends AbstractBundleConfig
 
     const INITIAL_STATUS = 'new';
     const DEFAULT_PROCESS_LOCATION = '/config/Zed/oms';
+    const NAME_CREDIT_MEMO_REFERENCE = 'CreditMemoReference';
 
     /**
      * @return string

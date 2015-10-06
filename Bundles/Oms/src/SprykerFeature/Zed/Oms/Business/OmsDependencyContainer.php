@@ -18,12 +18,14 @@ use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
 use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Business\Process\TransitionInterface;
+use SprykerFeature\Zed\Oms\Business\ReferenceGenerator\CreditMemoReferenceGenerator;
 use SprykerFeature\Zed\Oms\Business\Util\DrawerInterface;
 use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Oms\Business\Util\TransitionLogInterface;
 use SprykerFeature\Zed\Oms\OmsConfig;
 use SprykerFeature\Zed\Oms\OmsDependencyProvider;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
+use SprykerFeature\Zed\SequenceNumber\Business\SequenceNumberFacade;
 
 /**
  * @method OmsBusiness getFactory()
@@ -182,6 +184,25 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
                 $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS)
             )
         ; // @TODO do not inject the whole config, just inject what is needed
+    }
+
+    /**
+     * @return CreditMemoReferenceGenerator
+     */
+    protected function createCreditMemoReferenceGenerator()
+    {
+        return $this->getFactory()->createReferenceGeneratorCreditMemoReferenceGenerator(
+            $this->createSequenceNumberFacade(),
+            $this->getConfig()->getCreditMemoReferenceDefaults()
+        );
+    }
+
+    /**
+     * @return SequenceNumberFacade
+     */
+    protected function createSequenceNumberFacade()
+    {
+        return $this->getProvidedDependency(OmsDependencyProvider::FACADE_SEQUENCE_NUMBER);
     }
 
 }

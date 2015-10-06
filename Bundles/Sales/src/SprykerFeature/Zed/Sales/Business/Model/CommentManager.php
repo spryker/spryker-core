@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Sales\Business\Model;
 use Generated\Shared\Transfer\CommentTransfer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderComment;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainer;
+use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class CommentManager
 {
@@ -19,9 +20,9 @@ class CommentManager
     protected $queryContainer;
 
     /**
-     * @param SalesQueryContainer $salesQueryContainer
+     * @param SalesQueryContainerInterface $salesQueryContainer
      */
-    public function __construct(SalesQueryContainer $salesQueryContainer)
+    public function __construct(SalesQueryContainerInterface $salesQueryContainer)
     {
         $this->queryContainer = $salesQueryContainer;
     }

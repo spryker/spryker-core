@@ -1,14 +1,17 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Customer\Business\ReferenceGenerator;
+namespace SprykerFeature\Zed\SequenceNumber\Business\Model;
 
-interface RandomNumberGeneratorInterface
+interface SequenceNumberInterface
 {
+
     /**
      * @return int
      */
     public function generate();
+
 }

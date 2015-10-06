@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Sales\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\SalesBusiness;
-use SprykerEngine\Shared\Kernel\Store;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Sales\Business\Model\CommentManager;
 use SprykerFeature\Zed\Sales\Business\Model\OrderDetailsManager;
@@ -17,7 +16,7 @@ use SprykerFeature\Zed\Sales\Business\Model\Split\Validation\ValidatorInterface;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
 use SprykerFeature\Zed\Sales\SalesConfig;
-use SprykerFeature\Zed\Sales\Business\Model\OrderSequenceInterface;
+use SprykerFeature\Zed\SequenceNumber\Business\SequenceNumberFacade;
 
 /**
  * @method SalesBusiness getFactory()
@@ -87,39 +86,24 @@ class SalesDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return OrderSequenceInterface
-     */
-    public function createOrderSequence()
-    {
-        $randomNumberGenerator = $this->getFactory()->createModelRandomNumberGenerator(
-            $this->getConfig()->getOrderNumberIncrementMin(),
-            $this->getConfig()->getOrderNumberIncrementMax()
-        );
-
-        return $this->getFactory()->createModelOrderSequence(
-            $randomNumberGenerator,
-            $this->getConfig()->getMinimumOrderNumber()
-        );
-    }
-
-    /**
      * @return OrderReferenceGeneratorInterface
      */
     public function createReferenceGenerator()
     {
-        $storeName = Store::getInstance()->getStoreName();
-
-        $environment = \SprykerFeature_Shared_Library_Environment::getInstance();
-
-        $isDevelopment = $environment->isDevelopment();
-        $isStaging = $environment->isStaging();
+        $sequenceNumberSettings = $this->getConfig()->getOrderReferenceDefaults();
 
         return $this->getFactory()->createModelOrderReferenceGenerator(
-            $this->createOrderSequence(),
-            $isDevelopment,
-            $isStaging,
-            $storeName
+            $this->createSequenceNumberFacade(),
+            $sequenceNumberSettings
         );
+    }
+
+    /**
+     * @return SequenceNumberFacade
+     */
+    protected function createSequenceNumberFacade()
+    {
+        return $this->getProvidedDependency(SalesDependencyProvider::FACADE_SEQUENCE_NUMBER);
     }
 
 }

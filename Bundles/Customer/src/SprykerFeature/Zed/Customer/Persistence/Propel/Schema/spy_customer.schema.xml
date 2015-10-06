@@ -1,7 +1,6 @@
 <?xml version="1.0"?>
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" namespace="SprykerFeature\Zed\Customer\Persistence\Propel" package="vendor.spryker.spryker.Bundles.Customer.src.SprykerFeature.Zed.Customer.Persistence.Propel">
 
-
     <table name="spy_customer" idMethod="native" phpName="SpyCustomer">
         <column name="id_customer" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="customer_reference" required="true" type="VARCHAR" size="255"/>
@@ -29,7 +28,8 @@
         <foreign-key foreignTable="spy_customer_address" phpName="ShippingAddress" refPhpName="CustomerShippingAddress">
             <reference foreign="id_customer_address" local="default_shipping_address"/>
         </foreign-key>
-    <id-method-parameter value="spy_customer_pk_seq"/></table>
+        <id-method-parameter value="spy_customer_pk_seq"/>
+    </table>
 
     <table name="spy_customer_address" idMethod="native" phpName="SpyCustomerAddress">
         <column name="id_customer_address" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
@@ -65,14 +65,7 @@
 
         <behavior name="timestampable"/>
 
-    <id-method-parameter value="spy_customer_address_pk_seq"/></table>
+        <id-method-parameter value="spy_customer_address_pk_seq"/>
+    </table>
 
-    <table name="spy_customer_number_sequence" phpName="SpyCustomerNumberSequence">
-        <column name="id_customer_number_sequence" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
-        <column name="name" type="VARCHAR" size="255" required="true"/>
-        <column name="current_id" type="INTEGER" required="true"/>
-        <unique>
-            <unique-column name="name"/>
-        </unique>
-    <id-method-parameter value="spy_customer_number_sequence_pk_seq"/></table>
 </database>

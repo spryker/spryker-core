@@ -17,6 +17,7 @@ use SprykerFeature\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use SprykerFeature\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
 use SprykerFeature\Zed\Customer\Business\ReferenceGenerator\CustomerSequence;
+use SprykerFeature\Zed\SequenceNumber\Business\SequenceNumberFacade;
 
 /**
  * @method CustomerConfig getConfig()
@@ -103,27 +104,17 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
     protected function createCustomerReferenceGenerator()
     {
         return $this->getFactory()->createReferenceGeneratorCustomerReferenceGenerator(
-            $this->createCustomerSequence(),
-            $this->getConfig()->isDevelopmentEnvironment(),
-            $this->getConfig()->isStagingEnvironment(),
-            $this->getConfig()->getStoreName()
+            $this->createSequenceNumberFacade(),
+            $this->getConfig()->getCustomerReferenceDefaults()
         );
     }
 
     /**
-     * @return CustomerSequence
+     * @return SequenceNumberFacade
      */
-    protected function createCustomerSequence()
+    protected function createSequenceNumberFacade()
     {
-        $randomNumberGenerator = $this->getFactory()->createReferenceGeneratorRandomNumberGenerator(
-            $this->getConfig()->getCustomerNumberIncrementMin(),
-            $this->getConfig()->getCustomerNumberIncrementMax()
-        );
-
-        return $this->getFactory()->createReferenceGeneratorCustomerSequence(
-            $randomNumberGenerator,
-            $this->getConfig()->getMinimumCustomerNumber()
-        );
+        return $this->getProvidedDependency(CustomerDependencyProvider::FACADE_SEQUENCE_NUMBER);
     }
 
 }
