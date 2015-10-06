@@ -7,7 +7,6 @@
 namespace Functional\SprykerFeature\Zed\SequenceNumber;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\SequenceNumber\Business\Model\SequenceNumber;
@@ -51,10 +50,10 @@ class SequenceNumberTest extends Test
         $sequenceNumberSettings = $config->getDefaultSettings();
 
         $sequenceNumber = $this->sequenceNumberFacade->generate($sequenceNumberSettings);
-        $this->assertSame("2", $sequenceNumber);
+        $this->assertSame('2', $sequenceNumber);
 
         $number = $this->sequenceNumberFacade->generate($sequenceNumberSettings);
-        $this->assertSame("3", $number);
+        $this->assertSame('3', $number);
     }
 
     public function testGenerateWithPrefix()
@@ -64,7 +63,7 @@ class SequenceNumberTest extends Test
         $sequenceNumberSettings->setPrefix('DE');
 
         $sequenceNumber = $this->sequenceNumberFacade->generate($sequenceNumberSettings);
-        $this->assertSame("DE2", $sequenceNumber);
+        $this->assertSame('DE2', $sequenceNumber);
     }
 
     public function testGenerateOnSequenceNumber()
@@ -83,7 +82,7 @@ class SequenceNumberTest extends Test
         );
 
         $number = $sequenceNumber->generate();
-        $this->assertSame("011", $number);
+        $this->assertSame('011', $number);
 
         // Make sure other sequences don't interfere
         $config = $this->generateConfig();
@@ -98,10 +97,10 @@ class SequenceNumberTest extends Test
         );
 
         $number = $sequenceNumberOther->generate();
-        $this->assertSame("3", $number);
+        $this->assertSame('3', $number);
 
         $number = $sequenceNumber->generate();
-        $this->assertSame("012", $number);
+        $this->assertSame('012', $number);
     }
 
     /**
@@ -111,10 +110,12 @@ class SequenceNumberTest extends Test
     {
         $locator = Locator::getInstance();
         $config = new SequenceNumberConfig(new Config(), $locator);
+
         return $config;
     }
 
-    protected function generateGenerator($min = 1, $max = 1) {
+    protected function generateGenerator($min = 1, $max = 1)
+    {
         return $this->factory->createGeneratorRandomNumberGenerator(
             $min,
             $max

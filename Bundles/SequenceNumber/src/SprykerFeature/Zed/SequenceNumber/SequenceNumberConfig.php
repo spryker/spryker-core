@@ -15,19 +15,22 @@ class SequenceNumberConfig extends AbstractBundleConfig
     /**
      * @return SequenceNumberSettingsTransfer
      */
-    public function getDefaultSettings() {
+    public function getDefaultSettings()
+    {
         $sequenceNumberSettings = new SequenceNumberSettingsTransfer();
         $sequenceNumberSettings->setName($this->getSequenceName());
         $sequenceNumberSettings->setIncrementMinimum($this->getNumberIncrementMin());
         $sequenceNumberSettings->setIncrementMaximum($this->getNumberIncrementMax());
         $sequenceNumberSettings->setMinimumNumber($this->getNumberMinimum());
+
         return $sequenceNumberSettings;
     }
 
     /**
      * @return int
      */
-    public function getPaddingLength() {
+    public function getPaddingLength()
+    {
         return 0;
     }
 
