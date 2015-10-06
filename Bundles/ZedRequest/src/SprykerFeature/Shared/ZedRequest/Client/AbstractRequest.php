@@ -153,16 +153,19 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
      */
     public function getTransfer()
     {
-        if (!empty($this->values['transferClassName']) && !empty($this->values['transfer'])) {
+        if (!empty($this->values['transferClassName'])) {
             $transfer = $this->createTransferObject(
                 $this->values['transferClassName']
             );
-            $transfer->fromArray($this->values['transfer']);
+
+            if (!empty($this->values['transfer'])) {
+                $transfer->fromArray($this->values['transfer']);
+            }
 
             return $transfer;
         }
 
-        return;
+        return null;
     }
 
     /**
