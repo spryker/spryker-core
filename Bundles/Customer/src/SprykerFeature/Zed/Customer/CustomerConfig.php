@@ -140,12 +140,7 @@ class CustomerConfig extends AbstractBundleConfig
      */
     protected function getTimestamp()
     {
-        $ts = strtr(microtime(), [
-            '.' => '',
-            ' ' => '',
-        ]);
-
-        return $ts;
+        return (string) time();
     }
 
 }
