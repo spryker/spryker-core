@@ -24,4 +24,4 @@
 .grunt
 .sass-cache
 /node_modules/
-tests/_log/
+tests/_output/

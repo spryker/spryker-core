@@ -1,5 +1,4 @@
 <?php
-namespace Acl;
 
 /**
  * Inherited Methods
@@ -16,9 +15,9 @@ namespace Acl;
  *
  * @SuppressWarnings(PHPMD)
 */
-class NoGuy extends \Codeception\Actor
+class FunctionalTester extends \Codeception\Actor
 {
-    use _generated\NoGuyActions;
+    use _generated\FunctionalTesterActions;
 
    /**
     * Define custom actions here

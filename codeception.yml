@@ -1,4 +1,4 @@
-namespace: Pyz
+actor: Tester
 
 include:
  - Bundles/Acl/
@@ -78,7 +78,8 @@ paths:
     tests: ../../../tests
     log: ../../../tests/_log
     data: ../../../tests/_data
-    helpers: ../../../tests/_helpers
+    support: ../../../tests/_support,
+    envs: tests/_envs
 
 settings:
     bootstrap: _bootstrap.php
@@ -88,11 +89,8 @@ settings:
     log: true
 
 extensions:
-  enabled:
-    - Codeception\Extension\RemoteDebug
-  config:
-    Codeception\Extension\RemoteDebug:
-      sessionName: phpstorm
+    enabled:
+        - Codeception\Extension\RunFailed
 
 modules:
     config:
