@@ -49,7 +49,10 @@ class RegistrationTokenSender extends AbstractSender implements RegistrationToke
      */
     protected function setMailTransferSubject(MailTransfer $mailTransfer, CustomerMailConnectorConfig $config)
     {
-        $mailTransfer->setSubject($this->translate($config->getRegistrationSubject()));
+        $subject = $config->getRegistrationSubject();
+        if (null !== $subject) {
+            $mailTransfer->setSubject($this->translate($subject));
+        }
     }
 
     /**

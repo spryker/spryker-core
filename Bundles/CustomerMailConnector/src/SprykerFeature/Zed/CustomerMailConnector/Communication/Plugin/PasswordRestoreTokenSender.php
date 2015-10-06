@@ -49,7 +49,10 @@ class PasswordRestoreTokenSender extends AbstractSender implements PasswordResto
      */
     protected function setMailTransferSubject(MailTransfer $mailTransfer, CustomerMailConnectorConfig $config)
     {
-        $mailTransfer->setSubject($this->translate($config->getPasswordRestoreSubject()));
+        $subject = $config->getPasswordRestoreSubject();
+        if (null !== $subject) {
+            $mailTransfer->setSubject($this->translate($subject));
+        }
     }
 
     /**

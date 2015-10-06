@@ -48,7 +48,10 @@ class PasswordRestoredConfirmationSender extends AbstractSender implements Passw
      */
     protected function setMailTransferSubject(MailTransfer $mailTransfer, CustomerMailConnectorConfig $config)
     {
-        $mailTransfer->setSubject($this->translate($config->getPasswordRestoredConfirmationSubject()));
+        $subject = $config->getPasswordRestoredConfirmationSubject();
+        if (null !== $subject) {
+            $mailTransfer->setSubject($this->translate($subject));
+        }
     }
 
 }

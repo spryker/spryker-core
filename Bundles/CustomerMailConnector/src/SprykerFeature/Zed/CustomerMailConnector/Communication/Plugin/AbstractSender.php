@@ -90,8 +90,15 @@ class AbstractSender extends AbstractPlugin
      */
     protected function setMailTransferFrom(MailTransfer $mailTransfer, CustomerMailConnectorConfig $config)
     {
-        $mailTransfer->setFromName($config->getFromEmailName());
-        $mailTransfer->setFromEmail($config->getFromEmailAddress());
+        $fromName = $config->getFromEmailName();
+        if (null !== $fromName) {
+            $mailTransfer->setFromName($fromName);
+        }
+
+        $fromEmail = $config->getFromEmailAddress();
+        if (null !== $fromEmail) {
+            $mailTransfer->setFromEmail($fromEmail);
+        }
     }
 
     /**
