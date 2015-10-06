@@ -7,6 +7,7 @@
 namespace Functional\SprykerFeature\Zed\SequenceNumber;
 
 use Codeception\TestCase\Test;
+use Propel\Runtime\Propel;
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\SequenceNumber\Business\Model\SequenceNumber;
@@ -78,7 +79,8 @@ class SequenceNumberTest extends Test
         /** @var SequenceNumber $sequenceNumber */
         $sequenceNumber = $this->factory->createModelSequenceNumber(
             $generator,
-            $sequenceNumberSettings
+            $sequenceNumberSettings,
+            Propel::getConnection()
         );
 
         $number = $sequenceNumber->generate();
@@ -93,7 +95,8 @@ class SequenceNumberTest extends Test
         /** @var SequenceNumber $sequenceNumberOther */
         $sequenceNumberOther = $this->factory->createModelSequenceNumber(
             $generator,
-            $sequenceNumberSettings
+            $sequenceNumberSettings,
+            Propel::getConnection()
         );
 
         $number = $sequenceNumberOther->generate();

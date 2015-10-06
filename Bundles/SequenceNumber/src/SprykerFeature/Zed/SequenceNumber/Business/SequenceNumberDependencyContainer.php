@@ -13,6 +13,7 @@ use SprykerFeature\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorIn
 use SprykerFeature\Zed\SequenceNumber\Business\Model\SequenceNumberInterface;
 use SprykerFeature\Zed\SequenceNumber\Persistence\SequenceNumberQueryContainerInterface;
 use SprykerFeature\Zed\SequenceNumber\SequenceNumberConfig;
+use Propel\Runtime\Propel;
 
 /**
  * @method SequenceNumberConfig getConfig()
@@ -53,7 +54,8 @@ class SequenceNumberDependencyContainer extends AbstractBusinessDependencyContai
         return $this->getFactory()
             ->createModelSequenceNumber(
                 $generator,
-                $settings
+                $settings,
+                Propel::getConnection()
             )
         ;
     }

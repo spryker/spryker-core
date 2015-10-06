@@ -24,14 +24,19 @@ class SequenceNumber implements SequenceNumberInterface
     /** @var SequenceNumberSettingsInterface */
     protected $sequenceNumberSettings;
 
+    /** @var ConnectionInterface */
+    protected $connection;
+
     /**
      * @param RandomNumberGeneratorInterface $randomNumberGenerator
      * @param SequenceNumberSettingsInterface $sequenceNumberSettings
+     * @param ConnectionInterface $connection
      */
-    public function __construct(RandomNumberGeneratorInterface $randomNumberGenerator, SequenceNumberSettingsInterface $sequenceNumberSettings)
+    public function __construct(RandomNumberGeneratorInterface $randomNumberGenerator, SequenceNumberSettingsInterface $sequenceNumberSettings, ConnectionInterface $connection)
     {
         $this->randomNumberGenerator = $randomNumberGenerator;
         $this->sequenceNumberSettings = $sequenceNumberSettings;
+        $this->connection = $connection;
     }
 
     /**
@@ -63,7 +68,7 @@ class SequenceNumber implements SequenceNumberInterface
         $transaction = Propel::getConnection();
 
         try {
-            $transaction->beginTransaction();
+            $this->connection->beginTransaction();
 
             $sequence = $this->getSequence($transaction);
             $idCurrent = $sequence->getCurrentId() + $this->randomNumberGenerator->generate();
@@ -71,9 +76,9 @@ class SequenceNumber implements SequenceNumberInterface
             $sequence->setCurrentId($idCurrent);
             $sequence->save($transaction);
 
-            $transaction->commit();
+            $this->connection->commit();
         } catch (\Exception $e) {
-            $transaction->rollback();
+            $this->connection->rollback();
 
             throw new InvalidSequenceNumberException(
                 'Could not generate sequence number. Make sure your settings are complete. Error: ' . $e->getMessage());
