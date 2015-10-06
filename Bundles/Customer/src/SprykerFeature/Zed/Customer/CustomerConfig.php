@@ -26,54 +26,6 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return string
-     */
-    public function getStoreName()
-    {
-        return Store::getInstance()->getStoreName();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isDevelopmentEnvironment()
-    {
-        return \SprykerFeature_Shared_Library_Environment::getInstance()->isDevelopment();
-    }
-
-    /**
-     * @return bool
-     */
-    public function isStagingEnvironment()
-    {
-        return \SprykerFeature_Shared_Library_Environment::getInstance()->isStaging();
-    }
-
-    /**
-     * @return int
-     */
-    public function getMinimumCustomerNumber()
-    {
-        return 100;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCustomerNumberIncrementMin()
-    {
-        return 23;
-    }
-
-    /**
-     * @return int
-     */
-    public function getCustomerNumberIncrementMax()
-    {
-        return 42;
-    }
-
-    /**
      * @param string $token
      *
      * @return string
@@ -102,7 +54,7 @@ class CustomerConfig extends AbstractBundleConfig
 
         $sequenceNumberSettingsTransfer->setName(self::NAME_CUSTOMER_REFERENCE);
 
-        $storeName = $this->getStoreName();
+        $storeName = Store::getInstance()->getStoreName();
         $prefix = $storeName . $this->getUniqueIdentifierSeparator() . $this->getEnvironmentPrefix();
         $sequenceNumberSettingsTransfer->setPrefix($prefix);
 
