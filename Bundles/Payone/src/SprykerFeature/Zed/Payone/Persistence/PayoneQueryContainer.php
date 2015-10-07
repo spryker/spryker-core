@@ -170,13 +170,14 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
      *
      * @return SpyPaymentPayoneApiLogQuery
      */
-    public function getApiLogsByOrderId($idSalesOrder)
+    public function getLastApiLogsByOrderId($idSalesOrder)
     {
         $query = SpyPaymentPayoneApiLogQuery::create()
             ->useSpyPaymentPayoneQuery()
             ->filterByFkSalesOrder($idSalesOrder)
             ->endUse()
-            ->orderByCreatedAt()
+            ->orderByCreatedAt(Criteria::DESC)
+            ->orderByIdPaymentPayoneApiLog(Criteria::DESC)
         ;
 
         return $query;

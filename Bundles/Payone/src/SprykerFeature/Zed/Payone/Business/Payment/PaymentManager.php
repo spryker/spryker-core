@@ -531,7 +531,7 @@ class PaymentManager implements PaymentManagerInterface
     {
         //$paymentPayone = $orderTransfer->getPayonePayment();
 
-        $apiLogsQuery = $this->queryContainer->getApiLogsByOrderId($orderTransfer->getIdSalesOrder());
+        $apiLogsQuery = $this->queryContainer->getLastApiLogsByOrderId($orderTransfer->getIdSalesOrder());
         $apiLog = $apiLogsQuery->findOne();
         $redirectUrl = $apiLog->getRedirectUrl();
 
