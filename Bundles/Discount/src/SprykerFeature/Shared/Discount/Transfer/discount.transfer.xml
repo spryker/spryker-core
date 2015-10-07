@@ -22,11 +22,11 @@
         <property name="type" type="string" />
         <property name="usedCodes" type="array" singular="usedCode" />
         <property name="calculatorPlugin" type="string" />
-        <property name="collectorPlugin" type="string" />
         <property name="isPrivileged" type="string" />
         <property name="isActive" type="string" />
         <property name="validFrom" type="string" />
         <property name="validTo" type="string" />
+        <property name="discountCollectors" type="DiscountCollector[]" />
     </transfer>
 
     <transfer name="DecisionRule">
@@ -107,6 +107,15 @@
         <property name="calculatorPlugin" type="string"/>
         <property name="collectorPlugin" type="string"/>
         <property name="decisionRules" type="array"/>
+    </transfer>
+
+    <transfer name="DiscountCollector">
+        <property name="idDiscountCollector" type="int"/>
+        <property name="fkDiscount" type="int"/>
+        <property name="collectorPlugin" type="string"/>
+        <property name="value" type="string"/>
+        <property name="createdAt" type="string"/>
+        <property name="updatedAt" type="string"/>
     </transfer>
 
 </transfers>

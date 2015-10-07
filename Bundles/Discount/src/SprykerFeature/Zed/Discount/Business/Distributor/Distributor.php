@@ -7,11 +7,7 @@
 namespace SprykerFeature\Zed\Discount\Business\Distributor;
 
 use Generated\Shared\Discount\DiscountInterface;
-use Generated\Shared\Transfer\DiscountTransfer;
-use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
 
 class Distributor implements DistributorInterface
 {

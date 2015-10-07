@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
+use Generated\Shared\Discount\DiscountInterface;
+use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Distributor\DistributorInterface;
@@ -80,8 +82,7 @@ class Discount
         DiscountConfig $discountSettings,
         CalculatorInterface $calculator,
         DistributorInterface $distributor
-    )
-    {
+    ) {
         $this->queryContainer = $queryContainer;
         $this->decisionRule = $decisionRule;
         $this->discountContainer = $discountContainer;
@@ -129,17 +130,13 @@ class Discount
         $discountsToBeCalculated = [];
         $errors = [];
 
-        foreach ($discounts as $discount) {
-            $discountTransfer = new DiscountTransfer();
-            $discountTransfer->fromArray($discount->toArray(), true);
-            if ($discount->getUsedVoucherCode() !== null) {
-                $discountTransfer->addUsedCode($discount->getUsedVoucherCode());
-            }
+        foreach ($discounts as $discountEntity) {
+            $discountTransfer = $this->hydrateDiscountTransfer($discountEntity);
 
             $result = $this->decisionRule->evaluate(
                 $discountTransfer,
                 $this->discountContainer,
-                $this->getDecisionRulePlugins($discount->getPrimaryKey())
+                $this->getDecisionRulePlugins($discountEntity->getPrimaryKey())
             );
 
             if ($result->isSuccess()) {
@@ -239,6 +236,29 @@ class Discount
         }
 
         return $couponCodes;
+    }
+
+    /**
+     * @param SpyDiscount $discountEntity
+     *
+     * @return DiscountInterface
+     */
+    protected function hydrateDiscountTransfer(SpyDiscount $discountEntity)
+    {
+        $discountTransfer = new DiscountTransfer();
+        $discountTransfer->fromArray($discountEntity->toArray(), true);
+
+        if ($discountEntity->getUsedVoucherCode() !== null) {
+            $discountTransfer->addUsedCode($discountEntity->getUsedVoucherCode());
+        }
+
+        foreach ($discountEntity->getDiscountCollectors() as $discountCollectorEntity) {
+            $discountCollectorTransfer = new DiscountCollectorTransfer();
+            $discountCollectorTransfer->fromArray($discountCollectorEntity->toArray(), false);
+            $discountTransfer->addDiscountCollectors($discountCollectorTransfer);
+        }
+
+        return $discountTransfer;
     }
 
 }

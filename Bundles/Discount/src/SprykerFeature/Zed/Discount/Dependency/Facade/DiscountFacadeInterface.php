@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Dependency\Facade;
 
+use Generated\Shared\Discount\DiscountCollectorInterface;
 use Generated\Shared\Discount\VoucherCreateInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
@@ -163,25 +164,37 @@ interface DiscountFacadeInterface
     public function getCalculatorPluginByName($pluginName);
 
     /**
-     * @param CalculableInterface $container
+     * @param CalculableInterface        $container
+     * @param DiscountCollectorInterface $discountCollectorTransfer
      *
      * @return DiscountableInterface[]
      */
-    public function getDiscountableItems(CalculableInterface $container);
+    public function getDiscountableItems(
+        CalculableInterface $container,
+        DiscountCollectorInterface $discountCollectorTransfer
+    );
+
+    /**
+     * @param CalculableInterface        $container
+     * @param DiscountCollectorInterface $discountCollectorTransfer
+     *
+     * @return DiscountableInterface[]
+     */
+    public function getDiscountableItemExpenses(
+        CalculableInterface $container,
+        DiscountCollectorInterface $discountCollectorTransfer
+    );
 
     /**
      * @param CalculableInterface $container
+     * @param DiscountCollectorInterface $discountCollectorTransfer
      *
      * @return DiscountableInterface[]
      */
-    public function getDiscountableItemExpenses(CalculableInterface $container);
-
-    /**
-     * @param CalculableInterface $container
-     *
-     * @return DiscountableInterface[]
-     */
-    public function getDiscountableOrderExpenses(CalculableInterface $container);
+    public function getDiscountableOrderExpenses(
+        CalculableInterface $container,
+        DiscountCollectorInterface $discountCollectorTransfer
+    );
 
     /**
      * @return array

@@ -7,6 +7,7 @@
 namespace Functional\SprykerFeature\Zed\Discount\Business;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
@@ -23,6 +24,7 @@ use SprykerFeature\Zed\Discount\Communication\Plugin\Calculator\Percentage;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\DiscountConfig;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountCollector;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
 use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
 
@@ -271,7 +273,6 @@ class DiscountFacadeTest extends Test
     {
         $discountTransfer = new DiscountTransfer();
         $discountTransfer->setDisplayName(self::DISCOUNT_DISPLAY_NAME);
-        $discountTransfer->setCollectorPlugin(self::DISCOUNT_COLLECTOR_PLUGIN);
         $discountTransfer->setAmount(self::DISCOUNT_AMOUNT_100);
         $result = $this->discountFacade->createDiscount($discountTransfer);
 
@@ -405,7 +406,9 @@ class DiscountFacadeTest extends Test
         $discount->setAmount($amount);
         $discount->setIsActive($isActive);
         $discount->setCalculatorPlugin($type);
-        $discount->setCollectorPlugin($collectorPlugin);
+        $discountCollectorEntity = new SpyDiscountCollector();
+        $discountCollectorEntity->setCollectorPlugin($collectorPlugin);
+        $discount->addDiscountCollector($discountCollectorEntity);
         $discount->save();
 
         return $discount;
