@@ -87,7 +87,7 @@ class StorageController extends AbstractController
      *
      * @return array
      */
-    public function storageKeyAction(Request $request)
+    public function keyAction(Request $request)
     {
         $key = $request->get('key');
         $value = $this->getDependencyContainer()->createStorageClient()->get($key);

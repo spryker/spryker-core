@@ -66,8 +66,9 @@ class StorageTable extends AbstractTable
         $values = $this->storageClient->getMulti($keys);
 
         foreach($values as $key => $value){
+            $key = str_replace('kv:', '', $key);
             $result[] = [
-                'key' => '<a href="/maintenance/storage/storage-key?key=' . $key . '">' . $key . '</a>',
+                'key' => '<a href="/maintenance/storage/key?key=' . $key . '">' . $key . '</a>',
                 'value' => htmlentities(substr($value, 0, 200)),
             ];
         }
