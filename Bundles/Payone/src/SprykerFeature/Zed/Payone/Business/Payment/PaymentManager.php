@@ -529,8 +529,6 @@ class PaymentManager implements PaymentManagerInterface
      */
     public function postSaveHook(OrderInterface $orderTransfer, CheckoutResponseInterface $checkoutResponse)
     {
-        //$paymentPayone = $orderTransfer->getPayonePayment();
-
         $apiLogsQuery = $this->queryContainer->getLastApiLogsByOrderId($orderTransfer->getIdSalesOrder());
         $apiLog = $apiLogsQuery->findOne();
         $redirectUrl = $apiLog->getRedirectUrl();
