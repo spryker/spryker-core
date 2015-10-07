@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business;
 
+use Generated\Shared\Checkout\CheckoutResponseInterface;
 use Generated\Shared\Payone\PayoneCreditCardInterface;
 use Generated\Shared\Payone\PayonePaymentInterface;
 use Generated\Shared\Payone\PayoneRefundInterface;
@@ -272,11 +273,11 @@ class PayoneFacade extends AbstractFacade
             ->isPaymentCapture($idSalesOrder, $idSalesOrderItem);
     }
 
-    public function postSaveHook($orderTransfer)
+    public function postSaveHook(OrderInterface $orderTransfer, CheckoutResponseInterface $checkoutResponse)
     {
         return $this->getDependencyContainer()
             ->createPaymentManager()
-            ->postSaveHook($orderTransfer);
+            ->postSaveHook($orderTransfer, $checkoutResponse);
     }
 
 }
