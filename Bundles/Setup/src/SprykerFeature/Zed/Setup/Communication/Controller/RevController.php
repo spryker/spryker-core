@@ -7,19 +7,20 @@
 namespace SprykerFeature\Zed\Setup\Communication\Controller;
 
 use SprykerFeature\Shared\Library\Application\Version;
-/*
- * Class Rev
- * @package SprykerFeature\Zed\Setup\Communication\Controller
- */
+
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 
-class RevController extends AbstractController{
+class RevController extends AbstractController
+{
 
+    /**
+     * @return array
+     */
     public function indexAction()
     {
+        $revisionInfo = Version::getRevTxt();
 
-        $content = Version::getRevTxt();
-        echo '<pre>' . $content . '</pre>';
+        return $this->viewResponse(['revisionInfo' => $revisionInfo]);
     }
 
 }
