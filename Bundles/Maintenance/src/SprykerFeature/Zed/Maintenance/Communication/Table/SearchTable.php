@@ -51,7 +51,7 @@ class SearchTable extends AbstractTable
 
         $config->setHeader($headers);
 
-        $config->setUrl('search-table');
+        $config->setUrl('list-ajax');
 
         return $config;
     }
@@ -79,7 +79,7 @@ class SearchTable extends AbstractTable
 
             foreach ($results as $result) {
                 $tableData[] = [
-                    'id' => '<a href="/maintenance/search/search-key?key=' . $result->getId() . '">' . $result->getId() . '</a>',
+                    'id' => '<a href="/maintenance/search/key?key=' . $result->getId() . '">' . $result->getId() . '</a>',
                     'index' => $result->getIndex(),
                     'type' => $result->getType(),
                     'score' => $result->getScore(),

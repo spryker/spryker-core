@@ -32,6 +32,7 @@ class ElasticsearchMarkerWriter implements WriterInterface
     protected $type;
 
     /**
+     * TODO stateful property must be refactored
      * @var array
      */
     protected $metaData = [];
@@ -61,20 +62,27 @@ class ElasticsearchMarkerWriter implements WriterInterface
         }
     }
 
+    /**
+     * TODO Needs refactoring
+     */
     public function __destruct()
     {
-        $mapping = new Mapping($this->index->getType($this->type));
-        $mapping->setMeta($this->metaData)->send();
+        if (false === empty($this->metaData)) {
+            $mapping = new Mapping($this->index->getType($this->type));
+            $mapping->setMeta($this->metaData)->send();
+        }
     }
 
     /**
+     * Deletes all timestamps. Parameter $dataSet is ignored.
+     * TODO Needs refactoring
      * @param array $dataSet
-     *
      * @throws \Exception
      */
     public function delete(array $dataSet)
     {
-        throw new \Exception('Not implemented');
+        $mapping = new Mapping($this->index->getType($this->type));
+        $mapping->setMeta(['' => ''])->send(); // Empty mapping causes ClassCastException[java.util.ArrayList cannot be cast to java.util.Map]
     }
 
     /**

@@ -41,7 +41,7 @@ class StorageTable extends AbstractTable
         ];
 
         $config->setHeader($headers);
-        $config->setUrl('table');
+        $config->setUrl('list-ajax');
 
         return $config;
     }
@@ -58,20 +58,17 @@ class StorageTable extends AbstractTable
         sort($keys);
 
         $result = [];
-        foreach ($keys as $key) {
-            $key = str_replace('kv:', '', $key);
-            $value = $this->storageClient->get($key);
 
-            $value = print_r($value, true);
-            $value = htmlentities($value);
+        foreach ($keys as $i => $key) {
+            $keys[$i] = str_replace('kv:', '', $key);
+        }
 
-            if (is_string($value) && mb_strlen($value) > 100) {
-                $value = mb_substr($value, 0, 255);
-            }
+        $values = $this->storageClient->getMulti($keys);
 
+        foreach($values as $key => $value){
             $result[] = [
                 'key' => '<a href="/maintenance/storage/storage-key?key=' . $key . '">' . $key . '</a>',
-                'value' => $value,
+                'value' => htmlentities(substr($value, 0, 200)),
             ];
         }
 

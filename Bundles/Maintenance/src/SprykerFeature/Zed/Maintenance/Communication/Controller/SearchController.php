@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\Maintenance\Communication\Controller;
 
+use Elastica\Exception\ResponseException;
+use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Maintenance\Business\MaintenanceFacade;
 use SprykerFeature\Zed\Maintenance\Communication\MaintenanceDependencyContainer;
@@ -20,20 +22,50 @@ use Symfony\Component\HttpFoundation\Request;
 class SearchController extends AbstractController
 {
 
+    public function indexAction()
+    {
+        $client = $this->getDependencyContainer()->createSearchClient()->getIndexClient();
+
+        try {
+            $totalCount = $client->count();
+            $mapping = $client->getMapping();
+            $metaData = [];
+
+            if (isset($mapping['page']) && isset($mapping['page']['_meta'])) {
+                $metaData = $mapping['page']['_meta'];
+            }
+        } catch (ResponseException $e) {
+            $totalCount = 0;
+            $metaData = [];
+        }
+
+        return $this->viewResponse(
+            [
+                'totalCount' => $totalCount,
+                'metaData' => $metaData
+            ]
+        );
+    }
+
+    public function dropTimestampsAction()
+    {
+        Locator::getInstance()->collector()->facade()->deleteSearchTimestamps(); // TODO Wrong use of facade
+        return $this->redirectResponse('/maintenance/search');
+    }
+
     /**
      * @return array
      */
-    public function indexAction()
+    public function listAction()
     {
         $table = $this->getDependencyContainer()->createSearchTable();
-
         return $this->viewResponse(['searchTable' => $table->render()]);
     }
 
     /**
      * @return JsonResponse
      */
-    public function searchTableAction()
+    public function listAjaxAction()
     {
         $table = $this->getDependencyContainer()->createSearchTable();
 
@@ -58,7 +90,7 @@ class SearchController extends AbstractController
      *
      * @return array
      */
-    public function searchKeyAction(Request $request)
+    public function keyAction(Request $request)
     {
         $key = $request->get('key');
 
