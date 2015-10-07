@@ -30,6 +30,7 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainer;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
+use SprykerFeature\Zed\SequenceNumber\Business\SequenceNumberFacade;
 
 /**
  * @group Zed
@@ -56,9 +57,12 @@ class SalesFacadeTest extends Test
         $omsFacade = new OmsFacade(new Factory('Oms'), $locator);
         $omsFacade->setOwnQueryContainer(new OmsQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Oms'), $locator));
 
+        $sequenceNumberFacade = new SequenceNumberFacade(new Factory('SequenceNumber'), $locator);
+
         $container = new Container();
         $container[SalesDependencyProvider::FACADE_COUNTRY] = $countryFacade;
         $container[SalesDependencyProvider::FACADE_OMS] = $omsFacade;
+        $container[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = $sequenceNumberFacade;
 
         $this->salesFacade = new SalesFacade(new Factory('Sales'), $locator);
         $this->salesFacade->setOwnQueryContainer(new SalesQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('sales'), $locator));
