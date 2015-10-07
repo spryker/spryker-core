@@ -93,7 +93,7 @@ interface PaymentManagerInterface
      * @param OrderInterface $orderTransfer
      * @param CheckoutResponseInterface $checkoutResponse
      *
-     * @return OrderInterface
+     * @return CheckoutResponseInterface
      */
     public function postSaveHook(OrderInterface $orderTransfer, CheckoutResponseInterface $checkoutResponse);
 
