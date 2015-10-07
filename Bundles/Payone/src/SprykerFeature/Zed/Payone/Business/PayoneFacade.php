@@ -272,4 +272,11 @@ class PayoneFacade extends AbstractFacade
             ->isPaymentCapture($idSalesOrder, $idSalesOrderItem);
     }
 
+    public function postSaveHook($orderTransfer)
+    {
+        return $this->getDependencyContainer()
+            ->createPaymentManager()
+            ->postSaveHook($orderTransfer);
+    }
+
 }

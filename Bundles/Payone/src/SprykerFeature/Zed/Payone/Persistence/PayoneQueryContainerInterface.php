@@ -84,6 +84,13 @@ interface PayoneQueryContainerInterface
     public function getApiLogsByOrderIds($orders);
 
     /**
+     * @param int $idSalesOrder
+     *
+     * @return SpyPaymentPayoneApiLogQuery
+     */
+    public function getApiLogsByOrderId($idSalesOrder);
+
+    /**
      * @param ObjectCollection $orders
      *
      * @return SpyPaymentPayoneTransactionStatusLogQuery

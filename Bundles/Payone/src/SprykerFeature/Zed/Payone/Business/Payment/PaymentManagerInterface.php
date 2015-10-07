@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Payment;
 
+use Generated\Shared\Checkout\CheckoutResponseInterface;
+use Generated\Shared\Payone\OrderInterface;
 use Generated\Shared\Payone\PayoneCreditCardInterface;
 use Generated\Shared\Payone\PayoneRefundInterface;
 use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
@@ -83,8 +85,16 @@ interface PaymentManagerInterface
     /**
      * @param $orderTransfer
      *
-     * @return mixed
+     * @return bool
      */
     public function isRefundPossible($orderTransfer);
+
+    /**
+     * @param OrderInterface $orderTransfer
+     * @param CheckoutResponseInterface $checkoutResponse
+     *
+     * @return OrderInterface
+     */
+    public function postSaveHook(OrderInterface $orderTransfer, CheckoutResponseInterface $checkoutResponse);
 
 }
