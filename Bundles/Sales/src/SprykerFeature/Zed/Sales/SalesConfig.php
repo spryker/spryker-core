@@ -132,27 +132,13 @@ class SalesConfig extends AbstractBundleConfig
 
         $sequenceNumberSettingsTransfer->setName(self::NAME_ORDER_REFERENCE);
 
-        $storeName = Store::getInstance()->getStoreName();
-        $prefix = $storeName . $this->getUniqueIdentifierSeparator() . $this->getEnvironmentPrefix();
+        $sequenceNumberPrefixParts = [];
+        $sequenceNumberPrefixParts[] = Store::getInstance()->getStoreName();
+        $sequenceNumberPrefixParts[] = $this->get(SequenceNumberConstants::ENVIRONMENT_PREFIX);
+        $prefix = implode($this->getUniqueIdentifierSeparator(), $sequenceNumberPrefixParts);
         $sequenceNumberSettingsTransfer->setPrefix($prefix);
 
         return $sequenceNumberSettingsTransfer;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getEnvironmentPrefix()
-    {
-        return $this->get(SequenceNumberConstants::ENVIRONMENT_PREFIX);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getTimestamp()
-    {
-        return (string) time();
     }
 
 }
