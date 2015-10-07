@@ -49,6 +49,7 @@ class CustomerTable extends AbstractTable
             SpyCustomerTableMap::COL_EMAIL => 'Email',
             SpyCustomerTableMap::COL_LAST_NAME => 'Last Name',
             SpyCustomerTableMap::COL_FIRST_NAME => 'First Name',
+            SpyCustomerTableMap::COL_PHONE => 'Phone Number',
             self::COL_ZIP_CODE => 'Zip Code',
             self::COL_CITY => 'City',
             self::COL_FK_COUNTRY => 'Country',
@@ -92,26 +93,27 @@ class CustomerTable extends AbstractTable
             ->withColumn(SpyCustomerAddressTableMap::COL_FK_COUNTRY, self::COL_FK_COUNTRY)
         ;
 
-        $lines = $this->runQuery($query, $config);
-        if (!empty($lines)) {
-
-            foreach ($lines as $key => $value) {
-
-                $country = $this->customerQuery->useAddressQuery()
-                    ->useCountryQuery()
-                    ->findOneByIdCountry($lines[$key][self::COL_FK_COUNTRY])
-                ;
-
-                $lines[$key][self::COL_FK_COUNTRY] = $country ? $country->getName() : '';
-                $lines[$key][SpyCustomerTableMap::COL_CREATED_AT] = gmdate(
-                    self::FORMAT,
-                    strtotime($value[SpyCustomerTableMap::COL_CREATED_AT])
-                );
-                $lines[$key][self::ACTIONS] = $this->buildLinks($value);
-            }
+        $customersCollectionArray = $this->runQuery($query, $config);
+        if (null === $customersCollectionArray) {
+            return null;
         }
 
-        return $lines;
+        foreach ($customersCollectionArray as $key => $value) {
+
+            $country = $this->customerQuery->useAddressQuery()
+                ->useCountryQuery()
+                ->findOneByIdCountry($customersCollectionArray[$key][self::COL_FK_COUNTRY])
+            ;
+
+            $customersCollectionArray[$key][self::COL_FK_COUNTRY] = $country ? $country->getName() : '';
+            $customersCollectionArray[$key][SpyCustomerTableMap::COL_CREATED_AT] = gmdate(
+                self::FORMAT,
+                strtotime($value[SpyCustomerTableMap::COL_CREATED_AT])
+            );
+            $customersCollectionArray[$key][self::ACTIONS] = $this->buildLinks($value);
+        }
+
+        return $customersCollectionArray;
     }
 
     /**
