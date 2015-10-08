@@ -13,6 +13,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 use Symfony\Component\Process\Process;
 
+const RETURN_CODE_ERROR = 1;
+
 class MigrateConsole extends Console
 {
 
@@ -42,7 +44,7 @@ class MigrateConsole extends Console
 
         $process = new Process($command, APPLICATION_ROOT_DIR);
 
-        $process->run(function ($type, $buffer) {
+        return $process->run(function ($type, $buffer) {
             echo $buffer;
         });
     }

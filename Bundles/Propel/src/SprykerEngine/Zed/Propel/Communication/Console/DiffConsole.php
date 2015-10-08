@@ -44,7 +44,7 @@ class DiffConsole extends Console
         $process = new Process($command, APPLICATION_ROOT_DIR);
         $process->setTimeout(300);
 
-        $process->run(function ($type, $buffer) {
+        return $process->run(function ($type, $buffer) {
             echo $buffer;
         });
     }

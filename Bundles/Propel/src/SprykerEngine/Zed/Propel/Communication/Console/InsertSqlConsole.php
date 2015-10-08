@@ -37,7 +37,7 @@ class InsertSqlConsole extends Console
 
         $process = new Process($command, APPLICATION_ROOT_DIR);
 
-        $process->run(function ($type, $buffer) {
+        return $process->run(function ($type, $buffer) {
             echo $buffer;
         });
     }
