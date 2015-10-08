@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Checkout\Dependency\Plugin;
 
 use Generated\Shared\Checkout\OrderInterface;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use Generated\Shared\Transfer\OrderTransfer;
 
 interface CheckoutPostSaveHookInterface
 {
