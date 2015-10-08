@@ -53,6 +53,7 @@ class Search
                 $metaData = $mapping['page']['_meta'];
             }
         } catch (ResponseException $e) {
+            // legal catch, if no mapping found (fresh installation etc) we still want to show empty meta data
         }
 
         return $metaData;

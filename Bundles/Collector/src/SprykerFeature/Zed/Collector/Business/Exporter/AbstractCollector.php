@@ -19,6 +19,8 @@ use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 abstract class AbstractCollector implements ExporterInterface
 {
 
+    const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * @var CollectorPluginInterface[]
      */
@@ -124,6 +126,7 @@ abstract class AbstractCollector implements ExporterInterface
      * @param BatchResultInterface $batchResult
      * @param $type
      * @param string $timestamp
+     *
      * @return BatchResultInterface
      */
     protected function finishExport(BatchResultInterface $batchResult, $type, $timestamp)
@@ -148,7 +151,8 @@ abstract class AbstractCollector implements ExporterInterface
      */
     protected function createNewTimestamp()
     {
-        $timestamp = (new \DateTime())->format('Y-m-d H:i:s');
+        $timestamp = (new \DateTime())->format(self::DATE_TIME_FORMAT);
+
         return $timestamp;
     }
 
