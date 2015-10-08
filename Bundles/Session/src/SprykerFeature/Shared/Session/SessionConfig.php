@@ -17,6 +17,7 @@ interface SessionConfig extends ConfigInterface
     const SESSION_HANDLER_FILE = 'file';
 
     const SESSION_LIFETIME_30_DAYS = '2592000';
+    const SESSION_LIFETIME_1_YEAR = '31536000';
     const SESSION_LIFETIME_1_HOUR = '3600';
 
 }
