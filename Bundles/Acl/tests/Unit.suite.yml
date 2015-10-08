@@ -8,4 +8,4 @@ class_name: UnitTester
 modules:
     enabled:
         - Asserts
-        - \Module\Unit
+        - \Acl\Module\Unit

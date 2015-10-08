@@ -1,6 +1,6 @@
 <?php
 
-namespace Module;
+namespace Acl\Module;
 
 use Codeception\TestCase;
 use Codeception\Module;
