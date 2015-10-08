@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Payment;
 
+use Generated\Shared\Checkout\CheckoutResponseInterface;
 use Generated\Shared\Payone\PayoneCreditCardInterface;
 use Generated\Shared\Payone\PayoneRefundInterface;
 use Generated\Shared\Payone\PayoneStandardParameterInterface;
@@ -31,7 +32,6 @@ use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseConta
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Key\HashGenerator;
-use SprykerFeature\Zed\Payone\Business\Mode\ModeDetector;
 use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
@@ -519,6 +519,26 @@ class PaymentManager implements PaymentManagerInterface
         $paymentDetailTransfer = $paymentTransfer->getPaymentDetail();
 
         return $paymentDetailTransfer->getBic() && $paymentDetailTransfer->getIban();
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
+     * @param CheckoutResponseInterface $checkoutResponse
+     *
+     * @return CheckoutResponseInterface
+     */
+    public function postSaveHook(OrderInterface $orderTransfer, CheckoutResponseInterface $checkoutResponse)
+    {
+        $apiLogsQuery = $this->queryContainer->getLastApiLogsByOrderId($orderTransfer->getIdSalesOrder());
+        $apiLog = $apiLogsQuery->findOne();
+        $redirectUrl = $apiLog->getRedirectUrl();
+
+        if ($redirectUrl !== null) {
+            $checkoutResponse->setIsExternalRedirect(true);
+            $checkoutResponse->setRedirectUrl($redirectUrl);
+        }
+
+        return $checkoutResponse;
     }
 
 }

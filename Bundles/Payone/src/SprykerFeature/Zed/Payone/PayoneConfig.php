@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
 use SprykerFeature\Shared\Payone\PayoneConfigConstants;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerEngine\Shared\Kernel\Store;
+use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 
 class PayoneConfig extends AbstractBundleConfig
@@ -55,9 +56,9 @@ class PayoneConfig extends AbstractBundleConfig
         $standardParameter->setCurrency(Store::getInstance()->getCurrencyIsoCode());
         $standardParameter->setLanguage(Store::getInstance()->getCurrentLanguage());
 
-        $standardParameter->setRedirectSuccessUrl($settings[PayoneConfigConstants::PAYONE_REDIRECT_SUCCESS_URL]);
-        $standardParameter->setRedirectBackUrl($settings[PayoneConfigConstants::PAYONE_REDIRECT_BACK_URL]);
-        $standardParameter->setRedirectErrorUrl($settings[PayoneConfigConstants::PAYONE_REDIRECT_ERROR_URL]);
+        $standardParameter->setRedirectSuccessUrl($this->getYvesBaseUrl() . $settings[PayoneConfigConstants::PAYONE_REDIRECT_SUCCESS_URL]);
+        $standardParameter->setRedirectBackUrl($this->getYvesBaseUrl() . $settings[PayoneConfigConstants::PAYONE_REDIRECT_BACK_URL]);
+        $standardParameter->setRedirectErrorUrl($this->getYvesBaseUrl() .$settings[PayoneConfigConstants::PAYONE_REDIRECT_ERROR_URL]);
 
         return $standardParameter;
     }
@@ -71,6 +72,13 @@ class PayoneConfig extends AbstractBundleConfig
     public function generatePayoneReference(PayonePaymentInterface $paymentTransfer, SpySalesOrder $orderEntity)
     {
         return $orderEntity->getOrderReference();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getYvesBaseUrl() {
+        return $this->get(SystemConfig::HOST_YVES);
     }
 
 }

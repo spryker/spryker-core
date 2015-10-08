@@ -90,7 +90,7 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     {
         $redirectContainer = new RedirectContainer();
 
-        $params = 'orderReference=' . $orderReference;
+        $params = '?orderReference=' . $orderReference;
 
         $redirectContainer->setSuccessUrl($this->getStandardParameter()->getRedirectSuccessUrl() . $params);
         $redirectContainer->setBackUrl($this->getStandardParameter()->getRedirectBackUrl() . $params);

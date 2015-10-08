@@ -191,7 +191,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @return OrderTransfer
+     * @return OrderInterface
      */
     protected function getOrderTransfer()
     {
