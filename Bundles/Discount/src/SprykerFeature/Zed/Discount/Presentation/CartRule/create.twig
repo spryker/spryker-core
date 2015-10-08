@@ -24,13 +24,15 @@
                 <div class="row collection-form" id="collector-container">
                     {% for rule in form.collector_plugins %}
                         <div class="col-md-6">
-                            {{ form_row(rule) }}
+                            <div class="well well-sm">
+                                {{ form_row(rule) }}
+                            </div>
                         </div>
                     {% endfor %}
                 </div>
                 <div class="clearfix"></div>
                 <div class="load-cart-collector-plugins">
-                    <a href="#" id="add-collector-container"><i class="hidden fa fa-spinner fa-spin"></i> {{ 'Add Collector Plugin' | trans }}</a>
+                    <a href="#" id="add-collector-container" class="btn btn-sm btn-primary btn-outline"><i class="hidden fa fa-spinner fa-spin"></i> {{ 'Add Collector Plugin' | trans }}</a>
                 </div>
 
                 {{ form_row(form.valid_from) }}
@@ -41,13 +43,15 @@
                 <div class="row collection-form" id="rules-container">
                 {% for rule in form.decision_rules %}
                     <div class="col-md-6">
-                        {{ form_row(rule) }}
+                        <div class="well well-sm">
+                            {{ form_row(rule) }}
+                        </div>
                     </div>
                 {% endfor %}
                 </div>
                 <div class="clearfix"></div>
                 <div class="load-cart-rules">
-                    <a href="#" id="add-rules-container"><i class="hidden fa fa-spinner fa-spin"></i> {{ 'Add New Rule' | trans }}</a>
+                    <a href="#" id="add-rules-container" class="btn btn-sm btn-primary btn-outline"><i class="hidden fa fa-spinner fa-spin"></i> {{ 'Add New Rule' | trans }}</a>
                 </div>
 
                 <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}"/>

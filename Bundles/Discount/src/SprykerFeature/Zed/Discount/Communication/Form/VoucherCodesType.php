@@ -27,7 +27,7 @@ class VoucherCodesType extends AbstractRuleType
     const DATE_PERIOD_YEARS = 3;
 
     const FIELD_CALCULATOR_PLUGIN = 'calculator_plugin';
-    const FIELD_COLLECTOR_PLUGIN = 'collector_plugin';
+    const FIELD_COLLECTOR_PLUGINS = 'collector_plugins';
     const FIELD_DECISION_RULES = 'decision_rules';
 
     /**
@@ -112,9 +112,11 @@ class VoucherCodesType extends AbstractRuleType
                 'required' => false,
                 'placeholder' => 'Default',
             ])
-            ->add(self::FIELD_COLLECTOR_PLUGIN, 'choice', [
-                'label' => 'Collector Plugin',
-                'choices' => $this->getAvailableCollectorPlugins(),
+            ->add(self::FIELD_COLLECTOR_PLUGINS, 'collection', [
+                'type' => new CollectorPluginType($this->availableCollectorPlugins),
+                'label' => null,
+                'allow_add' => true,
+                'allow_extra_fields' => true,
             ])
             ->add(self::FIELD_DECISION_RULES, 'collection', [
                 'type' => new DecisionRuleType($this->availableDecisionRulePlugins),
