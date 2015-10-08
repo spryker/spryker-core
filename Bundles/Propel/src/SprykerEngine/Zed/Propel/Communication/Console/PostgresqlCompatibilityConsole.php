@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -31,11 +32,12 @@ class PostgresqlCompatibilityConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if(Config::get(SystemConfig::ZED_DB_ENGINE) == 'pgsql') {
+        if (Config::get(SystemConfig::ZED_DB_ENGINE) === 'pgsql') {
             $this->info('Adjust propel config for PostgreSQL and missing functions (group_concat)');
             $this->getFacade()->adjustPropelSchemaFilesForPostgresql();
             $this->getFacade()->adjustPostgresqlFunctions();

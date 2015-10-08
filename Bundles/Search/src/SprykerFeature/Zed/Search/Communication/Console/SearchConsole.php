@@ -19,6 +19,8 @@ class SearchConsole extends Console
 
     const COMMAND_NAME = 'setup:search';
     const DESCRIPTION = 'This command will run installer for search';
+    const EXIT_CODE_ERROR = 1;
+    const EXIT_CODE_SUCCESS = 0;
 
     protected function configure()
     {
@@ -36,7 +38,15 @@ class SearchConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getFacade()->install($this->getMessenger());
+        try {
+            $this->getFacade()->install($this->getMessenger());
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
+
+            return self::EXIT_CODE_ERROR;
+        }
+
+        return self::EXIT_CODE_SUCCESS;
     }
 
 }

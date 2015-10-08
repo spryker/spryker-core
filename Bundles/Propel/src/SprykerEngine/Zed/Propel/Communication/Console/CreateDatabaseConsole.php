@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -42,6 +43,7 @@ class CreateDatabaseConsole extends Console
 
     /**
      * @throws \Exception
+     *
      * @todo no sudo, vagrant user is missing for pgsql
      */
     private function createPostgresDatabaseIfNotExists()
@@ -60,6 +62,7 @@ class CreateDatabaseConsole extends Console
 
     /**
      * @throws \Exception
+     *
      * @return bool
      *
      * @todo no sudo, vagrant user is missing for pgsql

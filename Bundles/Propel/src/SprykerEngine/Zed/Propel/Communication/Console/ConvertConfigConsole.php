@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -27,6 +28,7 @@ class ConvertConfigConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
      * @return int|null|void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
@@ -34,10 +36,10 @@ class ConvertConfigConsole extends Console
         $this->info('Write propel config');
 
         $config = [
-            'propel' => Config::get(SystemConfig::PROPEL)
+            'propel' => Config::get(SystemConfig::PROPEL),
         ];
 
-        $dsn =  Config::get(SystemConfig::ZED_DB_ENGINE).':host=' . Config::get(SystemConfig::ZED_DB_HOST)
+        $dsn = Config::get(SystemConfig::ZED_DB_ENGINE) . ':host=' . Config::get(SystemConfig::ZED_DB_HOST)
             . ';dbname=' . Config::get(SystemConfig::ZED_DB_DATABASE)
         ;
 
