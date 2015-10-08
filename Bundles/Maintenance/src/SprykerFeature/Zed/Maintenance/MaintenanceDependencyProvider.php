@@ -13,8 +13,8 @@ class MaintenanceDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const STORAGE_CLIENT = 'STORAGE_CLIENT';
-
     const SEARCH_CLIENT = 'SEARCH_CLIENT';
+    const FACADE_COLLECTOR = 'collector facade';
 
     /**
      * @param Container $container
@@ -23,7 +23,6 @@ class MaintenanceDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-
         $container[self::STORAGE_CLIENT] = function (Container $container) {
             return $container->getLocator()->storage()->client();
         };
@@ -32,8 +31,11 @@ class MaintenanceDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->search()->client();
         };
 
+        $container[self::FACADE_COLLECTOR] = function (Container $container) {
+            return $container->getLocator()->collector()->facade();
+        };
+
         return $container;
     }
-
 
 }

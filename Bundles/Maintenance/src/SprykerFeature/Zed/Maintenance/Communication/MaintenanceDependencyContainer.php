@@ -10,6 +10,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\MaintenanceCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Client\Search\Service\SearchClient;
 use SprykerFeature\Client\Storage\Service\StorageClient;
+use SprykerFeature\Zed\Collector\Business\CollectorFacade;
 use SprykerFeature\Zed\Maintenance\Communication\Table\StorageTable;
 use SprykerFeature\Zed\Maintenance\MaintenanceConfig;
 use SprykerFeature\Zed\Maintenance\MaintenanceDependencyProvider;
@@ -55,6 +56,14 @@ class MaintenanceDependencyContainer extends AbstractCommunicationDependencyCont
     public function createStorageClient()
     {
         return $this->getProvidedDependency(MaintenanceDependencyProvider::STORAGE_CLIENT);
+    }
+
+    /**
+     * @return CollectorFacade
+     */
+    public function createCollectorFacade()
+    {
+        return $this->getProvidedDependency(MaintenanceDependencyProvider::FACADE_COLLECTOR);
     }
 
 }

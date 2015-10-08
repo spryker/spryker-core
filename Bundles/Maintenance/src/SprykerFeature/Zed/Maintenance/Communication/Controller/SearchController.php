@@ -22,6 +22,9 @@ use Symfony\Component\HttpFoundation\Request;
 class SearchController extends AbstractController
 {
 
+    /**
+     * @return array
+     */
     public function indexAction()
     {
         $client = $this->getDependencyContainer()->createSearchClient()->getIndexClient();
@@ -42,14 +45,18 @@ class SearchController extends AbstractController
         return $this->viewResponse(
             [
                 'totalCount' => $totalCount,
-                'metaData' => $metaData
+                'metaData' => $metaData,
             ]
         );
     }
 
+    /**
+     * @return RedirectResponse
+     */
     public function dropTimestampsAction()
     {
-        Locator::getInstance()->collector()->facade()->deleteSearchTimestamps(); // TODO Wrong use of facade
+        $this->getDependencyContainer()->createCollectorFacade()->deleteSearchTimestamps();
+
         return $this->redirectResponse('/maintenance/search');
     }
 
@@ -59,6 +66,7 @@ class SearchController extends AbstractController
     public function listAction()
     {
         $table = $this->getDependencyContainer()->createSearchTable();
+
         return $this->viewResponse(['searchTable' => $table->render()]);
     }
 

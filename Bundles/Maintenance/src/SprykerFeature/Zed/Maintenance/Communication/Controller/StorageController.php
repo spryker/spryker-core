@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Maintenance\Communication\Controller;
 
-use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Client\Storage\Service\StorageClient;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Maintenance\Business\MaintenanceFacade;
 use SprykerFeature\Zed\Maintenance\Communication\MaintenanceDependencyContainer;
@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class StorageController extends AbstractController
 {
+
     const REFERENCE_KEY = 'reference_key';
 
     /**
@@ -33,10 +34,11 @@ class StorageController extends AbstractController
         $totalCount = $client->getCountItems();
 
         $metaData = $this->getTimestamps($client);
+
         return $this->viewResponse(
             [
                 'totalCount' => $totalCount,
-                'metaData' => $metaData
+                'metaData' => $metaData,
             ]
         );
     }
@@ -63,12 +65,12 @@ class StorageController extends AbstractController
         );
     }
 
-
     public function dropTimestampsAction()
     {
         $client = $this->getDependencyContainer()->createStorageClient();
         $metaData = $this->getTimestamps($client);
-        Locator::getInstance()->collector()->facade()->deleteStorageTimestamps(array_keys($metaData)); // TODO Wrong use of facade
+        $this->getDependencyContainer()->createCollectorFacade()->deleteStorageTimestamps(array_keys($metaData));
+
         return $this->redirectResponse('/maintenance/storage');
     }
 
@@ -77,8 +79,9 @@ class StorageController extends AbstractController
      */
     public function deleteAllAction()
     {
-        $numberOfDeletedEntried = $this->getDependencyContainer()->createStorageClient()->deleteAll();
-        $this->addInfoMessage('Removed '.$numberOfDeletedEntried.' entries from storage.');
+        $numberOfDeletedEntries = $this->getDependencyContainer()->createStorageClient()->deleteAll();
+        $this->addInfoMessage('Removed ' . $numberOfDeletedEntries . ' entries from storage.');
+
         return $this->redirectResponse('/maintenance/storage');
     }
 
@@ -117,10 +120,12 @@ class StorageController extends AbstractController
 
     /**
      * TODO This should be hidden behind CollectorFacade
+     *
      * @param $client
+     *
      * @return array
      */
-    protected function getTimestamps($client)
+    protected function getTimestamps(StorageClient $client)
     {
         $metaData = [];
 
@@ -132,6 +137,7 @@ class StorageController extends AbstractController
                 $metaData[$key] = $client->get($key);
             }
         }
+
         return $metaData;
     }
 
