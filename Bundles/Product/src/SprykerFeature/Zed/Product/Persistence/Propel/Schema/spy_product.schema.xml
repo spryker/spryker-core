@@ -12,7 +12,9 @@
         <unique>
             <unique-column name="sku"/>
         </unique>
-    <id-method-parameter value="spy_abstract_product_pk_seq"/></table>
+        <behavior name="timestampable"/>
+        <id-method-parameter value="spy_abstract_product_pk_seq"/>
+    </table>
 
     <table name="spy_abstract_product_localized_attributes" idMethod="native" allowPkInsert="true" phpName="SpyLocalizedAbstractProductAttributes" identifierQuoting="true">
         <column name="id_abstract_attributes" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
@@ -30,7 +32,9 @@
             <unique-column name="fk_abstract_product"/>
             <unique-column name="fk_locale"/>
         </unique>
-    <id-method-parameter value="spy_abstract_product_localized_attributes_pk_seq"/></table>
+        <behavior name="timestampable"/>
+        <id-method-parameter value="spy_abstract_product_localized_attributes_pk_seq"/>
+    </table>
 
     <table name="spy_product" idMethod="native" allowPkInsert="true" phpName="SpyProduct" identifierQuoting="true">
         <column name="id_product" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
@@ -44,7 +48,9 @@
         <foreign-key foreignTable="spy_abstract_product">
             <reference local="fk_abstract_product" foreign="id_abstract_product"/>
         </foreign-key>
-    <id-method-parameter value="spy_product_pk_seq"/></table>
+        <behavior name="timestampable"/>
+        <id-method-parameter value="spy_product_pk_seq"/>
+    </table>
 
     <table name="spy_product_localized_attributes" idMethod="native" allowPkInsert="true" phpName="SpyLocalizedProductAttributes" identifierQuoting="true">
         <column name="id_attributes" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
@@ -63,7 +69,9 @@
             <unique-column name="fk_product"/>
             <unique-column name="fk_locale"/>
         </unique>
-    <id-method-parameter value="spy_product_localized_attributes_pk_seq"/></table>
+        <behavior name="timestampable"/>
+        <id-method-parameter value="spy_product_localized_attributes_pk_seq"/>
+    </table>
 
     <table name="spy_product_to_bundle" identifierQuoting="true">
         <column name="fk_product" type="INTEGER" required="true" primaryKey="true"/>
@@ -84,7 +92,9 @@
         <foreign-key foreignTable="spy_attribute_type">
             <reference local="fk_type" foreign="id_type"/>
         </foreign-key>
-    <id-method-parameter value="spy_attributes_metadata_pk_seq"/></table>
+        <id-method-parameter value="spy_attributes_metadata_pk_seq"/>
+    </table>
+
     <table name="spy_attribute_type" idMethod="native" allowPkInsert="true" phpName="SpyProductAttributeType" identifierQuoting="true">
         <column name="id_type" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" type="VARCHAR" required="true"/>
@@ -93,7 +103,8 @@
         <foreign-key foreignTable="spy_attribute_type">
             <reference local="fk_parent_type" foreign="id_type"/>
         </foreign-key>
-    <id-method-parameter value="spy_attribute_type_pk_seq"/></table>
+        <id-method-parameter value="spy_attribute_type_pk_seq"/>
+    </table>
 
     <table name="spy_attribute_type_value" idMethod="native" allowPkInsert="true" phpName="SpyTypeValue" identifierQuoting="true">
         <column name="id" autoIncrement="true" primaryKey="true" type="INTEGER"/>
@@ -109,5 +120,6 @@
             <unique-column name="fk_type"/>
             <unique-column name="key"/>
         </unique>
-    <id-method-parameter value="spy_attribute_type_value_pk_seq"/></table>
+        <id-method-parameter value="spy_attribute_type_value_pk_seq"/>
+    </table>
 </database>
