@@ -20,6 +20,8 @@ class AddressTable extends AbstractTable
     const DEFAULT_BILLING_ADDRESS = 'default_billing_address';
     const DEFAULT_SHIPPING_ADDRESS = 'default_shipping_address';
 
+    const COL_COMPANY = 'Company';
+
     /**
      * @var SpyCustomerAddressQuery
      */
@@ -47,6 +49,8 @@ class AddressTable extends AbstractTable
 
     /**
      * @param TableConfiguration $config
+     *
+     * @return TableConfiguration
      */
     protected function configure(TableConfiguration $config)
     {
@@ -57,10 +61,10 @@ class AddressTable extends AbstractTable
             SpyCustomerAddressTableMap::COL_ADDRESS1 => 'Address ',
             SpyCustomerAddressTableMap::COL_ADDRESS2 => 'Address (2nd line)',
             SpyCustomerAddressTableMap::COL_ADDRESS3 => 'Address (3rd line)',
-            SpyCustomerAddressTableMap::COL_COMPANY => SpyCustomerAddressTableMap::COL_COMPANY,
+            SpyCustomerAddressTableMap::COL_COMPANY => 'Company',
             SpyCustomerAddressTableMap::COL_ZIP_CODE => 'Zip Code',
             SpyCustomerAddressTableMap::COL_CITY => 'City',
-            $this->buildAlias(SpyCustomerAddressTableMap::COL_FK_COUNTRY) => 'Country',
+            self::COL_COMPANY => 'Country',
             self::ACTIONS => 'Actions',
         ]);
 
@@ -96,7 +100,7 @@ class AddressTable extends AbstractTable
     {
         $query = $this->addressQuery->filterByFkCustomer($this->idCustomer)
             ->leftJoinCountry('country')
-            ->withColumn('country.name', $this->buildAlias(SpyCustomerAddressTableMap::COL_FK_COUNTRY))
+            ->withColumn('country.name', self::COL_COMPANY)
         ;
         $lines = $this->runQuery($query, $config);
 
