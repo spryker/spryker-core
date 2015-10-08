@@ -40,8 +40,14 @@ function SprykerAjax() {
             data: options
         })
         .done(function(response){
-            var call = new SprykerAjaxCallbacks();
-            return call[callbackFunction](response, parameters);
+            if (typeof callbackFunction === 'function') {
+                return callbackFunction(response, parameters);
+            } else if (typeof callbackFunction === 'string') {
+                var call = new SprykerAjaxCallbacks();
+                return call[callbackFunction](response, parameters);
+            } else {
+                return response;
+            }
         });
     };
 

@@ -20,7 +20,7 @@ class CartRuleType extends AbstractRuleType
     const FIELD_IS_PRIVILEGED = 'is_privileged';
     const FIELD_IS_ACTIVE = 'is_active';
     const FIELD_CALCULATOR_PLUGIN = 'calculator_plugin';
-    const FIELD_COLLECTOR_PLUGIN = 'collector_plugin';
+    const FIELD_COLLECTOR_PLUGINS = 'collector_plugins';
     const FIELD_DECISION_RULES = 'decision_rules';
 
     const DATE_NOW = 'now';
@@ -40,13 +40,10 @@ class CartRuleType extends AbstractRuleType
                 ],
             ])
             ->add(self::FIELD_DESCRIPTION, 'textarea')
-            ->add(self::FIELD_AMOUNT, 'number', [
+            ->add(self::FIELD_AMOUNT, 'text', [
                 'label' => 'Amount',
                 'constraints' => [
                     new NotBlank(),
-                    new GreaterThan([
-                        'value' => 0,
-                    ])
                 ]
             ])
             ->add(self::FIELD_TYPE, 'choice', [
@@ -60,17 +57,22 @@ class CartRuleType extends AbstractRuleType
                 'constraints' => [
                     new Required(),
                 ],
+                'attr' => [
+                    'class' => 'form-inline option-chain'
+                ]
             ])
             ->add(self::FIELD_CALCULATOR_PLUGIN, 'choice', [
-                'label' => 'Collector Plugin',
+                'label' => 'Calculator Plugin',
                 'choices' => $this->getAvailableCalculatorPlugins(),
                 'empty_data' => null,
                 'required' => false,
                 'placeholder' => 'Default',
             ])
-            ->add(self::FIELD_COLLECTOR_PLUGIN, 'choice', [
-                'label' => 'Collector Plugin',
-                'choices' => $this->getAvailableCollectorPlugins(),
+            ->add(self::FIELD_COLLECTOR_PLUGINS, 'collection', [
+                'type' => new CollectorPluginType($this->availableCollectorPlugins),
+                'label' => null,
+                'allow_add' => true,
+                'allow_extra_fields' => true,
             ])
             ->add(self::FIELD_VALID_FROM, 'date')
             ->add(self::FIELD_VALID_TO, 'date')

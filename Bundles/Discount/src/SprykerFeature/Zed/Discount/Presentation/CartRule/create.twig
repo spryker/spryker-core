@@ -19,13 +19,26 @@
                 {{ form_row(form.amount) }}
                 {{ form_row(form.type) }}
                 {{ form_row(form.calculator_plugin) }}
-                {{ form_row(form.collector_plugin) }}
+                {#{{ form_row(form.collector_plugin) }}#}
+
+                <div class="row collection-form" id="collector-container">
+                    {% for rule in form.collector_plugins %}
+                        <div class="col-md-6">
+                            {{ form_row(rule) }}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="clearfix"></div>
+                <div class="load-cart-collector-plugins">
+                    <a href="#" id="add-collector-container"><i class="hidden fa fa-spinner fa-spin"></i> {{ 'Add Collector Plugin' | trans }}</a>
+                </div>
+
                 {{ form_row(form.valid_from) }}
                 {{ form_row(form.valid_to) }}
                 {{ form_row(form.is_privileged) }}
                 {{ form_row(form.is_active) }}
 
-                <div class="row" id="rules-container">
+                <div class="row collection-form" id="rules-container">
                 {% for rule in form.decision_rules %}
                     <div class="col-md-6">
                         {{ form_row(rule) }}
@@ -34,8 +47,7 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="load-cart-rules">
-                    <div class="ajax-loader hidden"></div>
-                    <a href="#" id="add-rules-container">{{ 'Add New Rule' | trans }}</a>
+                    <a href="#" id="add-rules-container"><i class="hidden fa fa-spinner fa-spin"></i> {{ 'Add New Rule' | trans }}</a>
                 </div>
 
                 <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}"/>

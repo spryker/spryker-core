@@ -7,25 +7,25 @@ use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
-class DecisionRuleType extends AbstractRuleType
+class CollectorPluginType extends AbstractRuleType
 {
 
-    const FIELD_DECISION_RULE_PLUGIN = 'decision_rule_plugin';
+    const FIELD_COLLECTOR_PLUGIN = 'collector_plugin';
     const FIELD_VALUE = 'value';
 
     /**
      * @var array
      */
-    protected $availableDecisionRulePlugins;
+    protected $availableCollectorPlugins;
 
     /**
      * DecisionRuleType constructor.
      *
-     * @param array $availableDecisionRulePlugins
+     * @param array $availableCollectorPlugins
      */
-    public function __construct(array $availableDecisionRulePlugins)
+    public function __construct(array $availableCollectorPlugins)
     {
-        $this->availableDecisionRulePlugins = $availableDecisionRulePlugins;
+        $this->availableCollectorPlugins = $availableCollectorPlugins;
     }
 
     /**
@@ -35,10 +35,10 @@ class DecisionRuleType extends AbstractRuleType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add(self::FIELD_DECISION_RULE_PLUGIN, 'choice', [
-                'label' => 'Decision Rule',
+            ->add(self::FIELD_COLLECTOR_PLUGIN, 'choice', [
+                'label' => 'Collector Plugin',
                 'multiple' => false,
-                'choices' => $this->getDecisionRuleOptions(),
+                'choices' => $this->getCollectorPluginsOptions(),
                 'constraints' => [
                     new Required(),
                 ],
@@ -55,10 +55,10 @@ class DecisionRuleType extends AbstractRuleType
     /**
      * @return array
      */
-    protected function getDecisionRuleOptions()
+    protected function getCollectorPluginsOptions()
     {
         $decisionRules = [];
-        $decisionRulesKeys = array_keys($this->availableDecisionRulePlugins);
+        $decisionRulesKeys = array_keys($this->availableCollectorPlugins);
 
         foreach ($decisionRulesKeys as $key) {
             $decisionRules[$key] = $this->filterChoicesLabels($key);
