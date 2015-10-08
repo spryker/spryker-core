@@ -7,6 +7,7 @@
 namespace Functional\SprykerFeature\Zed\Discount\Business\Model;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -253,7 +254,9 @@ class CalculatorTest extends Test
         $discountTransfer->setAmount($amount);
         $discountTransfer->setIsActive($isActive);
         $discountTransfer->setCalculatorPlugin($calculatorPlugin);
-        $discountTransfer->setCollectorPlugin($collectorPlugin);
+        $discountCollectorTransfer = new DiscountCollectorTransfer();
+        $discountCollectorTransfer->setCollectorPlugin($calculatorPlugin);
+        $discountTransfer->addDiscountCollectors($discountCollectorTransfer);
         $discountTransfer->setIsPrivileged($isPrivileged);
 
         return $discountTransfer;
