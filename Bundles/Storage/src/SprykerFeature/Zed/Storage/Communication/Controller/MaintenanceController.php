@@ -4,27 +4,43 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Maintenance\Communication\Controller;
+namespace SprykerFeature\Zed\Storage\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Maintenance\Business\MaintenanceFacade;
-use SprykerFeature\Zed\Maintenance\Communication\MaintenanceDependencyContainer;
+use SprykerFeature\Zed\Storage\Business\StorageFacade;
+use SprykerFeature\Zed\Storage\Communication\StorageDependencyContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method MaintenanceFacade getFacade()
- * @method MaintenanceDependencyContainer getDependencyContainer()
+ * @method StorageFacade getFacade()
+ * @method StorageDependencyContainer getDependencyContainer()
  */
-class StorageController extends AbstractController
+class MaintenanceController extends AbstractController
 {
+
     const REFERENCE_KEY = 'reference_key';
+    const MESSAGE_REMOVED_ENTRIES = 'Removed "%" entries from storage.';
+    const URL_STORAGE_MAINTENANCE = '/storage/maintenance';
 
     /**
      * @return array
      */
     public function indexAction()
+    {
+        return $this->viewResponse(
+            [
+                'totalCount' => $this->getFacade()->getTotalCount(),
+                'metaData' => $this->getFacade()->getTotalCount(),
+            ]
+        );
+    }
+
+    /**
+     * @return array
+     */
+    public function listAction()
     {
         $table = $this->getDependencyContainer()->createStorageTable();
 
@@ -34,7 +50,7 @@ class StorageController extends AbstractController
     /**
      * @return JsonResponse
      */
-    public function tableAction()
+    public function listAjaxAction()
     {
         $table = $this->getDependencyContainer()->createStorageTable();
 
@@ -46,11 +62,25 @@ class StorageController extends AbstractController
     /**
      * @return RedirectResponse
      */
+    public function dropTimestampsAction()
+    {
+        $timestamps = $this->getFacade()->getTimestamps();
+        $this->getDependencyContainer()->createCollectorFacade()->deleteStorageTimestamps(array_keys($timestamps));
+
+        return $this->redirectResponse(self::URL_STORAGE_MAINTENANCE);
+    }
+
+    /**
+     * @return RedirectResponse
+     */
     public function deleteAllAction()
     {
-        $numberOfDeletedEntried = $this->getDependencyContainer()->createStorageClient()->deleteAll();
-        $this->addInfoMessage('Removed '.$numberOfDeletedEntried.' entries from storage.');
-        return $this->redirectResponse('/maintenance/storage');
+        $numberOfDeletedEntries = $this->getFacade()->deleteAll();
+        $this->addInfoMessage(
+            sprintf(self::MESSAGE_REMOVED_ENTRIES, $numberOfDeletedEntries)
+        );
+
+        return $this->redirectResponse(self::URL_STORAGE_MAINTENANCE);
     }
 
     /**
@@ -58,10 +88,10 @@ class StorageController extends AbstractController
      *
      * @return array
      */
-    public function storageKeyAction(Request $request)
+    public function keyAction(Request $request)
     {
         $key = $request->get('key');
-        $value = $this->getDependencyContainer()->createStorageClient()->get($key);
+        $value = $this->getFacade()->get($key);
 
         return $this->viewResponse([
             'value' => var_export($value, true),

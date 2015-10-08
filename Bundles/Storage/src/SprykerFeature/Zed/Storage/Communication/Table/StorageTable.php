@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Maintenance\Communication\Table;
+namespace SprykerFeature\Zed\Storage\Communication\Table;
 
 use SprykerFeature\Client\Storage\Service\StorageClientInterface;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
@@ -41,7 +41,7 @@ class StorageTable extends AbstractTable
         ];
 
         $config->setHeader($headers);
-        $config->setUrl('table');
+        $config->setUrl('list-ajax');
 
         return $config;
     }
@@ -58,20 +58,18 @@ class StorageTable extends AbstractTable
         sort($keys);
 
         $result = [];
-        foreach ($keys as $key) {
+
+        foreach ($keys as $i => $key) {
+            $keys[$i] = str_replace('kv:', '', $key);
+        }
+
+        $values = $this->storageClient->getMulti($keys);
+
+        foreach ($values as $key => $value) {
             $key = str_replace('kv:', '', $key);
-            $value = $this->storageClient->get($key);
-
-            $value = print_r($value, true);
-            $value = htmlentities($value);
-
-            if (is_string($value) && mb_strlen($value) > 100) {
-                $value = mb_substr($value, 0, 255);
-            }
-
             $result[] = [
-                'key' => '<a href="/maintenance/storage/storage-key?key=' . $key . '">' . $key . '</a>',
-                'value' => $value,
+                'key' => '<a href="/storage/maintenance/key?key=' . $key . '">' . $key . '</a>',
+                'value' => htmlentities(substr($value, 0, 200)),
             ];
         }
 

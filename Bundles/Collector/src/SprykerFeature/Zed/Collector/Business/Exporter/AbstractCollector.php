@@ -19,6 +19,8 @@ use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 abstract class AbstractCollector implements ExporterInterface
 {
 
+    const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
+
     /**
      * @var CollectorPluginInterface[]
      */
@@ -95,6 +97,8 @@ abstract class AbstractCollector implements ExporterInterface
      */
     public function exportByType($type, LocaleTransfer $locale)
     {
+        $timestamp = $this->createNewTimestamp();
+
         $result = clone $this->batchResultPrototype;
         $result->setProcessedLocale($locale);
 
@@ -115,19 +119,20 @@ abstract class AbstractCollector implements ExporterInterface
         $baseQuery->setFormatter($this->getFormatter());
         $collector->run($baseQuery, $locale, $result, $this->writer, $this->touchUpdater);
 
-        return $this->finishExport($result, $type);
+        return $this->finishExport($result, $type, $timestamp);
     }
 
     /**
      * @param BatchResultInterface $batchResult
-     * @param string $type
+     * @param $type
+     * @param string $timestamp
      *
      * @return BatchResultInterface
      */
-    protected function finishExport(BatchResultInterface $batchResult, $type)
+    protected function finishExport(BatchResultInterface $batchResult, $type, $timestamp)
     {
         if (!$batchResult->isFailed()) {
-            $this->marker->setLastExportMarkByTypeAndLocale($type, $batchResult->getProcessedLocale());
+            $this->marker->setLastExportMarkByTypeAndLocale($type, $batchResult->getProcessedLocale(), $timestamp);
         }
 
         return $batchResult;
@@ -139,6 +144,16 @@ abstract class AbstractCollector implements ExporterInterface
     protected function getFormatter()
     {
         return new PropelArraySetFormatter();
+    }
+
+    /**
+     * @return string
+     */
+    protected function createNewTimestamp()
+    {
+        $timestamp = (new \DateTime())->format(self::DATE_TIME_FORMAT);
+
+        return $timestamp;
     }
 
 }

@@ -4,15 +4,15 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Search;
+namespace SprykerFeature\Zed\Storage;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
 use SprykerEngine\Zed\Kernel\Container;
 
-class SearchDependencyProvider extends AbstractBundleDependencyProvider
+class StorageDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const CLIENT_SEARCH = 'search client';
+    const CLIENT_STORAGE = 'storage client';
     const FACADE_COLLECTOR = 'collector facade';
 
     /**
@@ -22,7 +22,7 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $this->addSearchClient($container);
+        $this->addStorageClient($container);
 
         return $container;
     }
@@ -34,7 +34,7 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $this->addSearchClient($container);
+        $this->addStorageClient($container);
         $this->addCollectorFacade($container);
 
         return $container;
@@ -43,10 +43,10 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
     /**
      * @param Container $container
      */
-    protected function addSearchClient(Container $container)
+    protected function addStorageClient(Container $container)
     {
-        $container[self::CLIENT_SEARCH] = function (Container $container) {
-            return $container->getLocator()->search()->client();
+        $container[self::CLIENT_STORAGE] = function (Container $container) {
+            return $container->getLocator()->storage()->client();
         };
     }
 

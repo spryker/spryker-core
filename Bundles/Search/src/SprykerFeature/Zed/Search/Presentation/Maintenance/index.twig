@@ -1,0 +1,40 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'Search overview' %}
+
+{% block head_title widget_title | trans %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+
+            <div class="row">
+                <div class="col-md-6">
+
+                    <table class="table table-bordered">
+                        <tr>
+                            <th>{{ "Number of entries:" | trans }}</th>
+                            <td><a href="/search/maintenance/list">{{ totalCount }}</a></td>
+                        </tr>
+
+
+                        {% for key, timestamp in metaData %}
+                            <tr>
+                                <th>{{ key }}</th>
+                                <td>{{ timestamp }}</td>
+                            </tr>
+                        {% endfor %}
+                        <tr>
+                            <th></th>
+                            <td><a href="/search/maintenance/drop-timestamps">{{ "Drop timestamps" | trans }}</a></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

@@ -3,7 +3,7 @@
 {% block body_class %}spy-page{% endblock %}
 
 {% block action %}
-    {{ viewActionButton('/maintenance/search', 'All Keys' | trans) }}
+    {{ viewActionButton('/storage/maintenance', 'All Keys' | trans) }}
 {% endblock %}
 
 {% block content %}
@@ -12,6 +12,9 @@
         {% block widget_content %}
 
             <h1>{{ key }}</h1>
+            {% if referenceKey %}
+            <a href="/storage/maintenance/key?key={{ referenceKey }}">{{ referenceKey }}</a>
+            {% endif %}
             <pre>{{ value }}</pre>
 
         {% endblock %}

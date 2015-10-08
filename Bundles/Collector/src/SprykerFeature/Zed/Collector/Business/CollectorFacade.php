@@ -81,4 +81,21 @@ class CollectorFacade extends AbstractFacade
         return $this->getDependencyContainer()->getConfig()->getSearchDocumentType();
     }
 
+    /**
+     * @param array $keys
+     * @return bool
+     */
+    public function deleteSearchTimestamps(array $keys = [])
+    {
+        return $this->getDependencyContainer()->createSearchMarker()->deleteTimestamps($keys);
+    }
+
+    /**
+     * @param array $keys
+     * @return bool
+     */
+    public function deleteStorageTimestamps(array $keys = [])
+    {
+        return $this->getDependencyContainer()->createKeyValueMarker()->deleteTimestamps($keys);
+    }
 }

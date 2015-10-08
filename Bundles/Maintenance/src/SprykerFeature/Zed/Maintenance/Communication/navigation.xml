@@ -16,22 +16,6 @@
                 <action>index</action>
                 <icon>fa-archive</icon>
             </packages>
-            <search>
-                <label>Search</label>
-                <title>Search index</title>
-                <bundle>maintenance</bundle>
-                <controller>search</controller>
-                <action>index</action>
-                <icon>fa-search</icon>
-            </search>
-            <storage>
-                <label>Storage</label>
-                <title>Storage index</title>
-                <bundle>maintenance</bundle>
-                <controller>storage</controller>
-                <action>index</action>
-                <icon>fa-hdd-o</icon>
-            </storage>
             <phpinfo>
                 <label>PHP Info</label>
                 <title>PHP Info</title>
