@@ -19,6 +19,8 @@ class InitializeDatabaseConsole extends Console
 
     const COMMAND_NAME = 'setup:init-db';
     const DESCRIPTION = 'Fill the database with required data';
+    const EXIT_CODE_ERROR = 0;
+    const EXIT_CODE_SUCCESS = 1;
 
     protected function configure()
     {
@@ -37,10 +39,18 @@ class InitializeDatabaseConsole extends Console
 
         $messenger = $this->getMessenger();
 
-        foreach ($installerPlugins as $installer) {
-            $installer->setMessenger($messenger);
-            $installer->install();
+        try {
+            foreach ($installerPlugins as $installer) {
+                $installer->setMessenger($messenger);
+                $installer->install();
+            }
+        } catch (\Exception $e) {
+            $this->error($e->getMessage());
+
+            return self::EXIT_CODE_ERROR;
         }
+
+        return self::EXIT_CODE_SUCCESS;
     }
 
 }
