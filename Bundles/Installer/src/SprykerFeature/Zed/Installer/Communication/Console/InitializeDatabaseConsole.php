@@ -19,8 +19,8 @@ class InitializeDatabaseConsole extends Console
 
     const COMMAND_NAME = 'setup:init-db';
     const DESCRIPTION = 'Fill the database with required data';
-    const EXIT_CODE_ERROR = 0;
-    const EXIT_CODE_SUCCESS = 1;
+    const EXIT_CODE_ERROR = 1;
+    const EXIT_CODE_SUCCESS = 0;
 
     protected function configure()
     {
