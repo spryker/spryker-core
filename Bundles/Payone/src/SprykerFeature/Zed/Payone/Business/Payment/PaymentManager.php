@@ -531,11 +531,14 @@ class PaymentManager implements PaymentManagerInterface
     {
         $apiLogsQuery = $this->queryContainer->getLastApiLogsByOrderId($orderTransfer->getIdSalesOrder());
         $apiLog = $apiLogsQuery->findOne();
-        $redirectUrl = $apiLog->getRedirectUrl();
 
-        if ($redirectUrl !== null) {
-            $checkoutResponse->setIsExternalRedirect(true);
-            $checkoutResponse->setRedirectUrl($redirectUrl);
+        if ($apiLog) {
+            $redirectUrl = $apiLog->getRedirectUrl();
+
+            if ($redirectUrl !== null) {
+                $checkoutResponse->setIsExternalRedirect(true);
+                $checkoutResponse->setRedirectUrl($redirectUrl);
+            }
         }
 
         return $checkoutResponse;
