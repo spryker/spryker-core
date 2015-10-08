@@ -31,27 +31,34 @@ class VoucherCodesWriter extends AbstractWriter
      * @var DiscountDecisionRuleWriter
      */
     protected $discountDecisionRuleWriter;
+    /**
+     * @var DiscountCollectorWriter
+     */
+    private $discountCollectorWriter;
 
     /**
-     * @param DiscountQueryContainerInterface $queryContainer
-     * @param DiscountWriter $discountWriter
-     * @param DiscountVoucherPoolWriter $discountVoucherPoolWriter
+     * @param DiscountQueryContainerInterface   $queryContainer
+     * @param DiscountWriter                    $discountWriter
+     * @param DiscountVoucherPoolWriter         $discountVoucherPoolWriter
      * @param DiscountVoucherPoolCategoryWriter $discountVoucherPoolCategoryWriter
-     * @param DiscountDecisionRuleWriter $discountDecisionRuleWriter
+     * @param DiscountDecisionRuleWriter        $discountDecisionRuleWriter
+     * @param DiscountCollectorWriter           $discountCollectorWriter
      */
     public function __construct(
         DiscountQueryContainerInterface $queryContainer,
         DiscountWriter $discountWriter,
         DiscountVoucherPoolWriter $discountVoucherPoolWriter,
         DiscountVoucherPoolCategoryWriter $discountVoucherPoolCategoryWriter,
-        DiscountDecisionRuleWriter $discountDecisionRuleWriter
+        DiscountDecisionRuleWriter $discountDecisionRuleWriter,
+        DiscountCollectorWriter $discountCollectorWriter
     ) {
+        parent::__construct($queryContainer);
+
         $this->discountWriter = $discountWriter;
         $this->discountVoucherPoolWriter = $discountVoucherPoolWriter;
         $this->discountVoucherPoolCategoryWriter = $discountVoucherPoolCategoryWriter;
         $this->discountDecisionRuleWriter = $discountDecisionRuleWriter;
-
-        parent::__construct($queryContainer);
+        $this->discountCollectorWriter = $discountCollectorWriter;
     }
 
     /**
@@ -61,15 +68,19 @@ class VoucherCodesWriter extends AbstractWriter
      */
     public function saveVoucherCode(VoucherCodesTransfer $voucherCodesTransfer)
     {
-        $voucherPoolCategory = $this->discountVoucherPoolCategoryWriter
-            ->getOrCreateByName($voucherCodesTransfer->getVoucherPoolCategory())
-        ;
+        $voucherPoolCategoryEntity = $this->discountVoucherPoolCategoryWriter
+            ->getOrCreateByName($voucherCodesTransfer->getVoucherPoolCategory());
 
-        $voucherPool = $this->saveDiscountVoucherPool($voucherCodesTransfer, $voucherPoolCategory);
-        $discount = $this->saveDiscount($voucherCodesTransfer, $voucherPool);
-        $this->saveDiscountDecisionRules($voucherCodesTransfer, $discount);
+        $voucherPoolEntity = $this->saveDiscountVoucherPool($voucherCodesTransfer, $voucherPoolCategoryEntity);
+        $discountEntity = $this->saveDiscount($voucherCodesTransfer, $voucherPoolEntity);
+        $this->saveDiscountDecisionRules($voucherCodesTransfer, $discountEntity);
 
-        return (new VoucherPoolTransfer())->fromArray($voucherPool->toArray(), true);
+        foreach ($voucherCodesTransfer->getCollectorPlugins() as $collectorPluginTransfer) {
+            $collectorPluginTransfer->setFkDiscount($discountEntity->getIdDiscount());
+            $this->discountCollectorWriter->save($collectorPluginTransfer);
+        }
+
+        return (new VoucherPoolTransfer())->fromArray($voucherPoolEntity->toArray(), true);
     }
 
     /**
