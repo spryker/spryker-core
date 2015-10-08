@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Maintenance\Communication\Table;
+namespace SprykerFeature\Zed\Search\Communication\Table;
 
 use Elastica\Exception\ResponseException;
 use SprykerFeature\Client\Search\Service\SearchClient;
@@ -25,7 +25,6 @@ class SearchTable extends AbstractTable
      * @var SearchClient
      */
     protected $searchClient;
-
 
     /**
      * @param SearchClient $searchClient
@@ -76,16 +75,14 @@ class SearchTable extends AbstractTable
 
             $results = $this->searchClient->getIndexClient()->search('*', ['limit' => $limit, 'from' => $offset])->getResults();
 
-
             foreach ($results as $result) {
                 $tableData[] = [
-                    'id' => '<a href="/maintenance/search/key?key=' . $result->getId() . '">' . $result->getId() . '</a>',
+                    'id' => '<a href="/search/maintenance/key?key=' . $result->getId() . '">' . $result->getId() . '</a>',
                     'index' => $result->getIndex(),
                     'type' => $result->getType(),
                     'score' => $result->getScore(),
                 ];
             }
-
         } catch (ResponseException $e) {
             // allowed catch, because ElasticSearch index is not always there
         }

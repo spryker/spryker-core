@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <maintenance>
+        <pages>
+            <storage>
+                <label>Storage</label>
+                <title>Storage index</title>
+                <bundle>storage</bundle>
+                <controller>maintenance</controller>
+                <action>index</action>
+                <icon>fa-hdd-o</icon>
+                <pages>
+                    <storage-list>
+                        <label>List</label>
+                        <title>Storage list</title>
+                        <bundle>storage</bundle>
+                        <controller>maintenance</controller>
+                        <action>list</action>
+                        <icon>fa-hdd-o</icon>
+                        <visible>0</visible>
+                    </storage-list>
+                    <search-key>
+                        <label>Key</label>
+                        <title>Storage key</title>
+                        <bundle>storage</bundle>
+                        <controller>maintenance</controller>
+                        <action>key</action>
+                        <icon>fa-hdd-o</icon>
+                        <visible>0</visible>
+                    </search-key>
+                </pages>
+            </storage>
+        </pages>
+    </maintenance>
+</config>

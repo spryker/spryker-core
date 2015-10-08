@@ -15,10 +15,11 @@ class MaintenanceConfig extends AbstractBundleConfig
     public function getBundleDirectory()
     {
         return APPLICATION_VENDOR_DIR
-        . DIRECTORY_SEPARATOR . 'spryker'
-        . DIRECTORY_SEPARATOR . 'spryker'
-        . DIRECTORY_SEPARATOR . 'Bundles'
-        . DIRECTORY_SEPARATOR;
+            . DIRECTORY_SEPARATOR . 'spryker'
+            . DIRECTORY_SEPARATOR . 'spryker'
+            . DIRECTORY_SEPARATOR . 'Bundles'
+            . DIRECTORY_SEPARATOR
+        ;
     }
 
     public function getExcludedDirectoriesForDependencies()
@@ -56,14 +57,6 @@ class MaintenanceConfig extends AbstractBundleConfig
     public function getPathToFossFile()
     {
         return APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . 'FOSS.md';
-    }
-
-    /**
-     * @return string
-     */
-    public function getElasticaDocumentType()
-    {
-        return $this->get(SystemConfig::ELASTICA_PARAMETER__DOCUMENT_TYPE);
     }
 
 }

@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Maintenance\Communication\Table;
+namespace SprykerFeature\Zed\Storage\Communication\Table;
 
 use SprykerFeature\Client\Storage\Service\StorageClientInterface;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
@@ -65,10 +65,10 @@ class StorageTable extends AbstractTable
 
         $values = $this->storageClient->getMulti($keys);
 
-        foreach($values as $key => $value){
+        foreach ($values as $key => $value) {
             $key = str_replace('kv:', '', $key);
             $result[] = [
-                'key' => '<a href="/maintenance/storage/key?key=' . $key . '">' . $key . '</a>',
+                'key' => '<a href="/storage/maintenance/key?key=' . $key . '">' . $key . '</a>',
                 'value' => htmlentities(substr($value, 0, 200)),
             ];
         }

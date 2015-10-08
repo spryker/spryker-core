@@ -16,62 +16,6 @@
                 <action>index</action>
                 <icon>fa-archive</icon>
             </packages>
-            <search>
-                <label>Search</label>
-                <title>Search index</title>
-                <bundle>maintenance</bundle>
-                <controller>search</controller>
-                <action>index</action>
-                <icon>fa-search</icon>
-                <pages>
-                    <search-list>
-                        <label>List</label>
-                        <title>Search list</title>
-                        <bundle>maintenance</bundle>
-                        <controller>search</controller>
-                        <action>list</action>
-                        <icon>fa-search</icon>
-                        <visible>0</visible>
-                    </search-list>
-                    <search-key>
-                        <label>Key</label>
-                        <title>Search key</title>
-                        <bundle>maintenance</bundle>
-                        <controller>search</controller>
-                        <action>key</action>
-                        <icon>fa-search</icon>
-                        <visible>0</visible>
-                    </search-key>
-                </pages>
-            </search>
-            <storage>
-                <label>Storage</label>
-                <title>Storage index</title>
-                <bundle>maintenance</bundle>
-                <controller>storage</controller>
-                <action>index</action>
-                <icon>fa-hdd-o</icon>
-                <pages>
-                    <storage-list>
-                        <label>List</label>
-                        <title>Storage list</title>
-                        <bundle>maintenance</bundle>
-                        <controller>storage</controller>
-                        <action>list</action>
-                        <icon>fa-hdd-o</icon>
-                        <visible>0</visible>
-                    </storage-list>
-                    <search-key>
-                        <label>Key</label>
-                        <title>Storage key</title>
-                        <bundle>maintenance</bundle>
-                        <controller>storage</controller>
-                        <action>key</action>
-                        <icon>fa-hdd-o</icon>
-                        <visible>0</visible>
-                    </search-key>
-                </pages>
-            </storage>
             <phpinfo>
                 <label>PHP Info</label>
                 <title>PHP Info</title>
