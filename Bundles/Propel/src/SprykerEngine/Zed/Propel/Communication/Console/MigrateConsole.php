@@ -13,8 +13,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Process\Process;
 
-const RETURN_CODE_ERROR = 1;
-
 class MigrateConsole extends Console
 {
 

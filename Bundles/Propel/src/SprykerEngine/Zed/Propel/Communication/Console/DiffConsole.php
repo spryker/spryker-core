@@ -18,6 +18,8 @@ class DiffConsole extends Console
 
     const COMMAND_NAME = 'setup:propel:diff';
 
+    const PROCESS_TIMEOUT = 300;
+
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
@@ -43,7 +45,7 @@ class DiffConsole extends Console
         ;
 
         $process = new Process($command, APPLICATION_ROOT_DIR);
-        $process->setTimeout(300);
+        $process->setTimeout(self::PROCESS_TIMEOUT);
 
         return $process->run(function ($type, $buffer) {
             echo $buffer;
