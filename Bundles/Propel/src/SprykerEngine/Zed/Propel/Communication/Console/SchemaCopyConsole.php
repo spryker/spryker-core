@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,7 +10,6 @@ use SprykerEngine\Zed\Propel\Business\PropelFacade;
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Finder\Finder;
 
 /**
  * @method PropelFacade getFacade()
@@ -38,4 +38,5 @@ class SchemaCopyConsole extends Console
         $this->getFacade()->cleanPropelSchemaDirectory();
         $this->getFacade()->copySchemaFilesToTargetDirectory();
     }
+
 }

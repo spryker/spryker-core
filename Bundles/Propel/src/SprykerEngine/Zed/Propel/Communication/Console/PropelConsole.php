@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -53,4 +54,5 @@ class PropelConsole extends Console
         $input = new ArrayInput($arguments);
         $command->run($input, $this->output);
     }
+
 }
