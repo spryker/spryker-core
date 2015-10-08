@@ -255,7 +255,7 @@ class CalculatorTest extends Test
         $discountTransfer->setIsActive($isActive);
         $discountTransfer->setCalculatorPlugin($calculatorPlugin);
         $discountCollectorTransfer = new DiscountCollectorTransfer();
-        $discountCollectorTransfer->setCollectorPlugin($calculatorPlugin);
+        $discountCollectorTransfer->setCollectorPlugin($collectorPlugin);
         $discountTransfer->addDiscountCollectors($discountCollectorTransfer);
         $discountTransfer->setIsPrivileged($isPrivileged);
 
