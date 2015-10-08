@@ -1,0 +1,17 @@
+{
+  "name": "spryker/newsletter",
+  "autoload": {
+    "psr-0": {
+      "SprykerFeature": "src/",
+      "Acceptance": "tests/",
+      "Function": "tests/",
+      "Integration": "tests/",
+      "Unit": "tests/",
+      "YvesUnit": "tests/"
+    }
+  },
+  "require": {
+  },
+  "require-dev": {
+  }
+}

@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" defaultIdMethod="native" defaultPhpNamingMethod="underscore" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" namespace="SprykerFeature\Zed\Newsletter\Persistence\Propel" package="vendor.spryker.spryker.Bundles.Newsletter.src.SprykerFeature.Zed.Newsletter.Persistence.Propel">
+
+    <table name="spy_newsletter_subscription" idMethod="native" identifierQuoting="true">
+        <column name="id_newsletter_subscription" primaryKey="true" autoIncrement="true" type="INTEGER"/>
+        <column name="email" type="VARCHAR" size="255" required="true"/>
+        <column name="fk_customer" type="INTEGER"/>
+        <column name="is_confirmed" type="BOOLEAN" default="false"/>
+        <column name="confirm_key" type="VARCHAR" size="150"/>
+
+        <behavior name="timestampable"/>
+
+        <unique>
+            <unique-column name="email"/>
+        </unique>
+
+        <id-method-parameter value="spy_newsletter_subscription_pk_seq"/>
+
+        <foreign-key foreignTable="spy_customer">
+            <reference local="fk_customer" foreign="id_customer"/>
+        </foreign-key>
+    </table>
+
+    <table name="spy_newsletter_type" idMethod="native" identifierQuoting="true">
+        <column name="id_newsletter_subscription_type" primaryKey="true" autoIncrement="true" type="INTEGER"/>
+        <column name="name" type="VARCHAR" size="255" required="true"/>
+
+        <behavior name="timestampable"/>
+
+        <id-method-parameter value="spy_newsletter_type_pk_seq"/>
+    </table>
+
+    <table name="spy_newsletter_type_subscription" idMethod="native" identifierQuoting="true" isCrossRef="true">
+        <column name="fk_newsletter_subscription_type" primaryKey="true" type="INTEGER"/>
+        <column name="fk_newsletter_subscription" primaryKey="true" type="INTEGER"/>
+
+        <behavior name="timestampable"/>
+
+        <foreign-key foreignTable="spy_newsletter_type">
+            <reference local="fk_newsletter_subscription_type" foreign="id_newsletter_subscription_type"/>
+        </foreign-key>
+        <foreign-key foreignTable="spy_newsletter_subscription">
+            <reference local="fk_newsletter_subscription" foreign="id_newsletter_subscription"/>
+        </foreign-key>
+    </table>
+</database>
