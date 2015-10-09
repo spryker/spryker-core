@@ -11,6 +11,10 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
+use SprykerEngine\Zed\Kernel\AbstractUnitTest;
+use SprykerEngine\Zed\Kernel\Business\Factory;
+use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
@@ -24,7 +28,7 @@ use SprykerFeature\Zed\Sales\Business\Model\Split\OrderItem;
  * @group Business
  * @group DiscountSaver
  */
-class DiscountSaverTest extends \PHPUnit_Framework_TestCase
+class DiscountSaverTest extends AbstractUnitTest
 {
 
     const DISCOUNT_DISPLAY_NAME = 'discount';
@@ -186,7 +190,7 @@ class DiscountSaverTest extends \PHPUnit_Framework_TestCase
         $discountSaverMock = $this->getMock(
             'SprykerFeature\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaver',
             $discountSaverMethods,
-            [$this->getDiscountQueryContainerMock($queryContainerMethods)]
+            [$this->getDiscountQueryContainerMock($queryContainerMethods), $this->getFacade(null, 'Discount')]
         );
 
         return $discountSaverMock;

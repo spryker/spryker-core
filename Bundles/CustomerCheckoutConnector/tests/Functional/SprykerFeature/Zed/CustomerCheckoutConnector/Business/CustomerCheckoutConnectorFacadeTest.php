@@ -14,6 +14,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\Customer\CustomerDependencyProvider;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
 use SprykerFeature\Zed\CustomerCheckoutConnector\Business\CustomerCheckoutConnectorFacade;
 use SprykerFeature\Zed\CustomerCheckoutConnector\CustomerCheckoutConnectorDependencyProvider;
@@ -40,7 +41,13 @@ class CustomerCheckoutConnectorFacadeTest extends Test
         $this->customerCheckoutConnectorFacade = new CustomerCheckoutConnectorFacade(new Factory('CustomerCheckoutConnector'), $locator);
 
         $container = new Container();
-        $container[CustomerCheckoutConnectorDependencyProvider::FACADE_CUSTOMER] = new CustomerFacade(new Factory('Customer'), $locator);
+        $customerDependencyProvider = new CustomerDependencyProvider();
+        $customerDependencyProvider->provideBusinessLayerDependencies($container);
+        $customerFacade = new CustomerFacade(new Factory('Customer'), $locator);
+        $customerFacade->setExternalDependencies($container);
+
+        $container = new Container();
+        $container[CustomerCheckoutConnectorDependencyProvider::FACADE_CUSTOMER] = $customerFacade;
 
         $this->customerCheckoutConnectorFacade->setExternalDependencies($container);
     }
@@ -56,6 +63,7 @@ class CustomerCheckoutConnectorFacadeTest extends Test
             ->setFirstName('Max')
             ->setLastName('Sprykermann')
             ->setPassword('5pryk3rRul3z')
+            ->setCustomerReference('foo')
         ;
         $customerEntity->save();
 
@@ -114,7 +122,7 @@ class CustomerCheckoutConnectorFacadeTest extends Test
             ->setAddress2('B1')
             ->setAddress3('B1')
             ->setCity('City2')
-            ->setIso2Code('cz')
+            ->setIso2Code('de')
             ->setZipCode('11111')
         ;
 

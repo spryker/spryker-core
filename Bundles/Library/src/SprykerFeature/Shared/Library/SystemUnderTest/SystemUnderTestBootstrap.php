@@ -12,8 +12,10 @@ use Propel\Runtime\Propel;
 use Pyz\Yves\Application\Communication\YvesBootstrap;
 use Pyz\Zed\Application\Communication\ZedBootstrap;
 use ReflectionObject;
+use Silex\Application;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Yves\Kernel\Locator;
+use SprykerEngine\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use SprykerFeature\Shared\Library\Application\Environment;
 use SprykerFeature\Shared\Library\Application\TestEnvironment;
 
@@ -102,6 +104,9 @@ class SystemUnderTestBootstrap
         $locator = \SprykerEngine\Zed\Kernel\Locator::getInstance();
         $this->resetLocator($locator);
         $application->boot();
+
+        $propelServiceProvider = new PropelServiceProvider();
+        $propelServiceProvider->boot(new Application());
     }
 
     /**

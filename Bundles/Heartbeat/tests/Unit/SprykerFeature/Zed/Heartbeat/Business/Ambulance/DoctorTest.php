@@ -22,68 +22,52 @@ class DoctorTest extends \PHPUnit_Framework_TestCase
 
     public function testIsPatientAliveMustReturnTrueIfNoHealthIndicatorIsApplied()
     {
-        $doctor = new Doctor(new HealthReportTransfer(), []);
+        $doctor = new Doctor([]);
 
         $this->assertTrue($doctor->doHealthCheck()->isPatientAlive());
     }
 
     public function testIsPatientAliveMustReturnTrueIfAllHealthIndicatorReturnTrue()
     {
-        $checkerMock = $this->getMock('SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface', ['check', 'getReport']);
+        $checkerMock = $this->getMock('SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface', ['doHealthCheck']);
         $checkerMock->expects($this->once())
-            ->method('check')
-            ->will($this->returnValue(true))
-        ;
-        $checkerMock->expects($this->once())
-            ->method('getReport')
+            ->method('doHealthCheck')
             ->will($this->returnValue((new HealthIndicatorReportTransfer())->setStatus(true)))
         ;
 
-        $doctor = new Doctor(new HealthReportTransfer(), [$checkerMock]);
+        $doctor = new Doctor([$checkerMock]);
 
         $this->assertTrue($doctor->doHealthCheck()->isPatientAlive());
     }
 
-    public function testIsPatientAliveMustReturnFalseIfAllHealthIndicatorReturnTrue()
+    public function testIsPatientAliveMustReturnFalseIfAllHealthIndicatorReturnFalse()
     {
-        $checkerMock = $this->getMock('SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface', ['check', 'getReport']);
+        $checkerMock = $this->getMock('SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface', ['doHealthCheck']);
         $checkerMock->expects($this->once())
-            ->method('check')
-            ->will($this->returnValue(false))
-        ;
-        $checkerMock->expects($this->once())
-            ->method('getReport')
-            ->will($this->returnValue(new HealthIndicatorReportTransfer()))
+            ->method('doHealthCheck')
+            ->will($this->returnValue((new HealthIndicatorReportTransfer())->setStatus(false)))
         ;
 
-        $doctor = new Doctor(new HealthReportTransfer(), [$checkerMock]);
+        $doctor = new Doctor([$checkerMock]);
 
         $this->assertFalse($doctor->doHealthCheck()->isPatientAlive());
     }
 
     public function testIsPatientAliveMustReturnFalseIfNotAllHealthIndicatorReturnTrue()
     {
-        $checkerMockTrue = $this->getMock('SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface', ['check', 'getReport']);
+        $checkerMockTrue = $this->getMock('SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface', ['doHealthCheck']);
         $checkerMockTrue->expects($this->once())
-            ->method('check')
-            ->will($this->returnValue(true))
-        ;
-        $checkerMockTrue->expects($this->once())
-            ->method('getReport')
+            ->method('doHealthCheck')
             ->will($this->returnValue((new HealthIndicatorReportTransfer())->setStatus(false)))
         ;
 
-        $checkerMockFalse = $this->getMock('SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface', ['check', 'getReport']);
+        $checkerMockFalse = $this->getMock('SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface', ['doHealthCheck']);
         $checkerMockFalse->expects($this->once())
-            ->method('check')
-            ->will($this->returnValue(false))
-        ;
-        $checkerMockFalse->expects($this->once())
-            ->method('getReport')
+            ->method('doHealthCheck')
             ->will($this->returnValue(new HealthIndicatorReportTransfer()))
         ;
 
-        $doctor = new Doctor(new HealthReportTransfer(), [$checkerMockFalse, $checkerMockTrue]);
+        $doctor = new Doctor([$checkerMockFalse, $checkerMockTrue]);
 
         $this->assertFalse($doctor->doHealthCheck()->isPatientAlive());
     }
