@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace ZedUnit\SprykerFeature\Zed\Heartbeat\Business\Ambulance;
+namespace Unit\SprykerFeature\Zed\Heartbeat\Business\Ambulance;
 
 use Generated\Shared\Transfer\HealthIndicatorReportTransfer;
 use Generated\Shared\Transfer\HealthReportTransfer;
