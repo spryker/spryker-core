@@ -1,5 +1,5 @@
 class_name: FunctionalTester
 modules:
     enabled:
-    - Filesystem
-    - \Acl\Module\Functional
+        - Filesystem
+#        - \Acl\Module\Functional
