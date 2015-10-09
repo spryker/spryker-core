@@ -1,4 +1,4 @@
-namespace: SequenceNumber
+actor: Tester
 
 paths:
     tests: tests
