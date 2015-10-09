@@ -2,4 +2,4 @@ class_name: UnitTester
 modules:
     enabled:
         - Asserts
-#        - \ZedRequest\Module\Unit
+        - \ZedRequest\Module\Unit

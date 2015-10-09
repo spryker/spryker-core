@@ -2,4 +2,4 @@ class_name: UnitTester
 modules:
     enabled:
         - Asserts
-#        - \Propel\Module\Unit
+        - \Propel\Module\Unit

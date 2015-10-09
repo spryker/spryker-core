@@ -2,4 +2,4 @@ class_name: FunctionalTester
 modules:
     enabled:
         - Filesystem
-#        - \Oms\Module\Functional
+        - \Oms\Module\Functional

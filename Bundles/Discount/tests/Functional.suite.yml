@@ -2,4 +2,4 @@ class_name: FunctionalTester
 modules:
     enabled:
         - Filesystem
-#        - \Discount\Module\Functional
+        - \Discount\Module\Functional

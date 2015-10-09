@@ -2,4 +2,4 @@ class_name: UnitTester
 modules:
     enabled:
         - Asserts
-#        - \Availability\Module\Unit
+        - \Availability\Module\Unit

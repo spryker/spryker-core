@@ -2,4 +2,4 @@ class_name: UnitTester
 modules:
     enabled:
         - Asserts
-#        - \Transfer\Module\Unit
+        - \Transfer\Module\Unit

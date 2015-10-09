@@ -2,4 +2,4 @@ class_name: UnitTester
 modules:
     enabled:
         - Asserts
-#        - \Git\Module\Unit
+        - \Git\Module\Unit

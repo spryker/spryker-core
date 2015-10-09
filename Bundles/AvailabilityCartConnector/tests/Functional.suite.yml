@@ -2,4 +2,4 @@ class_name: FunctionalTester
 modules:
     enabled:
         - Filesystem
-#        - \AvailabilityCartConnector\Module\Functional
+        - \AvailabilityCartConnector\Module\Functional

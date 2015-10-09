@@ -2,4 +2,4 @@ class_name: FunctionalTester
 modules:
     enabled:
         - Filesystem
-#        - \TaxProductConnector\Module\Functional
+        - \TaxProductConnector\Module\Functional

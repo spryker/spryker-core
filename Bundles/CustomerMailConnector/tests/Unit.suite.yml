@@ -2,4 +2,4 @@ class_name: UnitTester
 modules:
     enabled:
         - Asserts
-#        - \CustomerMailConnector\Module\Unit
+        - \CustomerMailConnector\Module\Unit

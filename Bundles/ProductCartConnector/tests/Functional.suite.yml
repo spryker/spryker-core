@@ -2,4 +2,4 @@ class_name: FunctionalTester
 modules:
     enabled:
         - Filesystem
-#        - \ProductCartConnector\Module\Functional
+        - \ProductCartConnector\Module\Functional

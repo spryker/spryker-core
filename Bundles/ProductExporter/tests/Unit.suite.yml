@@ -2,4 +2,4 @@ class_name: UnitTester
 modules:
     enabled:
         - Asserts
-#        - \ProductExporter\Module\Unit
+        - \ProductExporter\Module\Unit

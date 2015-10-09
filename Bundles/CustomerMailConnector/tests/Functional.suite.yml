@@ -2,4 +2,4 @@ class_name: FunctionalTester
 modules:
     enabled:
         - Filesystem
-#        - \CustomerMailConnector\Module\Functional
+        - \CustomerMailConnector\Module\Functional

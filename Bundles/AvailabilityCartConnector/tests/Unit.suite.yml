@@ -2,4 +2,4 @@ class_name: UnitTester
 modules:
     enabled:
         - Asserts
-#        - \AvailabilityCartConnector\Module\Unit
+        - \AvailabilityCartConnector\Module\Unit

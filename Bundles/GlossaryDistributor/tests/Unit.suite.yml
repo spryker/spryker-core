@@ -2,4 +2,4 @@ class_name: UnitTester
 modules:
     enabled:
         - Asserts
-#        - \GlossaryDistributor\Module\Unit
+        - \GlossaryDistributor\Module\Unit

@@ -2,4 +2,4 @@ class_name: FunctionalTester
 modules:
     enabled:
         - Filesystem
-#        - \ZedRequest\Module\Functional
+        - \ZedRequest\Module\Functional

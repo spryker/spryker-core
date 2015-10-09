@@ -2,4 +2,4 @@ class_name: FunctionalTester
 modules:
     enabled:
         - Filesystem
-#        - \Transfer\Module\Functional
+        - \Transfer\Module\Functional

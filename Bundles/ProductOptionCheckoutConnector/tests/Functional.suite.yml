@@ -2,4 +2,4 @@ class_name: FunctionalTester
 modules:
     enabled:
         - Filesystem
-#        - \ProductOptionCheckoutConnector\Module\Functional
+        - \ProductOptionCheckoutConnector\Module\Functional

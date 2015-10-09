@@ -2,4 +2,4 @@ class_name: UnitTester
 modules:
     enabled:
         - Asserts
-#        - \Cms\Module\Unit
+        - \Cms\Module\Unit
