@@ -58,12 +58,12 @@
         <property name="idTaxSet" type="int" />
         <property name="taxRates" type="TaxRate[]" singular="taxRate" />
         <property name="amount" type="int" />
-        <property name="effectiveRate" type="int" />
+        <property name="effectiveRate" type="float" />
     </transfer>
 
     <transfer name="TaxRate">
         <property name="idTaxRate" type="int" />
-        <property name="rate" type="int" />
+        <property name="rate" type="float" />
     </transfer>
 
     <transfer name="Totals">

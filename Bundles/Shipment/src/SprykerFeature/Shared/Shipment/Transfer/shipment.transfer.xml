@@ -26,7 +26,7 @@
         <property name="taxCalculationPlugin" type="string" />
         <property name="name" type="string" />
         <property name="price" type="int" />
-        <property name="taxRate" type="int" />
+        <property name="taxRate" type="float" />
         <property name="isActive" type="bool" />
         <property name="time" type="string" />
     </transfer>

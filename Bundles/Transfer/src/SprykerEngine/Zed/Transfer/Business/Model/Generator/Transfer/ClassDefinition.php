@@ -181,7 +181,7 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $normalizedProperties = [];
         foreach ($properties as $property) {
-            if (!preg_match('/^int|integer|string|array|bool|boolean/', $property['type'])) {
+            if (!preg_match('/^int|integer|float|string|array|bool|boolean/', $property['type'])) {
                 if (preg_match('/\[\]$/', $property['type'])) {
                     $property['type'] = str_replace('[]', '', $property['type']) . 'Transfer[]';
                 } else {
@@ -239,9 +239,9 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         if ($this->isArray($property)) {
             return 'array';
-        } else {
-            return str_replace('[]', '', $property['type']);
         }
+
+        return str_replace('[]', '', $property['type']);
     }
 
     /**
@@ -375,7 +375,7 @@ class ClassDefinition implements ClassDefinitionInterface
             return 'array';
         }
 
-        if (preg_match('/(string|int|bool|boolean)/', $property['type'])) {
+        if (preg_match('/(string|int|float|bool|boolean)/', $property['type'])) {
             return false;
         }
 
@@ -393,11 +393,11 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function getAddTypeHint(array $property)
     {
-        if (preg_match('/^(string|int|bool|boolean|array|\[\])/', $property['type'])) {
+        if (preg_match('/^(string|int|float|bool|boolean|array|\[\])/', $property['type'])) {
             return false;
-        } else {
-            return str_replace('[]', '', $property['type']);
         }
+
+        return str_replace('[]', '', $property['type']);
     }
 
     /**

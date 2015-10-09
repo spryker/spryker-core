@@ -103,7 +103,7 @@
     </transfer>
 
     <transfer name="TaxSet">
-        <property name="effectiveRate" type="int" />
+        <property name="effectiveRate" type="float" />
         <property name="amount" type="int" />
     </transfer>
 
