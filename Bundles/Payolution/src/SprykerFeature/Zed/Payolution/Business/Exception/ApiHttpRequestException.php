@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Exception;
 
-class ApiHttpRequestException extends \ErrorException
+class ApiHttpRequestException extends \Exception
 {
 
 }

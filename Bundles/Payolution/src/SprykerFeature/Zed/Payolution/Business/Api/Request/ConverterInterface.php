@@ -14,7 +14,7 @@ interface ConverterInterface
     /**
      * @param PayolutionRequestInterface $requestTransfer
      *
-     * @return mixed
+     * @return array
      */
     public function toArray(PayolutionRequestInterface $requestTransfer);
 

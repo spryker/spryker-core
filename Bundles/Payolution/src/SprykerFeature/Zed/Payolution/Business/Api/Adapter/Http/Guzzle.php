@@ -54,7 +54,7 @@ class Guzzle implements AdapterInterface
             throw new ApiHttpRequestException($requestException->getMessage());
         }
 
-        parse_str($response->getBody($asString = true), $out);
+        parse_str($response->getBody(true), $out);
 
         return $out;
     }

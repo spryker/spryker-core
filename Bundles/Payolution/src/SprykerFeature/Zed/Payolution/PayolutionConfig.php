@@ -92,4 +92,12 @@ class PayolutionConfig extends AbstractBundleConfig
         return $this->get(PayolutionConfigConstants::DEFAULT_TIMEOUT);
     }
 
+    /**
+     * @return string
+     */
+    public function getAnalysisCriteriaPropertyName()
+    {
+        return $this->get(PayolutionConfigConstants::ANALYSIS_CRITERIA);
+    }
+
 }

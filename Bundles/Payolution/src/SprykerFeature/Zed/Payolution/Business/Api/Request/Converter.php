@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Payolution\Business\Api\Request;
 
 use Generated\Shared\Payolution\PayolutionRequestInterface;
+use SprykerFeature\Shared\Payolution\PayolutionConfigConstants;
 
 class Converter implements ConverterInterface
 {
@@ -25,7 +26,7 @@ class Converter implements ConverterInterface
                 continue;
             }
 
-            if ('analysis_criteria' === $propertyName) {
+            if ($propertyName === PayolutionConfigConstants::ANALYSIS_CRITERIA) {
                 $result = array_merge($this->getAnalysisCriteria($propertyValue), $result);
                 continue;
             }
