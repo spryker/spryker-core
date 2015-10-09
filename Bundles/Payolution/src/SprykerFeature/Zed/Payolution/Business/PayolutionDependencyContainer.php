@@ -20,6 +20,7 @@ use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionOrderItem;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLog;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLog;
+use Guzzle\Http\Client as GuzzleClient;
 
 /**
  * @method PayolutionBusiness getFactory()
@@ -59,7 +60,11 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $gatewayUrl = $this->getConfig()->getGatewayUrl();
 
-        return $this->getFactory()->createApiAdapterHttpGuzzle($gatewayUrl);
+        $client = new GuzzleClient([
+            'timeout' => $this->getConfig()->getDefaultTimeout(),
+        ]);
+
+        return $this->getFactory()->createApiAdapterHttpGuzzle($client, $gatewayUrl);
     }
 
     /**

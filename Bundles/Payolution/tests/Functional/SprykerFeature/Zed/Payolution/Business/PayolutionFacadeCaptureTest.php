@@ -10,6 +10,12 @@ use Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http\CaptureAd
 use Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http\PreAuthorizationAdapterMock;
 use SprykerFeature\Zed\Payolution\Business\Api\Constants;
 
+/**
+ * @group Zed
+ * @group Business
+ * @group Payolution
+ * @group PayolutionFacadeCaptureTest
+ */
 class PayolutionFacadeCaptureTest extends AbstractFacadeTest
 {
 

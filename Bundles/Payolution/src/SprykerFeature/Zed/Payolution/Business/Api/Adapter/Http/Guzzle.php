@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http;
 
-use Guzzle\Http\Client;
+use Guzzle\Http\Client as GuzzleClient;
 use Guzzle\Http\Exception\RequestException;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payolution\Business\Exception\ApiHttpRequestException;
@@ -14,10 +14,8 @@ use SprykerFeature\Zed\Payolution\Business\Exception\ApiHttpRequestException;
 class Guzzle implements AdapterInterface
 {
 
-    const DEFAULT_TIMEOUT = 45;
-
     /**
-     * @var Client
+     * @var GuzzleClient
      */
     protected $client;
 
@@ -29,12 +27,10 @@ class Guzzle implements AdapterInterface
     /**
      * @param string $gatewayUrl
      */
-    public function __construct($gatewayUrl)
+    public function __construct(GuzzleClient $client, $gatewayUrl)
     {
+        $this->client = $client;
         $this->gatewayUrl = $gatewayUrl;
-        $this->client = new Client([
-            'timeout' => self::DEFAULT_TIMEOUT,
-        ]);
     }
 
     /**

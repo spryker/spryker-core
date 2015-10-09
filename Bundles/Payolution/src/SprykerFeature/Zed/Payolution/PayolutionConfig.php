@@ -84,4 +84,12 @@ class PayolutionConfig extends AbstractBundleConfig
         return $this->get(PayolutionConfigConstants::USER_PASSWORD);
     }
 
+    /**
+     * @return int
+     */
+    public function getDefaultTimeout()
+    {
+        return $this->get(PayolutionConfigConstants::DEFAULT_TIMEOUT);
+    }
+
 }
