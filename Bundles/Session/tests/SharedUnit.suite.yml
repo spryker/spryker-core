@@ -1,1 +1,4 @@
 class_name: SharedUnitTester
+modules:
+    enabled:
+        - Asserts

@@ -1,1 +1,4 @@
 class_name: ClientTester
+modules:
+    enabled:
+        - Asserts
