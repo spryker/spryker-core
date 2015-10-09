@@ -1,11 +1,12 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
 
 namespace SprykerFeature\Zed\Newsletter\Business;
 
-use Generated\Shared\Newsletter\NewsletterSubscriptionInterface;
+use Generated\Shared\Newsletter\NewsletterSubscriptionRequestInterface;
 use Generated\Shared\Newsletter\NewsletterSubscriptionResponseInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
@@ -15,17 +16,37 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 class NewsletterFacade extends AbstractFacade
 {
     /**
-     * @param NewsletterSubscriptionInterface $newsletterSubscription
+     * @param NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest
      *
      * @return NewsletterSubscriptionResponseInterface
      */
-    public function subscribe(NewsletterSubscriptionInterface $newsletterSubscription)
+    public function subscribeWithSingleOptIn(NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest)
     {
+        $optInHandler = $this->getDependencyContainer()->createSingleOptInHandler();
+
         $subscriptionResponse = $this->getDependencyContainer()
-            ->createSubscriptionManager()
-            ->subscribe($newsletterSubscription)
+            ->createSubscriptionRequestHandler($optInHandler)
+            ->processNewsletterSubscriptions($newsletterSubscriptionRequest)
         ;
 
         return $subscriptionResponse;
     }
+
+    /**
+     * @param NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest
+     *
+     * @return NewsletterSubscriptionResponseInterface
+     */
+    public function subscribeWithDoubleOptIn(NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest)
+    {
+        $optInHandler = $this->getDependencyContainer()->createDoubleOptInHandler();
+
+        $subscriptionResponse = $this->getDependencyContainer()
+            ->createSubscriptionRequestHandler($optInHandler)
+            ->processNewsletterSubscriptions($newsletterSubscriptionRequest)
+        ;
+
+        return $subscriptionResponse;
+    }
+
 }
