@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace Acl\Module;
 
 use Codeception\TestCase;
@@ -8,9 +12,6 @@ use Propel\Runtime\Propel;
 use Silex\Application;
 use SprykerEngine\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
-/**
- * All public methods declared in helper class will be available in $I
- */
 class Functional extends Module
 {
 
