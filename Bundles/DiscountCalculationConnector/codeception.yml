@@ -1,3 +1,5 @@
+namespace: DiscountCalculationConnector
+
 actor: Tester
 
 paths:

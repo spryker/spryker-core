@@ -1,3 +1,5 @@
+namespace: GlossaryDistributor
+
 actor: Tester
 
 paths:

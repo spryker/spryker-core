@@ -1,3 +1,5 @@
+namespace: OmsCheckoutConnector
+
 actor: Tester
 
 paths:

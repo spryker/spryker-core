@@ -1,3 +1,5 @@
+namespace: Twig
+
 actor: Tester
 
 paths:

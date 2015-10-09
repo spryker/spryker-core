@@ -1,3 +1,5 @@
+namespace: ShipmentCheckoutConnector
+
 actor: Tester
 
 paths:

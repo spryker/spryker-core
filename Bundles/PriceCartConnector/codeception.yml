@@ -1,3 +1,5 @@
+namespace: PriceCartConnector
+
 actor: Tester
 
 paths:

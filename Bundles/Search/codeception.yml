@@ -1,3 +1,5 @@
+namespace: Search
+
 actor: Tester
 
 paths:

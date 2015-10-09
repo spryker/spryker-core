@@ -1,3 +1,5 @@
+namespace: Transfer
+
 actor: Tester
 
 paths:

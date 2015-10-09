@@ -1,3 +1,5 @@
+namespace: ProductOption
+
 actor: Tester
 
 paths:

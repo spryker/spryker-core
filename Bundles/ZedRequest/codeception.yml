@@ -1,3 +1,5 @@
+namespace: ZedRequest
+
 actor: Tester
 
 paths:

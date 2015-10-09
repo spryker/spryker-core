@@ -1,3 +1,5 @@
+namespace: Payone
+
 actor: Tester
 
 paths:

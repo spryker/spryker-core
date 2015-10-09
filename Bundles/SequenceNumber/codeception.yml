@@ -1,3 +1,5 @@
+namespace: SequenceNumber
+
 actor: Tester
 
 paths:

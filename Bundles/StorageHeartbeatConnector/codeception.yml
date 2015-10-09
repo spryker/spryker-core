@@ -1,3 +1,5 @@
+namespace: StorageHeartbeatConnector
+
 actor: Tester
 
 paths:

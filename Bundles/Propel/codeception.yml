@@ -1,3 +1,5 @@
+namespace: Propel
+
 actor: Tester
 
 paths:

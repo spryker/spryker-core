@@ -1,3 +1,5 @@
+namespace: Country
+
 actor: Tester
 
 paths:

@@ -1,3 +1,5 @@
+namespace: ProductCategory
+
 actor: Tester
 
 paths:

@@ -1,3 +1,5 @@
+namespace: SalesCheckoutConnector
+
 actor: Tester
 
 paths:

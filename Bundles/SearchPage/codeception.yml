@@ -1,3 +1,5 @@
+namespace: SearchPage
+
 actor: Tester
 
 paths:

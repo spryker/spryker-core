@@ -1,3 +1,5 @@
+namespace: Wishlist
+
 actor: Tester
 
 suite: default

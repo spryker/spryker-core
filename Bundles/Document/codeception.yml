@@ -1,3 +1,5 @@
+namespace: Document
+
 actor: Tester
 
 paths:

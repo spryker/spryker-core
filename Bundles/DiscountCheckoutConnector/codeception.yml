@@ -1,3 +1,5 @@
+namespace: DiscountCheckoutConnector
+
 actor: Tester
 
 paths:

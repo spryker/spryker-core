@@ -1,3 +1,5 @@
+namespace: TaxProductConnector
+
 actor: Tester
 
 paths:

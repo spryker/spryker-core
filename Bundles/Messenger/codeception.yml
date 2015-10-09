@@ -1,3 +1,5 @@
+namespace: Messenger
+
 actor: Tester
 
 paths:

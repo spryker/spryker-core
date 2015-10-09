@@ -1,3 +1,5 @@
+namespace: Installer
+
 actor: Tester
 
 paths:

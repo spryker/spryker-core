@@ -1,3 +1,5 @@
+namespace: Kernel
+
 actor: Tester
 
 paths:

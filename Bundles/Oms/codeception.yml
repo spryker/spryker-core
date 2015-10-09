@@ -1,3 +1,5 @@
+namespace: Oms
+
 actor: Tester
 
 paths:

@@ -1,3 +1,5 @@
+namespace: Heartbeat
+
 actor: Tester
 
 paths:

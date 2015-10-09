@@ -1,3 +1,5 @@
+namespace: Yves
+
 actor: Tester
 
 paths:

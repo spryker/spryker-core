@@ -1,3 +1,5 @@
+namespace: ProductCartConnector
+
 actor: Tester
 
 paths:
