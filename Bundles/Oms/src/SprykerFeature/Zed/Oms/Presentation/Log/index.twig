@@ -1,0 +1,24 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% set widget_title = 'OMS Transition Log' %}
+
+{% block head_title widget_title %}
+{% block section_title widget_title %}
+
+{% block action %}
+
+{% endblock %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+
+            {{ transitionLogTable | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

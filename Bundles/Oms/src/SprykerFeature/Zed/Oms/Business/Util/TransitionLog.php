@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Oms\Business\Util;
 
+use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\Library\System;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
@@ -15,6 +16,7 @@ use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Oms\Persistence\SpyOmsTransitionLog;
+use Symfony\Component\HttpFoundation\Request;
 
 class TransitionLog implements TransitionLogInterface
 {
@@ -190,23 +192,28 @@ class TransitionLog implements TransitionLogInterface
 
         $logItem->setHostname(System::getHostname());
 
-        if (isset($this->logContext['module'])) {
-            $logItem->setModule($this->logContext['module']);
-        } else {
-            $logItem->setModule('Not available.');
-        }
 
-        if (isset($this->logContext['controller'])) {
-            $logItem->setController($this->logContext['controller']);
-        } else {
-            $logItem->setController('Not available.');
-        }
+        $request = $this->getRequest();
+        $path = $request->getPathInfo();
+        $logItem->setPath($path);
 
-        if (isset($this->logContext['action'])) {
-            $logItem->setAction($this->logContext['action']);
-        } else {
-            $logItem->setAction('Not available.');
-        }
+//        if (isset($this->logContext['module'])) {
+//            $logItem->setModule($this->logContext['module']);
+//        } else {
+//            $logItem->setModule('Not available.');
+//        }
+//
+//        if (isset($this->logContext['controller'])) {
+//            $logItem->setController($this->logContext['controller']);
+//        } else {
+//            $logItem->setController('Not available.');
+//        }
+//
+//        if (isset($this->logContext['action'])) {
+//            $logItem->setAction($this->logContext['action']);
+//        } else {
+//            $logItem->setAction('Not available.');
+//        }
 
         if (isset($this->logContext['params'])) {
             $params = [];
@@ -223,6 +230,16 @@ class TransitionLog implements TransitionLogInterface
         $logItem->setErrorMessage($this->errorMessage);
 
         $logItem->save();
+    }
+
+    /**
+     * TODO Refactor: dependency
+     *
+     * @return Request
+     */
+    protected function getRequest()
+    {
+        return Locator::getInstance()->application()->pluginPimple()->getApplication()['request'];
     }
 
     /**

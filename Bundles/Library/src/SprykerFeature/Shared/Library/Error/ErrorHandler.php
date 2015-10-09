@@ -35,8 +35,8 @@ class ErrorHandler
     {
         if (!self::$instance) {
             self::$instance = new self();
-            set_exception_handler([self::$instance, 'handleException']);
-            register_shutdown_function([self::$instance, 'handleFatal']);
+//            set_exception_handler([self::$instance, 'handleException']);
+//            register_shutdown_function([self::$instance, 'handleFatal']);
 
             return self::$instance;
         }

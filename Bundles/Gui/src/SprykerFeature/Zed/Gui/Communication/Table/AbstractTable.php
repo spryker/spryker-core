@@ -11,6 +11,7 @@ use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\Gui\Communication\Exception\TableException;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractTable

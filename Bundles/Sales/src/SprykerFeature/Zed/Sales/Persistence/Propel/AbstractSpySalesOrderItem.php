@@ -6,7 +6,10 @@
 
 namespace SprykerFeature\Zed\Sales\Persistence\Propel;
 
+use Propel\Runtime\Connection\ConnectionInterface;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem as BaseSpySalesOrderItem;
+use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStateHistory;
+use SprykerFeature\Zed\Sales\Persistence\Propel\Map\SpySalesOrderItemTableMap;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_sales_order_item' table.
@@ -17,6 +20,41 @@ use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem as BaseSpySalesOrderItem;
  * application requirements.  This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-abstract class AbstractSpySalesOrderItem extends BaseSpySalesOrderItem
+class SpySalesOrderItem extends BaseSpySalesOrderItem
 {
+
+    /**
+     * @var bool
+     */
+    protected $statusChanged = false;
+
+    /**
+     * @param ConnectionInterface|null $con
+     *
+     * @return bool
+     */
+    public function preSave(ConnectionInterface $con = null)
+    {
+        $this->statusChanged = in_array(SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_ITEM_STATE, $this->modifiedColumns);
+        return true;
+    }
+
+    /**
+     * @param ConnectionInterface|null $con
+     * @throws \Propel\Runtime\Exception\PropelException
+     * 
+     * @return void
+     */
+    public function postSave(ConnectionInterface $con = null)
+    {
+        if ($this->statusChanged) {
+            // FIXME Wrong dependency direction
+            $e = new SpyOmsOrderItemStateHistory();
+            $e->setOrderItem($this);
+            $e->setState($this->getState());
+            $e->save();
+        }
+        $this->statusChanged = false;
+    }
+
 }
