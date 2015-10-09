@@ -8,14 +8,20 @@
     height: 32px;
   }
 }
-#rules-container {
+.collection-form {
   > div {
     padding-top: 10px;
   }
-  > div > .form-group > label.control-label {
+  > div > .well > .form-group > label.control-label {
     display: none;
   }
 }
-.ajax-loaded > .form-group > div > .form-group > label {
+.ajax-loaded > .well > .form-group > div > .form-group > label {
   display: none;
+}
+.form-inline.option-chain label {
+  padding-right: 10px;
+  > input {
+    margin-right: 5px;
+  }
 }

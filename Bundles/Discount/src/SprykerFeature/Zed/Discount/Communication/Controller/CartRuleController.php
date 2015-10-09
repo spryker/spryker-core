@@ -62,7 +62,26 @@ class CartRuleController extends AbstractController
             'form' => $form->createView(),
             'elementsCount' => $elements,
         ];
+    }
 
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function collectorPluginsAction(Request $request)
+    {
+        $elements = $request->request->getInt(self::PARAM_CURRENT_ELEMENTS_COUNT);
+
+        $formType = $this->getDependencyContainer()->createCollectorPluginFormType();
+
+        $form = $this->getDependencyContainer()->createCartRuleForm($formType);
+        $form->handleRequest($request);
+
+        return [
+            'form' => $form->createView(),
+            'elementsCount' => $elements,
+        ];
     }
 
     /**
@@ -72,13 +91,14 @@ class CartRuleController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $formType = $this->getDependencyContainer()->createCartRuleFormType();
-
-        $form = $this->getDependencyContainer()->createCartRuleForm($formType);
+        $form = $this->getDependencyContainer()->createCartRuleForm(
+            $this->getDependencyContainer()->createCartRuleFormType()
+        );
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $formData = $form->getData();
+
             $cartRuleFormTransfer = (new CartRuleTransfer())->fromArray($formData, true);
             $discount = $this->getFacade()->saveCartRules($cartRuleFormTransfer);
 

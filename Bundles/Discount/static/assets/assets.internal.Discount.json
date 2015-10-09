@@ -2,6 +2,7 @@
     "priority": 80,
     "assets": {
         "js": [
+            "/js/discount.helpers.js",
             "/js/discount.js"
         ],
         "css": [

@@ -2,20 +2,24 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
+use DateTime;
+use DateTimeZone;
 use Generated\Shared\Transfer\CartRuleTransfer;
 use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerEngine\Shared\Kernel\Store;
+use SprykerFeature\Zed\Discount\Business\Writer\DiscountCollectorWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountWriter;
 use SprykerFeature\Zed\Discount\Communication\Form\CartRuleType;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
 
 class CartRule implements CartRuleInterface
 {
-
     const CART_RULES_ITERATOR = 'rule_';
     const DATABASE_DATE_FORMAT = 'Y-m-d\TG:i:s\Z';
+    const COLLECTOR_ITERATOR =  'collector_';
 
     /**
      * @var DiscountQueryContainer
@@ -48,15 +52,29 @@ class CartRule implements CartRuleInterface
     ];
 
     /**
-     * @param DiscountQueryContainer $queryContainer
-     * @param Store $store
+     * @var DiscountCollectorWriter
      */
-    public function __construct(DiscountQueryContainer $queryContainer, Store $store, DiscountDecisionRuleWriter $discountDecisionRuleWriter, DiscountWriter $discountWriter)
-    {
+    protected $discountCollectorWriter;
+
+    /**
+     * @param DiscountQueryContainer     $queryContainer
+     * @param Store                      $store
+     * @param DiscountDecisionRuleWriter $discountDecisionRuleWriter
+     * @param DiscountWriter             $discountWriter
+     * @param DiscountCollectorWriter    $discountCollectorWriter
+     */
+    public function __construct(
+        DiscountQueryContainer $queryContainer,
+        Store $store,
+        DiscountDecisionRuleWriter $discountDecisionRuleWriter,
+        DiscountWriter $discountWriter,
+        DiscountCollectorWriter $discountCollectorWriter
+    ) {
         $this->queryContainer = $queryContainer;
         $this->store = $store;
         $this->discountDecisionRuleWriter = $discountDecisionRuleWriter;
         $this->discountWriter = $discountWriter;
+        $this->discountCollectorWriter = $discountCollectorWriter;
     }
 
     /**
@@ -68,17 +86,22 @@ class CartRule implements CartRuleInterface
     {
         $formData = $cartRuleFormTransfer->toArray();
         $discountTransfer = (new DiscountTransfer())->fromArray($formData, true);
-        $discount = $this->saveDiscount($discountTransfer);
+        $discountEntity = $this->saveDiscount($discountTransfer);
 
         foreach ($formData[CartRuleType::FIELD_DECISION_RULES] as $cartRules) {
             $decisionRuleTransfer = (new DecisionRuleTransfer())->fromArray($cartRules, true);
-            $decisionRuleTransfer->setFkDiscount($discount->getIdDiscount());
-            $decisionRuleTransfer->setName($discount->getDisplayName());
+            $decisionRuleTransfer->setFkDiscount($discountEntity->getIdDiscount());
+            $decisionRuleTransfer->setName($discountEntity->getDisplayName());
 
             $this->discountDecisionRuleWriter->saveDiscountDecisionRule($decisionRuleTransfer);
         }
 
-        return $discountTransfer->fromArray($discount->toArray(), true);
+        foreach ($cartRuleFormTransfer->getCollectorPlugins() as $collectorTransfer) {
+             $collectorTransfer->setFkDiscount($discountTransfer->getIdDiscount());
+             $this->discountCollectorWriter->save($collectorTransfer);
+        }
+
+        return $discountTransfer->fromArray($discountEntity->toArray(), true);
     }
 
     /**
@@ -88,40 +111,44 @@ class CartRule implements CartRuleInterface
      */
     public function getCurrentCartRulesDetailsByIdDiscount($idDiscount)
     {
-        $discount = $this->queryContainer->queryDiscount()->findOneByIdDiscount($idDiscount);
+        $discountEntity = $this->queryContainer->queryDiscount()->findOneByIdDiscount($idDiscount);
+        $discount = $this->updateDateTimeZoneToStoreDefault($discountEntity->toArray());
 
-        $defaultData = $this->fixDateFormats($discount->toArray());
-
-        $rules = $this->queryContainer->queryDecisionRules($idDiscount)->find();
-
-        if ($rules->count() < 1) {
-            return $defaultData;
+        foreach ($discountEntity->getDecisionRules() as $key => $decisionRuleEntity) {
+            $discount[CartRuleType::FIELD_DECISION_RULES][self::CART_RULES_ITERATOR . (+$key)] =
+                $this->updateDateTimeZoneToStoreDefault($decisionRuleEntity->toArray());
         }
 
-        foreach ($rules as $i => $decisionRule) {
-            $defaultData[CartRuleType::FIELD_DECISION_RULES][self::CART_RULES_ITERATOR . (+$i)] = $this->fixDateFormats($decisionRule->toArray());
+        foreach ($discountEntity->getDiscountCollectors() as $key => $collectorEntity) {
+            $discount[CartRuleType::FIELD_COLLECTOR_PLUGINS][self::COLLECTOR_ITERATOR . (+$key)] =
+                $this->updateDateTimeZoneToStoreDefault($collectorEntity->toArray());
         }
 
-        return $defaultData;
+        return $discount;
     }
 
     /**
-     * @param array $entityArray
+     * @param array $discount
      *
      * @return array
      */
-    protected function fixDateFormats(array $entityArray)
+    protected function updateDateTimeZoneToStoreDefault(array $discount)
     {
-        foreach ($entityArray as $key => $value) {
-            if (false === in_array($key, $this->dateTypeFields)) {
+        foreach ($discount as $field => $value) {
+            if (false === in_array($field, $this->dateTypeFields)) {
                 continue;
             }
-            if (false === ($value instanceof \DateTime)) {
-                $entityArray[$key] = \DateTime::createFromFormat(self::DATABASE_DATE_FORMAT, $value, new \DateTimeZone($this->store->getTimezone()));
+
+            if (false === ($value instanceof DateTime)) {
+                $discount[$field] = DateTime::createFromFormat(
+                    self::DATABASE_DATE_FORMAT,
+                    $value,
+                    new DateTimeZone($this->store->getTimezone())
+                );
             }
         }
 
-        return $entityArray;
+        return $discount;
     }
 
     /**

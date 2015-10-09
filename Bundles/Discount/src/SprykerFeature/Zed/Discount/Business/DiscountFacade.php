@@ -5,6 +5,7 @@
 
 namespace SprykerFeature\Zed\Discount\Business;
 
+use Generated\Shared\Discount\DiscountCollectorInterface;
 use Generated\Shared\Discount\OrderInterface;
 use Generated\Shared\Discount\VoucherCreateInterface;
 use Generated\Shared\Transfer\CartRuleTransfer;
@@ -313,53 +314,72 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * @param CalculableInterface $container
+     * @param CalculableInterface        $container
+     * @param DiscountCollectorInterface $discountCollectorTransfer
      *
      * @return array
      */
-    public function getDiscountableItems(CalculableInterface $container)
-    {
-        return $this->getDependencyContainer()->createItemCollector()->collect($container);
+    public function getDiscountableItems(
+        CalculableInterface $container,
+        DiscountCollectorInterface $discountCollectorTransfer
+    ) {
+        return $this->getDependencyContainer()->createItemCollector()->collect($container, $discountCollectorTransfer);
     }
 
     /**
-     * @param CalculableInterface $container
+     * @param CalculableInterface        $container
+     * @param DiscountCollectorInterface $discountCollectorTransfer
      *
      * @return OrderInterface[]
      */
-    public function getDiscountableItemExpenses(CalculableInterface $container)
-    {
-        return $this->getDependencyContainer()->createItemExpenseCollector()->collect($container);
+    public function getDiscountableItemExpenses(
+        CalculableInterface $container,
+        DiscountCollectorInterface $discountCollectorTransfer
+    ) {
+        return $this->getDependencyContainer()->createItemExpenseCollector()
+            ->collect($container, $discountCollectorTransfer);
     }
 
     /**
-     * @param CalculableInterface $container
+     * @param CalculableInterface        $container
+     * @param DiscountCollectorInterface $discountCollectorTransfer
      *
      * @return OrderInterface[]
      */
-    public function getDiscountableOrderExpenses(CalculableInterface $container)
-    {
-        return $this->getDependencyContainer()->createOrderExpenseCollector()->collect($container);
+    public function getDiscountableOrderExpenses(
+        CalculableInterface $container,
+        DiscountCollectorInterface $discountCollectorTransfer
+    ) {
+        return $this->getDependencyContainer()->createOrderExpenseCollector()
+            ->collect($container, $discountCollectorTransfer);
     }
 
     /**
-     * @param CalculableInterface $container
+     * @param CalculableInterface        $container
+     * @param DiscountCollectorInterface $discountCollectorTransfer
      *
      * @return OrderInterface[]
      */
-    public function getDiscountableItemProductOptions(CalculableInterface $container)
-    {
-        return $this->getDependencyContainer()->createItemProductOptionCollector()->collect($container);
+    public function getDiscountableItemProductOptions(
+        CalculableInterface $container,
+        DiscountCollectorInterface $discountCollectorTransfer
+    ) {
+        return $this->getDependencyContainer()->createItemProductOptionCollector()
+            ->collect($container, $discountCollectorTransfer);
     }
 
     /**
-     * @param CalculableInterface $container
+     * @param CalculableInterface        $container
+     * @param DiscountCollectorInterface $discountCollectorTransfer
      *
      * @return OrderInterface[]
      */
-    public function getDiscountableItemsFromCollectorAggregate(CalculableInterface $container)
-    {
-        return $this->getDependencyContainer()->createAggregateCollector()->collect($container);
+    public function getDiscountableItemsFromCollectorAggregate(
+        CalculableInterface $container,
+        DiscountCollectorInterface $discountCollectorTransfer
+    ) {
+        return $this->getDependencyContainer()->createAggregateCollector()
+            ->collect($container, $discountCollectorTransfer);
     }
 
     /**

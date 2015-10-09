@@ -5,6 +5,7 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Collector;
 
+use Generated\Shared\Discount\DiscountCollectorInterface;
 use Generated\Shared\Discount\OrderInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 
@@ -28,11 +29,11 @@ class Aggregate implements CollectorInterface
      *
      * @return OrderInterface[]
      */
-    public function collect(CalculableInterface $container)
+    public function collect(CalculableInterface $container, DiscountCollectorInterface $discountCollectorTransfer)
     {
         $collected = [];
         foreach ($this->collectors as $collector) {
-            $collected = array_merge($collected, $collector->collect($container));
+            $collected = array_merge($collected, $collector->collect($container, $discountCollectorTransfer));
         }
 
         return $collected;

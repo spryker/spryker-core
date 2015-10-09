@@ -7,6 +7,7 @@
 namespace Functional\SprykerFeature\Zed\Discount\Business\Model;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -33,7 +34,7 @@ class CalculatorTest extends Test
         $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
         $calculator = new Calculator();
 
-        $order = $this->getOrderWithTwoItems();
+        $order = $this->getCalculableContainerWithTwoItems();
 
         $result = $calculator->calculate([], $order, $settings, new Distributor(Locator::getInstance()));
 
@@ -55,9 +56,14 @@ class CalculatorTest extends Test
         $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
         $calculator = new Calculator();
 
-        $order = $this->getOrderWithTwoItems();
+        $calculableContainer = $this->getCalculableContainerWithTwoItems();
 
-        $result = $calculator->calculate($discountCollection, $order, $settings, new Distributor(Locator::getInstance()));
+        $result = $calculator->calculate(
+            $discountCollection,
+            $calculableContainer,
+            $settings,
+            new Distributor(Locator::getInstance())
+        );
 
         $this->assertEquals(1, count($result));
     }
@@ -86,7 +92,7 @@ class CalculatorTest extends Test
 
         $calculator = new Calculator();
 
-        $order = $this->getOrderWithTwoItems();
+        $order = $this->getCalculableContainerWithTwoItems();
         $result = $calculator->calculate(
             $discountCollection,
             $order,
@@ -127,7 +133,7 @@ class CalculatorTest extends Test
         $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
         $calculator = new Calculator();
 
-        $order = $this->getOrderWithTwoItems();
+        $order = $this->getCalculableContainerWithTwoItems();
         $result = $calculator->calculate(
             $discountCollection,
             $order,
@@ -176,7 +182,7 @@ class CalculatorTest extends Test
         $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
         $calculator = new Calculator();
 
-        $order = $this->getOrderWithTwoItems();
+        $order = $this->getCalculableContainerWithTwoItems();
         $result = $calculator->calculate(
             $discountCollection,
             $order,
@@ -225,7 +231,7 @@ class CalculatorTest extends Test
         $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
         $calculator = new Calculator();
 
-        $order = $this->getOrderWithTwoItems();
+        $order = $this->getCalculableContainerWithTwoItems();
         $result = $calculator->calculate($discountCollection, $order, $settings, new Distributor(Locator::getInstance()));
         $this->assertEquals(3, count($result));
     }
@@ -253,7 +259,11 @@ class CalculatorTest extends Test
         $discountTransfer->setAmount($amount);
         $discountTransfer->setIsActive($isActive);
         $discountTransfer->setCalculatorPlugin($calculatorPlugin);
-        $discountTransfer->setCollectorPlugin($collectorPlugin);
+
+        $discountCollectorTransfer = new DiscountCollectorTransfer();
+        $discountCollectorTransfer->setCollectorPlugin($collectorPlugin);
+
+        $discountTransfer->addDiscountCollectors($discountCollectorTransfer);
         $discountTransfer->setIsPrivileged($isPrivileged);
 
         return $discountTransfer;
@@ -262,17 +272,14 @@ class CalculatorTest extends Test
     /**
      * @return CalculableContainer
      */
-    protected function getOrderWithTwoItems()
+    protected function getCalculableContainerWithTwoItems()
     {
         $order = new OrderTransfer();
         $item = new ItemTransfer();
-        $itemCollection = new OrderItemsTransfer();
 
         $item->setGrossPrice(self::ITEM_GROSS_PRICE_500);
-        $itemCollection->addOrderItem($item);
-        $itemCollection->addOrderItem(clone $item);
-
-        $order->setItems($itemCollection);
+        $order->addItem($item);
+        $order->addItem(clone $item);
 
         return new CalculableContainer($order);
     }

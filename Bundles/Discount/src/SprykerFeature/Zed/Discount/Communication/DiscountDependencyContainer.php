@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Communication;
 
+use SprykerFeature\Zed\Discount\Communication\Form\CollectorPluginType;
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesType;
 use SprykerFeature\Zed\Discount\Communication\Table\DiscountsTable;
 use Generated\Shared\Transfer\DecisionRuleTransfer;
@@ -148,6 +149,12 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
                     'rules' => '',
                 ],
             ],
+            'collector_plugins' => [
+                'plugin_1' => [
+                    'collector_plugin' => '',
+                    'value' => '',
+                ],
+            ],
             'group' => [],
         ];
     }
@@ -164,6 +171,19 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
         );
     }
 
+    /**
+     * @return CollectorPluginType
+     */
+    public function createCollectorPluginFormType()
+    {
+        return new CollectorPluginType(
+            $this->getConfig()->getAvailableCollectorPlugins()
+        );
+    }
+
+    /**
+     * @return VoucherCodesType
+     */
     public function createVoucherCodesFormType()
     {
         return new VoucherCodesType(

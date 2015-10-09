@@ -7,6 +7,7 @@
 namespace Functional\SprykerFeature\Zed\Discount\Business\Model;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -17,6 +18,7 @@ use SprykerFeature\Zed\Discount\Business\Model\Calculator;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountCollector;
 use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
@@ -252,17 +254,25 @@ class VoucherEngineTest extends Test
         $collectorPlugin,
         $isPrivileged = true
     ) {
-        $discount = new SpyDiscount();
-        $discount->setDisplayName($displayName);
-        $discount->setAmount($amount);
-        $discount->setIsActive($isActive);
-        $discount->setCalculatorPlugin($calculatorPlugin);
-        $discount->setCollectorPlugin($collectorPlugin);
-        $discount->setIsPrivileged($isPrivileged);
-        $discount->save();
+        $discountEntity = new SpyDiscount();
+        $discountEntity->setDisplayName($displayName);
+        $discountEntity->setAmount($amount);
+        $discountEntity->setIsActive($isActive);
+        $discountEntity->setCalculatorPlugin($calculatorPlugin);
+        $discountEntity->setIsPrivileged($isPrivileged);
+        $discountEntity->save();
+
+        $discountCollectorEntity = new SpyDiscountCollector();
+        $discountCollectorEntity->setCollectorPlugin($collectorPlugin);
+        $discountCollectorEntity->setFkDiscount($discountEntity->getIdDiscount());
+        $discountCollectorEntity->save();
 
         $discountTransfer = new DiscountTransfer();
-        $discountTransfer->fromArray($discount->toArray(), true);
+        $discountTransfer->fromArray($discountEntity->toArray(), true);
+
+        $discountCollectorTransfer = new DiscountCollectorTransfer();
+        $discountCollectorTransfer->fromArray($discountCollectorEntity->toArray(), true);
+        $discountTransfer->addDiscountCollectors($discountCollectorTransfer);
 
         return $discountTransfer;
     }
@@ -274,13 +284,10 @@ class VoucherEngineTest extends Test
     {
         $order = new OrderTransfer();
         $item = new ItemTransfer();
-        $itemCollection = new OrderItemsTransfer();
 
         $item->setGrossPrice(self::ITEM_GROSS_PRICE_500);
-        $itemCollection->addOrderItem($item);
-        $itemCollection->addOrderItem(clone $item);
-
-        $order->setItems($itemCollection);
+        $order->addItem($item);
+        $order->addItem(clone $item);
 
         return new CalculableContainer($order);
     }

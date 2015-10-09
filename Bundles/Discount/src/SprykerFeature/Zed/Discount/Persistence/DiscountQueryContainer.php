@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Discount\Persistence;
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesType;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherPoolTableMap;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherTableMap;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountCollectorQuery;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountQuery;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
@@ -109,6 +110,14 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     }
 
     /**
+     * @return SpyDiscountCollectorQuery
+     */
+    public function queryDiscountCollector()
+    {
+        return new SpyDiscountCollectorQuery();
+    }
+
+    /**
      * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRuleQuery
      */
     public function queryDiscountDecisionRule()
@@ -117,6 +126,26 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
             ->joinDiscount()
             ->withColumn(SpyDiscountTableMap::COL_DISPLAY_NAME, 'discount_name')
             ->withColumn(SpyDiscountTableMap::COL_AMOUNT, 'discount_amount');
+    }
+
+    /**
+     * @param int $idDiscountCollector
+     *
+     * @return SpyDiscountCollectorQuery
+     */
+    public function queryDiscountCollectorById($idDiscountCollector)
+    {
+        return $this->queryDiscountCollector()->filterByIdDiscountCollector($idDiscountCollector);
+    }
+
+    /**
+     * @param $idDiscount
+     *
+     * @return SpyDiscountCollectorQuery
+     */
+    public function queryDiscountCollectorByDiscountId($idDiscount)
+    {
+        return $this->queryDiscountCollector()->filterByFkDiscount($idDiscount);
     }
 
     /**
@@ -190,14 +219,12 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     }
 
     /**
-     * @param SpyDiscountVoucherPool $pool
+     * @param int $idDiscountVoucherPool
      *
-     * @return SpyDiscountDecisionRuleQuery
+     * @return SpyDiscountCollectorQuery
      */
-    public function queryDiscountDecisionRulesByIdPool(SpyDiscountVoucherPool $pool)
+    public function queryDiscountCollectorBysByIdPool(SpyDiscountVoucherPool $pool)
     {
         return $this->queryDecisionRules($pool->getVirtualColumn(DiscountQueryContainer::ALIAS_COL_ID_DISCOUNT));
     }
-
-
 }

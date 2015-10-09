@@ -11,14 +11,13 @@ use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Distributor\DistributorInterface;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
 use SprykerFeature\Zed\Discount\DiscountConfigInterface;
-use Generated\Shared\Discount\OrderInterface;
 
 class Calculator implements CalculatorInterface
 {
-
     const KEY_DISCOUNT_TRANSFER = 'transfer';
     const KEY_DISCOUNT_AMOUNT = 'amount';
     const KEY_DISCOUNT_REASON = 'reason';
+    const KEY_DISCOUNTABLE_OBJECTS = 'discountableObjects';
 
     /**
      * @var array
@@ -39,20 +38,24 @@ class Calculator implements CalculatorInterface
         DiscountConfigInterface $settings,
         DistributorInterface $distributor
     ) {
-        $discountableObjects = [];
+
         $calculatedDiscounts = [];
 
         foreach ($discountCollection as $discountTransfer) {
-            $calculator = $settings->getCalculatorPluginByName($discountTransfer->getCalculatorPlugin());
-            $collector = $settings->getCollectorPluginByName($discountTransfer->getCollectorPlugin());
-            $discountableObjects = $collector->collect($discountTransfer, $container);
+            $discountableObjects = $this->applyDiscountCollectors($container, $settings, $discountTransfer);
 
-            $discountAmount = $calculator->calculate($discountableObjects, $discountTransfer->getAmount());
+            if (count($discountableObjects) === 0) {
+                continue;
+            }
+
+            $calculatorPlugin = $settings->getCalculatorPluginByName($discountTransfer->getCalculatorPlugin());
+            $discountAmount = $calculatorPlugin->calculate($discountableObjects, $discountTransfer->getAmount());
             $discountTransfer->setAmount($discountAmount);
 
             $calculatedDiscounts[] = [
                 self::KEY_DISCOUNT_TRANSFER => $discountTransfer,
-                self::KEY_DISCOUNT_AMOUNT => $discountAmount
+                self::KEY_DISCOUNT_AMOUNT => $discountAmount,
+                self::KEY_DISCOUNTABLE_OBJECTS => $discountableObjects,
             ];
         }
 
@@ -60,7 +63,7 @@ class Calculator implements CalculatorInterface
 
         foreach ($calculatedDiscounts as $discountTransfer) {
             $distributor->distribute(
-                $discountableObjects,
+                $discountTransfer[self::KEY_DISCOUNTABLE_OBJECTS],
                 $discountTransfer[self::KEY_DISCOUNT_TRANSFER]
             );
         }
@@ -127,6 +130,48 @@ class Calculator implements CalculatorInterface
     protected function getDiscountEntity(array $discount)
     {
         return $discount[self::KEY_DISCOUNT_TRANSFER];
+    }
+
+    /**
+     * @param CalculableInterface $container
+     * @param DiscountConfigInterface $settings
+     * @param DiscountInterface $discountTransfer
+     *
+     * @return DiscountableInterface[]
+     */
+    protected function applyDiscountCollectors(
+        CalculableInterface $container,
+        DiscountConfigInterface $settings,
+        DiscountInterface $discountTransfer
+    ) {
+
+        $discountableObjects = [];
+        foreach ($discountTransfer->getDiscountCollectors() as $discountCollectorTransfer) {
+            $collectorPlugin = $settings->getCollectorPluginByName(
+                $discountCollectorTransfer->getCollectorPlugin()
+            );
+
+            $collected = $collectorPlugin->collect($discountTransfer, $container, $discountCollectorTransfer);
+            $discountableObjects = array_merge($discountableObjects, $collected);
+        }
+
+        $uniqDiscountableObjects = $this->getUniqDiscountableObjects($discountableObjects);
+
+        return $uniqDiscountableObjects;
+    }
+
+    /**
+     * @param DiscountableInterface[] $discountableObjects
+     *
+     * @return array
+     */
+    protected function getUniqDiscountableObjects(array $discountableObjects)
+    {
+        $uniqDiscountableObjects = [];
+        foreach ($discountableObjects as $discountableObject) {
+            $uniqDiscountableObjects[spl_object_hash($discountableObject)] = $discountableObject;
+        }
+        return $uniqDiscountableObjects;
     }
 
 }
