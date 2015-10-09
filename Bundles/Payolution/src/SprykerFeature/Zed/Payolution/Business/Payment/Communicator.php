@@ -10,12 +10,10 @@ use Generated\Shared\Payolution\CheckoutRequestInterface;
 use Generated\Shared\Payolution\PayolutionRequestInterface;
 use Generated\Shared\Payolution\PayolutionResponseInterface;
 use Generated\Shared\Transfer\PayolutionResponseTransfer;
-use SprykerEngine\Zed\Kernel\Business\DependencyContainer\DependencyContainerInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\ConverterInterface as RequestConverterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Response\ConverterInterface as ResponseConverterInterface;
 use SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper\MethodMapperInterface;
-use SprykerFeature\Zed\Payolution\Business\PayolutionDependencyContainer;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLog;
@@ -45,11 +43,6 @@ class Communicator implements CommunicatorInterface
     private $responseConverter;
 
     /**
-     * @var DependencyContainerInterface
-     */
-    private $dependencyContainer;
-
-    /**
      * @var MethodMapperInterface[]
      */
     private $methodMappers = [];
@@ -59,20 +52,17 @@ class Communicator implements CommunicatorInterface
      * @param PayolutionQueryContainerInterface $queryContainer
      * @param RequestConverterInterface $requestConverter
      * @param ResponseConverterInterface $responseConverter
-     * @param DependencyContainerInterface $dependencyContainer
      */
     public function __construct(
         AdapterInterface $executionAdapter,
         PayolutionQueryContainerInterface $queryContainer,
         RequestConverterInterface $requestConverter,
-        ResponseConverterInterface $responseConverter,
-        DependencyContainerInterface $dependencyContainer
+        ResponseConverterInterface $responseConverter
     ) {
         $this->executionAdapter = $executionAdapter;
         $this->queryContainer = $queryContainer;
         $this->requestConverter = $requestConverter;
         $this->responseConverter = $responseConverter;
-        $this->dependencyContainer = $dependencyContainer;
     }
 
     /**
@@ -239,7 +229,7 @@ class Communicator implements CommunicatorInterface
      */
     private function logApiRequest(PayolutionRequestInterface $requestTransfer, $idPayment)
     {
-        $logEntity = $this->getDependencyContainer()->createTransactionRequestLogEntity();
+        $logEntity = new SpyPaymentPayolutionTransactionRequestLog();
         $logEntity
             ->setPaymentCode($requestTransfer->getPaymentCode())
             ->setPresentationAmount($requestTransfer->getPresentationAmount())
@@ -272,18 +262,10 @@ class Communicator implements CommunicatorInterface
      */
     private function logApiResponse(PayolutionResponseInterface $responseTransfer, $idPayment)
     {
-        $logEntity = $this->getDependencyContainer()->createTransactionStatusLogEntity();
+        $logEntity = new SpyPaymentPayolutionTransactionStatusLog();
         $logEntity->fromArray($responseTransfer->toArray());
         $logEntity->setFkPaymentPayolution($idPayment);
         $logEntity->save();
-    }
-
-    /**
-     * @return PayolutionDependencyContainer
-     */
-    private function getDependencyContainer()
-    {
-        return $this->dependencyContainer;
     }
 
 }

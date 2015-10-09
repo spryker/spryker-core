@@ -8,24 +8,10 @@ namespace SprykerFeature\Zed\Payolution\Business\Order;
 use Generated\Shared\Payolution\ItemInterface;
 use Generated\Shared\Payolution\PayolutionPaymentInterface;
 use Generated\Shared\Payolution\OrderInterface;
-use SprykerFeature\Zed\Payolution\Business\PayolutionDependencyContainer;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 
 class Saver implements SaverInterface
 {
-
-    /**
-     * @var PayolutionDependencyContainer
-     */
-    private $dependencyContainer;
-
-    /**
-     * @param PayolutionDependencyContainer $dependencyContainer
-     */
-    public function __construct(PayolutionDependencyContainer $dependencyContainer)
-    {
-        $this->dependencyContainer = $dependencyContainer;
-    }
 
     /**
      * @param OrderInterface $orderTransfer
@@ -51,7 +37,7 @@ class Saver implements SaverInterface
      */
     private function savePaymentForOrder(PayolutionPaymentInterface $paymentTransfer, $idSalesOrder)
     {
-        $paymentEntity = $this->dependencyContainer->createPaymentEntity();
+        $paymentEntity = new SpyPaymentPayolution();
         $paymentEntity->fromArray($paymentTransfer->toArray());
 
         // Take over fields from address transfer
@@ -82,7 +68,7 @@ class Saver implements SaverInterface
     {
         /** @var ItemInterface $orderItemTransfer */
         foreach ($orderItemTransfers as $orderItemTransfer) {
-            $paymentOrderItemEntity = $this->dependencyContainer->createPaymentOrderItemEntity();
+            $paymentOrderItemEntity = new SpyPaymentPayolutionOrderItem();
             $paymentOrderItemEntity
                 ->setFkPaymentPayolution($idPayment)
                 ->setFkSalesOrderItem($orderItemTransfer->getIdSalesOrderItem());
