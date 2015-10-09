@@ -1,85 +1,87 @@
 actor: Tester
 
 include:
- - Bundles/Acl/
- - Bundles/Application/
- - Bundles/Auth/
- - Bundles/Availability/
- - Bundles/AvailabilityCartConnector/
- - Bundles/AvailabilityCheckoutConnector/
- - Bundles/Calculation/
- - Bundles/Cart/
- - Bundles/Catalog/
- - Bundles/Category/
- - Bundles/CategoryExporter/
- - Bundles/Checkout/
- - Bundles/Cms/
- - Bundles/CmsExporter/
- - Bundles/Collector/
- - Bundles/Config/
- - Bundles/Console/
- - Bundles/Country/
- - Bundles/Customer/
- - Bundles/CustomerMailConnector/
- - Bundles/DbDump/
- - Bundles/Discount/
- - Bundles/DiscountCalculationConnector/
- - Bundles/Distributor/
- - Bundles/Document/
- - Bundles/Git/
- - Bundles/Glossary/
- - Bundles/GlossaryDistributor/
- - Bundles/GlossaryQueue/
- - Bundles/Heartbeat/
- - Bundles/Installer/
- - Bundles/Invoice/
- - Bundles/Kernel/
- - Bundles/Library/
- - Bundles/Locale/
- - Bundles/Lumberjack/
- - Bundles/Mail/
- - Bundles/Maintenance/
- - Bundles/Oms/
- - Bundles/Price/
- - Bundles/PriceCartConnector/
- - Bundles/Product/
- - Bundles/ProductCategory/
- - Bundles/ProductExporter/
- - Bundles/ProductImage/
- - Bundles/ProductOption/
- - Bundles/ProductOptionCartConnector/
- - Bundles/ProductSearch/
- - Bundles/ProductSearch/
- - Bundles/Propel/
- - Bundles/Queue/
- - Bundles/RedirectExporter/
- - Bundles/Sales/
- - Bundles/Search/
- - Bundles/SearchHeartbeatConnector/
- - Bundles/Setup/
- - Bundles/Session/
- - Bundles/SessionHeartbeatConnector/
- - Bundles/Stock/
- - Bundles/StockSalesConnector/
- - Bundles/Storage/
- - Bundles/StorageHeartbeatConnector/
- - Bundles/System/
- - Bundles/Tax/
- - Bundles/TaxProductConnector/
- - Bundles/Transfer/
- - Bundles/Touch/
- - Bundles/Twig/
- - Bundles/Url/
- - Bundles/User/
- - Bundles/Yves/
- - Bundles/ZedRequest/
+ - Bundles/Acl
+ - Bundles/Application
+ - Bundles/Auth
+ - Bundles/Availability
+ - Bundles/Calculation
+ - Bundles/Cart
+ - Bundles/Category
+ - Bundles/Checkout
+ - Bundles/Cms
+ - Bundles/Config
+ - Bundles/Console
+ - Bundles/Country
+ - Bundles/Customer
+ - Bundles/CustomerCheckoutConnector
+ - Bundles/CustomerMailConnector
+ - Bundles/DbDump
+ - Bundles/Discount
+ - Bundles/DiscountCalculationConnector
+ - Bundles/DiscountCheckoutConnector
+ - Bundles/Distributor
+ - Bundles/Document
+ - Bundles/Git
+ - Bundles/Glossary
+ - Bundles/GlossaryDistributor
+ - Bundles/GlossaryQueue
+ - Bundles/Heartbeat
+ - Bundles/Invoice
+ - Bundles/ItemGrouper
+ - Bundles/Kernel
+ - Bundles/Library
+ - Bundles/Locale
+ - Bundles/Lumberjack
+ - Bundles/Mail
+ - Bundles/Maintenance
+ - Bundles/Oms
+ - Bundles/OmsCheckoutConnector
+ - Bundles/Payone
+ - Bundles/Price
+ - Bundles/PriceCartConnector
+ - Bundles/Product
+ - Bundles/ProductCartConnector
+ - Bundles/ProductCategory
+ - Bundles/ProductExporter
+ - Bundles/ProductImage
+ - Bundles/ProductOption
+ - Bundles/ProductOptionCartConnector
+ - Bundles/ProductOptionCheckoutConnector
+ - Bundles/ProductOptionExporter
+ - Bundles/ProductSearch
+ - Bundles/Propel
+ - Bundles/PropelHeartbeatConnector
+ - Bundles/Queue
+ - Bundles/Sales
+ - Bundles/SearchHeartbeatConnector
+ - Bundles/SequenceNumber
+ - Bundles/Session
+ - Bundles/SessionHeartbeatConnector
+ - Bundles/Setup
+ - Bundles/Stock
+ - Bundles/StockSalesConnector
+ - Bundles/Storage
+ - Bundles/StorageHeartbeatConnector
+ - Bundles/System
+ - Bundles/Tax
+ - Bundles/TaxProductConnector
+ - Bundles/Touch
+ - Bundles/Transfer
+ - Bundles/Translation
+ - Bundles/Twig
+ - Bundles/Url
+ - Bundles/User
+ - Bundles/Wishlist
+ - Bundles/Yves
+ - Bundles/ZedRequest
 
 paths:
     tests: ../../../tests
-    log: ../../../tests/_log
+    log: ../../../tests/_output
     data: ../../../tests/_data
-    support: ../../../tests/_support,
-    envs: tests/_envs
+    support: ../../../tests/_support
+    envs: ../../../tests/_envs
 
 settings:
     bootstrap: _bootstrap.php
@@ -88,10 +90,6 @@ settings:
     memory_limit: 1024M
     log: true
 
-extensions:
-    enabled:
-        - Codeception\Extension\RunFailed
-
 modules:
     config:
         Db:
@@ -99,3 +97,7 @@ modules:
             user: ''
             password: ''
             dump: tests/_data/dump.sql
+
+extensions:
+    enabled:
+        - Codeception\Extension\RunFailed
