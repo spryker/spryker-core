@@ -45,6 +45,7 @@
         <property name="maxNumberOfUses" type="int" />
         <property name="voucherBatch" type="int"/>
         <property name="quantity" type="int" />
+        <property name="includeTemplate" type="bool"/>
     </transfer>
 
     <transfer name="VoucherPool">

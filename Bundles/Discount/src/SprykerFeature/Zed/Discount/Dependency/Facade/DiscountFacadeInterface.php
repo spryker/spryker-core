@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Discount\Dependency\Facade;
 
 use Generated\Shared\Discount\DiscountCollectorInterface;
-use Generated\Shared\Discount\VoucherCreateInterface;
+use Generated\Shared\Discount\VoucherInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 use Generated\Shared\Transfer\DiscountTransfer;
@@ -71,14 +71,14 @@ interface DiscountFacadeInterface
     public function distributeAmount(array $discountableObjects, DiscountTransfer $discountTransfer);
 
     /**
-     * @param VoucherCreateInterface $voucherTransfer
+     * @param VoucherInterface $voucherTransfer
      */
-    public function createVoucherCodes(VoucherCreateInterface $voucherTransfer);
+    public function createVoucherCodes(VoucherInterface $voucherTransfer);
 
     /**
-     * @param VoucherCreateInterface $voucherTransfer
+     * @param VoucherInterface $voucherTransfer
      */
-    public function createVoucherCode(VoucherCreateInterface $voucherTransfer);
+    public function createVoucherCode(VoucherInterface $voucherTransfer);
 
     /**
      * @return array

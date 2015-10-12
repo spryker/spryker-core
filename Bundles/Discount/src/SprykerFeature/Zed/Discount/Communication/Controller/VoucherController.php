@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Controller;
 
-use Generated\Shared\Transfer\VoucherCreateTransfer;
+use Generated\Shared\Transfer\VoucherTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
@@ -38,12 +38,12 @@ class VoucherController extends AbstractController
             $formData = $form->getData();
             $this->setSessionTimestampForVoucherGenerator();
 
-            $voucherCreateTransfer = new VoucherCreateTransfer();
-            $voucherCreateTransfer->fromArray($formData, true);
-            $voucherCreateTransfer->setQuantity(VoucherForm::ONE_VOUCHER);
-            $voucherCreateTransfer->setIncludeTemplate(false);
+            $voucherTransfer = new VoucherTransfer();
+            $voucherTransfer->fromArray($formData, true);
+            $voucherTransfer->setQuantity(VoucherForm::ONE_VOUCHER);
+            $voucherTransfer->setIncludeTemplate(false);
 
-            $this->getFacade()->createVoucherCodes($voucherCreateTransfer);
+            $this->getFacade()->createVoucherCodes($voucherTransfer);
 
             return $this->redirectResponse('/discount/voucher/view/?' . self::ID_POOL_PARAMETER . '=' . (int) $formData[VoucherForm::FIELD_ID_POOL]);
         }
@@ -65,11 +65,11 @@ class VoucherController extends AbstractController
             $formData = $form->getData();
             $this->setSessionTimestampForVoucherGenerator();
 
-            $voucherCreateTransfer = new VoucherCreateTransfer();
-            $voucherCreateTransfer->fromArray($formData, true);
-            $voucherCreateTransfer->setIncludeTemplate(false);
+            $voucherTransfer = new VoucherTransfer();
+            $voucherTransfer->fromArray($formData, true);
+            $voucherTransfer->setIncludeTemplate(false);
 
-            $this->getFacade()->createVoucherCodes($voucherCreateTransfer);
+            $this->getFacade()->createVoucherCodes($voucherTransfer);
 
             return $this->redirectResponse('/discount/voucher/view/?' . self::ID_POOL_PARAMETER . '=' . (int) $formData[VoucherForm::FIELD_ID_POOL]);
         }

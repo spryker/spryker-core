@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Discount\Business;
 use Generated\Shared\Discount\DiscountCollectorInterface;
 use Generated\Shared\Discount\OrderInterface;
 use Generated\Shared\Discount\VoucherCreateInterface;
+use Generated\Shared\Discount\VoucherInterface;
 use Generated\Shared\Transfer\CartRuleTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DecisionRuleTransfer;
@@ -99,17 +100,19 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * @param VoucherCreateInterface $voucherTransfer
+     * @param VoucherInterface $voucherTransfer
      */
-    public function createVoucherCodes(VoucherCreateInterface $voucherTransfer)
+    public function createVoucherCodes(VoucherInterface $voucherTransfer)
     {
         $this->getDependencyContainer()->createVoucherEngine()->createVoucherCodes($voucherTransfer);
     }
 
     /**
-     * @param VoucherCreateInterface $voucherTransfer
+     * @param VoucherInterface $voucherTransfer
+     *
+     * @return SpyDiscountVoucher
      */
-    public function createVoucherCode(VoucherCreateInterface $voucherTransfer)
+    public function createVoucherCode(VoucherInterface $voucherTransfer)
     {
         return $this->getDependencyContainer()->createVoucherEngine()->createVoucherCode($voucherTransfer);
     }
