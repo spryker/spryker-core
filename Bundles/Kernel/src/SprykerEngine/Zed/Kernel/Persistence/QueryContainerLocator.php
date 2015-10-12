@@ -68,7 +68,7 @@ class QueryContainerLocator extends AbstractLocator
             $queryContainer->setExternalDependencies($container);
         } catch (ClassNotFoundException $e) {
             // TODO remove try-catch when all bundles have a DependencyProvider
-            \SprykerFeature_Shared_Library_Log::log($bundle, 'builder_missing.log');
+            \SprykerFeature\Shared\Library\Log::log($bundle, 'builder_missing.log');
         }
 
         return $queryContainer;

@@ -30,7 +30,7 @@ class TranslationServiceProvider extends SilexTranslationServiceProvider impleme
         $currentLanguage = Store::getInstance()->getCurrentLanguage();
         $pathToLanguageFile = APPLICATION_ROOT_DIR . '/config/Zed/language/' . $currentLanguage . '/lang.csv';
 
-        $translator = new \SprykerFeature_Zed_Library_Translate(
+        $translator = new \SprykerFeature\Zed\Library\Translate(
             [
                 'adapter' => 'csv',
                 'content' => $pathToLanguageFile,

@@ -90,7 +90,7 @@ class ControllerLocator implements ControllerLocatorInterface
         $bundleName = lcfirst($this->bundle);
 
         if (!method_exists($resolvedController, 'setOwnFacade')) {
-            \SprykerFeature_Shared_Library_Log::log($resolvedController, 'wrong_controller.txt');
+            \SprykerFeature\Shared\Library\Log::log($resolvedController, 'wrong_controller.txt');
         }
 
         $bundleConfigLocator = new BundleDependencyProviderLocator(); // @todo Make singleton because of performance

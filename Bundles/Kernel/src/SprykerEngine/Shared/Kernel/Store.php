@@ -314,7 +314,7 @@ class Store
      */
     public function getStorePrefix()
     {
-        $prefix = (\SprykerFeature_Shared_Library_Environment::isNotProduction()) ? 'DEV' : ''; // DEV = Testing
+        $prefix = (\SprykerFeature\Shared\Library\Environment::isNotProduction()) ? 'DEV' : ''; // DEV = Testing
         $prefix .= $this->getStoreName();
 
         return $prefix;

@@ -70,7 +70,7 @@ class Config
     public static function init($environment = null)
     {
         if (is_null($environment)) {
-            $environment = \SprykerFeature_Shared_Library_Environment::getInstance()->getEnvironment();
+            $environment = \SprykerFeature\Shared\Library\Environment::getInstance()->getEnvironment();
         }
 
         $storeName = \SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName();

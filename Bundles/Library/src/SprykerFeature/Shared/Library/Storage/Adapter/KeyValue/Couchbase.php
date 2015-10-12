@@ -64,7 +64,7 @@ abstract class Couchbase extends AbstractKeyValue
     protected function getBucketName()
     {
         $storeName = \SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName();
-        $environment = \SprykerFeature_Shared_Library_Environment::getInstance()->getEnvironment();
+        $environment = \SprykerFeature\Shared\Library\Environment::getInstance()->getEnvironment();
 
         return $storeName . '_' . $environment . '_' . self::BUCKET_NAME_POSTFIX;
     }

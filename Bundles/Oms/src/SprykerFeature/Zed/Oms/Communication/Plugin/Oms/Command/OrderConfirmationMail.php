@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command;
 use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
-use SprykerFeature_Shared_Library_Log;
+use \SprykerFeature\Shared\Library\Log;
 
 class OrderConfirmationMail implements CommandByOrderInterface
 {
@@ -23,7 +23,7 @@ class OrderConfirmationMail implements CommandByOrderInterface
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        SprykerFeature_Shared_Library_Log::log('Command OrderConfirmationMail by Order for nr of items: ' . count($orderItems), 'statemachine.log');
+        \SprykerFeature\Shared\Library\Log::log('Command OrderConfirmationMail by Order for nr of items: ' . count($orderItems), 'statemachine.log');
     }
 
 }

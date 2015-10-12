@@ -67,7 +67,7 @@ class FacadeLocator extends AbstractLocator
             }
         } catch (ClassNotFoundException $e) {
             // TODO remove try-catch when all bundles have a Builder
-            \SprykerFeature_Shared_Library_Log::log(APPLICATION . ' - ' . $bundle, 'builder_missing.log');
+            \SprykerFeature\Shared\Library\Log::log(APPLICATION . ' - ' . $bundle, 'builder_missing.log');
         }
 
         return $facade;

@@ -19,7 +19,7 @@ use Exception;
 use ErrorException;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature_Shared_Library_Log;
+use \SprykerFeature\Shared\Library\Log;
 
 class Timeout implements TimeoutInterface
 {
@@ -138,7 +138,7 @@ class Timeout implements TimeoutInterface
 
             $this->eventToTimeoutBuffer[$event->getName()] = $currentTime->add($interval);
 
-            SprykerFeature_Shared_Library_Log::log($this->eventToTimeoutBuffer, 'timeout.log');
+            \SprykerFeature\Shared\Library\Log::log($this->eventToTimeoutBuffer, 'timeout.log');
         }
 
         return $this->eventToTimeoutBuffer[$event->getName()];

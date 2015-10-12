@@ -114,7 +114,7 @@ class File extends AbstractWriter
     {
         return isset($this->options['log_path']) ?
             $this->options['log_path']
-            : \SprykerFeature_Shared_Library_Data::getLocalCommonPath('lumberjack');
+            : \SprykerFeature\Shared\Library\DataDirectory::getLocalCommonPath('lumberjack');
     }
 
     /**

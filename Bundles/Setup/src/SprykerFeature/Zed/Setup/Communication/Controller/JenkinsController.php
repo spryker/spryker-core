@@ -52,9 +52,9 @@ class JenkinsController extends AbstractController{
         curl_setopt($ch, CURLOPT_HEADER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        \SprykerFeature_Shared_Library_Log::logRaw('CURL call: ' . $post_url . "body:\n[" . $body . "]\n\n", self::LOGFILE);
+        \SprykerFeature\Shared\Library\Log::logRaw('CURL call: ' . $post_url . "body:\n[" . $body . "]\n\n", self::LOGFILE);
         $head = curl_exec($ch);
-        \SprykerFeature_Shared_Library_Log::logRaw("CURL response:\n[" . $head . "]\n\n", self::LOGFILE);
+        \SprykerFeature\Shared\Library\Log::logRaw("CURL response:\n[" . $head . "]\n\n", self::LOGFILE);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
@@ -115,7 +115,7 @@ class JenkinsController extends AbstractController{
             return $schedule;
         }
 
-        if (\SprykerFeature_Shared_Library_Environment::isNotProduction()) {
+        if (\SprykerFeature\Shared\Library\Environment::isNotProduction()) {
             // Non-production - don't run automatically via Jenkins
             return '';
         } else {
@@ -145,7 +145,7 @@ class JenkinsController extends AbstractController{
      */
     protected function getCommand($command, $store)
     {
-        if (\SprykerFeature_Shared_Library_Environment::getInstance()->isNotDevelopment()) {
+        if (\SprykerFeature\Shared\Library\Environment::getInstance()->isNotDevelopment()) {
             return "<command>[ -f ../../../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../../../current/deploy/vars
 [ -f ../../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../../current/deploy/vars
 [ -f ../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../current/deploy/vars
@@ -177,7 +177,7 @@ $command</command>";
             ]
         );
 
-        $jobs_dir = \SprykerFeature_Shared_Library_Data::getLocalCommonPath('/jenkins/jobs/');
+        $jobs_dir = \SprykerFeature\Shared\Library\DataDirectory::getLocalCommonPath('/jenkins/jobs/');
 
         $roles = $this->getRoles();
 

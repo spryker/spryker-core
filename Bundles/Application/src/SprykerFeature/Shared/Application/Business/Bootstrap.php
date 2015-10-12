@@ -24,7 +24,7 @@ abstract class Bootstrap
     {
         $app = $this->getBaseApplication();
 
-        if (\SprykerFeature_Shared_Library_Environment::isNotProduction()) {
+        if (\SprykerFeature\Shared\Library\Environment::isNotProduction()) {
             $app['debug'] = true;
         }
 

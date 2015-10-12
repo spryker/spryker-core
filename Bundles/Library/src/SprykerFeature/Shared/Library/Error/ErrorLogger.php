@@ -100,7 +100,7 @@ class ErrorLogger
     ) {
         try {
             $message = ErrorRenderer::renderException($exception);
-            \SprykerFeature_Shared_Library_Log::log($message, 'exception.log');
+            \SprykerFeature\Shared\Library\Log::log($message, 'exception.log');
         } catch (\Exception $internalException) {
             self::sendExceptionToLumberjack($internalException, true, $eventJournal, $newRelicApi);
             self::sendExceptionToNewRelic($internalException, true, $eventJournal, $newRelicApi);

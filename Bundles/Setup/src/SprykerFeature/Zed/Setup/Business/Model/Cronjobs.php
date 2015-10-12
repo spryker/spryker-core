@@ -263,9 +263,9 @@ class Cronjobs
         curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-//        \SprykerFeature_Shared_Library_Log::logRaw('CURL call: ' . $postUrl . "body:\n[" . $body . "]\n\n", self::LOGFILE);
+//        \SprykerFeature\Shared\Library\Log::logRaw('CURL call: ' . $postUrl . "body:\n[" . $body . "]\n\n", self::LOGFILE);
         $curl_response = curl_exec($ch);
-//        \SprykerFeature_Shared_Library_Log::logRaw("CURL response:\n[" . $head . "]\n\n", self::LOGFILE);
+//        \SprykerFeature\Shared\Library\Log::logRaw("CURL response:\n[" . $head . "]\n\n", self::LOGFILE);
         if (false === $curl_response) {
             throw new \ErrorException('cURL error: ' . curl_error($ch) . ' while calling Jenkins URL ' . $postUrl);
         } else {
@@ -372,7 +372,7 @@ class Cronjobs
             return $schedule;
         }
 
-        if (\SprykerFeature_Shared_Library_Environment::isNotProduction()) {
+        if (\SprykerFeature\Shared\Library\Environment::isNotProduction()) {
             // Non-production - don't run automatically via Jenkins
             return '';
         } else {
@@ -404,7 +404,7 @@ class Cronjobs
      */
     protected function getCommand($command, $store)
     {
-        $environment = \SprykerFeature_Shared_Library_Environment::getInstance();
+        $environment = \SprykerFeature\Shared\Library\Environment::getInstance();
         $environment_name = $environment->getEnvironment();
         if ($environment->isNotDevelopment()) {
             return "<command>[ -f ../../../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../../../current/deploy/vars

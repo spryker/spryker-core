@@ -19,7 +19,7 @@ class ModeDetector implements ModeDetectorInterface
      */
     public function getMode()
     {
-        if (\SprykerFeature_Shared_Library_Environment::isNotProduction()) {
+        if (\SprykerFeature\Shared\Library\Environment::isNotProduction()) {
             return self::MODE_TEST;
         }
 

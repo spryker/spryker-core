@@ -110,7 +110,7 @@ class SessionHandlerMysql implements \SessionHandlerInterface
         $startTime = microtime(true);
 
         $store = Store::getInstance()->getStoreName();
-        $environment = \SprykerFeature_Shared_Library_Environment::getInstance()->getEnvironment();
+        $environment = \SprykerFeature\Shared\Library\Environment::getInstance()->getEnvironment();
         $query = 'SELECT * FROM session WHERE session.key=? AND session.store=? AND session.environment=? AND session.expires >= session.updated_at + ' . $this->lifetime . ' LIMIT 1';
 
         $statement = $this->connection->prepare($query);
@@ -136,7 +136,7 @@ class SessionHandlerMysql implements \SessionHandlerInterface
         }
 
         $startTime = microtime(true);
-        $environment = \SprykerFeature_Shared_Library_Environment::getInstance()->getEnvironment();
+        $environment = \SprykerFeature\Shared\Library\Environment::getInstance()->getEnvironment();
         $data = json_encode($sessionData);
         $expireTimestamp = time() + $this->lifetime;
         $expires = date('Y-m-d H:i:s', $expireTimestamp);

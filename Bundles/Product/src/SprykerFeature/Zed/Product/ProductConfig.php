@@ -17,7 +17,7 @@ class ProductConfig extends AbstractBundleConfig
      */
     public function getDestinationDirectoryForUploads()
     {
-        return \SprykerFeature_Shared_Library_Data::getLocalStoreSpecificPath('import/products');
+        return \SprykerFeature\Shared\Library\DataDirectory::getLocalStoreSpecificPath('import/products');
     }
 
     /**

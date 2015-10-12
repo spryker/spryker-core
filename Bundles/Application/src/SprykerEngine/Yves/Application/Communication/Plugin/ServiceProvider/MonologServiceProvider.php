@@ -36,7 +36,7 @@ class MonologServiceProvider implements ServiceProviderInterface
         });
 
         $app['monolog.logfile'] = function () {
-            return \SprykerFeature_Shared_Library_Log::getFilePath('message.log');
+            return \SprykerFeature\Shared\Library\Log::getFilePath('message.log');
         };
 
         $app['monolog.handler.debug'] = function () use ($app) {

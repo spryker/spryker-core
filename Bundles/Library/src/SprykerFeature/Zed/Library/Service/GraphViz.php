@@ -1045,7 +1045,7 @@ class GraphViz
 
         $googleGraph = str_replace('strict digraph G ', '', $digraph);
 
-        $googleApi = new \SprykerFeature_Zed_Library_Service_GoogleGraph();
+        $googleApi = new \SprykerFeature\Zed\Library\Service\GoogleGraph();
         $googleApi->setCht('gv:dot');
         $googleApi->setChof('gif');
         $googleApi->setChl('digraph' . $googleGraph);

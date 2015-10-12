@@ -27,9 +27,9 @@ class Repeater extends AbstractPlugin
     {
         $this->isRepeatInProgress = true;
         if (!is_null($mvc)) {
-            return \SprykerFeature_Shared_Library_Log::getFlashInFile('last_yves_request_' . $mvc . '.log');
+            return \SprykerFeature\Shared\Library\Log::getFlashInFile('last_yves_request_' . $mvc . '.log');
         } else {
-            return \SprykerFeature_Shared_Library_Log::getFlashInFile('last_yves_request.log');
+            return \SprykerFeature\Shared\Library\Log::getFlashInFile('last_yves_request.log');
         }
     }
 
@@ -43,7 +43,7 @@ class Repeater extends AbstractPlugin
             return;
         }
 
-        if (\SprykerFeature_Shared_Library_Environment::isNotDevelopment()) {
+        if (\SprykerFeature\Shared\Library\Environment::isNotDevelopment()) {
             return;
         }
 
@@ -61,8 +61,8 @@ class Repeater extends AbstractPlugin
             $httpRequest->attributes->get('action')
         );
 
-        \SprykerFeature_Shared_Library_Log::setFlashInFile($repeatData, 'last_yves_request_' . $mvc . '.log');
-        \SprykerFeature_Shared_Library_Log::setFlashInFile($repeatData, 'last_yves_request.log');
+        \SprykerFeature\Shared\Library\Log::setFlashInFile($repeatData, 'last_yves_request_' . $mvc . '.log');
+        \SprykerFeature\Shared\Library\Log::setFlashInFile($repeatData, 'last_yves_request.log');
     }
 
 }

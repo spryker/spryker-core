@@ -14,7 +14,7 @@ class ReleaseExpiredLocksController extends AbstractController
     public function indexAction()
     {
         $releasedLocksCount = $this->facadeMisc->releaseExpiredLocks();
-        \SprykerFeature_Zed_Library_Setup::renderAndExit('Released ' . $releasedLocksCount . ' expired locks.');
+        \SprykerFeature\Zed\Library\Setup::renderAndExit('Released ' . $releasedLocksCount . ' expired locks.');
     }
 
 }
