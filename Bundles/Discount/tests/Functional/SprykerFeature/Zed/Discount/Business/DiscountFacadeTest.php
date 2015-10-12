@@ -11,9 +11,9 @@ use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
-use Generated\Shared\Transfer\VoucherCreateTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
+use Generated\Shared\Transfer\VoucherTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use Generated\Shared\Transfer\OrderTransfer;
@@ -234,9 +234,9 @@ class DiscountFacadeTest extends Test
             ->setName(self::VOUCHER_POOL_NAME);
         $voucherPoolEntity->save();
 
-        $voucherCreateTransfer = new VoucherCreateTransfer();
+        $voucherCreateTransfer = new VoucherTransfer();
         $voucherCreateTransfer->setCode(self::TEST_VOUCHER_CODE);
-        $voucherCreateTransfer->setIdVoucherPool($voucherPoolEntity->getPrimaryKey());
+        $voucherCreateTransfer->setFkDiscountVoucherPool($voucherPoolEntity->getPrimaryKey());
 
         $this->discountFacade->createVoucherCode($voucherCreateTransfer);
 
@@ -254,9 +254,9 @@ class DiscountFacadeTest extends Test
             ->setName(self::VOUCHER_POOL_NAME);
         $voucherPoolEntity->save();
 
-        $voucherCreateTransfer = new VoucherCreateTransfer();
+        $voucherCreateTransfer = new VoucherTransfer();
         $voucherCreateTransfer->setQuantity(self::AMOUNT_OF_VOUCHERS_TO_CREATE_10);
-        $voucherCreateTransfer->setIdVoucherPool($voucherPoolEntity->getPrimaryKey());
+        $voucherCreateTransfer->setFkDiscountVoucherPool($voucherPoolEntity->getPrimaryKey());
 
         $this->discountFacade->createVoucherCodes($voucherCreateTransfer);
 
