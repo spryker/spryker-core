@@ -24,15 +24,19 @@ class Config
 
     /**
      * @param string $key
+     * @param null $default
      *
      * @throws \Exception
-     *
      * @return mixed
      */
-    public static function get($key)
+    public static function get($key, $default = null)
     {
         if (empty(self::$config)) {
             self::init();
+        }
+
+        if (!self::hasValue($key) && null !== $default) {
+            self::$config[$key] = $default;
         }
 
         if (!self::hasValue($key)) {
