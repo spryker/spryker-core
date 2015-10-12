@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Auth\Communication\Plugin\ServiceProvider;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use SprykerFeature\Zed\Auth\AuthConfig;
 use SprykerFeature\Zed\Auth\Business\AuthFacade;
 use SprykerFeature\Zed\Auth\Communication\AuthDependencyContainer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -63,11 +64,11 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
      */
     protected function canRedirectAfterLogin(Request $request)
     {
-        if ($request->getMethod() !== 'GET') {
+        if ($request->getMethod() !== Request::METHOD_GET) {
             return false;
         }
 
-        if ($this->isAuthorized($request)) {
+        if ($this->isAuthenticated($request)) {
             return false;
         }
 
@@ -89,7 +90,7 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
      *
      * @return bool
      */
-    protected function isAuthorized(Request $request)
+    protected function isAuthenticated(Request $request)
     {
         $facadeAuth = $this->getFacade();
         $token = null;
@@ -98,11 +99,11 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
             $token = $facadeAuth->getCurrentUserToken();
         }
 
-        if ($request->headers->get('Auth-Token')) {
-            $token = $request->headers->get('Auth-Token');
+        if ($request->headers->get(AuthConfig::AUTH_TOKEN)) {
+            $token = $request->headers->get(AuthConfig::AUTH_TOKEN);
         }
 
-        if (!$facadeAuth->isAuthorized($token)) {
+        if (!$facadeAuth->isAuthenticated($token)) {
             return false;
         }
 
@@ -116,7 +117,7 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
     {
         $request = $event->getRequest();
         $session = $request->getSession();
-        if ($session->has(self::REQUEST_URI) && $this->isAuthorized($request)) {
+        if ($session->has(self::REQUEST_URI) && $this->isAuthenticated($request)) {
             $event->setResponse(new RedirectResponse($session->get(self::REQUEST_URI)));
             $session->remove(self::REQUEST_URI);
         }

@@ -43,7 +43,7 @@ class AuthFacade extends AbstractFacade
      *
      * @return bool
      */
-    public function isAuthorized($token)
+    public function isAuthenticated($token)
     {
         return $this->getDependencyContainer()
             ->createAuthModel()
