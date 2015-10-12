@@ -106,12 +106,11 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     private function hasTransactionLogStatus(OrderInterface $orderTransfer, $paymentCode, $expectedStatusReasonCode)
     {
         $idSalesOrder = $orderTransfer->getIdSalesOrder();
-        $paymentEntity = $this->queryContainer->queryPaymentBySalesOrderId($idSalesOrder)->findOne();
 
         $logEntity = $this
             ->queryContainer
-            ->queryTransactionStatusLogByPaymentIdAndPaymentCodeLatestFirst(
-                $paymentEntity->getIdPaymentPayolution(),
+            ->queryTransactionStatusLogBySalesOrderIdAndPaymentCodeLatestFirst(
+                $idSalesOrder,
                 $paymentCode
             )
             ->findOne();

@@ -84,14 +84,40 @@ class PayolutionQueryContainer extends AbstractQueryContainer implements Payolut
     }
 
     /**
-     * @param int $idPayment
+     * @param int $idSalesOrder
+     *
+     * @return SpyPaymentPayolutionTransactionStatusLogQuery
+     */
+    public function queryTransactionStatusLogBySalesOrderId($idSalesOrder)
+    {
+        return $this
+            ->queryTransactionStatusLog()
+            ->useSpyPaymentPayolutionQuery()
+                ->filterByFkSalesOrder($idSalesOrder)
+            ->endUse();
+    }
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return SpyPaymentPayolutionTransactionStatusLogQuery
+     */
+    public function queryTransactionStatusLogBySalesOrderIdLatestFirst($idSalesOrder)
+    {
+        return $this
+            ->queryTransactionStatusLogBySalesOrderId($idSalesOrder)
+            ->orderByIdPaymentPayolutionTransactionStatusLog(Criteria::DESC);
+    }
+
+    /**
+     * @param int $idSalesOrder
      * @param string $paymentCode
      *
      * @return SpyPaymentPayolutionTransactionStatusLogQuery
      */
-    public function queryTransactionStatusLogByPaymentIdAndPaymentCodeLatestFirst($idPayment, $paymentCode)
+    public function queryTransactionStatusLogBySalesOrderIdAndPaymentCodeLatestFirst($idSalesOrder, $paymentCode)
     {
-        return $this->queryTransactionStatusLogByPaymentIdLatestFirst($idPayment)
+        return $this->queryTransactionStatusLogBySalesOrderIdLatestFirst($idSalesOrder)
             // Payment code need to get checked in request log table
             ->joinSpyPaymentPayolutionTransactionRequestLog()
             ->useSpyPaymentPayolutionTransactionRequestLogQuery()

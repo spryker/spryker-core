@@ -51,13 +51,28 @@ interface PayolutionQueryContainerInterface
      */
     public function queryTransactionStatusLogByPaymentIdLatestFirst($idPayment);
 
+
     /**
-     * @param int $idPayment
+     * @param $idSalesOrder
+     *
+     * @return SpyPaymentPayolutionTransactionStatusLogQuery
+     */
+    public function queryTransactionStatusLogBySalesOrderId($idSalesOrder);
+
+    /**
+     * @param int $idSalesOrder
+     *
+     * @return SpyPaymentPayolutionTransactionStatusLogQuery
+     */
+    public function queryTransactionStatusLogBySalesOrderIdLatestFirst($idSalesOrder);
+
+    /**
+     * @param int $idSalesOrder
      * @param string $paymentCode
      *
      * @return SpyPaymentPayolutionTransactionStatusLogQuery
      */
-    public function queryTransactionStatusLogByPaymentIdAndPaymentCodeLatestFirst($idPayment, $paymentCode);
+    public function queryTransactionStatusLogBySalesOrderIdAndPaymentCodeLatestFirst($idSalesOrder, $paymentCode);
 
     /**
      * @param int $idPayment
