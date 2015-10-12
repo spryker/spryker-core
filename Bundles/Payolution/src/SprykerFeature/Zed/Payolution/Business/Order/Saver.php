@@ -9,6 +9,7 @@ use Generated\Shared\Payolution\ItemInterface;
 use Generated\Shared\Payolution\PayolutionPaymentInterface;
 use Generated\Shared\Payolution\OrderInterface;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
+use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionOrderItem;
 
 class Saver implements SaverInterface
 {

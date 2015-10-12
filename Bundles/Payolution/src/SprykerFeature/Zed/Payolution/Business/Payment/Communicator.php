@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PayolutionResponseTransfer;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\ConverterInterface as RequestConverterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Response\ConverterInterface as ResponseConverterInterface;
+use SprykerFeature\Zed\Payolution\Business\Exception\NoMethodMapperException;
 use SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper\MethodMapperInterface;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
@@ -186,10 +187,16 @@ class Communicator implements CommunicatorInterface
     /**
      * @param string $accountBrand
      *
+     * @throws NoMethodMapperException
+     *
      * @return MethodMapperInterface
      */
     private function getMethodMapper($accountBrand)
     {
+        if (!isset($this->methodMappers[$accountBrand])) {
+            throw new NoMethodMapperException('The method mapper is not registered.');
+        }
+
         return $this->methodMappers[$accountBrand];
     }
 
