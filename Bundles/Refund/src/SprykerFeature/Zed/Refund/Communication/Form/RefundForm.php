@@ -2,12 +2,13 @@
 
 namespace SprykerFeature\Zed\Refund\Communication\Form;
 
-use Propel\Runtime\Collection\ObjectCollection;
+use Generated\Shared\Refund\RefundInterface;
+use Generated\Shared\Sales\OrderInterface;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use SprykerFeature\Zed\Refund\Persistence\Propel\SpyRefund;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesExpense;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use SprykerFeature\Zed\Refund\Business\RefundFacade;
+use SprykerFeature\Zed\Refund\Persistence\Propel\SpyRefundQuery;
 use Symfony\Component\Validator\Constraints\GreaterThan;
+use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RefundForm extends AbstractForm
@@ -20,24 +21,27 @@ class RefundForm extends AbstractForm
     const FIELD_ORDER_ITEMS = 'order_items';
     const FIELD_EXPENSES = 'expenses';
 
-    /**
-     * @var ObjectCollection
-     */
-    protected $orderItems;
+    /** @var  SpyRefundQuery */
+    protected $refundQuery;
 
     /**
-     * @var ObjectCollection
+     * @var RefundFacade
      */
-    protected $expenses;
+    protected $refundFacade;
 
     /**
-     * @param ObjectCollection $orderItems
-     * @param ObjectCollection $expenses
+     * @var OrderInterface
      */
-    public function __construct(ObjectCollection $orderItems, ObjectCollection $expenses)
+    protected $orderTransfer;
+
+    /**
+     * @param RefundFacade $refundFacade
+     * @param OrderInterface $orderTransfer
+     */
+    public function __construct(RefundFacade $refundFacade, OrderInterface $orderTransfer)
     {
-        $this->orderItems = $orderItems;
-        $this->expenses = $expenses;
+        $this->refundFacade = $refundFacade;
+        $this->orderTransfer = $orderTransfer;
     }
 
     /**
@@ -48,6 +52,8 @@ class RefundForm extends AbstractForm
         $this->addCollection(self::FIELD_ORDER_ITEMS, $this->buildOrderItemsFieldConfiguration());
         $this->addCollection(self::FIELD_EXPENSES, $this->buildExpensesFieldConfiguration());
 
+        $maxAmount = $this->refundFacade->calculateRefundableAmount($this->orderTransfer);
+
         $this
             ->addNumber(self::FIELD_ADJUSTMENT_FEE, [
                 'label' => 'Adjustment Fee (in Cents)',
@@ -57,6 +63,7 @@ class RefundForm extends AbstractForm
                 'constraints' => [
                     new NotBlank(),
                     new GreaterThan(['value' => 0]),
+                    new LessThanOrEqual(['value' => $maxAmount]),
                 ],
                 'attr' => ['readonly' => true],
             ])
@@ -101,7 +108,7 @@ class RefundForm extends AbstractForm
         return [
             'type' => 'number',
             'label' => false,
-            'data' => $data,
+            'data' => $this->getRefundableItems(),
             'constraints' => $this->getFieldDefaultConstraints(),
         ];
     }
@@ -111,25 +118,11 @@ class RefundForm extends AbstractForm
      */
     protected function buildExpensesFieldConfiguration()
     {
-        $data = [];
-
-        /** @var SpySalesExpense $expense */
-        foreach ($this->expenses as $expense) {
-            if ($expense->getFkRefund() !== null) {
-                continue;
-            }
-
-            $data[$expense->getIdSalesExpense()] = 1;
-        }
-
-        $attr = [];
-
         return [
             'type' => 'number',
             'label' => false,
-            'data' => $data,
+            'data' => $this->getRefundableExpenses(),
             'constraints' => $this->getFieldDefaultConstraints(),
-            //'attr' => $attr
         ];
     }
 
@@ -145,16 +138,41 @@ class RefundForm extends AbstractForm
     /**
      * @param $idOrder
      *
-     * @return ObjectCollection|SpyRefund[]
+     * @return RefundInterface[]
      */
     protected function getRefunds($idOrder)
     {
-        $this->refundQuery = new \SprykerFeature\Zed\Refund\Persistence\Propel\SpyRefundQuery();
+        return $this->refundFacade->getRefundsByIdSalesOrder($idOrder);
+    }
 
-        return $this->refundQuery
-            ->filterByFkSalesOrder($idOrder)
-            ->find()
-        ;
+    /**
+     * @return array
+     */
+    protected function getRefundableItems()
+    {
+        $refundableItems = $this->refundFacade->getRefundableItems($this->orderTransfer->getIdSalesOrder());
+        $data = [];
+
+        foreach ($refundableItems as $item) {
+            $data[$item->getIdSalesOrderItem()] = $item->getQuantity();
+        }
+
+        return $data;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getRefundableExpenses()
+    {
+        $refundableExpenses = $this->refundFacade->getRefundableExpenses($this->orderTransfer->getIdSalesOrder());
+        $data = [];
+
+        foreach ($refundableExpenses as $expense) {
+            $data[$expense->getIdSalesExpense()] = 1;
+        }
+
+        return $data;
     }
 
 }

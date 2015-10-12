@@ -112,7 +112,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param string $name
      *
-     * @return PaymentMethodMapperInterface
+     * @return PaymentMethodMapperInterface|null
      */
     protected function findPaymentMethodMapperByName($name)
     {
@@ -120,7 +120,7 @@ class PaymentManager implements PaymentManagerInterface
             return $this->registeredMethodMappers[$name];
         }
 
-        return;
+        return null;
     }
 
     /**
@@ -439,7 +439,6 @@ class PaymentManager implements PaymentManagerInterface
         $container->setApiVersion(PayoneApiConstants::API_VERSION_3_9);
         $container->setEncoding($this->standardParameter->getEncoding());
         $container->setKey($this->hashGenerator->hash($this->standardParameter->getKey()));
-        //$container->setKey($this->standardParameter->getKey());
         $container->setMid($this->standardParameter->getMid());
         $container->setPortalid($this->standardParameter->getPortalId());
         $container->setMode($this->modeDetector->getMode());

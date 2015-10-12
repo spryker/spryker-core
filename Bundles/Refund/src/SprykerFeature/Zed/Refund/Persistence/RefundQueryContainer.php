@@ -24,10 +24,15 @@ class RefundQueryContainer extends AbstractQueryContainer implements RefundQuery
         return (new Propel\SpyRefundQuery());
     }
 
-    public function queryRefundsByIdSalesOrder($idSalesOrder)
+    /**
+     * @param int $idOrder
+     *
+     * @return SpyRefundQuery
+     */
+    public function queryRefundsByIdSalesOrder($idOrder)
     {
         $query = SpyRefundQuery::create();
-        $query->filterByFkSalesOrder($idSalesOrder);
+        $query->filterByFkSalesOrder($idOrder);
 
         return $query;
     }

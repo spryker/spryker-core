@@ -2,16 +2,19 @@
 
 namespace SprykerFeature\Zed\Refund\Business\Model;
 
+use Generated\Shared\Refund\RefundInterface;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemsAndExpensesTransfer;
 use Generated\Shared\Transfer\RefundExpenseTransfer;
 use Generated\Shared\Transfer\RefundOrderItemTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
-use SprykerFeature\Zed\Oms\Business\OmsFacade;
+use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\Refund\Dependency\Facade\RefundToOmsInterface;
 use SprykerFeature\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
 use SprykerFeature\Zed\Refund\Persistence\Propel\SpyRefund;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesExpense;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainer;
 
 class Refund
@@ -30,31 +33,31 @@ class Refund
     /**
      * @var SalesQueryContainer
      */
-    protected $queryContainer;
+    protected $salesQueryContainer;
 
     /**
      * @param RefundToSalesInterface $salesFacade
      * @param RefundToOmsInterface $omsFacade
-     * @param SalesQueryContainer $queryContainer
+     * @param SalesQueryContainer $salesQueryContainer
      */
     public function __construct(
         RefundToSalesInterface $salesFacade,
         RefundToOmsInterface $omsFacade,
-        SalesQueryContainer $queryContainer
+        SalesQueryContainer $salesQueryContainer
     ) {
         $this->salesFacade = $salesFacade;
         $this->omsFacade = $omsFacade;
-        $this->queryContainer = $queryContainer;
+        $this->salesQueryContainer = $salesQueryContainer;
     }
 
     /**
      * @param RefundTransfer $refundTransfer
      *
-     * @return RefundTransfer
+     * @return RefundInterface
      */
-    public function saveRefund(RefundTransfer $refundTransfer)
+    public function saveRefund(RefundInterface $refundTransfer)
     {
-        $this->queryContainer->getConnection()->beginTransaction();
+        $this->salesQueryContainer->getConnection()->beginTransaction();
 
         $refundEntity = new SpyRefund();
         $refundEntity->fromArray($refundTransfer->toArray());
@@ -67,13 +70,13 @@ class Refund
         $processedExpenses = $this->processExpenses($expenses);
 
         if (!$processedOrderItems) {
-            $this->queryContainer->getConnection()->rollBack();
+            $this->salesQueryContainer->getConnection()->rollBack();
             return null;
         }
 
         $this->updateOrderItemsAndExpensesAfterRefund($refundEntity->getIdRefund(), $processedOrderItems, $processedExpenses);
 
-        $this->queryContainer->getConnection()->commit();
+        $this->salesQueryContainer->getConnection()->commit();
 
         $orderItemsIds = [];
         /** @var ItemTransfer $processedOrderItem */
@@ -81,7 +84,7 @@ class Refund
             $orderItemsIds[] = $processedOrderItem->getIdSalesOrderItem();
         }
 
-        $orderItems = $this->queryContainer->querySalesOrderItem()
+        $orderItems = $this->salesQueryContainer->querySalesOrderItem()
             ->filterByIdSalesOrderItem($orderItemsIds)
             ->find();
         $this->omsFacade->triggerEvent('start refund', $orderItems, []);
@@ -140,6 +143,11 @@ class Refund
         return $expensesArray;
     }
 
+    /**
+     * @param int $idRefund
+     * @param \ArrayObject $orderItemsArray
+     * @param \ArrayObject $expensesArray
+     */
     protected function updateOrderItemsAndExpensesAfterRefund($idRefund, $orderItemsArray, $expensesArray)
     {
         $orderItemsAndExpensesTransfer = new OrderItemsAndExpensesTransfer();
@@ -148,6 +156,36 @@ class Refund
         $orderItemsAndExpensesTransfer->setExpenses($expensesArray);
 
         $this->salesFacade->updateOrderItemsAndExpensesAfterRefund($idRefund, $orderItemsAndExpensesTransfer);
+    }
+
+    /**
+     * @param int $idOrder
+     *
+     * @return SpySalesOrderItem[]
+     */
+    public function getRefundableItems($idOrder)
+    {
+        return $this->salesQueryContainer
+            ->querySalesOrderItem()
+            ->filterByFkSalesOrder($idOrder)
+            ->filterByFkRefund(null, Criteria::ISNULL)
+            ->find()
+        ;
+    }
+
+    /**
+     * @param int $idOrder
+     *
+     * @return SpySalesExpense[]
+     */
+    public function getRefundableExpenses($idOrder)
+    {
+        return $this->salesQueryContainer
+            ->querySalesExpense()
+            ->filterByFkSalesOrder($idOrder)
+            ->filterByFkRefund(null, Criteria::ISNULL)
+            ->find()
+        ;
     }
 
 }

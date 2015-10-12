@@ -14,6 +14,15 @@ function calculateTotalRefundAmount() {
     var adjustmentFee = parseInt($('#form_adjustment_fee').val(), 10) || 0;
     sum = sum + adjustmentFee;
 
+    if (sum < 0) {
+        adjustmentFee = adjustmentFee + sum;
+        $('#form_adjustment_fee').val(adjustmentFee);
+        sum = 0;
+    }
+
+    var maxSum = $('div.refund-form').data('max');
+    if (sum > total)
+
     $('#form_amount').val(sum);
 }
 

@@ -9,15 +9,16 @@ namespace SprykerFeature\Zed\Refund\Communication\Controller;
 use Generated\Shared\Transfer\RefundExpenseTransfer;
 use Generated\Shared\Transfer\RefundOrderItemTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
-use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Refund\Business\RefundFacade;
 use SprykerFeature\Zed\Refund\Communication\RefundDependencyContainer;
+use SprykerFeature\Zed\Refund\Persistence\RefundQueryContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method RefundDependencyContainer getDependencyContainer()
+ * @method RefundQueryContainer getQueryContainer()
  * @method RefundFacade getFacade()
  */
 class IndexController extends AbstractController
@@ -54,25 +55,20 @@ class IndexController extends AbstractController
     {
         $idOrder = $request->query->get('id-sales-order');
 
-        $orderItems = $this->getDependencyContainer()->getSalesQueryContainer()
-            ->querySalesOrderItem()
-            ->filterByFkSalesOrder($idOrder)
-            ->filterByFkRefund(null, Criteria::ISNULL)
-            ->find();
+        $orderTransfer = $this->getFacade()->getOrderByIdSalesOrder($idOrder);
 
-        if (!$orderItems->count()) {
+        $orderItems = $this->getFacade()->getRefundableItems($idOrder);
+
+        if ($orderItems->count() < 1) {
             $this->addErrorMessage('Nothing to refund.');
 
             return $this->redirectResponse(sprintf('/sales/details/?id-sales-order=%d', $idOrder));
         }
 
-        $expenses = $this->getDependencyContainer()->getSalesQueryContainer()
-            ->querySalesExpense()
-            ->filterByFkSalesOrder($idOrder)
-            ->find();
+        $expenses = $this->getFacade()->getRefundableExpenses($idOrder);
 
         $form = $this->getDependencyContainer()
-            ->createRefundForm($orderItems, $expenses)
+            ->createRefundForm($orderTransfer)
         ;
 
         $form->handleRequest();
@@ -80,13 +76,10 @@ class IndexController extends AbstractController
         if ($form->isValid()) {
             $formData = $form->getData();
 
-            $orderTransfer = $this->getFacade()->getOrderByIdSalesOrder($idOrder);
-
             $refundTransfer = new RefundTransfer();
             $refundTransfer->setAdjustmentFee($formData['adjustment_fee']);
             $refundTransfer->setAmount($formData['amount']);
             $refundTransfer->setComment($formData['comment']);
-
             $refundTransfer->setFkSalesOrder($orderTransfer->getIdSalesOrder());
 
             foreach ($formData['order_items'] as $key => $quantity) {
@@ -121,6 +114,7 @@ class IndexController extends AbstractController
 
         return $this->viewResponse([
             'idOrder' => $idOrder,
+            'maxRefundAmount' => $this->getFacade()->calculateRefundableAmount($orderTransfer),
             'form' => $form->createView(),
             'orderItems' => $orderItemsArray,
             'expenses'=> $expensesArray,
