@@ -192,6 +192,7 @@ class CategoryTreeWriter
     public function deleteNode($idNode, LocaleTransfer $locale, $deleteChildren = false)
     {
         $connection = Propel::getConnection();
+        $connection->beginTransaction();
 
         //order of execution matters, this must be called before node is deleted
         $this->touchUrlDeleted($idNode, $locale);
