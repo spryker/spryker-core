@@ -24,7 +24,9 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
+
     const REQUEST_URI = 'request uri';
+    const LOGIN_URI = '/auth/login';
 
     /**
      * @param Application $app
@@ -72,7 +74,7 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
 
         $requestUri = $request->getRequestUri();
 
-        if ($requestUri === '/auth/login') {
+        if ($requestUri === self::LOGIN_URI) {
             return false;
         }
 
@@ -88,7 +90,7 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
      *
      * @return bool
      */
-    private function isAuthorized(Request $request)
+    protected function isAuthorized(Request $request)
     {
         $facadeAuth = $this->getFacade();
         $token = null;
