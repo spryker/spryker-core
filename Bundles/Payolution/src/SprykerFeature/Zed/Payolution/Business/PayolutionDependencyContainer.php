@@ -99,36 +99,4 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
         return $this->getFactory()->createLogTransactionStatusLog($this->getQueryContainer());
     }
 
-    /**
-     * @return SpyPaymentPayolutionTransactionRequestLog
-     */
-    public function createTransactionRequestLogEntity()
-    {
-        return new SpyPaymentPayolutionTransactionRequestLog();
-    }
-
-    /**
-     * @return SpyPaymentPayolutionTransactionStatusLog
-     */
-    public function createTransactionStatusLogEntity()
-    {
-        return new SpyPaymentPayolutionTransactionStatusLog();
-    }
-
-    /**
-     * @return SpyPaymentPayolution
-     */
-    public function createPaymentEntity()
-    {
-        return new SpyPaymentPayolution();
-    }
-
-    /**
-     * @return SpyPaymentPayolutionOrderItem
-     */
-    public function createPaymentOrderItemEntity()
-    {
-        return new SpyPaymentPayolutionOrderItem();
-    }
-
 }

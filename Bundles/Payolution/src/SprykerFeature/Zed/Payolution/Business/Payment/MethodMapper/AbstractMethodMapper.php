@@ -178,6 +178,22 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
 
     /**
      * @param SpyPaymentPayolution $paymentEntity
+     * @param string $uniqueId
+     *
+     * @return PayolutionRequestInterface
+     */
+    public function mapToCapture(SpyPaymentPayolution $paymentEntity, $uniqueId)
+    {
+        $requestTransfer = $this->getBaseRequestTransferForPayment($paymentEntity);
+        $requestTransfer
+            ->setPaymentCode(Constants::PAYMENT_CODE_CAPTURE)
+            ->setIdentificationReferenceid($uniqueId);
+
+        return $requestTransfer;
+    }
+
+    /**
+     * @param SpyPaymentPayolution $paymentEntity
      * @param int $uniqueId
      *
      * @return PayolutionRequestInterface
