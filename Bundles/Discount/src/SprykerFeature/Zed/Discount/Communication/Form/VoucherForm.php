@@ -10,7 +10,7 @@ use Symfony\Component\Validator\Constraints\GreaterThan;
 class VoucherForm extends AbstractForm
 {
     const FIELD_ID_POOL = 'id_voucher_pool';
-    const FIELD_AMOUNT = 'amount';
+    const FIELD_QUANTITY = 'quantity';
     const MINIMUM_VOUCHERS_TO_GENERATE = 2;
     const ONE_VOUCHER = 1;
     const FIELD_NUMBER_OF_USES = 'number_of_uses';
@@ -44,8 +44,8 @@ class VoucherForm extends AbstractForm
     {
         if ($this->isMultiple) {
             $this
-                ->addText(static::FIELD_AMOUNT, [
-                    'label' => 'Number',
+                ->addText(static::FIELD_QUANTITY, [
+                    'label' => 'Quantity',
                     'constraints' => [
                         new NotBlank(),
                         new GreaterThan(1)
@@ -94,7 +94,7 @@ class VoucherForm extends AbstractForm
     protected function populateFormFields()
     {
         return [
-            static::FIELD_AMOUNT => ($this->isMultiple) ? static::MINIMUM_VOUCHERS_TO_GENERATE : static::ONE_VOUCHER,
+            static::FIELD_QUANTITY => ($this->isMultiple) ? static::MINIMUM_VOUCHERS_TO_GENERATE : static::ONE_VOUCHER,
         ];
     }
 

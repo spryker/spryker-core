@@ -7,10 +7,12 @@
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
 use Generated\Shared\Discount\VoucherCreateInterface;
+use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\Discount\DiscountConfigInterface;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class VoucherEngine
@@ -43,14 +45,28 @@ class VoucherEngine
      */
     public function createVoucherCodes(VoucherCreateInterface $voucherCreateTransfer)
     {
+        $nextVoucherBatchValue = 0;
         $codeCollisions = 0;
         $voucherPoolEntity = $this->queryContainer
             ->queryVoucherPool()
             ->findPk($voucherCreateTransfer->getIdVoucherPool());
 
+        $highestBatchValueOnVouchers = $this->queryContainer
+            ->queryDiscountVoucher()
+            ->filterByFkDiscountVoucherPool($voucherCreateTransfer->getIdVoucherPool())
+            ->orderByVoucherBatch(Criteria::DESC)
+            ->findOne()
+        ;
+
+        if (null !== $highestBatchValueOnVouchers && $voucherCreateTransfer->getQuantity() > 1) {
+            $nextVoucherBatchValue = $highestBatchValueOnVouchers->getVoucherBatch() + 1;
+        }
+
+        $voucherCreateTransfer->setVoucherBatch($nextVoucherBatchValue);
+
         $length = $this->settings->getVoucherCodeLength();
 
-        for ($i = 0; $i < $voucherCreateTransfer->getAmount(); $i++) {
+        for ($i = 0; $i < $voucherCreateTransfer->getQuantity(); $i++) {
             try {
                 $code = $this->getRandomVoucherCode($length);
 
@@ -67,7 +83,7 @@ class VoucherEngine
         }
 
         if ($codeCollisions > 0) {
-            $voucherCreateTransfer->setAmount($codeCollisions);
+            $voucherCreateTransfer->getQuantity($codeCollisions);
             $this->createVoucherCodes($voucherCreateTransfer);
         }
     }
