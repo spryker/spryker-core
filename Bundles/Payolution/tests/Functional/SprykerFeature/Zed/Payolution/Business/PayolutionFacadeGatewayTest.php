@@ -24,6 +24,7 @@ use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransac
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLog;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
+use \Propel\Runtime\Exception\PropelException;
 
 /**
  * Note:
@@ -258,7 +259,7 @@ class PayolutionFacadeGatewayTest extends Test
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws PropelException
      */
     private function setBaseTestData()
     {
@@ -295,7 +296,7 @@ class PayolutionFacadeGatewayTest extends Test
     }
 
     /**
-     * @throws \Propel\Runtime\Exception\PropelException
+     * @throws PropelException
      */
     private function setPaymentTestData()
     {
