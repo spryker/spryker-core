@@ -211,11 +211,16 @@ class CategoryTreeWriter
         $this->touchCategoryDeleted($idNode);
         $this->touchNavigationDeleted();
 
-        $result =  $this->nodeWriter->delete($idNode);
+        $result = $this->nodeWriter->delete($idNode);
 
         $connection->commit();
 
         return $result;
+    }
+
+    public function deleteCategoryId($idCategory)
+    {
+        $this->touchCategoryDeleted($idNode);
     }
 
     public function rebuildClosureTable()

@@ -278,7 +278,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         }
     }
 
-    public function deleteCategory(CategoryTransfer $category, NodeTransfer $categoryNode, LocaleTransfer $locale)
+    public function deleteCategoryDeep(CategoryTransfer $category, NodeTransfer $categoryNode, LocaleTransfer $locale)
     {
         $connection = Propel::getConnection();
         $connection->beginTransaction();
