@@ -3,7 +3,10 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-interface SprykerFeature_Zed_Library_Sanitize_Filter_Interface
+
+namespace SprykerFeature\Zed\Library\Sanitize;
+
+interface FilterInterface
 {
 
     /**

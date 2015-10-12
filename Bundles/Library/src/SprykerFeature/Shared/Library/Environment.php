@@ -3,7 +3,10 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-class SprykerFeature_Shared_Library_Environment
+
+namespace SprykerFeature\Shared\Library;
+
+class Environment
 {
 
     const DEFAULT_ENVIRONMENT = 'production';
@@ -19,12 +22,12 @@ class SprykerFeature_Shared_Library_Environment
     protected static $environment = APPLICATION_ENV;
 
     /**
-     * @var SprykerFeature_Shared_Library_Environment
+     * @var Environment
      */
     protected static $instance;
 
     /**
-     * @return SprykerFeature_Shared_Library_Environment
+     * @return Environment
      */
     public static function getInstance()
     {

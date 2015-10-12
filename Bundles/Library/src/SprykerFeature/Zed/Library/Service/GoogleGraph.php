@@ -8,7 +8,10 @@
  * @link http://code.google.com/intl/de-DE/apis/chart/image/docs/data_formats.html
  * @link https://developers.google.com/chart/image/docs/chart_params
  */
-class SprykerFeature_Zed_Library_Service_GoogleGraph
+
+namespace SprykerFeature\Zed\Library\Service;
+
+class GoogleGraph
 {
 
     const URI = 'https://chart.googleapis.com/chart';
@@ -40,7 +43,7 @@ class SprykerFeature_Zed_Library_Service_GoogleGraph
         assert(is_bool($sendHeader));
         assert(in_array($contentType, ['gif', 'png', 'json']));
 
-        $client = new Zend_Http_Client();
+        $client = new \Zend_Http_Client();
         $client->setUri(self::URI);
 
         $vars = get_object_vars($this);

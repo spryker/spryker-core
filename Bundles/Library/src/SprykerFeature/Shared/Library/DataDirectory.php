@@ -3,13 +3,16 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-use SprykerFeature\Shared\Library\Cloud;
+
+namespace SprykerFeature\Shared\Library;
+
+use SprykerEngine\Shared\Kernel\Store;
 
 /**
  * Performance Optimization:
  *  Cache the information if the directory exists
  */
-class SprykerFeature_Shared_Library_Data
+class DataDirectory
 {
 
     const PATH_DATA = 'data';
@@ -107,7 +110,7 @@ class SprykerFeature_Shared_Library_Data
             $path .= DIRECTORY_SEPARATOR . self::PATH_SHARED;
         }
         if ($storeSpecific) {
-            $path .= DIRECTORY_SEPARATOR . \SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName();
+            $path .= DIRECTORY_SEPARATOR . Store::getInstance()->getStoreName();
         }
 
         return $path;
@@ -134,7 +137,7 @@ class SprykerFeature_Shared_Library_Data
     /**
      * @param string $path
      *
-     * @throws Exception
+     * @throws \Exception
      *
      * @return string
      */
@@ -143,12 +146,12 @@ class SprykerFeature_Shared_Library_Data
         if (false === is_dir($path)) {
             try {
                 mkdir($path, 0775, true);
-            } catch (ErrorException $e) {
-                throw new Exception('Could not create data directory "' . $path . '"!');
+            } catch (\ErrorException $e) {
+                throw new \Exception('Could not create data directory "' . $path . '"!');
             }
         }
         if (false === is_writable($path)) {
-            throw new Exception('Data directory not writable! (' . $path . ')');
+            throw new \Exception('Data directory not writable! (' . $path . ')');
         }
 
         return $path;

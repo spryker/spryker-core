@@ -3,7 +3,13 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-class SprykerFeature_Zed_System_Business_Model_Loadbalancer_BigIP_IPv4
+
+namespace SprykerFeature\Zed\System\Business\Model\Loadbalancer\BigIP;
+
+use SprykerEngine\Shared\Kernel\Store;
+use SprykerFeature\Shared\Library\Environment;
+
+class IPv4
 {
 
     /**
@@ -27,7 +33,7 @@ class SprykerFeature_Zed_System_Business_Model_Loadbalancer_BigIP_IPv4
     public function __construct($environment = null)
     {
         if (null === $environment) {
-            $this->environment = \SprykerFeature_Shared_Library_Environment::isProduction() ? 'production' : 'staging';
+            $this->environment = Environment::isProduction() ? 'production' : 'staging';
         }
         $this->environment = $environment;
     }
@@ -86,14 +92,14 @@ class SprykerFeature_Zed_System_Business_Model_Loadbalancer_BigIP_IPv4
      * @param string $hostname
      * @param string $applicationName
      *
-     * @throws ErrorException
+     * @throws \ErrorException
      *
      * @return string
      */
     public function getCookieValueByHost($hostname, $applicationName)
     {
         if ($applicationName !== self::APPLICATION_NAME_ZED && $applicationName !== self::APPLICATION_NAME_YVES) {
-            throw new ErrorException('Cannot find loadbalancer setting for application ' . $applicationName);
+            throw new \ErrorException('Cannot find loadbalancer setting for application ' . $applicationName);
         }
 
         $hosts = $this->factory->createSettings()->getHosts($this->environment);
@@ -110,7 +116,7 @@ class SprykerFeature_Zed_System_Business_Model_Loadbalancer_BigIP_IPv4
             }
         }
 
-        throw new ErrorException('Could not find configuration for hostname ' . $hostname);
+        throw new \ErrorException('Could not find configuration for hostname ' . $hostname);
     }
 
     /**
@@ -123,7 +129,7 @@ class SprykerFeature_Zed_System_Business_Model_Loadbalancer_BigIP_IPv4
     {
 
         if (!$store) {
-            $store = \SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName();
+            $store = Store::getInstance()->getStoreName();
         }
 
         $poolNumber = $this->factory->createSettings()->getStorePoolNumberByStore($store);

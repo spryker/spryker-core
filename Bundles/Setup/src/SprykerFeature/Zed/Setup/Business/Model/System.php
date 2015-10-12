@@ -7,7 +7,10 @@
 /**
  * @deprecated
  */
-class SprykerFeature_Zed_Setup_Business_Model_System
+
+namespace SprykerFeature\Zed\Setup\Business\Model;
+
+class System
 {
 
     /**

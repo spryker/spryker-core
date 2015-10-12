@@ -3,7 +3,10 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-class SprykerFeature_Zed_Library_Setup
+
+namespace SprykerFeature\Zed\Library;
+
+class Setup
 {
 
     /**
@@ -27,12 +30,12 @@ class SprykerFeature_Zed_Library_Setup
     {
         $checks = [];
         foreach ($directories as $directory) {
-            $checks[] = \SprykerFeature_Zed_Library_Setup::checkCondition('is_dir', $directory);
-            $checks[] = \SprykerFeature_Zed_Library_Setup::checkCondition('is_writable', $directory);
+            $checks[] = self::checkCondition('is_dir', $directory);
+            $checks[] = self::checkCondition('is_writable', $directory);
         }
         foreach ($checks as $check) {
             if ($check === false) {
-                \SprykerFeature_Zed_Library_Setup::renderAndExit(\SprykerFeature_Zed_Library_Setup::getErrorMessagesAsList());
+                self::renderAndExit(self::getErrorMessagesAsList());
             }
         }
     }
@@ -91,7 +94,7 @@ class SprykerFeature_Zed_Library_Setup
         }
 
         if (strtolower(PHP_SAPI) !== 'cli') {
-echo "
+            echo "
 <html>
 <body style='background-color: $background; font-family: courier new; color: $color;'>
 <pre>

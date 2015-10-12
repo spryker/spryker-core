@@ -3,12 +3,14 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-use SprykerFeature\Shared\Library\Cloud;
-use SprykerFeature\Shared\Library\Config;
+
+namespace SprykerFeature\Shared\Library;
+
+use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Shared\ProductImage\ProductImageConfig;
 use SprykerFeature\Shared\System\SystemConfig;
 
-class SprykerFeature_Shared_Library_Image
+class Image
 {
 
     /*
@@ -45,7 +47,6 @@ class SprykerFeature_Shared_Library_Image
      */
     public static function getAbsoluteProductImageUrl($filename)
     {
-
         $urlDomain = self::getStaticMediaUrl();
 
         if ($filename === '') {
@@ -73,7 +74,7 @@ class SprykerFeature_Shared_Library_Image
             '/',
             [
                 $urlDomain,
-                \SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName(),
+                Store::getInstance()->getStoreName(),
                 Config::get(ProductImageConfig::PRODUCT_IMAGE_IMAGE_URL_PREFIX), $urlKey,
             ]
 
