@@ -56,8 +56,6 @@ class AuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInt
             }
 
             if (!$facadeAuth->isAuthorized($token)) {
-                $request->getSession()->set('redirectUrl', '/foo/bar/baz');
-
                 return $app->redirect($bundleSettings->getLoginPageUrl());
             }
         });

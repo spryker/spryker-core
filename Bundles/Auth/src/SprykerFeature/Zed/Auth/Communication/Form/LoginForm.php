@@ -31,9 +31,6 @@ class LoginForm extends AbstractForm
                     'placeholder' => 'Email Address',
                 ],
             ])
-            ->addHidden(self::REDIRECT_URL, [
-                'data' => '/',
-            ])
             ->addPassword(self::PASSWORD, [
                 'constraints' => [
                     new Assert\Required(),
@@ -44,18 +41,6 @@ class LoginForm extends AbstractForm
                 ],
             ])
         ;
-    }
-
-    /**
-     * @return array
-     */
-    protected function populateFormFields()
-    {
-        $redirectUrl = $this->request->getSession()->get(self::REDIRECT_URL, '/');
-
-        return [
-            self::REDIRECT_URL => $redirectUrl,
-        ];
     }
 
 }

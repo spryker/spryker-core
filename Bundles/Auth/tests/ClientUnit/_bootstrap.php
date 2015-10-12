@@ -3,7 +3,8 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-$bootstrap = SprykerFeature\Shared\Library\SystemUnderTest\SystemUnderTestBootstrap::getInstance();
 
-$application = 'Client';
-$bootstrap->bootstrap($application);
+use SprykerFeature\Shared\Library\SystemUnderTest\SystemUnderTestBootstrap;
+
+$bootstrap = SystemUnderTestBootstrap::getInstance();
+$bootstrap->bootstrap(SystemUnderTestBootstrap::APPLICATION_CLIENT);

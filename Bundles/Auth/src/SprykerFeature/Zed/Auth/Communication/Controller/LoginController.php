@@ -36,7 +36,7 @@ class LoginController extends AbstractController
             $isLogged = $this->getFacade()->login($formData[LoginForm::USERNAME], $formData[LoginForm::PASSWORD]);
 
             if ($isLogged) {
-                return $this->redirectResponse($formData[LoginForm::REDIRECT_URL]);
+                return $this->redirectResponse('/');
             } else {
                 $this->addErrorMessage('Authentication failed!');
             }
