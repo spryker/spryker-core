@@ -294,6 +294,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
         $this->categoryFacade->deleteCategoryByNodeId($categoryNode->getIdCategoryNode(), $locale);
 
+        //remove paths, url, regenrate menu
+
         $connection->commit();
     }
 
