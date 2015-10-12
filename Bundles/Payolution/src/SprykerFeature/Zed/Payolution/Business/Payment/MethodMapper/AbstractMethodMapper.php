@@ -11,6 +11,7 @@ use Generated\Shared\Payolution\PayolutionRequestInterface;
 use Generated\Shared\Transfer\PayolutionRequestAnalysisCriterionTransfer;
 use Generated\Shared\Transfer\PayolutionRequestTransfer;
 use SprykerFeature\Zed\Payolution\Business\Api\Constants;
+use SprykerFeature\Zed\Payolution\Business\Exception\GenderNotDefinedException;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\Map\SpyPaymentPayolutionTableMap;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
@@ -24,6 +25,14 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
      * @var PayolutionConfig
      */
     private $config;
+
+    /**
+     * @const array
+     */
+    private static $genderMap = array(
+        SpyPaymentPayolutionTableMap::COL_GENDER_MALE => Constants::SEX_MALE,
+        SpyPaymentPayolutionTableMap::COL_GENDER_FEMALE => Constants::SEX_FEMALE,
+    );
 
     /**
      * @param PayolutionConfig $config
@@ -132,16 +141,17 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
     /**
      * @param string $gender
      *
+     * @throws GenderNotDefinedException
+     * 
      * @return string
      */
     private function mapGender($gender)
     {
-        $genderMap = [
-            SpyPaymentPayolutionTableMap::COL_GENDER_MALE => Constants::SEX_MALE,
-            SpyPaymentPayolutionTableMap::COL_GENDER_FEMALE => Constants::SEX_FEMALE,
-        ];
+        if (!isset(self::$genderMap[$gender])) {
+            throw new GenderNotDefinedException('The given gender is not defined.');
+        }
 
-        return $genderMap[$gender];
+        return self::$genderMap[$gender];
     }
 
     /**
