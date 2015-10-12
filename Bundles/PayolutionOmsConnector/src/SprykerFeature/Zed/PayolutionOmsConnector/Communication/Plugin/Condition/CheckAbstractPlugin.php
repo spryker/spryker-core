@@ -11,7 +11,7 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 
-abstract class AbstractPlugin extends BaseAbstractPlugin implements ConditionInterface
+abstract class CheckAbstractPlugin extends BaseAbstractPlugin implements ConditionInterface
 {
 
     /**

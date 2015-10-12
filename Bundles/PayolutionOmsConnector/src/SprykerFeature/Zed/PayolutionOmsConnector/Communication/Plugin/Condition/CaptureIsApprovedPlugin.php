@@ -12,7 +12,7 @@ use SprykerFeature\Zed\PayolutionOmsConnector\Communication\PayolutionOmsConnect
 /**
  * @method PayolutionOmsConnectorDependencyContainer getDependencyContainer()
  */
-class CaptureIsApprovedPlugin extends AbstractPlugin
+class CaptureIsApprovedPlugin extends CheckAbstractPlugin
 {
 
     /**
