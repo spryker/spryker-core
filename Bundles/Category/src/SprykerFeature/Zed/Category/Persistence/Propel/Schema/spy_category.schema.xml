@@ -4,6 +4,8 @@
     <table name="spy_category" idMethod="native" phpName="SpyCategory">
         <column name="id_category" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="is_active" default="true" type="BOOLEAN"/>
+        <column name="is_in_menu" default="true" type="BOOLEAN" />
+        <column name="is_clickable" default="true" type="BOOLEAN" />
     <id-method-parameter value="spy_category_pk_seq"/></table>
 
     <table name="spy_category_attribute" idMethod="native" phpName="SpyCategoryAttribute">
