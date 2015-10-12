@@ -94,17 +94,6 @@ class RefundForm extends AbstractForm
      */
     protected function buildOrderItemsFieldConfiguration()
     {
-        $data = [];
-
-        /** @var SpySalesOrderItem $orderItem */
-        foreach ($this->orderItems as $orderItem) {
-            if ($orderItem->getFkRefund() !== null) {
-                continue;
-            }
-
-            $data[$orderItem->getIdSalesOrderItem()] = $orderItem->getQuantity();
-        }
-
         return [
             'type' => 'number',
             'label' => false,

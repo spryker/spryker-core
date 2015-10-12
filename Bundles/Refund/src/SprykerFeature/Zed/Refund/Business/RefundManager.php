@@ -54,12 +54,13 @@ class RefundManager
             $sum += $expense->getPriceToPay();
         }
 
+        $orderGrandTotal = (int) $orderTransfer->getGrandTotal();
+
         $refunds = $this->getRefunds($orderTransfer->getIdSalesOrder());
         foreach ($refunds as $refund) {
-            $sum -= $refund->getAmount();
+            $orderGrandTotal -= $refund->getAmount();
         }
 
-        $orderGrandTotal = (int) $orderTransfer->getGrandTotal();
         if ($sum > $orderGrandTotal) {
             return $orderGrandTotal;
         }
