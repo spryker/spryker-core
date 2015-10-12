@@ -6,17 +6,16 @@
 
 namespace SprykerFeature\Zed\Newsletter\Business\Subscription;
 
-use Exception;
 use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
 use SprykerFeature\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberException;
 
-class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptInHandlerInterface
+class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptInHandlerInterface, DoubleOptInHandlerInterface
 {
 
     /**
      * @var SubscriberOptInSenderInterface[]
      */
-    protected $subscriberOptInSenders;
+    protected $subscriberOptInSenders = [];
 
     /**
      * @param SubscriberOptInSenderInterface $subscriberOptInSender
@@ -30,7 +29,6 @@ class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
      * @param NewsletterSubscriberInterface $subscriberTransfer
      *
      * @throws MissingNewsletterSubscriberException
-     * @throws Exception
      */
     public function optIn(NewsletterSubscriberInterface $subscriberTransfer)
     {
@@ -43,22 +41,10 @@ class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
             ));
         }
 
-        if (false === $subscriberEntity->getIsConfirmed() && null === $subscriberEntity->getSubscriberKey()) {
-            $connection = $this->queryContainer->getConnection();
-            $connection->beginTransaction();
+        if (false === $subscriberEntity->getIsConfirmed()) {
+            $subscriberTransfer->fromArray($subscriberEntity->toArray(), true);
 
-            try {
-                $this->setSubscriberKey($subscriberEntity);
-
-                $subscriberTransfer->fromArray($subscriberEntity->toArray(), true);
-
-                $this->triggerSubscriberOptInSenders($subscriberTransfer);
-
-                $connection->commit();
-            } catch (Exception $e) {
-                $connection->rollBack();
-                throw $e;
-            }
+            $this->triggerSubscriberOptInSenders($subscriberTransfer);
         }
     }
 
@@ -70,6 +56,28 @@ class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
         foreach ($this->subscriberOptInSenders as $sender) {
             $sender->send($subscriberTransfer);
         }
+    }
+
+    /**
+     * @param NewsletterSubscriberInterface $newsletterSubscriber
+     *
+     * @throws MissingNewsletterSubscriberException
+     */
+    public function approveSubscriberByKey(NewsletterSubscriberInterface $newsletterSubscriber)
+    {
+        $subscriberEntity = $this->queryContainer->querySubscriber()
+            ->findOneBySubscriberKey($newsletterSubscriber->getSubscriberKey())
+        ;
+
+        if (null === $subscriberEntity) {
+            throw new MissingNewsletterSubscriberException(sprintf(
+                'Newsletter subscriber could not be found by subscriber key "%s".',
+                $newsletterSubscriber->getSubscriberKey()
+            ));
+        }
+
+        $subscriberEntity->setIsConfirmed(true);
+        $subscriberEntity->save();
     }
 
 }

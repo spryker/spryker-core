@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -12,6 +13,7 @@ use SprykerFeature\Zed\Newsletter\Persistence\Propel\SpyNewsletterSubscriber;
 
 class SubscriberManager implements SubscriberManagerInterface
 {
+
     /**
      * @var NewsletterQueryContainer
      */
@@ -35,7 +37,7 @@ class SubscriberManager implements SubscriberManagerInterface
     /**
      * @param string $email
      *
-     * @return NewsletterSubscriberInterface
+     * @return NewsletterSubscriberInterface|null
      */
     public function loadSubscriberByEmail($email)
     {
@@ -43,6 +45,10 @@ class SubscriberManager implements SubscriberManagerInterface
             ->filterByEmail($email)
             ->findOne()
         ;
+
+        if (null === $subscriberEntity) {
+            return null;
+        }
 
         return $this->convertSubscriberEntityToTransfer($subscriberEntity);
     }
@@ -57,7 +63,7 @@ class SubscriberManager implements SubscriberManagerInterface
         $subscriberEntity = new SpyNewsletterSubscriber();
         $subscriberEntity->fromArray($newsletterSubscriberTransfer->toArray());
 
-        if (true === $subscriberEntity->getIsConfirmed() && null === $subscriberEntity->getSubscriberKey()) {
+        if (null === $subscriberEntity->getSubscriberKey()) {
             $subscriberKey = $this->subscriberKeyGenerator->generateKey();
             $subscriberEntity->setSubscriberKey($subscriberKey);
         }
@@ -72,11 +78,12 @@ class SubscriberManager implements SubscriberManagerInterface
      *
      * @return NewsletterSubscriberTransfer
      */
-    protected function convertSubscriberEntityToTransfer($subscriberEntity)
+    protected function convertSubscriberEntityToTransfer(SpyNewsletterSubscriber $subscriberEntity)
     {
         $subscriberTransfer = new NewsletterSubscriberTransfer();
         $subscriberTransfer->fromArray($subscriberEntity->toArray(), true);
 
         return $subscriberTransfer;
     }
+
 }

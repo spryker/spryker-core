@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Newsletter\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\NewsletterBusiness;
+use SprykerFeature\Zed\Newsletter\Business\Subscription\DoubleOptInHandlerInterface;
 use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriberKeyGeneratorInterface;
 use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriberManagerInterface;
 use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriberOptInHandlerInterface;
@@ -25,16 +26,13 @@ class NewsletterDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**
-     * @param SubscriberOptInHandlerInterface $optInHandler
-     *
      * @return \SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriptionRequestHandler
      */
-    public function createSubscriptionRequestHandler(SubscriberOptInHandlerInterface $optInHandler)
+    public function createSubscriptionRequestHandler()
     {
         return $this->getFactory()->createSubscriptionSubscriptionRequestHandler(
             $this->createSubscriptionManager(),
             $this->createSubscriberManager(),
-            $optInHandler,
             $this->getQueryContainer()
         );
     }
@@ -72,7 +70,7 @@ class NewsletterDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return SubscriberOptInHandlerInterface
+     * @return SubscriberOptInHandlerInterface|DoubleOptInHandlerInterface
      */
     public function createDoubleOptInHandler()
     {

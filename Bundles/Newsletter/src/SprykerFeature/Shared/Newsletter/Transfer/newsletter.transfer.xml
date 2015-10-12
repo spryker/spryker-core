@@ -7,8 +7,8 @@
         <property name="idNewsletterSubscriber" type="int" />
         <property name="email" type="string" />
         <property name="idCustomer" type="int" />
-        <property name="subscriber_key" type="string" />
-        <property name="is_confirmed" type="bool" />
+        <property name="subscriberKey" type="string" />
+        <property name="isConfirmed" type="bool" />
     </transfer>
 
     <transfer name="NewsletterType">
@@ -19,13 +19,7 @@
     <transfer name="NewsletterSubscriptionRequest">
         <property name="newsletterSubscriber" type="NewsletterSubscriber" />
         <property name="newsletterTypes" type="NewsletterType[]" singular="subscriptionType" />
-        <!--<property name="newsletterSubscriptions" type="NewsletterSubscription[]" singular="newsletterSubscription" />-->
     </transfer>
-
-    <!--<transfer name="NewsletterSubscription">-->
-        <!--<property name="newsletterSubscriber" type="NewsletterSubscriber" />-->
-        <!--<property name="newsletterType" type="NewsletterType" />-->
-    <!--</transfer>-->
 
     <transfer name="NewsletterSubscriptionResponse">
         <property name="subscriptionResults" type="NewsletterSubscriptionResult[]" singular="subscriptionResult" />

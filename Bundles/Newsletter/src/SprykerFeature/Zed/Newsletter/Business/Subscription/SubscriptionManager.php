@@ -12,9 +12,7 @@ use SprykerFeature\Zed\Newsletter\Persistence\Propel\SpyNewsletterSubscription;
 
 /**
  * TODO: create demo data
- * TODO: double opt-in (email, yves controller, hash)
- * TODO: unsubscribe
- * TODO: subscription logic
+ * TODO: double opt-in email
  * TODO: remove customer.has_newsletter_subscription field
  */
 class SubscriptionManager implements SubscriptionManagerInterface
@@ -57,5 +55,21 @@ class SubscriptionManager implements SubscriptionManagerInterface
             ->count();
 
         return $subscriptionCount > 0;
+    }
+
+    /**
+     * @param NewsletterSubscriberInterface $newsletterSubscriber
+     * @param NewsletterTypeInterface $newsletterType
+     */
+    public function unsubscribe(NewsletterSubscriberInterface $newsletterSubscriber, NewsletterTypeInterface $newsletterType)
+    {
+        $subscriptionEntity = $this->queryContainer
+            ->querySubscriptionBySubscriberKeyAndNewsletterType($newsletterSubscriber->getSubscriberKey(), $newsletterType->getIdNewsletterType())
+            ->findOne()
+        ;
+
+        if (null !== $subscriptionEntity) {
+            $subscriptionEntity->delete();
+        }
     }
 }

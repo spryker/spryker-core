@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,6 +11,7 @@ use Generated\Shared\Newsletter\NewsletterTypeInterface;
 
 interface SubscriptionManagerInterface
 {
+
     /**
      * @param NewsletterSubscriberInterface $newsletterSubscriber
      * @param NewsletterTypeInterface $newsletterType
@@ -23,4 +25,11 @@ interface SubscriptionManagerInterface
      * @return bool
      */
     public function isAlreadySubscribed(NewsletterSubscriberInterface $newsletterSubscriber, NewsletterTypeInterface $newsletterType);
+
+    /**
+     * @param NewsletterSubscriberInterface $newsletterSubscriber
+     * @param NewsletterTypeInterface $newsletterType
+     */
+    public function unsubscribe(NewsletterSubscriberInterface $newsletterSubscriber, NewsletterTypeInterface $newsletterType);
+
 }

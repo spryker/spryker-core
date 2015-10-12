@@ -8,10 +8,10 @@ namespace SprykerFeature\Zed\Newsletter\Business\Subscription;
 
 use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
 use SprykerFeature\Zed\Newsletter\Persistence\NewsletterQueryContainer;
-use SprykerFeature\Zed\Newsletter\Persistence\Propel\SpyNewsletterSubscriber;
 
 abstract class AbstractOptInHandler
 {
+
     /**
      * @var NewsletterQueryContainer
      */
@@ -59,13 +59,4 @@ abstract class AbstractOptInHandler
         return null;
     }
 
-    /**
-     * @param SpyNewsletterSubscriber $subscriberEntity
-     */
-    protected function setSubscriberKey(SpyNewsletterSubscriber $subscriberEntity)
-    {
-        $subscriberKey = $this->subscriberKeyGenerator->generateKey();
-        $subscriberEntity->setSubscriberKey($subscriberKey);
-        $subscriberEntity->save();
-    }
 }
