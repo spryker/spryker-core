@@ -186,9 +186,6 @@ class DiscountSaver implements DiscountSaverInterface
                 $salesDiscountCodeEntity->setCodepoolName(
                     $discountVoucherEntity->getVoucherPool()->getName()
                 );
-                $salesDiscountCodeEntity->setIsReusable(
-                    $discountVoucherEntity->getVoucherPool()->getIsInfinitelyUsable()
-                );
                 $salesDiscountCodeEntity->setDiscount($salesDiscountEntity);
 
                 if (!isset($this->voucherCodesUsed[$code])) {

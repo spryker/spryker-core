@@ -42,7 +42,7 @@
         <property name="fkDiscountVoucherPool" type="int" />
         <property name="code" type="string" />
         <property name="isActive" type="string" />
-        <property name="numberOfUses" type="int" />
+        <property name="maxNumberOfUses" type="int" />
         <property name="voucherBatch" type="int"/>
     </transfer>
 
@@ -50,7 +50,7 @@
         <property name="quantity" type="int" />
         <property name="idVoucherPool" type="int" />
         <property name="includeTemplate" type="boolean" />
-        <property name="numberOfUses" type="int" />
+        <property name="maxNumberOfUses" type="int" />
         <property name="code" type="string" />
         <property name="voucherBatch" type="int"/>
     </transfer>
@@ -61,7 +61,6 @@
         <property name="name" type="string" />
         <property name="template" type="string" />
         <property name="isActive" type="string" />
-        <property name="isInfinitelyUsable" type="string" />
     </transfer>
 
     <transfer name="VoucherPoolCategory">
@@ -98,7 +97,6 @@
         <property name="name" type="string"/>
         <property name="template" type="string"/>
         <property name="isActive" type="bool"/>
-        <property name="isInfinitelyUsable" type="bool"/>
         <property name="voucherPoolCategory" type="string"/>
         <property name="description" type="string"/>
         <property name="amount" type="int"/>

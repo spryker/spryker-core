@@ -35,11 +35,10 @@ interface DiscountFacadeInterface
 
     /**
      * @param string $code
-     * @param int $idDiscountVoucherPool
      *
      * @return ModelResult
      */
-    public function isVoucherUsable($code, $idDiscountVoucherPool);
+    public function isVoucherUsable($code);
 
     /**
      * @param CalculableInterface $container
@@ -211,7 +210,7 @@ interface DiscountFacadeInterface
      *
      * @return bool
      */
-    public function releaseVoucherCodes(array $codes);
+    public function releaseUsedVoucherCodes(array $codes);
 
     /**
      * @param array|string[] $codes

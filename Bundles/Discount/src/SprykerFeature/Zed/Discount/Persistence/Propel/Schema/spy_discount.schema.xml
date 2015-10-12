@@ -60,7 +60,6 @@
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="template" type="VARCHAR" size="255" required="false"/>
         <column name="is_active" type="BOOLEAN" default="false"/>
-        <column name="is_infinitely_usable" type="BOOLEAN" default="false"/>
 
         <behavior name="timestampable"/>
 
@@ -74,6 +73,7 @@
         <column name="fk_discount_voucher_pool" type="INTEGER" required="false"/>
         <column name="code" type="VARCHAR" size="255" required="true"/>
         <column name="number_of_uses" type="INTEGER" required="false"/>
+        <column name="max_number_of_uses" type="INTEGER" required="false"/>
         <column name="is_active" type="BOOLEAN" default="false"/>
         <column name="voucher_batch" type="INTEGER" default="0"/>
 

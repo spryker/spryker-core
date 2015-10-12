@@ -13,7 +13,7 @@ class VoucherForm extends AbstractForm
     const FIELD_QUANTITY = 'quantity';
     const MINIMUM_VOUCHERS_TO_GENERATE = 2;
     const ONE_VOUCHER = 1;
-    const FIELD_NUMBER_OF_USES = 'number_of_uses';
+    const FIELD_MAX_NUMBER_OF_USES = 'max_number_of_uses';
 
     /**
      * @var SpyDiscountVoucherPoolQuery
@@ -55,8 +55,8 @@ class VoucherForm extends AbstractForm
         }
 
         $this
-            ->addNumber(static::FIELD_NUMBER_OF_USES, [
-                'label' => 'Number of uses',
+            ->addNumber(static::FIELD_MAX_NUMBER_OF_USES, [
+                'label' => 'Max number of uses',
             ])
             ->addChoice(static::FIELD_ID_POOL, [
                 'label' => 'Pool',

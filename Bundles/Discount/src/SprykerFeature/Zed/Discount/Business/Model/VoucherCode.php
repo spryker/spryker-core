@@ -28,7 +28,7 @@ class VoucherCode implements VoucherCodeInterface
      *
      * @return bool
      */
-    public function releaseCodes(array $codes)
+    public function releaseUsedCodes(array $codes)
     {
         $voucherEntityList = $this->discountQueryContainer->queryVoucherPoolByVoucherCodes($codes)->find();
 
@@ -37,11 +37,11 @@ class VoucherCode implements VoucherCodeInterface
         }
 
         foreach ($voucherEntityList as $discountVoucherEntity) {
-            if ($this->isVoucherWithCounter($discountVoucherEntity)) {
-                $this->incrementNumberOfUses($discountVoucherEntity);
+            if (!$this->isVoucherWithCounter($discountVoucherEntity)) {
+                continue;
             }
 
-            $discountVoucherEntity->setIsActive(true);
+            $this->decrementNumberOfUses($discountVoucherEntity);
             $this->saveDiscountVoucherEntity($discountVoucherEntity);
         }
 
@@ -66,22 +66,14 @@ class VoucherCode implements VoucherCodeInterface
                 continue;
             }
 
-            if ($discountVoucherEntity->getVoucherPool()->isInfinitelyUsable()) {
+            if (!$this->isVoucherWithCounter($discountVoucherEntity)) {
                 continue;
             }
 
-            if ($this->isVoucherWithCounter($discountVoucherEntity)) {
-                $this->decrementNumberOfUses($discountVoucherEntity);
-                if ($discountVoucherEntity->getNumberOfUses() <= 0) {
-                    $discountVoucherEntity->setIsActive(false);
-                }
-            } else {
-                $discountVoucherEntity->setIsActive(false);
-            }
 
+            $this->incrementNumberOfUses($discountVoucherEntity);
             $this->saveDiscountVoucherEntity($discountVoucherEntity);
         }
-
 
         return true;
     }
@@ -111,9 +103,9 @@ class VoucherCode implements VoucherCodeInterface
      */
     protected function isVoucherWithCounter(SpyDiscountVoucher $voucherEntity)
     {
-        $numberOfUses = $voucherEntity->getNumberOfUses();
+        $maxNumberOfUses = $voucherEntity->getMaxNumberOfUses();
 
-        if ($numberOfUses !== null) {
+        if ($maxNumberOfUses !== null) {
             return true;
         }
 

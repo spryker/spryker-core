@@ -15,7 +15,6 @@ class VoucherCodesType extends AbstractRuleType
 
     const NAME = 'name';
     const VOUCHER_POOL_CATEGORY = 'voucher_pool_category';
-    const IS_INFINITELY_USABLE = 'is_infinitely_usable';
     const IS_ACTIVE = 'is_active';
     const IS_PRIVILEGED = 'is_privileged';
     const DESCRIPTION = 'description';
@@ -41,10 +40,11 @@ class VoucherCodesType extends AbstractRuleType
     protected $camelCaseToUnderscoreFilter;
 
     /**
-     * @param array $availableCalculatorPlugins
-     * @param array $availableCollectorPlugins
-     * @param array $availableDecisionRulePlugins
-     * @param array $availablePoolCategories
+     * @param array                 $availableCalculatorPlugins
+     * @param array                 $availableCollectorPlugins
+     * @param array                 $availableDecisionRulePlugins
+     * @param array                 $availablePoolCategories
+     * @param CamelCaseToUnderscore $camelCaseToUnderscore
      */
     public function __construct(
         array $availableCalculatorPlugins,
@@ -58,6 +58,10 @@ class VoucherCodesType extends AbstractRuleType
         parent::__construct($availableCalculatorPlugins, $availableCollectorPlugins, $availableDecisionRulePlugins);
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array                $options
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -96,9 +100,6 @@ class VoucherCodesType extends AbstractRuleType
             ->add(self::VALID_TO, 'date', [
                 'label' => 'Valid Until'
             ])
-            ->add(self::IS_INFINITELY_USABLE, 'checkbox', [
-                'label' => 'Unlimited',
-            ])
             ->add(self::IS_PRIVILEGED, 'checkbox', [
                 'label' => 'Is Privileged',
             ])
@@ -111,6 +112,9 @@ class VoucherCodesType extends AbstractRuleType
                 'empty_data' => null,
                 'required' => false,
                 'placeholder' => 'Default',
+                'constraints' => [
+                    new NotBlank(),
+                ],
             ])
             ->add(self::FIELD_COLLECTOR_PLUGINS, 'collection', [
                 'type' => new CollectorPluginType($this->availableCollectorPlugins),
@@ -128,6 +132,9 @@ class VoucherCodesType extends AbstractRuleType
         ;
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'voucher_codes';
