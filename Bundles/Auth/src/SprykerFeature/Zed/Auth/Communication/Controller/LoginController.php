@@ -27,7 +27,7 @@ class LoginController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createLoginForm($request);
+        $form = $this->getDependencyContainer()->createLoginForm();
         $form->handleRequest();
 
         if ($request->isMethod(Request::METHOD_POST) && $form->isValid()) {
@@ -36,7 +36,7 @@ class LoginController extends AbstractController
             $isLogged = $this->getFacade()->login($formData[LoginForm::USERNAME], $formData[LoginForm::PASSWORD]);
 
             if ($isLogged) {
-                return $this->redirectResponse('/');
+                return $this->redirectResponse($formData[LoginForm::REDIRECT_URL]);
             } else {
                 $this->addErrorMessage('Authentication failed!');
             }

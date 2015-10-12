@@ -11,8 +11,10 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class LoginForm extends AbstractForm
 {
+
     const USERNAME = 'username';
     const PASSWORD = 'password';
+    const REDIRECT_URL = 'redirectUrl';
 
     /**
      * @return self
@@ -27,7 +29,10 @@ class LoginForm extends AbstractForm
                 ],
                 'attr' => [
                     'placeholder' => 'Email Address',
-                ]
+                ],
+            ])
+            ->addHidden(self::REDIRECT_URL, [
+                'data' => '/',
             ])
             ->addPassword(self::PASSWORD, [
                 'constraints' => [
@@ -36,7 +41,7 @@ class LoginForm extends AbstractForm
                 ],
                 'attr' => [
                     'placeholder' => 'Password',
-                ]
+                ],
             ])
         ;
     }
@@ -46,7 +51,11 @@ class LoginForm extends AbstractForm
      */
     protected function populateFormFields()
     {
-        return [];
+        $redirectUrl = $this->request->getSession()->get(self::REDIRECT_URL, '/');
+
+        return [
+            self::REDIRECT_URL => $redirectUrl,
+        ];
     }
 
 }
