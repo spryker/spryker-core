@@ -57,6 +57,17 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * @return SpyProductCategoryQuery
+     */
+    public function queryProductCategoryMappingsByCategoryId($idCategory)
+    {
+        return $this->getDependencyContainer()
+            ->createProductCategoryQuery()
+            ->filterByIdProductCategory($idCategory)
+        ;
+    }
+
+    /**
      * @param int $idCategory
      * @param int $idAbstractProduct
      *

@@ -100,6 +100,7 @@ class EditController extends AddController
             'form' => $form->createView(),
             'productCategoriesTable' => $productCategories->render(),
             'productsTable' => $products->render(),
+            'showProducts' => true
         ]);
     }
 

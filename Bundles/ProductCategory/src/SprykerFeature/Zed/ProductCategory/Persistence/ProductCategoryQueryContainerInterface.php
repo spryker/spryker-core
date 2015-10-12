@@ -26,6 +26,11 @@ interface ProductCategoryQueryContainerInterface
     public function expandProductCategoryPathQuery(ModelCriteria $query, LocaleTransfer $locale, $excludeDirectParent = true, $excludeRoot = true);
 
     /**
+     * @return SpyProductCategoryQuery
+     */
+    public function queryProductCategoryMappingsByCategoryId($idCategory);
+
+    /**
      * @param int $idAbstractProduct
      * @param int $idCategoryNode
      *

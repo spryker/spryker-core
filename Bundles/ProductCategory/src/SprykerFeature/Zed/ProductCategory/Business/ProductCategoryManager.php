@@ -6,9 +6,12 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Business;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
+use Propel\Runtime\Propel;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
@@ -273,6 +276,25 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
             $this->touchAbstractProductActive($idProduct);
         }
+    }
+
+    public function deleteCategory(CategoryTransfer $category, NodeTransfer $categoryNode, LocaleTransfer $locale)
+    {
+        $connection = Propel::getConnection();
+        $connection->beginTransaction();
+
+        //remove product mappings
+        $productsIdsToDeassign = $this->productCategoryQueryContainer
+            ->queryProductCategoryMappingsByCategoryId($category->getIdCategory())
+        ;
+
+        $this->removeProductCategoryMappings($category->getIdCategory(), $productsIdsToDeassign);
+
+        $this->categoryFacade->deleteCategoryById($categoryNode->getIdCategoryNode(), $locale);
+
+        $this->categoryFacade->deleteCategoryByNodeId($categoryNode->getIdCategoryNode(), $locale);
+
+        $connection->commit();
     }
 
     /**

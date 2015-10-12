@@ -142,6 +142,22 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
     }
 
     /**
+     * @param int $idCategory
+     *
+     * @return CategoryFormEdit
+     */
+    public function createCategoryFormDelete($idCategory)
+    {
+        return $this->getFactory()->createFormCategoryFormDelete(
+            $this->createCategoryQueryContainer(),
+            $this->createProductCategoryFacade(),
+            $this->getCurrentLocale(),
+            $idCategory,
+            null
+        );
+    }
+
+    /**
      * @param LocaleTransfer $locale
      * @param int $idCategory
      *

@@ -30,6 +30,9 @@
                 <a href="/productCategory/edit?id-category={{ item.id_category }}" class="btn btn-xs btn-primary">
                     <i class="fa fa-pencil"></i>
                 </a>
+                <a href="/productCategory/delete?id-category={{ item.id_category }}" class="btn btn-xs btn-warning">
+                    <i class="fa fa-trash"></i>
+                </a>
             </div>
         </div>
         {% if item.children is defined and item.children|length > 0 %}

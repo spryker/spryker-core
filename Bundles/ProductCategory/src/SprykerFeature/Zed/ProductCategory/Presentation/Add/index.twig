@@ -29,8 +29,8 @@
 
             {{ form_start(form) }}
             {{ form_widget(form) }}
-            
-{% if idCategory > 0 %}
+
+{% if showProducts %}
             <div class="tabs-container">
                 <ul class="nav nav-tabs">
                     <li class="active"><a data-toggle="tab" href="#tab-1">Select products to assign</a></li>
@@ -61,14 +61,6 @@
                                 <tbody>
                                 </tbody>
                             </table>
-
-{#                            <div class="">
-                                <a onclick="fnClearSelection();" href="javascript:void(0);" class="btn btn-primary ">Clear Selected</a>
-                            </div>
-
-                            <div class="">
-                                <a onclick="fnClearSelection();" href="javascript:void(0);" class="btn btn-primary ">Clear All</a>
-                            </div>#}
                         </div>
                     </div>
                 </div>

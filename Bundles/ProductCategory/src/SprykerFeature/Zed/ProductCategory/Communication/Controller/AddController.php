@@ -83,6 +83,7 @@ class AddController extends AbstractController
 
         return $this->viewResponse([
             'form' => $form->createView(),
+            'showProducts' => false
         ]);
     }
 
