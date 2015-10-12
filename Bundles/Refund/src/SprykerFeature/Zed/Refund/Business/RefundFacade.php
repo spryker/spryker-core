@@ -6,12 +6,15 @@
 
 namespace SprykerFeature\Zed\Refund\Business;
 
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Refund\RefundInterface;
+use Generated\Shared\Sales\OrderInterface;
 use Generated\Shared\Transfer\RefundTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Refund\Business\RefundDependencyContainer as SprykerRefundDependencyContainer;
 use SprykerFeature\Zed\Refund\Persistence\Propel\SpyRefund;
 use SprykerFeature\Zed\Refund\RefundDependencyProvider;
+use SprykerFeature\Zed\Sales\Persistence\Propel\Base\SpySalesOrderItem;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesExpense;
 
 /**
  * @method SprykerRefundDependencyContainer getDependencyContainer()
@@ -20,20 +23,21 @@ class RefundFacade extends AbstractFacade
 {
 
     /**
-     * @param $orderItems
-     * @param $orderEntity
+     * @param OrderInterface $orderTransfer
      *
      * @return int
      */
-    public function calculateAmount($orderItems, $orderEntity)
+    public function calculateRefundableAmount(OrderInterface $orderTransfer)
     {
-        $this->getDependencyContainer()->createRefundCalculator()->calculateAmount($orderItems, $orderEntity);
+        return $this->getDependencyContainer()
+            ->createRefundManager()
+            ->calculateRefundableAmount($orderTransfer);
     }
 
     /**
      * @param int $idSalesOrder
      *
-     * @return RefundTransfer[]
+     * @return RefundInterface[]
      */
     public function getRefundsByIdSalesOrder($idSalesOrder)
     {
@@ -53,27 +57,47 @@ class RefundFacade extends AbstractFacade
     /**
      * @param int $idSalesOrder
      *
-     * @return OrderTransfer
+     * @return OrderInterface
      */
     public function getOrderByIdSalesOrder($idSalesOrder)
     {
         return $this->getDependencyContainer()
-            ->getProvidedDependency(RefundDependencyProvider::FACADE_SALES)
+            ->createSalesFacade()
             ->getOrderByIdSalesOrder($idSalesOrder)
         ;
     }
 
     /**
-     * @param RefundTransfer $refundTransfer
+     * @param RefundInterface $refundTransfer
      *
-     * @return RefundTransfer
+     * @return RefundInterface
      */
-    public function saveRefund(RefundTransfer $refundTransfer)
+    public function saveRefund(RefundInterface $refundTransfer)
     {
         return $this->getDependencyContainer()
             ->createRefundModel()
             ->saveRefund($refundTransfer)
         ;
+    }
+
+    /**
+     * @param $idOrder
+     *
+     * @return SpySalesOrderItem[]
+     */
+    public function getRefundableItems($idOrder)
+    {
+        return $this->getDependencyContainer()->createRefundModel()->getRefundableItems($idOrder);
+    }
+
+    /**
+     * @param $idOrder
+     *
+     * @return SpySalesExpense[]
+     */
+    public function getRefundableExpenses($idOrder)
+    {
+        return $this->getDependencyContainer()->createRefundModel()->getRefundableExpenses($idOrder);
     }
 
 }

@@ -12,10 +12,12 @@ use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Oms\Business\OmsFacade;
 use SprykerFeature\Zed\Refund\Business\Model\Refund;
+use SprykerFeature\Zed\Refund\Persistence\RefundQueryContainerInterface;
 use SprykerFeature\Zed\Refund\RefundDependencyProvider;
 use SprykerFeature\Zed\Sales\Business\SalesFacade;
 
 /**
+ * @method RefundQueryContainerInterface getQueryContainer()
  * @method Factory|RefundBusiness getFactory()
  */
 class RefundDependencyContainer extends AbstractBusinessDependencyContainer
@@ -34,19 +36,30 @@ class RefundDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return OmsFacade
+     * @return RefundManager
      */
-    protected function createOmsFacade()
+    public function createRefundManager()
     {
-        return $this->getProvidedDependency(RefundDependencyProvider::FACADE_OMS);
+        return $this->getFactory()->createRefundManager(
+            $this->getQueryContainer(),
+            $this->createSalesQueryContainer()
+        );
     }
 
     /**
      * @return SalesFacade
      */
-    protected function createSalesFacade()
+    public function createSalesFacade()
     {
         return $this->getProvidedDependency(RefundDependencyProvider::FACADE_SALES);
+    }
+
+    /**
+     * @return OmsFacade
+     */
+    protected function createOmsFacade()
+    {
+        return $this->getProvidedDependency(RefundDependencyProvider::FACADE_OMS);
     }
 
     /**

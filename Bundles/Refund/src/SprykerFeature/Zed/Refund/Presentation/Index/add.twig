@@ -11,6 +11,9 @@
             {% embed '@Gui/Partials/widget.twig' with { widget_title: 'New Refund' }  %}
 
                 {% block widget_content %}
+                    <div class="refund-form" data-max="{{ maxRefundAmount }}">
+                        {{ 'Maximum refundable amount' | trans }}: {{ maxRefundAmount | currency }}
+
                     {{ form_start(form) }}
 
                         <h6>{{ 'Order Items' | trans }}</h6>
@@ -41,7 +44,7 @@
                         </table>
 
                         <h6>{{ 'Expenses' | trans }}</h6>
-                        <table class="footable table table-striped">
+                        <table class="footable table table-striped add-refund">
                             <thead>
                             <tr>
                                 <th>{{ 'Expense' | trans }}</th>
@@ -71,6 +74,7 @@
 
                         <input type="submit" class="btn btn-primary" value="{{ 'Save' | trans }}" />
                     {{ form_end(form) }}
+                    </div>
 
                 {% endblock %}
 

@@ -14,6 +14,19 @@ function calculateTotalRefundAmount() {
     var adjustmentFee = parseInt($('#form_adjustment_fee').val(), 10) || 0;
     sum = sum + adjustmentFee;
 
+    if (sum < 0) {
+        adjustmentFee = adjustmentFee + sum;
+        $('#form_adjustment_fee').val(adjustmentFee);
+        sum = 0;
+    }
+
+    var maxSum = parseInt($('div.refund-form').data('max'), 10);
+    if (sum > maxSum) {
+        adjustmentFee = adjustmentFee - (sum - maxSum);
+        $('#form_adjustment_fee').val(adjustmentFee);
+        sum = maxSum;
+    }
+
     $('#form_amount').val(sum);
 }
 
@@ -35,7 +48,7 @@ $(document).ready(function() {
     });
 
     $('#form_adjustment_fee').change(function(e) {
-        //TODO: Maybe calculate max possible fee and if necessary to return all expenses? CD-448
+        //TODO: Maybe add a warning when not all expenses are refunded but if all items will be refunded? CD-448
 
         calculateTotalRefundAmount();
     });
