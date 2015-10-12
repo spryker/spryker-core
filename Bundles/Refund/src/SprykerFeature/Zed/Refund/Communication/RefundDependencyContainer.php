@@ -33,6 +33,7 @@ class RefundDependencyContainer extends AbstractCommunicationDependencyContainer
     public function createRefundForm(OrderInterface $orderTransfer)
     {
         $refundFacade = $this->getRefundFacade();
+
         return $this->getFactory()->createFormRefundForm($refundFacade, $orderTransfer);
     }
 

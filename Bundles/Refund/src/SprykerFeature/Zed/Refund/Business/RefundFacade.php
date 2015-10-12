@@ -95,7 +95,8 @@ class RefundFacade extends AbstractFacade
      *
      * @return SpySalesExpense[]
      */
-    public function getRefundableExpenses($idOrder) {
+    public function getRefundableExpenses($idOrder)
+    {
         return $this->getDependencyContainer()->createRefundModel()->getRefundableExpenses($idOrder);
     }
 

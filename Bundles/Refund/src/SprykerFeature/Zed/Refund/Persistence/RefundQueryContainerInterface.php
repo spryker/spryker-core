@@ -10,6 +10,7 @@ use SprykerFeature\Zed\Refund\Persistence\Propel\SpyRefundQuery;
 
 interface RefundQueryContainerInterface
 {
+
     /**
      * @param int $idOrder
      *

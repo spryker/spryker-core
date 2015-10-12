@@ -71,6 +71,7 @@ class Refund
 
         if (!$processedOrderItems) {
             $this->salesQueryContainer->getConnection()->rollBack();
+
             return null;
         }
 

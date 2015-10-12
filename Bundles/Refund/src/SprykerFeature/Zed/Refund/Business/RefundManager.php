@@ -16,6 +16,7 @@ use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class RefundManager
 {
+
     /**
      * @var RefundQueryContainerInterface
      */
@@ -41,7 +42,8 @@ class RefundManager
      *
      * @return int
      */
-    public function calculateRefundableAmount(OrderInterface $orderTransfer) {
+    public function calculateRefundableAmount(OrderInterface $orderTransfer)
+    {
         $sum = 0;
 
         $orderItems = $this->getRefundableItems($orderTransfer->getIdSalesOrder());
@@ -73,8 +75,8 @@ class RefundManager
      *
      * @return SpySalesOrderItem[]
      */
-    public function getRefundableItems($idOrder) {
-
+    public function getRefundableItems($idOrder)
+    {
         $orderItems = $this->salesQueryContainer
             ->querySalesOrderItem()
             ->filterByFkSalesOrder($idOrder)
@@ -90,7 +92,8 @@ class RefundManager
      *
      * @return SpySalesExpense[]
      */
-    public function getRefundableExpenses($idOrder) {
+    public function getRefundableExpenses($idOrder)
+    {
         $expenses = $this->salesQueryContainer
             ->querySalesExpense()
             ->filterByFkSalesOrder($idOrder)
@@ -106,10 +109,12 @@ class RefundManager
      *
      * @return SpyRefund[]
      */
-    public function getRefunds($idOrder) {
+    public function getRefunds($idOrder)
+    {
         return $this->refundQueryContainer
             ->queryRefundsByIdSalesOrder($idOrder)
-            ->find();
+            ->find()
+        ;
     }
 
 }
