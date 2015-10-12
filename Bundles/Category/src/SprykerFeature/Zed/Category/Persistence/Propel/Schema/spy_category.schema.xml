@@ -34,6 +34,7 @@
         <column name="fk_category" required="true" type="INTEGER"/>
         <column name="fk_parent_category_node" required="false" type="INTEGER" default="NULL"/>
         <column name="is_root" type="BOOLEAN" default="false"/>
+        <column name="is_main" default="false" type="BOOLEAN" />
         <column name="node_order" type="INTEGER" required="false" default="0"/>
 
         <foreign-key foreignTable="spy_category_node" phpName="ParentCategoryNode" refPhpName="Node">

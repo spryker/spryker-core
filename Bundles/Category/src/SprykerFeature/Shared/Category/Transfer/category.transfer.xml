@@ -19,6 +19,7 @@
 
     <transfer name="Node">
         <property name="isRoot" type="bool" />
+        <property name="isMain" type="bool" />
         <property name="idCategoryNode" type="int" />
         <property name="fkCategory" type="int" />
         <property name="fkParentCategoryNode" type="int" />
