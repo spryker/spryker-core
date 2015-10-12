@@ -390,6 +390,54 @@ class DiscountFacadeTest extends Test
         $this->assertEquals(1, count($result));
     }
 
+    public function testUseVoucherCodesWhenCounterPresentShouldIncreaseNumberOfUses()
+    {
+        $voucherPoolEntity = $this->initializeDatabaseWithTestVoucher(
+            self::VOUCHER_CODE_TEST_6,
+            true,
+            true,
+            true,
+            5,
+            0
+        );
+
+        $this->discountFacade->useVoucherCodes([self::VOUCHER_CODE_TEST_6]);
+        $discountVoucherEntity = $voucherPoolEntity->getDiscountVouchers()[0];
+        $this->assertEquals(1, $discountVoucherEntity->getNumberOfUses());
+    }
+
+    public function testReleaseUsedCodesWhenCounterPresentShouldDecreaseNumberOfUses()
+    {
+        $voucherPoolEntity = $this->initializeDatabaseWithTestVoucher(
+            self::VOUCHER_CODE_TEST_6,
+            true,
+            true,
+            true,
+            5,
+            1
+        );
+
+        $this->discountFacade->releaseUsedVoucherCodes([self::VOUCHER_CODE_TEST_6]);
+        $discountVoucherEntity = $voucherPoolEntity->getDiscountVouchers()[0];
+        $this->assertEquals(0, $discountVoucherEntity->getNumberOfUses());
+    }
+
+    public function testValidateVoucherWhenVoucherUsedLimitThenItShouldFail()
+    {
+        $this->initializeDatabaseWithTestVoucher(
+            self::VOUCHER_CODE_TEST_6,
+            true,
+            true,
+            true,
+            5,
+            5
+        );
+
+        $validationErrors = $this->discountFacade->isVoucherUsable([self::VOUCHER_CODE_TEST_6]);
+
+        $this->assertCount(1, $validationErrors->getErrors());
+    }
+
     /**
      * @param string $displayName
      * @param string $type
@@ -426,7 +474,9 @@ class DiscountFacadeTest extends Test
         $code,
         $voucherIsActive = true,
         $voucherPoolIsActive = true,
-        $createVoucher = true
+        $createVoucher = true,
+        $maxNumberOfUses = null,
+        $numberOfUses = null
     ) {
         $voucherPool = new \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool();
         $voucherPool->setIsActive($voucherPoolIsActive);
@@ -436,6 +486,8 @@ class DiscountFacadeTest extends Test
         if ($createVoucher) {
             $voucher = new \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher();
             $voucher->setCode($code);
+            $voucher->setMaxNumberOfUses($maxNumberOfUses);
+            $voucher->setNumberOfUses($numberOfUses);
             $voucher->setIsActive($voucherIsActive);
             $voucher->setVoucherPool($voucherPool);
             $voucher->save();
