@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class LoginForm extends AbstractForm
 {
+
     const USERNAME = 'username';
     const PASSWORD = 'password';
 
@@ -27,7 +28,7 @@ class LoginForm extends AbstractForm
                 ],
                 'attr' => [
                     'placeholder' => 'Email Address',
-                ]
+                ],
             ])
             ->addPassword(self::PASSWORD, [
                 'constraints' => [
@@ -36,17 +37,9 @@ class LoginForm extends AbstractForm
                 ],
                 'attr' => [
                     'placeholder' => 'Password',
-                ]
+                ],
             ])
         ;
-    }
-
-    /**
-     * @return array
-     */
-    protected function populateFormFields()
-    {
-        return [];
     }
 
 }

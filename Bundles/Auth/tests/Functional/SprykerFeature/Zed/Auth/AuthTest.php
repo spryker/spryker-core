@@ -100,7 +100,7 @@ class AuthTest extends Test
         $login = $this->authFacade->login($userDto->getUsername(), $userData['password']);
         $this->assertTrue($login);
 
-        $isValid = $this->authFacade->isAuthorized($token);
+        $isValid = $this->authFacade->isAuthenticated($token);
         $this->assertTrue($isValid);
     }
 
@@ -158,7 +158,7 @@ class AuthTest extends Test
         foreach ($credentials as $username => $credential) {
             $token->setRawToken($credential['token']);
             $hash = $token->generate();
-            $isAllowed = $this->authFacade->isAuthorized($hash);
+            $isAllowed = $this->authFacade->isAuthenticated($hash);
             $this->assertTrue($isAllowed);
         }
     }
@@ -169,7 +169,7 @@ class AuthTest extends Test
 
         $token->setRawToken('WRONGTOKEN');
         $hash = $token->generate();
-        $isAllowed = $this->authFacade->isAuthorized($hash);
+        $isAllowed = $this->authFacade->isAuthenticated($hash);
         $this->assertTrue(!$isAllowed);
     }
 
@@ -203,7 +203,7 @@ class AuthTest extends Test
         $token->setRawToken($rawToken);
         $hash = $token->generate();
 
-        $isAllowed = $this->authFacade->isAuthorized($hash);
+        $isAllowed = $this->authFacade->isAuthenticated($hash);
         $this->assertTrue($isAllowed);
     }
 

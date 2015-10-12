@@ -12,7 +12,6 @@ use SprykerFeature\Zed\Auth\Communication\Form\LoginForm;
 use SprykerFeature\Zed\Auth\Communication\Form\ResetPasswordRequestForm;
 use SprykerFeature\Zed\User\Business\UserFacade;
 use SprykerFeature\Zed\User\Communication\Form\ResetPasswordForm;
-use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Auth\AuthDependencyProvider;
 use SprykerFeature\Zed\Auth\AuthConfig;
 
@@ -22,12 +21,11 @@ use SprykerFeature\Zed\Auth\AuthConfig;
  */
 class AuthDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
-     * @param Request $request
-     *
      * @return LoginForm
      */
-    public function createLoginForm(Request $request)
+    public function createLoginForm()
     {
         return $this->getFactory()->createFormLoginForm();
     }
@@ -55,4 +53,5 @@ class AuthDependencyContainer extends AbstractCommunicationDependencyContainer
     {
         return $this->getProvidedDependency(AuthDependencyProvider::FACADE_USER);
     }
+
 }

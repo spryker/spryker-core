@@ -64,11 +64,12 @@ abstract class AbstractForm
     abstract protected function buildFormFields();
 
     /**
-     * Set the values for fields
-     *
      * @return array
      */
-    abstract protected function populateFormFields();
+    protected function populateFormFields()
+    {
+        return [];
+    }
 
     /**
      * @return $this
@@ -660,7 +661,7 @@ abstract class AbstractForm
 
     /**
      * Select2 default combobox styling, see https://select2.github.io/examples.html
-     * 
+     *
      * @param string $name
      * @param array $options
      *
@@ -669,7 +670,7 @@ abstract class AbstractForm
     public function addSelect2ComboBox($name, $options = [])
     {
         $this->add($name, new Select2ComboBoxType(), $options);
-        
+
         return $this;
     }
 

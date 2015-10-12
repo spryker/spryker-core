@@ -6,6 +6,8 @@
     <transfer name="Category">
         <property name="idCategory" type="int" />
         <property name="isActive" type="bool" />
+        <property name="isInMenu" type="bool" />
+        <property name="isClickable" type="bool" />
         <property name="name" type="string" />
         <property name="url" type="string" />
         <property name="imageName" type="string" />
