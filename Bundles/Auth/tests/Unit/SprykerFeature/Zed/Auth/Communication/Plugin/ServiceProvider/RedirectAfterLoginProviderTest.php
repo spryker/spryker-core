@@ -216,4 +216,5 @@ class RedirectAfterLoginProviderTest extends AbstractUnitTest
 
         return $this->getMock('SprykerFeature\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider', $methods, [], '', false);
     }
+
 }

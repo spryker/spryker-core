@@ -24,7 +24,6 @@ use Symfony\Component\HttpKernel\KernelEvents;
 class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
-
     const REQUEST_URI = 'request uri';
     const LOGIN_URI = '/auth/login';
 

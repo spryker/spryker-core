@@ -14,7 +14,6 @@ class LoginForm extends AbstractForm
 
     const USERNAME = 'username';
     const PASSWORD = 'password';
-    const REDIRECT_URL = 'redirectUrl';
 
     /**
      * @return self

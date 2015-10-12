@@ -18,21 +18,6 @@ abstract class Bootstrap
 {
 
     /**
-     * @var Application
-     */
-    protected $application;
-
-    /**
-     * @param Application|null $application
-     */
-    public function __construct(Application $application = null)
-    {
-        if ($application) {
-            $this->application = $application;
-        }
-    }
-
-    /**
      * @return Application
      */
     public function boot()

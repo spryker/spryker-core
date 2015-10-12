@@ -10,7 +10,6 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Auth\Business\AuthFacade;
 use SprykerFeature\Zed\Auth\Communication\AuthDependencyContainer;
 use SprykerFeature\Zed\Auth\Communication\Form\LoginForm;
-use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
