@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -9,8 +10,12 @@ use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
 
 interface SubscriberOptInSenderInterface
 {
+
     /**
      * @param NewsletterSubscriberInterface $newsletterSubscriber
+     *
+     * @return bool
      */
     public function send(NewsletterSubscriberInterface $newsletterSubscriber);
+
 }

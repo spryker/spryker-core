@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -10,7 +11,10 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class NewsletterDependencyProvider extends AbstractBundleDependencyProvider
 {
-    const OPT_IN_SENDER_PLUGINS = 'opt in sender plugins';
+
+    const DOUBLE_OPT_IN_SENDER_PLUGINS = 'double opt in sender plugins';
+    const FACADE_MAIL = 'mail facade';
+    const FACADE_GLOSSARY = 'glossary facade';
 
     /**
      * @param Container $container
@@ -21,8 +25,25 @@ class NewsletterDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
-        $container[self::OPT_IN_SENDER_PLUGINS] = function (Container $container) {
-            return $this->getOptInSenderPlugins($container);
+        $container[self::DOUBLE_OPT_IN_SENDER_PLUGINS] = function (Container $container) {
+            return $this->getDoubleOptInSenderPlugins($container);
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container)
+    {
+        $container[self::FACADE_MAIL] = function (Container $container) {
+            return $container->getLocator()->mail()->facade();
+        };
+        $container[self::FACADE_GLOSSARY] = function (Container $container) {
+            return $container->getLocator()->glossary()->facade();
         };
 
         return $container;
@@ -33,8 +54,11 @@ class NewsletterDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return array
      */
-    protected function getOptInSenderPlugins(Container $container)
+    protected function getDoubleOptInSenderPlugins(Container $container)
     {
-        return [];
+        return [
+            $container->getLocator()->newsletter()->pluginDoubleOptInSubscriptionSender(),
+        ];
     }
+
 }

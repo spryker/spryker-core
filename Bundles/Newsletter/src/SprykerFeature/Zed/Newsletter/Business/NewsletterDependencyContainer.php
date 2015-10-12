@@ -79,7 +79,7 @@ class NewsletterDependencyContainer extends AbstractBusinessDependencyContainer
             $this->createSubscriberKeyGenerator()
         );
 
-        $optInSenderPlugins = $this->getProvidedDependency(NewsletterDependencyProvider::OPT_IN_SENDER_PLUGINS);
+        $optInSenderPlugins = $this->getProvidedDependency(NewsletterDependencyProvider::DOUBLE_OPT_IN_SENDER_PLUGINS);
 
         foreach ($optInSenderPlugins as $optInSenderPlugin) {
             $subscriberOptInHandler->addSubscriberOptInSender($optInSenderPlugin);

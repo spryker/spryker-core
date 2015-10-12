@@ -11,8 +11,8 @@ use SprykerFeature\Zed\Newsletter\Persistence\NewsletterQueryContainer;
 use SprykerFeature\Zed\Newsletter\Persistence\Propel\SpyNewsletterSubscription;
 
 /**
+ * TODO: facade to check if subscriber is subscribed for a specific newsletter type
  * TODO: create demo data
- * TODO: double opt-in email
  * TODO: remove customer.has_newsletter_subscription field
  */
 class SubscriptionManager implements SubscriptionManagerInterface

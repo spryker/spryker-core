@@ -107,12 +107,13 @@ class SubscriptionRequestHandler
     public function processNewsletterUnsubscriptions(NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest)
     {
         $subscriptionResponse = $this->createSubscriptionResponse();
-        $newsletterSubscriberTransfer = $newsletterSubscriptionRequest->getNewsletterSubscriber();
 
         $connection = $this->queryContainer->getConnection();
         $connection->beginTransaction();
 
         try {
+            $newsletterSubscriberTransfer = $newsletterSubscriptionRequest->getNewsletterSubscriber();
+
             foreach ($newsletterSubscriptionRequest->getNewsletterTypes() as $newsletterTypeTransfer) {
                 $this->subscriptionManager->unsubscribe($newsletterSubscriberTransfer, $newsletterTypeTransfer);
 
