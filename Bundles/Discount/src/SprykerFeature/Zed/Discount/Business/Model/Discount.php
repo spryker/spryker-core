@@ -124,31 +124,27 @@ class Discount
      */
     protected function retrieveDiscountsToBeCalculated()
     {
-        $discounts = $this->retrieveActiveCartAndVoucherDiscounts(
-            $this->getCouponCodes()
-        );
+        $discounts = $this->retrieveActiveCartAndVoucherDiscounts($this->getCouponCodes());
+
         $discountsToBeCalculated = [];
-        $errors = [];
+        $decisionRuleValidationErrors = [];
 
         foreach ($discounts as $discountEntity) {
             $discountTransfer = $this->hydrateDiscountTransfer($discountEntity);
+            $decisionRulePlugins = $this->getDecisionRulePlugins($discountEntity->getPrimaryKey());
 
-            $result = $this->decisionRule->evaluate(
-                $discountTransfer,
-                $this->discountContainer,
-                $this->getDecisionRulePlugins($discountEntity->getPrimaryKey())
-            );
+            $result = $this->decisionRule->evaluate($discountTransfer, $this->discountContainer, $decisionRulePlugins);
 
             if ($result->isSuccess()) {
                 $discountsToBeCalculated[] = $discountTransfer;
             } else {
-                $errors = array_merge($errors, $result->getErrors());
+                $decisionRuleValidationErrors = array_merge($decisionRuleValidationErrors, $result->getErrors());
             }
         }
 
         return [
             self::KEY_DISCOUNTS => $discountsToBeCalculated,
-            self::KEY_ERRORS => $errors,
+            self::KEY_ERRORS => $decisionRuleValidationErrors,
         ];
     }
 
@@ -160,13 +156,6 @@ class Discount
     protected function getDecisionRulePlugins($idDiscount)
     {
         $plugins = [];
-
-        $defaultVoucherDecisionRulePlugin = $this->getDefaultVoucherDecisionRulePluginIfNeeded($idDiscount);
-
-        if ($defaultVoucherDecisionRulePlugin) {
-            $plugins[] = $defaultVoucherDecisionRulePlugin;
-        }
-
         $decisionRules = $this->retrieveDecisionRules($idDiscount);
         foreach ($decisionRules as $decisionRuleEntity) {
             $decisionRulePlugin = $this->discountSettings->getDecisionRulePluginByName(
@@ -198,40 +187,13 @@ class Discount
     }
 
     /**
-     * @param int $idDiscount
-     *
-     * @return null|DiscountDecisionRulePluginInterface
-     */
-    protected function getDefaultVoucherDecisionRulePluginIfNeeded($idDiscount)
-    {
-        if (count($this->discountContainer->getCalculableObject()->getCouponCodes()) === 0) {
-            return null;
-        }
-
-        $discount = $this->queryContainer->queryDiscount()->findPk($idDiscount);
-
-        if ($discount->getFkDiscountVoucherPool()) {
-            $plugin = $this->discountSettings->getDefaultVoucherDecisionRulePlugin();
-            $plugin->setContext(
-                [
-                    AbstractDecisionRule::KEY_DATA => $discount->getFkDiscountVoucherPool(),
-                ]
-            );
-
-            return $plugin;
-        }
-
-        return null;
-    }
-
-    /**
      * @return array
      */
     protected function getCouponCodes()
     {
         $couponCodes = $this->discountContainer->getCalculableObject()->getCouponCodes();
 
-        if (0 === count($couponCodes)) {
+        if (count($couponCodes) === 0) {
             return [];
         }
 

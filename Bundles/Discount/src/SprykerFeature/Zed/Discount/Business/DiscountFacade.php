@@ -48,20 +48,9 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return ModelResult
      */
-    public function isCodeUsable($code)
+    public function isVoucherUsable($code)
     {
-        return $this->getDependencyContainer()->getDecisionRuleVoucher()->isCodeUsable($code);
-    }
-
-    /**
-     * @param string $code
-     * @param int $idDiscountVoucherPool
-     *
-     * @return ModelResult
-     */
-    public function isVoucherUsable($code, $idDiscountVoucherPool)
-    {
-        return $this->getDependencyContainer()->getDecisionRuleVoucher()->isUsable($code, $idDiscountVoucherPool);
+        return $this->getDependencyContainer()->getDecisionRuleVoucher()->isUsable($code);
     }
 
     /**
@@ -403,9 +392,9 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
      *
      * @return bool
      */
-    public function releaseVoucherCodes(array $codes)
+    public function releaseUsedVoucherCodes(array $codes)
     {
-        return $this->getDependencyContainer()->createVoucherCode()->releaseCodes($codes);
+        return $this->getDependencyContainer()->createVoucherCode()->releaseUsedCodes($codes);
     }
 
     /**

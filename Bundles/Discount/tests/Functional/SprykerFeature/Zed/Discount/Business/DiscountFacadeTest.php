@@ -86,35 +86,35 @@ class DiscountFacadeTest extends Test
     public function testIsVoucherUsable()
     {
         $voucherPool = $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_1);
-        $result = $this->discountFacade->isVoucherUsable(self::VOUCHER_CODE_TEST_1, $voucherPool->getPrimaryKey());
+        $result = $this->discountFacade->isVoucherUsable(self::VOUCHER_CODE_TEST_1);
         $this->assertTrue($result->isSuccess());
     }
 
     public function testIsVoucherUsableForInactivePool()
     {
         $voucherPool = $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_2, true, false);
-        $result = $this->discountFacade->isVoucherUsable(self::VOUCHER_CODE_TEST_2, $voucherPool->getPrimaryKey());
+        $result = $this->discountFacade->isVoucherUsable(self::VOUCHER_CODE_TEST_2);
         $this->assertFalse($result->isSuccess());
     }
 
     public function testIsVoucherUsableForInactiveVoucher()
     {
         $voucherPool = $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_3, false, true);
-        $result = $this->discountFacade->isVoucherUsable(self::VOUCHER_CODE_TEST_3, $voucherPool->getPrimaryKey());
+        $result = $this->discountFacade->isVoucherUsable(self::VOUCHER_CODE_TEST_3);
         $this->assertFalse($result->isSuccess());
     }
 
     public function testIsVoucherUsableForInactiveVoucherAndInactivePool()
     {
         $voucherPool = $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_4, false, false);
-        $result = $this->discountFacade->isVoucherUsable(self::VOUCHER_CODE_TEST_4, $voucherPool->getPrimaryKey());
+        $result = $this->discountFacade->isVoucherUsable(self::VOUCHER_CODE_TEST_4);
         $this->assertFalse($result->isSuccess());
     }
 
     public function testIsVoucherUsableForNonExistingVoucher()
     {
         $voucherPool = $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_5, true, true, false);
-        $result = $this->discountFacade->isVoucherUsable(self::VOUCHER_CODE_TEST_5, $voucherPool->getPrimaryKey());
+        $result = $this->discountFacade->isVoucherUsable(self::VOUCHER_CODE_TEST_5);
         $this->assertFalse($result->isSuccess());
     }
 

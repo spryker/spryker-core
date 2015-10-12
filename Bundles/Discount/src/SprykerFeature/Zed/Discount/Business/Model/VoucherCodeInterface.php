@@ -11,7 +11,7 @@ interface VoucherCodeInterface
      *
      * @return bool
      */
-    public function releaseCodes(array $codes);
+    public function releaseUsedCodes(array $codes);
 
     /**
      * @param array|string[] $codes

@@ -45,9 +45,6 @@ class CollectorPluginType extends AbstractRuleType
             ])
             ->add(self::FIELD_VALUE, 'text', [
                 'label' => 'Value',
-                'constraints' => [
-                    new NotBlank(),
-                ]
             ])
         ;
     }

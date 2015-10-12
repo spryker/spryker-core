@@ -27,53 +27,40 @@ class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePlugin
      */
     public function check(DiscountInterface $discountTransfer, CalculableInterface $container)
     {
-        $componentResult = new ModelResult();
+        $voucherCodeValidationResults = new ModelResult();
 
-        if (count($container->getCalculableObject()->getCouponCodes()) < 1) {
-            $componentResult->addError('Voucher not set.');
-            return $componentResult;
+        if (!$this->isVoucherCodesProvided($container)) {
+            $voucherCodeValidationResults->addError('Voucher codes not set.');
+            return $voucherCodeValidationResults;
         }
 
-        $errors = [];
-        $result = true;
-
-        $idDiscountVoucherPool = $this->getIdVoucherPool();
-
+        $validationErrors = [];
         $validVoucherCodes = [];
         foreach ($discountTransfer->getUsedCodes() as $voucherCode) {
-            $response = $this
-                ->getDependencyContainer()
-                ->getDiscountFacade()
-                ->isVoucherUsable($voucherCode, $idDiscountVoucherPool);
+            $voucherValidation = $this->getDependencyContainer()->getDiscountFacade()->isVoucherUsable($voucherCode);
 
-            $result &= $response->isSuccess();
-            if ($response->isSuccess()) {
+            if ($voucherValidation->isSuccess()) {
                 $validVoucherCodes[] = $voucherCode;
             }
-            $errors = array_merge($errors, $response->getErrors());
+            $validationErrors = array_merge($validationErrors, $voucherValidation->getErrors());
         }
 
         $discountTransfer->setUsedCodes($validVoucherCodes);
+        $voucherCodeValidationResults->addErrors($validationErrors);
 
-        $componentResult->addErrors($errors);
-
-        return $componentResult;
+        return $voucherCodeValidationResults;
     }
 
     /**
-     * @return int
+     * @param CalculableInterface $container
+     *
+     * @return bool
      */
-    protected function getIdVoucherPool()
+    protected function isVoucherCodesProvided(CalculableInterface $container)
     {
-        if (array_key_exists(self::KEY_DATA, $this->getContext())) {
-            return $this->getContext()[self::KEY_DATA]; //idDiscountVoucher
+        if (count($container->getCalculableObject()->getCouponCodes()) < 1) {
+            return false;
         }
-
-        if (array_key_exists(self::KEY_ENTITY, $this->getContext())) {
-            /* @var $decisionRuleEntity SpyDiscountDecisionRule */
-            $decisionRuleEntity = $this->getContext()[self::KEY_ENTITY];
-            return $decisionRuleEntity->getDiscount()->getFkDiscountVoucherPool();
-        }
+        return true;
     }
-
 }
