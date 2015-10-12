@@ -75,6 +75,7 @@
         <column name="code" type="VARCHAR" size="255" required="true"/>
         <column name="number_of_uses" type="INTEGER" required="false"/>
         <column name="is_active" type="BOOLEAN" default="false"/>
+        <column name="voucher_batch" type="INTEGER" default="0"/>
 
         <behavior name="timestampable"/>
 

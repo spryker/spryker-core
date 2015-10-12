@@ -255,7 +255,7 @@ class DiscountFacadeTest extends Test
         $voucherPoolEntity->save();
 
         $voucherCreateTransfer = new VoucherCreateTransfer();
-        $voucherCreateTransfer->setAmount(self::AMOUNT_OF_VOUCHERS_TO_CREATE_10);
+        $voucherCreateTransfer->setQuantity(self::AMOUNT_OF_VOUCHERS_TO_CREATE_10);
         $voucherCreateTransfer->setIdVoucherPool($voucherPoolEntity->getPrimaryKey());
 
         $this->discountFacade->createVoucherCodes($voucherCreateTransfer);
