@@ -1,6 +1,63 @@
 {% extends '@ProductCategory/Add/index.twig' %}
-{% set submit_title = 'Delete' %}
-{% set widget_title = 'Category Delete' %}
+{% set submit_title = 'Delete' | trans %}
+{% set widget_title = 'Category Delete' | trans %}
+{% set widget_title = widget_title ~ ': ' ~ currentCategory.name %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' %}
+
+        {% block widget_content %}
+
+            {{ form_start(form) }}
+
+            {{ form_errors(form) }}
+
+            <div class="row">
+                <div class="col-md-4">Paths to be deleted</div>
+                <div class="col-md-8">
+                    <ul>
+                        <li>BB</li>
+                        <li>BB</li>
+                        <li>BB</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">Products to be de assigned</div>
+                <div class="col-md-8">
+                    <ul>
+                        <li>BB</li>
+                        <li>BB</li>
+                        <li>BB</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4">Cms blocks to be de assigned</div>
+                <div class="col-md-8">
+                    <ul>
+                        <li>BB</li>
+                        <li>BB</li>
+                        <li>BB</li>
+                    </ul>
+                </div>
+            </div>
+
+
+
+            {{ form_rest(form) }}
+
+            <input type="submit" class="btn btn-primary" value="{{ submit_title | trans }}" />
+            {{ form_end(form) }}
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}
 
 {% block action %}
     {{ parent() }}

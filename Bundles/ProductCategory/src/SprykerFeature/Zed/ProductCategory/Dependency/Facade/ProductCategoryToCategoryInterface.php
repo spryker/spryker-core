@@ -38,14 +38,16 @@ interface ProductCategoryToCategoryInterface
     /**
      * @param int $idNode
      * @param LocaleTransfer $locale
+     * @param bool $deleteChildren
      *
-     * @return bool
+     * @return int
      */
-    public function deleteCategoryByNodeId($idNode, LocaleTransfer $locale);
+    public function deleteNode($idNode, LocaleTransfer $locale, $deleteChildren = false);
 
     /**
      * @param int $idCategory
      */
-    public function deleteCategoryById($idCategory);
+    public function deleteCategory($idCategory);
+
 
 }

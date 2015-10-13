@@ -8,11 +8,11 @@ namespace SprykerFeature\Zed\ProductCategory\Business;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
@@ -27,6 +27,11 @@ use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
 
 class ProductCategoryManager implements ProductCategoryManagerInterface
 {
+
+    /**
+     * @var CategoryQueryContainerInterface
+     */
+    protected $categoryQueryContainer;
 
     /**
      * @var ProductCategoryQueryContainerInterface
@@ -59,6 +64,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     protected $locator;
 
     /**
+     * @param CategoryQueryContainerInterface $categoryQueryContainer
      * @param ProductCategoryQueryContainerInterface $productCategoryQueryContainer
      * @param ProductCategoryToProductInterface $productFacade
      * @param ProductCategoryToCategoryInterface $categoryFacade
@@ -67,6 +73,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param LocatorLocatorInterface $locator
      */
     public function __construct(
+        CategoryQueryContainerInterface $categoryQueryContainer,
         ProductCategoryQueryContainerInterface $productCategoryQueryContainer,
         ProductCategoryToProductInterface $productFacade,
         ProductCategoryToCategoryInterface $categoryFacade,
@@ -74,6 +81,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         CmsToCategoryInterface $cmsFacade,
         LocatorLocatorInterface $locator
     ) {
+        $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productCategoryQueryContainer = $productCategoryQueryContainer;
         $this->productFacade = $productFacade;
         $this->categoryFacade = $categoryFacade;
@@ -287,7 +295,11 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         }
     }
 
-    public function deleteCategoryFull(CategoryTransfer $category, NodeTransfer $categoryNode, LocaleTransfer $locale)
+    /**
+     * @param CategoryTransfer $category
+     * @param LocaleTransfer $locale
+     */
+    public function deleteCategoryFull(CategoryTransfer $category, LocaleTransfer $locale)
     {
         $connection = Propel::getConnection();
         $connection->beginTransaction();
@@ -309,17 +321,21 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         //url/path mappings
         //update touch
 
-        //block mappings
-        //set type to static and value to 0
-
         //product mappings
         //update touch
 
-        $this->cmsFacade->updateBlocksAssignedToDeletedCategoryNode($categoryNode->getIdCategoryNode());
+        $categoryNodes = $this->categoryQueryContainer
+            ->queryAllNodesByCategoryId($category->getIdCategory())
+            ->find()
+        ;
 
-        $this->categoryFacade->deleteCategoryByNodeId($categoryNode->getIdCategoryNode(), $locale);
+        foreach ($categoryNodes as $node) {
+            $this->cmsFacade->updateBlocksAssignedToDeletedCategoryNode($node->getIdCategoryNode());
+            $this->categoryFacade->deleteNode($node->getIdCategoryNode(), $locale);
+        }
 
-        $this->categoryFacade->deleteCategoryById($category->getIdCategory());
+        $this->categoryFacade->deleteCategory($category->getIdCategory());
+
 
         //remove paths, url, regenrate menu
 

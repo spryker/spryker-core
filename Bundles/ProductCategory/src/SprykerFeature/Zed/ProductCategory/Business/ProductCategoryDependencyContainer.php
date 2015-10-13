@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\ProductCategory\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductCategoryBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\CmsToCategoryInterface;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterface;
@@ -28,6 +29,7 @@ class ProductCategoryDependencyContainer extends AbstractBusinessDependencyConta
     public function createProductCategoryManager()
     {
         return $this->getFactory()->createProductCategoryManager(
+            $this->createCategoryQueryContainer(),
             $this->createProductCategoryQueryContainer(),
             $this->createProductFacade(),
             $this->createCategoryFacade(),
@@ -35,6 +37,14 @@ class ProductCategoryDependencyContainer extends AbstractBusinessDependencyConta
             $this->createCmsFacade(),
             $this->getLocator()
         );
+    }
+
+    /**
+     * @return CategoryQueryContainerInterface
+     */
+    protected function createCategoryQueryContainer()
+    {
+        return $this->getLocator()->category()->queryContainer();
     }
 
     /**
