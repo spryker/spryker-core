@@ -4,20 +4,20 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Communication\Plugin;
+namespace SprykerFeature\Zed\Payolution\Communication\Plugin\Checkout;
 
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreconditionInterface;
-use SprykerFeature\Zed\PayolutionCheckoutConnector\Communication\PayolutionCheckoutConnectorDependencyContainer;
+use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;
 
 /**
- * @method PayolutionCheckoutConnectorDependencyContainer getDependencyContainer()
+ * @method PayolutionFacade getFacade()
  */
-class CheckoutPreCheckPlugin extends AbstractPlugin implements CheckoutPreconditionInterface
+class CheckoutPreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreconditionInterface
 {
 
     /**
@@ -30,8 +30,7 @@ class CheckoutPreCheckPlugin extends AbstractPlugin implements CheckoutPrecondit
         CheckoutRequestTransfer $checkoutRequest,
         CheckoutResponseTransfer $checkoutResponse
     ) {
-        $payolutionFacade = $this->getDependencyContainer()->createPayolutionFacade();
-        $payolutionResponseTransfer = $payolutionFacade->preCheckPayment($checkoutRequest);
+        $payolutionResponseTransfer = $this->getFacade()->preCheckPayment($checkoutRequest);
 
         if (PayolutionApiConstants::REASON_CODE_SUCCESS !== $payolutionResponseTransfer->getProcessingReasonCode()
             || PayolutionApiConstants::STATUS_CODE_SUCCESS !== $payolutionResponseTransfer->getProcessingStatusCode()

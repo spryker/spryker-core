@@ -4,14 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\PayolutionOmsConnector\Communication\Plugin\Condition;
+namespace SprykerFeature\Zed\Payolution\Communication\Plugin\Oms\Condition;
 
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 
-abstract class CheckAbstractPlugin extends BaseAbstractPlugin implements ConditionInterface
+abstract class AbstractCheckPlugin extends BaseAbstractPlugin implements ConditionInterface
 {
 
     /**

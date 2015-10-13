@@ -4,20 +4,20 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\PayolutionOmsConnector\Communication\Plugin\Command;
+namespace SprykerFeature\Zed\Payolution\Communication\Plugin\Oms\Command;
 
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
+use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
-use SprykerFeature\Zed\PayolutionOmsConnector\Communication\PayolutionOmsConnectorDependencyContainer;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 
 /**
- * @method PayolutionOmsConnectorDependencyContainer getDependencyContainer()
+ * @method PayolutionFacade getFacade()
  */
-class RefundPlugin  extends AbstractPlugin implements CommandByOrderInterface
+class PreAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterface
 {
 
     /**
@@ -32,9 +32,7 @@ class RefundPlugin  extends AbstractPlugin implements CommandByOrderInterface
         /** @var SpyPaymentPayolution $paymentEntity */
         $paymentEntity = $orderEntity->getSpyPaymentPayolutions()->getFirst();
 
-        $this->getDependencyContainer()
-            ->createPayolutionFacade()
-            ->refundPayment($paymentEntity->getIdPaymentPayolution());
+        $this->getFacade()->preAuthorizePayment($paymentEntity->getIdPaymentPayolution());
 
         return [];
     }
