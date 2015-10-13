@@ -5,6 +5,7 @@
  */
 
 namespace SprykerFeature\Shared\Library;
+use SprykerEngine\Shared\Kernel\Store;
 
 /**
  * Runtime-Config for Yves and Zed
@@ -65,10 +66,10 @@ class Config
     {
 
         if (is_null($environment)) {
-            $environment = \SprykerFeature\Shared\Library\Environment::getInstance()->getEnvironment();
+            $environment = Environment::getInstance()->getEnvironment();
         }
 
-        $storeName = \SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName();
+        $storeName = Store::getInstance()->getStoreName();
 
         $config = new \ArrayObject();
 
@@ -106,14 +107,13 @@ class Config
     }
 
     /**
-     * @param $type
+     * @param string $type
+     * @param \ArrayObject $config
      *
      * @return \ArrayObject
      */
     protected static function buildConfig($type = null, \ArrayObject $config)
     {
-        assert(is_string($type));
-
         $fileName = APPLICATION_ROOT_DIR . self::CONFIG_FILE_PREFIX . $type . self::CONFIG_FILE_SUFFIX;
         if (file_exists($fileName)) {
             include $fileName;

@@ -23,7 +23,7 @@ class OrderConfirmationMail implements CommandByOrderInterface
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        \SprykerFeature\Shared\Library\Log::log('Command OrderConfirmationMail by Order for nr of items: ' . count($orderItems), 'statemachine.log');
+        Log::log('Command OrderConfirmationMail by Order for nr of items: ' . count($orderItems), 'statemachine.log');
     }
 
 }

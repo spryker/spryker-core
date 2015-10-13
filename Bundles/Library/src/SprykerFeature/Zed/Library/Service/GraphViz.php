@@ -339,7 +339,7 @@ class GraphViz
     public function fetch($format = 'svg', $command = null)
     {
         $file = $this->saveParsedGraph();
-        if (!$file || PEAR::isError($file)) {
+        if (!$file || \PEAR::isError($file)) {
             return $file;
         }
 
@@ -359,7 +359,7 @@ class GraphViz
             if ($this->_returnFalseOnError) {
                 return false;
             }
-            throw new ErrorException('Could not read rendered file');
+            throw new \ErrorException('Could not read rendered file');
 
             return $error;
         }
@@ -390,7 +390,7 @@ class GraphViz
             if ($this->_returnFalseOnError) {
                 return false;
             }
-            throw new ErrorException('Could not find dot file');
+            throw new \ErrorException('Could not find dot file');
 
             return $error;
         }
@@ -421,7 +421,7 @@ class GraphViz
         } elseif ($this->_returnFalseOnError) {
             return false;
         }
-        throw new ErrorException($command_orig . ' command failed: ' . implode("\n", $msg));
+        throw new \ErrorException($command_orig . ' command failed: ' . implode("\n", $msg));
     }
 
     /**
@@ -760,7 +760,7 @@ class GraphViz
             return false;
         }
 
-        throw new ErrorException('Could not save serialized graph instance');
+        throw new \ErrorException('Could not save serialized graph instance');
 
         return $error;
     }
@@ -1009,7 +1009,7 @@ class GraphViz
      *
      * @param string $file
      *
-     * @throws ErrorException
+     * @throws \ErrorException
      *
      * @return bool|string
      */
@@ -1036,7 +1036,7 @@ class GraphViz
             return false;
         }
 
-        throw new ErrorException('Could not save graph');
+        throw new \ErrorException('Could not save graph');
     }
 
     public function imageFromGoogleGraph($setPNGHeader = true)
@@ -1045,7 +1045,7 @@ class GraphViz
 
         $googleGraph = str_replace('strict digraph G ', '', $digraph);
 
-        $googleApi = new \SprykerFeature\Zed\Library\Service\GoogleGraph();
+        $googleApi = new GoogleGraph();
         $googleApi->setCht('gv:dot');
         $googleApi->setChof('gif');
         $googleApi->setChl('digraph' . $googleGraph);

@@ -13,6 +13,7 @@ use SprykerEngine\Zed\Kernel\BundleDependencyProviderLocator;
 use SprykerEngine\Zed\Kernel\ClassNamePattern;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Shared\Kernel\ClassMapFactory;
+use SprykerFeature\Shared\Library\Log;
 
 class ControllerLocator implements ControllerLocatorInterface
 {
@@ -90,7 +91,7 @@ class ControllerLocator implements ControllerLocatorInterface
         $bundleName = lcfirst($this->bundle);
 
         if (!method_exists($resolvedController, 'setOwnFacade')) {
-            \SprykerFeature\Shared\Library\Log::log($resolvedController, 'wrong_controller.txt');
+            Log::log($resolvedController, 'wrong_controller.txt');
         }
 
         $bundleConfigLocator = new BundleDependencyProviderLocator(); // @todo Make singleton because of performance

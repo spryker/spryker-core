@@ -21,7 +21,7 @@ class PaymentRedirected extends AbstractCondition
     {
         $b = (microtime() * 1000000 % 2) ? true : false;
         $bS = $b ? 'true' : 'false';
-        \SprykerFeature\Shared\Library\Log::log('Condition PaymentRedirected for item: ' . $orderItem->getIdSalesOrderItem() . ' ' . $bS, 'statemachine.log');
+        Log::log('Condition PaymentRedirected for item: ' . $orderItem->getIdSalesOrderItem() . ' ' . $bS, 'statemachine.log');
 
         return $b;
     }

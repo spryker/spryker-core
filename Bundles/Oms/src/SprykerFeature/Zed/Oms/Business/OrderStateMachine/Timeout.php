@@ -138,7 +138,7 @@ class Timeout implements TimeoutInterface
 
             $this->eventToTimeoutBuffer[$event->getName()] = $currentTime->add($interval);
 
-            \SprykerFeature\Shared\Library\Log::log($this->eventToTimeoutBuffer, 'timeout.log');
+            Log::log($this->eventToTimeoutBuffer, 'timeout.log');
         }
 
         return $this->eventToTimeoutBuffer[$event->getName()];

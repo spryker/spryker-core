@@ -21,7 +21,7 @@ class DecreaseStock implements CommandByItemInterface
      */
     public function run(SpySalesOrderItem $orderItem, ReadOnlyArrayObject $data)
     {
-        \SprykerFeature\Shared\Library\Log::log('Command DecreaseStock by Item', 'statemachine.log');
+        Log::log('Command DecreaseStock by Item', 'statemachine.log');
 
         return [];
     }

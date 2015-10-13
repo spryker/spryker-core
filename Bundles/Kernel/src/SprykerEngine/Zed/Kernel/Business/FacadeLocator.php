@@ -12,6 +12,7 @@ use SprykerEngine\Shared\Kernel\Locator\LocatorException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\BundleDependencyProviderLocator;
 use SprykerEngine\Zed\Kernel\Container;
+use SprykerFeature\Shared\Library\Log;
 
 class FacadeLocator extends AbstractLocator
 {
@@ -67,7 +68,7 @@ class FacadeLocator extends AbstractLocator
             }
         } catch (ClassNotFoundException $e) {
             // TODO remove try-catch when all bundles have a Builder
-            \SprykerFeature\Shared\Library\Log::log(APPLICATION . ' - ' . $bundle, 'builder_missing.log');
+            Log::log(APPLICATION . ' - ' . $bundle, 'builder_missing.log');
         }
 
         return $facade;

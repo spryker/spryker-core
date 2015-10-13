@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Setup\Business\Model;
 
+use SprykerFeature\Shared\Library\Environment;
 use SprykerFeature\Zed\Setup\SetupConfig;
 
 class Cronjobs
@@ -371,7 +372,7 @@ class Cronjobs
             return $schedule;
         }
 
-        if (\SprykerFeature\Shared\Library\Environment::isNotProduction()) {
+        if (Environment::isNotProduction()) {
             // Non-production - don't run automatically via Jenkins
             return '';
         } else {

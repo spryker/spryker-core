@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Product;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use SprykerFeature\Shared\Library\DataDirectory;
 use SprykerFeature\Shared\Product\ProductConfig as SharedProductConfig;
 
 class ProductConfig extends AbstractBundleConfig
@@ -17,7 +18,7 @@ class ProductConfig extends AbstractBundleConfig
      */
     public function getDestinationDirectoryForUploads()
     {
-        return \SprykerFeature\Shared\Library\DataDirectory::getLocalStoreSpecificPath('import/products');
+        return DataDirectory::getLocalStoreSpecificPath('import/products');
     }
 
     /**

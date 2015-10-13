@@ -7,13 +7,17 @@
 namespace SprykerFeature\Zed\Setup\Communication\Controller;
 
 use SprykerFeature\Shared\Library\Config;
+use SprykerFeature\Shared\Library\DataDirectory;
+use SprykerFeature\Shared\Library\Environment;
+use SprykerFeature\Shared\Library\Log;
 use SprykerFeature\Shared\Setup\SetupConfig;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 
 /**
  * @deprecated
  */
-class JenkinsController extends AbstractController{
+class JenkinsController extends AbstractController
+{
 
     const LOGFILE = 'jenkins.log';
     const ROLE_ADMIN = 'admin';
@@ -33,7 +37,6 @@ class JenkinsController extends AbstractController{
 
     public function init()
     {
-
     }
 
     /**
@@ -52,9 +55,9 @@ class JenkinsController extends AbstractController{
         curl_setopt($ch, CURLOPT_HEADER, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        \SprykerFeature\Shared\Library\Log::logRaw('CURL call: ' . $post_url . "body:\n[" . $body . "]\n\n", self::LOGFILE);
+        Log::logRaw('CURL call: ' . $post_url . "body:\n[" . $body . "]\n\n", self::LOGFILE);
         $head = curl_exec($ch);
-        \SprykerFeature\Shared\Library\Log::logRaw("CURL response:\n[" . $head . "]\n\n", self::LOGFILE);
+        Log::logRaw("CURL response:\n[" . $head . "]\n\n", self::LOGFILE);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
@@ -96,8 +99,8 @@ class JenkinsController extends AbstractController{
   <builders>
     <hudson.tasks.Shell>";
 
-   $xml .= $this->getCommand($command, $store);
-   $xml .= "
+        $xml .= $this->getCommand($command, $store);
+        $xml .= "
     </hudson.tasks.Shell>
   </builders>\n"
             . $this->getPublisherString($job) . "\n
@@ -115,7 +118,7 @@ class JenkinsController extends AbstractController{
             return $schedule;
         }
 
-        if (\SprykerFeature\Shared\Library\Environment::isNotProduction()) {
+        if (Environment::isNotProduction()) {
             // Non-production - don't run automatically via Jenkins
             return '';
         } else {
@@ -145,7 +148,7 @@ class JenkinsController extends AbstractController{
      */
     protected function getCommand($command, $store)
     {
-        if (\SprykerFeature\Shared\Library\Environment::getInstance()->isNotDevelopment()) {
+        if (Environment::getInstance()->isNotDevelopment()) {
             return "<command>[ -f ../../../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../../../current/deploy/vars
 [ -f ../../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../../current/deploy/vars
 [ -f ../../../../../current/deploy/vars ] &amp;&amp; . ../../../../../current/deploy/vars
@@ -177,7 +180,7 @@ $command</command>";
             ]
         );
 
-        $jobs_dir = \SprykerFeature\Shared\Library\DataDirectory::getLocalCommonPath('/jenkins/jobs/');
+        $jobs_dir = DataDirectory::getLocalCommonPath('/jenkins/jobs/');
 
         $roles = $this->getRoles();
 
@@ -309,7 +312,6 @@ $command</command>";
                           <sendToIndividuals>false</sendToIndividuals>
                         </hudson.tasks.Mailer>
                     </publishers>";
-
         } else {
             return '<publishers/>';
         }
