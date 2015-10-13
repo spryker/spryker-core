@@ -12,7 +12,9 @@ use Generated\Shared\Payone\PayonePaymentInterface;
 use Generated\Shared\Payone\PayoneRefundInterface;
 use Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer;
 use Generated\Shared\Payone\OrderInterface;
+use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseContainer;
@@ -278,6 +280,15 @@ class PayoneFacade extends AbstractFacade
         return $this->getDependencyContainer()
             ->createPaymentManager()
             ->postSaveHook($orderTransfer, $checkoutResponse);
+    }
+
+    /**
+     * @param ObjectCollection $orders
+     *
+     * @return PayonePaymentLogTransfer[]
+     */
+    public function getPaymentLogs(ObjectCollection $orders) {
+        return $this->getDependencyContainer()->createPaymentManager()->getPaymentLogs($orders);
     }
 
 }
