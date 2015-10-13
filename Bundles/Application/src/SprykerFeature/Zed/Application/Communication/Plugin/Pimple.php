@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Application\Communication\Plugin;
 
-use SprykerFeature\Shared\Application\Communication\Application;
+use SprykerEngine\Shared\Application\Communication\Application;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 
 class Pimple extends AbstractPlugin

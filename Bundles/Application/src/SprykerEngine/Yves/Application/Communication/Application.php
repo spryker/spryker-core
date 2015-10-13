@@ -7,7 +7,7 @@
 namespace SprykerEngine\Yves\Application\Communication;
 
 use Elastica\Client;
-use SprykerFeature\Shared\Application\Communication\Application as SharedApplication;
+use SprykerEngine\Shared\Application\Communication\Application as SharedApplication;
 use SprykerFeature\Shared\Library\Storage\Adapter\KeyValue\ReadInterface;
 use SprykerFeature\Yves\Library\Session\TransferSession;
 use Symfony\Component\HttpFoundation\Session\Session;
