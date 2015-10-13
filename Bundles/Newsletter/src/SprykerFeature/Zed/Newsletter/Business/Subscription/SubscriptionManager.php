@@ -61,10 +61,7 @@ class SubscriptionManager implements SubscriptionManagerInterface
      */
     public function unsubscribe(NewsletterSubscriberInterface $newsletterSubscriber, NewsletterTypeInterface $newsletterType)
     {
-        $subscriptionEntity = $this->queryContainer
-            ->querySubscriptionBySubscriberKeyAndNewsletterTypeName($newsletterSubscriber->getSubscriberKey(), $newsletterType->getName())
-            ->findOne()
-        ;
+        $subscriptionEntity = $this->getSubscription($newsletterSubscriber, $newsletterType);
 
         if (null !== $subscriptionEntity) {
             $subscriptionEntity->delete();
@@ -97,5 +94,34 @@ class SubscriptionManager implements SubscriptionManagerInterface
         }
 
         throw new MissingNewsletterTypeException(sprintf('Newsletter type "%s" not found.', $newsletterType->getName()));
+    }
+
+    /**
+     * @param NewsletterSubscriberInterface $newsletterSubscriber
+     * @param NewsletterTypeInterface $newsletterType
+     *
+     * @return SpyNewsletterSubscription|null
+     */
+    protected function getSubscription(NewsletterSubscriberInterface $newsletterSubscriber, NewsletterTypeInterface $newsletterType)
+    {
+        if (null !== $newsletterSubscriber->getSubscriberKey()) {
+            $subscriptionEntity = $this->queryContainer
+                ->querySubscriptionBySubscriberKeyAndNewsletterTypeName($newsletterSubscriber->getSubscriberKey(), $newsletterType->getName())
+                ->findOne()
+            ;
+
+            return $subscriptionEntity;
+        }
+
+        if (null !== $newsletterSubscriber->getIdCustomer()) {
+            $subscriptionEntity = $this->queryContainer
+                ->querySubscriptionByIdCustomerAndNewsletterTypeName($newsletterSubscriber->getSubscriberKey(), $newsletterType->getName())
+                ->findOne()
+            ;
+
+            return $subscriptionEntity;
+        }
+
+        return null;
     }
 }

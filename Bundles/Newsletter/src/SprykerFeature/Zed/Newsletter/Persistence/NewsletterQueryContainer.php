@@ -59,6 +59,28 @@ class NewsletterQueryContainer extends AbstractQueryContainer
     }
 
     /**
+     * @param int $idCustomer
+     * @param string $newsletterTypeName
+     *
+     * @return SpyNewsletterSubscriptionQuery
+     */
+    public function querySubscriptionByIdCustomerAndNewsletterTypeName($idCustomer, $newsletterTypeName)
+    {
+        $subscriptionQuery = $this->querySubscription()
+            ->joinSpyNewsletterType()
+            ->useSpyNewsletterTypeQuery()
+                ->filterByName($newsletterTypeName)
+            ->endUse()
+            ->joinSpyNewsletterSubscriber()
+            ->useSpyNewsletterSubscriberQuery()
+                ->filterByFkCustomer($idCustomer)
+            ->endUse()
+        ;
+
+        return $subscriptionQuery;
+    }
+
+    /**
      * @return SpyNewsletterSubscriberQuery
      */
     public function querySubscriber()
