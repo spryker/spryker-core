@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\PayoneCheckoutConnector\Communication\Plugin;
+namespace SprykerFeature\Zed\Payone\Communication\Plugin\Checkout;
 
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
