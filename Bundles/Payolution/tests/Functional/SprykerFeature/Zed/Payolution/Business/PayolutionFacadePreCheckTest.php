@@ -14,7 +14,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use SprykerFeature\Zed\Payolution\Business\Api\Constants;
+use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
 
 class PayolutionFacadePreCheckTest extends AbstractFacadeTest
 {
@@ -113,7 +113,7 @@ class PayolutionFacadePreCheckTest extends AbstractFacadeTest
             ->setGender('Male')
             ->setDateOfBirth('1970-01-01')
             ->setClientIp('127.0.0.1')
-            ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE)
+            ->setAccountBrand(PayolutionApiConstants::BRAND_INVOICE)
             ->setAddress($paymentAddressTransfer);
 
         $checkoutRequestTransfer = new CheckoutRequestTransfer();

@@ -5,7 +5,7 @@
  */
 namespace SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
 
-use SprykerFeature\Zed\Payolution\Business\Api\Constants;
+use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
 use SprykerFeature\Zed\Payolution\Business\Exception\PaymentMethodMapperMethodNotAvailableException;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
 
@@ -17,7 +17,7 @@ class Installment extends AbstractMethodMapper
      */
     public function getAccountBrand()
     {
-        return Constants::ACCOUNT_BRAND_INSTALLMENT;
+        return PayolutionApiConstants::BRAND_INSTALLMENT;
     }
 
     /**

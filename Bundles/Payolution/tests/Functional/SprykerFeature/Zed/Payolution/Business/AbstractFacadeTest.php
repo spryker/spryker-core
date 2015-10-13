@@ -14,6 +14,7 @@ use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Constants;
+use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
 use SprykerFeature\Zed\Payolution\Business\Api\Response\Converter as ResponseConverter;
 use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\Map\SpyPaymentPayolutionTableMap;
@@ -101,7 +102,7 @@ class AbstractFacadeTest extends Test
     {
         $this->paymentEntity = (new SpyPaymentPayolution())
             ->setFkSalesOrder($this->getOrderEntity()->getIdSalesOrder())
-            ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE)
+            ->setAccountBrand(PayolutionApiConstants::BRAND_INVOICE)
             ->setClientIp('127.0.0.1')
             ->setFirstName('Jane')
             ->setLastName('Doe')

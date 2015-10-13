@@ -31,7 +31,7 @@ class InvoiceTest extends Test
 
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionRequestTransfer', $requestTransfer);
         $this->assertSame(PayolutionApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
-        $this->assertSame(Constants::PAYMENT_CODE_PRE_CHECK, $requestTransfer->getPaymentCode());
+        $this->assertSame(PayolutionApiConstants::PAYMENT_CODE_PRE_CHECK, $requestTransfer->getPaymentCode());
         $this->assertSame('Straße des 17. Juni 135', $requestTransfer->getAddressStreet());
 
         $criteria = $requestTransfer->getAnalysisCriteria();
@@ -70,7 +70,7 @@ class InvoiceTest extends Test
             ->setGender('Male')
             ->setDateOfBirth('1970-01-01')
             ->setClientIp('127.0.0.1')
-            ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE)
+            ->setAccountBrand(PayolutionApiConstants::BRAND_INVOICE)
             ->setAddress($addressTransfer);
 
         $checkoutRequestTransfer = new CheckoutRequestTransfer();

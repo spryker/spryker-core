@@ -11,8 +11,7 @@ use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
 
 interface Constants extends ConfigInterface
 {
-
-    const PAYMENT_CODE_PRE_CHECK = PayolutionApiConstants::PAYMENT_CODE_PRE_CHECK;
+    
     const PAYMENT_CODE_PRE_AUTHORIZATION = 'VA.PA';
     const PAYMENT_CODE_RE_AUTHORIZATION = 'VA.PA';
     const PAYMENT_CODE_CAPTURE = 'VA.CP';
@@ -25,11 +24,6 @@ interface Constants extends ConfigInterface
     const SEX_MALE = 'M';
     const SEX_FEMALE = 'F';
 
-    const ACCOUNT_BRAND_INVOICE = PayolutionApiConstants::BRAND_INVOICE;
-    const ACCOUNT_BRAND_INSTALLMENT = PayolutionApiConstants::BRAND_INSTALLMENT;
-
-    const STATUS_CODE_SUCCESS = PayolutionApiConstants::STATUS_CODE_SUCCESS;
-    const REASON_CODE_SUCCESS = PayolutionApiConstants::REASON_CODE_SUCCESS;
     const STATUS_REASON_CODE_SUCCESS = self::STATUS_CODE_SUCCESS . '.' . self::REASON_CODE_SUCCESS;
 
     /**

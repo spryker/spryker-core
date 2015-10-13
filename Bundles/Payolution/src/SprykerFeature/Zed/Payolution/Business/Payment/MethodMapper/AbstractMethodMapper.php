@@ -11,6 +11,7 @@ use Generated\Shared\Payolution\PayolutionRequestInterface;
 use Generated\Shared\Transfer\PayolutionRequestAnalysisCriterionTransfer;
 use Generated\Shared\Transfer\PayolutionRequestTransfer;
 use SprykerFeature\Zed\Payolution\Business\Api\Constants;
+use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
 use SprykerFeature\Zed\Payolution\Business\Exception\GenderNotDefinedException;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\Map\SpyPaymentPayolutionTableMap;
@@ -65,7 +66,7 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
             $payolutionTransfer->getCurrencyIso3Code(),
             $isSalesOrder = null
         );
-        $requestTransfer->setPaymentCode(Constants::PAYMENT_CODE_PRE_CHECK);
+        $requestTransfer->setPaymentCode(PayolutionApiConstants::PAYMENT_CODE_PRE_CHECK);
 
         // Pre-check requires to set a specific transaction channel
         $requestTransfer->setTransactionChannel($this->config->getTransactionChannelPreCheck());
