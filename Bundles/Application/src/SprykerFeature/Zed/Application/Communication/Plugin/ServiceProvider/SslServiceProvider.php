@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider;
 
+use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\System\SystemConfig;
 use Symfony\Component\HttpFoundation\Request;
@@ -13,7 +14,7 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-class SslServiceProvider implements ServiceProviderInterface
+class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
     /**

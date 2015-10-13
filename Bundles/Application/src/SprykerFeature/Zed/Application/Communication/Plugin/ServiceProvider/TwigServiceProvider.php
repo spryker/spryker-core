@@ -6,6 +6,9 @@
 
 namespace SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider;
 
+use Silex\ServiceProviderInterface;
+use SprykerEngine\Shared\Kernel\Store;
+use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Shared\Application\ApplicationConfig;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Zed\Application\Business\Model\Twig\RouteResolver;
@@ -13,13 +16,12 @@ use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
 use SprykerFeature\Zed\Library\Twig\Loader\Filesystem;
 use Silex\Application;
-use Silex\Provider\TwigServiceProvider as SilexTwigServiceProvider;
-use SprykerEngine\Yves\Application\Business\Application as SprykerApplication;
+use SprykerEngine\Yves\Application\Communication\Application as SprykerApplication;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class TwigServiceProvider extends SilexTwigServiceProvider
+class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
     /**
@@ -34,15 +36,13 @@ class TwigServiceProvider extends SilexTwigServiceProvider
     {
         $this->app = $app;
 
-        parent::register($app);
-
         $this->provideFormTypeExtension();
         $this->provideFormTypeTemplates();
 
         $app['twig.loader.zed'] = $app->share(function () {
             $namespace = Config::get(SystemConfig::PROJECT_NAMESPACE);
 
-            $storeName = \SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName();
+            $storeName = Store::getInstance()->getStoreName();
 
             return new Filesystem(
                 [
@@ -148,7 +148,6 @@ class TwigServiceProvider extends SilexTwigServiceProvider
                 new NoValidateTypeExtension(),
             ];
         });
-
     }
 
     /**

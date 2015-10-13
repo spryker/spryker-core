@@ -6,11 +6,12 @@
 
 namespace SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider;
 
+use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use Symfony\Component\HttpFoundation\Request;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 
-class RequestServiceProvider implements ServiceProviderInterface
+class RequestServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
     const BUNDLE = 'module';

@@ -6,19 +6,23 @@
 
 namespace SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Zed\Application\Business\Model\Twig\EnvironmentInfo;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 
-class EnvironmentInformationServiceProvider extends AbstractPlugin implements ServiceProviderInterface
+class UrlGeneratorServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
     /**
-     * @param Application $app
+     * {@inheritdoc}
      */
     public function register(Application $app)
     {
+        $app['url_generator'] = $app->share(function ($app) {
+            $app->flush();
+
+            return $app['routers'];
+        });
     }
 
     /**
@@ -26,8 +30,6 @@ class EnvironmentInformationServiceProvider extends AbstractPlugin implements Se
      */
     public function boot(Application $app)
     {
-        $twig = $app['twig'];
-        $twig->addFunction(new EnvironmentInfo());
     }
 
 }

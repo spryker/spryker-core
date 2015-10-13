@@ -2,11 +2,13 @@
 
 namespace SprykerEngine\Yves\Application\Business\Routing;
 
+use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Shared\Library\Filter\CamelCaseToSeparatorFilter;
 use Silex\Application;
 
 class Helper
 {
+
     /**
      * @var Application
      */
@@ -23,9 +25,9 @@ class Helper
     /**
      * @param string $destination
      *
-     * @return string
-     *
      * @throws \LogicException
+     *
+     * @return string
      */
     public function getRouteFromDestination($destination)
     {
@@ -37,15 +39,16 @@ class Helper
         } else {
             throw new \LogicException('Cannot parse destination');
         }
-        list(,,$bundle,,,$controllerName) = explode('\\', $controllerNamespaceName);
+        list(, , $bundle, , , $controllerName) = explode('\\', $controllerNamespaceName);
 
         $filter = new CamelCaseToSeparatorFilter('-');
 
-        $bundle = str_replace(\SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName(), '', $bundle);
+        $bundle = str_replace(Store::getInstance()->getStoreName(), '', $bundle);
         $bundle = $filter->filter($bundle);
         $controller = $filter->filter(str_replace('Controller', '', $controllerName));
         $action = $filter->filter(str_replace('Action', '', $actionName));
 
         return $bundle . '/' . $controller . '/' . $action;
     }
+
 }

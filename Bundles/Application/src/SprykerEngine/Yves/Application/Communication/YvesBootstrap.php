@@ -4,14 +4,19 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Yves\Application\Business;
+namespace SprykerEngine\Yves\Application\Communication;
 
 use Generated\Yves\Ide\AutoCompletion;
+use SprykerEngine\Shared\Kernel\Store;
 use SprykerEngine\Yves\Application\Communication\Plugin\ControllerProviderInterface;
-use SprykerFeature\Shared\Application\Business\Application as SharedApplication;
-use SprykerEngine\Yves\Application\Business\Application as YvesApplication;
-use SprykerFeature\Shared\Application\Business\Bootstrap;
 use SprykerEngine\Yves\Kernel\Locator;
+use SprykerFeature\Shared\Application\Communication\Application as SharedApplication;
+use SprykerEngine\Yves\Application\Communication\Application as YvesApplication;
+use SprykerFeature\Shared\Application\Communication\Bootstrap;
+use SprykerFeature\Shared\Library\Config;
+use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Shared\Yves\YvesConfig;
+use Symfony\Component\HttpFoundation\Request;
 
 abstract class YvesBootstrap extends Bootstrap
 {
@@ -48,7 +53,7 @@ abstract class YvesBootstrap extends Bootstrap
      */
     protected function getTwigExtensions(SharedApplication $app)
     {
-        $yvesExtension = $this->getLocator($app)->twig()->pluginTwigYves();
+        $yvesExtension = $this->getLocator()->twig()->pluginTwigYves();
 
         return [
             $yvesExtension->getTwigYvesExtension($app),
@@ -66,13 +71,33 @@ abstract class YvesBootstrap extends Bootstrap
     }
 
     /**
-     * @param Application $app
-     *
      * @return AutoCompletion
      */
-    protected function getLocator(Application $app)
+    protected function getLocator()
     {
-        return $app['locator'];
+        return Locator::getInstance();
+    }
+
+    /**
+     * @param SharedApplication $app
+     */
+    protected function beforeBoot(SharedApplication $app)
+    {
+        $app['locale'] = Store::getInstance()->getCurrentLocale();
+        if (\SprykerFeature_Shared_Library_Environment::isDevelopment()) {
+            $app['profiler.cache_dir'] = \SprykerFeature_Shared_Library_Data::getLocalStoreSpecificPath('cache/profiler');
+        }
+        $proxies = Config::get(YvesConfig::YVES_TRUSTED_PROXIES);
+
+        Request::setTrustedProxies($proxies);
+    }
+
+    /**
+     * @param SharedApplication $app
+     */
+    protected function afterBoot(SharedApplication $app)
+    {
+        $app['monolog.level'] = Config::get(SystemConfig::LOG_LEVEL);
     }
 
 }

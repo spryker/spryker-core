@@ -116,10 +116,12 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
     public function onKernelResponse(FilterResponseEvent $event)
     {
         $request = $event->getRequest();
-        $session = $request->getSession();
-        if ($session->has(self::REQUEST_URI) && $this->isAuthenticated($request)) {
-            $event->setResponse(new RedirectResponse($session->get(self::REQUEST_URI)));
-            $session->remove(self::REQUEST_URI);
+        if ($request->hasSession()) {
+            $session = $request->getSession();
+            if ($session->has(self::REQUEST_URI) && $this->isAuthenticated($request)) {
+                $event->setResponse(new RedirectResponse($session->get(self::REQUEST_URI)));
+                $session->remove(self::REQUEST_URI);
+            }
         }
     }
 

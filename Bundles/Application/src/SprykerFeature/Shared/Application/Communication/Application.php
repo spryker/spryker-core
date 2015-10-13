@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Application\Business;
+namespace SprykerFeature\Shared\Application\Communication;
 
 use Silex\Application\TranslationTrait;
 use Silex\Application\TwigTrait;

@@ -7,9 +7,10 @@
 namespace SprykerEngine\Zed\Translation\Communication\Plugin;
 
 use Silex\Application;
+use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerEngine\Zed\Kernel\Locator;
 
-class TranslationServiceProvider implements TranslationServiceProviderInterface
+class TranslationServiceProvider extends AbstractPlugin implements TranslationServiceProviderInterface
 {
 
     /**
