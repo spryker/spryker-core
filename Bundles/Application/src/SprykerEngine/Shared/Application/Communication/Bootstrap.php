@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Application\Communication;
+namespace SprykerEngine\Shared\Application\Communication;
 
 use SprykerFeature\Shared\Application\ApplicationConfig;
 use SprykerFeature\Shared\Library\Config;

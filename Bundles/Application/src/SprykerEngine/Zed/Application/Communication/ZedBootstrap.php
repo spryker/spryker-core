@@ -9,9 +9,11 @@ namespace SprykerEngine\Zed\Application\Communication;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Shared\Application\Communication\Application;
-use SprykerFeature\Shared\Application\Communication\Bootstrap;
+use SprykerEngine\Shared\Application\Communication\Application;
+use SprykerEngine\Shared\Application\Communication\Bootstrap;
 use SprykerFeature\Shared\Library\Config;
+use SprykerFeature\Shared\Library\DataDirectory;
+use SprykerFeature\Shared\Library\Environment;
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Application\Communication\Plugin\Pimple;
 use SprykerFeature\Zed\Kernel\Communication\Plugin\GatewayServiceProviderPlugin;
@@ -39,9 +41,8 @@ abstract class ZedBootstrap extends Bootstrap
     protected function beforeBoot(Application $app)
     {
         $app['locale'] = Store::getInstance()->getCurrentLocale();
-        if (\SprykerFeature_Shared_Library_Environment::isDevelopment()) {
-            $app['profiler.cache_dir'] =
-                \SprykerFeature_Shared_Library_Data::getLocalStoreSpecificPath('cache/profiler');
+        if (Environment::isDevelopment()) {
+            $app['profiler.cache_dir'] = DataDirectory::getLocalStoreSpecificPath('cache/profiler');
         }
     }
 
