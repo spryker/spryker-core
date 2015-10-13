@@ -93,13 +93,12 @@ class Log
      * @param string $fileName
      * @param string $dir
      *
+     * @throws \Exception
+     *
      * @return string
-     * @static
      */
     public static function getFilePath($fileName, $dir = 'logs')
     {
-        assert(is_string($fileName));
-
         $logPath = DataDirectory::getLocalStoreSpecificPath($dir);
         if ($dir === 'logs') {
             $logPath .= APPLICATION . DIRECTORY_SEPARATOR;
@@ -108,7 +107,9 @@ class Log
             }
         }
 
-        assert(is_writable($logPath));
+        if (!is_writable($logPath)) {
+            throw new \Exception(sprintf('Log file "%s" is not writable!', $logPath));
+        }
 
         return $logPath . DIRECTORY_SEPARATOR . $fileName;
     }

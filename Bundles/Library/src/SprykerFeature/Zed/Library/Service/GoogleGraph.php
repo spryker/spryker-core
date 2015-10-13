@@ -40,8 +40,9 @@ class GoogleGraph
 
     public function request($sendHeader = true, $contentType = 'gif')
     {
-        assert(is_bool($sendHeader));
-        assert(in_array($contentType, ['gif', 'png', 'json']));
+        if (!in_array($contentType, ['gif', 'png', 'json'])) {
+            throw new \Exception(sprintf('Content type "%s" is not a valid content type for this operation', $contentType));
+        }
 
         $client = new \Zend_Http_Client();
         $client->setUri(self::URI);
@@ -63,12 +64,12 @@ class GoogleGraph
         $vars = get_object_vars($this);
         $form = '<form action="https://chart.googleapis.com/chart" method="POST" >';
         foreach ($vars as $k => $v) {
-        $form = $form . '<input type="hidden" name="' . $k .  '" value="' . $v . '"  />';
+            $form = $form . '<input type="hidden" name="' . $k .  '" value="' . $v . '"  />';
         }
 
         $form = $form . '<input type="submit"  /></form>';
 
-       return $form;
+        return $form;
     }
 
     public function setChf($chf)

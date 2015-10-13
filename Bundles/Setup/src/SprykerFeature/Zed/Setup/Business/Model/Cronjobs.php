@@ -263,9 +263,8 @@ class Cronjobs
         curl_setopt($ch, CURLOPT_POSTFIELDS, $body);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-//        \SprykerFeature\Shared\Library\Log::logRaw('CURL call: ' . $postUrl . "body:\n[" . $body . "]\n\n", self::LOGFILE);
         $curl_response = curl_exec($ch);
-//        \SprykerFeature\Shared\Library\Log::logRaw("CURL response:\n[" . $head . "]\n\n", self::LOGFILE);
+
         if (false === $curl_response) {
             throw new \ErrorException('cURL error: ' . curl_error($ch) . ' while calling Jenkins URL ' . $postUrl);
         } else {
