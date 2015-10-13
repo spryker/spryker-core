@@ -5,6 +5,7 @@
  */
 
 namespace SprykerFeature\Shared\Library;
+
 use SprykerEngine\Shared\Kernel\Store;
 
 /**
@@ -28,6 +29,7 @@ class Config
      * @param null $default
      *
      * @throws \Exception
+     *
      * @return mixed
      */
     public static function get($key, $default = null)
@@ -64,7 +66,6 @@ class Config
      */
     public static function init($environment = null)
     {
-
         if (is_null($environment)) {
             $environment = Environment::getInstance()->getEnvironment();
         }

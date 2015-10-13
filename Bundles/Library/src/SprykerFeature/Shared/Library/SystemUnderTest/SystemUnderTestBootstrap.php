@@ -26,6 +26,7 @@ class SystemUnderTestBootstrap
     const APPLICATION_YVES = 'Yves';
     const APPLICATION_SHARED = 'Shared';
     const APPLICATION_CLIENT = 'Client';
+    const TEST_ENVIRONMENT = 'test';
 
     /**
      * @var SystemUnderTestBootstrap
@@ -70,6 +71,7 @@ class SystemUnderTestBootstrap
 
         defined('IS_CLI') or define('IS_CLI', false);
         defined('APPLICATION') or define('APPLICATION', strtoupper($application));
+        defined('APPLICATION_ENV') or define('APPLICATION_ENV', self::TEST_ENVIRONMENT);
 
         $path = realpath(__DIR__ . '/../../../../../../../../../..');
         defined('APPLICATION_ROOT_DIR') or define('APPLICATION_ROOT_DIR', $path);
