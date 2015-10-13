@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Newsletter\Communication\Controller;
 
 use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
+use Generated\Shared\Newsletter\NewsletterSubscriptionApprovalResultInterface;
 use Generated\Shared\Newsletter\NewsletterSubscriptionRequestInterface;
 use Generated\Shared\Newsletter\NewsletterSubscriptionResponseInterface;
 use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
@@ -40,10 +41,12 @@ class GatewayController extends AbstractGatewayController
 
     /**
      * @param NewsletterSubscriberInterface $newsletterSubscriber
+     *
+     * @return NewsletterSubscriptionApprovalResultInterface
      */
     public function approveDoubleOptInSubscriberAction(NewsletterSubscriberInterface $newsletterSubscriber)
     {
-        $this->getFacade()->approveDoubleOptInSubscriber($newsletterSubscriber);
+        return $this->getFacade()->approveDoubleOptInSubscriber($newsletterSubscriber);
     }
 
     /**

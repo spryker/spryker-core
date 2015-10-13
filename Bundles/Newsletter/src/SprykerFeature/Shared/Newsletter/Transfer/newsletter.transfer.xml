@@ -31,4 +31,9 @@
         <property name="errorMessage" type="string" />
     </transfer>
 
+    <transfer name="NewsletterSubscriptionApprovalResult">
+        <property name="isSuccess" type="bool" default="true" />
+        <property name="errorMessage" type="string" />
+    </transfer>
+
 </transfers>

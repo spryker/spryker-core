@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Newsletter\Business;
 
 use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
+use Generated\Shared\Newsletter\NewsletterSubscriptionApprovalResultInterface;
 use Generated\Shared\Newsletter\NewsletterSubscriptionRequestInterface;
 use Generated\Shared\Newsletter\NewsletterSubscriptionResponseInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
@@ -53,10 +54,12 @@ class NewsletterFacade extends AbstractFacade
 
     /**
      * @param NewsletterSubscriberInterface $newsletterSubscriber
+     *
+     * @return NewsletterSubscriptionApprovalResultInterface
      */
     public function approveDoubleOptInSubscriber(NewsletterSubscriberInterface $newsletterSubscriber)
     {
-        $this->getDependencyContainer()
+        return $this->getDependencyContainer()
             ->createDoubleOptInHandler()
             ->approveSubscriberByKey($newsletterSubscriber)
         ;

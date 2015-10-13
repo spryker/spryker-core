@@ -7,6 +7,7 @@
 namespace SprykerFeature\Client\Newsletter\Service\Zed;
 
 use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
+use Generated\Shared\Newsletter\NewsletterSubscriptionApprovalResultInterface;
 use Generated\Shared\Newsletter\NewsletterSubscriptionRequestInterface;
 use Generated\Shared\Newsletter\NewsletterSubscriptionResponseInterface;
 use SprykerFeature\Client\ZedRequest\Service\ZedRequestClient;
@@ -49,10 +50,12 @@ class NewsletterStub implements NewsletterStubInterface
 
     /**
      * @param NewsletterSubscriberInterface $newsletterSubscriber
+     *
+     * @return NewsletterSubscriptionApprovalResultInterface
      */
     public function approveDoubleOptInSubscriber(NewsletterSubscriberInterface $newsletterSubscriber)
     {
-        $this->zedStub->call('/newsletter/gateway/approve-double-opt-in-subscriber', $newsletterSubscriber);
+        return $this->zedStub->call('/newsletter/gateway/approve-double-opt-in-subscriber', $newsletterSubscriber);
     }
 
     /**

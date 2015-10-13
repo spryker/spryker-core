@@ -7,6 +7,9 @@
 namespace SprykerFeature\Zed\Newsletter\Business\Subscription;
 
 use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
+use Generated\Shared\Newsletter\NewsletterSubscriptionApprovalResultInterface;
+use Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer;
+use SprykerFeature\Shared\Newsletter\Messages\Messages;
 use SprykerFeature\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberException;
 
 class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptInHandlerInterface, DoubleOptInHandlerInterface
@@ -61,23 +64,28 @@ class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
     /**
      * @param NewsletterSubscriberInterface $newsletterSubscriber
      *
-     * @throws MissingNewsletterSubscriberException
+     * @return NewsletterSubscriptionApprovalResultInterface
      */
     public function approveSubscriberByKey(NewsletterSubscriberInterface $newsletterSubscriber)
     {
+        $result = new NewsletterSubscriptionApprovalResultTransfer();
+
         $subscriberEntity = $this->queryContainer->querySubscriber()
             ->findOneBySubscriberKey($newsletterSubscriber->getSubscriberKey())
         ;
 
         if (null === $subscriberEntity) {
-            throw new MissingNewsletterSubscriberException(sprintf(
-                'Newsletter subscriber could not be found by subscriber key "%s".',
-                $newsletterSubscriber->getSubscriberKey()
-            ));
+            $result->setIsSuccess(false);
+            $result->setErrorMessage(Messages::INVALID_SUBSCRIBER_KEY);
+
+            return $result;
         }
 
         $subscriberEntity->setIsConfirmed(true);
         $subscriberEntity->save();
+        $result->setIsSuccess(true);
+
+        return $result;
     }
 
 }

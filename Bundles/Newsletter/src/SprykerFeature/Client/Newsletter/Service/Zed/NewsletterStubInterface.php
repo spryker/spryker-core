@@ -7,6 +7,7 @@
 namespace SprykerFeature\Client\Newsletter\Service\Zed;
 
 use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
+use Generated\Shared\Newsletter\NewsletterSubscriptionApprovalResultInterface;
 use Generated\Shared\Newsletter\NewsletterSubscriptionRequestInterface;
 use Generated\Shared\Newsletter\NewsletterSubscriptionResponseInterface;
 
@@ -29,6 +30,8 @@ interface NewsletterStubInterface
 
     /**
      * @param NewsletterSubscriberInterface $newsletterSubscriber
+     *
+     * @return NewsletterSubscriptionApprovalResultInterface
      */
     public function approveDoubleOptInSubscriber(NewsletterSubscriberInterface $newsletterSubscriber);
 

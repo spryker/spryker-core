@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Newsletter\Business\Subscription;
 
 use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
-use SprykerFeature\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberException;
+use Generated\Shared\Newsletter\NewsletterSubscriptionApprovalResultInterface;
 
 interface DoubleOptInHandlerInterface
 {
@@ -20,7 +20,7 @@ interface DoubleOptInHandlerInterface
     /**
      * @param NewsletterSubscriberInterface $newsletterSubscriber
      *
-     * @throws MissingNewsletterSubscriberException
+     * @return NewsletterSubscriptionApprovalResultInterface
      */
     public function approveSubscriberByKey(NewsletterSubscriberInterface $newsletterSubscriber);
 
