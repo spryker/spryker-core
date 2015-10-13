@@ -8,14 +8,13 @@ namespace SprykerFeature\Zed\Oms\Business\Util;
 
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\Library\System;
-use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
-use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
-use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Oms\Persistence\SpyOmsTransitionLog;
+use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
+use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class TransitionLog implements TransitionLogInterface
@@ -192,9 +191,11 @@ class TransitionLog implements TransitionLogInterface
 
         $logItem->setHostname(System::getHostname());
 
-
+        $path = 'cli';
         $request = $this->getRequest();
-        $path = $request->getPathInfo();
+        if (isset($request)) {
+            $path = $request->getPathInfo();
+        }
         $logItem->setPath($path);
 
 //        if (isset($this->logContext['module'])) {
