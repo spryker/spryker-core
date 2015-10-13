@@ -12,6 +12,7 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Oms\Business\Process\Process;
 use SprykerFeature\Zed\Oms\Business\Process\Event;
 use Propel\Runtime\Collection\ObjectCollection;
+use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsTransitionLog;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcess;
@@ -241,7 +242,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     /**
      * @param SpySalesOrder $order
      *
-     * @return PropelObjectCollection
+     * @return SpyOmsTransitionLog[]
      */
     public function getLogForOrder(SpySalesOrder $order)
     {
@@ -254,7 +255,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     /**
      * @param string $sku
      *
-     * @return \SprykerFeature_Zed_Library_Propel_ClearAllReferencesIterator
+     * @return SpySalesOrderItem
      */
     public function getReservedOrderItemsForSku($sku)
     {

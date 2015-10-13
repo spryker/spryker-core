@@ -145,10 +145,7 @@ class SystemConfig extends AbstractBundleConfig
      */
     public function getNotificationEmailSettings()
     {
-        return [
-            \SprykerFeature_Zed_System_Business_Model_Watchdog_Abstract::NOTIFICATION_FROM => '',
-            \SprykerFeature_Zed_System_Business_Model_Watchdog_Abstract::NOTIFICATION_SUBJECT => '',
-        ];
+        return [];
     }
 
     /**

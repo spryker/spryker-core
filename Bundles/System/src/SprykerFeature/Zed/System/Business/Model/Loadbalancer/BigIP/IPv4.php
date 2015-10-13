@@ -105,13 +105,13 @@ class IPv4
         $hosts = $this->factory->createSettings()->getHosts($this->environment);
 
         foreach ($hosts as $host) {
-            if ($host[\SprykerFeature_Zed_System_Business_Settings::KEY_HOST] === $hostname) {
+            if ($host['key_host'] === $hostname) {
                 $ipAddress = $this->factory->createSettings()->getHostIpAddressByHostname($hostname);
 
                 if ($applicationName === self::APPLICATION_NAME_ZED) {
-                    return $this->calculateStickyCookieValue($ipAddress, $host[\SprykerFeature_Zed_System_Business_Settings::KEY_ZED_PORT]);
+                    return $this->calculateStickyCookieValue($ipAddress, $host['key_zed_port']);
                 } else {
-                    return $this->calculateStickyCookieValue($ipAddress, $host[\SprykerFeature_Zed_System_Business_Settings::KEY_YVES_PORT]);
+                    return $this->calculateStickyCookieValue($ipAddress, $host['yves_port']);
                 }
             }
         }

@@ -54,21 +54,6 @@ class Setup
         }
     }
 
-    public static function checkDirectoriesByName($root, $pattern)
-    {
-        $dirHelper = new \SprykerFeature_Zed_Library_Helper_Directory();
-        $directories = $dirHelper->getDirs($root);
-
-        $entitiesDirectories = [];
-        foreach ($directories as $directory) {
-            $directory = str_replace('\\', '/', $directory);
-            if (strpos($directory, '/' . $pattern . '/') !== false) {
-                $entitiesDirectories[] = $directory;
-            }
-        }
-        self::checkDirectories($entitiesDirectories);
-    }
-
     public static function checkCondition($callBack, $value)
     {
         assert(function_exists($callBack));
