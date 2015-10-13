@@ -97,7 +97,7 @@ class CartRule implements CartRuleInterface
         }
 
         foreach ($cartRuleFormTransfer->getCollectorPlugins() as $collectorTransfer) {
-             $collectorTransfer->setFkDiscount($discountTransfer->getIdDiscount());
+             $collectorTransfer->setFkDiscount($discountEntity->getIdDiscount());
              $this->discountCollectorWriter->save($collectorTransfer);
         }
 

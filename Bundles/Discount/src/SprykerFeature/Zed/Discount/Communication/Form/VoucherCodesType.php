@@ -38,6 +38,10 @@ class VoucherCodesType extends AbstractRuleType
      * @var CamelCaseToUnderscore
      */
     protected $camelCaseToUnderscoreFilter;
+    /**
+     * @var CamelCaseToUnderscore
+     */
+    private $camelCaseToUnderscore;
 
     /**
      * @param array                 $availableCalculatorPlugins
@@ -53,9 +57,11 @@ class VoucherCodesType extends AbstractRuleType
         array $availablePoolCategories,
         CamelCaseToUnderscore $camelCaseToUnderscore
     ) {
-        $this->availablePoolCategories = $availablePoolCategories;
-
         parent::__construct($availableCalculatorPlugins, $availableCollectorPlugins, $availableDecisionRulePlugins);
+
+        $this->availablePoolCategories = $availablePoolCategories;
+        $this->camelCaseToUnderscore = $camelCaseToUnderscore;
+
     }
 
     /**
@@ -128,7 +134,7 @@ class VoucherCodesType extends AbstractRuleType
                 'allow_add' => true,
                 'allow_extra_fields' => true,
             ])
-            ->addModelTransformer(new DecisionRulesFormTransformer($this->camelCaseToUnderscoreFilter))
+            ->addModelTransformer(new DecisionRulesFormTransformer($this->camelCaseToUnderscore))
         ;
     }
 
