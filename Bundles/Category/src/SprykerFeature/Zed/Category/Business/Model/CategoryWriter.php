@@ -70,7 +70,10 @@ class CategoryWriter implements CategoryWriterInterface
     public function delete($idCategory)
     {
         $this->deleteAttributes($idCategory);
-        $categoryEntity = $this->queryContainer->queryCategoryById($idCategory)->findOne();
+        $categoryEntity = $this->queryContainer
+            ->queryCategoryById($idCategory)
+            ->findOne()
+        ;
 
         if ($categoryEntity) {
             $categoryEntity->delete();
