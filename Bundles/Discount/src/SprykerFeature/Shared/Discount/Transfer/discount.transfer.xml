@@ -46,6 +46,8 @@
         <property name="voucherBatch" type="int"/>
         <property name="quantity" type="int" />
         <property name="includeTemplate" type="bool"/>
+        <property name="customCode" type="string"/>
+        <property name="codeLength" type="int"></property>
     </transfer>
 
     <transfer name="VoucherPool">

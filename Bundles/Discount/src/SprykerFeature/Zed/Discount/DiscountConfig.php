@@ -16,6 +16,8 @@ use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInte
 class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInterface
 {
 
+    const DEFAULT_VOUCHER_CODE_LENGTH = 6;
+
     const PLUGIN_DECISION_RULE_VOUCHER = 'PLUGIN_DECISION_RULE_VOUCHER';
     const PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL = 'PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL';
     const PLUGIN_COLLECTOR_ITEM = 'PLUGIN_COLLECTOR_ITEM';
@@ -134,7 +136,7 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
      */
     public function getVoucherCodeLength()
     {
-        return 6;
+        return self::DEFAULT_VOUCHER_CODE_LENGTH;
     }
 
     /**
@@ -152,10 +154,21 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
             self::KEY_VOUCHER_CODE_NUMBERS => [
                 1, 2, 3, 4, 5, 6, 7, 8, 9,
             ],
-            self::KEY_VOUCHER_CODE_SPECIAL_CHARACTERS => [
-                '-',
-            ],
         ];
+    }
+
+    /**
+     * @return int
+     */
+    public function getAllowedCodeCharactersLength()
+    {
+        $charactersLength = array_reduce($this->getVoucherCodeCharacters(), function($length, $items){
+            $length += count($items);
+
+            return $length;
+        });
+
+        return $charactersLength;
     }
 
     /**

@@ -16,7 +16,6 @@ interface DiscountConfigInterface
     const KEY_VOUCHER_CODE_CONSONANTS = 'consonants';
     const KEY_VOUCHER_CODE_VOWELS = 'vowels';
     const KEY_VOUCHER_CODE_NUMBERS = 'numbers';
-    const KEY_VOUCHER_CODE_SPECIAL_CHARACTERS = 'special-characters';
 
     /**
      * @throws \ErrorException
@@ -60,5 +59,10 @@ interface DiscountConfigInterface
      * @return string
      */
     public function getVoucherPoolTemplateReplacementString();
+
+    /**
+     * @return int
+     */
+    public function getAllowedCodeCharactersLength();
 
 }

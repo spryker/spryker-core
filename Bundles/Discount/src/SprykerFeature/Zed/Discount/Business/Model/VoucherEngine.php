@@ -63,7 +63,9 @@ class VoucherEngine
 
         $voucherTransfer->setVoucherBatch($nextVoucherBatchValue);
 
-        $length = $this->settings->getVoucherCodeLength();
+        $voucherTransfer->setIncludeTemplate(true);
+        $length = $voucherTransfer->getCodeLength();
+        $voucherPoolEntity->setTemplate($voucherTransfer->getCustomCode());
 
         for ($i = 0; $i < $voucherTransfer->getQuantity(); $i++) {
             try {
@@ -121,7 +123,6 @@ class VoucherEngine
         $consonants = $allowedCharacters[DiscountConfigInterface::KEY_VOUCHER_CODE_CONSONANTS];
         $vowels = $allowedCharacters[DiscountConfigInterface::KEY_VOUCHER_CODE_VOWELS];
         $numbers = $allowedCharacters[DiscountConfigInterface::KEY_VOUCHER_CODE_NUMBERS];
-        $specialCharacters = $allowedCharacters[DiscountConfigInterface::KEY_VOUCHER_CODE_SPECIAL_CHARACTERS];
 
         $code = '';
 
@@ -136,10 +137,6 @@ class VoucherEngine
 
             if (count($numbers)) {
                 $code .= $numbers[rand(0, count($numbers) - 1)];
-            }
-
-            if (count($specialCharacters)) {
-                $code .= $specialCharacters[rand(0, count($specialCharacters) - 1)];
             }
         }
 

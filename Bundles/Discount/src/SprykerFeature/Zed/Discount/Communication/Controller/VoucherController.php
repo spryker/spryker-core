@@ -45,7 +45,7 @@ class VoucherController extends AbstractController
 
             $this->getFacade()->createVoucherCodes($voucherTransfer);
 
-            return $this->redirectResponse('/discount/voucher/view/?' . self::ID_POOL_PARAMETER . '=' . (int) $formData[VoucherForm::FIELD_ID_POOL]);
+            return $this->redirectResponse('/discount/voucher/view/?' . self::ID_POOL_PARAMETER . '=' . (int) $formData[VoucherForm::FIELD_DISCOUNT_VOUCHER_POOL]);
         }
 
         return [
@@ -71,7 +71,7 @@ class VoucherController extends AbstractController
 
             $this->getFacade()->createVoucherCodes($voucherTransfer);
 
-            return $this->redirectResponse('/discount/voucher/view/?' . self::ID_POOL_PARAMETER . '=' . (int) $formData[VoucherForm::FIELD_ID_POOL]);
+            return $this->redirectResponse('/discount/voucher/view/?' . self::ID_POOL_PARAMETER . '=' . (int) $formData[VoucherForm::FIELD_DISCOUNT_VOUCHER_POOL]);
         }
 
         return [
