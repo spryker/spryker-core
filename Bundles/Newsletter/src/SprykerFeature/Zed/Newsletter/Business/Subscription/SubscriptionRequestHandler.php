@@ -122,9 +122,9 @@ class SubscriptionRequestHandler
             $newsletterSubscriberTransfer = $newsletterSubscriptionRequest->getNewsletterSubscriber();
 
             foreach ($newsletterSubscriptionRequest->getNewsletterTypes() as $newsletterTypeTransfer) {
-                $this->subscriptionManager->unsubscribe($newsletterSubscriberTransfer, $newsletterTypeTransfer);
+                $isSuccess = $this->subscriptionManager->unsubscribe($newsletterSubscriberTransfer, $newsletterTypeTransfer);
 
-                $subscriptionResult = $this->createSubscriptionResultTransfer($newsletterTypeTransfer, true);
+                $subscriptionResult = $this->createSubscriptionResultTransfer($newsletterTypeTransfer, $isSuccess);
 
                 $subscriptionResponse->addSubscriptionResult($subscriptionResult);
             }
@@ -133,6 +133,32 @@ class SubscriptionRequestHandler
         } catch (Exception $e) {
             $connection->rollBack();
             throw $e;
+        }
+
+        return $subscriptionResponse;
+    }
+
+    /**
+     * @param NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest
+     *
+     * @return NewsletterSubscriptionResponseInterface
+     */
+    public function checkNewsletterSubscriptions(NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest)
+    {
+        $subscriptionResponse = $this->createSubscriptionResponse();
+
+        $newsletterSubscriberTransfer = $newsletterSubscriptionRequest->getNewsletterSubscriber();
+
+        foreach ($newsletterSubscriptionRequest->getNewsletterTypes() as $newsletterTypeTransfer) {
+            $isAlreadySubscribed = $this->subscriptionManager->isAlreadySubscribed($newsletterSubscriberTransfer, $newsletterTypeTransfer);
+
+            if ($isAlreadySubscribed) {
+                $subscriptionResult = $this->createSubscriptionResultTransfer($newsletterTypeTransfer, true);
+            } else {
+                $subscriptionResult = $this->createSubscriptionResultTransfer($newsletterTypeTransfer, false);
+            }
+
+            $subscriptionResponse->addSubscriptionResult($subscriptionResult);
         }
 
         return $subscriptionResponse;

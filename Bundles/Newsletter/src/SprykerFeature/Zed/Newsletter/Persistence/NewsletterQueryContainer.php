@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -8,21 +9,23 @@ namespace SprykerFeature\Zed\Newsletter\Persistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Newsletter\Persistence\Propel\Base\SpyNewsletterSubscriptionQuery;
 use SprykerFeature\Zed\Newsletter\Persistence\Propel\SpyNewsletterSubscriberQuery;
+use SprykerFeature\Zed\Newsletter\Persistence\Propel\SpyNewsletterTypeQuery;
 
 class NewsletterQueryContainer extends AbstractQueryContainer
 {
+
     /**
      * @param string $email
-     * @param int $idNewsletterType
+     * @param string $newsletterTypeName
      *
      * @return SpyNewsletterSubscriptionQuery
      */
-    public function querySubscriptionByEmailAndNewsletterType($email, $idNewsletterType)
+    public function querySubscriptionByEmailAndNewsletterTypeName($email, $newsletterTypeName)
     {
         $subscriptionQuery = $this->querySubscription()
             ->joinSpyNewsletterType()
             ->useSpyNewsletterTypeQuery()
-                ->filterByIdNewsletterType($idNewsletterType)
+                ->filterByName($newsletterTypeName)
             ->endUse()
             ->joinSpyNewsletterSubscriber()
             ->useSpyNewsletterSubscriberQuery()
@@ -35,16 +38,16 @@ class NewsletterQueryContainer extends AbstractQueryContainer
 
     /**
      * @param string $subscriberKey
-     * @param int $idNewsletterType
+     * @param string $newsletterTypeName
      *
      * @return SpyNewsletterSubscriptionQuery
      */
-    public function querySubscriptionBySubscriberKeyAndNewsletterType($subscriberKey, $idNewsletterType)
+    public function querySubscriptionBySubscriberKeyAndNewsletterTypeName($subscriberKey, $newsletterTypeName)
     {
         $subscriptionQuery = $this->querySubscription()
             ->joinSpyNewsletterType()
             ->useSpyNewsletterTypeQuery()
-                ->filterByIdNewsletterType($idNewsletterType)
+                ->filterByName($newsletterTypeName)
             ->endUse()
             ->joinSpyNewsletterSubscriber()
             ->useSpyNewsletterSubscriberQuery()
@@ -70,4 +73,13 @@ class NewsletterQueryContainer extends AbstractQueryContainer
     {
         return SpyNewsletterSubscriptionQuery::create();
     }
+
+    /**
+     * @return SpyNewsletterTypeQuery
+     */
+    public function queryNewsletterType()
+    {
+        return SpyNewsletterTypeQuery::create();
+    }
+
 }

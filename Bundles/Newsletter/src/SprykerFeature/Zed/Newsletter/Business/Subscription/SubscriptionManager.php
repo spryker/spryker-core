@@ -7,14 +7,10 @@ namespace SprykerFeature\Zed\Newsletter\Business\Subscription;
 
 use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
 use Generated\Shared\Newsletter\NewsletterTypeInterface;
+use SprykerFeature\Zed\Newsletter\Business\Exception\MissingNewsletterTypeException;
 use SprykerFeature\Zed\Newsletter\Persistence\NewsletterQueryContainer;
 use SprykerFeature\Zed\Newsletter\Persistence\Propel\SpyNewsletterSubscription;
 
-/**
- * TODO: facade to check if subscriber is subscribed for a specific newsletter type
- * TODO: create demo data
- * TODO: remove customer.has_newsletter_subscription field
- */
 class SubscriptionManager implements SubscriptionManagerInterface
 {
     /**
@@ -38,7 +34,7 @@ class SubscriptionManager implements SubscriptionManagerInterface
     {
         $subscriptionEntity = new SpyNewsletterSubscription();
         $subscriptionEntity->setFkNewsletterSubscriber($newsletterSubscriber->getIdNewsletterSubscriber());
-        $subscriptionEntity->setFkNewsletterType($newsletterType->getIdNewsletterType());
+        $subscriptionEntity->setFkNewsletterType($this->getIdNewsletterType($newsletterType));
         $subscriptionEntity->save();
     }
 
@@ -51,7 +47,7 @@ class SubscriptionManager implements SubscriptionManagerInterface
     public function isAlreadySubscribed(NewsletterSubscriberInterface $newsletterSubscriber, NewsletterTypeInterface $newsletterType)
     {
         $subscriptionCount = $this->queryContainer
-            ->querySubscriptionByEmailAndNewsletterType($newsletterSubscriber->getEmail(), $newsletterType->getIdNewsletterType())
+            ->querySubscriptionByEmailAndNewsletterTypeName($newsletterSubscriber->getEmail(), $newsletterType->getName())
             ->count();
 
         return $subscriptionCount > 0;
@@ -60,16 +56,46 @@ class SubscriptionManager implements SubscriptionManagerInterface
     /**
      * @param NewsletterSubscriberInterface $newsletterSubscriber
      * @param NewsletterTypeInterface $newsletterType
+     *
+     * @return bool
      */
     public function unsubscribe(NewsletterSubscriberInterface $newsletterSubscriber, NewsletterTypeInterface $newsletterType)
     {
         $subscriptionEntity = $this->queryContainer
-            ->querySubscriptionBySubscriberKeyAndNewsletterType($newsletterSubscriber->getSubscriberKey(), $newsletterType->getIdNewsletterType())
+            ->querySubscriptionBySubscriberKeyAndNewsletterTypeName($newsletterSubscriber->getSubscriberKey(), $newsletterType->getName())
             ->findOne()
         ;
 
         if (null !== $subscriptionEntity) {
             $subscriptionEntity->delete();
+            return true;
         }
+
+        return false;
+    }
+
+    /**
+     * @param NewsletterTypeInterface $newsletterType
+     *
+     * @throws MissingNewsletterTypeException
+     *
+     * @return int
+     */
+    protected function getIdNewsletterType(NewsletterTypeInterface $newsletterType)
+    {
+        if (null !== $newsletterType->getIdNewsletterType()) {
+            return $newsletterType->getIdNewsletterType();
+        }
+
+        $newsletterTypeEntity = $this->queryContainer
+            ->queryNewsletterType()
+            ->findOneByName($newsletterType->getName())
+        ;
+
+        if (null !== $newsletterTypeEntity) {
+            return $newsletterTypeEntity->getIdNewsletterType();
+        }
+
+        throw new MissingNewsletterTypeException(sprintf('Newsletter type "%s" not found.', $newsletterType->getName()));
     }
 }

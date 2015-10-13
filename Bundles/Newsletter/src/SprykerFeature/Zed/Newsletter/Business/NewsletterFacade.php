@@ -62,9 +62,19 @@ class NewsletterFacade extends AbstractFacade
         ;
     }
 
-    public function checkSubscription()
+    /**
+     * @param NewsletterSubscriptionRequestInterface $newsletterUnsubscriptionRequest
+     *
+     * @return NewsletterSubscriptionResponseInterface
+     */
+    public function checkSubscription(NewsletterSubscriptionRequestInterface $newsletterUnsubscriptionRequest)
     {
-        // TODO: implement checkSubscription() method
+        $subscriptionResponse = $this->getDependencyContainer()
+            ->createSubscriptionRequestHandler()
+            ->checkNewsletterSubscriptions($newsletterUnsubscriptionRequest)
+        ;
+
+        return $subscriptionResponse;
     }
 
     /**

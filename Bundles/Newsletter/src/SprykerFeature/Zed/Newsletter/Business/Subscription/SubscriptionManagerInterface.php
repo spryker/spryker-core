@@ -29,6 +29,8 @@ interface SubscriptionManagerInterface
     /**
      * @param NewsletterSubscriberInterface $newsletterSubscriber
      * @param NewsletterTypeInterface $newsletterType
+     *
+     * @return bool
      */
     public function unsubscribe(NewsletterSubscriberInterface $newsletterSubscriber, NewsletterTypeInterface $newsletterType);
 

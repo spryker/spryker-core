@@ -56,4 +56,14 @@ class GatewayController extends AbstractGatewayController
         return $this->getFacade()->unsubscribe($newsletterSubscriptionRequest);
     }
 
+    /**
+     * @param NewsletterSubscriptionRequestInterface $newsletterUnsubscriptionRequest
+     *
+     * @return NewsletterSubscriptionResponseInterface
+     */
+    public function checkSubscriptionAction(NewsletterSubscriptionRequestInterface $newsletterUnsubscriptionRequest)
+    {
+        return $this->getFacade()->checkSubscription($newsletterUnsubscriptionRequest);
+    }
+
 }

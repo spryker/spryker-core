@@ -62,6 +62,16 @@ class NewsletterStub implements NewsletterStubInterface
      */
     public function unsubscribe(NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest)
     {
-        $this->zedStub->call('/newsletter/gateway/unsubscribe', $newsletterSubscriptionRequest);
+        return $this->zedStub->call('/newsletter/gateway/unsubscribe', $newsletterSubscriptionRequest);
+    }
+
+    /**
+     * @param NewsletterSubscriptionRequestInterface $newsletterUnsubscriptionRequest
+     *
+     * @return NewsletterSubscriptionResponseInterface
+     */
+    public function checkSubscription(NewsletterSubscriptionRequestInterface $newsletterUnsubscriptionRequest)
+    {
+        return $this->zedStub->call('/newsletter/gateway/check-subscription', $newsletterUnsubscriptionRequest);
     }
 }

@@ -32,12 +32,18 @@ interface NewsletterClientInterface
      */
     public function approveDoubleOptInSubscriber(NewsletterSubscriberInterface $newsletterSubscriber);
 
-
     /**
      * @param NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest
      *
      * @return NewsletterSubscriptionResponseInterface
      */
     public function unsubscribe(NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest);
+
+    /**
+     * @param NewsletterSubscriptionRequestInterface $newsletterUnsubscriptionRequest
+     *
+     * @return NewsletterSubscriptionResponseInterface
+     */
+    public function checkSubscription(NewsletterSubscriptionRequestInterface $newsletterUnsubscriptionRequest);
 
 }

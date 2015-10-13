@@ -63,4 +63,16 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
         ;
     }
 
+    /**
+     * @param NewsletterSubscriptionRequestInterface $newsletterUnsubscriptionRequest
+     *
+     * @return NewsletterSubscriptionResponseInterface
+     */
+    public function checkSubscription(NewsletterSubscriptionRequestInterface $newsletterUnsubscriptionRequest)
+    {
+        return $this->getDependencyContainer()->createZedNewsletterStub()
+            ->checkSubscription($newsletterUnsubscriptionRequest)
+        ;
+    }
+
 }

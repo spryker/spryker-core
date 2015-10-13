@@ -17,6 +17,13 @@
             <unique-column name="subscriber_key"/>
         </unique>
 
+        <index>
+            <index-column name="email" />
+        </index>
+        <index>
+            <index-column name="subscriber_key" />
+        </index>
+
         <id-method-parameter value="spy_newsletter_subscriber_pk_seq"/>
 
         <foreign-key foreignTable="spy_customer">
@@ -29,6 +36,14 @@
         <column name="name" type="VARCHAR" size="255" required="true"/>
 
         <behavior name="timestampable"/>
+
+        <unique>
+            <unique-column name="name"/>
+        </unique>
+
+        <index>
+            <index-column name="name" />
+        </index>
 
         <id-method-parameter value="spy_newsletter_type_pk_seq"/>
     </table>

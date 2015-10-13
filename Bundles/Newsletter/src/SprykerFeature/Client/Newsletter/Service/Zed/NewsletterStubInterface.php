@@ -40,4 +40,11 @@ interface NewsletterStubInterface
      */
     public function unsubscribe(NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest);
 
+    /**
+     * @param NewsletterSubscriptionRequestInterface $newsletterUnsubscriptionRequest
+     *
+     * @return NewsletterSubscriptionResponseInterface
+     */
+    public function checkSubscription(NewsletterSubscriptionRequestInterface $newsletterUnsubscriptionRequest);
+
 }
