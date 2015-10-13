@@ -315,14 +315,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             $productsToDeAssign[] = $mapping->getFkAbstractProduct();
         }
 
-        //product mappings
         $this->removeProductCategoryMappings($category->getIdCategory(), $productsToDeAssign);
-
-        //url/path mappings
-        //update touch
-
-        //product mappings
-        //update touch
 
         $categoryNodes = $this->categoryQueryContainer
             ->queryAllNodesByCategoryId($category->getIdCategory())
@@ -331,11 +324,17 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
         foreach ($categoryNodes as $node) {
             $this->cmsFacade->updateBlocksAssignedToDeletedCategoryNode($node->getIdCategoryNode());
-            $this->categoryFacade->deleteNode($node->getIdCategoryNode(), $locale);
+
+            $nodeExists = $this->categoryQueryContainer
+                ->queryNodeById($node->getIdCategoryNode())
+                ->count() > 0;
+
+            if ($nodeExists) {
+                $this->categoryFacade->deleteNode($node->getIdCategoryNode(), $locale, true);
+            }
         }
 
         $this->categoryFacade->deleteCategory($category->getIdCategory());
-
 
         //remove paths, url, regenrate menu
 

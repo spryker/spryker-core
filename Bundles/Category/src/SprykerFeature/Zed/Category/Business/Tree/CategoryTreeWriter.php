@@ -130,15 +130,21 @@ class CategoryTreeWriter
         $this->removeNodeUrl($idNode, $locale);
         $this->touchCategoryDeleted($idNode);
 
-        if ($this->categoryTreeReader->hasChildren($idNode) && $deleteChildren) {
+        $hasChildren = $this->categoryTreeReader->hasChildren($idNode);
+
+        if ($deleteChildren && $hasChildren) {
             $childNodes = $this->categoryTreeReader->getChildren($idNode, $locale);
             foreach ($childNodes as $childNode) {
                 $this->deleteNode($childNode->getIdCategoryNode(), $locale, true);
             }
         }
 
-        $this->closureTableWriter->delete($idNode);
-        $result = $this->nodeWriter->delete($idNode);
+        $result = $this->closureTableWriter->delete($idNode);
+
+        $hasChildren = $this->categoryTreeReader->hasChildren($idNode);
+        if (!$hasChildren) {
+            $result = $this->nodeWriter->delete($idNode);
+        }
 
         $this->touchNavigationDeleted();
 

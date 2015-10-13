@@ -268,10 +268,7 @@ class CategoryFacade extends AbstractFacade
     {
         $categories = $this->getDependencyContainer()
             ->createCategoryTreeReader()
-            ->getTreeNodeChildren(
-                $idCategory,
-                $locale
-            )
+            ->getTreeNodeChildren($idCategory, $locale)
         ;
 
         return $this->getDependencyContainer()

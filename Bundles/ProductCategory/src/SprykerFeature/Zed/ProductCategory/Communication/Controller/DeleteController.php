@@ -59,13 +59,10 @@ class DeleteController extends EditController
 
             $data = $form->getData();
 
-            die(dump($data));
-
             $currentCategoryTransfer = (new CategoryTransfer())
                 ->fromArray($data, true);
 
             if ($data['delete_children']) {
-                die('delete children');
                 $this->getDependencyContainer()
                     ->createProductCategoryFacade()
                     ->deleteCategoryFull($currentCategoryTransfer, $locale)
@@ -89,7 +86,7 @@ class DeleteController extends EditController
 
             $connection->commit();
 
-            return $this->redirectResponse('/productCategory/edit?id-category='.$idCategory);
+            return $this->redirectResponse('/category');
         }
 
         $productCategories = $this->getDependencyContainer()
