@@ -154,7 +154,7 @@ class Install extends AbstractInstaller
         $json = $this->codeMappings;
 
         if ($this->version !== $json['supplemental']['version']['_cldrVersion']) {
-            throw new \SprykerFeature_Zed_Library_Exception('CLDR version mismatch in country install');
+            throw new \Exception('CLDR version mismatch in country install');
         }
 
         $mappings = $json['supplemental']['codeMappings'];
@@ -175,7 +175,7 @@ class Install extends AbstractInstaller
         $json = $this->postalCodes;
 
         if ($this->version !== $json['supplemental']['version']['_cldrVersion']) {
-            throw new \SprykerFeature_Zed_Library_Exception('CLDR version mismatch in country install');
+            throw new \Exception('CLDR version mismatch in country install');
         }
 
         $mappings = $json['supplemental']['postalCodeData'];

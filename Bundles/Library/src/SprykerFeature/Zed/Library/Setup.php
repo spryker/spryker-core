@@ -3,7 +3,10 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-class SprykerFeature_Zed_Library_Setup
+
+namespace SprykerFeature\Zed\Library;
+
+class Setup
 {
 
     /**
@@ -27,12 +30,12 @@ class SprykerFeature_Zed_Library_Setup
     {
         $checks = [];
         foreach ($directories as $directory) {
-            $checks[] = \SprykerFeature_Zed_Library_Setup::checkCondition('is_dir', $directory);
-            $checks[] = \SprykerFeature_Zed_Library_Setup::checkCondition('is_writable', $directory);
+            $checks[] = self::checkCondition('is_dir', $directory);
+            $checks[] = self::checkCondition('is_writable', $directory);
         }
         foreach ($checks as $check) {
             if ($check === false) {
-                \SprykerFeature_Zed_Library_Setup::renderAndExit(\SprykerFeature_Zed_Library_Setup::getErrorMessagesAsList());
+                self::renderAndExit(self::getErrorMessagesAsList());
             }
         }
     }
@@ -49,21 +52,6 @@ class SprykerFeature_Zed_Library_Setup
                 mkdir($directory, 0777, true);
             }
         }
-    }
-
-    public static function checkDirectoriesByName($root, $pattern)
-    {
-        $dirHelper = new \SprykerFeature_Zed_Library_Helper_Directory();
-        $directories = $dirHelper->getDirs($root);
-
-        $entitiesDirectories = [];
-        foreach ($directories as $directory) {
-            $directory = str_replace('\\', '/', $directory);
-            if (strpos($directory, '/' . $pattern . '/') !== false) {
-                $entitiesDirectories[] = $directory;
-            }
-        }
-        self::checkDirectories($entitiesDirectories);
     }
 
     public static function checkCondition($callBack, $value)
@@ -91,7 +79,7 @@ class SprykerFeature_Zed_Library_Setup
         }
 
         if (strtolower(PHP_SAPI) !== 'cli') {
-echo "
+            echo "
 <html>
 <body style='background-color: $background; font-family: courier new; color: $color;'>
 <pre>

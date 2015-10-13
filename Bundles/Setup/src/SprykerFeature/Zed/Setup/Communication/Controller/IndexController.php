@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Setup\Communication\Controller;
 
 use SprykerFeature\Shared\Library\Config;
+use SprykerFeature\Shared\Library\Environment;
 use SprykerFeature\Shared\Setup\SetupConfig;
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
@@ -35,7 +36,7 @@ class IndexController extends AbstractController
             'target' => '_blank',
             'label' => __('Show PHP-Info'),
         ];
-        if (\SprykerFeature_Shared_Library_Environment::isNotDevelopment()) {
+        if (Environment::isNotDevelopment()) {
             $developmentLinks[] = [
                 'href' => '#',
                 'label' => __('Show Elasticsearch' . ' <span class="icon-info"></span>'),
@@ -51,7 +52,7 @@ class IndexController extends AbstractController
                 'label' => __('Show Elasticsearch'),
             ];
         }
-        if (\SprykerFeature_Shared_Library_Environment::isNotDevelopment()) {
+        if (Environment::isNotDevelopment()) {
             $developmentLinks[] = [
                 'href' => '#',
                 'label' => __('Show Elasticsearch Head (9200/_plugin/head)' . ' <span class="icon-info"></span>'),
@@ -68,7 +69,7 @@ class IndexController extends AbstractController
             ];
         }
 
-        if (\SprykerFeature_Shared_Library_Environment::isNotDevelopment()) {
+        if (Environment::isNotDevelopment()) {
             $developmentLinks[] = [
                 'href' => '#',
                 'label' => __('Show Elasticsearch Bigdesk (9200/_plugin/bigdesk)' . ' <span class="icon-info"></span>'),
@@ -84,7 +85,7 @@ class IndexController extends AbstractController
                 'label' => __('Show Elasticsearch Bigdesk'),
             ];
         }
-        if (\SprykerFeature_Shared_Library_Environment::isNotDevelopment()) {
+        if (Environment::isNotDevelopment()) {
             $developmentLinks[] = [
                 'href' => '#',
                 'label' => __('Show Couchbase' . ' <span class="icon-info"></span>'),
@@ -101,7 +102,7 @@ class IndexController extends AbstractController
             ];
         }
 
-        if (\SprykerFeature_Shared_Library_Environment::isNotDevelopment()) {
+        if (Environment::isNotDevelopment()) {
             $developmentLinks[] = [
                 'href' => '#',
                 'label' => __('Show Jenkins' . ' <span class="icon-info"></span>'),

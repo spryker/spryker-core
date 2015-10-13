@@ -3,14 +3,17 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-class SprykerFeature_Shared_Library_Log
+
+namespace SprykerFeature\Shared\Library;
+
+class Log
 {
 
     /**
-     * Simple Logger - removes html tags
-     *
-     * @param mixed $expression
+     * @param string $expression
      * @param string $fileName
+     * @param bool|true $showInfo
+     * @param string $dir
      */
     public static function log($expression, $fileName, $showInfo = true, $dir = 'logs')
     {
@@ -90,14 +93,13 @@ class SprykerFeature_Shared_Library_Log
      * @param string $fileName
      * @param string $dir
      *
+     * @throws \Exception
+     *
      * @return string
-     * @static
      */
     public static function getFilePath($fileName, $dir = 'logs')
     {
-        assert(is_string($fileName));
-
-        $logPath = \SprykerFeature_Shared_Library_Data::getLocalStoreSpecificPath($dir);
+        $logPath = DataDirectory::getLocalStoreSpecificPath($dir);
         if ($dir === 'logs') {
             $logPath .= APPLICATION . DIRECTORY_SEPARATOR;
             if (false === is_dir($logPath)) {
@@ -105,7 +107,9 @@ class SprykerFeature_Shared_Library_Log
             }
         }
 
-        assert(is_writable($logPath));
+        if (!is_writable($logPath)) {
+            throw new \Exception(sprintf('Log file "%s" is not writable!', $logPath));
+        }
 
         return $logPath . DIRECTORY_SEPARATOR . $fileName;
     }

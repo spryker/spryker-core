@@ -7,6 +7,7 @@
 namespace SprykerEngine\Shared\Lumberjack\Model\Writer;
 
 use SprykerEngine\Shared\Lumberjack\Model\EventInterface;
+use SprykerFeature\Shared\Library\DataDirectory;
 
 class File extends AbstractWriter
 {
@@ -114,7 +115,7 @@ class File extends AbstractWriter
     {
         return isset($this->options['log_path']) ?
             $this->options['log_path']
-            : \SprykerFeature_Shared_Library_Data::getLocalCommonPath('lumberjack');
+            : DataDirectory::getLocalCommonPath('lumberjack');
     }
 
     /**

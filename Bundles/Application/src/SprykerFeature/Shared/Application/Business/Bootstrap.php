@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Shared\Application\Business;
 
+use SprykerFeature\Shared\Application\ApplicationConfig;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\Yves\YvesConfig;
 use Silex\ServiceProviderInterface;
@@ -23,10 +24,7 @@ abstract class Bootstrap
     public function boot()
     {
         $app = $this->getBaseApplication();
-
-        if (\SprykerFeature_Shared_Library_Environment::isNotProduction()) {
-            $app['debug'] = true;
-        }
+        $app['debug'] = Config::get(ApplicationConfig::ENABLE_APPLICATION_DEBUG, false);
 
         $this->optimizeApp($app);
 

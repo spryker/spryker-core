@@ -11,6 +11,7 @@ use SprykerEngine\Shared\Lumberjack\Model\EventInterface;
 use SprykerEngine\Shared\Lumberjack\Model\EventJournalInterface;
 use SprykerEngine\Shared\Lumberjack\Model\SharedEventJournal;
 use SprykerFeature\Shared\Library\Application\Version;
+use SprykerFeature\Shared\Library\Log;
 use SprykerFeature\Shared\Library\NewRelic\Api;
 use SprykerFeature\Shared\Library\NewRelic\ApiInterface;
 
@@ -100,7 +101,7 @@ class ErrorLogger
     ) {
         try {
             $message = ErrorRenderer::renderException($exception);
-            \SprykerFeature_Shared_Library_Log::log($message, 'exception.log');
+            Log::log($message, 'exception.log');
         } catch (\Exception $internalException) {
             self::sendExceptionToLumberjack($internalException, true, $eventJournal, $newRelicApi);
             self::sendExceptionToNewRelic($internalException, true, $eventJournal, $newRelicApi);

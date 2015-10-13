@@ -7,6 +7,7 @@
 namespace SprykerFeature\Shared\Session\Business\Model;
 
 use SprykerEngine\Shared\Kernel\Store;
+use SprykerFeature\Shared\Library\Environment;
 use SprykerFeature\Shared\Session\Business\Handler\SessionHandlerCouchbase;
 use SprykerFeature\Shared\Session\Business\Handler\SessionHandlerFile;
 use SprykerFeature\Shared\Session\Business\Handler\SessionHandlerMysql;
@@ -112,7 +113,7 @@ abstract class SessionFactory
     protected function getBucketName()
     {
         $storeName = Store::getInstance()->getStoreName();
-        $environment = \SprykerFeature_Shared_Library_Environment::getInstance()->getEnvironment();
+        $environment = Environment::getInstance()->getEnvironment();
 
         return $storeName . '_' . $environment . '_' . self::BUCKET_NAME_POSTFIX;
     }

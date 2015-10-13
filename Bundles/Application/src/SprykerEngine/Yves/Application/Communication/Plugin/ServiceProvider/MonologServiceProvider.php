@@ -8,6 +8,7 @@ namespace SprykerEngine\Yves\Application\Communication\Plugin\ServiceProvider;
 
 use Monolog\Logger;
 use Monolog\Handler\StreamHandler;
+use SprykerFeature\Shared\Library\Log;
 use SprykerFeature\Shared\Library\Monolog\LumberjackHandler;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
@@ -36,7 +37,7 @@ class MonologServiceProvider implements ServiceProviderInterface
         });
 
         $app['monolog.logfile'] = function () {
-            return \SprykerFeature_Shared_Library_Log::getFilePath('message.log');
+            return Log::getFilePath('message.log');
         };
 
         $app['monolog.handler.debug'] = function () use ($app) {

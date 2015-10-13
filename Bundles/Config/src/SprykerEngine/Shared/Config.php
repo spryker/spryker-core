@@ -6,6 +6,9 @@
 
 namespace SprykerEngine\Shared;
 
+use SprykerEngine\Shared\Kernel\Store;
+use SprykerFeature\Shared\Library\Environment;
+
 class Config
 {
 
@@ -36,15 +39,20 @@ class Config
 
     /**
      * @param string $key
+     * @param null $default
      *
      * @throws \Exception
      *
      * @return string
      */
-    public static function get($key)
+    public static function get($key, $default = null)
     {
         if (empty(self::$config)) {
             self::init();
+        }
+
+        if (!self::hasValue($key) && null !== $default) {
+            self::$config[$key] = $default;
         }
 
         if (!self::hasValue($key)) {
@@ -70,10 +78,10 @@ class Config
     public static function init($environment = null)
     {
         if (is_null($environment)) {
-            $environment = \SprykerFeature_Shared_Library_Environment::getInstance()->getEnvironment();
+            $environment = Environment::getInstance()->getEnvironment();
         }
 
-        $storeName = \SprykerEngine\Shared\Kernel\Store::getInstance()->getStoreName();
+        $storeName = Store::getInstance()->getStoreName();
 
         $config = new \ArrayObject();
 
@@ -118,8 +126,6 @@ class Config
      */
     protected static function buildConfig($type = null, \ArrayObject $config)
     {
-        assert(is_string($type));
-
         $fileName = APPLICATION_ROOT_DIR . self::CONFIG_FILE_PREFIX . $type . self::CONFIG_FILE_SUFFIX;
         if (file_exists($fileName)) {
             include $fileName;

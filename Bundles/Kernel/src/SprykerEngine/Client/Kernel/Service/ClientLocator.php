@@ -8,6 +8,7 @@ use SprykerEngine\Shared\Kernel\AbstractLocator;
 use SprykerEngine\Shared\Kernel\ClassResolver\ClassNotFoundException;
 use SprykerEngine\Shared\Kernel\Locator\LocatorException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerFeature\Shared\Library\Log;
 
 class ClientLocator extends AbstractLocator
 {
@@ -56,10 +57,9 @@ class ClientLocator extends AbstractLocator
             $container = new Container();
             $bundleBuilder->provideServiceLayerDependencies($container);
             $locatedClient->setExternalDependencies($container);
-
         } catch (ClassNotFoundException $e) {
             // TODO remove try-catch when all bundles have a Builder
-            \SprykerFeature_Shared_Library_Log::log('Yves - ' . $bundle, 'builder_missing.log');
+            Log::log('Yves - ' . $bundle, 'builder_missing.log');
         }
 
         return $locatedClient;

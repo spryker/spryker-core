@@ -7,6 +7,9 @@
 namespace SprykerFeature\Zed\Application\Communication\Plugin\TransferObject;
 
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerFeature\Shared\Application\ApplicationConfig;
+use SprykerFeature\Shared\Library\Config;
+use SprykerFeature\Shared\Library\Log;
 use SprykerFeature\Shared\ZedRequest\Client\RequestInterface;
 use Symfony\Component\HttpFoundation\Request as HttpRequest;
 
@@ -27,9 +30,9 @@ class Repeater extends AbstractPlugin
     {
         $this->isRepeatInProgress = true;
         if (!is_null($mvc)) {
-            return \SprykerFeature_Shared_Library_Log::getFlashInFile('last_yves_request_' . $mvc . '.log');
+            return Log::getFlashInFile('last_yves_request_' . $mvc . '.log');
         } else {
-            return \SprykerFeature_Shared_Library_Log::getFlashInFile('last_yves_request.log');
+            return Log::getFlashInFile('last_yves_request.log');
         }
     }
 
@@ -43,7 +46,7 @@ class Repeater extends AbstractPlugin
             return;
         }
 
-        if (\SprykerFeature_Shared_Library_Environment::isNotDevelopment()) {
+        if (Config::get(ApplicationConfig::SET_REPEAT_DATA, false)) {
             return;
         }
 
@@ -61,8 +64,8 @@ class Repeater extends AbstractPlugin
             $httpRequest->attributes->get('action')
         );
 
-        \SprykerFeature_Shared_Library_Log::setFlashInFile($repeatData, 'last_yves_request_' . $mvc . '.log');
-        \SprykerFeature_Shared_Library_Log::setFlashInFile($repeatData, 'last_yves_request.log');
+        Log::setFlashInFile($repeatData, 'last_yves_request_' . $mvc . '.log');
+        Log::setFlashInFile($repeatData, 'last_yves_request.log');
     }
 
 }

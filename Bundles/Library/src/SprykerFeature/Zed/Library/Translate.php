@@ -3,7 +3,10 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-class SprykerFeature_Zed_Library_Translate extends Zend_Translate
+
+namespace SprykerFeature\Zed\Library;
+
+class Translate extends \Zend_Translate
 {
 
 }
@@ -11,19 +14,19 @@ class SprykerFeature_Zed_Library_Translate extends Zend_Translate
 /**
  * @param $string
  *
- * @throws ErrorException
+ * @throws \ErrorException
  *
  * @return mixed
  */
 function __($string)
 {
-    $registry = Zend_Registry::getInstance();
-    /* @var \SprykerFeature_Zed_Library_Translate $instance */
+    $registry = \Zend_Registry::getInstance();
+    /* @var Translate $instance */
     if ($registry->isRegistered('Zend_Translate')) {
         $instance = $registry->get('Zend_Translate');
 
         return $instance->_($string);
     } else {
-        throw new ErrorException('No instance of Zend_Translate initiated.');
+        throw new \ErrorException('No instance of Zend_Translate initiated.');
     }
 }

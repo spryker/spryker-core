@@ -12,7 +12,7 @@ class Form extends \Zend_Form
 {
 
     /**
-     * @var \SprykerFeature_Zed_Library_Gui_Form_DataSource_Interface
+     * @var null
      */
     protected $dataSource;
 

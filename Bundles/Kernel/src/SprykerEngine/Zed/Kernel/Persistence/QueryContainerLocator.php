@@ -13,6 +13,7 @@ use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Shared\Kernel\AbstractLocator;
 use SprykerEngine\Zed\Kernel\BundleDependencyProviderLocator;
 use SprykerEngine\Zed\Kernel\Container;
+use SprykerFeature\Shared\Library\Log;
 
 class QueryContainerLocator extends AbstractLocator
 {
@@ -60,7 +61,7 @@ class QueryContainerLocator extends AbstractLocator
             $bundleBuilder = $bundleConfigLocator->locate($bundle, $locator);
             $container = new Container();
             $container[self::PROPEL_CONNECTION] = function () use ($locator) {
-                /** @var $locator AutoCompletion */
+                /* @var $locator AutoCompletion */
                 return $locator->propel()->pluginConnection()->get();
             };
             $bundleBuilder->providePersistenceLayerDependencies($container);
@@ -68,7 +69,7 @@ class QueryContainerLocator extends AbstractLocator
             $queryContainer->setExternalDependencies($container);
         } catch (ClassNotFoundException $e) {
             // TODO remove try-catch when all bundles have a DependencyProvider
-            \SprykerFeature_Shared_Library_Log::log($bundle, 'builder_missing.log');
+            Log::log($bundle, 'builder_missing.log');
         }
 
         return $queryContainer;

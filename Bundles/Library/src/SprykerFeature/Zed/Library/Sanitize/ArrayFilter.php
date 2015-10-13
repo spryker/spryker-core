@@ -3,7 +3,10 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-class SprykerFeature_Zed_Library_Sanitize_Array implements Iterator, Countable, ArrayAccess
+
+namespace SprykerFeature\Zed\Library\Sanitize;
+
+class ArrayFilter implements \Iterator, \Countable, \ArrayAccess
 {
 
     /**
@@ -18,7 +21,7 @@ class SprykerFeature_Zed_Library_Sanitize_Array implements Iterator, Countable, 
 
     /**
      * @param array $array
-     * @param string|\SprykerFeature_Zed_Library_Sanitize_FilterSet_Interface $filterSet
+     * @param string|FilterSetInterface $filterSet
      */
     public function __construct(array $array, $filterSet)
     {
@@ -27,15 +30,15 @@ class SprykerFeature_Zed_Library_Sanitize_Array implements Iterator, Countable, 
     }
 
     /**
-     * @param string|\SprykerFeature_Zed_Library_Sanitize_FilterSet_Interface $filterSet
+     * @param string|FilterSetInterface $filterSet
      */
     protected function initFilters($filterSet)
     {
         if (is_string($filterSet) && class_exists($filterSet)) {
-            /** @var \SprykerFeature_Zed_Library_Sanitize_FilterSet_Interface $filterSetClass */
+            /** @var FilterSetInterface $filterSetClass */
             $filterSetClass = new $filterSet();
             $this->filters = $filterSetClass->getFilters();
-        } elseif ($filterSet instanceof \SprykerFeature_Zed_Library_Sanitize_FilterSet_Interface) {
+        } elseif ($filterSet instanceof FilterSetInterface) {
             $this->filters = $filterSet->getFilters();
         }
     }
@@ -52,7 +55,7 @@ class SprykerFeature_Zed_Library_Sanitize_Array implements Iterator, Countable, 
         }
 
         $result = $array;
-        /** @var \SprykerFeature_Zed_Library_Sanitize_Filter_Interface $filter */
+        /** @var FilterInterface $filter */
         foreach ($this->filters as $filter) {
             $result = $filter->filter($result);
         }

@@ -10,6 +10,7 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use SprykerEngine\Shared\Kernel\Store;
 use Silex\Provider\TranslationServiceProvider as SilexTranslationServiceProvider;
+use SprykerFeature\Zed\Library\Translate;
 
 class TranslationServiceProvider extends SilexTranslationServiceProvider implements ServiceProviderInterface
 {
@@ -30,7 +31,7 @@ class TranslationServiceProvider extends SilexTranslationServiceProvider impleme
         $currentLanguage = Store::getInstance()->getCurrentLanguage();
         $pathToLanguageFile = APPLICATION_ROOT_DIR . '/config/Zed/language/' . $currentLanguage . '/lang.csv';
 
-        $translator = new \SprykerFeature_Zed_Library_Translate(
+        $translator = new Translate(
             [
                 'adapter' => 'csv',
                 'content' => $pathToLanguageFile,

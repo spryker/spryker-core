@@ -7,7 +7,9 @@
 namespace SprykerFeature\Zed\System\Communication\Controller;
 
 use SprykerFeature\Shared\Library\Config;
+use SprykerFeature\Shared\Library\Environment;
 use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Zed\System\Business\Model\Loadbalancer\BigIP\IPv4;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\System\Business\SystemSettings;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
@@ -24,7 +26,7 @@ class IndexController extends AbstractController
 
     public function indexAction()
     {
-        $environment = \SprykerFeature_Shared_Library_Environment::isProduction() ? 'production' : 'staging';
+        $environment = Environment::isProduction() ? 'production' : 'staging';
         $hosts = $this->facadeSystem->getHosts($environment);
         $mappings = [];
 
@@ -33,14 +35,14 @@ class IndexController extends AbstractController
                 self::KEY_ZED_COOKIE_NAME => $this->facadeSystem->getCookieName($environment, 'zed'),
                 self::KEY_ZED_COOKIE_VALUE => $this->facadeSystem->getCookieValueByHost($environment,
                     $host[SystemSettings::KEY_HOST],
-                    \SprykerFeature_Zed_System_Business_Model_Loadbalancer_BigIP_IPv4::APPLICATION_NAME_ZED),
+                    IPv4::APPLICATION_NAME_ZED),
 
                 self::KEY_ZED_PORT => $host[SystemSettings::KEY_ZED_PORT],
 
                 self::KEY_YVES_COOKIE_NAME => $this->facadeSystem->getCookieName($environment, 'yves'),
                 self::KEY_YVES_COOKIE_VALUE => $this->facadeSystem->getCookieValueByHost($environment,
                     $host[SystemSettings::KEY_HOST],
-                    \SprykerFeature_Zed_System_Business_Model_Loadbalancer_BigIP_IPv4::APPLICATION_NAME_YVES),
+                    IPv4::APPLICATION_NAME_YVES),
 
                 self::KEY_YVES_PORT => $host[SystemSettings::KEY_YVES_PORT],
             ];
