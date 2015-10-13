@@ -76,7 +76,6 @@ class SystemUnderTestBootstrap
         $path = realpath(__DIR__ . '/../../../../../../../../../..');
         defined('APPLICATION_ROOT_DIR') or define('APPLICATION_ROOT_DIR', $path);
 
-        \Zend_Session::$_unitTestEnabled = true;
         TestEnvironment::forceSystemUnderTest();
         Environment::initialize($application);
 
