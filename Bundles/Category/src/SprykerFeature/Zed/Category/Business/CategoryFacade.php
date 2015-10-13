@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Category\Business;
 
-use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeFormatter;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Locale\LocaleInterface;
@@ -141,23 +140,9 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param int $idNode
-     * @param LocaleTransfer $locale
-     *
-     * @return bool
-     */
-    public function deleteCategoryByNodeId($idNode, LocaleTransfer $locale)
-    {
-        return $this->getDependencyContainer()
-            ->createCategoryTreeWriter()
-            ->deleteCategoryByNodeId($idNode, $locale)
-        ;
-    }
-
-    /**
      * @param int $idCategory
      */
-    public function deleteCategoryById($idCategory)
+    public function deleteCategory($idCategory)
     {
         $this->getDependencyContainer()
             ->createCategoryWriter()

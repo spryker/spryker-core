@@ -19,11 +19,6 @@ class CategoryTreeWriter
 {
 
     /**
-     * @var CategoryWriterInterface
-     */
-    protected $categoryWriter;
-
-    /**
      * @var NodeWriterInterface
      */
     protected $nodeWriter;
@@ -49,7 +44,6 @@ class CategoryTreeWriter
     protected $touchFacade;
 
     /**
-     * @param CategoryWriterInterface $categoryWriter
      * @param NodeWriterInterface $nodeWriter
      * @param ClosureTableWriterInterface $closureTableWriter
      * @param CategoryTreeReaderInterface $categoryTreeReader
@@ -57,14 +51,12 @@ class CategoryTreeWriter
      * @param CategoryToTouchInterface $touchFacade
      */
     public function __construct(
-        CategoryWriterInterface $categoryWriter,
         NodeWriterInterface $nodeWriter,
         ClosureTableWriterInterface $closureTableWriter,
         CategoryTreeReaderInterface $categoryTreeReader,
         NodeUrlManagerInterface $nodeUrlManager,
         CategoryToTouchInterface  $touchFacade
     ) {
-        $this->categoryWriter = $categoryWriter;
         $this->nodeWriter = $nodeWriter;
         $this->closureTableWriter = $closureTableWriter;
         $this->categoryTreeReader = $categoryTreeReader;
@@ -104,36 +96,6 @@ class CategoryTreeWriter
     }
 
     /**
-     * @param int $idNode
-     * @param LocaleTransfer $locale
-     *
-     * @return bool
-     */
-    public function deleteCategoryByNodeId($idNode, LocaleTransfer $locale)
-    {
-        $connection = Propel::getConnection();
-        $connection->beginTransaction();
-
-        //order of execution matters, this must be called before node is deleted
-        $this->touchUrlDeleted($idNode, $locale);
-
-        $nodeEntity = $this->categoryTreeReader->getNodeById($idNode);
-        $idCategory = $nodeEntity->getFkCategory();
-        $categoryNodes = $this->categoryTreeReader->getAllNodesByIdCategory($idCategory);
-
-        foreach ($categoryNodes as $node) {
-            $this->deleteNode($node->getPrimaryKey(), $locale, true);
-        }
-        $this->categoryWriter->delete($idCategory);
-        
-        $this->touchCategoryDeleted($idNode);
-
-        $connection->commit();
-
-        return true;
-    }
-
-    /**
      * @param NodeTransfer $categoryNode
      * @param LocaleTransfer $locale
      */
@@ -150,6 +112,44 @@ class CategoryTreeWriter
         $this->touchNavigationActive();
 
         $connection->commit();
+    }
+
+    /**
+     * @param int $idNode
+     * @param LocaleTransfer $locale
+     * @param bool $deleteChildren
+     *
+     * @return int
+     */
+    public function deleteNode($idNode, LocaleTransfer $locale, $deleteChildren = false)
+    {
+        $connection = Propel::getConnection();
+        $connection->beginTransaction();
+
+        //order of execution matters, these must be called before node is deleted
+        $this->removeNodeUrl($idNode, $locale);
+        $this->touchCategoryDeleted($idNode);
+
+        if ($this->categoryTreeReader->hasChildren($idNode) && $deleteChildren) {
+            $childNodes = $this->categoryTreeReader->getChildren($idNode, $locale);
+            foreach ($childNodes as $childNode) {
+                $this->deleteNode($childNode->getIdCategoryNode(), $locale, true);
+            }
+        }
+
+        $this->closureTableWriter->delete($idNode);
+        $result = $this->nodeWriter->delete($idNode);
+
+        $this->touchNavigationDeleted();
+
+        $connection->commit();
+
+        return $result;
+    }
+
+    public function rebuildClosureTable()
+    {
+        $this->closureTableWriter->rebuildCategoryNodes();
     }
 
     /**
@@ -183,52 +183,6 @@ class CategoryTreeWriter
     }
 
     /**
-     * @param int $idNode
-     * @param LocaleTransfer $locale
-     * @param bool $deleteChildren
-     *
-     * @return int
-     */
-    public function deleteNode($idNode, LocaleTransfer $locale, $deleteChildren = false)
-    {
-        $connection = Propel::getConnection();
-        $connection->beginTransaction();
-
-        //order of execution matters, this must be called before node is deleted
-        $this->touchUrlDeleted($idNode, $locale);
-        
-        if ($this->categoryTreeReader->hasChildren($idNode) && $deleteChildren) {
-            $childNodes = $this->categoryTreeReader->getChildren($idNode, $locale);
-            foreach ($childNodes as $childNode) {
-                $this->deleteNode($childNode->getIdCategoryNode(), $locale, true);
-            }
-        }
-
-        $this->touchCategoryDeleted($idNode);
-
-        $this->closureTableWriter->delete($idNode);
-
-        $this->touchCategoryDeleted($idNode);
-        $this->touchNavigationDeleted();
-
-        $result = $this->nodeWriter->delete($idNode);
-
-        $connection->commit();
-
-        return $result;
-    }
-
-    public function deleteCategoryId($idCategory)
-    {
-        $this->touchCategoryDeleted($idNode);
-    }
-
-    public function rebuildClosureTable()
-    {
-        $this->closureTableWriter->rebuildCategoryNodes();
-    }
-
-    /**
      * @param int $idCategoryNode
      */
     protected function touchCategoryActive($idCategoryNode)
@@ -255,20 +209,19 @@ class CategoryTreeWriter
 
     protected function touchNavigationDeleted()
     {
-        $navigationItems = $this->touchFacade->getItemsByType(CategoryConfig::RESOURCE_TYPE_NAVIGATION);
-
-        $itemIds = array_keys($navigationItems);
-
-        $this->touchFacade->bulkTouchInactive(CategoryConfig::RESOURCE_TYPE_NAVIGATION, $itemIds);
+        //just refresh navigation, cause it's always 1 item, there is nothing to delete
+        $this->touchNavigationActive();
     }
 
     /**
      * @param $idCategoryNode
      */
-    protected function touchUrlDeleted($idCategoryNode, LocaleTransfer $locale)
+    protected function removeNodeUrl($idCategoryNode, LocaleTransfer $locale)
     {
         $node = $this->categoryTreeReader->getNodeById($idCategoryNode);
-        $nodeTransfer = (new NodeTransfer())->fromArray($node->toArray());
+        $nodeTransfer = (new NodeTransfer())
+            ->fromArray($node->toArray());
+
         $this->nodeUrlManager->removeUrl($nodeTransfer, $locale);
     }
 }

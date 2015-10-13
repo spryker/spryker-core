@@ -34,14 +34,6 @@ interface CategoryTreeWriterInterface
     public function createNodeByCategoryName($name, $parentId, $locale);
 
     /**
-     * @param int       $nodeId
-     * @param string    $locale
-     *
-     * @return bool
-     */
-    public function deleteCategoryByNodeId($nodeId, $locale);
-
-    /**
      * @param int   $nodeId
      * @param int   $newParentId
      *

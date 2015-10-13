@@ -36,7 +36,6 @@ class CategoryDependencyContainer extends AbstractBusinessDependencyContainer
     public function createCategoryTreeWriter()
     {
         return $this->getFactory()->createTreeCategoryTreeWriter(
-            $this->createCategoryWriter(),
             $this->createNodeWriter(),
             $this->createClosureTableWriter(),
             $this->createCategoryTreeReader(),
