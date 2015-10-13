@@ -31,11 +31,12 @@ class DeleteController extends EditController
     {
         $idCategory = $request->get(ProductCategoryConfig::PARAM_ID_CATEGORY);
 
-        $categoryExists = $this->getDependencyContainer()
+        $currentCategory = $this->getDependencyContainer()
                 ->createCategoryQueryContainer()
-                ->queryCategoryById($idCategory)->count() > 0;
+                ->queryCategoryById($idCategory)
+                ->findOne();
 
-        if (!$categoryExists) {
+        if (!$currentCategory) {
             $this->addErrorMessage(sprintf('The category you are trying to delete %s does not exist.', $idCategory));
 
             return new RedirectResponse('/category');
@@ -54,21 +55,25 @@ class DeleteController extends EditController
 
         if ($form->isValid()) {
             $connection = Propel::getConnection();
+            $connection->beginTransaction();
 
             $data = $form->getData();
+
+            die(dump($data));
 
             $currentCategoryTransfer = (new CategoryTransfer())
                 ->fromArray($data, true);
 
             if ($data['delete_children']) {
-
+                die('delete children');
                 $this->getDependencyContainer()
                     ->createProductCategoryFacade()
-                    ->removeProductCategoryMappings($currentCategoryTransfer->getIdCategory(), $removeProductMappingCollection);
-
+                    ->deleteCategoryFull($currentCategoryTransfer, $locale)
+                ;
             } else {
+
+                die('move');
                 $currentCategoryNodeTransfer = $this->updateCategoryNode($currentCategoryTransfer, $locale, $data);
-                $parentIdList = $data['extra_parents'];
 
                 $parentIdList[] = $currentCategoryNodeTransfer->getFkParentCategoryNode();
                 $parentIdList = array_flip($parentIdList);
@@ -98,7 +103,8 @@ class DeleteController extends EditController
             'form' => $form->createView(),
             'productCategoriesTable' => $productCategories->render(),
             'productsTable' => $products->render(),
-            'showProducts' => false
+            'showProducts' => false,
+            'currentCategory' => $currentCategory->toArray()
         ]);
     }
 

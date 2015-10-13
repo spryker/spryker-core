@@ -31,11 +31,12 @@ class EditController extends AddController
     {
         $idCategory = $request->get(ProductCategoryConfig::PARAM_ID_CATEGORY);
 
-        $categoryExists = $this->getDependencyContainer()
-                ->createCategoryQueryContainer()
-                ->queryCategoryById($idCategory)->count() > 0;
+        $currentCategory = $this->getDependencyContainer()
+            ->createCategoryQueryContainer()
+            ->queryCategoryById($idCategory)
+            ->findOne();
 
-        if (!$categoryExists) {
+        if (!$currentCategory) {
             $this->addErrorMessage(sprintf('The category you are trying to edit %s does not exist.', $idCategory));
 
             return new RedirectResponse('/category');
@@ -54,6 +55,7 @@ class EditController extends AddController
 
         if ($form->isValid()) {
             $connection = Propel::getConnection();
+            $connection->beginTransaction();
 
             $data = $form->getData();
 
@@ -100,7 +102,8 @@ class EditController extends AddController
             'form' => $form->createView(),
             'productCategoriesTable' => $productCategories->render(),
             'productsTable' => $products->render(),
-            'showProducts' => true
+            'showProducts' => true,
+            'currentCategory' => $currentCategory->toArray()
         ]);
     }
 

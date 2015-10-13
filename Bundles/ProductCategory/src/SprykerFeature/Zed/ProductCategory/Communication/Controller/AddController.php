@@ -45,6 +45,7 @@ class AddController extends AbstractController
 
         if ($form->isValid()) {
             $connection = Propel::getConnection();
+            $connection->beginTransaction();
 
             $locale = $this->getDependencyContainer()
                 ->createCurrentLocale()
