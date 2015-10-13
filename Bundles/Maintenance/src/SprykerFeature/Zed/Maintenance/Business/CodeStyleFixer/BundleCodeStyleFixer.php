@@ -69,15 +69,26 @@ class BundleCodeStyleFixer
         return $this->pathToBundles . $bundle;
     }
 
+    /*
+     * @return string
+     */
+    private function getPathToCore()
+    {
+        return dirname($this->pathToBundles);
+    }
+
     /**
      * @param string $path
      */
     private function copyPhpCsFixerConfigToBundle($path)
     {
+        $from = $this->getPathToCore() . DIRECTORY_SEPARATOR . self::PHP_CS_CONFIG_FILE_NAME;
+        $to = $path . DIRECTORY_SEPARATOR . self::PHP_CS_CONFIG_FILE_NAME;
+
         $fileSystem = new Filesystem();
         $fileSystem->copy(
-            $this->applicationRoot . DIRECTORY_SEPARATOR . self::PHP_CS_CONFIG_FILE_NAME,
-            $path . DIRECTORY_SEPARATOR . self::PHP_CS_CONFIG_FILE_NAME
+            $from,
+            $to
         );
     }
 
@@ -97,8 +108,8 @@ class BundleCodeStyleFixer
      */
     private function runFixerCommand($path)
     {
-        $command = './vendor/bin/php-cs-fixer fix ' . $path . ' -vvv';
-        $process = new Process($command, $this->applicationRoot, null, null, 3600);
+        $command = $this->applicationRoot . '/vendor/bin/php-cs-fixer fix ' . $path . ' -vvv';
+        $process = new Process($command, $this->getPathToCore(), null, null, 3600);
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });

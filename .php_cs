@@ -1,12 +1,7 @@
 <?php
 
-if (!defined('APPLICATION_STORE')) {
-    $store = include __DIR__ . '/../../../config/Shared/default_store.php';
-    define('APPLICATION_STORE', $store);
-}
-
 $finder = Symfony\CS\Finder\DefaultFinder::create()
-    ->in(__DIR__ . '/Bundles')
+    ->in(__DIR__ . '/src')
     ->exclude('Generated')
     ->exclude('Propel/Base')
     ->exclude('Propel/Map')
@@ -68,8 +63,7 @@ return Symfony\CS\Config\Config::create()
             'unary_operators_spaces',
             'unused_use',
             'whitespacy_lines',
-            'return_fixer',
         ]
     )
     ->addCustomFixer(new \SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\EmptyEnclosingLinesFixer())
-    ;
+;
