@@ -1,11 +1,12 @@
 <?php
 
 $finder = Symfony\CS\Finder\DefaultFinder::create()
-    ->in(__DIR__ . '/src')
+    ->in(__DIR__)
     ->exclude('Generated')
     ->exclude('Propel/Base')
     ->exclude('Propel/Map')
     ->exclude('tests/_helpers')
+    ->exclude('tests/_support')
     ->exclude('Presentation')
     ->notName('*.twig')
 ;
