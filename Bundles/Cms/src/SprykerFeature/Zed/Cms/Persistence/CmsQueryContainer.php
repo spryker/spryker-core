@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Cms\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use SprykerFeature\Shared\Cms\CmsConfig;
 use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategoryNodeQuery;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
@@ -21,14 +22,15 @@ use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlockQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsGlossaryKeyMappingQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPageQuery;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
+use SprykerFeature\Zed\Glossary\Persistence\Propel\Base\SpyGlossaryTranslationQuery;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryKeyTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
 use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKeyQuery;
 use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
+use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
 
 class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContainerInterface
 {
-
     const TEMPLATE_NAME = 'template_name';
     const TEMPLATE_PATH = 'template_path';
     const CATEGORY_NODE_ID = 'categoryNodeId';
@@ -103,7 +105,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     public function queryPagesWithTemplates()
     {
         return $this->queryPages()
-            ->leftJoinCmsTemplate(null, Criteria::LEFT_JOIN)
+            ->leftJoinCmsTemplate()
             ->withColumn(self::TEMPLATE_NAME)
             ->withColumn(self::TEMPLATE_PATH)
             ;
@@ -115,7 +117,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     public function queryPageWithTemplatesAndUrls()
     {
         return $this->queryPages()
-            ->leftJoinCmsTemplate(null, Criteria::LEFT_JOIN)
+            ->leftJoinCmsTemplate()
             ->innerJoinSpyUrl()
             ->withColumn(self::TEMPLATE_NAME)
             ->withColumn(self::URL)
@@ -449,6 +451,19 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->withColumn(SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE, self::CATEGORY_NODE_ID)
             ->withColumn(SpyUrlTableMap::COL_URL, self::URL)
             ;
+    }
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return SpyCmsBlockQuery
+     */
+    public function queryBlockByIdCategoryNode($idCategoryNode)
+    {
+        return $this->queryBlocks()
+            ->filterByType(CmsConfig::RESOURCE_TYPE_CATEGORY_NODE)
+            ->filterByValue($idCategoryNode)
+        ;
     }
 
 }

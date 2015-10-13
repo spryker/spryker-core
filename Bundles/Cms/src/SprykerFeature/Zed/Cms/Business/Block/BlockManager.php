@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Cms\Business\Block;
 
 use Generated\Shared\Cms\CmsBlockInterface;
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Propel\Runtime\Propel;
 use SprykerFeature\Shared\Cms\CmsConfig;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
 use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
@@ -16,7 +17,6 @@ use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlock;
 
 class BlockManager implements BlockManagerInterface
 {
-
     /**
      * @var CmsQueryContainerInterface
      */
@@ -78,6 +78,31 @@ class BlockManager implements BlockManagerInterface
         }
 
         return $blockTransfer;
+    }
+
+    /**
+     * @param int $idCategoryNode
+     */
+    public function updateBlocksAssignedToDeletedCategoryNode($idCategoryNode)
+    {
+        $connection = Propel::getConnection();
+        $connection->beginTransaction();
+
+        $assignedBlocks = $this->getCmsBlocksByIdCategoryNode($idCategoryNode);
+
+        foreach ($assignedBlocks as $block) {
+            $blockTransfer = $this->convertBlockEntityToTransfer($block);
+
+            //unique keys is on name, type and value therefore the name has to be changed
+            $blockTransfer->setName(
+                $blockTransfer->getName().'_'.CmsConfig::RESOURCE_TYPE_CATEGORY_NODE.'_deleted_'.$block->getIdCmsBlock()
+            );
+            $block->setType(CmsConfig::RESOURCE_TYPE_STATIC);
+            $block->setValue(0);
+            $this->saveBlockAndTouch($blockTransfer);
+        }
+
+        $connection->commit();
     }
 
     /**
@@ -180,6 +205,20 @@ class BlockManager implements BlockManagerInterface
     }
 
     /**
+     * @param int $idCategory
+     *
+     * @return SpyCmsBlock[]
+     */
+    protected function getCmsBlocksByIdCategoryNode($idCategory)
+    {
+        $blockEntities = $this->cmsQueryContainer->queryBlockByIdCategoryNode($idCategory)
+            ->find()
+        ;
+
+        return $blockEntities;
+    }
+
+    /**
      * @param CmsBlockInterface $cmsBlockTransfer
      * @param SpyCmsBlock $blockEntity
      */
@@ -208,6 +247,20 @@ class BlockManager implements BlockManagerInterface
         $blockKey = $name . '-' . $type . '-' . $value;
 
         return $blockKey;
+    }
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return bool
+     */
+    public function hasBlockCategoryNodeMapping($idCategoryNode)
+    {
+        $mappingCount = $this->cmsQueryContainer->queryBlockByIdCategoryNode($idCategoryNode)
+            ->count()
+        ;
+
+        return $mappingCount > 0;
     }
 
 }

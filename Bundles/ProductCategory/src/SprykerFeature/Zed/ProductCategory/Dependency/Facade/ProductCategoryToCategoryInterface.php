@@ -43,4 +43,9 @@ interface ProductCategoryToCategoryInterface
      */
     public function deleteCategoryByNodeId($idNode, LocaleTransfer $locale);
 
+    /**
+     * @param int $idCategory
+     */
+    public function deleteCategoryById($idCategory);
+
 }

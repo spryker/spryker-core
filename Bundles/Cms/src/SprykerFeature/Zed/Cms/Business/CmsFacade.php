@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Cms\Business;
 
-use Generated\Shared\Cms\CmsBlockInterface;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
@@ -128,6 +127,18 @@ class CmsFacade extends AbstractFacade
         $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
 
         return $glossaryKeyMappingManager->hasPagePlaceholderMapping($idPage, $placeholder);
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return bool
+     */
+    public function hasBlockCategoryNodeMapping($idCategory)
+    {
+        $blockManager = $this->getDependencyContainer()->getBlockManager();
+
+        return $blockManager->hasBlockCategoryNodeMapping($idCategory);
     }
 
     /**
@@ -308,5 +319,15 @@ class CmsFacade extends AbstractFacade
         $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
 
         return $glossaryKeyMappingManager->generateGlossaryKeyName($templateName, $placeholder);
+    }
+
+    /**
+     * @param int $idCategoryNode
+     */
+    public function updateBlocksAssignedToDeletedCategoryNode($idCategoryNode)
+    {
+        $blockManager = $this->getDependencyContainer()->getBlockManager();
+
+        $blockManager->updateBlocksAssignedToDeletedCategoryNode($idCategoryNode);
     }
 }

@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\ProductCategory\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductCategoryBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
+use SprykerFeature\Zed\ProductCategory\Dependency\Facade\CmsToCategoryInterface;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToLocaleInterface;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
@@ -31,6 +32,7 @@ class ProductCategoryDependencyContainer extends AbstractBusinessDependencyConta
             $this->createProductFacade(),
             $this->createCategoryFacade(),
             $this->createTouchFacade(),
+            $this->createCmsFacade(),
             $this->getLocator()
         );
     }
@@ -73,6 +75,16 @@ class ProductCategoryDependencyContainer extends AbstractBusinessDependencyConta
     protected function createTouchFacade()
     {
         return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_TOUCH);
+    }
+
+    /**
+     * TODO: https://spryker.atlassian.net/browse/CD-540
+     *
+     * @return CmsToCategoryInterface
+     */
+    protected function createCmsFacade()
+    {
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_CMS);
     }
 
 }

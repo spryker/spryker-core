@@ -17,6 +17,7 @@ use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
+use SprykerFeature\Zed\ProductCategory\Dependency\Facade\CmsToCategoryInterface;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCategoryInterface;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface;
@@ -48,6 +49,11 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     protected $touchFacade;
 
     /**
+     * @var CmsToCategoryInterface
+     */
+    protected $cmsFacade;
+
+    /**
      * @var AutoCompletion
      */
     protected $locator;
@@ -56,20 +62,23 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param ProductCategoryQueryContainerInterface $productCategoryQueryContainer
      * @param ProductCategoryToProductInterface $productFacade
      * @param ProductCategoryToCategoryInterface $categoryFacade
-     * @param LocatorLocatorInterface $locator
      * @param ProductCategoryToTouchInterface $touchFacade
+     * @param CmsToCategoryInterface $cmsFacade
+     * @param LocatorLocatorInterface $locator
      */
     public function __construct(
         ProductCategoryQueryContainerInterface $productCategoryQueryContainer,
         ProductCategoryToProductInterface $productFacade,
         ProductCategoryToCategoryInterface $categoryFacade,
         ProductCategoryToTouchInterface $touchFacade,
+        CmsToCategoryInterface $cmsFacade,
         LocatorLocatorInterface $locator
     ) {
         $this->productCategoryQueryContainer = $productCategoryQueryContainer;
         $this->productFacade = $productFacade;
         $this->categoryFacade = $categoryFacade;
         $this->touchFacade = $touchFacade;
+        $this->cmsFacade = $cmsFacade;
         $this->locator = $locator;
     }
 
@@ -278,21 +287,39 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         }
     }
 
-    public function deleteCategoryDeep(CategoryTransfer $category, NodeTransfer $categoryNode, LocaleTransfer $locale)
+    public function deleteCategoryFull(CategoryTransfer $category, NodeTransfer $categoryNode, LocaleTransfer $locale)
     {
         $connection = Propel::getConnection();
         $connection->beginTransaction();
 
         //remove product mappings
-        $productsIdsToDeassign = $this->productCategoryQueryContainer
+        $assignedProducts = $this->productCategoryQueryContainer
             ->queryProductCategoryMappingsByCategoryId($category->getIdCategory())
+            ->find()
         ;
 
-        $this->removeProductCategoryMappings($category->getIdCategory(), $productsIdsToDeassign);
+        $productsToDeAssign = [];
+        foreach ($assignedProducts as $mapping) {
+            $productsToDeAssign[] = $mapping->getFkAbstractProduct();
+        }
 
-        $this->categoryFacade->deleteCategoryById($categoryNode->getIdCategoryNode(), $locale);
+        //product mappings
+        $this->removeProductCategoryMappings($category->getIdCategory(), $productsToDeAssign);
+
+        //url/path mappings
+        //update touch
+
+        //block mappings
+        //set type to static and value to 0
+
+        //product mappings
+        //update touch
+
+        $this->cmsFacade->updateBlocksAssignedToDeletedCategoryNode($categoryNode->getIdCategoryNode());
 
         $this->categoryFacade->deleteCategoryByNodeId($categoryNode->getIdCategoryNode(), $locale);
+
+        $this->categoryFacade->deleteCategoryById($category->getIdCategory());
 
         //remove paths, url, regenrate menu
 

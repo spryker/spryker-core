@@ -155,6 +155,17 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
+     * @param int $idCategory
+     */
+    public function deleteCategoryById($idCategory)
+    {
+        $this->getDependencyContainer()
+            ->createCategoryWriter()
+            ->delete($idCategory)
+        ;
+    }
+
+    /**
      * @param NodeTransfer $categoryNode
      * @param LocaleTransfer $locale
      * @param bool $createUrlPath
