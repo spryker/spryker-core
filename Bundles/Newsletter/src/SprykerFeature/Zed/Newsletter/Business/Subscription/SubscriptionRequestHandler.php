@@ -36,6 +36,11 @@ class SubscriptionRequestHandler
     protected $queryContainer;
 
     /**
+     * @var bool
+     */
+    private $subscriberExists;
+
+    /**
      * @param SubscriptionManagerInterface $subscriptionManager
      * @param SubscriberManagerInterface $subscriberManager
      * @param NewsletterQueryContainer $queryContainer
@@ -65,12 +70,12 @@ class SubscriptionRequestHandler
     ) {
         $subscriptionResponse = $this->createSubscriptionResponse();
 
-        $newsletterSubscriberTransfer = $this->getNewsletterSubscriber($newsletterSubscriptionRequest->getNewsletterSubscriber());
-
         $connection = $this->queryContainer->getConnection();
         $connection->beginTransaction();
 
         try {
+            $newsletterSubscriberTransfer = $this->getNewsletterSubscriber($newsletterSubscriptionRequest->getNewsletterSubscriber());
+
             foreach ($newsletterSubscriptionRequest->getNewsletterTypes() as $newsletterTypeTransfer) {
                 $isAlreadySubscribed = $this->subscriptionManager->isAlreadySubscribed($newsletterSubscriberTransfer, $newsletterTypeTransfer);
 
@@ -85,7 +90,9 @@ class SubscriptionRequestHandler
                 $subscriptionResponse->addSubscriptionResult($subscriptionResult);
             }
 
-            $optInHandler->optIn($newsletterSubscriberTransfer);
+            if (false === $this->subscriberExists) {
+                $optInHandler->optIn($newsletterSubscriberTransfer);
+            }
 
             $connection->commit();
         } catch (Exception $e) {
@@ -146,9 +153,11 @@ class SubscriptionRequestHandler
         }
 
         $loadedNewsletterSubscriberTransfer = $this->subscriberManager->loadSubscriberByEmail($email);
+        $this->subscriberExists = true;
 
         if (null === $loadedNewsletterSubscriberTransfer) {
             $loadedNewsletterSubscriberTransfer = $this->subscriberManager->createSubscriberFromTransfer($newsletterSubscriberTransfer);
+            $this->subscriberExists = false;
         }
 
         return $loadedNewsletterSubscriberTransfer;

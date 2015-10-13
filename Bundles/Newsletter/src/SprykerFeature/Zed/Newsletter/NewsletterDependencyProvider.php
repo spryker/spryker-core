@@ -56,9 +56,7 @@ class NewsletterDependencyProvider extends AbstractBundleDependencyProvider
      */
     protected function getDoubleOptInSenderPlugins(Container $container)
     {
-        return [
-            $container->getLocator()->newsletter()->pluginDoubleOptInSubscriptionSender(),
-        ];
+        return [];
     }
 
 }
