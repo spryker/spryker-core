@@ -16,6 +16,8 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
 {
 
     /**
+     * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
+     *
      * @param int $idTaxRate
      *
      * @return SpyAbstractProductQuery
@@ -37,6 +39,8 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
     }
 
     /**
+     * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
+     *
      * @param int $idTaxSet
      *
      * @return SpyAbstractProductQuery

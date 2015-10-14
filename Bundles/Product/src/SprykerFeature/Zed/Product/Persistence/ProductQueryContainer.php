@@ -31,6 +31,8 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
 {
 
     /**
+     * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
+     *
      * @param string $skus
      * @param LocaleTransfer $locale
      *

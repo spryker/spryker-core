@@ -22,6 +22,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
 {
 
     /**
+     * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
+     *
      * @param int $transactionId
      *
      * @return SpyPaymentPayoneTransactionStatusLogQuery
@@ -36,6 +38,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
+     *
      * @param int $transactionId
      *
      * @return Propel\SpyPaymentPayoneQuery
@@ -49,6 +53,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
+     *
      * @param int $fkPayment
      * @param string $requestName
      *
@@ -64,6 +70,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
+     *
      * @param int $orderId
      *
      * @return SpyPaymentPayoneQuery
@@ -77,6 +85,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
+     *
      * @param int $orderId
      * @param string $request
      *
@@ -97,6 +107,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
+     *
      * @param int $paymentId
      * 
      * @return SpyPaymentPayoneQuery
@@ -110,6 +122,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
+     *
      * @param int $idIdSalesOrder
      *
      * @return SpyPaymentPayoneTransactionStatusLog[]
@@ -127,6 +141,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
+     *
      * @param int $idSalesOrderItem
      * @param array $ids
      *
@@ -143,6 +159,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
+     * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
+     *
      * @param ObjectCollection $orders
      *
      * @return SpyPaymentPayoneApiLogQuery
@@ -166,24 +184,8 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
     }
 
     /**
-     * @param int $idSalesOrder
+     * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
      *
-     * @return SpyPaymentPayoneApiLogQuery
-     */
-    public function getLastApiLogsByOrderId($idSalesOrder)
-    {
-        $query = SpyPaymentPayoneApiLogQuery::create()
-            ->useSpyPaymentPayoneQuery()
-            ->filterByFkSalesOrder($idSalesOrder)
-            ->endUse()
-            ->orderByCreatedAt(Criteria::DESC)
-            ->orderByIdPaymentPayoneApiLog(Criteria::DESC)
-        ;
-
-        return $query;
-    }
-
-    /**
      * @param ObjectCollection $orders
      *
      * @return SpyPaymentPayoneTransactionStatusLogQuery
