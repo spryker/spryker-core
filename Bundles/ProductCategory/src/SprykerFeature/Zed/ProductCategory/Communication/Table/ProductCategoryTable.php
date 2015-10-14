@@ -88,7 +88,7 @@ class ProductCategoryTable extends AbstractTable
             SpyProductCategoryTableMap::COL_PRODUCT_ORDER,
             'product_order_alias'
         );
-        $query->orderBy('product_order_alias', Criteria::DESC);
+        $query->orderBy('product_order_alias', Criteria::ASC);
         $query->setModelAlias('spy_abstract_product');
 
         $queryResults = $this->runQuery($query, $config);
