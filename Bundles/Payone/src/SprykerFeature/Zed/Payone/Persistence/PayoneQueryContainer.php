@@ -158,6 +158,26 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
         return $relations;
     }
 
+
+    /**
+     * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
+     *
+     * @param int $idSalesOrder
+     *
+     * @return SpyPaymentPayoneApiLogQuery
+     */
+    public function getLastApiLogsByOrderId($idSalesOrder)
+    {
+        $query = SpyPaymentPayoneApiLogQuery::create()
+            ->useSpyPaymentPayoneQuery()
+            ->filterByFkSalesOrder($idSalesOrder)
+            ->endUse()
+            ->orderByCreatedAt(Criteria::DESC)
+            ->orderByIdPaymentPayoneApiLog(Criteria::DESC);
+
+        return $query;
+    }
+
     /**
      * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
      *
