@@ -121,4 +121,7 @@
 
 {% block footer_js %}
     {{ parent() }}
+    <script>
+        $('.spryker-form-select2combobox').select2();
+    </script>
 {% endblock %}

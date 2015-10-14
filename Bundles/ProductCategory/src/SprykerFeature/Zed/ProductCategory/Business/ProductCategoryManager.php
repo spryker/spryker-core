@@ -296,17 +296,17 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
-     * @param CategoryTransfer $category
+     * @param int $idCategory
      * @param LocaleTransfer $locale
      */
-    public function deleteCategoryFull(CategoryTransfer $category, LocaleTransfer $locale)
+    public function deleteCategoryFull($idCategory, LocaleTransfer $locale)
     {
         $connection = Propel::getConnection();
         $connection->beginTransaction();
 
         //remove product mappings
         $assignedProducts = $this->productCategoryQueryContainer
-            ->queryProductCategoryMappingsByCategoryId($category->getIdCategory())
+            ->queryProductCategoryMappingsByCategoryId($idCategory)
             ->find()
         ;
 
@@ -315,15 +315,24 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             $productsToDeAssign[] = $mapping->getFkAbstractProduct();
         }
 
-        $this->removeProductCategoryMappings($category->getIdCategory(), $productsToDeAssign);
+        $this->removeProductCategoryMappings($idCategory, $productsToDeAssign);
 
         $categoryNodes = $this->categoryQueryContainer
-            ->queryAllNodesByCategoryId($category->getIdCategory())
+            ->queryAllNodesByCategoryId($idCategory)
             ->find()
         ;
 
         foreach ($categoryNodes as $node) {
             $this->cmsFacade->updateBlocksAssignedToDeletedCategoryNode($node->getIdCategoryNode());
+
+            $children = $this->categoryQueryContainer
+                ->queryFirstLevelChildren($node->getIdCategoryNode())
+                ->find()
+            ;
+
+            foreach ($children as $child) {
+                $this->deleteCategoryFull($child->getFkCategory(), $locale);
+            }
 
             $nodeExists = $this->categoryQueryContainer
                 ->queryNodeById($node->getIdCategoryNode())
@@ -334,9 +343,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             }
         }
 
-        $this->categoryFacade->deleteCategory($category->getIdCategory());
-
-        //remove paths, url, regenrate menu
+        $this->categoryFacade->deleteCategory($idCategory);
 
         $connection->commit();
     }

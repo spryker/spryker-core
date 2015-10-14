@@ -65,7 +65,7 @@ class DeleteController extends EditController
             if ($data['delete_children']) {
                 $this->getDependencyContainer()
                     ->createProductCategoryFacade()
-                    ->deleteCategoryFull($currentCategoryTransfer, $locale)
+                    ->deleteCategoryFull($currentCategoryTransfer->getIdCategory(), $locale)
                 ;
             } else {
 

@@ -23,13 +23,21 @@ class CategoryFormDelete extends CategoryFormEdit
             ->addSelect2ComboBox(self::FK_PARENT_CATEGORY_NODE, [
                 'label' => 'Or move them to',
                 'choices' => $this->getCategories(),
-                'constraints' => [
-                    new NotBlank(),
-                ],
                 'multiple' => false,
             ])
             ->addHidden(self::PK_CATEGORY_NODE)
             ->addHidden(self::FK_NODE_CATEGORY)
         ;
+    }
+
+    /**
+     * @return array
+     */
+    protected function populateFormFields()
+    {
+        $fields = parent::populateFormFields();
+        $fields[self::FK_PARENT_CATEGORY_NODE] = null;
+
+        return $fields;
     }
 }

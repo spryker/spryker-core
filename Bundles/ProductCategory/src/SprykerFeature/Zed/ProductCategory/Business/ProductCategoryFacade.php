@@ -152,14 +152,14 @@ class ProductCategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param CategoryTransfer $category
+     * @param int $idCategory
      * @param LocaleTransfer $locale
      */
-    public function deleteCategoryFull(CategoryTransfer $category, LocaleTransfer $locale)
+    public function deleteCategoryFull($idCategory, LocaleTransfer $locale)
     {
         $this->getDependencyContainer()
             ->createProductCategoryManager()
-            ->deleteCategoryFull($category, $locale)
+            ->deleteCategoryFull($idCategory, $locale)
         ;
     }
 }
