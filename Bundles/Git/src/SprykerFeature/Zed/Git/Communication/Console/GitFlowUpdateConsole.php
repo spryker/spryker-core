@@ -51,40 +51,22 @@ class GitFlowUpdateConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-
         $from = $this->getFrom();
         $branch = $this->getBranch();
 
-        $this->info('console git:update --level=core --from=develop --branch=feature/XX-123-Your-description-here');
+        $commandList = [
+            'git checkout ' . $from,
+            'git pull --rebase',
+            'git checkout ' . $branch,
+            'git rebase develop',
+            'git push -f origin ' . $branch,
+        ];
 
-        $aborted = false;
-
-        $command = 'git checkout ' . $from;
-        if ($this->askConfirmation(sprintf('Run "%s"', $command))) {
-            $this->runProcess($command);
-            $this->info('run');
-        } else {
-            $aborted = true;
+        foreach ($commandList as $command) {
+            if ($this->askConfirmation(sprintf('Run "%s"', $command))) {
+                $this->runProcess($command);
+            }
         }
-
-
-        $this->info('end');
-//console gitflow:update --level=core --from=develop --branch=feature/XX-123-Your-description-here
-//
-//Run "git checkout develop"? y
-//... output ...
-//
-//Run "git pull --rebase"? y
-//... output ...
-//
-//Run "git checkout feature/XX-123-Your-description-here"? y
-//... output ...
-//
-//Run "git rebase develop"? y
-//... output ...
-//
-//Run "git push -f origin feature/XX-123-Your-description-here"? y
-//... output ...
     }
 
     /**
