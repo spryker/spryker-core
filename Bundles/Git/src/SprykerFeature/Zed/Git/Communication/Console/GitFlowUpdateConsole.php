@@ -10,6 +10,7 @@ use SprykerFeature\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Process;
 
 class GitFlowUpdateConsole extends Console
 {
@@ -50,11 +51,24 @@ class GitFlowUpdateConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $workingDirectory = $this->getWorkingDirectory();
+
         $from = $this->getFrom();
+        $branch = $this->getBranch();
 
         $this->info('console git:update --level=core --from=develop --branch=feature/XX-123-Your-description-here');
 
+        $aborted = false;
+
+        $command = 'git checkout ' . $from;
+        if ($this->askConfirmation(sprintf('Run "%s"', $command))) {
+            $this->runProcess($command);
+            $this->info('run');
+        } else {
+            $aborted = true;
+        }
+
+
+        $this->info('end');
 //console gitflow:update --level=core --from=develop --branch=feature/XX-123-Your-description-here
 //
 //Run "git checkout develop"? y
@@ -84,7 +98,7 @@ class GitFlowUpdateConsole extends Console
         }
 
         if ($level === self::OPTION_LEVEL_CORE) {
-            return APPLICATION_VENDOR_DIR . implode(DIRECTORY_SEPARATOR, ['spryker', 'spryker']);
+            return implode(DIRECTORY_SEPARATOR, [APPLICATION_VENDOR_DIR, 'spryker', 'spryker']);
         }
 
         throw new \InvalidArgumentException(sprintf('"%s" is not a valid level, allowed levels are "%s" and "%s"', $level, self::OPTION_LEVEL_CORE, self::OPTION_LEVEL_PROJECT));
@@ -95,16 +109,40 @@ class GitFlowUpdateConsole extends Console
      */
     private function getFrom()
     {
-        $level = $this->input->getOption(self::OPTION_LEVEL);
-        if ($level === self::OPTION_LEVEL_PROJECT) {
-            return APPLICATION_ROOT_DIR;
+        return $this->input->getOption(self::OPTION_FROM);
+    }
+
+    /**
+     * @return string
+     */
+    private function getBranch()
+    {
+        if ($this->input->hasOption(self::OPTION_BRANCH)) {
+            return $this->input->getOption(self::OPTION_BRANCH);
         }
 
-        if ($level === self::OPTION_LEVEL_CORE) {
-            return APPLICATION_VENDOR_DIR . implode(DIRECTORY_SEPARATOR, ['spryker', 'spryker']);
-        }
+        $workingDirectory = $this->getWorkingDirectory();
+        $this->info($workingDirectory);
+        $process = new Process('git rev-parse --abbrev-ref HEAD', $workingDirectory);
 
-        throw new \InvalidArgumentException(sprintf('"%s" is not a valid level, allowed levels are core and project', $level));
+        $process->run();
+
+        return trim($process->getOutput());
+    }
+
+    /**
+     * @param $command
+     *
+     * @return int
+     */
+    private function runProcess($command)
+    {
+        $workingDirectory = $this->getWorkingDirectory();
+        $process = new Process($command, $workingDirectory);
+
+        return $process->run(function ($type, $buffer) {
+            echo $buffer;
+        });
     }
 
 }
