@@ -19,9 +19,12 @@ class YvesBootstrap extends Bootstrap
      */
     private $controllerProviderExtensions = [];
 
-    public function __construct()
+    /**
+     * @param Application $application
+     */
+    public function __construct(YvesApplication $application)
     {
-        parent::__construct(new YvesApplication());
+        parent::__construct($application);
     }
 
     /**
@@ -37,16 +40,16 @@ class YvesBootstrap extends Bootstrap
     }
 
     /**
-     * @param SharedApplication $app
+     * @param SharedApplication $application
      */
-    protected function addProvidersToApp(SharedApplication $app)
+    protected function addProvidersToApp(SharedApplication $application)
     {
-        parent::addProvidersToApp($app);
+        parent::addProvidersToApp($application);
 
         foreach ($this->controllerProviderExtensions as $controllerProviderExtension) {
-            $controllerProviderCollection = $controllerProviderExtension->getControllerProvider($app);
+            $controllerProviderCollection = $controllerProviderExtension->getControllerProvider($application);
             foreach ($controllerProviderCollection as $controllerProvider) {
-                $app->mount($controllerProvider->getUrlPrefix(), $controllerProvider);
+                $application->mount($controllerProvider->getUrlPrefix(), $controllerProvider);
             }
         }
     }
