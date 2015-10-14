@@ -21,6 +21,10 @@ use SprykerFeature\Zed\Newsletter\NewsletterConfig;
 class DoubleOptInSubscriptionSender extends AbstractPlugin implements SubscriberOptInSenderInterface
 {
 
+    const STATUS = 'status';
+    const SENT = 'sent';
+    const QUEUED = 'queued';
+
     /**
      * @param NewsletterSubscriberInterface $newsletterSubscriber
      *
@@ -84,10 +88,10 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
     protected function isMailSent(array $results)
     {
         foreach ($results as $result) {
-            if (!isset($result['status'])) {
+            if (!isset($result[self::STATUS])) {
                 return false;
             }
-            if ($result['status'] !== 'sent' && $result['status'] !== 'queued') {
+            if ($result[self::STATUS] !== self::SENT && $result[self::STATUS] !== self::QUEUED) {
                 return false;
             }
         }

@@ -14,6 +14,8 @@ interface DoubleOptInHandlerInterface
 
     /**
      * @param SubscriberOptInSenderInterface $subscriberOptInSender
+     *
+     * @return DoubleOptInHandlerInterface
      */
     public function addSubscriberOptInSender(SubscriberOptInSenderInterface $subscriberOptInSender);
 

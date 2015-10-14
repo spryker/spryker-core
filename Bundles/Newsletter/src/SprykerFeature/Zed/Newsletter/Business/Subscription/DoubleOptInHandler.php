@@ -22,10 +22,14 @@ class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
 
     /**
      * @param SubscriberOptInSenderInterface $subscriberOptInSender
+     *
+     * @return DoubleOptInHandlerInterface
      */
     public function addSubscriberOptInSender(SubscriberOptInSenderInterface $subscriberOptInSender)
     {
         $this->subscriberOptInSenders[] = $subscriberOptInSender;
+
+        return $this;
     }
 
     /**

@@ -12,6 +12,7 @@ use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriberKeyGeneratorIn
 use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriberManagerInterface;
 use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriberOptInHandlerInterface;
 use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriptionManagerInterface;
+use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriptionRequestHandler;
 use SprykerFeature\Zed\Newsletter\NewsletterConfig;
 use SprykerFeature\Zed\Newsletter\NewsletterDependencyProvider;
 use SprykerFeature\Zed\Newsletter\Persistence\NewsletterQueryContainer;
@@ -26,7 +27,7 @@ class NewsletterDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**
-     * @return \SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriptionRequestHandler
+     * @return SubscriptionRequestHandler
      */
     public function createSubscriptionRequestHandler()
     {

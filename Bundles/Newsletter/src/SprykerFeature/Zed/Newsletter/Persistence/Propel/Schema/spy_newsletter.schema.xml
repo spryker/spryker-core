@@ -3,8 +3,8 @@
 
     <table name="spy_newsletter_subscriber" idMethod="native" identifierQuoting="true">
         <column name="id_newsletter_subscriber" primaryKey="true" autoIncrement="true" type="INTEGER"/>
-        <column name="email" type="VARCHAR" size="255" required="true"/>
         <column name="fk_customer" type="INTEGER"/>
+        <column name="email" type="VARCHAR" size="255" required="true"/>
         <column name="subscriber_key" type="VARCHAR" size="150"/>
         <column name="is_confirmed" type="BOOLEAN" required="true" default="false"/>
 

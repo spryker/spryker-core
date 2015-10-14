@@ -5,8 +5,8 @@
 
     <transfer name="NewsletterSubscriber">
         <property name="idNewsletterSubscriber" type="int" />
+        <property name="fkCustomer" type="int" />
         <property name="email" type="string" />
-        <property name="idCustomer" type="int" />
         <property name="subscriberKey" type="string" />
         <property name="isConfirmed" type="bool" />
     </transfer>

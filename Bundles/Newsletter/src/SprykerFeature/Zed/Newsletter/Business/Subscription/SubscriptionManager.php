@@ -1,4 +1,5 @@
 <?php
+
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
@@ -13,6 +14,7 @@ use SprykerFeature\Zed\Newsletter\Persistence\Propel\SpyNewsletterSubscription;
 
 class SubscriptionManager implements SubscriptionManagerInterface
 {
+
     /**
      * @var NewsletterQueryContainer
      */
@@ -65,6 +67,7 @@ class SubscriptionManager implements SubscriptionManagerInterface
 
         if (null !== $subscriptionEntity) {
             $subscriptionEntity->delete();
+
             return true;
         }
 
@@ -113,9 +116,9 @@ class SubscriptionManager implements SubscriptionManagerInterface
             return $subscriptionEntity;
         }
 
-        if (null !== $newsletterSubscriber->getIdCustomer()) {
+        if (null !== $newsletterSubscriber->getFkCustomer()) {
             $subscriptionEntity = $this->queryContainer
-                ->querySubscriptionByIdCustomerAndNewsletterTypeName($newsletterSubscriber->getIdCustomer(), $newsletterType->getName())
+                ->querySubscriptionByIdCustomerAndNewsletterTypeName($newsletterSubscriber->getFkCustomer(), $newsletterType->getName())
                 ->findOne()
             ;
 
@@ -124,4 +127,5 @@ class SubscriptionManager implements SubscriptionManagerInterface
 
         return null;
     }
+
 }

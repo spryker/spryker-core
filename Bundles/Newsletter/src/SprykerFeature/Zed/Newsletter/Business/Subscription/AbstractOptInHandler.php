@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Newsletter\Business\Subscription;
 
 use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
 use SprykerFeature\Zed\Newsletter\Persistence\NewsletterQueryContainer;
+use SprykerFeature\Zed\Newsletter\Persistence\Propel\SpyNewsletterSubscriber;
 
 abstract class AbstractOptInHandler
 {
@@ -40,7 +41,7 @@ abstract class AbstractOptInHandler
     /**
      * @param NewsletterSubscriberInterface $subscriberTransfer
      *
-     * @return \SprykerFeature\Zed\Newsletter\Persistence\Propel\SpyNewsletterSubscriber
+     * @return SpyNewsletterSubscriber
      */
     protected function findSubscriberEntity(NewsletterSubscriberInterface $subscriberTransfer)
     {
