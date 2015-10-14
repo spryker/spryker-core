@@ -77,7 +77,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     /**
      * @param array|string[] $couponCodes
      *
-     * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountQuery
+     * @return SpyDiscountQuery
      */
     public function queryCartRulesIncludingSpecifiedVouchers(array $couponCodes = [])
     {
@@ -89,6 +89,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
                 ->endUse()
             ->endUse()
             ->_or()
+            ->filterByIsActive(true)
             ->filterByFkDiscountVoucherPool(null);
     }
 
