@@ -17,6 +17,7 @@ use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\Communication\Form\CartRuleType;
 use SprykerFeature\Zed\Discount\Communication\Form\DecisionRuleType;
+use SprykerFeature\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
 use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\DiscountDependencyProvider;
 use SprykerFeature\Zed\Discount\Communication\Table\DiscountVoucherTable;
@@ -79,6 +80,17 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
         $discountQuery = $this->getQueryContainer()->queryDiscount();
 
         return $this->getFactory()->createTableDiscountsTable($discountQuery);
+    }
+
+    /**
+     * @param int $idPool
+     * @param int $batchValue
+     *
+     * @return DiscountVoucherCodesTable
+     */
+    public function createDiscountVoucherCodesTable($idPool, $batchValue)
+    {
+        return $this->getFactory()->createTableDiscountVoucherCodesTable($this->getQueryContainer(), $idPool, $batchValue);
     }
 
     /**

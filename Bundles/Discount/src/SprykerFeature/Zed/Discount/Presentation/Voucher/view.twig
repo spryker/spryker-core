@@ -32,4 +32,20 @@
 
     {% endembed %}
 
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Generated Codes' } %}
+
+        {% block widget_header_content %}
+            {% if batchValue is not null %}
+            {{ viewActionButton('/discount/voucher/export?id-pool=' ~ idPool ~ '&batch=' ~ batchValue, 'Export Generated Codes' | trans) }}
+            {% endif %}
+        {% endblock %}
+
+        {% block widget_content %}
+
+            {{ generatedCodes | raw }}
+
+        {% endblock %}
+
+    {% endembed %}
+
 {% endblock %}
