@@ -323,25 +323,30 @@ class Bootstrap
     }
 
     /**
-     * @param Application$application
+     * @param Application $application
+     *
+     * @throws \Exception
+     * @return null
      */
     private function addProtocolCheck(Application $application)
     {
-        if (Config::get(YvesConfig::YVES_SSL_ENABLED) && Config::get(YvesConfig::YVES_COMPLETE_SSL_ENABLED)) {
-            $application->before(
-                function (Request $request) {
-                    if (!$request->isSecure()
-                        && !in_array($request->getPathInfo(), Config::get(YvesConfig::YVES_SSL_EXCLUDED))
-                    ) {
-                        $fakeRequest = clone $request;
-                        $fakeRequest->server->set('HTTPS', true);
-
-                        return new RedirectResponse($fakeRequest->getUri(), 301);
-                    }
-                },
-                255
-            );
+        if (!Config::get(YvesConfig::YVES_SSL_ENABLED) || !Config::get(YvesConfig::YVES_COMPLETE_SSL_ENABLED)) {
+            return null;
         }
+
+        $application->before(
+            function (Request $request) {
+                if (!$request->isSecure()
+                    && !in_array($request->getPathInfo(), Config::get(YvesConfig::YVES_SSL_EXCLUDED))
+                ) {
+                    $fakeRequest = clone $request;
+                    $fakeRequest->server->set('HTTPS', true);
+
+                    return new RedirectResponse($fakeRequest->getUri(), 301);
+                }
+            },
+            255
+        );
     }
 
 }
