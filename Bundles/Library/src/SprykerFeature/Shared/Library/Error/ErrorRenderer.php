@@ -49,14 +49,19 @@ class ErrorRenderer
      */
     protected static function renderForCli(\Exception $e)
     {
-        $uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : 'n/a';
+
+        if(isset($_SERVER['argv']) && is_array($_SERVER['argv'])){
+            $uri = implode(' ', $_SERVER['argv']);
+        }else{
+            $uri = 'n/a';
+        }
 
         $message = get_class($e) . ' - ' . $e->getMessage();
         $string = PHP_EOL . APPLICATION . ' Exception: ' . $message . PHP_EOL;
 
         $string .= 'in ' . $e->getFile() . ' (' . $e->getLine() . ')';
         $string .= PHP_EOL . PHP_EOL;
-        $string .= 'Url: ' . $uri;
+        $string .= 'Cli: ' . $uri;
         $string .= PHP_EOL . PHP_EOL;
         $string .= 'Trace:' . PHP_EOL;
         $string .= $e->getTraceAsString() . PHP_EOL;
@@ -76,11 +81,19 @@ class ErrorRenderer
      */
     public static function renderException(\Exception $e)
     {
-        if (defined('IS_CLI') && IS_CLI === true) {
+        if (self::isCliCall()) {
             return self::renderForCli($e);
         }
 
         return self::renderForWeb($e);
+    }
+
+    /**
+     * @return bool
+     */
+    protected static function isCliCall()
+    {
+        return defined('IS_CLI') && IS_CLI === true;
     }
 
 }

@@ -23,9 +23,11 @@ class ConsoleBootstrap extends Application
      */
     public function __construct($name = 'Spryker', $version = '1')
     {
+        define('IS_CLI', true);
         Environment::initialize();
 
         parent::__construct($name, $version);
+        $this->setCatchExceptions(false);
     }
 
     /**
