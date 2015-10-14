@@ -6,22 +6,42 @@
 
 namespace SprykerEngine\Zed\Application\Communication;
 
-use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerEngine\Zed\Kernel\Locator;
+use SprykerEngine\Zed\Application\Communication\Bootstrap\Extension\AfterBootExtension;
+use SprykerEngine\Zed\Application\Communication\Bootstrap\Extension\BeforeBootExtension;
+use SprykerEngine\Zed\Application\Communication\Bootstrap\Extension\GlobalTemplateVariablesExtension;
 use SprykerEngine\Shared\Application\Communication\Application;
 use SprykerEngine\Shared\Application\Communication\Bootstrap;
-use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Library\DataDirectory;
-use SprykerFeature\Shared\Library\Environment;
-use SprykerFeature\Shared\System\SystemConfig;
+use SprykerEngine\Zed\Application\Communication\Bootstrap\Extension\RouterExtension;
+use SprykerEngine\Zed\Application\Communication\Bootstrap\Extension\ServiceProviderExtension;
 use SprykerFeature\Zed\Application\Communication\Plugin\Pimple;
-use SprykerFeature\Zed\Kernel\Communication\Plugin\GatewayServiceProviderPlugin;
-use SprykerFeature\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvider;
-use Symfony\Component\HttpFoundation\Request;
 
-abstract class ZedBootstrap extends Bootstrap
+class ZedBootstrap extends Bootstrap
 {
+
+    public function __construct()
+    {
+        parent::__construct($this->getBaseApplication());
+
+        $this->addBeforeBootExtension(
+            $this->getBeforeBootExtension()
+        );
+
+        $this->addAfterBootExtension(
+            $this->getAfterBootExtension()
+        );
+
+        $this->addServiceProviderExtension(
+            $this->getServiceProviderExtension()
+        );
+
+        $this->addRouterExtension(
+            $this->getRouterExtension()
+        );
+
+        $this->addGlobalTemplateVariableExtension(
+            $this->getGlobalTemplateVariablesExtension()
+        );
+    }
 
     /**
      * @return Application
@@ -36,85 +56,43 @@ abstract class ZedBootstrap extends Bootstrap
     }
 
     /**
-     * @param Application $app
+     * @return BeforeBootExtension
      */
-    protected function beforeBoot(Application $app)
+    protected function getBeforeBootExtension()
     {
-        $app['locale'] = Store::getInstance()->getCurrentLocale();
-        if (Environment::isDevelopment()) {
-            $app['profiler.cache_dir'] = DataDirectory::getLocalStoreSpecificPath('cache/profiler');
-        }
+        return new BeforeBootExtension();
     }
 
     /**
-     * @param Application $app
+     * @return AfterBootExtension
      */
-    protected function afterBoot(Application $app)
+    protected function getAfterBootExtension()
     {
-        $app['monolog.level'] = Config::get(SystemConfig::LOG_LEVEL);
+        return new AfterBootExtension();
     }
 
     /**
-     * @return AutoCompletion
+     * @return ServiceProviderExtension
      */
-    protected function getLocator()
+    protected function getServiceProviderExtension()
     {
-        return Locator::getInstance();
+        return new ServiceProviderExtension();
     }
 
     /**
-     * @return GatewayServiceProviderPlugin
+     * @return RouterExtension
      */
-    protected function getGatewayServiceProvider()
+    protected function getRouterExtension()
     {
-        $locator = $this->getLocator();
-        $controllerListener = $locator->kernel()->pluginGatewayControllerListenerPlugin();
-        $serviceProvider = $locator->kernel()->pluginGatewayServiceProviderPlugin();
-        $serviceProvider->setControllerListener($controllerListener);
-
-        return $serviceProvider;
+        return new RouterExtension();
     }
 
     /**
-     * @return SessionServiceProvider
+     * @return GlobalTemplateVariablesExtension
      */
-    protected function getSessionServiceProvider()
+    protected function getGlobalTemplateVariablesExtension()
     {
-        $sessionServiceProvider = $this->getLocator()->session()->pluginServiceProviderSessionServiceProvider();
-        $sessionServiceProvider->setClient(
-            $this->getLocator()->session()->client()
-        );
-
-        return $sessionServiceProvider;
-    }
-
-    /**
-     * @return string
-     */
-    protected function getNavigation()
-    {
-        $request = Request::createFromGlobals();
-
-        return $this->getLocator()
-            ->application()
-            ->pluginNavigation()
-            ->buildNavigation($request->getPathInfo());
-    }
-
-    /**
-     * @return string
-     */
-    protected function getUsername()
-    {
-        $username = '';
-
-        $userFacade = $this->getLocator()->user()->facade();
-        if ($userFacade->hasCurrentUser()) {
-            $user = $userFacade->getCurrentUser();
-            $username = sprintf('%s %s', $user->getFirstName(), $user->getLastName());
-        }
-
-        return $username;
+        return new GlobalTemplateVariablesExtension();
     }
 
 }

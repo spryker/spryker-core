@@ -6,32 +6,34 @@
 
 namespace SprykerEngine\Yves\Application\Communication;
 
-use Generated\Yves\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\Store;
-use SprykerEngine\Yves\Application\Communication\Plugin\ControllerProviderInterface;
-use SprykerEngine\Yves\Kernel\Locator;
 use SprykerEngine\Shared\Application\Communication\Application as SharedApplication;
 use SprykerEngine\Yves\Application\Communication\Application as YvesApplication;
 use SprykerEngine\Shared\Application\Communication\Bootstrap;
-use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\System\SystemConfig;
-use SprykerFeature\Shared\Yves\YvesConfig;
-use Symfony\Component\HttpFoundation\Request;
+use SprykerEngine\Yves\Application\Communication\Bootstrap\Extension\ControllerProviderExtensionInterface;
 
-abstract class YvesBootstrap extends Bootstrap
+class YvesBootstrap extends Bootstrap
 {
 
     /**
-     * @return ControllerProviderInterface[]
+     * @var ControllerProviderExtensionInterface[]
      */
-    abstract protected function getControllerProviders();
+    private $controllerProviderExtensions = [];
+
+    public function __construct()
+    {
+        parent::__construct(new YvesApplication());
+    }
 
     /**
-     * @return SharedApplication|YvesApplication
+     * @param ControllerProviderExtensionInterface $controllerProviderExtension
+     *
+     * @return $this
      */
-    protected function getBaseApplication()
+    public function addControllerProviderExtension(ControllerProviderExtensionInterface $controllerProviderExtension)
     {
-        return new YvesApplication();
+        $this->controllerProviderExtensions[] = $controllerProviderExtension;
+
+        return $this;
     }
 
     /**
@@ -41,63 +43,12 @@ abstract class YvesBootstrap extends Bootstrap
     {
         parent::addProvidersToApp($app);
 
-        foreach ($this->getControllerProviders() as $provider) {
-            $app->mount($provider->getUrlPrefix(), $provider);
+        foreach ($this->controllerProviderExtensions as $controllerProviderExtension) {
+            $controllerProviderCollection = $controllerProviderExtension->getControllerProvider($app);
+            foreach ($controllerProviderCollection as $controllerProvider) {
+                $app->mount($controllerProvider->getUrlPrefix(), $controllerProvider);
+            }
         }
-    }
-
-    /**
-     * @param SharedApplication $app
-     *
-     * @return \Twig_Extension[]
-     */
-    protected function getTwigExtensions(SharedApplication $app)
-    {
-        $yvesExtension = $this->getLocator()->twig()->pluginTwigYves();
-
-        return [
-            $yvesExtension->getTwigYvesExtension($app),
-        ];
-    }
-
-    /**
-     * @param SharedApplication $app
-     *
-     * @return array
-     */
-    protected function globalTemplateVariables(SharedApplication $app)
-    {
-        return parent::globalTemplateVariables($app);
-    }
-
-    /**
-     * @return AutoCompletion
-     */
-    protected function getLocator()
-    {
-        return Locator::getInstance();
-    }
-
-    /**
-     * @param SharedApplication $app
-     */
-    protected function beforeBoot(SharedApplication $app)
-    {
-        $app['locale'] = Store::getInstance()->getCurrentLocale();
-        if (\SprykerFeature_Shared_Library_Environment::isDevelopment()) {
-            $app['profiler.cache_dir'] = \SprykerFeature_Shared_Library_Data::getLocalStoreSpecificPath('cache/profiler');
-        }
-        $proxies = Config::get(YvesConfig::YVES_TRUSTED_PROXIES);
-
-        Request::setTrustedProxies($proxies);
-    }
-
-    /**
-     * @param SharedApplication $app
-     */
-    protected function afterBoot(SharedApplication $app)
-    {
-        $app['monolog.level'] = Config::get(SystemConfig::LOG_LEVEL);
     }
 
 }
