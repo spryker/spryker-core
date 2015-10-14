@@ -99,10 +99,10 @@ class GitFlowUpdateConsole extends Console
      */
     private function getBranch()
     {
-        if ($this->input->hasOption(self::OPTION_BRANCH)) {
+        if ($this->input->getOption(self::OPTION_BRANCH)) {
             return $this->input->getOption(self::OPTION_BRANCH);
         }
-
+        
         $workingDirectory = $this->getWorkingDirectory();
         $this->info($workingDirectory);
         $process = new Process('git rev-parse --abbrev-ref HEAD', $workingDirectory);
