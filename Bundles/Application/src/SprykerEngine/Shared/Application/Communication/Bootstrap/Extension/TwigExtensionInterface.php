@@ -13,8 +13,8 @@ interface TwigExtensionInterface
 {
 
     /**
-     * @param Application $app
+     * @param Application $application
      */
-    public function getTwigExtensions(Application $app);
+    public function getTwigExtensions(Application $application);
 
 }

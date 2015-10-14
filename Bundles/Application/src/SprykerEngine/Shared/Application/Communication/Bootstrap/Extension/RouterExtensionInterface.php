@@ -13,10 +13,10 @@ interface RouterExtensionInterface
 {
 
     /**
-     * @param Application $app
+     * @param Application $application
      *
      * @return RouterInterface[]
      */
-    public function getRouter(Application $app);
+    public function getRouter(Application $application);
 
 }

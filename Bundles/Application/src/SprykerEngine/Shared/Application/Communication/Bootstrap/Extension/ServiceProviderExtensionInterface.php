@@ -13,8 +13,8 @@ interface ServiceProviderExtensionInterface
 {
 
     /**
-     * @param Application $app
+     * @param Application $application
      */
-    public function getServiceProvider(Application $app);
+    public function getServiceProvider(Application $application);
 
 }

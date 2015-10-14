@@ -13,8 +13,8 @@ interface AfterBootExtensionInterface
 {
 
     /**
-     * @param Application $app
+     * @param Application $application
      */
-    public function afterBoot(Application $app);
+    public function afterBoot(Application $application);
 
 }

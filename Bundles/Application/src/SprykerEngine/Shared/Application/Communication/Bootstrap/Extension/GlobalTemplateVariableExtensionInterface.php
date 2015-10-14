@@ -13,8 +13,8 @@ interface GlobalTemplateVariableExtensionInterface
 {
 
     /**
-     * @param Application $app
+     * @param Application $application
      */
-    public function getGlobalTemplateVariables(Application $app);
+    public function getGlobalTemplateVariables(Application $application);
 
 }

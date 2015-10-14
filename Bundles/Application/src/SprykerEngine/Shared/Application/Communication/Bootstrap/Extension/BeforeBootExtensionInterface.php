@@ -13,8 +13,8 @@ interface BeforeBootExtensionInterface
 {
 
     /**
-     * @param Application $app
+     * @param Application $application
      */
-    public function beforeBoot(Application $app);
+    public function beforeBoot(Application $application);
 
 }
