@@ -63,7 +63,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     {
         return $this->getDependencyContainer()
             ->createProductCategoryQuery()
-            ->filterByIdProductCategory($idCategory)
+            ->filterByFkCategory($idCategory)
         ;
     }
 
