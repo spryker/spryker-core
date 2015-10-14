@@ -45,6 +45,7 @@ class IndexController extends AbstractController
 
         $format = $request->query->get('format');
         $fontsize = $request->query->get('font');
+        $highlightState = $request->query->get('state');
 
         $reload = false;
         if (is_null($format)) {
@@ -60,7 +61,7 @@ class IndexController extends AbstractController
             return $this->redirectResponse('/oms/index/draw?process=' . $processName . '&format=' . $format . '&font=' . $fontsize);
         }
 
-        $response = $this->getFacade()->drawProcess($processName, null, $format, $fontsize);
+        $response = $this->getFacade()->drawProcess($processName, $highlightState, $format, $fontsize);
 
         $callback = function () use ($response) {
             echo $response;

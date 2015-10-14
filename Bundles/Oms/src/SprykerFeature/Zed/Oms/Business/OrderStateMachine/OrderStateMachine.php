@@ -108,18 +108,17 @@ class OrderStateMachine implements OrderStateMachineInterface
         $this->activeProcesses = $activeProcesses;
         $this->conditions = $conditions;
         $this->commands = $commands;
-        $this->factory = $factory;
+        $this->factory = $factory; // TODO remove
     }
 
     /**
      * @param string $eventId
      * @param SpySalesOrderItem[] $orderItems
      * @param array $data
-     * @param array $logContext
      *
      * @return array
      */
-    public function triggerEvent($eventId, array $orderItems, $data, array $logContext = [])
+    public function triggerEvent($eventId, array $orderItems, $data)
     {
         assert('is_string($eventId)');
         assert('count($orderItems) > 0');
@@ -134,13 +133,14 @@ class OrderStateMachine implements OrderStateMachineInterface
 
         $orderItems = $this->filterAffectedOrderItems($eventId, $orderItems, $processes);
 
-        $log = clone $this->transitionLog;
-
-        $log->addItems($orderItems);
+        $log = $this->initTransitionLog($orderItems);
+        //$log->addItems($orderItems);
 
         $orderGroup = $this->groupByOrderAndState($eventId, $orderItems, $processes);
         $sourceStateBuffer = [];
         foreach ($orderGroup as $groupedOrderItems) {
+            $this->logSourceState($groupedOrderItems, $log);
+
             $this->runCommand($eventId, $groupedOrderItems, $processes, $data, $log);
             $sourceStateBuffer = $this->updateStateByEvent($eventId, $groupedOrderItems, $sourceStateBuffer, $log);
             $this->saveOrderItems($groupedOrderItems, $log, $processes, $sourceStateBuffer);
@@ -150,7 +150,7 @@ class OrderStateMachine implements OrderStateMachineInterface
 
         $log->saveAll();
 
-        $this->triggerOnEnterEvents($orderItemsWithOnEnterEvent, $data, $logContext);
+        $this->triggerOnEnterEvents($orderItemsWithOnEnterEvent, $data);
 
         return $this->returnData;
     }
@@ -162,7 +162,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      *
      * @return array
      */
-    public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data)
+    public function triggerEventForOrderItems($eventId, array $orderItemIds, $data)
     {
         $orderItems = $this->queryContainer
             ->querySalesOrderItems($orderItemIds)
@@ -179,7 +179,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      *
      * @return array
      */
-    public function triggerEventForOneOrderItem($eventId, $orderItemId, array $data)
+    public function triggerEventForOneOrderItem($eventId, $orderItemId, $data)
     {
         $orderItems = $this->queryContainer
             ->querySalesOrderItems([$orderItemId])
@@ -192,17 +192,16 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * @param SpySalesOrderItem[] $orderItems
      * @param array $data
-     * @param array $logContext
      *
      * @return array
      */
-    public function triggerEventForNewItem(array $orderItems, array $data, array $logContext = [])
+    public function triggerEventForNewItem(array $orderItems, $data)
     {
         $data = $this->makeDataReadOnly($data);
         $sourceStateBuffer = [];
         $processes = $this->getProcesses($orderItems);
         $orderItemsWithOnEnterEvent = $this->filterItemsWithOnEnterEvent($orderItems, $processes, $sourceStateBuffer);
-        $this->triggerOnEnterEvents($orderItemsWithOnEnterEvent, $data, $logContext);
+        $this->triggerOnEnterEvents($orderItemsWithOnEnterEvent, $data);
 
         return $this->returnData;
     }
@@ -213,7 +212,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      *
      * @return array
      */
-    public function triggerEventForNewOrderItems(array $orderItemIds, array $data)
+    public function triggerEventForNewOrderItems(array $orderItemIds, $data)
     {
         $orderItems = $this->queryContainer
             ->querySalesOrderItems($orderItemIds)
@@ -234,7 +233,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         foreach ($this->activeProcesses as $processName) {
             $process = $this->builder->createProcess($processName);
             $orderStateMachine = clone $this;
-            $affectedOrderItems += $orderStateMachine->checkConditionsForProcess($process, $logContext);
+            $affectedOrderItems += $orderStateMachine->checkConditionsForProcess($process);
         }
 
         return $affectedOrderItems;
@@ -242,11 +241,10 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param ProcessInterface $process
-     * @param array $logContext
-     *
+     * 
      * @return int
      */
-    protected function checkConditionsForProcess(ProcessInterface $process, array $logContext = [])
+    protected function checkConditionsForProcess(ProcessInterface $process)
     {
         $transitions = $process->getAllTransitionsWithoutEvent();
 
@@ -260,9 +258,7 @@ class OrderStateMachine implements OrderStateMachineInterface
             return 0;
         }
 
-        $log = clone $this->transitionLog;
-
-        $log->addItems($orderItems);
+        $log = $this->initTransitionLog($orderItems);
 
         $sourceStateBuffer = $this->updateStateByTransition($stateToTransitionsMap, $orderItems, [], $log);
 
@@ -374,7 +370,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * @param string $eventId
      * @param SpySalesOrderItem[] $orderItems
-     * @param Process[] $processes
+     * @param ProcessInterface[] $processes
      *
      * @return array
      */
@@ -490,13 +486,13 @@ class OrderStateMachine implements OrderStateMachineInterface
             $process = $this->builder->createProcess($orderItem->getProcess()->getName());
             $sourceState = $process->getStateFromAllProcesses($stateId);
 
-            $log->addSourceState($orderItem, $sourceState);
+            //$log->addSourceState($orderItem, $sourceState->getName());
 
             $targetState = $sourceState;
             if (isset($eventId) && $sourceState->hasEvent($eventId)) {
                 $transitions = $sourceState->getEvent($eventId)->getTransitionsBySource($sourceState);
                 $targetState = $this->checkCondition($transitions, $orderItem, $sourceState, $log);
-                $log->addTargetState($orderItem, $targetState);
+                $log->addTargetState($orderItem, $targetState->getName());
             }
 
             $targetStateMap[$i] = $targetState->getName();
@@ -529,7 +525,7 @@ class OrderStateMachine implements OrderStateMachineInterface
             $process = $this->builder->createProcess($orderItem->getProcess()->getName());
             $sourceState = $process->getStateFromAllProcesses($stateId);
 
-            $log->addSourceState($orderItem, $sourceState);
+            $log->addSourceState($orderItem, $sourceState->getName());
 
             $transitions = $stateToTransitionsMap[$orderItem->getState()->getName()];
 
@@ -538,7 +534,7 @@ class OrderStateMachine implements OrderStateMachineInterface
                 $targetState = $this->checkCondition($transitions, $orderItem, $sourceState, $log);
             }
 
-            $log->addTargetState($orderItem, $targetState);
+            $log->addTargetState($orderItem, $targetState->getName());
 
             $targetStateMap[$i] = $targetState->getName();
         }
@@ -572,7 +568,7 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param SpySalesOrderItem[] $orderItems
-     * @param array $processes
+     * @param ProcessInterface[] $processes
      * @param array $sourceStateBuffer
      *
      * @throws LogicException
@@ -621,7 +617,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     protected function makeDataReadOnly($data)
     {
         if (is_array($data)) {
-            $data = $this->factory->createUtilReadOnlyArrayObject($data);
+            $data = $this->factory->createUtilReadOnlyArrayObject($data); // TODO use dependency injection
 
             return $data;
         }
@@ -719,6 +715,7 @@ class OrderStateMachine implements OrderStateMachineInterface
             }
 
             if ($orderItem->isModified()) {
+                Log::log($orderItem->toArray(), 'orderitems.log');
                 $orderItem->save();
                 $log->save($orderItem);
             }
@@ -755,6 +752,30 @@ class OrderStateMachine implements OrderStateMachineInterface
         }
 
         return $this->conditions[$conditionString];
+    }
+
+    /**
+     * @param SpySalesOrderItem[] $orderItems
+     * @return TransitionLogInterface
+     */
+    protected function initTransitionLog(array $orderItems)
+    {
+        $log = clone $this->transitionLog;
+
+        $log->init($orderItems);
+        return $log;
+    }
+
+    /**
+     * @param SpySalesOrderItem[] $orderItems
+     * @param TransitionLogInterface $log
+     */
+    protected function logSourceState($orderItems, TransitionLogInterface $log)
+    {
+        foreach ($orderItems as $orderItem) {
+            $stateName = $orderItem->getState()->getName();
+            $log->addSourceState($orderItem, $stateName);
+        }
     }
 
 }

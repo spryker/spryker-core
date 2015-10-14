@@ -23,9 +23,9 @@ interface TransitionLogInterface
     public function setEvent(EventInterface $event);
 
     /**
-     * @param SpySalesOrderItem[] $items
+     * @param SpySalesOrderItem[] $salesOrderItems
      */
-    public function addItems(array $items);
+    public function init(array $salesOrderItems);
 
     /**
      * @param SpySalesOrderItem $item
@@ -41,15 +41,15 @@ interface TransitionLogInterface
 
     /**
      * @param SpySalesOrderItem $item
-     * @param StateInterface $state
+     * @param string $stateName
      */
-    public function addSourceState(SpySalesOrderItem $item, StateInterface $state);
+    public function addSourceState(SpySalesOrderItem $item, $stateName);
 
     /**
      * @param SpySalesOrderItem $item
-     * @param StateInterface $state
+     * @param string $stateName
      */
-    public function addTargetState(SpySalesOrderItem $item, StateInterface $state);
+    public function addTargetState(SpySalesOrderItem $item, $stateName);
 
     /**
      * @param bool $error
@@ -57,14 +57,15 @@ interface TransitionLogInterface
     public function setError($error);
 
     /**
+     * @param SpySalesOrderItem $salesOrderItem
+     * @return void
+     */
+    public function save(SpySalesOrderItem $salesOrderItem);
+
+    /**
      * @param string $errorMessage
      */
     public function setErrorMessage($errorMessage);
-
-    /**
-     * @param SpySalesOrderItem $orderItem
-     */
-    public function save(SpySalesOrderItem $orderItem);
 
     /**
      */

@@ -23,47 +23,12 @@ class TransitionLog implements TransitionLogInterface
     /**
      * @var array
      */
-    protected $logItems = [];
+    private $logItems = [];
 
     /**
      * @var SpySalesOrderItem[]
      */
-    protected $items = [];
-
-    /**
-     * @var EventInterface
-     */
-    protected $event;
-
-    /**
-     * @var CommandInterface[]
-     */
-    protected $commands = [];
-
-    /**
-     * @var ConditionInterface[]
-     */
-    protected $conditions = [];
-
-    /**
-     * @var StateInterface[]
-     */
-    protected $sources = [];
-
-    /**
-     * @var StateInterface[]
-     */
-    protected $targets = [];
-
-    /**
-     * @var bool
-     */
-    protected $error = false;
-
-    /**
-     * @var string
-     */
-    protected $errorMessage;
+    private $items = [];
 
     /**
      * @var OmsQueryContainerInterface
@@ -74,6 +39,13 @@ class TransitionLog implements TransitionLogInterface
      * @var array
      */
     protected $logContext;
+
+
+    /**
+     * @var SpyOmsTransitionLog[]
+     */
+    protected $logEntities;
+
 
     /**
      * @param OmsQueryContainerInterface $queryContainer
@@ -90,15 +62,29 @@ class TransitionLog implements TransitionLogInterface
      */
     public function setEvent(EventInterface $event)
     {
-        $this->event = $event;
+        $nameEvent = $event->getName();
+
+        if ($event->isOnEnter()) {
+            $nameEvent .= ' (on enter)';
+        }
+
+        foreach($this->logEntities as $logEntity){
+            $logEntity->setEvent($nameEvent);
+        }
     }
 
     /**
-     * @param SpySalesOrderItem[] $items
+     * TODO rename to init
+     * @param SpySalesOrderItem[] $salesOrderItems
      */
-    public function addItems(array $items)
+    public function init(array $salesOrderItems)
     {
-        $this->items = $items;
+        $this->logEntities = [];
+
+        foreach($salesOrderItems as $salesOrderItem){
+            $logEntity = $this->initEntity($salesOrderItem);
+            $this->logEntities[$salesOrderItem->getIdSalesOrderItem()] = $logEntity;
+        }
     }
 
     /**
@@ -107,7 +93,7 @@ class TransitionLog implements TransitionLogInterface
      */
     public function addCommand(SpySalesOrderItem $item, CommandInterface $command)
     {
-        $this->commands[$item->getIdSalesOrderItem()] = $command;
+        $this->logEntities[$item->getIdSalesOrderItem()]->addCommand(get_class($command));
     }
 
     /**
@@ -116,25 +102,25 @@ class TransitionLog implements TransitionLogInterface
      */
     public function addCondition(SpySalesOrderItem $item, ConditionInterface $condition)
     {
-        $this->conditions[$item->getIdSalesOrderItem()] = $condition;
+        $this->logEntities[$item->getIdSalesOrderItem()]->addCondition(get_class($condition));
     }
 
     /**
      * @param SpySalesOrderItem $item
-     * @param StateInterface $state
+     * @param string $stateName
      */
-    public function addSourceState(SpySalesOrderItem $item, StateInterface $state)
+    public function addSourceState(SpySalesOrderItem $item, $stateName)
     {
-        $this->sources[$item->getIdSalesOrderItem()] = $state;
+        $this->logEntities[$item->getIdSalesOrderItem()]->setSourceState($stateName);
     }
 
     /**
      * @param SpySalesOrderItem $item
-     * @param StateInterface $state
+     * @param string $stateName
      */
-    public function addTargetState(SpySalesOrderItem $item, StateInterface $state)
+    public function addTargetState(SpySalesOrderItem $item, $stateName)
     {
-        $this->targets[$item->getIdSalesOrderItem()] = $state;
+        $this->logEntities[$item->getIdSalesOrderItem()]->setTargetState($stateName);
     }
 
     /**
@@ -142,7 +128,9 @@ class TransitionLog implements TransitionLogInterface
      */
     public function setError($error)
     {
-        $this->error = $error;
+        foreach($this->logEntities as $logEntity){
+            $logEntity->setError($error);
+        }
     }
 
     /**
@@ -150,88 +138,37 @@ class TransitionLog implements TransitionLogInterface
      */
     public function setErrorMessage($errorMessage)
     {
-        $this->errorMessage = $errorMessage;
+            foreach($this->logEntities as $logEntity){
+                $logEntity->setErrorMessage($errorMessage);
+            }
     }
 
-    /**
-     * @param SpySalesOrderItem $orderItem
-     */
-    public function save(SpySalesOrderItem $orderItem)
-    {
-        $logItem = $this->getEntity();
-        $this->logItems[] = $logItem;
+    protected function initEntity(SpySalesOrderItem $salesOrderItem){
 
-        $logItem->setProcess($orderItem->getProcess());
+        $logEntity = $this->getEntity();
+        $logEntity->setOrderItem($salesOrderItem);
+        $logEntity->setFkSalesOrder($salesOrderItem->getFkSalesOrder());
+        $logEntity->setFkOmsOrderProcess($salesOrderItem->getFkOmsOrderProcess());
 
-        if (isset($this->event)) {
-            $eventStr = $this->event->getName();
+        $logEntity->setHostname(System::getHostname());
 
-            if ($this->event->isOnEnter()) {
-                $eventStr .= ' (on enter)';
-            }
-            $logItem->setEvent($eventStr);
-        }
-        $itemId = $orderItem->getIdSalesOrderItem();
-
-        if (isset($this->sources[$itemId])) {
-            $logItem->setSourceState($this->sources[$itemId]->getName());
-        }
-
-        if (isset($this->targets[$itemId])) {
-            $logItem->setTargetState($this->targets[$itemId]->getName());
-        }
-
-        if (isset($this->commands[$itemId])) {
-            $logItem->addCommand(get_class($this->commands[$itemId]));
-        }
-
-        if (isset($this->conditions[$itemId])) {
-            $logItem->addCondition(get_class($this->conditions[$itemId]));
-        }
-
-        $logItem->setHostname(System::getHostname());
 
         $path = 'cli';
         $request = $this->getRequest();
         if (isset($request)) {
             $path = $request->getPathInfo();
+        }else{
+            if(isset($_SERVER['argv']) && is_array($_SERVER['argv'])) {
+                $path = implode(' ', $_SERVER['argv']);
+            }
         }
-        $logItem->setPath($path);
+        $logEntity->setPath($path);
 
-//        if (isset($this->logContext['module'])) {
-//            $logItem->setModule($this->logContext['module']);
-//        } else {
-//            $logItem->setModule('Not available.');
-//        }
-//
-//        if (isset($this->logContext['controller'])) {
-//            $logItem->setController($this->logContext['controller']);
-//        } else {
-//            $logItem->setController('Not available.');
-//        }
-//
-//        if (isset($this->logContext['action'])) {
-//            $logItem->setAction($this->logContext['action']);
-//        } else {
-//            $logItem->setAction('Not available.');
-//        }
+        $logEntity->setParams(['a' => 'todo']);
 
-        if (isset($this->logContext['params'])) {
-            $params = [];
-            $this->getOutputParams($this->logContext['params'], $params);
-            $logItem->setParams($params);
-        } else {
-            $logItem->setParams(['Not available.']);
-        }
-
-        $logItem->setOrder($orderItem->getOrder());
-        $logItem->setOrderItem($orderItem);
-
-        $logItem->setError($this->error);
-        $logItem->setErrorMessage($this->errorMessage);
-
-        $logItem->save();
+        return $logEntity;
     }
+
 
     /**
      * TODO Refactor: dependency
@@ -244,27 +181,23 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
+     * @param SpySalesOrderItem $salesOrderItem
+     * @return void
      */
-    public function saveAll()
+    public function save(SpySalesOrderItem $salesOrderItem)
     {
-        foreach ($this->items as $item) {
-            if ($item->isModified()) {
-                $this->save($item);
-            }
-        }
+        $this->logEntities[$salesOrderItem->getIdSalesOrderItem()]->save();
     }
 
     /**
-     * @return mixed|null
      */
-    protected function getAclUser()
+    public function saveAll()
     {
-//        $auth = Auth::getInstance();
-//        if ($auth->hasIdentity()) {
-//            return $auth->getIdentity();
-//        }
-
-        return;
+        foreach ($this->logEntities as $logEntity) {
+            if ($logEntity->isModified()) {
+                $logEntity->save();
+            }
+        }
     }
 
     /**

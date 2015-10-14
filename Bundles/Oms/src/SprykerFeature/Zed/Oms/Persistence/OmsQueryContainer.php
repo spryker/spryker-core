@@ -72,14 +72,20 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
-     * @param $idOrder
+     * @param int $idOrder
+     * @param bool $orderById
      * @return SpyOmsTransitionLogQuery
      */
-    public function queryLogByIdOrder($idOrder)
+    public function queryLogByIdOrder($idOrder, $orderById = true)
     {
-        return $this->getFactory()->createPropelSpyOmsTransitionLogQuery()
-            ->filterByFkSalesOrder($idOrder)
-            ->orderBy(SpyOmsTransitionLogTableMap::COL_ID_OMS_TRANSITION_LOG, Criteria::DESC);
+        $transitionLogQuery = $this->getFactory()->createPropelSpyOmsTransitionLogQuery()
+            ->filterByFkSalesOrder($idOrder);
+
+        if ($orderById) {
+            $transitionLogQuery->orderBy(SpyOmsTransitionLogTableMap::COL_ID_OMS_TRANSITION_LOG, Criteria::DESC);
+        }
+
+        return $transitionLogQuery;
     }
 
     /**

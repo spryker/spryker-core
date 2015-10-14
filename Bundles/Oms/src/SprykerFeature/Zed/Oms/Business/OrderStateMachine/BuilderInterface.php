@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
 
+use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
+
 interface BuilderInterface
 {
 
