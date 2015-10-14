@@ -141,21 +141,40 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param DiscountInterface $discount
+     * @param DiscountInterface $discountTransfer
      * @param array $arrayOfExpenseTotalItems
      */
     protected function transformDiscountToDiscountTotalItemInArray(
-        DiscountInterface $discount,
+        DiscountInterface $discountTransfer,
         array &$arrayOfExpenseTotalItems
     ) {
-        if (!isset($arrayOfExpenseTotalItems[$discount->getDisplayName()])) {
-            $item = $this->getDiscountTotalItem();
-            $item->setName($discount->getDisplayName());
+        if (!isset($arrayOfExpenseTotalItems[$discountTransfer->getDisplayName()])) {
+            $discountTotalItemTransfer = $this->getDiscountTotalItem();
+            $discountTotalItemTransfer->setName($discountTransfer->getDisplayName());
         } else {
-            $item = $arrayOfExpenseTotalItems[$discount->getDisplayName()];
+            $discountTotalItemTransfer = $arrayOfExpenseTotalItems[$discountTransfer->getDisplayName()];
         }
-        $item->setAmount($item->getAmount() + $discount->getAmount());
-        $arrayOfExpenseTotalItems[$discount->getDisplayName()] = $item;
+
+        $this->setUsedCodes($discountTotalItemTransfer, $discountTransfer);
+
+        $discountTotalItemTransfer->setAmount($discountTotalItemTransfer->getAmount() + $discountTransfer->getAmount());
+        $arrayOfExpenseTotalItems[$discountTransfer->getDisplayName()] = $discountTotalItemTransfer;
+    }
+
+    /**
+     * @param DiscountTotalItemTransfer $discountTotalItemTransfer
+     * @param DiscountInterface         $discountTransfer
+     */
+    protected function setUsedCodes(
+        DiscountTotalItemTransfer $discountTotalItemTransfer,
+        DiscountInterface $discountTransfer
+    ) {
+        $storedCodes = (array) $discountTotalItemTransfer->getCodes();
+        foreach ($discountTransfer->getUsedCodes() as $code) {
+            if (!in_array($code, $storedCodes)) {
+                $discountTotalItemTransfer->addCode($code);
+            }
+        }
     }
 
     /**
