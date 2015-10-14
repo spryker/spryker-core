@@ -98,10 +98,10 @@ class TransactionController extends AbstractController
             ->endUse()
             ->endUse()
             ->find();
-        $this->getDependencyContainer()->getOmsFacade()->triggerEvent('PaymentNotificationReceived', $orderItems, []);
+        $this->getDependencyContainer()->createOmsFacade()->triggerEvent('PaymentNotificationReceived', $orderItems, []);
 
         if ($dataArray['txaction'] === PayoneConfigConstants::PAYONE_TXACTION_APPOINTED) {
-            $this->getDependencyContainer()->getOmsFacade()->triggerEvent('RedirectResponseAppointed', $orderItems, []);
+            $this->getDependencyContainer()->createOmsFacade()->triggerEvent('RedirectResponseAppointed', $orderItems, []);
         }
     }
 
