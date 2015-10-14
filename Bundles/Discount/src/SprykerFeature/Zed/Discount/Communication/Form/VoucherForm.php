@@ -62,7 +62,7 @@ class VoucherForm extends AbstractForm
                     'label' => 'Quantity',
                     'constraints' => [
                         new NotBlank(),
-                        new GreaterThan(1)
+                        new GreaterThan(1),
                     ],
                 ])
             ;
@@ -78,12 +78,12 @@ class VoucherForm extends AbstractForm
                 'attr' => [
                     'data-toggle' => 'tooltip',
                     'data-placement' => 'top',
-                    'title' => 'Add [code] template to position generated code'
+                    'title' => 'Add [code] template to position generated code',
                 ],
             ])
             ->add(self::FIELD_CODE_LENGTH, 'choice', [
                 'label' => 'Random Generated Code Length',
-                'choices' => $this->getCodeLenghtChoices(),
+                'choices' => $this->getCodeLengthChoices(),
                 'constraints' => [
                     new Callback([
                         'methods' => [
@@ -94,14 +94,14 @@ class VoucherForm extends AbstractForm
                                     $context->addViolation('The quantity of required codes is to high regarding the code length');
                                 }
                             },
-                        ]
+                        ],
                     ]),
                 ]
             ])
             ->addNumber(self::FIELD_MAX_NUMBER_OF_USES, [
-                'label' => 'Max number of uses',
+                'label' => 'Max number of uses (0 = Infinite usage)',
             ])
-            ->addChoice(static::FIELD_DISCOUNT_VOUCHER_POOL, [
+            ->addChoice(self::FIELD_DISCOUNT_VOUCHER_POOL, [
                 'label' => 'Pool',
                 'placeholder' => 'Select one',
                 'choices' => $this->getPools(),
@@ -144,10 +144,10 @@ class VoucherForm extends AbstractForm
     /**
      * @return array
      */
-    protected function getCodeLenghtChoices()
+    protected function getCodeLengthChoices()
     {
         $codeLengthChoices = [
-            0 => 'No extra random characters',
+            0 => 'No additional random characters',
             3 => 3,
             4 => 4,
             5 => 5,

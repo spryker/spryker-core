@@ -168,23 +168,22 @@ class VoucherEngine
     {
         $nextVoucherBatchValue = 0;
 
-        if ($voucherTransfer->getQuantity() > 1) {
-            $highestBatchValueOnVouchers = $this->queryContainer
-                ->queryDiscountVoucher()
-                ->filterByFkDiscountVoucherPool($voucherTransfer->getFkDiscountVoucherPool())
-                ->orderByVoucherBatch(Criteria::DESC)
-                ->findOne()
-            ;
-
-            if (null === $highestBatchValueOnVouchers) {
-
-                return 1;
-            }
-
-            return $highestBatchValueOnVouchers->getVoucherBatch() + 1;
+        if ($voucherTransfer->getQuantity() < 2) {
+            return $nextVoucherBatchValue;
         }
 
-        return $nextVoucherBatchValue;
+        $highestBatchValueOnVouchers = $this->queryContainer
+            ->queryDiscountVoucher()
+            ->filterByFkDiscountVoucherPool($voucherTransfer->getFkDiscountVoucherPool())
+            ->orderByVoucherBatch(Criteria::DESC)
+            ->findOne()
+        ;
+
+        if (null === $highestBatchValueOnVouchers) {
+            return 1;
+        }
+
+        return $highestBatchValueOnVouchers->getVoucherBatch() + 1;
     }
 
 }

@@ -2,13 +2,11 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Table;
 
-use Pyz\Zed\Discount\Persistence\DiscountQueryContainer;
-use SprykerFeature\Zed\Discount\Communication\Controller\VoucherController;
+use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherTableMap;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountQuery;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
-use Symfony\Component\HttpFoundation\Request;
 
 class DiscountVoucherCodesTable extends AbstractTable
 {
@@ -33,7 +31,7 @@ class DiscountVoucherCodesTable extends AbstractTable
      * @param int $idPool
      * @param int $batchValue
      */
-    public function __construct(DiscountQueryContainer $discountQueryContainer, $idPool, $batchValue=null)
+    public function __construct(DiscountQueryContainer $discountQueryContainer, $idPool, $batchValue = null)
     {
         $this->discountQueryContainer = $discountQueryContainer;
         $this->idPool = $idPool;
@@ -47,7 +45,7 @@ class DiscountVoucherCodesTable extends AbstractTable
      */
     protected function configure(TableConfiguration $config)
     {
-        $config->setUrl('table/?id-pool='.$this->idPool.'&batch='.$this->batchValue);
+        $config->setUrl('table/?id-pool=' . $this->idPool . '&batch=' . $this->batchValue);
 
         $config->setHeader([
             SpyDiscountVoucherTableMap::COL_CODE => 'Voucher Code',
