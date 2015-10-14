@@ -2,10 +2,14 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
+use SprykerFeature\Zed\Discount\Communication\Form\Validators\MaximumCalculatedRangeValidator;
+use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\GreaterThan;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class VoucherForm extends AbstractForm
 {
@@ -29,12 +33,19 @@ class VoucherForm extends AbstractForm
     protected $isMultiple;
 
     /**
+     * @var DiscountConfig
+     */
+    protected $discountConfig;
+
+    /**
      * @param SpyDiscountVoucherPoolQuery $poolQuery
+     * @param DiscountConfig $discountConfig
      * @param bool $isMultiple
      */
-    public function __construct(SpyDiscountVoucherPoolQuery $poolQuery, $isMultiple = false)
+    public function __construct(SpyDiscountVoucherPoolQuery $poolQuery, DiscountConfig $discountConfig, $isMultiple = false)
     {
         $this->poolQuery = $poolQuery;
+        $this->discountConfig = $discountConfig;
         $this->isMultiple = $isMultiple;
     }
 
@@ -57,6 +68,10 @@ class VoucherForm extends AbstractForm
             ;
         }
 
+
+        $maxAllowedCodeCharactersLength = $this->discountConfig->getAllowedCodeCharactersLength();
+        $codeLengthValidator = new MaximumCalculatedRangeValidator($maxAllowedCodeCharactersLength);
+
         $this
             ->addText(self::FIELD_CUSTOM_CODE, [
                 'label' => 'Custom Code',
@@ -69,6 +84,19 @@ class VoucherForm extends AbstractForm
             ->add(self::FIELD_CODE_LENGTH, 'choice', [
                 'label' => 'Random Generated Code Length',
                 'choices' => $this->getCodeLenghtChoices(),
+                'constraints' => [
+                    new Callback([
+                        'methods' => [
+                            function ($length, ExecutionContextInterface $context) use ($codeLengthValidator) {
+                                $formData = $context->getRoot()->getData();
+
+                                if ($codeLengthValidator->getPossibleCodeCombinationsCount($length) < $formData[VoucherForm::FIELD_QUANTITY]) {
+                                    $context->addViolation('The quantity of required codes is to high regarding the code length');
+                                }
+                            },
+                        ]
+                    ]),
+                ]
             ])
             ->addNumber(self::FIELD_MAX_NUMBER_OF_USES, [
                 'label' => 'Max number of uses',

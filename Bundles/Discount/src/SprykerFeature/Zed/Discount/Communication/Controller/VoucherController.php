@@ -24,6 +24,7 @@ class VoucherController extends AbstractController
 {
     const SESSION_TIME = 'session_title';
     const ID_POOL_PARAMETER = 'id-pool';
+    const BATCH_PARAMETER = 'batch';
     const GENERATED_ON_PARAMETER = 'generated-on';
 
     /**
@@ -45,7 +46,15 @@ class VoucherController extends AbstractController
 
             $this->getFacade()->createVoucherCodes($voucherTransfer);
 
-            return $this->redirectResponse('/discount/voucher/view/?' . self::ID_POOL_PARAMETER . '=' . (int) $formData[VoucherForm::FIELD_DISCOUNT_VOUCHER_POOL]);
+            return $this->redirectResponse(
+                sprintf(
+                    '/discount/voucher/view/?%s=%d&%s=%d',
+                    self::ID_POOL_PARAMETER,
+                    (int) $formData[VoucherForm::FIELD_DISCOUNT_VOUCHER_POOL],
+                    self::BATCH_PARAMETER,
+                    $voucherTransfer->getVoucherBatch()
+                )
+            );
         }
 
         return [
@@ -71,7 +80,15 @@ class VoucherController extends AbstractController
 
             $this->getFacade()->createVoucherCodes($voucherTransfer);
 
-            return $this->redirectResponse('/discount/voucher/view/?' . self::ID_POOL_PARAMETER . '=' . (int) $formData[VoucherForm::FIELD_DISCOUNT_VOUCHER_POOL]);
+            return $this->redirectResponse(
+                sprintf(
+                    '/discount/voucher/view/?%s=%d&%s=%d',
+                    self::ID_POOL_PARAMETER,
+                    (int) $formData[VoucherForm::FIELD_DISCOUNT_VOUCHER_POOL],
+                    self::BATCH_PARAMETER,
+                    $voucherTransfer->getVoucherBatch()
+                )
+            );
         }
 
         return [

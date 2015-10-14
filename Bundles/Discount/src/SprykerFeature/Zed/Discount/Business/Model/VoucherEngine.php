@@ -44,22 +44,12 @@ class VoucherEngine
      */
     public function createVoucherCodes(VoucherInterface $voucherTransfer)
     {
-        $nextVoucherBatchValue = 0;
         $codeCollisions = 0;
         $voucherPoolEntity = $this->queryContainer
             ->queryVoucherPool()
             ->findPk($voucherTransfer->getFkDiscountVoucherPool());
 
-        $highestBatchValueOnVouchers = $this->queryContainer
-            ->queryDiscountVoucher()
-            ->filterByFkDiscountVoucherPool($voucherTransfer->getFkDiscountVoucherPool())
-            ->orderByVoucherBatch(Criteria::DESC)
-            ->findOne()
-        ;
-
-        if (null !== $highestBatchValueOnVouchers && $voucherTransfer->getQuantity() > 1) {
-            $nextVoucherBatchValue = $highestBatchValueOnVouchers->getVoucherBatch() + 1;
-        }
+        $nextVoucherBatchValue = $this->getNextBatchValueForVouchers($voucherTransfer);
 
         $voucherTransfer->setVoucherBatch($nextVoucherBatchValue);
 
@@ -163,10 +153,38 @@ class VoucherEngine
         }
 
         if (!strstr($template, $replacementString)) {
-            return $code;
+            return $voucherPoolEntity->getTemplate() . $code;
         }
 
         return str_replace($this->settings->getVoucherPoolTemplateReplacementString(), $code, $template);
+    }
+
+    /**
+     * @param VoucherInterface $voucherTransfer
+     *
+     * @return int
+     */
+    protected function getNextBatchValueForVouchers(VoucherInterface $voucherTransfer)
+    {
+        $nextVoucherBatchValue = 0;
+
+        if ($voucherTransfer->getQuantity() > 1) {
+            $highestBatchValueOnVouchers = $this->queryContainer
+                ->queryDiscountVoucher()
+                ->filterByFkDiscountVoucherPool($voucherTransfer->getFkDiscountVoucherPool())
+                ->orderByVoucherBatch(Criteria::DESC)
+                ->findOne()
+            ;
+
+            if (null === $highestBatchValueOnVouchers) {
+
+                return 1;
+            }
+
+            return $highestBatchValueOnVouchers->getVoucherBatch() + 1;
+        }
+
+        return $nextVoucherBatchValue;
     }
 
 }
