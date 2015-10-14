@@ -89,8 +89,8 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
                 ->endUse()
             ->endUse()
             ->_or()
-            ->filterByIsActive(true)
-            ->filterByFkDiscountVoucherPool(null);
+            ->filterByFkDiscountVoucherPool(null)
+            ->filterByIsActive(true);
     }
 
 
