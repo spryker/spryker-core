@@ -62,14 +62,27 @@ class DeleteController extends EditController
             $currentCategoryTransfer = (new CategoryTransfer())
                 ->fromArray($data, true);
 
+            $currentNodeTransfer = (new NodeTransfer())
+                ->fromArray($data, true);
+
             if ($data['delete_children']) {
                 $this->getDependencyContainer()
                     ->createProductCategoryFacade()
                     ->deleteCategoryFull($currentCategoryTransfer->getIdCategory(), $locale)
                 ;
             } else {
+                if (0 === (int) $currentNodeTransfer->getFkParentCategoryNode()) {
+                    throw new \InvalidArgumentException('Please select a category');
+                }
 
-                die('move');
+                if ((int) $currentNodeTransfer->getIdCategoryNode() === (int) $currentNodeTransfer->getFkParentCategoryNode()) {
+                    throw new \InvalidArgumentException('Please select another category');
+                }
+
+                dump($currentCategoryTransfer->toArray());
+                dump($currentNodeTransfer->toArray());
+                die(dump($data));
+
                 $currentCategoryNodeTransfer = $this->updateCategoryNode($currentCategoryTransfer, $locale, $data);
 
                 $parentIdList[] = $currentCategoryNodeTransfer->getFkParentCategoryNode();
@@ -79,6 +92,10 @@ class DeleteController extends EditController
                     $locale,
                     $parentIdList
                 );
+
+                $this->getDependencyContainer()
+                    ->createProductCategoryFacade()
+                    ->deleteCategoryFull($currentCategoryTransfer->getIdCategory(), $locale);
             }
 
 

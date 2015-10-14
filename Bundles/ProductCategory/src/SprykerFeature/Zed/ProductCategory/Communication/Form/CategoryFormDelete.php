@@ -21,7 +21,7 @@ class CategoryFormDelete extends CategoryFormEdit
                 'label' => 'Delete subcategories',
             ])
             ->addSelect2ComboBox(self::FK_PARENT_CATEGORY_NODE, [
-                'label' => 'Or move them to',
+                'label' => 'Or move them to category',
                 'choices' => $this->getCategories(),
                 'multiple' => false,
             ])
