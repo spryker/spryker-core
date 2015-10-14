@@ -40,7 +40,7 @@ class VoucherController extends AbstractController
 
             $voucherCreateTransfer = new VoucherCreateTransfer();
             $voucherCreateTransfer->fromArray($formData, true);
-            $voucherCreateTransfer->setAmount(VoucherForm::ONE_VOUCHER);
+            $voucherCreateTransfer->setQuantity(VoucherForm::ONE_VOUCHER);
             $voucherCreateTransfer->setIncludeTemplate(false);
 
             $this->getFacade()->createVoucherCodes($voucherCreateTransfer);
