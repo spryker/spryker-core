@@ -7,7 +7,7 @@
 namespace Unit\SprykerFeature\Zed\Checkout\Business\Fixture;
 
 use Generated\Shared\Checkout\CheckoutResponseInterface;
-use Generated\Shared\Checkout\OrderInterface;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 
 class MockPostHook implements CheckoutPostSaveHookInterface
@@ -27,10 +27,10 @@ class MockPostHook implements CheckoutPostSaveHookInterface
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      * @param CheckoutResponseInterface $checkoutResponse
      */
-    public function executeHook(OrderInterface $orderTransfer, CheckoutResponseInterface $checkoutResponse)
+    public function executeHook(OrderTransfer $orderTransfer, CheckoutResponseInterface $checkoutResponse)
     {
         $checkoutResponse->fromArray($this->checkoutResponse->toArray(true));
     }
