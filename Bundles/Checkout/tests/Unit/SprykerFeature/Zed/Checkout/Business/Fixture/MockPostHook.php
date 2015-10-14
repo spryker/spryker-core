@@ -8,7 +8,6 @@ namespace Unit\SprykerFeature\Zed\Checkout\Business\Fixture;
 
 use Generated\Shared\Checkout\CheckoutResponseInterface;
 use Generated\Shared\Checkout\OrderInterface;
-use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 
 class MockPostHook implements CheckoutPostSaveHookInterface

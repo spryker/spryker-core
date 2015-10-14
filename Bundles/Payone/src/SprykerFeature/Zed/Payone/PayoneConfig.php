@@ -13,6 +13,7 @@ use SprykerFeature\Shared\Payone\PayoneConfigConstants;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
 
 class PayoneConfig extends AbstractBundleConfig
@@ -70,6 +71,18 @@ class PayoneConfig extends AbstractBundleConfig
      * @return string
      */
     public function generatePayoneReference(PayonePaymentInterface $paymentTransfer, SpySalesOrder $orderEntity)
+    {
+        return $orderEntity->getOrderReference();
+    }
+
+    /**
+     * @param array $orderItems
+     * @param SpySalesOrder $orderEntity
+     * @param ReadOnlyArrayObject $data
+     *
+     * @return string
+     */
+    public function getNarrativeText(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
         return $orderEntity->getOrderReference();
     }
