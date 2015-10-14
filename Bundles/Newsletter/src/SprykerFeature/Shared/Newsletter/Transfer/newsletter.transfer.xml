@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<transfers xmlns="http://xsd.spryker.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
+
+    <transfer name="NewsletterSubscriber">
+        <property name="idNewsletterSubscriber" type="int" />
+        <property name="fkCustomer" type="int" />
+        <property name="email" type="string" />
+        <property name="subscriberKey" type="string" />
+        <property name="isConfirmed" type="bool" />
+    </transfer>
+
+    <transfer name="NewsletterType">
+        <property name="idNewsletterType" type="int" />
+        <property name="name" type="string" />
+    </transfer>
+
+    <transfer name="NewsletterSubscriptionRequest">
+        <property name="newsletterSubscriber" type="NewsletterSubscriber" />
+        <property name="newsletterTypes" type="NewsletterType[]" singular="subscriptionType" />
+    </transfer>
+
+    <transfer name="NewsletterSubscriptionResponse">
+        <property name="subscriptionResults" type="NewsletterSubscriptionResult[]" singular="subscriptionResult" />
+    </transfer>
+
+    <transfer name="NewsletterSubscriptionResult">
+        <property name="isSuccess" type="bool" default="true" />
+        <property name="newsletterType" type="NewsletterType" />
+        <property name="errorMessage" type="string" />
+    </transfer>
+
+    <transfer name="NewsletterSubscriptionApprovalResult">
+        <property name="isSuccess" type="bool" default="true" />
+        <property name="errorMessage" type="string" />
+    </transfer>
+
+</transfers>
