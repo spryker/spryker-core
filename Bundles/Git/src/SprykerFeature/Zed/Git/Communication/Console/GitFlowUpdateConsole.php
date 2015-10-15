@@ -20,18 +20,18 @@ class GitFlowUpdateConsole extends Console
 
     const OPTION_LEVEL = 'level';
     const OPTION_LEVEL_SHORT = 'l';
-    const OPTION_LEVEL_DESCRIPTION = 'Define on which level this command should run (default: project)';
+    const OPTION_LEVEL_DESCRIPTION = 'Define on which level this command should run';
     const OPTION_LEVEL_PROJECT = 'project';
     const OPTION_LEVEL_CORE = 'core';
 
     const OPTION_FROM = 'from';
     const OPTION_FROM_SHORT = 'f';
-    const OPTION_FROM_DESCRIPTION = 'Define from where you want to rebase (default: develop)';
+    const OPTION_FROM_DESCRIPTION = 'Define from where you want to rebase';
     const OPTION_FROM_DEVELOP = 'develop';
 
     const OPTION_BRANCH = 'branch';
     const OPTION_BRANCH_SHORT = 'b';
-    const OPTION_BRANCH_DESCRIPTION = 'Define which branch you want to rebase (default: current)';
+    const OPTION_BRANCH_DESCRIPTION = 'Define which branch you want to rebase';
 
     const CURRENT_BRANCH_NAME_COMMAND = 'git rev-parse --abbrev-ref HEAD';
     const ERROR_INVALID_LEVEL = '"%s" is not a valid level, allowed levels are "%s" and "%s"';
