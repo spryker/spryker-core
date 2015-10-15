@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\ProductCategory\Business;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
@@ -91,6 +92,12 @@ interface ProductCategoryManagerInterface
      * @throws PropelException
      */
     public function updateProductMappingsPreconfig($idCategory, array $productPreconfigList);
+
+    /**
+     * @param NodeTransfer $categoryNodeTransfer
+     * @param LocaleTransfer $locale
+     */
+    public function moveCategoryChildrenAndDeleteCategory(NodeTransfer $categoryNodeTransfer, LocaleTransfer $locale);
 
     /**
      * @param int $idCategory

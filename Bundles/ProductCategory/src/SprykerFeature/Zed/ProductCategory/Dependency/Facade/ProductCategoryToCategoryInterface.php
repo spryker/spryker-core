@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\ProductCategory\Dependency\Facade;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 
 interface ProductCategoryToCategoryInterface
 {
@@ -48,6 +49,13 @@ interface ProductCategoryToCategoryInterface
      * @param int $idCategory
      */
     public function deleteCategory($idCategory);
+
+    /**
+     * @param NodeTransfer $categoryNode
+     *
+     * @param LocaleTransfer $locale
+     */
+    public function updateCategoryNode(NodeTransfer $categoryNode, LocaleTransfer $locale);
 
 
 }

@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\ProductCategory\Business;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
@@ -293,6 +294,51 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
             $this->touchAbstractProductActive($idProduct);
         }
+    }
+
+    /**
+     * @param NodeTransfer $categoryNodeTransfer
+     * @param LocaleTransfer $locale
+     */
+    public function moveCategoryChildrenAndDeleteCategory(NodeTransfer $categoryNodeTransfer, LocaleTransfer $locale)
+    {
+        $connection = Propel::getConnection();
+        $connection->beginTransaction();
+
+        $children = $this->categoryQueryContainer
+            ->queryFirstLevelChildren($categoryNodeTransfer->getIdCategoryNode())
+            ->find()
+        ;
+
+        foreach ($children as $child) {
+            $childTransfer = (new NodeTransfer())->fromArray($child->toArray());
+            $childTransfer->setFkParentCategoryNode($categoryNodeTransfer->getIdCategoryNode());
+            $childTransfer->setFkCategory($categoryNodeTransfer->getFkCategory());
+            $this->categoryFacade->updateCategoryNode($childTransfer, $locale);
+        }
+
+        //remove extra parents
+        $extraParents = $this->categoryQueryContainer
+            ->queryNotMainNodesByCategoryId($categoryNodeTransfer->getFkCategory())
+            ->find()
+        ;
+
+        foreach ($extraParents as $parent) {
+            $this->categoryFacade->deleteNode($parent->getIdCategoryNode(), $locale);
+        }
+
+        $this->categoryFacade->deleteNode($categoryNodeTransfer->getIdCategoryNode(), $locale, false);
+
+        $hasNodes = $this->categoryQueryContainer
+            ->queryAllNodesByCategoryId($categoryNodeTransfer->getFkCategory())
+            ->count() > 0
+        ;
+
+        if (!$hasNodes) {
+            $this->categoryFacade->deleteCategory($categoryNodeTransfer->getFkCategory());
+        }
+
+        $connection->commit();
     }
 
     /**

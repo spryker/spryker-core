@@ -79,9 +79,9 @@ class DeleteController extends EditController
                     throw new \InvalidArgumentException('Please select another category');
                 }
 
-                dump($currentCategoryTransfer->toArray());
-                dump($currentNodeTransfer->toArray());
-                die(dump($data));
+                $this->getDependencyContainer()
+                    ->createProductCategoryFacade()
+                    ->moveCategoryChildrenAndDeleteCategory($currentNodeTransfer, $locale);
 
                 $currentCategoryNodeTransfer = $this->updateCategoryNode($currentCategoryTransfer, $locale, $data);
 
