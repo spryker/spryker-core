@@ -19,6 +19,7 @@ class GitConfig extends AbstractBundleConfig
     {
         return [
             $this->getLocator()->git()->consoleGitFlowUpdateConsole(),
+            $this->getLocator()->git()->consoleGitFlowFinishConsole(),
         ];
     }
 
