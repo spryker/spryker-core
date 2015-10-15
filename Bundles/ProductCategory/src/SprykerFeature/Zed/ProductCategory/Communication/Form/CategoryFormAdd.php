@@ -120,6 +120,11 @@ class CategoryFormAdd extends AbstractForm
 
         ksort($data);
 
+        foreach ($data as $path => $categoryNames) {
+            asort($data[$path], SORT_FLAG_CASE & SORT_STRING);
+        }
+
+
         return $data;
     }
 

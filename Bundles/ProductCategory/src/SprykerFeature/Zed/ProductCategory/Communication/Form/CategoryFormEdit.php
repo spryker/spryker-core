@@ -35,6 +35,8 @@ class CategoryFormEdit extends CategoryFormAdd
      */
     protected function buildFormFields()
     {
+        $categoriesWithPath = $this->getCategoriesWithPaths();
+
         return $this->addText(self::NAME, [
             'constraints' => [
                 new NotBlank(),
@@ -72,7 +74,7 @@ class CategoryFormEdit extends CategoryFormAdd
             ])
             ->addSelect2ComboBox(self::FK_PARENT_CATEGORY_NODE, [
                 'label' => 'Parent',
-                'choices' => $this->getCategoriesWithPaths(),
+                'choices' => $categoriesWithPath,
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -80,7 +82,7 @@ class CategoryFormEdit extends CategoryFormAdd
             ])
             ->addSelect2ComboBox(self::EXTRA_PARENTS, [
                 'label' => 'Additional Parents',
-                'choices' => $this->getCategoriesWithPaths(),
+                'choices' => $categoriesWithPath,
                 'multiple' => true,
             ])
             ->addHidden(self::PK_CATEGORY_NODE)
