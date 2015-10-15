@@ -72,7 +72,7 @@ class CategoryFormEdit extends CategoryFormAdd
             ])
             ->addSelect2ComboBox(self::FK_PARENT_CATEGORY_NODE, [
                 'label' => 'Parent',
-                'choices' => $this->getCategories(),
+                'choices' => $this->getCategoriesWithPaths(),
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -80,7 +80,7 @@ class CategoryFormEdit extends CategoryFormAdd
             ])
             ->addSelect2ComboBox(self::EXTRA_PARENTS, [
                 'label' => 'Additional Parents',
-                'choices' => $this->getCategories(),
+                'choices' => $this->getCategoriesWithPaths(),
                 'multiple' => true,
             ])
             ->addHidden(self::PK_CATEGORY_NODE)

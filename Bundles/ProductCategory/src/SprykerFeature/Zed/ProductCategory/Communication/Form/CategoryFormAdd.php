@@ -13,6 +13,7 @@ use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
+use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
 use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategory;
@@ -84,7 +85,7 @@ class CategoryFormAdd extends AbstractForm
         ])
             ->addSelect2ComboBox(self::FK_PARENT_CATEGORY_NODE, [
                 'label' => 'Parent',
-                'choices' => $this->getCategories(),
+                'choices' => $this->getCategoriesWithPaths(),
                 'constraints' => [
                     new NotBlank(),
                 ]
@@ -96,19 +97,50 @@ class CategoryFormAdd extends AbstractForm
     /**
      * @return array
      */
-    protected function getCategories()
+    protected function getCategoriesWithPaths()
     {
-        $categories = $this->categoryQueryContainer->queryCategory($this->locale->getIdLocale())
-            ->setFormatter(new PropelArraySetFormatter())
+        $categoryList = $this->categoryQueryContainer->queryCategory($this->locale->getIdLocale())
             ->find()
         ;
 
         $data = [];
-        foreach ($categories as $category) {
-            $data[$category[self::PK_CATEGORY_NODE]] = $category[self::NAME];
+        $pathCache = [];
+        foreach ($categoryList as $category) {
+            foreach ($category->getNodes() as $node) {
+                if (!array_key_exists($node->getFkParentCategoryNode(), $pathCache)) {
+                    $path = $this->buildPath($node);
+                }
+                else {
+                    $path = $pathCache[$node->getFkParentCategoryNode()];
+                }
+
+                $data[$path][$node->getIdCategoryNode()] = $category->getAttributes()->getFirst()->getName();
+            }
         }
 
+        ksort($data);
+
         return $data;
+    }
+
+    /**
+     * @param SpyCategoryNode $node
+     *
+     * @return string
+     */
+    protected function buildPath(SpyCategoryNode $node)
+    {
+        $pathTokens = $this->categoryQueryContainer
+            ->queryPath($node->getIdCategoryNode(), $this->locale->getIdLocale(), false, true)
+            ->find()
+        ;
+
+        $formattedPath = [];
+        foreach ($pathTokens as $path) {
+            $formattedPath[] = $path['name'];
+        }
+
+        return  '/' . implode('/', $formattedPath);
     }
 
     /**
