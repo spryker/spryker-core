@@ -13,6 +13,7 @@ use SprykerEngine\Shared\Application\Communication\Application;
 use SprykerEngine\Shared\Application\Communication\Bootstrap;
 use SprykerEngine\Zed\Application\Communication\Bootstrap\Extension\RouterExtension;
 use SprykerEngine\Zed\Application\Communication\Bootstrap\Extension\ServiceProviderExtension;
+use SprykerEngine\Zed\Application\Communication\Bootstrap\Extension\TwigExtension;
 use SprykerFeature\Zed\Application\Communication\Plugin\Pimple;
 
 class ZedBootstrap extends Bootstrap
@@ -36,6 +37,10 @@ class ZedBootstrap extends Bootstrap
 
         $this->addRouterExtension(
             $this->getRouterExtension()
+        );
+
+        $this->addTwigExtension(
+            $this->getTwigExtension()
         );
 
         $this->addGlobalTemplateVariableExtension(
@@ -85,6 +90,14 @@ class ZedBootstrap extends Bootstrap
     protected function getRouterExtension()
     {
         return new RouterExtension();
+    }
+
+    /**
+     * @return TwigExtension
+     */
+    protected function getTwigExtension()
+    {
+        return new TwigExtension();
     }
 
     /**
