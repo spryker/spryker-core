@@ -98,14 +98,29 @@ class CategoryFormAdd extends AbstractForm
      */
     protected function getCategories()
     {
-        $categories = $this->categoryQueryContainer->queryCategory($this->locale->getIdLocale())
-            ->setFormatter(new PropelArraySetFormatter())
+        $categoryList = $this->categoryQueryContainer->queryCategory($this->locale->getIdLocale())
             ->find()
         ;
 
         $data = [];
-        foreach ($categories as $category) {
-            $data[$category[self::PK_CATEGORY_NODE]] = $category[self::NAME];
+        foreach ($categoryList as $category) {
+            foreach ($category->getNodes() as $node) {
+                $pathTokens = $this->categoryQueryContainer
+                    ->queryPath($node->getIdCategoryNode(), $this->locale->getIdLocale(), false, true)
+                    ->find()
+                ;
+
+                $formattedPath = [];
+                foreach ($pathTokens as $path) {
+                    $formattedPath[] = $path['name'];
+                }
+
+                $path =  '/' . implode('/', $formattedPath);
+
+                $data[$path][$node->getIdCategoryNode()] = $category->getAttributes()->getFirst()->getName();
+            }
+
+            ksort($data);
         }
 
         return $data;
