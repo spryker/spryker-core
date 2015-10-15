@@ -44,15 +44,10 @@
         <property name="isActive" type="string" />
         <property name="maxNumberOfUses" type="int" />
         <property name="voucherBatch" type="int"/>
-    </transfer>
-
-    <transfer name="VoucherCreate">
         <property name="quantity" type="int" />
-        <property name="idVoucherPool" type="int" />
-        <property name="includeTemplate" type="boolean" />
-        <property name="maxNumberOfUses" type="int" />
-        <property name="code" type="string" />
-        <property name="voucherBatch" type="int"/>
+        <property name="includeTemplate" type="bool"/>
+        <property name="customCode" type="string"/>
+        <property name="codeLength" type="int"/>
     </transfer>
 
     <transfer name="VoucherPool">

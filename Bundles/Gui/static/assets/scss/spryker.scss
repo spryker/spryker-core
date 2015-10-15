@@ -29,9 +29,13 @@
 }
 
 .icon-holder {
-  float: left;
-  width: 19px;
-  overflow: hidden;
+    float: left;
+    width: 19px;
+    overflow: hidden;
+}
+
+.tooltip-inner {
+    max-width: 600px;
 }
 
 /* Login .. */

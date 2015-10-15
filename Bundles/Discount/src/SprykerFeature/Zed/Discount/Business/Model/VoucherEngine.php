@@ -6,13 +6,12 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
-use Generated\Shared\Discount\VoucherCreateInterface;
+use Generated\Shared\Discount\VoucherInterface;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\Discount\DiscountConfigInterface;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * Class VoucherEngine
@@ -41,67 +40,59 @@ class VoucherEngine
     }
 
     /**
-     * @param VoucherCreateInterface $voucherCreateTransfer
+     * @param VoucherInterface $voucherTransfer
      */
-    public function createVoucherCodes(VoucherCreateInterface $voucherCreateTransfer)
+    public function createVoucherCodes(VoucherInterface $voucherTransfer)
     {
-        $nextVoucherBatchValue = 0;
         $codeCollisions = 0;
         $voucherPoolEntity = $this->queryContainer
             ->queryVoucherPool()
-            ->findPk($voucherCreateTransfer->getIdVoucherPool());
+            ->findPk($voucherTransfer->getFkDiscountVoucherPool());
 
-        $highestBatchValueOnVouchers = $this->queryContainer
-            ->queryDiscountVoucher()
-            ->filterByFkDiscountVoucherPool($voucherCreateTransfer->getIdVoucherPool())
-            ->orderByVoucherBatch(Criteria::DESC)
-            ->findOne()
-        ;
+        $nextVoucherBatchValue = $this->getNextBatchValueForVouchers($voucherTransfer);
 
-        if (null !== $highestBatchValueOnVouchers && $voucherCreateTransfer->getQuantity() > 1) {
-            $nextVoucherBatchValue = $highestBatchValueOnVouchers->getVoucherBatch() + 1;
-        }
+        $voucherTransfer->setVoucherBatch($nextVoucherBatchValue);
 
-        $voucherCreateTransfer->setVoucherBatch($nextVoucherBatchValue);
+        $voucherTransfer->setIncludeTemplate(true);
+        $length = $voucherTransfer->getCodeLength();
+        $voucherPoolEntity->setTemplate($voucherTransfer->getCustomCode());
 
-        $length = $this->settings->getVoucherCodeLength();
-
-        for ($i = 0; $i < $voucherCreateTransfer->getQuantity(); $i++) {
+        for ($i = 0; $i < $voucherTransfer->getQuantity(); $i++) {
             try {
                 $code = $this->getRandomVoucherCode($length);
 
-                if ($voucherCreateTransfer->getIncludeTemplate()) {
+                if ($voucherTransfer->getIncludeTemplate()) {
                     $code = $this->getCodeWithTemplate($voucherPoolEntity, $code);
                 }
 
-                $voucherCreateTransfer->setCode($code);
+                $voucherTransfer->setCode($code);
 
-                $this->createVoucherCode($voucherCreateTransfer);
+                $this->createVoucherCode($voucherTransfer);
             } catch (\Exception $e) {
                 $codeCollisions++;
             }
         }
 
         if ($codeCollisions > 0) {
-            $voucherCreateTransfer->getQuantity($codeCollisions);
-            $this->createVoucherCodes($voucherCreateTransfer);
+            $voucherTransfer->getQuantity($codeCollisions);
+            $this->createVoucherCodes($voucherTransfer);
         }
     }
 
 
     /**
-     * @param VoucherCreateInterface $voucherCreateTransfer
+     * @param VoucherInterface $voucherTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      * @return SpyDiscountVoucher
      */
-    public function createVoucherCode(VoucherCreateInterface $voucherCreateTransfer)
+    public function createVoucherCode(VoucherInterface $voucherTransfer)
     {
         $voucherEntity = new SpyDiscountVoucher();
-        $voucherEntity->fromArray($voucherCreateTransfer->toArray());
+        $voucherEntity->fromArray($voucherTransfer->toArray());
 
         $voucherEntity
-            ->setFkDiscountVoucherPool($voucherCreateTransfer->getIdVoucherPool())
+            ->setFkDiscountVoucherPool($voucherTransfer->getFkDiscountVoucherPool())
             ->setIsActive(true)
             ->save();
 
@@ -122,7 +113,6 @@ class VoucherEngine
         $consonants = $allowedCharacters[DiscountConfigInterface::KEY_VOUCHER_CODE_CONSONANTS];
         $vowels = $allowedCharacters[DiscountConfigInterface::KEY_VOUCHER_CODE_VOWELS];
         $numbers = $allowedCharacters[DiscountConfigInterface::KEY_VOUCHER_CODE_NUMBERS];
-        $specialCharacters = $allowedCharacters[DiscountConfigInterface::KEY_VOUCHER_CODE_SPECIAL_CHARACTERS];
 
         $code = '';
 
@@ -137,10 +127,6 @@ class VoucherEngine
 
             if (count($numbers)) {
                 $code .= $numbers[rand(0, count($numbers) - 1)];
-            }
-
-            if (count($specialCharacters)) {
-                $code .= $specialCharacters[rand(0, count($specialCharacters) - 1)];
             }
         }
 
@@ -167,10 +153,37 @@ class VoucherEngine
         }
 
         if (!strstr($template, $replacementString)) {
-            return $code;
+            return $voucherPoolEntity->getTemplate() . $code;
         }
 
         return str_replace($this->settings->getVoucherPoolTemplateReplacementString(), $code, $template);
+    }
+
+    /**
+     * @param VoucherInterface $voucherTransfer
+     *
+     * @return int
+     */
+    protected function getNextBatchValueForVouchers(VoucherInterface $voucherTransfer)
+    {
+        $nextVoucherBatchValue = 0;
+
+        if ($voucherTransfer->getQuantity() < 2) {
+            return $nextVoucherBatchValue;
+        }
+
+        $highestBatchValueOnVouchers = $this->queryContainer
+            ->queryDiscountVoucher()
+            ->filterByFkDiscountVoucherPool($voucherTransfer->getFkDiscountVoucherPool())
+            ->orderByVoucherBatch(Criteria::DESC)
+            ->findOne()
+        ;
+
+        if (null === $highestBatchValueOnVouchers) {
+            return 1;
+        }
+
+        return $highestBatchValueOnVouchers->getVoucherBatch() + 1;
     }
 
 }

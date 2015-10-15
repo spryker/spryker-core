@@ -2,18 +2,25 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
+use SprykerFeature\Zed\Discount\Communication\Form\Validators\MaximumCalculatedRangeValidator;
+use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
+use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\GreaterThan;
+use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class VoucherForm extends AbstractForm
 {
-    const FIELD_ID_POOL = 'id_voucher_pool';
-    const FIELD_QUANTITY = 'quantity';
-    const MINIMUM_VOUCHERS_TO_GENERATE = 2;
     const ONE_VOUCHER = 1;
+    const MINIMUM_VOUCHERS_TO_GENERATE = 2;
+
+    const FIELD_DISCOUNT_VOUCHER_POOL = 'fk_discount_voucher_pool';
+    const FIELD_QUANTITY = 'quantity';
     const FIELD_MAX_NUMBER_OF_USES = 'max_number_of_uses';
+    const FIELD_CUSTOM_CODE = 'custom_code';
+    const FIELD_CODE_LENGTH = 'code_length';
 
     /**
      * @var SpyDiscountVoucherPoolQuery
@@ -26,12 +33,19 @@ class VoucherForm extends AbstractForm
     protected $isMultiple;
 
     /**
+     * @var DiscountConfig
+     */
+    protected $discountConfig;
+
+    /**
      * @param SpyDiscountVoucherPoolQuery $poolQuery
+     * @param DiscountConfig $discountConfig
      * @param bool $isMultiple
      */
-    public function __construct(SpyDiscountVoucherPoolQuery $poolQuery, $isMultiple = false)
+    public function __construct(SpyDiscountVoucherPoolQuery $poolQuery, DiscountConfig $discountConfig, $isMultiple = false)
     {
         $this->poolQuery = $poolQuery;
+        $this->discountConfig = $discountConfig;
         $this->isMultiple = $isMultiple;
     }
 
@@ -44,21 +58,50 @@ class VoucherForm extends AbstractForm
     {
         if ($this->isMultiple) {
             $this
-                ->addText(static::FIELD_QUANTITY, [
+                ->addText(self::FIELD_QUANTITY, [
                     'label' => 'Quantity',
                     'constraints' => [
                         new NotBlank(),
-                        new GreaterThan(1)
+                        new GreaterThan(1),
                     ],
                 ])
             ;
         }
 
+
+        $maxAllowedCodeCharactersLength = $this->discountConfig->getAllowedCodeCharactersLength();
+        $codeLengthValidator = new MaximumCalculatedRangeValidator($maxAllowedCodeCharactersLength);
+
         $this
-            ->addNumber(static::FIELD_MAX_NUMBER_OF_USES, [
-                'label' => 'Max number of uses',
+            ->addText(self::FIELD_CUSTOM_CODE, [
+                'label' => 'Custom Code',
+                'attr' => [
+                    'data-toggle' => 'tooltip',
+                    'data-placement' => 'top',
+                    'title' => 'Add [code] template to position generated code',
+                ],
             ])
-            ->addChoice(static::FIELD_ID_POOL, [
+            ->add(self::FIELD_CODE_LENGTH, 'choice', [
+                'label' => 'Random Generated Code Length',
+                'choices' => $this->getCodeLengthChoices(),
+                'constraints' => [
+                    new Callback([
+                        'methods' => [
+                            function ($length, ExecutionContextInterface $context) use ($codeLengthValidator) {
+                                $formData = $context->getRoot()->getData();
+
+                                if ($codeLengthValidator->getPossibleCodeCombinationsCount($length) < $formData[VoucherForm::FIELD_QUANTITY]) {
+                                    $context->addViolation('The quantity of required codes is to high regarding the code length');
+                                }
+                            },
+                        ],
+                    ]),
+                ]
+            ])
+            ->addNumber(self::FIELD_MAX_NUMBER_OF_USES, [
+                'label' => 'Max number of uses (0 = Infinite usage)',
+            ])
+            ->addChoice(self::FIELD_DISCOUNT_VOUCHER_POOL, [
                 'label' => 'Pool',
                 'placeholder' => 'Select one',
                 'choices' => $this->getPools(),
@@ -96,6 +139,26 @@ class VoucherForm extends AbstractForm
         return [
             static::FIELD_QUANTITY => ($this->isMultiple) ? static::MINIMUM_VOUCHERS_TO_GENERATE : static::ONE_VOUCHER,
         ];
+    }
+
+    /**
+     * @return array
+     */
+    protected function getCodeLengthChoices()
+    {
+        $codeLengthChoices = [
+            0 => 'No additional random characters',
+            3 => 3,
+            4 => 4,
+            5 => 5,
+            6 => 6,
+            7 => 7,
+            8 => 8,
+            9 => 9,
+            10 => 10,
+        ];
+
+        return $codeLengthChoices;
     }
 
 }

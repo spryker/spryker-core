@@ -6,11 +6,12 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Controller;
 
-use Generated\Shared\Transfer\VoucherCreateTransfer;
+use Generated\Shared\Transfer\VoucherTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
+use SprykerFeature\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -24,6 +25,7 @@ class VoucherController extends AbstractController
 {
     const SESSION_TIME = 'session_title';
     const ID_POOL_PARAMETER = 'id-pool';
+    const BATCH_PARAMETER = 'batch';
     const GENERATED_ON_PARAMETER = 'generated-on';
 
     /**
@@ -38,14 +40,22 @@ class VoucherController extends AbstractController
             $formData = $form->getData();
             $this->setSessionTimestampForVoucherGenerator();
 
-            $voucherCreateTransfer = new VoucherCreateTransfer();
-            $voucherCreateTransfer->fromArray($formData, true);
-            $voucherCreateTransfer->setQuantity(VoucherForm::ONE_VOUCHER);
-            $voucherCreateTransfer->setIncludeTemplate(false);
+            $voucherTransfer = new VoucherTransfer();
+            $voucherTransfer->fromArray($formData, true);
+            $voucherTransfer->setQuantity(VoucherForm::ONE_VOUCHER);
+            $voucherTransfer->setIncludeTemplate(false);
 
-            $this->getFacade()->createVoucherCodes($voucherCreateTransfer);
+            $this->getFacade()->createVoucherCodes($voucherTransfer);
 
-            return $this->redirectResponse('/discount/voucher/view/?' . self::ID_POOL_PARAMETER . '=' . (int) $formData[VoucherForm::FIELD_ID_POOL]);
+            return $this->redirectResponse(
+                sprintf(
+                    '/discount/voucher/view/?%s=%d&%s=%d',
+                    self::ID_POOL_PARAMETER,
+                    (int) $formData[VoucherForm::FIELD_DISCOUNT_VOUCHER_POOL],
+                    self::BATCH_PARAMETER,
+                    $voucherTransfer->getVoucherBatch()
+                )
+            );
         }
 
         return [
@@ -65,13 +75,21 @@ class VoucherController extends AbstractController
             $formData = $form->getData();
             $this->setSessionTimestampForVoucherGenerator();
 
-            $voucherCreateTransfer = new VoucherCreateTransfer();
-            $voucherCreateTransfer->fromArray($formData, true);
-            $voucherCreateTransfer->setIncludeTemplate(false);
+            $voucherTransfer = new VoucherTransfer();
+            $voucherTransfer->fromArray($formData, true);
+            $voucherTransfer->setIncludeTemplate(false);
 
-            $this->getFacade()->createVoucherCodes($voucherCreateTransfer);
+            $this->getFacade()->createVoucherCodes($voucherTransfer);
 
-            return $this->redirectResponse('/discount/voucher/view/?' . self::ID_POOL_PARAMETER . '=' . (int) $formData[VoucherForm::FIELD_ID_POOL]);
+            return $this->redirectResponse(
+                sprintf(
+                    '/discount/voucher/view/?%s=%d&%s=%d',
+                    self::ID_POOL_PARAMETER,
+                    (int) $formData[VoucherForm::FIELD_DISCOUNT_VOUCHER_POOL],
+                    self::BATCH_PARAMETER,
+                    $voucherTransfer->getVoucherBatch()
+                )
+            );
         }
 
         return [
@@ -87,7 +105,7 @@ class VoucherController extends AbstractController
     public function viewAction(Request $request)
     {
         $idPool = $request->query->get(self::ID_POOL_PARAMETER);
-
+        $batchValue = $request->query->get(self::BATCH_PARAMETER);
 
         $pool = $this->getDependencyContainer()
             ->getVoucherPoolById($idPool)
@@ -101,12 +119,38 @@ class VoucherController extends AbstractController
             ->getGeneratedVouchersCountByIdPool($pool->getIdDiscountVoucherPool())
         ;
 
+        $generatedCodesTable = $this->getGeneratedCodesTable($request);
+
         return $this->viewResponse([
             'idPool' => $idPool,
             'pool' => $pool,
+            'batchValue' => $batchValue,
             'discount' => $discount,
             'countVouchers' => $countVouchers,
+            'generatedCodes' => $generatedCodesTable->render(),
         ]);
+    }
+
+    public function tableAction(Request $request)
+    {
+        $table = $this->getGeneratedCodesTable($request);
+
+        return $this->jsonResponse(
+            $table->fetchData()
+        );
+    }
+
+    /**
+     * @param Request $request
+     *
+     * @return DiscountVoucherCodesTable
+     */
+    protected function getGeneratedCodesTable(Request $request)
+    {
+        $idPool = $request->query->get(self::ID_POOL_PARAMETER);
+        $batch = $request->query->get(self::BATCH_PARAMETER);
+
+        return $this->getDependencyContainer()->createDiscountVoucherCodesTable($idPool, $batch);
     }
 
     /**
@@ -117,13 +161,9 @@ class VoucherController extends AbstractController
     public function exportAction(Request $request)
     {
         $idPool = $request->query->get(self::ID_POOL_PARAMETER);
-        $timestamp = $request->query->get(self::GENERATED_ON_PARAMETER);
-        $store = $this->getDependencyContainer()->getStore();
+        $batch = $request->query->get(self::BATCH_PARAMETER);
 
-        $createdAt = new \DateTime('now', new \DateTimeZone($store->getTimezone()));
-        $createdAt->setTimestamp($timestamp);
-
-        return $this->generateCsvFromVouchers($idPool, $createdAt);
+        return $this->generateCsvFromVouchers($idPool, $batch);
     }
 
     /**
@@ -158,13 +198,21 @@ class VoucherController extends AbstractController
 
     /**
      * @param int $idPool
+     * @param int $batchValue
      *
      * @return Response
      */
-    protected function generateCsvFromVouchers($idPool)
+    protected function generateCsvFromVouchers($idPool, $batchValue)
     {
-        $generatedVouchers = $this->getDependencyContainer()
+        $generatedVouchersQuery = $this->getDependencyContainer()
             ->getQueryForGeneratedVouchersByIdPool($idPool)
+        ;
+
+        if ($batchValue > 0) {
+            $generatedVouchersQuery = $generatedVouchersQuery->filterByVoucherBatch($batchValue);
+        }
+
+        $generatedVouchers = $generatedVouchersQuery
             ->find()
         ;
 
