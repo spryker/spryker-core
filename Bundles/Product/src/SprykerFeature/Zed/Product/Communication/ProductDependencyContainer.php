@@ -12,12 +12,14 @@ use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerFeature\Zed\Product\Business\ProductFacade;
 use SprykerFeature\Zed\Product\Communication\Table\ProductTable;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainer;
+use SprykerFeature\Zed\Product\ProductConfig;
 use SprykerFeature\Zed\Product\ProductDependencyProvider;
 use SprykerFeature\Zed\ProductOption\Business\ProductOptionFacade;
 use SprykerFeature\Zed\Url\Business\UrlFacade;
 
 /**
  * @method ProductQueryContainer getQueryContainer()
+ * @method ProductConfig getConfig()
  */
 class ProductDependencyContainer extends AbstractCommunicationDependencyContainer
 {
