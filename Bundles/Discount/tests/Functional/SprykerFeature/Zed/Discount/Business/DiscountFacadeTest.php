@@ -257,7 +257,7 @@ class DiscountFacadeTest extends Test
         $voucherCreateTransfer = new VoucherTransfer();
         $voucherCreateTransfer->setQuantity(self::AMOUNT_OF_VOUCHERS_TO_CREATE_10);
         $voucherCreateTransfer->setFkDiscountVoucherPool($voucherPoolEntity->getPrimaryKey());
-
+        $voucherCreateTransfer->setCodeLength(10);
         $this->discountFacade->createVoucherCodes($voucherCreateTransfer);
 
         $voucherEntities = (new \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherQuery())
