@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Discount\Business\Model;
 
 use Generated\Shared\Discount\VoucherInterface;
 use Propel\Runtime\ActiveQuery\Criteria;
+use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Discount\DiscountConfigInterface;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
@@ -18,6 +19,8 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
  */
 class VoucherEngine
 {
+
+    const POSTGRES_UNIQUE_VALIDATION = 23505;
 
     /**
      * @var DiscountConfigInterface
@@ -68,8 +71,10 @@ class VoucherEngine
                 $voucherTransfer->setCode($code);
 
                 $this->createVoucherCode($voucherTransfer);
-            } catch (\Exception $e) {
-                $codeCollisions++;
+            } catch (PropelException $e) {
+                if ($e->getCode() === self::POSTGRES_UNIQUE_VALIDATION) {
+                    $codeCollisions++;
+                }
             }
         }
 
