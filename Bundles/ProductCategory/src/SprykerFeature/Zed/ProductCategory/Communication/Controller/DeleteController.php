@@ -83,7 +83,7 @@ class DeleteController extends EditController
                     ->createProductCategoryFacade()
                     ->moveCategoryChildrenAndDeleteCategory($currentNodeTransfer, $locale);
 
-                $currentCategoryNodeTransfer = $this->updateCategoryNode($currentCategoryTransfer, $locale, $data);
+                $currentCategoryNodeTransfer = $this->updateCategoryNode($locale, $data);
 
                 $parentIdList[] = $currentCategoryNodeTransfer->getFkParentCategoryNode();
                 $parentIdList = array_flip($parentIdList);
