@@ -7,8 +7,8 @@
 namespace SprykerFeature\Zed\Category\Communication\Controller;
 
 use Generated\Shared\Transfer\NodeTransfer;
-use Pyz\Zed\Category\Business\CategoryFacade;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerFeature\Zed\Category\CategoryConfig;
 use SprykerFeature\Zed\Category\Communication\CategoryDependencyContainer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;

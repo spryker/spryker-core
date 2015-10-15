@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Product\Communication\Table;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\UrlTransfer;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
@@ -36,9 +37,16 @@ class ProductTable extends AbstractTable
 
     /**
      * @param SpyAbstractProductQuery $productQuery
+     * @param UrlFacade $urlFacade
+     * @param LocaleTransfer $localeTransfer
+     * @param $yvesUrl
      */
-    public function __construct(SpyAbstractProductQuery $productQuery, UrlFacade $urlFacade, LocaleTransfer $localeTransfer, $yvesUrl)
-    {
+    public function __construct(
+        SpyAbstractProductQuery $productQuery,
+        UrlFacade $urlFacade,
+        LocaleTransfer $localeTransfer,
+        $yvesUrl
+    ) {
         $this->productQuery = $productQuery;
         $this->urlFacade = $urlFacade;
         $this->localeTransfer = $localeTransfer;
