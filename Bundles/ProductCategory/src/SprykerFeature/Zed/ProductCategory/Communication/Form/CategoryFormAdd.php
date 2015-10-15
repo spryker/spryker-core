@@ -84,7 +84,7 @@ class CategoryFormAdd extends AbstractForm
         ])
             ->addSelect2ComboBox(self::FK_PARENT_CATEGORY_NODE, [
                 'label' => 'Parent',
-                'choices' => $this->getCategories(),
+                'choices' => $this->getCategoriesWithPaths(),
                 'constraints' => [
                     new NotBlank(),
                 ]
@@ -96,32 +96,39 @@ class CategoryFormAdd extends AbstractForm
     /**
      * @return array
      */
-    protected function getCategories()
+    protected function getCategoriesWithPaths()
     {
         $categoryList = $this->categoryQueryContainer->queryCategory($this->locale->getIdLocale())
             ->find()
         ;
 
         $data = [];
+        $pathCache = [];
         foreach ($categoryList as $category) {
             foreach ($category->getNodes() as $node) {
-                $pathTokens = $this->categoryQueryContainer
-                    ->queryPath($node->getIdCategoryNode(), $this->locale->getIdLocale(), false, true)
-                    ->find()
-                ;
+                if (!array_key_exists($node->getFkParentCategoryNode(), $pathCache)) {
+                    $pathTokens = $this->categoryQueryContainer
+                        ->queryPath($node->getIdCategoryNode(), $this->locale->getIdLocale(), false, true)
+                        ->find()
+                    ;
 
-                $formattedPath = [];
-                foreach ($pathTokens as $path) {
-                    $formattedPath[] = $path['name'];
+                    $formattedPath = [];
+                    foreach ($pathTokens as $path) {
+                        $formattedPath[] = $path['name'];
+                    }
+
+                    $path =  '/' . implode('/', $formattedPath);
+                    $pathCache[$node->getFkParentCategoryNode()] = $path;
                 }
-
-                $path =  '/' . implode('/', $formattedPath);
+                else {
+                    $path = $pathCache[$node->getFkParentCategoryNode()];
+                }
 
                 $data[$path][$node->getIdCategoryNode()] = $category->getAttributes()->getFirst()->getName();
             }
-
-            ksort($data);
         }
+
+        ksort($data);
 
         return $data;
     }
