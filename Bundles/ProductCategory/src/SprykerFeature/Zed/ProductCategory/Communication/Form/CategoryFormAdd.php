@@ -124,7 +124,6 @@ class CategoryFormAdd extends AbstractForm
             asort($data[$path], SORT_FLAG_CASE & SORT_STRING);
         }
 
-
         return $data;
     }
 
