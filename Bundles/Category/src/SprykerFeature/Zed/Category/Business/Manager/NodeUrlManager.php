@@ -127,13 +127,11 @@ class NodeUrlManager implements NodeUrlManagerInterface
      */
     public function removeUrl(NodeTransfer $categoryNode, LocaleTransfer $locale)
     {
-        $path = $this->categoryTreeReader->getPath($categoryNode->getIdCategoryNode(), $locale);
-        $categoryUrl = $this->urlPathGenerator->generate($path);
         $idNode = $categoryNode->getIdCategoryNode();
-        
-        if ($this->urlFacade->hasUrl($categoryUrl)) {
-            $url = $this->urlFacade->getUrlByPath($categoryUrl);
-            $this->urlFacade->touchUrlDeleted($url->getIdUrl());
+        $urlTransfer = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($idNode, $locale);
+
+        if ($urlTransfer) {
+            $this->urlFacade->deleteUrl($urlTransfer);
         }
     }
 }

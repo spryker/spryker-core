@@ -46,6 +46,13 @@ interface UrlManagerInterface
 
     /**
      * @param UrlTransfer $url
+     * @throws MissingUrlException
+     * @throws PropelException
+     */
+    public function deleteUrl(UrlTransfer $url);
+
+    /**
+     * @param UrlTransfer $url
      *
      * @return UrlTransfer
      */
@@ -121,5 +128,13 @@ interface UrlManagerInterface
      * @return SpyUrl
      */
     public function createUrlForCurrentLocale($url, $resourceType, $idResource);
+
+    /**
+     * @param int $idAbstractProduct
+     * @param int $idLocale
+     *
+     * @return UrlTransfer
+     */
+    public function getUrlByIdAbstractProductAndIdLocale($idAbstractProduct, $idLocale);
 
 }

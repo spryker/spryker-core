@@ -258,6 +258,23 @@ class UrlManager implements UrlManagerInterface
 
     /**
      * @param UrlTransfer $url
+     * @throws MissingUrlException
+     * @throws PropelException
+     */
+    public function deleteUrl(UrlTransfer $url)
+    {
+        $urlEntity = $this->urlQueryContainer->queryUrlById($url->getIdUrl())
+            ->findOne()
+        ;
+
+        if ($urlEntity) {
+            $this->touchUrlDeleted($url->getIdUrl());
+            $urlEntity->delete();
+        }
+    }
+
+    /**
+     * @param UrlTransfer $url
      *
      * @return UrlTransfer
      */

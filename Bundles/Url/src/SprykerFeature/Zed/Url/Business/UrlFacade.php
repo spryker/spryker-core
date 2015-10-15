@@ -252,6 +252,16 @@ class UrlFacade extends AbstractFacade
     }
 
     /**
+     * @param UrlTransfer $url
+     */
+    public function deleteUrl(UrlTransfer $url)
+    {
+        $urlManager = $this->getDependencyContainer()->getUrlManager();
+
+        $urlManager->deleteUrl($url);
+    }
+
+    /**
      * @param RedirectTransfer $redirect
      *
      * @return RedirectTransfer

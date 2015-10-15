@@ -68,5 +68,12 @@ interface CategoryToUrlInterface
      * @return UrlTransfer
      */
     public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale);
+
+    /**
+     * @param UrlTransfer $url
+     * @throws MissingUrlException
+     * @throws PropelException
+     */
+    public function deleteUrl(UrlTransfer $url);
     
 }
