@@ -14,6 +14,7 @@ interface ApplicationConfig extends ConfigInterface
     const COUCHBASE_BUCKET_PREFIX = 'COUCHBASE_BUCKET_PREFIX';
 
     const ENABLE_APPLICATION_DEBUG = 'ENABLE_APPLICATION_DEBUG';
+    const ENABLE_WEB_PROFILER = 'ENABLE_WEB_PROFILER';
     const NAVIGATION_CACHE_ENABLED = 'navigation cache enabled';
     const SET_REPEAT_DATA = 'SET_REPEAT_DATA';
     const SHOW_SYMFONY_TOOLBAR = 'SHOW_SYMFONY_TOOLBAR';

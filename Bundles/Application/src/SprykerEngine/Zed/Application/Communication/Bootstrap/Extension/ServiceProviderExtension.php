@@ -52,7 +52,7 @@ class ServiceProviderExtension extends LocatorAwareExtension implements ServiceP
             new HttpFragmentServiceProvider(),
         ];
 
-        if (Config::get(ApplicationConfig::SHOW_SYMFONY_TOOLBAR)) {
+        if (Config::get(ApplicationConfig::ENABLE_WEB_PROFILER, false)) {
             $providers[] = new WebProfilerServiceProvider();
         }
 
