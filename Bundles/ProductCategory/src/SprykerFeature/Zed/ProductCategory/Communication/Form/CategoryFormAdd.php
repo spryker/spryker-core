@@ -13,6 +13,7 @@ use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
+use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
 use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategory;
@@ -107,18 +108,7 @@ class CategoryFormAdd extends AbstractForm
         foreach ($categoryList as $category) {
             foreach ($category->getNodes() as $node) {
                 if (!array_key_exists($node->getFkParentCategoryNode(), $pathCache)) {
-                    $pathTokens = $this->categoryQueryContainer
-                        ->queryPath($node->getIdCategoryNode(), $this->locale->getIdLocale(), false, true)
-                        ->find()
-                    ;
-
-                    $formattedPath = [];
-                    foreach ($pathTokens as $path) {
-                        $formattedPath[] = $path['name'];
-                    }
-
-                    $path =  '/' . implode('/', $formattedPath);
-                    $pathCache[$node->getFkParentCategoryNode()] = $path;
+                    $path = $this->buildPath($node);
                 }
                 else {
                     $path = $pathCache[$node->getFkParentCategoryNode()];
@@ -131,6 +121,26 @@ class CategoryFormAdd extends AbstractForm
         ksort($data);
 
         return $data;
+    }
+
+    /**
+     * @param SpyCategoryNode $node
+     *
+     * @return string
+     */
+    protected function buildPath(SpyCategoryNode $node)
+    {
+        $pathTokens = $this->categoryQueryContainer
+            ->queryPath($node->getIdCategoryNode(), $this->locale->getIdLocale(), false, true)
+            ->find()
+        ;
+
+        $formattedPath = [];
+        foreach ($pathTokens as $path) {
+            $formattedPath[] = $path['name'];
+        }
+
+        return  '/' . implode('/', $formattedPath);
     }
 
     /**
