@@ -14,6 +14,8 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 {
     const STORE_CONFIG = 'store_config';
 
+    const FLASH_MESSENGER = 'flash_messanger';
+
     /**
      * @param Container $container
      *
@@ -23,6 +25,9 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::STORE_CONFIG] = function (Container $container) {
             return Store::getInstance();
+        };
+        $container[self::FLASH_MESSENGER] = function (Container $container) {
+            return $container->getLocator()->flashMessenger()->facade();
         };
 
         return $container;

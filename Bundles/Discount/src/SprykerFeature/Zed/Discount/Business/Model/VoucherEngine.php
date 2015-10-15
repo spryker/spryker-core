@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Discount\Business\Model;
 use Generated\Shared\Discount\VoucherInterface;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Exception\PropelException;
+use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerFeature\Zed\Discount\DiscountConfigInterface;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
@@ -33,14 +34,26 @@ class VoucherEngine
     protected $queryContainer;
 
     /**
+     * @var FlashMessengerFacade
+     */
+    protected $flashMessengerFacade;
+
+    /**
      * @param DiscountConfigInterface $settings
      * @param DiscountQueryContainer $queryContainer
+     * @param FlashMessengerFacade $flashMessengerFacade
      */
-    public function __construct(DiscountConfigInterface $settings, DiscountQueryContainer $queryContainer)
+    public function __construct(
+        DiscountConfigInterface $settings,
+        DiscountQueryContainer $queryContainer,
+        FlashMessengerFacade $flashMessengerFacade
+    )
     {
         $this->settings = $settings;
         $this->queryContainer = $queryContainer;
+        $this->flashMessengerFacade = $flashMessengerFacade;
     }
+
 
     /**
      * @param VoucherInterface $voucherTransfer
@@ -72,13 +85,17 @@ class VoucherEngine
 
                 $this->createVoucherCode($voucherTransfer);
             } catch (PropelException $e) {
+                $this->flashMessengerFacade->addErrorMessage(sprintf(
+                    'Code "%s" already exists',
+                    $code
+                ));
                 if ($e->getCode() === self::POSTGRES_UNIQUE_VALIDATION) {
                     $codeCollisions++;
                 }
             }
         }
 
-        if ($codeCollisions > 0) {
+        if ($codeCollisions > 0 && $voucherTransfer->getCodeLength() > 0) {
             $voucherTransfer->getQuantity($codeCollisions);
             $this->createVoucherCodes($voucherTransfer);
         }
