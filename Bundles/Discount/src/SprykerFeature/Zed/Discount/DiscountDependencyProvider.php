@@ -16,6 +16,8 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 
     const FLASH_MESSENGER = 'flash_messanger';
 
+    const PLUGIN_PROPEL_CONNECTION = 'propel_connection_plugin';
+
     /**
      * @param Container $container
      *
@@ -28,6 +30,9 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         };
         $container[self::FLASH_MESSENGER] = function (Container $container) {
             return $container->getLocator()->flashMessenger()->facade();
+        };
+        $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
+            return $container->getLocator()->propel()->pluginConnection()->get();
         };
 
         return $container;
