@@ -88,7 +88,6 @@ class UrlManager implements UrlManagerInterface
             ->setUrl($url)
             ->setFkLocale($fkLocale)
             ->setResource($resourceType, $idResource)
-
             ->save()
         ;
 
