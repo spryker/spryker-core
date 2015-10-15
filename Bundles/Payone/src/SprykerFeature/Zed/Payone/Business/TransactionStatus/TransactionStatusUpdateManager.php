@@ -383,7 +383,7 @@ class TransactionStatusUpdateManager
      *
      * @throws \Propel\Runtime\Exception\PropelException
      */
-    private function saveSpyPaymentPayoneTransactionStatusLogOrderItem($idSalesOrderItem, SpyPaymentPayoneTransactionStatusLog $statusLog)
+    protected function saveSpyPaymentPayoneTransactionStatusLogOrderItem($idSalesOrderItem, SpyPaymentPayoneTransactionStatusLog $statusLog)
     {
         $entity = new SpyPaymentPayoneTransactionStatusLogOrderItem();
         $entity->setSpyPaymentPayoneTransactionStatusLog($statusLog);
