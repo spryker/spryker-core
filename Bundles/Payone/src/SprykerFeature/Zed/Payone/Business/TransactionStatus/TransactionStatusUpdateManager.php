@@ -69,6 +69,8 @@ class TransactionStatusUpdateManager
 
     /**
      * @param TransactionStatusUpdateInterface $request
+     *
+     * @return void
      */
     protected function persistRequest(TransactionStatusUpdateInterface $request)
     {
@@ -115,20 +117,26 @@ class TransactionStatusUpdateManager
 
     /**
      * @param TransactionStatusUpdateInterface $request
+     *
+     * @return void
      */
     protected function transformCurrency(TransactionStatusUpdateInterface $request)
     {
         $balance = $request->getBalance();
-        $newBalance = (int) (round($balance * 100));
-        $request->setBalance($newBalance);
+        $balanceAmountInCents = round($balance * 100);
+        $request->setBalance($balanceAmountInCents);
 
         $receivable = $request->getReceivable();
-        $newReceivable = (int) (round($receivable * 100));
-        $request->setReceivable($newReceivable);
+        $receivableAmountInCents = round($receivable * 100);
+        $request->setReceivable($receivableAmountInCents);
+
+        $price = $request->getPrice();
+        $priceAmountInCents = round($price * 100);
+        $request->setPrice($priceAmountInCents);
     }
 
     /**
-     * @param TransactionStatusRequest $request
+     * @param TransactionStatusUpdateInterface $request
      *
      * @return bool|TransactionStatusResponse
      */
@@ -183,6 +191,12 @@ class TransactionStatusUpdateManager
         return $this->queryContainer->getPaymentByTransactionIdQuery($transactionId)->findOne();
     }
 
+    /**
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
+     *
+     * @return bool
+     */
     public function isPaymentPaid($idSalesOrder, $idSalesOrderItem)
     {
         $status = PayoneTransactionStatusConstants::TXACTION_PAID;
@@ -291,9 +305,9 @@ class TransactionStatusUpdateManager
     }
 
     /**
-     * @param $idSalesOrder
-     * @param $idSalesOrderItem
-     * @param $status
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
+     * @param string $status
      *
      * @return bool
      */
@@ -310,8 +324,8 @@ class TransactionStatusUpdateManager
     }
 
     /**
-     * @param $idSalesOrder
-     * @param $idSalesOrderItem
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
      *
      * @return bool
      */
@@ -323,11 +337,11 @@ class TransactionStatusUpdateManager
     }
 
     /**
-     * @param $idSalesOrder
-     * @param $idSalesOrderItem
-     * @param $status
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
+     * @param string $status
      *
-     * @return SpyPaymentPayoneTransactionStatusLog
+     * @return SpyPaymentPayoneTransactionStatusLog|null
      */
     private function getFirstUnprocessedTransactionStatusLog($idSalesOrder, $idSalesOrderItem, $status)
     {
@@ -348,8 +362,8 @@ class TransactionStatusUpdateManager
     }
 
     /**
-     * @param $idSalesOrder
-     * @param $idSalesOrderItem
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
      *
      * @return SpyPaymentPayoneTransactionStatusLog[]
      */
@@ -382,6 +396,8 @@ class TransactionStatusUpdateManager
      * @param SpyPaymentPayoneTransactionStatusLog $statusLog
      *
      * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
      */
     protected function saveSpyPaymentPayoneTransactionStatusLogOrderItem($idSalesOrderItem, SpyPaymentPayoneTransactionStatusLog $statusLog)
     {
