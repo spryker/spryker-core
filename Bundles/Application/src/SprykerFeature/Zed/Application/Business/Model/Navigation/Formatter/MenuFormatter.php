@@ -63,13 +63,13 @@ class MenuFormatter implements MenuFormatterInterface
     /**
      * @param array $pages
      * @param string $pathInfo
-     * @param bool $includeUnVisible
+     * @param bool $includeInvisible
      *
      * @return array
      */
-    public function formatMenu(array $pages, $pathInfo, $includeUnVisible = false)
+    public function formatMenu(array $pages, $pathInfo, $includeInvisible = false)
     {
-        $formattedPages = $this->formatPages($pages, $pathInfo, 1, $includeUnVisible);
+        $formattedPages = $this->formatPages($pages, $pathInfo, 1, $includeInvisible);
         unset($formattedPages[self::CHILD_IS_ACTIVE]);
 
         return $formattedPages;
@@ -79,23 +79,23 @@ class MenuFormatter implements MenuFormatterInterface
      * @param array $pages
      * @param string $pathInfo
      * @param int $currentLevel
-     * @param bool $includeUnVisible
+     * @param bool $includeInvisible
      *
      * @return array
      */
-    protected function formatPages(array $pages, $pathInfo, $currentLevel = 1, $includeUnVisible = false)
+    protected function formatPages(array $pages, $pathInfo, $currentLevel = 1, $includeInvisible = false)
     {
         $formattedPages = [];
         $currentLevel++;
         foreach ($pages as $page) {
-            if (!$includeUnVisible && isset($page[self::VISIBLE]) && !$page[self::VISIBLE]) {
+            if (!$includeInvisible && isset($page[self::VISIBLE]) && !$page[self::VISIBLE]) {
                 continue;
             }
             $formattedPage = $this->formatPage($page);
 
             if (isset($page[self::PAGES]) && !empty($page[self::PAGES])) {
                 $this->menuLevelValidator->validate($currentLevel, $page[self::TITLE]);
-                $children = $this->formatPages($page[self::PAGES], $pathInfo, $currentLevel, $includeUnVisible);
+                $children = $this->formatPages($page[self::PAGES], $pathInfo, $currentLevel, $includeInvisible);
             }
 
             if (isset($children[self::CHILD_IS_ACTIVE]) || $pathInfo === $formattedPage[self::URI]) {

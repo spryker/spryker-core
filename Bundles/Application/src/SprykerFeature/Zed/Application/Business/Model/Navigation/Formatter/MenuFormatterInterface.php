@@ -12,10 +12,10 @@ interface MenuFormatterInterface
     /**
      * @param array $pages
      * @param string $pathInfo
-     * @param bool $includeUnVisible
+     * @param bool $includeInvisible
      *
      * @return array
      */
-    public function formatMenu(array $pages, $pathInfo, $includeUnVisible = false);
+    public function formatMenu(array $pages, $pathInfo, $includeInvisible = false);
 
 }
