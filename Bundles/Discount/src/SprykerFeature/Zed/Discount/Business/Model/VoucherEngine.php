@@ -6,7 +6,9 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
+use Generated\Shared\Discount\VoucherCreateInfoInterface;
 use Generated\Shared\Discount\VoucherInterface;
+use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Shared\Transfer\TransferInterface;
@@ -21,6 +23,8 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
  */
 class VoucherEngine
 {
+    const MESSAGE_TYPE_SUCCESS = 'success';
+    const MESSAGE_TYPE_ERROR = 'error';
 
     protected $remainingCodesToGenerate = null;
 
@@ -65,6 +69,8 @@ class VoucherEngine
 
     /**
      * @param VoucherInterface $voucherTransfer
+     *
+     * @return VoucherCreateInfoInterface
      */
     public function createVoucherCodes(VoucherInterface $voucherTransfer)
     {
@@ -80,37 +86,39 @@ class VoucherEngine
         $voucherTransfer->setIncludeTemplate(true);
         $voucherPoolEntity->setTemplate($voucherTransfer->getCustomCode());
 
-        $this->saveBatchVoucherCodes($voucherPoolEntity, $voucherTransfer);
+        return $this->saveBatchVoucherCodes($voucherPoolEntity, $voucherTransfer);
     }
 
     /**
      * @param SpyDiscountVoucherPool $voucherPoolEntity
      * @param TransferInterface $voucherTransfer
+     *
+     * @return VoucherCreateInfoInterface
      */
     protected function saveBatchVoucherCodes(SpyDiscountVoucherPool $voucherPoolEntity, TransferInterface $voucherTransfer)
     {
         $this->connection->beginTransaction();
         $voucherCodesAreValid = $this->generateAndSaveVoucherCodes($voucherPoolEntity, $voucherTransfer, $voucherTransfer->getQuantity());
 
-        $this->acceptVoucherCodesTransation($voucherCodesAreValid);
+        return $this->acceptVoucherCodesTransation($voucherCodesAreValid);
     }
 
     /**
-     * @param bool $voucherCodesAreValid
+     * @param VoucherCreateInfoInterface $voucherCreateInfoInterface
      *
-     * @return bool
+     * @return VoucherCreateInfoInterface
      */
-    protected function acceptVoucherCodesTransation($voucherCodesAreValid)
+    protected function acceptVoucherCodesTransation(VoucherCreateInfoInterface $voucherCreateInfoInterface)
     {
-        if (true === $voucherCodesAreValid) {
+        if ($voucherCreateInfoInterface->getType() === self::MESSAGE_TYPE_SUCCESS) {
             $this->connection->commit();
 
-            return true;
+            return $voucherCreateInfoInterface;
         }
 
         $this->connection->rollBack();
 
-        return false;
+        return $voucherCreateInfoInterface;
     }
 
     /**
@@ -118,12 +126,13 @@ class VoucherEngine
      * @param VoucherInterface $voucherTransfer
      * @param int $quantiy
      *
-     * @return bool
+     * @return VoucherCreateInfoTransfer
      */
     protected function generateAndSaveVoucherCodes(SpyDiscountVoucherPool $discountVoucherPool, VoucherInterface $voucherTransfer, $quantiy)
     {
         $length = $voucherTransfer->getCodeLength();
         $codeCollisions = 0;
+        $messageCreateInfoTransfer = new VoucherCreateInfoTransfer();
 
         for ($i = 0; $i < $quantiy; $i++) {
             $code = $this->getRandomVoucherCode($length);
@@ -143,21 +152,24 @@ class VoucherEngine
         }
 
         if ($codeCollisions === 0) {
-            $this->flashMessengerFacade->addSuccessMessage('Voucher codes successfully generated');
+            $messageCreateInfoTransfer->setType(self::MESSAGE_TYPE_SUCCESS);
+            $messageCreateInfoTransfer->setMessage('Voucher codes successfully generated');
 
-            return true;
+            return $messageCreateInfoTransfer;
         }
 
         if ($codeCollisions === $voucherTransfer->getQuantity()) {
-            $this->flashMessengerFacade->addErrorMessage('No available codes to generate');
+            $messageCreateInfoTransfer->setType(self::MESSAGE_TYPE_ERROR);
+            $messageCreateInfoTransfer->setMessage('No available codes to generate');
 
-            return false;
+            return $messageCreateInfoTransfer;
         }
 
         if ($codeCollisions === $this->remainingCodesToGenerate) {
-            $this->flashMessengerFacade->addErrorMessage('No available codes to generate. Select higher code length');
+            $messageCreateInfoTransfer->setType(self::MESSAGE_TYPE_ERROR);
+            $messageCreateInfoTransfer->setMessage('No available codes to generate. Select higher code length');
 
-            return false;
+            return $messageCreateInfoTransfer;
         }
 
         $this->remainingCodesToGenerate = $codeCollisions;

@@ -251,16 +251,16 @@ class DiscountFacadeTest extends Test
 
     public function testShouldCreateMultipleVouchersForOneVoucherPoolWithTemplate()
     {
-        $this->markTestSkipped('Accessed request service outside of request scope. Try moving that call to a before handler or controller.');
         $voucherPoolEntity = (new \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool())
             ->setName(self::VOUCHER_POOL_NAME);
         $voucherPoolEntity->save();
 
-        $voucherCreateTransfer = new VoucherTransfer();
-        $voucherCreateTransfer->setQuantity(self::AMOUNT_OF_VOUCHERS_TO_CREATE_10);
-        $voucherCreateTransfer->setFkDiscountVoucherPool($voucherPoolEntity->getPrimaryKey());
-        $voucherCreateTransfer->setCodeLength(10);
-        $this->discountFacade->createVoucherCodes($voucherCreateTransfer);
+        $voucherTransfer = new VoucherTransfer();
+        $voucherTransfer->setQuantity(self::AMOUNT_OF_VOUCHERS_TO_CREATE_10);
+        $voucherTransfer->setFkDiscountVoucherPool($voucherPoolEntity->getPrimaryKey());
+        $voucherTransfer->setCustomCode('spryker-[code]');
+        $voucherTransfer->setCodeLength(10);
+        $this->discountFacade->createVoucherCodes($voucherTransfer);
 
         $voucherEntities = (new \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherQuery())
             ->filterByFkDiscountVoucherPool($voucherPoolEntity->getPrimaryKey())->find();

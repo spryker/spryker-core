@@ -50,6 +50,11 @@
         <property name="codeLength" type="int"/>
     </transfer>
 
+    <transfer name="VoucherCreateInfo">
+        <property name="type" type="string"/>
+        <property name="message" type="string"/>
+    </transfer>
+
     <transfer name="VoucherPool">
         <property name="idDiscountVoucherPool" type="int" />
         <property name="fkDiscountVoucherPoolCategory" type="int" />
