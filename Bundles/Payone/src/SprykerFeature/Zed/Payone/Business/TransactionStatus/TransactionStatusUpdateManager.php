@@ -69,6 +69,7 @@ class TransactionStatusUpdateManager
 
     /**
      * @param TransactionStatusUpdateInterface $request
+     *
      * @return void
      */
     protected function persistRequest(TransactionStatusUpdateInterface $request)
@@ -116,25 +117,26 @@ class TransactionStatusUpdateManager
 
     /**
      * @param TransactionStatusUpdateInterface $request
+     *
      * @return void
      */
     protected function transformCurrency(TransactionStatusUpdateInterface $request)
     {
         $balance = $request->getBalance();
-        $newBalance = (int) (round($balance * 100));
-        $request->setBalance($newBalance);
+        $balanceAmountInCents = round($balance * 100);
+        $request->setBalance($balanceAmountInCents);
 
         $receivable = $request->getReceivable();
-        $newReceivable = (int) (round($receivable * 100));
-        $request->setReceivable($newReceivable);
+        $receivableAmountInCents = round($receivable * 100);
+        $request->setReceivable($receivableAmountInCents);
 
         $price = $request->getPrice();
-        $newPrice = (int) (round($price * 100));
-        $request->setPrice($newPrice);
+        $priceAmountInCents = round($price * 100);
+        $request->setPrice($priceAmountInCents);
     }
 
     /**
-     * @param TransactionStatusRequest $request
+     * @param TransactionStatusUpdateInterface $request
      *
      * @return bool|TransactionStatusResponse
      */
