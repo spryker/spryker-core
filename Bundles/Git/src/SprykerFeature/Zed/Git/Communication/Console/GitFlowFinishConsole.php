@@ -6,15 +6,11 @@
 
 namespace SprykerFeature\Zed\Git\Communication\Console;
 
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
-
-class GitFlowUpdateConsole extends AbstractGitFlowConsole
+class GitFlowFinishConsole extends AbstractGitFlowConsole
 {
 
-    const COMMAND_NAME = 'gitflow:update';
-    const DESCRIPTION = 'Update branch';
+    const COMMAND_NAME = 'gitflow:finish';
+    const DESCRIPTION = 'Finish branch';
 
     protected function configure()
     {
@@ -38,6 +34,11 @@ class GitFlowUpdateConsole extends AbstractGitFlowConsole
             'git checkout ' . $branch,
             'git rebase ' . $from,
             'git push -f origin ' . $branch,
+            'git checkout ' . $from,
+            'git merge --no-ff ' . $branch,
+            'git push origin ' . $branch,
+            'git branch -d ' . $branch,
+            'git push origin :' . $branch,
         ];
     }
 
