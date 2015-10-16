@@ -74,6 +74,9 @@ abstract class AbstractGitFlowConsole extends Console
         foreach ($commandList as $command) {
             if ($this->askConfirmation(sprintf('Run "%s"', $command))) {
                 $this->runProcess($command);
+                $this->info(sprintf('Executed "%s"', $command));
+            } else {
+                $this->warning(sprintf('Not executed "%s"', $command));
             }
         }
     }
