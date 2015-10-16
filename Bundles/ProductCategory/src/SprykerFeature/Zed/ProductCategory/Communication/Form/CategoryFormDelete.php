@@ -22,7 +22,7 @@ class CategoryFormDelete extends CategoryFormEdit
             ])
             ->addSelect2ComboBox(self::FK_PARENT_CATEGORY_NODE, [
                 'label' => 'Or move them to category',
-                'choices' => $this->getCategories(),
+                'choices' => $this->getCategoriesWithPaths(),
                 'multiple' => false,
             ])
             ->addHidden(self::PK_CATEGORY_NODE)

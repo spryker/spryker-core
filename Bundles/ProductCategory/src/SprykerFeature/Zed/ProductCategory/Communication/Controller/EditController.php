@@ -275,4 +275,50 @@ class EditController extends AddController
         return $nodeTransfer;
     }
 
+    /**
+     * @param $idCategory
+     * @param LocaleTransfer $locale
+     *
+     * @return array
+     */
+    protected function getPaths($idCategory, LocaleTransfer $locale)
+    {
+        $categoryNodes = $this->getDependencyContainer()
+            ->createCategoryFacade()
+            ->getMainNodesByIdCategory($idCategory);
+
+        $paths = [];
+        foreach ($categoryNodes as $node) {
+            $pathTokens = $this->getDependencyContainer()
+                ->createCategoryQueryContainer()
+                ->queryPath($node->getIdCategoryNode(), $locale->getIdLocale(), true, false)
+                ->find()
+            ;
+
+            $paths[] = $this->getDependencyContainer()
+                ->createCategoryFacade()
+                ->getUrlGenerator()
+                ->generate($pathTokens);
+        }
+
+        return $paths;
+    }
+
+    /**
+     * @param $idCategory
+     * @param LocaleTransfer $locale
+     *
+     * @return array
+     */
+    protected function getProducts($idCategory, LocaleTransfer $locale)
+    {
+        $productList = $this->getDependencyContainer()
+            ->createProductCategoryQueryContainer()
+            ->queryProductsByCategoryId($idCategory, $locale)
+            ->find()
+        ;
+
+        return $productList->toArray();
+    }
+
 }

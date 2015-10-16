@@ -297,29 +297,29 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
-     * @param NodeTransfer $categoryNodeTransfer
+     * @param NodeTransfer $sourceNode
+     * @param NodeTransfer $destinationNode
      * @param LocaleTransfer $locale
      */
-    public function moveCategoryChildrenAndDeleteCategory(NodeTransfer $categoryNodeTransfer, LocaleTransfer $locale)
+    public function moveCategoryChildrenAndDeleteCategory(NodeTransfer $sourceNode, NodeTransfer $destinationNode, LocaleTransfer $locale)
     {
         $connection = Propel::getConnection();
         $connection->beginTransaction();
 
         $children = $this->categoryQueryContainer
-            ->queryFirstLevelChildren($categoryNodeTransfer->getIdCategoryNode())
+            ->queryFirstLevelChildren($sourceNode->getIdCategoryNode())
             ->find()
         ;
 
         foreach ($children as $child) {
             $childTransfer = (new NodeTransfer())->fromArray($child->toArray());
-            $childTransfer->setFkParentCategoryNode($categoryNodeTransfer->getIdCategoryNode());
-            $childTransfer->setFkCategory($categoryNodeTransfer->getFkCategory());
+            $childTransfer->setFkParentCategoryNode($destinationNode->getIdCategoryNode());
             $this->categoryFacade->updateCategoryNode($childTransfer, $locale);
         }
 
         //remove extra parents
         $extraParents = $this->categoryQueryContainer
-            ->queryNotMainNodesByCategoryId($categoryNodeTransfer->getFkCategory())
+            ->queryNotMainNodesByCategoryId($sourceNode->getFkCategory())
             ->find()
         ;
 
@@ -327,16 +327,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             $this->categoryFacade->deleteNode($parent->getIdCategoryNode(), $locale);
         }
 
-        $this->categoryFacade->deleteNode($categoryNodeTransfer->getIdCategoryNode(), $locale, false);
-
-        $hasNodes = $this->categoryQueryContainer
-            ->queryAllNodesByCategoryId($categoryNodeTransfer->getFkCategory())
-            ->count() > 0
-        ;
-
-        if (!$hasNodes) {
-            $this->categoryFacade->deleteCategory($categoryNodeTransfer->getFkCategory());
-        }
+        $this->categoryFacade->deleteNode($sourceNode->getIdCategoryNode(), $locale, false);
 
         $connection->commit();
     }

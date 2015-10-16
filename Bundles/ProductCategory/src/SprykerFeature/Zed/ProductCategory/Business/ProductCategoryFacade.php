@@ -165,14 +165,15 @@ class ProductCategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param NodeTransfer $categoryNodeTransfer
+     * @param NodeTransfer $sourceNode
+     * @param NodeTransfer $destinationNode
      * @param LocaleTransfer $locale
      */
-    public function moveCategoryChildrenAndDeleteCategory(NodeTransfer $categoryNodeTransfer, LocaleTransfer $locale)
+    public function moveCategoryChildrenAndDeleteCategory(NodeTransfer $sourceNode, NodeTransfer $destinationNode, LocaleTransfer $locale)
     {
         $this->getDependencyContainer()
             ->createProductCategoryManager()
-            ->moveCategoryChildrenAndDeleteCategory($categoryNodeTransfer, $locale)
+            ->moveCategoryChildrenAndDeleteCategory($sourceNode, $destinationNode, $locale)
         ;
     }
 }

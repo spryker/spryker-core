@@ -14,24 +14,32 @@
             {{ form_errors(form) }}
 
             <div class="row">
-                <div class="col-md-4">Paths to be deleted</div>
+                <div class="col-md-4">Urls to be deleted</div>
                 <div class="col-md-8">
-                    <ul>
-                        <li>BB</li>
-                        <li>BB</li>
-                        <li>BB</li>
-                    </ul>
+                    {% if paths|length > 0 %}
+                        <ul>
+                        {% for path in paths %}
+                            <li>
+                                {{ path }}
+                            </li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-4">Products to be de assigned</div>
                 <div class="col-md-8">
-                    <ul>
-                        <li>BB</li>
-                        <li>BB</li>
-                        <li>BB</li>
-                    </ul>
+                    {% if products|length > 0 %}
+                        <ul>
+                            {% for product in products %}
+                                <li>
+                                    {{ product.name }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
                 </div>
             </div>
 

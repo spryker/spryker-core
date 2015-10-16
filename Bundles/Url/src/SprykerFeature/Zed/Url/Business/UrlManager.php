@@ -137,8 +137,7 @@ class UrlManager implements UrlManagerInterface
 
         $setterName = 'setFk' . implode('', $bumps);
 
-        $transferUrl = new UrlTransfer();
-        $transferUrl
+        $transferUrl = (new UrlTransfer())
             ->setFkLocale($urlEntity->getFkLocale())
             ->setUrl($urlEntity->getUrl())
             ->setResourceType($urlEntity->getResourceType())

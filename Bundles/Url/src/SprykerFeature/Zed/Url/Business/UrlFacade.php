@@ -128,12 +128,16 @@ class UrlFacade extends AbstractFacade
      * @param int $idCategoryNode
      * @param LocaleTransfer $locale
      *
-     * @return UrlTransfer
+     * @return UrlTransfer|null
      */
     public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale)
     {
         $urlManager = $this->getDependencyContainer()->getUrlManager();
         $urlEntity = $urlManager->getResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $locale->getIdLocale());
+
+        if (!$urlEntity) {
+            return null;
+        }
 
         return $urlManager->convertUrlEntityToTransfer($urlEntity);
     }

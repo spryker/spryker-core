@@ -94,10 +94,12 @@ interface ProductCategoryManagerInterface
     public function updateProductMappingsPreconfig($idCategory, array $productPreconfigList);
 
     /**
-     * @param NodeTransfer $categoryNodeTransfer
+     * @param NodeTransfer $sourceNode
+     * @param NodeTransfer $destinationNode
      * @param LocaleTransfer $locale
+     * @return
      */
-    public function moveCategoryChildrenAndDeleteCategory(NodeTransfer $categoryNodeTransfer, LocaleTransfer $locale);
+    public function moveCategoryChildrenAndDeleteCategory(NodeTransfer $sourceNode, NodeTransfer $destinationNode, LocaleTransfer $locale);
 
     /**
      * @param int $idCategory
