@@ -19,7 +19,6 @@ class VoucherCodesType extends AbstractRuleType
     const IS_PRIVILEGED = 'is_privileged';
     const DESCRIPTION = 'description';
     const AMOUNT = 'amount';
-    const AMOUNT_TYPE = 'type';
     const VALID_FROM = 'valid_from';
     const VALID_TO = 'valid_to';
     const DATE_NOW = 'now';
@@ -91,14 +90,6 @@ class VoucherCodesType extends AbstractRuleType
                         'value' => 0,
                     ]),
                 ],
-            ])
-            ->add(self::AMOUNT_TYPE, 'choice', [
-                'label' => 'Value Type',
-                'empty_value' => false,
-                'choices' => [
-                    SpyDiscountTableMap::COL_TYPE_FIXED => SpyDiscountTableMap::COL_TYPE_FIXED,
-                    SpyDiscountTableMap::COL_TYPE_PERCENT => SpyDiscountTableMap::COL_TYPE_PERCENT,
-                ]
             ])
             ->add(self::VALID_FROM, 'date', [
                 'label' => 'Valid From',
