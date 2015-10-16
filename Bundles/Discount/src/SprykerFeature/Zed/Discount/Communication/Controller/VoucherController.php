@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Controller;
 
+use Generated\Shared\Discount\VoucherCreateInfoInterface;
+use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
@@ -28,6 +30,8 @@ class VoucherController extends AbstractController
     const BATCH_PARAMETER = 'batch';
     const GENERATED_ON_PARAMETER = 'generated-on';
 
+    const MESSAGE_TYPE_SUCCESS = 'success';
+
     /**
      * @return array|RedirectResponse
      */
@@ -45,7 +49,9 @@ class VoucherController extends AbstractController
             $voucherTransfer->setQuantity(VoucherForm::ONE_VOUCHER);
             $voucherTransfer->setIncludeTemplate(false);
 
-            $this->getFacade()->createVoucherCodes($voucherTransfer);
+            $voucherCreateInfoTransfer = $this->getFacade()->createVoucherCodes($voucherTransfer);
+
+            $this->addVoucherCreateMessage($voucherCreateInfoTransfer);
 
             return $this->redirectResponse(
                 sprintf(
@@ -79,7 +85,9 @@ class VoucherController extends AbstractController
             $voucherTransfer->fromArray($formData, true);
             $voucherTransfer->setIncludeTemplate(false);
 
-            $this->getFacade()->createVoucherCodes($voucherTransfer);
+            $voucherCreateInfoTransfer = $this->getFacade()->createVoucherCodes($voucherTransfer);
+
+            $this->addVoucherCreateMessage($voucherCreateInfoTransfer);
 
             return $this->redirectResponse(
                 sprintf(
@@ -95,6 +103,20 @@ class VoucherController extends AbstractController
         return [
             'form' => $form->createView(),
         ];
+    }
+
+    /**
+     * @param VoucherCreateInfoInterface $voucherCreateInfoInterface
+     *
+     * @return self
+     */
+    protected function addVoucherCreateMessage(VoucherCreateInfoInterface $voucherCreateInfoInterface)
+    {
+        if ($voucherCreateInfoInterface->getType() === self::MESSAGE_TYPE_SUCCESS) {
+            return $this->addSuccessMessage($voucherCreateInfoInterface->getMessage());
+        }
+
+        return $this->addErrorMessage($voucherCreateInfoInterface->getMessage());
     }
 
     /**
