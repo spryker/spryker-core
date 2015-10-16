@@ -12,6 +12,16 @@
                 <controller>role</controller>
                 <action>index</action>
                 <icon>fa-user-secret</icon>
+                <pages>
+                    <roles>
+                        <label>Create</label>
+                        <title>Create</title>
+                        <bundle>acl</bundle>
+                        <controller>role</controller>
+                        <action>create</action>
+                        <visible>0</visible>
+                    </roles>
+                </pages>
             </roles>
             <groups>
                 <label>Groups</label>

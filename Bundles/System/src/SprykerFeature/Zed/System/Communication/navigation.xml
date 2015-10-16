@@ -55,13 +55,13 @@
     </development>
     <home>
         <label>Home</label>
+        <title>Home</title>
         <bundle>index</bundle>
         <controller>index</controller>
         <action>index</action>
         <visible>0</visible>
     </home>
     <login-logout>
-        <id>login-logout</id>
         <label>Login</label>
         <title>Login</title>
         <bundle>auth</bundle>

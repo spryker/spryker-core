@@ -22,6 +22,11 @@ class PathExtractor implements PathExtractorInterface
      */
     public function extractPathFromMenu(array $menu)
     {
+
+
+
+
+
         $filteredMenu = array_filter($menu, function ($branch) {
             return isset($branch[MenuFormatter::IS_ACTIVE]);
         });

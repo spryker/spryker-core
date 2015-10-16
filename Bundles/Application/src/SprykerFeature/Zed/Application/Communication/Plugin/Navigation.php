@@ -25,8 +25,9 @@ class Navigation extends AbstractPlugin
     public function buildNavigation($pathInfo)
     {
         return $this->getDependencyContainer()
-                ->getApplicationFacade()
-                ->buildNavigation($pathInfo);
+            ->getApplicationFacade()
+            ->buildNavigation($pathInfo)
+        ;
     }
 
 }

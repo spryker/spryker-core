@@ -63,12 +63,13 @@ class MenuFormatter implements MenuFormatterInterface
     /**
      * @param array $pages
      * @param string $pathInfo
+     * @param bool $includeUnVisible
      *
      * @return array
      */
-    public function formatMenu(array $pages, $pathInfo)
+    public function formatMenu(array $pages, $pathInfo, $includeUnVisible = false)
     {
-        $formattedPages = $this->formatPages($pages, $pathInfo);
+        $formattedPages = $this->formatPages($pages, $pathInfo, 1, $includeUnVisible);
         unset($formattedPages[self::CHILD_IS_ACTIVE]);
 
         return $formattedPages;
@@ -78,25 +79,26 @@ class MenuFormatter implements MenuFormatterInterface
      * @param array $pages
      * @param string $pathInfo
      * @param int $currentLevel
+     * @param bool $includeUnVisible
      *
      * @return array
      */
-    protected function formatPages(array $pages, $pathInfo, $currentLevel = 1)
+    protected function formatPages(array $pages, $pathInfo, $currentLevel = 1, $includeUnVisible = false)
     {
         $formattedPages = [];
         $currentLevel++;
         foreach ($pages as $page) {
-            if (isset($page[self::VISIBLE]) && !$page[self::VISIBLE]) {
+            if (!$includeUnVisible && isset($page[self::VISIBLE]) && !$page[self::VISIBLE]) {
                 continue;
             }
             $formattedPage = $this->formatPage($page);
+
             if (isset($page[self::PAGES]) && !empty($page[self::PAGES])) {
                 $this->menuLevelValidator->validate($currentLevel, $page[self::TITLE]);
-                $children = $this->formatPages($page[self::PAGES], $pathInfo, $currentLevel);
+                $children = $this->formatPages($page[self::PAGES], $pathInfo, $currentLevel, $includeUnVisible);
             }
-            if (isset($children[self::CHILD_IS_ACTIVE]) ||
-                $pathInfo === $formattedPage[self::URI]
-            ) {
+
+            if (isset($children[self::CHILD_IS_ACTIVE]) || $pathInfo === $formattedPage[self::URI]) {
                 $formattedPages[self::CHILD_IS_ACTIVE] = true;
                 $formattedPage[self::IS_ACTIVE] = true;
             }
@@ -105,7 +107,6 @@ class MenuFormatter implements MenuFormatterInterface
                 $formattedPage[self::CHILDREN] = $children;
                 $children = [];
             }
-
             $formattedPages[$formattedPage[self::TITLE]] = $formattedPage;
         }
 
@@ -153,16 +154,6 @@ class MenuFormatter implements MenuFormatterInterface
 
         if (isset($page[self::SHORTCUT]) && strlen($page[self::SHORTCUT]) === 1) {
             $formattedPage[self::SHORTCUT] = $page[self::SHORTCUT];
-        }
-
-        $attributes = [];
-        if (isset($page[self::ID])) {
-            $attributes[self::ID] = $page[self::ID];
-        }
-        if (count($attributes)) {
-            $formattedPage[self::ATTRIBUTES] = $attributes;
-
-            return [$formattedPage, $page];
         }
 
         return $formattedPage;

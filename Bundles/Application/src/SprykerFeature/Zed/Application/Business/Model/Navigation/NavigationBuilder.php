@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Application\Business\Model\Navigation;
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface;
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Extractor\PathExtractorInterface;
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatterInterface;
-use SprykerFeature\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinderInterface;
 
 class NavigationBuilder
 {
@@ -52,7 +51,8 @@ class NavigationBuilder
         $navigationPages = $this->navigationCollector->getNavigation();
 
         $menu = $this->menuFormatter->formatMenu($navigationPages, $pathInfo);
-        $path = $this->pathExtractor->extractPathFromMenu($menu);
+        $breadcrumb = $this->menuFormatter->formatMenu($navigationPages, $pathInfo, true);
+        $path = $this->pathExtractor->extractPathFromMenu($breadcrumb);
 
         return [
             self::MENU => $menu,

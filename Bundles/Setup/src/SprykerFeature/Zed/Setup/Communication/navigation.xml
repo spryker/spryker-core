@@ -3,7 +3,6 @@
     <system>
         <pages>
             <setup-index>
-                <id>setup-index</id>
                 <label>Setup</label>
                 <title>Setup</title>
                 <bundle>setup</bundle>
