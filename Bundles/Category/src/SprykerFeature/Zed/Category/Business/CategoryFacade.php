@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Locale\LocaleInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerFeature\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 
 /**
@@ -308,6 +309,16 @@ class CategoryFacade extends AbstractFacade
         $this->getDependencyContainer()
             ->createCategoryTreeWriter()
             ->rebuildClosureTable()
+        ;
+    }
+
+    /**
+     * @return UrlPathGeneratorInterface
+     */
+    public function getUrlGenerator()
+    {
+        return $this->getDependencyContainer()
+            ->createUrlPathGenerator()
         ;
     }
 

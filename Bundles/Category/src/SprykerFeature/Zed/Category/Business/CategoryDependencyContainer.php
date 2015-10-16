@@ -122,7 +122,7 @@ class CategoryDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return UrlPathGeneratorInterface
      */
-    protected function createUrlPathGenerator()
+    public function createUrlPathGenerator()
     {
         return $this->getFactory()->createGeneratorUrlPathGenerator();
     }
