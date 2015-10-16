@@ -32,7 +32,7 @@ class GitFlowFinishConsole extends AbstractGitFlowConsole
             'git checkout ' . $from,
             'git pull --rebase',
             'git checkout ' . $branch,
-            'git rebase develop',
+            'git rebase ' . $from,
             'git push -f origin ' . $branch,
             'git checkout ' . $from,
             'git merge --no-ff ' . $branch,

@@ -36,7 +36,7 @@ class GitFlowUpdateConsole extends AbstractGitFlowConsole
             'git checkout ' . $from,
             'git pull --rebase',
             'git checkout ' . $branch,
-            'git rebase develop',
+            'git rebase ' . $from,
             'git push -f origin ' . $branch,
         ];
     }
