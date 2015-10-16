@@ -243,7 +243,9 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createModelVoucherEngine(
             $this->getConfig(),
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->getProvidedDependency(DiscountDependencyProvider::FLASH_MESSENGER),
+            $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_PROPEL_CONNECTION)
         );
     }
 

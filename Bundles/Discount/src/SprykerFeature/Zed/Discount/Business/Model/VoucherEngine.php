@@ -7,7 +7,10 @@
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
 use Generated\Shared\Discount\VoucherInterface;
+use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\ActiveQuery\Criteria;
+use SprykerEngine\Shared\Transfer\TransferInterface;
+use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerFeature\Zed\Discount\DiscountConfigInterface;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
@@ -18,6 +21,8 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
  */
 class VoucherEngine
 {
+
+    protected $remainingCodesToGenerate = null;
 
     /**
      * @var DiscountConfigInterface
@@ -30,13 +35,32 @@ class VoucherEngine
     protected $queryContainer;
 
     /**
+     * @var FlashMessengerFacade
+     */
+    protected $flashMessengerFacade;
+
+    /**
+     * @var ConnectionInterface
+     */
+    protected $connection;
+
+    /**
      * @param DiscountConfigInterface $settings
      * @param DiscountQueryContainer $queryContainer
+     * @param FlashMessengerFacade $flashMessengerFacade
+     * @param ConnectionInterface $connection
      */
-    public function __construct(DiscountConfigInterface $settings, DiscountQueryContainer $queryContainer)
+    public function __construct(
+        DiscountConfigInterface $settings,
+        DiscountQueryContainer $queryContainer,
+        FlashMessengerFacade $flashMessengerFacade,
+        ConnectionInterface $connection
+    )
     {
         $this->settings = $settings;
         $this->queryContainer = $queryContainer;
+        $this->flashMessengerFacade = $flashMessengerFacade;
+        $this->connection = $connection;
     }
 
     /**
@@ -44,41 +68,117 @@ class VoucherEngine
      */
     public function createVoucherCodes(VoucherInterface $voucherTransfer)
     {
-        $codeCollisions = 0;
         $voucherPoolEntity = $this->queryContainer
             ->queryVoucherPool()
-            ->findPk($voucherTransfer->getFkDiscountVoucherPool());
+            ->findPk($voucherTransfer->getFkDiscountVoucherPool())
+        ;
 
         $nextVoucherBatchValue = $this->getNextBatchValueForVouchers($voucherTransfer);
 
         $voucherTransfer->setVoucherBatch($nextVoucherBatchValue);
 
         $voucherTransfer->setIncludeTemplate(true);
-        $length = $voucherTransfer->getCodeLength();
         $voucherPoolEntity->setTemplate($voucherTransfer->getCustomCode());
 
-        for ($i = 0; $i < $voucherTransfer->getQuantity(); $i++) {
-            try {
-                $code = $this->getRandomVoucherCode($length);
-
-                if ($voucherTransfer->getIncludeTemplate()) {
-                    $code = $this->getCodeWithTemplate($voucherPoolEntity, $code);
-                }
-
-                $voucherTransfer->setCode($code);
-
-                $this->createVoucherCode($voucherTransfer);
-            } catch (\Exception $e) {
-                $codeCollisions++;
-            }
-        }
-
-        if ($codeCollisions > 0) {
-            $voucherTransfer->getQuantity($codeCollisions);
-            $this->createVoucherCodes($voucherTransfer);
-        }
+        $this->saveBatchVoucherCodes($voucherPoolEntity, $voucherTransfer);
     }
 
+    /**
+     * @param SpyDiscountVoucherPool $voucherPoolEntity
+     * @param TransferInterface $voucherTransfer
+     */
+    protected function saveBatchVoucherCodes(SpyDiscountVoucherPool $voucherPoolEntity, TransferInterface $voucherTransfer)
+    {
+        $this->connection->beginTransaction();
+        $voucherCodesAreValid = $this->generateAndSaveVoucherCodes($voucherPoolEntity, $voucherTransfer, $voucherTransfer->getQuantity());
+
+        $this->acceptVoucherCodesTransation($voucherCodesAreValid);
+    }
+
+    /**
+     * @param bool $voucherCodesAreValid
+     *
+     * @return bool
+     */
+    protected function acceptVoucherCodesTransation($voucherCodesAreValid)
+    {
+        if (true === $voucherCodesAreValid) {
+            $this->connection->commit();
+
+            return true;
+        }
+
+        $this->connection->rollBack();
+
+        return false;
+    }
+
+    /**
+     * @param SpyDiscountVoucherPool $discountVoucherPool
+     * @param VoucherInterface $voucherTransfer
+     * @param int $quantiy
+     *
+     * @return bool
+     */
+    protected function generateAndSaveVoucherCodes(SpyDiscountVoucherPool $discountVoucherPool, VoucherInterface $voucherTransfer, $quantiy)
+    {
+        $length = $voucherTransfer->getCodeLength();
+        $codeCollisions = 0;
+
+        for ($i = 0; $i < $quantiy; $i++) {
+            $code = $this->getRandomVoucherCode($length);
+
+            if ($voucherTransfer->getIncludeTemplate()) {
+                $code = $this->getCodeWithTemplate($discountVoucherPool, $code);
+            }
+
+            if (true === $this->voucherCodeExists($code)) {
+                $codeCollisions++;
+                continue;
+            }
+
+            $voucherTransfer->setCode($code);
+
+            $this->createVoucherCode($voucherTransfer);
+        }
+
+        if ($codeCollisions === 0) {
+            $this->flashMessengerFacade->addSuccessMessage('Voucher codes successfully generated');
+
+            return true;
+        }
+
+        if ($codeCollisions === $voucherTransfer->getQuantity()) {
+            $this->flashMessengerFacade->addErrorMessage('No available codes to generate');
+
+            return false;
+        }
+
+        if ($codeCollisions === $this->remainingCodesToGenerate) {
+            $this->flashMessengerFacade->addErrorMessage('No available codes to generate. Select higher code length');
+
+            return false;
+        }
+
+        $this->remainingCodesToGenerate = $codeCollisions;
+
+        return $this->generateAndSaveVoucherCodes($discountVoucherPool, $voucherTransfer, $codeCollisions);
+    }
+
+    /**
+     * @param string $voucherCode
+     *
+     * @return bool
+     */
+    protected function voucherCodeExists($voucherCode)
+    {
+        $voucherCodeEntity = $this->queryContainer
+            ->queryDiscountVoucher()
+            ->findOneByCode($voucherCode)
+        ;
+
+        return null !== $voucherCodeEntity;
+    }
 
     /**
      * @param VoucherInterface $voucherTransfer
