@@ -125,6 +125,10 @@ class TransactionStatusUpdateManager
         $receivable = $request->getReceivable();
         $newReceivable = (int) (round($receivable * 100));
         $request->setReceivable($newReceivable);
+
+        $price = $request->getPrice();
+        $newPrice = (int) (round($price * 100));
+        $request->setPrice($newPrice);
     }
 
     /**
