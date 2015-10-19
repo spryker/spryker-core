@@ -278,17 +278,20 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     public function queryChildren($idNode, $idLocale, $onlyOneLevel = true, $excludeStartNode = true)
     {
         $nodeQuery = SpyCategoryNodeQuery::create();
-        $nodeQuery->useCategoryQuery()
-            ->useAttributeQuery()
-            ->filterByFkLocale($idLocale)
+        $nodeQuery
+            ->useCategoryQuery()
+                ->useAttributeQuery()
+                    ->filterByFkLocale($idLocale)
+                ->endUse()
             ->endUse()
+            ->useDescendantQuery()
+                ->filterByFkCategoryNode($idNode)
             ->endUse()
-            ->addSelectColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE)
+            //ORDER OF COLUMNS MATTERS WHEN USING addSelectColumn()
+            //TODO https://spryker.atlassian.net/browse/CD-563
             ->addSelectColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE)
+            ->addSelectColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE)
             ->addSelectColumn(SpyCategoryAttributeTableMap::COL_NAME);
-        $nodeQuery->useDescendantQuery()
-            ->filterByFkCategoryNode($idNode)
-            ->endUse();
 
         if ($excludeStartNode) {
             $nodeQuery->filterByIdCategoryNode($idNode, Criteria::NOT_EQUAL);

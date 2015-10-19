@@ -6,6 +6,7 @@ use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Propel\Runtime\Propel;
+use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
 use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
@@ -14,6 +15,7 @@ use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+
 
 /**
  * @method ProductCategoryFacade getFacade()
@@ -276,7 +278,7 @@ class EditController extends AddController
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param LocaleTransfer $locale
      *
      * @return array
@@ -289,23 +291,31 @@ class EditController extends AddController
 
         $paths = [];
         foreach ($categoryNodes as $node) {
-            $pathTokens = $this->getDependencyContainer()
+            $children = $this->getDependencyContainer()
                 ->createCategoryQueryContainer()
-                ->queryPath($node->getIdCategoryNode(), $locale->getIdLocale(), true, false)
+                ->queryChildren($node->getIdCategoryNode(), $locale->getIdLocale(), false, true)
                 ->find()
             ;
 
-            $paths[] = $this->getDependencyContainer()
-                ->createCategoryFacade()
-                ->getUrlGenerator()
-                ->generate($pathTokens);
+            foreach ($children as $child) {
+                $pathTokens = $this->getDependencyContainer()
+                    ->createCategoryQueryContainer()
+                    ->queryPath($child->getIdCategoryNode(), $locale->getIdLocale(), true, false)
+                    ->find()
+                ;
+
+                $paths[] = $this->getDependencyContainer()
+                    ->createCategoryFacade()
+                    ->getUrlGenerator()
+                    ->generate($pathTokens);
+            }
         }
 
         return $paths;
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param LocaleTransfer $locale
      *
      * @return array
@@ -319,6 +329,28 @@ class EditController extends AddController
         ;
 
         return $productList->toArray();
+    }
+
+    /**
+     * @param SpyCategory $category
+     *
+     * @return array
+     */
+    protected function getBlocks(SpyCategory $category)
+    {
+        $blockList = [];
+        foreach ($category->getNodes() as $node) {
+            $blocks = $this->getDependencyContainer()
+                ->createCmsFacade()
+                ->getCmsBlocksByIdCategoryNode($node->getIdCategoryNode())
+            ;
+
+            foreach ($blocks as $blockTransfer) {
+                $blockList[] = $blockTransfer->toArray();
+            }
+        }
+
+        return $blockList;
     }
 
 }
