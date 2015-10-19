@@ -11,7 +11,9 @@ use SprykerFeature\Shared\Library\ConfigInterface;
 interface ApplicationConfig extends ConfigInterface
 {
 
+    const ALLOW_INTEGRATION_CHECKS = 'ALLOW_INTEGRATION_CHECKS';
     const COUCHBASE_BUCKET_PREFIX = 'COUCHBASE_BUCKET_PREFIX';
+    const DISPLAY_ERRORS = 'DISPLAY_ERRORS';
 
     const ENABLE_APPLICATION_DEBUG = 'ENABLE_APPLICATION_DEBUG';
     const ENABLE_WEB_PROFILER = 'ENABLE_WEB_PROFILER';

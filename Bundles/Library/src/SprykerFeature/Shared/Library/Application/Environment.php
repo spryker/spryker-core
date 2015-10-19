@@ -6,8 +6,10 @@
 
 namespace SprykerFeature\Shared\Library\Application;
 
+use SprykerEngine\Shared\Config;
+use SprykerEngine\Shared\Kernel\Store;
+use SprykerFeature\Shared\Application\ApplicationConfig;
 use SprykerFeature\Shared\Library\Autoloader;
-use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\Library\Error\ErrorHandler;
 use SprykerFeature\Shared\Library\TestAutoloader;
 use SprykerFeature\Shared\System\SystemConfig;
@@ -15,44 +17,22 @@ use SprykerFeature\Shared\System\SystemConfig;
 class Environment
 {
 
-    const ENV_TESTING = 'testing';
-    const ENV_STAGING = 'staging';
     const ENV_DEVELOPMENT = 'development';
-    const ENV_PRODUCTION = 'production';
-    const ENV_QUALITY01 = 'quality01';
-    const ENV_QUALITY02 = 'quality02';
-    const ENV_QUALITY03 = 'quality03';
-    const ENV_QUALITY04 = 'quality04';
 
     /**
      * @var array
      */
-    protected static $environments = [
-        self::ENV_TESTING,
-        self::ENV_STAGING,
-        self::ENV_DEVELOPMENT,
-        self::ENV_PRODUCTION,
-        self::ENV_QUALITY01,
-        self::ENV_QUALITY02,
-        self::ENV_QUALITY03,
-        self::ENV_QUALITY04,
+    private static $fatalErrors = [
+        E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR
     ];
-
-    private static $fatalErrors = [E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR];
-
-    /**
-     * @return array
-     */
-    public static function getEnvironments()
-    {
-        return self::$environments;
-    }
 
     /**
      * @param string $application
      * @param bool $disableApplicationCheck
      *
      * @throws \Exception
+     *
+     * @return void
      */
     public static function initialize($application, $disableApplicationCheck = false)
     {
@@ -65,7 +45,7 @@ class Environment
         self::defineStore();
 
         date_default_timezone_set('UTC');
-        ini_set('display_errors', APPLICATION_ENV !== self::ENV_PRODUCTION);
+        ini_set('display_errors', Config::get(ApplicationConfig::DISPLAY_ERRORS, false));
 
         if (!defined('APPLICATION_SOURCE_DIR')) {
             if (!getenv('APPLICATION_SOURCE_DIR')) {
@@ -113,7 +93,7 @@ class Environment
             Autoloader::allowNamespace($namespace);
         }
 
-        $store = \SprykerEngine\Shared\Kernel\Store::getInstance();
+        $store = Store::getInstance();
         $locale2 = $store->getCurrentLocale();
         $locale1 = $locale2 . '.UTF-8';
 
@@ -131,6 +111,9 @@ class Environment
         date_default_timezone_set($store->getTimezone());
     }
 
+    /**
+     * @return void
+     */
     private static function defineEnvironment()
     {
         if (!defined('APPLICATION_ENV')) {
@@ -148,6 +131,9 @@ class Environment
         }
     }
 
+    /**
+     * @return void
+     */
     private static function defineStore()
     {
         if (!defined('APPLICATION_STORE')) {
@@ -166,7 +152,7 @@ class Environment
     }
 
     /**
-     * Errorhandler is initialized lazy as in most cases
+     * ErrorHandler is initialized lazy as in most cases
      * we will not use it
      */
     protected static function initializeErrorHandler()

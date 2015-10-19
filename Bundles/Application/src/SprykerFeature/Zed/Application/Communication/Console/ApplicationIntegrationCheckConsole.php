@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\Application\Communication\Console;
 
+use SprykerEngine\Shared\Config;
+use SprykerFeature\Shared\Application\ApplicationConfig;
 use SprykerFeature\Shared\Library\Application\Environment;
 use SprykerFeature\Zed\Application\Business\ApplicationFacade;
 use SprykerFeature\Zed\Application\Communication\Console\ApplicationCheckStep\AbstractApplicationCheckStep;
@@ -36,10 +38,12 @@ class ApplicationIntegrationCheckConsole extends Console
      * @param OutputInterface $output
      *
      * @throws \Exception
+     *
+     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (Environment::ENV_DEVELOPMENT !== APPLICATION_ENV) {
+        if (Config::get(ApplicationConfig::ALLOW_INTEGRATION_CHECKS, false)) {
             throw new \Exception('This command is only allowed to run in development environment');
         }
 
