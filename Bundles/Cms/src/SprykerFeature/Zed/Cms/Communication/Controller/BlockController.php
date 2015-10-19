@@ -186,7 +186,6 @@ class BlockController extends AbstractController
         $localId = $this->getLocaleFacade()->getCurrentLocale()->getIdLocale();
 
         $searchedItems = $this->getQueryContainer()->queryNodeByCategoryName($term,$localId)
-            ->limit(self::SEARCH_LIMIT)
             ->find();
 
         $result = [];
