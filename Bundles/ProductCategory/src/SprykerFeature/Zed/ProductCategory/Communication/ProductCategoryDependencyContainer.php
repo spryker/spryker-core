@@ -11,6 +11,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\ProductCategoryCommunication;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainerInterface;
+use SprykerFeature\Zed\Cms\Business\CmsFacade; //TODO: https://spryker.atlassian.net/browse/CD-540
 use SprykerFeature\Zed\ProductCategory\Communication\Table\ProductCategoryTable;
 use SprykerFeature\Zed\ProductCategory\Communication\Table\ProductTable;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
@@ -71,6 +72,18 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
     public function createProductCategoryFacade()
     {
         return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_PRODUCT_CATEGORY);
+    }
+
+    /**
+     * TODO: https://spryker.atlassian.net/browse/CD-540
+     *
+     * @throws \ErrorException
+     *
+     * @return CmsFacade
+     */
+    public function createCmsFacade()
+    {
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_CMS);
     }
 
     /**
