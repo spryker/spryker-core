@@ -1,3 +1,4 @@
+
 <?php
 
 /**
@@ -8,7 +9,6 @@ namespace SprykerFeature\Zed\Application\Communication\Console;
 
 use SprykerEngine\Shared\Config;
 use SprykerFeature\Shared\Application\ApplicationConfig;
-use SprykerFeature\Shared\Library\Application\Environment;
 use SprykerFeature\Zed\Application\Business\ApplicationFacade;
 use SprykerFeature\Zed\Application\Communication\Console\ApplicationCheckStep\AbstractApplicationCheckStep;
 use SprykerFeature\Zed\Console\Business\Model\Console;
@@ -43,7 +43,7 @@ class ApplicationIntegrationCheckConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (Config::get(ApplicationConfig::ALLOW_INTEGRATION_CHECKS, false)) {
+        if (!Config::get(ApplicationConfig::ALLOW_INTEGRATION_CHECKS, false)) {
             throw new \Exception('This command is only allowed to run in development environment');
         }
 

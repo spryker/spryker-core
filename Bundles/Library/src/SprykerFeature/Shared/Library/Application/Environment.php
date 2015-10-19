@@ -17,13 +17,11 @@ use SprykerFeature\Shared\System\SystemConfig;
 class Environment
 {
 
-    const ENV_DEVELOPMENT = 'development';
-
     /**
      * @var array
      */
     private static $fatalErrors = [
-        E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR
+        E_ERROR, E_PARSE, E_CORE_ERROR, E_COMPILE_ERROR, E_USER_ERROR,
     ];
 
     /**
@@ -31,8 +29,6 @@ class Environment
      * @param bool $disableApplicationCheck
      *
      * @throws \Exception
-     *
-     * @return void
      */
     public static function initialize($application, $disableApplicationCheck = false)
     {
@@ -112,7 +108,6 @@ class Environment
     }
 
     /**
-     * @return void
      */
     private static function defineEnvironment()
     {
@@ -132,7 +127,6 @@ class Environment
     }
 
     /**
-     * @return void
      */
     private static function defineStore()
     {
