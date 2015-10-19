@@ -330,4 +330,16 @@ class CmsFacade extends AbstractFacade
 
         $blockManager->updateBlocksAssignedToDeletedCategoryNode($idCategoryNode);
     }
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return CmsBlockTransfer[]
+     */
+    public function getCmsBlocksByIdCategoryNode($idCategoryNode)
+    {
+        $blockManager = $this->getDependencyContainer()->getBlockManager();
+
+        return $blockManager->getCmsBlocksByIdCategoryNode($idCategoryNode);
+    }
 }

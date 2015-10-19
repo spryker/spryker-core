@@ -90,15 +90,13 @@ class BlockManager implements BlockManagerInterface
 
         $assignedBlocks = $this->getCmsBlocksByIdCategoryNode($idCategoryNode);
 
-        foreach ($assignedBlocks as $block) {
-            $blockTransfer = $this->convertBlockEntityToTransfer($block);
-
+        foreach ($assignedBlocks as $idBlock => $blockTransfer) {
             //unique keys is on name, type and value therefore the name has to be changed
             $blockTransfer->setName(
-                $blockTransfer->getName().'_'.CmsConfig::RESOURCE_TYPE_CATEGORY_NODE.'_deleted_'.$block->getIdCmsBlock()
+                $blockTransfer->getName().'_'.CmsConfig::RESOURCE_TYPE_CATEGORY_NODE.'_deleted_'.$blockTransfer->getIdCmsBlock()
             );
-            $block->setType(CmsConfig::RESOURCE_TYPE_STATIC);
-            $block->setValue(0);
+            $blockTransfer->setType(CmsConfig::RESOURCE_TYPE_STATIC);
+            $blockTransfer->setValue(0);
             $this->saveBlockAndTouch($blockTransfer);
         }
 
@@ -205,17 +203,22 @@ class BlockManager implements BlockManagerInterface
     }
 
     /**
-     * @param int $idCategory
+     * @param int $idCategoryNode
      *
-     * @return SpyCmsBlock[]
+     * @return CmsBlockTransfer[]
      */
-    protected function getCmsBlocksByIdCategoryNode($idCategory)
+    public function getCmsBlocksByIdCategoryNode($idCategoryNode)
     {
-        $blockEntities = $this->cmsQueryContainer->queryBlockByIdCategoryNode($idCategory)
+        $blockEntities = $this->cmsQueryContainer->queryBlockByIdCategoryNode($idCategoryNode)
             ->find()
         ;
 
-        return $blockEntities;
+        $blockTransfers = [];
+        foreach ($blockEntities as $block) {
+            $blockTransfers[$block->getIdCmsBlock()] = $this->convertBlockEntityToTransfer($block);
+        }
+
+        return $blockTransfers;
     }
 
     /**

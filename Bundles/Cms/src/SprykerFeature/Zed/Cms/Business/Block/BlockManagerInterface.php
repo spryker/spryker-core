@@ -59,4 +59,11 @@ interface BlockManagerInterface
      * @return bool
      */
     public function hasBlockCategoryNodeMapping($idCategoryNode);
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return CmsBlockTransfer[]
+     */
+    public function getCmsBlocksByIdCategoryNode($idCategoryNode);
 }
