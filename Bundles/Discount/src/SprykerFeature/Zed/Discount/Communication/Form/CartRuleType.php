@@ -46,21 +46,6 @@ class CartRuleType extends AbstractRuleType
                     new NotBlank(),
                 ]
             ])
-            ->add(self::FIELD_TYPE, 'choice', [
-                'label' => 'Value Type',
-                'multiple' => false,
-                'expanded' => true,
-                'choices' => [
-                    SpyDiscountTableMap::COL_TYPE_FIXED => SpyDiscountTableMap::COL_TYPE_FIXED,
-                    SpyDiscountTableMap::COL_TYPE_PERCENT => SpyDiscountTableMap::COL_TYPE_PERCENT,
-                ],
-                'constraints' => [
-                    new Required(),
-                ],
-                'attr' => [
-                    'class' => 'form-inline option-chain'
-                ]
-            ])
             ->add(self::FIELD_CALCULATOR_PLUGIN, 'choice', [
                 'label' => 'Calculator Plugin',
                 'choices' => $this->getAvailableCalculatorPlugins(),

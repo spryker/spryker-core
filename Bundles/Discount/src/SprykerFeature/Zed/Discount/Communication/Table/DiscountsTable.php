@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Table;
 
+use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountQuery;
@@ -78,7 +79,7 @@ class DiscountsTable extends AbstractTable
                 SpyDiscountTableMap::COL_ID_DISCOUNT => $item->getIdDiscount(),
                 SpyDiscountTableMap::COL_DISPLAY_NAME => $item->getDisplayName(),
                 SpyDiscountTableMap::COL_DESCRIPTION => $item->getDescription(),
-                self::COL_VALUE => $item->getAmount() . ' ' . $item->getType(),
+                self::COL_VALUE => $this->getDiscountPrice($item),
                 SpyDiscountTableMap::COL_IS_PRIVILEGED => $item->getIsPrivileged(),
                 SpyDiscountTableMap::COL_IS_ACTIVE => $item->getIsActive(),
                 self::COL_PERIOD => $item->getValidFrom(self::DATE_FORMAT) . ' - ' . $item->getValidTo(self::DATE_FORMAT),
@@ -88,6 +89,34 @@ class DiscountsTable extends AbstractTable
         }
 
         return $result;
+    }
+
+    /**
+     * @param SpyDiscount $discount
+     *
+     * @return string
+     */
+    protected function getDiscountPrice(SpyDiscount $discount)
+    {
+        $amount = $discount->getAmount();
+        $amountType = $this->getDiscountAmountType($discount);
+
+        return $amount . ' ' . $amountType;
+    }
+
+    /**
+     * @param SpyDiscount $discount
+     *
+     * @return string
+     */
+    protected function getDiscountAmountType(SpyDiscount $discount)
+    {
+        if ($discount->getCalculatorPlugin() === DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE) {
+
+            return 'percentage';
+        }
+
+        return 'fixed';
     }
 
     /**

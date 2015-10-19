@@ -17,9 +17,7 @@
                 {{ form_row(form.display_name) }}
                 {{ form_row(form.description) }}
                 {{ form_row(form.amount) }}
-                {{ form_row(form.type) }}
                 {{ form_row(form.calculator_plugin) }}
-                {#{{ form_row(form.collector_plugin) }}#}
 
                 <div class="row collection-form" id="collector-container">
                     {% for rule in form.collector_plugins %}
