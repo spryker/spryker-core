@@ -36,7 +36,7 @@ class GitFlowFinishConsole extends AbstractGitFlowConsole
             'git push -f origin ' . $branch,
             'git checkout ' . $from,
             'git merge --no-ff ' . $branch,
-            'git push origin ' . $branch,
+            'git push origin ' . $from,
             'git branch -d ' . $branch,
             'git push origin :' . $branch,
         ];
