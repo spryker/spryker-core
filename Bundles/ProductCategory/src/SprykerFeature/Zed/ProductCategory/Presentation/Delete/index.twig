@@ -14,8 +14,7 @@
             {{ form_errors(form) }}
 
             <div class="row">
-                <div class="col-md-4">Urls to be deleted</div>
-                <div class="col-md-8">
+                <div class="col-md-12"><b>Urls to be deleted</b>
                     {% if paths|length > 0 %}
                         <ul>
                         {% for path in paths %}
@@ -24,13 +23,16 @@
                             </li>
                         {% endfor %}
                         </ul>
+                    {% else %}
+                        <ul>
+                            <li>None</li>
+                        </ul>
                     {% endif %}
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-4">Products to be de assigned</div>
-                <div class="col-md-8">
+                <div class="col-md-12"><b>Products to be de assigned</b>
                     {% if products|length > 0 %}
                         <ul>
                             {% for product in products %}
@@ -39,21 +41,31 @@
                                 </li>
                             {% endfor %}
                         </ul>
+                    {% else %}
+                        <ul>
+                            <li>None</li>
+                        </ul>
                     {% endif %}
                 </div>
             </div>
 
             <div class="row">
-                <div class="col-md-4">Cms blocks to be de assigned</div>
-                <div class="col-md-8">
-                    <ul>
-                        <li>BB</li>
-                        <li>BB</li>
-                        <li>BB</li>
-                    </ul>
+                <div class="col-md-12"><b>Cms blocks to be de assigned</b>
+                    {% if blocks|length > 0 %}
+                        <ul>
+                            {% for block in blocks %}
+                                <li>
+                                    {{ block.name }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <ul>
+                            <li>None</li>
+                        </ul>
+                    {% endif %}
                 </div>
             </div>
-
 
 
             {{ form_rest(form) }}

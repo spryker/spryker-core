@@ -122,7 +122,8 @@ class DeleteController extends EditController
             'showProducts' => false,
             'currentCategory' => $currentCategory->toArray(),
             'paths' => $this->getPaths($idCategory, $locale),
-            'products' => $this->getProducts($idCategory, $locale)
+            'products' => $this->getProducts($idCategory, $locale),
+            'blocks' => $this->getBlocks($currentCategory)
         ]);
     }
 
