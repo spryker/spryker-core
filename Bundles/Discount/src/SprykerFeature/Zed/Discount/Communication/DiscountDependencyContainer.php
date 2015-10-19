@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Communication;
 
+use Generated\Shared\Transfer\DataTablesTransfer;
 use SprykerFeature\Zed\Discount\Communication\Form\CollectorPluginType;
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesType;
 use SprykerFeature\Zed\Discount\Communication\Table\DiscountsTable;
@@ -88,9 +89,14 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
      *
      * @return DiscountVoucherCodesTable
      */
-    public function createDiscountVoucherCodesTable($idPool, $batchValue)
+    public function createDiscountVoucherCodesTable(DataTablesTransfer $dataTablesTransfer, $idPool, $batchValue)
     {
-        return $this->getFactory()->createTableDiscountVoucherCodesTable($this->getQueryContainer(), $idPool, $batchValue);
+        return $this->getFactory()->createTableDiscountVoucherCodesTable(
+            $this->getQueryContainer(),
+            $dataTablesTransfer,
+            $idPool,
+            $batchValue
+        );
     }
 
     /**

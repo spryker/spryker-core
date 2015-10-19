@@ -7,13 +7,13 @@
 namespace SprykerFeature\Zed\Discount\Communication\Controller;
 
 use Generated\Shared\Discount\VoucherCreateInfoInterface;
-use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
+use SprykerFeature\Zed\Gui\Communication\Table\TableParameters;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
@@ -172,8 +172,12 @@ class VoucherController extends AbstractController
         $idPool = $request->query->get(self::ID_POOL_PARAMETER);
         $batch = $request->query->get(self::BATCH_PARAMETER);
 
-        return $this->getDependencyContainer()->createDiscountVoucherCodesTable($idPool, $batch);
+        $tableParameters = TableParameters::getTableParameters($request);
+
+        return $this->getDependencyContainer()->createDiscountVoucherCodesTable($tableParameters, $idPool, $batch);
     }
+
+
 
     /**
      * @param Request $request

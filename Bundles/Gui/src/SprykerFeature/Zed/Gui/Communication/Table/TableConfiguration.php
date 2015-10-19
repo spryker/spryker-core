@@ -22,6 +22,11 @@ class TableConfiguration
     private $header;
 
     /**
+     * @var array
+     */
+    private $footer;
+
+    /**
      * @var int
      */
     private $pageLength;
@@ -65,6 +70,37 @@ class TableConfiguration
         if ($this->isAssoc($header)) {
             $this->header = $header;
         }
+    }
+
+    /**
+     * @return array
+     */
+    public function getFooter()
+    {
+        return $this->footer;
+    }
+
+    /**
+     * @param array $footer
+     */
+    public function setFooter(array $footer)
+    {
+        $this->footer = $footer;
+    }
+
+    /**
+     * @return $this
+     */
+    public function setFooterFromHeader()
+    {
+        if (empty($this->getHeader()) === true) {
+            return $this;
+        }
+
+        $headerKeys = array_keys($this->getHeader());
+        $this->setFooter($headerKeys);
+
+        return $this;
     }
 
     /**

@@ -336,6 +336,7 @@ abstract class AbstractTable
                 'tableId' => $this->getTableIdentifier(),
                 'class' => $this->tableClass,
                 'header' => $this->config->getHeader(),
+                'footer' => $this->config->getFooter(),
                 'order' => $this->getOrders($this->config),
                 'searchable' => $this->config->getSearchable(),
                 'sortable' => $this->config->getSortable(),
