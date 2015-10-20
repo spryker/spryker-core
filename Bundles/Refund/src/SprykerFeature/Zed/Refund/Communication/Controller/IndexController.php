@@ -30,7 +30,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $table = $this->getDependencyContainer()->createRefundsTable();
+        $table = $this->getDependencyContainer()->createRefundTable();
 
         return $this->viewResponse(['refunds' => $table->render()]);
     }
@@ -40,7 +40,7 @@ class IndexController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getDependencyContainer()->createRefundsTable();
+        $table = $this->getDependencyContainer()->createRefundTable();
 
         return $this->jsonResponse(
             $table->fetchData()
@@ -91,9 +91,7 @@ class IndexController extends AbstractController
             }
 
             $refundTransfer = new RefundTransfer();
-            $refundTransfer->setAdjustmentFee($formData['adjustment_fee']);
-            $refundTransfer->setAmount($formData['amount']);
-            $refundTransfer->setComment($formData['comment']);
+            $refundTransfer->fromArray($formData, true);
             $refundTransfer->setFkSalesOrder($orderTransfer->getIdSalesOrder());
 
             foreach ($formData['order_items'] as $key => $quantity) {

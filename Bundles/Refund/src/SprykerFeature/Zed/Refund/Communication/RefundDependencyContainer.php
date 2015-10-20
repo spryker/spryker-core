@@ -13,7 +13,7 @@ use SprykerFeature\Shared\Library\Context;
 use SprykerFeature\Shared\Library\DateFormatter;
 use SprykerFeature\Zed\Refund\Business\RefundFacade;
 use SprykerFeature\Zed\Refund\Communication\Form\RefundForm;
-use SprykerFeature\Zed\Refund\Communication\Table\RefundsTable;
+use SprykerFeature\Zed\Refund\Communication\Table\RefundTable;
 use SprykerFeature\Zed\Refund\Persistence\RefundQueryContainer;
 use SprykerFeature\Zed\Refund\RefundConfig;
 use SprykerFeature\Zed\Refund\RefundDependencyProvider;
@@ -41,9 +41,9 @@ class RefundDependencyContainer extends AbstractCommunicationDependencyContainer
     }
 
     /**
-     * @return RefundsTable
+     * @return RefundTable
      */
-    public function createRefundsTable()
+    public function createRefundTable()
     {
         $refundQuery = $this->getQueryContainer()->queryRefund();
 
