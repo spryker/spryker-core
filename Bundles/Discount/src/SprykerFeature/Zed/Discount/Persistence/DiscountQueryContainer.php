@@ -213,7 +213,6 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
             ->withColumn(SpyDiscountVoucherPoolCategoryTableMap::COL_NAME, VoucherCodesType::VOUCHER_POOL_CATEGORY)
             ->withColumn(SpyDiscountTableMap::COL_ID_DISCOUNT, self::ALIAS_COL_ID_DISCOUNT)
             ->withColumn(SpyDiscountTableMap::COL_AMOUNT, self::ALIAS_COL_AMOUNT)
-            ->withColumn(SpyDiscountTableMap::COL_TYPE, self::ALIAS_COL_TYPE)
             ->withColumn(SpyDiscountTableMap::COL_DESCRIPTION, self::ALIAS_COL_DESCRIPTION)
             ->filterByIdDiscountVoucherPool($idVoucherCode)
         ;
