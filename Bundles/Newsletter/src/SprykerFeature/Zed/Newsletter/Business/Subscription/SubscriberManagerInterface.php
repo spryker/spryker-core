@@ -26,7 +26,9 @@ interface SubscriberManagerInterface
 
     /**
      * @param NewsletterSubscriberInterface $subscriber
+     *
+     * @return void
      */
-    public function assignCustomerWithExistingSubscriber(NewsletterSubscriberInterface $subscriber);
+    public function assignCustomerToExistingSubscriber(NewsletterSubscriberInterface $subscriber);
 
 }
