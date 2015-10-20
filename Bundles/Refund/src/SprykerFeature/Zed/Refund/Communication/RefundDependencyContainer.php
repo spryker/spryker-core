@@ -47,7 +47,7 @@ class RefundDependencyContainer extends AbstractCommunicationDependencyContainer
     {
         $refundQuery = $this->getQueryContainer()->queryRefund();
 
-        return $this->getFactory()->createTableRefundsTable(
+        return $this->getFactory()->createTableRefundTable(
             $refundQuery,
             $this->getRefundFacade(),
             new DateFormatter(Context::getInstance())

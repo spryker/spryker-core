@@ -41,7 +41,6 @@ class Environment
         self::defineStore();
 
         date_default_timezone_set('UTC');
-        ini_set('display_errors', Config::get(ApplicationConfig::DISPLAY_ERRORS, false));
 
         if (!defined('APPLICATION_SOURCE_DIR')) {
             if (!getenv('APPLICATION_SOURCE_DIR')) {
@@ -88,6 +87,8 @@ class Environment
         foreach ($coreNamespaces as $namespace) {
             Autoloader::allowNamespace($namespace);
         }
+
+        ini_set('display_errors', Config::get(ApplicationConfig::DISPLAY_ERRORS, false));
 
         $store = Store::getInstance();
         $locale2 = $store->getCurrentLocale();
