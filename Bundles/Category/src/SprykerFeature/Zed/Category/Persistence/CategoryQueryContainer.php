@@ -327,16 +327,17 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         }
 
         $nodeQuery = SpyCategoryNodeQuery::create();
-        $nodeQuery->useClosureTableQuery()
-            ->orderByFkCategoryNodeDescendant(Criteria::DESC)
-            ->orderByDepth(Criteria::DESC)
-            ->filterByFkCategoryNodeDescendant($idNode)
-            ->filterByDepth($depth, Criteria::NOT_EQUAL)
-            ->endUse();
-        $nodeQuery->useCategoryQuery()
-            ->useAttributeQuery()
-            ->filterByFkLocale($idLocale)
+        $nodeQuery
+            ->useClosureTableQuery()
+                ->orderByFkCategoryNodeDescendant(Criteria::DESC)
+                ->orderByDepth(Criteria::DESC)
+                ->filterByFkCategoryNodeDescendant($idNode)
+                ->filterByDepth($depth, Criteria::NOT_EQUAL)
             ->endUse()
+            ->useCategoryQuery()
+                ->useAttributeQuery()
+                    ->filterByFkLocale($idLocale)
+                ->endUse()
             ->endUse();
 
         if ($excludeRootNode) {
