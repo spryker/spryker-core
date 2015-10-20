@@ -86,18 +86,18 @@ interface PaymentManagerInterface
     public function getCreditCardCheckRequestData(PayoneCreditCardCheckRequestDataTransfer $creditCardCheckRequestDataTransfer);
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param OrderInterface $orderTransfer
      *
      * @return bool
      */
-    public function isRefundPossible(OrderTransfer $orderTransfer);
+    public function isRefundPossible(OrderInterface $orderTransfer);
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param OrderInterface $orderTransfer
      *
      * @return bool
      */
-    public function isPaymentDataRequired(OrderTransfer $orderTransfer);
+    public function isPaymentDataRequired(OrderInterface $orderTransfer);
 
     /**
      * @param OrderInterface $orderTransfer
@@ -120,6 +120,6 @@ interface PaymentManagerInterface
      *
      * @return void
      */
-    public function updatePaymentDetail($paymentData, $idOrder);
+    public function updatePaymentDetail(PaymentDataTransfer $paymentData, $idOrder);
 
 }

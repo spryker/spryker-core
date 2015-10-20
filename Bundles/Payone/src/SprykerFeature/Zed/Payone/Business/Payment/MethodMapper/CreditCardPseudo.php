@@ -164,7 +164,7 @@ class CreditCardPseudo extends AbstractMapper
     {
         $paymentMethodContainer = new CreditCardPseudoContainer();
 
-        $pseudoCardPan = $paymentEntity->getSpyPaymentPayoneDetail()->getPseudocardpan();
+        $pseudoCardPan = $paymentEntity->getSpyPaymentPayoneDetail()->getPseudoCardPan();
         $paymentMethodContainer->setPseudoCardPan($pseudoCardPan);
 
         return $paymentMethodContainer;

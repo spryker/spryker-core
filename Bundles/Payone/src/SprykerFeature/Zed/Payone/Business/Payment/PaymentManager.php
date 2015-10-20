@@ -12,7 +12,6 @@ use Generated\Shared\Payone\PayoneRefundInterface;
 use Generated\Shared\Payone\PayoneStandardParameterInterface;
 use Generated\Shared\Payone\OrderInterface;
 use Generated\Shared\Refund\PaymentDataInterface;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
 use Generated\Shared\Transfer\PayonePaymentDetailTransfer;
@@ -514,11 +513,11 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param OrderInterface $orderTransfer
      *
      * @return bool
      */
-    public function isRefundPossible(OrderTransfer $orderTransfer)
+    public function isRefundPossible(OrderInterface $orderTransfer)
     {
         $paymentTransfer = $this->getPayment($orderTransfer);
 
@@ -532,11 +531,11 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param OrderInterface $orderTransfer
      *
      * @return bool
      */
-    public function isPaymentDataRequired(OrderTransfer $orderTransfer)
+    public function isPaymentDataRequired(OrderInterface $orderTransfer)
     {
         $paymentTransfer = $this->getPayment($orderTransfer);
 
@@ -583,7 +582,7 @@ class PaymentManager implements PaymentManagerInterface
      *
      * @return void
      */
-    public function updatePaymentDetail($paymentData, $idOrder)
+    public function updatePaymentDetail(PaymentDataTransfer $paymentData, $idOrder)
     {
         $paymentEntity = $this->queryContainer->getPaymentByOrderId($idOrder)->findOne();
         $paymentDetailEntity = $paymentEntity->getSpyPaymentPayoneDetail();

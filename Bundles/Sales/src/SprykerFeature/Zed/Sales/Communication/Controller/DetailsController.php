@@ -86,7 +86,6 @@ class DetailsController extends AbstractController
             'itemsInProgress' => $itemsInProgress,
             'itemsPaid' => $itemsPaid,
             'itemsCancelled' => $itemsCancelled,
-            //'form' => isset($form) ? $form->createView() : null,
         ];
     }
 
