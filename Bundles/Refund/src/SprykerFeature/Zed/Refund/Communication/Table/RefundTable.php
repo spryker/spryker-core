@@ -10,7 +10,7 @@ use SprykerFeature\Zed\Refund\Business\RefundFacade;
 use SprykerFeature\Zed\Refund\Persistence\Propel\Map\SpyRefundTableMap;
 use SprykerFeature\Zed\Refund\Persistence\Propel\SpyRefundQuery;
 
-class RefundsTable extends AbstractTable
+class RefundTable extends AbstractTable
 {
 
     const ACTIONS = 'Actions';

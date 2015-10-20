@@ -10,6 +10,8 @@ use Generated\Shared\Checkout\CheckoutResponseInterface;
 use Generated\Shared\Payone\PayoneCreditCardInterface;
 use Generated\Shared\Payone\PayonePaymentInterface;
 use Generated\Shared\Payone\PayoneRefundInterface;
+use Generated\Shared\Refund\PaymentDataInterface;
+use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer;
 use Generated\Shared\Payone\OrderInterface;
 use Generated\Shared\Transfer\PayonePaymentLogTransfer;
@@ -211,6 +213,16 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
+     * @param OrderInterface $orderTransfer
+     *
+     * @return bool
+     */
+    public function isPaymentDataRequired(OrderInterface $orderTransfer)
+    {
+        return $this->getDependencyContainer()->createPaymentManager()->isPaymentDataRequired($orderTransfer);
+    }
+
+    /**
      * @param PayonePaymentInterface $payment
      *
      * @return PayoneAuthorizationCheckResponseTransfer
@@ -287,8 +299,28 @@ class PayoneFacade extends AbstractFacade
      *
      * @return PayonePaymentLogTransfer[]
      */
-    public function getPaymentLogs(ObjectCollection $orders) {
+    public function getPaymentLogs(ObjectCollection $orders)
+    {
         return $this->getDependencyContainer()->createPaymentManager()->getPaymentLogs($orders);
+    }
+
+    /**
+     * @param int $idPayment
+     *
+     * @return PaymentDataInterface
+     */
+    public function getPaymentData($idPayment)
+    {
+        return $this->getDependencyContainer()->createPaymentManager()->getPaymentData($idPayment);
+    }
+
+    /**
+     * @param PaymentDataTransfer $paymentData
+     * @param int $idOrder
+     */
+    public function updatePaymentDetail(PaymentDataTransfer $paymentData, $idOrder)
+    {
+        $this->getDependencyContainer()->createPaymentManager()->updatePaymentDetail($paymentData, $idOrder);
     }
 
 }

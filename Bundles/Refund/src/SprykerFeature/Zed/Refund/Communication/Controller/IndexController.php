@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Refund\Communication\Controller;
 
+use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\RefundExpenseTransfer;
 use Generated\Shared\Transfer\RefundOrderItemTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
@@ -29,7 +30,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-        $table = $this->getDependencyContainer()->createRefundsTable();
+        $table = $this->getDependencyContainer()->createRefundTable();
 
         return $this->viewResponse(['refunds' => $table->render()]);
     }
@@ -39,7 +40,7 @@ class IndexController extends AbstractController
      */
     public function tableAction()
     {
-        $table = $this->getDependencyContainer()->createRefundsTable();
+        $table = $this->getDependencyContainer()->createRefundTable();
 
         return $this->jsonResponse(
             $table->fetchData()
@@ -73,13 +74,24 @@ class IndexController extends AbstractController
 
         $form->handleRequest();
 
+        $isPaymentDataRequired = $this->getDependencyContainer()
+            ->getConfig()
+            ->getPaymentDataPlugin()
+            ->isPaymentDataRequired($orderTransfer)
+        ;
+
         if ($form->isValid()) {
             $formData = $form->getData();
 
+            if ($isPaymentDataRequired) {
+                $paymentDataTransfer = (new PaymentDataTransfer())->fromArray($formData, true);
+                $this->getDependencyContainer()->getConfig()->getPaymentDataPlugin()
+                    ->updatePaymentDetail($paymentDataTransfer, $idOrder)
+                ;
+            }
+
             $refundTransfer = new RefundTransfer();
-            $refundTransfer->setAdjustmentFee($formData['adjustment_fee']);
-            $refundTransfer->setAmount($formData['amount']);
-            $refundTransfer->setComment($formData['comment']);
+            $refundTransfer->fromArray($formData, true);
             $refundTransfer->setFkSalesOrder($orderTransfer->getIdSalesOrder());
 
             foreach ($formData['order_items'] as $key => $quantity) {
@@ -118,6 +130,7 @@ class IndexController extends AbstractController
             'form' => $form->createView(),
             'orderItems' => $orderItemsArray,
             'expenses'=> $expensesArray,
+            'isPaymentDataRequired' => $isPaymentDataRequired,
         ]);
     }
 

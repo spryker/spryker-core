@@ -23,11 +23,15 @@ interface PaymentMethodMapperInterface
 
     /**
      * @param SequenceNumberProviderInterface $sequenceNumberProvider
+     *
+     * @return void
      */
     public function setSequenceNumberProvider(SequenceNumberProviderInterface $sequenceNumberProvider);
 
     /**
      * @param PayoneStandardParameterInterface $standardParameter
+     *
+     * @return void
      */
     public function setStandardParameter(PayoneStandardParameterInterface $standardParameter);
 

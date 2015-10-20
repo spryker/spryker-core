@@ -11,7 +11,8 @@ use Generated\Shared\Payone\PayoneCreditCardInterface;
 use Generated\Shared\Payone\PayoneRefundInterface;
 use Generated\Shared\Payone\PayoneStandardParameterInterface;
 use Generated\Shared\Payone\OrderInterface;
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Refund\PaymentDataInterface;
+use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
 use Generated\Shared\Transfer\PayonePaymentDetailTransfer;
 use Generated\Shared\Transfer\PayonePaymentLogTransfer;
@@ -19,6 +20,7 @@ use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
+use SprykerFeature\Zed\Library\Copy;
 use SprykerFeature\Zed\Payone\Business\Api\Call\CreditCardCheck;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\RefundContainer;
@@ -445,6 +447,21 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
+     * @param int $idOrder
+     *
+     * @return PaymentDataInterface
+     */
+    public function getPaymentData($idOrder)
+    {
+        $paymentEntity = $this->queryContainer->getPaymentByOrderId($idOrder)->findOne();
+        $paymentDetailEntity = $paymentEntity->getSpyPaymentPayoneDetail();
+        $paymentDataTransfer = new PaymentDataTransfer();
+        $paymentDataTransfer->fromArray($paymentDetailEntity->toArray(), true);
+
+        return $paymentDataTransfer;
+    }
+
+    /**
      * Gets payment logs (both api and transaction status) for specific orders in chronological order.
      *
      * @param ObjectCollection $orders
@@ -497,11 +514,29 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param OrderInterface $orderTransfer
      *
      * @return bool
      */
-    public function isRefundPossible($orderTransfer)
+    public function isRefundPossible(OrderInterface $orderTransfer)
+    {
+        $paymentTransfer = $this->getPayment($orderTransfer);
+
+        if (!$this->isPaymentDataRequired($orderTransfer)) {
+            return true;
+        }
+
+        $paymentDetailTransfer = $paymentTransfer->getPaymentDetail();
+
+        return $paymentDetailTransfer->getBic() && $paymentDetailTransfer->getIban();
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
+     *
+     * @return bool
+     */
+    public function isPaymentDataRequired(OrderInterface $orderTransfer)
     {
         $paymentTransfer = $this->getPayment($orderTransfer);
 
@@ -511,13 +546,12 @@ class PaymentManager implements PaymentManagerInterface
             PayoneApiConstants::PAYMENT_METHOD_PAYPAL,
             PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO,
         ];
+
         if (in_array($paymentMethod, $whiteList)) {
-            return true;
+            return false;
         }
 
-        $paymentDetailTransfer = $paymentTransfer->getPaymentDetail();
-
-        return $paymentDetailTransfer->getBic() && $paymentDetailTransfer->getIban();
+        return true;
     }
 
     /**
@@ -541,6 +575,22 @@ class PaymentManager implements PaymentManagerInterface
         }
 
         return $checkoutResponse;
+    }
+
+    /**
+     * @param PaymentDataTransfer $paymentDataTransfer
+     * @param int $idOrder
+     *
+     * @return void
+     */
+    public function updatePaymentDetail(PaymentDataTransfer $paymentDataTransfer, $idOrder)
+    {
+        $paymentEntity = $this->queryContainer->getPaymentByOrderId($idOrder)->findOne();
+        $paymentDetailEntity = $paymentEntity->getSpyPaymentPayoneDetail();
+
+        Copy::transferToEntity($paymentDataTransfer, $paymentDetailEntity);
+
+        $paymentDetailEntity->save();
     }
 
 }

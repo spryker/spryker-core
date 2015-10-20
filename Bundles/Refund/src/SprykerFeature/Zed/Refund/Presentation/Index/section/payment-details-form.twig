@@ -1,0 +1,8 @@
+{% if isPaymentDataRequired %}
+
+<h6>{{ 'Required Payment Data' | trans }}</h6>
+
+{{ form_row(form.iban) }}
+{{ form_row(form.bic) }}
+
+{% endif %}

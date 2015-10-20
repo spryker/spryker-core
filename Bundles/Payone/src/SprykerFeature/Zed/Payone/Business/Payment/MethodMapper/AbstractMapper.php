@@ -39,6 +39,8 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
 
     /**
      * @param PayoneStandardParameterInterface $standardParameterTransfer
+     *
+     * @return void
      */
     public function setStandardParameter(PayoneStandardParameterInterface $standardParameterTransfer)
     {
@@ -55,6 +57,8 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
 
     /**
      * @param SequenceNumberProviderInterface $sequenceNumberProvider
+     *
+     * @return void
      */
     public function setSequenceNumberProvider(SequenceNumberProviderInterface $sequenceNumberProvider)
     {

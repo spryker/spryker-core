@@ -197,6 +197,8 @@ class SalesFacade extends AbstractFacade
     }
 
     /**
+     * //TODO: Remove direct dependency and move to plugin | CD-561
+     *
      * @param PayonePaymentDetailTransfer $paymentDetailTransfer
      * @param int $idPayment
      *

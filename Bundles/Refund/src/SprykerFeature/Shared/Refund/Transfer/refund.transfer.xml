@@ -24,4 +24,15 @@
         <property name="quantity" type="integer" />
     </transfer>
 
+    <transfer name="Order">
+        <property name="idSalesOrder" type="int"/>
+        <property name="grandTotal" type="string" />
+    </transfer>
+
+    <transfer name="PaymentData">
+        <property name="idPayment" type="int" />
+        <property name="iban" type="string" />
+        <property name="bic" type="string" />
+    </transfer>
+
 </transfers>

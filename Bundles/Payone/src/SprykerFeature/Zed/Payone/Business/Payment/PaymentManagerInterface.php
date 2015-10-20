@@ -10,6 +10,8 @@ use Generated\Shared\Checkout\CheckoutResponseInterface;
 use Generated\Shared\Payone\OrderInterface;
 use Generated\Shared\Payone\PayoneCreditCardInterface;
 use Generated\Shared\Payone\PayoneRefundInterface;
+use Generated\Shared\Refund\PaymentDataInterface;
+use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\AuthorizationResponseContainer;
@@ -83,11 +85,18 @@ interface PaymentManagerInterface
     public function getCreditCardCheckRequestData(PayoneCreditCardCheckRequestDataTransfer $creditCardCheckRequestDataTransfer);
 
     /**
-     * @param $orderTransfer
+     * @param OrderInterface $orderTransfer
      *
      * @return bool
      */
-    public function isRefundPossible($orderTransfer);
+    public function isRefundPossible(OrderInterface $orderTransfer);
+
+    /**
+     * @param OrderInterface $orderTransfer
+     *
+     * @return bool
+     */
+    public function isPaymentDataRequired(OrderInterface $orderTransfer);
 
     /**
      * @param OrderInterface $orderTransfer
@@ -96,5 +105,20 @@ interface PaymentManagerInterface
      * @return CheckoutResponseInterface
      */
     public function postSaveHook(OrderInterface $orderTransfer, CheckoutResponseInterface $checkoutResponse);
+
+    /**
+     * @param int $idPayment
+     *
+     * @return PaymentDataInterface
+     */
+    public function getPaymentData($idPayment);
+
+    /**
+     * @param PaymentDataTransfer $paymentDataTransfer
+     * @param int $idOrder
+     *
+     * @return void
+     */
+    public function updatePaymentDetail(PaymentDataTransfer $paymentDataTransfer, $idOrder);
 
 }

@@ -6,21 +6,23 @@
 
 namespace SprykerFeature\Zed\Refund\Communication;
 
-use Generated\Shared\Sales\OrderInterface;
+use Generated\Shared\Refund\OrderInterface;
 use Generated\Zed\Ide\FactoryAutoCompletion\RefundCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Shared\Library\Context;
 use SprykerFeature\Shared\Library\DateFormatter;
 use SprykerFeature\Zed\Refund\Business\RefundFacade;
 use SprykerFeature\Zed\Refund\Communication\Form\RefundForm;
-use SprykerFeature\Zed\Refund\Communication\Table\RefundsTable;
+use SprykerFeature\Zed\Refund\Communication\Table\RefundTable;
 use SprykerFeature\Zed\Refund\Persistence\RefundQueryContainer;
+use SprykerFeature\Zed\Refund\RefundConfig;
 use SprykerFeature\Zed\Refund\RefundDependencyProvider;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainer;
 
 /**
  * @method RefundCommunication getFactory()
  * @method RefundQueryContainer getQueryContainer()
+ * @method RefundConfig getConfig()
  */
 class RefundDependencyContainer extends AbstractCommunicationDependencyContainer
 {
@@ -33,18 +35,19 @@ class RefundDependencyContainer extends AbstractCommunicationDependencyContainer
     public function createRefundForm(OrderInterface $orderTransfer)
     {
         $refundFacade = $this->getRefundFacade();
+        $paymentDataPlugin = $this->getConfig()->getPaymentDataPlugin();
 
-        return $this->getFactory()->createFormRefundForm($refundFacade, $orderTransfer);
+        return $this->getFactory()->createFormRefundForm($refundFacade, $orderTransfer, $paymentDataPlugin);
     }
 
     /**
-     * @return RefundsTable
+     * @return RefundTable
      */
-    public function createRefundsTable()
+    public function createRefundTable()
     {
         $refundQuery = $this->getQueryContainer()->queryRefund();
 
-        return $this->getFactory()->createTableRefundsTable(
+        return $this->getFactory()->createTableRefundTable(
             $refundQuery,
             $this->getRefundFacade(),
             new DateFormatter(Context::getInstance())

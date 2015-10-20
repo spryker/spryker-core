@@ -7,7 +7,6 @@
 namespace Unit\SprykerFeature\Zed\Payone\Business\Mode;
 
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Zed\Payone\Business\Mode\ModeDetector;
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
 use SprykerFeature\Zed\Payone\PayoneConfig;

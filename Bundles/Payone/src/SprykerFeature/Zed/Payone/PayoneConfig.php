@@ -59,7 +59,7 @@ class PayoneConfig extends AbstractBundleConfig
 
         $standardParameter->setRedirectSuccessUrl($this->getYvesBaseUrl() . $settings[PayoneConfigConstants::PAYONE_REDIRECT_SUCCESS_URL]);
         $standardParameter->setRedirectBackUrl($this->getYvesBaseUrl() . $settings[PayoneConfigConstants::PAYONE_REDIRECT_BACK_URL]);
-        $standardParameter->setRedirectErrorUrl($this->getYvesBaseUrl() .$settings[PayoneConfigConstants::PAYONE_REDIRECT_ERROR_URL]);
+        $standardParameter->setRedirectErrorUrl($this->getYvesBaseUrl() . $settings[PayoneConfigConstants::PAYONE_REDIRECT_ERROR_URL]);
 
         return $standardParameter;
     }
@@ -90,7 +90,8 @@ class PayoneConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    protected function getYvesBaseUrl() {
+    protected function getYvesBaseUrl()
+    {
         return $this->get(SystemConfig::HOST_YVES);
     }
 
