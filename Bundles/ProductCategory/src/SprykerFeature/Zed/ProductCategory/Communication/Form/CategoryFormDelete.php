@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Communication\Form;
 
+use SprykerFeature\Zed\ProductCategory\Communication\Form\Constraints\CategoryFieldNotBlank;
+
 class CategoryFormDelete extends CategoryFormEdit
 {
     const DELETE_CHILDREN = 'delete_children';
@@ -22,6 +24,12 @@ class CategoryFormDelete extends CategoryFormEdit
                 'label' => 'Or move them to category',
                 'choices' => $this->getCategoriesWithPaths(),
                 'multiple' => false,
+                'constraints' => [
+                    new CategoryFieldNotBlank([
+                        'categoryFieldName' => self::FK_PARENT_CATEGORY_NODE,
+                        'checkboxFieldName' => self::DELETE_CHILDREN
+                    ]),
+                ],
             ])
             ->addHidden(self::PK_CATEGORY_NODE)
             ->addHidden(self::FK_NODE_CATEGORY)

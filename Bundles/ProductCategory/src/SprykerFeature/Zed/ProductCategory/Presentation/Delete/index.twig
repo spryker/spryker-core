@@ -1,4 +1,5 @@
 {% extends '@ProductCategory/Add/index.twig' %}
+{% set yes_sure = 'Yes, I am sure' | trans %}
 {% set submit_title = 'Delete' | trans %}
 {% set widget_title = 'Category Delete' | trans %}
 {% set widget_title = widget_title ~ ': ' ~ currentCategory.name %}
@@ -15,7 +16,8 @@
 
             {{ form_rest(form) }}
 
-            <input type="submit" class="btn btn-primary" value="{{ submit_title | trans }}" />
+            <input type="submit" class="btn btn-primary" value="{{ submit_title }}" disabled="disabled" id="submit_delete"/>
+            <input type="checkbox" id="delete_confirm"/> {{ yes_sure }}
             <br/><br/>
 
             <div class="row">
@@ -35,7 +37,7 @@
                     {% endif %}
                 </div>
 
-                <div class="col-md-4"><b>Products to be de assigned</b>
+                <div class="col-md-4"><b>Products to be de / re assigned</b>
                     {% if products|length > 0 %}
                         <ul class="nodes">
                             {% for product in products %}
@@ -51,7 +53,7 @@
                     {% endif %}
                 </div>
 
-                <div class="col-md-4"><b>Cms blocks to be de assigned</b>
+                <div class="col-md-4"><b>CMS blocks to be de assigned</b>
                     {% if blocks|length > 0 %}
                         <ul class="nodes">
                             {% for block in blocks %}
@@ -88,11 +90,19 @@
     <script>
         $(document).ready(function(){
             $('.nodes li[data-node="child"]').toggle($(this).prop('checked'));
+
             $('#form_delete_children')
                 .off('click')
                 .on('click', function(){
                     $('.nodes li[data-node="child"]').toggle($(this).prop('checked'));
+                    $('.spryker-form-select2combobox').val(null).trigger('change');
                 });
+
+            $('#delete_confirm')
+                    .off('click')
+                    .on('click', function(){
+                        $('#submit_delete').prop('disabled', !$(this).prop('checked'));
+                    });
         });
 
     </script>
