@@ -24,6 +24,10 @@
         <property name="quantity" type="integer" />
     </transfer>
 
+    <transfer name="Order">
+        <property name="idSalesOrder" type="int"/>
+    </transfer>
+
     <transfer name="PaymentData">
         <property name="idPayment" type="int" />
         <property name="iban" type="string" />

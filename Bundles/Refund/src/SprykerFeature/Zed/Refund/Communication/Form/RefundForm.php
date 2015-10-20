@@ -3,8 +3,7 @@
 namespace SprykerFeature\Zed\Refund\Communication\Form;
 
 use Generated\Shared\Refund\RefundInterface;
-use Generated\Shared\Sales\OrderInterface;
-use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Refund\OrderInterface;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Refund\Business\RefundFacade;
 use SprykerFeature\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface;
@@ -37,7 +36,7 @@ class RefundForm extends AbstractForm
     protected $refundFacade;
 
     /**
-     * @var OrderTransfer
+     * @var OrderInterface
      */
     protected $orderTransfer;
 

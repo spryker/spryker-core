@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Refund\Business;
 
-use Generated\Shared\Sales\OrderInterface;
+use Generated\Shared\Refund\OrderInterface;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\Refund\Persistence\Propel\SpyRefund;
 use SprykerFeature\Zed\Refund\Persistence\RefundQueryContainerInterface;

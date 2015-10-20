@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Refund\Business;
 
 use Generated\Shared\Refund\RefundInterface;
-use Generated\Shared\Sales\OrderInterface;
+use Generated\Shared\Refund\OrderInterface;
 use Generated\Shared\Transfer\RefundTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Refund\Business\RefundDependencyContainer as SprykerRefundDependencyContainer;
