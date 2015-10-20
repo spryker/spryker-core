@@ -46,7 +46,7 @@ class SubscriberManager implements SubscriberManagerInterface
             ->findOne()
         ;
 
-        if (null === $subscriberEntity) {
+        if ($subscriberEntity === null) {
             return null;
         }
 
@@ -71,6 +71,27 @@ class SubscriberManager implements SubscriberManagerInterface
         $subscriberEntity->save();
 
         return $this->convertSubscriberEntityToTransfer($subscriberEntity);
+    }
+
+    /**
+     * @param NewsletterSubscriberInterface $subscriber
+     *
+     * @return void
+     */
+    public function assignCustomerToExistingSubscriber(NewsletterSubscriberInterface $subscriber)
+    {
+        if ($subscriber->getFkCustomer() === null) {
+            return;
+        }
+
+        $subscriberEntity = $this->queryContainer->querySubscriber()
+            ->findOneByEmail($subscriber->getEmail())
+        ;
+
+        if ($subscriberEntity !== null) {
+            $subscriberEntity->setFkCustomer($subscriber->getFkCustomer());
+            $subscriberEntity->save();
+        }
     }
 
     /**

@@ -17,7 +17,7 @@ class NewsletterConfig extends AbstractBundleConfig
      *
      * @return string
      */
-    public function getCustomerPasswordRestoreTokenUrl($token)
+    public function getDoubleOptInApproveTokenUrl($token)
     {
         return $this->getHostYves() . '/newsletter/approve?token=' . $token;
     }

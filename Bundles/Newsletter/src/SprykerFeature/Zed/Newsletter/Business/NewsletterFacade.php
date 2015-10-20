@@ -95,4 +95,17 @@ class NewsletterFacade extends AbstractFacade
         return $subscriptionResponse;
     }
 
+    /**
+     * @param NewsletterSubscriberInterface $newsletterSubscriber
+     *
+     * @return void
+     */
+    public function assignCustomerToExistingSubscriber(NewsletterSubscriberInterface $newsletterSubscriber)
+    {
+        $this->getDependencyContainer()
+            ->createSubscriptionRequestHandler()
+            ->assignCustomerToExistingSubscriber($newsletterSubscriber)
+        ;
+    }
+
 }

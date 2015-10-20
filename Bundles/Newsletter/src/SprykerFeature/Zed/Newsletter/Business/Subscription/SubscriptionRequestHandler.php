@@ -236,4 +236,14 @@ class SubscriptionRequestHandler
         return $subscriptionResultTransfer;
     }
 
+    /**
+     * @param NewsletterSubscriberInterface $subscriber
+     *
+     * @return void
+     */
+    public function assignCustomerToExistingSubscriber(NewsletterSubscriberInterface $subscriber)
+    {
+        $this->subscriberManager->assignCustomerToExistingSubscriber($subscriber);
+    }
+
 }
