@@ -4,8 +4,10 @@ namespace SprykerFeature\Zed\Refund\Communication\Form;
 
 use Generated\Shared\Refund\RefundInterface;
 use Generated\Shared\Sales\OrderInterface;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Refund\Business\RefundFacade;
+use SprykerFeature\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface;
 use SprykerFeature\Zed\Refund\Persistence\Propel\SpyRefundQuery;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
@@ -18,10 +20,15 @@ class RefundForm extends AbstractForm
     const FIELD_AMOUNT = 'amount';
     const FIELD_ADJUSTMENT_FEE = 'adjustment_fee';
 
+    const FIELD_BIC = 'bic';
+    const FIELD_IBAN = 'iban';
+
     const FIELD_ORDER_ITEMS = 'order_items';
     const FIELD_EXPENSES = 'expenses';
 
-    /** @var  SpyRefundQuery */
+    /**
+     * @var  SpyRefundQuery
+     */
     protected $refundQuery;
 
     /**
@@ -30,18 +37,25 @@ class RefundForm extends AbstractForm
     protected $refundFacade;
 
     /**
-     * @var OrderInterface
+     * @var OrderTransfer
      */
     protected $orderTransfer;
 
     /**
+     * @var PaymentDataPluginInterface
+     */
+    protected $paymentDataPlugin;
+
+    /**
      * @param RefundFacade $refundFacade
      * @param OrderInterface $orderTransfer
+     * @param PaymentDataPluginInterface $paymentDataPlugin
      */
-    public function __construct(RefundFacade $refundFacade, OrderInterface $orderTransfer)
+    public function __construct(RefundFacade $refundFacade, OrderInterface $orderTransfer, PaymentDataPluginInterface $paymentDataPlugin)
     {
         $this->refundFacade = $refundFacade;
         $this->orderTransfer = $orderTransfer;
+        $this->paymentDataPlugin = $paymentDataPlugin;
     }
 
     /**
@@ -78,6 +92,21 @@ class RefundForm extends AbstractForm
             ])
         ;
 
+        if ($this->requiresPaymentData()) {
+            $this
+                ->addText(self::FIELD_IBAN, [
+                    'constraints' => [
+                        new NotBlank(),
+                    ],
+                ])
+                ->addText(self::FIELD_BIC, [
+                    'constraints' => [
+                        new NotBlank(),
+                    ],
+                ])
+            ;
+        }
+
         return $this;
     }
 
@@ -86,7 +115,16 @@ class RefundForm extends AbstractForm
      */
     protected function populateFormFields()
     {
-        return [];
+        if (!$this->requiresPaymentData()) {
+            return [];
+        }
+
+        $paymentData = $this->paymentDataPlugin->getPaymentData($this->orderTransfer->getIdSalesOrder());
+
+        return [
+            self::FIELD_IBAN => $paymentData->getIban(),
+            self::FIELD_BIC => $paymentData->getBic(),
+        ];
     }
 
     /**
@@ -162,6 +200,13 @@ class RefundForm extends AbstractForm
         }
 
         return $data;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function requiresPaymentData() {
+        return $this->paymentDataPlugin->isPaymentDataRequired($this->orderTransfer);
     }
 
 }

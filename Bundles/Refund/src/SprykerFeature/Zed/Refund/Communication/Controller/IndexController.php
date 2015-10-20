@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Refund\Communication\Controller;
 
+use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\RefundExpenseTransfer;
 use Generated\Shared\Transfer\RefundOrderItemTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
@@ -67,14 +68,26 @@ class IndexController extends AbstractController
 
         $expenses = $this->getFacade()->getRefundableExpenses($idOrder);
 
+
         $form = $this->getDependencyContainer()
             ->createRefundForm($orderTransfer)
         ;
 
         $form->handleRequest();
 
+        $paymentDataRequired = $this->getDependencyContainer()->getConfig()->getPaymentDataPlugin()
+            ->isPaymentDataRequired($orderTransfer);
+        ;
+
         if ($form->isValid()) {
             $formData = $form->getData();
+
+            if ($paymentDataRequired) {
+                $paymentDataTransfer = (new PaymentDataTransfer())->fromArray($formData, true);
+                $this->getDependencyContainer()->getConfig()->getPaymentDataPlugin()
+                    ->updatePaymentDetail($paymentDataTransfer, $idOrder)
+                ;
+            }
 
             $refundTransfer = new RefundTransfer();
             $refundTransfer->setAdjustmentFee($formData['adjustment_fee']);
@@ -118,6 +131,7 @@ class IndexController extends AbstractController
             'form' => $form->createView(),
             'orderItems' => $orderItemsArray,
             'expenses'=> $expensesArray,
+            'paymentDataRequired' => $paymentDataRequired,
         ]);
     }
 

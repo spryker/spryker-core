@@ -12,9 +12,12 @@
 
                 {% block widget_content %}
                     <div class="refund-form" data-max="{{ maxRefundAmount }}">
-                        {{ 'Maximum refundable amount' | trans }}: {{ maxRefundAmount | currency }}
+                        <p>{{ 'Maximum refundable amount' | trans }}: {{ maxRefundAmount | currency }}</p>
 
                     {{ form_start(form) }}
+
+                        {% include '@Refund/Index/section/payment-details-form.twig' %}
+
 
                         <h6>{{ 'Order Items' | trans }}</h6>
                         <table class="footable table table-striped add-refund">

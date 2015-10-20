@@ -15,12 +15,14 @@ use SprykerFeature\Zed\Refund\Business\RefundFacade;
 use SprykerFeature\Zed\Refund\Communication\Form\RefundForm;
 use SprykerFeature\Zed\Refund\Communication\Table\RefundsTable;
 use SprykerFeature\Zed\Refund\Persistence\RefundQueryContainer;
+use SprykerFeature\Zed\Refund\RefundConfig;
 use SprykerFeature\Zed\Refund\RefundDependencyProvider;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainer;
 
 /**
  * @method RefundCommunication getFactory()
  * @method RefundQueryContainer getQueryContainer()
+ * @method RefundConfig getConfig()
  */
 class RefundDependencyContainer extends AbstractCommunicationDependencyContainer
 {
@@ -33,8 +35,9 @@ class RefundDependencyContainer extends AbstractCommunicationDependencyContainer
     public function createRefundForm(OrderInterface $orderTransfer)
     {
         $refundFacade = $this->getRefundFacade();
+        $paymentDataPlugin = $this->getConfig()->getPaymentDataPlugin();
 
-        return $this->getFactory()->createFormRefundForm($refundFacade, $orderTransfer);
+        return $this->getFactory()->createFormRefundForm($refundFacade, $orderTransfer, $paymentDataPlugin);
     }
 
     /**
