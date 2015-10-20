@@ -99,12 +99,12 @@ interface ProductCategoryManagerInterface
      * @param LocaleTransfer $locale
      * @return
      */
-    public function moveCategoryChildrenAndDeleteCategory(NodeTransfer $sourceNode, NodeTransfer $destinationNode, LocaleTransfer $locale);
+    public function moveCategoryChildrenAndDeleteNode(NodeTransfer $sourceNode, NodeTransfer $destinationNode, LocaleTransfer $locale);
 
     /**
      * @param int $idCategory
      * @param LocaleTransfer $locale
      */
-    public function deleteCategoryFull($idCategory, LocaleTransfer $locale);
+    public function deleteCategoryRecursive($idCategory, LocaleTransfer $locale);
 
 }

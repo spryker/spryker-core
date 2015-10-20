@@ -156,11 +156,11 @@ class ProductCategoryFacade extends AbstractFacade
      * @param int $idCategory
      * @param LocaleTransfer $locale
      */
-    public function deleteCategoryFull($idCategory, LocaleTransfer $locale)
+    public function deleteCategoryRecursive($idCategory, LocaleTransfer $locale)
     {
         $this->getDependencyContainer()
             ->createProductCategoryManager()
-            ->deleteCategoryFull($idCategory, $locale)
+            ->deleteCategoryRecursive($idCategory, $locale)
         ;
     }
 
@@ -169,11 +169,11 @@ class ProductCategoryFacade extends AbstractFacade
      * @param NodeTransfer $destinationNode
      * @param LocaleTransfer $locale
      */
-    public function moveCategoryChildrenAndDeleteCategory(NodeTransfer $sourceNode, NodeTransfer $destinationNode, LocaleTransfer $locale)
+    public function moveCategoryChildrenAndDeleteNode(NodeTransfer $sourceNode, NodeTransfer $destinationNode, LocaleTransfer $locale)
     {
         $this->getDependencyContainer()
             ->createProductCategoryManager()
-            ->moveCategoryChildrenAndDeleteCategory($sourceNode, $destinationNode, $locale)
+            ->moveCategoryChildrenAndDeleteNode($sourceNode, $destinationNode, $locale)
         ;
     }
 }

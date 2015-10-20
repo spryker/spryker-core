@@ -301,7 +301,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param NodeTransfer $destinationNode
      * @param LocaleTransfer $locale
      */
-    public function moveCategoryChildrenAndDeleteCategory(NodeTransfer $sourceNode, NodeTransfer $destinationNode, LocaleTransfer $locale)
+    public function moveCategoryChildrenAndDeleteNode(NodeTransfer $sourceNode, NodeTransfer $destinationNode, LocaleTransfer $locale)
     {
         $connection = Propel::getConnection();
         $connection->beginTransaction();
@@ -336,7 +336,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param int $idCategory
      * @param LocaleTransfer $locale
      */
-    public function deleteCategoryFull($idCategory, LocaleTransfer $locale)
+    public function deleteCategoryRecursive($idCategory, LocaleTransfer $locale)
     {
         $connection = Propel::getConnection();
         $connection->beginTransaction();
@@ -351,7 +351,6 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         foreach ($assignedProducts as $mapping) {
             $productsToDeAssign[] = $mapping->getFkAbstractProduct();
         }
-
         $this->removeProductCategoryMappings($idCategory, $productsToDeAssign);
 
         $categoryNodes = $this->categoryQueryContainer
@@ -368,7 +367,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             ;
 
             foreach ($children as $child) {
-                $this->deleteCategoryFull($child->getFkCategory(), $locale);
+                $this->deleteCategoryRecursive($child->getFkCategory(), $locale);
             }
 
             $nodeExists = $this->categoryQueryContainer
