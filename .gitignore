@@ -52,3 +52,6 @@ config/Yves/cache_bust.php
 npm-debug.log
 tests/_output/
 
+# PHP CS Fixer
+Bundles/*/.php_cs.cache
+
