@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\SequenceNumber;
 
+use Generated\Shared\SequenceNumber\SequenceNumberSettingsInterface;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
@@ -13,17 +14,30 @@ class SequenceNumberConfig extends AbstractBundleConfig
 {
 
     /**
+     * @param SequenceNumberSettingsInterface|null $settings
+     *
      * @return SequenceNumberSettingsTransfer
      */
-    public function getDefaultSettings()
+    public function getDefaultSettings(SequenceNumberSettingsInterface $settings = null)
     {
-        $sequenceNumberSettings = new SequenceNumberSettingsTransfer();
-        $sequenceNumberSettings->setName($this->getSequenceName());
-        $sequenceNumberSettings->setIncrementMinimum($this->getNumberIncrementMin());
-        $sequenceNumberSettings->setIncrementMaximum($this->getNumberIncrementMax());
-        $sequenceNumberSettings->setMinimumNumber($this->getNumberMinimum());
+        $defaultSettings = new SequenceNumberSettingsTransfer();
+        $defaultSettings->setName($this->getSequenceName());
+        $defaultSettings->setIncrementMinimum($this->getNumberIncrementMin());
+        $defaultSettings->setIncrementMaximum($this->getNumberIncrementMax());
+        $defaultSettings->setMinimumNumber($this->getNumberMinimum());
 
-        return $sequenceNumberSettings;
+        if ($settings === null) {
+            return $defaultSettings;
+        }
+
+        $settingsArray = $settings->toArray();
+        $settingsArray = array_filter($settingsArray, function($value) {
+            return ($value !== null);
+        });
+        $settingsArray += $defaultSettings->toArray();
+        $settings->fromArray($settingsArray);
+
+        return $settings;
     }
 
     /**

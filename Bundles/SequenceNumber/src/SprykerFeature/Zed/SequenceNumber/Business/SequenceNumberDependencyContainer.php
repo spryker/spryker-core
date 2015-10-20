@@ -46,8 +46,7 @@ class SequenceNumberDependencyContainer extends AbstractBusinessDependencyContai
      */
     public function createSequenceNumber(SequenceNumberSettingsInterface $sequenceNumberSettings)
     {
-        $settings = $this->getConfig()->getDefaultSettings();
-        $settings->fromArray($sequenceNumberSettings->toArray());
+        $settings = $this->getConfig()->getDefaultSettings($sequenceNumberSettings);
 
         $generator = $this->createRandomNumberGenerator($settings->getIncrementMinimum(), $settings->getIncrementMaximum());
 

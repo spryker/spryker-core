@@ -51,10 +51,10 @@ class SequenceNumberTest extends Test
         $sequenceNumberSettings = $config->getDefaultSettings();
 
         $sequenceNumber = $this->sequenceNumberFacade->generate($sequenceNumberSettings);
-        $this->assertSame('2', $sequenceNumber);
+        $this->assertSame('1', $sequenceNumber);
 
         $number = $this->sequenceNumberFacade->generate($sequenceNumberSettings);
-        $this->assertSame('3', $number);
+        $this->assertSame('2', $number);
     }
 
     public function testGenerateWithPrefix()
@@ -64,7 +64,7 @@ class SequenceNumberTest extends Test
         $sequenceNumberSettings->setPrefix('DE');
 
         $sequenceNumber = $this->sequenceNumberFacade->generate($sequenceNumberSettings);
-        $this->assertSame('DE2', $sequenceNumber);
+        $this->assertSame('DE1', $sequenceNumber);
     }
 
     public function testGenerateOnSequenceNumber()
@@ -84,7 +84,7 @@ class SequenceNumberTest extends Test
         );
 
         $number = $sequenceNumber->generate();
-        $this->assertSame('011', $number);
+        $this->assertSame('010', $number);
 
         // Make sure other sequences don't interfere
         $config = $this->generateConfig();
@@ -100,10 +100,10 @@ class SequenceNumberTest extends Test
         );
 
         $number = $sequenceNumberOther->generate();
-        $this->assertSame('3', $number);
+        $this->assertSame('2', $number);
 
         $number = $sequenceNumber->generate();
-        $this->assertSame('012', $number);
+        $this->assertSame('011', $number);
     }
 
     /**

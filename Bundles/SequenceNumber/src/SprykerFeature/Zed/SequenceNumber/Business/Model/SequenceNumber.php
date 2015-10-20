@@ -67,7 +67,6 @@ class SequenceNumber implements SequenceNumberInterface
     {
         try {
             $this->connection->beginTransaction();
-
             $sequence = $this->getSequence($this->connection);
             $idCurrent = $sequence->getCurrentId() + $this->randomNumberGenerator->generate();
 
@@ -98,7 +97,7 @@ class SequenceNumber implements SequenceNumberInterface
         if ($sequence === null) {
             $sequence = new SpySequenceNumber();
             $sequence->setName($this->sequenceNumberSettings->getName());
-            $sequence->setCurrentId($this->sequenceNumberSettings->getMinimumNumber());
+            $sequence->setCurrentId($this->sequenceNumberSettings->getMinimumNumber() - 1);
         }
 
         return $sequence;
