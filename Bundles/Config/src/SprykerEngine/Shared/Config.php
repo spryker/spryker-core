@@ -43,7 +43,7 @@ class Config
      *
      * @throws \Exception
      *
-     * @return string
+     * @return mixed
      */
     public static function get($key, $default = null)
     {
