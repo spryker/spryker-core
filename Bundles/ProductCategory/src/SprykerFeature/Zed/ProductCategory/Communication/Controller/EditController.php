@@ -9,6 +9,7 @@ use Propel\Runtime\Propel;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
+use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategory;
 use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
 use SprykerFeature\Zed\ProductCategory\Communication\ProductCategoryDependencyContainer;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
@@ -280,34 +281,19 @@ class EditController extends AddController
     }
 
     /**
-     * @param int $idCategory
+     * @param SpyCategory $category
      * @param LocaleTransfer $locale
      *
      * @return array
      */
-    protected function getPaths($idCategory, LocaleTransfer $locale)
+    protected function getPaths(SpyCategory $category, LocaleTransfer $locale)
     {
-        $categoryNodes = $this->getDependencyContainer()
-            ->createCategoryFacade()
-            ->getMainNodesByIdCategory($idCategory);
-
         $paths = [];
-        foreach ($categoryNodes as $node) {
-            $children = $this->getDependencyContainer()
-                ->createCategoryQueryContainer()
-                ->queryChildren($node->getIdCategoryNode(), $locale->getIdLocale(), false, true)
-                ->find();
+        foreach ($category->getNodes() as $node) {
+            $children = $this->getCategoryChildren($node->getIdCategoryNode(), $locale);
 
             foreach ($children as $child) {
-                $pathTokens = $this->getDependencyContainer()
-                    ->createCategoryQueryContainer()
-                    ->queryPath($child->getIdCategoryNode(), $locale->getIdLocale(), true, false)
-                    ->find();
-
-                $paths[] = $this->getDependencyContainer()
-                    ->createCategoryFacade()
-                    ->getUrlGenerator()
-                    ->generate($pathTokens);
+                $paths[] = $this->getPathDataForView($category, $child, $locale);
             }
         }
 
@@ -315,40 +301,149 @@ class EditController extends AddController
     }
 
     /**
-     * @param int $idCategory
+     * @param SpyCategory $category
+     * @param SpyCategoryNode $node
      * @param LocaleTransfer $locale
      *
      * @return array
      */
-    protected function getProducts($idCategory, LocaleTransfer $locale)
+    protected function getPathDataForView(SpyCategory $category, SpyCategoryNode $node, LocaleTransfer $locale)
     {
-        $productList = $this->getDependencyContainer()
-            ->createProductCategoryQueryContainer()
-            ->queryProductsByCategoryId($idCategory, $locale)
+        $path = [];
+        $pathTokens = $this->getDependencyContainer()
+            ->createCategoryQueryContainer()
+            ->queryPath($node->getIdCategoryNode(), $locale->getIdLocale(), true, false)
             ->find();
 
-        return $productList->toArray();
+        $path['url'] = $this->getDependencyContainer()
+            ->createCategoryFacade()
+            ->getUrlGenerator()
+            ->generate($pathTokens);
+
+        $path['view_node_name'] = 'child';
+        if ((int) $category->getIdCategory() === (int) $node->getFkCategory()) {
+            $path['view_node_name'] = 'parent';
+        }
+
+        return $path;
     }
 
     /**
      * @param SpyCategory $category
+     * @param LocaleTransfer $locale
      *
      * @return array
      */
-    protected function getBlocks(SpyCategory $category)
+    protected function getProducts(SpyCategory $category, LocaleTransfer $locale)
+    {
+        $productList = [];
+        foreach ($category->getNodes() as $node) {
+            $children = $this->getCategoryChildren($node->getIdCategoryNode(), $locale);
+
+            foreach ($children as $child) {
+                if (isset($productList[$child->getFkCategory()])) {
+                    continue;
+                }
+
+                $productDataList = $this->getProductDataForView($category, $child, $locale);
+                $productList = array_merge($productList, $productDataList);
+            }
+        }
+
+        return $productList;
+    }
+
+    /**
+     * @param SpyCategory $category
+     * @param SpyCategoryNode $node
+     * @param LocaleTransfer $locale
+     *
+     * @return array
+     */
+    protected function getProductDataForView(SpyCategory $category, SpyCategoryNode $node, LocaleTransfer $locale)
+    {
+        $productCategoryList = $this->getDependencyContainer()
+            ->createProductCategoryQueryContainer()
+            ->queryProductsByCategoryId($node->getFkCategory(), $locale)
+            ->find();
+
+        $productDataList = [];
+        foreach ($productCategoryList as $productCategory) {
+            /**
+             * @var SpyProductCategory $productCategory
+             */
+            $productCategoryData = $productCategory->toArray();
+            $productCategoryData['view_node_name'] = 'child';
+
+            if ((int) $category->getIdCategory() === (int) $productCategory->getFkCategory()) {
+                $productCategoryData['view_node_name'] = 'parent';
+            }
+
+            $productDataList[] = $productCategoryData;
+        }
+
+        return $productDataList;
+    }
+
+    /**
+     * @param SpyCategory $category
+     * @param LocaleTransfer $locale
+     *
+     * @return array
+     */
+    protected function getBlocks(SpyCategory $category, LocaleTransfer $locale)
     {
         $blockList = [];
         foreach ($category->getNodes() as $node) {
-            $blocks = $this->getDependencyContainer()
-                ->createCmsFacade()
-                ->getCmsBlocksByIdCategoryNode($node->getIdCategoryNode());
+            $children = $this->getCategoryChildren($node->getIdCategoryNode(), $locale);
 
-            foreach ($blocks as $blockTransfer) {
-                $blockList[] = $blockTransfer->toArray();
+            foreach ($children as $child) {
+                $childBlockList = $this->getBlockDataForView($category, $child);
+                $blockList = array_merge($childBlockList, $blockList);
             }
         }
 
         return $blockList;
+    }
+
+    /**
+     * @param SpyCategory $category
+     * @param SpyCategoryNode $node
+     *
+     * @return array
+     */
+    protected function getBlockDataForView(SpyCategory $category, SpyCategoryNode $node)
+    {
+        $blockList = [];
+        $blocks = $this->getDependencyContainer()
+            ->createCmsFacade()
+            ->getCmsBlocksByIdCategoryNode($node->getIdCategoryNode());
+
+        foreach ($blocks as $blockTransfer) {
+            $blockData = $blockTransfer->toArray();
+            $blockData['view_node_name'] = 'child';
+            if ((int) $category->getIdCategory() === (int) $node->getFkCategory()) {
+                $blockData['view_node_name'] = 'parent';
+            }
+
+            $blockList[] = $blockData;
+        }
+
+        return $blockList;
+    }
+
+    /**
+     * @param int $idCategoryNode
+     * @param LocaleTransfer $locale
+     *
+     * @return SpyCategoryNode[]
+     */
+    protected function getCategoryChildren($idCategoryNode, LocaleTransfer $locale)
+    {
+        return $this->getDependencyContainer()
+            ->createCategoryQueryContainer()
+            ->queryChildren($idCategoryNode, $locale->getIdLocale(), false, false)
+            ->find();
     }
 
 }
