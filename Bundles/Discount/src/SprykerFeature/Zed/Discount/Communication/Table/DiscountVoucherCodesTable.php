@@ -38,10 +38,10 @@ class DiscountVoucherCodesTable extends AbstractTable
      * @param int $idPool
      * @param int $batchValue
      */
-    public function __construct(DiscountQueryContainer $discountQueryContainer, DataTablesTransfer $dataTablesTransfer, $idPool, $batchValue = null)
+    public function __construct(DataTablesTransfer $dataTablesTransfer, DiscountQueryContainer $discountQueryContainer, $idPool, $batchValue = null)
     {
-        $this->discountQueryContainer = $discountQueryContainer;
         $this->dataTablesTransfer = $dataTablesTransfer;
+        $this->discountQueryContainer = $discountQueryContainer;
         $this->idPool = $idPool;
         $this->batchValue = $batchValue;
     }
@@ -58,17 +58,16 @@ class DiscountVoucherCodesTable extends AbstractTable
 
         $config->setHeader([
             SpyDiscountVoucherTableMap::COL_CODE => 'Voucher Code',
+            SpyDiscountVoucherTableMap::COL_NUMBER_OF_USES => 'Used',
             SpyDiscountVoucherTableMap::COL_CREATED_AT => 'Created At',
             SpyDiscountVoucherTableMap::COL_VOUCHER_BATCH => 'Batch Value',
         ]);
 
         $config->setFooterFromHeader();
 
-        $config->setSearchable([
-            SpyDiscountVoucherTableMap::COL_CODE,
-            SpyDiscountVoucherTableMap::COL_CREATED_AT,
-            SpyDiscountVoucherTableMap::COL_VOUCHER_BATCH,
-        ]);
+        $config->setSearchable(
+            array_keys($config->getHeader())
+        );
 
         return $config;
     }
@@ -80,13 +79,10 @@ class DiscountVoucherCodesTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-
         $generatedVoucherCodesQuery = $this->discountQueryContainer
             ->queryDiscountVoucher()
             ->filterByFkDiscountVoucherPool($this->idPool)
         ;
-
-//        dump($this->dataTablesTransfer);die;
 
         if ('' !== $this->batchValue) {
             $generatedVoucherCodesQuery->filterByVoucherBatch($this->batchValue);
@@ -98,9 +94,9 @@ class DiscountVoucherCodesTable extends AbstractTable
 
         /** @var SpyDiscountVoucher $code */
         foreach ($collectionObject as $code) {
-//            dump($code);die;
             $result[] = [
                 SpyDiscountVoucherTableMap::COL_CODE => $code->getCode(),
+                SpyDiscountVoucherTableMap::COL_NUMBER_OF_USES => (int) $code->getNumberOfUses(),
                 SpyDiscountVoucherTableMap::COL_CREATED_AT => $code->getCreatedAt('Y-m-d'),
                 SpyDiscountVoucherTableMap::COL_VOUCHER_BATCH => $code->getVoucherBatch(),
             ];

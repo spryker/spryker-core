@@ -6,7 +6,9 @@
 
 namespace SprykerFeature\Zed\Gui\Communication\Table;
 
+use Generated\Shared\Transfer\DataTablesTransfer;
 use Generated\Zed\Ide\AutoCompletion;
+use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -22,6 +24,7 @@ abstract class AbstractTable
     const BUTTON_HREF = 'href';
     const BUTTON_DEFAULT_CLASS = 'btn-default';
     const BUTTON_ICON = 'icon';
+    const PARAMETER_VALUE = 'value';
 
     /**
      * @var Request
@@ -79,6 +82,41 @@ abstract class AbstractTable
     protected $tableIdentifier;
 
     /**
+     * @var DataTablesTransfer
+     */
+    protected $dataTablesTransfer;
+
+    /**
+     * @param TableConfiguration $config
+     *
+     * @return mixed
+     */
+    abstract protected function configure(TableConfiguration $config);
+
+    /**
+     * @param TableConfiguration $config
+     *
+     * @return mixed
+     */
+    abstract protected function prepareData(TableConfiguration $config);
+
+    /**
+     * @return DataTablesTransfer
+     */
+    public function getDataTablesTransfer()
+    {
+        return $this->dataTablesTransfer;
+    }
+
+    /**
+     * @param DataTablesTransfer $dataTablesTransfer
+     */
+    public function setDataTablesTransfer($dataTablesTransfer)
+    {
+        $this->dataTablesTransfer = $dataTablesTransfer;
+    }
+
+    /**
      * @return $this
      */
     private function init()
@@ -132,25 +170,11 @@ abstract class AbstractTable
 
     /**
      * @param TableConfiguration $config
-     *
-     * @return mixed
-     */
-    abstract protected function configure(TableConfiguration $config);
-
-    /**
-     * @param TableConfiguration $config
      */
     public function setConfiguration(TableConfiguration $config)
     {
         $this->config = $config;
     }
-
-    /**
-     * @param TableConfiguration $config
-     *
-     * @return mixed
-     */
-    abstract protected function prepareData(TableConfiguration $config);
 
     /**
      * @param array $data
@@ -364,7 +388,7 @@ abstract class AbstractTable
      *
      * @return array
      */
-    protected function runQuery(ModelCriteria $query, TableConfiguration $config, $returnRawResults=false)
+    protected function runQuery(ModelCriteria $query, TableConfiguration $config, $returnRawResults = false)
     {
         //$limit = $config->getPageLength();
         $limit = $this->getLimit();
@@ -381,8 +405,9 @@ abstract class AbstractTable
         $query->orderBy($orderColumn, $order[0]['dir']);
         $searchTerm = $this->getSearchTerm();
 
-        if (mb_strlen($searchTerm['value']) > 0) {
-            $isFirst = true;
+        $isFirst = true;
+
+        if (mb_strlen($searchTerm[self::PARAMETER_VALUE]) > 0) {
             $query->setIdentifierQuoting(true);
 
             foreach ($config->getSearchable() as $value) {
@@ -393,7 +418,7 @@ abstract class AbstractTable
                 }
 
                 // @todo fix this in CD-412
-                $query->where(sprintf("LOWER(%s::TEXT) LIKE '%s'", $value, '%' . mb_strtolower($searchTerm['value']) . '%'));
+                $query->where(sprintf("LOWER(%s::TEXT) LIKE '%s'", $value, '%' . mb_strtolower($searchTerm[self::PARAMETER_VALUE]) . '%'));
             }
 
             $this->filtered = $query->count();
@@ -401,9 +426,23 @@ abstract class AbstractTable
             $this->filtered = $this->total;
         }
 
+        if ($this->dataTablesTransfer !== null) {
+            $searchColumns = $config->getSearchable();
+
+            foreach ($this->dataTablesTransfer->getColumns() as $column) {
+                $search = $column->getSearch();
+                if (empty($search[self::PARAMETER_VALUE])) {
+                    continue;
+                }
+
+                $this->addQueryCondition($query, $searchColumns, $column);
+            }
+        }
+
         $query->offset($offset)
             ->limit($limit)
         ;
+
         $data = $query->find();
 
         if (true === $returnRawResults) {
@@ -411,6 +450,19 @@ abstract class AbstractTable
         }
 
         return $data->toArray(null, false, TableMap::TYPE_COLNAME);
+    }
+
+    /**
+     * @param string $value
+     *
+     * @return string
+     */
+    protected function filterSearchValue($value)
+    {
+        $value = str_replace(['^', '$'], '', $value);
+        $value = stripslashes($value);
+
+        return $value;
     }
 
     /**
@@ -622,6 +674,43 @@ abstract class AbstractTable
         }
 
         return $buttonOptions;
+    }
+
+    /**
+     * @param ModelCriteria $query
+     * @param array $searchColumns
+     * @param \ArrayObject $column
+     *
+     * @return void
+     */
+    protected function addQueryCondition(ModelCriteria $query, array $searchColumns, \ArrayObject $column)
+    {
+        $search = $column->getSearch();
+        if (preg_match('/created_at|updated_at/', $searchColumns[$column->getData()])) {
+            $query->where(
+                sprintf(
+                    "(%s >= '%s' AND %s <= '%s')",
+                    $searchColumns[$column->getData()],
+                    $this->filterSearchValue($search[self::PARAMETER_VALUE]) . ' 00:00:00',
+                    $searchColumns[$column->getData()],
+                    $this->filterSearchValue($search[self::PARAMETER_VALUE]) . ' 23:59:59'
+                )
+            );
+            return;
+        }
+
+        $value = $this->filterSearchValue($search[self::PARAMETER_VALUE]);
+        if ($value === 'null') {
+            return;
+        }
+
+        $query->where(sprintf(
+            "%s = '%s'",
+            $searchColumns[$column->getData()],
+            $value)
+        );
+
+        return;
     }
 
 }

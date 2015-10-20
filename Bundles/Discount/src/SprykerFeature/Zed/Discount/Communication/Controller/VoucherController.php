@@ -177,8 +177,6 @@ class VoucherController extends AbstractController
         return $this->getDependencyContainer()->createDiscountVoucherCodesTable($tableParameters, $idPool, $batch);
     }
 
-
-
     /**
      * @param Request $request
      *
