@@ -90,8 +90,14 @@ class VoucherForm extends AbstractForm
                             function ($length, ExecutionContextInterface $context) use ($codeLengthValidator) {
                                 $formData = $context->getRoot()->getData();
 
+                                if (empty($formData[self::FIELD_CUSTOM_CODE]) && $length < 1) {
+                                    $context->addViolation('Please add a custom code or select a length for code to be generated');
+                                    return;
+                                }
+
                                 if ($codeLengthValidator->getPossibleCodeCombinationsCount($length) < $formData[VoucherForm::FIELD_QUANTITY]) {
                                     $context->addViolation('The quantity of required codes is to high regarding the code length');
+                                    return;
                                 }
                             },
                         ],
