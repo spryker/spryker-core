@@ -26,6 +26,7 @@
 
     <transfer name="Order">
         <property name="idSalesOrder" type="int"/>
+        <property name="grandTotal" type="string" />
     </transfer>
 
     <transfer name="PaymentData">

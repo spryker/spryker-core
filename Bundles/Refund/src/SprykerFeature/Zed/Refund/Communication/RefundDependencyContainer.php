@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Refund\Communication;
 
-use Generated\Shared\Sales\OrderInterface;
+use Generated\Shared\Refund\OrderInterface;
 use Generated\Zed\Ide\FactoryAutoCompletion\RefundCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Shared\Library\Context;

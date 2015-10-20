@@ -68,15 +68,16 @@ class IndexController extends AbstractController
 
         $expenses = $this->getFacade()->getRefundableExpenses($idOrder);
 
-
         $form = $this->getDependencyContainer()
             ->createRefundForm($orderTransfer)
         ;
 
         $form->handleRequest();
 
-        $isPaymentDataRequired = $this->getDependencyContainer()->getConfig()->getPaymentDataPlugin()
-            ->isPaymentDataRequired($orderTransfer);
+        $isPaymentDataRequired = $this->getDependencyContainer()
+            ->getConfig()
+            ->getPaymentDataPlugin()
+            ->isPaymentDataRequired($orderTransfer)
         ;
 
         if ($form->isValid()) {
