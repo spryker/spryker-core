@@ -108,6 +108,7 @@ class Environment
     }
 
     /**
+     * @return void
      */
     private static function defineEnvironment()
     {
@@ -127,6 +128,7 @@ class Environment
     }
 
     /**
+     * @return void
      */
     private static function defineStore()
     {
