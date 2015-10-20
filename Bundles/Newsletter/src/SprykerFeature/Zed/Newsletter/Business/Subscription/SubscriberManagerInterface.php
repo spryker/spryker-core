@@ -9,6 +9,7 @@ use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
 
 interface SubscriberManagerInterface
 {
+
     /**
      * @param string $email
      *
@@ -22,4 +23,10 @@ interface SubscriberManagerInterface
      * @return NewsletterSubscriberInterface
      */
     public function createSubscriberFromTransfer(NewsletterSubscriberInterface $newsletterSubscriberTransfer);
+
+    /**
+     * @param NewsletterSubscriberInterface $subscriber
+     */
+    public function assignCustomerWithExistingSubscriber(NewsletterSubscriberInterface $subscriber);
+
 }
