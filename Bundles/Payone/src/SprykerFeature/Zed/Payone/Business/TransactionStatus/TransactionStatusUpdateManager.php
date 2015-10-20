@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Payone\Business\TransactionStatus;
 use Generated\Shared\Payone\PayoneStandardParameterInterface;
 use SprykerFeature\Shared\Payone\Dependency\TransactionStatusUpdateInterface;
 use SprykerFeature\Shared\Payone\PayoneTransactionStatusConstants;
-use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusRequest;
 use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
 use SprykerFeature\Zed\Payone\Business\Key\HashGenerator;
 use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;

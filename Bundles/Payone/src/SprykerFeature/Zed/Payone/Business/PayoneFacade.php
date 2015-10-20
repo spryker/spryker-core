@@ -305,6 +305,7 @@ class PayoneFacade extends AbstractFacade
 
     /**
      * @param int $idPayment
+     *
      * @return PaymentDataInterface
      */
     public function getPaymentData($idPayment)

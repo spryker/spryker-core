@@ -11,7 +11,6 @@ use Generated\Shared\Payone\OrderInterface;
 use Generated\Shared\Payone\PayoneCreditCardInterface;
 use Generated\Shared\Payone\PayoneRefundInterface;
 use Generated\Shared\Refund\PaymentDataInterface;
-use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
 use Propel\Runtime\Collection\ObjectCollection;

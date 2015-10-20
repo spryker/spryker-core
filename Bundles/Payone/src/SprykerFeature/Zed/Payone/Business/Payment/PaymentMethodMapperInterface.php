@@ -6,10 +6,8 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Payment;
 
-use Generated\Shared\Payone\PayoneCreditCardInterface;
 use Generated\Shared\Payone\PayoneStandardParameterInterface;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
-use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CreditCardCheckContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;

@@ -455,9 +455,10 @@ class PaymentManager implements PaymentManagerInterface
     {
         $paymentEntity = $this->queryContainer->getPaymentByOrderId($idOrder)->findOne();
         $paymentDetailEntity = $paymentEntity->getSpyPaymentPayoneDetail();
-        $paymentData = new PaymentDataTransfer();
-        $paymentData->fromArray($paymentDetailEntity->toArray(), true);
-        return $paymentData;
+        $paymentDataTransfer = new PaymentDataTransfer();
+        $paymentDataTransfer->fromArray($paymentDetailEntity->toArray(), true);
+
+        return $paymentDataTransfer;
     }
 
     /**

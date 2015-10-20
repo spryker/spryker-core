@@ -5,7 +5,6 @@
 
 namespace SprykerFeature\Zed\Payone\Communication\Plugin\Log;
 
-
 interface PaymentLogReceiverPluginInterface
 {
 

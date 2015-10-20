@@ -58,4 +58,5 @@ class PaymentDataPlugin extends AbstractPlugin implements PaymentDataPluginInter
     {
         $this->getFacade()->updatePaymentDetail($paymentData, $idOrder);
     }
+
 }

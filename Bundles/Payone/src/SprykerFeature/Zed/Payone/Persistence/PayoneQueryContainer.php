@@ -158,7 +158,6 @@ class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQuery
         return $relations;
     }
 
-
     /**
      * @todo CD-427 Follow naming conventions and use method name starting with 'query*'
      *
