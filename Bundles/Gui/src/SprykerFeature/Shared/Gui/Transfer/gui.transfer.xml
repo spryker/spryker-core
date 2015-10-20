@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<transfers xmlns="http://xsd.spryker.com"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
+
+    <transfer name="DataTables">
+        <property name="draw" type="int"/>
+        <property name="columns" type="DataTablesColumn[]"/>
+        <property name="order" type="DataTablesOrder[]"/>
+        <property name="start" type="int"/>
+        <property name="length" type="int"/>
+        <property name="search" type="array"/>
+    </transfer>
+
+    <transfer name="DataTablesColumn">
+        <property name="data" type="int"/>
+        <property name="name" type="string"/>
+        <property name="searchable" type="bool"/>
+        <property name="orderable" type="bool"/>
+        <property name="search" type="array"/>
+    </transfer>
+
+    <transfer name="DataTablesOrder">
+        <property name="column" type="int"/>
+        <property name="dir" type="string"/>
+    </transfer>
+
+</transfers>
+

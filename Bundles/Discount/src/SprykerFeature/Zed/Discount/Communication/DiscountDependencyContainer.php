@@ -6,14 +6,13 @@
 
 namespace SprykerFeature\Zed\Discount\Communication;
 
+use Generated\Shared\Transfer\DataTablesTransfer;
 use SprykerFeature\Zed\Discount\Communication\Form\CollectorPluginType;
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesType;
 use SprykerFeature\Zed\Discount\Communication\Table\DiscountsTable;
-use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\DiscountCommunication;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\Communication\Form\CartRuleType;
 use SprykerFeature\Zed\Discount\Communication\Form\DecisionRuleType;
@@ -23,17 +22,13 @@ use SprykerFeature\Zed\Discount\DiscountDependencyProvider;
 use SprykerFeature\Zed\Discount\Communication\Table\DiscountVoucherTable;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherQuery;
-use Symfony\Component\Form\Extension\Validator\ValidatorExtension;
-use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolCategoryTable;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolTable;
 use SprykerFeature\Zed\Discount\Communication\Form\PoolCategoryForm;
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
-use Symfony\Component\Validator\Validation;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 
 /**
@@ -88,9 +83,14 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
      *
      * @return DiscountVoucherCodesTable
      */
-    public function createDiscountVoucherCodesTable($idPool, $batchValue)
+    public function createDiscountVoucherCodesTable(DataTablesTransfer $dataTablesTransfer, $idPool, $batchValue)
     {
-        return $this->getFactory()->createTableDiscountVoucherCodesTable($this->getQueryContainer(), $idPool, $batchValue);
+        return $this->getFactory()->createTableDiscountVoucherCodesTable(
+            $dataTablesTransfer,
+            $this->getQueryContainer(),
+            $idPool,
+            $batchValue
+        );
     }
 
     /**
