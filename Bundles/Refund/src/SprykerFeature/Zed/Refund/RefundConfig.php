@@ -17,7 +17,7 @@ class RefundConfig extends AbstractBundleConfig
      * @return PaymentDataPluginInterface
      */
     public function getPaymentDataPlugin() {
-        throw new NotImplementedException('Please implement');
+        throw new NotImplementedException('No Payment Data Plugin Provided. Please implement on project level.');
     }
 
 }

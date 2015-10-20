@@ -11,6 +11,7 @@ use Generated\Shared\Payone\PayoneCreditCardInterface;
 use Generated\Shared\Payone\PayonePaymentInterface;
 use Generated\Shared\Payone\PayoneRefundInterface;
 use Generated\Shared\Refund\PaymentDataInterface;
+use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer;
 use Generated\Shared\Payone\OrderInterface;
 use Generated\Shared\Transfer\PayonePaymentLogTransfer;
@@ -313,7 +314,11 @@ class PayoneFacade extends AbstractFacade
         return $this->getDependencyContainer()->createPaymentManager()->getPaymentData($idPayment);
     }
 
-    public function updatePaymentDetail($paymentData, $idOrder)
+    /**
+     * @param PaymentDataTransfer $paymentData
+     * @param int $idOrder
+     */
+    public function updatePaymentDetail(PaymentDataTransfer $paymentData, $idOrder)
     {
         $this->getDependencyContainer()->createPaymentManager()->updatePaymentDetail($paymentData, $idOrder);
     }

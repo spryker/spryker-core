@@ -114,11 +114,11 @@ interface PaymentManagerInterface
     public function getPaymentData($idPayment);
 
     /**
-     * @param PaymentDataTransfer $paymentData
+     * @param PaymentDataTransfer $paymentDataTransfer
      * @param int $idOrder
      *
      * @return void
      */
-    public function updatePaymentDetail(PaymentDataTransfer $paymentData, $idOrder);
+    public function updatePaymentDetail(PaymentDataTransfer $paymentDataTransfer, $idOrder);
 
 }

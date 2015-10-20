@@ -6,10 +6,7 @@
 
 namespace SprykerFeature\Zed\Sales\Communication\Controller;
 
-use Generated\Shared\Transfer\PayonePaymentDetailTransfer;
-use SprykerFeature\Zed\Sales\Communication\Form\PaymentDetailForm;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
 use SprykerFeature\Zed\Sales\Communication\SalesDependencyContainer;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;

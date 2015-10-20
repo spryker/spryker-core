@@ -205,7 +205,8 @@ class RefundForm extends AbstractForm
     /**
      * @return bool
      */
-    protected function requiresPaymentData() {
+    protected function requiresPaymentData()
+    {
         return $this->paymentDataPlugin->isPaymentDataRequired($this->orderTransfer);
     }
 

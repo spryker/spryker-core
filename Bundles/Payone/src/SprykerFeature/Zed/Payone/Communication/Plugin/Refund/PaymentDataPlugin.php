@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Payone\Communication\Plugin\Refund;
 
 use Generated\Shared\Refund\PaymentDataInterface;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PaymentDataTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Payone\Business\PayoneFacade;
 use SprykerFeature\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface;
@@ -49,12 +50,12 @@ class PaymentDataPlugin extends AbstractPlugin implements PaymentDataPluginInter
     }
 
     /**
-     * @param PaymentDataInterface $paymentData
+     * @param PaymentDataTransfer $paymentData
      * @param int $idOrder
      *
      * @return void
      */
-    public function updatePaymentDetail(PaymentDataInterface $paymentData, $idOrder)
+    public function updatePaymentDetail(PaymentDataTransfer $paymentData, $idOrder)
     {
         $this->getFacade()->updatePaymentDetail($paymentData, $idOrder);
     }

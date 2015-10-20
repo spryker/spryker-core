@@ -75,14 +75,14 @@ class IndexController extends AbstractController
 
         $form->handleRequest();
 
-        $paymentDataRequired = $this->getDependencyContainer()->getConfig()->getPaymentDataPlugin()
+        $isPaymentDataRequired = $this->getDependencyContainer()->getConfig()->getPaymentDataPlugin()
             ->isPaymentDataRequired($orderTransfer);
         ;
 
         if ($form->isValid()) {
             $formData = $form->getData();
 
-            if ($paymentDataRequired) {
+            if ($isPaymentDataRequired) {
                 $paymentDataTransfer = (new PaymentDataTransfer())->fromArray($formData, true);
                 $this->getDependencyContainer()->getConfig()->getPaymentDataPlugin()
                     ->updatePaymentDetail($paymentDataTransfer, $idOrder)
@@ -131,7 +131,7 @@ class IndexController extends AbstractController
             'form' => $form->createView(),
             'orderItems' => $orderItemsArray,
             'expenses'=> $expensesArray,
-            'paymentDataRequired' => $paymentDataRequired,
+            'isPaymentDataRequired' => $isPaymentDataRequired,
         ]);
     }
 

@@ -578,17 +578,17 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param PaymentDataTransfer $paymentData
+     * @param PaymentDataTransfer $paymentDataTransfer
      * @param int $idOrder
      *
      * @return void
      */
-    public function updatePaymentDetail(PaymentDataTransfer $paymentData, $idOrder)
+    public function updatePaymentDetail(PaymentDataTransfer $paymentDataTransfer, $idOrder)
     {
         $paymentEntity = $this->queryContainer->getPaymentByOrderId($idOrder)->findOne();
         $paymentDetailEntity = $paymentEntity->getSpyPaymentPayoneDetail();
 
-        Copy::transferToEntity($paymentData, $paymentDetailEntity);
+        Copy::transferToEntity($paymentDataTransfer, $paymentDetailEntity);
 
         $paymentDetailEntity->save();
     }

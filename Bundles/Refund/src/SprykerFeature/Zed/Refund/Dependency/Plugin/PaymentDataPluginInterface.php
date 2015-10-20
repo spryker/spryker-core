@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Refund\Dependency\Plugin;
 
 use Generated\Shared\Refund\PaymentDataInterface;
 use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PaymentDataTransfer;
 
 interface PaymentDataPluginInterface
 {
@@ -34,11 +35,11 @@ interface PaymentDataPluginInterface
     public function isPaymentDataRequired(OrderTransfer $orderTransfer);
 
     /**
-     * @param PaymentDataInterface $paymentData
-     * @param $idOrder
+     * @param PaymentDataTransfer $paymentData
+     * @param int $idOrder
      *
      * @return void
      */
-    public function updatePaymentDetail(PaymentDataInterface $paymentData, $idOrder);
+    public function updatePaymentDetail(PaymentDataTransfer $paymentData, $idOrder);
 
 }
