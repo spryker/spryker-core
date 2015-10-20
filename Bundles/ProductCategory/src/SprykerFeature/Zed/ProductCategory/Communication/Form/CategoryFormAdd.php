@@ -7,8 +7,6 @@
 namespace SprykerFeature\Zed\ProductCategory\Communication\Form;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
-use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
@@ -55,8 +53,10 @@ class CategoryFormAdd extends AbstractForm
 
     /**
      * @param CategoryQueryContainerInterface $categoryQueryContainer
+     * @param ProductCategoryFacade $productCategoryFacade
      * @param LocaleTransfer $locale
      * @param int $idCategory
+     * @param int $idParentNode
      */
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
@@ -99,7 +99,8 @@ class CategoryFormAdd extends AbstractForm
      */
     protected function getCategoriesWithPaths()
     {
-        $categoryList = $this->categoryQueryContainer->queryCategory($this->locale->getIdLocale())
+        $categoryList = $this->categoryQueryContainer
+            ->queryCategory($this->locale->getIdLocale())
             ->find()
         ;
 
@@ -152,7 +153,9 @@ class CategoryFormAdd extends AbstractForm
      */
     protected function getAssignedProducts()
     {
-        $productList = $this->productCategoryFacade->getProductsByCategory($this->idCategory, $this->locale);
+        $productList = $this->productCategoryFacade
+            ->getProductsByCategory($this->idCategory, $this->locale)
+        ;
 
         $data = [];
         foreach ($productList as $product) {
@@ -170,7 +173,9 @@ class CategoryFormAdd extends AbstractForm
      */
     protected function getProducts()
     {
-        $productList = $this->productCategoryFacade->getProductsByCategory($this->idCategory, $this->locale);
+        $productList = $this->productCategoryFacade
+            ->getProductsByCategory($this->idCategory, $this->locale)
+        ;
 
         $data = [];
         foreach ($productList as $product) {
@@ -193,7 +198,8 @@ class CategoryFormAdd extends AbstractForm
          * @var SpyCategory $category
          */
 
-        $category = $this->categoryQueryContainer->queryCategoryById($this->idCategory)
+        $category = $this->categoryQueryContainer
+            ->queryCategoryById($this->idCategory)
             ->innerJoinAttribute()
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::NAME)
             ->innerJoinNode()

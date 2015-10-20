@@ -120,7 +120,8 @@ class CategoryFormEdit extends CategoryFormAdd
         /**
          * @var SpyCategory $category
          */
-        $category = $this->categoryQueryContainer->queryCategoryById($this->idCategory)
+        $category = $this->categoryQueryContainer
+            ->queryCategoryById($this->idCategory)
             ->innerJoinAttribute()
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::NAME)
             ->withColumn(SpyCategoryAttributeTableMap::COL_META_TITLE, self::ATTRIBUTE_META_TITLE)
@@ -142,7 +143,8 @@ class CategoryFormEdit extends CategoryFormAdd
         if ($category) {
             $category = $category->toArray();
             
-            $nodeList = $this->categoryQueryContainer->queryNotMainNodesByCategoryId($this->idCategory)
+            $nodeList = $this->categoryQueryContainer
+                ->queryNotMainNodesByCategoryId($this->idCategory)
                 ->where(
                     SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE . ' <> ?',
                     $category[self::PK_CATEGORY_NODE]

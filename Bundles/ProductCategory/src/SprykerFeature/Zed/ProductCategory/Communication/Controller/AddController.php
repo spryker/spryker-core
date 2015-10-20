@@ -69,6 +69,7 @@ class AddController extends AbstractController
             ;
 
             $categoryNodeTransfer->setFkCategory($idCategory);
+            $categoryNodeTransfer->setIsMain(true);
 
             $this->getDependencyContainer()
                 ->createCategoryFacade()

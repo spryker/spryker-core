@@ -19,14 +19,12 @@ use SprykerFeature\Zed\ProductCategory\Persistence\Propel\Map\SpyProductCategory
 class ProductCategoryTable extends AbstractTable
 {
     const TABLE_IDENTIFIER = 'product-category-table';
-
     const COL_CHECKBOX = 'checkbox';
 
     /**
      * @var ProductCategoryQueryContainerInterface
      */
     protected $productCategoryQueryContainer;
-
 
     /**
      * @var LocaleTransfer

@@ -6,8 +6,6 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Communication\Form;
 
-use Symfony\Component\Validator\Constraints\NotBlank;
-
 class CategoryFormDelete extends CategoryFormEdit
 {
     const DELETE_CHILDREN = 'delete_children';

@@ -128,7 +128,9 @@ class EditController extends AddController
         } else {
             $newData = $categoryNodeTransfer->toArray();
             unset($newData['id_category_node']);
-            $categoryNodeTransfer = (new NodeTransfer())->fromArray($newData, true);
+
+            $categoryNodeTransfer = (new NodeTransfer())
+                ->fromArray($newData, true);
             
             $this->getDependencyContainer()
                 ->createCategoryFacade()
@@ -294,15 +296,13 @@ class EditController extends AddController
             $children = $this->getDependencyContainer()
                 ->createCategoryQueryContainer()
                 ->queryChildren($node->getIdCategoryNode(), $locale->getIdLocale(), false, true)
-                ->find()
-            ;
+                ->find();
 
             foreach ($children as $child) {
                 $pathTokens = $this->getDependencyContainer()
                     ->createCategoryQueryContainer()
                     ->queryPath($child->getIdCategoryNode(), $locale->getIdLocale(), true, false)
-                    ->find()
-                ;
+                    ->find();
 
                 $paths[] = $this->getDependencyContainer()
                     ->createCategoryFacade()
@@ -325,8 +325,7 @@ class EditController extends AddController
         $productList = $this->getDependencyContainer()
             ->createProductCategoryQueryContainer()
             ->queryProductsByCategoryId($idCategory, $locale)
-            ->find()
-        ;
+            ->find();
 
         return $productList->toArray();
     }
@@ -342,8 +341,7 @@ class EditController extends AddController
         foreach ($category->getNodes() as $node) {
             $blocks = $this->getDependencyContainer()
                 ->createCmsFacade()
-                ->getCmsBlocksByIdCategoryNode($node->getIdCategoryNode())
-            ;
+                ->getCmsBlocksByIdCategoryNode($node->getIdCategoryNode());
 
             foreach ($blocks as $blockTransfer) {
                 $blockList[] = $blockTransfer->toArray();

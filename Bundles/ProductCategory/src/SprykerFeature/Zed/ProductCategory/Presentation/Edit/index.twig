@@ -176,8 +176,8 @@
         function selectedProductClickRemoveSelected(btn, idProduct) {
             var table = $('#selectedProductsTable').DataTable();
             table.row( $(btn).parents('tr') )
-                    .remove()
-                    .draw();
+                .remove()
+                .draw();
 
             allProductsTable.getSelector().removeProductFromSelection(idProduct);
             allProductsTable.updateSelectedProductsLabelCount();
@@ -203,8 +203,8 @@
         function categoryTableClickRemoveSelected(btn, idProduct) {
             var table = $('#deselectedProductsTable').DataTable();
             table.row( $(btn).parents('tr') )
-                    .remove()
-                    .draw();
+                .remove()
+                .draw();
 
             productCategoryTable.getSelector().removeProductFromSelection(idProduct);
             productCategoryTable.updateSelectedProductsLabelCount();
