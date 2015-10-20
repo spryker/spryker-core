@@ -7,6 +7,7 @@
 namespace Functional\SprykerFeature\Zed\SequenceNumber;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Propel\Runtime\Propel;
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -43,6 +44,19 @@ class SequenceNumberTest extends Test
         $this->factory = new \SprykerEngine\Zed\Kernel\Business\Factory('SequenceNumber');
         $this->sequenceNumberFacade = new SequenceNumberFacade($this->factory, $locator);
         $this->sequenceNumberQueryContainer = new SequenceNumberQueryContainer(new Factory('SequenceNumber'), $locator);
+    }
+
+    public function testGetDefaultSettingsMerge()
+    {
+        $customSettings = new SequenceNumberSettingsTransfer();
+        $customSettings->setIncrementMinimum(2);
+        $customSettings->setMinimumNumber(null);
+
+        $config = $this->generateConfig();
+        $sequenceNumberSettings = $config->getDefaultSettings($customSettings);
+
+        $this->assertSame(2, $sequenceNumberSettings->getIncrementMinimum());
+        $this->assertSame(1, $sequenceNumberSettings->getMinimumNumber());
     }
 
     public function testGenerate()

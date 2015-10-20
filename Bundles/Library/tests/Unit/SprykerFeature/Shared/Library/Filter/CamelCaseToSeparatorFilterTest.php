@@ -29,9 +29,9 @@ class CamelCaseToSeparatorFilterTest extends \PHPUnit_Framework_TestCase
     /**
      * @dataProvider dataProvider
      */
-    public function testWithDifferentSeperator($camelCase, $seperator, $expected)
+    public function testWithDifferentSeparator($camelCase, $separator, $expected)
     {
-        $filter = new CamelCaseToSeparatorFilter($seperator);
+        $filter = new CamelCaseToSeparatorFilter($separator);
         $this->assertEquals($expected, $filter->filter($camelCase));
     }
 
