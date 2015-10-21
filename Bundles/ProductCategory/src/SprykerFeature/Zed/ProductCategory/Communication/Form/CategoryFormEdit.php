@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\ProductCategory\Communication\Form;
 
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
+use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategory;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CategoryFormEdit extends CategoryFormAdd
@@ -103,9 +104,7 @@ class CategoryFormEdit extends CategoryFormAdd
     {
         $fields = $this->getDefaultFormFields();
 
-        /*
-         * @var SpyCategory $category
-         */
+        /** @var SpyCategory $category */
         $category = $this->categoryQueryContainer
             ->queryCategoryById($this->idCategory)
             ->innerJoinAttribute()

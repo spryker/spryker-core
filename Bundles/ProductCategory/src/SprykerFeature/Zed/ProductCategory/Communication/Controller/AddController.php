@@ -34,9 +34,6 @@ class AddController extends AbstractController
     {
         $idParentNode = $request->get(ProductCategoryConfig::PARAM_ID_PARENT_NODE);
 
-        /*
-         * @var Form
-         */
         $form = $this->getDependencyContainer()
             ->createCategoryFormAdd($idParentNode)
         ;

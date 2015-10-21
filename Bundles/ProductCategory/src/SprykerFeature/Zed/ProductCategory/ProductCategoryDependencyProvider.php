@@ -25,7 +25,7 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
     const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
 
     /**
-     * @var Container
+     * @param Container $container
      *
      * @return Container
      */

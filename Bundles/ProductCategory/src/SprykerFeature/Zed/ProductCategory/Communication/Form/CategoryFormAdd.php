@@ -10,9 +10,11 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
+use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
+use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategory;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CategoryFormAdd extends AbstractForm
@@ -155,9 +157,7 @@ class CategoryFormAdd extends AbstractForm
 
         $data = [];
         foreach ($productList as $product) {
-            /*
-             * @var SpyProductCategory $product
-             */
+            /* @var SpyProductCategory $product */
             $data[] = $product->getIdProductCategory();
         }
 
@@ -175,9 +175,7 @@ class CategoryFormAdd extends AbstractForm
 
         $data = [];
         foreach ($productList as $product) {
-            /*
-             * @var SpyProductCategory $product
-             */
+            /* @var SpyProductCategory $product */
             $data[$product->getIdProductCategory()] = $product->getName();
         }
 
@@ -191,9 +189,7 @@ class CategoryFormAdd extends AbstractForm
     {
         $fields = $this->getDefaultFormFields();
 
-        /*
-         * @var SpyCategory $category
-         */
+        /** @var SpyCategory $category */
         $category = $this->categoryQueryContainer
             ->queryCategoryById($this->idCategory)
             ->innerJoinAttribute()

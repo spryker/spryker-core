@@ -9,6 +9,7 @@ use Propel\Runtime\Propel;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
+use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategory;
 use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
 use SprykerFeature\Zed\ProductCategory\Communication\ProductCategoryDependencyContainer;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
@@ -46,9 +47,6 @@ class EditController extends AddController
         $locale = $this->getDependencyContainer()
             ->createCurrentLocale();
 
-        /*
-         * @var Form
-         */
         $form = $this->getDependencyContainer()
             ->createCategoryFormEdit($idCategory);
 
@@ -117,9 +115,7 @@ class EditController extends AddController
      */
     protected function createOrUpdateCategoryNode($existingCategoryNode, NodeTransfer $categoryNodeTransfer, LocaleTransfer $locale)
     {
-        /*
-         * @var SpyCategoryNode $existingCategoryNode
-         */
+        /** @var SpyCategoryNode $existingCategoryNode */
         if ($existingCategoryNode) {
             $categoryNodeTransfer->setIdCategoryNode($existingCategoryNode->getIdCategoryNode());
 
@@ -249,9 +245,7 @@ class EditController extends AddController
 
         $currentCategoryNodeTransfer->setIsMain(true);
 
-        /*
-         * @var SpyCategoryNode $currentCategoryNode
-         */
+        /* @var SpyCategoryNode $currentCategoryNode */
         $existingCategoryNode = $this->getDependencyContainer()
             ->createCategoryFacade()
             ->getNodeById($currentCategoryNodeTransfer->getIdCategoryNode());
@@ -371,9 +365,7 @@ class EditController extends AddController
 
         $productDataList = [];
         foreach ($productCategoryList as $productCategory) {
-            /*
-             * @var SpyProductCategory $productCategory
-             */
+            /* @var SpyProductCategory $productCategory */
             $productCategoryData = $productCategory->toArray();
             $productCategoryData['view_node_name'] = 'child';
 
