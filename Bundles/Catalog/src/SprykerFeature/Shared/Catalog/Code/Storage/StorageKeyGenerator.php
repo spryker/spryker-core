@@ -21,7 +21,7 @@ class StorageKeyGenerator extends BaseStorageKeyGenerator
      */
     public static function getProductKey($id)
     {
-        $key = implode(self::KEY_SEPERATOR, [self::KEY_NAMESPACE, 'product', $id]);
+        $key = implode(self::KEY_SEPARATOR, [self::KEY_NAMESPACE, 'product', $id]);
 
         return self::prependStoreName(self::escapeKey($key));
     }
@@ -34,7 +34,7 @@ class StorageKeyGenerator extends BaseStorageKeyGenerator
      */
     public static function getProductSkuKey($sku)
     {
-        $key = implode(self::KEY_SEPERATOR, [self::KEY_NAMESPACE, 'sku', 'product', $sku]);
+        $key = implode(self::KEY_SEPARATOR, [self::KEY_NAMESPACE, 'sku', 'product', $sku]);
 
         return self::prependStoreName(self::escapeKey($key));
     }
@@ -45,7 +45,7 @@ class StorageKeyGenerator extends BaseStorageKeyGenerator
      */
     public static function getProductOptionKey()
     {
-        $key = implode(self::KEY_SEPERATOR, [self::KEY_NAMESPACE, 'options']);
+        $key = implode(self::KEY_SEPARATOR, [self::KEY_NAMESPACE, 'options']);
 
         return self::prependStoreName($key);
     }
@@ -58,7 +58,7 @@ class StorageKeyGenerator extends BaseStorageKeyGenerator
      */
     public static function getProductUrlKey($url)
     {
-        $key = implode(self::KEY_SEPERATOR, [self::KEY_NAMESPACE, 'urlkey', $url]);
+        $key = implode(self::KEY_SEPARATOR, [self::KEY_NAMESPACE, 'urlkey', $url]);
 
         return self::prependStoreName(self::escapeKey($key));
     }
@@ -71,7 +71,7 @@ class StorageKeyGenerator extends BaseStorageKeyGenerator
      */
     public static function getBrandKey($brandName)
     {
-        $key = implode(self::KEY_SEPERATOR, [self::KEY_NAMESPACE, 'brand', $brandName]);
+        $key = implode(self::KEY_SEPARATOR, [self::KEY_NAMESPACE, 'brand', $brandName]);
 
         return self::prependStoreName(self::escapeKey($key));
     }
@@ -82,7 +82,7 @@ class StorageKeyGenerator extends BaseStorageKeyGenerator
      */
     public static function getBrandListKey()
     {
-        $key = implode(self::KEY_SEPERATOR, [self::KEY_NAMESPACE, 'list', 'brand']);
+        $key = implode(self::KEY_SEPARATOR, [self::KEY_NAMESPACE, 'list', 'brand']);
 
         return self::prependStoreName($key);
     }

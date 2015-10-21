@@ -21,7 +21,7 @@ class StorageKeyGenerator extends BaseStorageKeyGenerator
      */
     public static function getCategoryKey($categoryId)
     {
-        $key = implode(self::KEY_SEPERATOR, [self::KEY_NAMESPACE, 'tree', $categoryId]);
+        $key = implode(self::KEY_SEPARATOR, [self::KEY_NAMESPACE, 'tree', $categoryId]);
 
         return self::prependStoreName(self::escapeKey($key));
     }
@@ -32,7 +32,7 @@ class StorageKeyGenerator extends BaseStorageKeyGenerator
      */
     public static function getCategoryTreeKey()
     {
-        $key = implode(self::KEY_SEPERATOR, [self::KEY_NAMESPACE, 'tree']);
+        $key = implode(self::KEY_SEPARATOR, [self::KEY_NAMESPACE, 'tree']);
 
         return self::prependStoreName($key);
     }
@@ -45,7 +45,7 @@ class StorageKeyGenerator extends BaseStorageKeyGenerator
      */
     public static function getCategoryUrlKey($url)
     {
-        $key = implode(self::KEY_SEPERATOR, [self::KEY_NAMESPACE, 'url', $url]);
+        $key = implode(self::KEY_SEPARATOR, [self::KEY_NAMESPACE, 'url', $url]);
 
         return self::prependStoreName(self::escapeKey($key));
     }

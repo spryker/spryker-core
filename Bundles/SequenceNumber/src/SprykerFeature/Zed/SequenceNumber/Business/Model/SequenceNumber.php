@@ -67,12 +67,11 @@ class SequenceNumber implements SequenceNumberInterface
     {
         try {
             $this->connection->beginTransaction();
-
-            $sequence = $this->getSequence($this->connection);
+            $sequence = $this->getSequence();
             $idCurrent = $sequence->getCurrentId() + $this->randomNumberGenerator->generate();
 
             $sequence->setCurrentId($idCurrent);
-            $sequence->save($this->connection);
+            $sequence->save();
 
             $this->connection->commit();
         } catch (\Exception $e) {
@@ -86,19 +85,25 @@ class SequenceNumber implements SequenceNumberInterface
     }
 
     /**
-     * @param ConnectionInterface $transaction
-     *
      * @return SpySequenceNumber
      */
-    protected function getSequence($transaction)
+    protected function getSequence()
     {
         $sequence = SpySequenceNumberQuery::create()
-            ->findOneByName($this->sequenceNumberSettings->getName(), $transaction);
+            ->findOneByName($this->sequenceNumberSettings->getName());
+
+        $expectedCurrentValue = $this->sequenceNumberSettings->getMinimumNumber() - 1;
 
         if ($sequence === null) {
             $sequence = new SpySequenceNumber();
             $sequence->setName($this->sequenceNumberSettings->getName());
-            $sequence->setCurrentId($this->sequenceNumberSettings->getMinimumNumber());
+            $sequence->setCurrentId($expectedCurrentValue);
+            return $sequence;
+        }
+
+        $current = $sequence->getCurrentId();
+        if ($current < $expectedCurrentValue) {
+            $sequence->setCurrentId($expectedCurrentValue);
         }
 
         return $sequence;

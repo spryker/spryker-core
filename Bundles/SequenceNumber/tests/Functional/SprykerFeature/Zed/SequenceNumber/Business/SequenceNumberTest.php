@@ -7,12 +7,12 @@
 namespace Functional\SprykerFeature\Zed\SequenceNumber;
 
 use Codeception\TestCase\Test;
+use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Propel\Runtime\Propel;
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\SequenceNumber\Business\Model\SequenceNumber;
 use SprykerFeature\Zed\SequenceNumber\Business\SequenceNumberFacade;
-use SprykerFeature\Zed\SequenceNumber\Persistence\SequenceNumberQueryContainer;
 use SprykerEngine\Zed\Kernel\Persistence\Factory;
 use SprykerFeature\Zed\SequenceNumber\SequenceNumberConfig;
 
@@ -30,11 +30,6 @@ class SequenceNumberTest extends Test
      */
     protected $sequenceNumberFacade;
 
-    /**
-     * @var SequenceNumberQueryContainer
-     */
-    protected $sequenceNumberQueryContainer;
-
     public function setUp()
     {
         parent::setUp();
@@ -42,7 +37,19 @@ class SequenceNumberTest extends Test
         $locator = Locator::getInstance();
         $this->factory = new \SprykerEngine\Zed\Kernel\Business\Factory('SequenceNumber');
         $this->sequenceNumberFacade = new SequenceNumberFacade($this->factory, $locator);
-        $this->sequenceNumberQueryContainer = new SequenceNumberQueryContainer(new Factory('SequenceNumber'), $locator);
+    }
+
+    public function testGetDefaultSettingsMergedWithCustomSettings()
+    {
+        $customSettings = new SequenceNumberSettingsTransfer();
+        $customSettings->setIncrementMinimum(2);
+        $customSettings->setMinimumNumber(null);
+
+        $config = $this->generateConfig();
+        $sequenceNumberSettings = $config->getDefaultSettings($customSettings);
+
+        $this->assertSame(2, $sequenceNumberSettings->getIncrementMinimum());
+        $this->assertSame(1, $sequenceNumberSettings->getMinimumNumber());
     }
 
     public function testGenerate()
@@ -51,10 +58,18 @@ class SequenceNumberTest extends Test
         $sequenceNumberSettings = $config->getDefaultSettings();
 
         $sequenceNumber = $this->sequenceNumberFacade->generate($sequenceNumberSettings);
-        $this->assertSame('2', $sequenceNumber);
+        $this->assertSame('1', $sequenceNumber);
 
         $number = $this->sequenceNumberFacade->generate($sequenceNumberSettings);
-        $this->assertSame('3', $number);
+        $this->assertSame('2', $number);
+
+        $sequenceNumberSettings->setMinimumNumber(100);
+        $number = $this->sequenceNumberFacade->generate($sequenceNumberSettings);
+        $this->assertSame('100', $number);
+
+        $sequenceNumberSettings->setMinimumNumber(10);
+        $number = $this->sequenceNumberFacade->generate($sequenceNumberSettings);
+        $this->assertSame('101', $number);
     }
 
     public function testGenerateWithPrefix()
@@ -64,7 +79,7 @@ class SequenceNumberTest extends Test
         $sequenceNumberSettings->setPrefix('DE');
 
         $sequenceNumber = $this->sequenceNumberFacade->generate($sequenceNumberSettings);
-        $this->assertSame('DE2', $sequenceNumber);
+        $this->assertSame('DE1', $sequenceNumber);
     }
 
     public function testGenerateOnSequenceNumber()
@@ -84,7 +99,7 @@ class SequenceNumberTest extends Test
         );
 
         $number = $sequenceNumber->generate();
-        $this->assertSame('011', $number);
+        $this->assertSame('010', $number);
 
         // Make sure other sequences don't interfere
         $config = $this->generateConfig();
@@ -100,10 +115,10 @@ class SequenceNumberTest extends Test
         );
 
         $number = $sequenceNumberOther->generate();
-        $this->assertSame('3', $number);
+        $this->assertSame('2', $number);
 
         $number = $sequenceNumber->generate();
-        $this->assertSame('012', $number);
+        $this->assertSame('011', $number);
     }
 
     /**
