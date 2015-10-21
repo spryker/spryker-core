@@ -143,6 +143,8 @@ class CategoryFacade extends AbstractFacade
 
     /**
      * @param int $idCategory
+     *
+     * @return void
      */
     public function deleteCategory($idCategory)
     {
@@ -169,8 +171,9 @@ class CategoryFacade extends AbstractFacade
 
     /**
      * @param NodeTransfer $categoryNode
-     *
      * @param LocaleTransfer $locale
+     *
+     * @return void
      */
     public function updateCategoryNode(NodeTransfer $categoryNode, LocaleTransfer $locale)
     {
@@ -290,6 +293,7 @@ class CategoryFacade extends AbstractFacade
 
     /**
      * @param int $idNode
+     *
      * @return SpyCategoryNode
      */
     public function getNodeById($idNode)
@@ -310,6 +314,7 @@ class CategoryFacade extends AbstractFacade
 
     /**
      * @param array $pathTokens
+     *
      * @return string
      */
     public function generatePath(array $pathTokens)
