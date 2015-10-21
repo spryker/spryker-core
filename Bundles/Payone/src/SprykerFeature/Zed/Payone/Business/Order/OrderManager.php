@@ -7,8 +7,8 @@
 namespace SprykerFeature\Zed\Payone\Business\Order;
 
 use Generated\Shared\Payone\OrderInterface as PayoneOrderInterface;
+use Generated\Shared\Payone\PaymentDetailInterface;
 use Generated\Shared\Payone\PayonePaymentInterface;
-use Generated\Shared\Transfer\PayonePaymentDetailTransfer;
 use Propel\Runtime\Propel;
 use SprykerFeature\Zed\Payone\PayoneConfig;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
@@ -32,6 +32,8 @@ class OrderManager implements OrderManagerInterface
 
     /**
      * @param PayoneOrderInterface $orderTransfer
+     *
+     * @return void
      */
     public function saveOrder(PayoneOrderInterface $orderTransfer)
     {
@@ -69,9 +71,11 @@ class OrderManager implements OrderManagerInterface
 
     /**
      * @param SpyPaymentPayone $payment
-     * @param PayonePaymentDetailTransfer $paymentDetailTransfer
+     * @param PaymentDetailInterface $paymentDetailTransfer
+     *
+     * @return void
      */
-    protected function savePaymentDetail(SpyPaymentPayone $payment, PayonePaymentDetailTransfer $paymentDetailTransfer)
+    protected function savePaymentDetail(SpyPaymentPayone $payment, PaymentDetailInterface $paymentDetailTransfer)
     {
         $paymentDetailEntity = new SpyPaymentPayoneDetail();
         $paymentDetailEntity->setSpyPaymentPayone($payment);

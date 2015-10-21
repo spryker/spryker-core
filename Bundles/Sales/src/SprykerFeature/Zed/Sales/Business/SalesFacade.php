@@ -13,7 +13,6 @@ use Generated\Shared\Transfer\OrderItemsTransfer;
 use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\PayonePaymentDetailTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
@@ -193,22 +192,6 @@ class SalesFacade extends AbstractFacade
         return $this->getDependencyContainer()
             ->createOrderManager()
             ->getOrders($orderListTransfer)
-            ;
-    }
-
-    /**
-     * //TODO: Remove direct dependency and move to plugin | CD-561
-     *
-     * @param PayonePaymentDetailTransfer $paymentDetailTransfer
-     * @param int $idPayment
-     *
-     * @return mixed
-     */
-    public function updatePaymentDetail(PayonePaymentDetailTransfer $paymentDetailTransfer, $idPayment)
-    {
-        return $this->getDependencyContainer()
-            ->createOrderManager()
-            ->updatePaymentDetail($paymentDetailTransfer, $idPayment)
             ;
     }
 

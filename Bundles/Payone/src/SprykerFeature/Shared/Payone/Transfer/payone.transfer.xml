@@ -49,10 +49,10 @@
         <property name="authorizationType" type="string" />
         <property name="reference" type="string" />
         <property name="transactionId" type="string" />
-        <property name="paymentDetail" type="PayonePaymentDetail" />
+        <property name="paymentDetail" type="PaymentDetail" />
     </transfer>
 
-    <transfer name="PayonePaymentDetail">
+    <transfer name="PaymentDetail">
         <property name="amount" type="int" />
         <property name="currency" type="string" />
         <property name="pseudoCardPan" type="string" />

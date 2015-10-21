@@ -81,6 +81,4 @@ interface SalesQueryContainerInterface
      */
     public function querySalesOrderDetails($idSalesOrder, $idCustomer);
 
-    public function queryPaymentDetailByPaymentId($idPayment);
-
 }

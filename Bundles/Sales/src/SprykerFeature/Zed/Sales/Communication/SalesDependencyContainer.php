@@ -133,18 +133,6 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
     }
 
     /**
-     * @param int $idPayment
-     *
-     * @return PaymentDetailForm
-     */
-    public function createPaymentDetailForm($idPayment)
-    {
-        $paymentDetailQuery = $this->getQueryContainer()->queryPaymentDetailByPaymentId($idPayment);
-
-        return $this->getFactory()->createFormPaymentDetailForm($paymentDetailQuery);
-    }
-
-    /**
      * @return OmsFacade
      */
     public function getOmsFacade()

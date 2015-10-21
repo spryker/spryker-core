@@ -13,6 +13,8 @@ interface OrderManagerInterface
 
     /**
      * @param PayoneOrderInterface $orderTransfer
+     *
+     * @return void
      */
     public function saveOrder(PayoneOrderInterface $orderTransfer);
 

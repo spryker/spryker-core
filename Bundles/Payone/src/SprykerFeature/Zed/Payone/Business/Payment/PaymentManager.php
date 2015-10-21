@@ -14,7 +14,7 @@ use Generated\Shared\Payone\OrderInterface;
 use Generated\Shared\Refund\PaymentDataInterface;
 use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
-use Generated\Shared\Transfer\PayonePaymentDetailTransfer;
+use Generated\Shared\Transfer\PaymentDetailTransfer;
 use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -311,7 +311,7 @@ class PaymentManager implements PaymentManagerInterface
         $payment = $this->queryContainer->getPaymentByOrderId($orderTransfer->getIdSalesOrder())->findOne();
         $paymentDetail = $payment->getSpyPaymentPayoneDetail();
 
-        $paymentDetailTransfer = new PayonePaymentDetailTransfer();
+        $paymentDetailTransfer = new PaymentDetailTransfer();
         $paymentDetailTransfer->fromArray($paymentDetail->toArray(), true);
 
         $paymentTransfer = new PayonePaymentTransfer();
