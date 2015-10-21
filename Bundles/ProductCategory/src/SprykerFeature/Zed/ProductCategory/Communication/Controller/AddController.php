@@ -25,7 +25,6 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class AddController extends AbstractController
 {
-
     /**
      * @param Request $request
      *
@@ -44,10 +43,7 @@ class AddController extends AbstractController
         $form->handleRequest();
 
         if ($form->isValid()) {
-            $connection = Propel::getConnection();
-            $connection->beginTransaction();
-
-            $locale = $this->getDependencyContainer()
+            $localeTransfer = $this->getDependencyContainer()
                 ->createCurrentLocale()
             ;
 
@@ -55,30 +51,15 @@ class AddController extends AbstractController
                 ->fromArray($form->getData(), true)
             ;
 
-            $categoryTransfer->setIsActive(true);
-            $categoryTransfer->setIsInMenu(true);
-            $categoryTransfer->setIsClickable(true);
-
-            $idCategory = $this->getDependencyContainer()
-                ->createCategoryFacade()
-                ->createCategory($categoryTransfer, $locale)
-            ;
-
             $categoryNodeTransfer = (new NodeTransfer())
                 ->fromArray($form->getData(), true)
             ;
 
-            $categoryNodeTransfer->setFkCategory($idCategory);
-            $categoryNodeTransfer->setIsMain(true);
-
-            $this->getDependencyContainer()
-                ->createCategoryFacade()
-                ->createCategoryNode($categoryNodeTransfer, $locale)
+            $idCategory = $this->getFacade()
+                ->addCategory($categoryTransfer, $categoryNodeTransfer, $localeTransfer)
             ;
 
             $this->addSuccessMessage('The category was added successfully.');
-
-            $connection->commit();
 
             return $this->redirectResponse('/product-category/edit?id-category=' . $idCategory);
         }

@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Business;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Propel\Runtime\Exception\PropelException;
@@ -191,9 +192,24 @@ class ProductCategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param $idCategoryNode
-     * @param $fkParentCategoryNode
-     * @param $deleteChildren
+     * @param CategoryTransfer $categoryTransfer
+     * @param NodeTransfer $categoryNodeTransfer
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return int
+     */
+    public function addCategory(CategoryTransfer $categoryTransfer, NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
+    {
+        return $this->getDependencyContainer()
+            ->createProductCategoryManager()
+            ->addCategory($categoryTransfer, $categoryNodeTransfer, $localeTransfer)
+        ;
+    }
+
+    /**
+     * @param int $idCategoryNode
+     * @param int $fkParentCategoryNode
+     * @param bool $deleteChildren
      * @param LocaleTransfer $localeTransfer
      *
      * @return void

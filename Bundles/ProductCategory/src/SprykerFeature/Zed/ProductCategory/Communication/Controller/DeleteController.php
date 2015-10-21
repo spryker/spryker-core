@@ -3,12 +3,12 @@
 namespace SprykerFeature\Zed\ProductCategory\Communication\Controller;
 
 use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
-use SprykerFeature\Zed\ProductCategory\Communication\Form\CategoryFormEdit;
 use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
 use SprykerFeature\Zed\ProductCategory\Communication\ProductCategoryDependencyContainer;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Form;
 
 /**
  * @method ProductCategoryFacade getFacade()
@@ -61,7 +61,7 @@ class DeleteController extends EditController
      *
      * @return bool
      */
-    private function existsCategory($idCategory)
+    protected function existsCategory($idCategory)
     {
         $categoryCount = $this->getDependencyContainer()
             ->createCategoryQueryContainer()
@@ -78,11 +78,11 @@ class DeleteController extends EditController
 
     /**
      * @param $idCategory
-     * @param CategoryFormEdit $form
+     * @param Form $form
      *
      * @return array
      */
-    private function getViewData($idCategory, CategoryFormEdit $form)
+    protected function getViewData($idCategory, Form $form)
     {
         $locale = $this->getDependencyContainer()
             ->createCurrentLocale()

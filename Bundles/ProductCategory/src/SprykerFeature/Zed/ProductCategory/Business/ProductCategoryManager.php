@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Business;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Zed\Ide\AutoCompletion;
@@ -361,6 +362,33 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
+     * @param CategoryTransfer $categoryTransfer
+     * @param NodeTransfer $categoryNodeTransfer
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return int
+     */
+    public function addCategory(CategoryTransfer $categoryTransfer, NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
+    {
+        $this->connection->beginTransaction();
+
+        $categoryTransfer->setIsActive(true);
+        $categoryTransfer->setIsInMenu(true);
+        $categoryTransfer->setIsClickable(true);
+
+        $idCategory = $this->categoryFacade->createCategory($categoryTransfer, $localeTransfer);
+
+        $categoryNodeTransfer->setFkCategory($idCategory);
+        $categoryNodeTransfer->setIsMain(true);
+
+        $this->categoryFacade->createCategoryNode($categoryNodeTransfer, $localeTransfer);
+
+        $this->connection->commit();
+
+        return $idCategory;
+    }
+
+    /**
      * @param int $idCategoryNode
      * @param int $fkParentCategoryNode
      * @param bool $deleteChildren
@@ -372,14 +400,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     {
         $this->connection->beginTransaction();
 
-        $currentCategoryTransfer = (new CategoryTransfer())
-            ->fromArray($data, true);
-
-        $sourceTransfer = (new NodeTransfer())
-            ->fromArray($data, true);
-
         if ($deleteChildren) {
-            $this->deleteCategoryRecursive($idCategoryNode, $locale);
+            $this->deleteCategoryRecursive($idCategoryNode, $localeTransfer);
         } else {
             $sourceTransfer = $this->categoryFacade->getNodeById($idCategoryNode);
 
@@ -391,8 +413,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             $destinationNodeTransfer = (new NodeTransfer())
                 ->fromArray($destinationEntity->toArray());
 
-            $this->moveCategoryChildrenAndDeleteNode($sourceNodeTransfer, $destinationNodeTransfer, $locale);
-            $this->deleteCategoryRecursive($idCategoryNode, $locale);
+            $this->moveCategoryChildrenAndDeleteNode($sourceNodeTransfer, $destinationNodeTransfer, $localeTransfer);
+            $this->deleteCategoryRecursive($idCategoryNode, $localeTransfer);
         }
 
         $this->connection->commit();
