@@ -12,7 +12,6 @@ use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
 use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
 use SprykerFeature\Zed\ProductCategory\Communication\ProductCategoryDependencyContainer;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -131,8 +130,7 @@ class EditController extends AddController
             $newData = $categoryNodeTransfer->toArray();
             unset($newData['id_category_node']);
 
-            $categoryNodeTransfer = (new NodeTransfer())
-                ->fromArray($newData, true);
+            $categoryNodeTransfer = $this->createCategoryNodeTransferFromData($newData);
 
             $this->getDependencyContainer()
                 ->createCategoryFacade()
@@ -230,8 +228,7 @@ class EditController extends AddController
      */
     protected function updateCategory(LocaleTransfer $locale, array $data)
     {
-        $currentCategoryTransfer = (new CategoryTransfer())
-            ->fromArray($data, true);
+        $currentCategoryTransfer = $this->createCategoryTransferFromData($data);
 
         $this->getDependencyContainer()
             ->createCategoryFacade()
@@ -248,8 +245,7 @@ class EditController extends AddController
      */
     protected function updateCategoryNode(LocaleTransfer $locale, array $data)
     {
-        $currentCategoryNodeTransfer = (new NodeTransfer())
-            ->fromArray($data, true);
+        $currentCategoryNodeTransfer = $this->createCategoryNodeTransferFromData($data);
 
         $currentCategoryNodeTransfer->setIsMain(true);
 
@@ -274,8 +270,7 @@ class EditController extends AddController
      */
     protected function updateCategoryNodeChild(CategoryTransfer $categoryTransfer, LocaleTransfer $locale, array $data)
     {
-        $nodeTransfer = (new NodeTransfer())
-            ->fromArray($data, true);
+        $nodeTransfer = $this->createCategoryNodeTransferFromData($data);
 
         $nodeTransfer->setIsMain(false);
 

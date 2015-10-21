@@ -47,13 +47,8 @@ class AddController extends AbstractController
                 ->createCurrentLocale()
             ;
 
-            $categoryTransfer = (new CategoryTransfer())
-                ->fromArray($form->getData(), true)
-            ;
-
-            $categoryNodeTransfer = (new NodeTransfer())
-                ->fromArray($form->getData(), true)
-            ;
+            $categoryTransfer = $this->createCategoryTransferFromData($form->getData());
+            $categoryNodeTransfer = $this->createCategoryNodeTransferFromData($form->getData());
 
             $idCategory = $this->getFacade()
                 ->addCategory($categoryTransfer, $categoryNodeTransfer, $localeTransfer)
@@ -110,6 +105,26 @@ class AddController extends AbstractController
         return $this->jsonResponse(
             $productTable->fetchData()
         );
+    }
+
+    /**
+     * @param array $data
+     * @return CategoryTransfer
+     */
+    protected function createCategoryTransferFromData(array $data)
+    {
+        return (new CategoryTransfer())
+            ->fromArray($data, true);
+    }
+
+    /**
+     * @param array $data
+     * @return NodeTransfer
+     */
+    protected function createCategoryNodeTransferFromData(array $data)
+    {
+        return (new NodeTransfer())
+            ->fromArray($data, true);
     }
 
 }
