@@ -264,7 +264,7 @@ interface CategoryQueryContainerInterface
     public function queryNodeByCategoryName($categoryName, $idLocale);
 
     /**
-     * @param $idCategoryNode
+     * @param int $idCategoryNode
      *
      * @return SpyUrlQuery
      */

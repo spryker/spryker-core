@@ -5,7 +5,6 @@
 
 namespace SprykerFeature\Zed\Category\Communication\Table;
 
-use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;

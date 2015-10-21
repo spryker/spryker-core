@@ -15,36 +15,36 @@ interface CategoryTreeWriterInterface
 {
 
     /**
-     * @param int       $categoryId
-     * @param string    $locale
-     * @param int|null  $parentId
-     * @param bool      $createUrlPath
+     * @param int $categoryId
+     * @param string $locale
+     * @param int|null $parentId
+     * @param bool $createUrlPath
      *
      * @return int
      */
     public function createCategoryNode($categoryId, $locale, $parentId = null, $createUrlPath = true);
 
     /**
-     * @param string    $name
-     * @param int       $parentId
-     * @param string    $locale
+     * @param string $name
+     * @param int $parentId
+     * @param string $locale
      *
      * @return ModelResult
      */
     public function createNodeByCategoryName($name, $parentId, $locale);
 
     /**
-     * @param int   $nodeId
-     * @param int   $newParentId
+     * @param int $nodeId
+     * @param int $newParentId
      *
      * @return ModelResult
      */
     public function moveNode($nodeId, $newParentId);
 
     /**
-     * @param int       $nodeId
-     * @param string    $locale
-     * @param bool      $deleteChildren
+     * @param int $nodeId
+     * @param string $locale
+     * @param bool $deleteChildren
      *
      * @return bool|int
      */
