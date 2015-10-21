@@ -119,15 +119,15 @@ class ProductCategoryFacade extends AbstractFacade
 
     /**
      * @param int $idCategory
-     * @param array $productIdsToDeassign
+     * @param array $productIdsToUnAssign
      *
      * @return void
      */
-    public function removeProductCategoryMappings($idCategory, array $productIdsToDeassign)
+    public function removeProductCategoryMappings($idCategory, array $productIdsToUnAssign)
     {
         $this->getDependencyContainer()
             ->createProductCategoryManager()
-            ->removeProductCategoryMappings($idCategory, $productIdsToDeassign)
+            ->removeProductCategoryMappings($idCategory, $productIdsToUnAssign)
         ;
     }
 
@@ -149,15 +149,15 @@ class ProductCategoryFacade extends AbstractFacade
 
     /**
      * @param int $idCategory
-     * @param $productPreconfig
+     * @param $productPreConfig
      *
      * @return void
      */
-    public function updateProductCategoryPreconfig($idCategory, array $productPreconfig)
+    public function updateProductCategoryPreConfig($idCategory, array $productPreConfig)
     {
         $this->getDependencyContainer()
             ->createProductCategoryManager()
-            ->updateProductMappingsPreconfig($idCategory, $productPreconfig)
+            ->updateProductMappingsPreConfig($idCategory, $productPreConfig)
         ;
     }
 
@@ -187,6 +187,22 @@ class ProductCategoryFacade extends AbstractFacade
         $this->getDependencyContainer()
             ->createProductCategoryManager()
             ->moveCategoryChildrenAndDeleteNode($sourceNode, $destinationNode, $locale)
+        ;
+    }
+
+    /**
+     * @param $idCategoryNode
+     * @param $fkParentCategoryNode
+     * @param $deleteChildren
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return void
+     */
+    public function deleteCategory($idCategoryNode, $fkParentCategoryNode, $deleteChildren, LocaleTransfer $localeTransfer)
+    {
+        $this->getDependencyContainer()
+            ->createProductCategoryManager()
+            ->deleteCategory($idCategoryNode, $fkParentCategoryNode, $deleteChildren, $localeTransfer)
         ;
     }
 

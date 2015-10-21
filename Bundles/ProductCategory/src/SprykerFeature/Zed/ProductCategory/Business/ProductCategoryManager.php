@@ -76,6 +76,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param ProductCategoryToTouchInterface $touchFacade
      * @param CmsToCategoryInterface $cmsFacade
      * @param LocatorLocatorInterface $locator
+     * @param ConnectionInterface $connection
      */
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
@@ -208,13 +209,13 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
     /**
      * @param int $idCategory
-     * @param array $productIdsToDeassign
+     * @param array $productIdsToUnAssign
      *
      * @return void
      */
-    public function removeProductCategoryMappings($idCategory, array $productIdsToDeassign)
+    public function removeProductCategoryMappings($idCategory, array $productIdsToUnAssign)
     {
-        foreach ($productIdsToDeassign as $idProduct) {
+        foreach ($productIdsToUnAssign as $idProduct) {
             $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
                 ->findOne();
 
@@ -285,15 +286,15 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
     /**
      * @param int $idCategory
-     * @param array $productPreconfigList
+     * @param array $productPreConfigList
      *
      * @throws PropelException
      *
      * @return void
      */
-    public function updateProductMappingsPreconfig($idCategory, array $productPreconfigList)
+    public function updateProductMappingsPreConfig($idCategory, array $productPreConfigList)
     {
-        foreach ($productPreconfigList as $idProduct => $idPreconfigProduct) {
+        foreach ($productPreConfigList as $idProduct => $idPreconfigProduct) {
             $idPreconfigProduct = (int) $idPreconfigProduct;
             $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
                 ->findOne();
@@ -342,7 +343,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
-     * @param int $idCategory
+     * @param $idCategory
+     * @param LocaleTransfer $localeTransfer
      *
      * @return void
      */
@@ -356,6 +358,44 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         foreach ($extraParents as $parent) {
             $this->categoryFacade->deleteNode($parent->getIdCategoryNode(), $localeTransfer);
         }
+    }
+
+    /**
+     * @param int $idCategoryNode
+     * @param int $fkParentCategoryNode
+     * @param bool $deleteChildren
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return void
+     */
+    public function deleteCategory($idCategoryNode, $fkParentCategoryNode, $deleteChildren, LocaleTransfer $localeTransfer)
+    {
+        $this->connection->beginTransaction();
+
+        $currentCategoryTransfer = (new CategoryTransfer())
+            ->fromArray($data, true);
+
+        $sourceTransfer = (new NodeTransfer())
+            ->fromArray($data, true);
+
+        if ($deleteChildren) {
+            $this->deleteCategoryRecursive($idCategoryNode, $locale);
+        } else {
+            $sourceTransfer = $this->categoryFacade->getNodeById($idCategoryNode);
+
+            $destinationEntity = $this->categoryFacade->getNodeById($fkParentCategoryNode);
+
+            $sourceNodeTransfer = (new NodeTransfer())
+                ->fromArray($sourceTransfer->toArray());
+
+            $destinationNodeTransfer = (new NodeTransfer())
+                ->fromArray($destinationEntity->toArray());
+
+            $this->moveCategoryChildrenAndDeleteNode($sourceNodeTransfer, $destinationNodeTransfer, $locale);
+            $this->deleteCategoryRecursive($idCategoryNode, $locale);
+        }
+
+        $this->connection->commit();
     }
 
     /**

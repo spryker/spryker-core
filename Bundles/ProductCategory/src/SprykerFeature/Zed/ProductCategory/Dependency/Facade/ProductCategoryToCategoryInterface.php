@@ -58,4 +58,11 @@ interface ProductCategoryToCategoryInterface
      */
     public function updateCategoryNode(NodeTransfer $categoryNode, LocaleTransfer $locale);
 
+    /**
+     * @param $idCategoryNode
+     *
+     * @return NodeTransfer
+     */
+    public function getNodeById($idCategoryNode);
+
 }

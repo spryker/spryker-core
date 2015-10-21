@@ -76,11 +76,11 @@ interface ProductCategoryManagerInterface
 
     /**
      * @param int $idCategory
-     * @param array $productIdsToDeassign
+     * @param array $productIdsToUnAssign
      *
      * @return void
      */
-    public function removeProductCategoryMappings($idCategory, array $productIdsToDeassign);
+    public function removeProductCategoryMappings($idCategory, array $productIdsToUnAssign);
 
     /**
      * @param $idCategory
@@ -94,13 +94,13 @@ interface ProductCategoryManagerInterface
 
     /**
      * @param int $idCategory
-     * @param array $productPreconfigList
+     * @param array $productPreConfigList
      *
      * @throws PropelException
      *
      * @return void
      */
-    public function updateProductMappingsPreconfig($idCategory, array $productPreconfigList);
+    public function updateProductMappingsPreConfig($idCategory, array $productPreConfigList);
 
     /**
      * @param NodeTransfer $sourceNodeTransfer
@@ -118,5 +118,15 @@ interface ProductCategoryManagerInterface
      * @return void
      */
     public function deleteCategoryRecursive($idCategory, LocaleTransfer $localeTransfer);
+
+    /**
+     * @param int $idCategoryNode
+     * @param int $fkParentCategoryNode
+     * @param bool $deleteChildren
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return void
+     */
+    public function deleteCategory($idCategoryNode, $fkParentCategoryNode, $deleteChildren, LocaleTransfer $localeTransfer);
 
 }

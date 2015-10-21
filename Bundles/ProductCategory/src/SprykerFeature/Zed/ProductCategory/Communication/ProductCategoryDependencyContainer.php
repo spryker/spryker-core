@@ -31,11 +31,6 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
 {
 
     /**
-     * @var LocaleTransfer
-     */
-    protected $currentLocale;
-
-    /**
      * @return LocaleTransfer
      */
     public function createCurrentLocale()
@@ -87,18 +82,6 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
     }
 
     /**
-     * @return LocaleTransfer
-     */
-    public function getCurrentLocale()
-    {
-        if (null === $this->currentLocale) {
-            $this->currentLocale = $this->createCurrentLocale();
-        }
-
-        return $this->currentLocale;
-    }
-
-    /**
      * @return ProductCategoryQueryContainerInterface
      */
     public function createProductCategoryQueryContainer()
@@ -132,7 +115,7 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
         return $this->getFactory()->createFormCategoryFormAdd(
             $this->createCategoryQueryContainer(),
             $this->createProductCategoryFacade(),
-            $this->getCurrentLocale(),
+            $this->createCurrentLocale(),
             null,
             $idParentNode
         );
@@ -148,7 +131,7 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
         return $this->getFactory()->createFormCategoryFormEdit(
             $this->createCategoryQueryContainer(),
             $this->createProductCategoryFacade(),
-            $this->getCurrentLocale(),
+            $this->createCurrentLocale(),
             $idCategory,
             null
         );
@@ -164,7 +147,7 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
         return $this->getFactory()->createFormCategoryFormDelete(
             $this->createCategoryQueryContainer(),
             $this->createProductCategoryFacade(),
-            $this->getCurrentLocale(),
+            $this->createCurrentLocale(),
             $idCategory,
             null
         );

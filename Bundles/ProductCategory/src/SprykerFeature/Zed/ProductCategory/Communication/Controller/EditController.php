@@ -220,7 +220,7 @@ class EditController extends AddController
     {
         $this->getDependencyContainer()
             ->createProductCategoryFacade()
-            ->updateProductCategoryPreconfig($categoryTransfer->getIdCategory(), $productPreconfig);
+            ->updateProductCategoryPreConfig($categoryTransfer->getIdCategory(), $productPreconfig);
     }
 
     /**

@@ -2,15 +2,11 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Communication\Controller;
 
-use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Transfer\NodeTransfer;
-use Propel\Runtime\Propel;
 use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
 use SprykerFeature\Zed\ProductCategory\Communication\Form\CategoryFormEdit;
 use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
 use SprykerFeature\Zed\ProductCategory\Communication\ProductCategoryDependencyContainer;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
-use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -43,59 +39,16 @@ class DeleteController extends EditController
         ;
 
         if ($form->isValid()) {
-            $locale = $this->getDependencyContainer()
-                ->createCurrentLocale();
-
-            $connection = Propel::getConnection();
-            $connection->beginTransaction();
-
             $data = $form->getData();
-
-            $currentCategoryTransfer = (new CategoryTransfer())
-                ->fromArray($data, true);
-
-            $sourceTransfer = (new NodeTransfer())
-                ->fromArray($data, true);
-
-            if ($data['delete_children']) {
-                $this->getDependencyContainer()
-                    ->createProductCategoryFacade()
-                    ->deleteCategoryRecursive($currentCategoryTransfer->getIdCategory(), $locale);
-            } else {
-                if ($sourceTransfer->getFkParentCategoryNode() === 0) {
-                    throw new \InvalidArgumentException('Please select a category');
-                }
-
-                if ($sourceTransfer->getIdCategoryNode() === $sourceTransfer->getFkParentCategoryNode()) {
-                    throw new \InvalidArgumentException('Please select another category');
-                }
-
-                $sourceTransfer = $this->getDependencyContainer()
-                    ->createCategoryFacade()
-                    ->getNodeById($data['id_category_node']);
-
-                $destinationEntity = $this->getDependencyContainer()
-                    ->createCategoryFacade()
-                    ->getNodeById($data['fk_parent_category_node']);
-
-                $sourceNodeTransfer = (new NodeTransfer())
-                    ->fromArray($sourceTransfer->toArray());
-
-                $destinationNodeTransfer = (new NodeTransfer())
-                    ->fromArray($destinationEntity->toArray());
-
-                $this->getDependencyContainer()
-                    ->createProductCategoryFacade()
-                    ->moveCategoryChildrenAndDeleteNode($sourceNodeTransfer, $destinationNodeTransfer, $locale);
-
-                $this->getDependencyContainer()
-                    ->createProductCategoryFacade()
-                    ->deleteCategoryRecursive($currentCategoryTransfer->getIdCategory(), $locale);
-            }
-
-            $this->addSuccessMessage('The category was deleted successfully.');
-
-            $connection->commit();
+            $localeTransfer = $this->getDependencyContainer()
+                ->createCurrentLocale()
+            ;
+            $this->getFacade()->deleteCategory(
+                $data['id_category_node'],
+                $data['fk_parent_category_node'],
+                $data['delete_children'],
+                $localeTransfer
+            );
 
             return $this->redirectResponse('/category');
         }
