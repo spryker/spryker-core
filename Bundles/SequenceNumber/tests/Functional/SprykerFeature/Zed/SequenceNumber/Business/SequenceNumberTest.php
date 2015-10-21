@@ -62,6 +62,14 @@ class SequenceNumberTest extends Test
 
         $number = $this->sequenceNumberFacade->generate($sequenceNumberSettings);
         $this->assertSame('2', $number);
+
+        $sequenceNumberSettings->setMinimumNumber(100);
+        $number = $this->sequenceNumberFacade->generate($sequenceNumberSettings);
+        $this->assertSame('100', $number);
+
+        $sequenceNumberSettings->setMinimumNumber(10);
+        $number = $this->sequenceNumberFacade->generate($sequenceNumberSettings);
+        $this->assertSame('101', $number);
     }
 
     public function testGenerateWithPrefix()

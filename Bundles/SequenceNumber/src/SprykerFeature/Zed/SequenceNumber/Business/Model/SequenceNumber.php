@@ -92,10 +92,18 @@ class SequenceNumber implements SequenceNumberInterface
         $sequence = SpySequenceNumberQuery::create()
             ->findOneByName($this->sequenceNumberSettings->getName());
 
+        $expectedCurrentValue = $this->sequenceNumberSettings->getMinimumNumber() - 1;
+
         if ($sequence === null) {
             $sequence = new SpySequenceNumber();
             $sequence->setName($this->sequenceNumberSettings->getName());
-            $sequence->setCurrentId($this->sequenceNumberSettings->getMinimumNumber() - 1);
+            $sequence->setCurrentId($expectedCurrentValue);
+            return $sequence;
+        }
+
+        $current = $sequence->getCurrentId();
+        if ($current < $expectedCurrentValue) {
+            $sequence->setCurrentId($expectedCurrentValue);
         }
 
         return $sequence;
