@@ -20,6 +20,8 @@ interface NodeWriterInterface
 
     /**
      * @param NodeTransfer $categoryNode
+     *
+     * @return void
      */
     public function update(NodeTransfer $categoryNode);
 

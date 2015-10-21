@@ -39,6 +39,8 @@ class CategoryTreeFormatter
 
     /**
      * @param array $categories
+     *
+     * @return void
      */
     public function setupCategories(array $categories)
     {
@@ -52,6 +54,8 @@ class CategoryTreeFormatter
 
     /**
      * @param array $category
+     *
+     * @return void
      */
     protected function findCategoryIndex(array $category)
     {

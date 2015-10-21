@@ -34,7 +34,7 @@ class CategoryFacade extends AbstractFacade
 
     /**
      * @param int $idCategory
-     * @param $idParentNode
+     * @param int $idParentNode
      * 
      * @return SpyCategoryNode
      */
@@ -304,6 +304,9 @@ class CategoryFacade extends AbstractFacade
         ;
     }
 
+    /**
+     * @return void
+     */
     public function rebuildClosureTable()
     {
         $this->getDependencyContainer()

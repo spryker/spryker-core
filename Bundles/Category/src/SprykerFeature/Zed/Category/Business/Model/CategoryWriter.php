@@ -54,6 +54,8 @@ class CategoryWriter implements CategoryWriterInterface
     /**
      * @param CategoryInterface $category
      * @param LocaleTransfer $locale
+     *
+     * @return void
      */
     public function update(CategoryInterface $category, LocaleTransfer $locale)
     {
@@ -64,6 +66,8 @@ class CategoryWriter implements CategoryWriterInterface
 
     /**
      * @param int $idCategory
+     *
+     * @return void
      *
      * @throws PropelException
      */
@@ -100,6 +104,8 @@ class CategoryWriter implements CategoryWriterInterface
      * @param CategoryInterface $category
      * @param LocaleTransfer $locale
      *
+     * @return void
+     *
      * @throws PropelException
      */
     protected function persistCategoryAttribute(CategoryInterface $category, LocaleTransfer $locale)
@@ -115,6 +121,8 @@ class CategoryWriter implements CategoryWriterInterface
 
     /**
      * @param int $idCategory
+     *
+     * @return void
      */
     protected function deleteAttributes($idCategory)
     {

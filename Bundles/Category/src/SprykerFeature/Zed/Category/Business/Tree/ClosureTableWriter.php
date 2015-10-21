@@ -35,6 +35,8 @@ class ClosureTableWriter implements ClosureTableWriterInterface
 
     /**
      * @param NodeTransfer $categoryNode
+     *
+     * @return void
      */
     public function create(NodeTransfer $categoryNode)
     {
@@ -50,6 +52,8 @@ class ClosureTableWriter implements ClosureTableWriterInterface
 
     /**
      * @param int $nodeId
+     *
+     * @return void
      */
     public function delete($nodeId)
     {
@@ -61,6 +65,9 @@ class ClosureTableWriter implements ClosureTableWriterInterface
 
     /**
      * @param NodeTransfer $categoryNode
+     *
+     * @return void
+     *
      * @throws PropelException
      */
     public function moveNode(NodeTransfer $categoryNode)
@@ -101,6 +108,8 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     /**
      * @param NodeTransfer $categoryNode
      *
+     * @return void
+     *
      * @throws PropelException
      */
     protected function createRootNode(NodeTransfer $categoryNode)
@@ -118,6 +127,8 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     /**
      * @param int $nodeId
      * @param int $parentId
+     *
+     * @return void
      */
     protected function persistNode($nodeId, $parentId)
     {
@@ -141,6 +152,8 @@ class ClosureTableWriter implements ClosureTableWriterInterface
 
     /**
      * Quick fix to regenerate broken closure table based on category node table
+     *
+     * @return void
      */
     public function rebuildCategoryNodes()
     {
@@ -180,6 +193,8 @@ class ClosureTableWriter implements ClosureTableWriterInterface
 
     /**
      * Fix problem when category node has its fk_parent_category_node set to itself
+     *
+     * @return void
      */
     protected function removeCircularRelations()
     {

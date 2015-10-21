@@ -38,8 +38,8 @@ interface CategoryQueryContainerInterface
     public function queryFirstLevelChildren($idNode);
 
     /**
-     * @param $idCategory
-     * @param $idParentNode
+     * @param int $idCategory
+     * @param int $idParentNode
      *
      * @return SpyCategoryNodeQuery
      */

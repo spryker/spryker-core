@@ -71,6 +71,8 @@ interface CategoryToUrlInterface
     /**
      * @param UrlTransfer $url
      *
+     * @return void
+     *
      * @throws MissingUrlException
      * @throws PropelException
      */

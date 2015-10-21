@@ -120,6 +120,7 @@ class ProductCategoryTable extends AbstractTable
 
     /**
      * @param $productCategory
+     *
      * @return string
      */
     protected function getProductOptionsComboBoxItems($productCategory)

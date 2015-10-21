@@ -132,6 +132,11 @@ class IndexController extends AbstractController
         return $this->viewResponse($tableData);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return void
+     */
     public function rebuildClosureTableAction(Request $request)
     {
         $this->getFacade()

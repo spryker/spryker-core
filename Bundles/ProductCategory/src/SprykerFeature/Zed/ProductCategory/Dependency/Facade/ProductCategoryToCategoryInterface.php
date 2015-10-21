@@ -47,6 +47,8 @@ interface ProductCategoryToCategoryInterface
 
     /**
      * @param int $idCategory
+     *
+     * @return void
      */
     public function deleteCategory($idCategory);
 

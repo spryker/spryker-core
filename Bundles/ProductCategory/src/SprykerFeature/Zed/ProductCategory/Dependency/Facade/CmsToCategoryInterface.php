@@ -10,6 +10,8 @@ interface CmsToCategoryInterface
 {
     /**
      * @param int $idCategoryNode
+     *
+     * @return void
      */
     public function updateBlocksAssignedToDeletedCategoryNode($idCategoryNode);
 }

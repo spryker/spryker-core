@@ -100,7 +100,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
     /**
      * @param int $idCategory
-     * @param $idParentNode
+     * @param int $idParentNode
      *
      * @return SpyCategoryNodeQuery
      */

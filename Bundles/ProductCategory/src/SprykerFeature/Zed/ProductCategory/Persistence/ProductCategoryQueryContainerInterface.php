@@ -56,8 +56,8 @@ interface ProductCategoryQueryContainerInterface
 
     /**
      * @param int $idCategory
-     *
      * @param LocaleTransfer $locale
+     *
      * @return SpyProductCategoryQuery
      */
     public function queryProductsByCategoryId($idCategory, LocaleTransfer $locale);
@@ -65,8 +65,8 @@ interface ProductCategoryQueryContainerInterface
     /**
      * @param $term
      * @param LocaleTransfer $locale
-     *
      * @param null $idExcludedCategory
+     *
      * @return SpyAbstractProductQuery
      */
     public function queryAbstractProductsBySearchTerm($term, LocaleTransfer $locale, $idExcludedCategory = null);

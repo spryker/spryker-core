@@ -72,9 +72,9 @@ class CategoryTreeRenderer
     }
 
     /**
-     * @var SpyCategoryNode
-     *
      * @param SpyCategoryNode $node
+     *
+     * @return void
      */
     protected function renderChildren(SpyCategoryNode $node)
     {
@@ -132,9 +132,9 @@ class CategoryTreeRenderer
     }
 
     /**
-     * @var SpyCategoryClosureTable
-     *
      * @param SpyCategoryNode $node
+     *
+     * @return void
      */
     protected function addClosureConnections(SpyCategoryNode $node)
     {

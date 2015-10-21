@@ -43,8 +43,8 @@ interface ProductCategoryManagerInterface
 
     /**
      * @param int $idCategory
-     *
      * @param LocaleTransfer $locale
+     *
      * @return SpyProductCategoryQuery[]
      */
     public function getProductsByCategory($idCategory, LocaleTransfer $locale);
@@ -68,6 +68,8 @@ interface ProductCategoryManagerInterface
      * @param int $idCategory
      * @param array $productIdsToAssign
      *
+     * @return void
+     *
      * @throws PropelException
      */
     public function createProductCategoryMappings($idCategory, array $productIdsToAssign);
@@ -75,12 +77,17 @@ interface ProductCategoryManagerInterface
     /**
      * @param int $idCategory
      * @param array $productIdsToDeassign
+     *
+     * @return void
      */
     public function removeProductCategoryMappings($idCategory, array $productIdsToDeassign);
 
     /**
      * @param $idCategory
      * @param array $productOrderList
+     *
+     * @return void
+     *
      * @throws PropelException
      */
     public function updateProductMappingsOrder($idCategory, array $productOrderList);
@@ -88,6 +95,9 @@ interface ProductCategoryManagerInterface
     /**
      * @param int $idCategory
      * @param array $productPreconfigList
+     *
+     * @return void
+     *
      * @throws PropelException
      */
     public function updateProductMappingsPreconfig($idCategory, array $productPreconfigList);
@@ -96,13 +106,16 @@ interface ProductCategoryManagerInterface
      * @param NodeTransfer $sourceNodeTransfer
      * @param NodeTransfer $destinationNodeTransfer
      * @param LocaleTransfer $localeTransfer
-     * @return
+     *
+     * @return void
      */
     public function moveCategoryChildrenAndDeleteNode(NodeTransfer $sourceNodeTransfer, NodeTransfer $destinationNodeTransfer, LocaleTransfer $localeTransfer);
 
     /**
      * @param int $idCategory
      * @param LocaleTransfer $localeTransfer
+     *
+     * @return void
      */
     public function deleteCategoryRecursive($idCategory, LocaleTransfer $localeTransfer);
 
