@@ -104,7 +104,7 @@ class IndexController extends AbstractController
     {
         $idCategory = $request->get(self::PARAM_ID_CATEGORY_NODE);
 
-        /* @var CategoryAttributeTable $table */
+        /** @var CategoryAttributeTable $table */
         $table = $this->getDependencyContainer()
             ->createCategoryAttributeTable($idCategory)
         ;

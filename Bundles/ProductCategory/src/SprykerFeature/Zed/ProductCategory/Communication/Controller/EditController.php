@@ -245,7 +245,7 @@ class EditController extends AddController
 
         $currentCategoryNodeTransfer->setIsMain(true);
 
-        /* @var SpyCategoryNode $currentCategoryNode */
+        /** @var SpyCategoryNode $currentCategoryNode */
         $existingCategoryNode = $this->getDependencyContainer()
             ->createCategoryFacade()
             ->getNodeById($currentCategoryNodeTransfer->getIdCategoryNode());
@@ -365,7 +365,7 @@ class EditController extends AddController
 
         $productDataList = [];
         foreach ($productCategoryList as $productCategory) {
-            /* @var SpyProductCategory $productCategory */
+            /** @var SpyProductCategory $productCategory */
             $productCategoryData = $productCategory->toArray();
             $productCategoryData['view_node_name'] = 'child';
 

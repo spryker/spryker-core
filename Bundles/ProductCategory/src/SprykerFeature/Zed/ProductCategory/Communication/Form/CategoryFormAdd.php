@@ -157,7 +157,7 @@ class CategoryFormAdd extends AbstractForm
 
         $data = [];
         foreach ($productList as $product) {
-            /* @var SpyProductCategory $product */
+            /** @var SpyProductCategory $product */
             $data[] = $product->getIdProductCategory();
         }
 
@@ -175,7 +175,7 @@ class CategoryFormAdd extends AbstractForm
 
         $data = [];
         foreach ($productList as $product) {
-            /* @var SpyProductCategory $product */
+            /** @var SpyProductCategory $product */
             $data[$product->getIdProductCategory()] = $product->getName();
         }
 
