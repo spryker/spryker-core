@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\CustomerMailConnector;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerFeature\Shared\Customer\CustomerConfig;
+use SprykerFeature\Shared\Mail\MailConfig;
 
 class CustomerMailConnectorConfig extends AbstractBundleConfig
 {
@@ -74,6 +75,14 @@ class CustomerMailConnectorConfig extends AbstractBundleConfig
     public function getPasswordRestoredConfirmationSubject()
     {
         return $this->get(CustomerConfig::SHOP_MAIL_PASSWORD_RESTORED_CONFIRMATION_SUBJECT);
+    }
+
+    /**
+     * @return string
+     */
+    public function getMergeLanguage()
+    {
+        return MailConfig::MERGE_LANGUAGE_HANDLEBARS;
     }
 
 }

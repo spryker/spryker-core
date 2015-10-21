@@ -6,15 +6,14 @@
 
 namespace SprykerFeature\Zed\CustomerMailConnector\Communication\Plugin;
 
-use Generated\Shared\Transfer\MailTransfer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface;
-use SprykerFeature\Zed\CustomerMailConnector\Communication\CustomerMailConnectorDependencyContainer;
-use SprykerFeature\Zed\CustomerMailConnector\CustomerMailConnectorConfig;
+use SprykerFeature\Zed\CustomerMailConnector\Business\CustomerMailConnectorFacade;
 
 /**
- * @method CustomerMailConnectorDependencyContainer getDependencyContainer()
+ * @method CustomerMailConnectorFacade getFacade()
  */
-class PasswordRestoreTokenSender extends AbstractSender implements PasswordRestoreTokenSenderPluginInterface
+class PasswordRestoreTokenSender extends AbstractPlugin implements PasswordRestoreTokenSenderPluginInterface
 {
 
     /**
@@ -25,48 +24,7 @@ class PasswordRestoreTokenSender extends AbstractSender implements PasswordResto
      */
     public function send($email, $token)
     {
-        $config = $this->getDependencyContainer()->getConfig();
-
-        $mailTransfer = $this->createMailTransfer();
-
-        $mailTransfer->setTemplateName($config->getPasswordRestoreToken());
-
-        $this->addMailRecipient($mailTransfer, $email);
-        $this->setMailTransferFrom($mailTransfer, $config);
-        $this->setMailTransferSubject($mailTransfer, $config);
-        $this->setMailMergeData($mailTransfer, $this->getMailGlobalMergeVars($token));
-
-        $result = $this->getDependencyContainer()
-            ->createMailFacade()
-            ->sendMail($mailTransfer);
-
-        return $this->isMailSent($result);
-    }
-
-    /**
-     * @param MailTransfer $mailTransfer
-     * @param CustomerMailConnectorConfig $config
-     */
-    protected function setMailTransferSubject(MailTransfer $mailTransfer, CustomerMailConnectorConfig $config)
-    {
-        $subject = $config->getPasswordRestoreSubject();
-        if (null !== $subject) {
-            $mailTransfer->setSubject($this->translate($subject));
-        }
-    }
-
-    /**
-     * @param string $token
-     *
-     * @return array
-     */
-    protected function getMailGlobalMergeVars($token)
-    {
-        $globalMergeVars = [
-            'reset_password_token_url' => $token,
-        ];
-
-        return $globalMergeVars;
+        return $this->getFacade()->sendPasswordRestoreToken($email, $token);
     }
 
 }
