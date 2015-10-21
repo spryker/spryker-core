@@ -30,14 +30,24 @@ class SequenceNumberConfig extends AbstractBundleConfig
             return $defaultSettings;
         }
 
-        $settingsArray = $settings->toArray();
-        $settingsArray = array_filter($settingsArray, function($value) {
-            return ($value !== null);
-        });
-        $settingsArray += $defaultSettings->toArray();
+        $settingsArray = $this->mergeSettings($defaultSettings->toArray(), $settings->toArray());
         $settings->fromArray($settingsArray);
 
         return $settings;
+    }
+
+    /**
+     * @param array $defaultSettingsArray
+     * @param array $settingsArray
+     *
+     * @return array
+     */
+    protected function mergeSettings(array $defaultSettingsArray, array $settingsArray) {
+        $settingsArray = array_filter($settingsArray, function($value) {
+            return ($value !== null);
+        });
+        $settingsArray += $defaultSettingsArray;
+        return $settingsArray;
     }
 
     /**

@@ -13,7 +13,6 @@ use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\SequenceNumber\Business\Model\SequenceNumber;
 use SprykerFeature\Zed\SequenceNumber\Business\SequenceNumberFacade;
-use SprykerFeature\Zed\SequenceNumber\Persistence\SequenceNumberQueryContainer;
 use SprykerEngine\Zed\Kernel\Persistence\Factory;
 use SprykerFeature\Zed\SequenceNumber\SequenceNumberConfig;
 
@@ -31,11 +30,6 @@ class SequenceNumberTest extends Test
      */
     protected $sequenceNumberFacade;
 
-    /**
-     * @var SequenceNumberQueryContainer
-     */
-    protected $sequenceNumberQueryContainer;
-
     public function setUp()
     {
         parent::setUp();
@@ -43,10 +37,9 @@ class SequenceNumberTest extends Test
         $locator = Locator::getInstance();
         $this->factory = new \SprykerEngine\Zed\Kernel\Business\Factory('SequenceNumber');
         $this->sequenceNumberFacade = new SequenceNumberFacade($this->factory, $locator);
-        $this->sequenceNumberQueryContainer = new SequenceNumberQueryContainer(new Factory('SequenceNumber'), $locator);
     }
 
-    public function testGetDefaultSettingsMerge()
+    public function testGetDefaultSettingsMergedWithCustomSettings()
     {
         $customSettings = new SequenceNumberSettingsTransfer();
         $customSettings->setIncrementMinimum(2);
