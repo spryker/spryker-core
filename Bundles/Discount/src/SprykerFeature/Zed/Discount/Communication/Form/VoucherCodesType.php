@@ -84,6 +84,7 @@ class VoucherCodesType extends AbstractRuleType
             ])
             ->add(self::DESCRIPTION, 'textarea')
             ->add(self::AMOUNT, 'text', [
+                'label' => 'Amount (Please enter a valid amount. Eg. 5 or 5.55)',
                 'constraints' => [
                     new NotBlank(),
                     new GreaterThan([
