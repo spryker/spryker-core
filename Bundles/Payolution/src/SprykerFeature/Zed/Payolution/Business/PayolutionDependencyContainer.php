@@ -16,10 +16,6 @@ use SprykerFeature\Zed\Payolution\Business\Log\TransactionStatusLogInterface;
 use SprykerFeature\Zed\Payolution\Business\Payment\CommunicatorInterface;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionOrderItem;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLog;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLog;
 use Guzzle\Http\Client as GuzzleClient;
 
 /**
@@ -39,8 +35,7 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
             $this->createExecutionAdapter(),
             $this->getQueryContainer(),
             $this->createRequestConverter(),
-            $this->createResponseConverter(),
-            $this
+            $this->createResponseConverter()
         );
 
         $paymentManager->registerMethodMapper(
@@ -72,7 +67,7 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createOrderSaver()
     {
-        return $this->getFactory()->createOrderSaver($this);
+        return $this->getFactory()->createOrderSaver();
     }
 
     /**

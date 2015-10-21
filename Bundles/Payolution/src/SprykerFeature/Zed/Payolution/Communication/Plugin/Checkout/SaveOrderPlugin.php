@@ -15,7 +15,7 @@ use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;
 /**
  * @method PayolutionFacade getFacade()
  */
-class CheckoutSaveOrderPlugin extends BaseAbstractPlugin implements CheckoutSaveOrderInterface
+class SaveOrderPlugin extends BaseAbstractPlugin implements CheckoutSaveOrderInterface
 {
 
     /**

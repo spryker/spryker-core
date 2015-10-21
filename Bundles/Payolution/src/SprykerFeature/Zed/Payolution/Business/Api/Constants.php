@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Payolution\Business\Api;
 
 use SprykerFeature\Shared\Library\ConfigInterface;
 use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
+use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;
 
 interface Constants extends ConfigInterface
 {
@@ -24,7 +25,7 @@ interface Constants extends ConfigInterface
     const SEX_MALE = 'M';
     const SEX_FEMALE = 'F';
 
-    const STATUS_REASON_CODE_SUCCESS = self::STATUS_CODE_SUCCESS . '.' . self::REASON_CODE_SUCCESS;
+    const STATUS_REASON_CODE_SUCCESS = PayolutionApiConstants::STATUS_CODE_SUCCESS . '.' . PayolutionApiConstants::REASON_CODE_SUCCESS;
 
     /**
      * Analysis/Criteria keys

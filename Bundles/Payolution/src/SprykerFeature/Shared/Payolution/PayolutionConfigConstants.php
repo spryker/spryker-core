@@ -12,7 +12,7 @@ interface PayolutionConfigConstants extends ConfigInterface
 {
 
     const GATEWAY_URL = 'PAYOLUTION_GATEWAY_URL';
-    const DEFAULT_TIMEOUT = 45;
+    const DEFAULT_TIMEOUT = 'DEFAULT_TIMEOUT';
     const SECURITY_SENDER = 'PAYOLUTION_SECURITY_SENDER';
     const USER_LOGIN = 'PAYOLUTION_USER_LOGIN';
     const USER_PASSWORD = 'PAYOLUTION_USER_PASSWORD';

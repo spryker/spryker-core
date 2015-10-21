@@ -17,7 +17,7 @@ use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;
 /**
  * @method PayolutionFacade getFacade()
  */
-class CheckoutPreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreconditionInterface
+class PreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreconditionInterface
 {
 
     /**

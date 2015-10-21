@@ -19,7 +19,7 @@ class MockOmsOrderHydrator implements CheckoutOrderHydrationInterface
      */
     public function hydrateOrder(OrderTransfer $orderTransfer, CheckoutRequestTransfer $checkoutRequest)
     {
-        $orderTransfer->setProcess('CheckoutTest01');
+        $orderTransfer->setProcess('Prepayment01');
     }
 
 }

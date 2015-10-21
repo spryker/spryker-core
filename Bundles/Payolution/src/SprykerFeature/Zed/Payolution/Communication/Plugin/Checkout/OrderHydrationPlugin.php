@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
 
-class CheckoutOrderHydrationPlugin extends BaseAbstractPlugin implements CheckoutOrderHydrationInterface
+class OrderHydrationPlugin extends BaseAbstractPlugin implements CheckoutOrderHydrationInterface
 {
 
     /**

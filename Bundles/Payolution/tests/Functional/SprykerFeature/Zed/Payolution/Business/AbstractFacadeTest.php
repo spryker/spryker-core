@@ -13,7 +13,6 @@ use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
 use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
 use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use SprykerFeature\Zed\Payolution\Business\Api\Constants;
 use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
 use SprykerFeature\Zed\Payolution\Business\Api\Response\Converter as ResponseConverter;
 use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;
