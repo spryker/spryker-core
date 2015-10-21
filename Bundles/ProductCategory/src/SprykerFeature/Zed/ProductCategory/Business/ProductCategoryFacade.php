@@ -118,6 +118,8 @@ class ProductCategoryFacade extends AbstractFacade
     /**
      * @param int $idCategory
      * @param array $productIdsToDeassign
+     *
+     * @return void
      */
     public function removeProductCategoryMappings($idCategory, array $productIdsToDeassign)
     {
@@ -131,6 +133,8 @@ class ProductCategoryFacade extends AbstractFacade
      * @param int $idCategory
      * @param array $productOrderList
      * @throws PropelException
+     *
+     * @return void
      */
     public function updateProductMappingsOrder($idCategory, array $productOrderList)
     {
@@ -155,6 +159,8 @@ class ProductCategoryFacade extends AbstractFacade
     /**
      * @param int $idCategory
      * @param LocaleTransfer $locale
+     *
+     * @return void
      */
     public function deleteCategoryRecursive($idCategory, LocaleTransfer $locale)
     {
@@ -168,6 +174,8 @@ class ProductCategoryFacade extends AbstractFacade
      * @param NodeTransfer $sourceNode
      * @param NodeTransfer $destinationNode
      * @param LocaleTransfer $locale
+     *
+     * @return void
      */
     public function moveCategoryChildrenAndDeleteNode(NodeTransfer $sourceNode, NodeTransfer $destinationNode, LocaleTransfer $locale)
     {
