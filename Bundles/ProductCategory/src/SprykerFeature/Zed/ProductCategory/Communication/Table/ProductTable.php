@@ -44,7 +44,7 @@ class ProductTable extends AbstractTable
         $this->productCategoryQueryContainer = $productCategoryQueryContainer;
         $this->locale = $locale;
         $this->idCategory = (int) $idCategory;
-        $this->defaultUrl = sprintf('productTable?%s=%d', ProductCategoryConfig::PARAM_ID_CATEGORY, $this->idCategory);
+        $this->defaultUrl = sprintf('product-table?%s=%d', ProductCategoryConfig::PARAM_ID_CATEGORY, $this->idCategory);
         $this->setTableIdentifier(self::TABLE_IDENTIFIER);
     }
 
@@ -86,7 +86,7 @@ class ProductTable extends AbstractTable
 
         $results = [];
         foreach ($queryResults as $product) {
-            $checkbox_html  = sprintf(
+            $checkbox_html = sprintf(
                 '<input id="all_products_checkbox_%d" type="checkbox" onclick="allProductsClickMarkAsSelected(this.checked, %d, \'%s\', \'%s\'); return" /> ',
                 $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT],
                 $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT],
@@ -98,7 +98,7 @@ class ProductTable extends AbstractTable
                 SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => $product[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT],
                 SpyAbstractProductTableMap::COL_SKU => $product[SpyAbstractProductTableMap::COL_SKU],
                 SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => $product['name'],
-                'checkbox' => $checkbox_html
+                'checkbox' => $checkbox_html,
             ];
         }
         unset($queryResults);

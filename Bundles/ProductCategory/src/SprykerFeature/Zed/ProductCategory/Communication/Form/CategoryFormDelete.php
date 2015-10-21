@@ -10,6 +10,7 @@ use SprykerFeature\Zed\ProductCategory\Communication\Form\Constraints\CategoryFi
 
 class CategoryFormDelete extends CategoryFormEdit
 {
+
     const DELETE_CHILDREN = 'delete_children';
 
     /**
@@ -27,7 +28,7 @@ class CategoryFormDelete extends CategoryFormEdit
                 'constraints' => [
                     new CategoryFieldNotBlank([
                         'categoryFieldName' => self::FK_PARENT_CATEGORY_NODE,
-                        'checkboxFieldName' => self::DELETE_CHILDREN
+                        'checkboxFieldName' => self::DELETE_CHILDREN,
                     ]),
                 ],
             ])
@@ -46,4 +47,5 @@ class CategoryFormDelete extends CategoryFormEdit
 
         return $fields;
     }
+
 }

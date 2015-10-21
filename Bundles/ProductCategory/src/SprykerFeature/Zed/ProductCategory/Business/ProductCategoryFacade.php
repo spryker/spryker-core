@@ -62,7 +62,7 @@ class ProductCategoryFacade extends AbstractFacade
     /**
      * @param int $idCategory
      * @param LocaleTransfer $locale
-     * 
+     *
      * @return SpyProductCategoryQuery[]
      */
     public function getProductsByCategory($idCategory, LocaleTransfer $locale)
@@ -103,7 +103,7 @@ class ProductCategoryFacade extends AbstractFacade
     /**
      * @param int $idCategory
      * @param array $productIdsToAssign
-     * 
+     *
      * @throws PropelException
      *
      * @return void

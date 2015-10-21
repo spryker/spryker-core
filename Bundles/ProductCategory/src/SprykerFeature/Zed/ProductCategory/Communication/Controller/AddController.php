@@ -80,7 +80,7 @@ class AddController extends AbstractController
 
             $connection->commit();
 
-            return $this->redirectResponse('/productCategory/edit?id-category='.$idCategory);
+            return $this->redirectResponse('/product-category/edit?id-category='.$idCategory);
         }
 
         return $this->viewResponse([

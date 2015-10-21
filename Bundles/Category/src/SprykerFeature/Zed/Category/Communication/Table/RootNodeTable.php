@@ -114,7 +114,7 @@ class RootNodeTable extends AbstractTable
     protected function getReorderButtonHtml(array $rootNode)
     {
         return sprintf(
-            '<a href="/productCategory/add?id-parent-node=%d" class="btn btn-xs btn-success"><i class="fa fa-plus"></i></a>',
+            '<a href="/product-category/add?id-parent-node=%d" class="btn btn-xs btn-success"><i class="fa fa-plus"></i></a>',
             $rootNode[self::ID_CATEGORY_NODE]
         );
     }

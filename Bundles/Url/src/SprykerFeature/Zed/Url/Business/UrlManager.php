@@ -264,6 +264,7 @@ class UrlManager implements UrlManagerInterface
 
     /**
      * @param UrlTransfer $url
+     *
      * @throws MissingUrlException
      * @throws PropelException
      *

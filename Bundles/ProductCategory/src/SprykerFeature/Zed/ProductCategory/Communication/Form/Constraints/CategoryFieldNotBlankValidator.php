@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class CategoryFieldNotBlankValidator extends NotBlankValidator
 {
+
     /**
      * @param string $value
      * @param Constraint $constraint
@@ -51,4 +52,5 @@ class CategoryFieldNotBlankValidator extends NotBlankValidator
     {
         return (bool) $this->context->getRoot()->get($checkboxName)->getData();
     }
+
 }

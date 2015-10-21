@@ -91,7 +91,7 @@ class EditController extends AddController
 
             $connection->commit();
 
-            return $this->redirectResponse('/productCategory/edit?id-category='.$idCategory);
+            return $this->redirectResponse('/product-category/edit?id-category='.$idCategory);
         }
 
         $productCategories = $this->getDependencyContainer()
@@ -124,7 +124,7 @@ class EditController extends AddController
          */
         if ($existingCategoryNode) {
             $categoryNodeTransfer->setIdCategoryNode($existingCategoryNode->getIdCategoryNode());
-            
+
             $this->getDependencyContainer()
                 ->createCategoryFacade()
                 ->updateCategoryNode($categoryNodeTransfer, $locale);
@@ -134,7 +134,7 @@ class EditController extends AddController
 
             $categoryNodeTransfer = (new NodeTransfer())
                 ->fromArray($newData, true);
-            
+
             $this->getDependencyContainer()
                 ->createCategoryFacade()
                 ->createCategoryNode($categoryNodeTransfer, $locale);
