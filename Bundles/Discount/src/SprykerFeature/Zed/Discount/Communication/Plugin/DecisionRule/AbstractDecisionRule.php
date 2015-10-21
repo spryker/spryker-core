@@ -6,12 +6,12 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule;
 
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerFeature\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
 
 /**
  * Class AbstractDecisionRule
  */
-abstract class AbstractDecisionRule extends AbstractPlugin
+abstract class AbstractDecisionRule extends AbstractDiscountPlugin
 {
 
     const KEY_ENTITY = 'entity';

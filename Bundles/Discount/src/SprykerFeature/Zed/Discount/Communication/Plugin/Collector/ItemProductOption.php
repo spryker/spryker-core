@@ -9,14 +9,14 @@ use Generated\Shared\Discount\DiscountCollectorInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
+use SprykerFeature\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use Generated\Shared\Discount\DiscountInterface;
 
 /**
  * @method DiscountFacade getFacade()
  */
-class ItemProductOption extends AbstractPlugin implements DiscountCollectorPluginInterface
+class ItemProductOption extends AbstractDiscountPlugin implements DiscountCollectorPluginInterface
 {
 
     /**
