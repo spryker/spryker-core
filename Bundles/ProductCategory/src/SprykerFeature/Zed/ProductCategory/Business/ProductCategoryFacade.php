@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Business;
 
-use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Propel\Runtime\Exception\PropelException;
@@ -106,6 +105,8 @@ class ProductCategoryFacade extends AbstractFacade
      * @param array $productIdsToAssign
      * 
      * @throws PropelException
+     *
+     * @return void
      */
     public function createProductCategoryMappings($idCategory, array $productIdsToAssign)
     {
@@ -147,6 +148,8 @@ class ProductCategoryFacade extends AbstractFacade
     /**
      * @param int $idCategory
      * @param $productPreconfig
+     *
+     * @return void
      */
     public function updateProductCategoryPreconfig($idCategory, array $productPreconfig)
     {
