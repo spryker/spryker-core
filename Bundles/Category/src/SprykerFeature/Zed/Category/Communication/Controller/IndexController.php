@@ -143,7 +143,7 @@ class IndexController extends AbstractController
             ->rebuildClosureTable()
         ;
 
-        die("<br/>Done");
+        die('<br/>Done');
     }
 
     /**

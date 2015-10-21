@@ -47,7 +47,6 @@ class CategoryTreeWriter
      */
     protected $connection;
 
-
     /**
      * @param NodeWriterInterface $nodeWriter
      * @param ClosureTableWriterInterface $closureTableWriter
@@ -88,11 +87,11 @@ class CategoryTreeWriter
 
         $idNode = $this->nodeWriter->create($categoryNode);
         $this->closureTableWriter->create($categoryNode);
-        
+
         $this->touchNavigationActive();
 
         $this->touchCategoryActiveRecursive($categoryNode);
-        
+
         if ($createUrlPath) {
             $this->nodeUrlManager->createUrl($categoryNode, $locale);
         }
@@ -178,7 +177,7 @@ class CategoryTreeWriter
         $closureQuery= new SpyCategoryClosureTableQuery();
         $nodes = $closureQuery->findByFkCategoryNodeDescendant($categoryNode->getFkParentCategoryNode());
 
-        foreach($nodes as $node) {
+        foreach ($nodes as $node) {
             $this->touchCategoryActive($node->getFkCategoryNode());
         }
 
@@ -195,7 +194,7 @@ class CategoryTreeWriter
         $closureQuery= new SpyCategoryClosureTableQuery();
         $nodes = $closureQuery->findByFkCategoryNodeDescendant($categoryNode->getFkParentCategoryNode());
 
-        foreach($nodes as $node) {
+        foreach ($nodes as $node) {
             $this->touchCategoryDeleted($node->getFkCategoryNode());
         }
 
@@ -256,4 +255,5 @@ class CategoryTreeWriter
 
         $this->nodeUrlManager->removeUrl($nodeTransfer, $locale);
     }
+
 }

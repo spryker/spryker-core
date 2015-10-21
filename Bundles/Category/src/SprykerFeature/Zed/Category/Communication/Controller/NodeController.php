@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-
 /**
  * @method CategoryFacade getFacade()
  * @method CategoryDependencyContainer getDependencyContainer()
@@ -45,13 +44,13 @@ class NodeController extends AbstractController
 
         $items = [];
         foreach ($nodes as $node) {
-            /**
+            /*
              * @var SpyCategoryNode $node
              */
 
             $items[] = [
                 'id' => $node->getIdCategoryNode(),
-                'text' => $node->getCategory()->getAttributes()->getFirst()->getName()
+                'text' => $node->getCategory()->getAttributes()->getFirst()->getName(),
             ];
         }
 

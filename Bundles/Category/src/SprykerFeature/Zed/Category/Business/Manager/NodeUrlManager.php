@@ -77,7 +77,7 @@ class NodeUrlManager implements NodeUrlManagerInterface
         $idNode = $categoryNodeTransfer->getIdCategoryNode();
 
         $url = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($idNode, $localeTransfer);
-        
+
         if (!$url) {
             $urlTransfer = new UrlTransfer();
             $urlTransfer->setFkPage(null);
@@ -87,8 +87,7 @@ class NodeUrlManager implements NodeUrlManagerInterface
             $urlTransfer->setFkLocale($localeTransfer->getIdLocale());
 
             $this->urlFacade->saveUrlAndTouch($urlTransfer);
-        }
-        else {
+        } else {
             $url->setUrl($categoryUrl);
             $this->urlFacade->saveUrlAndTouch($url);
         }
@@ -106,7 +105,7 @@ class NodeUrlManager implements NodeUrlManagerInterface
     {
         $children = $this->categoryTreeReader->getPathChildren($categoryNodeTransfer->getIdCategoryNode());
         foreach ($children as $child) {
-            /**
+            /*
              * @var SpyCategoryClosureTable $child
              * @var SpyCategoryClosureTable $parent
              */
@@ -142,4 +141,5 @@ class NodeUrlManager implements NodeUrlManagerInterface
             $this->urlFacade->deleteUrl($urlTransfer);
         }
     }
+
 }

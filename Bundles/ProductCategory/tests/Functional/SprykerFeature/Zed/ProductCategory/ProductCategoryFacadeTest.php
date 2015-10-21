@@ -79,7 +79,6 @@ class ProductCategoryFacadeTest extends AbstractFunctionalTest
         $dependencyProvider->provideBusinessLayerDependencies($container);
         $dependencyProvider->provideCommunicationLayerDependencies($container);
 
-
         $this->productCategoryFacade->setExternalDependencies($container);
         $this->productCategoryQueryContainer = new ProductQueryContainer(
             new PersistenceFactory('ProductCategory'),

@@ -67,9 +67,9 @@ class CategoryWriter implements CategoryWriterInterface
     /**
      * @param int $idCategory
      *
-     * @return void
-     *
      * @throws PropelException
+     *
+     * @return void
      */
     public function delete($idCategory)
     {
@@ -87,9 +87,10 @@ class CategoryWriter implements CategoryWriterInterface
     /**
      * @param CategoryInterface $category
 
-     * @return SpyCategory
      *
      * @throws PropelException
+     *
+     * @return SpyCategory
      */
     protected function saveCategory(CategoryInterface $category)
     {
@@ -104,9 +105,9 @@ class CategoryWriter implements CategoryWriterInterface
      * @param CategoryInterface $category
      * @param LocaleTransfer $locale
      *
-     * @return void
-     *
      * @throws PropelException
+     *
+     * @return void
      */
     protected function persistCategoryAttribute(CategoryInterface $category, LocaleTransfer $locale)
     {

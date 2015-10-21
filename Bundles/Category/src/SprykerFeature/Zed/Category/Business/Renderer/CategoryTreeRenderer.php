@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Category\Business\Renderer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategory;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTable;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 use SprykerFeature\Zed\Library\Service\GraphViz;
 

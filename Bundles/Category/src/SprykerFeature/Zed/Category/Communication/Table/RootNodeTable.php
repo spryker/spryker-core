@@ -11,15 +11,14 @@ use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTable
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
-
 class RootNodeTable extends AbstractTable
 {
+
     const TABLE_IDENTIFIER = 'root-node-table';
 
     const ID_CATEGORY_NODE = 'id_category_node';
     const LOCALE_NAME = 'locale_name';
     const COL_REORDER = 'Reorder';
-
 
     /**
      * @var CategoryQueryContainerInterface
@@ -55,7 +54,7 @@ class RootNodeTable extends AbstractTable
             SpyCategoryAttributeTableMap::COL_FK_CATEGORY => 'Category Id',
             SpyCategoryAttributeTableMap::COL_NAME => 'Name',
             SpyLocaleTableMap::COL_LOCALE_NAME => 'Locale',
-            self::COL_REORDER => ''
+            self::COL_REORDER => '',
         ]);
         $config->setSortable([
             SpyLocaleTableMap::COL_LOCALE_NAME,
@@ -85,10 +84,11 @@ class RootNodeTable extends AbstractTable
                 SpyCategoryAttributeTableMap::COL_FK_CATEGORY => $rootNode[SpyCategoryAttributeTableMap::COL_FK_CATEGORY],
                 SpyCategoryAttributeTableMap::COL_NAME => $rootNode[SpyCategoryAttributeTableMap::COL_NAME],
                 SpyLocaleTableMap::COL_LOCALE_NAME => $rootNode[self::LOCALE_NAME],
-                self::COL_REORDER => $this->getReorderButtonHtml($rootNode).' '.$this->getAddButtonHtml($rootNode)
+                self::COL_REORDER => $this->getReorderButtonHtml($rootNode) . ' ' . $this->getAddButtonHtml($rootNode),
             ];
         }
         unset($queryResults);
+
         return $results;
     }
 
@@ -118,4 +118,5 @@ class RootNodeTable extends AbstractTable
             $rootNode[self::ID_CATEGORY_NODE]
         );
     }
+
 }

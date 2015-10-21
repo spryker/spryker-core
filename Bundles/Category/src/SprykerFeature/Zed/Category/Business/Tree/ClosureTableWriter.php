@@ -15,7 +15,6 @@ use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTable;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTableQuery;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNodeQuery;
 
-
 class ClosureTableWriter implements ClosureTableWriterInterface
 {
 
@@ -53,11 +52,11 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     /**
      * @param int $nodeId
      *
-     * @return void
+     * @return int
      */
     public function delete($nodeId)
     {
-        $this->queryContainer
+        return $this->queryContainer
             ->queryClosureTableByNodeId($nodeId)
             ->delete()
         ;
@@ -66,9 +65,9 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     /**
      * @param NodeTransfer $categoryNode
      *
-     * @return void
-     *
      * @throws PropelException
+     *
+     * @return void
      */
     public function moveNode(NodeTransfer $categoryNode)
     {
@@ -108,9 +107,9 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     /**
      * @param NodeTransfer $categoryNode
      *
-     * @return void
-     *
      * @throws PropelException
+     *
+     * @return void
      */
     protected function createRootNode(NodeTransfer $categoryNode)
     {
@@ -159,7 +158,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     {
         $connection = Propel::getConnection();
 
-        echo "<pre>";
+        echo '<pre>';
 
         $this->removeCircularRelations();
 
@@ -176,7 +175,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
                 continue;
             }
 
-            echo "Updated node closure table for: ".$nodeEntity->getIdCategoryNode().', parent: '.$nodeEntity->getFkParentCategoryNode()."<br/>\n";
+            echo 'Updated node closure table for: ' . $nodeEntity->getIdCategoryNode() . ', parent: ' . $nodeEntity->getFkParentCategoryNode() . "<br/>\n";
 
             $nodeToMove = (new NodeTransfer())->fromArray($nodeEntity->toArray());
             $this->delete($nodeToMove->getIdCategoryNode());
@@ -184,9 +183,9 @@ class ClosureTableWriter implements ClosureTableWriterInterface
             $this->moveNode($nodeToMove);
         }
 
-        echo "Done updated ".$categoryNodes->count()." nodes.<br/>\n";
+        echo 'Done updated ' . $categoryNodes->count() . " nodes.<br/>\n";
 
-        echo "</pre>";
+        echo '</pre>';
 
         $connection->commit();
     }
@@ -206,9 +205,9 @@ class ClosureTableWriter implements ClosureTableWriterInterface
             ->endUse()
             ->orderByFkParentCategoryNode()
             ->orderByNodeOrder('DESC')
-            ->where(SpyCategoryNodeTableMap::COL_FK_CATEGORY .' = '.SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE)
+            ->where(SpyCategoryNodeTableMap::COL_FK_CATEGORY . ' = ' . SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE)
             ->_and()
-            ->where(SpyCategoryNodeTableMap::COL_IS_ROOT .' = false')
+            ->where(SpyCategoryNodeTableMap::COL_IS_ROOT . ' = false')
         ;
 
         $badNodes = $query->find();
@@ -217,7 +216,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
                 continue;
             }
 
-            printf (
+            printf(
                 "Removing circular referenced node: %s from [%d]<br/>\n",
                 $entityToMoveToRoot->getCategory()->getAttributes()->getFirst()->getName(),
                 $entityToMoveToRoot->getFkParentCategoryNode()
@@ -233,9 +232,9 @@ class ClosureTableWriter implements ClosureTableWriterInterface
                 ->endUse()
                 ->orderByFkParentCategoryNode()
                 ->orderByNodeOrder('DESC')
-                ->where(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE .' = ?', $entityToMoveToRoot->getIdCategoryNode())
+                ->where(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE . ' = ?', $entityToMoveToRoot->getIdCategoryNode())
                 ->_and()
-                ->where(SpyCategoryNodeTableMap::COL_IS_ROOT .' = false')
+                ->where(SpyCategoryNodeTableMap::COL_IS_ROOT . ' = false')
             ;
 
             $badChildrenToRemove = $query->find();

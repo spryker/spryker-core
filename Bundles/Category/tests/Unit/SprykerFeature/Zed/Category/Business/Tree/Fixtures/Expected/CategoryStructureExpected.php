@@ -8,6 +8,7 @@ namespace Unit\SprykerFeature\Zed\Category\Business\Tree\Fixtures\Expected;
 
 class CategoryStructureExpected
 {
+
     /**
      * @return array
      */
@@ -38,7 +39,7 @@ class CategoryStructureExpected
                                                 'id' => 6,
                                                 'parent' => 5,
                                                 'text' => 'Category 6',
-                                                'children' => []
+                                                'children' => [],
                                             ],
                                         ],
                                     ],
@@ -50,7 +51,7 @@ class CategoryStructureExpected
                         'id' => 4,
                         'parent' => 1,
                         'text' => 'Category 4',
-                        'children' => []
+                        'children' => [],
                     ],
                 ],
             ],
@@ -85,7 +86,7 @@ class CategoryStructureExpected
                                 'id' => 5,
                                 'parent' => 2,
                                 'text' => 'Category 5',
-                                'children' => []
+                                'children' => [],
                             ],
                         ],
                     ],
@@ -194,11 +195,12 @@ class CategoryStructureExpected
                         'parent' => 1,
                         'text' => 'Category 4',
                         'children' => [],
-                    ]
-                ]
-            ]
+                    ],
+                ],
+            ],
         ];
 
         return $categories;
     }
+
 }

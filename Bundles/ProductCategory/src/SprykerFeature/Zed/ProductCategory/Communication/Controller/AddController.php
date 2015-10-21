@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\ProductCategory\Communication\Controller;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Propel\Runtime\Propel;
 use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\ProductCategory\Communication\ProductCategoryDependencyContainer;
@@ -25,6 +24,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class AddController extends AbstractController
 {
+
     /**
      * @param Request $request
      *
@@ -109,6 +109,7 @@ class AddController extends AbstractController
 
     /**
      * @param array $data
+     *
      * @return CategoryTransfer
      */
     protected function createCategoryTransferFromData(array $data)
@@ -119,6 +120,7 @@ class AddController extends AbstractController
 
     /**
      * @param array $data
+     *
      * @return NodeTransfer
      */
     protected function createCategoryNodeTransferFromData(array $data)

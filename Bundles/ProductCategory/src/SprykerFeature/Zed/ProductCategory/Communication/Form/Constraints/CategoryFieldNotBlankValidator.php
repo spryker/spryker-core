@@ -17,9 +17,9 @@ class CategoryFieldNotBlankValidator extends NotBlankValidator
      * @param string $value
      * @param Constraint $constraint
      *
-     * @return void
-     *
      * @throws UnexpectedTypeException
+     *
+     * @return void
      */
     public function validate($value, Constraint $constraint)
     {

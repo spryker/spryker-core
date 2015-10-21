@@ -14,6 +14,7 @@ use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
 interface CategoryToUrlInterface
 {
+
     /**
      * @param string $url
      * @param LocaleTransfer $locale
@@ -71,10 +72,11 @@ interface CategoryToUrlInterface
     /**
      * @param UrlTransfer $url
      *
-     * @return void
-     *
      * @throws MissingUrlException
      * @throws PropelException
+     *
+     * @return void
      */
     public function deleteUrl(UrlTransfer $url);
+
 }

@@ -28,7 +28,7 @@ interface ClosureTableWriterInterface
     /**
      * @param int $nodeId
      *
-     * @return void
+     * @return int
      */
     public function delete($nodeId);
 

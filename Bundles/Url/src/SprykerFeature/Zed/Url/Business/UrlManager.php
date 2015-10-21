@@ -110,9 +110,9 @@ class UrlManager implements UrlManagerInterface
     /**
      * @param string $url
      *
-     * @return void
-     *
      * @throws UrlExistsException
+     *
+     * @return void
      */
     protected function checkUrlDoesNotExist($url)
     {

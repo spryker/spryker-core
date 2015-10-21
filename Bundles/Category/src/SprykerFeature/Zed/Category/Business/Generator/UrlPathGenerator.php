@@ -11,6 +11,7 @@ namespace SprykerFeature\Zed\Category\Business\Generator;
  */
 class UrlPathGenerator implements UrlPathGeneratorInterface
 {
+
     const CATEGORY_NAME = 'name';
 
     /**

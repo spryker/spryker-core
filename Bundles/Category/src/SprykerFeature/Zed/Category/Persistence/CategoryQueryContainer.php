@@ -196,6 +196,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
      * @param int $idNode
      *
      * @throws PropelException
+     *
      * @return SpyCategoryClosureTableQuery
      */
     public function queryClosureTableParentEntries($idNode)
@@ -242,7 +243,6 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             );
 
         return $query;
-
     }
 
     /**
@@ -588,8 +588,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         $rightTableAlias = 'categoryChildren',
         $fieldIdentifier = 'child',
         $leftTableAlias = SpyCategoryNodeTableMap::TABLE_NAME
-    )
-    {
+    ) {
         $expandableQuery
             ->addJoinObject(
                 (new Join(
@@ -626,8 +625,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         $leftTableAlias = SpyCategoryNodeTableMap::TABLE_NAME,
         $relationTableAlias = 'categoryParents',
         $fieldIdentifier = 'parent'
-    )
-    {
+    ) {
         $expandableQuery
             ->addJoinObject(
                 (new Join(
@@ -687,8 +685,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     public function joinCategoryQueryWithUrls(
         ModelCriteria $expandableQuery,
         $leftAlias = SpyCategoryNodeTableMap::TABLE_NAME
-    )
-    {
+    ) {
         $expandableQuery
             ->addJoinObject(
                 (new Join(
@@ -724,8 +721,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         ModelCriteria $expandableQuery,
         $relationTableAlias,
         $fieldIdentifier
-    )
-    {
+    ) {
         $expandableQuery->addJoinObject(
             (new Join(
                 $relationTableAlias . '.fk_category',
@@ -762,8 +758,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         ModelCriteria $expandableQuery,
         $relationTableAlias,
         $fieldIdentifier
-    )
-    {
+    ) {
         $expandableQuery->addJoinObject(
             (new Join(
                 $relationTableAlias . '.id_category_node',
@@ -796,8 +791,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     public function selectCategoryAttributeColumns(
         ModelCriteria $expandableQuery,
         $tableAlias = SpyCategoryAttributeTableMap::TABLE_NAME
-    )
-    {
+    ) {
         $expandableQuery->withColumn(
             $tableAlias . '.name',
             'category_name'

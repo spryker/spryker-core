@@ -18,6 +18,7 @@ use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
  */
 class CategoryFacade extends AbstractFacade
 {
+
     /**
      * @param string $categoryName
      * @param LocaleTransfer $locale
