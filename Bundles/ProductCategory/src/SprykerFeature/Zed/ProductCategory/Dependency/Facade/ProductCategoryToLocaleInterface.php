@@ -13,7 +13,6 @@ interface ProductCategoryToLocaleInterface
 
     /**
      * @return LocaleTransfer
-     * @return void
      */
     public function getCurrentLocale();
 

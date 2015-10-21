@@ -29,7 +29,7 @@ class CategoryFormEdit extends CategoryFormAdd
     const EXTRA_PARENTS = 'extra_parents';
 
     /**
-     * @return CategoryFormEdit
+     * @return self
      */
     protected function buildFormFields()
     {

@@ -14,7 +14,7 @@ class CategoryFormDelete extends CategoryFormEdit
     const DELETE_CHILDREN = 'delete_children';
 
     /**
-     * @return CategoryFormDelete
+     * @return self
      */
     protected function buildFormFields()
     {

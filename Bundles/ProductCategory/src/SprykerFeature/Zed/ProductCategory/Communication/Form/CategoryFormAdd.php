@@ -71,7 +71,7 @@ class CategoryFormAdd extends AbstractForm
     }
 
     /**
-     * @return CategoryFormAdd
+     * @return self
      */
     protected function buildFormFields()
     {

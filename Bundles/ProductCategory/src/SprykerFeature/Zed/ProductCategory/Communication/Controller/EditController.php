@@ -252,7 +252,7 @@ class EditController extends AddController
         /*
          * @var SpyCategoryNode $currentCategoryNode
          */
-         $existingCategoryNode = $this->getDependencyContainer()
+        $existingCategoryNode = $this->getDependencyContainer()
             ->createCategoryFacade()
             ->getNodeById($currentCategoryNodeTransfer->getIdCategoryNode());
 
