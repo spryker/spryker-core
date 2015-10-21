@@ -23,7 +23,7 @@ class CategoryFieldNotBlankValidator extends NotBlankValidator
      */
     public function validate($value, Constraint $constraint)
     {
-        if (!$constraint instanceof CategoryFieldNotBlank) {
+        if (!($constraint instanceof CategoryFieldNotBlank)) {
             throw new UnexpectedTypeException($constraint, __NAMESPACE__ . '\Category');
         }
 
