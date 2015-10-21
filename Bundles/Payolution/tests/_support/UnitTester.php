@@ -1,4 +1,5 @@
 <?php
+
 namespace Payolution;
 
 /**
@@ -16,9 +17,9 @@ namespace Payolution;
  *
  * @SuppressWarnings(PHPMD)
 */
-class CodeGuy extends \Codeception\Actor
+class UnitTester extends \Codeception\Actor
 {
-    use _generated\CodeGuyActions;
+    use _generated\UnitTesterActions;
 
    /**
     * Define custom actions here
