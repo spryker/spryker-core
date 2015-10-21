@@ -16,6 +16,7 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_LOCALE = 'locale facade';
     const FACADE_URL = 'url facade';
     const FACADE_CATEGORY = 'category facade';
+    const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
 
     /**
      * @var Container
@@ -38,6 +39,10 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_CATEGORY] = function (Container $container) {
             return $container->getLocator()->category()->facade();
+        };
+
+        $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
+            return $container->getLocator()->propel()->pluginConnection()->get();
         };
 
         return $container;

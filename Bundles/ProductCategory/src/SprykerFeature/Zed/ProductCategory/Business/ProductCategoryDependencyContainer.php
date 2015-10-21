@@ -35,7 +35,8 @@ class ProductCategoryDependencyContainer extends AbstractBusinessDependencyConta
             $this->createCategoryFacade(),
             $this->createTouchFacade(),
             $this->createCmsFacade(),
-            $this->getLocator()
+            $this->getLocator(),
+            $this->getProvidedDependency(ProductCategoryDependencyProvider::PLUGIN_PROPEL_CONNECTION)
         );
     }
 

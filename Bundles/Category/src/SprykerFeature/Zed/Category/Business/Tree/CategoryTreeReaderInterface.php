@@ -172,4 +172,12 @@ interface CategoryTreeReaderInterface
      */
     public function getTreeNodeChildren($idCategory, LocaleInterface $locale);
 
+    /**
+     * @param int $idCategory
+     * @param LocaleInterface $locale
+     *
+     * @return array
+     */
+    public function getTreeNodeChildrenByIdCategoryAndLocale($idCategory, LocaleInterface $locale);
+
 }

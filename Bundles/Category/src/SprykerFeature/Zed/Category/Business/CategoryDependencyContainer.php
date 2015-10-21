@@ -40,7 +40,8 @@ class CategoryDependencyContainer extends AbstractBusinessDependencyContainer
             $this->createClosureTableWriter(),
             $this->createCategoryTreeReader(),
             $this->createNodeUrlManager(),
-            $this->createTouchFacade()
+            $this->createTouchFacade(),
+            $this->getProvidedDependency(CategoryDependencyProvider::PLUGIN_PROPEL_CONNECTION)
         );
     }
 
@@ -60,7 +61,8 @@ class CategoryDependencyContainer extends AbstractBusinessDependencyContainer
     public function createCategoryTreeReader()
     {
         return $this->getFactory()->createTreeCategoryTreeReader(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->createCategoryTreeFormatter()
         );
     }
 
@@ -149,6 +151,14 @@ class CategoryDependencyContainer extends AbstractBusinessDependencyContainer
     protected function createUrlFacade()
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_URL);
+    }
+
+    /**
+     * @return CategoryTreeFormatter
+     */
+    protected function createCategoryTreeFormatter()
+    {
+        return $this->getFactory()->createTreeFormatterCategoryTreeFormatter();
     }
 
 }

@@ -49,30 +49,34 @@ class NodeUrlManager implements NodeUrlManagerInterface
     }
 
     /**
-     * @param NodeTransfer $categoryNode
-     * @param LocaleTransfer $locale
+     * @param NodeTransfer $categoryNodeTransfer
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return void
      */
-    public function createUrl(NodeTransfer $categoryNode, LocaleTransfer $locale)
+    public function createUrl(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {
-        $path = $this->categoryTreeReader->getPath($categoryNode->getIdCategoryNode(), $locale);
+        $path = $this->categoryTreeReader->getPath($categoryNodeTransfer->getIdCategoryNode(), $localeTransfer);
         $categoryUrl = $this->urlPathGenerator->generate($path);
-        $idNode = $categoryNode->getIdCategoryNode();
+        $idNode = $categoryNodeTransfer->getIdCategoryNode();
 
-        $url = $this->urlFacade->createUrl($categoryUrl, $locale, CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idNode);
+        $url = $this->urlFacade->createUrl($categoryUrl, $localeTransfer, CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idNode);
         $this->urlFacade->touchUrlActive($url->getIdUrl());
     }
 
     /**
-     * @param NodeTransfer $categoryNode
-     * @param LocaleTransfer $locale
+     * @param NodeTransfer $categoryNodeTransfer
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return void
      */
-    public function updateUrl(NodeTransfer $categoryNode, LocaleTransfer $locale)
+    public function updateUrl(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {
-        $path = $this->categoryTreeReader->getPath($categoryNode->getIdCategoryNode(), $locale);
+        $path = $this->categoryTreeReader->getPath($categoryNodeTransfer->getIdCategoryNode(), $localeTransfer);
         $categoryUrl = $this->urlPathGenerator->generate($path);
-        $idNode = $categoryNode->getIdCategoryNode();
+        $idNode = $categoryNodeTransfer->getIdCategoryNode();
 
-        $url = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($idNode, $locale);
+        $url = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($idNode, $localeTransfer);
         
         if (!$url) {
             $urlTransfer = new UrlTransfer();
@@ -80,7 +84,7 @@ class NodeUrlManager implements NodeUrlManagerInterface
             $urlTransfer->setResourceId($idNode);
             $urlTransfer->setResourceType(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE);
             $urlTransfer->setUrl($categoryUrl);
-            $urlTransfer->setFkLocale($locale->getIdLocale());
+            $urlTransfer->setFkLocale($localeTransfer->getIdLocale());
 
             $this->urlFacade->saveUrlAndTouch($urlTransfer);
         }
@@ -89,22 +93,24 @@ class NodeUrlManager implements NodeUrlManagerInterface
             $this->urlFacade->saveUrlAndTouch($url);
         }
 
-        $this->updateChildrenUrls($categoryNode, $locale);
+        $this->updateChildrenUrls($categoryNodeTransfer, $localeTransfer);
     }
 
     /**
-     * @param NodeTransfer $categoryNode
-     * @param LocaleTransfer $locale
+     * @param NodeTransfer $categoryNodeTransfer
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return void
      */
-    protected function updateChildrenUrls(NodeTransfer $categoryNode, LocaleTransfer $locale)
+    protected function updateChildrenUrls(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {
-        $children = $this->categoryTreeReader->getPathChildren($categoryNode->getIdCategoryNode());
+        $children = $this->categoryTreeReader->getPathChildren($categoryNodeTransfer->getIdCategoryNode());
         foreach ($children as $child) {
             /**
              * @var SpyCategoryClosureTable $child
              * @var SpyCategoryClosureTable $parent
              */
-            $urlTransfer = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($child->getFkCategoryNodeDescendant(), $locale);
+            $urlTransfer = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($child->getFkCategoryNodeDescendant(), $localeTransfer);
             if (!$urlTransfer) {
                 continue;
             }
@@ -122,13 +128,15 @@ class NodeUrlManager implements NodeUrlManagerInterface
     }
 
     /**
-     * @param NodeTransfer $categoryNode
-     * @param LocaleTransfer $locale
+     * @param NodeTransfer $categoryNodeTransfer
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return void
      */
-    public function removeUrl(NodeTransfer $categoryNode, LocaleTransfer $locale)
+    public function removeUrl(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {
-        $idNode = $categoryNode->getIdCategoryNode();
-        $urlTransfer = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($idNode, $locale);
+        $idNode = $categoryNodeTransfer->getIdCategoryNode();
+        $urlTransfer = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($idNode, $localeTransfer);
 
         if ($urlTransfer) {
             $this->urlFacade->deleteUrl($urlTransfer);

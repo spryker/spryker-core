@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Cms\Business\Block;
 
 use Generated\Shared\Cms\CmsBlockInterface;
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use Propel\Runtime\Propel;
+use Propel\Runtime\Connection\ConnectionInterface;
 use SprykerFeature\Shared\Cms\CmsConfig;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
 use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
@@ -28,13 +28,20 @@ class BlockManager implements BlockManagerInterface
     protected $touchFacade;
 
     /**
+     * @var ConnectionInterface
+     */
+    protected $connection;
+
+    /**
      * @param CmsQueryContainerInterface $cmsQueryContainer
      * @param CmsToTouchInterface $touchFacade
+     * @param ConnectionInterface $connection
      */
-    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, CmsToTouchInterface $touchFacade)
+    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, CmsToTouchInterface $touchFacade, ConnectionInterface $connection)
     {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->touchFacade = $touchFacade;
+        $this->connection = $connection;
     }
 
     /**
@@ -85,8 +92,7 @@ class BlockManager implements BlockManagerInterface
      */
     public function updateBlocksAssignedToDeletedCategoryNode($idCategoryNode)
     {
-        $connection = Propel::getConnection();
-        $connection->beginTransaction();
+        $this->connection->beginTransaction();
 
         $assignedBlocks = $this->getCmsBlocksByIdCategoryNode($idCategoryNode);
 
@@ -100,7 +106,7 @@ class BlockManager implements BlockManagerInterface
             $this->saveBlockAndTouch($blockTransfer);
         }
 
-        $connection->commit();
+        $this->connection->commit();
     }
 
     /**

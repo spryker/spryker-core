@@ -68,7 +68,8 @@ class CmsDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createBlockBlockManager(
             $this->getCmsQueryContainer(),
-            $this->getTouchFacade()
+            $this->getTouchFacade(),
+            $this->getProvidedDependency(CmsDependencyProvider::PLUGIN_PROPEL_CONNECTION)
         );
     }
 

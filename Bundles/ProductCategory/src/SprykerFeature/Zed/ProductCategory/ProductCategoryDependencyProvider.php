@@ -21,6 +21,7 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
     const QUERY_CONTAINER_CATEGORY = 'category query container';
     const QUERY_CONTAINER_PRODUCT = 'product query container';
     const QUERY_CONTAINER_PRODUCT_CATEGORY = 'product category query container';
+    const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
 
     /**
      * @var Container
@@ -67,6 +68,10 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::QUERY_CONTAINER_PRODUCT_CATEGORY] = function (Container $container) {
             return $container->getLocator()->productCategory()->queryContainer();
+        };
+
+        $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
+            return $container->getLocator()->propel()->pluginConnection()->get();
         };
 
         return $container;

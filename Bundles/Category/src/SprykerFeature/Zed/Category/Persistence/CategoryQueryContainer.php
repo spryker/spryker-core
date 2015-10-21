@@ -268,6 +268,10 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
+     * Order of columns matters when using addSelectColumn()
+     *
+     * TODO https://spryker.atlassian.net/browse/CD-563
+     *
      * @param int $idNode
      * @param string $idLocale
      * @param bool $onlyOneLevel
@@ -287,8 +291,6 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             ->useDescendantQuery()
                 ->filterByFkCategoryNode($idNode)
             ->endUse()
-            //ORDER OF COLUMNS MATTERS WHEN USING addSelectColumn()
-            //TODO https://spryker.atlassian.net/browse/CD-563
             ->addSelectColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE)
             ->addSelectColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE)
             ->addSelectColumn(SpyCategoryAttributeTableMap::COL_NAME);

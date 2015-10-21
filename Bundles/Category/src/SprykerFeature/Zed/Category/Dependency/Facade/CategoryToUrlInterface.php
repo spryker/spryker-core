@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Category\Dependency\Facade;
@@ -14,7 +14,6 @@ use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
 interface CategoryToUrlInterface
 {
-
     /**
      * @param string $url
      * @param LocaleTransfer $locale
@@ -71,9 +70,9 @@ interface CategoryToUrlInterface
 
     /**
      * @param UrlTransfer $url
+     *
      * @throws MissingUrlException
      * @throws PropelException
      */
     public function deleteUrl(UrlTransfer $url);
-    
 }

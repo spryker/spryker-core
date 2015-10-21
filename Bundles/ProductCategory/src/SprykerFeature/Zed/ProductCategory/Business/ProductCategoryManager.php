@@ -6,12 +6,11 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Business;
 
-use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Zed\Ide\AutoCompletion;
+use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
-use Propel\Runtime\Propel;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
@@ -65,6 +64,11 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     protected $locator;
 
     /**
+     * @var ConnectionInterface
+     */
+    protected $connection;
+
+    /**
      * @param CategoryQueryContainerInterface $categoryQueryContainer
      * @param ProductCategoryQueryContainerInterface $productCategoryQueryContainer
      * @param ProductCategoryToProductInterface $productFacade
@@ -80,7 +84,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         ProductCategoryToCategoryInterface $categoryFacade,
         ProductCategoryToTouchInterface $touchFacade,
         CmsToCategoryInterface $cmsFacade,
-        LocatorLocatorInterface $locator
+        LocatorLocatorInterface $locator,
+        ConnectionInterface $connection
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productCategoryQueryContainer = $productCategoryQueryContainer;
@@ -89,6 +94,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         $this->touchFacade = $touchFacade;
         $this->cmsFacade = $cmsFacade;
         $this->locator = $locator;
+        $this->connection = $connection;
     }
 
     /**
@@ -141,6 +147,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param string $sku
      * @param string $categoryName
      * @param LocaleTransfer $locale
+     *
+     * @return void
      *
      * @throws ProductCategoryMappingExistsException
      */
@@ -200,7 +208,33 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
     /**
      * @param int $idCategory
+     * @param array $productIdsToDeassign
+     *
+     * @return void
+     */
+    public function removeProductCategoryMappings($idCategory, array $productIdsToDeassign)
+    {
+        foreach ($productIdsToDeassign as $idProduct) {
+            $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
+                ->findOne();
+
+            if (null === $mapping) {
+                continue;
+            }
+
+            $mapping->delete();
+
+            //yes, Active is correct, it should update touch items, not mark them to delete
+            //it's just a change to the mappings and not an actual abstract product
+            $this->touchAbstractProductActive($idProduct);
+        }
+    }
+
+    /**
+     * @param int $idCategory
      * @param array $productIdsToAssign
+     *
+     * @return void
      *
      * @throws PropelException
      */
@@ -224,29 +258,9 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
     /**
      * @param int $idCategory
-     * @param array $productIdsToDeassign
-     */
-    public function removeProductCategoryMappings($idCategory, array $productIdsToDeassign)
-    {
-        foreach ($productIdsToDeassign as $idProduct) {
-            $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
-                ->findOne();
-
-            if (null === $mapping) {
-                continue;
-            }
-
-            $mapping->delete();
-
-            //yes, Active is correct, it should update touch items, not mark them to delete
-            //it's just a change to the mappings and not an actual abstract product
-            $this->touchAbstractProductActive($idProduct);
-        }
-    }
-
-    /**
-     * @param int $idCategory
      * @param array $productOrderList
+     *
+     * @return void
      *
      * @throws PropelException
      */
@@ -273,6 +287,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param int $idCategory
      * @param array $productPreconfigList
      *
+     * @return void
+     *
      * @throws PropelException
      */
     public function updateProductMappingsPreconfig($idCategory, array $productPreconfigList)
@@ -297,51 +313,101 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
-     * @param NodeTransfer $sourceNode
-     * @param NodeTransfer $destinationNode
-     * @param LocaleTransfer $locale
+     * @param NodeTransfer $sourceNodeTransfer
+     * @param NodeTransfer $destinationNodeTransfer
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return void
      */
-    public function moveCategoryChildrenAndDeleteNode(NodeTransfer $sourceNode, NodeTransfer $destinationNode, LocaleTransfer $locale)
+    public function moveCategoryChildrenAndDeleteNode(NodeTransfer $sourceNodeTransfer, NodeTransfer $destinationNodeTransfer, LocaleTransfer $localeTransfer)
     {
-        $connection = Propel::getConnection();
-        $connection->beginTransaction();
+        $this->connection->beginTransaction();
 
         $children = $this->categoryQueryContainer
-            ->queryFirstLevelChildren($sourceNode->getIdCategoryNode())
+            ->queryFirstLevelChildren($sourceNodeTransfer->getIdCategoryNode())
             ->find()
         ;
 
         foreach ($children as $child) {
             $childTransfer = (new NodeTransfer())->fromArray($child->toArray());
-            $childTransfer->setFkParentCategoryNode($destinationNode->getIdCategoryNode());
-            $this->categoryFacade->updateCategoryNode($childTransfer, $locale);
+            $childTransfer->setFkParentCategoryNode($destinationNodeTransfer->getIdCategoryNode());
+            $this->categoryFacade->updateCategoryNode($childTransfer, $localeTransfer);
         }
 
-        //remove extra parents
-        $extraParents = $this->categoryQueryContainer
-            ->queryNotMainNodesByCategoryId($sourceNode->getFkCategory())
-            ->find()
-        ;
+        $this->removeExtraParents($sourceNodeTransfer->getFkCategory(), $localeTransfer);
 
-        foreach ($extraParents as $parent) {
-            $this->categoryFacade->deleteNode($parent->getIdCategoryNode(), $locale);
-        }
+        $this->categoryFacade->deleteNode($sourceNodeTransfer->getIdCategoryNode(), $localeTransfer, false);
 
-        $this->categoryFacade->deleteNode($sourceNode->getIdCategoryNode(), $locale, false);
-
-        $connection->commit();
+        $this->connection->commit();
     }
 
     /**
      * @param int $idCategory
-     * @param LocaleTransfer $locale
+     *
+     * @return void
      */
-    public function deleteCategoryRecursive($idCategory, LocaleTransfer $locale)
+    protected function removeExtraParents($idCategory, LocaleTransfer $localeTransfer)
     {
-        $connection = Propel::getConnection();
-        $connection->beginTransaction();
+        $extraParents = $this->categoryQueryContainer
+            ->queryNotMainNodesByCategoryId($idCategory)
+            ->find()
+        ;
 
-        //remove product mappings
+        foreach ($extraParents as $parent) {
+            $this->categoryFacade->deleteNode($parent->getIdCategoryNode(), $localeTransfer);
+        }
+    }
+
+    /**
+     * @param int $idCategory
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return void
+     */
+    public function deleteCategoryRecursive($idCategory, LocaleTransfer $localeTransfer)
+    {
+        $this->connection->beginTransaction();
+
+        $this->removeMappings($idCategory);
+
+        $categoryNodes = $this->categoryQueryContainer
+            ->queryAllNodesByCategoryId($idCategory)
+            ->find()
+        ;
+
+        foreach ($categoryNodes as $node) {
+            $this->cmsFacade->updateBlocksAssignedToDeletedCategoryNode($node->getIdCategoryNode()); //TODO: https://spryker.atlassian.net/browse/CD-540
+
+            $children = $this->categoryQueryContainer
+                ->queryFirstLevelChildren($node->getIdCategoryNode())
+                ->find()
+            ;
+
+            foreach ($children as $child) {
+                $this->deleteCategoryRecursive($child->getFkCategory(), $localeTransfer);
+            }
+
+            $nodeExists = $this->categoryQueryContainer
+                ->queryNodeById($node->getIdCategoryNode())
+                ->count() > 0;
+
+            if ($nodeExists) {
+                $this->categoryFacade->deleteNode($node->getIdCategoryNode(), $localeTransfer, true);
+            }
+        }
+
+        $this->categoryFacade->deleteCategory($idCategory);
+
+        $this->connection->commit();
+    }
+
+    /**
+     * @param $idCategory
+     *
+     * @return void
+     */
+    protected function removeMappings($idCategory)
+    {
         $assignedProducts = $this->productCategoryQueryContainer
             ->queryProductCategoryMappingsByCategoryId($idCategory)
             ->find()
@@ -352,40 +418,12 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             $productsToDeAssign[] = $mapping->getFkAbstractProduct();
         }
         $this->removeProductCategoryMappings($idCategory, $productsToDeAssign);
-
-        $categoryNodes = $this->categoryQueryContainer
-            ->queryAllNodesByCategoryId($idCategory)
-            ->find()
-        ;
-
-        foreach ($categoryNodes as $node) {
-            $this->cmsFacade->updateBlocksAssignedToDeletedCategoryNode($node->getIdCategoryNode());
-
-            $children = $this->categoryQueryContainer
-                ->queryFirstLevelChildren($node->getIdCategoryNode())
-                ->find()
-            ;
-
-            foreach ($children as $child) {
-                $this->deleteCategoryRecursive($child->getFkCategory(), $locale);
-            }
-
-            $nodeExists = $this->categoryQueryContainer
-                ->queryNodeById($node->getIdCategoryNode())
-                ->count() > 0;
-
-            if ($nodeExists) {
-                $this->categoryFacade->deleteNode($node->getIdCategoryNode(), $locale, true);
-            }
-        }
-
-        $this->categoryFacade->deleteCategory($idCategory);
-
-        $connection->commit();
     }
 
     /**
      * @param int $idAbstractProduct
+     *
+     * @return void
      */
     protected function touchAbstractProductActive($idAbstractProduct)
     {
@@ -394,6 +432,8 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
     /**
      * @param int $idAbstractProduct
+     *
+     * @return void
      */
     protected function touchAbstractProductDeleted($idAbstractProduct)
     {

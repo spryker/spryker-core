@@ -114,6 +114,8 @@ class EditController extends AddController
      * @param $existingCategoryNode
      * @param NodeTransfer $categoryNodeTransfer
      * @param LocaleTransfer $locale
+     *
+     * @return void
      */
     protected function createOrUpdateCategoryNode($existingCategoryNode, NodeTransfer $categoryNodeTransfer, LocaleTransfer $locale)
     {
@@ -143,6 +145,8 @@ class EditController extends AddController
      * @param CategoryTransfer $categoryTransfer
      * @param LocaleTransfer $locale
      * @param array $parentIdList
+     *
+     * @return void
      */
     protected function removeDeselectedCategoryAdditionalParents(
         CategoryTransfer $categoryTransfer,
@@ -166,6 +170,8 @@ class EditController extends AddController
     /**
      * @param CategoryTransfer $categoryTransfer
      * @param array $data
+     *
+     * @return void
      */
     protected function updateProductCategoryMappings(CategoryTransfer $categoryTransfer, array $data)
     {
@@ -195,6 +201,8 @@ class EditController extends AddController
     /**
      * @param CategoryTransfer $categoryTransfer
      * @param $productOrder
+     *
+     * @return void
      */
     protected function updateProductOrder(CategoryTransfer $categoryTransfer, array $productOrder)
     {
@@ -206,6 +214,8 @@ class EditController extends AddController
     /**
      * @param CategoryTransfer $categoryTransfer
      * @param $productPreconfig
+     *
+     * @return void
      */
     protected function updateProductCategoryPreconfig(CategoryTransfer $categoryTransfer, array $productPreconfig)
     {
@@ -317,8 +327,7 @@ class EditController extends AddController
 
         $path['url'] = $this->getDependencyContainer()
             ->createCategoryFacade()
-            ->getUrlGenerator()
-            ->generate($pathTokens);
+            ->generatePath($pathTokens);
 
         $path['view_node_name'] = 'child';
         if ((int) $category->getIdCategory() === (int) $node->getFkCategory()) {

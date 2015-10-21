@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Business;
 
-use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Propel\Runtime\Exception\PropelException;
@@ -94,17 +93,17 @@ interface ProductCategoryManagerInterface
     public function updateProductMappingsPreconfig($idCategory, array $productPreconfigList);
 
     /**
-     * @param NodeTransfer $sourceNode
-     * @param NodeTransfer $destinationNode
-     * @param LocaleTransfer $locale
+     * @param NodeTransfer $sourceNodeTransfer
+     * @param NodeTransfer $destinationNodeTransfer
+     * @param LocaleTransfer $localeTransfer
      * @return
      */
-    public function moveCategoryChildrenAndDeleteNode(NodeTransfer $sourceNode, NodeTransfer $destinationNode, LocaleTransfer $locale);
+    public function moveCategoryChildrenAndDeleteNode(NodeTransfer $sourceNodeTransfer, NodeTransfer $destinationNodeTransfer, LocaleTransfer $localeTransfer);
 
     /**
      * @param int $idCategory
-     * @param LocaleTransfer $locale
+     * @param LocaleTransfer $localeTransfer
      */
-    public function deleteCategoryRecursive($idCategory, LocaleTransfer $locale);
+    public function deleteCategoryRecursive($idCategory, LocaleTransfer $localeTransfer);
 
 }

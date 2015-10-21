@@ -24,6 +24,7 @@ class UrlManager implements UrlManagerInterface
 {
 
     const ITEM_TYPE_URL = 'url';
+
     /**
      * @var UrlQueryContainerInterface
      */
@@ -108,6 +109,8 @@ class UrlManager implements UrlManagerInterface
 
     /**
      * @param string $url
+     *
+     * @return void
      *
      * @throws UrlExistsException
      */
@@ -222,6 +225,8 @@ class UrlManager implements UrlManagerInterface
 
     /**
      * @param int $idUrl
+     *
+     * @return void
      */
     public function touchUrlActive($idUrl)
     {
@@ -230,6 +235,8 @@ class UrlManager implements UrlManagerInterface
 
     /**
      * @param $idUrl
+     *
+     * @return void
      */
     public function touchUrlDeleted($idUrl)
     {
@@ -259,6 +266,8 @@ class UrlManager implements UrlManagerInterface
      * @param UrlTransfer $url
      * @throws MissingUrlException
      * @throws PropelException
+     *
+     * @return void
      */
     public function deleteUrl(UrlTransfer $url)
     {
@@ -397,11 +406,12 @@ class UrlManager implements UrlManagerInterface
             ->findOne()
         ;
 
-        if (!$urlEntity) {
-            return new UrlTransfer();
+        $urlTransfer = new UrlTransfer();
+        if ($urlEntity) {
+            $urlTransfer->fromArray($urlEntity->toArray(), true);
         }
 
-        return (new UrlTransfer())->fromArray($urlEntity->toArray(), true);
+        return $urlTransfer;
     }
 
 }

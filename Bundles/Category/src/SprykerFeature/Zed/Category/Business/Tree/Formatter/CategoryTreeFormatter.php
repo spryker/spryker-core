@@ -32,7 +32,15 @@ class CategoryTreeFormatter
     /**
      * @param array $categories
      */
-    public function __construct(array $categories)
+    public function __construct(array $categories = [])
+    {
+        $this->setupCategories($categories);
+    }
+
+    /**
+     * @param array $categories
+     */
+    public function setupCategories(array $categories)
     {
         foreach ($categories as $category) {
             $this->findCategoryIndex($category);

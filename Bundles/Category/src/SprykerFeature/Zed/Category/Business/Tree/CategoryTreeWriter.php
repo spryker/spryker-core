@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Category\Business\Tree;
 
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Propel\Runtime\Propel;
+use Propel\Runtime\Connection\ConnectionInterface;
 use SprykerFeature\Shared\Category\CategoryConfig;
 use SprykerFeature\Zed\Category\Business\Manager\NodeUrlManagerInterface;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
@@ -43,24 +43,33 @@ class CategoryTreeWriter
     protected $touchFacade;
 
     /**
+     * @var ConnectionInterface
+     */
+    protected $connection;
+
+
+    /**
      * @param NodeWriterInterface $nodeWriter
      * @param ClosureTableWriterInterface $closureTableWriter
      * @param CategoryTreeReaderInterface $categoryTreeReader
      * @param NodeUrlManagerInterface $nodeUrlManager
      * @param CategoryToTouchInterface $touchFacade
+     * @param ConnectionInterface $connection
      */
     public function __construct(
         NodeWriterInterface $nodeWriter,
         ClosureTableWriterInterface $closureTableWriter,
         CategoryTreeReaderInterface $categoryTreeReader,
         NodeUrlManagerInterface $nodeUrlManager,
-        CategoryToTouchInterface  $touchFacade
+        CategoryToTouchInterface  $touchFacade,
+        ConnectionInterface $connection
     ) {
         $this->nodeWriter = $nodeWriter;
         $this->closureTableWriter = $closureTableWriter;
         $this->categoryTreeReader = $categoryTreeReader;
         $this->nodeUrlManager = $nodeUrlManager;
         $this->touchFacade = $touchFacade;
+        $this->connection = $connection;
     }
 
     /**
@@ -75,8 +84,7 @@ class CategoryTreeWriter
         LocaleTransfer $locale,
         $createUrlPath = true
     ) {
-        $connection = Propel::getConnection();
-        $connection->beginTransaction();
+        $this->connection->beginTransaction();
 
         $idNode = $this->nodeWriter->create($categoryNode);
         $this->closureTableWriter->create($categoryNode);
@@ -89,28 +97,29 @@ class CategoryTreeWriter
             $this->nodeUrlManager->createUrl($categoryNode, $locale);
         }
 
-        $connection->commit();
+        $this->connection->commit();
 
         return $idNode;
     }
 
     /**
-     * @param NodeTransfer $categoryNode
-     * @param LocaleTransfer $locale
+     * @param NodeTransfer $categoryNodeTransfer
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return void
      */
-    public function updateNode(NodeTransfer $categoryNode, LocaleTransfer $locale)
+    public function updateNode(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {
-        $connection = Propel::getConnection();
-        $connection->beginTransaction();
+        $this->connection->beginTransaction();
 
-        $this->nodeWriter->update($categoryNode);
-        $this->closureTableWriter->moveNode($categoryNode);
-        $this->nodeUrlManager->updateUrl($categoryNode, $locale);
+        $this->nodeWriter->update($categoryNodeTransfer);
+        $this->closureTableWriter->moveNode($categoryNodeTransfer);
+        $this->nodeUrlManager->updateUrl($categoryNodeTransfer, $localeTransfer);
 
-        $this->touchCategoryActiveRecursive($categoryNode);
+        $this->touchCategoryActiveRecursive($categoryNodeTransfer);
         $this->touchNavigationActive();
 
-        $connection->commit();
+        $this->connection->commit();
     }
 
     /**
@@ -122,8 +131,7 @@ class CategoryTreeWriter
      */
     public function deleteNode($idNode, LocaleTransfer $locale, $deleteChildren = false)
     {
-        $connection = Propel::getConnection();
-        $connection->beginTransaction();
+        $this->connection->beginTransaction();
 
         //order of execution matters, these must be called before node is deleted
         $this->removeNodeUrl($idNode, $locale);
@@ -145,13 +153,16 @@ class CategoryTreeWriter
             $result = $this->nodeWriter->delete($idNode);
         }
 
-        $this->touchNavigationDeleted();
+        $this->touchNavigationUpdated();
 
-        $connection->commit();
+        $this->connection->commit();
 
         return $result;
     }
 
+    /**
+     * @return void
+     */
     public function rebuildClosureTable()
     {
         $this->closureTableWriter->rebuildCategoryNodes();
@@ -159,6 +170,8 @@ class CategoryTreeWriter
 
     /**
      * @param NodeTransfer $categoryNode
+     *
+     * @return void
      */
     protected function touchCategoryActiveRecursive(NodeTransfer $categoryNode)
     {
@@ -174,6 +187,8 @@ class CategoryTreeWriter
 
     /**
      * @param NodeTransfer $categoryNode
+     *
+     * @return void
      */
     protected function touchCategoryDeletedRecursive(NodeTransfer $categoryNode)
     {
@@ -189,6 +204,8 @@ class CategoryTreeWriter
 
     /**
      * @param int $idCategoryNode
+     *
+     * @return void
      */
     protected function touchCategoryActive($idCategoryNode)
     {
@@ -197,12 +214,17 @@ class CategoryTreeWriter
 
     /**
      * @param $idCategoryNode
+     *
+     * @return void
      */
     protected function touchCategoryDeleted($idCategoryNode)
     {
         $this->touchFacade->touchDeleted(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
     }
 
+    /**
+     * @return void
+     */
     protected function touchNavigationActive()
     {
         $navigationItems = $this->touchFacade->getItemsByType(CategoryConfig::RESOURCE_TYPE_NAVIGATION);
@@ -212,14 +234,19 @@ class CategoryTreeWriter
         $this->touchFacade->bulkTouchActive(CategoryConfig::RESOURCE_TYPE_NAVIGATION, $itemIds);
     }
 
-    protected function touchNavigationDeleted()
+    /**
+     * @return void
+     */
+    protected function touchNavigationUpdated()
     {
-        //just refresh navigation, cause it's always 1 item, there is nothing to delete
         $this->touchNavigationActive();
     }
 
     /**
-     * @param $idCategoryNode
+     * @param int $idCategoryNode
+     * @param LocaleTransfer $locale
+     *
+     * @return void
      */
     protected function removeNodeUrl($idCategoryNode, LocaleTransfer $locale)
     {
