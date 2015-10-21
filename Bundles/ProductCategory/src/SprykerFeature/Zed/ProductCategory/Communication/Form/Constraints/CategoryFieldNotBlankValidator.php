@@ -37,10 +37,13 @@ class CategoryFieldNotBlankValidator extends NotBlankValidator
      */
     protected function shouldValidateCategory(CategoryFieldNotBlank $constraint)
     {
-        return !$this->isSubcategoriesChecked($constraint->getCheckboxFieldName()) &&
-            $this->context->getRoot()
+        $isNotCategorySelected = $this->context->getRoot()
                 ->get($constraint->getCategoryFieldName())
                 ->getData() === null;
+
+        $isNotSubcategoryChecked = !$this->isSubcategoriesChecked($constraint->getCheckboxFieldName());
+
+        return $isNotSubcategoryChecked && $isNotCategorySelected;
     }
 
     /**
