@@ -76,10 +76,10 @@ class CategoryFormAdd extends AbstractForm
     protected function buildFormFields()
     {
         return $this->addText(self::NAME, [
-            'constraints' => [
-                new NotBlank(),
-            ],
-        ])
+                'constraints' => [
+                    new NotBlank(),
+                ],
+            ])
             ->addSelect2ComboBox(self::FK_PARENT_CATEGORY_NODE, [
                 'label' => 'Parent',
                 'choices' => $this->getCategoriesWithPaths(),
@@ -190,10 +190,10 @@ class CategoryFormAdd extends AbstractForm
     protected function populateFormFields()
     {
         $fields = $this->getDefaultFormFields();
-        /*
-         * @var SpyCategory
-         */
 
+        /*
+         * @var SpyCategory $category
+         */
         $category = $this->categoryQueryContainer
             ->queryCategoryById($this->idCategory)
             ->innerJoinAttribute()

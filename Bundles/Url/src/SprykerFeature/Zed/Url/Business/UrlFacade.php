@@ -257,6 +257,8 @@ class UrlFacade extends AbstractFacade
 
     /**
      * @param UrlTransfer $url
+     *
+     * @return void
      */
     public function deleteUrl(UrlTransfer $url)
     {

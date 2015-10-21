@@ -104,7 +104,7 @@ class CategoryFormEdit extends CategoryFormAdd
         $fields = $this->getDefaultFormFields();
 
         /*
-         * @var SpyCategory
+         * @var SpyCategory $category
          */
         $category = $this->categoryQueryContainer
             ->queryCategoryById($this->idCategory)
