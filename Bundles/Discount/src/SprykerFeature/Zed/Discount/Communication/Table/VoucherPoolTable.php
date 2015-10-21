@@ -49,9 +49,9 @@ class VoucherPoolTable extends AbstractTable
 
         $config->setHeader([
             SpyDiscountVoucherPoolTableMap::COL_CREATED_AT => 'Date Created',
-            SpyDiscountVoucherPoolTableMap::COL_NAME => 'Pool Name',
+            SpyDiscountVoucherPoolTableMap::COL_NAME => 'Voucher Name',
             self::COL_CATEGORY_NAME => 'Category Name',
-            self::COL_VOUCHERS_COUNT => 'Codes Vouchers',
+            self::COL_VOUCHERS_COUNT => 'Codes',
             self::COL_OPTIONS => 'Options',
         ]);
 
@@ -122,9 +122,9 @@ class VoucherPoolTable extends AbstractTable
             . self::SPACE_SEPARATOR
             . $this->generateViewButton('/discount/voucher/view/?' . self::PARAM_ID_POOL . '=' . $discountVoucherPool->getIdDiscountVoucherPool(), 'View Codes')
             . self::SPACE_SEPARATOR
-            . $this->generateCreateButton('/discount/voucher/create-single', 'Add Single Voucher')
+            . $this->generateCreateButton('/discount/voucher/create-single', 'Add Single Code')
             . self::SPACE_SEPARATOR
-            . $this->generateCreateButton('/discount/voucher/create-multiple', 'Add Multiple Vouchers')
+            . $this->generateCreateButton('/discount/voucher/create-multiple', 'Add Multiple Codes')
         ;
     }
 
