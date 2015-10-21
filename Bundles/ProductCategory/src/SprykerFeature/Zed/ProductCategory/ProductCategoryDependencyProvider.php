@@ -11,6 +11,7 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const FACADE_CMS = 'cms facade'; //TODO: https://spryker.atlassian.net/browse/CD-540
     const FACADE_TOUCH = 'touch facade';
     const FACADE_LOCALE = 'locale facade';
@@ -118,4 +119,5 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
+
 }

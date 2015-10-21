@@ -148,9 +148,9 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param string $categoryName
      * @param LocaleTransfer $locale
      *
-     * @return void
-     *
      * @throws ProductCategoryMappingExistsException
+     *
+     * @return void
      */
     protected function checkMappingDoesNotExist($sku, $categoryName, LocaleTransfer $locale)
     {
@@ -234,9 +234,9 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param int $idCategory
      * @param array $productIdsToAssign
      *
-     * @return void
-     *
      * @throws PropelException
+     *
+     * @return void
      */
     public function createProductCategoryMappings($idCategory, array $productIdsToAssign)
     {
@@ -260,9 +260,9 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param int $idCategory
      * @param array $productOrderList
      *
-     * @return void
-     *
      * @throws PropelException
+     *
+     * @return void
      */
     public function updateProductMappingsOrder($idCategory, array $productOrderList)
     {
@@ -287,9 +287,9 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param int $idCategory
      * @param array $productPreconfigList
      *
-     * @return void
-     *
      * @throws PropelException
+     *
+     * @return void
      */
     public function updateProductMappingsPreconfig($idCategory, array $productPreconfigList)
     {

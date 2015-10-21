@@ -17,7 +17,6 @@ use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
-
 /**
  * @method ProductCategoryFacade getFacade()
  * @method ProductCategoryDependencyContainer getDependencyContainer()
@@ -25,6 +24,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class EditController extends AddController
 {
+
     /**
      * @param Request $request
      *
@@ -48,7 +48,7 @@ class EditController extends AddController
         $locale = $this->getDependencyContainer()
             ->createCurrentLocale();
 
-        /**
+        /*
          * @var Form
          */
         $form = $this->getDependencyContainer()
@@ -91,7 +91,7 @@ class EditController extends AddController
 
             $connection->commit();
 
-            return $this->redirectResponse('/product-category/edit?id-category='.$idCategory);
+            return $this->redirectResponse('/product-category/edit?id-category=' . $idCategory);
         }
 
         $productCategories = $this->getDependencyContainer()
@@ -106,7 +106,7 @@ class EditController extends AddController
             'productCategoriesTable' => $productCategories->render(),
             'productsTable' => $products->render(),
             'showProducts' => true,
-            'currentCategory' => $currentCategory->toArray()
+            'currentCategory' => $currentCategory->toArray(),
         ]);
     }
 
@@ -119,8 +119,8 @@ class EditController extends AddController
      */
     protected function createOrUpdateCategoryNode($existingCategoryNode, NodeTransfer $categoryNodeTransfer, LocaleTransfer $locale)
     {
-        /**
-         * @var SpyCategoryNode $existingCategoryNode
+        /*
+         * @var SpyCategoryNode
          */
         if ($existingCategoryNode) {
             $categoryNodeTransfer->setIdCategoryNode($existingCategoryNode->getIdCategoryNode());
@@ -152,8 +152,7 @@ class EditController extends AddController
         CategoryTransfer $categoryTransfer,
         LocaleTransfer $locale,
         array $parentIdList
-    )
-    {
+    ) {
         $existingParents = $this->getDependencyContainer()
             ->createCategoryFacade()
             ->getNotMainNodesByIdCategory($categoryTransfer->getIdCategory());
@@ -255,7 +254,7 @@ class EditController extends AddController
 
         $currentCategoryNodeTransfer->setIsMain(true);
 
-        /**
+        /*
          * @var SpyCategoryNode $currentCategoryNode
          */
          $existingCategoryNode = $this->getDependencyContainer()
@@ -378,7 +377,7 @@ class EditController extends AddController
 
         $productDataList = [];
         foreach ($productCategoryList as $productCategory) {
-            /**
+            /*
              * @var SpyProductCategory $productCategory
              */
             $productCategoryData = $productCategory->toArray();

@@ -48,7 +48,7 @@ interface ProductCategoryManagerInterface
      * @return SpyProductCategoryQuery[]
      */
     public function getProductsByCategory($idCategory, LocaleTransfer $locale);
-    
+
     /**
      * @param SpyAbstractProduct $abstractProduct
      *
@@ -68,9 +68,9 @@ interface ProductCategoryManagerInterface
      * @param int $idCategory
      * @param array $productIdsToAssign
      *
-     * @return void
-     *
      * @throws PropelException
+     *
+     * @return void
      */
     public function createProductCategoryMappings($idCategory, array $productIdsToAssign);
 
@@ -86,9 +86,9 @@ interface ProductCategoryManagerInterface
      * @param $idCategory
      * @param array $productOrderList
      *
-     * @return void
-     *
      * @throws PropelException
+     *
+     * @return void
      */
     public function updateProductMappingsOrder($idCategory, array $productOrderList);
 
@@ -96,9 +96,9 @@ interface ProductCategoryManagerInterface
      * @param int $idCategory
      * @param array $productPreconfigList
      *
-     * @return void
-     *
      * @throws PropelException
+     *
+     * @return void
      */
     public function updateProductMappingsPreconfig($idCategory, array $productPreconfigList);
 

@@ -43,7 +43,6 @@ class DeleteController extends EditController
         ;
 
         if ($form->isValid()) {
-
             $locale = $this->getDependencyContainer()
                 ->createCurrentLocale();
 

@@ -38,4 +38,5 @@ class CategoryFieldNotBlank extends NotBlank
     {
         return $this->checkboxFieldName;
     }
+
 }

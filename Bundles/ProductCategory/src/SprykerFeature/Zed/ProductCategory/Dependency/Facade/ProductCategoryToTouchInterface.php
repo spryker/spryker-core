@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\ProductCategory\Dependency\Facade;
 
 interface ProductCategoryToTouchInterface
 {
+
     /**
      * @param string $itemType
      * @param int $itemId
@@ -23,4 +24,5 @@ interface ProductCategoryToTouchInterface
      * @return bool
      */
     public function touchDeleted($itemType, $itemId);
+
 }

@@ -64,8 +64,7 @@ class CategoryFormAdd extends AbstractForm
         LocaleTransfer $locale,
         $idCategory,
         $idParentNode
-    )
-    {
+    ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
         $this->productCategoryFacade = $productCategoryFacade;
         $this->locale = $locale;
@@ -88,7 +87,7 @@ class CategoryFormAdd extends AbstractForm
                 'choices' => $this->getCategoriesWithPaths(),
                 'constraints' => [
                     new NotBlank(),
-                ]
+                ],
             ])
             ->addHidden(self::PK_CATEGORY_NODE)
         ;
@@ -110,8 +109,7 @@ class CategoryFormAdd extends AbstractForm
             foreach ($category->getNodes() as $node) {
                 if (!array_key_exists($node->getFkParentCategoryNode(), $pathCache)) {
                     $path = $this->buildPath($node);
-                }
-                else {
+                } else {
                     $path = $pathCache[$node->getFkParentCategoryNode()];
                 }
 
@@ -159,7 +157,7 @@ class CategoryFormAdd extends AbstractForm
 
         $data = [];
         foreach ($productList as $product) {
-            /**
+            /*
              * @var SpyProductCategory $product
              */
             $data[] = $product->getIdProductCategory();
@@ -179,7 +177,7 @@ class CategoryFormAdd extends AbstractForm
 
         $data = [];
         foreach ($productList as $product) {
-            /**
+            /*
              * @var SpyProductCategory $product
              */
             $data[$product->getIdProductCategory()] = $product->getName();
@@ -194,8 +192,8 @@ class CategoryFormAdd extends AbstractForm
     protected function populateFormFields()
     {
         $fields = $this->getDefaultFormFields();
-        /**
-         * @var SpyCategory $category
+        /*
+         * @var SpyCategory
          */
 
         $category = $this->categoryQueryContainer
@@ -232,7 +230,7 @@ class CategoryFormAdd extends AbstractForm
             self::PK_CATEGORY => null,
             self::PK_CATEGORY_NODE => null,
             self::FK_PARENT_CATEGORY_NODE => $this->idParentNode,
-            self::NAME => ''
+            self::NAME => '',
         ];
     }
 

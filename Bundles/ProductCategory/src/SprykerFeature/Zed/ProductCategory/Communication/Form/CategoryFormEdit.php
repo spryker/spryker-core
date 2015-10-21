@@ -89,27 +89,27 @@ class CategoryFormEdit extends CategoryFormAdd
             ->addHidden(self::FK_NODE_CATEGORY)
             ->addHidden('products_to_be_assigned', [
                 'attr' => [
-                    'id' => 'products_to_be_assigned'
-                ]
+                    'id' => 'products_to_be_assigned',
+                ],
             ])
             ->addHidden('products_to_be_de_assigned', [
                 'attr' => [
-                    'id' => 'products_to_be_de_assigned'
-                ]
+                    'id' => 'products_to_be_de_assigned',
+                ],
             ])
             ->addHidden('product_order', [
                 'attr' => [
-                    'id' => 'product_order'
-                ]
+                    'id' => 'product_order',
+                ],
             ])
             ->addHidden('product_category_preconfig', [
                 'attr' => [
-                    'id' => 'product_category_preconfig'
-                ]
+                    'id' => 'product_category_preconfig',
+                ],
             ])
         ;
     }
-    
+
     /**
      * @return array
      */
@@ -117,8 +117,8 @@ class CategoryFormEdit extends CategoryFormAdd
     {
         $fields = $this->getDefaultFormFields();
 
-        /**
-         * @var SpyCategory $category
+        /*
+         * @var SpyCategory
          */
         $category = $this->categoryQueryContainer
             ->queryCategoryById($this->idCategory)
@@ -139,10 +139,10 @@ class CategoryFormEdit extends CategoryFormAdd
             ->withColumn(SpyCategoryNodeTableMap::COL_IS_MAIN, self::CATEGORY_NODE_IS_MAIN)
             ->findOne()
         ;
-        
+
         if ($category) {
             $category = $category->toArray();
-            
+
             $nodeList = $this->categoryQueryContainer
                 ->queryNotMainNodesByCategoryId($this->idCategory)
                 ->where(
@@ -151,12 +151,12 @@ class CategoryFormEdit extends CategoryFormAdd
                 )
                 ->find()
             ;
-            
+
             $nodeIds = [];
             foreach ($nodeList as $node) {
                 $nodeIds[] = $node->getFkParentCategoryNode();
             }
-            
+
             $fields = [
                 self::PK_CATEGORY => $category[self::PK_CATEGORY],
                 self::PK_CATEGORY_NODE => $category[self::PK_CATEGORY_NODE],
@@ -186,7 +186,6 @@ class CategoryFormEdit extends CategoryFormAdd
 
         return $fields;
     }
-
 
     /**
      * @return array

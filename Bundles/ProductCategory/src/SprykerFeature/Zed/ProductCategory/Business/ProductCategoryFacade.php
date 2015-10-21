@@ -18,6 +18,7 @@ use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuer
 
 /**
  * @property ProductCategoryDependencyContainer $dependencyContainer
+ *
  * @method ProductCategoryDependencyContainer getDependencyContainer()
  * @method ProductCategoryManager createProductManager()
  */
@@ -133,6 +134,7 @@ class ProductCategoryFacade extends AbstractFacade
     /**
      * @param int $idCategory
      * @param array $productOrderList
+     *
      * @throws PropelException
      *
      * @return void
@@ -187,4 +189,5 @@ class ProductCategoryFacade extends AbstractFacade
             ->moveCategoryChildrenAndDeleteNode($sourceNode, $destinationNode, $locale)
         ;
     }
+
 }
