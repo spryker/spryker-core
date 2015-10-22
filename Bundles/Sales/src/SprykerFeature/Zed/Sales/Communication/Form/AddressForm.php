@@ -2,7 +2,6 @@
 
 namespace SprykerFeature\Zed\Sales\Communication\Form;
 
-use Generated\Shared\Transfer\AddressTransfer;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
 use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddressQuery;
@@ -17,9 +16,9 @@ class AddressForm extends AbstractForm
     const MIDDLE_NAME = 'middle_name';
     const LAST_NAME = 'last_name';
     const EMAIL = 'email';
-    const ADDRESS_1 = 'address_1';
-    const ADDRESS_2 = 'address_2';
-    const ADDRESS_3 = 'address_3';
+    const ADDRESS_1 = 'address1';
+    const ADDRESS_2 = 'address2';
+    const ADDRESS_3 = 'address3';
     const COMPANY = 'company';
     const CITY = 'city';
     const ZIP_CODE = 'zip_code';
@@ -34,12 +33,7 @@ class AddressForm extends AbstractForm
     /**
      * @var SpySalesOrderAddressQuery
      */
-    private $addressQuery;
-
-    /**
-     * @var int
-     */
-    private $idOrder;
+    protected $addressQuery;
 
     /**
      * @param SpySalesOrderAddressQuery $addressQuery
@@ -47,7 +41,6 @@ class AddressForm extends AbstractForm
     public function __construct(SpySalesOrderAddressQuery $addressQuery)
     {
         $this->addressQuery = $addressQuery;
-//        $this->setDefaultDataType(new AddressTransfer());
     }
 
     /**
