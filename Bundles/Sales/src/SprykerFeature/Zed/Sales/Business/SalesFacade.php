@@ -25,8 +25,6 @@ class SalesFacade extends AbstractFacade
 {
 
     /**
-     * @deprecated
-     *
      * @param CommentTransfer $commentTransfer
      *
      * @return CommentTransfer
@@ -34,9 +32,8 @@ class SalesFacade extends AbstractFacade
     public function saveComment(CommentTransfer $commentTransfer)
     {
         $commentsManager = $this->getDependencyContainer()->createCommentsManager();
-        $commentsManager->saveComment($commentTransfer);
 
-        return $commentsManager->convertToTransfer();
+        return $commentsManager->saveComment($commentTransfer);
     }
 
     /**

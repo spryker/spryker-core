@@ -34,12 +34,14 @@ class CommentManager
      */
     public function saveComment(CommentTransfer $commentTransfer)
     {
-        $comment = new SpySalesOrderComment();
-        $comment->fromArray($commentTransfer->toArray());
+        $commentEntity = new SpySalesOrderComment();
+        $commentEntity->fromArray($commentTransfer->toArray());
 
-        $comment->save();
+        $commentEntity->save();
 
-        return $comment;
+        $commentTransfer->fromArray($commentEntity->toArray(), true);
+
+        return $commentTransfer;
     }
 
 }
