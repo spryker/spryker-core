@@ -134,6 +134,7 @@ class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
         $sessionHandlerFile->write(self::SESSION_ID, self::SESSION_DATA);
         $this->makeFileOlderThanItIs();
         $sessionHandlerFile->write(self::SESSION_ID_2, self::SESSION_DATA);
+        $this->makeFileNewerThanItIs();
 
         $finder = new Finder();
         $finder->in($this->getSavePath());
@@ -141,12 +142,25 @@ class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(2, $finder);
 
         $sessionHandlerFile->gc(1);
-
         $this->assertCount(1, $finder);
+
+        unlink($this->getSavePath() . '/session:' . self::SESSION_ID_2);
+        rmdir($this->getSavePath());
     }
 
+    /**
+     * @return void
+     */
     protected function makeFileOlderThanItIs()
     {
-        touch($this->getSavePath() . DIRECTORY_SEPARATOR . 'session:' . self::SESSION_ID, time() - 10);
+        touch($this->getSavePath() . DIRECTORY_SEPARATOR . 'session:' . self::SESSION_ID, time() - 200);
+    }
+
+    /**
+     * @return void
+     */
+    protected function makeFileNewerThanItIs()
+    {
+        touch($this->getSavePath() . DIRECTORY_SEPARATOR . 'session:' . self::SESSION_ID_2, time() + 200);
     }
 }
