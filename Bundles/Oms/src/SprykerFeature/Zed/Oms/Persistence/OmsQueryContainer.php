@@ -66,7 +66,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function queryLogForOrder(SpySalesOrder $order)
     {
-        return $this->getFactory()->createPropelSpyOmsTransitionLogQuery()
+        return SpyOmsTransitionLogQuery::create()
             ->filterByOrder($order)
             ->orderBy(SpyOmsTransitionLogTableMap::COL_ID_OMS_TRANSITION_LOG, Criteria::DESC);
     }

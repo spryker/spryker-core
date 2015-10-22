@@ -28,7 +28,7 @@ class AclDependencyContainer extends AbstractPersistenceDependencyContainer
      */
     public function createGroupQuery()
     {
-        return $this->getFactory()->createPropelSpyAclGroupQuery();
+        return new SpyAclGroupQuery();
     }
 
     /**
@@ -36,15 +36,15 @@ class AclDependencyContainer extends AbstractPersistenceDependencyContainer
      */
     public function createRuleQuery()
     {
-        return $this->getFactory()->createPropelSpyAclRuleQuery();
+        return new SpyAclRuleQuery();
     }
 
     /**
-     * @return SpyAclRoleQuery
+     * @return SpyAclRuleQuery
      */
     public function createRoleQuery()
     {
-        return $this->getFactory()->createPropelSpyAclRoleQuery();
+        return new SpyAclRuleQuery();
     }
 
     /**
@@ -52,7 +52,7 @@ class AclDependencyContainer extends AbstractPersistenceDependencyContainer
      */
     public function createGroupHasRoleQuery()
     {
-        return $this->getFactory()->createPropelSpyAclGroupsHasRolesQuery();
+        return new SpyAclGroupsHasRolesQuery();
     }
 
     /**
@@ -60,7 +60,7 @@ class AclDependencyContainer extends AbstractPersistenceDependencyContainer
      */
     public function createUserHasRoleQuery()
     {
-        return $this->getFactory()->createPropelSpyAclUserHasGroupQuery();
+        return new SpyAclUserHasGroupQuery();
     }
 
     /**
@@ -68,7 +68,7 @@ class AclDependencyContainer extends AbstractPersistenceDependencyContainer
      */
     public function createUserQuery()
     {
-        return $this->createUserQueryContainer()->queryUsers();
+        return new SpyUserQuery();
     }
 
     /**
@@ -76,7 +76,7 @@ class AclDependencyContainer extends AbstractPersistenceDependencyContainer
      */
     public function createUserHasGroupQuery()
     {
-        return $this->getFactory()->createPropelSpyAclUserHasGroupQuery();
+        return new SpyAclUserHasGroupQuery();
     }
 
     /**

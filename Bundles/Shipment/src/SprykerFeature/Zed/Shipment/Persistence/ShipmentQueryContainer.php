@@ -22,7 +22,7 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
      */
     public function queryCarriers()
     {
-        return $this->getFactory()->createPropelSpyShipmentCarrierQuery();
+        return new SpyShipmentCarrierQuery();
     }
 
     /**
@@ -38,7 +38,7 @@ class ShipmentQueryContainer extends AbstractQueryContainer implements ShipmentQ
      */
     public function queryMethods()
     {
-        return $this->getFactory()->createPropelSpyShipmentMethodQuery();
+        return new SpyShipmentMethodQuery();
     }
 
     /**

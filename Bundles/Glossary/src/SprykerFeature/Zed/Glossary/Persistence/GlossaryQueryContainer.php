@@ -62,7 +62,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
      */
     public function queryKeys()
     {
-        return $this->getFactory()->createPropelSpyGlossaryKeyQuery();
+        return new SpyGlossaryKeyQuery();
     }
 
     /**
@@ -92,7 +92,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
      */
     public function queryTranslations()
     {
-        return $this->getFactory()->createPropelSpyGlossaryTranslationQuery();
+        return new SpyGlossaryTranslationQuery();
     }
 
     /**

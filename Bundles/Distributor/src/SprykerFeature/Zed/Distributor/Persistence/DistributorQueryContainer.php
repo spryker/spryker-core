@@ -24,7 +24,7 @@ class DistributorQueryContainer extends AbstractQueryContainer implements
      */
     public function queryItemTypes()
     {
-        $query = $this->getFactory()->createPropelSpyDistributorItemTypeQuery()
+        $query = SpyDistributorItemTypeQuery::create()
             ->addSelectColumn(SpyDistributorItemTypeTableMap::COL_TYPE_KEY)
             ->setDistinct()
             ->setFormatter(new PropelArraySetFormatter())
@@ -40,7 +40,7 @@ class DistributorQueryContainer extends AbstractQueryContainer implements
      */
     public function queryTypeByKey($typeKey)
     {
-        $query = $this->getFactory()->createPropelSpyDistributorItemTypeQuery()
+        $query = SpyDistributorItemTypeQuery::create()
             ->filterByTypeKey($typeKey)
         ;
 
@@ -57,7 +57,7 @@ class DistributorQueryContainer extends AbstractQueryContainer implements
      */
     public function queryTouchedItemsByTypeKey($typeKey, $timestamp)
     {
-        return $this->getFactory()->createPropelSpyDistributorItemQuery()
+        return SpyDistributorItemQuery::create()
             ->filterByTouched(['min' => $timestamp])
             ->useSpyDistributorItemTypeQuery()
             ->filterByTypeKey($typeKey)
@@ -70,7 +70,7 @@ class DistributorQueryContainer extends AbstractQueryContainer implements
      */
     public function queryReceivers()
     {
-        $query = $this->getFactory()->createPropelSpyDistributorReceiverQuery()
+        $query = SpyDistributorReceiverQuery::create()
             ->addSelectColumn(SpyDistributorReceiverTableMap::COL_RECEIVER_KEY)
             ->setDistinct()
             ->setFormatter(new PropelArraySetFormatter())
@@ -89,7 +89,7 @@ class DistributorQueryContainer extends AbstractQueryContainer implements
     {
         $foreignKeyColumn = $this->getForeignKeyColumnByType($itemType);
 
-        $query = $this->getFactory()->createPropelSpyDistributorItemQuery()
+        $query = SpyDistributorItemQuery::create()
             ->addAnd($foreignKeyColumn, $idItem)
             ->useSpyDistributorItemTypeQuery()
             ->filterByTypeKey($itemType)

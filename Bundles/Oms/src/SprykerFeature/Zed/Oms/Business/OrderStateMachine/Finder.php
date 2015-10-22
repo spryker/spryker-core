@@ -167,7 +167,7 @@ class Finder implements FinderInterface
      *
      * @return array
      */
-    public function getGroupedManuallyExecutableEvents(\SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order)
+    public function getGroupedManuallyExecutableEvents(SpySalesOrder $order)
     {
         $processBuilder = clone $this->builder;
         $processName = $order->getItems()->getFirst()->getProcess()->getName();
