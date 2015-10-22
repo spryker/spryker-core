@@ -20,7 +20,7 @@ class CustomerMailConnectorDependencyProvider extends AbstractBundleDependencyPr
      *
      * @return Container
      */
-    public function provideCommunicationLayerDependencies(Container $container)
+    public function provideBusinessLayerDependencies(Container $container)
     {
         $container[self::FACADE_MAIL] = function (Container $container) {
             return $container->getLocator()->mail()->facade();

@@ -6,15 +6,14 @@
 
 namespace SprykerFeature\Zed\CustomerMailConnector\Communication\Plugin;
 
-use Generated\Shared\Transfer\MailTransfer;
+use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSenderPluginInterface;
-use SprykerFeature\Zed\CustomerMailConnector\Communication\CustomerMailConnectorDependencyContainer;
-use SprykerFeature\Zed\CustomerMailConnector\CustomerMailConnectorConfig;
+use SprykerFeature\Zed\CustomerMailConnector\Business\CustomerMailConnectorFacade;
 
 /**
- * @method CustomerMailConnectorDependencyContainer getDependencyContainer()
+ * @method CustomerMailConnectorFacade getFacade()
  */
-class PasswordRestoredConfirmationSender extends AbstractSender implements PasswordRestoredConfirmationSenderPluginInterface
+class PasswordRestoredConfirmationSender extends AbstractPlugin implements PasswordRestoredConfirmationSenderPluginInterface
 {
 
     /**
@@ -24,34 +23,7 @@ class PasswordRestoredConfirmationSender extends AbstractSender implements Passw
      */
     public function send($email)
     {
-        $config = $this->getDependencyContainer()->getConfig();
-
-        $mailTransfer = $this->createMailTransfer();
-
-        $mailTransfer->setTemplateName($config->getPasswordRestoredConfirmationToken());
-
-        $this->addMailRecipient($mailTransfer, $email);
-        $this->setMailTransferFrom($mailTransfer, $config);
-        $this->setMailTransferSubject($mailTransfer, $config);
-        $this->setMailMergeData($mailTransfer);
-
-        $result = $this->getDependencyContainer()
-            ->createMailFacade()
-            ->sendMail($mailTransfer);
-
-        return $this->isMailSent($result);
-    }
-
-    /**
-     * @param MailTransfer $mailTransfer
-     * @param CustomerMailConnectorConfig $config
-     */
-    protected function setMailTransferSubject(MailTransfer $mailTransfer, CustomerMailConnectorConfig $config)
-    {
-        $subject = $config->getPasswordRestoredConfirmationSubject();
-        if (null !== $subject) {
-            $mailTransfer->setSubject($this->translate($subject));
-        }
+        return $this->getFacade()->sendPasswordRestoredConfirmation($email);
     }
 
 }

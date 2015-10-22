@@ -4,20 +4,43 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\CustomerMailConnector\Communication\Plugin;
+namespace SprykerFeature\Zed\CustomerMailConnector\Business\Sender;
 
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailTransfer;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Shared\Mail\MailConfig;
-use SprykerFeature\Zed\CustomerMailConnector\Communication\CustomerMailConnectorDependencyContainer;
 use SprykerFeature\Zed\CustomerMailConnector\CustomerMailConnectorConfig;
+use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
+use SprykerFeature\Zed\Mail\Business\MailFacade;
 
-/**
- * @method CustomerMailConnectorDependencyContainer getDependencyContainer()
- */
-class AbstractSender extends AbstractPlugin
+abstract class AbstractSender
 {
+
+    /**
+     * @var CustomerMailConnectorConfig
+     */
+    protected $config;
+
+    /**
+     * @var MailFacade
+     */
+    protected $mailFacade;
+
+    /**
+     * @var GlossaryFacade
+     */
+    protected $glossaryFacade;
+
+    /**
+     * @param CustomerMailConnectorConfig $config
+     * @param MailFacade $mailFacade
+     * @param GlossaryFacade $glossaryFacade
+     */
+    public function __construct(CustomerMailConnectorConfig $config, MailFacade $mailFacade, GlossaryFacade $glossaryFacade)
+    {
+        $this->config = $config;
+        $this->mailFacade = $mailFacade;
+        $this->glossaryFacade = $glossaryFacade;
+    }
 
     /**
      * @param array $results
@@ -49,6 +72,8 @@ class AbstractSender extends AbstractPlugin
     /**
      * @param MailTransfer $mailTransfer
      * @param string $email
+     *
+     * @return void
      */
     protected function addMailRecipient(MailTransfer $mailTransfer, $email)
     {
@@ -68,35 +93,30 @@ class AbstractSender extends AbstractPlugin
     /**
      * @param MailTransfer $mailTransfer
      * @param array $globalMergeVars
+     *
+     * @return void
      */
     protected function setMailMergeData(MailTransfer $mailTransfer, array $globalMergeVars = [])
     {
         $mailTransfer->setMerge(true);
-        $mailTransfer->setMergeLanguage($this->getMergeLanguage());
+        $mailTransfer->setMergeLanguage($this->config->getMergeLanguage());
         $mailTransfer->setGlobalMergeVars($globalMergeVars);
     }
 
     /**
-     * @return string
-     */
-    protected function getMergeLanguage()
-    {
-        return MailConfig::MERGE_LANGUAGE_HANDLEBARS;
-    }
-
-    /**
      * @param MailTransfer $mailTransfer
-     * @param CustomerMailConnectorConfig $config
+     *
+     * @return void
      */
-    protected function setMailTransferFrom(MailTransfer $mailTransfer, CustomerMailConnectorConfig $config)
+    protected function setMailTransferFrom(MailTransfer $mailTransfer)
     {
-        $fromName = $config->getFromEmailName();
-        if (null !== $fromName) {
+        $fromName = $this->config->getFromEmailName();
+        if ($fromName !== null) {
             $mailTransfer->setFromName($fromName);
         }
 
-        $fromEmail = $config->getFromEmailAddress();
-        if (null !== $fromEmail) {
+        $fromEmail = $this->config->getFromEmailAddress();
+        if ($fromEmail !== null) {
             $mailTransfer->setFromEmail($fromEmail);
         }
     }
@@ -108,9 +128,8 @@ class AbstractSender extends AbstractPlugin
      */
     protected function translate($keyName)
     {
-        $glossaryFacade = $this->getDependencyContainer()->createGlossaryFacade();
-        if ($glossaryFacade->hasTranslation($keyName)) {
-            return $glossaryFacade->translate($keyName);
+        if ($this->glossaryFacade->hasTranslation($keyName)) {
+            return $this->glossaryFacade->translate($keyName);
         }
 
         return $keyName;
