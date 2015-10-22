@@ -106,7 +106,7 @@ class CurrencyManager
      */
     public function convertDecimalToCent($decimalValue)
     {
-        return number_format($decimalValue * self::PRICE_PRECISION, 2, '.', '');
+        return $decimalValue * self::PRICE_PRECISION;
     }
 
     /**

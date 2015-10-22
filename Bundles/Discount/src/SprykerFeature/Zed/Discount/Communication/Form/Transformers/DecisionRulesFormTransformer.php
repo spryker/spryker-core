@@ -107,14 +107,18 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param $formArray
+     * @param array $formArray
+     * @param bool $showInForm
      *
-     * @return mixed
+     * @return array
      */
     protected function filterVoucherAmountValue($formArray, $showInForm = false)
     {
-        $conversionMethod = $this->decideTransformRule($showInForm);
+        if (!array_key_exists(self::CALCULATOR_PLUGIN, $formArray)) {
+            return $formArray;
+        }
 
+        $conversionMethod = $this->decideTransformRule($showInForm);
         $calculatorPlugins = $this->config->getAvailableCalculatorPlugins();
 
         $selectedCalculatorPlugin = $calculatorPlugins[$formArray[self::CALCULATOR_PLUGIN]];
@@ -125,7 +129,7 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
 
     /**
      * @param array $fromArray
-     * @param bool|false $showInForm
+     * @param bool $showInForm
      *
      * @return array
      */
@@ -143,6 +147,9 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
         }
 
         foreach ($fromArray[self::DECISION_RULES] as &$decisionRule) {
+            if (!array_key_exists($decisionRulePluginKey, $decisionRule)) {
+                continue;
+            }
             $plugin = $decisionRulesPlugins[$decisionRule[$decisionRulePluginKey]];
             $decisionRule[self::VALUE] = $plugin->$conversionMethod($decisionRule[$valueKey]);
         }
@@ -152,7 +159,7 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
 
     /**
      * @param array $formArray
-     * @param bool|false $showInForm
+     * @param bool $showInForm
      *
      * @return array
      */
@@ -162,6 +169,9 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
         $conversionMethod = $this->decideTransformRule($showInForm);
 
         foreach ($formArray[self::COLLECTOR_PLUGINS] as &$collectorPlugin) {
+            if (!array_key_exists(self::COLLECTOR_PLUGIN, $collectorPlugin) || !array_key_exists($collectorPlugin[self::COLLECTOR_PLUGIN], $collectorPlugins)) {
+                continue;
+            }
             $plugin = $collectorPlugins[$collectorPlugin[self::COLLECTOR_PLUGIN]];
             $collectorPlugin[self::VALUE] = $plugin->$conversionMethod($collectorPlugin[self::VALUE]);
         }

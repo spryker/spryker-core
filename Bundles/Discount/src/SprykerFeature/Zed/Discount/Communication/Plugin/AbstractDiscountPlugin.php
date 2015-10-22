@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Discount\Communication\Plugin;
 
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerFeature\Shared\Library\Currency\CurrencyManager;
 
 class AbstractDiscountPlugin extends AbstractPlugin
 {
@@ -25,5 +26,13 @@ class AbstractDiscountPlugin extends AbstractPlugin
     public function transformFromPersistence($value)
     {
         return $value;
+    }
+
+    /**
+     * @return CurrencyManager
+     */
+    protected function getCurrencyManager()
+    {
+        return CurrencyManager::getInstance();
     }
 }
