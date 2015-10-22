@@ -57,7 +57,7 @@ class NodeUrlManager implements NodeUrlManagerInterface
     public function createUrl(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {
         $path = $this->categoryTreeReader->getPath($categoryNodeTransfer->getIdCategoryNode(), $localeTransfer);
-        $categoryUrl = $this->urlPathGenerator->generate($path);
+        $categoryUrl = $this->generateUrlFromPath($path);
         $idNode = $categoryNodeTransfer->getIdCategoryNode();
 
         $url = $this->urlFacade->createUrl($categoryUrl, $localeTransfer, CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idNode);
@@ -73,24 +73,19 @@ class NodeUrlManager implements NodeUrlManagerInterface
     public function updateUrl(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {
         $path = $this->categoryTreeReader->getPath($categoryNodeTransfer->getIdCategoryNode(), $localeTransfer);
-        $categoryUrl = $this->urlPathGenerator->generate($path);
+        $categoryUrl = $this->generateUrlFromPath($path);
         $idNode = $categoryNodeTransfer->getIdCategoryNode();
 
-        $url = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($idNode, $localeTransfer);
+        $urlTransfer = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($idNode, $localeTransfer);
 
-        if (!$url) {
+        if (!$urlTransfer) {
             $urlTransfer = new UrlTransfer();
-            $urlTransfer->setFkPage(null);
-            $urlTransfer->setResourceId($idNode);
-            $urlTransfer->setResourceType(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE);
-            $urlTransfer->setUrl($categoryUrl);
-            $urlTransfer->setFkLocale($localeTransfer->getIdLocale());
-
-            $this->urlFacade->saveUrlAndTouch($urlTransfer);
+            $this->updateTransferUrl($urlTransfer, $categoryUrl, $idNode, $localeTransfer->getIdLocale());
         } else {
-            $url->setUrl($categoryUrl);
-            $this->urlFacade->saveUrlAndTouch($url);
+            $this->updateTransferUrl($urlTransfer, $categoryUrl);
         }
+
+        $this->urlFacade->saveUrlAndTouch($urlTransfer);
 
         $this->updateChildrenUrls($categoryNodeTransfer, $localeTransfer);
     }
@@ -118,8 +113,8 @@ class NodeUrlManager implements NodeUrlManagerInterface
                 $pathTokens[] = $parent->toArray();
             }
 
-            $childUrl = $this->urlPathGenerator->generate($pathTokens);
-            $urlTransfer->setUrl($childUrl);
+            $childUrl = $this->generateUrlFromPath($pathTokens);
+            $this->updateTransferUrl($urlTransfer, $childUrl, $child->getFkCategoryNode(), $localeTransfer->getIdLocale());
             $this->urlFacade->saveUrlAndTouch($urlTransfer);
         }
     }
@@ -138,6 +133,39 @@ class NodeUrlManager implements NodeUrlManagerInterface
         if ($urlTransfer) {
             $this->urlFacade->deleteUrl($urlTransfer);
         }
+    }
+
+    /**
+     * @param array $pathTokens
+     *
+     * @return string
+     */
+    protected function generateUrlFromPath(array $pathTokens)
+    {
+        return $this->urlPathGenerator->generate($pathTokens);
+    }
+
+    /**
+     * @param UrlTransfer $urlTransfer
+     * @param $url
+     * @param int $idResource
+     * @param int $idLocale
+     *
+     * @return void
+     */
+    protected function updateTransferUrl(UrlTransfer $urlTransfer, $url, $idResource=null, $idLocale=null)
+    {
+        $urlTransfer->setResourceType(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE);
+
+        if ($idResource !== null) {
+            $urlTransfer->setResourceId($idResource);
+        }
+
+        if ($idLocale !== null) {
+            $urlTransfer->setFkLocale($idLocale);
+        }
+
+        $urlTransfer->setUrl($url);
     }
 
 }
