@@ -12,6 +12,7 @@ class CollectorPluginType extends AbstractRuleType
 
     const FIELD_COLLECTOR_PLUGIN = 'collector_plugin';
     const FIELD_VALUE = 'value';
+    const FIELD_REMOVE = 'remove';
 
     /**
      * @var array
@@ -47,6 +48,12 @@ class CollectorPluginType extends AbstractRuleType
                 'label' => 'Value',
             ])
         ;
+
+        $builder->add(self::FIELD_REMOVE, 'button', [
+            'attr' => [
+                'class' => 'btn btn-xs btn-danger remove-form-collection',
+            ],
+        ]);
     }
 
     /**

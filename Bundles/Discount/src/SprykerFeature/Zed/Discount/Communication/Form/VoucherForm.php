@@ -68,7 +68,6 @@ class VoucherForm extends AbstractForm
             ;
         }
 
-
         $maxAllowedCodeCharactersLength = $this->discountConfig->getAllowedCodeCharactersLength();
         $codeLengthValidator = new MaximumCalculatedRangeValidator($maxAllowedCodeCharactersLength);
 

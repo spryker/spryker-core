@@ -56,10 +56,6 @@ class DiscountDecisionRuleWriter extends AbstractWriter
      */
     public function saveDiscountDecisionRule(DecisionRuleTransfer $decisionRuleTransfer)
     {
-        if (null === $decisionRuleTransfer->getValue()) {
-            return null;
-        }
-
         if (null === $decisionRuleTransfer->getIdDiscountDecisionRule()) {
             return $this->create($decisionRuleTransfer);
         }

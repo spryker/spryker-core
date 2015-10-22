@@ -25,8 +25,6 @@ class CartRuleType extends AbstractRuleType
 
     const DATE_NOW = 'now';
 
-
-
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -57,6 +55,7 @@ class CartRuleType extends AbstractRuleType
                 'type' => new CollectorPluginType($this->availableCollectorPlugins),
                 'label' => null,
                 'allow_add' => true,
+                'allow_delete' => true,
                 'allow_extra_fields' => true,
             ])
             ->add(self::FIELD_VALID_FROM, 'date')
@@ -71,6 +70,7 @@ class CartRuleType extends AbstractRuleType
                 'type' => new DecisionRuleType($this->availableDecisionRulePlugins),
                 'label' => null,
                 'allow_add' => true,
+                'allow_delete' => true,
                 'allow_extra_fields' => true,
             ])
         ;

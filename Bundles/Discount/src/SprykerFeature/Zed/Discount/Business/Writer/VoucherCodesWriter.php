@@ -5,9 +5,9 @@ namespace SprykerFeature\Zed\Discount\Business\Writer;
 use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherCodesTransfer;
-use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
 
 class VoucherCodesWriter extends AbstractWriter
 {
@@ -71,12 +71,13 @@ class VoucherCodesWriter extends AbstractWriter
         $voucherPoolCategoryEntity = $this->discountVoucherPoolCategoryWriter
             ->getOrCreateByName($voucherCodesTransfer->getVoucherPoolCategory());
 
+        /** @var SpyDiscountVoucherPool $voucherPoolEntity */
         $voucherPoolEntity = $this->saveDiscountVoucherPool($voucherCodesTransfer, $voucherPoolCategoryEntity);
-        $discountEntity = $this->saveDiscount($voucherCodesTransfer, $voucherPoolEntity);
-        $this->saveDiscountDecisionRules($voucherCodesTransfer, $discountEntity);
+        $discountTransfer = $this->saveDiscount($voucherCodesTransfer, $voucherPoolEntity);
+        $this->saveDiscountDecisionRules($voucherCodesTransfer, $discountTransfer);
 
         foreach ($voucherCodesTransfer->getCollectorPlugins() as $collectorPluginTransfer) {
-            $collectorPluginTransfer->setFkDiscount($discountEntity->getIdDiscount());
+            $collectorPluginTransfer->setFkDiscount($discountTransfer->getIdDiscount());
             $this->discountCollectorWriter->save($collectorPluginTransfer);
         }
 
@@ -95,11 +96,34 @@ class VoucherCodesWriter extends AbstractWriter
         if (count($decisionRules) < 1) {
             return null;
         }
+
+        $this->deleteDecisionRules($voucherCodesTransfer);
+
         foreach ($decisionRules as $rule) {
             $decisionRuleTransfer = (new DecisionRuleTransfer())->fromArray($rule, true);
             $decisionRuleTransfer->setFkDiscount($discountTransfer->getIdDiscount());
             $decisionRuleTransfer->setName($discountTransfer->getDisplayName());
             $this->discountDecisionRuleWriter->saveDiscountDecisionRule($decisionRuleTransfer);
+        }
+    }
+
+    /**
+     * @param VoucherCodesTransfer $voucherCodesTransfer
+     *
+     * @return void
+     */
+    protected function deleteDecisionRules(VoucherCodesTransfer $voucherCodesTransfer)
+    {
+        $formDecisionRules = array_column($voucherCodesTransfer->getDecisionRules(), 'id_discount_decision_rule');
+
+        $decisionRulesCollection = $this->getQueryContainer()->queryDecisionRules($voucherCodesTransfer->getIdDiscount())->find();
+
+        foreach ($decisionRulesCollection as $decisionRule) {
+            if (in_array($decisionRule->getIdDiscountDecisionRule(), $formDecisionRules)) {
+                continue;
+            }
+
+            $decisionRule->delete();
         }
     }
 

@@ -104,16 +104,6 @@ class VoucherCodesType extends AbstractRuleType
             ->add(self::IS_ACTIVE, 'checkbox', [
                 'label' => 'Active',
             ])
-            ->add(self::FIELD_CALCULATOR_PLUGIN, 'choice', [
-                'label' => 'Calculator Plugin',
-                'choices' => $this->getAvailableCalculatorPlugins(),
-                'empty_data' => null,
-                'required' => false,
-                'placeholder' => 'Default',
-                'constraints' => [
-                    new NotBlank(),
-                ],
-            ])
             ->add(self::FIELD_COLLECTOR_PLUGINS, 'collection', [
                 'type' => new CollectorPluginType($this->availableCollectorPlugins),
                 'label' => null,
@@ -125,6 +115,16 @@ class VoucherCodesType extends AbstractRuleType
                 'label' => null,
                 'allow_add' => true,
                 'allow_extra_fields' => true,
+            ])
+            ->add(self::FIELD_CALCULATOR_PLUGIN, 'choice', [
+                'label' => 'Calculator Plugin',
+                'choices' => $this->getAvailableCalculatorPlugins(),
+                'empty_data' => null,
+                'required' => false,
+                'placeholder' => 'Default',
+                'constraints' => [
+                    new NotBlank(),
+                ],
             ])
             ->addModelTransformer(new DecisionRulesFormTransformer($this->camelCaseToUnderscore))
         ;
