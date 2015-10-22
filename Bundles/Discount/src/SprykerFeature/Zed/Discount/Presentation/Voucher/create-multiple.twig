@@ -1,10 +1,12 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set section_title = 'Create Multiple Vouchers' %}
+{% form_theme form '@Gui/Form/Theme/form-row-with-help-block.twig' %}
+
+{% set section_title = 'Create Multiple Codes' %}
 
 {% block action %}
     {{ backActionButton('/discount/pool', 'Back to Vouchers' | trans) }}
-    {{ createActionButton('/discount/voucher/create-single', 'Create Single Voucher' | trans) }}
+    {{ createActionButton('/discount/voucher/create-single', 'Create Single Code' | trans) }}
 {% endblock %}
 
 {% block content %}

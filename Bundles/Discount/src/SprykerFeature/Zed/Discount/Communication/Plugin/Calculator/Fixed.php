@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Plugin\Calculator;
 
+use Generated\Shared\Discount\DiscountInterface;
 use SprykerFeature\Shared\Library\Currency\CurrencyManager;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
@@ -63,6 +64,19 @@ class Fixed extends AbstractCalculator
     public function transformFromPersistence($value)
     {
         return $this->getCurrencyManager()->convertCentToDecimal($value);
+    }
+
+    /**
+     * @param DiscountInterface $discountTransfer
+     *
+     * @return string
+     */
+    public function getFormattedAmount(DiscountInterface $discountTransfer)
+    {
+        $currencyManager = CurrencyManager::getInstance();
+        $discountAmount = $currencyManager->convertCentToDecimal($discountTransfer->getAmount());
+
+        return $currencyManager->format($discountAmount);
     }
 
 }

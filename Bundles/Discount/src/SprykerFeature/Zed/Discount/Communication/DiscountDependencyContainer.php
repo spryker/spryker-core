@@ -100,7 +100,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     {
         $poolQuery = $this->getQueryContainer()->queryDiscountVoucherPool();
 
-        return $this->getFactory()->createTableVoucherPoolTable($poolQuery);
+        return $this->getFactory()->createTableVoucherPoolTable($poolQuery, $this->getConfig());
     }
 
     /**
