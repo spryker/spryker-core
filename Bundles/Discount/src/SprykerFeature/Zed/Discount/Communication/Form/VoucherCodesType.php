@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
+use Pyz\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\Communication\Form\Transformers\DecisionRulesFormTransformer;
 use SprykerFeature\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -33,33 +34,32 @@ class VoucherCodesType extends AbstractRuleType
     protected $availablePoolCategories;
 
     /**
-     * @var CamelCaseToUnderscore
+     * @var DiscountConfig
      */
-    protected $camelCaseToUnderscoreFilter;
+    protected $config;
     /**
      * @var CamelCaseToUnderscore
      */
     private $camelCaseToUnderscore;
 
     /**
-     * @param array                 $availableCalculatorPlugins
-     * @param array                 $availableCollectorPlugins
-     * @param array                 $availableDecisionRulePlugins
-     * @param array                 $availablePoolCategories
+     * @param DiscountConfig $config
+     * @param array $availablePoolCategories
      * @param CamelCaseToUnderscore $camelCaseToUnderscore
      */
     public function __construct(
-        array $availableCalculatorPlugins,
-        array $availableCollectorPlugins,
-        array $availableDecisionRulePlugins,
+        DiscountConfig $config,
         array $availablePoolCategories,
         CamelCaseToUnderscore $camelCaseToUnderscore
     ) {
-        parent::__construct($availableCalculatorPlugins, $availableCollectorPlugins, $availableDecisionRulePlugins);
+        parent::__construct(
+            $config->getAvailableCalculatorPlugins(),
+            $config->getAvailableCollectorPlugins(),
+            $config->getAvailableDecisionRulePlugins()
+        );
 
-        $this->availablePoolCategories = $availablePoolCategories;
+        $this->config = $config;
         $this->camelCaseToUnderscore = $camelCaseToUnderscore;
-
     }
 
     /**
@@ -104,14 +104,14 @@ class VoucherCodesType extends AbstractRuleType
                 'label' => 'Active',
             ])
             ->add(self::FIELD_COLLECTOR_PLUGINS, 'collection', [
-                'type' => new CollectorPluginType($this->availableCollectorPlugins),
+                'type' => new CollectorPluginType($this->config->getAvailableCollectorPlugins()),
                 'label' => null,
                 'allow_add' => true,
                 'allow_delete' => true,
                 'allow_extra_fields' => true,
             ])
             ->add(self::FIELD_DECISION_RULES, 'collection', [
-                'type' => new DecisionRuleType($this->availableDecisionRulePlugins),
+                'type' => new DecisionRuleType($this->config->getAvailableDecisionRulePlugins()),
                 'label' => null,
                 'allow_add' => true,
                 'allow_delete' => true,
@@ -127,7 +127,7 @@ class VoucherCodesType extends AbstractRuleType
                     new NotBlank(),
                 ],
             ])
-            ->addModelTransformer(new DecisionRulesFormTransformer($this->camelCaseToUnderscore))
+            ->addModelTransformer(new DecisionRulesFormTransformer($this->config, $this->camelCaseToUnderscore))
         ;
     }
 
