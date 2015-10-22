@@ -35,11 +35,13 @@ class RegistrationTokenSender extends AbstractSender
 
     /**
      * @param MailTransfer $mailTransfer
+     *
+     * @return void
      */
     protected function setMailTransferSubject(MailTransfer $mailTransfer)
     {
         $subject = $this->config->getRegistrationSubject();
-        if (null !== $subject) {
+        if ($subject !== null) {
             $mailTransfer->setSubject($this->translate($subject));
         }
     }

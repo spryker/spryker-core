@@ -72,6 +72,8 @@ abstract class AbstractSender
     /**
      * @param MailTransfer $mailTransfer
      * @param string $email
+     *
+     * @return void
      */
     protected function addMailRecipient(MailTransfer $mailTransfer, $email)
     {
@@ -91,6 +93,8 @@ abstract class AbstractSender
     /**
      * @param MailTransfer $mailTransfer
      * @param array $globalMergeVars
+     *
+     * @return void
      */
     protected function setMailMergeData(MailTransfer $mailTransfer, array $globalMergeVars = [])
     {
@@ -101,16 +105,18 @@ abstract class AbstractSender
 
     /**
      * @param MailTransfer $mailTransfer
+     *
+     * @return void
      */
     protected function setMailTransferFrom(MailTransfer $mailTransfer)
     {
         $fromName = $this->config->getFromEmailName();
-        if (null !== $fromName) {
+        if ($fromName !== null) {
             $mailTransfer->setFromName($fromName);
         }
 
         $fromEmail = $this->config->getFromEmailAddress();
-        if (null !== $fromEmail) {
+        if ($fromEmail !== null) {
             $mailTransfer->setFromEmail($fromEmail);
         }
     }
