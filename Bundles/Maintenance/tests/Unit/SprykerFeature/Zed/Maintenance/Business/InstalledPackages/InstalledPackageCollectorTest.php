@@ -21,7 +21,6 @@ class InstalledPackageCollectorTest extends \PHPUnit_Framework_TestCase
 
     public function testGetInstalledPackagesShouldReturnInstalledPackageCollection()
     {
-
         $collection = new InstalledPackagesTransfer();
         $finder = [
             $this->getMock('SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageFinderInterface', ['findInstalledPackages']),

@@ -15,6 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class PropelMigrationCleanerConsole extends Console
 {
+
     const COMMAND_NAME = 'maintenance:clean-propel-base';
     const COMMAND_DESCRIPTION = 'Clean up Propel base files';
 
@@ -42,4 +43,5 @@ class PropelMigrationCleanerConsole extends Console
 
         $this->info('Cleanup finished.');
     }
+
 }

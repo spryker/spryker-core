@@ -26,14 +26,9 @@ class EmptyEnclosingLinesFixer extends AbstractFixer
     {
         $tokens = Tokens::fromCode($content);
 
-        /**
-         * @var int
-         * @var Token
-         */
         foreach ($tokens as $index => $token) {
             /* @var Token $openingBrace */
             if ($token->isGivenKind([T_CLASS, T_INTERFACE, T_TRAIT])) {
-
                 $openingBraceIndex = $tokens->getNextTokenOfKind($index, ['{']);
                 $closingBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $openingBraceIndex);
 
@@ -68,6 +63,9 @@ class EmptyEnclosingLinesFixer extends AbstractFixer
         return 'There should be exactly one blank line after class start and before class end';
     }
 
+    /**
+     * @return int
+     */
     public function getPriority()
     {
         return -100;

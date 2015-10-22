@@ -32,7 +32,6 @@ class Manager
 
         $incomingDependencies = [];
         foreach ($allForeignBundles as $foreignBundle) {
-
             try {
                 $dependencies = $this->bundleParser->parseOutgoingDependencies($foreignBundle, true);
             } catch (\Exception $e) {

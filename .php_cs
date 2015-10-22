@@ -8,12 +8,13 @@ $finder = Symfony\CS\Finder\DefaultFinder::create()
     ->exclude('tests/_helpers')
     ->exclude('tests/_support')
     ->exclude('Presentation')
+    ->exclude('CodeStyleFixer/Fixtures')
     ->notName('*.twig')
 ;
 
 return Symfony\CS\Config\Config::create()
     ->finder($finder)
-    ->setUsingCache(true)
+    ->setUsingCache(false)
     ->level(\Symfony\CS\FixerInterface::PSR2_LEVEL)
     ->fixers(
         [
@@ -66,4 +67,5 @@ return Symfony\CS\Config\Config::create()
         ]
     )
     ->addCustomFixer(new \SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\EmptyEnclosingLinesFixer())
+    ->addCustomFixer(new \SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\MethodArgumentDefaultValueFixer())
 ;

@@ -36,7 +36,7 @@ class PropelMigrationCleaner implements PropelMigrationCleanerInterface
             $result = true;
 
             $fileSystem = new Filesystem();
-            foreach($baseFolders as $folder) {
+            foreach ($baseFolders as $folder) {
                 $fileSystem->remove($folder);
             }
         }

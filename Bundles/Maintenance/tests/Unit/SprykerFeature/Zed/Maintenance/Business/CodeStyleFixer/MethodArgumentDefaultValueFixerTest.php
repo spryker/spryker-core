@@ -2,7 +2,7 @@
 
 namespace Unit\SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer;
 
-use SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\EmptyEnclosingLinesFixer;
+use SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\MethodArgumentDefaultValueFixer;
 
 /**
  * @group SprykerFeature
@@ -10,20 +10,20 @@ use SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\EmptyEnclosingLinesFi
  * @group Maintenance
  * @group CodeStyleFixer
  */
-class EmptyEnclosingLinesFixerTest extends \PHPUnit_Framework_TestCase
+class MethodArgumentDefaultValueFixerTest extends \PHPUnit_Framework_TestCase
 {
 
-    const FIXER_NAME = 'EmptyEnclosingLinesFixer';
+    const FIXER_NAME = 'MethodArgumentDefaultValueFixer';
 
     /**
-     * @var EmptyEnclosingLinesFixer
+     * @var MethodArgumentDefaultValueFixer
      */
     protected $fixer;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->fixer = new EmptyEnclosingLinesFixer();
+        $this->fixer = new MethodArgumentDefaultValueFixer();
     }
 
     /**
@@ -31,6 +31,8 @@ class EmptyEnclosingLinesFixerTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $expected
      * @param string $input
+     *
+     * @return void
      */
     public function testFix($expected, $input = null)
     {
@@ -38,6 +40,9 @@ class EmptyEnclosingLinesFixerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, $this->fixer->fix($fileInfo, $input));
     }
 
+    /**
+     * @return array
+     */
     public function provideFixCases()
     {
         $fixturePath = __DIR__ . '/Fixtures/' . self::FIXER_NAME . '/';
@@ -50,18 +55,6 @@ class EmptyEnclosingLinesFixerTest extends \PHPUnit_Framework_TestCase
             [
                 file_get_contents($fixturePath . 'Expected/TestClass2Expected.php'),
                 file_get_contents($fixturePath . 'Input/TestClass2Input.php'),
-            ],
-            [
-                file_get_contents($fixturePath . 'Expected/TestClass3Expected.php'),
-                file_get_contents($fixturePath . 'Input/TestClass3Input.php'),
-            ],
-            [
-                file_get_contents($fixturePath . 'Expected/TestClass4Expected.php'),
-                file_get_contents($fixturePath . 'Input/TestClass4Input.php'),
-            ],
-            [
-                file_get_contents($fixturePath . 'Expected/TestClass5Expected.php'),
-                file_get_contents($fixturePath . 'Input/TestClass5Input.php'),
             ],
         ];
     }
