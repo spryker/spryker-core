@@ -3,7 +3,6 @@
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
 use SprykerFeature\Zed\Discount\Communication\Form\Transformers\DecisionRulesFormTransformer;
-use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
 use SprykerFeature\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\GreaterThan;
@@ -108,12 +107,14 @@ class VoucherCodesType extends AbstractRuleType
                 'type' => new CollectorPluginType($this->availableCollectorPlugins),
                 'label' => null,
                 'allow_add' => true,
+                'allow_delete' => true,
                 'allow_extra_fields' => true,
             ])
             ->add(self::FIELD_DECISION_RULES, 'collection', [
                 'type' => new DecisionRuleType($this->availableDecisionRulePlugins),
                 'label' => null,
                 'allow_add' => true,
+                'allow_delete' => true,
                 'allow_extra_fields' => true,
             ])
             ->add(self::FIELD_CALCULATOR_PLUGIN, 'choice', [

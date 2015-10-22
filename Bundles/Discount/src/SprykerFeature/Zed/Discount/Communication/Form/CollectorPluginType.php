@@ -13,6 +13,7 @@ class CollectorPluginType extends AbstractRuleType
     const FIELD_COLLECTOR_PLUGIN = 'collector_plugin';
     const FIELD_VALUE = 'value';
     const FIELD_REMOVE = 'remove';
+    const FIELD_ID_DISCOUNT_COLLECTOR = 'id_discount_collector';
 
     /**
      * @var array
@@ -36,6 +37,7 @@ class CollectorPluginType extends AbstractRuleType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add(self::FIELD_ID_DISCOUNT_COLLECTOR, 'hidden')
             ->add(self::FIELD_COLLECTOR_PLUGIN, 'choice', [
                 'label' => 'Collector Plugin',
                 'multiple' => false,

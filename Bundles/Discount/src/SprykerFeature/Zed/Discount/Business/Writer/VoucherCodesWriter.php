@@ -12,6 +12,10 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
 class VoucherCodesWriter extends AbstractWriter
 {
 
+    const COLLECTOR_PLUGINS = 'collector_plugins';
+    const ID_DISCOUNT_COLLECTOR = 'id_discount_collector';
+    const ID_DISCOUNT_DECISION_RULE = 'id_discount_decision_rule';
+
     /**
      * @var DiscountWriter
      */
@@ -71,17 +75,56 @@ class VoucherCodesWriter extends AbstractWriter
         $voucherPoolCategoryEntity = $this->discountVoucherPoolCategoryWriter
             ->getOrCreateByName($voucherCodesTransfer->getVoucherPoolCategory());
 
-        /** @var SpyDiscountVoucherPool $voucherPoolEntity */
         $voucherPoolEntity = $this->saveDiscountVoucherPool($voucherCodesTransfer, $voucherPoolCategoryEntity);
         $discountTransfer = $this->saveDiscount($voucherCodesTransfer, $voucherPoolEntity);
+
         $this->saveDiscountDecisionRules($voucherCodesTransfer, $discountTransfer);
+        $this->saveDiscountsCollectorPlugins($voucherCodesTransfer, $discountTransfer);
+
+        return (new VoucherPoolTransfer())->fromArray($voucherPoolEntity->toArray(), true);
+    }
+
+    /**
+     * @param VoucherCodesTransfer $voucherCodesTransfer
+     * @param DiscountTransfer $discountTransfer
+     *
+     * @return void
+     */
+    protected function saveDiscountsCollectorPlugins(VoucherCodesTransfer $voucherCodesTransfer, DiscountTransfer $discountTransfer)
+    {
+        $this->deleteCollectorPlugins($voucherCodesTransfer);
 
         foreach ($voucherCodesTransfer->getCollectorPlugins() as $collectorPluginTransfer) {
             $collectorPluginTransfer->setFkDiscount($discountTransfer->getIdDiscount());
             $this->discountCollectorWriter->save($collectorPluginTransfer);
         }
+    }
 
-        return (new VoucherPoolTransfer())->fromArray($voucherPoolEntity->toArray(), true);
+    /**
+     * @param VoucherCodesTransfer $voucherCodesTransfer
+     *
+     * @return void
+     */
+    protected function deleteCollectorPlugins(VoucherCodesTransfer $voucherCodesTransfer)
+    {
+        $voucherCodesTransferArray = $voucherCodesTransfer->toArray();
+        $formCollectorPlugins = array_column(
+            $voucherCodesTransferArray[self::COLLECTOR_PLUGINS],
+            self::ID_DISCOUNT_COLLECTOR)
+        ;
+
+        $collectorPluginsCollection = $this->getQueryContainer()
+            ->queryDiscountCollectorByDiscountId($voucherCodesTransfer->getIdDiscount())
+            ->find()
+        ;
+
+        foreach ($collectorPluginsCollection as $collectorPlugin) {
+            if (in_array($collectorPlugin->getIdDiscountCollector(), $formCollectorPlugins)) {
+                continue;
+            }
+
+            $collectorPlugin->delete();
+        }
     }
 
     /**
@@ -114,9 +157,12 @@ class VoucherCodesWriter extends AbstractWriter
      */
     protected function deleteDecisionRules(VoucherCodesTransfer $voucherCodesTransfer)
     {
-        $formDecisionRules = array_column($voucherCodesTransfer->getDecisionRules(), 'id_discount_decision_rule');
+        $formDecisionRules = array_column($voucherCodesTransfer->getDecisionRules(), self::ID_DISCOUNT_DECISION_RULE);
 
-        $decisionRulesCollection = $this->getQueryContainer()->queryDecisionRules($voucherCodesTransfer->getIdDiscount())->find();
+        $decisionRulesCollection = $this->getQueryContainer()
+            ->queryDecisionRules($voucherCodesTransfer->getIdDiscount())
+            ->find()
+        ;
 
         foreach ($decisionRulesCollection as $decisionRule) {
             if (in_array($decisionRule->getIdDiscountDecisionRule(), $formDecisionRules)) {
