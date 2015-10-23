@@ -5,18 +5,18 @@
  */
 namespace SprykerFeature\Zed\Sales\Business\Model\Split\Validation;
 
-use SprykerFeature\Zed\Sales\Persistence;
+use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 
 interface ValidatorInterface
 {
 
     /**
-     * @param Persistence\Propel\SpySalesOrderItem $salesOrderItem
-     * @param int                              $quantityToSplit
+     * @param SpySalesOrderItem $salesOrderItem
+     * @param int $quantityToSplit
      *
      * @return bool
      */
-    public function isValid(Persistence\Propel\SpySalesOrderItem $salesOrderItem, $quantityToSplit);
+    public function isValid(SpySalesOrderItem $salesOrderItem, $quantityToSplit);
 
     /**
      * @return array
