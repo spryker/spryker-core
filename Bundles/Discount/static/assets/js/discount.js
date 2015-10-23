@@ -47,4 +47,8 @@ $(function(){
         }
     });
 
+    $('.ibox-content').on('click', '.remove-form-collection', function(){
+        $(this).closest('.col-md-6').remove();
+    });
+
 });

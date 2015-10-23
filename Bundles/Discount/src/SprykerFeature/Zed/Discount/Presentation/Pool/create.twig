@@ -1,11 +1,11 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
 {% if section_title is not defined %}
-    {% set section_title = 'Create Pool' %}
+    {% set section_title = 'Create Voucher' %}
 {% endif %}
 
 {% block action %}
-    {{ backActionButton('/discount/pool', 'View Pools' | trans) }}
+    {{ backActionButton('/discount/pool', 'View Vouchers' | trans) }}
 {% endblock %}
 
 {% block content %}
@@ -26,14 +26,18 @@
                 <div class="col-md-12">{{ form_row(form.description) }}</div>
             </div>
             <div class="row">
-                <div class="col-md-12">{{ form_row(form.amount) }}</div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">{{ form_row(form.valid_from) }}</div>
-                <div class="col-md-6">{{ form_row(form.valid_to) }}</div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">{{ form_row(form.calculator_plugin) }}</div>
+                <div class="col-md-6">
+                    <div class="well well-sm">
+                        {{ form_row(form.calculator_plugin) }}
+                        {{ form_row(form.amount) }}
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="well well-sm">
+                        {{ form_row(form.valid_from) }}
+                        {{ form_row(form.valid_to) }}
+                    </div>
+                </div>
             </div>
             <div class="row collection-form" id="collector-container">
                 {% for rule in form.collector_plugins %}
@@ -46,13 +50,8 @@
             </div>
             <div class="clearfix"></div>
             <div class="load-cart-collector-plugins">
-                <a href="#" id="add-collector-pool-container" class="btn btn-sm btn-primary btn-outline"><i class="hidden fa fa-spinner fa-spin"></i> {{ 'Add Collector Plugin' | trans }}</a>
+                <a href="#" id="add-collector-pool-container" class="btn btn-sm btn-primary btn-outline"><i class="hidden fa fa-spinner fa-spin"></i> {{ 'Add Collector Plugin' | trans }} &raquo;</a>
             </div>
-            <div class="row">
-                <div class="col-xs-4 col-md-1">{{ form_row(form.is_active) }}</div>
-                <div class="col-xs-4 col-md-10">{{ form_row(form.is_privileged) }}</div>
-            </div>
-
             <div class="row collection-form" id="rules-container">
                 {% for rule in form.decision_rules %}
                     <div class="col-md-6">
@@ -64,7 +63,12 @@
             </div>
             <div class="clearfix"></div>
             <div class="load-cart-rules">
-                <a href="#" id="add-rules-pool-container" class="btn btn-sm btn-primary btn-outline"><i class="hidden fa fa-spinner fa-spin"></i> {{ 'Add New Rule' | trans }}</a>
+                <a href="#" id="add-rules-pool-container" class="btn btn-sm btn-primary btn-outline"><i class="hidden fa fa-spinner fa-spin"></i> {{ 'Add New Rule' | trans }} &raquo;</a>
+            </div>
+
+            <div class="row">
+                <div class="col-xs-4 col-md-1">{{ form_row(form.is_active) }}</div>
+                <div class="col-xs-4 col-md-10">{{ form_row(form.is_privileged) }}</div>
             </div>
 
             {{ form_rest(form) }}

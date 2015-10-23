@@ -6,12 +6,10 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Plugin\Calculator;
 
+use SprykerFeature\Shared\Library\Currency\CurrencyManager;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
 
-/**
- * Class DecisionRuleMinimumCartSubtotal
- */
 /**
  * @method DiscountDependencyContainer getDependencyContainer()
  */
@@ -28,9 +26,7 @@ class Fixed extends AbstractCalculator
      */
     public function calculate(array $discountableObjects, $number)
     {
-        return $this->getDependencyContainer()
-            ->getDiscountFacade()
-            ->calculateFixed($discountableObjects, $number);
+        return $this->getDependencyContainer()->getDiscountFacade()->calculateFixed($discountableObjects, $number);
     }
 
     /**
@@ -47,6 +43,26 @@ class Fixed extends AbstractCalculator
     public function getMaxValue()
     {
         return;
+    }
+
+    /**
+     * @param int $value
+     *
+     * @return int
+     */
+    public function transformForPersistence($value)
+    {
+        return $this->getCurrencyManager()->convertDecimalToCent($value);
+    }
+
+    /**
+     * @param int $value
+     *
+     * @return float
+     */
+    public function transformFromPersistence($value)
+    {
+        return $this->getCurrencyManager()->convertCentToDecimal($value);
     }
 
 }

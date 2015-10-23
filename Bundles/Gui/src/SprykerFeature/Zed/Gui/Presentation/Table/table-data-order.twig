@@ -1,0 +1,6 @@
+data-order='[
+{%- for order in config.order %}
+    ["{{ order.column }}", "{{ order.dir }}"]
+    {% if not loop.last %},{% endif %}
+{% endfor -%}
+]'

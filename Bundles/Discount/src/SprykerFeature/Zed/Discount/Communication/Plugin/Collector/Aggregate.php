@@ -6,9 +6,9 @@
 namespace SprykerFeature\Zed\Discount\Communication\Plugin\Collector;
 
 use Generated\Shared\Discount\DiscountCollectorInterface;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
+use SprykerFeature\Zed\Discount\Communication\Plugin\AbstractDiscountPlugin;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
 use Generated\Shared\Discount\DiscountInterface;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
@@ -16,7 +16,7 @@ use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 /**
  * @method DiscountFacade getFacade()
  */
-class Aggregate extends AbstractPlugin implements DiscountCollectorPluginInterface
+class Aggregate extends AbstractDiscountPlugin implements DiscountCollectorPluginInterface
 {
     /**
      * @param DiscountInterface          $discount

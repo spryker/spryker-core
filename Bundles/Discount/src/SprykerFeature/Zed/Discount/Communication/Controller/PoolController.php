@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\VoucherPoolTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Discount\Communication\Form\CartRuleType;
 use SprykerFeature\Zed\Discount\Communication\Form\PoolForm;
+use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesType;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolTable;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherPoolCategoryTableMap;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -37,8 +38,14 @@ class PoolController extends AbstractController
 
     public function createAction(Request $request)
     {
+        $defaultFormData = [
+            VoucherCodesType::VALID_FROM => new \DateTime('now'),
+            VoucherCodesType::VALID_TO => new \DateTime('now'),
+        ];
+
         $form = $this->getDependencyContainer()->createCartRuleForm(
-            $this->getDependencyContainer()->createVoucherCodesFormType()
+            $this->getDependencyContainer()->createVoucherCodesFormType(),
+            $defaultFormData
         );
         $form->handleRequest($request);
 

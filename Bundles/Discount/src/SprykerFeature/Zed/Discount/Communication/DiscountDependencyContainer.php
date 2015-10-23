@@ -199,9 +199,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     public function createVoucherCodesFormType()
     {
         return new VoucherCodesType(
-            $this->getConfig()->getAvailableCalculatorPlugins(),
-            $this->getConfig()->getAvailableCollectorPlugins(),
-            $this->getConfig()->getAvailableDecisionRulePlugins(),
+            $this->getConfig(),
             $this->getDiscountFacade()->getVoucherPoolCategories(),
             $this->createCamelCaseToUnderscoreFilter()
         );

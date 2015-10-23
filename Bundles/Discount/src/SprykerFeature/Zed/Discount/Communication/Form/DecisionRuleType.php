@@ -12,6 +12,8 @@ class DecisionRuleType extends AbstractRuleType
 
     const FIELD_DECISION_RULE_PLUGIN = 'decision_rule_plugin';
     const FIELD_VALUE = 'value';
+    const FIELD_REMOVE = 'remove';
+    const FIELD_ID_DISCOUNT_DECISION_RULE = 'id_discount_decision_rule';
 
     /**
      * @var array
@@ -35,21 +37,21 @@ class DecisionRuleType extends AbstractRuleType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
+            ->add(self::FIELD_ID_DISCOUNT_DECISION_RULE, 'hidden')
             ->add(self::FIELD_DECISION_RULE_PLUGIN, 'choice', [
                 'label' => 'Decision Rule',
                 'multiple' => false,
                 'choices' => $this->getDecisionRuleOptions(),
-                'constraints' => [
-                    new Required(),
-                ],
             ])
             ->add(self::FIELD_VALUE, 'text', [
                 'label' => 'Value',
-                'constraints' => [
-                    new NotBlank(),
-                ]
             ])
         ;
+        $builder->add(self::FIELD_REMOVE, 'button', [
+            'attr' => [
+                'class' => 'btn btn-xs btn-danger remove-form-collection',
+            ],
+        ]);
     }
 
     /**
