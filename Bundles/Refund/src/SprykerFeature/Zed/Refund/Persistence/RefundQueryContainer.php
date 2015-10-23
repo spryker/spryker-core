@@ -21,7 +21,7 @@ class RefundQueryContainer extends AbstractQueryContainer implements RefundQuery
      */
     public function queryRefund()
     {
-        return (new Propel\SpyRefundQuery());
+        return (new SpyRefundQuery());
     }
 
     /**

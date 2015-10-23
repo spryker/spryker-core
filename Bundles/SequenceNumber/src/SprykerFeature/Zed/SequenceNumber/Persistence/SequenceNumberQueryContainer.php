@@ -21,7 +21,7 @@ class SequenceNumberQueryContainer extends AbstractQueryContainer implements Seq
      */
     public function querySequenceNumber()
     {
-        return (new Propel\SpySequenceNumberQuery());
+        return (new SpySequenceNumberQuery());
     }
 
     public function querySequenceNumbersByIdSalesOrder($idSalesOrder)
