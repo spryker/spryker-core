@@ -11,13 +11,15 @@ use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class PropelConsole extends Console
+class PropelInstallConsole extends Console
 {
 
-    const COMMAND_NAME = 'propel:run';
+    const COMMAND_NAME = 'propel:install';
+    const DESCRIPTION = 'Runs config convert, create database, postgres compatibility, copy schemas, build models and migrate tasks';
 
-    const DESCRIPTION = 'Runs diff, migrate and model:build';
-
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
@@ -34,8 +36,11 @@ class PropelConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->runDependingCommand(ConvertConfigConsole::COMMAND_NAME);
+        $this->runDependingCommand(CreateDatabaseConsole::COMMAND_NAME);
+        $this->runDependingCommand(PostgresqlCompatibilityConsole::COMMAND_NAME);
+        $this->runDependingCommand(SchemaCopyConsole::COMMAND_NAME);
         $this->runDependingCommand(BuildModelConsole::COMMAND_NAME);
-        $this->runDependingCommand(DiffConsole::COMMAND_NAME);
         $this->runDependingCommand(MigrateConsole::COMMAND_NAME);
     }
 
