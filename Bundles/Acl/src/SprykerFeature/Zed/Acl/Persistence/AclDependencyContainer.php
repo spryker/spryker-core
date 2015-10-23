@@ -40,11 +40,11 @@ class AclDependencyContainer extends AbstractPersistenceDependencyContainer
     }
 
     /**
-     * @return SpyAclRuleQuery
+     * @return SpyAclRoleQuery
      */
     public function createRoleQuery()
     {
-        return new SpyAclRuleQuery();
+        return new SpyAclRoleQuery();
     }
 
     /**

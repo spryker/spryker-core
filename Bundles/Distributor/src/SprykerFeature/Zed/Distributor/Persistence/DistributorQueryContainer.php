@@ -11,6 +11,7 @@ use SprykerFeature\Zed\Distributor\Persistence\Propel\Map\SpyDistributorReceiver
 use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemQuery;
 use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery;
 use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
+use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorReceiverQuery;
 
 /**
  * @method DistributorPersistence getFactory()
