@@ -10,6 +10,7 @@ use Generated\Shared\Calculation\ItemInterface;
 use Generated\Shared\Calculation\DiscountInterface;
 use Generated\Shared\Calculation\ExpenseInterface;
 use Generated\Shared\Calculation\ProductOptionInterface;
+use Generated\Shared\Transfer\ItemTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
@@ -18,25 +19,47 @@ class ItemPriceToPayCalculator implements CalculatorPluginInterface
 
     /**
      * @param CalculableInterface $calculableContainer
+     *
+     * @return void
      */
     public function recalculate(CalculableInterface $calculableContainer)
     {
         $items = $this->getItems($calculableContainer);
-        foreach ($items as $item) {
 
-            $priceToPay = $item->getGrossPrice();
-            $priceToPay -= $this->sumDiscounts($item->getDiscounts());
-
-            $priceToPay = max(0, $priceToPay);
-            if ($priceToPay === 0) {
-                $priceToPay = $item->getGrossPrice();
-            }
-
-            //@todo add item expenses to priceToPay
-            $priceToPay += $this->sumOptions($item->getProductOptions());
-
-            $item->setPriceToPay($priceToPay);
+        foreach ($items as $itemTransfer) {
+            $this->calculatePriceToPay($itemTransfer);
+            $this->calculatePriceToPayWithoutDiscounts($itemTransfer);
         }
+    }
+
+    /**
+     * @param ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function calculatePriceToPay(ItemTransfer $itemTransfer)
+    {
+        $priceToPay = $itemTransfer->getGrossPrice();
+        $priceToPay -= $this->sumDiscounts($itemTransfer->getDiscounts());
+
+        $priceToPay = $this->adjustEmptyAmount($itemTransfer, $priceToPay);
+
+        //@todo add item expenses to priceToPay
+        $priceToPay += $this->sumOptions($itemTransfer->getProductOptions());
+
+        $itemTransfer->setPriceToPay($priceToPay);
+    }
+
+    /**
+     * @param ItemTransfer $itemTransfer
+     *
+     * @return void
+     */
+    protected function calculatePriceToPayWithoutDiscounts(ItemTransfer $itemTransfer)
+    {
+        $priceToPayWithoutDiscount = $itemTransfer->getGrossPrice();
+        $priceToPayWithoutDiscount += $this->sumOptionsGrossPrice($itemTransfer->getProductOptions());
+        $itemTransfer->setPriceToPayWithoutDiscount($priceToPayWithoutDiscount);
     }
 
     /**
@@ -85,6 +108,21 @@ class ItemPriceToPayCalculator implements CalculatorPluginInterface
     }
 
     /**
+     * @param \ArrayObject|ProductOptionInterface[] $options
+     *
+     * @return int
+     */
+    protected function sumOptionsGrossPrice(\ArrayObject $options)
+    {
+        $optionsAmount = 0;
+        foreach ($options as $option) {
+            $optionsAmount += $option->getGrossPrice();
+        }
+
+        return $optionsAmount;
+    }
+
+    /**
      * @param CalculableInterface $calculableContainer
      *
      * @return ItemInterface[]
@@ -92,6 +130,22 @@ class ItemPriceToPayCalculator implements CalculatorPluginInterface
     protected function getItems(CalculableInterface $calculableContainer)
     {
         return $calculableContainer->getCalculableObject()->getItems();
+    }
+
+    /**
+     * //@todo why set to gross, why not keep 0?
+     * @param ItemTransfer $itemTransfer
+     * @param int           $priceToPay
+     *
+     * @return int
+     */
+    protected function adjustEmptyAmount(ItemTransfer $itemTransfer, $priceToPay)
+    {
+        $priceToPay = max(0, $priceToPay);
+        if ($priceToPay === 0) {
+            $priceToPay = $itemTransfer->getGrossPrice();
+        }
+        return $priceToPay;
     }
 
 }

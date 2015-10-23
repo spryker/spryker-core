@@ -326,20 +326,6 @@ class DiscountFacadeTest extends Test
         $this->assertGreaterThanOrEqual(0, count($decisionRulePluginNames));
     }
 
-    public function testGetCalculatorPluginByName()
-    {
-        $plugin = $this->discountFacade
-            ->getCalculatorPluginByName(DiscountConfig::PLUGIN_CALCULATOR_FIXED);
-
-        $this->assertEquals($plugin->getMinValue(), Fixed::MIN_VALUE);
-
-        $plugin = $this->discountFacade
-            ->getCalculatorPluginByName(DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE);
-
-        $this->assertEquals($plugin->getMinValue(), Percentage::MIN_VALUE);
-        $this->assertEquals($plugin->getMaxValue(), Percentage::MAX_VALUE);
-    }
-
     public function testGetDiscountableItems()
     {
         $order = $this->getOrderWithFixtureData();

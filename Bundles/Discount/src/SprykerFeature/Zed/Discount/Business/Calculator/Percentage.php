@@ -6,31 +6,33 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Calculator;
 
-class Percentage
-{
+use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 
+class Percentage implements CalculatorInterface
+{
     /**
-     * @param DiscountableItemInterface[] $discountableObjects
-     * @param float $number
+     * @param DiscountableInterface[] $discountableObjects
+     * @param float $percentage
      *
      * @return float
      */
-    public function calculate(array $discountableObjects, $number)
+    public function calculate(array $discountableObjects, $percentage)
     {
-        $this->checkIsValidNumber($number);
+        $this->ensureIsValidNumber($percentage);
 
         $discountAmount = 0;
 
-        if ($number > 100) {
-            $number = 100;
+        if ($percentage > 100) {
+            $percentage = 100;
         }
 
-        if ($number <= 0) {
+        if ($percentage <= 0) {
             return 0;
         }
 
         foreach ($discountableObjects as $discountableObject) {
-            $discountAmount += $this->calculateDiscountAmount($discountableObject->getGrossPrice(), $number);
+            $itemTotalAmount = $discountableObject->getGrossPrice() * $discountableObject->getQuantity();
+            $discountAmount += $this->calculateDiscountAmount($itemTotalAmount, $percentage);
         }
 
         if ($discountAmount <= 0) {
@@ -56,10 +58,10 @@ class Percentage
      *
      * @throws \InvalidArgumentException
      */
-    protected function checkIsValidNumber($number)
+    protected function ensureIsValidNumber($number)
     {
         if (!is_float($number) && !is_int($number)) {
-            throw new \InvalidArgumentException('Wrong number');
+            throw new \InvalidArgumentException('Wrong number, only float or integer is allowed!');
         }
     }
 

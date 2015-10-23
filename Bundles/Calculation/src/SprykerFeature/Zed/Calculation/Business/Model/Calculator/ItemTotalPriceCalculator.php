@@ -16,7 +16,7 @@ class ItemTotalPriceCalculator implements CalculatorPluginInterface
     public function recalculate(CalculableInterface $calculableContainer)
     {
         foreach ($calculableContainer->getCalculableObject()->getItems() as $item) {
-            $item->setTotalPrice($item->getPriceToPay() * $item->getQuantity());
+            $item->setTotalPrice($item->getPriceToPayWithoutDiscount() * $item->getQuantity());
         }
     }
 }

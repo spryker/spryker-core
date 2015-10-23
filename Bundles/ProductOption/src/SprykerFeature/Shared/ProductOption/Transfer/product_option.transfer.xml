@@ -12,6 +12,7 @@
         <property name="discounts" type="Discount[]" singular="discount" />
         <property name="grossPrice" type="int" />
         <property name="priceToPay" type="int" />
+        <property name="quantity" type="int" />
     </transfer>
 
     <transfer name="ProductOptionsNameValue">

@@ -6,22 +6,24 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Calculator;
 
-class Fixed
+use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
+
+class Fixed implements CalculatorInterface
 {
 
     /**
-     * @param DiscountItemInterface[] $discountableObjects
-     * @param float $number
+     * @param DiscountableInterface[] $discountableObjects
+     * @param float $percentage
      *
      * @return float
      */
-    public function calculate(array $discountableObjects, $number)
+    public function calculate(array $discountableObjects, $percentage)
     {
-        if ($number <= 0) {
+        if ($percentage <= 0) {
             return 0;
         }
 
-        return $number;
+        return $percentage;
     }
 
 }

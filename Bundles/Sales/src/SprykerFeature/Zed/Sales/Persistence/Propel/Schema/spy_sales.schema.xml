@@ -208,10 +208,7 @@
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="description" type="VARCHAR" size="510" default="NULL"/>
         <column name="display_name" type="VARCHAR" size="255" required="true"/>
-        <column name="scope" type="ENUM" valueSet="global, local"/>
-        <column name="action" type="VARCHAR" size="255" required="true"/>
-        <column name="conditions" type="VARCHAR" size="1000" required="false"/>
-        <column name="amount" type="INTEGER" required="true"/>
+        <column name="amount" type="DECIMAL" size="8" scale="2" required="true"/>
 
         <behavior name="timestampable"/>
 

@@ -18,13 +18,13 @@ interface CalculatorInterface
      * @param DiscountInterface[] $discountCollection
      * @param CalculableInterface $container
      * @param DiscountConfigInterface $settings
-     * @param DistributorInterface $distributor
+     * @param DistributorInterface $discountDistributor
      */
     public function calculate(
         array $discountCollection,
         CalculableInterface $container,
         DiscountConfigInterface $settings,
-        DistributorInterface $distributor
+        DistributorInterface $discountDistributor
     );
 
 }

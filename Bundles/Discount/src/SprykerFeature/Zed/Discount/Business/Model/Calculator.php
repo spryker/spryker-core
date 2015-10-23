@@ -28,7 +28,7 @@ class Calculator implements CalculatorInterface
      * @param DiscountInterface[] $discountCollection
      * @param CalculableInterface $container
      * @param DiscountConfigInterface $settings
-     * @param DistributorInterface $distributor
+     * @param DistributorInterface $discountDistributor
      *
      * @return array
      */
@@ -36,7 +36,7 @@ class Calculator implements CalculatorInterface
         array $discountCollection,
         CalculableInterface $container,
         DiscountConfigInterface $settings,
-        DistributorInterface $distributor
+        DistributorInterface $discountDistributor
     ) {
 
         $calculatedDiscounts = [];
@@ -53,16 +53,15 @@ class Calculator implements CalculatorInterface
             $discountTransfer->setAmount($discountAmount);
 
             $calculatedDiscounts[] = [
-                self::KEY_DISCOUNT_TRANSFER => $discountTransfer,
-                self::KEY_DISCOUNT_AMOUNT => $discountAmount,
                 self::KEY_DISCOUNTABLE_OBJECTS => $discountableObjects,
+                self::KEY_DISCOUNT_TRANSFER => $discountTransfer,
             ];
         }
 
         $calculatedDiscounts = $this->filterOutNonPrivilegedDiscounts($calculatedDiscounts);
 
         foreach ($calculatedDiscounts as $discountTransfer) {
-            $distributor->distribute(
+            $discountDistributor->distribute(
                 $discountTransfer[self::KEY_DISCOUNTABLE_OBJECTS],
                 $discountTransfer[self::KEY_DISCOUNT_TRANSFER]
             );
@@ -92,7 +91,7 @@ class Calculator implements CalculatorInterface
     protected function sortByDiscountAmountDesc(array $calculatedDiscounts)
     {
         usort($calculatedDiscounts, function ($a, $b) {
-            return $b[self::KEY_DISCOUNT_AMOUNT] - $a[self::KEY_DISCOUNT_AMOUNT];
+            return $b[self::KEY_DISCOUNT_TRANSFER]->getAmount() - $a[self::KEY_DISCOUNT_TRANSFER]->getAmount();
         });
 
         return $calculatedDiscounts;

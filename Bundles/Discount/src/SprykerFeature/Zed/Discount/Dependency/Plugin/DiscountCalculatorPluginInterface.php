@@ -11,30 +11,13 @@ use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 
 interface DiscountCalculatorPluginInterface
 {
-
     /**
      * @param DiscountableInterface[] $discountableObjects
-     * @param float $number
+     * @param mixed $number
      *
-     * @return
+     * @return mixed
      */
     public function calculate(array $discountableObjects, $number);
-
-    /**
-     * @param DiscountableInterface[] $discountableObjects
-     * @param DiscountInterface $discountTransfer
-     */
-    public function distribute(array $discountableObjects, DiscountInterface $discountTransfer);
-
-    /**
-     * @return float
-     */
-    public function getMinValue();
-
-    /**
-     * @return float
-     */
-    public function getMaxValue();
 
     /**
      * @param DiscountInterface $discountTransfer

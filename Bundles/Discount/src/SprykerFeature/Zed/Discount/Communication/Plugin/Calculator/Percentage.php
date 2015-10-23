@@ -15,10 +15,6 @@ use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
  */
 class Percentage extends AbstractCalculator
 {
-
-    const MIN_VALUE = 0.1;
-    const MAX_VALUE = 100;
-
     /**
      * @param DiscountableInterface[] $discountableObjects
      * @param float $number
@@ -33,22 +29,6 @@ class Percentage extends AbstractCalculator
     }
 
     /**
-     * @return float
-     */
-    public function getMinValue()
-    {
-        return self::MIN_VALUE;
-    }
-
-    /**
-     * @return float
-     */
-    public function getMaxValue()
-    {
-        return self::MAX_VALUE;
-    }
-
-    /**
      * @param DiscountInterface $discountTransfer
      *
      * @return string
@@ -57,5 +37,4 @@ class Percentage extends AbstractCalculator
     {
         return $discountTransfer->getAmount() . '%';
     }
-
 }

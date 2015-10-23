@@ -109,7 +109,7 @@ class DiscountSaver implements DiscountSaverInterface
                 $salesDiscountEntity->setFkSalesOrder($idSalesOrder);
                 $salesDiscountEntity->setFkSalesOrderItem($idSalesOrderItem);
                 $salesDiscountEntity->setFkSalesOrderItemOption($productOptionTransfer->getIdSalesOrderItemOption());
-                $salesDiscountEntity->save();
+                $this->saveDiscount($salesDiscountEntity, $productOptionDiscountTransfer);
             }
         }
     }
@@ -124,7 +124,6 @@ class DiscountSaver implements DiscountSaverInterface
         $salesDiscountEntity = $this->getSalesDiscountEntity();
         $salesDiscountEntity->fromArray($discountTransfer->toArray());
         $salesDiscountEntity->setName('');
-        $salesDiscountEntity->setAction('');
 
         return $salesDiscountEntity;
     }
@@ -235,7 +234,7 @@ class DiscountSaver implements DiscountSaverInterface
                 $salesDiscountEntity = $this->createSalesDiscountEntity($discountTransfer);
                 $salesDiscountEntity->setFkSalesOrder($orderTransfer->getIdSalesOrder());
                 $salesDiscountEntity->setFkSalesExpense($expenseTransfer->getIdSalesExpense());
-                $salesDiscountEntity->save();
+                $this->saveDiscount($salesDiscountEntity, $discountTransfer);
             }
         }
     }

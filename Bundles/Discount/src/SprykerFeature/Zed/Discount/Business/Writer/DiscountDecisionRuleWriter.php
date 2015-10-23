@@ -37,7 +37,6 @@ class DiscountDecisionRuleWriter extends AbstractWriter
      */
     public function update(DecisionRuleTransfer $discountDecisionRuleTransfer)
     {
-
         $queryContainer = $this->getQueryContainer();
         $discountDecisionRuleEntity = $queryContainer
             ->queryDiscountDecisionRule()

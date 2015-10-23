@@ -26,4 +26,9 @@ interface DiscountableInterface
      */
     public function setDiscounts(\ArrayObject $discountCollection);
 
+    /**
+     * @return int
+     */
+    public function getQuantity();
+
 }

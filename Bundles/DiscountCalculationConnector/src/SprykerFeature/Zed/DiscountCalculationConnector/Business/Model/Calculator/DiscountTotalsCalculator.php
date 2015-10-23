@@ -90,7 +90,8 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
         $discountTransfer = new DiscountTotalsTransfer();
         $discountTransfer->setTotalAmount($this->calculateDiscount($discountableContainer, $discountableContainers));
 
-        foreach ($this->sumDiscountItems($discountableContainer, $discountableContainers) as $discountTotalItem) {
+        $totalDiscountAmounts = $this->sumDiscountItems($discountableContainer, $discountableContainers);
+        foreach ($totalDiscountAmounts as $discountTotalItem) {
             $discountTransfer->addDiscountItem($discountTotalItem);
         }
 
