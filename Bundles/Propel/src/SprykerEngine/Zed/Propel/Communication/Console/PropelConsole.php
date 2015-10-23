@@ -14,9 +14,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 class PropelConsole extends Console
 {
 
-    const COMMAND_NAME = 'setup:propel';
+    const COMMAND_NAME = 'propel:run';
 
-    const DESCRIPTION = 'This command will run installer for propel2';
+    const DESCRIPTION = 'Runs diff, migrate and model:build';
 
     protected function configure()
     {
@@ -34,10 +34,10 @@ class PropelConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->runDependingCommand(ConvertConfigConsole::COMMAND_NAME);
-        $this->runDependingCommand(CreateDatabaseConsole::COMMAND_NAME);
-        $this->runDependingCommand(PostgresqlCompatibilityConsole::COMMAND_NAME);
-        $this->runDependingCommand(SchemaCopyConsole::COMMAND_NAME);
+//        $this->runDependingCommand(ConvertConfigConsole::COMMAND_NAME);
+//        $this->runDependingCommand(CreateDatabaseConsole::COMMAND_NAME);
+//        $this->runDependingCommand(PostgresqlCompatibilityConsole::COMMAND_NAME);
+//        $this->runDependingCommand(SchemaCopyConsole::COMMAND_NAME);
         $this->runDependingCommand(BuildModelConsole::COMMAND_NAME);
         $this->runDependingCommand(DiffConsole::COMMAND_NAME);
         $this->runDependingCommand(MigrateConsole::COMMAND_NAME);
