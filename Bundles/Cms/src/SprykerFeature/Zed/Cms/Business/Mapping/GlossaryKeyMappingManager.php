@@ -155,8 +155,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     {
         $this->checkPagePlaceholderNotAmbiguous($pageKeyMapping->getFkPage(), $pageKeyMapping->getPlaceholder());
 
-        $mappingEntity = new SpyCmsGlossaryKeyMapping()
-        ;
+        $mappingEntity = new SpyCmsGlossaryKeyMapping();
         $mappingEntity->fromArray($pageKeyMapping->toArray());
 
         $mappingEntity->save();
@@ -282,8 +281,8 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     public function generateGlossaryKeyName($templateName, $placeholder)
     {
         $keyName = self::GENERATED_GLOSSARY_KEY_PREFIX . '.';
-        $keyName .= str_replace([' ', '.',], '-', $templateName) . '.';
-        $keyName .= str_replace([' ', '.',], '-', $placeholder);
+        $keyName .= str_replace([' ', '.'], '-', $templateName) . '.';
+        $keyName .= str_replace([' ', '.'], '-', $placeholder);
 
         $index = 0;
 
@@ -346,4 +345,5 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
 
         return $mappingTransfer;
     }
+
 }
