@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Discount\Business\Writer;
 
 use Generated\Shared\Transfer\DecisionRuleTransfer;
+use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherCodesTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
@@ -95,6 +96,10 @@ class VoucherCodesWriter extends AbstractWriter
         $this->deleteCollectorPlugins($voucherCodesTransfer);
 
         foreach ($voucherCodesTransfer->getCollectorPlugins() as $collectorPluginTransfer) {
+            if (is_array($collectorPluginTransfer)) {
+                $collectorPluginTransfer = (new DiscountCollectorTransfer())->fromArray($collectorPluginTransfer, true);
+            }
+
             $collectorPluginTransfer->setFkDiscount($discountTransfer->getIdDiscount());
             $this->discountCollectorWriter->save($collectorPluginTransfer);
         }
@@ -108,6 +113,11 @@ class VoucherCodesWriter extends AbstractWriter
     protected function deleteCollectorPlugins(VoucherCodesTransfer $voucherCodesTransfer)
     {
         $voucherCodesTransferArray = $voucherCodesTransfer->toArray();
+
+        if (!is_array($voucherCodesTransferArray[self::COLLECTOR_PLUGINS])) {
+            $voucherCodesTransferArray[self::COLLECTOR_PLUGINS] = [];
+        }
+
         $formCollectorPlugins = array_column(
             $voucherCodesTransferArray[self::COLLECTOR_PLUGINS],
             self::ID_DISCOUNT_COLLECTOR)
@@ -136,11 +146,11 @@ class VoucherCodesWriter extends AbstractWriter
     protected function saveDiscountDecisionRules(VoucherCodesTransfer $voucherCodesTransfer, DiscountTransfer $discountTransfer)
     {
         $decisionRules = $voucherCodesTransfer->getDecisionRules();
+        $this->deleteDecisionRules($voucherCodesTransfer);
+
         if (count($decisionRules) < 1) {
             return null;
         }
-
-        $this->deleteDecisionRules($voucherCodesTransfer);
 
         foreach ($decisionRules as $rule) {
             $decisionRuleTransfer = (new DecisionRuleTransfer())->fromArray($rule, true);
