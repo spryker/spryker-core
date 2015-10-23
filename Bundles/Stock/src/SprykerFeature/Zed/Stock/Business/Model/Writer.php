@@ -75,7 +75,7 @@ class Writer implements WriterInterface
     public function createStockType(TypeTransfer $stockTypeTransfer)
     {
         Propel::getConnection()->beginTransaction();
-        $stockEntity = $this->locator->stock()->entitySpyStock();
+        $stockEntity = new SpyStock();
         $stockEntity
             ->setName($stockTypeTransfer->getName())
             ->save()
@@ -235,7 +235,7 @@ class Writer implements WriterInterface
      */
     protected function saveStockProduct(StockProductTransfer $transferStockProduct, $idStockType, $idProduct)
     {
-        $stockProduct = $this->locator->stock()->entitySpyStockProduct();
+        $stockProduct = new SpyStockProduct();
         $stockProduct->setFkProduct($idProduct)
             ->setFkStock($idStockType)
             ->setIsNeverOutOfStock($transferStockProduct->getIsNeverOutOfStock())

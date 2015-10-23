@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\ProductSearch\Business\Operation;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
+use SprykerFeature\Zed\ProductSearch\Persistence\Propel\SpyProductSearchAttributesOperation;
 
 class OperationManager implements OperationManagerInterface
 {
@@ -54,7 +55,7 @@ class OperationManager implements OperationManagerInterface
      */
     public function createAttributeOperation($idAttribute, $copyTarget, $operation, $weight)
     {
-        $attributeOperationEntity = $this->locator->productSearch()->entitySpyProductSearchAttributesOperation();
+        $attributeOperationEntity = new SpyProductSearchAttributesOperation();
 
         $attributeOperationEntity->setTargetField($copyTarget);
         $attributeOperationEntity->setOperation($operation);

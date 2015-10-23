@@ -70,7 +70,7 @@ class TemplateManager implements TemplateManagerInterface
     {
         $this->checkTemplatePathDoesNotExist($path);
 
-        $template = $this->locator->cms()->entitySpyCmsTemplate();
+        $template = new SpyCmsTemplate();
         $template
             ->setTemplateName($name)
             ->setTemplatePath($path)
@@ -156,7 +156,7 @@ class TemplateManager implements TemplateManagerInterface
     protected function createTemplateFromTransfer(CmsTemplateTransfer $cmsTemplate)
     {
         $this->checkTemplatePathDoesNotExist($cmsTemplate->getTemplatePath());
-        $templateEntity = $this->locator->cms()->entitySpyCmsTemplate();
+        $templateEntity = new SpyCmsTemplate();
         $templateEntity->fromArray($cmsTemplate->toArray());
 
         $templateEntity->save();

@@ -135,7 +135,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         $idAbstractProduct = $this->productFacade->getAbstractProductIdBySku($sku);
         $idCategory = $this->categoryFacade->getCategoryIdentifier($categoryName, $locale);
 
-        $mappingEntity = $this->locator->productCategory()->entitySpyProductCategory();
+        $mappingEntity = new SpyProductCategory();
         $mappingEntity
             ->setFkAbstractProduct($idAbstractProduct)
             ->setFkCategory($idCategory)

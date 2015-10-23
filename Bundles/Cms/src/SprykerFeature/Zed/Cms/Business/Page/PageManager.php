@@ -118,9 +118,7 @@ class PageManager implements PageManagerInterface
     {
         $this->checkTemplateExists($page->getFkTemplate());
 
-        $pageEntity = $this->locator->cms()
-            ->entitySpyCmsPage()
-        ;
+        $pageEntity = new SpyCmsPage();
 
         $pageEntity->fromArray($page->toArray());
         $pageEntity->save();

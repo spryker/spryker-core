@@ -8,6 +8,8 @@ namespace SprykerFeature\Zed\Tax\Business\Model;
 
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
+use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRate;
+use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
 use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainerInterface;
 use SprykerFeature\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
 use SprykerFeature\Zed\Tax\TaxConfig;
@@ -108,7 +110,7 @@ class TaxWriter implements TaxWriterInterface
      */
     public function createTaxSet(TaxSetTransfer $taxSetTransfer)
     {
-        $taxSetEntity = $this->locator->tax()->entitySpyTaxSet();
+        $taxSetEntity = new SpyTaxSet();
         $taxSetEntity->setName($taxSetTransfer->getName());
 
         if (0 === $taxSetTransfer->getTaxRates()->count()) {
@@ -261,7 +263,7 @@ class TaxWriter implements TaxWriterInterface
 
     private function createTaxRateEntity(TaxRateTransfer $taxRateTransfer)
     {
-        $taxRateEntity = $this->locator->tax()->entitySpyTaxRate();
+        $taxRateEntity = new SpyTaxRate();
         $taxRateEntity->fromArray($taxRateTransfer->toArray());
         $taxRateEntity->save();
 

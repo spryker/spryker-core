@@ -15,6 +15,7 @@ use SprykerFeature\Zed\Country\Business\CountryFacade;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainer;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
 use SprykerFeature\Zed\Country\Persistence\Propel\Map\SpyCountryTableMap;
+use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountry;
 use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use SprykerEngine\Zed\Kernel\Persistence\Factory;
@@ -75,7 +76,7 @@ class CountryFacadeTest extends AbstractFunctionalTest
 
     public function testGetIdByIso2CodeReturnsRightValue()
     {
-        $country = $this->locator->country()->entitySpyCountry();
+        $country = new SpyCountry();
         $country->setIso2Code(self::ISO2_CODE);
 
         $country->save();

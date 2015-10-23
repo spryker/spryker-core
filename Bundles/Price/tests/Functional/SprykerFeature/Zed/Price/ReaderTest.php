@@ -11,6 +11,7 @@ use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
 use Generated\Zed\Ide\AutoCompletion;
+use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceProduct;
 use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceProductQuery;
 use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceTypeQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
@@ -112,7 +113,7 @@ class ReaderTest extends Test
 
     protected function insertPriceEntity($requestProduct, $requestPriceType)
     {
-        $this->locator->price()->entitySpyPriceProduct()
+        (new SpyPriceProduct())
             ->setPrice(100)
             ->setSpyAbstractProduct($requestProduct)
             ->setPriceType($requestPriceType)
@@ -163,13 +164,13 @@ class ReaderTest extends Test
         ;
 
         $this->deletePriceEntitiesAbstract($abstractProduct);
-        $this->locator->price()->entitySpyPriceProduct()
+        (new SpyPriceProduct())
             ->setSpyAbstractProduct($abstractProduct)
             ->setPriceType($priceType1)
             ->setPrice(100)
             ->save();
 
-        $this->locator->price()->entitySpyPriceProduct()
+        (new SpyPriceProduct())
             ->setProduct($concreteProduct)
             ->setPriceType($priceType2)
             ->setPrice(999)

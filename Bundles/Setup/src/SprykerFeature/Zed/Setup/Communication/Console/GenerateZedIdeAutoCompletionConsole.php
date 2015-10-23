@@ -83,7 +83,6 @@ class GenerateZedIdeAutoCompletionConsole extends Console
         $generator
             ->addMethodTagBuilder(new FacadeMethodTagBuilder())
             ->addMethodTagBuilder(new QueryContainerMethodTagBuilder())
-            ->addMethodTagBuilder(new EntityMethodTagBuilder())
             ->addMethodTagBuilder(new ConsoleMethodTagBuilder())
             ->addMethodTagBuilder(new ClientMethodTagBuilder())
             ->addMethodTagBuilder(new PluginMethodTagBuilder([PluginMethodTagBuilder::OPTION_KEY_APPLICATION => 'Zed']))
@@ -104,10 +103,6 @@ class GenerateZedIdeAutoCompletionConsole extends Console
             ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'Communication/',
             ConstructableMethodTagBuilder::OPTION_KEY_APPLICATION => 'Zed',
         ]);
-        $persistenceMethodTagGenerator = new PropelMethodTagBuilder([
-            ConstructableMethodTagBuilder::OPTION_KEY_PATH_PATTERN => 'Persistence/',
-            ConstructableMethodTagBuilder::OPTION_KEY_APPLICATION => 'Zed',
-        ]);
 
         $options = [
             IdeFactoryAutoCompletionGenerator::OPTION_KEY_NAMESPACE => 'Generated\Zed\Ide\FactoryAutoCompletion',
@@ -118,7 +113,6 @@ class GenerateZedIdeAutoCompletionConsole extends Console
         $generator
             ->addMethodTagBuilder($businessMethodTagGenerator)
             ->addMethodTagBuilder($communicationMethodTagGenerator)
-            ->addMethodTagBuilder($persistenceMethodTagGenerator)
         ;
 
         $generator->create('');

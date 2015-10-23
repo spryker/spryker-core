@@ -155,8 +155,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     {
         $this->checkPagePlaceholderNotAmbiguous($pageKeyMapping->getFkPage(), $pageKeyMapping->getPlaceholder());
 
-        $mappingEntity = $this->locator->cms()
-            ->entitySpyCmsGlossaryKeyMapping()
+        $mappingEntity = new SpyCmsGlossaryKeyMapping()
         ;
         $mappingEntity->fromArray($pageKeyMapping->toArray());
 

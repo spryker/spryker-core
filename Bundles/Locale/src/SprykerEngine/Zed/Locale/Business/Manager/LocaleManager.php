@@ -77,7 +77,7 @@ class LocaleManager
             );
         }
 
-        $locale = $this->locator->locale()->entitySpyLocale();
+        $locale = new SpyLocale();
         $locale->setLocaleName($localeName);
 
         $locale->save();
