@@ -23,6 +23,14 @@ class PayolutionConfig extends AbstractBundleConfig
     /**
      * @return string
      */
+    public function getTransactionMode()
+    {
+        return $this->get(PayolutionConfigConstants::TRANSACTION_MODE);
+    }
+
+    /**
+     * @return string
+     */
     public function getUserLogin()
     {
         return $this->get(PayolutionConfigConstants::USER_LOGIN);
@@ -114,6 +122,14 @@ class PayolutionConfig extends AbstractBundleConfig
     public function getMaxOrderGrandTotalInstallment()
     {
         return $this->get(PayolutionConfigConstants::MAX_ORDER_GRAND_TOTAL_INSTALLMENT);
+    }
+
+    /**
+     * @return int
+     */
+    public function getNotificationEmail()
+    {
+        return $this->get(PayolutionConfigConstants::NOTIFICATION_EMAIL);
     }
 
     /**
