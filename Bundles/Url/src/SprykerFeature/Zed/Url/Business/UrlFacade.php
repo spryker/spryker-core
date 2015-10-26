@@ -59,15 +59,15 @@ class UrlFacade extends AbstractFacade
     }
 
     /**
-     * @param UrlTransfer $url
+     * @param UrlTransfer $urlTransfer
      *
      * @return UrlTransfer
      */
-    public function saveUrl(UrlTransfer $url)
+    public function saveUrl(UrlTransfer $urlTransfer)
     {
         $urlManager = $this->getDependencyContainer()->getUrlManager();
 
-        return $urlManager->saveUrl($url);
+        return $urlManager->saveUrl($urlTransfer);
     }
 
     /**
@@ -244,27 +244,27 @@ class UrlFacade extends AbstractFacade
     }
 
     /**
-     * @param UrlTransfer $url
+     * @param UrlTransfer $urlTransfer
      *
      * @return UrlTransfer
      */
-    public function saveUrlAndTouch(UrlTransfer $url)
+    public function saveUrlAndTouch(UrlTransfer $urlTransfer)
     {
         $urlManager = $this->getDependencyContainer()->getUrlManager();
 
-        return $urlManager->saveUrlAndTouch($url);
+        return $urlManager->saveUrlAndTouch($urlTransfer);
     }
 
     /**
-     * @param UrlTransfer $url
+     * @param UrlTransfer $urlTransfer
      *
      * @return void
      */
-    public function deleteUrl(UrlTransfer $url)
+    public function deleteUrl(UrlTransfer $urlTransfer)
     {
         $urlManager = $this->getDependencyContainer()->getUrlManager();
 
-        $urlManager->deleteUrl($url);
+        $urlManager->deleteUrl($urlTransfer);
     }
 
     /**
