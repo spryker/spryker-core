@@ -256,7 +256,6 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
             ->setPresentationCurrency($currency)
             ->setAccountBrand($this->getAccountBrand())
             ->setTransactionChannel($this->getConfig()->getTransactionChannelSync())
-            ->setTransactionMode($this->getConfig()->getTransactionMode())
             ->setIdentificationTransactionid(uniqid('tran_'));
 
         return $requestTransfer;

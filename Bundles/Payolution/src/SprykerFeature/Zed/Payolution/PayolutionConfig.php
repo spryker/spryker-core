@@ -23,17 +23,25 @@ class PayolutionConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getSecuritySender()
+    public function getUserLogin()
     {
-        return $this->get(PayolutionConfigConstants::SECURITY_SENDER);
+        return $this->get(PayolutionConfigConstants::USER_LOGIN);
     }
 
     /**
      * @return string
      */
-    public function getTransactionMode()
+    public function getUserPassword()
     {
-        return $this->get(PayolutionConfigConstants::TRANSACTION_MODE);
+        return $this->get(PayolutionConfigConstants::USER_PASSWORD);
+    }
+
+    /**
+     * @return string
+     */
+    public function getSecuritySender()
+    {
+        return $this->get(PayolutionConfigConstants::SECURITY_SENDER);
     }
 
     /**
@@ -66,22 +74,6 @@ class PayolutionConfig extends AbstractBundleConfig
     public function getTransactionChannelPreCheck()
     {
         return $this->get(PayolutionConfigConstants::TRANSACTION_CHANNEL_PRE_CHECK);
-    }
-
-    /**
-     * @return string
-     */
-    public function getUserLogin()
-    {
-        return $this->get(PayolutionConfigConstants::USER_LOGIN);
-    }
-
-    /**
-     * @return string
-     */
-    public function getUserPassword()
-    {
-        return $this->get(PayolutionConfigConstants::USER_PASSWORD);
     }
 
     /**

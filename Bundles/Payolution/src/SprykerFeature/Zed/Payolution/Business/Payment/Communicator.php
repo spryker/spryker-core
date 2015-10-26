@@ -169,7 +169,7 @@ class Communicator implements CommunicatorInterface
 
         $requestTransfer = $this
             ->getMethodMapper($paymentEntity->getAccountBrand())
-            ->mapToRefund($paymentEntity, $statusLogEntity->getIdentificationUniqueid());
+            ->mapToRefund($paymentEntity, $statusLogEntity->getIdentificationReferenceid());
 
         return $this->sendLoggedRequest($requestTransfer, $paymentEntity);
     }
@@ -215,6 +215,20 @@ class Communicator implements CommunicatorInterface
 
     /**
      * @param PayolutionRequestInterface $requestTransfer
+     *
+     * @return PayolutionResponseInterface
+     */
+    private function sendRequest(PayolutionRequestInterface $requestTransfer)
+    {
+        $requestData = $this->requestConverter->toArray($requestTransfer);
+        $responseData = $this->executionAdapter->sendArrayDataRequest($requestData);
+        $responseTransfer = $this->responseConverter->fromArray($responseData);
+
+        return $responseTransfer;
+    }
+
+    /**
+     * @param PayolutionRequestInterface $requestTransfer
      * @param SpyPaymentPayolution $paymentEntity
      *
      * @return PayolutionResponseTransfer
@@ -247,20 +261,6 @@ class Communicator implements CommunicatorInterface
         $logEntity->save();
 
         return $logEntity;
-    }
-
-    /**
-     * @param PayolutionRequestInterface $requestTransfer
-     *
-     * @return PayolutionResponseInterface
-     */
-    private function sendRequest(PayolutionRequestInterface $requestTransfer)
-    {
-        $requestData = $this->requestConverter->toArray($requestTransfer);
-        $responseData = $this->executionAdapter->sendArrayDataRequest($requestData);
-        $responseTransfer = $this->responseConverter->fromArray($responseData);
-
-        return $responseTransfer;
     }
 
     /**

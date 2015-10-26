@@ -17,7 +17,6 @@
 
     <transfer name="PayolutionRequest">
         <property name="securitySender" type="string"/>
-        <property name="transactionMode" type="string"/>
         <property name="transactionChannel" type="string"/>
         <property name="userLogin" type="string"/>
         <property name="userPwd" type="string"/>
@@ -92,7 +91,6 @@
         <property name="addressCountry" type="string"/>
         <property name="processingConnectordetailPaymentreference" type="string"/>
         <property name="responseVersion" type="string"/>
-        <property name="transactionMode" type="string"/>
         <property name="processingReturn" type="string"/>
         <property name="transactionResponse" type="string"/>
         <property name="addressStreet" type="string"/>
