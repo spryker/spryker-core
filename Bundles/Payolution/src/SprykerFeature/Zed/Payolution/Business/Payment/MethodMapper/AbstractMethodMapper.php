@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\PayolutionRequestTransfer;
 use SprykerFeature\Zed\Payolution\Business\Api\Constants;
 use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
 use SprykerFeature\Zed\Payolution\Business\Exception\GenderNotDefinedException;
+use SprykerFeature\Zed\Payolution\Business\Exception\OrderGrandTotalException;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
@@ -59,19 +60,21 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
     public function mapToPreCheck(CheckoutRequestInterface $checkoutRequestTransfer)
     {
         $payolutionTransfer = $checkoutRequestTransfer->getPayolutionPayment();
-        $cart = $checkoutRequestTransfer->getCart();
-        $grandTotal = $cart->getTotals()->getGrandTotal();
+        $addressTransfer = $payolutionTransfer->getAddress();
+        $formattedStreet = trim(sprintf(
+            '%s %s %s',
+            $addressTransfer->getAddress1(),
+            $addressTransfer->getAddress2(),
+            $addressTransfer->getAddress3()
+        ));
+
         $requestTransfer = $this->getBaseRequestTransfer(
-            $grandTotal,
+            $checkoutRequestTransfer->getCart()->getTotals()->getGrandTotal(),
             $payolutionTransfer->getCurrencyIso3Code(),
             $isSalesOrder = null
         );
         $requestTransfer->setPaymentCode(PayolutionApiConstants::PAYMENT_CODE_PRE_CHECK);
-
-        // Pre-check requires to set a specific transaction channel
         $requestTransfer->setTransactionChannel($this->config->getTransactionChannelPreCheck());
-
-        $addressTransfer = $payolutionTransfer->getAddress();
         $requestTransfer
             ->setNameGiven($addressTransfer->getFirstName())
             ->setNameFamily($addressTransfer->getLastName())
@@ -85,14 +88,6 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
             ->setContactPhone($addressTransfer->getPhone())
             ->setContactMobile($addressTransfer->getCellPhone())
             ->setContactIp($payolutionTransfer->getClientIp());
-
-        // Payolution requires a single street address string
-        $formattedStreet = trim(sprintf(
-            '%s %s %s',
-            $addressTransfer->getAddress1(),
-            $addressTransfer->getAddress2(),
-            $addressTransfer->getAddress3()
-        ));
         $requestTransfer->setAddressStreet($formattedStreet);
 
         $criteria = [
@@ -112,6 +107,8 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
     public function mapToPreAuthorization(SpyPaymentPayolution $paymentEntity)
     {
         $orderEntity = $paymentEntity->getSpySalesOrder();
+
+        $this->checkMaxMinGrandTotal($orderEntity->getGrandTotal());
 
         $requestTransfer = $this->getBaseRequestTransferForPayment($paymentEntity);
         $requestTransfer
@@ -280,6 +277,24 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
         }
 
         return $requestTransfer;
+    }
+
+    /**
+     * @param int $amount
+     *
+     * @return void
+     */
+    private function checkMaxMinGrandTotal($amount)
+    {
+        if ($amount < $this->config->getMinOrderGrandTotalInvoice())
+        {
+            throw new OrderGrandTotalException('The grand total is less than the allowed minimum amount');
+        }
+
+        if ($amount > $this->config->getMaxOrderGrandTotalInvoice())
+        {
+            throw new OrderGrandTotalException('The grand total is greater than the allowed maximum amount');
+        }
     }
 
 }

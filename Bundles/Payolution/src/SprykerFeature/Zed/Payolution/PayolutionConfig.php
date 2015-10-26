@@ -85,6 +85,38 @@ class PayolutionConfig extends AbstractBundleConfig
     }
 
     /**
+     * @return int
+     */
+    public function getMinOrderGrandTotalInvoice()
+    {
+        return $this->get(PayolutionConfigConstants::MIN_ORDER_GRAND_TOTAL_INVOICE);
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxOrderGrandTotalInvoice()
+    {
+        return $this->get(PayolutionConfigConstants::MAX_ORDER_GRAND_TOTAL_INVOICE);
+    }
+
+    /**
+     * @return int
+     */
+    public function getMinOrderGrandTotalInstallment()
+    {
+        return $this->get(PayolutionConfigConstants::MIN_ORDER_GRAND_TOTAL_INSTALLMENT);
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxOrderGrandTotalInstallment()
+    {
+        return $this->get(PayolutionConfigConstants::MAX_ORDER_GRAND_TOTAL_INSTALLMENT);
+    }
+
+    /**
      * @return string
      */
     public function getAnalysisCriteriaPropertyName()
