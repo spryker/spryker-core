@@ -39,11 +39,11 @@ interface CategoryToUrlInterface
     public function touchUrlDeleted($idUrl);
 
     /**
-     * @param UrlTransfer $url
+     * @param UrlTransfer $urlTransfer
      *
      * @return UrlTransfer
      */
-    public function saveUrlAndTouch(UrlTransfer $url);
+    public function saveUrlAndTouch(UrlTransfer $urlTransfer);
 
     /**
      * @param string $url
@@ -70,13 +70,13 @@ interface CategoryToUrlInterface
     public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale);
 
     /**
-     * @param UrlTransfer $url
+     * @param UrlTransfer $urlTransfer
      *
      * @throws MissingUrlException
      * @throws PropelException
      *
      * @return void
      */
-    public function deleteUrl(UrlTransfer $url);
+    public function deleteUrl(UrlTransfer $urlTransfer);
 
 }
