@@ -127,7 +127,7 @@ class VoucherForm extends AbstractForm
     /**
      * @return array
      */
-    private function getPools()
+    protected function getPools()
     {
         $pools = [];
         $poolResult = $this->poolQuery->find();
@@ -178,7 +178,7 @@ class VoucherForm extends AbstractForm
      *
      * @return string
      */
-    private function getDiscountVoucherPoolDisplayName($discountVoucherPoolEntity)
+    protected function getDiscountVoucherPoolDisplayName(SpyDiscountVoucherPool $discountVoucherPoolEntity)
     {
         $availableCalculatorPlugins = $this->discountConfig->getAvailableCalculatorPlugins();
         $displayName = $discountVoucherPoolEntity->getName();

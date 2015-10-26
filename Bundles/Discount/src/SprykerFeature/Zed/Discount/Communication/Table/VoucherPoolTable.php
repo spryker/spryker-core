@@ -142,7 +142,7 @@ class VoucherPoolTable extends AbstractTable
      *
      * @return string|null
      */
-    private function getDiscountVoucherPoolDisplayName(SpyDiscountVoucherPool $discountVoucherPoolEntity)
+    protected function getDiscountVoucherPoolDisplayName(SpyDiscountVoucherPool $discountVoucherPoolEntity)
     {
         $availableCalculatorPlugins = $this->discountConfig->getAvailableCalculatorPlugins();
         $displayName = null;
