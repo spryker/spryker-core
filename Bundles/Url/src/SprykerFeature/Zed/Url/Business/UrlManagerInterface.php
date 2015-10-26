@@ -33,31 +33,28 @@ interface UrlManagerInterface
     public function createUrl($url, LocaleTransfer $locale, $resourceType, $idResource);
 
     /**
-     * @param UrlTransfer $url
-     *
-     * @throws UrlExistsException
-     * @throws MissingUrlException
-     * @throws \Exception
-     * @throws PropelException
+     * @param UrlTransfer $urlTransfer
      *
      * @return UrlTransfer
      */
-    public function saveUrl(UrlTransfer $url);
+    public function saveUrl(UrlTransfer $urlTransfer);
 
     /**
-     * @param UrlTransfer $url
+     * @param UrlTransfer $urlTransfer
      *
      * @throws MissingUrlException
      * @throws PropelException
+     *
+     * @return void
      */
-    public function deleteUrl(UrlTransfer $url);
+    public function deleteUrl(UrlTransfer $urlTransfer);
 
     /**
-     * @param UrlTransfer $url
+     * @param UrlTransfer $urlTransfer
      *
      * @return UrlTransfer
      */
-    public function saveUrlAndTouch(UrlTransfer $url);
+    public function saveUrlAndTouch(UrlTransfer $urlTransfer);
 
     /**
      * @param string $url
