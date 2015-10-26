@@ -163,4 +163,5 @@ class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
     {
         touch($this->getSavePath() . DIRECTORY_SEPARATOR . 'session:' . self::SESSION_ID_2, time() + 200);
     }
+
 }
