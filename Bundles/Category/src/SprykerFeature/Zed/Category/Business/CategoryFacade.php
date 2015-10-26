@@ -10,7 +10,9 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Locale\LocaleInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Propel\Runtime\Collection\ObjectCollection;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 
 /**
@@ -34,17 +36,18 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param int $idCategory
-     * @param int $idParentNode
-     * 
-     * @return SpyCategoryNode
+     * @param int $idNode
+     *
+     * @return NodeTransfer
      */
-    public function getNodeByIdCategoryAndParentNode($idCategory, $idParentNode)
+    public function getNodeById($idNode)
     {
-        return $this->getDependencyContainer()
+        $nodeEntity = $this->getDependencyContainer()
             ->createCategoryTreeReader()
-            ->getNodeByIdCategoryAndParentNode($idCategory, $idParentNode)
+            ->getNodeById($idNode)
         ;
+
+        return $this->convertCategoryNodeEntityToTransfer($nodeEntity);
     }
 
     /**
@@ -78,40 +81,46 @@ class CategoryFacade extends AbstractFacade
     /**
      * @param int $idCategory
      *
-     * @return SpyCategoryNode[]
+     * @return NodeTransfer[]
      */
     public function getAllNodesByIdCategory($idCategory)
     {
-        return $this->getDependencyContainer()
+        $nodeEntities = $this->getDependencyContainer()
             ->createCategoryTreeReader()
             ->getAllNodesByIdCategory($idCategory)
         ;
+
+        return $this->convertCategoryNodeEntityCollectionToArray($nodeEntities);
     }
 
     /**
      * @param int $idCategory
      *
-     * @return SpyCategoryNode[]
+     * @return NodeTransfer[]
      */
     public function getMainNodesByIdCategory($idCategory)
     {
-        return $this->getDependencyContainer()
+        $nodeEntities = $this->getDependencyContainer()
             ->createCategoryTreeReader()
             ->getMainNodesByIdCategory($idCategory)
         ;
+
+        return $this->convertCategoryNodeEntityCollectionToArray($nodeEntities);
     }
 
     /**
      * @param int $idCategory
      *
-     * @return SpyCategoryNode[]
+     * @return NodeTransfer[]
      */
     public function getNotMainNodesByIdCategory($idCategory)
     {
-        return $this->getDependencyContainer()
+        $nodeEntities = $this->getDependencyContainer()
             ->createCategoryTreeReader()
             ->getNotMainNodesByIdCategory($idCategory)
         ;
+
+        return $this->convertCategoryNodeEntityCollectionToArray($nodeEntities);
     }
 
     /**
@@ -211,21 +220,23 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
-     * @return SpyCategoryNode
+     * @return NodeTransfer[]
      */
     public function getRootNodes()
     {
-        return $this->getDependencyContainer()
+        $rootNodes = $this->getDependencyContainer()
             ->createCategoryTreeReader()
             ->getRootNodes()
         ;
+
+        return $this->convertCategoryNodeEntityCollectionToArray($rootNodes);
     }
 
     /**
      * @param int $idCategory
      * @param LocaleTransfer $locale
      *
-     * @return SpyCategoryNode[]
+     * @return array
      */
     public function getTree($idCategory, LocaleTransfer $locale)
     {
@@ -279,33 +290,6 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param int $idNode
-     * @param LocaleTransfer $locale
-     *
-     * @return array
-     */
-    public function getCategoryNodesWithOrder($idNode, LocaleTransfer $locale)
-    {
-        return $this->getDependencyContainer()
-            ->createCategoryTreeReader()
-            ->getCategoryNodesWithOrder($idNode, $locale->getIdLocale())
-        ;
-    }
-
-    /**
-     * @param int $idNode
-     *
-     * @return SpyCategoryNode
-     */
-    public function getNodeById($idNode)
-    {
-        return $this->getDependencyContainer()
-            ->createCategoryTreeReader()
-            ->getNodeById($idNode)
-        ;
-    }
-
-    /**
      * @return void
      */
     public function rebuildClosureTable()
@@ -327,6 +311,58 @@ class CategoryFacade extends AbstractFacade
             ->createUrlPathGenerator()
             ->generate($pathTokens)
         ;
+    }
+
+    /**
+     * @param SpyCategory $categoryEntity
+     *
+     * @return CategoryTransfer
+     */
+    protected function convertCategoryEntityToTransfer(SpyCategory $categoryEntity)
+    {
+        return (new CategoryTransfer())
+            ->fromArray($categoryEntity->toArray());
+    }
+
+    /**
+     * @param SpyCategory[]|ObjectCollection $categoryEntityList
+     *
+     * @return CategoryTransfer[]
+     */
+    protected function convertCategoryEntityCollectionToArray(ObjectCollection $categoryEntityList)
+    {
+        $transferList = [];
+        foreach ($categoryEntityList as $categoryEntity) {
+            $transferList[] = $this->convertCategoryEntityToTransfer($categoryEntity);
+        }
+
+        return $transferList;
+    }
+
+    /**
+     * @param SpyCategoryNode $nodeEntity
+     *
+     * @return NodeTransfer
+     */
+    protected function convertCategoryNodeEntityToTransfer(SpyCategoryNode $nodeEntity)
+    {
+        return (new NodeTransfer())
+            ->fromArray($nodeEntity->toArray());
+    }
+
+    /**
+     * @param SpyCategoryNode[]|ObjectCollection $categoryNodeEntityList
+     *
+     * @return NodeTransfer[]
+     */
+    protected function convertCategoryNodeEntityCollectionToArray(ObjectCollection $categoryNodeEntityList)
+    {
+        $transferList = [];
+        foreach ($categoryNodeEntityList as $categoryNodeEntity) {
+            $transferList[] = $this->convertCategoryNodeEntityToTransfer($categoryNodeEntity);
+        }
+
+        return $transferList;
     }
 
 }

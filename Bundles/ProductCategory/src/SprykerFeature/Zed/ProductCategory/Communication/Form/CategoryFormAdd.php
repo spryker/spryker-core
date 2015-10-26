@@ -13,7 +13,7 @@ use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
+use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategory;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
@@ -32,9 +32,9 @@ class CategoryFormAdd extends AbstractForm
     protected $categoryQueryContainer;
 
     /**
-     * @var ProductCategoryFacade
+     * @var ProductCategoryQueryContainerInterface
      */
-    protected $productCategoryFacade;
+    protected $productCategoryQueryContainer;
 
     /**
      * @var LocaleTransfer
@@ -53,20 +53,20 @@ class CategoryFormAdd extends AbstractForm
 
     /**
      * @param CategoryQueryContainerInterface $categoryQueryContainer
-     * @param ProductCategoryFacade $productCategoryFacade
+     * @param ProductCategoryQueryContainerInterface $productCategoryQueryContainer
      * @param LocaleTransfer $locale
      * @param int $idCategory
      * @param int $idParentNode
      */
     public function __construct(
         CategoryQueryContainerInterface $categoryQueryContainer,
-        ProductCategoryFacade $productCategoryFacade,
+        ProductCategoryQueryContainerInterface $productCategoryQueryContainer,
         LocaleTransfer $locale,
         $idCategory,
         $idParentNode
     ) {
         $this->categoryQueryContainer = $categoryQueryContainer;
-        $this->productCategoryFacade = $productCategoryFacade;
+        $this->productCategoryQueryContainer = $productCategoryQueryContainer;
         $this->locale = $locale;
         $this->idCategory = $idCategory;
         $this->idParentNode = $idParentNode;
@@ -98,32 +98,44 @@ class CategoryFormAdd extends AbstractForm
      */
     protected function getCategoriesWithPaths()
     {
-        $categoryList = $this->categoryQueryContainer
+        $categoryEntityList = $this->categoryQueryContainer
             ->queryCategory($this->locale->getIdLocale())
             ->find()
         ;
 
-        $data = [];
+        $categories = [];
         $pathCache = [];
-        foreach ($categoryList as $category) {
-            foreach ($category->getNodes() as $node) {
-                if (!array_key_exists($node->getFkParentCategoryNode(), $pathCache)) {
-                    $path = $this->buildPath($node);
+        foreach ($categoryEntityList as $categoryEntity) {
+            foreach ($categoryEntity->getNodes() as $nodeEntity) {
+                if (!array_key_exists($nodeEntity->getFkParentCategoryNode(), $pathCache)) {
+                    $path = $this->buildPath($nodeEntity);
                 } else {
-                    $path = $pathCache[$node->getFkParentCategoryNode()];
+                    $path = $pathCache[$nodeEntity->getFkParentCategoryNode()];
                 }
 
-                $data[$path][$node->getIdCategoryNode()] = $category->getAttributes()->getFirst()->getName();
+                $categories[$path][$nodeEntity->getIdCategoryNode()] = $categoryEntity->getAttributes()->getFirst()->getName();
             }
         }
 
-        ksort($data);
+        $categories = $this->sortCategoriesWithPaths($categories);
 
-        foreach ($data as $path => $categoryNames) {
-            asort($data[$path], SORT_FLAG_CASE & SORT_STRING);
+        return $categories;
+    }
+
+    /**
+     * @param array $categories
+     *
+     * @return array
+     */
+    protected function sortCategoriesWithPaths(array $categories)
+    {
+        ksort($categories);
+
+        foreach ($categories as $path => $categoryNames) {
+            asort($categories[$path], SORT_FLAG_CASE & SORT_STRING);
         }
 
-        return $data;
+        return $categories;
     }
 
     /**
@@ -151,17 +163,18 @@ class CategoryFormAdd extends AbstractForm
      */
     protected function getAssignedProducts()
     {
-        $productList = $this->productCategoryFacade
-            ->getProductsByCategory($this->idCategory, $this->locale)
+        $productEntityList = $this->productCategoryQueryContainer
+            ->queryProductsByCategoryId($this->idCategory, $this->locale)
+            ->find()
         ;
 
-        $data = [];
-        foreach ($productList as $product) {
-            /** @var SpyProductCategory $product */
-            $data[] = $product->getIdProductCategory();
+        $assignedProducts = [];
+        foreach ($productEntityList as $productEntity) {
+            /* @var SpyProductCategory $productEntity */
+            $assignedProducts[] = $productEntity->getIdProductCategory();
         }
 
-        return $data;
+        return $assignedProducts;
     }
 
     /**
@@ -169,17 +182,18 @@ class CategoryFormAdd extends AbstractForm
      */
     protected function getProducts()
     {
-        $productList = $this->productCategoryFacade
-            ->getProductsByCategory($this->idCategory, $this->locale)
+        $productCategoryEntityList = $this->productCategoryQueryContainer
+            ->queryProductsByCategoryId($this->idCategory, $this->locale)
+            ->find()
         ;
 
-        $data = [];
-        foreach ($productList as $product) {
-            /** @var SpyProductCategory $product */
-            $data[$product->getIdProductCategory()] = $product->getName();
+        $products = [];
+        foreach ($productCategoryEntityList as $productCategoryEntity) {
+            /** @var SpyProductCategory $productCategoryEntity */
+            $products[$productCategoryEntity->getIdProductCategory()] = $productCategoryEntity->getName();
         }
 
-        return $data;
+        return $products;
     }
 
     /**
@@ -189,8 +203,8 @@ class CategoryFormAdd extends AbstractForm
     {
         $fields = $this->getDefaultFormFields();
 
-        /** @var SpyCategory $category */
-        $category = $this->categoryQueryContainer
+        /** @var SpyCategory $categoryEntity */
+        $categoryEntity = $this->categoryQueryContainer
             ->queryCategoryById($this->idCategory)
             ->innerJoinAttribute()
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::NAME)
@@ -200,15 +214,15 @@ class CategoryFormAdd extends AbstractForm
             ->findOne()
         ;
 
-        if ($category) {
-            $category = $category->toArray();
+        if ($categoryEntity) {
+            $categoryEntity = $categoryEntity->toArray();
 
             $fields = [
-                self::PK_CATEGORY => $category[self::PK_CATEGORY],
-                self::PK_CATEGORY_NODE => $category[self::PK_CATEGORY_NODE],
-                self::FK_PARENT_CATEGORY_NODE => $category[self::FK_PARENT_CATEGORY_NODE],
-                self::FK_PARENT_CATEGORY_NODE => $category[self::FK_PARENT_CATEGORY_NODE],
-                self::NAME => $category[self::NAME],
+                self::PK_CATEGORY => $categoryEntity[self::PK_CATEGORY],
+                self::PK_CATEGORY_NODE => $categoryEntity[self::PK_CATEGORY_NODE],
+                self::FK_PARENT_CATEGORY_NODE => $categoryEntity[self::FK_PARENT_CATEGORY_NODE],
+                self::FK_PARENT_CATEGORY_NODE => $categoryEntity[self::FK_PARENT_CATEGORY_NODE],
+                self::NAME => $categoryEntity[self::NAME],
             ];
         }
 

@@ -62,20 +62,6 @@ class ProductCategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param int $idCategory
-     * @param LocaleTransfer $locale
-     *
-     * @return SpyProductCategoryQuery[]
-     */
-    public function getProductsByCategory($idCategory, LocaleTransfer $locale)
-    {
-        return $this->getDependencyContainer()
-            ->createProductCategoryManager()
-            ->getProductsByCategory($idCategory, $locale)
-        ;
-    }
-
-    /**
      * @param SpyAbstractProduct $abstractProduct
      *
      * @return SpyProductCategoryQuery
@@ -85,20 +71,6 @@ class ProductCategoryFacade extends AbstractFacade
         return $this->getDependencyContainer()
             ->createProductCategoryManager()
             ->getCategoriesByAbstractProduct($abstractProduct)
-        ;
-    }
-
-    /**
-     * @param int $idCategory
-     * @param int $idAbstractProduct
-     *
-     * @return SpyProductCategoryQuery
-     */
-    public function getProductCategoryMappingById($idCategory, $idAbstractProduct)
-    {
-        return $this->getDependencyContainer()
-            ->createProductCategoryManager()
-            ->getProductCategoryMappingById($idCategory, $idAbstractProduct)
         ;
     }
 

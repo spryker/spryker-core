@@ -27,7 +27,7 @@ class DeleteController extends EditController
     {
         $idCategory = $request->get(ProductCategoryConfig::PARAM_ID_CATEGORY);
 
-        if (!$this->existsCategory($idCategory)) {
+        if (!$this->categoryExists($idCategory)) {
             $this->addErrorMessage(sprintf('The category with id "%s" does not exist.', $idCategory));
 
             return new RedirectResponse('/category');
@@ -57,11 +57,11 @@ class DeleteController extends EditController
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      *
      * @return bool
      */
-    protected function existsCategory($idCategory)
+    protected function categoryExists($idCategory)
     {
         $categoryCount = $this->getDependencyContainer()
             ->createCategoryQueryContainer()
@@ -77,7 +77,7 @@ class DeleteController extends EditController
     }
 
     /**
-     * @param $idCategory
+     * @param int $idCategory
      * @param Form $form
      *
      * @return array

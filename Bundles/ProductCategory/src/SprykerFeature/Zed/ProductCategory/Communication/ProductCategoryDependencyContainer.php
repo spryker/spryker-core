@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\ProductCategory\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductCategoryCommunication;
+use Propel\Runtime\Connection\ConnectionInterface;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainerInterface;
@@ -114,7 +115,7 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
     {
         return $this->getFactory()->createFormCategoryFormAdd(
             $this->createCategoryQueryContainer(),
-            $this->createProductCategoryFacade(),
+            $this->createProductCategoryQueryContainer(),
             $this->createCurrentLocale(),
             null,
             $idParentNode
@@ -130,7 +131,7 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
     {
         return $this->getFactory()->createFormCategoryFormEdit(
             $this->createCategoryQueryContainer(),
-            $this->createProductCategoryFacade(),
+            $this->createProductCategoryQueryContainer(),
             $this->createCurrentLocale(),
             $idCategory,
             null
@@ -146,7 +147,7 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
     {
         return $this->getFactory()->createFormCategoryFormDelete(
             $this->createCategoryQueryContainer(),
-            $this->createProductCategoryFacade(),
+            $this->createProductCategoryQueryContainer(),
             $this->createCurrentLocale(),
             $idCategory,
             null
@@ -177,6 +178,16 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
         $productCategoryQueryContainer = $this->createProductCategoryQueryContainer();
 
         return $this->getFactory()->createTableProductTable($productCategoryQueryContainer, $locale, $idCategory);
+    }
+
+    /**
+     * @throws \ErrorException
+     *
+     * @return ConnectionInterface
+     */
+    public function createPropelConnection()
+    {
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::PLUGIN_PROPEL_CONNECTION);
     }
 
 }

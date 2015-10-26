@@ -12,7 +12,6 @@ use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerFeature\Zed\Category\CategoryConfig;
 use SprykerFeature\Zed\Category\Communication\CategoryDependencyContainer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -37,20 +36,17 @@ class NodeController extends AbstractController
         $locale = $this->getDependencyContainer()
             ->createCurrentLocale();
 
-        $nodes = $this->getDependencyContainer()
-            ->createCategoryFacade()
-            ->getCategoryNodesWithOrder($idCategoryNode, $locale)
+        $nodeList = $this->getDependencyContainer()
+            ->createCategoryQueryContainer()
+            ->getCategoryNodesWithOrder($idCategoryNode, $locale->getIdLocale())
+            ->find()
         ;
 
         $items = [];
-        foreach ($nodes as $node) {
-            /*
-             * @var SpyCategoryNode $node
-             */
-
+        foreach ($nodeList as $nodeEntity) {
             $items[] = [
-                'id' => $node->getIdCategoryNode(),
-                'text' => $node->getCategory()->getAttributes()->getFirst()->getName(),
+                'id' => $nodeEntity->getIdCategoryNode(),
+                'text' => $nodeEntity->getCategory()->getAttributes()->getFirst()->getName(),
             ];
         }
 
@@ -75,12 +71,13 @@ class NodeController extends AbstractController
         foreach ($categoryNodesToReorder as $index => $nodeData) {
             $idNode = $nodeData['id'];
 
-            $node = $this->getDependencyContainer()
-                ->createCategoryFacade()
-                ->getNodeById($idNode);
+            $nodeEntity = $this->getDependencyContainer()
+                ->createCategoryQueryContainer()
+                ->queryNodeById($idNode)
+                ->findOne();
 
             $nodeTransfer = (new NodeTransfer())
-                ->fromArray($node->toArray())
+                ->fromArray($nodeEntity->toArray())
             ;
 
             $nodeTransfer->setNodeOrder($order);

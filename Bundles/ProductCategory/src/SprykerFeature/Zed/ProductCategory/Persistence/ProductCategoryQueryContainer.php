@@ -19,6 +19,7 @@ use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyLocalizedAbstractProduc
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
 use SprykerFeature\Zed\ProductCategory\Persistence\Propel\Map\SpyProductCategoryTableMap;
+use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategory;
 use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
 
 /**
@@ -193,6 +194,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
                 'preconfig_product'
             )*/
             ->filterByFkCategory($idCategory)
+            ->orderByFkAbstractProduct()
         ;
     }
 

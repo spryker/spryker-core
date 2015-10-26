@@ -151,6 +151,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
 
     /**
      * Quick fix to regenerate broken closure table based on category node table
+     * @todo https://spryker.atlassian.net/browse/CD-575
      *
      * @return void
      */
@@ -191,7 +192,8 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     }
 
     /**
-     * Fix problem when category node has its fk_parent_category_node set to itself
+     * Quick fix for problem when category node has its fk_parent_category_node set to itself
+     * @todo https://spryker.atlassian.net/browse/CD-575
      *
      * @return void
      */

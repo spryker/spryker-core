@@ -104,8 +104,8 @@ class CategoryFormEdit extends CategoryFormAdd
     {
         $fields = $this->getDefaultFormFields();
 
-        /** @var SpyCategory $category */
-        $category = $this->categoryQueryContainer
+        /** @var SpyCategory $categoryEntity */
+        $categoryEntity = $this->categoryQueryContainer
             ->queryCategoryById($this->idCategory)
             ->innerJoinAttribute()
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::NAME)
@@ -121,40 +121,40 @@ class CategoryFormEdit extends CategoryFormAdd
             ->findOne()
         ;
 
-        if ($category) {
-            $category = $category->toArray();
+        if ($categoryEntity) {
+            $categoryEntity = $categoryEntity->toArray();
 
-            $nodeList = $this->categoryQueryContainer
+            $nodeEntityList = $this->categoryQueryContainer
                 ->queryNotMainNodesByCategoryId($this->idCategory)
                 ->where(
                     SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE . ' <> ?',
-                    $category[self::PK_CATEGORY_NODE]
+                    $categoryEntity[self::PK_CATEGORY_NODE]
                 )
                 ->find()
             ;
 
             $nodeIds = [];
-            foreach ($nodeList as $node) {
-                $nodeIds[] = $node->getFkParentCategoryNode();
+            foreach ($nodeEntityList as $nodeEntity) {
+                $nodeIds[] = $nodeEntity->getFkParentCategoryNode();
             }
 
             $fields = [
-                self::PK_CATEGORY => $category[self::PK_CATEGORY],
-                self::PK_CATEGORY_NODE => $category[self::PK_CATEGORY_NODE],
-                self::FK_PARENT_CATEGORY_NODE => $category[self::FK_PARENT_CATEGORY_NODE],
-                self::FK_NODE_CATEGORY => $category[self::FK_NODE_CATEGORY],
-                self::NAME => $category[self::NAME],
+                self::PK_CATEGORY => $categoryEntity[self::PK_CATEGORY],
+                self::PK_CATEGORY_NODE => $categoryEntity[self::PK_CATEGORY_NODE],
+                self::FK_PARENT_CATEGORY_NODE => $categoryEntity[self::FK_PARENT_CATEGORY_NODE],
+                self::FK_NODE_CATEGORY => $categoryEntity[self::FK_NODE_CATEGORY],
+                self::NAME => $categoryEntity[self::NAME],
                 //meta
-                self::ATTRIBUTE_META_TITLE => $category[self::ATTRIBUTE_META_TITLE],
-                self::ATTRIBUTE_META_DESCRIPTION => $category[self::ATTRIBUTE_META_DESCRIPTION],
-                self::ATTRIBUTE_META_KEYWORDS => $category[self::ATTRIBUTE_META_KEYWORDS],
+                self::ATTRIBUTE_META_TITLE => $categoryEntity[self::ATTRIBUTE_META_TITLE],
+                self::ATTRIBUTE_META_DESCRIPTION => $categoryEntity[self::ATTRIBUTE_META_DESCRIPTION],
+                self::ATTRIBUTE_META_KEYWORDS => $categoryEntity[self::ATTRIBUTE_META_KEYWORDS],
                 //image
-                self::ATTRIBUTE_CATEGORY_IMAGE_NAME => $category[self::ATTRIBUTE_CATEGORY_IMAGE_NAME],
+                self::ATTRIBUTE_CATEGORY_IMAGE_NAME => $categoryEntity[self::ATTRIBUTE_CATEGORY_IMAGE_NAME],
                 //category
-                self::CATEGORY_IS_ACTIVE => $category[self::CATEGORY_IS_ACTIVE],
-                self::CATEGORY_IS_IN_MENU => $category[self::CATEGORY_IS_IN_MENU],
-                self::CATEGORY_IS_CLICKABLE => $category[self::CATEGORY_IS_CLICKABLE],
-                self::CATEGORY_NODE_IS_MAIN => $category[self::CATEGORY_NODE_IS_MAIN],
+                self::CATEGORY_IS_ACTIVE => $categoryEntity[self::CATEGORY_IS_ACTIVE],
+                self::CATEGORY_IS_IN_MENU => $categoryEntity[self::CATEGORY_IS_IN_MENU],
+                self::CATEGORY_IS_CLICKABLE => $categoryEntity[self::CATEGORY_IS_CLICKABLE],
+                self::CATEGORY_NODE_IS_MAIN => $categoryEntity[self::CATEGORY_NODE_IS_MAIN],
 
                 self::EXTRA_PARENTS => $nodeIds,
             ];

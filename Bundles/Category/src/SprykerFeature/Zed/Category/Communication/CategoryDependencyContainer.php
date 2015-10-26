@@ -157,4 +157,14 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
         return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_CATEGORY);
     }
 
+    /**
+     * @throws \ErrorException
+     *
+     * @return CategoryQueryContainer
+     */
+    public function createCategoryQueryContainer()
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::QUERY_CONTAINER_CATEGORY);
+    }
+
 }

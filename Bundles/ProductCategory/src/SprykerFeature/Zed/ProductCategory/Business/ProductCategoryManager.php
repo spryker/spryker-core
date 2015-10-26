@@ -23,6 +23,7 @@ use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCatego
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
+use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategory;
 use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
 use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
 
@@ -172,7 +173,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
      * @param int $idCategory
      * @param LocaleTransfer $locale
      *
-     * @return array
+     * @return SpyProductCategory[]
      */
     public function getProductsByCategory($idCategory, LocaleTransfer $locale)
     {
@@ -475,11 +476,11 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             ->find()
         ;
 
-        $productsToDeAssign = [];
+        $productIdsToUnAssign = [];
         foreach ($assignedProducts as $mapping) {
-            $productsToDeAssign[] = $mapping->getFkAbstractProduct();
+            $productIdsToUnAssign[] = $mapping->getFkAbstractProduct();
         }
-        $this->removeProductCategoryMappings($idCategory, $productsToDeAssign);
+        $this->removeProductCategoryMappings($idCategory, $productIdsToUnAssign);
     }
 
     /**

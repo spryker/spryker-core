@@ -5,7 +5,6 @@ namespace SprykerFeature\Zed\ProductCategory\Communication\Controller;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Propel\Runtime\Propel;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
@@ -53,7 +52,9 @@ class EditController extends AddController
         $form->handleRequest();
 
         if ($form->isValid()) {
-            $connection = Propel::getConnection();
+            $connection = $this->getDependencyContainer()
+                ->createPropelConnection($idCategory);
+
             $connection->beginTransaction();
 
             $data = $form->getData();
@@ -115,7 +116,7 @@ class EditController extends AddController
      */
     protected function createOrUpdateCategoryNode($existingCategoryNode, NodeTransfer $categoryNodeTransfer, LocaleTransfer $locale)
     {
-        /** @var SpyCategoryNode $existingCategoryNode */
+        /* @var SpyCategoryNode $existingCategoryNode */
         if ($existingCategoryNode) {
             $categoryNodeTransfer->setIdCategoryNode($existingCategoryNode->getIdCategoryNode());
 
@@ -245,10 +246,11 @@ class EditController extends AddController
 
         $currentCategoryNodeTransfer->setIsMain(true);
 
-        /** @var SpyCategoryNode $currentCategoryNode */
+        /* @var SpyCategoryNode $currentCategoryNode */
         $existingCategoryNode = $this->getDependencyContainer()
-            ->createCategoryFacade()
-            ->getNodeById($currentCategoryNodeTransfer->getIdCategoryNode());
+            ->createCategoryQueryContainer()
+            ->queryNodeById($currentCategoryNodeTransfer->getIdCategoryNode())
+            ->findOne();
 
         $this->createOrUpdateCategoryNode($existingCategoryNode, $currentCategoryNodeTransfer, $locale);
 
@@ -269,8 +271,10 @@ class EditController extends AddController
         $nodeTransfer->setIsMain(false);
 
         $existingCategoryNode = $this->getDependencyContainer()
-            ->createCategoryFacade()
-            ->getNodeByIdCategoryAndParentNode($categoryTransfer->getIdCategory(), $nodeTransfer->getFkParentCategoryNode());
+            ->createCategoryQueryContainer()
+            ->queryNodeByIdCategoryAndParentNode($categoryTransfer->getIdCategory(), $nodeTransfer->getFkParentCategoryNode())
+            ->findOne()
+        ;
 
         $this->createOrUpdateCategoryNode($existingCategoryNode, $nodeTransfer, $locale);
 
@@ -365,7 +369,7 @@ class EditController extends AddController
 
         $productDataList = [];
         foreach ($productCategoryList as $productCategory) {
-            /** @var SpyProductCategory $productCategory */
+            /* @var SpyProductCategory $productCategory */
             $productCategoryData = $productCategory->toArray();
             $productCategoryData['view_node_name'] = 'child';
 

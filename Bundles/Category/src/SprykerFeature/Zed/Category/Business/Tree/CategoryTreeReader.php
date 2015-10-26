@@ -294,7 +294,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @return SpyCategoryNode[]
+     * @return SpyCategoryNode[]|ObjectCollection
      */
     public function getRootNodes()
     {
@@ -307,7 +307,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     /**
      * @param int $idCategory
      *
-     * @return SpyCategoryNode[]
+     * @return SpyCategoryNode[]|ObjectCollection
      */
     public function getAllNodesByIdCategory($idCategory)
     {
@@ -320,7 +320,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     /**
      * @param int $idCategory
      *
-     * @return SpyCategoryNode[]
+     * @return SpyCategoryNode[]|ObjectCollection
      */
     public function getMainNodesByIdCategory($idCategory)
     {
@@ -333,7 +333,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     /**
      * @param int $idCategory
      *
-     * @return SpyCategoryNode[]
+     * @return SpyCategoryNode[]|ObjectCollection
      */
     public function getNotMainNodesByIdCategory($idCategory)
     {
@@ -347,7 +347,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
      * @param int $idParentNode
      * @param int $idLocale
      *
-     * @return SpyCategoryNode[]
+     * @return SpyCategoryNode[]|ObjectCollection
      */
     public function getCategoryNodesWithOrder($idParentNode, $idLocale)
     {
