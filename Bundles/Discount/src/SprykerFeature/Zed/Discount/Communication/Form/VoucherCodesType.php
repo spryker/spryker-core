@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
-use Pyz\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\Communication\Form\Transformers\DecisionRulesFormTransformer;
+use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\GreaterThan;
