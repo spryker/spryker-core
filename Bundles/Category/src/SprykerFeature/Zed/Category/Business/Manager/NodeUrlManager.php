@@ -57,7 +57,7 @@ class NodeUrlManager implements NodeUrlManagerInterface
     public function createUrl(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {
         $path = $this->categoryTreeReader->getPath($categoryNodeTransfer->getIdCategoryNode(), $localeTransfer);
-        $categoryUrl = $this->generateUrlFromPath($path);
+        $categoryUrl = $this->generateUrlFromPathTokens($path);
         $idNode = $categoryNodeTransfer->getIdCategoryNode();
 
         $url = $this->urlFacade->createUrl($categoryUrl, $localeTransfer, CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idNode);
@@ -73,7 +73,7 @@ class NodeUrlManager implements NodeUrlManagerInterface
     public function updateUrl(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {
         $path = $this->categoryTreeReader->getPath($categoryNodeTransfer->getIdCategoryNode(), $localeTransfer);
-        $categoryUrl = $this->generateUrlFromPath($path);
+        $categoryUrl = $this->generateUrlFromPathTokens($path);
         $idNode = $categoryNodeTransfer->getIdCategoryNode();
 
         $urlTransfer = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($idNode, $localeTransfer);
@@ -106,17 +106,33 @@ class NodeUrlManager implements NodeUrlManagerInterface
                 continue;
             }
 
-            $parentList = $this->categoryTreeReader->getPathParents($child->getFkCategoryNodeDescendant());
-            $pathTokens = [];
-            foreach ($parentList as $parent) {
-                /* @var SpyCategoryClosureTable $parent */
-                $pathTokens[] = $parent->toArray();
-            }
-
-            $childUrl = $this->generateUrlFromPath($pathTokens);
-            $this->updateTransferUrl($urlTransfer, $childUrl, $child->getFkCategoryNode(), $localeTransfer->getIdLocale());
+            $childUrl = $this->generateChildUrl($child->getFkCategoryNodeDescendant());
+            $this->updateTransferUrl($urlTransfer, $childUrl, $child->getFkCategoryNodeDescendant(), $localeTransfer->getIdLocale());
             $this->urlFacade->saveUrlAndTouch($urlTransfer);
         }
+    }
+
+    /**
+     * @param UrlTransfer $urlTransfer
+     * @param string $url
+     * @param int $idResource
+     * @param int $idLocale
+     *
+     * @return void
+     */
+    protected function updateTransferUrl(UrlTransfer $urlTransfer, $url, $idResource=null, $idLocale=null)
+    {
+        $urlTransfer->setResourceType(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE);
+
+        if ($idResource !== null) {
+            $urlTransfer->setResourceId($idResource);
+        }
+
+        if ($idLocale !== null) {
+            $urlTransfer->setFkLocale($idLocale);
+        }
+
+        $urlTransfer->setUrl($url);
     }
 
     /**
@@ -136,36 +152,30 @@ class NodeUrlManager implements NodeUrlManagerInterface
     }
 
     /**
+     * @param int $idChild
+     *
+     * @return string
+     */
+    protected function generateChildUrl($idChild)
+    {
+        $parentList = $this->categoryTreeReader->getPathParents($idChild);
+        $pathTokens = [];
+        foreach ($parentList as $parent) {
+            /* @var SpyCategoryClosureTable $parent */
+            $pathTokens[] = $parent->toArray();
+        }
+
+        return $this->generateUrlFromPathTokens($pathTokens);
+    }
+
+    /**
      * @param array $pathTokens
      *
      * @return string
      */
-    protected function generateUrlFromPath(array $pathTokens)
+    protected function generateUrlFromPathTokens(array $pathTokens)
     {
         return $this->urlPathGenerator->generate($pathTokens);
-    }
-
-    /**
-     * @param UrlTransfer $urlTransfer
-     * @param $url
-     * @param int $idResource
-     * @param int $idLocale
-     *
-     * @return void
-     */
-    protected function updateTransferUrl(UrlTransfer $urlTransfer, $url, $idResource=null, $idLocale=null)
-    {
-        $urlTransfer->setResourceType(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE);
-
-        if ($idResource !== null) {
-            $urlTransfer->setResourceId($idResource);
-        }
-
-        if ($idLocale !== null) {
-            $urlTransfer->setFkLocale($idLocale);
-        }
-
-        $urlTransfer->setUrl($url);
     }
 
 }
