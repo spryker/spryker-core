@@ -14,7 +14,7 @@ class Percentage implements CalculatorInterface
      * @param DiscountableInterface[] $discountableObjects
      * @param float $percentage
      *
-     * @return float
+     * @return int
      */
     public function calculate(array $discountableObjects, $percentage)
     {
@@ -35,11 +35,12 @@ class Percentage implements CalculatorInterface
             $discountAmount += $this->calculateDiscountAmount($itemTotalAmount, $percentage);
         }
 
+
         if ($discountAmount <= 0) {
             return 0;
         }
 
-        return $discountAmount;
+        return round($discountAmount);
     }
 
     /**

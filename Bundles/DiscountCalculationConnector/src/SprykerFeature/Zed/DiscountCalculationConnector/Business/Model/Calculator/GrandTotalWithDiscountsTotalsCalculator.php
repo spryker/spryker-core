@@ -48,7 +48,7 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
         $items
     ) {
         $grandTotal = $this->calculateGrandTotal($totalsTransfer, $container, $items);
-        $grandTotal -= round($this->getDiscount($totalsTransfer, $container, $items));
+        $grandTotal -= $this->getDiscount($totalsTransfer, $container, $items);
         $totalsTransfer->setGrandTotalWithDiscounts($grandTotal);
     }
 

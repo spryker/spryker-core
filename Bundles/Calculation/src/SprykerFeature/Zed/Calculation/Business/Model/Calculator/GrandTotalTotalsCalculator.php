@@ -65,8 +65,8 @@ class GrandTotalTotalsCalculator implements TotalsCalculatorPluginInterface
         CalculableInterface $calculableContainer,
         $calculableItems
     ) {
-        $grandTotalWithoutDiscounts = round($this->getSubtotal($totalsTransfer, $calculableItems));
-        $grandTotalWithoutDiscounts += round($this->getOrderExpenseTotal($totalsTransfer, $calculableContainer));
+        $grandTotalWithoutDiscounts = $this->getSubtotal($totalsTransfer, $calculableItems);
+        $grandTotalWithoutDiscounts += $this->getOrderExpenseTotal($totalsTransfer, $calculableContainer);
 
         return $grandTotalWithoutDiscounts;
     }
