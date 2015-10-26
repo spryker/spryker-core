@@ -1,5 +1,5 @@
 {
-  "name": "spryker/Auth-Mail",
+  "name": "spryker/auth-mail-connector",
   "autoload": {
     "psr-0": {
       "SprykerFeature": "src/",
