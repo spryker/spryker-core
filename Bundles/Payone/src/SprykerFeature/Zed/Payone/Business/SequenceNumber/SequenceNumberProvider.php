@@ -63,7 +63,7 @@ class SequenceNumberProvider implements SequenceNumberProviderInterface
             return $this->defaultEmptySequenceNumber;
         }
 
-        return $transactionEntity->getSequencenumber();
+        return $transactionEntity->getSequenceNumber();
     }
 
 }

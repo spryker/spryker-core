@@ -34,6 +34,7 @@ use SprykerFeature\Zed\Payone\Business\Api\Response\Container\DebitResponseConta
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\CreditCardCheckResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Response\Container\RefundResponseContainer;
 use SprykerFeature\Zed\Payone\Business\Key\HashGenerator;
+use SprykerFeature\Zed\Payone\Business\Payment\MethodMapper\CreditCardPseudo;
 use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
@@ -266,6 +267,7 @@ class PaymentManager implements PaymentManagerInterface
      */
     public function creditCardCheck(PayoneCreditCardInterface $creditCardData)
     {
+        /** @var CreditCardPseudo $paymentMethodMapper */
         $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper($creditCardData->getPayment()->getPaymentMethod());
         $requestContainer = $paymentMethodMapper->mapCreditCardCheck($creditCardData);
         $this->setStandardParameter($requestContainer);

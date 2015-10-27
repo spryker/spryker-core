@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Payone\Communication\Plugin\Condition;
 
-use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\AbstractCondition;
 use SprykerFeature\Zed\Payone\Business\PayoneDependencyContainer;
 use SprykerFeature\Zed\Payone\Business\PayoneFacade;
