@@ -18,12 +18,12 @@ class BundleCodeStyleFixer
     /**
      * @var string
      */
-    private $applicationRoot;
+    protected $applicationRoot;
 
     /**
      * @var string
      */
-    private $pathToBundles;
+    protected $pathToBundles;
 
     /**
      * @param string $applicationRoot
@@ -37,6 +37,8 @@ class BundleCodeStyleFixer
 
     /**
      * @param string $bundle
+     *
+     * @return void
      */
     public function fixBundleCodeStyle($bundle)
     {
@@ -52,7 +54,7 @@ class BundleCodeStyleFixer
      *
      * @return string
      */
-    private function normalizeBundleName($bundle)
+    protected function normalizeBundleName($bundle)
     {
         $filter = new UnderscoreToCamelCase();
 
@@ -64,7 +66,7 @@ class BundleCodeStyleFixer
      *
      * @return string
      */
-    private function getPathToBundle($bundle)
+    protected function getPathToBundle($bundle)
     {
         return $this->pathToBundles . $bundle;
     }
@@ -72,7 +74,7 @@ class BundleCodeStyleFixer
     /*
      * @return string
      */
-    private function getPathToCore()
+    protected function getPathToCore()
     {
         return dirname($this->pathToBundles);
     }
@@ -80,7 +82,7 @@ class BundleCodeStyleFixer
     /**
      * @param string $path
      */
-    private function copyPhpCsFixerConfigToBundle($path)
+    protected function copyPhpCsFixerConfigToBundle($path)
     {
         $from = $this->getPathToCore() . DIRECTORY_SEPARATOR . self::PHP_CS_CONFIG_FILE_NAME;
         $to = $path . DIRECTORY_SEPARATOR . self::PHP_CS_CONFIG_FILE_NAME;
@@ -94,8 +96,10 @@ class BundleCodeStyleFixer
 
     /**
      * @param string $path
+     *
+     * @return void
      */
-    private function removePhpCsFixerConfigFromBundle($path)
+    protected function removePhpCsFixerConfigFromBundle($path)
     {
         $fileSystem = new Filesystem();
         $fileSystem->remove(
@@ -105,8 +109,10 @@ class BundleCodeStyleFixer
 
     /**
      * @param string $path
+     *
+     * @return void
      */
-    private function runFixerCommand($path)
+    protected function runFixerCommand($path)
     {
         $command = $this->applicationRoot . '/vendor/bin/php-cs-fixer fix ' . $path . ' -vvv';
         $process = new Process($command, $this->getPathToCore(), null, null, 3600);

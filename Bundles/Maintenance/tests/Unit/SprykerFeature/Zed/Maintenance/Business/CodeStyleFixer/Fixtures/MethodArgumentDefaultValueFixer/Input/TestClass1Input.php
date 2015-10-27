@@ -25,7 +25,7 @@ class TestClass1Input
 
     }
 
-    public function eFunction($foo = PHP_EOL, $bar, $baz = null, $x)
+    public function eFunction($foo = PHP_EOL, $bar, \SplFileInfo $baz = null, $x)
     {
 
     }

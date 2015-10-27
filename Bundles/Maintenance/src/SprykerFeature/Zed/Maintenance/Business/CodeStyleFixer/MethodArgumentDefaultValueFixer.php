@@ -34,7 +34,7 @@ class MethodArgumentDefaultValueFixer extends AbstractFixer
     /**
      * {@inheritdoc}
      */
-    public function fix(\SplFileInfo $file = null, $content)
+    public function fix(\SplFileInfo $file, $content)
     {
         $tokens = Tokens::fromCode($content);
 

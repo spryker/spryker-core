@@ -25,7 +25,7 @@ class TestClass1Input
 
     }
 
-    public function eFunction($foo, $bar, $baz, $x)
+    public function eFunction($foo, $bar, \SplFileInfo $baz, $x)
     {
 
     }
