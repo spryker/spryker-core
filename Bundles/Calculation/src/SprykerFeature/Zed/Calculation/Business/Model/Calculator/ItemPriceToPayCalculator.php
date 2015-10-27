@@ -42,7 +42,7 @@ class ItemPriceToPayCalculator implements CalculatorPluginInterface
         $priceToPay = $itemTransfer->getGrossPrice();
         $priceToPay -= $this->sumDiscounts($itemTransfer->getDiscounts());
 
-        $priceToPay = $this->adjustEmptyAmount($itemTransfer, $priceToPay);
+        $priceToPay = $this->adjustPriceWhenEmpty($itemTransfer, $priceToPay);
 
         //@todo add item expenses to priceToPay
         $priceToPay += $this->sumOptions($itemTransfer->getProductOptions());
@@ -135,11 +135,11 @@ class ItemPriceToPayCalculator implements CalculatorPluginInterface
     /**
      * //@todo why set to gross, why not keep 0?
      * @param ItemTransfer $itemTransfer
-     * @param int           $priceToPay
+     * @param int $priceToPay
      *
      * @return int
      */
-    protected function adjustEmptyAmount(ItemTransfer $itemTransfer, $priceToPay)
+    protected function adjustPriceWhenEmpty(ItemTransfer $itemTransfer, $priceToPay)
     {
         $priceToPay = max(0, $priceToPay);
         if ($priceToPay === 0) {

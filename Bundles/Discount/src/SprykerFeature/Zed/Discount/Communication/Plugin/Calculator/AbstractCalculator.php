@@ -21,7 +21,7 @@ abstract class AbstractCalculator extends AbstractDiscountPlugin implements Disc
      * @param DiscountableInterface[] $discountableObjects
      * @param float $number
      *
-     * @return mixed
+     * @return int
      */
     abstract public function calculate(array $discountableObjects, $number);
 }

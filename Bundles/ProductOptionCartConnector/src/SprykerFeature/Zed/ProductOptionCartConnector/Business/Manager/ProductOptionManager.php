@@ -46,7 +46,7 @@ class ProductOptionManager implements ProductOptionManagerInterface
     {
         foreach ($cartItem->getProductOptions() as &$productOptionTransfer) {
 
-            if (null === $productOptionTransfer->getIdOptionValueUsage() || null ===  $productOptionTransfer->getLocaleCode()) {
+            if ($productOptionTransfer->getIdOptionValueUsage() === null || $productOptionTransfer->getLocaleCode() === null) {
                 throw new \RuntimeException('Unable to expand product option. Missing required values: idOptionValueUsage, localeCode');
             }
 
