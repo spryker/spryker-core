@@ -8,7 +8,6 @@ namespace SprykerEngine\Yves\Application\Communication\Plugin\ServiceProvider;
 
 use SprykerEngine\Yves\Application\Communication\ApplicationDependencyContainer;
 use SprykerEngine\Yves\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Shared\Library\Error\ErrorLogger;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
@@ -75,10 +74,6 @@ class ExceptionServiceProvider extends AbstractPlugin implements ServiceProvider
         $exceptionHandlers = $this->getDependencyContainer()->createExceptionHandlers();
         if (!array_key_exists($statusCode, $exceptionHandlers)) {
             throw $exception;
-        }
-
-        if ($statusCode === Response::HTTP_INTERNAL_SERVER_ERROR) {
-            ErrorLogger::log($exception);
         }
     }
 

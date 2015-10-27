@@ -54,7 +54,13 @@ class ErrorHandler
 
             $this->cleanOutputBuffer();
 
-            $this->echoOutput($exception, $output);
+            if ($this->showExceptionStackTrace()) {
+                $this->echoOutput($exception, $output);
+            } else {
+                if ($exit) {
+                    $this->showErrorPage();
+                }
+            }
 
         } catch (\Exception $internalException) {
             ErrorLogger::log($internalException);
@@ -83,6 +89,14 @@ class ErrorHandler
     }
 
     /**
+     * @return bool
+     */
+    protected function showExceptionStackTrace()
+    {
+        return Config::get(YvesConfig::YVES_SHOW_EXCEPTION_STACK_TRACE);
+    }
+
+    /**
      * @param \Exception $exception
      * @param $output
      */
@@ -91,6 +105,14 @@ class ErrorHandler
         if ($output) {
             $message = ErrorRenderer::renderException($exception);
             echo $message;
+        }
+    }
+
+    protected function showErrorPage()
+    {
+        if (!headers_sent()) {
+            $errorPage = Config::get(YvesConfig::YVES_ERROR_PAGE);
+            require_once $errorPage;
         }
     }
 
