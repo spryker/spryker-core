@@ -98,4 +98,12 @@ class ProductCategoryDependencyContainer extends AbstractBusinessDependencyConta
         return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_CMS);
     }
 
+    /**
+     * @return TransferGeneratorInterface
+     */
+    public function createProductCategoryTransferGenerator()
+    {
+        return $this->getFactory()->createTransferGenerator();
+    }
+
 }

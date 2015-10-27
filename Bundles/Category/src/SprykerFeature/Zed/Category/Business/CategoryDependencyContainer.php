@@ -161,4 +161,12 @@ class CategoryDependencyContainer extends AbstractBusinessDependencyContainer
         return $this->getFactory()->createTreeFormatterCategoryTreeFormatter();
     }
 
+    /**
+     * @return TransferGeneratorInterface
+     */
+    public function createCategoryTransferGenerator()
+    {
+        return $this->getFactory()->createTransferGenerator();
+    }
+
 }

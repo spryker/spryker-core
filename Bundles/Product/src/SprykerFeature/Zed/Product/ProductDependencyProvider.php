@@ -17,6 +17,7 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_TOUCH = 'facade touch';
     const FACADE_PRODUCT_CATEGORIES = 'facade product categories';
     const FACADE_PRODUCT_OPTIONS = 'facade product options';
+    const QUERY_CONTAINER_PRODUCT = 'query container product ';
 
     /**
      * @param Container $container
@@ -61,6 +62,10 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_URL] = function (Container $container) {
             return $container->getLocator()->url()->facade();
+        };
+
+        $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
+            return $container->getLocator()->product()->queryContainer();
         };
 
         return $container;

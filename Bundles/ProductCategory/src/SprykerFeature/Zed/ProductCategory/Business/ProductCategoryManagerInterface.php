@@ -14,6 +14,7 @@ use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
+use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategory;
 use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
 
 interface ProductCategoryManagerInterface
@@ -53,7 +54,7 @@ interface ProductCategoryManagerInterface
     /**
      * @param SpyAbstractProduct $abstractProduct
      *
-     * @return SpyProductCategoryQuery
+     * @return SpyProductCategory[]
      */
     public function getCategoriesByAbstractProduct(SpyAbstractProduct $abstractProduct);
 

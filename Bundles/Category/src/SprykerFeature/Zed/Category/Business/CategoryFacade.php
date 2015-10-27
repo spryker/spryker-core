@@ -10,10 +10,7 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Locale\LocaleInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Propel\Runtime\Collection\ObjectCollection;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategory;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 
 /**
  * @method CategoryDependencyContainer getDependencyContainer()
@@ -47,7 +44,10 @@ class CategoryFacade extends AbstractFacade
             ->getNodeById($idNode)
         ;
 
-        return $this->convertCategoryNodeEntityToTransfer($nodeEntity);
+        return $this->getDependencyContainer()
+            ->createCategoryTransferGenerator()
+            ->convertCategoryNode($nodeEntity)
+        ;
     }
 
     /**
@@ -90,7 +90,10 @@ class CategoryFacade extends AbstractFacade
             ->getAllNodesByIdCategory($idCategory)
         ;
 
-        return $this->convertCategoryNodeEntityCollectionToArray($nodeEntities);
+        return $this->getDependencyContainer()
+            ->createCategoryTransferGenerator()
+            ->convertCategoryNodeCollection($nodeEntities)
+        ;
     }
 
     /**
@@ -105,7 +108,10 @@ class CategoryFacade extends AbstractFacade
             ->getMainNodesByIdCategory($idCategory)
         ;
 
-        return $this->convertCategoryNodeEntityCollectionToArray($nodeEntities);
+        return $this->getDependencyContainer()
+            ->createCategoryTransferGenerator()
+            ->convertCategoryNodeCollection($nodeEntities)
+        ;
     }
 
     /**
@@ -120,7 +126,10 @@ class CategoryFacade extends AbstractFacade
             ->getNotMainNodesByIdCategory($idCategory)
         ;
 
-        return $this->convertCategoryNodeEntityCollectionToArray($nodeEntities);
+        return $this->getDependencyContainer()
+            ->createCategoryTransferGenerator()
+            ->convertCategoryNodeCollection($nodeEntities)
+        ;
     }
 
     /**
@@ -229,7 +238,10 @@ class CategoryFacade extends AbstractFacade
             ->getRootNodes()
         ;
 
-        return $this->convertCategoryNodeEntityCollectionToArray($rootNodes);
+        return $this->getDependencyContainer()
+            ->createCategoryTransferGenerator()
+            ->convertCategoryNodeCollection($rootNodes)
+        ;
     }
 
     /**
@@ -311,58 +323,6 @@ class CategoryFacade extends AbstractFacade
             ->createUrlPathGenerator()
             ->generate($pathTokens)
         ;
-    }
-
-    /**
-     * @param SpyCategory $categoryEntity
-     *
-     * @return CategoryTransfer
-     */
-    protected function convertCategoryEntityToTransfer(SpyCategory $categoryEntity)
-    {
-        return (new CategoryTransfer())
-            ->fromArray($categoryEntity->toArray());
-    }
-
-    /**
-     * @param SpyCategory[]|ObjectCollection $categoryEntityList
-     *
-     * @return CategoryTransfer[]
-     */
-    protected function convertCategoryEntityCollectionToArray(ObjectCollection $categoryEntityList)
-    {
-        $transferList = [];
-        foreach ($categoryEntityList as $categoryEntity) {
-            $transferList[] = $this->convertCategoryEntityToTransfer($categoryEntity);
-        }
-
-        return $transferList;
-    }
-
-    /**
-     * @param SpyCategoryNode $nodeEntity
-     *
-     * @return NodeTransfer
-     */
-    protected function convertCategoryNodeEntityToTransfer(SpyCategoryNode $nodeEntity)
-    {
-        return (new NodeTransfer())
-            ->fromArray($nodeEntity->toArray());
-    }
-
-    /**
-     * @param SpyCategoryNode[]|ObjectCollection $categoryNodeEntityList
-     *
-     * @return NodeTransfer[]
-     */
-    protected function convertCategoryNodeEntityCollectionToArray(ObjectCollection $categoryNodeEntityList)
-    {
-        $transferList = [];
-        foreach ($categoryNodeEntityList as $categoryNodeEntity) {
-            $transferList[] = $this->convertCategoryNodeEntityToTransfer($categoryNodeEntity);
-        }
-
-        return $transferList;
     }
 
 }

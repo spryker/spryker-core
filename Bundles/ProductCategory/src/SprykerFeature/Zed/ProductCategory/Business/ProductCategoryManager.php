@@ -187,12 +187,13 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     /**
      * @param SpyAbstractProduct $abstractProduct
      *
-     * @return SpyProductCategoryQuery
+     * @return SpyProductCategory[]
      */
     public function getCategoriesByAbstractProduct(SpyAbstractProduct $abstractProduct)
     {
         return $this->productCategoryQueryContainer
             ->queryLocalizedProductCategoryMappingByProduct($abstractProduct)
+            ->find()
         ;
     }
 

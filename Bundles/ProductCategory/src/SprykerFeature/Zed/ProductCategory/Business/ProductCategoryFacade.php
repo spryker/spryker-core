@@ -9,13 +9,13 @@ namespace SprykerFeature\Zed\ProductCategory\Business;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
+use Generated\Shared\Transfer\ProductCategoryTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
-use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
 
 /**
  * @property ProductCategoryDependencyContainer $dependencyContainer
@@ -64,14 +64,18 @@ class ProductCategoryFacade extends AbstractFacade
     /**
      * @param SpyAbstractProduct $abstractProduct
      *
-     * @return SpyProductCategoryQuery
+     * @return ProductCategoryTransfer[]
      */
     public function getCategoriesByAbstractProduct(SpyAbstractProduct $abstractProduct)
     {
-        return $this->getDependencyContainer()
+        $entities = $this->getDependencyContainer()
             ->createProductCategoryManager()
             ->getCategoriesByAbstractProduct($abstractProduct)
         ;
+
+        return $this->getDependencyContainer()
+            ->createProductCategoryTransferGenerator()
+            ->convertProductCategoryCollection($entities);
     }
 
     /**

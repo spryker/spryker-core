@@ -53,7 +53,7 @@ class EditController extends AddController
 
         if ($form->isValid()) {
             $connection = $this->getDependencyContainer()
-                ->createPropelConnection($idCategory);
+                ->createPropelConnection();
 
             $connection->beginTransaction();
 
