@@ -25,6 +25,7 @@ use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
  */
 class CmsFacade extends AbstractFacade
 {
+
     /**
      * @param string $name
      * @param string $path
@@ -342,4 +343,5 @@ class CmsFacade extends AbstractFacade
 
         return $blockManager->getCmsBlocksByIdCategoryNode($idCategoryNode);
     }
+
 }

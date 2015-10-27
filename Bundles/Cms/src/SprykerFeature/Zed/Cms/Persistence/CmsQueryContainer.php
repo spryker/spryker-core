@@ -31,6 +31,7 @@ use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
 
 class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContainerInterface
 {
+
     const TEMPLATE_NAME = 'template_name';
     const TEMPLATE_PATH = 'template_path';
     const CATEGORY_NODE_ID = 'categoryNodeId';

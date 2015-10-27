@@ -12,6 +12,7 @@ use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlock;
 
 interface BlockManagerInterface
 {
+
     /**
      * @param CmsBlockInterface $cmsBlockTransfer
      *
@@ -66,4 +67,5 @@ interface BlockManagerInterface
      * @return CmsBlockTransfer[]
      */
     public function getCmsBlocksByIdCategoryNode($idCategoryNode);
+
 }

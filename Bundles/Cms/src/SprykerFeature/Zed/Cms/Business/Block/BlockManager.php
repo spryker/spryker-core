@@ -17,6 +17,7 @@ use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlock;
 
 class BlockManager implements BlockManagerInterface
 {
+
     /**
      * @var CmsQueryContainerInterface
      */
@@ -99,7 +100,7 @@ class BlockManager implements BlockManagerInterface
         foreach ($assignedBlocks as $idBlock => $blockTransfer) {
             //unique keys is on name, type and value therefore the name has to be changed
             $blockTransfer->setName(
-                $blockTransfer->getName().'_'.CmsConfig::RESOURCE_TYPE_CATEGORY_NODE.'_deleted_'.$blockTransfer->getIdCmsBlock()
+                $blockTransfer->getName() . '_' . CmsConfig::RESOURCE_TYPE_CATEGORY_NODE . '_deleted_' . $blockTransfer->getIdCmsBlock()
             );
             $blockTransfer->setType(CmsConfig::RESOURCE_TYPE_STATIC);
             $blockTransfer->setValue(0);

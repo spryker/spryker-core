@@ -189,7 +189,7 @@ class CategoryFormAdd extends AbstractForm
 
         $products = [];
         foreach ($productCategoryEntityList as $productCategoryEntity) {
-            /** @var SpyProductCategory $productCategoryEntity */
+            /* @var SpyProductCategory $productCategoryEntity */
             $products[$productCategoryEntity->getIdProductCategory()] = $productCategoryEntity->getName();
         }
 

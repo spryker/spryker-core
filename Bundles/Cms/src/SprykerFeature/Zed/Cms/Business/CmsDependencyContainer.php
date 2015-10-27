@@ -24,6 +24,7 @@ use Symfony\Component\Finder\Finder;
  */
 class CmsDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return CmsQueryContainerInterface
      */
@@ -118,6 +119,6 @@ class CmsDependencyContainer extends AbstractBusinessDependencyContainer
     protected function getFinder()
     {
         return new Finder();
-
     }
+
 }

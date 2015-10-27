@@ -99,4 +99,5 @@ interface CmsQueryContainerInterface
      * @return SpyCmsBlockQuery
      */
     public function queryBlockByIdCategoryNode($idCategoryNode);
+
 }
