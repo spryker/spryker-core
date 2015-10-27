@@ -54,6 +54,8 @@ class CategoryWriter implements CategoryWriterInterface
     /**
      * @param CategoryInterface $category
      * @param LocaleTransfer $locale
+     *
+     * @return void
      */
     public function update(CategoryInterface $category, LocaleTransfer $locale)
     {
@@ -66,11 +68,16 @@ class CategoryWriter implements CategoryWriterInterface
      * @param int $idCategory
      *
      * @throws PropelException
+     *
+     * @return void
      */
     public function delete($idCategory)
     {
         $this->deleteAttributes($idCategory);
-        $categoryEntity = $this->queryContainer->queryCategoryById($idCategory)->findOne();
+        $categoryEntity = $this->queryContainer
+            ->queryCategoryById($idCategory)
+            ->findOne()
+        ;
 
         if ($categoryEntity) {
             $categoryEntity->delete();
@@ -80,9 +87,10 @@ class CategoryWriter implements CategoryWriterInterface
     /**
      * @param CategoryInterface $category
 
-     * @return SpyCategory
      *
      * @throws PropelException
+     *
+     * @return SpyCategory
      */
     protected function saveCategory(CategoryInterface $category)
     {
@@ -98,6 +106,8 @@ class CategoryWriter implements CategoryWriterInterface
      * @param LocaleTransfer $locale
      *
      * @throws PropelException
+     *
+     * @return void
      */
     protected function persistCategoryAttribute(CategoryInterface $category, LocaleTransfer $locale)
     {
@@ -112,6 +122,8 @@ class CategoryWriter implements CategoryWriterInterface
 
     /**
      * @param int $idCategory
+     *
+     * @return void
      */
     protected function deleteAttributes($idCategory)
     {

@@ -37,6 +37,7 @@ use Zend\Filter\Word\CamelCaseToUnderscore;
  */
 class DiscountDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @param bool $allowMultiple
      *

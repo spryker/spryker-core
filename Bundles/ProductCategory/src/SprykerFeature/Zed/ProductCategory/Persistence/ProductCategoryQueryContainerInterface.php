@@ -26,6 +26,11 @@ interface ProductCategoryQueryContainerInterface
     public function expandProductCategoryPathQuery(ModelCriteria $query, LocaleTransfer $locale, $excludeDirectParent = true, $excludeRoot = true);
 
     /**
+     * @return SpyProductCategoryQuery
+     */
+    public function queryProductCategoryMappingsByCategoryId($idCategory);
+
+    /**
      * @param int $idAbstractProduct
      * @param int $idCategoryNode
      *
@@ -51,8 +56,8 @@ interface ProductCategoryQueryContainerInterface
 
     /**
      * @param int $idCategory
-     *
      * @param LocaleTransfer $locale
+     *
      * @return SpyProductCategoryQuery
      */
     public function queryProductsByCategoryId($idCategory, LocaleTransfer $locale);
@@ -60,8 +65,8 @@ interface ProductCategoryQueryContainerInterface
     /**
      * @param $term
      * @param LocaleTransfer $locale
-     *
      * @param null $idExcludedCategory
+     *
      * @return SpyAbstractProductQuery
      */
     public function queryAbstractProductsBySearchTerm($term, LocaleTransfer $locale, $idExcludedCategory = null);

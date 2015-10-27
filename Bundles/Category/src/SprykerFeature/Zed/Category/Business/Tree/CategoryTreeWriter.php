@@ -8,20 +8,14 @@ namespace SprykerFeature\Zed\Category\Business\Tree;
 
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Propel\Runtime\Propel;
+use Propel\Runtime\Connection\ConnectionInterface;
 use SprykerFeature\Shared\Category\CategoryConfig;
 use SprykerFeature\Zed\Category\Business\Manager\NodeUrlManagerInterface;
-use SprykerFeature\Zed\Category\Business\Model\CategoryWriterInterface;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTableQuery;
 
 class CategoryTreeWriter
 {
-
-    /**
-     * @var CategoryWriterInterface
-     */
-    protected $categoryWriter;
 
     /**
      * @var NodeWriterInterface
@@ -49,27 +43,32 @@ class CategoryTreeWriter
     protected $touchFacade;
 
     /**
-     * @param CategoryWriterInterface $categoryWriter
+     * @var ConnectionInterface
+     */
+    protected $connection;
+
+    /**
      * @param NodeWriterInterface $nodeWriter
      * @param ClosureTableWriterInterface $closureTableWriter
      * @param CategoryTreeReaderInterface $categoryTreeReader
      * @param NodeUrlManagerInterface $nodeUrlManager
      * @param CategoryToTouchInterface $touchFacade
+     * @param ConnectionInterface $connection
      */
     public function __construct(
-        CategoryWriterInterface $categoryWriter,
         NodeWriterInterface $nodeWriter,
         ClosureTableWriterInterface $closureTableWriter,
         CategoryTreeReaderInterface $categoryTreeReader,
         NodeUrlManagerInterface $nodeUrlManager,
-        CategoryToTouchInterface  $touchFacade
+        CategoryToTouchInterface  $touchFacade,
+        ConnectionInterface $connection
     ) {
-        $this->categoryWriter = $categoryWriter;
         $this->nodeWriter = $nodeWriter;
         $this->closureTableWriter = $closureTableWriter;
         $this->categoryTreeReader = $categoryTreeReader;
         $this->nodeUrlManager = $nodeUrlManager;
         $this->touchFacade = $touchFacade;
+        $this->connection = $connection;
     }
 
     /**
@@ -84,102 +83,42 @@ class CategoryTreeWriter
         LocaleTransfer $locale,
         $createUrlPath = true
     ) {
-        $connection = Propel::getConnection();
-        $connection->beginTransaction();
+        $this->connection->beginTransaction();
 
         $idNode = $this->nodeWriter->create($categoryNode);
         $this->closureTableWriter->create($categoryNode);
-        
+
         $this->touchNavigationActive();
 
         $this->touchCategoryActiveRecursive($categoryNode);
-        
+
         if ($createUrlPath) {
             $this->nodeUrlManager->createUrl($categoryNode, $locale);
         }
 
-        $connection->commit();
+        $this->connection->commit();
 
         return $idNode;
     }
 
     /**
-     * @param int $idNode
-     * @param LocaleTransfer $locale
+     * @param NodeTransfer $categoryNodeTransfer
+     * @param LocaleTransfer $localeTransfer
      *
-     * @return bool
+     * @return void
      */
-    public function deleteCategoryByNodeId($idNode, LocaleTransfer $locale)
+    public function updateNode(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {
-        $connection = Propel::getConnection();
-        $connection->beginTransaction();
+        $this->connection->beginTransaction();
 
-        //order of execution matters, this must be called before node is deleted
-        $this->touchUrlDeleted($idNode, $locale);
+        $this->nodeWriter->update($categoryNodeTransfer);
+        $this->closureTableWriter->moveNode($categoryNodeTransfer);
+        $this->nodeUrlManager->updateUrl($categoryNodeTransfer, $localeTransfer);
 
-        $nodeEntity = $this->categoryTreeReader->getNodeById($idNode);
-        $idCategory = $nodeEntity->getFkCategory();
-        $categoryNodes = $this->categoryTreeReader->getAllNodesByIdCategory($idCategory);
-
-        foreach ($categoryNodes as $node) {
-            $this->deleteNode($node->getPrimaryKey(), $locale, true);
-        }
-        $this->categoryWriter->delete($idCategory);
-        
-        $this->touchCategoryDeleted($idNode);
-
-        $connection->commit();
-
-        return true;
-    }
-
-    /**
-     * @param NodeTransfer $categoryNode
-     * @param LocaleTransfer $locale
-     */
-    public function updateNode(NodeTransfer $categoryNode, LocaleTransfer $locale)
-    {
-        $connection = Propel::getConnection();
-        $connection->beginTransaction();
-
-        $this->nodeWriter->update($categoryNode);
-        $this->closureTableWriter->moveNode($categoryNode);
-        $this->nodeUrlManager->updateUrl($categoryNode, $locale);
-
-        $this->touchCategoryActiveRecursive($categoryNode);
+        $this->touchCategoryActiveRecursive($categoryNodeTransfer);
         $this->touchNavigationActive();
 
-        $connection->commit();
-    }
-
-    /**
-     * @param NodeTransfer $categoryNode
-     */
-    protected function touchCategoryActiveRecursive(NodeTransfer $categoryNode)
-    {
-        $closureQuery= new SpyCategoryClosureTableQuery();
-        $nodes = $closureQuery->findByFkCategoryNodeDescendant($categoryNode->getFkParentCategoryNode());
-
-        foreach($nodes as $node) {
-            $this->touchCategoryActive($node->getFkCategoryNode());
-        }
-
-        $this->touchCategoryActive($categoryNode->getIdCategoryNode());
-    }
-
-    /**
-     * @param NodeTransfer $categoryNode
-     */
-    protected function touchCategoryDeletedRecursive(NodeTransfer $categoryNode)
-    {
-        $closureQuery= new SpyCategoryClosureTableQuery();
-        $nodes = $closureQuery->findByFkCategoryNodeDescendant($categoryNode->getFkParentCategoryNode());
-
-        foreach($nodes as $node) {
-            $this->touchCategoryDeleted($node->getFkCategoryNode());
-        }
-
-        $this->touchCategoryDeleted($categoryNode->getIdCategoryNode());
+        $this->connection->commit();
     }
 
     /**
@@ -191,40 +130,81 @@ class CategoryTreeWriter
      */
     public function deleteNode($idNode, LocaleTransfer $locale, $deleteChildren = false)
     {
-        $connection = Propel::getConnection();
-        $connection->beginTransaction();
+        $this->connection->beginTransaction();
 
-        //order of execution matters, this must be called before node is deleted
-        $this->touchUrlDeleted($idNode, $locale);
-        
-        if ($this->categoryTreeReader->hasChildren($idNode) && $deleteChildren) {
+        //order of execution matters, these must be called before node is deleted
+        $this->removeNodeUrl($idNode, $locale);
+        $this->touchCategoryDeleted($idNode);
+
+        $hasChildren = $this->categoryTreeReader->hasChildren($idNode);
+
+        if ($deleteChildren && $hasChildren) {
             $childNodes = $this->categoryTreeReader->getChildren($idNode, $locale);
             foreach ($childNodes as $childNode) {
                 $this->deleteNode($childNode->getIdCategoryNode(), $locale, true);
             }
         }
 
-        $this->touchCategoryDeleted($idNode);
+        $result = $this->closureTableWriter->delete($idNode);
 
-        $this->closureTableWriter->delete($idNode);
+        $hasChildren = $this->categoryTreeReader->hasChildren($idNode);
+        if (!$hasChildren) {
+            $result = $this->nodeWriter->delete($idNode);
+        }
 
-        $this->touchCategoryDeleted($idNode);
-        $this->touchNavigationDeleted();
+        $this->touchNavigationUpdated();
 
-        $result =  $this->nodeWriter->delete($idNode);
-
-        $connection->commit();
+        $this->connection->commit();
 
         return $result;
     }
 
+    /**
+     * @return void
+     */
     public function rebuildClosureTable()
     {
         $this->closureTableWriter->rebuildCategoryNodes();
     }
 
     /**
+     * @param NodeTransfer $categoryNode
+     *
+     * @return void
+     */
+    protected function touchCategoryActiveRecursive(NodeTransfer $categoryNode)
+    {
+        $closureQuery= new SpyCategoryClosureTableQuery();
+        $nodes = $closureQuery->findByFkCategoryNodeDescendant($categoryNode->getFkParentCategoryNode());
+
+        foreach ($nodes as $node) {
+            $this->touchCategoryActive($node->getFkCategoryNode());
+        }
+
+        $this->touchCategoryActive($categoryNode->getIdCategoryNode());
+    }
+
+    /**
+     * @param NodeTransfer $categoryNode
+     *
+     * @return void
+     */
+    protected function touchCategoryDeletedRecursive(NodeTransfer $categoryNode)
+    {
+        $closureQuery= new SpyCategoryClosureTableQuery();
+        $nodes = $closureQuery->findByFkCategoryNodeDescendant($categoryNode->getFkParentCategoryNode());
+
+        foreach ($nodes as $node) {
+            $this->touchCategoryDeleted($node->getFkCategoryNode());
+        }
+
+        $this->touchCategoryDeleted($categoryNode->getIdCategoryNode());
+    }
+
+    /**
      * @param int $idCategoryNode
+     *
+     * @return void
      */
     protected function touchCategoryActive($idCategoryNode)
     {
@@ -233,12 +213,17 @@ class CategoryTreeWriter
 
     /**
      * @param $idCategoryNode
+     *
+     * @return void
      */
     protected function touchCategoryDeleted($idCategoryNode)
     {
         $this->touchFacade->touchDeleted(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idCategoryNode);
     }
 
+    /**
+     * @return void
+     */
     protected function touchNavigationActive()
     {
         $navigationItems = $this->touchFacade->getItemsByType(CategoryConfig::RESOURCE_TYPE_NAVIGATION);
@@ -248,22 +233,27 @@ class CategoryTreeWriter
         $this->touchFacade->bulkTouchActive(CategoryConfig::RESOURCE_TYPE_NAVIGATION, $itemIds);
     }
 
-    protected function touchNavigationDeleted()
+    /**
+     * @return void
+     */
+    protected function touchNavigationUpdated()
     {
-        $navigationItems = $this->touchFacade->getItemsByType(CategoryConfig::RESOURCE_TYPE_NAVIGATION);
-
-        $itemIds = array_keys($navigationItems);
-
-        $this->touchFacade->bulkTouchInactive(CategoryConfig::RESOURCE_TYPE_NAVIGATION, $itemIds);
+        $this->touchNavigationActive();
     }
 
     /**
-     * @param $idCategoryNode
+     * @param int $idCategoryNode
+     * @param LocaleTransfer $locale
+     *
+     * @return void
      */
-    protected function touchUrlDeleted($idCategoryNode, LocaleTransfer $locale)
+    protected function removeNodeUrl($idCategoryNode, LocaleTransfer $locale)
     {
         $node = $this->categoryTreeReader->getNodeById($idCategoryNode);
-        $nodeTransfer = (new NodeTransfer())->fromArray($node->toArray());
+        $nodeTransfer = (new NodeTransfer())
+            ->fromArray($node->toArray());
+
         $this->nodeUrlManager->removeUrl($nodeTransfer, $locale);
     }
+
 }

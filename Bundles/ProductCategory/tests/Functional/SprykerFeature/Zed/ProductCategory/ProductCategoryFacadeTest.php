@@ -75,9 +75,9 @@ class ProductCategoryFacadeTest extends AbstractFunctionalTest
         $this->productCategoryFacade = new ProductCategoryFacade(new Factory('ProductCategory'), $this->locator);
 
         $container = new Container();
-        $container[ProductCategoryDependencyProvider::FACADE_TOUCH] = function (Container $container) {
-            return $this->getMock('SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface');
-        };
+        $dependencyProvider = new ProductCategoryDependencyProvider();
+        $dependencyProvider->provideBusinessLayerDependencies($container);
+        $dependencyProvider->provideCommunicationLayerDependencies($container);
 
         $this->productCategoryFacade->setExternalDependencies($container);
         $this->productCategoryQueryContainer = new ProductQueryContainer(

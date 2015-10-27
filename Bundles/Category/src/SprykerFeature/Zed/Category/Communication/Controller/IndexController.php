@@ -104,7 +104,7 @@ class IndexController extends AbstractController
     {
         $idCategory = $request->get(self::PARAM_ID_CATEGORY_NODE);
 
-        /* @var CategoryAttributeTable $table */
+        /** @var CategoryAttributeTable $table */
         $table = $this->getDependencyContainer()
             ->createCategoryAttributeTable($idCategory)
         ;
@@ -132,13 +132,18 @@ class IndexController extends AbstractController
         return $this->viewResponse($tableData);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return void
+     */
     public function rebuildClosureTableAction(Request $request)
     {
         $this->getFacade()
             ->rebuildClosureTable()
         ;
 
-        die("<br/>Done");
+        die('<br/>Done');
     }
 
     /**

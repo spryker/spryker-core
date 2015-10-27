@@ -75,6 +75,8 @@ class NodeWriter implements NodeWriterInterface
      * @param NodeTransfer $categoryNode
      *
      * @throws PropelException
+     *
+     * @return void
      */
     public function update(NodeTransfer $categoryNode)
     {

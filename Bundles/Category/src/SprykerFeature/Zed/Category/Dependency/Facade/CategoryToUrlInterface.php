@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerFeature\Zed\Category\Dependency\Facade;
@@ -39,11 +39,11 @@ interface CategoryToUrlInterface
     public function touchUrlDeleted($idUrl);
 
     /**
-     * @param UrlTransfer $url
+     * @param UrlTransfer $urlTransfer
      *
      * @return UrlTransfer
      */
-    public function saveUrlAndTouch(UrlTransfer $url);
+    public function saveUrlAndTouch(UrlTransfer $urlTransfer);
 
     /**
      * @param string $url
@@ -68,5 +68,15 @@ interface CategoryToUrlInterface
      * @return UrlTransfer
      */
     public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale);
-    
+
+    /**
+     * @param UrlTransfer $urlTransfer
+     *
+     * @throws MissingUrlException
+     * @throws PropelException
+     *
+     * @return void
+     */
+    public function deleteUrl(UrlTransfer $urlTransfer);
+
 }

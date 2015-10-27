@@ -27,7 +27,7 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
 {
 
     protected $currentLocale;
-    
+
     /**
      * @return LocaleTransfer
      */
@@ -46,7 +46,7 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
         if (null === $this->currentLocale) {
             $this->currentLocale = $this->createCurrentLocale();
         }
-        
+
         return $this->currentLocale;
     }
 
@@ -83,7 +83,7 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createCategoryAttributeTable($idCategoryNode)
     {
-        if ($idCategoryNode == null) {
+        if ($idCategoryNode === null) {
             //@TODO: table initialisation with ajax then this part can be deleted
             $idCategoryNode = $this->getQueryContainer()->queryRootNode()->findOne()->getIdCategoryNode();
         }
@@ -104,13 +104,14 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createUrlTable($idCategoryNode)
     {
-        if ($idCategoryNode == null) {
+        if ($idCategoryNode === null) {
             //@TODO: table initialisation with ajax then this part can be deleted
             $idCategoryNode = $this->getQueryContainer()->queryRootNode()->findOne()->getIdCategoryNode();
         }
         $urlQuery = $this->getQueryContainer()
             ->queryUrlByIdCategoryNode($idCategoryNode)
         ;
+
         return $this->getFactory()->createTableUrlTable($urlQuery);
     }
 
@@ -154,6 +155,16 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
     public function createCategoryFacade()
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_CATEGORY);
+    }
+
+    /**
+     * @throws \ErrorException
+     *
+     * @return CategoryQueryContainer
+     */
+    public function createCategoryQueryContainer()
+    {
+        return $this->getProvidedDependency(CategoryDependencyProvider::QUERY_CONTAINER_CATEGORY);
     }
 
 }

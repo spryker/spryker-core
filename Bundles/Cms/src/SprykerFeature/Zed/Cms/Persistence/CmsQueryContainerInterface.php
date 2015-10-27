@@ -92,4 +92,12 @@ interface CmsQueryContainerInterface
      * @return SpyCmsBlockQuery
      */
     public function queryBlockByNameAndTypeValue($blockName, $blockType, $blockValue);
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return SpyCmsBlockQuery
+     */
+    public function queryBlockByIdCategoryNode($idCategoryNode);
+
 }

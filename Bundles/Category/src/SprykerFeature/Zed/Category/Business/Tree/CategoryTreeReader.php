@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Category\Business\Tree;
 use Generated\Shared\Locale\LocaleInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
+use SprykerFeature\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryClosureTableTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
@@ -33,11 +34,17 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     protected $queryContainer;
 
     /**
+     * @var CategoryTreeFormatter
+     */
+    protected $treeFormatter;
+
+    /**
      * @param CategoryQueryContainer $queryContainer
      */
-    public function __construct(CategoryQueryContainer $queryContainer)
+    public function __construct(CategoryQueryContainer $queryContainer, CategoryTreeFormatter $treeFormatter)
     {
         $this->queryContainer = $queryContainer;
+        $this->treeFormatter = $treeFormatter;
     }
 
     /**
@@ -287,7 +294,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     }
 
     /**
-     * @return SpyCategoryNode[]
+     * @return SpyCategoryNode[]|ObjectCollection
      */
     public function getRootNodes()
     {
@@ -300,7 +307,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     /**
      * @param int $idCategory
      *
-     * @return SpyCategoryNode[]
+     * @return SpyCategoryNode[]|ObjectCollection
      */
     public function getAllNodesByIdCategory($idCategory)
     {
@@ -313,7 +320,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     /**
      * @param int $idCategory
      *
-     * @return SpyCategoryNode[]
+     * @return SpyCategoryNode[]|ObjectCollection
      */
     public function getMainNodesByIdCategory($idCategory)
     {
@@ -326,7 +333,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     /**
      * @param int $idCategory
      *
-     * @return SpyCategoryNode[]
+     * @return SpyCategoryNode[]|ObjectCollection
      */
     public function getNotMainNodesByIdCategory($idCategory)
     {
@@ -340,7 +347,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
      * @param int $idParentNode
      * @param int $idLocale
      *
-     * @return SpyCategoryNode[]
+     * @return SpyCategoryNode[]|ObjectCollection
      */
     public function getCategoryNodesWithOrder($idParentNode, $idLocale)
     {
@@ -420,6 +427,20 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
         );
 
         return $categories;
+    }
+
+    /**
+     * @param int $idCategory
+     * @param LocaleInterface $locale
+     *
+     * @return array
+     */
+    public function getTreeNodeChildrenByIdCategoryAndLocale($idCategory, LocaleInterface $locale)
+    {
+        $categories = $this->getTreeNodeChildren($idCategory, $locale);
+        $this->treeFormatter->setupCategories($categories);
+
+        return $this->treeFormatter->getCategoryTree();
     }
 
 }

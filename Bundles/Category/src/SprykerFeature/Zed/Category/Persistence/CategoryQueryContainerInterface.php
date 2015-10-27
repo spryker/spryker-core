@@ -16,6 +16,7 @@ use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
 
 interface CategoryQueryContainerInterface
 {
+
     /**
      * @param int $idLocale
      *
@@ -38,8 +39,8 @@ interface CategoryQueryContainerInterface
     public function queryFirstLevelChildren($idNode);
 
     /**
-     * @param $idCategory
-     * @param $idParentNode
+     * @param int $idCategory
+     * @param int $idParentNode
      *
      * @return SpyCategoryNodeQuery
      */
@@ -264,7 +265,7 @@ interface CategoryQueryContainerInterface
     public function queryNodeByCategoryName($categoryName, $idLocale);
 
     /**
-     * @param $idCategoryNode
+     * @param int $idCategoryNode
      *
      * @return SpyUrlQuery
      */
@@ -277,4 +278,5 @@ interface CategoryQueryContainerInterface
      * @return SpyCategoryNodeQuery
      */
     public function getCategoryNodesWithOrder($idParentNode, $idLocale);
+
 }

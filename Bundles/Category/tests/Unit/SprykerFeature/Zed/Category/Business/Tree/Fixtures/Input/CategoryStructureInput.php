@@ -10,6 +10,7 @@ use SprykerFeature\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
 
 class CategoryStructureInput
 {
+
     public function getOrderedCategoriesArray()
     {
         $categories = [
@@ -161,4 +162,5 @@ class CategoryStructureInput
 
         return $categories;
     }
+
 }

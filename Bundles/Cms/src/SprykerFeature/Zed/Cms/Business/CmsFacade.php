@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Cms\Business;
 
-use Generated\Shared\Cms\CmsBlockInterface;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
@@ -26,6 +25,7 @@ use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
  */
 class CmsFacade extends AbstractFacade
 {
+
     /**
      * @param string $name
      * @param string $path
@@ -128,6 +128,18 @@ class CmsFacade extends AbstractFacade
         $glossaryKeyMappingManager = $this->getDependencyContainer()->getGlossaryKeyMappingManager();
 
         return $glossaryKeyMappingManager->hasPagePlaceholderMapping($idPage, $placeholder);
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return bool
+     */
+    public function hasBlockCategoryNodeMapping($idCategory)
+    {
+        $blockManager = $this->getDependencyContainer()->getBlockManager();
+
+        return $blockManager->hasBlockCategoryNodeMapping($idCategory);
     }
 
     /**
@@ -309,4 +321,27 @@ class CmsFacade extends AbstractFacade
 
         return $glossaryKeyMappingManager->generateGlossaryKeyName($templateName, $placeholder);
     }
+
+    /**
+     * @param int $idCategoryNode
+     */
+    public function updateBlocksAssignedToDeletedCategoryNode($idCategoryNode)
+    {
+        $blockManager = $this->getDependencyContainer()->getBlockManager();
+
+        $blockManager->updateBlocksAssignedToDeletedCategoryNode($idCategoryNode);
+    }
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return CmsBlockTransfer[]
+     */
+    public function getCmsBlocksByIdCategoryNode($idCategoryNode)
+    {
+        $blockManager = $this->getDependencyContainer()->getBlockManager();
+
+        return $blockManager->getCmsBlocksByIdCategoryNode($idCategoryNode);
+    }
+
 }

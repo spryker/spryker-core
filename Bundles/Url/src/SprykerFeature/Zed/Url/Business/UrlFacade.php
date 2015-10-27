@@ -59,15 +59,15 @@ class UrlFacade extends AbstractFacade
     }
 
     /**
-     * @param UrlTransfer $url
+     * @param UrlTransfer $urlTransfer
      *
      * @return UrlTransfer
      */
-    public function saveUrl(UrlTransfer $url)
+    public function saveUrl(UrlTransfer $urlTransfer)
     {
         $urlManager = $this->getDependencyContainer()->getUrlManager();
 
-        return $urlManager->saveUrl($url);
+        return $urlManager->saveUrl($urlTransfer);
     }
 
     /**
@@ -128,12 +128,16 @@ class UrlFacade extends AbstractFacade
      * @param int $idCategoryNode
      * @param LocaleTransfer $locale
      *
-     * @return UrlTransfer
+     * @return UrlTransfer|null
      */
     public function getResourceUrlByCategoryNodeIdAndLocale($idCategoryNode, LocaleTransfer $locale)
     {
         $urlManager = $this->getDependencyContainer()->getUrlManager();
         $urlEntity = $urlManager->getResourceUrlByCategoryNodeAndLocaleId($idCategoryNode, $locale->getIdLocale());
+
+        if (!$urlEntity) {
+            return null;
+        }
 
         return $urlManager->convertUrlEntityToTransfer($urlEntity);
     }
@@ -240,15 +244,27 @@ class UrlFacade extends AbstractFacade
     }
 
     /**
-     * @param UrlTransfer $url
+     * @param UrlTransfer $urlTransfer
      *
      * @return UrlTransfer
      */
-    public function saveUrlAndTouch(UrlTransfer $url)
+    public function saveUrlAndTouch(UrlTransfer $urlTransfer)
     {
         $urlManager = $this->getDependencyContainer()->getUrlManager();
 
-        return $urlManager->saveUrlAndTouch($url);
+        return $urlManager->saveUrlAndTouch($urlTransfer);
+    }
+
+    /**
+     * @param UrlTransfer $urlTransfer
+     *
+     * @return void
+     */
+    public function deleteUrl(UrlTransfer $urlTransfer)
+    {
+        $urlManager = $this->getDependencyContainer()->getUrlManager();
+
+        $urlManager->deleteUrl($urlTransfer);
     }
 
     /**

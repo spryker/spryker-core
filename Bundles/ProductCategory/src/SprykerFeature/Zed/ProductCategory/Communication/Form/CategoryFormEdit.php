@@ -6,9 +6,9 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Communication\Form;
 
-use SprykerFeature\Zed\Category\Persistence\Propel\Base\SpyCategory;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
+use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategory;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CategoryFormEdit extends CategoryFormAdd
@@ -21,7 +21,6 @@ class CategoryFormEdit extends CategoryFormAdd
     const ATTRIBUTE_CATEGORY_ROBOTS = 'robots';
     const ATTRIBUTE_CATEGORY_CANONICAL = 'canonical';
     const ATTRIBUTE_CATEGORY_ALTERNATE_TAG = 'alternate_tag';
-    const ATTRIBUTE_CATEGORY_URL_KEY = 'url_key';
 
     const CATEGORY_IS_ACTIVE = 'is_active';
     const CATEGORY_IS_IN_MENU = 'is_in_menu';
@@ -31,17 +30,16 @@ class CategoryFormEdit extends CategoryFormAdd
     const EXTRA_PARENTS = 'extra_parents';
 
     /**
-     * @return CategoryFormAdd
+     * @return self
      */
     protected function buildFormFields()
     {
+        $categoriesWithPath = $this->getCategoriesWithPaths();
+
         return $this->addText(self::NAME, [
-            'constraints' => [
-                new NotBlank(),
-            ],
-            ])
-            ->addText(self::ATTRIBUTE_CATEGORY_URL_KEY, [
-                'label' => 'Url Key',
+                'constraints' => [
+                    new NotBlank(),
+                ],
             ])
             ->addText(self::ATTRIBUTE_META_TITLE, [
                 'label' => 'Meta Title',
@@ -51,15 +49,6 @@ class CategoryFormEdit extends CategoryFormAdd
             ])
             ->addTextarea(self::ATTRIBUTE_META_KEYWORDS, [
                 'label' => 'Meta Keywords',
-            ])
-            ->addTextarea(self::ATTRIBUTE_CATEGORY_ROBOTS, [
-                'label' => 'Robots tag',
-            ])
-            ->addTextarea(self::ATTRIBUTE_CATEGORY_CANONICAL, [
-                'label' => 'Canonical',
-            ])
-            ->addTextarea(self::ATTRIBUTE_CATEGORY_ALTERNATE_TAG, [
-                'label' => 'Alternate tag',
             ])
             ->addCheckbox(self::CATEGORY_IS_ACTIVE, [
                 'label' => 'Active',
@@ -72,7 +61,7 @@ class CategoryFormEdit extends CategoryFormAdd
             ])
             ->addSelect2ComboBox(self::FK_PARENT_CATEGORY_NODE, [
                 'label' => 'Parent',
-                'choices' => $this->getCategoriesWithPaths(),
+                'choices' => $categoriesWithPath,
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -80,34 +69,34 @@ class CategoryFormEdit extends CategoryFormAdd
             ])
             ->addSelect2ComboBox(self::EXTRA_PARENTS, [
                 'label' => 'Additional Parents',
-                'choices' => $this->getCategoriesWithPaths(),
+                'choices' => $categoriesWithPath,
                 'multiple' => true,
             ])
             ->addHidden(self::PK_CATEGORY_NODE)
             ->addHidden(self::FK_NODE_CATEGORY)
             ->addHidden('products_to_be_assigned', [
                 'attr' => [
-                    'id' => 'products_to_be_assigned'
-                ]
+                    'id' => 'products_to_be_assigned',
+                ],
             ])
             ->addHidden('products_to_be_de_assigned', [
                 'attr' => [
-                    'id' => 'products_to_be_de_assigned'
-                ]
+                    'id' => 'products_to_be_de_assigned',
+                ],
             ])
             ->addHidden('product_order', [
                 'attr' => [
-                    'id' => 'product_order'
-                ]
+                    'id' => 'product_order',
+                ],
             ])
             ->addHidden('product_category_preconfig', [
                 'attr' => [
-                    'id' => 'product_category_preconfig'
-                ]
+                    'id' => 'product_category_preconfig',
+                ],
             ])
         ;
     }
-    
+
     /**
      * @return array
      */
@@ -115,20 +104,15 @@ class CategoryFormEdit extends CategoryFormAdd
     {
         $fields = $this->getDefaultFormFields();
 
-        /**
-         * @var SpyCategory $category
-         */
-        $category = $this->categoryQueryContainer->queryCategoryById($this->idCategory)
+        /** @var SpyCategory $categoryEntity */
+        $categoryEntity = $this->categoryQueryContainer
+            ->queryCategoryById($this->idCategory)
             ->innerJoinAttribute()
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::NAME)
             ->withColumn(SpyCategoryAttributeTableMap::COL_META_TITLE, self::ATTRIBUTE_META_TITLE)
             ->withColumn(SpyCategoryAttributeTableMap::COL_META_DESCRIPTION, self::ATTRIBUTE_META_DESCRIPTION)
             ->withColumn(SpyCategoryAttributeTableMap::COL_META_KEYWORDS, self::ATTRIBUTE_META_KEYWORDS)
             ->withColumn(SpyCategoryAttributeTableMap::COL_CATEGORY_IMAGE_NAME, self::ATTRIBUTE_CATEGORY_IMAGE_NAME)
-            ->withColumn(SpyCategoryAttributeTableMap::COL_ROBOTS, self::ATTRIBUTE_CATEGORY_ROBOTS)
-            ->withColumn(SpyCategoryAttributeTableMap::COL_CANONICAL, self::ATTRIBUTE_CATEGORY_CANONICAL)
-            ->withColumn(SpyCategoryAttributeTableMap::COL_ALTERNATE_TAG, self::ATTRIBUTE_CATEGORY_ALTERNATE_TAG)
-            ->withColumn(SpyCategoryAttributeTableMap::COL_URL_KEY, self::ATTRIBUTE_CATEGORY_URL_KEY)
             ->innerJoinNode()
             ->withColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE, self::FK_PARENT_CATEGORY_NODE)
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, self::PK_CATEGORY_NODE)
@@ -136,45 +120,41 @@ class CategoryFormEdit extends CategoryFormAdd
             ->withColumn(SpyCategoryNodeTableMap::COL_IS_MAIN, self::CATEGORY_NODE_IS_MAIN)
             ->findOne()
         ;
-        
-        if ($category) {
-            $category = $category->toArray();
-            
-            $nodeList = $this->categoryQueryContainer->queryNotMainNodesByCategoryId($this->idCategory)
+
+        if ($categoryEntity) {
+            $categoryEntity = $categoryEntity->toArray();
+
+            $nodeEntityList = $this->categoryQueryContainer
+                ->queryNotMainNodesByCategoryId($this->idCategory)
                 ->where(
                     SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE . ' <> ?',
-                    $category[self::PK_CATEGORY_NODE]
+                    $categoryEntity[self::PK_CATEGORY_NODE]
                 )
                 ->find()
             ;
-            
+
             $nodeIds = [];
-            foreach ($nodeList as $node) {
-                $nodeIds[] = $node->getFkParentCategoryNode();
+            foreach ($nodeEntityList as $nodeEntity) {
+                $nodeIds[] = $nodeEntity->getFkParentCategoryNode();
             }
-            
+
             $fields = [
-                self::PK_CATEGORY => $category[self::PK_CATEGORY],
-                self::PK_CATEGORY_NODE => $category[self::PK_CATEGORY_NODE],
-                self::FK_PARENT_CATEGORY_NODE => $category[self::FK_PARENT_CATEGORY_NODE],
-                self::FK_NODE_CATEGORY => $category[self::FK_NODE_CATEGORY],
-                self::NAME => $category[self::NAME],
+                self::PK_CATEGORY => $categoryEntity[self::PK_CATEGORY],
+                self::PK_CATEGORY_NODE => $categoryEntity[self::PK_CATEGORY_NODE],
+                self::FK_PARENT_CATEGORY_NODE => $categoryEntity[self::FK_PARENT_CATEGORY_NODE],
+                self::FK_NODE_CATEGORY => $categoryEntity[self::FK_NODE_CATEGORY],
+                self::NAME => $categoryEntity[self::NAME],
                 //meta
-                self::ATTRIBUTE_META_TITLE => $category[self::ATTRIBUTE_META_TITLE],
-                self::ATTRIBUTE_META_DESCRIPTION => $category[self::ATTRIBUTE_META_DESCRIPTION],
-                self::ATTRIBUTE_META_KEYWORDS => $category[self::ATTRIBUTE_META_KEYWORDS],
+                self::ATTRIBUTE_META_TITLE => $categoryEntity[self::ATTRIBUTE_META_TITLE],
+                self::ATTRIBUTE_META_DESCRIPTION => $categoryEntity[self::ATTRIBUTE_META_DESCRIPTION],
+                self::ATTRIBUTE_META_KEYWORDS => $categoryEntity[self::ATTRIBUTE_META_KEYWORDS],
                 //image
-                self::ATTRIBUTE_CATEGORY_IMAGE_NAME => $category[self::ATTRIBUTE_CATEGORY_IMAGE_NAME],
-                //seo
-                self::ATTRIBUTE_CATEGORY_ROBOTS => $category[self::ATTRIBUTE_CATEGORY_ROBOTS],
-                self::ATTRIBUTE_CATEGORY_CANONICAL => $category[self::ATTRIBUTE_CATEGORY_CANONICAL],
-                self::ATTRIBUTE_CATEGORY_ALTERNATE_TAG => $category[self::ATTRIBUTE_CATEGORY_ALTERNATE_TAG],
-                self::ATTRIBUTE_CATEGORY_URL_KEY => $category[self::ATTRIBUTE_CATEGORY_URL_KEY],
+                self::ATTRIBUTE_CATEGORY_IMAGE_NAME => $categoryEntity[self::ATTRIBUTE_CATEGORY_IMAGE_NAME],
                 //category
-                self::CATEGORY_IS_ACTIVE => $category[self::CATEGORY_IS_ACTIVE],
-                self::CATEGORY_IS_IN_MENU => $category[self::CATEGORY_IS_IN_MENU],
-                self::CATEGORY_IS_CLICKABLE => $category[self::CATEGORY_IS_CLICKABLE],
-                self::CATEGORY_NODE_IS_MAIN => $category[self::CATEGORY_NODE_IS_MAIN],
+                self::CATEGORY_IS_ACTIVE => $categoryEntity[self::CATEGORY_IS_ACTIVE],
+                self::CATEGORY_IS_IN_MENU => $categoryEntity[self::CATEGORY_IS_IN_MENU],
+                self::CATEGORY_IS_CLICKABLE => $categoryEntity[self::CATEGORY_IS_CLICKABLE],
+                self::CATEGORY_NODE_IS_MAIN => $categoryEntity[self::CATEGORY_NODE_IS_MAIN],
 
                 self::EXTRA_PARENTS => $nodeIds,
             ];
@@ -182,7 +162,6 @@ class CategoryFormEdit extends CategoryFormAdd
 
         return $fields;
     }
-
 
     /**
      * @return array
@@ -203,11 +182,6 @@ class CategoryFormEdit extends CategoryFormAdd
             self::ATTRIBUTE_META_KEYWORDS => null,
             //image
             self::ATTRIBUTE_CATEGORY_IMAGE_NAME => null,
-            //seo
-            self::ATTRIBUTE_CATEGORY_ROBOTS => null,
-            self::ATTRIBUTE_CATEGORY_CANONICAL => null,
-            self::ATTRIBUTE_CATEGORY_ALTERNATE_TAG => null,
-            self::ATTRIBUTE_CATEGORY_URL_KEY => null,
             //category
             self::CATEGORY_IS_ACTIVE => null,
             self::CATEGORY_IS_IN_MENU => null,

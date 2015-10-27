@@ -15,18 +15,16 @@ use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap
 use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyLocalizedAbstractProductAttributesTableMap;
 use SprykerFeature\Zed\ProductCategory\Persistence\Propel\Map\SpyProductCategoryTableMap;
 
-
 class ProductCategoryTable extends AbstractTable
 {
-    const TABLE_IDENTIFIER = 'product-category-table';
 
+    const TABLE_IDENTIFIER = 'product-category-table';
     const COL_CHECKBOX = 'checkbox';
 
     /**
      * @var ProductCategoryQueryContainerInterface
      */
     protected $productCategoryQueryContainer;
-
 
     /**
      * @var LocaleTransfer
@@ -48,7 +46,7 @@ class ProductCategoryTable extends AbstractTable
         $this->productCategoryQueryContainer = $productCategoryQueryContainer;
         $this->locale = $locale;
         $this->idCategory = $idCategory;
-        $this->defaultUrl = sprintf('productCategoryTable?%s=%d', ProductCategoryConfig::PARAM_ID_CATEGORY, $this->idCategory);
+        $this->defaultUrl = sprintf('product-category-table?%s=%d', ProductCategoryConfig::PARAM_ID_CATEGORY, $this->idCategory);
         $this->setTableIdentifier(self::TABLE_IDENTIFIER);
     }
 
@@ -95,42 +93,31 @@ class ProductCategoryTable extends AbstractTable
 
         $results = [];
         foreach ($queryResults as $productCategory) {
-            //TODO fix when properly implementing product preconfig
-            //https://kartenmacherei.atlassian.net/browse/KSP-877
-            /*
-               $items = $this->getProductOptionsComboBoxItems($productCategory);
-
-                $select_html = sprintf(
-                    '<select id="product_category_preconfig_%d" onchange="updateProductCategoryPreconfig(this, %d)">%s</select>',
-                    $productCategory['id_abstract_product'],
-                    $productCategory['id_abstract_product'],
-                    $items
-                );
-            */
-
             $results[] = [
                 SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT => $productCategory['id_abstract_product'],
                 SpyAbstractProductTableMap::COL_SKU => $productCategory['sku'],
                 SpyLocalizedAbstractProductAttributesTableMap::COL_NAME => $productCategory['name'],
                 SpyProductCategoryTableMap::COL_PRODUCT_ORDER => $this->getOrderHtml($productCategory),
-                self::COL_CHECKBOX => $this->getCheckboxHtml($productCategory)
+                self::COL_CHECKBOX => $this->getCheckboxHtml($productCategory),
             ];
         }
         unset($queryResults);
+
         return $results;
     }
 
     /**
      * @param $productCategory
+     *
      * @return string
      */
     protected function getProductOptionsComboBoxItems($productCategory)
     {
-        $preconfigQuery = $this->productCategoryQueryContainer
+        $preConfigQuery = $this->productCategoryQueryContainer
             ->queryProductCategoryPreconfig($this->idCategory, $productCategory['id_abstract_product'])
             ->orderByFormat();
 
-        $preconfigItems = $preconfigQuery->find();
+        $preconfigItems = $preConfigQuery->find();
 
         $items = '<option value="0">Default</option>';
         foreach ($preconfigItems as $preconfigItem) {
@@ -139,7 +126,7 @@ class ProductCategoryTable extends AbstractTable
                 $selected = 'selected="selected"';
             }
 
-            $items .= '<option value="'.$preconfigItem->getIdProduct().'" '.$selected.'>'.$preconfigItem->getFormat().'</option>';
+            $items .= '<option value="' . $preconfigItem->getIdProduct() . '" ' . $selected . '>' . $preconfigItem->getFormat() . '</option>';
         }
 
         return $items;
@@ -175,4 +162,5 @@ class ProductCategoryTable extends AbstractTable
             $productCategory['id_abstract_product']
         );
     }
+
 }

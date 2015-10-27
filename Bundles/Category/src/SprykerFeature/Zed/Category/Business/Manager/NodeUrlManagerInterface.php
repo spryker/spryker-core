@@ -13,21 +13,27 @@ interface NodeUrlManagerInterface
 {
 
     /**
-     * @param NodeTransfer $categoryNode
-     * @param LocaleTransfer $locale
+     * @param NodeTransfer $categoryNodeTransfer
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return void
      */
-    public function createUrl(NodeTransfer $categoryNode, LocaleTransfer $locale);
+    public function createUrl(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer);
 
     /**
-     * @param NodeTransfer   $categoryNode
-     * @param LocaleTransfer $locale
+     * @param NodeTransfer $categoryNodeTransfer
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return void
      */
-    public function updateUrl(NodeTransfer $categoryNode, LocaleTransfer $locale);
+    public function updateUrl(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer);
 
     /**
-     * @param NodeTransfer $categoryNode
-     * @param LocaleTransfer $locale
+     * @param NodeTransfer $categoryNodeTransfer
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return void
      */
-    public function removeUrl(NodeTransfer $categoryNode, LocaleTransfer $locale);
+    public function removeUrl(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer);
 
 }

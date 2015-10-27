@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Category\Business\Tree\Formatter;
 
 class CategoryTreeFormatter
 {
+
     const ID = 'id';
     const ID_PARENT = 'parent';
     const ROOT = 0;
@@ -32,7 +33,17 @@ class CategoryTreeFormatter
     /**
      * @param array $categories
      */
-    public function __construct(array $categories)
+    public function __construct(array $categories = [])
+    {
+        $this->setupCategories($categories);
+    }
+
+    /**
+     * @param array $categories
+     *
+     * @return void
+     */
+    public function setupCategories(array $categories)
     {
         foreach ($categories as $category) {
             $this->findCategoryIndex($category);
@@ -44,6 +55,8 @@ class CategoryTreeFormatter
 
     /**
      * @param array $category
+     *
+     * @return void
      */
     protected function findCategoryIndex(array $category)
     {
@@ -114,4 +127,5 @@ class CategoryTreeFormatter
     {
         return $this->categories;
     }
+
 }

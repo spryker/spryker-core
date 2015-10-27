@@ -174,17 +174,17 @@ class IndexController extends AbstractController
      */
     protected function getProductCategories(SpyAbstractProduct $abstractProduct)
     {
-        $categoriesCollection = $this->getDependencyContainer()
-            ->getProvidedDependency(ProductDependencyProvider::FACADE_PRODUCT_CATEGORIES)
-            ->getCategoriesByAbstractProduct($abstractProduct)
+        $categoryEntityList = $this->getDependencyContainer()
+            ->getProvidedDependency(ProductDependencyProvider::QUERY_CONTAINER_PRODUCT)
+            ->queryLocalizedProductCategoryMappingByProduct($abstractProduct)
             ->find()
         ;
 
         $categories = [];
-        foreach ($categoriesCollection as $category) {
+        foreach ($categoryEntityList as $categoryEntity) {
             $categories[] = [
-                self::COL_ID_PRODUCT_CATEGORY => $category->getIdProductCategory(),
-                self::COL_CATEGORY_NAME => $category->getVirtualColumn(self::COL_CATEGORY_NAME),
+                self::COL_ID_PRODUCT_CATEGORY => $categoryEntity->getIdProductCategory(),
+                self::COL_CATEGORY_NAME => $categoryEntity->getVirtualColumn(self::COL_CATEGORY_NAME),
             ];
         }
 

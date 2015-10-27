@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Category\Business\Tree;
 
 use Generated\Shared\Locale\LocaleInterface;
-use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryException;
@@ -125,6 +124,7 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int $idCategory
+     *
      * @return SpyCategoryNode[]
      */
     public function getAllNodesByIdCategory($idCategory);
@@ -171,5 +171,13 @@ interface CategoryTreeReaderInterface
      * @return array
      */
     public function getTreeNodeChildren($idCategory, LocaleInterface $locale);
+
+    /**
+     * @param int $idCategory
+     * @param LocaleInterface $locale
+     *
+     * @return array
+     */
+    public function getTreeNodeChildrenByIdCategoryAndLocale($idCategory, LocaleInterface $locale);
 
 }

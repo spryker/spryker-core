@@ -57,6 +57,17 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
+     * @return SpyProductCategoryQuery
+     */
+    public function queryProductCategoryMappingsByCategoryId($idCategory)
+    {
+        return $this->getDependencyContainer()
+            ->createProductCategoryQuery()
+            ->filterByFkCategory($idCategory)
+        ;
+    }
+
+    /**
      * @param int $idCategory
      * @param int $idAbstractProduct
      *
@@ -182,6 +193,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
                 'preconfig_product'
             )*/
             ->filterByFkCategory($idCategory)
+            ->orderByFkAbstractProduct()
         ;
     }
 

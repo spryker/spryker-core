@@ -20,6 +20,7 @@ use Unit\SprykerFeature\Zed\Category\Business\Tree\Fixtures\Input\CategoryStruct
  */
 class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
 {
+
     /**
      * @var Factory
      */
@@ -101,4 +102,5 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
 
         $this->assertSame($this->expected->getCategoryStructureWithNonexistantParent(), $treeStructure);
     }
+
 }

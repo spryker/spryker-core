@@ -19,6 +19,8 @@ class CategoryNameExistsValidator extends ConstraintValidator
      * @param Constraint|CategoryNameExists $constraint The constraint for the validation
      *
      * @api
+     *
+     * @return void
      */
     public function validate($value, Constraint $constraint)
     {
@@ -40,6 +42,8 @@ class CategoryNameExistsValidator extends ConstraintValidator
     /**
      * @param string $value
      * @param Constraint|CategoryNameExists $constraint
+     *
+     * @return void
      */
     protected function addViolation($value, Constraint $constraint)
     {

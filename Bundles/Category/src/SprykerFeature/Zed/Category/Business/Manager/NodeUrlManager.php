@@ -49,91 +49,133 @@ class NodeUrlManager implements NodeUrlManagerInterface
     }
 
     /**
-     * @param NodeTransfer $categoryNode
-     * @param LocaleTransfer $locale
+     * @param NodeTransfer $categoryNodeTransfer
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return void
      */
-    public function createUrl(NodeTransfer $categoryNode, LocaleTransfer $locale)
+    public function createUrl(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {
-        $path = $this->categoryTreeReader->getPath($categoryNode->getIdCategoryNode(), $locale);
-        $categoryUrl = $this->urlPathGenerator->generate($path);
-        $idNode = $categoryNode->getIdCategoryNode();
+        $path = $this->categoryTreeReader->getPath($categoryNodeTransfer->getIdCategoryNode(), $localeTransfer);
+        $categoryUrl = $this->generateUrlFromPathTokens($path);
+        $idNode = $categoryNodeTransfer->getIdCategoryNode();
 
-        $url = $this->urlFacade->createUrl($categoryUrl, $locale, CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idNode);
+        $url = $this->urlFacade->createUrl($categoryUrl, $localeTransfer, CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idNode);
         $this->urlFacade->touchUrlActive($url->getIdUrl());
     }
 
     /**
-     * @param NodeTransfer $categoryNode
-     * @param LocaleTransfer $locale
+     * @param NodeTransfer $categoryNodeTransfer
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return void
      */
-    public function updateUrl(NodeTransfer $categoryNode, LocaleTransfer $locale)
+    public function updateUrl(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {
-        $path = $this->categoryTreeReader->getPath($categoryNode->getIdCategoryNode(), $locale);
-        $categoryUrl = $this->urlPathGenerator->generate($path);
-        $idNode = $categoryNode->getIdCategoryNode();
+        $path = $this->categoryTreeReader->getPath($categoryNodeTransfer->getIdCategoryNode(), $localeTransfer);
+        $categoryUrl = $this->generateUrlFromPathTokens($path);
+        $idNode = $categoryNodeTransfer->getIdCategoryNode();
 
-        $url = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($idNode, $locale);
-        
-        if (!$url) {
+        $urlTransfer = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($idNode, $localeTransfer);
+
+        if (!$urlTransfer) {
             $urlTransfer = new UrlTransfer();
-            $urlTransfer->setFkPage(null);
-            $urlTransfer->setResourceId($idNode);
-            $urlTransfer->setResourceType(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE);
-            $urlTransfer->setUrl($categoryUrl);
-            $urlTransfer->setFkLocale($locale->getIdLocale());
-
-            $this->urlFacade->saveUrlAndTouch($urlTransfer);
-        }
-        else {
-            $url->setUrl($categoryUrl);
-            $this->urlFacade->saveUrlAndTouch($url);
+            $this->updateTransferUrl($urlTransfer, $categoryUrl, $idNode, $localeTransfer->getIdLocale());
+        } else {
+            $this->updateTransferUrl($urlTransfer, $categoryUrl);
         }
 
-        $this->updateChildrenUrls($categoryNode, $locale);
+        $this->urlFacade->saveUrlAndTouch($urlTransfer);
+
+        $this->updateChildrenUrls($categoryNodeTransfer, $localeTransfer);
     }
 
     /**
-     * @param NodeTransfer $categoryNode
-     * @param LocaleTransfer $locale
+     * @param NodeTransfer $categoryNodeTransfer
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return void
      */
-    protected function updateChildrenUrls(NodeTransfer $categoryNode, LocaleTransfer $locale)
+    protected function updateChildrenUrls(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
     {
-        $children = $this->categoryTreeReader->getPathChildren($categoryNode->getIdCategoryNode());
+        $children = $this->categoryTreeReader->getPathChildren($categoryNodeTransfer->getIdCategoryNode());
         foreach ($children as $child) {
-            /**
-             * @var SpyCategoryClosureTable $child
-             * @var SpyCategoryClosureTable $parent
-             */
-            $urlTransfer = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($child->getFkCategoryNodeDescendant(), $locale);
+            /* @var SpyCategoryClosureTable $child */
+            $urlTransfer = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($child->getFkCategoryNodeDescendant(), $localeTransfer);
             if (!$urlTransfer) {
                 continue;
             }
 
-            $parentList = $this->categoryTreeReader->getPathParents($child->getFkCategoryNodeDescendant());
-            $pathTokens = [];
-            foreach ($parentList as $parent) {
-                $pathTokens[] = $parent->toArray();
-            }
-
-            $childUrl = $this->urlPathGenerator->generate($pathTokens);
-            $urlTransfer->setUrl($childUrl);
+            $childUrl = $this->generateChildUrl($child->getFkCategoryNodeDescendant());
+            $this->updateTransferUrl($urlTransfer, $childUrl, $child->getFkCategoryNodeDescendant(), $localeTransfer->getIdLocale());
             $this->urlFacade->saveUrlAndTouch($urlTransfer);
         }
     }
 
     /**
-     * @param NodeTransfer $categoryNode
-     * @param LocaleTransfer $locale
+     * @param UrlTransfer $urlTransfer
+     * @param string $url
+     * @param int $idResource
+     * @param int $idLocale
+     *
+     * @return void
      */
-    public function removeUrl(NodeTransfer $categoryNode, LocaleTransfer $locale)
+    protected function updateTransferUrl(UrlTransfer $urlTransfer, $url, $idResource=null, $idLocale=null)
     {
-        $path = $this->categoryTreeReader->getPath($categoryNode->getIdCategoryNode(), $locale);
-        $categoryUrl = $this->urlPathGenerator->generate($path);
-        $idNode = $categoryNode->getIdCategoryNode();
-        
-        if ($this->urlFacade->hasUrl($categoryUrl)) {
-            $url = $this->urlFacade->getUrlByPath($categoryUrl);
-            $this->urlFacade->touchUrlDeleted($url->getIdUrl());
+        $urlTransfer->setResourceType(CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE);
+
+        if ($idResource !== null) {
+            $urlTransfer->setResourceId($idResource);
+        }
+
+        if ($idLocale !== null) {
+            $urlTransfer->setFkLocale($idLocale);
+        }
+
+        $urlTransfer->setUrl($url);
+    }
+
+    /**
+     * @param NodeTransfer $categoryNodeTransfer
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return void
+     */
+    public function removeUrl(NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
+    {
+        $idNode = $categoryNodeTransfer->getIdCategoryNode();
+        $urlTransfer = $this->urlFacade->getResourceUrlByCategoryNodeIdAndLocale($idNode, $localeTransfer);
+
+        if ($urlTransfer) {
+            $this->urlFacade->deleteUrl($urlTransfer);
         }
     }
+
+    /**
+     * @param int $idChild
+     *
+     * @return string
+     */
+    protected function generateChildUrl($idChild)
+    {
+        $parentList = $this->categoryTreeReader->getPathParents($idChild);
+        $pathTokens = [];
+        foreach ($parentList as $parent) {
+            /* @var SpyCategoryClosureTable $parent */
+            $pathTokens[] = $parent->toArray();
+        }
+
+        return $this->generateUrlFromPathTokens($pathTokens);
+    }
+
+    /**
+     * @param array $pathTokens
+     *
+     * @return string
+     */
+    protected function generateUrlFromPathTokens(array $pathTokens)
+    {
+        return $this->urlPathGenerator->generate($pathTokens);
+    }
+
 }

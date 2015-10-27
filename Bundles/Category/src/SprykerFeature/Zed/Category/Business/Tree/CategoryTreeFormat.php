@@ -19,9 +19,9 @@ class CategoryTreeFormat
         ];
 
         foreach ($categories as $item) {
-            if ($item['parent'] == '#') {
+            if ($item['parent'] === '#') {
                 $children['text'] = $item['text'];
-                $children['state']['selected'] = ($parentIdCategory == $item['id']);
+                $children['state']['selected'] = ((int) $parentIdCategory === (int) $item['id']);
             } else {
                 $children['children'][] = $item['text'];
             }

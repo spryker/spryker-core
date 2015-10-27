@@ -10,5 +10,7 @@ use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class CategoryConfig extends AbstractBundleConfig
 {
+
     const PARAM_ID_NODE = 'id-node';
+
 }

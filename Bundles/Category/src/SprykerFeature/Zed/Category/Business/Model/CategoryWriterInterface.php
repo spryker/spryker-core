@@ -23,11 +23,15 @@ interface CategoryWriterInterface
     /**
      * @param CategoryInterface $category
      * @param LocaleTransfer $locale
+     *
+     * @return void
      */
     public function update(CategoryInterface $category, LocaleTransfer $locale);
 
     /**
      * @param int $idCategory
+     *
+     * @return void
      */
     public function delete($idCategory);
 

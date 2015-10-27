@@ -24,6 +24,7 @@ class UrlManager implements UrlManagerInterface
 {
 
     const ITEM_TYPE_URL = 'url';
+
     /**
      * @var UrlQueryContainerInterface
      */
@@ -88,7 +89,6 @@ class UrlManager implements UrlManagerInterface
             ->setUrl($url)
             ->setFkLocale($fkLocale)
             ->setResource($resourceType, $idResource)
-
             ->save()
         ;
 
@@ -102,7 +102,8 @@ class UrlManager implements UrlManagerInterface
      */
     public function hasUrl($url)
     {
-        $urlCount = $this->urlQueryContainer->queryUrl($url)->count();
+        $urlCount = $this->urlQueryContainer->queryUrl($url)
+            ->count();
 
         return $urlCount > 0;
     }
@@ -111,6 +112,8 @@ class UrlManager implements UrlManagerInterface
      * @param string $url
      *
      * @throws UrlExistsException
+     *
+     * @return void
      */
     protected function checkUrlDoesNotExist($url)
     {
@@ -138,8 +141,7 @@ class UrlManager implements UrlManagerInterface
 
         $setterName = 'setFk' . implode('', $bumps);
 
-        $transferUrl = new UrlTransfer();
-        $transferUrl
+        $transferUrl = (new UrlTransfer())
             ->setFkLocale($urlEntity->getFkLocale())
             ->setUrl($urlEntity->getUrl())
             ->setResourceType($urlEntity->getResourceType())
@@ -160,7 +162,8 @@ class UrlManager implements UrlManagerInterface
      */
     public function getUrlByPath($url)
     {
-        $urlEntity = $this->urlQueryContainer->queryUrl($url)->findOne();
+        $urlEntity = $this->urlQueryContainer->queryUrl($url)
+            ->findOne();
 
         if (!$urlEntity) {
             throw new MissingUrlException(
@@ -183,7 +186,8 @@ class UrlManager implements UrlManagerInterface
      */
     public function getUrlById($idUrl)
     {
-        $urlEntity = $this->urlQueryContainer->queryUrlById($idUrl)->findOne();
+        $urlEntity = $this->urlQueryContainer->queryUrlById($idUrl)
+            ->findOne();
 
         if (!$urlEntity) {
             throw new MissingUrlException(
@@ -217,13 +221,16 @@ class UrlManager implements UrlManagerInterface
      */
     public function hasUrlId($idUrl)
     {
-        $urlCount = $this->urlQueryContainer->queryUrlById($idUrl)->count();
+        $urlCount = $this->urlQueryContainer->queryUrlById($idUrl)
+            ->count();
 
         return $urlCount > 0;
     }
 
     /**
      * @param int $idUrl
+     *
+     * @return void
      */
     public function touchUrlActive($idUrl)
     {
@@ -232,6 +239,8 @@ class UrlManager implements UrlManagerInterface
 
     /**
      * @param $idUrl
+     *
+     * @return void
      */
     public function touchUrlDeleted($idUrl)
     {
@@ -239,35 +248,50 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param UrlTransfer $url
-     *
-     * @throws UrlExistsException
-     * @throws MissingUrlException
-     * @throws \Exception
-     * @throws PropelException
+     * @param UrlTransfer $urlTransfer
      *
      * @return UrlTransfer
      */
-    public function saveUrl(UrlTransfer $url)
+    public function saveUrl(UrlTransfer $urlTransfer)
     {
-        if (is_null($url->getIdUrl())) {
-            return $this->createUrlFromTransfer($url);
+        if (is_null($urlTransfer->getIdUrl())) {
+            return $this->createUrlFromTransfer($urlTransfer);
         } else {
-            return $this->updateUrlFromTransfer($url);
+            return $this->updateUrlFromTransfer($urlTransfer);
         }
     }
 
     /**
-     * @param UrlTransfer $url
+     * @param UrlTransfer $urlTransfer
+     *
+     * @throws MissingUrlException
+     * @throws PropelException
+     *
+     * @return void
+     */
+    public function deleteUrl(UrlTransfer $urlTransfer)
+    {
+        $urlEntity = $this->urlQueryContainer->queryUrlById($urlTransfer->getIdUrl())
+            ->findOne()
+        ;
+
+        if ($urlEntity) {
+            $this->touchUrlDeleted($urlTransfer->getIdUrl());
+            $urlEntity->delete();
+        }
+    }
+
+    /**
+     * @param UrlTransfer $urlTransfer
      *
      * @return UrlTransfer
      */
-    public function saveUrlAndTouch(UrlTransfer $url)
+    public function saveUrlAndTouch(UrlTransfer $urlTransfer)
     {
         $this->connection->beginTransaction();
 
-        $urlTransfer = $this->saveUrl($url);
-        $this->touchUrlActive($url->getIdUrl());
+        $urlTransfer = $this->saveUrl($urlTransfer);
+        $this->touchUrlActive($urlTransfer->getIdUrl());
 
         $this->connection->commit();
 
@@ -275,7 +299,7 @@ class UrlManager implements UrlManagerInterface
     }
 
     /**
-     * @param UrlTransfer $url
+     * @param UrlTransfer $urlTransfer
      *
      * @throws UrlExistsException
      * @throws \Exception
@@ -283,22 +307,22 @@ class UrlManager implements UrlManagerInterface
      *
      * @return UrlTransfer
      */
-    protected function createUrlFromTransfer(UrlTransfer $url)
+    protected function createUrlFromTransfer(UrlTransfer $urlTransfer)
     {
-        $this->checkUrlDoesNotExist($url->getUrl());
+        $this->checkUrlDoesNotExist($urlTransfer->getUrl());
 
         $urlEntity = new SpyUrl();
-        $this->syncUrlEntityWithTransfer($url, $urlEntity);
+        $this->syncUrlEntityWithTransfer($urlTransfer, $urlEntity);
 
         $urlEntity->save();
 
-        $url->setIdUrl($urlEntity->getPrimaryKey());
+        $urlTransfer->setIdUrl($urlEntity->getPrimaryKey());
 
-        return $url;
+        return $urlTransfer;
     }
 
     /**
-     * @param UrlTransfer $url
+     * @param UrlTransfer $urlTransfer
      *
      * @throws MissingUrlException
      * @throws UrlExistsException
@@ -307,23 +331,23 @@ class UrlManager implements UrlManagerInterface
      *
      * @return UrlTransfer
      */
-    protected function updateUrlFromTransfer(UrlTransfer $url)
+    protected function updateUrlFromTransfer(UrlTransfer $urlTransfer)
     {
-        $urlEntity = $this->getUrlById($url->getIdUrl());
+        $urlEntity = $this->getUrlById($urlTransfer->getIdUrl());
 
-        $this->syncUrlEntityWithTransfer($url, $urlEntity);
+        $this->syncUrlEntityWithTransfer($urlTransfer, $urlEntity);
 
         if (!$urlEntity->isModified()) {
-            return $url;
+            return $urlTransfer;
         }
 
         if ($urlEntity->isColumnModified(SpyUrlTableMap::COL_URL)) {
-            $this->checkUrlDoesNotExist($url->getUrl());
+            $this->checkUrlDoesNotExist($urlTransfer->getUrl());
         }
 
         $urlEntity->save();
 
-        return $url;
+        return $urlTransfer;
     }
 
     /**
@@ -382,11 +406,12 @@ class UrlManager implements UrlManagerInterface
             ->findOne()
         ;
 
-        if (!$urlEntity) {
-            return new UrlTransfer();
+        $urlTransfer = new UrlTransfer();
+        if ($urlEntity) {
+            $urlTransfer->fromArray($urlEntity->toArray(), true);
         }
 
-        return (new UrlTransfer())->fromArray($urlEntity->toArray(), true);
+        return $urlTransfer;
     }
 
 }

@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Cms\Business\Block;
 
 use Generated\Shared\Cms\CmsBlockInterface;
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Propel\Runtime\Connection\ConnectionInterface;
 use SprykerFeature\Shared\Cms\CmsConfig;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
 use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
@@ -28,13 +29,20 @@ class BlockManager implements BlockManagerInterface
     protected $touchFacade;
 
     /**
+     * @var ConnectionInterface
+     */
+    protected $connection;
+
+    /**
      * @param CmsQueryContainerInterface $cmsQueryContainer
      * @param CmsToTouchInterface $touchFacade
+     * @param ConnectionInterface $connection
      */
-    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, CmsToTouchInterface $touchFacade)
+    public function __construct(CmsQueryContainerInterface $cmsQueryContainer, CmsToTouchInterface $touchFacade, ConnectionInterface $connection)
     {
         $this->cmsQueryContainer = $cmsQueryContainer;
         $this->touchFacade = $touchFacade;
+        $this->connection = $connection;
     }
 
     /**
@@ -78,6 +86,28 @@ class BlockManager implements BlockManagerInterface
         }
 
         return $blockTransfer;
+    }
+
+    /**
+     * @param int $idCategoryNode
+     */
+    public function updateBlocksAssignedToDeletedCategoryNode($idCategoryNode)
+    {
+        $this->connection->beginTransaction();
+
+        $assignedBlocks = $this->getCmsBlocksByIdCategoryNode($idCategoryNode);
+
+        foreach ($assignedBlocks as $idBlock => $blockTransfer) {
+            //unique keys is on name, type and value therefore the name has to be changed
+            $blockTransfer->setName(
+                $blockTransfer->getName() . '_' . CmsConfig::RESOURCE_TYPE_CATEGORY_NODE . '_deleted_' . $blockTransfer->getIdCmsBlock()
+            );
+            $blockTransfer->setType(CmsConfig::RESOURCE_TYPE_STATIC);
+            $blockTransfer->setValue(0);
+            $this->saveBlockAndTouch($blockTransfer);
+        }
+
+        $this->connection->commit();
     }
 
     /**
@@ -180,6 +210,25 @@ class BlockManager implements BlockManagerInterface
     }
 
     /**
+     * @param int $idCategoryNode
+     *
+     * @return CmsBlockTransfer[]
+     */
+    public function getCmsBlocksByIdCategoryNode($idCategoryNode)
+    {
+        $blockEntities = $this->cmsQueryContainer->queryBlockByIdCategoryNode($idCategoryNode)
+            ->find()
+        ;
+
+        $blockTransfers = [];
+        foreach ($blockEntities as $block) {
+            $blockTransfers[$block->getIdCmsBlock()] = $this->convertBlockEntityToTransfer($block);
+        }
+
+        return $blockTransfers;
+    }
+
+    /**
      * @param CmsBlockInterface $cmsBlockTransfer
      * @param SpyCmsBlock $blockEntity
      */
@@ -208,6 +257,20 @@ class BlockManager implements BlockManagerInterface
         $blockKey = $name . '-' . $type . '-' . $value;
 
         return $blockKey;
+    }
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return bool
+     */
+    public function hasBlockCategoryNodeMapping($idCategoryNode)
+    {
+        $mappingCount = $this->cmsQueryContainer->queryBlockByIdCategoryNode($idCategoryNode)
+            ->count()
+        ;
+
+        return $mappingCount > 0;
     }
 
 }

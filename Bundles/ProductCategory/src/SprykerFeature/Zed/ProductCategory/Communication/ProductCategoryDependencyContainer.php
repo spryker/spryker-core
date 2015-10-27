@@ -8,9 +8,11 @@ namespace SprykerFeature\Zed\ProductCategory\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductCategoryCommunication;
+use Propel\Runtime\Connection\ConnectionInterface;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainerInterface;
+use SprykerFeature\Zed\Cms\Business\CmsFacade; //TODO: https://spryker.atlassian.net/browse/CD-540
 use SprykerFeature\Zed\ProductCategory\Communication\Table\ProductCategoryTable;
 use SprykerFeature\Zed\ProductCategory\Communication\Table\ProductTable;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer;
@@ -28,11 +30,6 @@ use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainer
  */
 class ProductCategoryDependencyContainer extends AbstractCommunicationDependencyContainer
 {
-
-    /**
-     * @var LocaleTransfer
-     */
-    protected $currentLocale;
 
     /**
      * @return LocaleTransfer
@@ -74,15 +71,15 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
     }
 
     /**
-     * @return LocaleTransfer
+     * TODO: https://spryker.atlassian.net/browse/CD-540
+     *
+     * @throws \ErrorException
+     *
+     * @return CmsFacade
      */
-    public function getCurrentLocale()
+    public function createCmsFacade()
     {
-        if (null === $this->currentLocale) {
-            $this->currentLocale = $this->createCurrentLocale();
-        }
-
-        return $this->currentLocale;
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::FACADE_CMS);
     }
 
     /**
@@ -118,8 +115,8 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
     {
         return $this->getFactory()->createFormCategoryFormAdd(
             $this->createCategoryQueryContainer(),
-            $this->createProductCategoryFacade(),
-            $this->getCurrentLocale(),
+            $this->createProductCategoryQueryContainer(),
+            $this->createCurrentLocale(),
             null,
             $idParentNode
         );
@@ -134,8 +131,24 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
     {
         return $this->getFactory()->createFormCategoryFormEdit(
             $this->createCategoryQueryContainer(),
-            $this->createProductCategoryFacade(),
-            $this->getCurrentLocale(),
+            $this->createProductCategoryQueryContainer(),
+            $this->createCurrentLocale(),
+            $idCategory,
+            null
+        );
+    }
+
+    /**
+     * @param int $idCategory
+     *
+     * @return CategoryFormEdit
+     */
+    public function createCategoryFormDelete($idCategory)
+    {
+        return $this->getFactory()->createFormCategoryFormDelete(
+            $this->createCategoryQueryContainer(),
+            $this->createProductCategoryQueryContainer(),
+            $this->createCurrentLocale(),
             $idCategory,
             null
         );
@@ -165,6 +178,16 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
         $productCategoryQueryContainer = $this->createProductCategoryQueryContainer();
 
         return $this->getFactory()->createTableProductTable($productCategoryQueryContainer, $locale, $idCategory);
+    }
+
+    /**
+     * @throws \ErrorException
+     *
+     * @return ConnectionInterface
+     */
+    public function createPropelConnection()
+    {
+        return $this->getProvidedDependency(ProductCategoryDependencyProvider::PLUGIN_PROPEL_CONNECTION);
     }
 
 }

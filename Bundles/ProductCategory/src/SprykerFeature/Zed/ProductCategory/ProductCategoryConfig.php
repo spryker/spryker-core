@@ -10,6 +10,7 @@ use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class ProductCategoryConfig extends AbstractBundleConfig
 {
+
     const PARAM_ID_CATEGORY = 'id-category';
     const PARAM_ID_PARENT_NODE = 'id-parent-node';
 

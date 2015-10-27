@@ -12,10 +12,12 @@ use SprykerEngine\Zed\Kernel\Container;
 class CategoryDependencyProvider extends AbstractBundleDependencyProvider
 {
 
+    const QUERY_CONTAINER_CATEGORY = 'category query container';
     const FACADE_TOUCH = 'touch facade';
     const FACADE_LOCALE = 'locale facade';
     const FACADE_URL = 'url facade';
     const FACADE_CATEGORY = 'category facade';
+    const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
 
     /**
      * @var Container
@@ -40,6 +42,10 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->category()->facade();
         };
 
+        $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
+            return $container->getLocator()->propel()->pluginConnection()->get();
+        };
+
         return $container;
     }
 
@@ -56,6 +62,10 @@ class CategoryDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_CATEGORY] = function (Container $container) {
             return $container->getLocator()->category()->facade();
+        };
+
+        $container[self::QUERY_CONTAINER_CATEGORY] = function (Container $container) {
+            return $container->getLocator()->category()->queryContainer();
         };
 
         return $container;

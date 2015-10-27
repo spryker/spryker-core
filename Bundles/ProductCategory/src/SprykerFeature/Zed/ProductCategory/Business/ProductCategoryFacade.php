@@ -6,17 +6,20 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Business;
 
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\NodeTransfer;
+use Generated\Shared\Transfer\ProductCategoryTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
-use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
 
 /**
  * @property ProductCategoryDependencyContainer $dependencyContainer
+ *
  * @method ProductCategoryDependencyContainer getDependencyContainer()
  * @method ProductCategoryManager createProductManager()
  */
@@ -59,51 +62,29 @@ class ProductCategoryFacade extends AbstractFacade
     }
 
     /**
-     * @param int $idCategory
-     * @param LocaleTransfer $locale
-     * 
-     * @return SpyProductCategoryQuery[]
-     */
-    public function getProductsByCategory($idCategory, LocaleTransfer $locale)
-    {
-        return $this->getDependencyContainer()
-            ->createProductCategoryManager()
-            ->getProductsByCategory($idCategory, $locale)
-        ;
-    }
-
-    /**
      * @param SpyAbstractProduct $abstractProduct
      *
-     * @return SpyProductCategoryQuery
+     * @return ProductCategoryTransfer[]
      */
     public function getCategoriesByAbstractProduct(SpyAbstractProduct $abstractProduct)
     {
-        return $this->getDependencyContainer()
+        $entities = $this->getDependencyContainer()
             ->createProductCategoryManager()
             ->getCategoriesByAbstractProduct($abstractProduct)
         ;
-    }
 
-    /**
-     * @param int $idCategory
-     * @param int $idAbstractProduct
-     *
-     * @return SpyProductCategoryQuery
-     */
-    public function getProductCategoryMappingById($idCategory, $idAbstractProduct)
-    {
         return $this->getDependencyContainer()
-            ->createProductCategoryManager()
-            ->getProductCategoryMappingById($idCategory, $idAbstractProduct)
-        ;
+            ->createProductCategoryTransferGenerator()
+            ->convertProductCategoryCollection($entities);
     }
 
     /**
      * @param int $idCategory
      * @param array $productIdsToAssign
-     * 
+     *
      * @throws PropelException
+     *
+     * @return void
      */
     public function createProductCategoryMappings($idCategory, array $productIdsToAssign)
     {
@@ -115,20 +96,25 @@ class ProductCategoryFacade extends AbstractFacade
 
     /**
      * @param int $idCategory
-     * @param array $productIdsToDeassign
+     * @param array $productIdsToUnAssign
+     *
+     * @return void
      */
-    public function removeProductCategoryMappings($idCategory, array $productIdsToDeassign)
+    public function removeProductCategoryMappings($idCategory, array $productIdsToUnAssign)
     {
         $this->getDependencyContainer()
             ->createProductCategoryManager()
-            ->removeProductCategoryMappings($idCategory, $productIdsToDeassign)
+            ->removeProductCategoryMappings($idCategory, $productIdsToUnAssign)
         ;
     }
 
     /**
      * @param int $idCategory
      * @param array $productOrderList
+     *
      * @throws PropelException
+     *
+     * @return void
      */
     public function updateProductMappingsOrder($idCategory, array $productOrderList)
     {
@@ -140,13 +126,76 @@ class ProductCategoryFacade extends AbstractFacade
 
     /**
      * @param int $idCategory
-     * @param $productPreconfig
+     * @param $productPreConfig
+     *
+     * @return void
      */
-    public function updateProductCategoryPreconfig($idCategory, array $productPreconfig)
+    public function updateProductCategoryPreConfig($idCategory, array $productPreConfig)
     {
         $this->getDependencyContainer()
             ->createProductCategoryManager()
-            ->updateProductMappingsPreconfig($idCategory, $productPreconfig)
+            ->updateProductMappingsPreConfig($idCategory, $productPreConfig)
         ;
     }
+
+    /**
+     * @param int $idCategory
+     * @param LocaleTransfer $locale
+     *
+     * @return void
+     */
+    public function deleteCategoryRecursive($idCategory, LocaleTransfer $locale)
+    {
+        $this->getDependencyContainer()
+            ->createProductCategoryManager()
+            ->deleteCategoryRecursive($idCategory, $locale)
+        ;
+    }
+
+    /**
+     * @param NodeTransfer $sourceNode
+     * @param NodeTransfer $destinationNode
+     * @param LocaleTransfer $locale
+     *
+     * @return void
+     */
+    public function moveCategoryChildrenAndDeleteNode(NodeTransfer $sourceNode, NodeTransfer $destinationNode, LocaleTransfer $locale)
+    {
+        $this->getDependencyContainer()
+            ->createProductCategoryManager()
+            ->moveCategoryChildrenAndDeleteNode($sourceNode, $destinationNode, $locale)
+        ;
+    }
+
+    /**
+     * @param CategoryTransfer $categoryTransfer
+     * @param NodeTransfer $categoryNodeTransfer
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return int
+     */
+    public function addCategory(CategoryTransfer $categoryTransfer, NodeTransfer $categoryNodeTransfer, LocaleTransfer $localeTransfer)
+    {
+        return $this->getDependencyContainer()
+            ->createProductCategoryManager()
+            ->addCategory($categoryTransfer, $categoryNodeTransfer, $localeTransfer)
+        ;
+    }
+
+    /**
+     * @param int $idCategoryNode
+     * @param int $fkParentCategoryNode
+     * @param bool $deleteChildren
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @return void
+     */
+    public function deleteCategory($idCategoryNode, $fkParentCategoryNode, $deleteChildren, LocaleTransfer $localeTransfer)
+    {
+        $this->getDependencyContainer()
+            ->createProductCategoryManager()
+            ->deleteCategory($idCategoryNode, $fkParentCategoryNode, $deleteChildren, $localeTransfer)
+        ;
+    }
+
 }

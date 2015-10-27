@@ -24,6 +24,7 @@ use Symfony\Component\Finder\Finder;
  */
 class CmsDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return CmsQueryContainerInterface
      */
@@ -68,7 +69,8 @@ class CmsDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createBlockBlockManager(
             $this->getCmsQueryContainer(),
-            $this->getTouchFacade()
+            $this->getTouchFacade(),
+            $this->getProvidedDependency(CmsDependencyProvider::PLUGIN_PROPEL_CONNECTION)
         );
     }
 
@@ -117,6 +119,6 @@ class CmsDependencyContainer extends AbstractBusinessDependencyContainer
     protected function getFinder()
     {
         return new Finder();
-
     }
+
 }

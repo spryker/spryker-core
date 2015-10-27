@@ -7,10 +7,12 @@
 namespace SprykerFeature\Zed\Cms\Business\Block;
 
 use Generated\Shared\Cms\CmsBlockInterface;
+use Generated\Shared\Transfer\CmsBlockTransfer;
 use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlock;
 
 interface BlockManagerInterface
 {
+
     /**
      * @param CmsBlockInterface $cmsBlockTransfer
      *
@@ -24,6 +26,11 @@ interface BlockManagerInterface
      * @return CmsBlockTransfer
      */
     public function saveBlockAndTouch(CmsBlockInterface $cmsBlockTransfer);
+
+    /**
+     * @param int $idCategoryNode
+     */
+    public function updateBlocksAssignedToDeletedCategoryNode($idCategoryNode);
 
     /**
      * @param SpyCmsBlock $blockEntity
@@ -46,4 +53,19 @@ interface BlockManagerInterface
      * @param CmsBlockInterface $cmsBlockTransfer
      */
     public function touchBlockDelete(CmsBlockInterface $cmsBlockTransfer);
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return bool
+     */
+    public function hasBlockCategoryNodeMapping($idCategoryNode);
+
+    /**
+     * @param int $idCategoryNode
+     *
+     * @return CmsBlockTransfer[]
+     */
+    public function getCmsBlocksByIdCategoryNode($idCategoryNode);
+
 }

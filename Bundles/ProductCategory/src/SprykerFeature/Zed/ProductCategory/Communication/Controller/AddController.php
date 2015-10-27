@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\ProductCategory\Communication\Controller;
 
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
-use Propel\Runtime\Propel;
 use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\ProductCategory\Communication\ProductCategoryDependencyContainer;
@@ -35,54 +34,31 @@ class AddController extends AbstractController
     {
         $idParentNode = $request->get(ProductCategoryConfig::PARAM_ID_PARENT_NODE);
 
-        /*
-         * @var Form
-         */
         $form = $this->getDependencyContainer()
             ->createCategoryFormAdd($idParentNode)
         ;
         $form->handleRequest();
 
         if ($form->isValid()) {
-            $connection = Propel::getConnection();
-
-            $locale = $this->getDependencyContainer()
+            $localeTransfer = $this->getDependencyContainer()
                 ->createCurrentLocale()
             ;
 
-            $categoryTransfer = (new CategoryTransfer())
-                ->fromArray($form->getData(), true)
-            ;
+            $categoryTransfer = $this->createCategoryTransferFromData($form->getData());
+            $categoryNodeTransfer = $this->createCategoryNodeTransferFromData($form->getData());
 
-            $categoryTransfer->setIsActive(true);
-            $categoryTransfer->setIsInMenu(true);
-            $categoryTransfer->setIsClickable(true);
-
-            $idCategory = $this->getDependencyContainer()
-                ->createCategoryFacade()
-                ->createCategory($categoryTransfer, $locale)
-            ;
-
-            $categoryNodeTransfer = (new NodeTransfer())
-                ->fromArray($form->getData(), true)
-            ;
-
-            $categoryNodeTransfer->setFkCategory($idCategory);
-
-            $this->getDependencyContainer()
-                ->createCategoryFacade()
-                ->createCategoryNode($categoryNodeTransfer, $locale)
+            $idCategory = $this->getFacade()
+                ->addCategory($categoryTransfer, $categoryNodeTransfer, $localeTransfer)
             ;
 
             $this->addSuccessMessage('The category was added successfully.');
 
-            $connection->commit();
-
-            return $this->redirectResponse('/productCategory/edit?id-category='.$idCategory);
+            return $this->redirectResponse('/product-category/edit?id-category=' . $idCategory);
         }
 
         return $this->viewResponse([
             'form' => $form->createView(),
+            'showProducts' => false,
         ]);
     }
 
@@ -126,6 +102,28 @@ class AddController extends AbstractController
         return $this->jsonResponse(
             $productTable->fetchData()
         );
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return CategoryTransfer
+     */
+    protected function createCategoryTransferFromData(array $data)
+    {
+        return (new CategoryTransfer())
+            ->fromArray($data, true);
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return NodeTransfer
+     */
+    protected function createCategoryNodeTransferFromData(array $data)
+    {
+        return (new NodeTransfer())
+            ->fromArray($data, true);
     }
 
 }

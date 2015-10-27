@@ -5,7 +5,6 @@
 
 namespace SprykerFeature\Zed\Category\Communication\Table;
 
-use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
@@ -13,6 +12,7 @@ use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
 
 class UrlTable extends AbstractTable
 {
+
     const TABLE_IDENTIFIER = 'url_table';
 
     /**
@@ -34,9 +34,9 @@ class UrlTable extends AbstractTable
     {
         $config->setHeader([
             SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE => 'Category node Id',
-            SpyUrlTableMap::COL_FK_LOCALE  => 'Fk Locale',
+            SpyUrlTableMap::COL_FK_LOCALE => 'Fk Locale',
             SpyUrlTableMap::COL_URL => 'Url',
-            SpyUrlTableMap::COL_FK_RESOURCE_REDIRECT => 'Fk Resource Redirect'
+            SpyUrlTableMap::COL_FK_RESOURCE_REDIRECT => 'Fk Resource Redirect',
         ]);
         $config->setSortable([
             SpyUrlTableMap::COL_URL,
@@ -64,6 +64,8 @@ class UrlTable extends AbstractTable
             ];
         }
         unset($queryResults);
+
         return $results;
     }
+
 }
