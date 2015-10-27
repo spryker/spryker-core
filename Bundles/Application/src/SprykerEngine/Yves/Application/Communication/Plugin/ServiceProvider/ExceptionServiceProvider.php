@@ -7,7 +7,6 @@
 namespace SprykerEngine\Yves\Application\Communication\Plugin\ServiceProvider;
 
 use SprykerEngine\Yves\Application\Communication\ApplicationDependencyContainer;
-use SprykerEngine\Yves\Application\Communication\Plugin\ServiceProvider\ExceptionService\ExceptionHandlerInterface;
 use SprykerEngine\Yves\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Shared\Library\Error\ErrorLogger;
 use Silex\Application;
@@ -32,21 +31,19 @@ class ExceptionServiceProvider extends AbstractPlugin implements ServiceProvider
      */
     public function register(Application $app)
     {
-        foreach ($this->getExceptionHandlers() as $statusCode => $exceptionHandler) {
-            $app['controller.service.error' . $statusCode] = $exceptionHandler;
+        $app['controller.service.error'] = $this->getDependencyContainer()->createExceptionHandlerDispatcher();
 
-            $app['dispatcher'] = $app->share(
-                $app->extend('dispatcher', function (EventDispatcherInterface $dispatcher) use ($app, $statusCode) {
-                    $exceptionListener = new ExceptionListener(
-                        'controller.service.error' . $statusCode . ':handleException',
-                        $app['logger']
-                    );
-                    $dispatcher->addSubscriber($exceptionListener);
+        $app['dispatcher'] = $app->share(
+            $app->extend('dispatcher', function (EventDispatcherInterface $dispatcher) use ($app) {
+                $exceptionListener = new ExceptionListener(
+                    'controller.service.error:dispatch',
+                    $app['logger']
+                );
+                $dispatcher->addSubscriber($exceptionListener);
 
-                    return $dispatcher;
-                })
-            );
-        }
+                return $dispatcher;
+            })
+        );
     }
 
     /**
@@ -75,19 +72,14 @@ class ExceptionServiceProvider extends AbstractPlugin implements ServiceProvider
             $statusCode = $exception->getStatusCode();
         }
 
-        if (array_key_exists($statusCode, $this->getExceptionHandlers())) {
-            ErrorLogger::log($exception);
-        } else {
+        $exceptionHandlers = $this->getDependencyContainer()->createExceptionHandlers();
+        if (!array_key_exists($statusCode, $exceptionHandlers)) {
             throw $exception;
         }
-    }
 
-    /**
-     * @return ExceptionHandlerInterface[]
-     */
-    protected function getExceptionHandlers()
-    {
-        return $this->getDependencyContainer()->createExceptionHandlers();
+        if ($statusCode === Response::HTTP_INTERNAL_SERVER_ERROR) {
+            ErrorLogger::log($exception);
+        }
     }
 
 }
