@@ -15,19 +15,26 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 class SubRequestExceptionHandler implements ExceptionHandlerInterface
 {
 
+    const DEFAULT_URL_NAME_PREFIX = 'error/';
+
     /**
      * @var Application
      */
     protected $application;
 
     /**
-     * DefaultExceptionController constructor.
-     *
-     * @param Application $application
+     * @var string
      */
-    public function __construct(Application $application)
+    protected $errorPageNamePrefix;
+
+    /**
+     * @param Application $application
+     * @param string $errorPageNamePrefix
+     */
+    public function __construct(Application $application, $errorPageNamePrefix = self::DEFAULT_URL_NAME_PREFIX)
     {
         $this->application = $application;
+        $this->errorPageNamePrefix = $errorPageNamePrefix;
     }
 
     /**
@@ -37,7 +44,8 @@ class SubRequestExceptionHandler implements ExceptionHandlerInterface
      */
     public function handleException(FlattenException $exception)
     {
-        $request = Request::create('/error/' . $exception->getStatusCode(), 'GET', [
+        $errorPageUrl =  $this->application->url($this->errorPageNamePrefix . $exception->getStatusCode());
+        $request = Request::create($errorPageUrl, 'GET', [
             'exception' => $exception,
         ]);
 

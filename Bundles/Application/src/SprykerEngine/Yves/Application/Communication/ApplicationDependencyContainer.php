@@ -17,7 +17,7 @@ class ApplicationDependencyContainer extends AbstractCommunicationDependencyCont
     /**
      * @return ExceptionHandlerInterface[]
      */
-    public function getExceptionHandlers()
+    public function createExceptionHandlers()
     {
         return [
             Response::HTTP_NOT_FOUND => new DefaultExceptionHandler(),

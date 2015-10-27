@@ -35,12 +35,17 @@ class ExceptionServiceProvider extends AbstractPlugin implements ServiceProvider
         foreach ($this->getExceptionHandlers() as $statusCode => $exceptionHandler) {
             $app['controller.service.error' . $statusCode] = $exceptionHandler;
 
-            $app['dispatcher'] = $app->share($app->extend('dispatcher', function ($dispatcher) use ($app, $statusCode) {
-                /** @var EventDispatcherInterface $dispatcher */
-                $dispatcher->addSubscriber(new ExceptionListener('controller.service.error' . $statusCode . ':handleException', $app['logger']));
+            $app['dispatcher'] = $app->share(
+                $app->extend('dispatcher', function (EventDispatcherInterface $dispatcher) use ($app, $statusCode) {
+                    $exceptionListener = new ExceptionListener(
+                        'controller.service.error' . $statusCode . ':handleException',
+                        $app['logger']
+                    );
+                    $dispatcher->addSubscriber($exceptionListener);
 
-                return $dispatcher;
-            }));
+                    return $dispatcher;
+                })
+            );
         }
     }
 
@@ -65,9 +70,12 @@ class ExceptionServiceProvider extends AbstractPlugin implements ServiceProvider
     {
         $exception = $event->getException();
 
-        $code = $exception instanceof HttpExceptionInterface ? $exception->getStatusCode() : Response::HTTP_INTERNAL_SERVER_ERROR;
+        $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
+        if ($exception instanceof HttpExceptionInterface) {
+            $statusCode = $exception->getStatusCode();
+        }
 
-        if (array_key_exists($code, $this->getExceptionHandlers())) {
+        if (array_key_exists($statusCode, $this->getExceptionHandlers())) {
             ErrorLogger::log($exception);
         } else {
             throw $exception;
@@ -79,7 +87,7 @@ class ExceptionServiceProvider extends AbstractPlugin implements ServiceProvider
      */
     protected function getExceptionHandlers()
     {
-        return $this->getDependencyContainer()->getExceptionHandlers();
+        return $this->getDependencyContainer()->createExceptionHandlers();
     }
 
 }
