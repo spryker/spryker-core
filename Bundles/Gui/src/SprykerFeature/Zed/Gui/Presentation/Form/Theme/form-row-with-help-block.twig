@@ -1,0 +1,12 @@
+{% block form_row %}
+    {% spaceless %}
+        {{ form_label(form) }}
+        {{ form_widget(form) }}
+        {% for attrname,attrvalue in attr %}
+            {% if attrname == 'help' %}
+                <span class="help-block">{{ attrvalue | trans }}</span>
+            {% endif %}
+        {% endfor %}
+        {{ form_errors(form) }}
+    {% endspaceless %}
+{% endblock form_row %}

@@ -36,4 +36,11 @@ interface DiscountCalculatorPluginInterface
      */
     public function getMaxValue();
 
+    /**
+     * @param DiscountInterface $discountTransfer
+     *
+     * @return string
+     */
+    public function getFormattedAmount(DiscountInterface $discountTransfer);
+
 }

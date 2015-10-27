@@ -1,6 +1,8 @@
 {% extends '@Gui/Layout/layout.twig' %}
 
-{% set section_title = 'Create Voucher' %}
+{% form_theme form '@Gui/Form/Theme/form-row-with-help-block.twig' %}
+
+{% set section_title = 'Create Code' %}
 
 {% block breadcrumb %}
     <li><a href="/discount/voucher">{{ 'Vouchers' | trans }}</a></li>
@@ -9,7 +11,7 @@
 
 {% block action %}
     {{ backActionButton('/discount/pool', 'Back to Vouchers' | trans) }}
-    {{ createActionButton('/discount/voucher/create-multiple', 'Create Multiple Vouchers' | trans) }}
+    {{ createActionButton('/discount/voucher/create-multiple', 'Create Multiple Codes' | trans) }}
 {% endblock %}
 
 {% block content %}

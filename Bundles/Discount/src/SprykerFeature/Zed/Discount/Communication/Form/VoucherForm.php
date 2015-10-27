@@ -2,8 +2,11 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
+use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerFeature\Zed\Discount\Communication\Form\Validators\MaximumCalculatedRangeValidator;
+use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use SprykerFeature\Zed\Discount\DiscountConfig;
+use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Validator\Constraints\Callback;
@@ -13,6 +16,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class VoucherForm extends AbstractForm
 {
+
     const ONE_VOUCHER = 1;
     const MINIMUM_VOUCHERS_TO_GENERATE = 2;
 
@@ -78,6 +82,7 @@ class VoucherForm extends AbstractForm
                     'data-toggle' => 'tooltip',
                     'data-placement' => 'top',
                     'title' => 'Add [code] template to position generated code',
+                    'help' => 'Please enter a string that will be used as custom code, the string code can be used to put the code in a certain position, e.g. "summer-code-special"',
                 ],
             ])
             ->add(self::FIELD_CODE_LENGTH, 'choice', [
@@ -91,23 +96,25 @@ class VoucherForm extends AbstractForm
 
                                 if (empty($formData[self::FIELD_CUSTOM_CODE]) && $length < 1) {
                                     $context->addViolation('Please add a custom code or select a length for code to be generated');
+
                                     return;
                                 }
 
                                 if ($codeLengthValidator->getPossibleCodeCombinationsCount($length) < $formData[VoucherForm::FIELD_QUANTITY]) {
                                     $context->addViolation('The quantity of required codes is to high regarding the code length');
+
                                     return;
                                 }
                             },
                         ],
                     ]),
-                ]
+                ],
             ])
             ->addNumber(self::FIELD_MAX_NUMBER_OF_USES, [
                 'label' => 'Max number of uses (0 = Infinite usage)',
             ])
             ->addChoice(self::FIELD_DISCOUNT_VOUCHER_POOL, [
-                'label' => 'Pool',
+                'label' => 'Voucher',
                 'placeholder' => 'Select one',
                 'choices' => $this->getPools(),
                 'constraints' => [
@@ -120,14 +127,14 @@ class VoucherForm extends AbstractForm
     /**
      * @return array
      */
-    private function getPools()
+    protected function getPools()
     {
         $pools = [];
-        $poolResult = $this->poolQuery->find()->toArray();
+        $poolResult = $this->poolQuery->find();
 
         if (!empty($poolResult)) {
-            foreach ($poolResult as $item) {
-                $pools[$item['IdDiscountVoucherPool']] = $item['Name'];
+            foreach ($poolResult as $discountVoucherPoolEntity) {
+                $pools[$discountVoucherPoolEntity->getIdDiscountVoucherPool()] = $this->getDiscountVoucherPoolDisplayName($discountVoucherPoolEntity);
             }
         }
 
@@ -164,6 +171,34 @@ class VoucherForm extends AbstractForm
         ];
 
         return $codeLengthChoices;
+    }
+
+    /**
+     * @param SpyDiscountVoucherPool $discountVoucherPoolEntity
+     *
+     * @return string
+     */
+    protected function getDiscountVoucherPoolDisplayName(SpyDiscountVoucherPool $discountVoucherPoolEntity)
+    {
+        $availableCalculatorPlugins = $this->discountConfig->getAvailableCalculatorPlugins();
+        $displayName = $discountVoucherPoolEntity->getName();
+
+        $discounts = [];
+        foreach ($discountVoucherPoolEntity->getDiscounts() as $discountEntity) {
+            $discountTransfer = new DiscountTransfer();
+            $discountTransfer->fromArray($discountEntity->toArray(), true);
+
+            /* @var DiscountCalculatorPluginInterface $calculator */
+            $calculator = $availableCalculatorPlugins[$discountEntity->getCalculatorPlugin()];
+
+            $discounts[] = $calculator->getFormattedAmount($discountTransfer);
+        }
+
+        if (!empty($discounts)) {
+            $displayName .= ' (' . implode(', ', $discounts) . ')';
+        }
+
+        return $displayName;
     }
 
 }

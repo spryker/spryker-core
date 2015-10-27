@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Plugin\Calculator;
 
+use Generated\Shared\Discount\DiscountInterface;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
 
@@ -45,6 +46,16 @@ class Percentage extends AbstractCalculator
     public function getMaxValue()
     {
         return self::MAX_VALUE;
+    }
+
+    /**
+     * @param DiscountInterface $discountTransfer
+     *
+     * @return string
+     */
+    public function getFormattedAmount(DiscountInterface $discountTransfer)
+    {
+        return $discountTransfer->getAmount() . '%';
     }
 
 }
