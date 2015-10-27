@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Maintenance;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Shared\System\SystemConfig;
 
 class MaintenanceConfig extends AbstractBundleConfig
 {

@@ -40,12 +40,11 @@ class Graph
         $graph->addNode($bundleName);
 
         foreach (array_keys($outgoingDependencies) as $foreignBundleName) {
-
             $isEngine = $this->bundleParser->isEngine($foreignBundleName);
 
             $attributes = [];
 
-            if($isEngine) {
+            if ($isEngine) {
                 $attributes['style'] = 'filled';
                 $attributes['fillcolor'] = '#e9e9e9';
             }
@@ -58,12 +57,12 @@ class Graph
         }
 
         $attributes = ['fontsize' => 10];
-        foreach($outgoingDependencies as $foreignBundleName => $count){
+        foreach ($outgoingDependencies as $foreignBundleName => $count) {
             $attributes['label'] = $count;
             $graph->addEdge([$bundleName => $foreignBundleName], $attributes);
         }
 
-        foreach($incomingDependencies as $foreignBundleName => $count){
+        foreach ($incomingDependencies as $foreignBundleName => $count) {
             $attributes['label'] = $count;
             $graph->addEdge([$foreignBundleName => $bundleName], $attributes);
         }

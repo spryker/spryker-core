@@ -60,7 +60,6 @@ class BundleParser
 
         $dependencies = [];
         foreach ($files as $file) {
-
             $content = $file->getContents();
 
             $matches = [];
@@ -97,7 +96,6 @@ class BundleParser
     {
         $reducedDependenciesPerFile = [];
         foreach ($dependencies as $fileName => $fileDependencies) {
-
             $reducedDependencies = [];
             foreach ($fileDependencies as $fileDependency) {
                 $fileDependencyParts = explode('\\', $fileDependency);
@@ -140,6 +138,7 @@ class BundleParser
 
     /**
      * @param string $bundleName
+     *
      * @return bool
      */
     public function isEngine($bundleName)
@@ -157,6 +156,7 @@ class BundleParser
     /**
      * @param string $bundleName
 
+     *
      * @return SplFileInfo[]
      */
     protected function findBundleNamespaceDirectoriesForBundle($bundleName)

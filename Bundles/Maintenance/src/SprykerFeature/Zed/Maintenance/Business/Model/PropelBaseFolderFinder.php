@@ -9,6 +9,7 @@ use Symfony\Component\Finder\Finder;
 
 class PropelBaseFolderFinder implements PropelBaseFolderFinderInterface
 {
+
     const NAME = 'Persistence/Propel/Base';
     const TESTS = 'tests';
 
@@ -21,7 +22,7 @@ class PropelBaseFolderFinder implements PropelBaseFolderFinderInterface
     {
         $this->bundlePath = $bundlePath;
     }
-    
+
     /**
      * @inheritDoc
      */
@@ -38,7 +39,7 @@ class PropelBaseFolderFinder implements PropelBaseFolderFinderInterface
         ;
 
         $result = [];
-        foreach($iterator as $folder) {
+        foreach ($iterator as $folder) {
             $result[] = $folder->getRealpath();
         }
 

@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Maintenance\Communication\Console;
 
-use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use SprykerFeature\Zed\Maintenance\Business\MaintenanceFacade;
 use Symfony\Component\Console\Input\InputArgument;

@@ -53,7 +53,6 @@ class DependencyController extends AbstractController
         };
 
         return $this->streamedResponse($callback);
-
     }
 
 }
