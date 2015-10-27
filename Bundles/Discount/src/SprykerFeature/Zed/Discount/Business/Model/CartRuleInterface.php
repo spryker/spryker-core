@@ -4,6 +4,7 @@ namespace SprykerFeature\Zed\Discount\Business\Model;
 
 interface CartRuleInterface
 {
+
     /**
      * @param int $idDiscount
      *

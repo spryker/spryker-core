@@ -10,6 +10,7 @@ use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 
 interface CalculatorInterface
 {
+
     /**
      * @param DiscountableInterface[] $discountableObjects
      * @param float $value
@@ -17,4 +18,5 @@ interface CalculatorInterface
      * @return float
      */
     public function calculate(array $discountableObjects, $value);
+
 }

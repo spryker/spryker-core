@@ -11,6 +11,7 @@ use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 
 class Aggregate implements CollectorInterface
 {
+
     /**
      * @var CollectorInterface[]
      */
@@ -38,4 +39,5 @@ class Aggregate implements CollectorInterface
 
         return $collected;
     }
+
 }

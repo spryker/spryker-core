@@ -95,7 +95,7 @@ class VoucherCodesType extends AbstractRuleType
                 'label' => 'Valid From',
             ])
             ->add(self::VALID_TO, 'date', [
-                'label' => 'Valid Until'
+                'label' => 'Valid Until',
             ])
             ->add(self::IS_PRIVILEGED, 'checkbox', [
                 'label' => 'Is Privileged',

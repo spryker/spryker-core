@@ -35,4 +35,5 @@ class AbstractDiscountPlugin extends AbstractPlugin
     {
         return CurrencyManager::getInstance();
     }
+
 }

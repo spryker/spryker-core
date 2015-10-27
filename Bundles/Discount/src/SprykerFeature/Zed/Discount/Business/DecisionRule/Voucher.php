@@ -12,6 +12,7 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
 
 class Voucher
 {
+
     const REASON_VOUCHER_CODE_NOT_AVAILABLE = 'Voucher code is not valid.';
     const REASON_VOUCHER_CODE_NOT_ACTIVE = 'Voucher code is not active.';
     const REASON_VOUCHER_CODE_POOL_MISSING = 'Voucher code pool is not set.';
@@ -59,7 +60,7 @@ class Voucher
         }
 
         if (!$discountVoucherEntity->getIsActive()) {
-             $result->addError(self::REASON_VOUCHER_CODE_NOT_ACTIVE);
+            $result->addError(self::REASON_VOUCHER_CODE_NOT_ACTIVE);
         }
 
         $voucherPoolEntity = $discountVoucherEntity->getVoucherPool();
@@ -68,7 +69,7 @@ class Voucher
         }
 
         if (!$voucherPoolEntity->getIsActive()) {
-             $result->addError(self::REASON_VOUCHER_CODE_POOL_NOT_ACTIVE);
+            $result->addError(self::REASON_VOUCHER_CODE_POOL_NOT_ACTIVE);
         }
 
         if (!$this->isValidNumberOfUses($discountVoucherEntity)) {

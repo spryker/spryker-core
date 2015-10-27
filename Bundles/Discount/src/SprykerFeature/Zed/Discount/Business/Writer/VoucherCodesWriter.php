@@ -225,4 +225,5 @@ class VoucherCodesWriter extends AbstractWriter
     {
         return (new DiscountTransfer())->fromArray($voucherCodesTransfer->toArray(), true);
     }
+
 }

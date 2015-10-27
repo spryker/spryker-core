@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Discount\Business\Writer;
 
 use Generated\Shared\Transfer\DecisionRuleTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
 

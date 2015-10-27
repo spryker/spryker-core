@@ -24,4 +24,5 @@ abstract class AbstractCalculator extends AbstractDiscountPlugin implements Disc
      * @return int
      */
     abstract public function calculate(array $discountableObjects, $number);
+
 }

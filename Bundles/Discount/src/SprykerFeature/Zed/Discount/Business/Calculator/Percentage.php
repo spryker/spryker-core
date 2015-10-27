@@ -10,6 +10,7 @@ use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 
 class Percentage implements CalculatorInterface
 {
+
     /**
      * @param DiscountableInterface[] $discountableObjects
      * @param float $percentage
@@ -34,7 +35,6 @@ class Percentage implements CalculatorInterface
             $itemTotalAmount = $discountableObject->getGrossPrice() * $discountableObject->getQuantity();
             $discountAmount += $this->calculateDiscountAmount($itemTotalAmount, $percentage);
         }
-
 
         if ($discountAmount <= 0) {
             return 0;

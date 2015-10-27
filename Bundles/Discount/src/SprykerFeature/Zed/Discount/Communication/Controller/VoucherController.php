@@ -25,6 +25,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class VoucherController extends AbstractController
 {
+
     const SESSION_TIME = 'session_title';
     const ID_POOL_PARAMETER = 'id-pool';
     const BATCH_PARAMETER = 'batch';

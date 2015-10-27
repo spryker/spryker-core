@@ -29,6 +29,7 @@ class MinimumCartSubtotal extends AbstractDecisionRule implements DiscountDecisi
         CalculableInterface $container
     ) {
         $decisionRuleEntity = $this->getContext()[self::KEY_ENTITY];
+
         return $this->getDependencyContainer()
             ->getDiscountFacade()
             ->isMinimumCartSubtotalReached($container, $decisionRuleEntity);
@@ -53,4 +54,5 @@ class MinimumCartSubtotal extends AbstractDecisionRule implements DiscountDecisi
     {
         return $this->getCurrencyManager()->convertCentToDecimal($value);
     }
+
 }

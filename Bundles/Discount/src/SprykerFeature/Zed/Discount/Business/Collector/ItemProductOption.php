@@ -11,6 +11,7 @@ use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 
 class ItemProductOption implements CollectorInterface
 {
+
     /**
      * @param CalculableInterface        $container
      * @param DiscountCollectorInterface $discountCollectorTransfer
@@ -28,4 +29,5 @@ class ItemProductOption implements CollectorInterface
 
         return $discountableOptions;
     }
+
 }

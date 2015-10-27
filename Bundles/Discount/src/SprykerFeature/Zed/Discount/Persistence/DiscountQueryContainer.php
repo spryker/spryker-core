@@ -23,6 +23,7 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolQuery;
  */
 class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQueryContainerInterface
 {
+
     const ALIAS_COL_ID_DISCOUNT = 'id_discount';
     const ALIAS_COL_AMOUNT = 'amount';
     const ALIAS_COL_TYPE = 'type';
@@ -64,7 +65,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
                 . SpyDiscountTableMap::COL_VALID_TO . ' >= ? )',
                 [
                     $now->format('Y-m-d H:i:s'),
-                    $now->format('Y-m-d H:i:s')
+                    $now->format('Y-m-d H:i:s'),
                 ]
             )->_or()->where(
                 SpyDiscountTableMap::COL_VALID_FROM . ' IS NULL AND '
@@ -92,7 +93,6 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
             ->filterByFkDiscountVoucherPool(null)
             ->filterByIsActive(true);
     }
-
 
     /**
      * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolQuery
@@ -225,6 +225,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
      */
     public function queryDiscountCollectorBysByIdPool(SpyDiscountVoucherPool $pool)
     {
-        return $this->queryDecisionRules($pool->getVirtualColumn(DiscountQueryContainer::ALIAS_COL_ID_DISCOUNT));
+        return $this->queryDecisionRules($pool->getVirtualColumn(self::ALIAS_COL_ID_DISCOUNT));
     }
+
 }

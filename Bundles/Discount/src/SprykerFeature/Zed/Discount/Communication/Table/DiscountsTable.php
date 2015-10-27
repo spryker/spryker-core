@@ -72,7 +72,6 @@ class DiscountsTable extends AbstractTable
         $queryResult = $this->runQuery($query, $config, true);
         /** @var SpyDiscount $item */
         foreach ($queryResult as $item) {
-
             $chosenDecisionRules = array_column($item->getDecisionRules()->toArray(), self::DECISION_RULE_PLUGIN);
 
             $result[] = [
@@ -112,7 +111,6 @@ class DiscountsTable extends AbstractTable
     protected function getDiscountAmountType(SpyDiscount $discount)
     {
         if ($discount->getCalculatorPlugin() === DiscountConfig::PLUGIN_CALCULATOR_PERCENTAGE) {
-
             return 'percentage';
         }
 

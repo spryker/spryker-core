@@ -9,10 +9,11 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class PoolCategoryForm extends AbstractForm
 {
+
     const COL_NAME = 'name';
 
     /**
-     * @var SpyDiscountVoucherPoolCategory $poolCategory
+     * @var SpyDiscountVoucherPoolCategory
      */
     protected $poolCategory;
 

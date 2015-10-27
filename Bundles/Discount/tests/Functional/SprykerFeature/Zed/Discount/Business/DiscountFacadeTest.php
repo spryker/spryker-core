@@ -20,7 +20,6 @@ use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
 use SprykerFeature\Zed\Discount\Communication\Plugin\Calculator\Fixed;
-use SprykerFeature\Zed\Discount\Communication\Plugin\Calculator\Percentage;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\DiscountConfig;

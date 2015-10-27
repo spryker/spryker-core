@@ -86,4 +86,5 @@ interface DiscountQueryContainerInterface extends QueryContainerInterface
      * @return SpyDiscountVoucherQuery
      */
     public function queryVoucherPoolByVoucherCodes(array $codes);
+
 }

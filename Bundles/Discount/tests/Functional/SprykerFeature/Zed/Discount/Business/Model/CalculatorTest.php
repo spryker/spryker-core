@@ -11,13 +11,11 @@ use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\OrderItemsTransfer;
 use SprykerEngine\Shared\Config;
 use SprykerFeature\Zed\Discount\Business\Distributor\Distributor;
 use SprykerFeature\Zed\Discount\Business\Model\Calculator;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Discount\DiscountConfig;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountQuery;
 use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
 
 /**

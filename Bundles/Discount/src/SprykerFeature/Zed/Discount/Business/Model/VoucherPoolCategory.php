@@ -6,20 +6,9 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
-use Generated\Shared\Discount\OrderInterface;
 use Generated\Shared\Transfer\DiscountTransfer;
-use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
-use SprykerFeature\Zed\Discount\Business\Distributor\DistributorInterface;
-use SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule\AbstractDecisionRule;
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
-use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
-use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
-use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
-use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherPoolCategoryTableMap;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
 
 class VoucherPoolCategory
 {
@@ -53,7 +42,6 @@ class VoucherPoolCategory
 
         return $availableVoucherPoolCategories;
     }
-
 
     /**
      * @return SpyDiscount[]

@@ -11,6 +11,7 @@ use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 
 interface DiscountCalculatorPluginInterface
 {
+
     /**
      * @param DiscountableInterface[] $discountableObjects
      * @param mixed $number

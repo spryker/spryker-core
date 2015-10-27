@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class CartRuleController extends AbstractController
 {
+
     const PARAM_ID_DISCOUNT = 'id-discount';
     const PARAM_CURRENT_ELEMENTS_COUNT = 'elements';
 

@@ -2,9 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
-use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 
@@ -42,7 +40,7 @@ class CartRuleType extends AbstractRuleType
                 'label' => 'Amount',
                 'constraints' => [
                     new NotBlank(),
-                ]
+                ],
             ])
             ->add(self::FIELD_CALCULATOR_PLUGIN, 'choice', [
                 'label' => 'Calculator Plugin',

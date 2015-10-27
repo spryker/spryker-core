@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Discount\Communication\Form\Transformers;
 
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesType;
-use SprykerFeature\Zed\Discount\Communication\Plugin\Calculator\Fixed;
 use SprykerFeature\Zed\Discount\DiscountConfig;
 use Symfony\Component\Form\DataTransformerInterface;
 use Zend\Filter\Word\CamelCaseToUnderscore;
@@ -66,7 +65,7 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
 
             $formArray[VoucherCodesType::FIELD_DECISION_RULES][$index] = $fixedValueSet;
         }
-        
+
         return $formArray;
     }
 

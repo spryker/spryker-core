@@ -18,6 +18,7 @@ use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
  */
 class OrderExpense extends AbstractDiscountPlugin implements DiscountCollectorPluginInterface
 {
+
     /**
      * @param DiscountInterface          $discount
      * @param CalculableInterface        $container
@@ -33,4 +34,5 @@ class OrderExpense extends AbstractDiscountPlugin implements DiscountCollectorPl
         return $this->getDependencyContainer()->getDiscountFacade()
             ->getDiscountableOrderExpenses($container, $discountCollectorTransfer);
     }
+
 }

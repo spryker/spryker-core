@@ -11,6 +11,7 @@ use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 
 class Distributor implements DistributorInterface
 {
+
     /**
      * @var float
      */
@@ -70,7 +71,6 @@ class Distributor implements DistributorInterface
 
         return $totalGrossAmount;
     }
-
 
     /**
      * @param DiscountableInterface $discountableItemTransfer

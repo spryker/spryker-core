@@ -11,7 +11,6 @@ use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
 
 /**
  * @method DiscountDependencyContainer getDependencyContainer()
@@ -31,6 +30,7 @@ class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePlugin
 
         if (!$this->isVoucherCodesProvided($container)) {
             $voucherCodeValidationResults->addError('Voucher codes not set.');
+
             return $voucherCodeValidationResults;
         }
 
@@ -61,6 +61,8 @@ class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePlugin
         if (count($container->getCalculableObject()->getCouponCodes()) < 1) {
             return false;
         }
+
         return true;
     }
+
 }

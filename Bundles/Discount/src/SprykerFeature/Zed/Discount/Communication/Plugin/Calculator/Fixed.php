@@ -16,6 +16,7 @@ use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
  */
 class Fixed extends AbstractCalculator
 {
+
     /**
      * @param DiscountableInterface[] $discountableObjects
      * @param int $number
@@ -59,4 +60,5 @@ class Fixed extends AbstractCalculator
 
         return $currencyManager->format($discountAmount);
     }
+
 }

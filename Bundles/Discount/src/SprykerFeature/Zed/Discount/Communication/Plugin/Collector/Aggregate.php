@@ -18,6 +18,7 @@ use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
  */
 class Aggregate extends AbstractDiscountPlugin implements DiscountCollectorPluginInterface
 {
+
     /**
      * @param DiscountInterface          $discount
      * @param CalculableInterface        $container
@@ -32,4 +33,5 @@ class Aggregate extends AbstractDiscountPlugin implements DiscountCollectorPlugi
     ) {
         return $this->getFacade()->getDiscountableItemsFromCollectorAggregate($container, $discountCollectorTransfer);
     }
+
 }

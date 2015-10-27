@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Writer;
 
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 

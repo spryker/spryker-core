@@ -6,13 +6,10 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Controller;
 
-use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherCodesTransfer;
 use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
-use Generated\Shared\Transfer\VoucherPoolTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Discount\Communication\Form\CartRuleType;
-use SprykerFeature\Zed\Discount\Communication\Form\PoolForm;
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesType;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolTable;
 use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherPoolCategoryTableMap;

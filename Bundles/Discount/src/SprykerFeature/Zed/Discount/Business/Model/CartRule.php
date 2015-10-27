@@ -17,9 +17,10 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
 
 class CartRule implements CartRuleInterface
 {
+
     const CART_RULES_ITERATOR = 'rule_';
     const DATABASE_DATE_FORMAT = 'Y-m-d\TG:i:s\Z';
-    const COLLECTOR_ITERATOR =  'collector_';
+    const COLLECTOR_ITERATOR = 'collector_';
 
     /**
      * @var DiscountQueryContainer
@@ -97,8 +98,8 @@ class CartRule implements CartRuleInterface
         }
 
         foreach ($cartRuleFormTransfer->getCollectorPlugins() as $collectorTransfer) {
-             $collectorTransfer->setFkDiscount($discountEntity->getIdDiscount());
-             $this->discountCollectorWriter->save($collectorTransfer);
+            $collectorTransfer->setFkDiscount($discountEntity->getIdDiscount());
+            $this->discountCollectorWriter->save($collectorTransfer);
         }
 
         return $discountTransfer->fromArray($discountEntity->toArray(), true);
@@ -164,4 +165,5 @@ class CartRule implements CartRuleInterface
 
         return $this->discountWriter->update($discountTransfer);
     }
+
 }

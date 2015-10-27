@@ -5,13 +5,13 @@
 
 namespace SprykerFeature\Zed\Discount\Business\DecisionRule;
 
-use Generated\Shared\Discount\OrderInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
 
 class MinimumCartSubtotal // @TODO Missing interface
 {
+
     const REASON_MINIMUM_CART_SUBTOTAL_NOT_REACHED = 'Minimum cart subtotal not reached';
 
     /**
@@ -30,4 +30,5 @@ class MinimumCartSubtotal // @TODO Missing interface
 
         return $result->addError(self::REASON_MINIMUM_CART_SUBTOTAL_NOT_REACHED);
     }
+
 }

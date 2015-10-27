@@ -10,6 +10,7 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountCollector;
 
 class DiscountCollectorWriter extends AbstractWriter
 {
+
     /**
      * @param DiscountCollectorTransfer $discountCollectorTransfer
      *
@@ -54,4 +55,5 @@ class DiscountCollectorWriter extends AbstractWriter
 
         return $discountCollectorEntity;
     }
+
 }

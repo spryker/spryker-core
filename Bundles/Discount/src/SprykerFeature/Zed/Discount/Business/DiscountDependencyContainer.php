@@ -104,7 +104,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createWriterDiscountCollectorWriter($this->getQueryContainer());
     }
-    
+
     /**
      * @return CalculatorInterface[]
      */

@@ -7,10 +7,8 @@
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
 use Generated\Shared\Discount\DiscountInterface;
-use Generated\Shared\Discount\OrderInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
 
 class DecisionRuleEngine implements DecisionRuleInterface
@@ -18,7 +16,6 @@ class DecisionRuleEngine implements DecisionRuleInterface
 
     /**
      * @param DiscountInterface $discountTransfer
-     *
      * @param CalculableInterface $discountableContainer
      * @param DiscountDecisionRulePluginInterface[] $decisionRulePlugins
      *

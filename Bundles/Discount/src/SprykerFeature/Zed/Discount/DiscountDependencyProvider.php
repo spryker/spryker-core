@@ -12,6 +12,7 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const STORE_CONFIG = 'store_config';
 
     const FLASH_MESSENGER = 'flash_messanger';
@@ -51,4 +52,5 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 
         return $container;
     }
+
 }

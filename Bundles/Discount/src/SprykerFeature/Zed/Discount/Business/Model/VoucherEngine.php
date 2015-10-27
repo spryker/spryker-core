@@ -23,6 +23,7 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
  */
 class VoucherEngine
 {
+
     const MESSAGE_TYPE_SUCCESS = 'success';
     const MESSAGE_TYPE_ERROR = 'error';
 
@@ -59,8 +60,7 @@ class VoucherEngine
         DiscountQueryContainer $queryContainer,
         FlashMessengerFacade $flashMessengerFacade,
         ConnectionInterface $connection
-    )
-    {
+    ) {
         $this->settings = $settings;
         $this->queryContainer = $queryContainer;
         $this->flashMessengerFacade = $flashMessengerFacade;
@@ -196,6 +196,7 @@ class VoucherEngine
      * @param VoucherInterface $voucherTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
+     *
      * @return SpyDiscountVoucher
      */
     public function createVoucherCode(VoucherInterface $voucherTransfer)

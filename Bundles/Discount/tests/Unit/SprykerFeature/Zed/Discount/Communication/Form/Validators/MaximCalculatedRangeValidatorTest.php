@@ -11,6 +11,7 @@ use SprykerFeature\Zed\Discount\Communication\Form\Validators\MaximumCalculatedR
 
 class MaximCalculatedRangeValidatorTest extends Test
 {
+
     /**
      * @dataProvider getPairs
      *
@@ -42,4 +43,5 @@ class MaximCalculatedRangeValidatorTest extends Test
             [3, 32, 4960],
         ];
     }
+
 }

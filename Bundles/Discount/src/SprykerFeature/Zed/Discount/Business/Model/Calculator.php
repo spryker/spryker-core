@@ -14,6 +14,7 @@ use SprykerFeature\Zed\Discount\DiscountConfigInterface;
 
 class Calculator implements CalculatorInterface
 {
+
     const KEY_DISCOUNT_TRANSFER = 'transfer';
     const KEY_DISCOUNT_AMOUNT = 'amount';
     const KEY_DISCOUNT_REASON = 'reason';
@@ -38,7 +39,6 @@ class Calculator implements CalculatorInterface
         DiscountConfigInterface $settings,
         DistributorInterface $discountDistributor
     ) {
-
         $calculatedDiscounts = [];
 
         foreach ($discountCollection as $discountTransfer) {
@@ -143,7 +143,6 @@ class Calculator implements CalculatorInterface
         DiscountConfigInterface $settings,
         DiscountInterface $discountTransfer
     ) {
-
         $discountableObjects = [];
         foreach ($discountTransfer->getDiscountCollectors() as $discountCollectorTransfer) {
             $collectorPlugin = $settings->getCollectorPluginByName(
@@ -170,6 +169,7 @@ class Calculator implements CalculatorInterface
         foreach ($discountableObjects as $discountableObject) {
             $uniqDiscountableObjects[spl_object_hash($discountableObject)] = $discountableObject;
         }
+
         return $uniqDiscountableObjects;
     }
 

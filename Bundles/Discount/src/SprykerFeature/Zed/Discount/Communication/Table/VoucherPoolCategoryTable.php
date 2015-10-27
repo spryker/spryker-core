@@ -9,6 +9,7 @@ use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
 class VoucherPoolCategoryTable extends AbstractTable
 {
+
     /**
      * @var SpyDiscountVoucherPoolCategoryQuery
      */

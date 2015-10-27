@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Discount\Business;
 use Generated\Shared\Discount\DiscountCollectorInterface;
 use Generated\Shared\Discount\OrderInterface;
 use Generated\Shared\Discount\VoucherCreateInfoInterface;
-use Generated\Shared\Discount\VoucherCreateInterface;
 use Generated\Shared\Discount\VoucherInterface;
 use Generated\Shared\Transfer\CartRuleTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;

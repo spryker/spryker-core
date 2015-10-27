@@ -33,4 +33,5 @@ class ItemProductOption extends AbstractDiscountPlugin implements DiscountCollec
     ) {
         return $this->getFacade()->getDiscountableItemProductOptions($container, $discountCollectorTransfer);
     }
+
 }

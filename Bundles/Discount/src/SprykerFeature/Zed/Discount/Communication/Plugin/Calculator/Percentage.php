@@ -15,6 +15,7 @@ use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
  */
 class Percentage extends AbstractCalculator
 {
+
     /**
      * @param DiscountableInterface[] $discountableObjects
      * @param float $number
@@ -37,4 +38,5 @@ class Percentage extends AbstractCalculator
     {
         return $discountTransfer->getAmount() . '%';
     }
+
 }

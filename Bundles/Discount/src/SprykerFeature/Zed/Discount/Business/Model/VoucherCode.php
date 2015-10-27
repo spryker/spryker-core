@@ -10,6 +10,7 @@ use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
 
 class VoucherCode implements VoucherCodeInterface
 {
+
     /**
      * @var DiscountQueryContainerInterface
      */
@@ -70,7 +71,6 @@ class VoucherCode implements VoucherCodeInterface
                 continue;
             }
 
-
             $this->incrementNumberOfUses($discountVoucherEntity);
             $this->saveDiscountVoucherEntity($discountVoucherEntity);
         }
@@ -110,7 +110,6 @@ class VoucherCode implements VoucherCodeInterface
         }
 
         return false;
-
     }
 
     /**
