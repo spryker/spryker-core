@@ -15,7 +15,7 @@ interface DiscountCalculatorPluginInterface
      * @param DiscountableInterface[] $discountableObjects
      * @param mixed $number
      *
-     * @return mixed
+     * @return int
      */
     public function calculate(array $discountableObjects, $number);
 
