@@ -10,6 +10,8 @@ use Generated\Shared\Transfer\AttachmentTransfer;
 use Generated\Shared\Transfer\MailHeaderTransfer;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailTransfer;
+use Generated\Shared\Transfer\SendMailResponsesTransfer;
+use Generated\Shared\Transfer\SendMailResponseTransfer;
 use SprykerFeature\Shared\Library\PHPUnit\Constraints\ArrayContainsKeyEqualToConstraint;
 use SprykerFeature\Zed\Mail\Business\MandrillMailSender;
 
@@ -887,20 +889,27 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
 
     public function testSendMailReturnsResult()
     {
-        $mockResult = [
-            [
-                'email' => 'testrecipient1@testmail.com',
-                'status' => 'sent',
-                'reject_reason' => '',
-                '_id' => 'messageId1',
-            ],
-            [
-                'email' => 'testrecipient2@testmail.com',
-                'status' => 'rejected',
-                'reject_reason' => 'hard-bounce',
-                '_id' => 'messageId2',
-            ],
-        ];
+        $mockResult = new SendMailResponsesTransfer();
+
+        $mockResponse1 = new SendMailResponseTransfer();
+        $mockResponse1->setEmail('testrecipient1@testmail.com');
+        $mockResponse1->setIsSent('true');
+        $mockResponse1->setIsQueued('false');
+        $mockResponse1->setIsRejected('false');
+        $mockResponse1->setIsInvalid('false');
+        $mockResponse1->setRejectReason('');
+        $mockResponse1->setIdMessage('messageId1');
+        $mockResult->addResponse($mockResponse1);
+
+        $mockResponse2 = new SendMailResponseTransfer();
+        $mockResponse2->setEmail('testrecipient2@testmail.com');
+        $mockResponse2->setIsSent('false');
+        $mockResponse2->setIsQueued('false');
+        $mockResponse2->setIsRejected('true');
+        $mockResponse2->setIsInvalid('false');
+        $mockResponse2->setRejectReason('hard-bounce');
+        $mockResponse2->setIdMessage('messageId2');
+        $mockResult->addResponse($mockResponse2);
 
         $this->mandrillMock->messages
             ->expects($this->once())
@@ -908,7 +917,6 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($mockResult));
 
         $result = $this->mailSender->sendMail(new MailTransfer());
-
         $this->assertEquals($mockResult, $result);
     }
 

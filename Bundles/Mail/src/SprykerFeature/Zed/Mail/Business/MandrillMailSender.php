@@ -6,13 +6,21 @@
 
 namespace SprykerFeature\Zed\Mail\Business;
 
+use Generated\Shared\Mail\SendMailResponsesInterface;
 use Generated\Shared\Transfer\AttachmentTransfer;
 use Generated\Shared\Transfer\MailHeaderTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\MailRecipientTransfer;
+use Generated\Shared\Transfer\SendMailResponsesTransfer;
+use Generated\Shared\Transfer\SendMailResponseTransfer;
 
 class MandrillMailSender implements MailSenderInterface
 {
+
+    const STATUS_SENT = 'sent';
+    const STATUS_QUEUED = 'queued';
+    const STATUS_REJECTED = 'rejected';
+    const STATUS_INVALID = 'invalid';
 
     /**
      * @var \Mandrill
@@ -37,9 +45,7 @@ class MandrillMailSender implements MailSenderInterface
     /**
      * @param MailTransfer $mailTransfer
      *
-     * @throws \Mandrill_Error
-     *
-     * @return array
+     * @return SendMailResponsesInterface
      */
     public function sendMail(MailTransfer $mailTransfer)
     {
@@ -53,7 +59,35 @@ class MandrillMailSender implements MailSenderInterface
             $sendAt = (new \DateTime($sendAt))->format('Y-m-d H:i:s');
         }
 
-        return $this->mandrill->messages->sendTemplate($templateName, $templateContent, $message, $async, $ipPool, $sendAt);
+        $responses = (array) $this->mandrill->messages->sendTemplate($templateName, $templateContent, $message, $async, $ipPool, $sendAt);
+
+        return $this->convertResponsesToTransfer($responses);
+    }
+
+    /**
+     * @param array $responses
+     *
+     * @return SendMailResponsesInterface
+     */
+    protected function convertResponsesToTransfer($responses)
+    {
+        $responsesTransfer = new SendMailResponsesTransfer();
+
+        foreach ($responses as $response)
+        {
+            $responseTransfer = new SendMailResponseTransfer();
+            $responseTransfer->setEmail($response['email']);
+            $responseTransfer->setIsSent($response['status'] === self::STATUS_SENT);
+            $responseTransfer->setIsQueued($response['status'] === self::STATUS_QUEUED);
+            $responseTransfer->setIsRejected($response['status'] === self::STATUS_REJECTED);
+            $responseTransfer->setIsInvalid($response['status'] === self::STATUS_INVALID);
+            $responseTransfer->setRejectReason($response['reject_reason']);
+            $responseTransfer->setIdMessage($response['_id']);
+
+            $responsesTransfer->addResponse($responseTransfer);
+        }
+
+        return $responsesTransfer;
     }
 
     /**

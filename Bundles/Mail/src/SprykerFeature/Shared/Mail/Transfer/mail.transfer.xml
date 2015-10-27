@@ -92,5 +92,19 @@
         <property name="versionCreatedBy" type="string" />
     </transfer>
 
+    <transfer name="SendMailResponse">
+        <property name="email" type="string" />
+        <property name="isSent" type="bool" />
+        <property name="isQueued" type="bool" />
+        <property name="isRejected" type="bool" />
+        <property name="isInvalid" type="bool" />
+        <property name="rejectReason" type="string" />
+        <property name="idMessage" type="string" />
+    </transfer>
+
+    <transfer name="SendMailResponses">
+        <property name="responses" type="SendMailResponse[]" singular="response" />
+    </transfer>
+
 </transfers>
 
