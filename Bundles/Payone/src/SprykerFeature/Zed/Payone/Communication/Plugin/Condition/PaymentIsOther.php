@@ -18,6 +18,11 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
 class PaymentIsOther extends AbstractCondition
 {
 
+    /**
+     * @param SpySalesOrderItem $orderItem
+     *
+     * @return bool
+     */
     public function check(SpySalesOrderItem $orderItem)
     {
         return $this->getFacade()

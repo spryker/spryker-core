@@ -7,9 +7,11 @@
 namespace SprykerFeature\Zed\Payone\Communication\Plugin\Condition;
 
 use Generated\Shared\Transfer\OrderTransfer;
+use SprykerFeature\Zed\Payone\Business\PayoneFacade;
 use SprykerFeature\Zed\Payone\Communication\PayoneDependencyContainer;
 
 /**
+ * @method PayoneFacade getFacade()
  * @method PayoneDependencyContainer getDependencyContainer()
  */
 class RefundIsApprovedPlugin extends AbstractPlugin

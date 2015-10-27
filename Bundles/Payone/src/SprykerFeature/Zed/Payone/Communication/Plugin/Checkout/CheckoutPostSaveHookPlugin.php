@@ -23,6 +23,8 @@ class CheckoutPostSaveHookPlugin extends AbstractPlugin implements CheckoutPostS
     /**
      * @param OrderTransfer $orderTransfer
      * @param CheckoutResponseInterface $checkoutResponse
+     *
+     * @return void
      */
     public function executeHook(OrderTransfer $orderTransfer, CheckoutResponseInterface $checkoutResponse)
     {

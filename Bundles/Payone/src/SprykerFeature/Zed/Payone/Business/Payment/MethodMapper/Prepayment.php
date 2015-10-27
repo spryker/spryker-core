@@ -130,11 +130,11 @@ class Prepayment extends AbstractMapper
         $refundContainer->setSequenceNumber($this->getNextSequenceNumber($paymentEntity->getTransactionId()));
         $refundContainer->setCurrency($this->getStandardParameter()->getCurrency());
 
-        $refundContainer->setBankcountry($paymentEntity->getSpyPaymentPayoneDetail()->getBankcountry());
-        $refundContainer->setBankaccount($paymentEntity->getSpyPaymentPayoneDetail()->getBankaccount());
-        $refundContainer->setBankcode($paymentEntity->getSpyPaymentPayoneDetail()->getBankcode());
-        $refundContainer->setBankbranchcode($paymentEntity->getSpyPaymentPayoneDetail()->getBankbranchcode());
-        $refundContainer->setBankcheckdigit($paymentEntity->getSpyPaymentPayoneDetail()->getBankcheckdigit());
+        $refundContainer->setBankcountry($paymentEntity->getSpyPaymentPayoneDetail()->getBankCountry());
+        $refundContainer->setBankaccount($paymentEntity->getSpyPaymentPayoneDetail()->getBankAccount());
+        $refundContainer->setBankcode($paymentEntity->getSpyPaymentPayoneDetail()->getBankCode());
+        $refundContainer->setBankbranchcode($paymentEntity->getSpyPaymentPayoneDetail()->getBankBranchCode());
+        $refundContainer->setBankcheckdigit($paymentEntity->getSpyPaymentPayoneDetail()->getBankCheckDigit());
         $refundContainer->setIban($paymentEntity->getSpyPaymentPayoneDetail()->getIban());
         $refundContainer->setBic($paymentEntity->getSpyPaymentPayoneDetail()->getBic());
 

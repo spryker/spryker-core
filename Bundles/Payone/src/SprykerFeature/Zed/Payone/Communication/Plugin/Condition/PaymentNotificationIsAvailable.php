@@ -20,7 +20,7 @@ class PaymentNotificationIsAvailable extends AbstractCondition
 {
 
     /**
-     * @param OrderTransfer $orderTransfer
+     * @param SpySalesOrderItem $orderItem
      *
      * @return bool
      */

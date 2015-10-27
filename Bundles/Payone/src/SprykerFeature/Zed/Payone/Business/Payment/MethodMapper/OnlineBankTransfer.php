@@ -130,11 +130,11 @@ class OnlineBankTransfer extends AbstractMapper
         $refundContainer->setSequenceNumber($this->getNextSequenceNumber($paymentEntity->getTransactionId()));
         $refundContainer->setCurrency($this->getStandardParameter()->getCurrency());
 
-        $refundContainer->setBankcountry($paymentEntity->getSpyPaymentPayoneDetail()->getBankcountry());
-        $refundContainer->setBankaccount($paymentEntity->getSpyPaymentPayoneDetail()->getBankaccount());
-        $refundContainer->setBankcode($paymentEntity->getSpyPaymentPayoneDetail()->getBankcode());
-        $refundContainer->setBankbranchcode($paymentEntity->getSpyPaymentPayoneDetail()->getBankbranchcode());
-        $refundContainer->setBankcheckdigit($paymentEntity->getSpyPaymentPayoneDetail()->getBankcheckdigit());
+        $refundContainer->setBankcountry($paymentEntity->getSpyPaymentPayoneDetail()->getBankCountry());
+        $refundContainer->setBankaccount($paymentEntity->getSpyPaymentPayoneDetail()->getBankAccount());
+        $refundContainer->setBankcode($paymentEntity->getSpyPaymentPayoneDetail()->getBankCode());
+        $refundContainer->setBankbranchcode($paymentEntity->getSpyPaymentPayoneDetail()->getBankBranchCode());
+        $refundContainer->setBankcheckdigit($paymentEntity->getSpyPaymentPayoneDetail()->getBankCheckDigit());
         $refundContainer->setIban($paymentEntity->getSpyPaymentPayoneDetail()->getIban());
         $refundContainer->setBic($paymentEntity->getSpyPaymentPayoneDetail()->getBic());
 
@@ -152,11 +152,11 @@ class OnlineBankTransfer extends AbstractMapper
 
         $paymentMethodContainer = new OnlineBankTransferContainer();
 
-        $paymentMethodContainer->setRedirect($this->createRedirectContainer($paymentEntity->getSpySalesOrder()->getOrderreference()));
-        $paymentMethodContainer->setBankCountry($paymentDetailEntity->getBankcountry());
-        $paymentMethodContainer->setBankAccount($paymentDetailEntity->getBankaccount());
-        $paymentMethodContainer->setBankCode($paymentDetailEntity->getBankcode());
-        $paymentMethodContainer->setBankGroupType($paymentDetailEntity->getBankgrouptype());
+        $paymentMethodContainer->setRedirect($this->createRedirectContainer($paymentEntity->getSpySalesOrder()->getOrderReference()));
+        $paymentMethodContainer->setBankCountry($paymentDetailEntity->getBankCountry());
+        $paymentMethodContainer->setBankAccount($paymentDetailEntity->getBankAccount());
+        $paymentMethodContainer->setBankCode($paymentDetailEntity->getBankCode());
+        $paymentMethodContainer->setBankGroupType($paymentDetailEntity->getBankGroupType());
         $paymentMethodContainer->setIban($paymentDetailEntity->getIban());
         $paymentMethodContainer->setBic($paymentDetailEntity->getBic());
 
