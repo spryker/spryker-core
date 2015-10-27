@@ -32,11 +32,11 @@ class PayoneFacade extends AbstractFacade
 {
 
     /**
-     * @param OrderInterface $orderData
+     * @param OrderInterface $orderTransfer
      */
-    public function saveOrder(OrderInterface $orderData)
+    public function saveOrder(OrderInterface $orderTransfer)
     {
-        $this->getDependencyContainer()->createOrderManager()->saveOrder($orderData);
+        $this->getDependencyContainer()->createOrderManager()->saveOrder($orderTransfer);
     }
 
     /**
@@ -233,8 +233,8 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param $idSalesOrder
-     * @param $idSalesOrderItem
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
      *
      * @return bool
      */
@@ -245,6 +245,12 @@ class PayoneFacade extends AbstractFacade
             ->isPaymentNotificationAvailable($idSalesOrder, $idSalesOrderItem);
     }
 
+    /**
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
+     *
+     * @return bool
+     */
     public function isPaymentPaid($idSalesOrder, $idSalesOrderItem)
     {
         return $this->getDependencyContainer()
@@ -252,6 +258,12 @@ class PayoneFacade extends AbstractFacade
             ->isPaymentPaid($idSalesOrder, $idSalesOrderItem);
     }
 
+    /**
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
+     *
+     * @return bool
+     */
     public function isPaymentOverpaid($idSalesOrder, $idSalesOrderItem)
     {
         return $this->getDependencyContainer()
@@ -259,6 +271,12 @@ class PayoneFacade extends AbstractFacade
             ->isPaymentOverpaid($idSalesOrder, $idSalesOrderItem);
     }
 
+    /**
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
+     *
+     * @return bool
+     */
     public function isPaymentUnderpaid($idSalesOrder, $idSalesOrderItem)
     {
         return $this->getDependencyContainer()
@@ -266,6 +284,12 @@ class PayoneFacade extends AbstractFacade
             ->isPaymentUnderpaid($idSalesOrder, $idSalesOrderItem);
     }
 
+    /**
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
+     *
+     * @return bool
+     */
     public function isPaymentAppointed($idSalesOrder, $idSalesOrderItem)
     {
         return $this->getDependencyContainer()
@@ -273,6 +297,12 @@ class PayoneFacade extends AbstractFacade
             ->isPaymentAppointed($idSalesOrder, $idSalesOrderItem);
     }
 
+    /**
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
+     *
+     * @return bool
+     */
     public function isPaymentOther($idSalesOrder, $idSalesOrderItem)
     {
         return $this->getDependencyContainer()
@@ -280,6 +310,12 @@ class PayoneFacade extends AbstractFacade
             ->isPaymentOther($idSalesOrder, $idSalesOrderItem);
     }
 
+    /**
+     * @param int $idSalesOrder
+     * @param int $idSalesOrderItem
+     *
+     * @return bool
+     */
     public function isPaymentCapture($idSalesOrder, $idSalesOrderItem)
     {
         return $this->getDependencyContainer()
@@ -287,6 +323,12 @@ class PayoneFacade extends AbstractFacade
             ->isPaymentCapture($idSalesOrder, $idSalesOrderItem);
     }
 
+    /**
+     * @param OrderInterface $orderTransfer
+     * @param CheckoutResponseInterface $checkoutResponse
+     *
+     * @return CheckoutResponseInterface
+     */
     public function postSaveHook(OrderInterface $orderTransfer, CheckoutResponseInterface $checkoutResponse)
     {
         return $this->getDependencyContainer()

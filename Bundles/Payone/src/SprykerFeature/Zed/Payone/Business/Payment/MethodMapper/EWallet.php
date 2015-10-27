@@ -140,7 +140,7 @@ class EWallet extends AbstractMapper
     protected function createPaymentMethodContainerFromPayment(SpyPaymentPayone $paymentEntity)
     {
         $paymentMethodContainer = new EWalletContainer();
-        $paymentMethodContainer->setRedirect($this->createRedirectContainer($paymentEntity->getSpySalesOrder()->getOrderreference()));
+        $paymentMethodContainer->setRedirect($this->createRedirectContainer($paymentEntity->getSpySalesOrder()->getOrderReference()));
 
         $paymentMethodContainer->setWalletType($paymentEntity->getSpyPaymentPayoneDetail()->getType());
 

@@ -87,20 +87,9 @@ class TransactionStatusUpdateManager
         $entity->setPrice($request->getPrice());
         $entity->setBalance($request->getBalance());
         $entity->setReceivable($request->getReceivable());
-        $entity->setReminderlevel($request->getReminderlevel());
+        $entity->setReminderLevel($request->getReminderlevel());
 
         $entity->save();
-    }
-
-    public function getPaymentStatus($order)
-    {
-        //        @todo implement
-//        $order->getTransactionId();
-//        $this->findPaymentByTransactionId();
-//        $paymentStatus = new PaymentStatusTransfer();
-//        $paymentStatus->setIsSuccess();
-//        $paymentStatus->setRedirectUrl();
-//        return $transactionStatus;
     }
 
     /**

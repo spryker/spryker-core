@@ -82,12 +82,12 @@ class TransactionController extends AbstractController
      * @param int $transactionId
      * @param array $dataArray
      *
-     * @return null
+     * @return void
      */
     protected function triggerEventsOnSuccess(TransactionStatusResponse $response, $transactionId, array $dataArray)
     {
         if (!$response->isSuccess()) {
-            return null;
+            return;
         }
 
         //TODO: Refactor as per CD-380
