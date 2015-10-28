@@ -143,4 +143,5 @@ class Calculator implements CalculatorInterface
     {
         return $discount[self::KEY_DISCOUNT_TRANSFER];
     }
+
 }

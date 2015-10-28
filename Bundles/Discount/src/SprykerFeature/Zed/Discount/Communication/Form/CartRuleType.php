@@ -59,7 +59,7 @@ class CartRuleType extends AbstractRuleType
             ->add(self::FIELD_COLLECTOR_LOGICAL_OPERATOR, 'choice', [
                 'label' => 'Logical operator for combining multiple collectors',
                 'choices' => $this->getCollectorLogicalOperators(),
-                'required' => true
+                'required' => true,
             ])
             ->add(self::FIELD_VALID_FROM, 'date')
             ->add(self::FIELD_VALID_TO, 'date')

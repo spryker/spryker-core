@@ -114,7 +114,7 @@ class VoucherCodesType extends AbstractRuleType
             ->add(self::FIELD_COLLECTOR_LOGICAL_OPERATOR, 'choice', [
                 'label' => 'Logical operator for combining multiple collectors',
                 'choices' => $this->getCollectorLogicalOperators(),
-                'required' => true
+                'required' => true,
             ])
             ->add(self::FIELD_DECISION_RULES, 'collection', [
                 'type' => new DecisionRuleType($this->config->getAvailableDecisionRulePlugins()),

@@ -3,7 +3,6 @@
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
 use Symfony\Component\Form\AbstractType;
-use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
 
 abstract class AbstractRuleType extends AbstractType
 {

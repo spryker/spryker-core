@@ -302,7 +302,6 @@ class VoucherEngineTest extends Test
         $calculator = new Calculator($collectorResolver);
 
         return $calculator;
-
     }
 
 }
