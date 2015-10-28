@@ -18,6 +18,7 @@ use SprykerFeature\Zed\Discount\Business\Collector\ItemProductOption;
 use SprykerFeature\Zed\Discount\Business\Distributor\Distributor;
 use SprykerFeature\Zed\Discount\Business\Model\Calculator;
 use SprykerFeature\Zed\Discount\Business\Model\CartRuleInterface;
+use SprykerFeature\Zed\Discount\Business\Model\CollectorResolver;
 use SprykerFeature\Zed\Discount\Business\Model\VoucherCodeInterface;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountCollectorWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter;
@@ -225,7 +226,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createCalculator()
     {
-        return $this->getFactory()->createModelCalculator();
+        return $this->getFactory()->createModelCalculator($this->createCollectorResolver());
     }
 
     /**
@@ -302,6 +303,14 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     public function createVoucherCode()
     {
         return $this->getFactory()->createModelVoucherCode($this->getQueryContainer());
+    }
+
+    /**
+     * @return CollectorResolver
+     */
+    public function createCollectorResolver()
+    {
+        return $this->getFactory()->createModelCollectorResolver($this->getConfig());
     }
 
 }

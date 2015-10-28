@@ -27,6 +27,7 @@ class VoucherCodesType extends AbstractRuleType
     const FIELD_CALCULATOR_PLUGIN = 'calculator_plugin';
     const FIELD_COLLECTOR_PLUGINS = 'collector_plugins';
     const FIELD_DECISION_RULES = 'decision_rules';
+    const FIELD_COLLECTOR_LOGICAL_OPERATOR = 'collector_logical_operator';
 
     /**
      * @var array
@@ -98,7 +99,7 @@ class VoucherCodesType extends AbstractRuleType
                 'label' => 'Valid Until',
             ])
             ->add(self::IS_PRIVILEGED, 'checkbox', [
-                'label' => 'Is Privileged',
+                'label' => 'Is Combinable with other discounts',
             ])
             ->add(self::IS_ACTIVE, 'checkbox', [
                 'label' => 'Active',
@@ -109,6 +110,11 @@ class VoucherCodesType extends AbstractRuleType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'allow_extra_fields' => true,
+            ])
+            ->add(self::FIELD_COLLECTOR_LOGICAL_OPERATOR, 'choice', [
+                'label' => 'Logical operator for combining multiple collectors',
+                'choices' => $this->getCollectorLogicalOperators(),
+                'required' => true,
             ])
             ->add(self::FIELD_DECISION_RULES, 'collection', [
                 'type' => new DecisionRuleType($this->config->getAvailableDecisionRulePlugins()),

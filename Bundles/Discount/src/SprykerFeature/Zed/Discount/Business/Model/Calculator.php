@@ -26,6 +26,19 @@ class Calculator implements CalculatorInterface
     protected $calculatedDiscounts = [];
 
     /**
+     * @var CollectorResolver
+     */
+    protected $collectorResolver;
+
+    /**
+     * @param CollectorResolver $collectorResolver
+     */
+    public function __construct(CollectorResolver $collectorResolver)
+    {
+        $this->collectorResolver = $collectorResolver;
+    }
+
+    /**
      * @param DiscountInterface[] $discountCollection
      * @param CalculableInterface $container
      * @param DiscountConfigInterface $settings
@@ -42,7 +55,7 @@ class Calculator implements CalculatorInterface
         $calculatedDiscounts = [];
 
         foreach ($discountCollection as $discountTransfer) {
-            $discountableObjects = $this->applyDiscountCollectors($container, $settings, $discountTransfer);
+            $discountableObjects = $this->collectorResolver->collectItems($container, $discountTransfer);
 
             if (count($discountableObjects) === 0) {
                 continue;
@@ -129,48 +142,6 @@ class Calculator implements CalculatorInterface
     protected function getDiscountEntity(array $discount)
     {
         return $discount[self::KEY_DISCOUNT_TRANSFER];
-    }
-
-    /**
-     * @param CalculableInterface $container
-     * @param DiscountConfigInterface $settings
-     * @param DiscountInterface $discountTransfer
-     *
-     * @return DiscountableInterface[]
-     */
-    protected function applyDiscountCollectors(
-        CalculableInterface $container,
-        DiscountConfigInterface $settings,
-        DiscountInterface $discountTransfer
-    ) {
-        $discountableObjects = [];
-        foreach ($discountTransfer->getDiscountCollectors() as $discountCollectorTransfer) {
-            $collectorPlugin = $settings->getCollectorPluginByName(
-                $discountCollectorTransfer->getCollectorPlugin()
-            );
-
-            $collected = $collectorPlugin->collect($discountTransfer, $container, $discountCollectorTransfer);
-            $discountableObjects = array_merge($discountableObjects, $collected);
-        }
-
-        $uniqDiscountableObjects = $this->getUniqDiscountableObjects($discountableObjects);
-
-        return $uniqDiscountableObjects;
-    }
-
-    /**
-     * @param DiscountableInterface[] $discountableObjects
-     *
-     * @return array
-     */
-    protected function getUniqDiscountableObjects(array $discountableObjects)
-    {
-        $uniqDiscountableObjects = [];
-        foreach ($discountableObjects as $discountableObject) {
-            $uniqDiscountableObjects[spl_object_hash($discountableObject)] = $discountableObject;
-        }
-
-        return $uniqDiscountableObjects;
     }
 
 }

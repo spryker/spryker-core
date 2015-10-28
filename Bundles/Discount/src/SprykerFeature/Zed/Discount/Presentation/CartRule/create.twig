@@ -33,6 +33,7 @@
                     <a href="#" id="add-collector-container" class="btn btn-sm btn-primary btn-outline"><i class="hidden fa fa-spinner fa-spin"></i> {{ 'Add Collector Plugin' | trans }}</a>
                 </div>
 
+                {{ form_row(form.collector_logical_operator) }}
                 {{ form_row(form.valid_from) }}
                 {{ form_row(form.valid_to) }}
                 {{ form_row(form.is_privileged) }}

@@ -83,4 +83,15 @@ abstract class AbstractRuleType extends AbstractType
         return $plugins;
     }
 
+    /**
+     * @return array|string[]
+     */
+    protected function getCollectorLogicalOperators()
+    {
+        return [
+            'AND' => 'AND',
+            'OR' => 'OR',
+        ];
+    }
+
 }
