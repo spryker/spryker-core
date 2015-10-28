@@ -174,4 +174,7 @@ interface SystemConfig extends ConfigInterface
     const ZED_AUTH_SETTINGS = 'ZED_AUTH_SETTINGS';
     const ZED_ACL_SETTINGS = 'ZED_ACL_SETTINGS';
 
+    const ZED_ERROR_PAGE = 'ZED_ERROR_PAGE';
+    const ZED_SHOW_EXCEPTION_STACK_TRACE = 'ZED_SHOW_EXCEPTION_STACK_TRACE';
+
 }
