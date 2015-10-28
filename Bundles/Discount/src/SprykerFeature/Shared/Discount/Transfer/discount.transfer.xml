@@ -26,6 +26,7 @@
         <property name="isActive" type="string" />
         <property name="validFrom" type="string" />
         <property name="validTo" type="string" />
+        <property name="collectorLogicalOperator" type="string" />
         <property name="discountCollectors" type="DiscountCollector[]" />
     </transfer>
 
@@ -87,6 +88,7 @@
         <property name="createdAt" type="string"/>
         <property name="updatedAt" type="string"/>
         <property name="decisionRules" type="array"/>
+        <property name="collectorLogicalOperator" type="string" />
         <property name="collectorPlugins" type="DiscountCollector[]"/>
     </transfer>
 
@@ -104,6 +106,7 @@
         <property name="validFrom" type="string"/>
         <property name="validTo" type="string"/>
         <property name="isPrivileged" type="bool"/>
+        <property name="collectorLogicalOperator" type="string" />
         <property name="calculatorPlugin" type="string"/>
         <property name="decisionRules" type="array"/>
         <property name="collectorPlugins" type="DiscountCollector[]"/>

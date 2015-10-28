@@ -52,6 +52,10 @@
             <div class="load-cart-collector-plugins">
                 <a href="#" id="add-collector-pool-container" class="btn btn-sm btn-primary btn-outline"><i class="hidden fa fa-spinner fa-spin"></i> {{ 'Add Collector Plugin' | trans }} &raquo;</a>
             </div>
+            <div class="row">
+                <div class="col-md-12">{{ form_row(form.collector_logical_operator) }}</div>
+            </div>
+            <div class="clearfix"></div>
             <div class="row collection-form" id="rules-container">
                 {% for rule in form.decision_rules %}
                     <div class="col-md-6">

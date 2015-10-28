@@ -12,6 +12,7 @@
         <column name="is_active" type="BOOLEAN" default="false"/>
         <column name="valid_from" type="TIMESTAMP" required="false"/>
         <column name="valid_to" type="TIMESTAMP" required="false"/>
+        <column name="collector_logical_operator" type="VARCHAR" />
 
         <behavior name="timestampable"/>
 
@@ -29,7 +30,7 @@
         <column name="fk_discount" type="INTEGER" required="false"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
         <column name="decision_rule_plugin" type="VARCHAR" size="255" required="true"/>
-        <column name="value" type="VARCHAR" size="255" required="true"/>
+        <column name="value" type="VARCHAR" size="255" required="false"/>
 
         <behavior name="timestampable"/>
 

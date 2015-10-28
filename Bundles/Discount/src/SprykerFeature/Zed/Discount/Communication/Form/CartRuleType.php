@@ -4,7 +4,6 @@ namespace SprykerFeature\Zed\Discount\Communication\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 class CartRuleType extends AbstractRuleType
 {
@@ -20,6 +19,7 @@ class CartRuleType extends AbstractRuleType
     const FIELD_CALCULATOR_PLUGIN = 'calculator_plugin';
     const FIELD_COLLECTOR_PLUGINS = 'collector_plugins';
     const FIELD_DECISION_RULES = 'decision_rules';
+    const FIELD_COLLECTOR_LOGICAL_OPERATOR = 'collector_logical_operator';
 
     const DATE_NOW = 'now';
 
@@ -56,10 +56,15 @@ class CartRuleType extends AbstractRuleType
                 'allow_delete' => true,
                 'allow_extra_fields' => true,
             ])
+            ->add(self::FIELD_COLLECTOR_LOGICAL_OPERATOR, 'choice', [
+                'label' => 'Logical operator for combining multiple collectors',
+                'choices' => $this->getCollectorLogicalOperators(),
+                'required' => true
+            ])
             ->add(self::FIELD_VALID_FROM, 'date')
             ->add(self::FIELD_VALID_TO, 'date')
             ->add(self::FIELD_IS_PRIVILEGED, 'checkbox', [
-                'label' => 'Is Combinable',
+                'label' => 'Is Combinable with other discounts',
             ])
             ->add(self::FIELD_IS_ACTIVE, 'checkbox', [
                 'label' => 'Is Active',
