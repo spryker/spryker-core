@@ -110,7 +110,7 @@
         <column name="sku" type="VARCHAR" size="255" required="true"/>
         <column name="gross_price" type="INTEGER" required="true" description="/price for one unit including tax, without shipping, coupons/"/>
         <column name="price_to_pay" type="INTEGER" required="true" description="/value that the customer has to pay./"/>
-        <column name="tax_percentage" type="INTEGER" required="false"/>
+        <column name="tax_percentage" type="DECIMAL" size="8" scale="2" required="false"/>
         <column name="quantity" type="INTEGER" unsigned="true" default="1" required="true" description="/Quantity ordered for item/"/>
         <column name="group_key" type="VARCHAR" size="255" required="false" description=""/>
 
