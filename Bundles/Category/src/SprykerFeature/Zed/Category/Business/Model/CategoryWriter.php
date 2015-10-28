@@ -10,8 +10,8 @@ use Generated\Shared\Category\CategoryInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategory;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryAttribute;
+use Orm\Zed\Category\Persistence\SpyCategory;
+use Orm\Zed\Category\Persistence\SpyCategoryAttribute;
 
 class CategoryWriter implements CategoryWriterInterface
 {

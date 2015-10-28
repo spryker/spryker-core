@@ -14,8 +14,8 @@ use SprykerFeature\Zed\Stock\Business\Exception\StockProductAlreadyExistsExcepti
 use SprykerFeature\Zed\Stock\Business\Exception\StockProductNotFoundException;
 use SprykerFeature\Zed\Stock\Business\Exception\StockTypeNotFoundException;
 use SprykerFeature\Zed\Stock\Dependency\Facade\StockToTouchInterface;
-use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStock;
-use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockProduct;
+use Orm\Zed\Stock\Persistence\SpyStock;
+use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use SprykerFeature\Zed\Stock\Persistence\StockQueryContainer;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;

@@ -11,7 +11,7 @@ use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 use SprykerFeature\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use SprykerFeature\Zed\Stock\Business\Exception\StockProductNotFoundException;
 use SprykerFeature\Zed\Stock\Dependency\Facade\StockToProductInterface;
-use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockProduct;
+use Orm\Zed\Stock\Persistence\SpyStockProduct;
 use SprykerFeature\Zed\Stock\Persistence\StockQueryContainer;
 
 class Reader implements ReaderInterface

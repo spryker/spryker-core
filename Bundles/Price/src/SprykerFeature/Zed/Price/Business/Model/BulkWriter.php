@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\Price\Business\Model;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
-use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceProduct;
+use Orm\Zed\Price\Persistence\SpyPriceProduct;
 
 class BulkWriter extends Writer implements BulkWriterInterface
 {

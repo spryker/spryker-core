@@ -18,8 +18,8 @@ use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInte
 use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
+use Orm\Zed\Discount\Persistence\SpyDiscount;
+use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
 
 class Discount
 {

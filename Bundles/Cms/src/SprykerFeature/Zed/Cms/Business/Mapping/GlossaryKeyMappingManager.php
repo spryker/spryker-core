@@ -18,8 +18,8 @@ use SprykerFeature\Zed\Cms\Business\Page\PageManagerInterface;
 use SprykerFeature\Zed\Cms\Business\Template\TemplateManagerInterface;
 use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
-use SprykerFeature\Zed\Cms\Persistence\Propel\Map\SpyCmsGlossaryKeyMappingTableMap;
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsGlossaryKeyMapping;
+use Orm\Zed\Cms\Persistence\Map\SpyCmsGlossaryKeyMappingTableMap;
+use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
 
 class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface

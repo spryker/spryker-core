@@ -8,8 +8,8 @@ namespace SprykerFeature\Zed\Tax\Business\Model;
 
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Tax\Business\Model\Exception\MissingTaxRateException;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRate;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
+use Orm\Zed\Tax\Persistence\SpyTaxRate;
+use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainerInterface;
 use SprykerFeature\Zed\Tax\Dependency\Plugin\TaxChangePluginInterface;
 use SprykerFeature\Zed\Tax\TaxConfig;

@@ -6,9 +6,9 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Form;
 
-use SprykerFeature\Zed\Customer\Persistence\Propel\Base\SpyCustomerAddressQuery;
-use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
-use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
+use Orm\Zed\Customer\Persistence\Base\SpyCustomerAddressQuery;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraints\Required;

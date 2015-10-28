@@ -10,10 +10,10 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Criterion\BasicCriterion;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
-use SprykerFeature\Zed\SearchPage\Persistence\Propel\Map\SpySearchDocumentAttributeTableMap;
-use SprykerFeature\Zed\SearchPage\Persistence\Propel\Map\SpySearchPageElementTableMap;
-use SprykerFeature\Zed\SearchPage\Persistence\Propel\Map\SpySearchPageElementTemplateTableMap;
+use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
+use Orm\Zed\SearchPage\Persistence\Map\SpySearchDocumentAttributeTableMap;
+use Orm\Zed\SearchPage\Persistence\Map\SpySearchPageElementTableMap;
+use Orm\Zed\SearchPage\Persistence\Map\SpySearchPageElementTemplateTableMap;
 
 class SearchPageConfigQueryExpander implements SearchPageConfigQueryExpanderInterface
 {

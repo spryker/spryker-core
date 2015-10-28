@@ -12,15 +12,15 @@ use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerFeature\Zed\Distributor\Business\DistributorFacade;
-use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItem;
-use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemQuery;
-use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemType;
-use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery;
+use Orm\Zed\Distributor\Persistence\SpyDistributorItem;
+use Orm\Zed\Distributor\Persistence\SpyDistributorItemQuery;
+use Orm\Zed\Distributor\Persistence\SpyDistributorItemType;
+use Orm\Zed\Distributor\Persistence\SpyDistributorItemTypeQuery;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 use SprykerFeature\Zed\Distributor\DistributorDependencyProvider;
 use SprykerFeature\Zed\Distributor\Persistence\DistributorQueryContainer;
-use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorReceiver;
+use Orm\Zed\Distributor\Persistence\SpyDistributorReceiver;
 
 /**
  * @group SprykerFeature

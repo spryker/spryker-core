@@ -11,10 +11,10 @@ use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRate;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
-use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
+use Orm\Zed\Tax\Persistence\SpyTaxRate;
+use Orm\Zed\Tax\Persistence\SpyTaxSet;
+use Orm\Zed\Product\Persistence\SpyAbstractProduct;
+use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 
 /**
  * @group Business

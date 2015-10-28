@@ -14,8 +14,8 @@ use SprykerFeature\Zed\Cms\Business\Exception\MissingTemplateException;
 use SprykerFeature\Zed\Cms\Business\Exception\TemplateExistsException;
 use SprykerFeature\Zed\Cms\CmsConfig;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
-use SprykerFeature\Zed\Cms\Persistence\Propel\Map\SpyCmsTemplateTableMap;
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplate;
+use Orm\Zed\Cms\Persistence\Map\SpyCmsTemplateTableMap;
+use Orm\Zed\Cms\Persistence\SpyCmsTemplate;
 use Symfony\Component\Finder\Finder;
 
 class TemplateManager implements TemplateManagerInterface

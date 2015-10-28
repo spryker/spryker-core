@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
 
 use Generated\Shared\Payolution\CheckoutRequestInterface;
 use Generated\Shared\Payolution\PayolutionRequestInterface;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 
 interface MethodMapperInterface
 {

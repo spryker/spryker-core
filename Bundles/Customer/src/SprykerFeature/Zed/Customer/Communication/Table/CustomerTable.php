@@ -7,10 +7,10 @@
 namespace SprykerFeature\Zed\Customer\Communication\Table;
 
 use Propel\Runtime\Collection\ObjectCollection;
-use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerAddressTableMap;
-use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
-use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
-use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerAddressTableMap;
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 

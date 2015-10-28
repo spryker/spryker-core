@@ -6,13 +6,13 @@ namespace SprykerFeature\Zed\Category\Persistence;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
-use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryAttributeQuery;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTableQuery;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNodeQuery;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryQuery;
-use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
+use Orm\Zed\Category\Persistence\SpyCategoryAttributeQuery;
+use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
+use Orm\Zed\Category\Persistence\SpyCategoryQuery;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 
 interface CategoryQueryContainerInterface
 {

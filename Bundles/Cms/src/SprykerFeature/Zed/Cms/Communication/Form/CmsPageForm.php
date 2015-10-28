@@ -8,8 +8,8 @@ namespace SprykerFeature\Zed\Cms\Communication\Form;
 
 use SprykerFeature\Zed\Cms\Communication\Form\Constraint\CmsConstraint;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPageQuery;
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Url\Business\UrlFacade;
 use Symfony\Component\Validator\Constraints\Callback;

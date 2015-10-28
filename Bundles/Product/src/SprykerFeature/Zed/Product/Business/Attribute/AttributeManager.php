@@ -10,8 +10,8 @@ use SprykerFeature\Zed\Product\Business\Exception\AttributeExistsException;
 use SprykerFeature\Zed\Product\Business\Exception\AttributeTypeExistsException;
 use SprykerFeature\Zed\Product\Business\Exception\MissingAttributeTypeException;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductAttributesMetadata;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductAttributeType;
+use Orm\Zed\Product\Persistence\SpyProductAttributesMetadata;
+use Orm\Zed\Product\Persistence\SpyProductAttributeType;
 
 class AttributeManager implements AttributeManagerInterface
 {

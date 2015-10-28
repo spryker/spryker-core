@@ -9,20 +9,20 @@ namespace Functional\SprykerFeature\Zed\ProductOption\Business\Model;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
-use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
+use Orm\Zed\Touch\Persistence\SpyTouchQuery;
+use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\Product\Persistence\SpyAbstractProduct;
 use SprykerFeature\Zed\ProductOption\Business\ProductOptionFacade;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionConfigurationPresetQuery;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeQuery;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageExclusionQuery;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageQuery;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionType;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValue;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsage;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsage;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageConstraintQuery;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageQuery;
+use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionConfigurationPresetQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageExclusionQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionType;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsage;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsage;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageConstraintQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery;
 
 /**
  * @group Business

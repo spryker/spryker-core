@@ -14,9 +14,9 @@ use SprykerFeature\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInte
 use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TaxRateTransfer;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionTypeTranslationTableMap;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\Map\SpyProductOptionValueTranslationTableMap;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
+use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionTypeTranslationTableMap;
+use Orm\Zed\ProductOption\Persistence\Map\SpyProductOptionValueTranslationTableMap;
+use Orm\Zed\Tax\Persistence\SpyTaxSet;
 
 class ProductOptionReader implements ProductOptionReaderInterface
 {

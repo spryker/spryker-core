@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
-use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryClosureTableTableMap;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryClosureTableTableMap;
+use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 

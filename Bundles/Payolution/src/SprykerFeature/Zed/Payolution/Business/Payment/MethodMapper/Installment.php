@@ -7,7 +7,7 @@ namespace SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper;
 
 use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
 use SprykerFeature\Zed\Payolution\Business\Exception\PaymentMethodMapperMethodNotAvailableException;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 
 class Installment extends AbstractMethodMapper
 {

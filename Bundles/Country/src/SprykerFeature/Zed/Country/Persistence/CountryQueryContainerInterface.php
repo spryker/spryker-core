@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\Country\Persistence;
 
-use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
-use SprykerFeature\Zed\Country\Persistence\Propel\SpyRegionQuery;
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
+use Orm\Zed\Country\Persistence\SpyRegionQuery;
 
 interface CountryQueryContainerInterface
 {

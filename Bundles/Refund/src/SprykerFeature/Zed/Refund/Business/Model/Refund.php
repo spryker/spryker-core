@@ -12,9 +12,9 @@ use Generated\Shared\Transfer\RefundTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\Refund\Dependency\Facade\RefundToOmsInterface;
 use SprykerFeature\Zed\Refund\Dependency\Facade\RefundToSalesInterface;
-use SprykerFeature\Zed\Refund\Persistence\Propel\SpyRefund;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesExpense;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use Orm\Zed\Refund\Persistence\SpyRefund;
+use Orm\Zed\Sales\Persistence\SpySalesExpense;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainer;
 
 class Refund

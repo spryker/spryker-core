@@ -20,15 +20,15 @@ use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\Checkout\CheckoutConfig;
 use SprykerFeature\Zed\Checkout\Business\CheckoutFacade;
 use SprykerFeature\Zed\Checkout\CheckoutDependencyProvider;
-use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountry;
-use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
-use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
+use Orm\Zed\Country\Persistence\SpyCountry;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use SprykerFeature\Zed\Oms\OmsConfig;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
-use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStock;
-use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockProduct;
+use Orm\Zed\Product\Persistence\SpyAbstractProduct;
+use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Orm\Zed\Stock\Persistence\SpyStock;
+use Orm\Zed\Stock\Persistence\SpyStockProduct;
 
 /**
  * @group SprykerFeature

@@ -8,8 +8,8 @@ namespace SprykerFeature\Zed\Payolution\Communication\Table;
 
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\Map\SpyPaymentPayolutionTransactionStatusLogTableMap;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLogQuery;
+use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTransactionStatusLogTableMap;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery;
 
 class StatusLog extends AbstractTable
 {

@@ -6,11 +6,11 @@
 namespace SprykerFeature\Zed\Glossary\Communication\Table;
 
 use Propel\Runtime\Map\TableMap;
-use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
+use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use SprykerFeature\Zed\Glossary\Communication\Form\TranslationForm;
-use SprykerFeature\Zed\Glossary\Persistence\Propel\Base\SpyGlossaryTranslationQuery;
-use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryKeyTableMap;
-use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
+use Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslationQuery;
+use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
+use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 

@@ -5,10 +5,10 @@ namespace SprykerFeature\Zed\Discount\Communication\Table;
 use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use SprykerFeature\Zed\Discount\DiscountConfig;
-use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherPoolCategoryTableMap;
-use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherPoolTableMap;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolQuery;
+use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolCategoryTableMap;
+use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolTableMap;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 

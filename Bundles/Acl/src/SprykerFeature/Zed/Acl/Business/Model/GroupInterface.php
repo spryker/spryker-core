@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\RoleTransfer;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupAlreadyHasRoleException;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupNameExistsException;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupNotFoundException;
-use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroup;
+use Orm\Zed\Acl\Persistence\SpyAclGroup;
 
 interface GroupInterface
 {

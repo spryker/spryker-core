@@ -12,8 +12,8 @@ use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
 use SprykerFeature\Zed\Wishlist\Business\Storage\Propel;
-use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlist;
-use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistItem;
+use Orm\Zed\Wishlist\Persistence\SpyWishlist;
+use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
 
 class PropelTest extends \PHPUnit_Framework_TestCase
 {
@@ -199,7 +199,7 @@ class PropelTest extends \PHPUnit_Framework_TestCase
     protected function getSpyWishlistQueryMock()
     {
         $spyWishlistMock = $this
-            ->getMockBuilder('SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistQuery')
+            ->getMockBuilder('Orm\Zed\Wishlist\Persistence\SpyWishlistQuery')
             ->setMethods(['findOneByFkCustomer'])
             ->disableOriginalConstructor()
             ->getMock();
@@ -210,7 +210,7 @@ class PropelTest extends \PHPUnit_Framework_TestCase
     protected function getSpyWishlistItemQueryMock()
     {
         $spyWishlistMock = $this
-            ->getMockBuilder('SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistItemQuery')
+            ->getMockBuilder('Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery')
             ->setMethods(['findOne'])
             ->disableOriginalConstructor()
             ->getMock();

@@ -8,11 +8,11 @@ namespace SprykerFeature\Zed\SearchPage\Persistence;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\SearchPage\Persistence\Propel\Base\SpySearchDocumentAttributeQuery;
-use SprykerFeature\Zed\SearchPage\Persistence\Propel\Map\SpySearchDocumentAttributeTableMap;
-use SprykerFeature\Zed\SearchPage\Persistence\Propel\Map\SpySearchPageElementTemplateTableMap;
-use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElementQuery;
-use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElementTemplateQuery;
+use Orm\Zed\SearchPage\Persistence\Base\SpySearchDocumentAttributeQuery;
+use Orm\Zed\SearchPage\Persistence\Map\SpySearchDocumentAttributeTableMap;
+use Orm\Zed\SearchPage\Persistence\Map\SpySearchPageElementTemplateTableMap;
+use Orm\Zed\SearchPage\Persistence\SpySearchPageElementQuery;
+use Orm\Zed\SearchPage\Persistence\SpySearchPageElementTemplateQuery;
 
 /**
  * @method SearchPageDependencyContainer getDependencyContainer()

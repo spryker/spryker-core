@@ -12,11 +12,11 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use SprykerFeature\Zed\Oms\OmsDependencyProvider;
-use SprykerFeature\Zed\Oms\Persistence\Propel\Map\SpyOmsTransitionLogTableMap;
-use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsTransitionLogQuery;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
+use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
+use Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 /**

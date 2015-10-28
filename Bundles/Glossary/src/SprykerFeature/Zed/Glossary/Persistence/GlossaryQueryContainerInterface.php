@@ -7,8 +7,8 @@ namespace SprykerFeature\Zed\Glossary\Persistence;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKeyQuery;
-use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslationQuery;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 
 interface GlossaryQueryContainerInterface
 {

@@ -16,8 +16,8 @@ use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
 use SprykerFeature\Zed\Payolution\Business\Api\Constants;
 use SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper\Invoice;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\Map\SpyPaymentPayolutionTableMap;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
+use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 
 class InvoiceTest extends Test
 {
@@ -193,13 +193,13 @@ class InvoiceTest extends Test
     private function getPaymentEntityMock()
     {
         $orderEntityMock = $this->getMock(
-            'SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder',
+            'Orm\Zed\Sales\Persistence\SpySalesOrder',
             $methods = []
         );
 
         /** @var SpyPaymentPayolution|\PHPUnit_Framework_MockObject_MockObject $paymentEntityMock */
         $paymentEntityMock = $this->getMock(
-            'SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution',
+            'Orm\Zed\Payolution\Persistence\SpyPaymentPayolution',
             $methods = [
                 'getSpySalesOrder',
             ]

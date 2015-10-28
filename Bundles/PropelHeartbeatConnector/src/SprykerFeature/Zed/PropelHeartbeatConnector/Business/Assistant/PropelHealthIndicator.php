@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\PropelHeartbeatConnector\Business\Assistant;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Shared\Heartbeat\Code\AbstractHealthIndicator;
 use SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface;
-use SprykerFeature\Zed\PropelHeartbeatConnector\Persistence\Propel\SpyPropelHeartbeat;
+use Orm\Zed\PropelHeartbeatConnector\Persistence\SpyPropelHeartbeat;
 
 class PropelHealthIndicator extends AbstractHealthIndicator implements HealthIndicatorInterface
 {

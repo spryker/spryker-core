@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Category\Business\Tree;
 
 use Generated\Shared\Locale\LocaleInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
+use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 

@@ -16,9 +16,9 @@ use SprykerFeature\Zed\Payolution\Business\Api\Response\ConverterInterface as Re
 use SprykerFeature\Zed\Payolution\Business\Exception\NoMethodMapperException;
 use SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper\MethodMapperInterface;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLog;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLog;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 
 class Communicator implements CommunicatorInterface
 {

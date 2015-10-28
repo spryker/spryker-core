@@ -6,16 +6,16 @@
 
 namespace SprykerFeature\Zed\ProductOption\Persistence;
 
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionTypeUsageExclusionQuery;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\Base\SpyProductOptionValueUsageConstraintQuery;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeQuery;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueQuery;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeTranslationQuery;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueTranslationQuery;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageQuery;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageQuery;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
-use SprykerFeature\Zed\Tax\Persistence\Propel\Base\SpyTaxSetQuery;
+use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionTypeUsageExclusionQuery;
+use Orm\Zed\ProductOption\Persistence\Base\SpyProductOptionValueUsageConstraintQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeTranslationQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueTranslationQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageQuery;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery;
+use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
+use Orm\Zed\Tax\Persistence\Base\SpyTaxSetQuery;
 
 interface ProductOptionQueryContainerInterface
 {

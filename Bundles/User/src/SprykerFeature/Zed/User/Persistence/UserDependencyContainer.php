@@ -10,7 +10,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\UserPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 use SprykerFeature\Zed\Auth\Business\AuthFacade;
 use SprykerFeature\Zed\User\Business\UserFacade;
-use SprykerFeature\Zed\User\Persistence\Propel\SpyUserQuery;
+use Orm\Zed\User\Persistence\SpyUserQuery;
 
 /**
  * @method UserPersistence getFactory()

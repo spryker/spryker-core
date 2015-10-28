@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\Shipment\Persistence;
 
-use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentCarrierQuery;
-use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentMethodQuery;
+use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 
 interface ShipmentQueryContainerInterface
 {

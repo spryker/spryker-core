@@ -16,7 +16,7 @@ use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\RefundContainer;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 
 class OnlineBankTransfer extends AbstractMapper
 {

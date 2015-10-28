@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\User\Communication\Form;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Validator\Constraints\Choice;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use SprykerFeature\Zed\User\Persistence\Propel\Map\SpyUserTableMap;
+use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 
 class UserForm extends AbstractForm
 {

@@ -11,8 +11,8 @@ use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Price\Persistence\PriceQueryContainer;
 use SprykerFeature\Zed\Price\Dependency\Facade\PriceToTouchInterface;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceProduct;
-use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceType;
+use Orm\Zed\Price\Persistence\SpyPriceProduct;
+use Orm\Zed\Price\Persistence\SpyPriceType;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Price\PriceConfig;
 

@@ -11,11 +11,11 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
+use Orm\Zed\Product\Persistence\SpyAbstractProduct;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
-use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategory;
-use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
+use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
+use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 
 interface ProductCategoryManagerInterface
 {

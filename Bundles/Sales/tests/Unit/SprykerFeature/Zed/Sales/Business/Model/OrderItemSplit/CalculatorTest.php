@@ -7,7 +7,7 @@
 namespace Unit\SprykerFeature\Zed\Sales\Business\Model\OrderItemSplit\Validation;
 
 use SprykerFeature\Zed\Sales\Business\Model\Split\Calculator;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 class CalculatorTest extends \PHPUnit_Framework_TestCase
 {

@@ -7,7 +7,7 @@ use Generated\Shared\Refund\OrderInterface;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Refund\Business\RefundFacade;
 use SprykerFeature\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface;
-use SprykerFeature\Zed\Refund\Persistence\Propel\SpyRefundQuery;
+use Orm\Zed\Refund\Persistence\SpyRefundQuery;
 use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Constraints\LessThanOrEqual;
 use Symfony\Component\Validator\Constraints\NotBlank;

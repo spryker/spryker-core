@@ -9,11 +9,11 @@ namespace SprykerFeature\Zed\Sales\Persistence;
 use Generated\Zed\Ide\FactoryAutoCompletion\SalesPersistence;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesExpenseQuery;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddressQuery;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderCommentQuery;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
+use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 
 /**
  * @method SalesPersistence getFactory()

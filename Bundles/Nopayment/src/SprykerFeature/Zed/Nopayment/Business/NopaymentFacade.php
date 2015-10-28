@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Nopayment\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 /**
  * @method NopaymentDependencyContainer getDependencyContainer()

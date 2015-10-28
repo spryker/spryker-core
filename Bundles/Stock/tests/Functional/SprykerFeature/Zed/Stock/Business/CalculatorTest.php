@@ -8,13 +8,13 @@ namespace Functional\SprykerFeature\Zed\Stock;
 
 use Codeception\TestCase\Test;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
+use Orm\Zed\Product\Persistence\SpyAbstractProduct;
+use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
+use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 use SprykerFeature\Zed\Stock\Business\StockFacade;
-use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockProductQuery;
-use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockQuery;
+use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
+use Orm\Zed\Stock\Persistence\SpyStockQuery;
 use SprykerFeature\Zed\Stock\Persistence\StockQueryContainer;
 use SprykerEngine\Zed\Kernel\Persistence\Factory;
 

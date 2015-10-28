@@ -15,7 +15,7 @@ use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainerInterface;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
+use Orm\Zed\Product\Persistence\SpyAbstractProduct;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\MissingCategoryNodeException;
 use SprykerFeature\Zed\ProductCategory\Business\Exception\ProductCategoryMappingExistsException;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\CmsToCategoryInterface;
@@ -23,8 +23,8 @@ use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToCatego
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToProductInterface;
 use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchInterface;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
-use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategory;
-use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
+use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
+use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
 
 class ProductCategoryManager implements ProductCategoryManagerInterface

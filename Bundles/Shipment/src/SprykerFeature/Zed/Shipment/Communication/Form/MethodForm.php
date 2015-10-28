@@ -8,11 +8,11 @@ namespace SprykerFeature\Zed\Shipment\Communication\Form;
 
 use SprykerFeature\Shared\Library\Currency\CurrencyManager;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentCarrierQuery;
-use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentMethodQuery;
+use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use SprykerFeature\Zed\Shipment\ShipmentConfig;
 use SprykerFeature\Zed\Shipment\ShipmentDependencyProvider;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSetQuery;
+use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Symfony\Component\Form\Extension\Core\ChoiceList\ChoiceList;
 
 class MethodForm extends AbstractForm

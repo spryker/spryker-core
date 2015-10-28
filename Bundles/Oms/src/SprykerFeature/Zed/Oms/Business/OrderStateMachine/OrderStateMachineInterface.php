@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
 
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 interface OrderStateMachineInterface
 {

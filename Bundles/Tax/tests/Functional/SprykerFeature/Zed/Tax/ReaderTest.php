@@ -7,8 +7,8 @@
 namespace Functional\SprykerFeature\Zed\Tax;
 
 use Codeception\TestCase\Test;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRate;
+use Orm\Zed\Tax\Persistence\SpyTaxSet;
+use Orm\Zed\Tax\Persistence\SpyTaxRate;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Tax\Business\TaxFacade;

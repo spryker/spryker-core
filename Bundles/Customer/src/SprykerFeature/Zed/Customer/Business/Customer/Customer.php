@@ -24,8 +24,8 @@ use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoredConfirmationSe
 use SprykerFeature\Zed\Customer\Dependency\Plugin\PasswordRestoreTokenSenderPluginInterface;
 use SprykerFeature\Zed\Customer\Dependency\Plugin\RegistrationTokenSenderPluginInterface;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
-use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
-use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddress;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
+use Orm\Zed\Customer\Persistence\SpyCustomerAddress;
 use Symfony\Component\Security\Core\Encoder\BCryptPasswordEncoder;
 
 class Customer

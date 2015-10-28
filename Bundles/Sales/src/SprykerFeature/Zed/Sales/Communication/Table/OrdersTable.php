@@ -8,8 +8,8 @@ namespace SprykerFeature\Zed\Sales\Communication\Table;
 
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
-use SprykerFeature\Zed\Sales\Persistence\Propel\Map\SpySalesOrderTableMap;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
+use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use SprykerFeature\Shared\Library\Currency\CurrencyManager;
 
 class OrdersTable extends AbstractTable

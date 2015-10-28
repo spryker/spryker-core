@@ -14,22 +14,22 @@ use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
-use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
-use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
-use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
-use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemState;
-use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcess;
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use SprykerFeature\Zed\Payolution\Business\Order\Saver;
 use SprykerFeature\Zed\Payolution\Business\PayolutionDependencyContainer;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionQuery;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\Map\SpyPaymentPayolutionTableMap;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemBundle;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemBundleItem;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
+use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundle;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundleItem;
 
 class SaverTest extends Test
 {
@@ -42,7 +42,7 @@ class SaverTest extends Test
 
         $paymentEntity = SpyPaymentPayolutionQuery::create()->findOneByFkSalesOrder($orderTransfer->getIdSalesOrder());
         $this->assertInstanceOf(
-            'SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution',
+            'Orm\Zed\Payolution\Persistence\SpyPaymentPayolution',
             $paymentEntity
         );
 

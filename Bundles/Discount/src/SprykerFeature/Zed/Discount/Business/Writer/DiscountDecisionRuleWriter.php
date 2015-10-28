@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Discount\Business\Writer;
 
 use Generated\Shared\Transfer\DecisionRuleTransfer;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
+use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
 
 class DiscountDecisionRuleWriter extends AbstractWriter
 {

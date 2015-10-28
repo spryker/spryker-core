@@ -10,10 +10,10 @@ use Generated\Shared\Transfer\NodeTransfer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
-use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTable;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTableQuery;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNodeQuery;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
+use Orm\Zed\Category\Persistence\SpyCategoryClosureTable;
+use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
+use Orm\Zed\Category\Persistence\SpyCategoryNodeQuery;
 
 class ClosureTableWriter implements ClosureTableWriterInterface
 {

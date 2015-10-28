@@ -16,7 +16,7 @@ use SprykerFeature\Zed\Url\Business\Exception\MissingRedirectException;
 use SprykerFeature\Zed\Url\Business\Exception\RedirectExistsException;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 use SprykerFeature\Zed\Url\Dependency\UrlToTouchInterface;
-use SprykerFeature\Zed\Url\Persistence\Propel\SpyRedirect;
+use Orm\Zed\Url\Persistence\SpyRedirect;
 use SprykerFeature\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class RedirectManager implements RedirectManagerInterface

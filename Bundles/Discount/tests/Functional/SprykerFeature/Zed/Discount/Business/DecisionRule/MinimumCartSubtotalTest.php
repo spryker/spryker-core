@@ -13,7 +13,7 @@ use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
 use SprykerFeature\Zed\Discount\Business\DecisionRule\MinimumCartSubtotal;
 use SprykerEngine\Zed\Kernel\Locator;
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
+use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
 use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
 
 /**

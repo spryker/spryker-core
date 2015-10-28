@@ -37,10 +37,10 @@ use SprykerFeature\Zed\Payone\Business\Key\HashGenerator;
 use SprykerFeature\Zed\Payone\Business\Payment\MethodMapper\CreditCardPseudo;
 use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
 use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLog;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog;
 
 class PaymentManager implements PaymentManagerInterface
 {

@@ -10,7 +10,7 @@ use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
 use Generated\Shared\Newsletter\NewsletterTypeInterface;
 use SprykerFeature\Zed\Newsletter\Business\Exception\MissingNewsletterTypeException;
 use SprykerFeature\Zed\Newsletter\Persistence\NewsletterQueryContainer;
-use SprykerFeature\Zed\Newsletter\Persistence\Propel\SpyNewsletterSubscription;
+use Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscription;
 
 class SubscriptionManager implements SubscriptionManagerInterface
 {

@@ -7,9 +7,9 @@ namespace SprykerFeature\Zed\Auth\Business\Model;
 
 use SprykerFeature\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
 use SprykerFeature\Zed\Auth\Persistence\AuthQueryContainer;
-use SprykerFeature\Zed\Auth\Persistence\Propel\SpyResetPassword;
+use Orm\Zed\Auth\Persistence\SpyResetPassword;
 use SprykerFeature\Zed\User\Business\UserFacade;
-use SprykerFeature\Zed\Auth\Persistence\Propel\Map\SpyResetPasswordTableMap;
+use Orm\Zed\Auth\Persistence\Map\SpyResetPasswordTableMap;
 use SprykerFeature\Zed\Auth\AuthConfig;
 
 class PasswordReset

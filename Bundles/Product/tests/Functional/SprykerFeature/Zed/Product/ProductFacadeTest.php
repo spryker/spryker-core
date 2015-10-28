@@ -16,11 +16,11 @@ use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 use SprykerFeature\Zed\Product\Business\ProductFacade;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainer;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyLocalizedProductAttributes;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRate;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
+use Orm\Zed\Product\Persistence\SpyAbstractProduct;
+use Orm\Zed\Product\Persistence\SpyLocalizedProductAttributes;
+use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\Tax\Persistence\SpyTaxRate;
+use Orm\Zed\Tax\Persistence\SpyTaxSet;
 use SprykerFeature\Zed\Url\Business\UrlFacade;
 
 class ProductFacadeTest extends Test

@@ -14,9 +14,9 @@ use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Country\Business\CountryFacade;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainer;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
-use SprykerFeature\Zed\Country\Persistence\Propel\Map\SpyCountryTableMap;
-use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountry;
-use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
+use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
+use Orm\Zed\Country\Persistence\SpyCountry;
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Symfony\Component\Config\Definition\Exception\Exception;
 use SprykerEngine\Zed\Kernel\Persistence\Factory;
 

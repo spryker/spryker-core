@@ -7,8 +7,8 @@
 namespace SprykerFeature\Zed\Country\Persistence;
 
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
-use SprykerFeature\Zed\Country\Persistence\Propel\SpyRegionQuery;
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
+use Orm\Zed\Country\Persistence\SpyRegionQuery;
 
 class CountryQueryContainer extends AbstractQueryContainer implements CountryQueryContainerInterface
 {

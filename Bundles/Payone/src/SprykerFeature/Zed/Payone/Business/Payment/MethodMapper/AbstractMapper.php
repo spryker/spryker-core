@@ -12,7 +12,7 @@ use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\Perso
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
 use SprykerFeature\Zed\Payone\Business\Payment\PaymentMethodMapperInterface;
 use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
+use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 
 abstract class AbstractMapper implements PaymentMethodMapperInterface
 {

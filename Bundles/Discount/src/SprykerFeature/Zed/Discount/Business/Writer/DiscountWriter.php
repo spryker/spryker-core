@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Discount\Business\Writer;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
+use Orm\Zed\Discount\Persistence\SpyDiscount;
 
 class DiscountWriter extends AbstractWriter
 {

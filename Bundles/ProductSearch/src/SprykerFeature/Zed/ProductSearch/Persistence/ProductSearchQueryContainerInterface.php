@@ -8,8 +8,8 @@ namespace SprykerFeature\Zed\ProductSearch\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
-use SprykerFeature\Zed\ProductSearch\Persistence\Propel\SpyProductSearchAttributesOperationQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperationQuery;
 
 interface ProductSearchQueryContainerInterface
 {

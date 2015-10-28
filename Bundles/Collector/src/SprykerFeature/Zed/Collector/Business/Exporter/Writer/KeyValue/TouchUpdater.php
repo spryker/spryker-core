@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Collector\Business\Exporter\Writer\KeyValue;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerEngine\Zed\Touch\Persistence\Propel\Base\SpyTouchStorageQuery;
+use Orm\Zed\Touch\Persistence\Base\SpyTouchStorageQuery;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 
 class TouchUpdater implements TouchUpdaterInterface

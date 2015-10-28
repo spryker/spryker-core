@@ -10,8 +10,8 @@ use Generated\Shared\Locale\LocaleInterface;
 use Generated\Shared\Transfer\AbstractProductTransfer;
 use Propel\Runtime\Propel;
 use SprykerFeature\Zed\Product\Business\Importer\Writer\AbstractProductWriterInterface;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyLocalizedAbstractProductAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyAbstractProductTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyLocalizedAbstractProductAttributesTableMap;
 
 class AbstractProductWriter implements AbstractProductWriterInterface
 {

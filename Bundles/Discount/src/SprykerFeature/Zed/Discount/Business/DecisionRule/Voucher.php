@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Discount\Business\DecisionRule;
 
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 
 class Voucher
 {

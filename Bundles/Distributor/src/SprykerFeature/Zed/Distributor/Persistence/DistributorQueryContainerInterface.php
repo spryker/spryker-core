@@ -4,8 +4,8 @@ namespace SprykerFeature\Zed\Distributor\Persistence;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Exception\PropelException;
-use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemQuery;
-use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery;
+use Orm\Zed\Distributor\Persistence\SpyDistributorItemQuery;
+use Orm\Zed\Distributor\Persistence\SpyDistributorItemTypeQuery;
 
 interface DistributorQueryContainerInterface
 {

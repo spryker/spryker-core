@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\Acl\Communication\Table;
 
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
-use SprykerFeature\Zed\Acl\Persistence\Propel\Map\SpyAclRuleTableMap;
+use Orm\Zed\Acl\Persistence\Map\SpyAclRuleTableMap;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 

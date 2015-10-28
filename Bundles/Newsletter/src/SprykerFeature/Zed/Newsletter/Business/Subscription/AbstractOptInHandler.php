@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Newsletter\Business\Subscription;
 
 use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
 use SprykerFeature\Zed\Newsletter\Persistence\NewsletterQueryContainer;
-use SprykerFeature\Zed\Newsletter\Persistence\Propel\SpyNewsletterSubscriber;
+use Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriber;
 
 abstract class AbstractOptInHandler
 {

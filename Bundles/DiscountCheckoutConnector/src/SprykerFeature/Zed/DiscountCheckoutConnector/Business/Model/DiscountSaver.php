@@ -12,9 +12,9 @@ use Generated\Shared\Sales\ItemInterface;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesDiscount;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesDiscountCode;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
+use Orm\Zed\Sales\Persistence\SpySalesDiscount;
+use Orm\Zed\Sales\Persistence\SpySalesDiscountCode;
 use SprykerFeature\Zed\Discount\Dependency\Facade\DiscountFacadeInterface;
 
 class DiscountSaver implements DiscountSaverInterface

@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Payolution\Communication\Plugin\Oms\Condition;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 abstract class AbstractCheckPlugin extends BaseAbstractPlugin implements ConditionInterface
 {

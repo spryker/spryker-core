@@ -12,7 +12,7 @@ interface AvailabilityToOmsFacadeInterface
     /**
      * @param string $sku
      *
-     * @return \SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem
+     * @return \Orm\Zed\Sales\Persistence\SpySalesOrderItem
      */
     public function countReservedOrderItemsForSku($sku);
 

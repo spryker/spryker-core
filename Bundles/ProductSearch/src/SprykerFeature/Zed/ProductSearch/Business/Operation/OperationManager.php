@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\ProductSearch\Business\Operation;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
-use SprykerFeature\Zed\ProductSearch\Persistence\Propel\SpyProductSearchAttributesOperation;
+use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperation;
 
 class OperationManager implements OperationManagerInterface
 {

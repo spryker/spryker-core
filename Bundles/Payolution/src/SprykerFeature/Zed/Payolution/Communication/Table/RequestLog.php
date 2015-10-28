@@ -8,8 +8,8 @@ namespace SprykerFeature\Zed\Payolution\Communication\Table;
 
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLogQuery;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\Map\SpyPaymentPayolutionTransactionRequestLogTableMap;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery;
+use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTransactionRequestLogTableMap;
 
 class RequestLog extends AbstractTable
 {

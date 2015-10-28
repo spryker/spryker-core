@@ -7,11 +7,11 @@
 namespace SprykerFeature\Zed\Tax\Persistence;
 
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Tax\Persistence\Propel\Map\SpyTaxRateTableMap;
-use SprykerFeature\Zed\Tax\Persistence\Propel\Map\SpyTaxSetTableMap;
-use SprykerFeature\Zed\Tax\Persistence\Propel\Map\SpyTaxSetTaxTableMap;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRateQuery;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSetQuery;
+use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
+use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
+use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTaxTableMap;
+use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
+use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 

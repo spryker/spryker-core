@@ -6,7 +6,7 @@
 
 namespace SprykerEngine\Zed\Touch\Persistence;
 
-use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
+use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 
 interface TouchQueryContainerInterface
 {

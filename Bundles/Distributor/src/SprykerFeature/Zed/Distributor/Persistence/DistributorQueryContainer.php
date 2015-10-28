@@ -6,12 +6,12 @@ use Generated\Zed\Ide\FactoryAutoCompletion\DistributorPersistence;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Distributor\Persistence\Propel\Map\SpyDistributorItemTypeTableMap;
-use SprykerFeature\Zed\Distributor\Persistence\Propel\Map\SpyDistributorReceiverTableMap;
-use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemQuery;
-use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery;
+use Orm\Zed\Distributor\Persistence\Map\SpyDistributorItemTypeTableMap;
+use Orm\Zed\Distributor\Persistence\Map\SpyDistributorReceiverTableMap;
+use Orm\Zed\Distributor\Persistence\SpyDistributorItemQuery;
+use Orm\Zed\Distributor\Persistence\SpyDistributorItemTypeQuery;
 use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
-use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorReceiverQuery;
+use Orm\Zed\Distributor\Persistence\SpyDistributorReceiverQuery;
 
 /**
  * @method DistributorPersistence getFactory()

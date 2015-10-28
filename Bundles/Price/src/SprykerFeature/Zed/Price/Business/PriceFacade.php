@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Price\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceType;
+use Orm\Zed\Price\Persistence\SpyPriceType;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 
 /**

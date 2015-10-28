@@ -3,9 +3,9 @@
 namespace SprykerFeature\Zed\Discount\Communication\Table;
 
 use SprykerFeature\Zed\Discount\DiscountConfig;
-use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountQuery;
+use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
+use Orm\Zed\Discount\Persistence\SpyDiscount;
+use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 

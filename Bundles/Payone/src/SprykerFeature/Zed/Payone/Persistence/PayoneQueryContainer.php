@@ -8,15 +8,15 @@ namespace SprykerFeature\Zed\Payone\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
-use SprykerFeature\Zed\Payone\Persistence\Propel\Base\SpyPaymentPayoneQuery;
+use Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneQuery;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLog;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLogOrderItem;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLogOrderItemQuery;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLogQuery;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLogQuery;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItem;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItemQuery;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogQuery;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 class PayoneQueryContainer extends AbstractQueryContainer implements PayoneQueryContainerInterface
 {

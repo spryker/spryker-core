@@ -5,7 +5,7 @@
 
 namespace SprykerFeature\Zed\Acl\Communication\Form;
 
-use SprykerFeature\Zed\Acl\Persistence\Propel\Map\SpyAclRuleTableMap;
+use Orm\Zed\Acl\Persistence\Map\SpyAclRuleTableMap;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 

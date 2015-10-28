@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\Discount\Business\Writer;
 
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountCollector;
+use Orm\Zed\Discount\Persistence\SpyDiscountCollector;
 
 class DiscountCollectorWriter extends AbstractWriter
 {

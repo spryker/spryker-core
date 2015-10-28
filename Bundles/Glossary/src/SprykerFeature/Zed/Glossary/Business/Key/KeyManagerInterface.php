@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Glossary\Business\Key;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Glossary\Business\Exception\KeyExistsException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;
-use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryKey;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 
 interface KeyManagerInterface
 {

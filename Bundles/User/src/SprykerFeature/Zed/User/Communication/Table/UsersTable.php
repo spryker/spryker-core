@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\User\Communication\Table;
 
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
-use SprykerFeature\Zed\User\Persistence\Propel\Map\SpyUserTableMap;
+use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
 
 class UsersTable extends AbstractTable

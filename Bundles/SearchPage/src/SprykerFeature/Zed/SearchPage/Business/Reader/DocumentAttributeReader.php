@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\SearchPage\Business\Reader;
 
 use SprykerFeature\Zed\SearchPage\Persistence\SearchPageQueryContainer;
-use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchDocumentAttribute;
+use Orm\Zed\SearchPage\Persistence\SpySearchDocumentAttribute;
 
 class DocumentAttributeReader implements DocumentAttributeReaderInterface
 {

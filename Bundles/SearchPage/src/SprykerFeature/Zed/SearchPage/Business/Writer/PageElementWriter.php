@@ -10,7 +10,7 @@ use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Shared\SearchPage\Dependency\PageElementInterface;
 use SprykerFeature\Zed\SearchPage\Business\Reader\PageElementReaderInterface;
 use SprykerFeature\Zed\SearchPage\Dependency\Facade\SearchPageToTouchInterface;
-use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElement;
+use Orm\Zed\SearchPage\Persistence\SpySearchPageElement;
 
 class PageElementWriter implements PageElementWriterInterface
 {

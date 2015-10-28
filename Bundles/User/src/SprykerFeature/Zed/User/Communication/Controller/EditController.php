@@ -11,7 +11,7 @@ use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
 use SprykerFeature\Zed\User\Business\UserFacade;
 use SprykerFeature\Zed\User\Communication\Form\UserForm;
 use SprykerFeature\Zed\User\Communication\UserDependencyContainer;
-use SprykerFeature\Zed\User\Persistence\Propel\Map\SpyUserTableMap;
+use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\User\Communication\Form\UserCreateForm;

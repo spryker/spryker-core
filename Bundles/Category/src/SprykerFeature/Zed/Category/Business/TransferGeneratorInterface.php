@@ -9,8 +9,8 @@ namespace SprykerFeature\Zed\Category\Business;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategory;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
+use Orm\Zed\Category\Persistence\SpyCategory;
+use Orm\Zed\Category\Persistence\SpyCategoryNode;
 
 interface TransferGeneratorInterface
 {

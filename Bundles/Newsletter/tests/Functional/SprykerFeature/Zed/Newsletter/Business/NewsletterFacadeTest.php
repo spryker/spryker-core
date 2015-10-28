@@ -18,7 +18,7 @@ use SprykerEngine\Zed\Kernel\Persistence\QueryContainerLocator;
 use SprykerFeature\Zed\Newsletter\Business\NewsletterFacade;
 use SprykerFeature\Zed\Newsletter\NewsletterDependencyProvider;
 use SprykerFeature\Zed\Newsletter\Persistence\NewsletterQueryContainer;
-use SprykerFeature\Zed\Newsletter\Persistence\Propel\SpyNewsletterType;
+use Orm\Zed\Newsletter\Persistence\SpyNewsletterType;
 
 /**
  * @group Zed

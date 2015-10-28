@@ -9,12 +9,12 @@ namespace SprykerFeature\Zed\Acl\Persistence;
 use Generated\Zed\Ide\FactoryAutoCompletion\AclPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 use SprykerFeature\Zed\Acl\AclDependencyProvider;
-use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupQuery;
-use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRoleQuery;
-use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRuleQuery;
-use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclUserHasGroupQuery;
-use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupsHasRolesQuery;
-use SprykerFeature\Zed\User\Persistence\Propel\SpyUserQuery;
+use Orm\Zed\Acl\Persistence\SpyAclGroupQuery;
+use Orm\Zed\Acl\Persistence\SpyAclRoleQuery;
+use Orm\Zed\Acl\Persistence\SpyAclRuleQuery;
+use Orm\Zed\Acl\Persistence\SpyAclUserHasGroupQuery;
+use Orm\Zed\Acl\Persistence\SpyAclGroupsHasRolesQuery;
+use Orm\Zed\User\Persistence\SpyUserQuery;
 use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
 
 /**

@@ -12,7 +12,7 @@ use Propel\Runtime\Connection\ConnectionInterface;
 use SprykerFeature\Shared\Category\CategoryConfig;
 use SprykerFeature\Zed\Category\Business\Manager\NodeUrlManagerInterface;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToTouchInterface;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTableQuery;
+use Orm\Zed\Category\Persistence\SpyCategoryClosureTableQuery;
 
 class CategoryTreeWriter
 {

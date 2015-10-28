@@ -13,7 +13,7 @@ use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Zed\Url\Business\Exception\MissingUrlException;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 use SprykerFeature\Zed\Url\Persistence\Exception\MissingResourceException;
-use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrl;
+use Orm\Zed\Url\Persistence\SpyUrl;
 
 interface UrlManagerInterface
 {

@@ -9,9 +9,9 @@ namespace Unit\SprykerFeature\Zed\Sales\Business\Model\OrderItemSplit\Validation
 use Propel\Runtime\Collection\Collection;
 use SprykerFeature\Zed\Sales\Business\Model\Split\Validation\Validator;
 use SprykerFeature\Zed\Sales\Business\Model\Split\Validation\Messages;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesDiscount;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemOption;
+use Orm\Zed\Sales\Persistence\SpySalesDiscount;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 
 class ValidatorTest extends \PHPUnit_Framework_TestCase
 {

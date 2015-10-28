@@ -15,7 +15,7 @@ use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Customer\CustomerDependencyProvider;
-use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
 use SprykerFeature\Zed\CustomerCheckoutConnector\Business\CustomerCheckoutConnectorFacade;
 use SprykerFeature\Zed\CustomerCheckoutConnector\CustomerCheckoutConnectorDependencyProvider;
 

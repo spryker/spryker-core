@@ -9,14 +9,14 @@ namespace Functional\SprykerFeature\Zed\Availability;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Availability\Business\AvailabilityFacade;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
-use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStock;
-use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockProduct;
-use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockProductQuery;
-use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockQuery;
+use Orm\Zed\Product\Persistence\SpyAbstractProduct;
+use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
+use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\Stock\Persistence\SpyStock;
+use Orm\Zed\Stock\Persistence\SpyStockProduct;
+use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
+use Orm\Zed\Stock\Persistence\SpyStockQuery;
 
 /**
  * @group SprykerFeature

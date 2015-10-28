@@ -7,23 +7,23 @@
 namespace Functional\SprykerFeature\Zed\ProductOption\Persistence;
 
 use Propel\Runtime\Propel;
-use SprykerEngine\Zed\Locale\Persistence\Propel\SpyLocale;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionConfigurationPreset;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionConfigurationPresetValue;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionType;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeTranslation;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsage;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageExclusion;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValue;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValuePrice;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueTranslation;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsage;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageConstraint;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRate;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSetTax;
+use Orm\Zed\Locale\Persistence\SpyLocale;
+use Orm\Zed\Product\Persistence\SpyAbstractProduct;
+use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionConfigurationPreset;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionConfigurationPresetValue;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionType;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeTranslation;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsage;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageExclusion;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueTranslation;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsage;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageConstraint;
+use Orm\Zed\Tax\Persistence\SpyTaxRate;
+use Orm\Zed\Tax\Persistence\SpyTaxSet;
+use Orm\Zed\Tax\Persistence\SpyTaxSetTax;
 
 class DbFixturesLoader
 {

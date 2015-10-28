@@ -7,11 +7,11 @@
 namespace SprykerFeature\Zed\Stock\Persistence;
 
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyProductTableMap;
-use SprykerFeature\Zed\Stock\Persistence\Propel\Map\SpyStockProductTableMap;
-use SprykerFeature\Zed\Stock\Persistence\Propel\Map\SpyStockTableMap;
-use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockProductQuery;
-use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockQuery;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Stock\Persistence\Map\SpyStockProductTableMap;
+use Orm\Zed\Stock\Persistence\Map\SpyStockTableMap;
+use Orm\Zed\Stock\Persistence\SpyStockProductQuery;
+use Orm\Zed\Stock\Persistence\SpyStockQuery;
 
 class StockQueryContainer extends AbstractQueryContainer
 {

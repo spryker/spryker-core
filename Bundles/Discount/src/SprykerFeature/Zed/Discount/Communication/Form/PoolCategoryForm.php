@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolCategory;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolCategoryQuery;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategory;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Validator\Constraints\NotBlank;
 

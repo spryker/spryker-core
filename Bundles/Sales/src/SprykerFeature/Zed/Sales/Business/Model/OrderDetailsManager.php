@@ -18,10 +18,10 @@ use SprykerFeature\Zed\Library\Copy;
 use SprykerFeature\Zed\Oms\Business\OmsFacade;
 use SprykerFeature\Zed\Sales\Business\Exception\InvalidSalesOrderException;
 use SprykerFeature\Zed\Sales\Dependency\Plugin\PaymentLogReceiverInterface;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 class OrderDetailsManager
 {

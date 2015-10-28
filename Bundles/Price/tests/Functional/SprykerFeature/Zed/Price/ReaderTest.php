@@ -11,13 +11,13 @@ use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceProduct;
-use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceProductQuery;
-use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceTypeQuery;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
+use Orm\Zed\Price\Persistence\SpyPriceProduct;
+use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
+use Orm\Zed\Price\Persistence\SpyPriceTypeQuery;
+use Orm\Zed\Product\Persistence\SpyAbstractProduct;
+use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
+use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 
 /**
  * @group PriceTest

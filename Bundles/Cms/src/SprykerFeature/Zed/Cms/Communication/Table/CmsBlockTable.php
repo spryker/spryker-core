@@ -6,10 +6,10 @@
 
 namespace SprykerFeature\Zed\Cms\Communication\Table;
 
-use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
-use SprykerFeature\Zed\Cms\Persistence\Propel\Base\SpyCmsBlockQuery;
-use SprykerFeature\Zed\Cms\Persistence\Propel\Map\SpyCmsBlockTableMap;
+use Orm\Zed\Cms\Persistence\Base\SpyCmsBlockQuery;
+use Orm\Zed\Cms\Persistence\Map\SpyCmsBlockTableMap;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 

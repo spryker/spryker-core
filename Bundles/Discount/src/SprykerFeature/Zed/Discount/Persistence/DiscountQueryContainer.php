@@ -7,17 +7,17 @@
 namespace SprykerFeature\Zed\Discount\Persistence;
 
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesType;
-use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherPoolTableMap;
-use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherTableMap;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountCollectorQuery;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRuleQuery;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountQuery;
+use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolTableMap;
+use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
+use Orm\Zed\Discount\Persistence\SpyDiscountCollectorQuery;
+use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRuleQuery;
+use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountTableMap;
-use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherPoolCategoryTableMap;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherQuery;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolQuery;
+use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
+use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolCategoryTableMap;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery;
 
 /**
  * Class DiscountQueryContainer
@@ -34,7 +34,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     /**
      * @param string $code
      *
-     * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherQuery
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
      */
     public function queryVoucher($code)
     {
@@ -44,7 +44,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     /**
      * @param int $idDiscount
      *
-     * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRuleQuery
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRuleQuery
      */
     public function queryDecisionRules($idDiscount)
     {
@@ -53,7 +53,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     }
 
     /**
-     * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountQuery
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
     public function queryActiveAndRunningDiscounts()
     {
@@ -96,7 +96,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     }
 
     /**
-     * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolQuery
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery
      */
     public function queryVoucherPool()
     {
@@ -104,7 +104,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     }
 
     /**
-     * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountQuery
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountQuery
      */
     public function queryDiscount()
     {
@@ -120,7 +120,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     }
 
     /**
-     * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRuleQuery
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountDecisionRuleQuery
      */
     public function queryDiscountDecisionRule()
     {
@@ -151,7 +151,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     }
 
     /**
-     * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherQuery
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery
      */
     public function queryDiscountVoucher()
     {
@@ -161,7 +161,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     }
 
     /**
-     * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolQuery
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery
      */
     public function queryDiscountVoucherPool()
     {
@@ -169,7 +169,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     }
 
     /**
-     * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolQuery
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery
      */
     public function queryDiscountVoucherPoolJoinedVoucherPoolCategory()
     {
@@ -179,7 +179,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     }
 
     /**
-     * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolCategoryQuery
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery
      */
     public function queryDiscountVoucherPoolCategory()
     {

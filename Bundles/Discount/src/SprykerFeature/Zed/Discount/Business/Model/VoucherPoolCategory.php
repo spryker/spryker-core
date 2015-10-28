@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Discount\Business\Model;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
+use Orm\Zed\Discount\Persistence\SpyDiscount;
 
 class VoucherPoolCategory
 {

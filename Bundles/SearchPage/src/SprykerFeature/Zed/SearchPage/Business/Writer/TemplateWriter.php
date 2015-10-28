@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\SearchPage\Business\Writer;
 use SprykerFeature\Shared\SearchPage\Dependency\TemplateInterface;
 use SprykerFeature\Zed\SearchPage\Business\Exception\TemplateDoesNotExistException;
 use SprykerFeature\Zed\SearchPage\Business\Reader\TemplateReaderInterface;
-use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElementTemplate;
+use Orm\Zed\SearchPage\Persistence\SpySearchPageElementTemplate;
 
 class TemplateWriter implements TemplateWriterInterface
 {

@@ -5,7 +5,7 @@ namespace SprykerFeature\Zed\Distributor\Business\Writer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Distributor\Business\Exception\ItemTypeDoesNotExistException;
 use SprykerFeature\Zed\Distributor\Persistence\DistributorQueryContainerInterface;
-use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItem;
+use Orm\Zed\Distributor\Persistence\SpyDistributorItem;
 
 class ItemWriter implements ItemWriterInterface
 {

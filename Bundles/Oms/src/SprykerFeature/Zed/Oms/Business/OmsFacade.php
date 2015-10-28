@@ -12,11 +12,11 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Oms\Business\Process\Process;
 use SprykerFeature\Zed\Oms\Business\Process\Event;
 use Propel\Runtime\Collection\ObjectCollection;
-use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsTransitionLog;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
-use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcess;
-use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemState;
+use Orm\Zed\Oms\Persistence\SpyOmsTransitionLog;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
 use SprykerFeature\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
 
 /**

@@ -4,9 +4,9 @@ namespace SprykerFeature\Zed\Discount\Communication\Table;
 
 use Generated\Shared\Transfer\DataTablesTransfer;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
-use SprykerFeature\Zed\Discount\Persistence\Propel\Map\SpyDiscountVoucherTableMap;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountQuery;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
+use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
+use Orm\Zed\Discount\Persistence\SpyDiscountQuery;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
