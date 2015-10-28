@@ -21,7 +21,7 @@ class NewsletterDependencyContainer extends AbstractCommunicationDependencyConta
     /**
      * @return MailFacade
      */
-    public function createMailFacade()
+    public function getMailFacade()
     {
         return $this->getProvidedDependency(NewsletterDependencyProvider::FACADE_MAIL);
     }
@@ -29,7 +29,7 @@ class NewsletterDependencyContainer extends AbstractCommunicationDependencyConta
     /**
      * @return GlossaryFacade
      */
-    public function createGlossaryFacade()
+    public function getGlossaryFacade()
     {
         return $this->getProvidedDependency(NewsletterDependencyProvider::FACADE_GLOSSARY);
     }

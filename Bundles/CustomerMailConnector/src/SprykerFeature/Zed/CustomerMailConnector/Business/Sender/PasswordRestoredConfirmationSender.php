@@ -27,9 +27,10 @@ class PasswordRestoredConfirmationSender extends AbstractSender
         $this->setMailTransferSubject($mailTransfer);
         $this->setMailMergeData($mailTransfer);
 
-        $result = $this->mailFacade->sendMail($mailTransfer);
+        $mailResponses = $this->mailFacade->sendMail($mailTransfer);
+        $result = $this->mailFacade->isMailSent($mailResponses);
 
-        return $this->isMailSent($result);
+        return $result;
     }
 
     /**

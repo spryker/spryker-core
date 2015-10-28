@@ -21,10 +21,6 @@ use SprykerFeature\Zed\Newsletter\NewsletterConfig;
 class DoubleOptInSubscriptionSender extends AbstractPlugin implements SubscriberOptInSenderInterface
 {
 
-    const STATUS = 'status';
-    const SENT = 'sent';
-    const QUEUED = 'queued';
-
     /**
      * @param NewsletterSubscriberInterface $newsletterSubscriber
      *
@@ -47,11 +43,11 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
         );
         $this->setMailMergeData($mailTransfer, $globalMergeVars);
 
-        $result = $this->getDependencyContainer()
-            ->createMailFacade()
-            ->sendMail($mailTransfer);
+        $mailFacade = $this->getDependencyContainer()->getMailFacade();
+        $responses = $mailFacade->sendMail($mailTransfer);
+        $result = $mailFacade->isMailSent($responses);
 
-        return $this->isMailSent($result);
+        return $result;
     }
 
     /**
@@ -78,25 +74,6 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
         ];
 
         return $globalMergeVars;
-    }
-
-    /**
-     * @param array $results
-     *
-     * @return bool
-     */
-    protected function isMailSent(array $results)
-    {
-        foreach ($results as $result) {
-            if (!isset($result[self::STATUS])) {
-                return false;
-            }
-            if ($result[self::STATUS] !== self::SENT && $result[self::STATUS] !== self::QUEUED) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     /**
@@ -169,7 +146,7 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
      */
     protected function translate($keyName)
     {
-        $glossaryFacade = $this->getDependencyContainer()->createGlossaryFacade();
+        $glossaryFacade = $this->getDependencyContainer()->getGlossaryFacade();
         if ($glossaryFacade->hasTranslation($keyName)) {
             return $glossaryFacade->translate($keyName);
         }
