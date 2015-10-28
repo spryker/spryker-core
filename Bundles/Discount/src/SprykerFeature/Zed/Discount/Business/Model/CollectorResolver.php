@@ -51,9 +51,7 @@ class CollectorResolver
             }
         }
 
-        $uniqDiscountableObjects = $this->getUniqueDiscountableObjects($collectedItems);
-
-        return $uniqDiscountableObjects;
+        return $this->getUniqueDiscountableObjects($collectedItems);
     }
 
     /**
@@ -110,11 +108,8 @@ class CollectorResolver
      *
      * @return DiscountableInterface[]
      */
-    protected function combine(
-        DiscountInterface $discountTransfer,
-        $collectedItems,
-        $itemsToCombine
-    ) {
+    protected function combine(DiscountInterface $discountTransfer, $collectedItems, $itemsToCombine)
+    {
         if ($discountTransfer->getCollectorLogicalOperator() === self::OPERATOR_OR) {
             return $this->combineWithOr($collectedItems, $itemsToCombine);
         } else {

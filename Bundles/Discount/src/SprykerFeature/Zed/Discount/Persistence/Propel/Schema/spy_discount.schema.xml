@@ -12,7 +12,7 @@
         <column name="is_active" type="BOOLEAN" default="false"/>
         <column name="valid_from" type="TIMESTAMP" required="false"/>
         <column name="valid_to" type="TIMESTAMP" required="false"/>
-        <column name="collector_logical_operator" type="VARCHAR" size="10" />
+        <column name="collector_logical_operator" type="VARCHAR" size="16" />
 
         <behavior name="timestampable"/>
 
