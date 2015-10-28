@@ -6,57 +6,73 @@
 
 namespace SprykerEngine\Yves\Application\Communication\Plugin\ServiceProvider;
 
-use SprykerFeature\Shared\Library\Error\ErrorLogger;
+use SprykerEngine\Yves\Application\Communication\ApplicationDependencyContainer;
+use SprykerEngine\Yves\Kernel\Communication\AbstractPlugin;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
+use Symfony\Component\EventDispatcher\EventDispatcherInterface;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent;
 use Symfony\Component\HttpKernel\EventListener\ExceptionListener;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Symfony\Component\HttpKernel\KernelEvents;
 
-class ExceptionServiceProvider implements ServiceProviderInterface
+/**
+ * @method ApplicationDependencyContainer getDependencyContainer()
+ */
+class ExceptionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
     /**
-     * @var string
+     * @param Application $app
+     *
+     * @return void
      */
-    private $controllerName;
-
-    /**
-     * @param string $controllerName
-     */
-    public function __construct($controllerName = '\SprykerFeature\Yves\Library\Controller\ExceptionController')
-    {
-        $this->controllerName = $controllerName;
-    }
-
     public function register(Application $app)
     {
-        $controllerName = $this->controllerName;
-        $app['controller.service.404error'] = $app->share(function () use ($app, $controllerName) {
-            return new $controllerName($app);
-        });
-        $app['dispatcher'] = $app->share($app->extend('dispatcher', function ($dispatcher) use ($app) {
-            $dispatcher->addSubscriber(new ExceptionListener('controller.service.404error:showAction', $app['logger']));
+        $app['controller.service.error'] = $this->getDependencyContainer()->createExceptionHandlerDispatcher();
 
-            return $dispatcher;
-        }));
+        $app['dispatcher'] = $app->share(
+            $app->extend('dispatcher', function (EventDispatcherInterface $dispatcher) use ($app) {
+                $exceptionListener = new ExceptionListener(
+                    'controller.service.error:dispatch',
+                    $app['logger']
+                );
+                $dispatcher->addSubscriber($exceptionListener);
+
+                return $dispatcher;
+            })
+        );
     }
 
+    /**
+     * @param Application $app
+     *
+     * @return void
+     */
     public function boot(Application $app)
     {
         $app['dispatcher']->addListener(KernelEvents::EXCEPTION, [$this, 'onKernelException'], -8);
     }
 
+    /**
+     * @param GetResponseForExceptionEvent $event
+     *
+     * @throws \Exception
+     *
+     * @return void
+     */
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
         $exception = $event->getException();
 
-        $code = $exception instanceof HttpExceptionInterface ? $exception->getStatusCode() : 500;
+        $statusCode = Response::HTTP_INTERNAL_SERVER_ERROR;
+        if ($exception instanceof HttpExceptionInterface) {
+            $statusCode = $exception->getStatusCode();
+        }
 
-        if ($code === 404) {
-            ErrorLogger::log($exception);
-        } else {
+        $exceptionHandlers = $this->getDependencyContainer()->createExceptionHandlers();
+        if (!array_key_exists($statusCode, $exceptionHandlers)) {
             throw $exception;
         }
     }
