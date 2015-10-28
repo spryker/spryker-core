@@ -12,20 +12,19 @@ use SprykerFeature\Zed\Discount\DiscountConfigInterface;
 class CollectorResolver
 {
 
-    const OPERATOR_AND = 'AND';
     const OPERATOR_OR = 'OR';
 
     /**
      * @var DiscountConfigInterface
      */
-    protected $settings;
+    protected $config;
 
     /**
-     * @param DiscountConfigInterface $settings
+     * @param DiscountConfigInterface $config
      */
-    public function __construct(DiscountConfigInterface $settings)
+    public function __construct(DiscountConfigInterface $config)
     {
-        $this->settings = $settings;
+        $this->config = $config;
     }
 
     /**
@@ -39,7 +38,7 @@ class CollectorResolver
         $collectedItems = [];
 
         foreach ($discountTransfer->getDiscountCollectors() as $discountCollectorTransfer) {
-            $collectorPlugin = $this->settings->getCollectorPluginByName(
+            $collectorPlugin = $this->config->getCollectorPluginByName(
                 $discountCollectorTransfer->getCollectorPlugin()
             );
 
@@ -52,7 +51,7 @@ class CollectorResolver
             }
         }
 
-        $uniqDiscountableObjects = $this->getUniqDiscountableObjects($collectedItems);
+        $uniqDiscountableObjects = $this->getUniqueDiscountableObjects($collectedItems);
 
         return $uniqDiscountableObjects;
     }
@@ -60,16 +59,16 @@ class CollectorResolver
     /**
      * @param DiscountableInterface[] $discountableObjects
      *
-     * @return array
+     * @return DiscountableInterface[]
      */
-    protected function getUniqDiscountableObjects(array $discountableObjects)
+    protected function getUniqueDiscountableObjects(array $discountableObjects)
     {
-        $uniqDiscountableObjects = [];
+        $uniqueDiscountableObjects = [];
         foreach ($discountableObjects as $discountableObject) {
-            $uniqDiscountableObjects[spl_object_hash($discountableObject)] = $discountableObject;
+            $uniqueDiscountableObjects[spl_object_hash($discountableObject)] = $discountableObject;
         }
 
-        return $uniqDiscountableObjects;
+        return $uniqueDiscountableObjects;
     }
 
     /**
@@ -116,15 +115,11 @@ class CollectorResolver
         $collectedItems,
         $itemsToCombine
     ) {
-        if ($discountTransfer->getCollectorLogicalOperator() === self::OPERATOR_AND) {
-            $collectedItems = $this->combineWithAnd($collectedItems, $itemsToCombine);
-        }
-
         if ($discountTransfer->getCollectorLogicalOperator() === self::OPERATOR_OR) {
-            $collectedItems = $this->combineWithOr($collectedItems, $itemsToCombine);
+            return $this->combineWithOr($collectedItems, $itemsToCombine);
+        } else {
+            return $this->combineWithAnd($collectedItems, $itemsToCombine);
         }
-
-        return $collectedItems;
     }
 
 }
