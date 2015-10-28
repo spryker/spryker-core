@@ -1,7 +1,7 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
 
 namespace SprykerEngine\Yves\Application\Communication;
@@ -37,14 +37,6 @@ class ApplicationDependencyContainer extends AbstractCommunicationDependencyCont
             Response::HTTP_NOT_FOUND => $this->getFactory()
                 ->createPluginServiceProviderExceptionServiceDefaultExceptionHandler(),
         ];
-    }
-
-    /**
-     * @return Application
-     */
-    protected function getApplication()
-    {
-        return $this->getLocator()->application()->pluginPimple()->getApplication();
     }
 
 }
