@@ -26,4 +26,14 @@ class MailFacade extends AbstractFacade
         return $this->getDependencyContainer()->getMailSender()->sendMail($mailTransfer);
     }
 
+    /**
+     * @param SendMailResponsesInterface $mailResponses
+     *
+     * @return bool
+     */
+    public function isMailSent(SendMailResponsesInterface $mailResponses)
+    {
+        return $this->getDependencyContainer()->getMailSender()->isMailSent($mailResponses);
+    }
+
 }

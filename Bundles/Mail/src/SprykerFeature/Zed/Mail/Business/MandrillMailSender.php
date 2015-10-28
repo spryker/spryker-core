@@ -91,6 +91,22 @@ class MandrillMailSender implements MailSenderInterface
     }
 
     /**
+     * @param SendMailResponsesInterface $responses
+     *
+     * @return bool
+     */
+    public function isMailSent(SendMailResponsesInterface $mailResponses)
+    {
+        foreach ($mailResponses->getResponses() as $response) {
+            if ($response->getIsRejected() === true || $response->getIsInvalid() === true) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * @param array $templateContent
      *
      * @return array

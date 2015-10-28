@@ -19,4 +19,11 @@ interface MailSenderInterface
      */
     public function sendMail(MailTransfer $mailTransfer);
 
+    /**
+     * @param SendMailResponsesInterface $mailResponses
+     *
+     * @return bool
+     */
+    public function isMailSent(SendMailResponsesInterface $mailResponses);
+
 }
