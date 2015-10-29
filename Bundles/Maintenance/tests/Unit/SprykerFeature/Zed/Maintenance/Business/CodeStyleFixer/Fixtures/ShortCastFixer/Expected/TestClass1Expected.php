@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\MethodArgumentDefaultValueFixer\Fixtures\Input;
+namespace Unit\SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\Fixtures\ShortCastFixer\Input;
 
 class TestClass1Input
 {
@@ -17,7 +17,7 @@ class TestClass1Input
     /**
      * @return void
      */
-    public function doNotReplaceFunction($foo)
+    public function doNotReplaceFunction()
     {
         $foo = (int)2;
         $foo = 2/(bool)$foo;

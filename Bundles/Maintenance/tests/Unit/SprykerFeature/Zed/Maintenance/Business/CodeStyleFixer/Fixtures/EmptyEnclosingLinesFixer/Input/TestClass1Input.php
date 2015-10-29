@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\EmptyEnclosingLinesFixer\Fixtures\Input;
+namespace Unit\SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\Fixtures\EmptyEnclosingLinesFixer\Input;
 
 class TestClass1Input
 {
