@@ -42,4 +42,4 @@ abstract class AbstractSpyStockProduct extends BaseSpyStockProduct
         $this->setQuantity($this->getQuantity() + $amount);
         $this->save();
     }
-} // SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockProduct
+} // SprykerFeature\Zed\Stock\Persistence\Propel\AbstractSpyStockProduct
