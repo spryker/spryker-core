@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition;
 
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use \SprykerFeature\Shared\Library\Log;
+use SprykerFeature\Shared\Library\Log;
 
 class PaymentRedirected extends AbstractCondition
 {

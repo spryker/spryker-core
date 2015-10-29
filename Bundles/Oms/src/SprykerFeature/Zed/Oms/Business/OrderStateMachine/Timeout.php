@@ -19,7 +19,7 @@ use Exception;
 use ErrorException;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Exception\PropelException;
-use \SprykerFeature\Shared\Library\Log;
+use SprykerFeature\Shared\Library\Log;
 
 class Timeout implements TimeoutInterface
 {

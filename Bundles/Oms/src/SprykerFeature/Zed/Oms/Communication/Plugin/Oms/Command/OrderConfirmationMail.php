@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command;
 use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
-use \SprykerFeature\Shared\Library\Log;
+use SprykerFeature\Shared\Library\Log;
 
 class OrderConfirmationMail implements CommandByOrderInterface
 {
