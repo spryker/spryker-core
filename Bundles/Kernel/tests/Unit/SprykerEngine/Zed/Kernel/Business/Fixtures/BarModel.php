@@ -14,7 +14,6 @@ class BarModel
      */
     public function __construct(FooModel $fooModel)
     {
-
     }
 
 }

@@ -26,5 +26,4 @@ class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($factory->exists('not existing'));
     }
 
-
 }

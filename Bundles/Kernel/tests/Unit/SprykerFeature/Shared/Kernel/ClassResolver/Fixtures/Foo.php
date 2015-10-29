@@ -25,4 +25,5 @@ class Foo
     {
         return $this->data;
     }
+
 }

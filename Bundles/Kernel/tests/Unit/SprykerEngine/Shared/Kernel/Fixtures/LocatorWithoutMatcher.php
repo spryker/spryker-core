@@ -21,7 +21,6 @@ class LocatorWithoutMatcher implements LocatorInterface
      */
     public function locate($bundle, LocatorLocatorInterface $locator, $className = null)
     {
-
     }
 
     /**

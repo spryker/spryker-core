@@ -72,7 +72,7 @@ class ConstructableMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
             ConstructableMethodTagBuilder::OPTION_KEY_CLASS_NAME_PART_LEVEL => 3,
         ];
 
-        require_once(__DIR__ . '/Fixtures/src/ProjectNamespace/Application/Bundle/Communication/Form/FooForm.php');
+        require_once __DIR__ . '/Fixtures/src/ProjectNamespace/Application/Bundle/Communication/Form/FooForm.php';
 
         $methodTagBuilder = new ConstructableMethodTagBuilder($options);
         $methodTags = $methodTagBuilder->buildMethodTags('Bundle');

@@ -10,7 +10,6 @@ use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Business\Factory as BusinessFactory;
-use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerEngine\Zed\Kernel\Communication\Factory as CommunicationFactory;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
