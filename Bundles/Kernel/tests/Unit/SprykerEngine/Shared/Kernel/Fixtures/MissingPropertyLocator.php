@@ -21,7 +21,6 @@ class MissingPropertyLocator extends AbstractLocator
      */
     public function locate($bundle, LocatorLocatorInterface $locator, $className = null)
     {
-
     }
 
 }

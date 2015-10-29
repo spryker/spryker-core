@@ -13,7 +13,6 @@ class FooController extends AbstractController
 
     public function __construct($something)
     {
-
     }
 
 }

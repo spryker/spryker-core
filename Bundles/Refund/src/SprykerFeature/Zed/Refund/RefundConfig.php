@@ -14,9 +14,9 @@ class RefundConfig extends AbstractBundleConfig
 {
 
     /**
-     * @return PaymentDataPluginInterface
-     *
      * @throws NotImplementedException
+     *
+     * @return PaymentDataPluginInterface
      */
     public function getPaymentDataPlugin()
     {

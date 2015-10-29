@@ -30,7 +30,7 @@ class Api implements ApiInterface
     protected $nameOfTransaction;
 
     /**
-     * Protected Singleton-Constructor. Use \SprykerFeature\Shared\Library\NewRelic\Api::getInstance() instead.
+     * Protected Singleton-Constructor. Use SprykerFeature\Shared\Library\NewRelic\Api::getInstance() instead.
      */
     protected function __construct()
     {

@@ -8,12 +8,14 @@ use SprykerFeature\Shared\System\SystemConfig;
 
 class TransferLocatorHelper
 {
+
     /**
      * @param LocatorLocatorInterface $locator
      * @param string $className
      *
-     * @return TransferInterface
      * @throws \Exception
+     *
+     * @return TransferInterface
      */
     public function createTransferFromClassName(LocatorLocatorInterface $locator, $className)
     {
@@ -31,8 +33,9 @@ class TransferLocatorHelper
     /**
      * @TODO replace this with configured namespaces
      *
-     * @return array
      * @throws \Exception
+     *
+     * @return array
      */
     private function getNamespaces()
     {
@@ -42,9 +45,10 @@ class TransferLocatorHelper
             'SprykerFeature\\',
             'SprykerEngine\\',
             'Shared\\',
-            'Transfer\\'
+            'Transfer\\',
         ];
 
         return $namespaces;
     }
+
 }

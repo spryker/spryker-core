@@ -24,7 +24,7 @@ use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
-use \Propel\Runtime\Exception\PropelException;
+use Propel\Runtime\Exception\PropelException;
 
 /**
  * Note:

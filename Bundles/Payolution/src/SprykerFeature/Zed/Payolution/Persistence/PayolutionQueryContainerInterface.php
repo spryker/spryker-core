@@ -51,7 +51,6 @@ interface PayolutionQueryContainerInterface
      */
     public function queryTransactionStatusLogByPaymentIdLatestFirst($idPayment);
 
-
     /**
      * @param $idSalesOrder
      *

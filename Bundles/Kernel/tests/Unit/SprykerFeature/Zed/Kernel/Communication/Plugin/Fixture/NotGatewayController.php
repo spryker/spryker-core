@@ -9,7 +9,6 @@ class NotGatewayController
 
     public function __construct()
     {
-
     }
 
     /**

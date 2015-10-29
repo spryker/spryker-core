@@ -8,11 +8,10 @@ namespace SprykerFeature\Zed\Payolution\Business\Api;
 
 use SprykerFeature\Shared\Library\ConfigInterface;
 use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
-use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;
 
 interface Constants extends ConfigInterface
 {
-    
+
     const PAYMENT_CODE_PRE_AUTHORIZATION = 'VA.PA';
     const PAYMENT_CODE_RE_AUTHORIZATION = 'VA.PA';
     const PAYMENT_CODE_CAPTURE = 'VA.CP';

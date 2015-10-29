@@ -15,6 +15,8 @@ class BundleCodeStyleFixer
 
     const PHP_CS_CONFIG_FILE_NAME = '.php_cs';
 
+    const PHP_CS_CACHE_CONFIG_FILE_NAME = '.php_cs.cache';
+
     /**
      * @var string
      */
@@ -46,7 +48,6 @@ class BundleCodeStyleFixer
         $path = $this->getPathToBundle($bundle);
         $this->copyPhpCsFixerConfigToBundle($path);
         $this->runFixerCommand($path);
-        $this->removePhpCsFixerConfigFromBundle($path);
     }
 
     /**
@@ -81,30 +82,32 @@ class BundleCodeStyleFixer
 
     /**
      * @param string $path
+     *
+     * @return void
      */
     protected function copyPhpCsFixerConfigToBundle($path)
     {
         $from = $this->getPathToCore() . DIRECTORY_SEPARATOR . self::PHP_CS_CONFIG_FILE_NAME;
         $to = $path . DIRECTORY_SEPARATOR . self::PHP_CS_CONFIG_FILE_NAME;
 
+        if (file_exists($to)) {
+            $modifiedTimeTarget = filemtime($to);
+            $modifiedTimeSource = filemtime($from);
+            if ($modifiedTimeTarget >= $modifiedTimeSource) {
+                return;
+            }
+        }
+
         $fileSystem = new Filesystem();
         $fileSystem->copy(
             $from,
             $to
         );
-    }
 
-    /**
-     * @param string $path
-     *
-     * @return void
-     */
-    protected function removePhpCsFixerConfigFromBundle($path)
-    {
-        $fileSystem = new Filesystem();
-        $fileSystem->remove(
-            $path . DIRECTORY_SEPARATOR . self::PHP_CS_CONFIG_FILE_NAME
-        );
+        $cacheFile = $path . DIRECTORY_SEPARATOR . self::PHP_CS_CACHE_CONFIG_FILE_NAME;
+        if (file_exists($cacheFile)) {
+            unlink($cacheFile);
+        }
     }
 
     /**

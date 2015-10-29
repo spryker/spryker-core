@@ -18,7 +18,6 @@ class BundleQueryContainer
      */
     public function __construct(array $foo, $bar = true, $baz = null, $baz2 = 'abc', $baz3 = '\\')
     {
-
     }
 
 }

@@ -30,10 +30,10 @@ abstract class AbstractMethodMapper implements MethodMapperInterface
     /**
      * @const array
      */
-    private static $genderMap = array(
+    private static $genderMap = [
         SpyPaymentPayolutionTableMap::COL_GENDER_MALE => Constants::SEX_MALE,
         SpyPaymentPayolutionTableMap::COL_GENDER_FEMALE => Constants::SEX_FEMALE,
-    );
+    ];
 
     /**
      * @param PayolutionConfig $config
