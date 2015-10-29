@@ -97,6 +97,7 @@ class PercentageTest extends \PHPUnit_Framework_TestCase
         foreach ($grossPrices as $grossPrice) {
             $item = new \Generated\Shared\Transfer\ItemTransfer();
             $item->setGrossPrice($grossPrice);
+            $item->setQuantity(1);
             $items[] = $item;
         }
 
