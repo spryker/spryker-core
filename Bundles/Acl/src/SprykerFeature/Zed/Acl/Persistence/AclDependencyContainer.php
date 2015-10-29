@@ -9,12 +9,12 @@ namespace SprykerFeature\Zed\Acl\Persistence;
 use Generated\Zed\Ide\FactoryAutoCompletion\AclPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 use SprykerFeature\Zed\Acl\AclDependencyProvider;
-use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupQuery;
-use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRoleQuery;
-use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRuleQuery;
-use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclUserHasGroupQuery;
-use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupsHasRolesQuery;
-use SprykerFeature\Zed\User\Persistence\Propel\SpyUserQuery;
+use Orm\Zed\Acl\Persistence\SpyAclGroupQuery;
+use Orm\Zed\Acl\Persistence\SpyAclRoleQuery;
+use Orm\Zed\Acl\Persistence\SpyAclRuleQuery;
+use Orm\Zed\Acl\Persistence\SpyAclUserHasGroupQuery;
+use Orm\Zed\Acl\Persistence\SpyAclGroupsHasRolesQuery;
+use Orm\Zed\User\Persistence\SpyUserQuery;
 use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
 
 /**
@@ -28,7 +28,7 @@ class AclDependencyContainer extends AbstractPersistenceDependencyContainer
      */
     public function createGroupQuery()
     {
-        return $this->getFactory()->createPropelSpyAclGroupQuery();
+        return new SpyAclGroupQuery();
     }
 
     /**
@@ -36,7 +36,7 @@ class AclDependencyContainer extends AbstractPersistenceDependencyContainer
      */
     public function createRuleQuery()
     {
-        return $this->getFactory()->createPropelSpyAclRuleQuery();
+        return new SpyAclRuleQuery();
     }
 
     /**
@@ -44,7 +44,7 @@ class AclDependencyContainer extends AbstractPersistenceDependencyContainer
      */
     public function createRoleQuery()
     {
-        return $this->getFactory()->createPropelSpyAclRoleQuery();
+        return new SpyAclRoleQuery();
     }
 
     /**
@@ -52,7 +52,7 @@ class AclDependencyContainer extends AbstractPersistenceDependencyContainer
      */
     public function createGroupHasRoleQuery()
     {
-        return $this->getFactory()->createPropelSpyAclGroupsHasRolesQuery();
+        return new SpyAclGroupsHasRolesQuery();
     }
 
     /**
@@ -60,7 +60,7 @@ class AclDependencyContainer extends AbstractPersistenceDependencyContainer
      */
     public function createUserHasRoleQuery()
     {
-        return $this->getFactory()->createPropelSpyAclUserHasGroupQuery();
+        return new SpyAclUserHasGroupQuery();
     }
 
     /**
@@ -68,7 +68,7 @@ class AclDependencyContainer extends AbstractPersistenceDependencyContainer
      */
     public function createUserQuery()
     {
-        return $this->createUserQueryContainer()->queryUsers();
+        return new SpyUserQuery();
     }
 
     /**
@@ -76,7 +76,7 @@ class AclDependencyContainer extends AbstractPersistenceDependencyContainer
      */
     public function createUserHasGroupQuery()
     {
-        return $this->getFactory()->createPropelSpyAclUserHasGroupQuery();
+        return new SpyAclUserHasGroupQuery();
     }
 
     /**

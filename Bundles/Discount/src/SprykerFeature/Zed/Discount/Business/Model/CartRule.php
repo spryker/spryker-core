@@ -13,7 +13,7 @@ use SprykerFeature\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountWriter;
 use SprykerFeature\Zed\Discount\Communication\Form\CartRuleType;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
+use Orm\Zed\Discount\Persistence\SpyDiscount;
 
 class CartRule implements CartRuleInterface
 {

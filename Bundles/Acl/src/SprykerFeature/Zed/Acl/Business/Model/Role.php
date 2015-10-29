@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Acl\Business\Model;
 use Generated\Shared\Transfer\RolesTransfer;
 use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Acl\Business\Exception\RootNodeModificationException;
-use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRole;
+use Orm\Zed\Acl\Persistence\SpyAclRole;
 use SprykerFeature\Zed\Library\Copy;
 use SprykerFeature\Zed\Acl\Business\Exception\EmptyEntityException;
 use SprykerFeature\Zed\Acl\Business\Exception\GroupNotFoundException;

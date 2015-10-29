@@ -6,9 +6,9 @@
 
 namespace SprykerFeature\Zed\Customer\Persistence;
 
-use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddressQuery;
+use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
-use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 
 class CustomerDependencyContainer extends AbstractPersistenceDependencyContainer
 {

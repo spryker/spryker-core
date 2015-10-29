@@ -7,7 +7,7 @@
 namespace SprykerEngine\Zed\Locale\Persistence;
 
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerEngine\Zed\Locale\Persistence\Propel\SpyLocaleQuery;
+use Orm\Zed\Locale\Persistence\SpyLocaleQuery;
 
 class LocaleQueryContainer extends AbstractQueryContainer implements LocaleQueryContainerInterface
 {

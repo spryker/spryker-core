@@ -13,7 +13,7 @@ use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Locale\Business\Exception\LocaleExistsException;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerEngine\Zed\Locale\Persistence\LocaleQueryContainerInterface;
-use SprykerEngine\Zed\Locale\Persistence\Propel\SpyLocale;
+use Orm\Zed\Locale\Persistence\SpyLocale;
 
 class LocaleManager
 {
@@ -77,7 +77,7 @@ class LocaleManager
             );
         }
 
-        $locale = $this->locator->locale()->entitySpyLocale();
+        $locale = new SpyLocale();
         $locale->setLocaleName($localeName);
 
         $locale->save();

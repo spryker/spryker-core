@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 
 class VoucherCode implements VoucherCodeInterface
 {

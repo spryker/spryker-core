@@ -9,9 +9,9 @@ namespace SprykerFeature\Zed\Customer\Persistence;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
-use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerAddressQuery;
-use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomerQuery;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
+use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 
 interface CustomerQueryContainerInterface extends QueryContainerInterface
 {

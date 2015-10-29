@@ -13,7 +13,7 @@ use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityP
 use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodDeliveryTimePluginInterface;
 use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodPriceCalculationPluginInterface;
 use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodTaxCalculationPluginInterface;
-use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentMethod;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 use SprykerFeature\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use SprykerFeature\Zed\Shipment\ShipmentDependencyProvider;
 

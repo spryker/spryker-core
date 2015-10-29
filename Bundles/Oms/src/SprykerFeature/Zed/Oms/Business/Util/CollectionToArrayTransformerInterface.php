@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Oms\Business\Util;
 
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Propel\Runtime\Collection\ObjectCollection;
 
 interface CollectionToArrayTransformerInterface

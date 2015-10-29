@@ -11,10 +11,10 @@ use Generated\Shared\Refund\OrderInterface;
 use Generated\Shared\Transfer\RefundTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Refund\Business\RefundDependencyContainer as SprykerRefundDependencyContainer;
-use SprykerFeature\Zed\Refund\Persistence\Propel\SpyRefund;
+use Orm\Zed\Refund\Persistence\SpyRefund;
 use SprykerFeature\Zed\Refund\RefundDependencyProvider;
-use SprykerFeature\Zed\Sales\Persistence\Propel\Base\SpySalesOrderItem;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesExpense;
+use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesExpense;
 
 /**
  * @method SprykerRefundDependencyContainer getDependencyContainer()

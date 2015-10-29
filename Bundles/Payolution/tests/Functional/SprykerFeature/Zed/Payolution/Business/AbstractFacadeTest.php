@@ -9,21 +9,21 @@ namespace Functional\SprykerFeature\Zed\Payolution\Business;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\PayolutionResponseTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
-use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
-use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
-use SprykerFeature\Zed\Customer\Persistence\Propel\SpyCustomer;
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
 use SprykerFeature\Zed\Payolution\Business\Api\Response\Converter as ResponseConverter;
 use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\Map\SpyPaymentPayolutionTableMap;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLog;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLogQuery;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLog;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLogQuery;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
+use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 
 class AbstractFacadeTest extends Test
 {

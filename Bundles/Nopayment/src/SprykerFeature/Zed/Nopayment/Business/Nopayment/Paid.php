@@ -9,8 +9,8 @@ namespace SprykerFeature\Zed\Nopayment\Business\Nopayment;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 use SprykerFeature\Zed\Nopayment\Persistence\NopaymentQueryContainer;
-use SprykerFeature\Zed\Nopayment\Persistence\Propel\SpyNopaymentPaid;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use Orm\Zed\Nopayment\Persistence\SpyNopaymentPaid;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\Exception\PropelException;
 

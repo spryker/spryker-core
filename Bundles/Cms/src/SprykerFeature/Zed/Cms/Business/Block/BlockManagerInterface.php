@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Cms\Business\Block;
 
 use Generated\Shared\Cms\CmsBlockInterface;
 use Generated\Shared\Transfer\CmsBlockTransfer;
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlock;
+use Orm\Zed\Cms\Persistence\SpyCmsBlock;
 
 interface BlockManagerInterface
 {

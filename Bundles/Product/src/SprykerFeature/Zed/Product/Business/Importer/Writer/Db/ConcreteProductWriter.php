@@ -10,9 +10,9 @@ use Generated\Shared\Locale\LocaleInterface;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Propel\Runtime\Propel;
 use SprykerFeature\Zed\Product\Business\Importer\Writer\ConcreteProductWriterInterface;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyLocalizedProductAttributesTableMap;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyAbstractProductTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyLocalizedProductAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 
 class ConcreteProductWriter implements ConcreteProductWriterInterface
 {

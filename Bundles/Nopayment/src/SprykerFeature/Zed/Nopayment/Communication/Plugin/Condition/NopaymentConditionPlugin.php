@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Nopayment\Communication\Plugin\Condition;
 
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use SprykerFeature\Zed\Nopayment\Communication\NopaymentDependencyContainer;
 
 /**

@@ -7,8 +7,8 @@
 namespace SprykerFeature\Zed\Cms\Communication\Form;
 
 use SprykerFeature\Zed\Cms\Communication\Form\Constraint\CmsConstraint;
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlockQuery;
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsBlockQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContext;

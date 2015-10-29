@@ -9,9 +9,9 @@ namespace SprykerFeature\Zed\Shipment\Communication\Table;
 use SprykerFeature\Shared\Library\Currency\CurrencyManager;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
-use SprykerFeature\Zed\Shipment\Persistence\Propel\Map\SpyShipmentMethodTableMap;
-use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentMethodQuery;
-use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentMethod;
+use Orm\Zed\Shipment\Persistence\Map\SpyShipmentMethodTableMap;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
+use Orm\Zed\Shipment\Persistence\SpyShipmentMethod;
 
 class MethodTable extends AbstractTable
 {

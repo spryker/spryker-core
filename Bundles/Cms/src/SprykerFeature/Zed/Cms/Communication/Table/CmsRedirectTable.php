@@ -10,9 +10,9 @@ use SprykerFeature\Zed\Cms\Communication\Form\CmsRedirectForm;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
-use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyRedirectTableMap;
-use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
-use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
+use Orm\Zed\Url\Persistence\Map\SpyRedirectTableMap;
+use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 
 class CmsRedirectTable extends AbstractTable
 {

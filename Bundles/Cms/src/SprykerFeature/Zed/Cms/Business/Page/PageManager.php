@@ -23,8 +23,8 @@ use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
 use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsGlossaryKeyMapping;
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPage;
+use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping;
+use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
 class PageManager implements PageManagerInterface
@@ -118,9 +118,7 @@ class PageManager implements PageManagerInterface
     {
         $this->checkTemplateExists($page->getFkTemplate());
 
-        $pageEntity = $this->locator->cms()
-            ->entitySpyCmsPage()
-        ;
+        $pageEntity = new SpyCmsPage();
 
         $pageEntity->fromArray($page->toArray());
         $pageEntity->save();

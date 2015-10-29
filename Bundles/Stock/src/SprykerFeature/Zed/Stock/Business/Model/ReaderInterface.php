@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Stock\Business\Model;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 use SprykerFeature\Zed\Stock\Business\Exception\StockProductAlreadyExistsException;
 use SprykerFeature\Zed\Stock\Business\Exception\StockProductNotFoundException;
-use SprykerFeature\Zed\Stock\Persistence\Propel\SpyStockProduct;
+use Orm\Zed\Stock\Persistence\SpyStockProduct;
 
 interface ReaderInterface
 {

@@ -10,11 +10,11 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
+use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
-use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
-use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
-use SprykerFeature\Zed\ProductCategory\Persistence\Propel\Map\SpyProductCategoryTableMap;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
+use Orm\Zed\ProductCategory\Persistence\Map\SpyProductCategoryTableMap;
 
 class ProductCategoryPathQueryExpander
 {

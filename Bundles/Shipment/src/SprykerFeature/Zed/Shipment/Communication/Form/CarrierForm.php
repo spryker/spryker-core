@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Shipment\Communication\Form;
 
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use SprykerFeature\Zed\Shipment\Persistence\Propel\SpyShipmentCarrierQuery;
+use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 
 class CarrierForm extends AbstractForm
 {

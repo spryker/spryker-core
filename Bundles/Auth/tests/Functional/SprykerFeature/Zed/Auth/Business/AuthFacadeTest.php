@@ -10,9 +10,9 @@ use Codeception\TestCase\Test;
 use Propel\Runtime\Propel;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Auth\Business\AuthFacade;
-use SprykerFeature\Zed\Auth\Persistence\Propel\SpyResetPasswordQuery;
-use SprykerFeature\Zed\User\Persistence\Propel\SpyUser;
-use SprykerFeature\Zed\Auth\Persistence\Propel\Map\SpyResetPasswordTableMap;
+use Orm\Zed\Auth\Persistence\SpyResetPasswordQuery;
+use Orm\Zed\User\Persistence\SpyUser;
+use Orm\Zed\Auth\Persistence\Map\SpyResetPasswordTableMap;
 
 class AuthFacadeTest extends Test
 {

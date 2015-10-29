@@ -10,8 +10,8 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 /**
  * @method PayolutionFacade getFacade()

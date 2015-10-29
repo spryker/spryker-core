@@ -11,8 +11,8 @@ use Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer;
 use Generated\Shared\Payone\OrderInterface;
 use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog;
 
 class ApiLogFinder
 {

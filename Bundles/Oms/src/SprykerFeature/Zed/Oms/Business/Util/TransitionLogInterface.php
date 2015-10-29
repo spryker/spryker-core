@@ -10,9 +10,9 @@ use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
-use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsTransitionLog;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Oms\Persistence\SpyOmsTransitionLog;
 
 interface TransitionLogInterface
 {

@@ -8,12 +8,12 @@ namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
 
 use Propel\Runtime\Exception\PropelException;
 use Exception;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
-use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemState;
-use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
-use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcessQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 
 // FIXME core-120 move queries to queryContainer
 class Dummy implements DummyInterface

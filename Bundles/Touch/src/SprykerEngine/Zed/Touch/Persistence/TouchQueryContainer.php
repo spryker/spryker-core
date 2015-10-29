@@ -10,12 +10,12 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchSearchTableMap;
-use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchStorageTableMap;
-use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
-use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchQuery;
+use Orm\Zed\Touch\Persistence\Map\SpyTouchSearchTableMap;
+use Orm\Zed\Touch\Persistence\Map\SpyTouchStorageTableMap;
+use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
+use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
-use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchStorage;
+use Orm\Zed\Touch\Persistence\SpyTouchStorage;
 
 class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryContainerInterface
 {

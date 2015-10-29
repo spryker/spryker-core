@@ -3,8 +3,8 @@
 namespace SprykerFeature\Zed\Country\Communication\Form;
 
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
-use SprykerFeature\Zed\User\Persistence\Propel\Base\SpyUserQuery;
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
+use Orm\Zed\User\Persistence\Base\SpyUserQuery;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 

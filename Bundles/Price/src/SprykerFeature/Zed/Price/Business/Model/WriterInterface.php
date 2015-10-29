@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Price\Business\Model;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
-use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceType;
+use Orm\Zed\Price\Persistence\SpyPriceType;
 use Propel\Runtime\Exception\PropelException;
 
 interface WriterInterface

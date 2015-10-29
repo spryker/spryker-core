@@ -8,9 +8,9 @@ namespace SprykerFeature\Zed\Wishlist\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Wishlist\Persistence\Propel\Map\SpyWishlistItemTableMap;
-use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistItemQuery;
-use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistQuery;
+use Orm\Zed\Wishlist\Persistence\Map\SpyWishlistItemTableMap;
+use Orm\Zed\Wishlist\Persistence\SpyWishlistItemQuery;
+use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
 
 class WishlistQueryContainer extends AbstractQueryContainer implements WishlistQueryContainerInterface
 {

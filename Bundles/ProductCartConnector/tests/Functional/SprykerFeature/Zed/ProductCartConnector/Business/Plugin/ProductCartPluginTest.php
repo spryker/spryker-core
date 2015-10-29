@@ -12,11 +12,11 @@ use SprykerEngine\Shared\Kernel\Store;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerFeature\Zed\ProductCartConnector\Business\ProductCartConnectorFacade;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRate;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSet;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyLocalizedProductAttributes;
+use Orm\Zed\Tax\Persistence\SpyTaxRate;
+use Orm\Zed\Tax\Persistence\SpyTaxSet;
+use Orm\Zed\Product\Persistence\SpyAbstractProduct;
+use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\Product\Persistence\SpyLocalizedProductAttributes;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Locator;
 

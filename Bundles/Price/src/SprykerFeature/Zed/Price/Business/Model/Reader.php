@@ -8,8 +8,8 @@ namespace SprykerFeature\Zed\Price\Business\Model;
 
 use SprykerFeature\Zed\Price\Dependency\Facade\PriceToProductInterface;
 use SprykerFeature\Zed\Price\Persistence\PriceQueryContainer;
-use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceProduct;
-use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceType;
+use Orm\Zed\Price\Persistence\SpyPriceProduct;
+use Orm\Zed\Price\Persistence\SpyPriceType;
 use SprykerFeature\Zed\Price\PriceConfig;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 

@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\UrlTransfer;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingTemplateException;
 use SprykerFeature\Zed\Cms\Business\Exception\PageExistsException;
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPage;
+use Orm\Zed\Cms\Persistence\SpyCmsPage;
 use SprykerFeature\Zed\Url\Business\Exception\MissingUrlException;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 

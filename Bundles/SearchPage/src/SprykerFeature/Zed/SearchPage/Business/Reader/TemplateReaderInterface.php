@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\SearchPage\Business\Reader;
 
-use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchPageElementTemplate;
+use Orm\Zed\SearchPage\Persistence\SpySearchPageElementTemplate;
 
 interface TemplateReaderInterface
 {

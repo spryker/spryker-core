@@ -17,8 +17,8 @@ use SprykerFeature\Zed\Discount\Business\Model\Calculator;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Discount\Business\Model\CollectorResolver;
 use SprykerFeature\Zed\Discount\DiscountConfig;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountCollector;
+use Orm\Zed\Discount\Persistence\SpyDiscount;
+use Orm\Zed\Discount\Persistence\SpyDiscountCollector;
 use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
@@ -244,7 +244,7 @@ class VoucherEngineTest extends Test
      * @param $collectorPlugin
      * @param bool $isPrivileged
      *
-     * @return \SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount
+     * @return \Orm\Zed\Discount\Persistence\SpyDiscount
      */
     protected function initializeDiscount(
         $displayName,

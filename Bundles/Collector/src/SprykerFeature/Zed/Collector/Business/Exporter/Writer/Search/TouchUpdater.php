@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Collector\Business\Exporter\Writer\Search;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerEngine\Zed\Touch\Persistence\Propel\SpyTouchSearchQuery;
+use Orm\Zed\Touch\Persistence\SpyTouchSearchQuery;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 

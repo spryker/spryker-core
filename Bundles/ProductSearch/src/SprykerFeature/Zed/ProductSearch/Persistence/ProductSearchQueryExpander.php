@@ -11,12 +11,12 @@ use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Exception\PropelException;
-use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
-use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
+use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
+use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyProductTableMap;
-use SprykerFeature\Zed\ProductSearch\Persistence\Propel\Map\SpySearchableProductsTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyAbstractProductTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\ProductSearch\Persistence\Map\SpySearchableProductsTableMap;
 
 class ProductSearchQueryExpander implements ProductSearchQueryExpanderInterface
 {

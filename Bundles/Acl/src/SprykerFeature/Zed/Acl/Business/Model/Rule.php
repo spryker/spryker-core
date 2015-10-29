@@ -15,7 +15,7 @@ use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Acl\Business\Exception\RuleNotFoundException;
 use SprykerFeature\Zed\Acl\Dependency\Facade\AclToUserInterface;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
-use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRule;
+use Orm\Zed\Acl\Persistence\SpyAclRule;
 use SprykerFeature\Zed\Library\Copy;
 use SprykerFeature\Zed\User\Business\Exception\UserNotFoundException;
 use SprykerFeature\Zed\User\Business\UserFacade;

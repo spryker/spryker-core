@@ -14,7 +14,7 @@ use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 class PayoneConfig extends AbstractBundleConfig
 {

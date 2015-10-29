@@ -16,10 +16,10 @@ use Propel\Runtime\Propel;
 use SprykerEngine\Zed\Propel\PropelFilterCriteria;
 use SprykerFeature\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 use SprykerFeature\Zed\Sales\Dependency\Facade\SalesToOmsInterface;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddress;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemOption;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class OrderManager

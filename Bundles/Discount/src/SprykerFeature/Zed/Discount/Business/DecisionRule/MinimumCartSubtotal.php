@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\Discount\Business\DecisionRule;
 
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
+use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
 
 class MinimumCartSubtotal // @TODO Missing interface

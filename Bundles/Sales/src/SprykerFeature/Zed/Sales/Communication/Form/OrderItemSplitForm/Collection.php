@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Sales\Communication\Form\OrderItemSplitForm;
 
 use Propel\Runtime\Collection\ObjectCollection;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use SprykerFeature\Zed\Sales\Communication\Form\OrderItemSplitForm;
 use SprykerFeature\Zed\Sales\Communication\Exception\FormNotFoundException;
 

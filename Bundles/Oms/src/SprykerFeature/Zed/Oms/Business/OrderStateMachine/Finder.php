@@ -8,9 +8,9 @@ namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
 
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 class Finder implements FinderInterface
 {
@@ -167,7 +167,7 @@ class Finder implements FinderInterface
      *
      * @return array
      */
-    public function getGroupedManuallyExecutableEvents(\SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder $order)
+    public function getGroupedManuallyExecutableEvents(SpySalesOrder $order)
     {
         $processBuilder = clone $this->builder;
         $processName = $order->getItems()->getFirst()->getProcess()->getName();

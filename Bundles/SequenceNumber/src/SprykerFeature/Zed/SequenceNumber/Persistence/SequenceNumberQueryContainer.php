@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\SequenceNumber\Persistence;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\SequenceNumberPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\SequenceNumber\Persistence\Propel\SpySequenceNumberQuery;
+use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery;
 
 /**
  * @method SequenceNumberPersistence getFactory()
@@ -21,7 +21,7 @@ class SequenceNumberQueryContainer extends AbstractQueryContainer implements Seq
      */
     public function querySequenceNumber()
     {
-        return (new Propel\SpySequenceNumberQuery());
+        return (new SpySequenceNumberQuery());
     }
 
     public function querySequenceNumbersByIdSalesOrder($idSalesOrder)

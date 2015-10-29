@@ -7,14 +7,14 @@
 namespace SprykerFeature\Zed\ProductOption\Business\Model;
 
 use SprykerFeature\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionType;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValue;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueTranslation;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValuePrice;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionTypeUsageExclusion;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionValueUsageConstraint;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionConfigurationPreset;
-use SprykerFeature\Zed\ProductOption\Persistence\Propel\SpyProductOptionConfigurationPresetValue;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionType;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueTranslation;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageExclusion;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageConstraint;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionConfigurationPreset;
+use Orm\Zed\ProductOption\Persistence\SpyProductOptionConfigurationPresetValue;
 use SprykerFeature\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface;
 use SprykerFeature\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
 use SprykerFeature\Zed\ProductOption\Business\Exception\MissingProductOptionTypeException;

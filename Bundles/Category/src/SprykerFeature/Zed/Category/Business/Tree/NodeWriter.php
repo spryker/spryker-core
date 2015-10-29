@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\NodeTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Category\Business\Tree\Exception\NodeNotFoundException;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryNode;
+use Orm\Zed\Category\Persistence\SpyCategoryNode;
 
 class NodeWriter implements NodeWriterInterface
 {

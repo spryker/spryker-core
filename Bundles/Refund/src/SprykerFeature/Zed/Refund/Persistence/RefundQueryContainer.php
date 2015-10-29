@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Refund\Persistence;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\RefundPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Refund\Persistence\Propel\SpyRefundQuery;
+use Orm\Zed\Refund\Persistence\SpyRefundQuery;
 
 /**
  * @method RefundPersistence getFactory()
@@ -21,7 +21,7 @@ class RefundQueryContainer extends AbstractQueryContainer implements RefundQuery
      */
     public function queryRefund()
     {
-        return (new Propel\SpyRefundQuery());
+        return (new SpyRefundQuery());
     }
 
     /**

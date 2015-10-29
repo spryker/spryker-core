@@ -2,12 +2,12 @@
 
 namespace SprykerFeature\Zed\Acl\Communication\Table;
 
-use SprykerFeature\Zed\Acl\Persistence\Propel\Map\SpyAclGroupTableMap;
-use SprykerFeature\Zed\Acl\Persistence\Propel\Map\SpyAclUserHasGroupTableMap;
-use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupQuery;
+use Orm\Zed\Acl\Persistence\Map\SpyAclGroupTableMap;
+use Orm\Zed\Acl\Persistence\Map\SpyAclUserHasGroupTableMap;
+use Orm\Zed\Acl\Persistence\SpyAclGroupQuery;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
-use SprykerFeature\Zed\User\Persistence\Propel\Map\SpyUserTableMap;
+use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 
 class GroupUsersTable extends AbstractTable
 {

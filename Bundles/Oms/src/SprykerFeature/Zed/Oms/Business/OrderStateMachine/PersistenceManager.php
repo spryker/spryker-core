@@ -8,10 +8,10 @@ namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
 
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Oms\OmsConfig;
-use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemState;
-use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcess;
-use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderProcessQuery;
-use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStateQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemState;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
 
 class PersistenceManager implements PersistenceManagerInterface
 {

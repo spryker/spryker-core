@@ -14,7 +14,7 @@ use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Zed\Url\Business\Exception\MissingUrlException;
 use SprykerFeature\Zed\Url\Business\Exception\RedirectExistsException;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
-use SprykerFeature\Zed\Url\Persistence\Propel\SpyRedirect;
+use Orm\Zed\Url\Persistence\SpyRedirect;
 
 interface RedirectManagerInterface
 {

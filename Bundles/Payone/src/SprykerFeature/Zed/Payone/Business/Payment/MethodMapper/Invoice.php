@@ -17,7 +17,7 @@ use SprykerFeature\Zed\Payone\Business\Api\Request\Container\DebitContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\RefundContainer;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 
 class Invoice extends AbstractMapper
 {

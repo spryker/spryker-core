@@ -14,18 +14,18 @@ use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Zed\Acl\AclConfig;
-use SprykerFeature\Zed\Acl\Persistence\Propel\Base\SpyAclUserHasGroupQuery;
-use SprykerFeature\Zed\Acl\Persistence\Propel\Map\SpyAclGroupsHasRolesTableMap;
-use SprykerFeature\Zed\Acl\Persistence\Propel\Map\SpyAclGroupTableMap;
-use SprykerFeature\Zed\Acl\Persistence\Propel\Map\SpyAclRoleTableMap;
-use SprykerFeature\Zed\Acl\Persistence\Propel\Map\SpyAclRuleTableMap;
-use SprykerFeature\Zed\Acl\Persistence\Propel\Map\SpyAclUserHasGroupTableMap;
-use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupQuery;
-use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclGroupsHasRolesQuery;
-use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRuleQuery;
-use SprykerFeature\Zed\Acl\Persistence\Propel\SpyAclRoleQuery;
-use SprykerFeature\Zed\User\Persistence\Propel\Map\SpyUserTableMap;
-use SprykerFeature\Zed\User\Persistence\Propel\SpyUserQuery;
+use Orm\Zed\Acl\Persistence\Base\SpyAclUserHasGroupQuery;
+use Orm\Zed\Acl\Persistence\Map\SpyAclGroupsHasRolesTableMap;
+use Orm\Zed\Acl\Persistence\Map\SpyAclGroupTableMap;
+use Orm\Zed\Acl\Persistence\Map\SpyAclRoleTableMap;
+use Orm\Zed\Acl\Persistence\Map\SpyAclRuleTableMap;
+use Orm\Zed\Acl\Persistence\Map\SpyAclUserHasGroupTableMap;
+use Orm\Zed\Acl\Persistence\SpyAclGroupQuery;
+use Orm\Zed\Acl\Persistence\SpyAclGroupsHasRolesQuery;
+use Orm\Zed\Acl\Persistence\SpyAclRuleQuery;
+use Orm\Zed\Acl\Persistence\SpyAclRoleQuery;
+use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
+use Orm\Zed\User\Persistence\SpyUserQuery;
 
 /**
  * @method AclDependencyContainer getDependencyContainer()

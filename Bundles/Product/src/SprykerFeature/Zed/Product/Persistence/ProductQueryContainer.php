@@ -12,20 +12,20 @@ use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyLocalizedAbstractProductAttributesTableMap;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyLocalizedProductAttributesTableMap;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyProductTableMap;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyLocalizedAbstractProductAttributesQuery;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyLocalizedProductAttributesQuery;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductAttributesMetadataQuery;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductAttributeTypeQuery;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
-use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSetQuery;
+use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyAbstractProductTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyLocalizedAbstractProductAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyLocalizedProductAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
+use Orm\Zed\Product\Persistence\SpyAbstractProduct;
+use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
+use Orm\Zed\Product\Persistence\SpyLocalizedAbstractProductAttributesQuery;
+use Orm\Zed\Product\Persistence\SpyLocalizedProductAttributesQuery;
+use Orm\Zed\Product\Persistence\SpyProductAttributesMetadataQuery;
+use Orm\Zed\Product\Persistence\SpyProductAttributeTypeQuery;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
+use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
+use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 
 class ProductQueryContainer extends AbstractQueryContainer implements ProductQueryContainerInterface
 {

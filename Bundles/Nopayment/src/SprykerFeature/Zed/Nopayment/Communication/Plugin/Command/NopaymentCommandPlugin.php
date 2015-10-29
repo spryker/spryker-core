@@ -9,8 +9,8 @@ namespace SprykerFeature\Zed\Nopayment\Communication\Plugin\Command;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
 use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use SprykerFeature\Zed\Nopayment\Communication\NopaymentDependencyContainer;
 
 /**

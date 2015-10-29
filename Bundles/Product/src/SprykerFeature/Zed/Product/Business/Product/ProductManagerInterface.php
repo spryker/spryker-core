@@ -14,7 +14,7 @@ use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Product\Business\Exception\AbstractProductExistsException;
 use SprykerFeature\Zed\Product\Business\Exception\ConcreteProductExistsException;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
+use Orm\Zed\Product\Persistence\SpyAbstractProduct;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
 interface ProductManagerInterface

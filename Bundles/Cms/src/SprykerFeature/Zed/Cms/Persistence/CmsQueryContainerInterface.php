@@ -6,10 +6,10 @@
 
 namespace SprykerFeature\Zed\Cms\Persistence;
 
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlockQuery;
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsGlossaryKeyMappingQuery;
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPageQuery;
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsTemplateQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsBlockQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
+use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
 
 interface CmsQueryContainerInterface
 {

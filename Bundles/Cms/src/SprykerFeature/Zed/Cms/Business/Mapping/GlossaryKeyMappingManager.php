@@ -18,8 +18,8 @@ use SprykerFeature\Zed\Cms\Business\Page\PageManagerInterface;
 use SprykerFeature\Zed\Cms\Business\Template\TemplateManagerInterface;
 use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToGlossaryInterface;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
-use SprykerFeature\Zed\Cms\Persistence\Propel\Map\SpyCmsGlossaryKeyMappingTableMap;
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsGlossaryKeyMapping;
+use Orm\Zed\Cms\Persistence\Map\SpyCmsGlossaryKeyMappingTableMap;
+use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMapping;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
 
 class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
@@ -155,9 +155,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     {
         $this->checkPagePlaceholderNotAmbiguous($pageKeyMapping->getFkPage(), $pageKeyMapping->getPlaceholder());
 
-        $mappingEntity = $this->locator->cms()
-            ->entitySpyCmsGlossaryKeyMapping()
-        ;
+        $mappingEntity = new SpyCmsGlossaryKeyMapping();
         $mappingEntity->fromArray($pageKeyMapping->toArray());
 
         $mappingEntity->save();
@@ -283,8 +281,8 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     public function generateGlossaryKeyName($templateName, $placeholder)
     {
         $keyName = self::GENERATED_GLOSSARY_KEY_PREFIX . '.';
-        $keyName .= str_replace([' ', '.',], '-', $templateName) . '.';
-        $keyName .= str_replace([' ', '.',], '-', $placeholder);
+        $keyName .= str_replace([' ', '.'], '-', $templateName) . '.';
+        $keyName .= str_replace([' ', '.'], '-', $placeholder);
 
         $index = 0;
 
@@ -347,4 +345,5 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
 
         return $mappingTransfer;
     }
+
 }

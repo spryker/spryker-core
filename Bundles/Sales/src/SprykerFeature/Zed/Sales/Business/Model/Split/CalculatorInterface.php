@@ -5,7 +5,7 @@
  */
 namespace SprykerFeature\Zed\Sales\Business\Model\Split;
 
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 interface CalculatorInterface
 {

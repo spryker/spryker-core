@@ -12,9 +12,9 @@ use SprykerFeature\Shared\Payone\PayoneTransactionStatusConstants;
 use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
 use SprykerFeature\Zed\Payone\Business\Key\HashGenerator;
 use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLog;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLogOrderItem;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItem;
 
 class TransactionStatusUpdateManager
 {

@@ -6,8 +6,8 @@
     defaultPhpNamingMethod="underscore"
     xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd"
     identifierQuoting="true"
-    namespace="SprykerFeature\Zed\Payolution\Persistence\Propel"
-    package="vendor.spryker.spryker.Bundles.Payolution.src.SprykerFeature.Zed.Payolution.Persistence.Propel"
+    namespace="Orm\Zed\Payolution\Persistence"
+    package="src.Orm.Zed.Payolution.Persistence"
 >
     <table name="spy_payment_payolution" phpName="SpyPaymentPayolution">
         <column name="id_payment_payolution" type="INTEGER" autoIncrement="true" primaryKey="true"/>

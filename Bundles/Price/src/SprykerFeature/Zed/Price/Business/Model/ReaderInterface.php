@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Price\Business\Model;
 
-use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceType;
+use Orm\Zed\Price\Persistence\SpyPriceType;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
 
 interface ReaderInterface

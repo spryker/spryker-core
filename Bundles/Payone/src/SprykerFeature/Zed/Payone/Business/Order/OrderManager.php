@@ -11,8 +11,8 @@ use Generated\Shared\Payone\PaymentDetailInterface;
 use Generated\Shared\Payone\PayonePaymentInterface;
 use Propel\Runtime\Propel;
 use SprykerFeature\Zed\Payone\PayoneConfig;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneDetail;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayoneDetail;
 
 class OrderManager implements OrderManagerInterface
 {

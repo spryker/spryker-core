@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Country\Communication\Table;
 
-use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountryQuery;
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 use Propel\Runtime\Collection\ObjectCollection;

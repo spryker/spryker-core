@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
 
 use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use DateTime;
 use Exception;
 use Propel\Runtime\Exception\PropelException;

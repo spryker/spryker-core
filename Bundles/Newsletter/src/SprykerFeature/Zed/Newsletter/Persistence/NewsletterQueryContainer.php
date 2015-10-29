@@ -7,9 +7,9 @@
 namespace SprykerFeature\Zed\Newsletter\Persistence;
 
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Newsletter\Persistence\Propel\Base\SpyNewsletterSubscriptionQuery;
-use SprykerFeature\Zed\Newsletter\Persistence\Propel\SpyNewsletterSubscriberQuery;
-use SprykerFeature\Zed\Newsletter\Persistence\Propel\SpyNewsletterTypeQuery;
+use Orm\Zed\Newsletter\Persistence\Base\SpyNewsletterSubscriptionQuery;
+use Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriberQuery;
+use Orm\Zed\Newsletter\Persistence\SpyNewsletterTypeQuery;
 
 class NewsletterQueryContainer extends AbstractQueryContainer
 {

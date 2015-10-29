@@ -6,9 +6,9 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Communication\Form;
 
-use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryAttributeTableMap;
-use SprykerFeature\Zed\Category\Persistence\Propel\Map\SpyCategoryNodeTableMap;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategory;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
+use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
+use Orm\Zed\Category\Persistence\SpyCategory;
 use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CategoryFormEdit extends CategoryFormAdd

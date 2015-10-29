@@ -15,8 +15,8 @@ use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;
 use SprykerFeature\Zed\Tax\Business\TaxFacade;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRateQuery;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSetQuery;
+use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
+use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 
 /**
  * @group Business

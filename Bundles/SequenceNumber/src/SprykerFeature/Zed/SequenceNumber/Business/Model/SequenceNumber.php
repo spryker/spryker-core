@@ -12,8 +12,8 @@ use Propel\Runtime\Connection\ConnectionInterface;
 use SprykerFeature\Zed\SequenceNumber\Business\Exception\InvalidSequenceNumberException;
 use SprykerFeature\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
 use SprykerFeature\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface;
-use SprykerFeature\Zed\SequenceNumber\Persistence\Propel\SpySequenceNumber;
-use SprykerFeature\Zed\SequenceNumber\Persistence\Propel\SpySequenceNumberQuery;
+use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumber;
+use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery;
 
 class SequenceNumber implements SequenceNumberInterface
 {

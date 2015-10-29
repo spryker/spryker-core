@@ -5,10 +5,10 @@ namespace SprykerFeature\Zed\GlossaryDistributor\Persistence;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerEngine\Zed\Locale\Persistence\Propel\Map\SpyLocaleTableMap;
-use SprykerFeature\Zed\Distributor\Persistence\Propel\Map\SpyDistributorItemTableMap;
-use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryKeyTableMap;
-use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
+use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
+use Orm\Zed\Distributor\Persistence\Map\SpyDistributorItemTableMap;
+use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryKeyTableMap;
+use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
 
 class GlossaryDistributorQueryContainer extends AbstractQueryContainer
 {

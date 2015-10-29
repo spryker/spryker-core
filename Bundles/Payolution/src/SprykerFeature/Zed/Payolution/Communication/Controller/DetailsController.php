@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Payolution\Communication\Controller;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Payolution\Communication\PayolutionDependencyContainer;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;

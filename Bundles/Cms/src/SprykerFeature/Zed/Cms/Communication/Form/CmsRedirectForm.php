@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Cms\Communication\Form;
 use SprykerFeature\Zed\Cms\Communication\Form\Constraint\CmsConstraint;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Url\Business\UrlFacade;
-use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContext;
 

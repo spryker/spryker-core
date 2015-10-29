@@ -15,12 +15,12 @@ use SprykerFeature\Zed\Cart\Business\CartFacade;
 use SprykerFeature\Zed\Cart\CartConfig;
 use SprykerFeature\Zed\Cart\CartDependencyProvider;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
-use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceProductQuery;
-use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceTypeQuery;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProduct;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyProductQuery;
+use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
+use Orm\Zed\Price\Persistence\SpyPriceTypeQuery;
+use Orm\Zed\Product\Persistence\SpyAbstractProduct;
+use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
+use Orm\Zed\Product\Persistence\SpyProduct;
+use Orm\Zed\Product\Persistence\SpyProductQuery;
 
 /**
  * @group SprykerFeature

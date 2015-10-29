@@ -10,8 +10,8 @@ use Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http\CaptureAd
 use Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http\PreAuthorizationAdapterMock;
 use Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http\RefundAdapterMock;
 use SprykerFeature\Zed\Payolution\Business\Api\Constants;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\Base\SpyPaymentPayolutionTransactionRequestLog;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\Base\SpyPaymentPayolutionTransactionStatusLog;
+use Orm\Zed\Payolution\Persistence\Base\SpyPaymentPayolutionTransactionRequestLog;
+use Orm\Zed\Payolution\Persistence\Base\SpyPaymentPayolutionTransactionStatusLog;
 
 class PayolutionFacadeRefundTest extends AbstractFacadeTest
 {

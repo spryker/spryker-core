@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<database name="zed" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" namespace="SprykerFeature\Zed\Sales\Persistence\Propel" package="vendor.spryker.spryker.Bundles.Sales.src.SprykerFeature.Zed.Sales.Persistence.Propel">
+<database name="zed" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" namespace="Orm\Zed\Sales\Persistence" package="src.Orm.Zed.Sales.Persistence">
     <table name="spy_sales_order" phpName="SpySalesOrder">
         <column name="fk_customer" type="INTEGER" />
         <foreign-key foreignTable="spy_customer" phpName="Customer" refPhpName="Order">

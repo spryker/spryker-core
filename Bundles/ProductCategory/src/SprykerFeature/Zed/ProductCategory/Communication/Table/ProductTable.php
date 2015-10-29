@@ -11,8 +11,8 @@ use SprykerFeature\Zed\ProductCategory\ProductCategoryConfig;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyLocalizedAbstractProductAttributesTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyAbstractProductTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyLocalizedAbstractProductAttributesTableMap;
 
 class ProductTable extends AbstractTable
 {

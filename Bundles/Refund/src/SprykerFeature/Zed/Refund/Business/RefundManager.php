@@ -8,10 +8,10 @@ namespace SprykerFeature\Zed\Refund\Business;
 
 use Generated\Shared\Refund\OrderInterface;
 use Propel\Runtime\ActiveQuery\Criteria;
-use SprykerFeature\Zed\Refund\Persistence\Propel\SpyRefund;
+use Orm\Zed\Refund\Persistence\SpyRefund;
 use SprykerFeature\Zed\Refund\Persistence\RefundQueryContainerInterface;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesExpense;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesExpense;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 class RefundManager

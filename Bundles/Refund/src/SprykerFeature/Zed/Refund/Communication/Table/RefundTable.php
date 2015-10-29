@@ -7,8 +7,8 @@ use SprykerFeature\Shared\Library\DateFormatter;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\Refund\Business\RefundFacade;
-use SprykerFeature\Zed\Refund\Persistence\Propel\Map\SpyRefundTableMap;
-use SprykerFeature\Zed\Refund\Persistence\Propel\SpyRefundQuery;
+use Orm\Zed\Refund\Persistence\Map\SpyRefundTableMap;
+use Orm\Zed\Refund\Persistence\SpyRefundQuery;
 
 class RefundTable extends AbstractTable
 {

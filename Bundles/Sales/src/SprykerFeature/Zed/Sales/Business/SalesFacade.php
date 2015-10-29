@@ -16,7 +16,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 
 /**
  * @method SalesDependencyContainer getDependencyContainer()

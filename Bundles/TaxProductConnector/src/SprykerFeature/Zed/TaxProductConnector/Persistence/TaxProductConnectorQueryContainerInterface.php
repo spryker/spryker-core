@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\TaxProductConnector\Persistence;
 
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
+use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
 
 interface TaxProductConnectorQueryContainerInterface
 {

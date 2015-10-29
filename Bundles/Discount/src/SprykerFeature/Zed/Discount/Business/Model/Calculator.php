@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Discount\Business\Model;
 use Generated\Shared\Discount\DiscountInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Distributor\DistributorInterface;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
+use Orm\Zed\Discount\Persistence\SpyDiscount;
 use SprykerFeature\Zed\Discount\DiscountConfigInterface;
 
 class Calculator implements CalculatorInterface

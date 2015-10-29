@@ -7,8 +7,8 @@
 namespace SprykerFeature\Zed\Tax\Persistence;
 
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxRateQuery;
-use SprykerFeature\Zed\Tax\Persistence\Propel\SpyTaxSetQuery;
+use Orm\Zed\Tax\Persistence\SpyTaxRateQuery;
+use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 
 interface TaxQueryContainerInterface
 {

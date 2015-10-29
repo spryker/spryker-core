@@ -16,8 +16,8 @@ use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 use SprykerFeature\Zed\Url\Dependency\UrlToLocaleInterface;
 use SprykerFeature\Zed\Url\Dependency\UrlToTouchInterface;
 use SprykerFeature\Zed\Url\Persistence\Exception\MissingResourceException;
-use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
-use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrl;
+use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
+use Orm\Zed\Url\Persistence\SpyUrl;
 use SprykerFeature\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 class UrlManager implements UrlManagerInterface

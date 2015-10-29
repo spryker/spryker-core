@@ -14,8 +14,8 @@ use SprykerFeature\Zed\Payolution\Business\Api\Constants;
 use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
 use SprykerFeature\Zed\Payolution\Business\Exception\GenderNotDefinedException;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\Map\SpyPaymentPayolutionTableMap;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
+use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 
 abstract class AbstractMethodMapper implements MethodMapperInterface
 {

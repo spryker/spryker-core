@@ -20,8 +20,8 @@ use SprykerFeature\Zed\Glossary\Business\Key\KeyManagerInterface;
 use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
-use SprykerFeature\Zed\Glossary\Persistence\Propel\Map\SpyGlossaryTranslationTableMap;
-use SprykerFeature\Zed\Glossary\Persistence\Propel\SpyGlossaryTranslation;
+use Orm\Zed\Glossary\Persistence\Map\SpyGlossaryTranslationTableMap;
+use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslation;
 
 class TranslationManager implements TranslationManagerInterface
 {

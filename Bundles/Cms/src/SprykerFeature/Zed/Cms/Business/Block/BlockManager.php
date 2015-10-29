@@ -13,7 +13,7 @@ use SprykerFeature\Shared\Cms\CmsConfig;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
 use SprykerFeature\Zed\Cms\Dependency\Facade\CmsToTouchInterface;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsBlock;
+use Orm\Zed\Cms\Persistence\SpyCmsBlock;
 
 class BlockManager implements BlockManagerInterface
 {

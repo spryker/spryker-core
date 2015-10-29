@@ -7,8 +7,8 @@
 namespace SprykerFeature\Zed\Auth\Persistence;
 
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Auth\Persistence\Propel\Base\SpyResetPasswordQuery;
-use SprykerFeature\Zed\Auth\Persistence\Propel\Map\SpyResetPasswordTableMap;
+use Orm\Zed\Auth\Persistence\Base\SpyResetPasswordQuery;
+use Orm\Zed\Auth\Persistence\Map\SpyResetPasswordTableMap;
 
 class AuthQueryContainer extends AbstractQueryContainer
 {

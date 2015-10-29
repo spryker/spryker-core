@@ -10,7 +10,7 @@ use Generated\Shared\Country\CountryInterface;
 use SprykerFeature\Zed\Country\Business\Exception\CountryExistsException;
 use SprykerFeature\Zed\Country\Business\Exception\MissingCountryException;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
-use SprykerFeature\Zed\Country\Persistence\Propel\SpyCountry;
+use Orm\Zed\Country\Persistence\SpyCountry;
 
 class CountryManager implements CountryManagerInterface
 {

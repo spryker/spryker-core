@@ -10,7 +10,7 @@ use Generated\Shared\ShipmentCheckoutConnector\OrderInterface;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Propel\Runtime\Propel;
 use SprykerFeature\Shared\Shipment\ShipmentConstants;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesExpense;
+use Orm\Zed\Sales\Persistence\SpySalesExpense;
 use SprykerFeature\Zed\ShipmentCheckoutConnector\Persistence\ShipmentCheckoutConnectorQueryContainerInterface;
 
 class ShipmentOrderSaver implements ShipmentOrderSaverInterface

@@ -7,8 +7,8 @@
 namespace SprykerFeature\Zed\Cms\Communication\Table;
 
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
-use SprykerFeature\Zed\Cms\Persistence\Propel\Map\SpyCmsPageTableMap;
-use SprykerFeature\Zed\Cms\Persistence\Propel\SpyCmsPageQuery;
+use Orm\Zed\Cms\Persistence\Map\SpyCmsPageTableMap;
+use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 

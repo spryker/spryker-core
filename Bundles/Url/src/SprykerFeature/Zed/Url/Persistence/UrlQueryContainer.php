@@ -7,10 +7,10 @@
 namespace SprykerFeature\Zed\Url\Persistence;
 
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyRedirectTableMap;
-use SprykerFeature\Zed\Url\Persistence\Propel\SpyRedirectQuery;
-use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrl;
-use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
+use Orm\Zed\Url\Persistence\Map\SpyRedirectTableMap;
+use Orm\Zed\Url\Persistence\SpyRedirectQuery;
+use Orm\Zed\Url\Persistence\SpyUrl;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 
 class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContainerInterface

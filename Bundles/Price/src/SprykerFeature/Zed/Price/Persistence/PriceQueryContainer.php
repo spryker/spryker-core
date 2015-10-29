@@ -8,12 +8,12 @@ namespace SprykerFeature\Zed\Price\Persistence;
 
 use Generated\Shared\Transfer\PriceProductTransfer;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Price\Persistence\Propel\Map\SpyPriceTypeTableMap;
-use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceProductQuery;
-use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceType;
-use SprykerFeature\Zed\Price\Persistence\Propel\SpyPriceTypeQuery;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyProductTableMap;
+use Orm\Zed\Price\Persistence\Map\SpyPriceTypeTableMap;
+use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
+use Orm\Zed\Price\Persistence\SpyPriceType;
+use Orm\Zed\Price\Persistence\SpyPriceTypeQuery;
+use Orm\Zed\Product\Persistence\Map\SpyAbstractProductTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Exception\PropelException;

@@ -8,9 +8,9 @@ namespace SprykerFeature\Zed\ProductCategory\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProduct;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
-use SprykerFeature\Zed\ProductCategory\Persistence\Propel\SpyProductCategoryQuery;
+use Orm\Zed\Product\Persistence\SpyAbstractProduct;
+use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
+use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 
 interface ProductCategoryQueryContainerInterface
 {

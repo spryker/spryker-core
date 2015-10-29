@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Refund\Persistence;
 
-use SprykerFeature\Zed\Refund\Persistence\Propel\SpyRefundQuery;
+use Orm\Zed\Refund\Persistence\SpyRefundQuery;
 
 interface RefundQueryContainerInterface
 {

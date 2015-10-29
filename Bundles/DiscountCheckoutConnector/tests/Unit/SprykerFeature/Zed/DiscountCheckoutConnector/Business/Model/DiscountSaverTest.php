@@ -16,8 +16,8 @@ use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use SprykerFeature\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaver;
 use SprykerFeature\Zed\Sales\Business\Model\Split\OrderItem;
 

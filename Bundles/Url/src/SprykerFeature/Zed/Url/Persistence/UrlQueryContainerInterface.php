@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\Url\Persistence;
 
-use SprykerFeature\Zed\Url\Persistence\Propel\SpyRedirectQuery;
-use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
+use Orm\Zed\Url\Persistence\SpyRedirectQuery;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 
 interface UrlQueryContainerInterface
 {

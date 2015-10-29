@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command;
 
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 
 class NoPayment extends AbstractCommand implements CommandByOrderInterface

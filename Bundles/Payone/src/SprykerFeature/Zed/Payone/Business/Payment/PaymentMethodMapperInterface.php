@@ -11,7 +11,7 @@ use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContai
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
 use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProviderInterface;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayone;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
 
 interface PaymentMethodMapperInterface
 {

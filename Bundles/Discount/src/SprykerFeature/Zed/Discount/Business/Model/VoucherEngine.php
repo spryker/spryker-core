@@ -15,8 +15,8 @@ use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerFeature\Zed\Discount\DiscountConfigInterface;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPool;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 
 /**
  * Class VoucherEngine

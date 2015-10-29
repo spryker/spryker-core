@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Sales\Business\Model\Split\Validation;
 
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 
 class Validator implements ValidatorInterface
 {
@@ -18,7 +18,7 @@ class Validator implements ValidatorInterface
 
     /**
      * @param SpySalesOrderItem $salesOrderItem
-     * @param int                              $quantityToSplit
+     * @param int $quantityToSplit
      *
      * @return bool
      */
@@ -42,7 +42,7 @@ class Validator implements ValidatorInterface
 
     /**
      * @param SpySalesOrderItem $salesOrderItem
-     * @param int                              $quantityToSplit
+     * @param int $quantityToSplit
      *
      * @return bool
      */

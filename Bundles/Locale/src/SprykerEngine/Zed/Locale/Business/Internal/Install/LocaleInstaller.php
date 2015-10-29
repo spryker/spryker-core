@@ -9,7 +9,7 @@ namespace SprykerEngine\Zed\Locale\Business\Internal\Install;
 use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Locale\Persistence\LocaleQueryContainerInterface;
-use SprykerEngine\Zed\Locale\Persistence\Propel\SpyLocale;
+use Orm\Zed\Locale\Persistence\SpyLocale;
 
 class LocaleInstaller extends AbstractInstaller
 {

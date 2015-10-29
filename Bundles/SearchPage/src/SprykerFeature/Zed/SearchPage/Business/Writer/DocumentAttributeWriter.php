@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\SearchPage\Business\Writer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\SearchPage\Business\Exception\DocumentAttributeDoesNotExistException;
 use SprykerFeature\Zed\SearchPage\Business\Reader\DocumentAttributeReaderInterface;
-use SprykerFeature\Zed\SearchPage\Persistence\Propel\SpySearchDocumentAttribute;
+use Orm\Zed\SearchPage\Persistence\SpySearchDocumentAttribute;
 use SprykerFeature\Shared\SearchPage\Dependency\DocumentAttributeInterface;
 
 class DocumentAttributeWriter implements DocumentAttributeWriterInterface

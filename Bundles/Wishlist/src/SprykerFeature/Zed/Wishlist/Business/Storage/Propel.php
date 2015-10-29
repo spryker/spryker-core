@@ -14,8 +14,8 @@ use Generated\Shared\Wishlist\ItemInterface;
 use Generated\Shared\Wishlist\WishlistChangeInterface;
 use Generated\Shared\Wishlist\WishlistInterface;
 use SprykerFeature\Zed\Product\Business\ProductFacade;
-use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlist;
-use SprykerFeature\Zed\Wishlist\Persistence\Propel\SpyWishlistItem;
+use Orm\Zed\Wishlist\Persistence\SpyWishlist;
+use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
 use SprykerFeature\Zed\Wishlist\Business\Model\Customer;
 use SprykerFeature\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
 

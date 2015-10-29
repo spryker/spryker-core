@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\ProductSearch\Business\Transformer;
 use SprykerFeature\Zed\ProductSearch\Business\Locator\OperationLocatorInterface;
 use SprykerFeature\Zed\ProductSearch\Business\Operation\OperationInterface;
 use SprykerFeature\Zed\ProductSearch\Persistence\ProductSearchQueryContainerInterface;
-use SprykerFeature\Zed\ProductSearch\Persistence\Propel\SpyProductSearchAttributesOperation;
+use Orm\Zed\ProductSearch\Persistence\SpyProductSearchAttributesOperation;
 use Propel\Runtime\Collection\ObjectCollection;
 
 class ProductAttributesTransformer implements ProductAttributesTransformerInterface

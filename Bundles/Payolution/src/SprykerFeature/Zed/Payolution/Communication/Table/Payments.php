@@ -7,8 +7,8 @@ namespace SprykerFeature\Zed\Payolution\Communication\Table;
 
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionQuery;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\Map\SpyPaymentPayolutionTableMap;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
+use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 
 class Payments extends AbstractTable
 {

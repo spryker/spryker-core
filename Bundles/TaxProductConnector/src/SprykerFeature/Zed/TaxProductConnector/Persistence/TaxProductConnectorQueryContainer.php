@@ -7,9 +7,9 @@
 namespace SprykerFeature\Zed\TaxProductConnector\Persistence;
 
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Tax\Persistence\Propel\Map\SpyTaxSetTableMap;
-use SprykerFeature\Zed\Product\Persistence\Propel\Map\SpyAbstractProductTableMap;
-use SprykerFeature\Zed\Product\Persistence\Propel\SpyAbstractProductQuery;
+use Orm\Zed\Tax\Persistence\Map\SpyTaxSetTableMap;
+use Orm\Zed\Product\Persistence\Map\SpyAbstractProductTableMap;
+use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 
 class TaxProductConnectorQueryContainer extends AbstractQueryContainer implements TaxProductConnectorQueryContainerInterface

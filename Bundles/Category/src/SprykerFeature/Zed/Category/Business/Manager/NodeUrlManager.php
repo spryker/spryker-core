@@ -13,7 +13,7 @@ use SprykerFeature\Shared\Category\CategoryConfig;
 use SprykerFeature\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
 use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeReaderInterface;
 use SprykerFeature\Zed\Category\Dependency\Facade\CategoryToUrlInterface;
-use SprykerFeature\Zed\Category\Persistence\Propel\SpyCategoryClosureTable;
+use Orm\Zed\Category\Persistence\SpyCategoryClosureTable;
 
 class NodeUrlManager implements NodeUrlManagerInterface
 {

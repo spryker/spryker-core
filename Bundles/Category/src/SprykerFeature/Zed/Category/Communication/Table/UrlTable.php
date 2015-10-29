@@ -7,8 +7,8 @@ namespace SprykerFeature\Zed\Category\Communication\Table;
 
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
-use SprykerFeature\Zed\Url\Persistence\Propel\Map\SpyUrlTableMap;
-use SprykerFeature\Zed\Url\Persistence\Propel\SpyUrlQuery;
+use Orm\Zed\Url\Persistence\Map\SpyUrlTableMap;
+use Orm\Zed\Url\Persistence\SpyUrlQuery;
 
 class UrlTable extends AbstractTable
 {

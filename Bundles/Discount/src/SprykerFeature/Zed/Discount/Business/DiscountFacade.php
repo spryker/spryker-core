@@ -19,12 +19,12 @@ use Generated\Shared\Transfer\VoucherPoolCategoryTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Dependency\Facade\DiscountFacadeInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscount;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucher;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherPoolCategory;
+use Orm\Zed\Discount\Persistence\SpyDiscount;
+use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategory;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountDecisionRule as DecisionRule;
+use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule as DecisionRule;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 

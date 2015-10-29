@@ -3,8 +3,8 @@
 namespace SprykerFeature\Zed\Sales\Communication\Form;
 
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use SprykerFeature\Zed\Customer\Persistence\Propel\Map\SpyCustomerTableMap;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderAddressQuery;
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
 use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\NotBlank;
 

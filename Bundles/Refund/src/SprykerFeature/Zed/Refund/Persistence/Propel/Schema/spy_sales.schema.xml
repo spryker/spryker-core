@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<database name="zed" namespace="SprykerFeature\Zed\Sales\Persistence\Propel" namespaceAutoPackage="false" package="vendor.spryker.spryker.Bundles.Sales.src.SprykerFeature.Zed.Sales.Persistence.Propel" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd">
+<database name="zed" namespace="Orm\Zed\Sales\Persistence" namespaceAutoPackage="false" package="src.Orm.Zed.Sales.Persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd">
 
     <table name="spy_sales_order_item">
         <column name="fk_refund" type="INTEGER"/>

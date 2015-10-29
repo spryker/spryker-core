@@ -9,9 +9,9 @@ namespace SprykerFeature\Zed\Payolution\Persistence;
 use Generated\Zed\Ide\FactoryAutoCompletion\PayolutionPersistence;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLogQuery;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLogQuery;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionQuery;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
 
 /**
  * @method PayolutionPersistence getFactory()

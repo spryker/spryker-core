@@ -9,11 +9,11 @@
 
 namespace SprykerFeature\Zed\Oms\Persistence;
 
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
-use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsTransitionLogQuery;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use DateTime;
 use Generated\Zed\Ide\FactoryAutoCompletion\OmsPersistence;
 

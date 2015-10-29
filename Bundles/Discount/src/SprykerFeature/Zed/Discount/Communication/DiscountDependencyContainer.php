@@ -22,7 +22,7 @@ use SprykerFeature\Zed\Discount\DiscountDependencyProvider;
 use SprykerFeature\Zed\Discount\Communication\Table\DiscountVoucherTable;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Discount\Persistence\Propel\SpyDiscountVoucherQuery;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
 use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolCategoryTable;

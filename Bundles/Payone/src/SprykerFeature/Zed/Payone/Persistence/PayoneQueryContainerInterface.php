@@ -7,12 +7,12 @@
 namespace SprykerFeature\Zed\Payone\Persistence;
 
 use Propel\Runtime\Collection\ObjectCollection;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLog;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLog;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLogOrderItem;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneTransactionStatusLogQuery;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneQuery;
-use SprykerFeature\Zed\Payone\Persistence\Propel\SpyPaymentPayoneApiLogQuery;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLog;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLog;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogOrderItem;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayoneTransactionStatusLogQuery;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayoneQuery;
+use Orm\Zed\Payone\Persistence\SpyPaymentPayoneApiLogQuery;
 
 interface PayoneQueryContainerInterface
 {

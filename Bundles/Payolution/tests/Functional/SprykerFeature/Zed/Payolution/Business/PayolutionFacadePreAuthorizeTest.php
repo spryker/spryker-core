@@ -8,8 +8,8 @@ namespace Functional\SprykerFeature\Zed\Payolution\Business;
 
 use Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http\PreAuthorizationAdapterMock;
 use SprykerFeature\Zed\Payolution\Business\Api\Constants;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionRequestLog;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolutionTransactionStatusLog;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 
 class PayolutionFacadePreAuthorizeTest extends AbstractFacadeTest
 {

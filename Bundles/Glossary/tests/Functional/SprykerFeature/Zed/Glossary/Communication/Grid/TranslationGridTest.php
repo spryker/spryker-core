@@ -11,7 +11,7 @@ use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainer;
-use SprykerFeature\Zed\Glossary\Persistence\Propel\Base\SpyGlossaryKeyQuery;
+use Orm\Zed\Glossary\Persistence\Base\SpyGlossaryKeyQuery;
 use Symfony\Component\HttpFoundation\Request;
 
 /**

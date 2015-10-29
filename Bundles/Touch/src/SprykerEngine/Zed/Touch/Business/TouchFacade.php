@@ -8,7 +8,7 @@ namespace SprykerEngine\Zed\Touch\Business;
 
 use Generated\Shared\Transfer\TouchTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use SprykerEngine\Zed\Touch\Persistence\Propel\Map\SpyTouchTableMap;
+use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 
 /**
  * @method TouchDependencyContainer getDependencyContainer()

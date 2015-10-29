@@ -12,7 +12,7 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
 use SprykerFeature\Zed\Payone\Business\PayoneFacade;
 use SprykerFeature\Zed\Payone\Communication\PayoneDependencyContainer;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemQuery;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 

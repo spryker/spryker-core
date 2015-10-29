@@ -6,11 +6,12 @@ use Generated\Zed\Ide\FactoryAutoCompletion\DistributorPersistence;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Distributor\Persistence\Propel\Map\SpyDistributorItemTypeTableMap;
-use SprykerFeature\Zed\Distributor\Persistence\Propel\Map\SpyDistributorReceiverTableMap;
-use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemQuery;
-use SprykerFeature\Zed\Distributor\Persistence\Propel\SpyDistributorItemTypeQuery;
+use Orm\Zed\Distributor\Persistence\Map\SpyDistributorItemTypeTableMap;
+use Orm\Zed\Distributor\Persistence\Map\SpyDistributorReceiverTableMap;
+use Orm\Zed\Distributor\Persistence\SpyDistributorItemQuery;
+use Orm\Zed\Distributor\Persistence\SpyDistributorItemTypeQuery;
 use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
+use Orm\Zed\Distributor\Persistence\SpyDistributorReceiverQuery;
 
 /**
  * @method DistributorPersistence getFactory()
@@ -24,7 +25,7 @@ class DistributorQueryContainer extends AbstractQueryContainer implements
      */
     public function queryItemTypes()
     {
-        $query = $this->getFactory()->createPropelSpyDistributorItemTypeQuery()
+        $query = SpyDistributorItemTypeQuery::create()
             ->addSelectColumn(SpyDistributorItemTypeTableMap::COL_TYPE_KEY)
             ->setDistinct()
             ->setFormatter(new PropelArraySetFormatter())
@@ -40,7 +41,7 @@ class DistributorQueryContainer extends AbstractQueryContainer implements
      */
     public function queryTypeByKey($typeKey)
     {
-        $query = $this->getFactory()->createPropelSpyDistributorItemTypeQuery()
+        $query = SpyDistributorItemTypeQuery::create()
             ->filterByTypeKey($typeKey)
         ;
 
@@ -57,7 +58,7 @@ class DistributorQueryContainer extends AbstractQueryContainer implements
      */
     public function queryTouchedItemsByTypeKey($typeKey, $timestamp)
     {
-        return $this->getFactory()->createPropelSpyDistributorItemQuery()
+        return SpyDistributorItemQuery::create()
             ->filterByTouched(['min' => $timestamp])
             ->useSpyDistributorItemTypeQuery()
             ->filterByTypeKey($typeKey)
@@ -70,7 +71,7 @@ class DistributorQueryContainer extends AbstractQueryContainer implements
      */
     public function queryReceivers()
     {
-        $query = $this->getFactory()->createPropelSpyDistributorReceiverQuery()
+        $query = SpyDistributorReceiverQuery::create()
             ->addSelectColumn(SpyDistributorReceiverTableMap::COL_RECEIVER_KEY)
             ->setDistinct()
             ->setFormatter(new PropelArraySetFormatter())
@@ -89,7 +90,7 @@ class DistributorQueryContainer extends AbstractQueryContainer implements
     {
         $foreignKeyColumn = $this->getForeignKeyColumnByType($itemType);
 
-        $query = $this->getFactory()->createPropelSpyDistributorItemQuery()
+        $query = SpyDistributorItemQuery::create()
             ->addAnd($foreignKeyColumn, $idItem)
             ->useSpyDistributorItemTypeQuery()
             ->filterByTypeKey($itemType)

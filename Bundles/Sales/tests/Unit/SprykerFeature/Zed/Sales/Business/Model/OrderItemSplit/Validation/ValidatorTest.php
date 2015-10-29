@@ -9,7 +9,9 @@ namespace Unit\SprykerFeature\Zed\Sales\Business\Model\OrderItemSplit\Validation
 use Propel\Runtime\Collection\Collection;
 use SprykerFeature\Zed\Sales\Business\Model\Split\Validation\Validator;
 use SprykerFeature\Zed\Sales\Business\Model\Split\Validation\Messages;
-use SprykerFeature\Zed\Sales\Persistence;
+use Orm\Zed\Sales\Persistence\SpySalesDiscount;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 
 class ValidatorTest extends \PHPUnit_Framework_TestCase
 {
@@ -51,7 +53,7 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $spySalesOrderItem = $this->getSalesOrderItem();
 
         $discountCollection = new Collection();
-        $discountCollection->append(new Persistence\Propel\SpySalesDiscount());
+        $discountCollection->append(new SpySalesDiscount());
         $spySalesOrderItem->setDiscounts($discountCollection);
 
         $validateResponse = $validator->isValid($spySalesOrderItem, 1);
@@ -68,11 +70,11 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
         $validator = $this->getValidator();
         $spySalesOrderItem = $this->getSalesOrderItem();
 
-        $orderItemOptionDiscount = new Persistence\Propel\SpySalesDiscount();
+        $orderItemOptionDiscount = new SpySalesDiscount();
         $discountCollection = new Collection();
         $discountCollection->append($orderItemOptionDiscount);
 
-        $salesOrderItemOption = new Persistence\Propel\SpySalesOrderItemOption();
+        $salesOrderItemOption = new SpySalesOrderItemOption();
         $salesOrderItemOption->setDiscounts($discountCollection);
 
         $optionCollection = new Collection();
@@ -109,11 +111,11 @@ class ValidatorTest extends \PHPUnit_Framework_TestCase
     /**
      * @param int $quantity
      *
-     * @return Persistence\Propel\SpySalesOrderItem
+     * @return SpySalesOrderItem
      */
     protected function getSalesOrderItem($quantity = 2)
     {
-        $spySalesOrderItem = new Persistence\Propel\SpySalesOrderItem();
+        $spySalesOrderItem = new SpySalesOrderItem();
         $spySalesOrderItem->setQuantity($quantity);
 
         return $spySalesOrderItem;

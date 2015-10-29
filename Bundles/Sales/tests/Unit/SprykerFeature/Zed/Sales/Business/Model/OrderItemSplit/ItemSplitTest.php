@@ -7,8 +7,8 @@
 namespace Unit\SprykerFeature\Zed\Sales\Business\Model\OrderItemSplit\Validation;
 
 use SprykerFeature\Zed\Sales\Business\Model\Split\OrderItem;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItemOption;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemOption;
 
 class ItemSplitTest extends \PHPUnit_Framework_TestCase
 {
@@ -152,7 +152,7 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
     protected function createSalesOrderMock()
     {
         $salesOrderItemQueryMock = $this
-            ->getMockBuilder('SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderQuery')
+            ->getMockBuilder('Orm\Zed\Sales\Persistence\SpySalesOrderQuery')
             ->setMethods(['findOneByIdSalesOrderItem'])
             ->disableOriginalConstructor()
             ->getMock();
