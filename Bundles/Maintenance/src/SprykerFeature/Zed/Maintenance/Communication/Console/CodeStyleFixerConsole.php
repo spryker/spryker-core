@@ -22,6 +22,9 @@ class CodeStyleFixerConsole extends Console
 
     const BUNDLE = 'bundle';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         parent::configure();
@@ -40,6 +43,8 @@ class CodeStyleFixerConsole extends Console
      * @param OutputInterface $output
      *
      * @throws \Exception
+     *
+     * @return void
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {

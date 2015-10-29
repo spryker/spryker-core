@@ -19,6 +19,9 @@ class PropelMigrationCleanerConsole extends Console
     const COMMAND_NAME = 'maintenance:clean-propel-base';
     const COMMAND_DESCRIPTION = 'Clean up Propel base files';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         parent::configure();
@@ -33,6 +36,8 @@ class PropelMigrationCleanerConsole extends Console
      * @param OutputInterface $output
      *
      * @throws \Exception
+     *
+     * @return void
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
