@@ -54,7 +54,7 @@ class RemoveFunctionAliasFixer extends AbstractFixer
                 continue;
             }
 
-            $wrongTokens = [T_FUNCTION, 359]; // 359 = ->
+            $wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR];
 
             $prevIndex = $tokens->getPrevNonWhitespace($index);
             if (in_array($tokens[$prevIndex]->getId(), $wrongTokens, true)) {
