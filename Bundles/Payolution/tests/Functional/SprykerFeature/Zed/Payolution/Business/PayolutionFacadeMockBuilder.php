@@ -23,7 +23,7 @@ class PayolutionFacadeMockBuilder
      *
      * @return PayolutionFacade
      */
-    static public function build(AdapterInterface $adapter, \PHPUnit_Framework_TestCase $testCase)
+    public static function build(AdapterInterface $adapter, \PHPUnit_Framework_TestCase $testCase)
     {
 
         // Mock dependency container to override return value of createExecutionAdapter to

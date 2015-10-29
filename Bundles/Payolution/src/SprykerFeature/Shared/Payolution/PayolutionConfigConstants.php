@@ -22,4 +22,5 @@ interface PayolutionConfigConstants extends ConfigInterface
     const TRANSACTION_CHANNEL_SYNC = 'PAYOLUTION_CHANNEL_SYNC';
     const TRANSACTION_CHANNEL_PRE_CHECK = 'PAYOLUTION_CHANNEL_PRE_CHECK_ID';
     const ANALYSIS_CRITERIA = 'analysis_criteria';
+
 }

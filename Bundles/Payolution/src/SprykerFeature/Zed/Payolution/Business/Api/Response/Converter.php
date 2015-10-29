@@ -24,7 +24,7 @@ class Converter implements ConverterInterface
         foreach ($data as $key => $value) {
             $convertedKey = str_replace(['_', '.'], ' ', $key);
             $convertedKey = mb_strtolower($convertedKey);
-            $convertedKey = mb_convert_case($convertedKey, MB_CASE_UPPER, "UTF-8");
+            $convertedKey = mb_convert_case($convertedKey, MB_CASE_UPPER, 'UTF-8');
             $convertedKey = str_replace(' ', '', $convertedKey);
             $methodName = 'set' . $convertedKey;
 

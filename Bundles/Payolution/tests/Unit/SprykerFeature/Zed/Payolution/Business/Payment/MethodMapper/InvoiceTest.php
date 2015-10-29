@@ -24,7 +24,6 @@ class InvoiceTest extends Test
 
     public function testMapToPreCheck()
     {
-
         $checkoutRequestTransfer = $this->getCheckoutRequestTransfer();
         $methodMapper = new Invoice($this->getBundleConfigMock());
         $requestTransfer = $methodMapper->mapToPreCheck($checkoutRequestTransfer);

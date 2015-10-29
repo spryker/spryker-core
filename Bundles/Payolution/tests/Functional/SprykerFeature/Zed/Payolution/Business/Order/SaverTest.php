@@ -90,8 +90,8 @@ class SaverTest extends Test
         $baseConfig = Config::getInstance();
         $config = new PayolutionConfig($baseConfig, $locator);
         $dependencyContainer = new PayolutionDependencyContainer($factory, $locator, $config);
-        return $dependencyContainer;
 
+        return $dependencyContainer;
     }
 
     /**
@@ -140,7 +140,6 @@ class SaverTest extends Test
                 ->setIdSalesOrderItem($orderItemEntity->getIdSalesOrderItem());
             $orderTransfer->addItem($itemTransfer);
         }
-
 
         return $orderTransfer;
     }
