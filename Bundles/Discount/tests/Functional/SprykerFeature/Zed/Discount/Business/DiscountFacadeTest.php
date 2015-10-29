@@ -505,6 +505,7 @@ class DiscountFacadeTest extends Test
         foreach ($grossPrices as $grossPrice) {
             $item = new ItemTransfer();
             $item->setGrossPrice($grossPrice);
+            $item->setQuantity(1);
             $items[] = $item;
         }
 
