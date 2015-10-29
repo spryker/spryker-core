@@ -48,13 +48,13 @@ class RemoveFunctionAliasFixer extends AbstractFixer
     public function fix(\SplFileInfo $file, $content)
     {
         $tokens = Tokens::fromCode($content);
+        $wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR];
+
         foreach ($tokens as $index => $token) {
             $tokenContent = $token->getContent();
             if (empty($tokenContent) || !isset(self::$matching[$tokenContent])) {
                 continue;
             }
-
-            $wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR];
 
             $prevIndex = $tokens->getPrevNonWhitespace($index);
             if (in_array($tokens[$prevIndex]->getId(), $wrongTokens, true)) {
