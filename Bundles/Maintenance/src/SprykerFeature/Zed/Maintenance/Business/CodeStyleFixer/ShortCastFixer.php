@@ -15,7 +15,8 @@ use Symfony\CS\Tokenizer\Tokens;
  *
  * @author Mark Scherer
  */
-class ShortCastFixer extends AbstractFixer {
+class ShortCastFixer extends AbstractFixer
+{
 
     /**
      * @var array
@@ -31,7 +32,8 @@ class ShortCastFixer extends AbstractFixer {
      *
      * @return string
      */
-    public function fix(\SplFileInfo $file, $content) {
+    public function fix(\SplFileInfo $file, $content)
+    {
         $tokens = Tokens::fromCode($content);
         foreach ($tokens as $index => $token) {
             // Don't use !!
@@ -66,14 +68,16 @@ class ShortCastFixer extends AbstractFixer {
     /**
      * @return int
      */
-    public function getLevel() {
+    public function getLevel()
+    {
         return FixerInterface::CONTRIB_LEVEL;
     }
 
     /**
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return 'Use short forms (bool) and (int) for casts and do not use !!.';
     }
 

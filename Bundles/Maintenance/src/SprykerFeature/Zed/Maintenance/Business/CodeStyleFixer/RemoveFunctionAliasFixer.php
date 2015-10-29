@@ -15,7 +15,8 @@ use Symfony\CS\Tokenizer\Tokens;
  *
  * @author Mark Scherer
  */
-class RemoveFunctionAliasFixer extends AbstractFixer {
+class RemoveFunctionAliasFixer extends AbstractFixer
+{
 
     /**
      * @see http://php.net/manual/en/aliases.php
@@ -35,7 +36,7 @@ class RemoveFunctionAliasFixer extends AbstractFixer {
         'ini_alter' => 'ini_set',
         'fputs' => 'fwrite',
         'die' => 'exit',
-        'chop' => 'rtrim'
+        'chop' => 'rtrim',
     ];
 
     /**
@@ -44,7 +45,8 @@ class RemoveFunctionAliasFixer extends AbstractFixer {
      *
      * @return string
      */
-    public function fix(\SplFileInfo $file, $content) {
+    public function fix(\SplFileInfo $file, $content)
+    {
         $tokens = Tokens::fromCode($content);
         foreach ($tokens as $index => $token) {
             $tokenContent = $token->getContent();
@@ -52,7 +54,7 @@ class RemoveFunctionAliasFixer extends AbstractFixer {
                 continue;
             }
 
-            $wrongTokens = array(T_FUNCTION, 359); // 359 = ->
+            $wrongTokens = [T_FUNCTION, 359]; // 359 = ->
 
             $prevIndex = $tokens->getPrevNonWhitespace($index);
             if (in_array($tokens[$prevIndex]->getId(), $wrongTokens, true)) {
@@ -81,14 +83,16 @@ class RemoveFunctionAliasFixer extends AbstractFixer {
     /**
      * @return int
      */
-    public function getLevel() {
+    public function getLevel()
+    {
         return FixerInterface::CONTRIB_LEVEL;
     }
 
     /**
      * @return string
      */
-    public function getDescription() {
+    public function getDescription()
+    {
         return 'Always use one form of a function and remove its aliases.';
     }
 
