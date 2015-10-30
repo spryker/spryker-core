@@ -76,7 +76,7 @@ class BundleCodeStyleFixer
      */
     protected function getPathToBundle($bundle)
     {
-        return $this->pathToBundles . $bundle;
+        return $this->pathToBundles . $bundle . DIRECTORY_SEPARATOR;
     }
 
     /*
@@ -125,9 +125,11 @@ class BundleCodeStyleFixer
      */
     protected function runFixerCommand($path)
     {
-        $path = rtrim($path, DIRECTORY_SEPARATOR);
-        $command = $this->applicationRoot . '/vendor/bin/php-cs-fixer fix ' . $path . ' -vvv';
-        $process = new Process($command, $this->getPathToCore(), null, null, 3600);
+        $pathToFiles = rtrim($path, DIRECTORY_SEPARATOR);
+        $command = $this->applicationRoot . '/vendor/bin/php-cs-fixer fix ' . $pathToFiles . ' -vvv';
+
+        $pathToCore = $this->getPathToCore();
+        $process = new Process($command, $pathToCore, null, null, 3600);
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
