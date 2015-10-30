@@ -16,9 +16,13 @@ class ObjectBuilder extends PropelObjectBuilder
      * Change default propel behaviour
      *
      * Adds setter method for boolean columns.
+     *
+     * @see parent::addColumnMutators()
+     *
      * @param string &$script The script will be modified in this method.
      * @param Column $col     The current column.
-     * @see parent::addColumnMutators()
+     *
+     * @return void
      */
     protected function addBooleanMutator(&$script, Column $col)
     {

@@ -33,10 +33,11 @@ class QueryBuilder extends PropelQueryBuilder
     }
 
     /**
-     * @return mixed
      * @throws \Exception
+     *
+     * @return mixed
      */
-    private function getBundleName()
+    protected function getBundleName()
     {
         if (preg_match('/Zed.(.*?).Persistence/', $this->getClasspath(), $matches)) {
             return $matches[1];
@@ -45,6 +46,11 @@ class QueryBuilder extends PropelQueryBuilder
         throw new \Exception('Could not extract bundle name!');
     }
 
+    /**
+     * @param string &$script
+     *
+     * @return string
+     */
     protected function addFindPkSimple(&$script)
     {
         $table = $this->getTable();
@@ -141,4 +147,5 @@ class QueryBuilder extends PropelQueryBuilder
     }
 ";
     }
+
 }

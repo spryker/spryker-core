@@ -12,6 +12,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 
 class Group
 {
+
     /**
      * @var ItemTransfer
      */
@@ -44,7 +45,7 @@ class Group
      */
     public function groupByKey(GroupableContainerInterface $groupableItems)
     {
-        if($this->neverGroup()){
+        if ($this->neverGroup()) {
             return $groupableItems;
         }
 
@@ -104,4 +105,5 @@ class Group
     {
         return $this->threshold < 0;
     }
+
 }

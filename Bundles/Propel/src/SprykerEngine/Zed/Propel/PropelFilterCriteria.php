@@ -8,9 +8,9 @@ namespace SprykerEngine\Zed\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Generated\Shared\Transfer\FilterTransfer;
 
-
 class PropelFilterCriteria implements PropelFilterCriteriaInterface
 {
+
     /**
      * @var FilterTransfer
      */
@@ -55,12 +55,12 @@ class PropelFilterCriteria implements PropelFilterCriteriaInterface
         if (null !== $this->filterTransfer->getOrderBy()) {
             if ('ASC' === $this->filterTransfer->getOrderDirection()) {
                 $criteria->addAscendingOrderByColumn($this->filterTransfer->getOrderBy());
-            } else if ('DESC' === $this->filterTransfer->getOrderDirection()) {
+            } elseif ('DESC' === $this->filterTransfer->getOrderDirection()) {
                 $criteria->addDescendingOrderByColumn($this->filterTransfer->getOrderBy());
             }
         }
         
         return $criteria;
     }
-    
+
 }

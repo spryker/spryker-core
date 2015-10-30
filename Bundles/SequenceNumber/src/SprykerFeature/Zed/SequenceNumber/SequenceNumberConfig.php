@@ -42,8 +42,9 @@ class SequenceNumberConfig extends AbstractBundleConfig
      *
      * @return array
      */
-    protected function mergeSettings(array $defaultSettingsArray, array $settingsArray) {
-        $settingsArray = array_filter($settingsArray, function($value) {
+    protected function mergeSettings(array $defaultSettingsArray, array $settingsArray)
+    {
+        $settingsArray = array_filter($settingsArray, function ($value) {
             return ($value !== null);
         });
         $settingsArray += $defaultSettingsArray;

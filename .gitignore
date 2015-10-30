@@ -53,5 +53,7 @@ npm-debug.log
 tests/_output/
 
 # PHP CS Fixer
+Bundles/.php_cs.cache
+Bundles/.php_cs
 Bundles/*/.php_cs.cache
 Bundles/*/.php_cs

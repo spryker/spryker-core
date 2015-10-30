@@ -121,7 +121,8 @@ class Autoloader
      */
     protected function autoload($resourceName)
     {
-        if ($file = $this->findFile($resourceName)) {
+        $file = $this->findFile($resourceName);
+        if ($file) {
             include $file;
         } else {
             $this->classMap[$resourceName] = false;

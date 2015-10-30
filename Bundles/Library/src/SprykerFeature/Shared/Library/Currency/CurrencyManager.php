@@ -11,7 +11,8 @@ namespace SprykerFeature\Shared\Library\Currency;
  */
 class CurrencyManager
 {
-    CONST PRICE_PRECISION = 100;
+
+    const PRICE_PRECISION = 100;
 
     /**
      * @var CurrencyInterface

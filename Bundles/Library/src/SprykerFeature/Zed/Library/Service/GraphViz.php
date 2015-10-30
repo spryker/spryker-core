@@ -695,7 +695,8 @@ class GraphViz
      */
     public function load($file)
     {
-        if ($serializedGraph = implode('', @file($file))) {
+        $serializedGraph = implode('', @file($file));
+        if ($serializedGraph) {
             $g = unserialize($serializedGraph);
 
             if (!is_array($g)) {
@@ -749,7 +750,8 @@ class GraphViz
             $file = System::mktemp('graph_');
         }
 
-        if ($fp = @fopen($file, 'wb')) {
+        $fp = @fopen($file, 'wb');
+        if ($fp) {
             @fputs($fp, $serializedGraph);
             @fclose($fp);
 

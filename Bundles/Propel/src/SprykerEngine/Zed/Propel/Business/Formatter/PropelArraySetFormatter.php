@@ -56,7 +56,8 @@ class PropelArraySetFormatter extends SimpleArrayFormatter
             throw new PropelException('Cannot use limit() in conjunction with with() on a one-to-many relationship. Please remove the with() call, or the limit() call.');
         }
         foreach ($dataFetcher as $row) {
-            if (false !== $rowArray = $this->getStructuredArrayFromRow($row)) {
+            $rowArray = $this->getStructuredArrayFromRow($row);
+            if ($rowArray !== false) {
                 $formattedArray[] = $rowArray;
             }
         }
@@ -64,4 +65,5 @@ class PropelArraySetFormatter extends SimpleArrayFormatter
 
         return $formattedArray;
     }
+
 }
