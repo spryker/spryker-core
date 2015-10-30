@@ -22,7 +22,7 @@ class Converter implements ConverterInterface
         $result = [];
 
         foreach ($requestTransfer->toArray() as $propertyName => $propertyValue) {
-            if (null === $propertyValue) {
+            if ($propertyValue === null) {
                 continue;
             }
 

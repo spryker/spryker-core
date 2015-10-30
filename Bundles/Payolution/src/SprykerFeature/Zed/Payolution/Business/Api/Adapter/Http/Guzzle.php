@@ -42,9 +42,10 @@ class Guzzle implements AdapterInterface
      */
     public function sendArrayDataRequest(array $data)
     {
+        $headers = ['Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8'];
         $guzzleRequest = $this->client->post(
           $this->gatewayUrl,
-            $headers = ['Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8'],
+            $headers,
             $data
         );
 
