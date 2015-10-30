@@ -29,9 +29,11 @@ class NoInlineAssignmentFixer extends AbstractFixer
             /* @var Token $token */
             $token = $tokens[$index];
 
-            if (!$token->isGivenKind([T_FOREACH, T_FOR, T_WHILE, T_IF, T_SWITCH])) {
+            // We skip T_FOR, T_WHILE for now as they can have valid inline assignment
+            if (!$token->isGivenKind([T_FOREACH, T_IF, T_SWITCH])) {
                 continue;
             }
+
             $startIndex = $tokens->getNextMeaningfulToken($index);
             $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $startIndex);
 
@@ -59,7 +61,7 @@ class NoInlineAssignmentFixer extends AbstractFixer
                 continue;
             }
 
-            // Remove into own $var
+            // Extract to own $var into line above
             $string = '';
             $var = '';
             for ($i = $startIndex + 1; $i < $endIndex; ++$i) {

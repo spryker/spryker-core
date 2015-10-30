@@ -58,10 +58,13 @@ class MaintenanceFacade extends AbstractFacade
 
     /**
      * @param string|null $bundle
+     * @param bool $clear
+     *
+     * @return void
      */
-    public function fixCodeStyle($bundle = null)
+    public function fixCodeStyle($bundle = null, $clear = false)
     {
-        $this->getDependencyContainer()->createBundleCodeStyleFixer()->fixBundleCodeStyle($bundle);
+        $this->getDependencyContainer()->createBundleCodeStyleFixer()->fixBundleCodeStyle($bundle, $clear);
     }
 
     /**
