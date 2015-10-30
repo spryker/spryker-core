@@ -32,7 +32,7 @@ class MaintenanceFacade extends AbstractFacade
     }
 
     /**
-     * @param $bundleName
+     * @param string $bundleName
      *
      * @return array
      */
@@ -42,7 +42,7 @@ class MaintenanceFacade extends AbstractFacade
     }
 
     /**
-     * @param $bundleName
+     * @param string $bundleName
      *
      * @return array
      */
@@ -57,9 +57,9 @@ class MaintenanceFacade extends AbstractFacade
     }
 
     /**
-     * @param $bundle
+     * @param string|null $bundle
      */
-    public function fixCodeStyle($bundle)
+    public function fixCodeStyle($bundle = null)
     {
         $this->getDependencyContainer()->createBundleCodeStyleFixer()->fixBundleCodeStyle($bundle);
     }

@@ -38,12 +38,18 @@ class BundleCodeStyleFixer
     }
 
     /**
-     * @param string $bundle
+     * @param string|null $bundle
      *
      * @return void
      */
     public function fixBundleCodeStyle($bundle)
     {
+        if (!$bundle) {
+            $this->copyPhpCsFixerConfigToBundle($this->pathToBundles);
+            $this->runFixerCommand($this->pathToBundles);
+            return;
+        }
+
         $bundle = $this->normalizeBundleName($bundle);
         $path = $this->getPathToBundle($bundle);
         $this->copyPhpCsFixerConfigToBundle($path);
@@ -77,7 +83,7 @@ class BundleCodeStyleFixer
      */
     protected function getPathToCore()
     {
-        return dirname($this->pathToBundles);
+        return dirname($this->pathToBundles) . DIRECTORY_SEPARATOR;
     }
 
     /**
@@ -87,8 +93,8 @@ class BundleCodeStyleFixer
      */
     protected function copyPhpCsFixerConfigToBundle($path)
     {
-        $from = $this->getPathToCore() . DIRECTORY_SEPARATOR . self::PHP_CS_CONFIG_FILE_NAME;
-        $to = $path . DIRECTORY_SEPARATOR . self::PHP_CS_CONFIG_FILE_NAME;
+        $from = $this->getPathToCore() . self::PHP_CS_CONFIG_FILE_NAME;
+        $to = $path . self::PHP_CS_CONFIG_FILE_NAME;
 
         if (file_exists($to)) {
             $modifiedTimeTarget = filemtime($to);
@@ -104,7 +110,7 @@ class BundleCodeStyleFixer
             $to
         );
 
-        $cacheFile = $path . DIRECTORY_SEPARATOR . self::PHP_CS_CACHE_CONFIG_FILE_NAME;
+        $cacheFile = $path . self::PHP_CS_CACHE_CONFIG_FILE_NAME;
         if (file_exists($cacheFile)) {
             unlink($cacheFile);
         }
@@ -117,6 +123,7 @@ class BundleCodeStyleFixer
      */
     protected function runFixerCommand($path)
     {
+        $path = rtrim($path, DIRECTORY_SEPARATOR);
         $command = $this->applicationRoot . '/vendor/bin/php-cs-fixer fix ' . $path . ' -vvv';
         $process = new Process($command, $this->getPathToCore(), null, null, 3600);
         $process->run(function ($type, $buffer) {

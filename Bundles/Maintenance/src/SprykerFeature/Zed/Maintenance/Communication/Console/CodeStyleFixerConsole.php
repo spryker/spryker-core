@@ -35,7 +35,7 @@ class CodeStyleFixerConsole extends Console
             ->setDescription('Fix code style for a specific bundle')
         ;
 
-        $this->addArgument(self::BUNDLE, InputArgument::REQUIRED, 'Name of bundle to fix code style');
+        $this->addArgument(self::BUNDLE, InputArgument::OPTIONAL, 'Name of bundle to fix code style');
     }
 
     /**
@@ -49,8 +49,14 @@ class CodeStyleFixerConsole extends Console
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $bundle = $this->input->getArgument(self::BUNDLE);
-        $this->info('Fix code style in ' . $this->input->getArgument(self::BUNDLE) . ' bundle');
-        $this->getFacade()->fixCodeStyle($bundle);
+        if ($bundle) {
+            $this->info('Fix code style in ' . $this->input->getArgument(self::BUNDLE) . ' bundle');
+            $this->getFacade()->fixCodeStyle($bundle);
+            return;
+        }
+
+        $this->info('Fix code style in all bundles');
+        $this->getFacade()->fixCodeStyle();
     }
 
 }
