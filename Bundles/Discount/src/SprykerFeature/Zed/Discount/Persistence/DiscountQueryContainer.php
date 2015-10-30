@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\Discount\Persistence;
 
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery;
+use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesType;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
@@ -220,9 +222,11 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
     }
 
     /**
-     * @param int $idDiscountVoucherPool
+     * @param SpyDiscountVoucherPool $pool
      *
-     * @return SpyDiscountCollectorQuery
+     * @throws PropelException
+     *
+     * @return SpyDiscountDecisionRuleQuery
      */
     public function queryDiscountCollectorBysByIdPool(SpyDiscountVoucherPool $pool)
     {
