@@ -136,7 +136,7 @@ class PaymentManager implements PaymentManagerInterface
     protected function getRegisteredPaymentMethodMapper($paymentMethodName)
     {
         $paymentMethodMapper = $this->findPaymentMethodMapperByName($paymentMethodName);
-        if (null === $paymentMethodMapper) {
+        if ($paymentMethodMapper === null) {
             throw new InvalidPaymentMethodException(
                 sprintf('No registered payment method mapper found for given method name %s', $paymentMethodName)
             );

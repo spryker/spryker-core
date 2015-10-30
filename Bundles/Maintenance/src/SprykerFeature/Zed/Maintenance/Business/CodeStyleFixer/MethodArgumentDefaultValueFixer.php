@@ -124,7 +124,7 @@ class MethodArgumentDefaultValueFixer extends AbstractFixer
      */
     public function getLevel()
     {
-        return FixerInterface::CONTRIB_LEVEL;
+        return FixerInterface::NONE_LEVEL;
     }
 
 }

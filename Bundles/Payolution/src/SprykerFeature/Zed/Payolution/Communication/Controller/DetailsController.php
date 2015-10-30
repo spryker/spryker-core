@@ -50,7 +50,7 @@ class DetailsController extends AbstractController
     {
         $paymentEntity = $this->getQueryContainer()->queryPaymentById($idPayment)->findOne();
 
-        if (null === $paymentEntity) {
+        if ($paymentEntity === null) {
             throw new NotFoundHttpException('Payment entity could not be found');
         }
 
