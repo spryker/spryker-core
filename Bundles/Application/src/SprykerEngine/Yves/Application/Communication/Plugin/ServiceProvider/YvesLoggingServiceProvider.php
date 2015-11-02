@@ -10,7 +10,7 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use SprykerEngine\Shared\Lumberjack\Model\Event;
 use SprykerEngine\Shared\Lumberjack\Model\EventJournalInterface;
-use SprykerFeature\Shared\Library\NewRelic\ApiInterface;
+use SprykerFeature\Shared\NewRelic\ApiInterface;
 use SprykerFeature\Shared\Library\System;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;

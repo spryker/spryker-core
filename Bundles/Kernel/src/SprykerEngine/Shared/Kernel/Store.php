@@ -8,7 +8,7 @@ namespace SprykerEngine\Shared\Kernel;
 
 use SprykerFeature\Shared\Application\ApplicationConfig;
 use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Library\NewRelic\Api;
+use SprykerFeature\Shared\NewRelic\Api;
 use SprykerFeature\Shared\System\SystemConfig;
 
 class Store

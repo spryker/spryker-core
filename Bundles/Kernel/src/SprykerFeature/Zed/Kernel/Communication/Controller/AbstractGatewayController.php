@@ -11,7 +11,7 @@ use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\ZedRequest\Client\Message;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Shared\Library\NewRelic\Api;
+use SprykerFeature\Shared\NewRelic\Api;
 
 abstract class AbstractGatewayController extends AbstractController
 {

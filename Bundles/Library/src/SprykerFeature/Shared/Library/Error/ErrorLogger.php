@@ -12,8 +12,8 @@ use SprykerEngine\Shared\Lumberjack\Model\EventJournalInterface;
 use SprykerEngine\Shared\Lumberjack\Model\SharedEventJournal;
 use SprykerFeature\Shared\Library\Application\Version;
 use SprykerFeature\Shared\Library\Log;
-use SprykerFeature\Shared\Library\NewRelic\Api;
-use SprykerFeature\Shared\Library\NewRelic\ApiInterface;
+use SprykerFeature\Shared\NewRelic\Api;
+use SprykerFeature\Shared\NewRelic\ApiInterface;
 
 class ErrorLogger
 {

@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Shared\Session\Business\Handler;
 
-use SprykerFeature\Shared\Library\NewRelic\Api;
+use SprykerFeature\Shared\NewRelic\Api;
 
 class SessionHandlerCouchbase implements \SessionHandlerInterface
 {

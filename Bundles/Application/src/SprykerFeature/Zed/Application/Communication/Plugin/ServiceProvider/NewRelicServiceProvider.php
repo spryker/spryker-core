@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Shared\Library\NewRelic\Api;
+use SprykerFeature\Shared\NewRelic\Api;
 use SprykerFeature\Shared\Library\System;
 use Symfony\Component\HttpFoundation\Request;
 use Silex\Application;

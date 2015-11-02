@@ -1,34 +1,77 @@
 <?php
+
 /**
- *
- * (c) Copyright Spryker Systems GmbH 2015
+ * (c) Spryker Systems GmbH copyright protected
  */
-namespace SprykerFeature\Shared\Library\NewRelic;
+
+namespace SprykerFeature\Shared\NewRelic;
+
+use SprykerEngine\Shared\Config;
+use SprykerFeature\Shared\NewRelic\Exception\DeploymentException;
 
 /**
  * The PHP API for New Relic
  *
  * @link https://newrelic.com/docs/php/the-php-api
  */
-interface ApiInterface
+class Api implements ApiInterface
 {
+
+    const NEWRELIC_DEPLOYMENT_API_URL = 'https://api.newrelic.com/deployments.xml';
+
+    /**
+     * @var
+     */
+    protected static $instance;
+
+    /**
+     * @var bool
+     */
+    protected $active = false;
+
+    /**
+     * @var string
+     */
+    protected $nameOfTransaction;
+
+    /**
+     * Protected Singleton-Constructor. Use SprykerFeature\Shared\NewRelic\Api::getInstance() instead.
+     */
+    protected function __construct()
+    {
+        $this->active = extension_loaded('newrelic');
+    }
 
     /**
      * @static
      *
-     * @return $this
+     * @return self
      */
-    public static function getInstance();
+    public static function getInstance()
+    {
+        if (is_null(self::$instance)) {
+            self::$instance = new static();
+        }
+
+        return self::$instance;
+    }
 
     /**
      * Report an error at this line of code, with a complete stack trace.
      *
      * @param $message
-     * @param Exception $e
+     * @param \Exception $e
      *
-     * @return $this
+     * @return self
      */
-    public function noticeError($message, \Exception $e);
+    public function noticeError($message, \Exception $e)
+    {
+        if ($this->active) {
+            newrelic_notice_error($message, $e);
+        }
+
+        return $this;
+    }
 
     /**
      * Sets the name of the application to string. The string uses the same format as newrelic.appname and can set
@@ -40,9 +83,16 @@ interface ApiInterface
      *
      * @param $name
      *
-     * @return $this
+     * @return self
      */
-    public function setAppName($name);
+    public function setAppName($name)
+    {
+        if ($this->active) {
+            newrelic_set_appname($name);
+        }
+
+        return $this;
+    }
 
     /**
      * Sets the name of the transaction to the specified string. This can be useful if you have implemented your own
@@ -58,14 +108,26 @@ interface ApiInterface
      *
      * @param $name
      *
-     * @return $this
+     * @return self
      */
-    public function setNameOfTransaction($name);
+    public function setNameOfTransaction($name)
+    {
+        $this->nameOfTransaction = $name;
+
+        if ($this->active) {
+            newrelic_name_transaction($name);
+        }
+
+        return $this;
+    }
 
     /**
      * @return string
      */
-    public function getNameOfTransaction();
+    public function getNameOfTransaction()
+    {
+        return $this->nameOfTransaction;
+    }
 
     /**
      * Stop recording the web transaction immediately. Usually used when a page is done with all computation and is
@@ -75,26 +137,47 @@ interface ApiInterface
      * very long time to download even small files, and you wouldn't want that download time to skew the real
      * transaction time.
      *
-     * @return $this
+     * @return self
      */
-    public function markEndOfTransaction();
+    public function markEndOfTransaction()
+    {
+        if ($this->active) {
+            newrelic_end_of_transaction();
+        }
+
+        return $this;
+    }
 
     /**
      * Do not generate metrics for this transaction. This is useful when you have transactions that are particularly
      * slow for known reasons and you do not want them always being reported as the transaction trace or skewing your
      * site averages.
      *
-     * @return $this
+     * @return self
      */
-    public function markIgnoreTransaction();
+    public function markIgnoreTransaction()
+    {
+        if ($this->active) {
+            newrelic_ignore_transaction();
+        }
+
+        return $this;
+    }
 
     /**
      * Do not generate Apdex metrics for this transaction. This is useful when you have either very short or very long
      * transactions (such as file downloads) that can skew your apdex score.
      *
-     * @return $this
+     * @return self
      */
-    public function markIgnoreApdex();
+    public function markIgnoreApdex()
+    {
+        if ($this->active) {
+            newrelic_ignore_apdex();
+        }
+
+        return $this;
+    }
 
     /**
      * If no argument or true as an argument is given, mark the current transaction as a background job. If false is
@@ -102,9 +185,17 @@ interface ApiInterface
      *
      * @param $flag
      *
-     * @return $this
+     * @return self
      */
-    public function markAsBackgroundJob($flag = true);
+    public function markAsBackgroundJob($flag = true)
+    {
+        assert(is_bool($flag));
+        if ($this->active) {
+            newrelic_background_job($flag);
+        }
+
+        return $this;
+    }
 
     /**
      * Adds a custom metric with the specified name and value, which is of type double. These custom metrics can then
@@ -113,9 +204,19 @@ interface ApiInterface
      * @param $metricName
      * @param $value
      *
-     * @return $this
+     * @return self
      */
-    public function addCustomMetric($metricName, $value);
+    public function addCustomMetric($metricName, $value)
+    {
+        if ($this->active) {
+            if (strpos($metricName, 'Custom/') !== 0) {
+                $metricName = 'Custom/' . $metricName;
+            }
+            newrelic_custom_metric($metricName, $value);
+        }
+
+        return $this;
+    }
 
     /**
      * Add a custom parameter to the current web transaction with the specified value. For example, you can add a
@@ -124,9 +225,16 @@ interface ApiInterface
      * @param $key
      * @param $value
      *
-     * @return $this
+     * @return self
      */
-    public function addCustomParameter($key, $value);
+    public function addCustomParameter($key, $value)
+    {
+        if ($this->active) {
+            newrelic_add_custom_parameter($key, $value);
+        }
+
+        return $this;
+    }
 
     /**
      * API equivalent of the newrelic.transaction_tracer.customi setting. It allows you to add functions or methods to
@@ -134,9 +242,16 @@ interface ApiInterface
      *
      * @param string $tracer
      *
-     * @return $this
+     * @return self
      */
-    public function addCustomTracer($tracer = 'classname::function_name');
+    public function addCustomTracer($tracer = 'classname::function_name')
+    {
+        if ($this->active) {
+            newrelic_add_custom_tracer($tracer);
+        }
+
+        return $this;
+    }
 
     /**
      * Returns the JavaScript string to inject as part of the header for browser timing (real user monitoring). If flag
@@ -145,9 +260,16 @@ interface ApiInterface
      *
      * @param bool $flag
      *
-     * @return $this
+     * @return self
      */
-    public function getBrowserTimingHeader($flag = true);
+    public function getBrowserTimingHeader($flag = true)
+    {
+        if ($this->active) {
+            newrelic_get_browser_timing_header($flag);
+        }
+
+        return $this;
+    }
 
     /**
      * Returns the JavaScript string to inject at the very end of the HTML output for browser timing (real user
@@ -156,15 +278,69 @@ interface ApiInterface
      *
      * @param bool $flag
      *
-     * @return $this
+     * @return self
      */
-    public function getBrowserTimingFooter($flag = true);
+    public function getBrowserTimingFooter($flag = true)
+    {
+        if ($this->active) {
+            newrelic_get_browser_timing_footer($flag);
+        }
+
+        return $this;
+    }
 
     /**
      * Prevents the output filter from attempting to insert RUM JAvaScript for this current transaction. Useful for
      * AJAX calls, for example.
      *
-     * @return $this
+     * @return self
      */
-    public function disableAutoRUM();
+    public function disableAutoRUM()
+    {
+        if ($this->active) {
+            newrelic_disable_autorum();
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param array $params
+     *
+     * @throws DeploymentException
+     *
+     * @return self
+     */
+    public function deployment(array $params = [])
+    {
+        if (!$this->active) {
+            return $this;
+        }
+
+        $header = ['x-api-key:' . Config::get(NewRelicConfig::NEWRELIC_API_KEY)];
+
+        $data['deployment'] = [];
+        foreach ($params as $key => $value) {
+            $data['deployment'][$key] = $value;
+        }
+
+        $resource = curl_init();
+
+        curl_setopt($resource, CURLOPT_URL, self::NEWRELIC_DEPLOYMENT_API_URL);
+        curl_setopt($resource, CURLOPT_HEADER, 1);
+        curl_setopt($resource, CURLOPT_HTTPHEADER, $header);
+        curl_setopt($resource, CURLOPT_POSTFIELDS, http_build_query($data));
+
+        curl_exec($resource);
+        $error = curl_error($resource);
+
+        curl_close($resource);
+
+        if ($error !== '') {
+            throw new DeploymentException($error);
+        }
+
+        return $this;
+    }
+
 }

@@ -8,7 +8,7 @@ namespace SprykerFeature\Shared\Session\Business\Handler;
 
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Shared\Library\Environment;
-use SprykerFeature\Shared\Library\NewRelic\Api;
+use SprykerFeature\Shared\NewRelic\Api;
 
 class SessionHandlerMysql implements \SessionHandlerInterface
 {

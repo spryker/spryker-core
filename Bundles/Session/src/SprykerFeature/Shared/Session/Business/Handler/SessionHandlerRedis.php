@@ -7,7 +7,7 @@
 namespace SprykerFeature\Shared\Session\Business\Handler;
 
 use Predis\Client;
-use SprykerFeature\Shared\Library\NewRelic\Api;
+use SprykerFeature\Shared\NewRelic\Api;
 
 class SessionHandlerRedis implements \SessionHandlerInterface
 {

@@ -6,8 +6,7 @@
 
 namespace SprykerFeature\Shared\Session\Business\Handler;
 
-use Propel\Runtime\Collection\Collection;
-use SprykerFeature\Shared\Library\NewRelic\Api;
+use SprykerFeature\Shared\NewRelic\Api;
 
 class SessionHandlerFile implements \SessionHandlerInterface
 {

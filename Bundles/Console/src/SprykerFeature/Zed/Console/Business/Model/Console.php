@@ -15,6 +15,8 @@ use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContain
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerEngine\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
+use SprykerFeature\Shared\Library\System;
+use SprykerFeature\Shared\NewRelic\Api;
 use SprykerFeature\Zed\Console\Communication\ConsoleBootstrap;
 use Symfony\Component\Console\Command\Command as SymfonyCommand;
 use Symfony\Component\Console\Input\ArrayInput;
@@ -133,6 +135,8 @@ class Console extends SymfonyCommand
 
         $propelService = new PropelServiceProvider();
         $propelService->boot(new Application());
+
+        Api::getInstance()->markAsBackgroundJob();
     }
 
     /**
@@ -141,9 +145,12 @@ class Console extends SymfonyCommand
      */
     protected function runDependingCommand($command, array $arguments = [])
     {
+        $this->setNewRelicTransaction($command, $arguments);
+
         $command = $this->getApplication()->find($command);
         $arguments['command'] = $command;
         $input = new ArrayInput($arguments);
+
         $command->run($input, $this->output);
     }
 
@@ -157,6 +164,26 @@ class Console extends SymfonyCommand
         }
 
         return $this->messenger;
+    }
+
+    /**
+     * @param $command
+     * @param array $arguments
+     *
+     * @return void
+     */
+    protected function setNewRelicTransaction($command, array $arguments)
+    {
+        $newRelicApi = Api::getInstance();
+
+        $newRelicApi
+            ->setNameOfTransaction($command)
+            ->addCustomParameter('host', System::getHostname())
+        ;
+
+        foreach ($arguments as $key => $value) {
+            $newRelicApi->addCustomParameter($key, $value);
+        }
     }
 
 }
