@@ -48,6 +48,7 @@ class SequenceNumberConfig extends AbstractBundleConfig
             return ($value !== null);
         });
         $settingsArray += $defaultSettingsArray;
+
         return $settingsArray;
     }
 

@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\SequenceNumber\Business\Model;
 
 use Generated\Shared\SequenceNumber\SequenceNumberSettingsInterface;
-use Propel\Runtime\Propel;
 use Propel\Runtime\Connection\ConnectionInterface;
 use SprykerFeature\Zed\SequenceNumber\Business\Exception\InvalidSequenceNumberException;
 use SprykerFeature\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
@@ -98,6 +97,7 @@ class SequenceNumber implements SequenceNumberInterface
             $sequence = new SpySequenceNumber();
             $sequence->setName($this->sequenceNumberSettings->getName());
             $sequence->setCurrentId($expectedCurrentValue);
+
             return $sequence;
         }
 
