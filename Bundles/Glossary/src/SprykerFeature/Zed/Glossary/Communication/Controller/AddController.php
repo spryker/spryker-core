@@ -54,4 +54,5 @@ class AddController extends AbstractController
             'form' => $glossaryForm->createView(),
         ]);
     }
+
 }

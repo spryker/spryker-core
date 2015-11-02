@@ -5,7 +5,6 @@
 
 namespace Unit\SprykerEngine\Zed\Propel;
 
-
 use Generated\Shared\Transfer\FilterTransfer;
 use SprykerEngine\Zed\Propel\PropelFilterCriteria;
 
@@ -15,10 +14,10 @@ class PropelFilterCriteriaTest extends \PHPUnit_Framework_TestCase
     public function testToCriteriaShouldReturnEmptyCriteriaWhenNothingWasSet()
     {
         $filterTransfer = new FilterTransfer();
-        
+
         $filterCriteria = new PropelFilterCriteria($filterTransfer);
         $propelCriteria = $filterCriteria->toCriteria();
-        
+
         $this->assertInstanceOf('Propel\Runtime\ActiveQuery\Criteria', $propelCriteria);
         $this->assertEquals(-1, $propelCriteria->getLimit());
         $this->assertEquals(0, $propelCriteria->getOffset());
@@ -35,7 +34,7 @@ class PropelFilterCriteriaTest extends \PHPUnit_Framework_TestCase
 
         $filterCriteria = new PropelFilterCriteria($filterTransfer);
         $propelCriteria = $filterCriteria->toCriteria();
-        
+
         $this->assertInstanceOf('Propel\Runtime\ActiveQuery\Criteria', $propelCriteria);
         $this->assertEquals(10, $propelCriteria->getLimit());
         $this->assertEquals(0, $propelCriteria->getOffset());

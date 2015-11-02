@@ -15,7 +15,7 @@ class PropelFilterCriteria implements PropelFilterCriteriaInterface
      * @var FilterTransfer
      */
     protected $filterTransfer;
-    
+
     public function __construct(FilterTransfer $filterTransfer)
     {
         $this->filterTransfer = $filterTransfer;
@@ -43,7 +43,7 @@ class PropelFilterCriteria implements PropelFilterCriteriaInterface
     public function toCriteria()
     {
         $criteria = new Criteria();
-        
+
         if (null !== $this->filterTransfer->getLimit()) {
             $criteria->setLimit($this->filterTransfer->getLimit());
         }
@@ -59,7 +59,7 @@ class PropelFilterCriteria implements PropelFilterCriteriaInterface
                 $criteria->addDescendingOrderByColumn($this->filterTransfer->getOrderBy());
             }
         }
-        
+
         return $criteria;
     }
 

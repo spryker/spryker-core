@@ -30,7 +30,7 @@ class PropelArraySetFormatter extends SimpleArrayFormatter
         $this->setClass($criteria->getModelName());
         $this->setWith($criteria->getWith());
         $this->asColumns = array_merge($criteria->getSelectColumns(), $criteria->getAsColumns());
-        $this->hasLimit = $criteria->getLimit() != -1;
+        $this->hasLimit = $criteria->getLimit() !== -1;
         if ($dataFetcher) {
             $this->setDataFetcher($dataFetcher);
         }
@@ -40,8 +40,9 @@ class PropelArraySetFormatter extends SimpleArrayFormatter
     /**
      * @param DataFetcherInterface $dataFetcher
      *
-     * @return array
      * @throws PropelException
+     *
+     * @return array
      */
     public function format(DataFetcherInterface $dataFetcher = null)
     {

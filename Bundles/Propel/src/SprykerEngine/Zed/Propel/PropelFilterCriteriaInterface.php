@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\FilterTransfer;
 
 interface PropelFilterCriteriaInterface
 {
+
     /**
      * @return FilterTransfer
      */
@@ -24,4 +25,5 @@ interface PropelFilterCriteriaInterface
      * @return Criteria
      */
     public function toCriteria();
+
 }

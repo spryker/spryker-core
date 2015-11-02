@@ -67,4 +67,5 @@ class PropelSchemaTest extends \PHPUnit_Framework_TestCase
 
         $this->assertTrue(file_exists($this->getFixtureTargetDirectory() . DIRECTORY_SEPARATOR . 'foo_bar.schema.xml'));
     }
+
 }

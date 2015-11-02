@@ -12,13 +12,15 @@ use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 
 interface KeyManagerInterface
 {
+
     /**
      * @param string $keyName
      *
-     * @return int
      * @throws KeyExistsException
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return int
      */
     public function createKey($keyName);
 
@@ -32,8 +34,9 @@ interface KeyManagerInterface
     /**
      * @param string $keyName
      *
-     * @return SpyGlossaryKey
      * @throws MissingKeyException
+     *
+     * @return SpyGlossaryKey
      */
     public function getKey($keyName);
 
@@ -41,8 +44,9 @@ interface KeyManagerInterface
      * @param string $currentKeyName
      * @param string $newKeyName
      *
-     * @return bool
      * @throws MissingKeyException
+     *
+     * @return bool
      */
     public function updateKey($currentKeyName, $newKeyName);
 
@@ -52,4 +56,5 @@ interface KeyManagerInterface
      * @return bool
      */
     public function deleteKey($keyName);
+
 }

@@ -158,7 +158,7 @@ class Store
                 $this->$k = $v;
             } else {
                 // bc
-                if ('frontends' === $k) {
+                if ($k === 'frontends') {
                     continue;
                 }
                 throw new \Exception('Unknown setup-key: ' . $k);

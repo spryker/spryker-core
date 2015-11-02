@@ -307,7 +307,7 @@ class OrderStateMachine implements OrderStateMachineInterface
                     throw $e;
                 }
 
-                if (true === $conditionCheck) {
+                if ($conditionCheck === true) {
                     $log->addCondition($orderItem, $conditionModel);
                     array_unshift($possibleTransitions, $transition);
                 }

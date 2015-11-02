@@ -5,7 +5,6 @@
 
 namespace Unit\SprykerEngine\Zed\Propel\Business\Model;
 
-use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaFinder;
 use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaWriter;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -33,4 +32,5 @@ class PropelSchemaWriterTest extends AbstractPropelSchemaTest
             file_get_contents($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . self::TEST_FILE_NAME)
         );
     }
+
 }

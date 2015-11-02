@@ -15,6 +15,6 @@ interface GlossaryClientInterface
      *
      * @return string
      */
-    public function translate($id, array $parameters = [], $localeName);
+    public function translate($id, array $parameters, $localeName);
 
 }

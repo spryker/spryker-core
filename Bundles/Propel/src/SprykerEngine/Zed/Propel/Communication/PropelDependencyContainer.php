@@ -31,4 +31,5 @@ class PropelDependencyContainer extends AbstractCommunicationDependencyContainer
 
         return [$defaultLogger];
     }
+
 }

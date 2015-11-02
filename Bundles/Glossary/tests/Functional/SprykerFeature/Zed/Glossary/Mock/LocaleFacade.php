@@ -10,4 +10,5 @@ use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 
 class LocaleFacade extends SprykerLocaleFacade implements GlossaryToLocaleInterface
 {
+
 }

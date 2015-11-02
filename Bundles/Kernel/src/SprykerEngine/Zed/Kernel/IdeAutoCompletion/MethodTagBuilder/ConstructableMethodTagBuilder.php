@@ -134,7 +134,7 @@ class ConstructableMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
             }
         } catch (\Exception $e) {
             echo $e->getMessage() . PHP_EOL;
-            echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($className) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . die();
+            echo '<pre>' . PHP_EOL . \Symfony\Component\VarDumper\VarDumper::dump($className) . PHP_EOL . 'Line: ' . __LINE__ . PHP_EOL . 'File: ' . __FILE__ . exit();
         }
 
         return false;

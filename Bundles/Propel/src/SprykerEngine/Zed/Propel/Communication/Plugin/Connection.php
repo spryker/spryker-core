@@ -26,4 +26,5 @@ class Connection extends AbstractPlugin
 
         return $connection;
     }
+
 }

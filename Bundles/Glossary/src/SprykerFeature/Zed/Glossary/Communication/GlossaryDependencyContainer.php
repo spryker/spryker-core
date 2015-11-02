@@ -15,7 +15,6 @@ use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use SprykerFeature\Zed\Glossary\GlossaryDependencyProvider;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Validator\Validator;
 
 /**
  * @method GlossaryCommunication getFactory()

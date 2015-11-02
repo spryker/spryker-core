@@ -9,6 +9,7 @@ use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
 
 trait GlossaryKeyBuilder
 {
+
     use KeyBuilderTrait;
 
     /**

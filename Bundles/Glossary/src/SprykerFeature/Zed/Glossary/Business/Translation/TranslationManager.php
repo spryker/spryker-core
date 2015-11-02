@@ -5,7 +5,6 @@
 
 namespace SprykerFeature\Zed\Glossary\Business\Translation;
 
-use Generated\Shared\FlashMessenger\FlashMessagesInterface;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
@@ -109,7 +108,6 @@ class TranslationManager implements TranslationManagerInterface
             }
 
             return true;
-
         } catch (MissingKeyException $error) {
             $this->flashMessages->addErrorMessage($error->getMessage());
 
@@ -157,10 +155,11 @@ class TranslationManager implements TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return TranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
+     *
+     * @return TranslationTransfer
      */
     public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive)
     {
@@ -169,7 +168,7 @@ class TranslationManager implements TranslationManagerInterface
         ;
         $idLocale = $locale->getIdLocale();
 
-        if (null === $idLocale) {
+        if ($idLocale === null) {
             $idLocale = $this->localeFacade->getLocale($locale->getLocaleName())
                 ->getIdLocale()
             ;
@@ -199,7 +198,7 @@ class TranslationManager implements TranslationManagerInterface
      */
     public function hasTranslation($keyName, LocaleTransfer $localeTransfer = null)
     {
-        if (null === $localeTransfer) {
+        if ($localeTransfer === null) {
             $localeTransfer = $this->localeFacade->getCurrentLocale();
         }
 
@@ -216,9 +215,10 @@ class TranslationManager implements TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return TranslationTransfer
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return TranslationTransfer
      */
     protected function createTranslationByIds($idKey, $idLocale, $value, $isActive)
     {
@@ -264,9 +264,10 @@ class TranslationManager implements TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return TranslationTransfer
      * @throws MissingTranslationException
      * @throws PropelException
+     *
+     * @return TranslationTransfer
      */
     public function updateTranslation($keyName, LocaleTransfer $locale, $value, $isActive)
     {
@@ -281,8 +282,9 @@ class TranslationManager implements TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return SpyGlossaryTranslation
      * @throws MissingTranslationException
+     *
+     * @return SpyGlossaryTranslation
      */
     protected function getUpdatedTranslationEntity($keyName, $locale, $value, $isActive)
     {
@@ -298,8 +300,9 @@ class TranslationManager implements TranslationManagerInterface
      * @param string $keyName
      * @param LocaleTransfer $locale
      *
-     * @return TranslationTransfer
      * @throws MissingTranslationException
+     *
+     * @return TranslationTransfer
      */
     public function getTranslationByKeyName($keyName, LocaleTransfer $locale)
     {
@@ -349,7 +352,7 @@ class TranslationManager implements TranslationManagerInterface
      */
     public function translate($keyName, array $data = [], LocaleTransfer $localeTransfer = null)
     {
-        if (null === $localeTransfer) {
+        if ($localeTransfer === null) {
             $localeTransfer = $this->localeFacade->getCurrentLocale();
         }
 
@@ -361,11 +364,12 @@ class TranslationManager implements TranslationManagerInterface
     /**
      * @param TranslationTransfer $translationTransfer
      *
-     * @return TranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
      * @throws MissingTranslationException
+     *
+     * @return TranslationTransfer
      */
     public function saveTranslation(TranslationTransfer $translationTransfer)
     {
@@ -386,12 +390,13 @@ class TranslationManager implements TranslationManagerInterface
     /**
      * @param TranslationTransfer $transferTranslation
      *
-     * @return TranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
      * @throws MissingTranslationException
      * @throws \Exception
+     *
+     * @return TranslationTransfer
      */
     public function saveAndTouchTranslation(TranslationTransfer $transferTranslation)
     {
@@ -453,8 +458,9 @@ class TranslationManager implements TranslationManagerInterface
      * @param int $idKey
      * @param int $idLocale
      *
-     * @return SpyGlossaryTranslation
      * @throws MissingTranslationException
+     *
+     * @return SpyGlossaryTranslation
      */
     protected function getTranslationByIds($idKey, $idLocale)
     {
@@ -472,8 +478,9 @@ class TranslationManager implements TranslationManagerInterface
     /**
      * @param TranslationTransfer $transferTranslation
      *
-     * @return SpyGlossaryTranslation
      * @throws MissingTranslationException
+     *
+     * @return SpyGlossaryTranslation
      */
     protected function getTranslationFromTransfer(TranslationTransfer $transferTranslation)
     {
@@ -487,8 +494,9 @@ class TranslationManager implements TranslationManagerInterface
      * @param int $idKey
      * @param array $data
      *
-     * @return string
      * @throws MissingTranslationException
+     *
+     * @return string
      */
     public function translateByKeyId($idKey, array $data = [])
     {
@@ -505,10 +513,11 @@ class TranslationManager implements TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return SpyGlossaryTranslation
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
+     *
+     * @return SpyGlossaryTranslation
      */
     public function createTranslationForCurrentLocale($keyName, $value, $isActive = true)
     {
@@ -528,10 +537,11 @@ class TranslationManager implements TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return SpyGlossaryTranslation
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws TranslationExistsException
+     *
+     * @return SpyGlossaryTranslation
      */
     public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
     {
@@ -556,10 +566,11 @@ class TranslationManager implements TranslationManagerInterface
      * @param string $value
      * @param bool $isActive
      *
-     * @return TranslationTransfer
      * @throws MissingKeyException
      * @throws MissingLocaleException
      * @throws MissingTranslationException
+     *
+     * @return TranslationTransfer
      */
     public function updateAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true)
     {
@@ -585,9 +596,10 @@ class TranslationManager implements TranslationManagerInterface
     /**
      * @param SpyGlossaryTranslation $translation
      *
-     * @return TranslationTransfer
      * @throws \Exception
      * @throws PropelException
+     *
+     * @return TranslationTransfer
      */
     protected function doUpdateAndTouchTranslation(SpyGlossaryTranslation $translation)
     {
@@ -619,8 +631,9 @@ class TranslationManager implements TranslationManagerInterface
     /**
      * @param int $idTranslation
      *
-     * @return TranslationTransfer
      * @throws MissingTranslationException
+     *
+     * @return TranslationTransfer
      */
     protected function getTranslationById($idTranslation)
     {
@@ -645,8 +658,9 @@ class TranslationManager implements TranslationManagerInterface
      * @param string $keyName
      * @param string $localeName
      *
-     * @return SpyGlossaryTranslation
      * @throws MissingTranslationException
+     *
+     * @return SpyGlossaryTranslation
      */
     protected function getTranslationEntityByNames($keyName, $localeName)
     {
@@ -663,8 +677,9 @@ class TranslationManager implements TranslationManagerInterface
     /**
      * @param int $idTranslation
      *
-     * @return SpyGlossaryTranslation
      * @throws MissingTranslationException
+     *
+     * @return SpyGlossaryTranslation
      */
     protected function getTranslationEntityById($idTranslation)
     {

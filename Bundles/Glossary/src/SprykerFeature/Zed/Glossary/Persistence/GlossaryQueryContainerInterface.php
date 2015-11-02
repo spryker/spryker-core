@@ -12,6 +12,7 @@ use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 
 interface GlossaryQueryContainerInterface
 {
+
     /**
      * @param string $keyName
      *
@@ -83,8 +84,9 @@ interface GlossaryQueryContainerInterface
     /**
      * @param array $relevantLocales
      *
-     * @return ModelCriteria
      * @throws PropelException
+     *
+     * @return ModelCriteria
      */
     public function queryAllPossibleTranslations(array $relevantLocales);
 
@@ -123,4 +125,5 @@ interface GlossaryQueryContainerInterface
      * @return array
      */
     public function queryByKey($key);
+
 }

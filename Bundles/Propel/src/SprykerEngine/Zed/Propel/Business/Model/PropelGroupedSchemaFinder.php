@@ -52,4 +52,5 @@ class PropelGroupedSchemaFinder implements PropelGroupedSchemaFinderInterface
 
         return $schemaFiles;
     }
+
 }
