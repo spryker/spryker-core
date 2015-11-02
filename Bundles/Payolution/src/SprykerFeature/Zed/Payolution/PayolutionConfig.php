@@ -125,19 +125,43 @@ class PayolutionConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return int
-     */
-    public function getNotificationEmail()
-    {
-        return $this->get(PayolutionConfigConstants::NOTIFICATION_EMAIL);
-    }
-
-    /**
      * @return string
      */
     public function getAnalysisCriteriaPropertyName()
     {
         return $this->get(PayolutionConfigConstants::ANALYSIS_CRITERIA);
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmailFromName()
+    {
+        return $this->get(PayolutionConfigConstants::EMAIL_FROM_NAME);
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmailFromAddress()
+    {
+        return $this->get(PayolutionConfigConstants::EMAIL_FROM_ADDRESS);
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmailTemplateName()
+    {
+        return $this->get(PayolutionConfigConstants::EMAIL_TEMPLATE_NAME);
+    }
+
+    /**
+     * @return string
+     */
+    public function getEmailSubject()
+    {
+        return $this->get(PayolutionConfigConstants::EMAIL_SUBJECT);
     }
 
 }

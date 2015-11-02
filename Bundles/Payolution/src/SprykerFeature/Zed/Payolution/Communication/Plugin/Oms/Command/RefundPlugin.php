@@ -29,12 +29,20 @@ class RefundPlugin  extends AbstractPlugin implements CommandByOrderInterface
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        /** @var SpyPaymentPayolution $paymentEntity */
-        $paymentEntity = $orderEntity->getSpyPaymentPayolutions()->getFirst();
-
+        $paymentEntity = $this->getPaymentEntity($orderEntity);
         $this->getFacade()->refundPayment($paymentEntity->getIdPaymentPayolution());
-
         return [];
+    }
+
+    /**
+     * @param SpySalesOrder $orderEntity
+     *
+     * @return SpyPaymentPayolution
+     */
+    protected function getPaymentEntity(SpySalesOrder $orderEntity)
+    {
+        $paymentEntity = $orderEntity->getSpyPaymentPayolutions()->getFirst();
+        return $paymentEntity;
     }
 
 }

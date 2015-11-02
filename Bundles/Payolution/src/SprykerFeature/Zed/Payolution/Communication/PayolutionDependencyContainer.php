@@ -7,11 +7,14 @@ namespace SprykerFeature\Zed\Payolution\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\PayolutionCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Payolution\Communication\Table\Payments;
 use SprykerFeature\Zed\Payolution\Communication\Table\RequestLog;
 use SprykerFeature\Zed\Payolution\Communication\Table\StatusLog;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
+use SprykerFeature\Zed\Payolution\PayolutionDependencyProvider;
+use SprykerFeature\Zed\Mail\Business\MailFacade;
 
 /**
  * @method PayolutionCommunication getFactory()
@@ -53,6 +56,22 @@ class PayolutionDependencyContainer extends AbstractCommunicationDependencyConta
         $statusLogQuery= $this->getQueryContainer()->queryTransactionStatusLogByPaymentId($idPayment);
 
         return $this->getFactory()->createTableStatusLog($statusLogQuery, $idPayment);
+    }
+
+    /**
+     * @return MailFacade
+     */
+    public function getMailFacade()
+    {
+        return $this->getProvidedDependency(PayolutionDependencyProvider::FACADE_MAIL);
+    }
+
+    /**
+     * @return GlossaryFacade
+     */
+    public function getGlossaryFacade()
+    {
+        return $this->getProvidedDependency(PayolutionDependencyProvider::FACADE_GLOSSARY);
     }
 
 }
