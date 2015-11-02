@@ -126,7 +126,7 @@ class BundleCodeStyleFixer
     protected function runFixerCommand($path)
     {
         $pathToFiles = rtrim($path, DIRECTORY_SEPARATOR);
-        $command = $this->applicationRoot . '/vendor/bin/php-cs-fixer fix ' . $pathToFiles . ' -vvv';
+        $command = $this->applicationRoot . 'vendor/bin/php-cs-fixer fix ' . $pathToFiles . ' -vvv';
 
         $pathToCore = $this->getPathToCore();
         $process = new Process($command, $pathToCore, null, null, 3600);

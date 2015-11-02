@@ -92,8 +92,7 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
             // Look for the right expression
             $rightIndex = $tokens->getNextMeaningfulToken($comparisonIndex);
             if (!$rightIndex) {
-                $error = 'Usage of Yoda conditions is not advised. Please switch the expression order.';
-                $file->addError($error, $comparisonIndex, 'ExpressionOrder');
+                // Cannot fix this right now
                 continue;
             }
 
@@ -101,7 +100,7 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
 
             // If its T_OPEN_PARENTHESIS we need to find the closing one
             if ($tokens[$rightIndex]->getContent() === '(') {
-                // skip for now
+                // Skip for now
                 continue;
             }
 
@@ -120,7 +119,7 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
 
             $rightIndexEnd = $tokens->getNextMeaningfulToken($rightIndexStart);
             if (!$rightIndex || $tokens[$rightIndexEnd]->getContent() !== ')') {
-                // skip for now
+                // Skip for now
                 continue;
             }
 

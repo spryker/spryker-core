@@ -2,17 +2,9 @@
 
 namespace Unit\SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\Fixtures\EmptyEnclosingLinesFixer\Input;
 
-class TestClass3Input
+interface TestClass3Input
 {
+    public function aFunction();
 
-    public function aFunction()
-    {
-
-    }
-
-    public function bFunction()
-    {
-
-    }
-
+    public function bFunction();
 }

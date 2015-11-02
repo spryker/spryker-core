@@ -27,7 +27,6 @@ return Symfony\CS\Config\Config::create()
             'encoding',
             'extra_empty_lines',
             'include',
-            'join_function',
             'list_commas',
             'multiline_array_trailing_comma',
             'namespace_no_leading_whitespace',

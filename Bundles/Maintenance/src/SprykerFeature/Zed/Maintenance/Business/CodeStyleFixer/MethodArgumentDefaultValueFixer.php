@@ -48,6 +48,13 @@ class MethodArgumentDefaultValueFixer extends AbstractFixer
 
             $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $index);
 
+            // Avoid closures and other special constructs
+            for ($i = $endIndex - 1; $i > $index; --$i) {
+                if ($tokens[$i]->equals('}')) {
+                    break 2;
+                }
+            }
+
             $this->defaultValueForbidden = false;
 
             // Fix from last to first argument

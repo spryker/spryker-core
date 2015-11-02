@@ -7,7 +7,10 @@ class TestClass1Input
 
     public function aFunction($foo = null, $bar = null)
     {
-
+        $bar->setCallback(function () use ($foo) {
+            $csvHandle = fopen('php://output', 'w+');
+            return $foo;
+        });
     }
 
     public function bFunction($foo, $bar)
