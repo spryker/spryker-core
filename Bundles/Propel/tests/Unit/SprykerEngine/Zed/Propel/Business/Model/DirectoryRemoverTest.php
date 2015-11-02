@@ -47,4 +47,5 @@ class DirectoryRemoverTest extends \PHPUnit_Framework_TestCase
 
         $this->assertFalse(is_dir($this->fixtureDirectory));
     }
+
 }

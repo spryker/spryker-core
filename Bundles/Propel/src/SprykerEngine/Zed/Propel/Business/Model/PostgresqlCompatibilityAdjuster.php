@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * (c) Copyright Spryker Systems GmbH 2015
  */
 namespace SprykerEngine\Zed\Propel\Business\Model;
@@ -8,10 +7,7 @@ namespace SprykerEngine\Zed\Propel\Business\Model;
 use DOMDocument;
 use DOMXPath;
 use Symfony\Component\Finder\SplFileInfo;
-use SprykerEngine\Shared\Config;
-use SprykerFeature\Shared\System\SystemConfig;
 use Propel\Runtime\Propel;
-
 
 class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjusterInterface
 {
@@ -50,7 +46,6 @@ class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjuster
      */
     public function addMissingFunctions()
     {
-
         $connection = Propel::getConnection();
 
         $connection->exec("
@@ -89,10 +84,10 @@ class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjuster
     protected function adjustForNamedIndices(DOMDocument $dom)
     {
         $xpath = new DOMXPath($dom);
-        $nodeList = $xpath->query("//index[@name]|//unique[@name]|//foreign-key[@name]");
+        $nodeList = $xpath->query('//index[@name]|//unique[@name]|//foreign-key[@name]');
         $domChanged = 0;
+        /** @var $node \DOMElement */
         foreach ($nodeList as $node) {
-            /** @var $node \DOMElement */
             $node->removeAttribute('name');
             $domChanged++;
         }
@@ -141,4 +136,5 @@ class PostgresqlCompatibilityAdjuster implements PostgresqlCompatibilityAdjuster
 
         return $dom;
     }
+
 }

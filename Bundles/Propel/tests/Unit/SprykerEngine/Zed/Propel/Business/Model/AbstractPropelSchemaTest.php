@@ -32,4 +32,5 @@ abstract class AbstractPropelSchemaTest extends \PHPUnit_Framework_TestCase
     {
         return __DIR__ . '/TempFixtures';
     }
+
 }

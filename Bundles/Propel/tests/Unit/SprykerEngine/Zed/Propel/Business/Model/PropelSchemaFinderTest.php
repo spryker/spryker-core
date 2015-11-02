@@ -25,4 +25,5 @@ class PropelSchemaFinderTest extends AbstractPropelSchemaTest
 
         $this->assertInstanceOf('Symfony\Component\Finder\Finder', $schemaFinder->getSchemaFiles());
     }
+
 }

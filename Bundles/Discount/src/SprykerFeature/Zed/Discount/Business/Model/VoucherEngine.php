@@ -292,7 +292,7 @@ class VoucherEngine
             ->findOne()
         ;
 
-        if (null === $highestBatchValueOnVouchers) {
+        if ($highestBatchValueOnVouchers === null) {
             return 1;
         }
 

@@ -6,7 +6,6 @@
 namespace SprykerEngine\Zed\Propel\Business\Model;
 
 use SprykerEngine\Zed\Propel\Business\Exception\SchemaMergeException;
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\SplFileInfo;
 
 class PropelSchemaMerger implements PropelSchemaMergerInterface
@@ -15,8 +14,9 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     /**
      * @param SplFileInfo[] $schemaFiles
      *
-     * @return string
      * @throws SchemaMergeException
+     *
+     * @return string
      */
     public function merge(array $schemaFiles)
     {
@@ -111,6 +111,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      * @param SplFileInfo[] $schemaFiles
      *
      * @throws \ErrorException
+     *
      * @return \SimpleXMLElement[]
      */
     private function createSchemaXmlElements(array $schemaFiles)
@@ -207,7 +208,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      */
     private function getElementName(\SimpleXMLElement $fromXmlChildElement, $tagName)
     {
-        $elementName = (array)$fromXmlChildElement->attributes();
+        $elementName = (array) $fromXmlChildElement->attributes();
         $elementName = current($elementName);
         if (is_array($elementName) && array_key_exists('name', $elementName)) {
             $elementName = $tagName . '|' . $elementName['name'];
@@ -225,11 +226,12 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      * @param \SimpleXMLElement $fromXmlElement
      *
      * @throws SchemaMergeException
+     *
      * @return \SimpleXMLElement
      */
     private function mergeAttributes(\SimpleXMLElement $toXmlElement, \SimpleXMLElement $fromXmlElement)
     {
-        $toXmlAttributes = (array)$toXmlElement->attributes();
+        $toXmlAttributes = (array) $toXmlElement->attributes();
         if (count($toXmlAttributes) > 0) {
             $toXmlAttributes = current($toXmlAttributes);
             $alreadyHasAttributes = true;
@@ -239,13 +241,13 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
         foreach ($fromXmlElement->attributes() as $key => $value) {
             if (true === $alreadyHasAttributes
                 && true === array_key_exists($key, $toXmlAttributes)
-                && $toXmlAttributes[$key] != $value
+                && $toXmlAttributes[$key] !== $value
             ) {
                 throw new SchemaMergeException('Ambiguous value for the same attribute for key "' . $key . '": "' . $toXmlAttributes[$key] . '" !== "' . $value . '"');
             }
 
             if (false === $alreadyHasAttributes || false === array_key_exists($key, $toXmlAttributes)) {
-                $value = (string)$value;
+                $value = (string) $value;
                 $toXmlElement->addAttribute($key, $value);
             }
         }

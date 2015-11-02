@@ -158,7 +158,7 @@ class OrderDetailsManager
             ->findOne()
         ;
 
-        if (null === $orderEntity) {
+        if ($orderEntity === null) {
             throw new InvalidSalesOrderException();
         }
 

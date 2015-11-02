@@ -147,7 +147,7 @@ class OrderManager
             $itemEntity->setProcess($orderProcess);
 
             $taxSet = $item->getTaxSet();
-            if (null !== $taxSet) {
+            if ($taxSet !== null) {
                 $itemEntity->setTaxPercentage($taxSet->getEffectiveRate());
             }
 
@@ -211,7 +211,7 @@ class OrderManager
         $filter = $orderListTransfer->getFilter();
         $criteria = new Criteria();
 
-        if (null !== $filter) {
+        if ($filter !== null) {
             $criteria = (new PropelFilterCriteria($filter))
                 ->toCriteria();
         }
