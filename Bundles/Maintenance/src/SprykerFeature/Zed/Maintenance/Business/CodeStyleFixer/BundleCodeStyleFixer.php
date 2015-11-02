@@ -41,6 +41,8 @@ class BundleCodeStyleFixer
      * @param string|null $bundle
      * @param bool $clear
      *
+     * @throws \ErrorException
+     *
      * @return void
      */
     public function fixBundleCodeStyle($bundle, $clear = false)
@@ -54,6 +56,11 @@ class BundleCodeStyleFixer
 
         $bundle = $this->normalizeBundleName($bundle);
         $path = $this->getPathToBundle($bundle);
+
+        if (!is_dir($path)) {
+            throw new \ErrorException('This bundle does not exist');
+        }
+
         $this->copyPhpCsFixerConfigToBundle($path, $clear);
         $this->runFixerCommand($path);
     }
