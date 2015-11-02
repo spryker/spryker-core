@@ -27,7 +27,8 @@ abstract class AbstractRestController
      *
      * @return JsonResponse
      */
-    public function indexAction(Request $request) {
+    public function indexAction(Request $request)
+    {
         $this->request = $request;
 
         $result = $this->routeRequest();
@@ -35,7 +36,8 @@ abstract class AbstractRestController
         return new JsonResponse($result);
     }
 
-    protected function routeRequest() {
+    protected function routeRequest()
+    {
         $result = null;
         switch ($this->request->getMethod()) {
             case self::GET :

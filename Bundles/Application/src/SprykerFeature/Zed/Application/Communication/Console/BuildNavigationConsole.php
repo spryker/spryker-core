@@ -6,12 +6,9 @@
 
 namespace SprykerFeature\Zed\Application\Communication\Console;
 
-use SprykerFeature\Shared\Library\Application\Environment;
 use SprykerFeature\Zed\Application\Business\ApplicationFacade;
-use SprykerFeature\Zed\Application\Communication\Console\ApplicationCheckStep\AbstractApplicationCheckStep;
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**

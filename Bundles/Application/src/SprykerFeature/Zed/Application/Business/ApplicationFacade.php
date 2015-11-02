@@ -94,4 +94,5 @@ class ApplicationFacade extends AbstractFacade
     {
         $this->getDependencyContainer()->createNavigationCacheBuilder()->writeNavigationCache();
     }
+
 }

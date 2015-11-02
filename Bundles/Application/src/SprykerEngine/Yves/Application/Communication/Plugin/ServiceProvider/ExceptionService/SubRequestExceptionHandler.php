@@ -44,7 +44,7 @@ class SubRequestExceptionHandler implements ExceptionHandlerInterface
      */
     public function handleException(FlattenException $exception)
     {
-        $errorPageUrl =  $this->application->url($this->errorPageNamePrefix . $exception->getStatusCode());
+        $errorPageUrl = $this->application->url($this->errorPageNamePrefix . $exception->getStatusCode());
         $request = Request::create($errorPageUrl, 'GET', [
             'exception' => $exception,
         ]);

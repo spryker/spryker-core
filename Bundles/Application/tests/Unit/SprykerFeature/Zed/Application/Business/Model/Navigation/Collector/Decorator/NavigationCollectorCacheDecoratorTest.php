@@ -79,5 +79,5 @@ class NavigationCollectorCacheDecoratorTest extends \PHPUnit_Framework_TestCase
             $navigationCollectorCacheDecorator->getNavigation()
         );
     }
-    
+
 }
