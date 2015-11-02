@@ -122,7 +122,7 @@ class Autoloader
     protected function autoload($resourceName)
     {
         $file = $this->findFile($resourceName);
-        if ($file) {
+        if ($file !== false) {
             include $file;
         } else {
             $this->classMap[$resourceName] = false;
