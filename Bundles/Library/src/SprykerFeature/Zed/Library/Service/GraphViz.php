@@ -692,41 +692,46 @@ class GraphViz
      * Loads a graph from a file in Image_GraphViz format
      *
      * @param string $file File to load graph from.
+     *
+     * @return void
      */
     public function load($file)
     {
-        if ($serializedGraph = implode('', @file($file))) {
-            $g = unserialize($serializedGraph);
+        $serializedGraph = implode('', @file($file));
+        if ($serializedGraph === '') {
+            return;
+        }
 
-            if (!is_array($g)) {
-                return;
+        $g = unserialize($serializedGraph);
+
+        if (!is_array($g)) {
+            return;
+        }
+
+        // Convert old storage format to new one
+        $defaults = ['edgesFrom' => [],
+                          'nodes' => [],
+                          'attributes' => [],
+                          'directed' => true,
+                          'clusters' => [],
+                          'subgraphs' => [],
+                          'name' => 'G',
+                          'strict' => true,
+                    ];
+
+        $this->graph = array_merge($defaults, $g);
+
+        if (isset($this->graph['edges'])) {
+            foreach ($this->graph['edges'] as $id => $nodes) {
+                $attr = (isset($this->graph['edgeAttributes'][$id]))
+                        ? $this->graph['edgeAttributes'][$id]
+                        : [];
+
+                $this->addEdge($nodes, $attr);
             }
 
-            // Convert old storage format to new one
-            $defaults = ['edgesFrom' => [],
-                              'nodes' => [],
-                              'attributes' => [],
-                              'directed' => true,
-                              'clusters' => [],
-                              'subgraphs' => [],
-                              'name' => 'G',
-                              'strict' => true,
-                        ];
-
-            $this->graph = array_merge($defaults, $g);
-
-            if (isset($this->graph['edges'])) {
-                foreach ($this->graph['edges'] as $id => $nodes) {
-                    $attr = (isset($this->graph['edgeAttributes'][$id]))
-                            ? $this->graph['edgeAttributes'][$id]
-                            : [];
-
-                    $this->addEdge($nodes, $attr);
-                }
-
-                unset($this->graph['edges']);
-                unset($this->graph['edgeAttributes']);
-            }
+            unset($this->graph['edges']);
+            unset($this->graph['edgeAttributes']);
         }
     }
 
@@ -737,6 +742,8 @@ class GraphViz
      * rendered graph.
      *
      * @param string $file File to save the graph to.
+     *
+     * @throws \ErrorException
      *
      * @return string File the graph was saved to, FALSE or PEAR_Error on
      *                failure.
@@ -749,7 +756,8 @@ class GraphViz
             $file = System::mktemp('graph_');
         }
 
-        if ($fp = @fopen($file, 'wb')) {
+        $fp = @fopen($file, 'wb');
+        if ($fp) {
             @fputs($fp, $serializedGraph);
             @fclose($fp);
 
@@ -761,8 +769,6 @@ class GraphViz
         }
 
         throw new \ErrorException('Could not save serialized graph instance');
-
-        return $error;
     }
 
     /**

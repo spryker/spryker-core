@@ -31,6 +31,11 @@ class Graph
         $this->manager = $manager;
     }
 
+    /**
+     * @param string $bundleName
+     *
+     * @return bool
+     */
     public function draw($bundleName)
     {
         $outgoingDependencies = $this->bundleParser->parseOutgoingDependencies($bundleName);

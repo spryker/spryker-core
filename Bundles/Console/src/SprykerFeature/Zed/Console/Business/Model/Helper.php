@@ -164,10 +164,11 @@ trait Helper
     /**
      * @return Application
      */
-    protected abstract function getApplication();
+    abstract protected function getApplication();
 
     /**
      * @return HelperSet
      */
-    protected abstract function getHelperSet();
+    abstract protected function getHelperSet();
+
 }

@@ -6,18 +6,19 @@ use SprykerFeature\Zed\Library\Twig\TwigFunction;
 
 abstract class AbstractActionButton extends TwigFunction
 {
+
     const PARAM_ID = 'id';
     const PARAM_CLASS = 'class';
 
     /**
      * @return string
      */
-    protected abstract function getButtonClass();
+    abstract protected function getButtonClass();
 
     /**
      * @return string
      */
-    protected abstract function getIcon();
+    abstract protected function getIcon();
 
     /**
      * @param array $options
@@ -72,7 +73,7 @@ abstract class AbstractActionButton extends TwigFunction
         $button = $this;
 
         // @todo CD-450 use twig to render html
-        return function($url, $title, $options = []) use ($button) {
+        return function ($url, $title, $options = []) use ($button) {
             $html = $button->generateAnchor($url, $options);
             $html .= $this->getIcon();
             $html .= $title;

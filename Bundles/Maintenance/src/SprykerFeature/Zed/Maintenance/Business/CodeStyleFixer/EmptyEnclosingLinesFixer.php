@@ -32,18 +32,14 @@ class EmptyEnclosingLinesFixer extends AbstractFixer
                 $openingBraceIndex = $tokens->getNextTokenOfKind($index, ['{']);
                 $closingBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $openingBraceIndex);
 
-                if (!$this->emptyLineAfterIndex($tokens, $openingBraceIndex)) {
+                if (!$this->isEmptyLineAfterIndex($tokens, $openingBraceIndex)) {
                     if ($tokens[$openingBraceIndex + 2]->getContent() !== '}') {
-                        $tokens[$openingBraceIndex]->setContent('{' . "\n");
+                        $tokens[$openingBraceIndex + 1]->setContent("\n" . $tokens[$openingBraceIndex + 1]->getContent());
                     }
-                } else {
-                    $tokens[$openingBraceIndex + 1]->setContent("\n\n    ");
                 }
 
-                if (!$this->emptyLineBeforeIndex($tokens, $closingBraceIndex)) {
-                    $tokens[$closingBraceIndex]->setContent("\n" . '}');
-                } else {
-                    $tokens[$closingBraceIndex - 1]->setContent("\n\n");
+                if (!$this->isEmptyLineBeforeIndex($tokens, $closingBraceIndex)) {
+                    $tokens[$closingBraceIndex - 1]->setContent($tokens[$closingBraceIndex - 1]->getContent() . "\n");
                 }
             }
         }
@@ -85,7 +81,7 @@ class EmptyEnclosingLinesFixer extends AbstractFixer
      *
      * @return bool
      */
-    private function emptyLineAfterIndex(Tokens $tokens, $openingBraceIndex)
+    protected function isEmptyLineAfterIndex(Tokens $tokens, $openingBraceIndex)
     {
         return mb_substr_count($tokens[$openingBraceIndex + 1]->getContent(), "\n") >= 2;
     }
@@ -96,7 +92,7 @@ class EmptyEnclosingLinesFixer extends AbstractFixer
      *
      * @return bool
      */
-    private function emptyLineBeforeIndex(Tokens $tokens, $closingBraceIndex)
+    protected function isEmptyLineBeforeIndex(Tokens $tokens, $closingBraceIndex)
     {
         return mb_substr_count($tokens[$closingBraceIndex - 1]->getContent(), "\n") >= 2;
     }

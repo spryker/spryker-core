@@ -204,7 +204,7 @@ class Api implements ApiInterface
     public function addCustomMetric($metricName, $value)
     {
         if ($this->active) {
-            if(strpos($metricName, 'Custom/') !== 0) {
+            if (strpos($metricName, 'Custom/') !== 0) {
                 $metricName = 'Custom/' . $metricName;
             }
             newrelic_custom_metric($metricName, $value);

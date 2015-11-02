@@ -117,7 +117,6 @@ class Cronjobs
                 $commandExpl = explode(' ', $command);
                 $requestParts = ['module' => '', 'controller' => '', 'action' => ''];
                 foreach ($commandExpl as $part) {
-
                     $segments = array_keys($requestParts);
                     foreach ($segments as $segment) {
                         if (strpos($part, $segment . '=') !== false) {
@@ -237,7 +236,9 @@ class Cronjobs
             $xml = $this->prepareJobXml($v);
             $url = 'createItem?name=' . $v['name'];
             $code = $this->callJenkins($url, $xml);
-            if ($code === '400') $code = '400: already exists';
+            if ($code === '400') {
+                $code = '400: already exists';
+            }
             $console_output .= "CREATE  jenkins job: $url (http_response: $code)" . PHP_EOL;
         }
 
@@ -348,7 +349,6 @@ class Cronjobs
                           <sendToIndividuals>false</sendToIndividuals>
                         </hudson.tasks.Mailer>
                     </publishers>";
-
         } else {
             return '<publishers/>';
         }
@@ -441,7 +441,6 @@ $command</command>";
     protected function getJenkinsUrl($location)
     {
         return $this->config->getJenkinsUrl() . $location;
-
     }
 
     /**

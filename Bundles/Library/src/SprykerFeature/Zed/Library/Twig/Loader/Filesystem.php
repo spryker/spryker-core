@@ -103,7 +103,8 @@ class Filesystem extends \Twig_Loader_Filesystem
         $this->validateName($name);
 
         if (isset($name[0]) && '@' === $name[0]) {
-            if (false === $pos = strpos($name, '/')) {
+            $pos = strpos($name, '/');
+            if ($pos === false) {
                 $this->cache[$name] = false;
                 throw new \Twig_Error_Loader(sprintf('Malformed bundle template name "%s" (expecting "@bundle/template_name").', $name));
             }
@@ -114,7 +115,8 @@ class Filesystem extends \Twig_Loader_Filesystem
         }
 
         $name = '/' . ltrim($name, '/');
-        if (false === $pos = strpos(ltrim($name, '/'), '/')) {
+        $pos = strpos(ltrim($name, '/'), '/');
+        if ($pos === false) {
             $this->cache[$name] = false;
             throw new \Twig_Error_Loader(sprintf('Malformed bundle template name "%s" (expecting "@bundle/template_name").', $name));
         }

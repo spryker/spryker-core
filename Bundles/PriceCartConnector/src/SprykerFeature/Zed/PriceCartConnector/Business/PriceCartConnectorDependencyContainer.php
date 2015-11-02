@@ -26,8 +26,7 @@ class PriceCartConnectorDependencyContainer extends AbstractBusinessDependencyCo
      */
     public function createPriceManager($grossPriceType = null)
     {
-        if(is_null($grossPriceType))
-        {
+        if (is_null($grossPriceType)) {
             $bundleConfig = $this->getConfig();
             $grossPriceType = $bundleConfig->getGrossPriceType();
         }

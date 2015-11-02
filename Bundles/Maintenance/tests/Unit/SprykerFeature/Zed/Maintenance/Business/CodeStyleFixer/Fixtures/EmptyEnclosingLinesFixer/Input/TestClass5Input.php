@@ -4,5 +4,4 @@ namespace Unit\SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\Fixtures\E
 
 class TestClass5Input
 {
-
 }

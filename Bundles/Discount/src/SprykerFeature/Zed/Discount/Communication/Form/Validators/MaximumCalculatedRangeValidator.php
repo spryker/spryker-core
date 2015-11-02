@@ -35,7 +35,7 @@ class MaximumCalculatedRangeValidator
             return $factor;
         }
 
-        for ($i=1; $i<=$n; $i++) {
+        for ($i = 1; $i <= $n; ++$i) {
             $factor *= $i;
         }
 

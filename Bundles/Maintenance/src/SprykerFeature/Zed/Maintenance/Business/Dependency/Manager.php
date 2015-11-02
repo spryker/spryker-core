@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Maintenance\Business\Dependency;
 
 use Symfony\Component\Finder\Finder;
+use Symfony\Component\Finder\SplFileInfo;
 
 class Manager
 {
@@ -21,11 +22,19 @@ class Manager
      */
     protected $finder;
 
+    /**
+     * @param BundleParser $bundleParser
+     */
     public function __construct(BundleParser $bundleParser)
     {
         $this->bundleParser = $bundleParser;
     }
 
+    /**
+     * @param string $bundleName
+     *
+     * @return array
+     */
     public function parseIncomingDependencies($bundleName)
     {
         $allForeignBundles = $this->collectAllForeignBundles($bundleName);
@@ -33,7 +42,7 @@ class Manager
         $incomingDependencies = [];
         foreach ($allForeignBundles as $foreignBundle) {
             try {
-                $dependencies = $this->bundleParser->parseOutgoingDependencies($foreignBundle, true);
+                $dependencies = $this->bundleParser->parseOutgoingDependencies($foreignBundle);
             } catch (\Exception $e) {
                 $dependencies = []; // TODO illegal try-catch
             }
@@ -57,9 +66,11 @@ class Manager
     {
         $allForeignBundles = [];
 
-        $bundles = (new Finder())->directories()->depth('== 0')->in(APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/');
+        $pathToBundles = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/';
+        $bundles = (new Finder())->directories()->depth('== 0')->in($pathToBundles);
+
+        /** @var $bundle SplFileInfo */
         foreach ($bundles as $bundle) {
-            /* @var $bundle \Symfony\Component\Finder\SplFileInfo */
             $foreignBundleName = $bundle->getFilename();
             if ($foreignBundleName !== $bundleName) {
                 $allForeignBundles[] = $foreignBundleName;

@@ -73,7 +73,6 @@ class Copy
         $methods = get_class_methods($transfer);
         foreach ($methods as $method) {
             if (strpos($method, 'get') === 0) {
-
                 $property = substr($method, 3);
                 $enrichAbleProperty = lcfirst($property);
                 $setMethod = 'set' . $property;

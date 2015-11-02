@@ -6,17 +6,13 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Form;
 
-use Generated\Shared\Transfer\AddressTransfer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-
 use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
-
 use Symfony\Component\Validator\Constraints;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Length;
-
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 
 class AddressForm extends AbstractForm

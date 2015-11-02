@@ -34,10 +34,11 @@ class TableMapBuilder extends PropelTableMapBuilder
     }
 
     /**
-     * @return mixed
      * @throws \Exception
+     *
+     * @return mixed
      */
-    private function getBundleName()
+    protected function getBundleName()
     {
         if (preg_match('/Zed.(.*?).Persistence/', $this->getClasspath(), $matches)) {
             return $matches[1];
@@ -48,7 +49,10 @@ class TableMapBuilder extends PropelTableMapBuilder
 
     /**
      * Adds the populateObject() method.
+     *
      * @param string &$script The script will be modified in this method.
+     *
+     * @return void
      */
     protected function addPopulateObject(&$script)
     {
@@ -103,4 +107,5 @@ class TableMapBuilder extends PropelTableMapBuilder
     }
 ";
     }
+
 }

@@ -118,7 +118,8 @@ class TestAutoloader
      */
     protected function autoload($resourceName)
     {
-        if ($file = $this->findFile($resourceName)) {
+        $file = $this->findFile($resourceName);
+        if ($file !== false) {
             include $file;
         } else {
             $this->classMap[$resourceName] = false;
