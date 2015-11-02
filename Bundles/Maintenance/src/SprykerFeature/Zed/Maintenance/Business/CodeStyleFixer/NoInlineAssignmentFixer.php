@@ -21,6 +21,12 @@ use Symfony\CS\Utils;
 class NoInlineAssignmentFixer extends AbstractFixer
 {
 
+    /**
+     * @param \SplFileInfo $file
+     * @param string $content
+     *
+     * @return string
+     */
     public function fix(\SplFileInfo $file, $content)
     {
         $tokens = Tokens::fromCode($content);

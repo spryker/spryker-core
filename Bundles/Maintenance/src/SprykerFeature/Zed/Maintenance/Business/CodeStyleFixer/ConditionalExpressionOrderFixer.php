@@ -46,13 +46,12 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
      * @see http://php.net/manual/en/language.operators.precedence.php
      *
      * @param \SplFileInfo $file
-     * @param Tokens &$tokens
+     * @param Tokens|Token[] &$tokens
      *
      * @return void
      */
-    protected function fixConditions(\SplFileInfo $file, &$tokens)
+    protected function fixConditions(\SplFileInfo $file, Tokens &$tokens)
     {
-        /** @var Token $token */
         foreach ($tokens as $index => $token) {
             if ($token->getContent() !== '(') {
                 continue;

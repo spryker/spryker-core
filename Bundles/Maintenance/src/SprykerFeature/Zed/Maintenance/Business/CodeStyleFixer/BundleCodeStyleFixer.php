@@ -48,6 +48,7 @@ class BundleCodeStyleFixer
         if (!$bundle) {
             $this->copyPhpCsFixerConfigToBundle($this->pathToBundles, $clear);
             $this->runFixerCommand($this->pathToBundles);
+
             return;
         }
 
