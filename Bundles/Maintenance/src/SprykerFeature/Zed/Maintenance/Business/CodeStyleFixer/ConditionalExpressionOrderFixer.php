@@ -46,11 +46,11 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
      * @see http://php.net/manual/en/language.operators.precedence.php
      *
      * @param \SplFileInfo $file
-     * @param Tokens|Token[] &$tokens
+     * @param Tokens|Token[] $tokens
      *
      * @return void
      */
-    protected function fixConditions(\SplFileInfo $file, Tokens &$tokens)
+    protected function fixConditions(\SplFileInfo $file, Tokens $tokens)
     {
         foreach ($tokens as $index => $token) {
             if ($token->getContent() !== '(') {
@@ -104,17 +104,7 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
             }
 
             // Check if we need to inverse comparison operator
-            $comparisonIndexValue = $tokens[$comparisonIndex]->getContent();
-            if (in_array($tokens[$comparisonIndex]->getId(), [T_GREATER_THAN, T_LESS_THAN,
-                T_IS_GREATER_OR_EQUAL, T_IS_SMALLER_OR_EQUAL, ])) {
-                $mapping = [
-                    T_GREATER_THAN => '<',
-                    T_LESS_THAN => '>',
-                    T_IS_GREATER_OR_EQUAL => '<=',
-                    T_IS_SMALLER_OR_EQUAL => '>=',
-                ];
-                $comparisonIndexValue = $mapping[$tokens[$comparisonIndex]->getId()];
-            }
+            $comparisonIndexValue = $this->getComparisonIndexValue($tokens, $comparisonIndex);
 
             $rightIndexEnd = $tokens->getNextMeaningfulToken($rightIndexStart);
             if (!$rightIndex || $tokens[$rightIndexEnd]->getContent() !== ')') {
@@ -158,6 +148,29 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
     public function getDescription()
     {
         return 'Usage of Yoda conditions is not allowed. Switch the expression order.';
+    }
+
+    /**
+     * @param Tokens $tokens
+     * @param int $comparisonIndex
+     *
+     * @return int
+     */
+    protected function getComparisonIndexValue(Tokens $tokens, $comparisonIndex)
+    {
+        $comparisonIndexValue = $tokens[$comparisonIndex]->getContent();
+        if (in_array($tokens[$comparisonIndex]->getId(), [T_GREATER_THAN, T_LESS_THAN,
+            T_IS_GREATER_OR_EQUAL, T_IS_SMALLER_OR_EQUAL,])) {
+            $mapping = [
+                T_GREATER_THAN => '<',
+                T_LESS_THAN => '>',
+                T_IS_GREATER_OR_EQUAL => '<=',
+                T_IS_SMALLER_OR_EQUAL => '>=',
+            ];
+            $comparisonIndexValue = $mapping[$tokens[$comparisonIndex]->getId()];
+            return $comparisonIndexValue;
+        }
+        return $comparisonIndexValue;
     }
 
 }

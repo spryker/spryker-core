@@ -43,26 +43,8 @@ class NoInlineAssignmentFixer extends AbstractFixer
             $startIndex = $tokens->getNextMeaningfulToken($index);
             $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $startIndex);
 
-            $hasInlineAssignment = false;
             $indexEqualSign = null;
-            for ($i = $index; $i < $endIndex; $i++) {
-                /* @var Token $currentToken */
-                $currentToken = $tokens[$i];
-
-                // We need to skip for complex assignments
-                if ($currentToken->isGivenKind([T_BOOLEAN_OR, T_BOOLEAN_AND, T_LOGICAL_OR, T_LOGICAL_XOR, T_LOGICAL_AND])) {
-                    $hasInlineAssignment = false;
-                    break;
-                }
-
-                if (!$currentToken->equals('=')) {
-                    continue;
-                }
-
-                $indexEqualSign = $i;
-                $hasInlineAssignment = true;
-            }
-
+            $hasInlineAssignment = $this->hasInlineAssignment($index, $endIndex, $tokens, $indexEqualSign);
             if (!$hasInlineAssignment) {
                 continue;
             }
@@ -116,6 +98,36 @@ class NoInlineAssignmentFixer extends AbstractFixer
     public function getDescription()
     {
         return 'Inline assignment is not allowed. Extract into an own line above.';
+    }
+
+    /**
+     * @param int $index
+     * @param int $endIndex
+     * @param Tokens|Token[] $tokens
+     * @param int &$indexEqualSign
+     * @return bool
+     */
+    protected function hasInlineAssignment($index, $endIndex, Tokens $tokens, &$indexEqualSign)
+    {
+        $hasInlineAssignment = false;
+        for ($i = $index; $i < $endIndex; $i++) {
+            $currentToken = $tokens[$i];
+
+            // We need to skip for complex assignments
+            if ($currentToken->isGivenKind([T_BOOLEAN_OR, T_BOOLEAN_AND, T_LOGICAL_OR, T_LOGICAL_XOR, T_LOGICAL_AND])) {
+                $hasInlineAssignment = false;
+                break;
+            }
+
+            if (!$currentToken->equals('=')) {
+                continue;
+            }
+
+            $indexEqualSign = $i;
+            $hasInlineAssignment = true;
+        }
+
+        return $hasInlineAssignment;
     }
 
 }
