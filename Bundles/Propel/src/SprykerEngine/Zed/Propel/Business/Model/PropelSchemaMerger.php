@@ -239,14 +239,14 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
             $alreadyHasAttributes = false;
         }
         foreach ($fromXmlElement->attributes() as $key => $value) {
-            if (true === $alreadyHasAttributes
-                && true === array_key_exists($key, $toXmlAttributes)
-                && $toXmlAttributes[$key] !== $value
+            if ($alreadyHasAttributes
+                && array_key_exists($key, $toXmlAttributes)
+                && $toXmlAttributes[$key] !== (string) $value
             ) {
                 throw new SchemaMergeException('Ambiguous value for the same attribute for key "' . $key . '": "' . $toXmlAttributes[$key] . '" !== "' . $value . '"');
             }
 
-            if (false === $alreadyHasAttributes || false === array_key_exists($key, $toXmlAttributes)) {
+            if (!$alreadyHasAttributes || !array_key_exists($key, $toXmlAttributes)) {
                 $value = (string) $value;
                 $toXmlElement->addAttribute($key, $value);
             }
