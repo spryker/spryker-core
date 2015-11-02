@@ -20,6 +20,7 @@ use Symfony\Component\Validator\Constraint;
 
 abstract class AbstractForm
 {
+    use ConstraintsTrait;
 
     /**
      * @var Form
@@ -81,8 +82,11 @@ abstract class AbstractForm
             ->pluginPimple()
             ->getApplication();
 
+
         $this->request = $app['request'];
         $this->formFactory = $app['form.factory'];
+
+//        dump($this->formFactory);die;
 
         $this->form = $this->formFactory->createNamed(
             $this->getFormName(),

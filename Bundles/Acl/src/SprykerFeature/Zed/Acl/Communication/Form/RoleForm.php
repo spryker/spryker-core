@@ -35,7 +35,8 @@ class RoleForm extends AbstractForm
             [
                 'label' => 'Role name',
                 'constraints' => [
-                     new NotBlank(),
+//                     new NotBlank(),
+                    $this->createConstraintNotBlank(),
                 ],
             ]
         );

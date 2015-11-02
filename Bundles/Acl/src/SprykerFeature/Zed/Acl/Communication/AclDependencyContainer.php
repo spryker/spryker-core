@@ -106,7 +106,7 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createRoleForm()
     {
-        return $this->getFactory()->createFormRoleForm();
+        return $this->getFactory()->createFormRoleFormType();
     }
 
     /**
