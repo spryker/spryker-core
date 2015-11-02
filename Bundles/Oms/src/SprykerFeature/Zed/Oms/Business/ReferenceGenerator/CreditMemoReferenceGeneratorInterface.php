@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Oms\Business\ReferenceGenerator;
 
-
 interface CreditMemoReferenceGeneratorInterface
 {
 

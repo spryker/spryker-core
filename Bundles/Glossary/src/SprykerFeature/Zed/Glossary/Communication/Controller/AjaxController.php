@@ -35,7 +35,7 @@ class AjaxController extends AbstractController
             ->createQueryContainer()
             ->queryActiveKeysByName('%' . $term . '%')
             ->select([
-                SpyGlossaryKeyTableMap::COL_KEY
+                SpyGlossaryKeyTableMap::COL_KEY,
             ])
             ->find()
             ->toArray()
@@ -43,4 +43,5 @@ class AjaxController extends AbstractController
 
         return new JsonResponse($keys);
     }
+
 }

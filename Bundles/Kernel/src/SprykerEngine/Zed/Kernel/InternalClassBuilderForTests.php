@@ -66,7 +66,7 @@ trait InternalClassBuilderForTests
 
         $factory = new CommunicationFactory($bundle);
 
-        if (null === $bundleConfig) {
+        if ($bundleConfig === null) {
             $bundleConfigLocator = new BundleConfigLocator();
             $bundleConfig = $bundleConfigLocator->locate($bundle, $this->getLocator());
         }

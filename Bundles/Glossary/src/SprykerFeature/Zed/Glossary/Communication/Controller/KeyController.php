@@ -52,7 +52,6 @@ class KeyController extends AbstractController
                 ->queryTranslations()
                 ->findByFkGlossaryKey($idGlossaryKey)
             ;
-
         }
 
         $result = [];

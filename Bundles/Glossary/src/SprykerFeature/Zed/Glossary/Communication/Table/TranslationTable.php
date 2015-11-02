@@ -60,7 +60,7 @@ class TranslationTable extends AbstractTable
 
         $config->setSearchable([
             SpyGlossaryTranslationTableMap::COL_VALUE,
-            SpyGlossaryKeyTableMap::COL_KEY
+            SpyGlossaryKeyTableMap::COL_KEY,
         ]);
 
         $headers[self::ACTIONS] = self::ACTIONS;
@@ -154,7 +154,7 @@ class TranslationTable extends AbstractTable
 
         if (!empty($details[SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY])) {
             $idGlossaryKey = $details[SpyGlossaryTranslationTableMap::COL_FK_GLOSSARY_KEY];
-            if (false !== $idGlossaryKey) {
+            if ($idGlossaryKey !== false) {
                 $urls = '<a href="/glossary/edit/?' . TranslationForm::URL_PARAMETER_GLOSSARY_KEY . '=' . $idGlossaryKey . '" class="btn btn-xs btn-white">Edit</a>';
             }
         }

@@ -53,4 +53,5 @@ class IndexController extends AbstractController
 
         return $this->jsonResponse($table->fetchData());
     }
+
 }

@@ -98,7 +98,7 @@ class ClassMapFactory
      */
     protected function createKey($application, $bundle, $suffix, $layer = null)
     {
-        if (null !== $layer) {
+        if ($layer !== null) {
             $key = implode('|', [$application, $bundle, $layer, $suffix]);
         } else {
             $key = implode('|', [$application, $bundle, $suffix]);

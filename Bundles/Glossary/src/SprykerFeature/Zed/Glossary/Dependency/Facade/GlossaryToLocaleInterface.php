@@ -10,11 +10,13 @@ use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 
 interface GlossaryToLocaleInterface
 {
+
     /**
      * @param string $localeName
      *
-     * @return LocaleTransfer
      * @throws MissingLocaleException
+     *
+     * @return LocaleTransfer
      */
     public function getLocale($localeName);
 
@@ -27,4 +29,5 @@ interface GlossaryToLocaleInterface
      * @return array
      */
     public function getAvailableLocales();
+
 }

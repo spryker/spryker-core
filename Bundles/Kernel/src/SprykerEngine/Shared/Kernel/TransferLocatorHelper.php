@@ -20,7 +20,7 @@ class TransferLocatorHelper
     public function createTransferFromClassName(LocatorLocatorInterface $locator, $className)
     {
         $className = str_replace($this->getNamespaces(), '', $className, $count);
-        if (3 !== $count) {
+        if ($count !== 3) {
             throw new \Exception(sprintf('TransferClass %s  has the wrong namespace.', $className));
         }
         $segments = explode('\\', $className);

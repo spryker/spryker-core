@@ -26,11 +26,11 @@ class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[GlossaryDependencyProvider::FACADE_LOCALE] = function (Container $container) {
+        $container[self::FACADE_LOCALE] = function (Container $container) {
             return $container->getLocator()->locale()->facade();
         };
 
-        $container[GlossaryDependencyProvider::PLUGIN_VALIDATOR] = function (Container $container) {
+        $container[self::PLUGIN_VALIDATOR] = function (Container $container) {
             return $container->getLocator()->application()->pluginPimple()->getApplication()['validator'];
         };
 
@@ -44,15 +44,15 @@ class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[GlossaryDependencyProvider::FACADE_TOUCH] = function (Container $container) {
+        $container[self::FACADE_TOUCH] = function (Container $container) {
             return $container->getLocator()->touch()->facade();
         };
 
-        $container[GlossaryDependencyProvider::FACADE_LOCALE] = function (Container $container) {
+        $container[self::FACADE_LOCALE] = function (Container $container) {
             return $container->getLocator()->locale()->facade();
         };
 
-        $container[GlossaryDependencyProvider::FLASH_MESSAGES] = function (Container $container) {
+        $container[self::FLASH_MESSAGES] = function (Container $container) {
             return $container->getLocator()->flashMessenger()->facade();
         };
 

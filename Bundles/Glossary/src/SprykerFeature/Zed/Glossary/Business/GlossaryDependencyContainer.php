@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Glossary\Business;
 use Generated\Zed\Ide\FactoryAutoCompletion\GlossaryBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Glossary\Business\Key\KeyManagerInterface;
-use SprykerFeature\Zed\Glossary\Business\Key\KeySourceInterface;
 use SprykerFeature\Zed\Glossary\Business\Translation\TranslationManagerInterface;
 use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToTouchInterface;

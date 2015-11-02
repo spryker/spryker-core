@@ -144,4 +144,5 @@ class GlossaryFacadeTest extends Test
 
         $this->assertNotSame($translatedKey->getValue(), $translatedKeyChanged->getValue());
     }
+
 }
