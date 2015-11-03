@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Oms\Communication\Table;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
-use SprykerFeature\Zed\Oms\Persistence\Propel\Map\SpyOmsTransitionLogTableMap;
+use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
 
 class TransitionLogTable extends AbstractTable
 {
@@ -90,7 +90,8 @@ class TransitionLogTable extends AbstractTable
     }
 
     /**
-     * @param $row
+     * @param array $row
+     * @param string $column
      *
      * @return mixed
      */
@@ -121,8 +122,8 @@ class TransitionLogTable extends AbstractTable
     }
 
     /**
-     * @param $row
-     * @param $column
+     * @param array $row
+     * @param string $column
      *
      * @return mixed
      */

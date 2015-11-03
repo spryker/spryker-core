@@ -6,10 +6,10 @@
 
 namespace SprykerFeature\Zed\Sales\Persistence\Propel;
 
+use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem as BaseSpySalesOrderItem;
 use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory;
-use SprykerFeature\Zed\Sales\Persistence\Propel\Map\SpySalesOrderItemTableMap;
 
 /**
  * Skeleton subclass for representing a row from the 'spy_sales_order_item' table.
@@ -20,7 +20,7 @@ use SprykerFeature\Zed\Sales\Persistence\Propel\Map\SpySalesOrderItemTableMap;
  * application requirements.  This class will only be generated as
  * long as it does not already exist in the output directory.
  */
-class SpySalesOrderItem extends BaseSpySalesOrderItem
+class AbstractSpySalesOrderItem extends BaseSpySalesOrderItem
 {
 
     /**

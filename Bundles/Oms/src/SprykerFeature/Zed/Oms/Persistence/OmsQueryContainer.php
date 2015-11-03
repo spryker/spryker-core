@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Oms\Persistence;
 
 use DateTime;
-use Generated\Zed\Ide\FactoryAutoCompletion\OmsPersistence;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
@@ -20,7 +19,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 /**
- * @method OmsPersistence getFactory()
  */
 class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContainerInterface
 {
@@ -79,7 +77,9 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      */
     public function queryLogByIdOrder($idOrder, $orderById = true)
     {
-        $transitionLogQuery = $this->getFactory()->createPropelSpyOmsTransitionLogQuery()
+        $transitionLogQuery = new SpyOmsTransitionLogQuery();
+
+        $transitionLogQuery
             ->filterByFkSalesOrder($idOrder);
 
         if ($orderById) {
