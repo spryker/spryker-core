@@ -8,9 +8,15 @@ use SprykerFeature\Zed\Gui\Communication\Form\Type\SelectType;
 use Symfony\Component\Form\Extension\Validator\Constraints\Form;
 use Symfony\Component\Validator\Constraint;
 
+/**
+ * @deprecated use AbstractFormType instead
+ * this trait will not be necessary for AbstractFormType
+ */
 trait FormBuilderTrait
 {
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param string|Constraint $type
      * @param array $options
@@ -25,6 +31,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -38,6 +46,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -51,6 +61,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -64,6 +76,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -77,6 +91,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -90,6 +106,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -103,6 +121,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -116,6 +136,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -129,6 +151,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -142,6 +166,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -155,6 +181,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -168,6 +196,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -181,6 +211,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -194,6 +226,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -207,6 +241,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -220,6 +256,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -233,6 +271,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -246,6 +286,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -259,6 +301,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -272,6 +316,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -285,6 +331,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -298,6 +346,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -311,6 +361,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -324,6 +376,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -339,6 +393,8 @@ trait FormBuilderTrait
     /* == Field Groups == */
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -352,6 +408,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -365,6 +423,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -378,6 +438,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -391,6 +453,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -408,6 +472,7 @@ trait FormBuilderTrait
      * @param array $options
      *
      * @return $this
+     *
      * @deprecated Forms should not have submit buttons http://symfony.com/doc/current/best_practices/forms.html#form-button-configuration
      */
     public function addSubmit($name = 'submit', $options = [])
@@ -420,6 +485,8 @@ trait FormBuilderTrait
     /* == Base fields == */
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -433,6 +500,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *
@@ -446,6 +515,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * Select2 default combobox styling, see https://select2.github.io/examples.html
      *
      * @param string $name
@@ -461,6 +532,8 @@ trait FormBuilderTrait
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $name
      * @param array $options
      *

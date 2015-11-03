@@ -15,6 +15,9 @@ use Symfony\Component\Form\FormErrorIterator;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * @deprecated Use UserSprykerFeature/Zed/Gui/Communication/AbstractFormType instead
+ */
 abstract class AbstractForm
 {
     use FormBuilderTrait;
@@ -62,11 +65,15 @@ abstract class AbstractForm
     /**
      * Prepares form
      *
+     * @deprecated use AbstractFormType instead
+     *
      * @return $this
      */
     abstract protected function buildFormFields();
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @return array
      */
     protected function populateFormFields()
@@ -87,6 +94,8 @@ abstract class AbstractForm
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @return $this
      */
     protected function injectDependencies()
@@ -111,6 +120,8 @@ abstract class AbstractForm
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param array $options
      *
      * @return $this
@@ -123,6 +134,8 @@ abstract class AbstractForm
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param string $type
      *
      * @return $this
@@ -134,12 +147,19 @@ abstract class AbstractForm
         return $this;
     }
 
+    /**
+     * @deprecated use AbstractFormType instead
+     *
+     * @return string
+     */
     protected function getDefaultDataType()
     {
         return $this->defaultDataType;
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @return AutoCompletion
      */
     protected function getLocator()
@@ -148,6 +168,8 @@ abstract class AbstractForm
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @return $this
      */
     protected function init()
@@ -165,6 +187,8 @@ abstract class AbstractForm
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @param array $data
      *
      * @return $this
@@ -180,6 +204,8 @@ abstract class AbstractForm
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @return mixed
      */
     public function createView()
@@ -192,6 +218,8 @@ abstract class AbstractForm
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @return $this
      */
     public function handleRequest()
@@ -202,6 +230,8 @@ abstract class AbstractForm
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @return bool
      */
     public function isSubmitted()
@@ -210,6 +240,8 @@ abstract class AbstractForm
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @return bool
      */
     public function isValid()
@@ -218,6 +250,8 @@ abstract class AbstractForm
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @return mixed
      */
     public function getData()
@@ -232,6 +266,8 @@ abstract class AbstractForm
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @return FormErrorIterator
      */
     public function getErrors()
@@ -240,6 +276,8 @@ abstract class AbstractForm
     }
 
     /**
+     * @deprecated use AbstractFormType instead
+     *
      * @return string
      */
     protected function getFormName()
