@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * (c) Spryker Systems GmbH copyright protected
+ */
+
 namespace SprykerFeature\Zed\Gui\Communication;
 
 use SprykerEngine\Zed\Kernel\Locator;
@@ -13,6 +17,11 @@ abstract class AbstractFormType extends AbstractType
      * @var ConstraintsPlugin
      */
     protected $constraintsPlugin;
+
+    public function __construct()
+    {
+        $this->locateConstraint();
+    }
 
     /**
      * @return ConstraintsPlugin
