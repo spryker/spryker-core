@@ -47,7 +47,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
-     * @param $idOrder
+     * @param int $idOrder
      *
      * @return SpySalesOrderItemQuery
      */

@@ -165,6 +165,7 @@ class TransitionLog implements TransitionLogInterface
     {
         $logEntity = $this->getEntity();
         $logEntity->setOrderItem($salesOrderItem);
+        $logEntity->setQuantity($salesOrderItem->getQuantity());
         $logEntity->setFkSalesOrder($salesOrderItem->getFkSalesOrder());
         $logEntity->setFkOmsOrderProcess($salesOrderItem->getFkOmsOrderProcess());
 
