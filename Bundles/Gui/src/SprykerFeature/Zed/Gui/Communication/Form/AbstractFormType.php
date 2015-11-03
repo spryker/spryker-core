@@ -4,7 +4,7 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Gui\Communication;
+namespace SprykerFeature\Zed\Gui\Communication\Form;
 
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Gui\Communication\Plugin\ConstraintsPlugin;

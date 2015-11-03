@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
-use SprykerFeature\Zed\Gui\Communication\AbstractFormType;
+use SprykerFeature\Zed\Gui\Communication\Form\AbstractFormType;
 
 abstract class AbstractRuleType extends AbstractFormType
 {
@@ -36,7 +36,7 @@ abstract class AbstractRuleType extends AbstractFormType
         $this->availableCollectorPlugins = $availableCollectorPlugins;
         $this->availableDecisionRulePlugins = $availableDecisionRulePlugins;
 
-        $this->locateConstraint();
+        parent::__construct();
     }
 
     /**
