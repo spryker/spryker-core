@@ -15,7 +15,7 @@ class PropelInstallConsole extends Console
 {
 
     const COMMAND_NAME = 'propel:install';
-    const DESCRIPTION = 'Runs config convert, create database, postgres compatibility, copy schemas, build models and migrate tasks';
+    const DESCRIPTION = 'Runs config convert, create database, postgres compatibility, copy schemas, runs Diff, build models and migrate tasks';
 
     /**
      * @return void
@@ -41,6 +41,7 @@ class PropelInstallConsole extends Console
         $this->runDependingCommand(PostgresqlCompatibilityConsole::COMMAND_NAME);
         $this->runDependingCommand(SchemaCopyConsole::COMMAND_NAME);
         $this->runDependingCommand(BuildModelConsole::COMMAND_NAME);
+        $this->runDependingCommand(DiffConsole::COMMAND_NAME);
         $this->runDependingCommand(MigrateConsole::COMMAND_NAME);
     }
 

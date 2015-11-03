@@ -5,7 +5,7 @@
     <div class="col-md-12">
         <div class="row">
             <div class="col-lg-4">
-                {{ panel('Generators'|trans, listGroup(['<h4>' ~ 'Code'|trans ~ '</h4><pre><code> vendor/bin/console setup:generate</code></pre>', '<h4>' ~ 'Propel'|trans ~ '</h4><pre><code> vendor/bin/console propel:setup</code></pre>']), {'noWrap': true}) }}
+                {{ panel('Generators'|trans, listGroup(['<h4>' ~ 'Code'|trans ~ '</h4><pre><code> vendor/bin/console setup:generate</code></pre>', '<h4>' ~ 'Propel'|trans ~ '</h4><pre><code> vendor/bin/console propel:install</code></pre>']), {'noWrap': true}) }}
             </div>
             <div class="col-lg-4">
                 {% set dumpItem = {'href': '/db-dump/download'), 'target': '_blank', 'label': 'Get dump for  store'|trans} %}
