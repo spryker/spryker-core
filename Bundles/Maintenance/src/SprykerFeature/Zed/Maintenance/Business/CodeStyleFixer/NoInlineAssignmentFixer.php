@@ -105,6 +105,7 @@ class NoInlineAssignmentFixer extends AbstractFixer
      * @param int $endIndex
      * @param Tokens|Token[] $tokens
      * @param int &$indexEqualSign
+     *
      * @return bool
      */
     protected function hasInlineAssignment($index, $endIndex, Tokens $tokens, &$indexEqualSign)

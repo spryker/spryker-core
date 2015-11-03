@@ -177,7 +177,7 @@ class Group implements GroupInterface
     }
 
     /**
-     * @param integer $idUser
+     * @param int $idUser
      *
      * @return GroupsTransfer
      */
@@ -193,7 +193,6 @@ class Group implements GroupInterface
         }
 
         return $groupsTransfer;
-
     }
 
     /**

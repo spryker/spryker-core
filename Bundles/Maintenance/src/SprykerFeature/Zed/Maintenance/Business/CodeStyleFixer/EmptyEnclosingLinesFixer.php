@@ -39,7 +39,13 @@ class EmptyEnclosingLinesFixer extends AbstractFixer
                 }
 
                 if (!$this->isEmptyLineBeforeIndex($tokens, $closingBraceIndex)) {
-                    $tokens[$closingBraceIndex - 1]->setContent($tokens[$closingBraceIndex - 1]->getContent() . "\n");
+                    if ($tokens[$closingBraceIndex - 2]->getContent() !== '{') {
+                        $tokens[$closingBraceIndex - 1]->setContent($tokens[$closingBraceIndex - 1]->getContent() . "\n");
+                    }
+                } else {
+                    if ($openingBraceIndex + 2 === $closingBraceIndex) {
+                        $tokens[$openingBraceIndex + 1]->setContent("\n");
+                    }
                 }
             }
         }

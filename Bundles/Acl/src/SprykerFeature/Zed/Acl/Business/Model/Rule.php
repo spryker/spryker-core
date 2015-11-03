@@ -74,6 +74,7 @@ class Rule implements RuleInterface
      * @param RuleTransfer $ruleTransfer
      *
      * @throws RuleNotFoundException
+     *
      * @return RuleTransfer
      */
     public function addRule(RuleTransfer $ruleTransfer)

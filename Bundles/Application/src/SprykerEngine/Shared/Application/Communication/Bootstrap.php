@@ -326,6 +326,7 @@ class Bootstrap
      * @param Application $application
      *
      * @throws \Exception
+     *
      * @return null
      */
     private function addProtocolCheck(Application $application)

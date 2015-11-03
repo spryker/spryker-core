@@ -140,11 +140,11 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
     }
 
     /**
-     * @param \SimpleXmlElement $xml
+     * @param \SimpleXMLElement $xml
      *
      * @return string
      */
-    private function prettyPrint(\SimpleXmlElement $xml)
+    private function prettyPrint(\SimpleXMLElement $xml)
     {
         $dom = new \DOMDocument('1.0');
         $dom->preserveWhiteSpace = false;

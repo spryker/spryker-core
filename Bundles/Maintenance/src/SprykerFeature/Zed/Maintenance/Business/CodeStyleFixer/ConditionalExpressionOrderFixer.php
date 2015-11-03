@@ -160,7 +160,7 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
     {
         $comparisonIndexValue = $tokens[$comparisonIndex]->getContent();
         if (in_array($tokens[$comparisonIndex]->getId(), [T_GREATER_THAN, T_LESS_THAN,
-            T_IS_GREATER_OR_EQUAL, T_IS_SMALLER_OR_EQUAL,])) {
+            T_IS_GREATER_OR_EQUAL, T_IS_SMALLER_OR_EQUAL, ])) {
             $mapping = [
                 T_GREATER_THAN => '<',
                 T_LESS_THAN => '>',
@@ -168,8 +168,10 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
                 T_IS_SMALLER_OR_EQUAL => '>=',
             ];
             $comparisonIndexValue = $mapping[$tokens[$comparisonIndex]->getId()];
+
             return $comparisonIndexValue;
         }
+
         return $comparisonIndexValue;
     }
 

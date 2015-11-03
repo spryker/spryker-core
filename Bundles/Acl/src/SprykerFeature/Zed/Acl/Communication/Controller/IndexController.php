@@ -20,9 +20,7 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
-
     }
-
 
     /**
      * @return void
@@ -30,4 +28,5 @@ class IndexController extends AbstractController
     public function deniedAction()
     {
     }
+
 }

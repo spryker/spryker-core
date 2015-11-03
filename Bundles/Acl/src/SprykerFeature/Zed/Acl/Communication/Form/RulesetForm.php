@@ -11,6 +11,7 @@ use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 
 class RulesetForm extends AbstractForm
 {
+
     const BUNDLE = 'bundle';
     const CONTROLLER = 'controller';
     const ACTION = 'action';
@@ -37,7 +38,7 @@ class RulesetForm extends AbstractForm
         $this->addText(
             self::BUNDLE,
             [
-                'label'       => 'Bundle',
+                'label' => 'Bundle',
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -55,7 +56,7 @@ class RulesetForm extends AbstractForm
         $this->addText(
             self::CONTROLLER,
             [
-                'label'       => 'Controller',
+                'label' => 'Controller',
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -73,7 +74,7 @@ class RulesetForm extends AbstractForm
         $this->addText(
             self::ACTION,
             [
-                'label'       => 'Action',
+                'label' => 'Action',
                 'constraints' => [
                     new NotBlank(),
                 ],
@@ -91,8 +92,8 @@ class RulesetForm extends AbstractForm
         $this->addSelect(
             self::TYPE,
             [
-                'label'       => 'Permission',
-                'choices'     => $this->getPermissionSelectChoices(),
+                'label' => 'Permission',
+                'choices' => $this->getPermissionSelectChoices(),
                 'placeholder' => false,
             ]
         );
@@ -127,4 +128,5 @@ class RulesetForm extends AbstractForm
     {
         return 'ruleset_form';
     }
+
 }

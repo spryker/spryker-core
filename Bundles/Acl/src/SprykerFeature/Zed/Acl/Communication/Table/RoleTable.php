@@ -14,6 +14,7 @@ use SprykerFeature\Zed\Acl\AclConfig;
 
 class RoleTable extends AbstractTable
 {
+
     const ACTION = 'Action';
     const UPDATE_ROLE_URL = '/acl/role/update?id-role=%d';
     const DELETE_ROLE_URL = '/acl/role/delete?id-role=%d';
@@ -40,8 +41,8 @@ class RoleTable extends AbstractTable
     {
         $config->setHeader([
             SpyAclRoleTableMap::COL_CREATED_AT => 'Created at',
-            SpyAclRoleTableMap::COL_NAME       => 'Name',
-            self::ACTION                       => self::ACTION,
+            SpyAclRoleTableMap::COL_NAME => 'Name',
+            self::ACTION => self::ACTION,
         ]);
 
         $config->setSortable([
@@ -70,8 +71,8 @@ class RoleTable extends AbstractTable
         foreach ($queryResults as $rule) {
             $results[] = [
                 SpyAclRoleTableMap::COL_CREATED_AT => $rule[SpyAclRoleTableMap::COL_CREATED_AT],
-                SpyAclRoleTableMap::COL_NAME       => $rule[SpyAclRoleTableMap::COL_NAME],
-                self::ACTION                       => $this->createTableActions($rule),
+                SpyAclRoleTableMap::COL_NAME => $rule[SpyAclRoleTableMap::COL_NAME],
+                self::ACTION => $this->createTableActions($rule),
             ];
         }
 
@@ -94,7 +95,7 @@ class RoleTable extends AbstractTable
             $rule[SpyAclRoleTableMap::COL_ID_ACL_ROLE]
         );
 
-        if ($rule[SpyAclRoleTableMap::COL_NAME] != AclConfig::ROOT_ROLE) {
+        if ($rule[SpyAclRoleTableMap::COL_NAME] !== AclConfig::ROOT_ROLE) {
             $deleteButton = sprintf(
                 '<a class="btn btn-xs btn-white" href="' . self::DELETE_ROLE_URL . '">
                   Delete
@@ -105,6 +106,6 @@ class RoleTable extends AbstractTable
         }
 
         return $editButton . $deleteButton;
-
     }
+
 }

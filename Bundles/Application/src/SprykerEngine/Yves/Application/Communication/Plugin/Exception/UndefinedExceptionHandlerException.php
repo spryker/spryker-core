@@ -8,5 +8,4 @@ namespace SprykerEngine\Yves\Application\Communication\Plugin\Exception;
 
 class UndefinedExceptionHandlerException extends \Exception
 {
-
 }

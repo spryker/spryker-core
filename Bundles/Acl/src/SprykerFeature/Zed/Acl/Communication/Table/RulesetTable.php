@@ -12,6 +12,7 @@ use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
 class RulesetTable extends AbstractTable
 {
+
     const REMOVE_ACL_RULESET_URL = '/acl/ruleset/delete?id-rule=%d&id-role=%d';
     const EMPTY_HEADER_NAME = 'empty';
 
@@ -21,13 +22,13 @@ class RulesetTable extends AbstractTable
     private $aclQueryContainer;
 
     /**
-     * @var integer
+     * @var int
      */
     private $idRole;
 
     /**
      * @param AclQueryContainer $aclQueryContainer
-     * @param integer $idRole
+     * @param int $idRole
      */
     public function __construct(AclQueryContainer $aclQueryContainer, $idRole)
     {
@@ -109,4 +110,5 @@ class RulesetTable extends AbstractTable
 
         return $actionButtons;
     }
+
 }

@@ -20,6 +20,7 @@ use SprykerFeature\Zed\Acl\Business\Exception\RoleNameExistsException;
 
 class Role implements RoleInterface
 {
+
     /**
      * @var AclQueryContainer
      */
@@ -60,9 +61,10 @@ class Role implements RoleInterface
     /**
      * @param RoleTransfer $roleTransfer
      *
-     * @return RoleTransfer
      * @throws RoleNameExistsException
      * @throws RootNodeModificationException
+     *
+     * @return RoleTransfer
      */
     public function save(RoleTransfer $roleTransfer)
     {
