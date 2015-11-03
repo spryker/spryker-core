@@ -6,6 +6,7 @@
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
 
+        <column name="quantity" type="INTEGER" required="false"/>
         <column name="locked" type="BOOLEAN" required="false"/>
         <column name="fk_oms_order_process" type="INTEGER" required="false"/>
         <column name="event" required="false" size="100" type="VARCHAR"/>
