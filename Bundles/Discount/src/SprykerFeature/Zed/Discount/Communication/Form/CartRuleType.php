@@ -32,14 +32,14 @@ class CartRuleType extends AbstractRuleType
         $builder
             ->add(self::FIELD_DISPLAY_NAME, 'text', [
                 'constraints' => [
-                    new NotBlank(),
+                    $this->constraintsPlugin->createConstraintNotBlank(),
                 ],
             ])
             ->add(self::FIELD_DESCRIPTION, 'textarea')
             ->add(self::FIELD_AMOUNT, 'text', [
                 'label' => 'Amount',
                 'constraints' => [
-                    new NotBlank(),
+                    $this->constraintsPlugin->createConstraintNotBlank(),
                 ],
             ])
             ->add(self::FIELD_CALCULATOR_PLUGIN, 'choice', [

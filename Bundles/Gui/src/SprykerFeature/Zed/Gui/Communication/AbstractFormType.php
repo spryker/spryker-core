@@ -2,16 +2,36 @@
 
 namespace SprykerFeature\Zed\Gui\Communication;
 
+use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\Gui\Communication\Plugin\ConstraintsPlugin;
 use Symfony\Component\Form\AbstractType;
 
 abstract class AbstractFormType extends AbstractType
 {
 
     /**
-     * @return string
+     * @var ConstraintsPlugin
      */
-    public function getName()
+    protected $constraintsPlugin;
+
+    /**
+     * @return ConstraintsPlugin
+     */
+    public function locateConstraint()
     {
-        return 'form';
+        if (is_null($this->constraintsPlugin)) {
+            $this->constraintsPlugin = $this->getLocator()->gui()->pluginConstraintsPlugin();
+        }
+
+        return $this->constraintsPlugin;
     }
+
+    /**
+     * @return Locator
+     */
+    public function getLocator()
+    {
+        return Locator::getInstance();
+    }
+
 }

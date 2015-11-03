@@ -75,8 +75,6 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     {
         $discountQuery = $this->getQueryContainer()->queryDiscount();
 
-//        dump($this->getFactory());die;
-
         return $this->getFactory()->createTableDiscountsTable($discountQuery);
     }
 

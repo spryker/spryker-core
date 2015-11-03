@@ -149,10 +149,8 @@ abstract class AbstractForm
 
     /**
      * @return $this
-     *
-     * @deprecated this method will become private and will be called in this class ONLY in handleRequest()
      */
-    public function init()
+    protected function init()
     {
         if (!$this->initialized) {
             $this->initialized = true;

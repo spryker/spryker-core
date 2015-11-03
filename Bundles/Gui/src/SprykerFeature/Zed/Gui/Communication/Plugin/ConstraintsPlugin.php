@@ -45,6 +45,7 @@ use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Constraints\Null;
 use Symfony\Component\Validator\Constraints\Range;
 use Symfony\Component\Validator\Constraints\Regex;
+use Symfony\Component\Validator\Constraints\Required;
 use Symfony\Component\Validator\Constraints\Time;
 use Symfony\Component\Validator\Constraints\True;
 use Symfony\Component\Validator\Constraints\Type;
@@ -491,5 +492,15 @@ class ConstraintsPlugin extends AbstractPlugin
     public function createConstraintValid($options = null)
     {
         return new Valid($options);
+    }
+
+    /**
+     * @param null $options
+     *
+     * @return Required
+     */
+    public function createConstraintRequired($options = null)
+    {
+        return new Required($options);
     }
 }
