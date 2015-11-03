@@ -74,6 +74,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     /**
      * @param int $idOrder
      * @param bool $orderById
+     *
      * @return SpyOmsTransitionLogQuery
      */
     public function queryLogByIdOrder($idOrder, $orderById = true)

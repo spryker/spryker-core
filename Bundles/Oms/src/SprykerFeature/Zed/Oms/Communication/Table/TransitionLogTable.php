@@ -5,7 +5,6 @@
 
 namespace SprykerFeature\Zed\Oms\Communication\Table;
 
-use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
@@ -23,6 +22,7 @@ class TransitionLogTable extends AbstractTable
 
     /**
      * TransitionLogTable constructor.
+     *
      * @param OmsQueryContainerInterface $omsQueryContainer
      */
     public function __construct(OmsQueryContainerInterface $omsQueryContainer)
@@ -51,7 +51,7 @@ class TransitionLogTable extends AbstractTable
 
         $config->setHeader($headers);
 
-        $config->setUrl('table-ajax?id-order='.$this->getIdOrder());
+        $config->setUrl('table-ajax?id-order=' . $this->getIdOrder());
 
         $createdAtColumnIndex = array_search(SpyOmsTransitionLogTableMap::COL_CREATED_AT, array_keys($config->getHeader()));
 
@@ -76,7 +76,6 @@ class TransitionLogTable extends AbstractTable
         $result = $this->runQuery($query, $config);
 
         foreach ($result as $i => $row) {
-
             $row = $this->formatArray($row, SpyOmsTransitionLogTableMap::COL_CONDITIONS);
             $row = $this->formatArray($row, SpyOmsTransitionLogTableMap::COL_COMMANDS);
 
@@ -85,15 +84,14 @@ class TransitionLogTable extends AbstractTable
             $row = $this->formatEmptyValues($row, SpyOmsTransitionLogTableMap::COL_COMMANDS);
 
             $result[$i] = $row;
-
         }
-
 
         return $result;
     }
 
     /**
      * @param $row
+     *
      * @return mixed
      */
     protected function formatArray(array $row, $column)
@@ -118,17 +116,20 @@ class TransitionLogTable extends AbstractTable
     protected function getIdOrder()
     {
         $idOrder = $this->request->get('id-order');
+
         return $idOrder;
     }
 
     /**
      * @param $row
      * @param $column
+     *
      * @return mixed
      */
     protected function formatEmptyValues($row, $column)
     {
         $row[$column] = empty($row[$column]) ? '---' : $row[$column];
+
         return $row;
     }
 

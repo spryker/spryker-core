@@ -760,6 +760,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         $log = clone $this->transitionLog;
 
         $log->init($orderItems);
+
         return $log;
     }
 

@@ -9,12 +9,12 @@ namespace SprykerFeature\Zed\Oms\Business\Util;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\Library\System;
 use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
-use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Oms\Persistence\SpyOmsTransitionLog;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
+use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class TransitionLog implements TransitionLogInterface
@@ -40,12 +40,10 @@ class TransitionLog implements TransitionLogInterface
      */
     protected $logContext;
 
-
     /**
      * @var SpyOmsTransitionLog[]
      */
     protected $logEntities;
-
 
     /**
      * @param OmsQueryContainerInterface $queryContainer
@@ -59,6 +57,8 @@ class TransitionLog implements TransitionLogInterface
 
     /**
      * @param EventInterface $event
+     *
+     * @return void
      */
     public function setEvent(EventInterface $event)
     {
@@ -68,20 +68,21 @@ class TransitionLog implements TransitionLogInterface
             $nameEvent .= ' (on enter)';
         }
 
-        foreach($this->logEntities as $logEntity){
+        foreach ($this->logEntities as $logEntity) {
             $logEntity->setEvent($nameEvent);
         }
     }
 
-    /**
-     * TODO rename to init
+    /***
      * @param SpySalesOrderItem[] $salesOrderItems
+     *
+     * @return void
      */
     public function init(array $salesOrderItems)
     {
         $this->logEntities = [];
 
-        foreach($salesOrderItems as $salesOrderItem){
+        foreach ($salesOrderItems as $salesOrderItem) {
             $logEntity = $this->initEntity($salesOrderItem);
             $this->logEntities[$salesOrderItem->getIdSalesOrderItem()] = $logEntity;
         }
@@ -90,6 +91,8 @@ class TransitionLog implements TransitionLogInterface
     /**
      * @param SpySalesOrderItem $item
      * @param CommandInterface $command
+     *
+     * @return void
      */
     public function addCommand(SpySalesOrderItem $item, CommandInterface $command)
     {
@@ -99,6 +102,8 @@ class TransitionLog implements TransitionLogInterface
     /**
      * @param SpySalesOrderItem $item
      * @param ConditionInterface $condition
+     *
+     * @return void
      */
     public function addCondition(SpySalesOrderItem $item, ConditionInterface $condition)
     {
@@ -108,6 +113,8 @@ class TransitionLog implements TransitionLogInterface
     /**
      * @param SpySalesOrderItem $item
      * @param string $stateName
+     *
+     * @return void
      */
     public function addSourceState(SpySalesOrderItem $item, $stateName)
     {
@@ -117,6 +124,8 @@ class TransitionLog implements TransitionLogInterface
     /**
      * @param SpySalesOrderItem $item
      * @param string $stateName
+     *
+     * @return void
      */
     public function addTargetState(SpySalesOrderItem $item, $stateName)
     {
@@ -125,26 +134,35 @@ class TransitionLog implements TransitionLogInterface
 
     /**
      * @param bool $error
+     *
+     * @return void
      */
     public function setError($error)
     {
-        foreach($this->logEntities as $logEntity){
+        foreach ($this->logEntities as $logEntity) {
             $logEntity->setError($error);
         }
     }
 
     /**
      * @param string $errorMessage
+     *
+     * @return void
      */
     public function setErrorMessage($errorMessage)
     {
-            foreach($this->logEntities as $logEntity){
-                $logEntity->setErrorMessage($errorMessage);
-            }
+        foreach ($this->logEntities as $logEntity) {
+            $logEntity->setErrorMessage($errorMessage);
+        }
     }
 
-    protected function initEntity(SpySalesOrderItem $salesOrderItem){
-
+    /**
+     * @param SpySalesOrderItem $salesOrderItem
+     *
+     * @return SpyOmsTransitionLog
+     */
+    protected function initEntity(SpySalesOrderItem $salesOrderItem)
+    {
         $logEntity = $this->getEntity();
         $logEntity->setOrderItem($salesOrderItem);
         $logEntity->setFkSalesOrder($salesOrderItem->getFkSalesOrder());
@@ -152,13 +170,12 @@ class TransitionLog implements TransitionLogInterface
 
         $logEntity->setHostname(System::getHostname());
 
-
         $path = 'cli';
         $request = $this->getRequest();
         if (isset($request)) {
             $path = $request->getPathInfo();
-        }else{
-            if(isset($_SERVER['argv']) && is_array($_SERVER['argv'])) {
+        } else {
+            if (isset($_SERVER['argv']) && is_array($_SERVER['argv'])) {
                 $path = implode(' ', $_SERVER['argv']);
             }
         }
@@ -168,7 +185,6 @@ class TransitionLog implements TransitionLogInterface
 
         return $logEntity;
     }
-
 
     /**
      * TODO Refactor: dependency
@@ -182,6 +198,7 @@ class TransitionLog implements TransitionLogInterface
 
     /**
      * @param SpySalesOrderItem $salesOrderItem
+     *
      * @return void
      */
     public function save(SpySalesOrderItem $salesOrderItem)
@@ -190,6 +207,7 @@ class TransitionLog implements TransitionLogInterface
     }
 
     /**
+     * @return void
      */
     public function saveAll()
     {
@@ -202,7 +220,9 @@ class TransitionLog implements TransitionLogInterface
 
     /**
      * @param array $params
-     * @param array $result
+     * @param array &$result
+     *
+     * @return void
      */
     protected function getOutputParams(array $params, array &$result)
     {

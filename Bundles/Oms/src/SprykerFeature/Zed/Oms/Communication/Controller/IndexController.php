@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Oms\Communication\Controller;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Oms\Business\OmsFacade;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
-use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;

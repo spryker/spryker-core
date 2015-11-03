@@ -22,6 +22,7 @@ class OmsDependencyContainer extends AbstractCommunicationDependencyContainer
     public function createTransitionLogTable()
     {
         $queryContainer = $this->getQueryContainer();
+
         return $this->getFactory()->createTableTransitionLogTable($queryContainer);
     }
 

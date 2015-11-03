@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Sales\Persistence\Propel;
 
 use Propel\Runtime\Connection\ConnectionInterface;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItem as BaseSpySalesOrderItem;
-use SprykerFeature\Zed\Oms\Persistence\Propel\SpyOmsOrderItemStateHistory;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateHistory;
 use SprykerFeature\Zed\Sales\Persistence\Propel\Map\SpySalesOrderItemTableMap;
 
 /**
@@ -41,6 +41,7 @@ class SpySalesOrderItem extends BaseSpySalesOrderItem
 
     /**
      * @param ConnectionInterface|null $con
+     *
      * @throws \Propel\Runtime\Exception\PropelException
      * 
      * @return void

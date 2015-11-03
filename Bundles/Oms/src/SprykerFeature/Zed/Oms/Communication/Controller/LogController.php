@@ -23,21 +23,25 @@ class LogController extends AbstractController
 
     /**
      * @param Request $request
+     *
      * @return mixed
      */
     public function indexAction(Request $request)
     {
         $transitionLogTable = $this->getDependencyContainer()->createTransitionLogTable();
+
         return $this->viewResponse(['transitionLogTable' => $transitionLogTable->render()]);
     }
 
         /**
          * @param Request $request
+         *
          * @return mixed
          */
     public function tableAjaxAction(Request $request)
     {
         $transitionLogTable = $this->getDependencyContainer()->createTransitionLogTable();
+
         return $this->jsonResponse($transitionLogTable->fetchData());
     }
 

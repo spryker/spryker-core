@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Oms\Business\Util;
 
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
-use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
@@ -58,6 +57,7 @@ interface TransitionLogInterface
 
     /**
      * @param SpySalesOrderItem $salesOrderItem
+     *
      * @return void
      */
     public function save(SpySalesOrderItem $salesOrderItem);
