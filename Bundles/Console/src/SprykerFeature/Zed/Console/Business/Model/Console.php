@@ -146,7 +146,7 @@ class Console extends SymfonyCommand
         $this->setNewRelicTransaction($command, $arguments);
 
         $command = $this->getApplication()->find($command);
-        $arguments['command'] = $command;
+        $arguments['command'] = $command->getName();
         $input = new ArrayInput($arguments);
 
         $command->run($input, $this->output);

@@ -75,7 +75,7 @@ class SetupConfig extends AbstractBundleConfig
         return [
             DeleteAllCachesConsole::COMMAND_NAME,
             RemoveGeneratedDirectoryConsole::COMMAND_NAME,
-            PropelInstallConsole::COMMAND_NAME => [PropelInstallConsole::ARGUMENT_NO_DIFF],
+            PropelInstallConsole::COMMAND_NAME => ['--' . PropelInstallConsole::OPTION_NO_DIFF => true],
             GeneratorConsole::COMMAND_NAME,
             InitializeDatabaseConsole::COMMAND_NAME,
             GenerateIdeAutoCompletionConsole::COMMAND_NAME,
