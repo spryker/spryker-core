@@ -6,9 +6,6 @@
 
 namespace SprykerFeature\Zed\Gui\Communication\Exception;
 
-
-
 class TableException extends \Exception
 {
-
 }

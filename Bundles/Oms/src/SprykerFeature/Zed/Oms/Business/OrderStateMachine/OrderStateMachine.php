@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
 
-use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
+use SprykerFeature\Shared\Library\Log;
 use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByItemInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
@@ -77,11 +77,6 @@ class OrderStateMachine implements OrderStateMachineInterface
     protected $commands;
 
     /**
-     * @var FactoryInterface
-     */
-    protected $factory;
-
-    /**
      * @param OmsQueryContainerInterface $queryContainer
      * @param BuilderInterface $builder
      * @param TransitionLogInterface $transitionLog
@@ -89,7 +84,6 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @param ReadOnlyArrayObject $activeProcesses
      * @param array $conditions
      * @param array $commands
-     * @param FactoryInterface $factory
      */
     public function __construct(
         OmsQueryContainerInterface $queryContainer,
@@ -98,8 +92,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         TimeoutInterface $timeout,
         ReadOnlyArrayObject $activeProcesses,
         array $conditions,
-        array $commands,
-        FactoryInterface $factory
+        array $commands
     ) {
         $this->queryContainer = $queryContainer;
         $this->builder = $builder;
@@ -108,7 +101,6 @@ class OrderStateMachine implements OrderStateMachineInterface
         $this->activeProcesses = $activeProcesses;
         $this->conditions = $conditions;
         $this->commands = $commands;
-        $this->factory = $factory; // TODO remove
     }
 
     /**
@@ -423,6 +415,8 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @param TransitionLogInterface $log
      *
      * @throws Exception
+     *
+     * @return void
      */
     protected function runCommand($eventId, array $orderItems, array $processes, ReadOnlyArrayObject $data, TransitionLogInterface $log)
     {
@@ -610,16 +604,14 @@ class OrderStateMachine implements OrderStateMachineInterface
     }
 
     /**
-     * @param $data
+     * @param array $data
      *
      * @return ReadOnlyArrayObject
      */
     protected function makeDataReadOnly($data)
     {
         if (is_array($data)) {
-            $data = $this->factory->createUtilReadOnlyArrayObject($data); // TODO use dependency injection
-
-            return $data;
+            $data = new ReadOnlyArrayObject($data);
         }
 
         return $data;
@@ -645,6 +637,8 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * @param array $orderItemsWithOnEnterEvent
      * @param ReadOnlyArrayObject $data
+     *
+     * @return void
      */
     protected function triggerOnEnterEvents(array $orderItemsWithOnEnterEvent, ReadOnlyArrayObject $data)
     {
@@ -693,6 +687,8 @@ class OrderStateMachine implements OrderStateMachineInterface
      * @param TransitionLogInterface $log
      * @param ProcessInterface[] $processes
      * @param array $sourceStateBuffer
+     *
+     * @return void
      */
     protected function saveOrderItems(array $orderItems, TransitionLogInterface $log, array $processes, array $sourceStateBuffer)
     {
@@ -756,6 +752,7 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param SpySalesOrderItem[] $orderItems
+     *
      * @return TransitionLogInterface
      */
     protected function initTransitionLog(array $orderItems)
@@ -769,6 +766,8 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * @param SpySalesOrderItem[] $orderItems
      * @param TransitionLogInterface $log
+     *
+     * @return void
      */
     protected function logSourceState($orderItems, TransitionLogInterface $log)
     {
