@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Acl\Communication\Controller;
 
-use Generated\Shared\Transfer\RuleTransfer;
 use SprykerFeature\Zed\Acl\Business\AclFacade;
 use SprykerFeature\Zed\Acl\Communication\AclDependencyContainer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
@@ -19,6 +18,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class RulesetController extends AbstractController
 {
+
     const ROLE_UPDATE_URL = '/acl/role/update?id-role=%d';
 
     /**
@@ -33,6 +33,7 @@ class RulesetController extends AbstractController
 
         if (empty($idRule)) {
             $this->addErrorMessage('Missing rule id!');
+
             return $this->redirectResponse(sprintf(self::ROLE_UPDATE_URL, $idRole));
         }
 
@@ -46,4 +47,5 @@ class RulesetController extends AbstractController
 
         return $this->redirectResponse(sprintf(self::ROLE_UPDATE_URL, $idRole));
     }
+
 }

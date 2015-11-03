@@ -10,6 +10,7 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RoleForm extends AbstractForm
 {
+
     const NAME = 'name';
     const ID_ROLE = 'id_acl_role';
 
@@ -73,4 +74,5 @@ class RoleForm extends AbstractForm
     {
         return 'role_form';
     }
+
 }

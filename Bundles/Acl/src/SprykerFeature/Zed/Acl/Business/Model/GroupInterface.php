@@ -113,7 +113,7 @@ interface GroupInterface
     public function getUserGroup($idUser);
 
     /**
-     * @param integer $idUser
+     * @param int $idUser
      *
      * @return GroupsTransfer
      */

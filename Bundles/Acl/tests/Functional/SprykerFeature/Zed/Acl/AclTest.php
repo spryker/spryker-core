@@ -257,7 +257,6 @@ class AclTest extends Test
         $ruleData[] = $this->mockRuleData('deny', $roleDto->getIdAclRole());
 
         foreach ($ruleData as $current) {
-
             $ruleTransfer = new RuleTransfer();
             $ruleTransfer->fromArray($current, true);
 

@@ -104,7 +104,7 @@ class AclQueryContainer extends AbstractQueryContainer
     }
 
     /**
-     * @param integer $idRole
+     * @param int $idRole
      *
      * @return SpyAclGroupsHasRolesQuery
      */

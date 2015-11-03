@@ -137,6 +137,7 @@ class AclConfig extends AbstractBundleConfig
         if (Config::hasValue(AclSharedConfig::ACL_USER_RULE_WHITELIST)) {
             return Config::get(AclSharedConfig::ACL_USER_RULE_WHITELIST);
         }
+
         return [];
     }
 

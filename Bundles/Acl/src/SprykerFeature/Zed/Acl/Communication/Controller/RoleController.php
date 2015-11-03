@@ -26,6 +26,7 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
  */
 class RoleController extends AbstractController
 {
+
     const ACL_ROLE_LIST_URL = '/acl/role/index';
     const ROLE_UPDATE_URL = '/acl/role/update?id-role=%d';
 
@@ -67,6 +68,7 @@ class RoleController extends AbstractController
             try {
                 $roleTransfer = $this->getFacade()->addRole($formData[RoleForm::NAME]);
                 $this->addSuccessMessage('Role successfully added.');
+
                 return $this->redirectResponse(sprintf(self::ROLE_UPDATE_URL, $roleTransfer->getIdAclRole()));
             } catch (RoleNameExistsException $e) {
                 $this->addErrorMessage($e->getMessage());
@@ -91,6 +93,7 @@ class RoleController extends AbstractController
 
         if (empty($idRole)) {
             $this->addErrorMessage('Missing role id!');
+
             return $this->redirectResponse(self::ACL_ROLE_LIST_URL);
         }
 
@@ -98,6 +101,7 @@ class RoleController extends AbstractController
 
         if ($groupsHavingThisRole > 0) {
             $this->addErrorMessage('Not possible to delete, role have groups assigned.');
+
             return $this->redirectResponse(self::ACL_ROLE_LIST_URL);
         }
 
@@ -106,7 +110,6 @@ class RoleController extends AbstractController
         $this->addSuccessMessage('Role was successfully removed.');
 
         return $this->redirectResponse(self::ACL_ROLE_LIST_URL);
-
     }
 
     /**
@@ -135,6 +138,7 @@ class RoleController extends AbstractController
 
         if (empty($idRole)) {
             $this->addErrorMessage('Missing role id!');
+
             return $this->redirectResponse(self::ACL_ROLE_LIST_URL);
         }
 
@@ -153,17 +157,16 @@ class RoleController extends AbstractController
         $rulesetTable = $this->getDependencyContainer()->createRulesetTable($idRole);
 
         return [
-            'roleForm'     => $roleForm->createView(),
-            'rulesetForm'  => $rulesetForm->createView(),
+            'roleForm' => $roleForm->createView(),
+            'rulesetForm' => $rulesetForm->createView(),
             'rulesetTable' => $rulesetTable->render(),
             'roleTransfer' => $roleTransfer,
         ];
-
     }
 
     /**
      * @param RulesetForm $rulesetForm
-     * @param integer     $idRole
+     * @param int     $idRole
      *
      * @return RulesetForm
      */
@@ -190,7 +193,6 @@ class RoleController extends AbstractController
     /**
      * @param RoleForm     $roleForm
      * @param RoleTransfer $roleTransfer
-     *
      */
     protected function handleRoleForm(RoleForm $roleForm, RoleTransfer $roleTransfer)
     {
@@ -214,4 +216,5 @@ class RoleController extends AbstractController
             }
         }
     }
+
 }
