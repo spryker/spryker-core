@@ -102,7 +102,6 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
             $checkoutResponse->setOrder($orderTransfer);
             if (!$this->hasErrors($checkoutResponse)) {
-
                 $this->triggerStateMachine($orderTransfer);
                 $this->executePostHooks($orderTransfer, $checkoutResponse);
 
@@ -245,6 +244,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
     /**
      * @param \Exception $exception
+     *
      * @return CheckoutErrorTransfer
      */
     protected function handleCheckoutError(\Exception $exception)
