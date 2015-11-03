@@ -7,6 +7,7 @@ class TestClass1Input
 
     public function aFunction($foo = null, $bar = null)
     {
+        // We may not touch those
         $bar->setCallback(function () use ($foo) {
             $csvHandle = fopen('php://output', 'w+');
             return $foo;
@@ -15,7 +16,10 @@ class TestClass1Input
 
     public function bFunction($foo = null, $bar)
     {
-
+        // We may not touch those
+        while ($matches = $this->getMatches($lines[++$i], true)) {
+            $items[] = $matches;
+        }
     }
 
     public function cFunction($foo = false, $bar = 'bar', $baz)
