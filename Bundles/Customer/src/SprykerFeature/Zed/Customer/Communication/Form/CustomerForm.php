@@ -10,13 +10,6 @@ use Orm\Zed\Customer\Persistence\Base\SpyCustomerAddressQuery;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use Symfony\Component\Validator\Constraints;
-use Symfony\Component\Validator\Constraints\Required;
-use Symfony\Component\Validator\Constraints\Length;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\Callback;
-use SprykerFeature\Zed\Customer\Business\Customer\Customer;
 use Symfony\Component\Validator\Context\ExecutionContext;
 
 class CustomerForm extends AbstractForm
@@ -62,13 +55,13 @@ class CustomerForm extends AbstractForm
     public function buildFormFields()
     {
         $emailConstraints = [
-            new NotBlank(),
-            new Required(),
-            new Email(),
+            $this->locateConstraint()->createConstraintNotBlank(),
+            $this->locateConstraint()->createConstraintRequired(),
+            $this->locateConstraint()->createConstraintEmail(),
         ];
 
         if (self::ADD === $this->type) {
-            $emailConstraints[] = new Callback([
+            $emailConstraints[] = $this->locateConstraint()->createConstraintCallback([
                 'methods' => [
                     function ($email, ExecutionContext $context) {
                         if ($this->customerQuery->findByEmail($email)
@@ -102,17 +95,17 @@ class CustomerForm extends AbstractForm
             ->addText('first_name', [
                 'label' => 'First Name',
                 'constraints' => [
-                    new Required(),
-                    new NotBlank(),
-                    new Length(['max' => 100]),
+                    $this->locateConstraint()->createConstraintRequired(),
+                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->locateConstraint()->createConstraintLength(['max' => 100]),
                 ],
             ])
             ->addText('last_name', [
                 'label' => 'Last Name',
                 'constraints' => [
-                    new Required(),
-                    new NotBlank(),
-                    new Length(['max' => 100]),
+                    $this->locateConstraint()->createConstraintRequired(),
+                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->locateConstraint()->createConstraintLength(['max' => 100]),
                 ],
             ])
             ->addChoice(self::GENDER, [
@@ -120,7 +113,7 @@ class CustomerForm extends AbstractForm
                 'placeholder' => 'Select one',
                 'choices' => $this->getGenderOptions(),
                 'constraints' => [
-                    new Required(),
+                    $this->locateConstraint()->createConstraintRequired(),
                 ],
             ])
         ;

@@ -6,7 +6,6 @@
 namespace SprykerFeature\Zed\User\Communication\Form;
 
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use SprykerFeature\Zed\User\Communication\Form\Constraints\CurrentPassword;
 
 class ResetPasswordForm extends AbstractForm
@@ -26,7 +25,7 @@ class ResetPasswordForm extends AbstractForm
             [
                 'label'       => 'Current password',
                 'constraints' => [
-                    new NotBlank(),
+                    $this->locateConstraint()->createConstraintNotBlank(),
                     new CurrentPassword([
                         'facadeUser' => $this->getLocator()->user()->facade(),
                     ]),
@@ -36,7 +35,7 @@ class ResetPasswordForm extends AbstractForm
             self::PASSWORD,
             [
                 'constraints' => [
-                    new NotBlank(),
+                    $this->locateConstraint()->createConstraintNotBlank(),
                 ],
                 'invalid_message' => 'The password fields must match.',
                 'first_options' => ['label' => 'Password'],

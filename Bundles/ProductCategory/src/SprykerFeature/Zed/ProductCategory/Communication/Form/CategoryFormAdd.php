@@ -15,7 +15,6 @@ use Orm\Zed\Category\Persistence\SpyCategoryNode;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategory;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CategoryFormAdd extends AbstractForm
 {
@@ -79,14 +78,14 @@ class CategoryFormAdd extends AbstractForm
     {
         return $this->addText(self::NAME, [
                 'constraints' => [
-                    new NotBlank(),
+                    $this->locateConstraint()->createConstraintNotBlank(),
                 ],
             ])
             ->addSelect2ComboBox(self::FK_PARENT_CATEGORY_NODE, [
                 'label' => 'Parent',
                 'choices' => $this->getCategoriesWithPaths(),
                 'constraints' => [
-                    new NotBlank(),
+                    $this->locateConstraint()->createConstraintNotBlank(),
                 ],
             ])
             ->addHidden(self::PK_CATEGORY_NODE)

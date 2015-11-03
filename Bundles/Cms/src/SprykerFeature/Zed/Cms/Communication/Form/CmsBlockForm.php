@@ -6,11 +6,9 @@
 
 namespace SprykerFeature\Zed\Cms\Communication\Form;
 
-use SprykerFeature\Zed\Cms\Communication\Form\Constraint\CmsConstraint;
 use Orm\Zed\Cms\Persistence\SpyCmsBlockQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContext;
 
 class CmsBlockForm extends AbstractForm
@@ -51,11 +49,6 @@ class CmsBlockForm extends AbstractForm
     protected $idCmsBlock;
 
     /**
-     * @var CmsConstraint
-     */
-    protected $constraints;
-
-    /**
      * @var string
      */
     protected $blockName;
@@ -78,15 +71,17 @@ class CmsBlockForm extends AbstractForm
     /**
      * @param SpyCmsTemplateQuery $templateQuery
      * @param SpyCmsBlockQuery $blockPageByIdQuery
-     * @param CmsConstraint $constraints
      * @param string $formType
      * @param int $idCmsBlock
      */
-    public function __construct(SpyCmsTemplateQuery $templateQuery, SpyCmsBlockQuery $blockPageByIdQuery, CmsConstraint $constraints, $formType, $idCmsBlock)
-    {
+    public function __construct(
+        SpyCmsTemplateQuery $templateQuery,
+        SpyCmsBlockQuery $blockPageByIdQuery,
+        $formType,
+        $idCmsBlock
+    ) {
         $this->templateQuery = $templateQuery;
         $this->blockPageByIdQuery = $blockPageByIdQuery;
-        $this->constraints = $constraints;
         $this->formType = $formType;
         $this->idCmsBlock = $idCmsBlock;
     }
@@ -96,22 +91,21 @@ class CmsBlockForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-        $blockConstraints = $this->constraints->getMandatoryConstraints();
+        $blockConstraints = $this->locateConstraint()->getMandatoryConstraints();
 
-
-            $blockConstraints[] = new Callback([
-                'methods' => [
-                    function ($name, ExecutionContext $context) {
-                        $formData = $context->getRoot()->getViewData();
-                        if (!empty($this->checkExistingBlock($name, $formData)) && ($this->blockName !== $name
-                                            || $this->blockType !== $formData['type']
-                                            || $this->blockValue !== intval($formData['value']))
-                        ) {
-                            $context->addViolation('Block name with same Type and Value already exists.');
-                        }
-                    },
-                ],
-            ]);
+        $blockConstraints[] = $this->locateConstraint()->createConstraintCallback([
+            'methods' => [
+                function ($name, ExecutionContext $context) {
+                    $formData = $context->getRoot()->getViewData();
+                    if (!empty($this->checkExistingBlock($name, $formData)) && ($this->blockName !== $name
+                        || $this->blockType !== $formData['type']
+                        || $this->blockValue !== intval($formData['value']))
+                    ) {
+                        $context->addViolation('Block name with same Type and Value already exists.');
+                    }
+                },
+            ],
+        ]);
 
         return $this->addHidden(self::ID_CMS_BLOCK)
             ->addHidden(self::CURRENT_TEMPLATE)

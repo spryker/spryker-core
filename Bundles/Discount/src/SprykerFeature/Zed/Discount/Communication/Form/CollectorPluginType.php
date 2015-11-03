@@ -3,7 +3,6 @@
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\Required;
 
 class CollectorPluginType extends AbstractRuleType
 {

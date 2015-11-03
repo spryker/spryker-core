@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\ProductCategory\Communication\Form;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
 use Orm\Zed\Category\Persistence\SpyCategory;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class CategoryFormEdit extends CategoryFormAdd
 {
@@ -38,7 +37,7 @@ class CategoryFormEdit extends CategoryFormAdd
 
         return $this->addText(self::NAME, [
                 'constraints' => [
-                    new NotBlank(),
+                    $this->locateConstraint()->createConstraintNotBlank(),
                 ],
             ])
             ->addText(self::ATTRIBUTE_META_TITLE, [
@@ -63,7 +62,7 @@ class CategoryFormEdit extends CategoryFormAdd
                 'label' => 'Parent',
                 'choices' => $categoriesWithPath,
                 'constraints' => [
-                    new NotBlank(),
+                    $this->locateConstraint()->createConstraintNotBlank(),
                 ],
                 'multiple' => false,
             ])

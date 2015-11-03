@@ -7,11 +7,8 @@
 namespace SprykerFeature\Zed\Cms\Communication\Form;
 
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
-use SprykerFeature\Zed\Cms\Communication\Form\Constraint\CmsConstraint;
 use Orm\Zed\Cms\Persistence\SpyCmsGlossaryKeyMappingQuery;
-use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContext;
 
 class CmsGlossaryForm extends AbstractForm
@@ -55,24 +52,17 @@ class CmsGlossaryForm extends AbstractForm
     protected $cmsFacade;
 
     /**
-     * @var CmsConstraint
-     */
-    protected $constraints;
-
-    /**
      * @param SpyCmsGlossaryKeyMappingQuery $glossaryByIdQuery
      * @param CmsFacade $cmsFacade
-     * @param CmsConstraint $constraints
      * @param int $idPage
      * @param int $idMapping
      * @param array $placeholder
      */
 
-    public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryByIdQuery, CmsFacade $cmsFacade, CmsConstraint $constraints, $idPage, $idMapping, $placeholder)
+    public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryByIdQuery, CmsFacade $cmsFacade, $idPage, $idMapping, $placeholder)
     {
         $this->glossaryByIdQuery = $glossaryByIdQuery;
         $this->cmsFacade = $cmsFacade;
-        $this->constraints = $constraints;
         $this->idPage = $idPage;
         $this->idMapping = $idMapping;
         $this->placeholder = $placeholder;
@@ -83,10 +73,10 @@ class CmsGlossaryForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-        $placeholderConstraints = $this->constraints->getMandatoryConstraints();
+        $placeholderConstraints = $this->locateConstraint()->getMandatoryConstraints();
 
         if (!isset($this->idMapping)) {
-            $placeholderConstraints[] = new Callback([
+            $placeholderConstraints[] = $this->locateConstraint()->createConstraintCallback([
                 'methods' => [
                     function ($placeholder, ExecutionContext $context) {
                         if ($this->cmsFacade->hasPagePlaceholderMapping($this->idPage, $placeholder)) {
@@ -121,7 +111,7 @@ class CmsGlossaryForm extends AbstractForm
             ->addText(self::GLOSSARY_KEY)
             ->addTextarea(self::TRANSLATION,[
                 'label' => 'Content',
-                'constraints' => $this->constraints->getRequiredConstraints(),
+                'constraints' => $this->locateConstraint()->getRequiredConstraints(),
             ])
             ;
     }

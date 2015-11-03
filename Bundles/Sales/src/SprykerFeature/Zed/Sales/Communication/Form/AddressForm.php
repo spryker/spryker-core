@@ -5,8 +5,6 @@ namespace SprykerFeature\Zed\Sales\Communication\Form;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddressQuery;
-use Symfony\Component\Validator\Constraints\Email;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class AddressForm extends AbstractForm
 {
@@ -56,19 +54,19 @@ class AddressForm extends AbstractForm
             ])
             ->addText(self::FIRST_NAME, [
                 'constraints' => [
-                    new NotBlank(),
+                    $this->locateConstraint()->createConstraintNotBlank(),
                 ],
             ])
             ->addText(self::MIDDLE_NAME)
             ->addText(self::LAST_NAME, [
                 'constraints' => [
-                    new NotBlank(),
+                    $this->locateConstraint()->createConstraintNotBlank(),
                 ],
             ])
             ->addText(self::EMAIL, [
                 'constraints' => [
-                    new NotBlank(),
-                    new Email(),
+                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->locateConstraint()->createConstraintEmail(),
                 ],
             ])
             ->addText(self::ADDRESS_1)

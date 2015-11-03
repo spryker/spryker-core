@@ -56,6 +56,31 @@ use Symfony\Component\Validator\Constraints\Valid;
 class ConstraintsPlugin extends AbstractPlugin
 {
 
+    const MAXIMUM_LENGTH_CONSTRAINT = 255;
+
+    /**
+     * @return array
+     */
+    public function getMandatoryConstraints()
+    {
+        return [
+            $this->createConstraintRequired(),
+            $this->createConstraintNotBlank(),
+            $this->createConstraintLength(['max' => self::MAXIMUM_LENGTH_CONSTRAINT]),
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function getRequiredConstraints()
+    {
+        return [
+            $this->createConstraintRequired(),
+            $this->createConstraintNotBlank(),
+        ];
+    }
+
     /**
      * @param null $options
      *

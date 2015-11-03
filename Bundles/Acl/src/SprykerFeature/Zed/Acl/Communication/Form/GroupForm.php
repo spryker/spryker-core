@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Acl\Communication\Form;
 use SprykerFeature\Zed\Acl\Communication\Controller\GroupController;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -49,10 +48,10 @@ class GroupForm extends AbstractForm
     {
         $this->addText(self::FIELD_TITLE, [
             'constraints' => [
-                new Assert\NotBlank([
+                $this->locateConstraint()->createConstraintNotBlank([
                     'groups' => [self::VALIDATE_ADD, self::VALIDATE_EDIT],
                 ]),
-                new Assert\Callback([
+                $this->locateConstraint()->createConstraintCallback([
                     'groups' => [self::VALIDATE_ADD],
                     'methods' => [
                         function ($name, ExecutionContextInterface $contextInterface) {

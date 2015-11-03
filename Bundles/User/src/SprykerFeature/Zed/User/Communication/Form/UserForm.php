@@ -5,10 +5,7 @@
 
 namespace SprykerFeature\Zed\User\Communication\Form;
 
-
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use Symfony\Component\Validator\Constraints\Choice;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 
 class UserForm extends AbstractForm
@@ -51,7 +48,7 @@ class UserForm extends AbstractForm
             [
                 'label'       => 'Username',
                 'constraints' => [
-                    new NotBlank(),
+                    $this->locateConstraint()->createConstraintNotBlank(),
                 ],
             ]
         );
@@ -68,7 +65,7 @@ class UserForm extends AbstractForm
             self::PASSWORD,
             [
                 'constraints'     => [
-                    new NotBlank(),
+                    $this->locateConstraint()->createConstraintNotBlank(),
                 ],
                 'invalid_message' => 'The password fields must match.',
                 'first_options'   => ['label' => 'Password'],
@@ -90,7 +87,7 @@ class UserForm extends AbstractForm
             self::FIRST_NAME,
             [
                 'constraints' => [
-                    new NotBlank(),
+                    $this->locateConstraint()->createConstraintNotBlank(),
                 ],
             ]
         );
@@ -107,7 +104,7 @@ class UserForm extends AbstractForm
             self::LAST_NAME,
             [
                 'constraints' => [
-                    new NotBlank(),
+                    $this->locateConstraint()->createConstraintNotBlank(),
                 ],
             ]
         );
@@ -124,7 +121,7 @@ class UserForm extends AbstractForm
             self::GROUP,
             [
                 'constraints' => [
-                    new Choice([
+                    $this->locateConstraint()->createConstraintChoice([
                         'choices'  => array_keys($this->getGroupChoices()),
                         'multiple' => true,
                         'min'      => 1

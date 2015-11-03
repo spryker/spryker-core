@@ -8,9 +8,6 @@ use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Refund\Business\RefundFacade;
 use SprykerFeature\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface;
 use Orm\Zed\Refund\Persistence\SpyRefundQuery;
-use Symfony\Component\Validator\Constraints\GreaterThan;
-use Symfony\Component\Validator\Constraints\LessThanOrEqual;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RefundForm extends AbstractForm
 {
@@ -74,9 +71,9 @@ class RefundForm extends AbstractForm
             ->addNumber(self::FIELD_AMOUNT, [
                 'label' => 'Total Refund Amount (autocalculated / in Cents)',
                 'constraints' => [
-                    new NotBlank(),
-                    new GreaterThan(['value' => 0]),
-                    new LessThanOrEqual(['value' => $maxAmount]),
+                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->locateConstraint()->createConstraintGreaterThan(['value' => 0]),
+                    $this->locateConstraint()->createConstraintLessThanOrEqual(['value' => $maxAmount]),
                 ],
                 'attr' => ['readonly' => true],
             ])
@@ -86,7 +83,7 @@ class RefundForm extends AbstractForm
                     'rows' => 7,
                 ],
                 'constraints' => [
-                    new NotBlank(),
+                    $this->locateConstraint()->createConstraintNotBlank(),
                 ],
             ])
         ;
@@ -95,12 +92,12 @@ class RefundForm extends AbstractForm
             $this
                 ->addText(self::FIELD_IBAN, [
                     'constraints' => [
-                        new NotBlank(),
+                        $this->locateConstraint()->createConstraintNotBlank(),
                     ],
                 ])
                 ->addText(self::FIELD_BIC, [
                     'constraints' => [
-                        new NotBlank(),
+                        $this->locateConstraint()->createConstraintNotBlank(),
                     ],
                 ])
             ;

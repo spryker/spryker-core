@@ -6,7 +6,6 @@
 namespace SprykerFeature\Zed\Acl\Communication\Form;
 
 use Orm\Zed\Acl\Persistence\Map\SpyAclRuleTableMap;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 
 class RulesetForm extends AbstractForm
@@ -40,7 +39,7 @@ class RulesetForm extends AbstractForm
             [
                 'label' => 'Bundle',
                 'constraints' => [
-                    new NotBlank(),
+                    $this->locateConstraint()->createConstraintNotBlank(),
                 ],
             ]
         );
@@ -58,7 +57,7 @@ class RulesetForm extends AbstractForm
             [
                 'label' => 'Controller',
                 'constraints' => [
-                    new NotBlank(),
+                    $this->locateConstraint()->createConstraintNotBlank(),
                 ],
             ]
         );
@@ -76,7 +75,7 @@ class RulesetForm extends AbstractForm
             [
                 'label' => 'Action',
                 'constraints' => [
-                    new NotBlank(),
+                    $this->locateConstraint()->createConstraintNotBlank(),
                 ],
             ]
         );

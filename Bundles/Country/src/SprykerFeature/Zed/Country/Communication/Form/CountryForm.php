@@ -5,8 +5,6 @@ namespace SprykerFeature\Zed\Country\Communication\Form;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\User\Persistence\Base\SpyUserQuery;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Length;
 
 class CountryForm extends AbstractForm
 {
@@ -40,10 +38,10 @@ class CountryForm extends AbstractForm
             [
                 'label' => 'ISO2 Code',
                 'constraints' => [
-                    new NotBlank([
+                    $this->locateConstraint()->createConstraintNotBlank([
                         'message' => 'Please provide correct ISO2 Code',
                     ]),
-                    new Length([
+                    $this->locateConstraint()->createConstraintLength([
                         'min' => 2,
                         'max' => 2,
                     ]),
@@ -54,8 +52,8 @@ class CountryForm extends AbstractForm
                 [
                     'label' => 'ISO3 Code',
                     'constraints' => [
-                        new NotBlank(),
-                        new Length([
+                        $this->locateConstraint()->createConstraintNotBlank(),
+                        $this->locateConstraint()->createConstraintLength([
                             'min' => 3,
                             'max' => 3,
                         ]),
@@ -66,7 +64,7 @@ class CountryForm extends AbstractForm
                 [
                     'label' => 'Country Name',
                     'constraints' => [
-                        new NotBlank(),
+                        $this->locateConstraint()->createConstraintNotBlank(),
                     ],
                 ]
             )

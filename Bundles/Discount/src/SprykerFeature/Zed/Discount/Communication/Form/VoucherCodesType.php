@@ -6,8 +6,6 @@ use SprykerFeature\Zed\Discount\Communication\Form\Transformers\DecisionRulesFor
 use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Gui\Communication\Form\Type\AutosuggestType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\Validator\Constraints\GreaterThan;
-use Symfony\Component\Validator\Constraints\NotBlank;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 
 class VoucherCodesType extends AbstractRuleType
@@ -72,22 +70,22 @@ class VoucherCodesType extends AbstractRuleType
         $builder
             ->add(self::NAME, 'text', [
                 'constraints' => [
-                    new NotBlank(),
+                    $this->locateConstraint()->createConstraintNotBlank(),
                 ],
             ])
             ->add(self::VOUCHER_POOL_CATEGORY, new AutosuggestType(), [
                 'label' => 'Pool Category',
                 'url' => '/discount/pool/category-suggest',
                 'constraints' => [
-                    new NotBlank(),
+                    $this->locateConstraint()->createConstraintNotBlank(),
                 ],
             ])
             ->add(self::DESCRIPTION, 'textarea')
             ->add(self::AMOUNT, 'text', [
                 'label' => 'Amount (Please enter a valid amount. Eg. 5 or 5.55)',
                 'constraints' => [
-                    new NotBlank(),
-                    new GreaterThan([
+                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->locateConstraint()->createConstraintGreaterThan([
                         'value' => 0,
                     ]),
                 ],
@@ -130,7 +128,7 @@ class VoucherCodesType extends AbstractRuleType
                 'required' => false,
                 'placeholder' => 'Default',
                 'constraints' => [
-                    new NotBlank(),
+                    $this->locateConstraint()->createConstraintNotBlank(),
                 ],
             ])
             ->addModelTransformer(new DecisionRulesFormTransformer($this->config, $this->camelCaseToUnderscore))

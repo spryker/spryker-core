@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Auth\Communication\Form;
 
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use Symfony\Component\Validator\Constraints as Assert;
 
 class ResetPasswordRequestForm extends AbstractForm
 {
@@ -23,9 +22,9 @@ class ResetPasswordRequestForm extends AbstractForm
         return $this
             ->addText(self::EMAIL, [
                 'constraints' => [
-                    new Assert\NotBlank(),
-                    new Assert\Required(),
-                    new Assert\Email(),
+                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->locateConstraint()->createConstraintRequired(),
+                    $this->locateConstraint()->createConstraintEmail(),
                 ],
                 'attr' => [
                     'placeholder' => 'Email Address'
