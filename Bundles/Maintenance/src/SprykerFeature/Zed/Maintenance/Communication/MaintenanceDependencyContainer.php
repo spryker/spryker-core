@@ -16,5 +16,4 @@ use SprykerFeature\Zed\Maintenance\MaintenanceConfig;
  */
 class MaintenanceDependencyContainer extends AbstractCommunicationDependencyContainer
 {
-
 }

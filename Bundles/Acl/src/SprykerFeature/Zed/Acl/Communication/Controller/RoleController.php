@@ -166,7 +166,7 @@ class RoleController extends AbstractController
 
     /**
      * @param RulesetForm $rulesetForm
-     * @param int     $idRole
+     * @param int $idRole
      *
      * @return RulesetForm
      */
@@ -191,7 +191,7 @@ class RoleController extends AbstractController
     }
 
     /**
-     * @param RoleForm     $roleForm
+     * @param RoleForm $roleForm
      * @param RoleTransfer $roleTransfer
      */
     protected function handleRoleForm(RoleForm $roleForm, RoleTransfer $roleTransfer)
