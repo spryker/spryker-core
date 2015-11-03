@@ -46,6 +46,11 @@ class MethodArgumentDefaultValueFixer extends AbstractFixer
                 continue;
             }
 
+            // while should also not be touched
+            if ($tokens[$index - 1]->isGivenKind(T_WHILE) || $tokens[$index - 2]->isGivenKind(T_WHILE)) {
+                continue;
+            }
+
             $endIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $index);
 
             // Avoid closures and other special constructs
