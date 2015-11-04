@@ -25,7 +25,6 @@ class CollectorPluginType extends AbstractRuleType
     public function __construct(array $availableCollectorPlugins)
     {
         $this->availableCollectorPlugins = $availableCollectorPlugins;
-        $this->locateConstraint();
     }
 
     /**
@@ -41,7 +40,7 @@ class CollectorPluginType extends AbstractRuleType
                 'multiple' => false,
                 'choices' => $this->getCollectorPluginsOptions(),
                 'constraints' => [
-                    $this->constraintsPlugin->createConstraintRequired(),
+                    $this->getConstraints()->createConstraintRequired(),
                 ],
             ])
             ->add(self::FIELD_VALUE, 'text', [

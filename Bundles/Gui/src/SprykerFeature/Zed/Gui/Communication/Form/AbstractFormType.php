@@ -18,15 +18,10 @@ abstract class AbstractFormType extends AbstractType
      */
     protected $constraintsPlugin;
 
-    public function __construct()
-    {
-        $this->locateConstraint();
-    }
-
     /**
      * @return ConstraintsPlugin
      */
-    public function locateConstraint()
+    public function getConstraints()
     {
         if (is_null($this->constraintsPlugin)) {
             $this->constraintsPlugin = $this->getLocator()->gui()->pluginConstraintsPlugin();

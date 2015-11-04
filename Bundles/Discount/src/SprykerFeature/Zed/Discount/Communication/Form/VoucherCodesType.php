@@ -70,22 +70,22 @@ class VoucherCodesType extends AbstractRuleType
         $builder
             ->add(self::NAME, 'text', [
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
             ->add(self::VOUCHER_POOL_CATEGORY, new AutosuggestType(), [
                 'label' => 'Pool Category',
                 'url' => '/discount/pool/category-suggest',
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
             ->add(self::DESCRIPTION, 'textarea')
             ->add(self::AMOUNT, 'text', [
                 'label' => 'Amount (Please enter a valid amount. Eg. 5 or 5.55)',
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
-                    $this->locateConstraint()->createConstraintGreaterThan([
+                    $this->getConstraints()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintGreaterThan([
                         'value' => 0,
                     ]),
                 ],
@@ -128,7 +128,7 @@ class VoucherCodesType extends AbstractRuleType
                 'required' => false,
                 'placeholder' => 'Default',
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
             ->addModelTransformer(new DecisionRulesFormTransformer($this->config, $this->camelCaseToUnderscore))

@@ -35,8 +35,6 @@ abstract class AbstractRuleType extends AbstractFormType
         $this->availableCalculatorPlugins = $availableCalculatorPlugins;
         $this->availableCollectorPlugins = $availableCollectorPlugins;
         $this->availableDecisionRulePlugins = $availableDecisionRulePlugins;
-
-        parent::__construct();
     }
 
     /**
