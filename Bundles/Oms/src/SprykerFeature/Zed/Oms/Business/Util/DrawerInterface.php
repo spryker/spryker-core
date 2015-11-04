@@ -14,37 +14,47 @@ interface DrawerInterface
 
     /**
      * @param ProcessInterface $process
-     * @param string $highlightState
-     * @param null $format
-     * @param int $fontsize
+     * @param string|null $highlightState
+     * @param string|null $format
+     * @param int|null $fontSize
      *
      * @return bool
      */
-    public function draw(ProcessInterface $process, $highlightState = null, $format = null, $fontsize = null);
+    public function draw(ProcessInterface $process, $highlightState = null, $format = null, $fontSize = null);
 
     /**
      * @param ProcessInterface $process
-     * @param string $highlightState
+     * @param string|null $highlightState
+     *
+     * @return void
      */
     public function drawStates(ProcessInterface $process, $highlightState = null);
 
     /**
      * @param ProcessInterface $process
+     *
+     * @return void
      */
     public function drawTransitions(ProcessInterface $process);
 
     /**
      * @param StateInterface $state
+     *
+     * @return void
      */
     public function drawTransitionsEvents(StateInterface $state);
 
     /**
      * @param StateInterface $state
+     *
+     * @return void
      */
     public function drawTransitionsConditions(StateInterface $state);
 
     /**
      * @param ProcessInterface $process
+     *
+     * @return void
      */
     public function drawClusters(ProcessInterface $process);
 

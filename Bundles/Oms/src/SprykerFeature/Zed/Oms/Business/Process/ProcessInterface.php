@@ -12,31 +12,31 @@ interface ProcessInterface
     /**
      * @param string $highlightState
      * @param null $format
-     * @param int $fontsize
+     * @param int $fontSize
      *
      * @return bool
      */
-    public function draw($highlightState = null, $format = null, $fontsize = null);
+    public function draw($highlightState = null, $format = null, $fontSize = null);
 
     /**
-     * @param ProcessInterface[] $subprocesses
+     * @param ProcessInterface[] $subProcesses
      */
-    public function setSubprocesses($subprocesses);
+    public function setSubProcesses($subProcesses);
 
     /**
      * @return ProcessInterface[]
      */
-    public function getSubprocesses();
+    public function getSubProcesses();
 
     /**
      * @return bool
      */
-    public function hasSubprocesses();
+    public function hasSubProcesses();
 
     /**
-     * @param ProcessInterface $subprocess
+     * @param ProcessInterface $subProcess
      */
-    public function addSubprocess(ProcessInterface $subprocess);
+    public function addSubProcess(ProcessInterface $subProcess);
 
     /**
      * @param mixed $main

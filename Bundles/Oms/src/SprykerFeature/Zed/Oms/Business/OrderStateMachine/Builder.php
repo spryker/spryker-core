@@ -91,7 +91,7 @@ class Builder implements BuilderInterface
 
             $stateToProcessMap = $this->createStates($processMap);
 
-            $this->createSubprocesses($processMap);
+            $this->createSubProcesses($processMap);
 
             $eventMap = $this->createEvents();
 
@@ -132,8 +132,8 @@ class Builder implements BuilderInterface
             return;
         }
 
+        /** @var SimpleXMLElement $xmlElement */
         foreach ($xmlElements as $xmlElement) {
-            /* @var SimpleXMLElement $xmlElement */
             $child = $intoXmlNode->addChild($xmlElement->getName(), $xmlElement);
             $attributes = $xmlElement->attributes();
             foreach ($attributes as $k => $v) {
@@ -217,9 +217,9 @@ class Builder implements BuilderInterface
     {
         $mainProcess = null;
         $xmlProcesses = $this->rootElement->children();
-        foreach ($xmlProcesses as $xmlProcess) {
-            /* @var SimpleXMLElement $xmlProcess */
 
+        /** @var SimpleXMLElement $xmlProcess */
+        foreach ($xmlProcesses as $xmlProcess) {
             $process = clone $this->process;
             $processName = $this->getAttributeString($xmlProcess, 'name');
             $process->setName($processName);
@@ -241,7 +241,7 @@ class Builder implements BuilderInterface
      *
      * @return void
      */
-    protected function createSubprocesses(array $processMap)
+    protected function createSubProcesses(array $processMap)
     {
         foreach ($this->rootElement as $xmlProcess) {
             $processName = $this->getAttributeString($xmlProcess, 'name');
@@ -276,8 +276,8 @@ class Builder implements BuilderInterface
 
             if (!empty($xmlProcess->states)) {
                 $xmlStates = $xmlProcess->states->children();
+                /** @var SimpleXMLElement $xmlState */
                 foreach ($xmlStates as $xmlState) {
-                    /* @var SimpleXMLElement $xmlState */
                     $state = clone $this->state;
                     $state->setName($this->getAttributeString($xmlState, 'name'));
                     $state->setDisplay($this->getAttributeString($xmlState, 'display'));
