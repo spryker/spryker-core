@@ -163,7 +163,7 @@ interface DiscountFacadeInterface
     public function getCalculatorPluginByName($pluginName);
 
     /**
-     * @param CalculableInterface        $container
+     * @param CalculableInterface $container
      * @param DiscountCollectorInterface $discountCollectorTransfer
      *
      * @return DiscountableInterface[]
@@ -174,7 +174,7 @@ interface DiscountFacadeInterface
     );
 
     /**
-     * @param CalculableInterface        $container
+     * @param CalculableInterface $container
      * @param DiscountCollectorInterface $discountCollectorTransfer
      *
      * @return DiscountableInterface[]

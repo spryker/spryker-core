@@ -19,8 +19,8 @@ class Item extends AbstractDiscountPlugin implements DiscountCollectorPluginInte
 {
 
     /**
-     * @param DiscountInterface          $discount
-     * @param CalculableInterface        $container
+     * @param DiscountInterface $discount
+     * @param CalculableInterface $container
      * @param DiscountCollectorInterface $discountCollectorTransfer
      *
      * @return \SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface[]

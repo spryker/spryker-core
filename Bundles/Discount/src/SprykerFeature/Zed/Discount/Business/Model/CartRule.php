@@ -58,11 +58,11 @@ class CartRule implements CartRuleInterface
     protected $discountCollectorWriter;
 
     /**
-     * @param DiscountQueryContainer     $queryContainer
-     * @param Store                      $store
+     * @param DiscountQueryContainer $queryContainer
+     * @param Store $store
      * @param DiscountDecisionRuleWriter $discountDecisionRuleWriter
-     * @param DiscountWriter             $discountWriter
-     * @param DiscountCollectorWriter    $discountCollectorWriter
+     * @param DiscountWriter $discountWriter
+     * @param DiscountCollectorWriter $discountCollectorWriter
      */
     public function __construct(
         DiscountQueryContainer $queryContainer,

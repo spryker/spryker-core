@@ -20,8 +20,8 @@ class ItemExpense extends AbstractDiscountPlugin implements DiscountCollectorPlu
 {
 
     /**
-     * @param DiscountInterface          $discount
-     * @param CalculableInterface        $container
+     * @param DiscountInterface $discount
+     * @param CalculableInterface $container
      * @param DiscountCollectorInterface $discountCollectorTransfer
      *
      * @return DiscountableInterface[]

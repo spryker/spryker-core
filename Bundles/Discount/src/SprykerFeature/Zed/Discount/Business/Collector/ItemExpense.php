@@ -13,7 +13,7 @@ class ItemExpense implements CollectorInterface
 {
 
     /**
-     * @param CalculableInterface        $container
+     * @param CalculableInterface $container
      * @param DiscountCollectorInterface $discountCollectorTransfer
      *
      * @return OrderInterface[]
