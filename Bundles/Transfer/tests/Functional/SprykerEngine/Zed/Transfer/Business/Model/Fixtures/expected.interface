@@ -24,9 +24,11 @@ interface CatFaceInterface extends TransferInterface
     public function setName($name);
 
     /**
+     * @param bool $isRequired
+     *
      * @return string
      */
-    public function getName();
+    public function getName($isRequired = false);
 
     /**
      * @param ItemTransfer $item
@@ -36,9 +38,11 @@ interface CatFaceInterface extends TransferInterface
     public function setItem(ItemTransfer $item);
 
     /**
+     * @param bool $isRequired
+     *
      * @return ItemTransfer
      */
-    public function getItem();
+    public function getItem($isRequired = false);
 
     /**
      * @param \ArrayObject|ItemTransfer[] $items
@@ -48,9 +52,11 @@ interface CatFaceInterface extends TransferInterface
     public function setItems(\ArrayObject $items);
 
     /**
+     * @param bool $isRequired
+     *
      * @return ItemTransfer[]
      */
-    public function getItems();
+    public function getItems($isRequired = false);
 
     /**
      * @param ItemTransfer $item

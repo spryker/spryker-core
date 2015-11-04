@@ -6,6 +6,7 @@
 
 namespace SprykerEngine\Shared\Transfer;
 
+use SprykerEngine\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Zend\Code\Generator\DocBlock\Tag\ReturnTag;
 use Zend\Code\Reflection\MethodReflection;
 use Zend\Filter\Word\CamelCaseToUnderscore;
@@ -279,6 +280,37 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     {
         if (!in_array($property, $this->modifiedProperties)) {
             $this->modifiedProperties[] = $property;
+        }
+    }
+
+    /**
+     * @param string $property
+     * @param bool $isRequired
+     *
+     * @throws RequiredTransferPropertyException
+     *
+     * @return void
+     */
+    protected function assertIsRequired($property, $isRequired)
+    {
+        if ($isRequired === false) {
+            return;
+        }
+
+        if ($this->$property instanceof \ArrayObject && $this->$property->count() === 0) {
+            throw new RequiredTransferPropertyException(sprintf(
+                'Empty required collection property "%s" for transfer %s.',
+                $property,
+                get_class($this)
+            ));
+        }
+
+        if ($this->$property === null) {
+            throw new RequiredTransferPropertyException(sprintf(
+                'Missing required property "%s" for transfer %s.',
+                $property,
+                get_class($this)
+            ));
         }
     }
 

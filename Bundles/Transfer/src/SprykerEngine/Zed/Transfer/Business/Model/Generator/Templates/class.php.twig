@@ -8,7 +8,6 @@
 namespace Generated\Shared\Transfer;
 
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
-
 {% for use in uses %}
 use {{ use }};
 {% endfor %}
@@ -46,5 +45,4 @@ class {{ className }} extends AbstractTransfer
 {#{{ macro.addRemove(method) }}#}
 {#{% endif %}#}
 {% endfor %}
-
 }

@@ -8,9 +8,11 @@
 {% endmacro -%}
 {%- macro addGet(method) %}
     /**
+     * @param bool $isRequired
+     *
      * @return {{ method.return }}
      */
-    public function {{ method.name }}();
+    public function {{ method.name }}($isRequired = false);
 {% endmacro -%}
 {%- macro addAdd(method) %}
     /**

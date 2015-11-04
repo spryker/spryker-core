@@ -51,10 +51,14 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     }
 
     /**
+     * @param bool $isRequired
+     *
      * @return string
      */
-    public function getName()
+    public function getName($isRequired = false)
     {
+        $this->assertIsRequired('name', $isRequired);
+
         return $this->name;
     }
 
@@ -72,10 +76,14 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     }
 
     /**
+     * @param bool $isRequired
+     *
      * @return int
      */
-    public function getBla()
+    public function getBla($isRequired = false)
     {
+        $this->assertIsRequired('bla', $isRequired);
+
         return $this->bla;
     }
 
@@ -93,10 +101,14 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     }
 
     /**
+     * @param bool $isRequired
+     *
      * @return FooBarTransfer[]
      */
-    public function getSelfReference()
+    public function getSelfReference($isRequired = false)
     {
+        $this->assertIsRequired('selfReference', $isRequired);
+
         return $this->selfReference;
     }
 

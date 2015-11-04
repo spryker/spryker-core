@@ -1,6 +1,6 @@
 {% macro addProperty(property) %}
     /**
-     * @var {{ property.type }} ${{ property.name }}
+     * @var {{ property.type }}
      */
     protected ${{ property.name }};
 {% endmacro %}
@@ -32,10 +32,14 @@
 {% endmacro -%}
 {%- macro addGet(method) %}
     /**
+     * @param bool $isRequired
+     *
      * @return {{ method.return }}
      */
-    public function {{ method.name }}()
+    public function {{ method.name }}($isRequired = false)
     {
+        $this->assertIsRequired('{{ method.property }}', $isRequired);
+
         return $this->{{ method.property }};
     }
 {% endmacro -%}

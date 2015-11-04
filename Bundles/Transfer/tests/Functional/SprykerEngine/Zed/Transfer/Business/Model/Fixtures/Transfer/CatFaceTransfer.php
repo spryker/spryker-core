@@ -51,10 +51,14 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     }
 
     /**
+     * @param bool $isRequired
+     *
      * @return string
      */
-    public function getName()
+    public function getName($isRequired = false)
     {
+        $this->assertIsRequired('name', $isRequired);
+
         return $this->name;
     }
 
@@ -72,10 +76,14 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     }
 
     /**
+     * @param bool $isRequired
+     *
      * @return ItemTransfer
      */
-    public function getItem()
+    public function getItem($isRequired = false)
     {
+        $this->assertIsRequired('item', $isRequired);
+
         return $this->item;
     }
 
@@ -93,10 +101,14 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     }
 
     /**
+     * @param bool $isRequired
+     *
      * @return ItemTransfer[]
      */
-    public function getItems()
+    public function getItems($isRequired = false)
     {
+        $this->assertIsRequired('items', $isRequired);
+
         return $this->items;
     }
 

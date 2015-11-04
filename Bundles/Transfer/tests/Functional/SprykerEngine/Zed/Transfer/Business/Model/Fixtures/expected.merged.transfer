@@ -7,7 +7,6 @@
 namespace Generated\Shared\Transfer;
 
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
-
 use Generated\Shared\Project\FooBarInterface as ProjectFooBarInterface;
 use Generated\Shared\Vendor\FooBarInterface as VendorFooBarInterface;
 
@@ -19,17 +18,17 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
 {
 
     /**
-     * @var string $name
+     * @var string
      */
     protected $name;
 
     /**
-     * @var int $bla
+     * @var int
      */
     protected $bla;
 
     /**
-     * @var \ArrayObject|FooBarTransfer[] $selfReference
+     * @var \ArrayObject|FooBarTransfer[]
      */
     protected $selfReference;
 
@@ -52,10 +51,14 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     }
 
     /**
+     * @param bool $isRequired
+     *
      * @return string
      */
-    public function getName()
+    public function getName($isRequired = false)
     {
+        $this->assertIsRequired('name', $isRequired);
+
         return $this->name;
     }
 
@@ -73,10 +76,14 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     }
 
     /**
+     * @param bool $isRequired
+     *
      * @return int
      */
-    public function getBla()
+    public function getBla($isRequired = false)
     {
+        $this->assertIsRequired('bla', $isRequired);
+
         return $this->bla;
     }
 
@@ -94,10 +101,14 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     }
 
     /**
+     * @param bool $isRequired
+     *
      * @return FooBarTransfer[]
      */
-    public function getSelfReference()
+    public function getSelfReference($isRequired = false)
     {
+        $this->assertIsRequired('selfReference', $isRequired);
+
         return $this->selfReference;
     }
 
@@ -113,6 +124,5 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
 
         return $this;
     }
-
 
 }
