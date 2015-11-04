@@ -8,7 +8,7 @@ namespace SprykerFeature\Shared\Session\Business\Handler;
 
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Shared\Library\Environment;
-use SprykerFeature\Shared\NewRelic\Api;
+use SprykerFeature\Shared\NewRelic\ApiInterface;
 
 class SessionHandlerMysql implements \SessionHandlerInterface
 {
@@ -53,12 +53,18 @@ class SessionHandlerMysql implements \SessionHandlerInterface
     protected $port = 3306;
 
     /**
+     * @var ApiInterface
+     */
+    protected $newRelicApi;
+
+    /**
+     * @param ApiInterface $newRelicApi
      * @param array $hosts
      * @param null|string $user
-     * @param null|string  $password
+     * @param null|string $password
      * @param int $lifetime
      */
-    public function __construct($hosts = ['127.0.0.1:3306'], $user = null, $password = null, $lifetime = 600)
+    public function __construct(ApiInterface $newRelicApi, $hosts = ['127.0.0.1:3306'], $user = null, $password = null, $lifetime = 600)
     {
         $host = $hosts[0];
         if (strpos($host, ':')) {
@@ -67,6 +73,7 @@ class SessionHandlerMysql implements \SessionHandlerInterface
             $this->port = $parts[1];
         }
 
+        $this->newRelicApi = $newRelicApi;
         $this->host = $host;
         $this->user = $user;
         $this->password = $password;
@@ -117,7 +124,7 @@ class SessionHandlerMysql implements \SessionHandlerInterface
         $statement = $this->connection->prepare($query);
         $statement->execute([$key, $store, $environment]);
         $result = $statement->fetch();
-        Api::getInstance()->addCustomMetric(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
+        $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
         return $result ? json_decode($result['value'], true) : null;
     }
@@ -149,7 +156,7 @@ class SessionHandlerMysql implements \SessionHandlerInterface
         $statement = $this->connection->prepare($query);
         $result = $statement->execute([$key, $data, $storeName, $environment, $expires, $timestamp]);
 
-        Api::getInstance()->addCustomMetric(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
+        $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
 
         return $result;
     }
@@ -165,7 +172,7 @@ class SessionHandlerMysql implements \SessionHandlerInterface
 
         $startTime = microtime(true);
         $result = $this->connection->delete($key);
-        Api::getInstance()->addCustomMetric(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
+        $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
 
         return $result ? true : false;
     }

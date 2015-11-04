@@ -45,7 +45,8 @@ abstract class AbstractGatewayController extends AbstractController
         parent::__construct($application, $factory, $locator);
 
         // @todo this can be a plugin which listen for kernel.controller events
-        Api::getInstance()->addCustomParameter('Call_from', 'Yves');
+        $newRelicApi = new Api();
+        $newRelicApi->addCustomParameter('Call_from', 'Yves');
     }
 
     /**

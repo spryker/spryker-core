@@ -119,7 +119,7 @@ class Store
         header('X-Store: ' . $this->getStoreName());
         header('X-Env: ' . APPLICATION_ENV);
 
-        $newRelicApi = Api::getInstance();
+        $newRelicApi = new Api();
         $newRelicApi->addCustomParameter('locale', $this->getCurrentLocale());
         $newRelicApi->addCustomParameter('store', $this->getStoreName());
     }

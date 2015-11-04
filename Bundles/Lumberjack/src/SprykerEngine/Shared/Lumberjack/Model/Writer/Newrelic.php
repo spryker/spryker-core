@@ -14,9 +14,14 @@ class Newrelic extends AbstractWriter
 
     const TYPE = 'newrelic';
 
+    /**
+     * @param EventInterface $event
+     *
+     * @return bool
+     */
     public function write(EventInterface $event)
     {
-        $api = NewRelicApi::getInstance();
+        $api = new NewRelicApi();
 
         foreach ($event as $field => $value) {
             $api->addCustomParameter($field, $value);

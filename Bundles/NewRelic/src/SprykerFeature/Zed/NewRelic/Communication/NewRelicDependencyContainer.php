@@ -20,7 +20,7 @@ class NewRelicDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createNewRelicApi()
     {
-        return Api::getInstance();
+        return new Api();
     }
 
 }

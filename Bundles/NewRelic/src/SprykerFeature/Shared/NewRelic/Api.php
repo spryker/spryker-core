@@ -21,11 +21,6 @@ class Api implements ApiInterface
     const NEWRELIC_DEPLOYMENT_API_URL = 'https://api.newrelic.com/deployments.xml';
 
     /**
-     * @var
-     */
-    protected static $instance;
-
-    /**
      * @var bool
      */
     protected $active = false;
@@ -35,26 +30,9 @@ class Api implements ApiInterface
      */
     protected $nameOfTransaction;
 
-    /**
-     * Protected Singleton-Constructor. Use SprykerFeature\Shared\NewRelic\Api::getInstance() instead.
-     */
-    protected function __construct()
+    public function __construct()
     {
         $this->active = extension_loaded('newrelic');
-    }
-
-    /**
-     * @static
-     *
-     * @return self
-     */
-    public static function getInstance()
-    {
-        if (is_null(self::$instance)) {
-            self::$instance = new static();
-        }
-
-        return self::$instance;
     }
 
     /**

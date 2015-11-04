@@ -23,9 +23,11 @@ class ErrorLogger
      */
     public static function log(\Exception $exception)
     {
-        self::sendExceptionToFile($exception, new SharedEventJournal(), Api::getInstance());
-        self::sendExceptionToNewRelic($exception, false, new SharedEventJournal(), Api::getInstance());
-        self::sendExceptionToLumberjack($exception, false, new SharedEventJournal(), Api::getInstance());
+        $newRelicApi = new Api();
+        
+        self::sendExceptionToFile($exception, new SharedEventJournal(), $newRelicApi);
+        self::sendExceptionToNewRelic($exception, false, new SharedEventJournal(), $newRelicApi);
+        self::sendExceptionToLumberjack($exception, false, new SharedEventJournal(), $newRelicApi);
     }
 
     /**

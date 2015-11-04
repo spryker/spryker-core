@@ -13,13 +13,6 @@ interface ApiInterface
 {
 
     /**
-     * @static
-     *
-     * @return $this
-     */
-    public static function getInstance();
-
-    /**
      * Report an error at this line of code, with a complete stack trace.
      *
      * @param $message

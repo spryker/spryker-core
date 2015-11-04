@@ -135,8 +135,6 @@ class Console extends SymfonyCommand
 
         $propelService = new PropelServiceProvider();
         $propelService->boot(new Application());
-
-        Api::getInstance()->markAsBackgroundJob();
     }
 
     /**
@@ -167,16 +165,17 @@ class Console extends SymfonyCommand
     }
 
     /**
-     * @param $command
+     * @param string $command
      * @param array $arguments
      *
      * @return void
      */
     protected function setNewRelicTransaction($command, array $arguments)
     {
-        $newRelicApi = Api::getInstance();
+        $newRelicApi = $this->getDependencyContainer()->createNewRelicApi();
 
         $newRelicApi
+            ->markAsBackgroundJob()
             ->setNameOfTransaction($command)
             ->addCustomParameter('host', System::getHostname())
         ;

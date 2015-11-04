@@ -7,12 +7,15 @@
 namespace SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerFeature\Shared\NewRelic\Api;
 use SprykerFeature\Shared\Library\System;
+use SprykerFeature\Zed\Application\Communication\ApplicationDependencyContainer;
 use Symfony\Component\HttpFoundation\Request;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 
+/**
+ * @method ApplicationDependencyContainer getDependencyContainer()
+ */
 class NewRelicServiceProvider extends AbstractPlugin implements ServiceProviderInterface
 {
 
@@ -40,10 +43,11 @@ class NewRelicServiceProvider extends AbstractPlugin implements ServiceProviderI
 
             $host = isset($_SERVER['COMPUTERNAME']) ? $_SERVER['COMPUTERNAME'] : System::getHostname();
 
-            Api::getInstance()
+            $this->getDependencyContainer()->createNewRelicApi()
                 ->setNameOfTransaction($transactionName)
                 ->addCustomParameter('request_uri', $requestUri)
-                ->addCustomParameter('host', $host);
+                ->addCustomParameter('host', $host)
+            ;
         });
     }
 

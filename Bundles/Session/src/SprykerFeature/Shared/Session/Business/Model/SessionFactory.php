@@ -8,6 +8,7 @@ namespace SprykerFeature\Shared\Session\Business\Model;
 
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Shared\Library\Environment;
+use SprykerFeature\Shared\NewRelic\Api;
 use SprykerFeature\Shared\Session\Business\Handler\SessionHandlerCouchbase;
 use SprykerFeature\Shared\Session\Business\Handler\SessionHandlerFile;
 use SprykerFeature\Shared\Session\Business\Handler\SessionHandlerMysql;
@@ -34,7 +35,7 @@ abstract class SessionFactory
         $hosts = $this->getHostsFromSavePath($savePath);
         $lifetime = $this->getSessionLifetime();
 
-        $handler = new SessionHandlerCouchbase($hosts, $user, $password, $this->getBucketName(), true, $lifetime);
+        $handler = new SessionHandlerCouchbase(new Api(), $hosts, $user, $password, $this->getBucketName(), true, $lifetime);
         $this->setSessionSaveHandler($handler);
 
         return $handler;
@@ -53,7 +54,7 @@ abstract class SessionFactory
         $hosts = $this->getHostsFromSavePath($savePath);
         $lifetime = $this->getSessionLifetime();
 
-        $handler = new SessionHandlerMysql($hosts, $user, $password, $lifetime);
+        $handler = new SessionHandlerMysql(new Api(), $hosts, $user, $password, $lifetime);
         $this->setSessionSaveHandler($handler);
 
         return $handler;
@@ -67,7 +68,7 @@ abstract class SessionFactory
     public function registerRedisSessionHandler($savePath)
     {
         $lifetime = $this->getSessionLifetime();
-        $handler = new SessionHandlerRedis($savePath, $lifetime);
+        $handler = new SessionHandlerRedis($savePath, $lifetime, new Api());
         $this->setSessionSaveHandler($handler);
 
         return $handler;
@@ -81,7 +82,7 @@ abstract class SessionFactory
     public function registerFileSessionHandler($savePath)
     {
         $lifetime = $this->getSessionLifetime();
-        $handler = new SessionHandlerFile($savePath, $lifetime);
+        $handler = new SessionHandlerFile($savePath, $lifetime, new Api());
         $this->setSessionSaveHandler($handler);
 
         return $handler;
