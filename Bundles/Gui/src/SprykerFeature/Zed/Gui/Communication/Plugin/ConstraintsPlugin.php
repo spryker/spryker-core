@@ -82,7 +82,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return NotBlank
      */
@@ -100,7 +100,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return NotNull
      */
@@ -110,7 +110,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Null
      */
@@ -120,7 +120,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return True
      */
@@ -130,7 +130,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return False
      */
@@ -140,7 +140,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Type
      */
@@ -150,7 +150,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Email
      */
@@ -160,7 +160,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Length
      */
@@ -170,7 +170,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Url
      */
@@ -180,7 +180,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Regex
      */
@@ -190,7 +190,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Ip
      */
@@ -200,7 +200,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Uuid
      */
@@ -210,7 +210,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Range
      */
@@ -220,7 +220,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return EqualTo
      */
@@ -230,7 +230,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return NotEqualTo
      */
@@ -240,7 +240,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return IdenticalTo
      */
@@ -250,7 +250,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return NotIdenticalTo
      */
@@ -260,7 +260,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return LessThan
      */
@@ -270,7 +270,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return LessThanOrEqual
      */
@@ -280,7 +280,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return GreaterThan
      */
@@ -290,7 +290,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return GreaterThanOrEqual
      */
@@ -300,7 +300,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Date
      */
@@ -310,7 +310,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return DateTime
      */
@@ -320,7 +320,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Time
      */
@@ -330,7 +330,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Choice
      */
@@ -340,7 +340,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Collection
      */
@@ -350,7 +350,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Count
      */
@@ -360,7 +360,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Language
      */
@@ -370,7 +370,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Locale
      */
@@ -380,7 +380,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Country
      */
@@ -390,7 +390,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return File
      */
@@ -400,7 +400,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Image
      */
@@ -410,7 +410,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return CardScheme
      */
@@ -420,7 +420,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Currency
      */
@@ -430,7 +430,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Luhn
      */
@@ -440,7 +440,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Iban
      */
@@ -450,7 +450,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Isbn
      */
@@ -460,7 +460,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Issn
      */
@@ -470,7 +470,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Callback
      */
@@ -480,7 +480,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Expression
      */
@@ -490,7 +490,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return All
      */
@@ -500,7 +500,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return UserPassword
      */
@@ -510,7 +510,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Valid
      */
@@ -520,7 +520,7 @@ class ConstraintsPlugin extends AbstractPlugin
     }
 
     /**
-     * @param null $options
+     * @param mixed $options
      *
      * @return Required
      */
