@@ -7,7 +7,6 @@
 namespace Generated\Shared\Transfer;
 
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
-
 use Generated\Shared\Project\FooBarInterface as ProjectFooBarInterface;
 use Generated\Shared\Vendor\FooBarInterface as VendorFooBarInterface;
 
@@ -19,17 +18,17 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
 {
 
     /**
-     * @var string $name
+     * @var string
      */
     protected $name;
 
     /**
-     * @var int $bla
+     * @var int
      */
     protected $bla;
 
     /**
-     * @var \ArrayObject|FooBarTransfer[] $selfReference
+     * @var \ArrayObject|FooBarTransfer[]
      */
     protected $selfReference;
 
@@ -113,6 +112,5 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
 
         return $this;
     }
-
 
 }
