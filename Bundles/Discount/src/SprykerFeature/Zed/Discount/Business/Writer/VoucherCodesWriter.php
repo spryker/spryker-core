@@ -42,12 +42,12 @@ class VoucherCodesWriter extends AbstractWriter
     private $discountCollectorWriter;
 
     /**
-     * @param DiscountQueryContainerInterface   $queryContainer
-     * @param DiscountWriter                    $discountWriter
-     * @param DiscountVoucherPoolWriter         $discountVoucherPoolWriter
+     * @param DiscountQueryContainerInterface $queryContainer
+     * @param DiscountWriter $discountWriter
+     * @param DiscountVoucherPoolWriter $discountVoucherPoolWriter
      * @param DiscountVoucherPoolCategoryWriter $discountVoucherPoolCategoryWriter
-     * @param DiscountDecisionRuleWriter        $discountDecisionRuleWriter
-     * @param DiscountCollectorWriter           $discountCollectorWriter
+     * @param DiscountDecisionRuleWriter $discountDecisionRuleWriter
+     * @param DiscountCollectorWriter $discountCollectorWriter
      */
     public function __construct(
         DiscountQueryContainerInterface $queryContainer,

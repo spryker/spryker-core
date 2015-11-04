@@ -20,8 +20,8 @@ class OrderExpense extends AbstractDiscountPlugin implements DiscountCollectorPl
 {
 
     /**
-     * @param DiscountInterface          $discount
-     * @param CalculableInterface        $container
+     * @param DiscountInterface $discount
+     * @param CalculableInterface $container
      * @param DiscountCollectorInterface $discountCollectorTransfer
      *
      * @return DiscountableInterface[]

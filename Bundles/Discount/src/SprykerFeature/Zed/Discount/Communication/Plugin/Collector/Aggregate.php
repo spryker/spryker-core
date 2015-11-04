@@ -20,11 +20,11 @@ class Aggregate extends AbstractDiscountPlugin implements DiscountCollectorPlugi
 {
 
     /**
-     * @param DiscountInterface          $discount
-     * @param CalculableInterface        $container
+     * @param DiscountInterface $discount
+     * @param CalculableInterface $container
      * @param DiscountCollectorInterface $discountCollectorTransfer
      *
-     * @return  DiscountableInterface[]
+     * @return DiscountableInterface[]
      */
     public function collect(
         DiscountInterface $discount,

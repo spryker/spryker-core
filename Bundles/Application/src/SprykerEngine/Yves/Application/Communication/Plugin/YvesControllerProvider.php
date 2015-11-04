@@ -135,7 +135,7 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
      * @param string $path
      * @param string $name
      * @param string $redirectPath
-     * @param int    $status
+     * @param int $status
      *
      * @return Controller
      */

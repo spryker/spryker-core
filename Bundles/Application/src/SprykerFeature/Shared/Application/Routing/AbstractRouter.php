@@ -38,7 +38,7 @@ abstract class AbstractRouter implements RouterInterface
      *     null to not force anything (both https or http allowed)
      *
      * @param Application $app
-     * @param bool|null   $sslEnabled
+     * @param bool|null $sslEnabled
      */
     public function __construct(Application $app, $sslEnabled = null)
     {
@@ -98,11 +98,11 @@ abstract class AbstractRouter implements RouterInterface
             ];
         }
 
-        return;
+        return null;
     }
 
     /**
-     * @param string      $pathInfo
+     * @param string $pathInfo
      * @param bool|string $referenceType
      *
      * @return string
@@ -134,7 +134,7 @@ abstract class AbstractRouter implements RouterInterface
     }
 
     /**
-     * @param string      $pathInfo
+     * @param string $pathInfo
      * @param bool|string $referenceType
      *
      * @return string

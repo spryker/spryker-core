@@ -308,7 +308,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * @param CalculableInterface        $container
+     * @param CalculableInterface $container
      * @param DiscountCollectorInterface $discountCollectorTransfer
      *
      * @return array
@@ -321,7 +321,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * @param CalculableInterface        $container
+     * @param CalculableInterface $container
      * @param DiscountCollectorInterface $discountCollectorTransfer
      *
      * @return OrderInterface[]
@@ -335,7 +335,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * @param CalculableInterface        $container
+     * @param CalculableInterface $container
      * @param DiscountCollectorInterface $discountCollectorTransfer
      *
      * @return OrderInterface[]
@@ -349,7 +349,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * @param CalculableInterface        $container
+     * @param CalculableInterface $container
      * @param DiscountCollectorInterface $discountCollectorTransfer
      *
      * @return OrderInterface[]
@@ -363,7 +363,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * @param CalculableInterface        $container
+     * @param CalculableInterface $container
      * @param DiscountCollectorInterface $discountCollectorTransfer
      *
      * @return OrderInterface[]

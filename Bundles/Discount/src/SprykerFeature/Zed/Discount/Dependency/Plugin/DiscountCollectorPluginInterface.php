@@ -15,8 +15,8 @@ interface DiscountCollectorPluginInterface
 {
 
     /**
-     * @param DiscountInterface          $discount
-     * @param CalculableInterface        $container
+     * @param DiscountInterface $discount
+     * @param CalculableInterface $container
      * @param DiscountCollectorInterface $discountCollectorTransfer
      *
      * @return DiscountableInterface[]

@@ -155,7 +155,6 @@ class BundleParser
 
     /**
      * @param string $bundleName
-
      *
      * @return SplFileInfo[]
      */

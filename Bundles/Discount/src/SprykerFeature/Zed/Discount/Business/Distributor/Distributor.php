@@ -19,7 +19,7 @@ class Distributor implements DistributorInterface
 
     /**
      * @param DiscountableInterface[] $discountableObjects
-     * @param DiscountInterface       $discountTransfer
+     * @param DiscountInterface $discountTransfer
      *
      * @return void
      */

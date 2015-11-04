@@ -76,7 +76,7 @@ class PhpdocParamsFixer extends AbstractFixer
         /*
          * Should be run after all other docblock fixers.
          */
-        return -1000;
+        return -10;
     }
 
     /**
@@ -121,7 +121,7 @@ class PhpdocParamsFixer extends AbstractFixer
             $varMax = 0;
 
             foreach ($items as $item) {
-                if (null === $item['tag']) {
+                if ($item['tag'] === null) {
                     continue;
                 }
 
