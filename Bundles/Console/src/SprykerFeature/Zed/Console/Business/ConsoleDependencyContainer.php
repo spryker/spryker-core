@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Console\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\ConsoleBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Shared\NewRelic\Api;
 use SprykerFeature\Zed\Console\ConsoleConfig;
 use Symfony\Component\Console\Command\Command;
 
@@ -25,14 +24,6 @@ class ConsoleDependencyContainer extends AbstractBusinessDependencyContainer
     public function getConsoleCommands()
     {
         return $this->getConfig()->getConsoleCommands();
-    }
-
-    /**
-     * @return Api
-     */
-    public function createNewRelicApi()
-    {
-        return new Api();
     }
 
 }

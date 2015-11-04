@@ -172,7 +172,7 @@ class Console extends SymfonyCommand
      */
     protected function setNewRelicTransaction($command, array $arguments)
     {
-        $newRelicApi = $this->getDependencyContainer()->createNewRelicApi();
+        $newRelicApi = new Api();
 
         $newRelicApi
             ->markAsBackgroundJob()
