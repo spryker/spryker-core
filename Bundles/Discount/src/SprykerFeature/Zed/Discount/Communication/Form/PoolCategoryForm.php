@@ -5,7 +5,6 @@ namespace SprykerFeature\Zed\Discount\Communication\Form;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategory;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class PoolCategoryForm extends AbstractForm
 {
@@ -36,7 +35,7 @@ class PoolCategoryForm extends AbstractForm
         $this
             ->addText(self::COL_NAME, [
                 'constraints' => [
-                    new NotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
         ;

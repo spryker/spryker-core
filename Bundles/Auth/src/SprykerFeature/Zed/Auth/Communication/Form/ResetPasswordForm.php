@@ -5,7 +5,6 @@
 
 namespace SprykerFeature\Zed\Auth\Communication\Form;
 
-use Symfony\Component\Validator\Constraints;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 
 class ResetPasswordForm extends AbstractForm
@@ -23,7 +22,7 @@ class ResetPasswordForm extends AbstractForm
             self::PASSWORD,
             [
                 'constraints' => [
-                    new Constraints\NotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
                 'invalid_message' => 'The password fields must match.',
                 'first_options' => [

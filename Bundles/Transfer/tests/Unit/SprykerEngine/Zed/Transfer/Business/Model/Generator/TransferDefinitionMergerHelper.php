@@ -13,14 +13,14 @@ class TransferDefinitionMergerHelper
         return [
             'name' => 'Transfer',
             'interface' => [
-                ['name' => 'Path\To\Interface']
+                ['name' => 'Path\To\Interface'],
             ],
             'property' => [
                 [
                     'name' => 'propertyA',
-                    'type' => 'string'
-                ]
-            ]
+                    'type' => 'string',
+                ],
+            ],
         ];
     }
 
@@ -33,22 +33,22 @@ class TransferDefinitionMergerHelper
             'name' => 'Transfer',
             'interface' => [
                 [
-                    'name' => 'Path\To\Interface'
+                    'name' => 'Path\To\Interface',
                 ],
                 [
-                    'name' => 'Path\To\AnotherInterface'
-                ]
+                    'name' => 'Path\To\AnotherInterface',
+                ],
             ],
             'property' => [
                 [
                     'name' => 'propertyA',
-                    'type' => 'string'
+                    'type' => 'string',
                 ],
                 [
                     'name' => 'propertyB',
-                    'type' => 'int'
+                    'type' => 'int',
                 ],
-            ]
+            ],
         ];
     }
 
@@ -61,22 +61,23 @@ class TransferDefinitionMergerHelper
             'name' => 'Transfer',
             'interface' => [
                 'Path\To\Interface' => [
-                    'name' => 'Path\To\Interface'
+                    'name' => 'Path\To\Interface',
                 ],
                 'Path\To\AnotherInterface' => [
-                    'name' => 'Path\To\AnotherInterface'
-                ]
+                    'name' => 'Path\To\AnotherInterface',
+                ],
             ],
             'property' => [
                 'propertyA' => [
                     'name' => 'propertyA',
-                    'type' => 'string'
+                    'type' => 'string',
                 ],
                 'propertyB' => [
                     'name' => 'propertyB',
-                    'type' => 'int'
+                    'type' => 'int',
                 ],
-            ]
+            ],
         ];
     }
+
 }

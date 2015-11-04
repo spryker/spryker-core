@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Sales\Communication\Form;
 
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use Symfony\Component\Validator\Constraints;
 
 class OrderItemSplitForm extends AbstractForm
 {
@@ -30,10 +29,10 @@ class OrderItemSplitForm extends AbstractForm
             [
                 'label' => 'Quantity',
                 'constraints' => [
-                    new Constraints\NotBlank([
+                    $this->getConstraints()->createConstraintNotBlank([
                         'message' => self::VALIDATION_MESSAGE_QUANTITY,
                     ]),
-                    new Constraints\Regex([
+                    $this->getConstraints()->createConstraintRegex([
                         'pattern' => '/^\d+$/',
                         'message' => self::VALIDATE_MESSAGE_NUMERIC,
                     ]),

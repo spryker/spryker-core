@@ -9,9 +9,6 @@ use SprykerFeature\Zed\Discount\DiscountConfig;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use Symfony\Component\Validator\Constraints\Callback;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\GreaterThan;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class VoucherForm extends AbstractForm
@@ -65,8 +62,8 @@ class VoucherForm extends AbstractForm
                 ->addText(self::FIELD_QUANTITY, [
                     'label' => 'Quantity',
                     'constraints' => [
-                        new NotBlank(),
-                        new GreaterThan(1),
+                        $this->getConstraints()->createConstraintNotBlank(),
+                        $this->getConstraints()->createConstraintGreaterThan(1),
                     ],
                 ])
             ;
@@ -89,7 +86,7 @@ class VoucherForm extends AbstractForm
                 'label' => 'Random Generated Code Length',
                 'choices' => $this->getCodeLengthChoices(),
                 'constraints' => [
-                    new Callback([
+                    $this->getConstraints()->createConstraintCallback([
                         'methods' => [
                             function ($length, ExecutionContextInterface $context) use ($codeLengthValidator) {
                                 $formData = $context->getRoot()->getData();
@@ -118,7 +115,7 @@ class VoucherForm extends AbstractForm
                 'placeholder' => 'Select one',
                 'choices' => $this->getPools(),
                 'constraints' => [
-                    new NotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
         ;

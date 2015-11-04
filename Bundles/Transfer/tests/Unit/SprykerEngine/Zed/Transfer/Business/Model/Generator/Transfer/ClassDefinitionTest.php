@@ -180,7 +180,7 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $transferDefinition = [
             'name' => 'name',
             'property' => [
-                $this->getProperty('property1', 'name[]')
+                $this->getProperty('property1', 'name[]'),
             ],
         ];
 

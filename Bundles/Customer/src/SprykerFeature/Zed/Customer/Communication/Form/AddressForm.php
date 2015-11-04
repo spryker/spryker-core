@@ -9,10 +9,6 @@ namespace SprykerFeature\Zed\Customer\Communication\Form;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
-use Symfony\Component\Validator\Constraints;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
-use Symfony\Component\Validator\Constraints\Length;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 
 class AddressForm extends AbstractForm
@@ -64,17 +60,17 @@ class AddressForm extends AbstractForm
             ->addText(self::FIRST_NAME, [
                     'label' => 'First Name',
                     'constraints' => [
-                        new Required(),
-                        new NotBlank(),
-                        new Length(['max' => 100]),
+                        $this->getConstraints()->createConstraintRequired(),
+                        $this->getConstraints()->createConstraintNotBlank(),
+                        $this->getConstraints()->createConstraintLength(['max' => 100]),
                     ],
                 ])
             ->addText(self::LAST_NAME, [
                     'label' => 'Last Name',
                     'constraints' => [
-                        new Required(),
-                        new NotBlank(),
-                        new Length(['max' => 100]),
+                        $this->getConstraints()->createConstraintRequired(),
+                        $this->getConstraints()->createConstraintNotBlank(),
+                        $this->getConstraints()->createConstraintLength(['max' => 100]),
                     ],
                 ])
             ->addText('address1', [
@@ -92,7 +88,7 @@ class AddressForm extends AbstractForm
             ->addText('zip_code', [
                     'label' => 'Zip Code',
                     'constraints' => [
-                        new Length(['max' => 15]),
+                        $this->getConstraints()->createConstraintLength(['max' => 15]),
                     ],
                 ])
             ->addChoice('fk_country', [
@@ -114,7 +110,7 @@ class AddressForm extends AbstractForm
             ->addTextarea('comment', [
                     'label' => 'Comment',
                     'constraints' => [
-                        new Length(['max' => 255]),
+                        $this->getConstraints()->createConstraintLength(['max' => 255]),
                     ],
                 ])
             ;

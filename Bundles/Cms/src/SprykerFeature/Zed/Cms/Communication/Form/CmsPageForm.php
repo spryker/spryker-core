@@ -6,13 +6,11 @@
 
 namespace SprykerFeature\Zed\Cms\Communication\Form;
 
-use SprykerFeature\Zed\Cms\Communication\Form\Constraint\CmsConstraint;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 use Orm\Zed\Cms\Persistence\SpyCmsPageQuery;
 use Orm\Zed\Cms\Persistence\SpyCmsTemplateQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Url\Business\UrlFacade;
-use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContext;
 
 class CmsPageForm extends AbstractForm
@@ -54,11 +52,6 @@ class CmsPageForm extends AbstractForm
     protected $urlFacade;
 
     /**
-     * @var CmsConstraint
-     */
-    protected $constraints;
-
-    /**
      * @var string
      */
     protected $pageUrl;
@@ -67,16 +60,14 @@ class CmsPageForm extends AbstractForm
      * @param SpyCmsTemplateQuery $templateQuery
      * @param SpyCmsPageQuery $pageUrlByIdQuery
      * @param UrlFacade $urlFacade
-     * @param CmsConstraint $constraints
      * @param string $formType
      * @param int $idPage
      */
 
-    public function __construct(SpyCmsTemplateQuery $templateQuery, SpyCmsPageQuery $pageUrlByIdQuery, UrlFacade $urlFacade, CmsConstraint $constraints, $formType, $idPage)
+    public function __construct(SpyCmsTemplateQuery $templateQuery, SpyCmsPageQuery $pageUrlByIdQuery, UrlFacade $urlFacade, $formType, $idPage)
     {
         $this->templateQuery = $templateQuery;
         $this->pageUrlByIdQuery = $pageUrlByIdQuery;
-        $this->constraints = $constraints;
         $this->formType = $formType;
         $this->idPage = $idPage;
         $this->urlFacade = $urlFacade;
@@ -87,9 +78,9 @@ class CmsPageForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-        $urlConstraints = $this->constraints->getMandatoryConstraints();
+        $urlConstraints = $this->getConstraints()->getMandatoryConstraints();
 
-        $urlConstraints[] = new Callback([
+        $urlConstraints[] = $this->getConstraints()->createConstraintCallback([
             'methods' => [
                 function ($url, ExecutionContext $context) {
                     if ($this->urlFacade->hasUrl($url) && $this->pageUrl !== $url) {

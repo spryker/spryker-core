@@ -14,8 +14,6 @@ use Orm\Zed\Glossary\Persistence\SpyGlossaryKey;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryKeyQuery;
 use Orm\Zed\Glossary\Persistence\SpyGlossaryTranslationQuery;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Required;
 
 class TranslationForm extends AbstractForm
 {
@@ -115,8 +113,8 @@ class TranslationForm extends AbstractForm
     protected function getFieldDefaultConstraints()
     {
         return [
-            new NotBlank(),
-            new Required(),
+            $this->getConstraints()->createConstraintNotBlank(),
+            $this->getConstraints()->createConstraintRequired(),
         ];
     }
 

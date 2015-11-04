@@ -19,7 +19,7 @@ abstract class AbstractFactory implements FactoryInterface
     /**
      * @var string
      */
-    private $bundle;
+    protected $bundle;
 
     /**
      * @var array

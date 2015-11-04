@@ -6,11 +6,9 @@
 
 namespace SprykerFeature\Zed\Cms\Communication\Form;
 
-use SprykerFeature\Zed\Cms\Communication\Form\Constraint\CmsConstraint;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Url\Business\UrlFacade;
 use Orm\Zed\Url\Persistence\SpyUrlQuery;
-use Symfony\Component\Validator\Constraints\Callback;
 use Symfony\Component\Validator\Context\ExecutionContext;
 
 class CmsRedirectForm extends AbstractForm
@@ -39,11 +37,6 @@ class CmsRedirectForm extends AbstractForm
     protected $formType;
 
     /**
-     * @var CmsConstraint
-     */
-    protected $constraints;
-
-    /**
      * @var string
      */
     protected $redirectUrl;
@@ -55,14 +48,12 @@ class CmsRedirectForm extends AbstractForm
     /**
      * @param SpyUrlQuery $urlByIdQuery
      * @param UrlFacade $urlFacade
-     * @param CmsConstraint $constraints
      * @param string $formType
      */
-    public function __construct(SpyUrlQuery $urlByIdQuery, UrlFacade $urlFacade, CmsConstraint $constraints, $formType)
+    public function __construct(SpyUrlQuery $urlByIdQuery, UrlFacade $urlFacade, $formType)
     {
         $this->urlByIdQuery = $urlByIdQuery;
         $this->urlFacade = $urlFacade;
-        $this->constraints = $constraints;
         $this->formType = $formType;
     }
 
@@ -71,9 +62,9 @@ class CmsRedirectForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-        $urlConstraints = $this->constraints->getMandatoryConstraints();
+        $urlConstraints = $this->getConstraints()->getMandatoryConstraints();
 
-        $urlConstraints[] = new Callback([
+        $urlConstraints[] = $this->getConstraints()->createConstraintCallback([
             'methods' => [
                 function ($url, ExecutionContext $context) {
                     if ($this->urlFacade->hasUrl($url) && $this->redirectUrl !== $url) {
@@ -90,7 +81,7 @@ class CmsRedirectForm extends AbstractForm
             ])
             ->addText(self::TO_URL, [
                 'label' => 'To URL',
-                'constraints' => $this->constraints->getMandatoryConstraints(),
+                'constraints' => $this->getConstraints()->getMandatoryConstraints(),
             ])
             ->addText(self::STATUS)
             ;

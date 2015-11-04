@@ -7,7 +7,6 @@
 namespace Generated\Shared\Transfer;
 
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
-
 use Generated\Shared\Test\CatFaceInterface as TestCatFaceInterface;
 use Generated\Shared\Transfer\ItemTransfer;
 
@@ -19,17 +18,17 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
 {
 
     /**
-     * @var string $name
+     * @var string
      */
     protected $name;
 
     /**
-     * @var ItemTransfer $item
+     * @var ItemTransfer
      */
     protected $item;
 
     /**
-     * @var \ArrayObject|ItemTransfer[] $items
+     * @var \ArrayObject|ItemTransfer[]
      */
     protected $items;
 
@@ -113,6 +112,5 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
 
         return $this;
     }
-
 
 }

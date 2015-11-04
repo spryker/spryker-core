@@ -6,7 +6,6 @@
 namespace SprykerFeature\Zed\Acl\Communication\Form;
 
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use Symfony\Component\Validator\Constraints\NotBlank;
 
 class RoleForm extends AbstractForm
 {
@@ -35,7 +34,7 @@ class RoleForm extends AbstractForm
             [
                 'label' => 'Role name',
                 'constraints' => [
-                     new NotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ]
         );

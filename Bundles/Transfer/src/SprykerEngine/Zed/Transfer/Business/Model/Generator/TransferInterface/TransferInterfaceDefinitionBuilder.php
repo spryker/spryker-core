@@ -50,7 +50,7 @@ class TransferInterfaceDefinitionBuilder extends AbstractDefinitionBuilder
     public function getDefinitions()
     {
         $definitions = $this->loader->getDefinitions();
-        
+
         return $this->buildDefinitions($definitions, $this->interfaceDefinition);
     }
 
