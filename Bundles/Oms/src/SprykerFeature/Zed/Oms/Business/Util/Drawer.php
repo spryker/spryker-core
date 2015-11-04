@@ -102,8 +102,8 @@ class Drawer implements DrawerInterface
     {
         $states = $process->getAllStates();
         foreach ($states as $state) {
-            $highlight = $highlightState === $state->getName();
-            $this->addNode($state, [], null, $highlight);
+            $isHighlighted = $highlightState === $state->getName();
+            $this->addNode($state, [], null, $isHighlighted);
         }
     }
 

@@ -20,6 +20,9 @@ class CheckTimeoutConsole extends Console
     const COMMAND_NAME = 'oms:check-timeout';
     const COMMAND_DESCRIPTION = 'Check timeouts';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);

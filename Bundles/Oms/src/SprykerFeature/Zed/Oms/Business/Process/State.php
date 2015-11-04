@@ -34,6 +34,8 @@ class State implements StateInterface
 
     /**
      * @param TransitionInterface[] $incomingTransitions
+     *
+     * @return void
      */
     public function setIncomingTransitions(array $incomingTransitions)
     {
@@ -58,6 +60,8 @@ class State implements StateInterface
 
     /**
      * @param TransitionInterface[] $outgoingTransitions
+     *
+     * @return void
      */
     public function setOutgoingTransitions(array $outgoingTransitions)
     {
@@ -169,6 +173,8 @@ class State implements StateInterface
 
     /**
      * @param TransitionInterface $transition
+     *
+     * @return void
      */
     public function addIncomingTransition(TransitionInterface $transition)
     {
@@ -177,6 +183,8 @@ class State implements StateInterface
 
     /**
      * @param TransitionInterface $transition
+     *
+     * @return void
      */
     public function addOutgoingTransition(TransitionInterface $transition)
     {
@@ -185,6 +193,8 @@ class State implements StateInterface
 
     /**
      * @param string $name
+     *
+     * @return void
      */
     public function setName($name)
     {
@@ -201,6 +211,8 @@ class State implements StateInterface
 
     /**
      * @param ProcessInterface $process
+     *
+     * @return void
      */
     public function setProcess($process)
     {
@@ -217,6 +229,8 @@ class State implements StateInterface
 
     /**
      * @param bool $reserved
+     *
+     * @return void
      */
     public function setReserved($reserved)
     {
@@ -306,6 +320,8 @@ class State implements StateInterface
 
     /**
      * @param string $flag
+     *
+     * @return void
      */
     public function addFlag($flag)
     {
@@ -348,6 +364,8 @@ class State implements StateInterface
 
     /**
      * @param string $display
+     *
+     * @return void
      */
     public function setDisplay($display)
     {

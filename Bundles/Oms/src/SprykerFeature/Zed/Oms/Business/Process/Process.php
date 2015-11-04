@@ -47,13 +47,13 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @param bool $highlightState
-     * @param string $format
-     * @param int $fontSize
+     * @param string|null $highlightState
+     * @param string|null $format
+     * @param int|null $fontSize
      *
      * @return bool
      */
-    public function draw($highlightState = false, $format = null, $fontSize = null)
+    public function draw($highlightState = null, $format = null, $fontSize = null)
     {
         return $this->drawer->draw($this, $highlightState, $format, $fontSize);
     }

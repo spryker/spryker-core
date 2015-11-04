@@ -56,7 +56,7 @@ class Builder implements BuilderInterface
      * @param StateInterface $state
      * @param TransitionInterface $transition
      * @param ProcessInterface $process
-     * @param string $xmlFolder
+     * @param string|null $xmlFolder
      */
     public function __construct(EventInterface $event, StateInterface $state, TransitionInterface $transition, $process, $xmlFolder = null)
     {
@@ -254,7 +254,7 @@ class Builder implements BuilderInterface
                 foreach ($xmlSubProcesses as $xmlSubProcess) {
                     $subProcessName = (string) $xmlSubProcess;
                     $subProcess = $processMap[$subProcessName];
-                    $process->addSubprocess($subProcess);
+                    $process->addSubProcess($subProcess);
                 }
             }
         }

@@ -10,9 +10,9 @@ interface ProcessInterface
 {
 
     /**
-     * @param string $highlightState
-     * @param null $format
-     * @param int $fontSize
+     * @param string|null $highlightState
+     * @param string|null $format
+     * @param int|null $fontSize
      *
      * @return bool
      */

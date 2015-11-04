@@ -43,7 +43,7 @@ class IndexController extends AbstractController
         }
 
         $format = $request->query->get('format');
-        $fontsize = $request->query->get('font');
+        $fontSize = $request->query->get('font');
         $highlightState = $request->query->get('state');
 
         $reload = false;
@@ -51,16 +51,16 @@ class IndexController extends AbstractController
             $format = 'gif';
             $reload = true;
         }
-        if (is_null($fontsize)) {
-            $fontsize = '14';
+        if (is_null($fontSize)) {
+            $fontSize = '14';
             $reload = true;
         }
 
         if ($reload) {
-            return $this->redirectResponse('/oms/index/draw?process=' . $processName . '&format=' . $format . '&font=' . $fontsize);
+            return $this->redirectResponse('/oms/index/draw?process=' . $processName . '&format=' . $format . '&font=' . $fontSize);
         }
 
-        $response = $this->getFacade()->drawProcess($processName, $highlightState, $format, $fontsize);
+        $response = $this->getFacade()->drawProcess($processName, $highlightState, $format, $fontSize);
 
         $callback = function () use ($response) {
             echo $response;
@@ -77,12 +77,12 @@ class IndexController extends AbstractController
         $id = $request->query->get('id');
 
         $format = $request->query->get('format', 'gif');
-        $fontsize = $request->query->get('font', '14');
+        $fontSize = $request->query->get('font', '14');
 
         $orderItem = SpySalesOrderItemQuery::create()->findOneByIdSalesOrderItem($id);
         $processEntity = $orderItem->getProcess();
 
-        echo $this->getFacade()->drawProcess($processEntity->getName(), $orderItem->getState()->getName()), $format, $fontsize;
+        echo $this->getFacade()->drawProcess($processEntity->getName(), $orderItem->getState()->getName()), $format, $fontSize;
     }
 
     /**

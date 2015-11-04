@@ -20,6 +20,9 @@ class CheckConditionConsole extends Console
     const COMMAND_NAME = 'oms:check-condition';
     const COMMAND_DESCRIPTION = 'Check conditions';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
