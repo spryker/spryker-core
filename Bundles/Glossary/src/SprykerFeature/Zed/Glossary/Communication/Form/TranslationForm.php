@@ -100,10 +100,15 @@ class TranslationForm extends AbstractForm
         }
 
         return [
-            'type' => 'text',
+            'type' => 'textarea',
             'label' => false,
             $dataTypeField => $translationFields,
             'constraints' => $this->getFieldDefaultConstraints(),
+            'options' => [
+                'attr' => [
+                    'class' => 'html-editor',
+                ],
+            ],
         ];
     }
 
