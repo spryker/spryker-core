@@ -11,6 +11,8 @@ interface EventInterface
 
     /**
      * @param mixed $manual
+     *
+     * @return void
      */
     public function setManual($manual);
 
@@ -21,6 +23,8 @@ interface EventInterface
 
     /**
      * @param mixed $command
+     *
+     * @return void
      */
     public function setCommand($command);
 
@@ -36,6 +40,8 @@ interface EventInterface
 
     /**
      * @param bool $onEnter
+     *
+     * @return void
      */
     public function setOnEnter($onEnter);
 
@@ -46,6 +52,8 @@ interface EventInterface
 
     /**
      * @param mixed $id
+     *
+     * @return void
      */
     public function setName($id);
 
@@ -56,6 +64,8 @@ interface EventInterface
 
     /**
      * @param TransitionInterface $transition
+     *
+     * @return void
      */
     public function addTransition(TransitionInterface $transition);
 
@@ -73,6 +83,8 @@ interface EventInterface
 
     /**
      * @param mixed $timeout
+     *
+     * @return void
      */
     public function setTimeout($timeout);
 

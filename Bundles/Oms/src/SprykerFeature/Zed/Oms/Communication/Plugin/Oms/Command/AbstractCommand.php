@@ -13,9 +13,13 @@ abstract class AbstractCommand extends AbstractPlugin
 {
 
     /**
+     * //TODO: make addNote work again some time in the future
+     *
      * @param string $message
      * @param SpySalesOrder $orderEntity
      * @param bool $isSuccess
+     *
+     * @return void
      */
     protected function addNote($message, SpySalesOrder $orderEntity, $isSuccess = true)
     {

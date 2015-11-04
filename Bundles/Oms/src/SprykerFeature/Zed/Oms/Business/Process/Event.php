@@ -32,6 +32,8 @@ class Event implements EventInterface
 
     /**
      * @param mixed $manual
+     *
+     * @return void
      */
     public function setManual($manual)
     {
@@ -48,6 +50,8 @@ class Event implements EventInterface
 
     /**
      * @param mixed $command
+     *
+     * @return void
      */
     public function setCommand($command)
     {
@@ -72,6 +76,8 @@ class Event implements EventInterface
 
     /**
      * @param bool $onEnter
+     *
+     * @return void
      */
     public function setOnEnter($onEnter)
     {
@@ -88,6 +94,8 @@ class Event implements EventInterface
 
     /**
      * @param mixed $id
+     *
+     * @return void
      */
     public function setName($id)
     {
@@ -104,6 +112,8 @@ class Event implements EventInterface
 
     /**
      * @param TransitionInterface $transition
+     *
+     * @return void
      */
     public function addTransition(TransitionInterface $transition)
     {
@@ -138,6 +148,8 @@ class Event implements EventInterface
 
     /**
      * @param mixed $timeout
+     *
+     * @return void
      */
     public function setTimeout($timeout)
     {

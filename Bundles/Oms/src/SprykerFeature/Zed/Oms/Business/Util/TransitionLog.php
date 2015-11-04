@@ -21,16 +21,6 @@ class TransitionLog implements TransitionLogInterface
 {
 
     /**
-     * @var array
-     */
-    private $logItems = [];
-
-    /**
-     * @var SpySalesOrderItem[]
-     */
-    private $items = [];
-
-    /**
      * @var OmsQueryContainerInterface
      */
     protected $queryContainer;
@@ -96,7 +86,7 @@ class TransitionLog implements TransitionLogInterface
      */
     public function addCommand(SpySalesOrderItem $item, CommandInterface $command)
     {
-        $this->logEntities[$item->getIdSalesOrderItem()]->addCommand(get_class($command));
+        $this->logEntities[$item->getIdSalesOrderItem()]->setCommand(get_class($command));
     }
 
     /**
@@ -107,7 +97,7 @@ class TransitionLog implements TransitionLogInterface
      */
     public function addCondition(SpySalesOrderItem $item, ConditionInterface $condition)
     {
-        $this->logEntities[$item->getIdSalesOrderItem()]->addCondition(get_class($condition));
+        $this->logEntities[$item->getIdSalesOrderItem()]->setCondition(get_class($condition));
     }
 
     /**
@@ -182,6 +172,7 @@ class TransitionLog implements TransitionLogInterface
         }
         $logEntity->setPath($path);
 
+        //FIXME: get/post params
         $logEntity->setParams(['a' => 'todo']);
 
         return $logEntity;

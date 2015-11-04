@@ -20,6 +20,8 @@ interface ProcessInterface
 
     /**
      * @param ProcessInterface[] $subProcesses
+     *
+     * @return void
      */
     public function setSubProcesses($subProcesses);
 
@@ -35,11 +37,15 @@ interface ProcessInterface
 
     /**
      * @param ProcessInterface $subProcess
+     *
+     * @return void
      */
     public function addSubProcess(ProcessInterface $subProcess);
 
     /**
      * @param mixed $main
+     *
+     * @return void
      */
     public function setMain($main);
 
@@ -50,6 +56,8 @@ interface ProcessInterface
 
     /**
      * @param mixed $name
+     *
+     * @return void
      */
     public function setName($name);
 
@@ -60,11 +68,15 @@ interface ProcessInterface
 
     /**
      * @param StateInterface[] $states
+     *
+     * @return void
      */
     public function setStates($states);
 
     /**
      * @param StateInterface $state
+     *
+     * @return void
      */
     public function addState(StateInterface $state);
 
@@ -103,11 +115,15 @@ interface ProcessInterface
 
     /**
      * @param TransitionInterface $transition
+     *
+     * @return void
      */
     public function addTransition(TransitionInterface $transition);
 
     /**
      * @param TransitionInterface[] $transitions
+     *
+     * @return void
      */
     public function setTransitions($transitions);
 
@@ -158,6 +174,8 @@ interface ProcessInterface
 
     /**
      * @param mixed $file
+     *
+     * @return void
      */
     public function setFile($file);
 

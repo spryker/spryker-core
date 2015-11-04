@@ -38,10 +38,10 @@ class TransitionLogTable extends AbstractTable
         $headers = [
             SpyOmsTransitionLogTableMap::COL_FK_SALES_ORDER_ITEM => 'Item',
             SpyOmsTransitionLogTableMap::COL_EVENT => 'Event',
-            SpyOmsTransitionLogTableMap::COL_CONDITIONS => 'Condition',
+            SpyOmsTransitionLogTableMap::COL_CONDITION => 'Condition',
             SpyOmsTransitionLogTableMap::COL_SOURCE_STATE => 'Source state',
             SpyOmsTransitionLogTableMap::COL_TARGET_STATE => 'Target state',
-            SpyOmsTransitionLogTableMap::COL_COMMANDS => 'Command',
+            SpyOmsTransitionLogTableMap::COL_COMMAND => 'Command',
             SpyOmsTransitionLogTableMap::COL_ERROR => 'Error',
             SpyOmsTransitionLogTableMap::COL_ERROR_MESSAGE => 'Error message',
             SpyOmsTransitionLogTableMap::COL_PATH => 'Path',
@@ -76,12 +76,9 @@ class TransitionLogTable extends AbstractTable
         $result = $this->runQuery($query, $config);
 
         foreach ($result as $i => $row) {
-            $row = $this->formatArray($row, SpyOmsTransitionLogTableMap::COL_CONDITIONS);
-            $row = $this->formatArray($row, SpyOmsTransitionLogTableMap::COL_COMMANDS);
-
             $row = $this->formatEmptyValues($row, SpyOmsTransitionLogTableMap::COL_EVENT);
-            $row = $this->formatEmptyValues($row, SpyOmsTransitionLogTableMap::COL_CONDITIONS);
-            $row = $this->formatEmptyValues($row, SpyOmsTransitionLogTableMap::COL_COMMANDS);
+            $row = $this->formatEmptyValues($row, SpyOmsTransitionLogTableMap::COL_CONDITION);
+            $row = $this->formatEmptyValues($row, SpyOmsTransitionLogTableMap::COL_COMMAND);
 
             $result[$i] = $row;
         }

@@ -106,7 +106,7 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * @param string $eventId
      * @param SpySalesOrderItem[] $orderItems
-     * @param array $data
+     * @param array|ReadOnlyArrayObject $data
      *
      * @return array
      */
@@ -126,7 +126,6 @@ class OrderStateMachine implements OrderStateMachineInterface
         $orderItems = $this->filterAffectedOrderItems($eventId, $orderItems, $processes);
 
         $log = $this->initTransitionLog($orderItems);
-        //$log->addItems($orderItems);
 
         $orderGroup = $this->groupByOrderAndState($eventId, $orderItems, $processes);
         $sourceStateBuffer = [];
@@ -305,6 +304,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         }
 
         if (count($possibleTransitions) > 0) {
+            /* @var TransitionInterface $selectedTransition */
             $selectedTransition = array_shift($possibleTransitions);
             $targetState = $selectedTransition->getTarget();
         } else {
@@ -480,7 +480,7 @@ class OrderStateMachine implements OrderStateMachineInterface
             $process = $this->builder->createProcess($orderItem->getProcess()->getName());
             $sourceState = $process->getStateFromAllProcesses($stateId);
 
-            //$log->addSourceState($orderItem, $sourceState->getName());
+            $log->addSourceState($orderItem, $sourceState->getName());
 
             $targetState = $sourceState;
             if (isset($eventId) && $sourceState->hasEvent($eventId)) {
@@ -711,7 +711,7 @@ class OrderStateMachine implements OrderStateMachineInterface
             }
 
             if ($orderItem->isModified()) {
-                Log::log($orderItem->toArray(), 'orderitems.log');
+                //Log::log($orderItem->toArray(), 'orderitems.log');
                 $orderItem->save();
                 $log->save($orderItem);
             }

@@ -60,6 +60,8 @@ class Process implements ProcessInterface
 
     /**
      * @param ProcessInterface[] $subProcesses
+     *
+     * @return void
      */
     public function setSubProcesses($subProcesses)
     {
@@ -84,6 +86,8 @@ class Process implements ProcessInterface
 
     /**
      * @param ProcessInterface $subProcess
+     *
+     * @return void
      */
     public function addSubProcess(ProcessInterface $subProcess)
     {
@@ -92,6 +96,8 @@ class Process implements ProcessInterface
 
     /**
      * @param mixed $main
+     *
+     * @return void
      */
     public function setMain($main)
     {
@@ -108,6 +114,8 @@ class Process implements ProcessInterface
 
     /**
      * @param mixed $name
+     *
+     * @return void
      */
     public function setName($name)
     {
@@ -124,6 +132,8 @@ class Process implements ProcessInterface
 
     /**
      * @param StateInterface[] $states
+     *
+     * @return void
      */
     public function setStates($states)
     {
@@ -132,6 +142,8 @@ class Process implements ProcessInterface
 
     /**
      * @param StateInterface $state
+     *
+     * @return void
      */
     public function addState(StateInterface $state)
     {
@@ -194,6 +206,8 @@ class Process implements ProcessInterface
 
     /**
      * @param TransitionInterface $transition
+     *
+     * @return void
      */
     public function addTransition(TransitionInterface $transition)
     {
@@ -202,6 +216,8 @@ class Process implements ProcessInterface
 
     /**
      * @param TransitionInterface[] $transitions
+     *
+     * @return void
      */
     public function setTransitions($transitions)
     {
@@ -299,18 +315,18 @@ class Process implements ProcessInterface
      */
     public function getManualEvents()
     {
-        $manuallyExecuteableEventList = [];
+        $manuallyExecutableEventList = [];
         $transitions = $this->getAllTransitions();
         foreach ($transitions as $transition) {
             if ($transition->hasEvent()) {
                 $event = $transition->getEvent();
                 if ($event->isManual()) {
-                    $manuallyExecuteableEventList[] = $event;
+                    $manuallyExecutableEventList[] = $event;
                 }
             }
         }
 
-        return $manuallyExecuteableEventList;
+        return $manuallyExecutableEventList;
     }
 
     /**
@@ -350,6 +366,8 @@ class Process implements ProcessInterface
     }
     /**
      * @param mixed $file
+     *
+     * @return void
      */
     public function setFile($file)
     {

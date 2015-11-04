@@ -15,8 +15,8 @@
         <column name="params" type="ARRAY" required="true"/>
         <column name="source_state" type="VARCHAR" size="128" required="false"/>
         <column name="target_state" type="VARCHAR" size="128" required="false"/>
-        <column name="commands" type="ARRAY" required="false"/>
-        <column name="conditions" type="ARRAY" required="false"/>
+        <column name="command" type="VARCHAR" required="false"/>
+        <column name="condition" type="VARCHAR" required="false"/>
         <column name="error" type="BOOLEAN" required="false"/>
         <column name="error_message" type="VARCHAR" size="1024" required="false"/>
 
