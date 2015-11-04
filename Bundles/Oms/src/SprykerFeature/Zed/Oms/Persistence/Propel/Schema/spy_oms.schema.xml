@@ -17,7 +17,7 @@
         <column name="target_state" type="VARCHAR" size="128" required="false"/>
         <column name="command" type="VARCHAR" required="false"/>
         <column name="condition" type="VARCHAR" required="false"/>
-        <column name="error" type="BOOLEAN" required="false"/>
+        <column name="is_error" type="BOOLEAN" required="false"/>
         <column name="error_message" type="VARCHAR" size="1024" required="false"/>
 
         <behavior name="timestampable">

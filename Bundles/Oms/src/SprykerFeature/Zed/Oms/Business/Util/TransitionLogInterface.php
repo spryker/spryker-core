@@ -67,7 +67,7 @@ interface TransitionLogInterface
      *
      * @return void
      */
-    public function setError($error);
+    public function setIsError($error);
 
     /**
      * @param SpySalesOrderItem $salesOrderItem

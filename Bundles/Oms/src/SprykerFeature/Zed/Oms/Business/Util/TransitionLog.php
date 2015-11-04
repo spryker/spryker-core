@@ -127,10 +127,10 @@ class TransitionLog implements TransitionLogInterface
      *
      * @return void
      */
-    public function setError($error)
+    public function setIsError($error)
     {
         foreach ($this->logEntities as $logEntity) {
-            $logEntity->setError($error);
+            $logEntity->setIsError($error);
         }
     }
 

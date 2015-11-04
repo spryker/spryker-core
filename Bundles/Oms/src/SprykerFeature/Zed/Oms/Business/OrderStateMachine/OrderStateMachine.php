@@ -288,7 +288,7 @@ class OrderStateMachine implements OrderStateMachineInterface
                 try {
                     $conditionCheck = $conditionModel->check($orderItem);
                 } catch (Exception $e) {
-                    $log->setError(true);
+                    $log->setIsError(true);
                     $log->setErrorMessage(get_class($e) . ' - ' . $e->getMessage());
                     $log->saveAll();
                     throw $e;
@@ -448,7 +448,7 @@ class OrderStateMachine implements OrderStateMachineInterface
                         break;
                     }
                 } catch (Exception $e) {
-                    $log->setError(true);
+                    $log->setIsError(true);
                     $log->setErrorMessage(get_class($e) . ' - ' . $e->getMessage());
                     $log->saveAll();
                     throw $e;
