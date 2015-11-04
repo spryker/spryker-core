@@ -112,8 +112,11 @@ class CmsGlossaryForm extends AbstractForm
             ->addTextarea(self::TRANSLATION,[
                 'label' => 'Content',
                 'constraints' => $this->getConstraints()->getRequiredConstraints(),
+                'attr' => [
+                    'class' => 'html-editor',
+                ],
             ])
-            ;
+        ;
     }
 
     /**
