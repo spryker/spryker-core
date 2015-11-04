@@ -1,9 +1,8 @@
 <?php
 /**
- *
  * (c) Copyright Spryker Systems GmbH 2015
  */
-namespace SprykerFeature\Shared\Library\NewRelic;
+namespace SprykerFeature\Shared\NewRelic;
 
 /**
  * The PHP API for New Relic
@@ -14,17 +13,10 @@ interface ApiInterface
 {
 
     /**
-     * @static
-     *
-     * @return $this
-     */
-    public static function getInstance();
-
-    /**
      * Report an error at this line of code, with a complete stack trace.
      *
      * @param $message
-     * @param Exception $e
+     * @param \Exception $e
      *
      * @return $this
      */
@@ -167,4 +159,14 @@ interface ApiInterface
      * @return $this
      */
     public function disableAutoRUM();
+
+    /**
+     * Send information about application deployments to New Relic.
+     *
+     * @param array $params
+     *
+     * @return $this
+     */
+    public function recordDeployment(array $params = []);
+
 }

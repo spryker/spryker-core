@@ -12,8 +12,8 @@ use SprykerEngine\Shared\Lumberjack\Model\EventJournalInterface;
 use SprykerEngine\Shared\Lumberjack\Model\SharedEventJournal;
 use SprykerFeature\Shared\Library\Application\Version;
 use SprykerFeature\Shared\Library\Log;
-use SprykerFeature\Shared\Library\NewRelic\Api;
-use SprykerFeature\Shared\Library\NewRelic\ApiInterface;
+use SprykerFeature\Shared\NewRelic\Api;
+use SprykerFeature\Shared\NewRelic\ApiInterface;
 
 class ErrorLogger
 {
@@ -23,9 +23,11 @@ class ErrorLogger
      */
     public static function log(\Exception $exception)
     {
-        self::sendExceptionToFile($exception, new SharedEventJournal(), Api::getInstance());
-        self::sendExceptionToNewRelic($exception, false, new SharedEventJournal(), Api::getInstance());
-        self::sendExceptionToLumberjack($exception, false, new SharedEventJournal(), Api::getInstance());
+        $newRelicApi = new Api();
+        
+        self::sendExceptionToFile($exception, new SharedEventJournal(), $newRelicApi);
+        self::sendExceptionToNewRelic($exception, false, new SharedEventJournal(), $newRelicApi);
+        self::sendExceptionToLumberjack($exception, false, new SharedEventJournal(), $newRelicApi);
     }
 
     /**

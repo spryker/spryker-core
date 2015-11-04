@@ -41,7 +41,7 @@ class ClassGeneratorTest extends \PHPUnit_Framework_TestCase
      */
     private function getFixtureDirectory()
     {
-        return __DIR__ . '/Fixtures';
+        return __DIR__ . '/Fixtures/';
     }
 
     public function testGenerateShouldCreateTargetDirectoryIfNotExist()

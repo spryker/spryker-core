@@ -6,8 +6,7 @@
 
 namespace SprykerFeature\Shared\Session\Business\Handler;
 
-use Propel\Runtime\Collection\Collection;
-use SprykerFeature\Shared\Library\NewRelic\Api;
+use SprykerFeature\Shared\NewRelic\ApiInterface;
 
 class SessionHandlerFile implements \SessionHandlerInterface
 {
@@ -32,13 +31,20 @@ class SessionHandlerFile implements \SessionHandlerInterface
     protected $savePath;
 
     /**
+     * @var ApiInterface
+     */
+    protected $newRelicApi;
+
+    /**
      * @param string $savePath
      * @param int $lifetime
+     * @param ApiInterface $newRelicApi
      */
-    public function __construct($savePath, $lifetime)
+    public function __construct($savePath, $lifetime, ApiInterface $newRelicApi)
     {
         $this->savePath = $savePath;
         $this->lifetime = $lifetime;
+        $this->newRelicApi = $newRelicApi;
     }
 
     /**
@@ -81,7 +87,7 @@ class SessionHandlerFile implements \SessionHandlerInterface
 
         $content = file_get_contents($sessionFile);
 
-        Api::getInstance()->addCustomMetric(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
+        $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_READ_TIME, microtime(true) - $startTime);
 
         return $content;
     }
@@ -102,7 +108,7 @@ class SessionHandlerFile implements \SessionHandlerInterface
 
         $startTime = microtime(true);
         $result = file_put_contents($this->savePath . DIRECTORY_SEPARATOR . $key, $sessionData);
-        Api::getInstance()->addCustomMetric(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
+        $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_WRITE_TIME, microtime(true) - $startTime);
 
         return $result > 0;
     }
@@ -119,7 +125,7 @@ class SessionHandlerFile implements \SessionHandlerInterface
         if (file_exists($file)) {
             $startTime = microtime(true);
             unlink($file);
-            Api::getInstance()->addCustomMetric(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
+            $this->newRelicApi->addCustomMetric(self::METRIC_SESSION_DELETE_TIME, microtime(true) - $startTime);
 
             return true;
         }

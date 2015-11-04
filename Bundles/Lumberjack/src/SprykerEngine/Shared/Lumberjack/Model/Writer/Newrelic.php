@@ -7,16 +7,21 @@
 namespace SprykerEngine\Shared\Lumberjack\Model\Writer;
 
 use SprykerEngine\Shared\Lumberjack\Model\EventInterface;
-use SprykerFeature\Shared\Library\NewRelic\Api as NewRelicApi;
+use SprykerFeature\Shared\NewRelic\Api as NewRelicApi;
 
 class Newrelic extends AbstractWriter
 {
 
     const TYPE = 'newrelic';
 
+    /**
+     * @param EventInterface $event
+     *
+     * @return bool
+     */
     public function write(EventInterface $event)
     {
-        $api = NewRelicApi::getInstance();
+        $api = new NewRelicApi();
 
         foreach ($event as $field => $value) {
             $api->addCustomParameter($field, $value);

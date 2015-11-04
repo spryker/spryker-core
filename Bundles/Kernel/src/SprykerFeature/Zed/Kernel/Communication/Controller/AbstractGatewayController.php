@@ -11,7 +11,7 @@ use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\ZedRequest\Client\Message;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Shared\Library\NewRelic\Api;
+use SprykerFeature\Shared\NewRelic\Api;
 
 abstract class AbstractGatewayController extends AbstractController
 {
@@ -45,7 +45,8 @@ abstract class AbstractGatewayController extends AbstractController
         parent::__construct($application, $factory, $locator);
 
         // @todo this can be a plugin which listen for kernel.controller events
-        Api::getInstance()->addCustomParameter('Call_from', 'Yves');
+        $newRelicApi = new Api();
+        $newRelicApi->addCustomParameter('Call_from', 'Yves');
     }
 
     /**

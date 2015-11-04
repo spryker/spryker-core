@@ -8,7 +8,7 @@ namespace SprykerEngine\Shared\Kernel;
 
 use SprykerFeature\Shared\Application\ApplicationConfig;
 use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Library\NewRelic\Api;
+use SprykerFeature\Shared\NewRelic\Api;
 use SprykerFeature\Shared\System\SystemConfig;
 
 class Store
@@ -119,7 +119,7 @@ class Store
         header('X-Store: ' . $this->getStoreName());
         header('X-Env: ' . APPLICATION_ENV);
 
-        $newRelicApi = Api::getInstance();
+        $newRelicApi = new Api();
         $newRelicApi->addCustomParameter('locale', $this->getCurrentLocale());
         $newRelicApi->addCustomParameter('store', $this->getStoreName());
     }

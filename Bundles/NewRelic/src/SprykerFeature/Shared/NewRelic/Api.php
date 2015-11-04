@@ -4,7 +4,11 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Shared\Library\NewRelic;
+namespace SprykerFeature\Shared\NewRelic;
+
+use Guzzle\Http\Client;
+use SprykerEngine\Shared\Config;
+use SprykerFeature\Shared\NewRelic\Exception\RecordDeploymentException;
 
 /**
  * The PHP API for New Relic
@@ -14,10 +18,7 @@ namespace SprykerFeature\Shared\Library\NewRelic;
 class Api implements ApiInterface
 {
 
-    /**
-     * @var
-     */
-    protected static $instance;
+    const NEWRELIC_DEPLOYMENT_API_URL = 'https://api.newrelic.com/deployments.xml';
 
     /**
      * @var bool
@@ -29,26 +30,9 @@ class Api implements ApiInterface
      */
     protected $nameOfTransaction;
 
-    /**
-     * Protected Singleton-Constructor. Use SprykerFeature\Shared\Library\NewRelic\Api::getInstance() instead.
-     */
-    protected function __construct()
+    public function __construct()
     {
         $this->active = extension_loaded('newrelic');
-    }
-
-    /**
-     * @static
-     *
-     * @return self
-     */
-    public static function getInstance()
-    {
-        if (is_null(self::$instance)) {
-            self::$instance = new static;
-        }
-
-        return self::$instance;
     }
 
     /**
@@ -297,6 +281,60 @@ class Api implements ApiInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @param array $params
+     *
+     * @throws RecordDeploymentException
+     *
+     * @return self
+     */
+    public function recordDeployment(array $params = [])
+    {
+        if (!$this->active) {
+            return $this;
+        }
+
+        $request = $this->createRecordDeploymentRequest($params);
+
+        $response = $request->send();
+
+        if ($response->isError()) {
+            throw new RecordDeploymentException(sprintf(
+                'Record deployment to New Relic request failed with code %d. %s',
+                $response->getStatusCode(),
+                $response->getBody()
+            ));
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param array $params
+     *
+     * @throws \Exception
+     *
+     * @return \Guzzle\Http\Message\EntityEnclosingRequestInterface|\Guzzle\Http\Message\RequestInterface
+     */
+    protected function createRecordDeploymentRequest(array $params)
+    {
+        $headers = [
+            'x-api-key' => Config::get(NewRelicConfig::NEWRELIC_API_KEY),
+        ];
+
+        $data['deployment'] = [];
+        foreach ($params as $key => $value) {
+            $data['deployment'][$key] = $value;
+        }
+
+        $httpClient = new Client(self::NEWRELIC_DEPLOYMENT_API_URL);
+
+        $request = $httpClient->post(null, $headers);
+        $request->addPostFields($data);
+
+        return $request;
     }
 
 }
