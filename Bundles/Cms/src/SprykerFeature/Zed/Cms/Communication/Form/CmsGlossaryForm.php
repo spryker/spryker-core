@@ -73,10 +73,10 @@ class CmsGlossaryForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-        $placeholderConstraints = $this->locateConstraint()->getMandatoryConstraints();
+        $placeholderConstraints = $this->getConstraints()->getMandatoryConstraints();
 
         if (!isset($this->idMapping)) {
-            $placeholderConstraints[] = $this->locateConstraint()->createConstraintCallback([
+            $placeholderConstraints[] = $this->getConstraints()->createConstraintCallback([
                 'methods' => [
                     function ($placeholder, ExecutionContext $context) {
                         if ($this->cmsFacade->hasPagePlaceholderMapping($this->idPage, $placeholder)) {
@@ -111,7 +111,7 @@ class CmsGlossaryForm extends AbstractForm
             ->addText(self::GLOSSARY_KEY)
             ->addTextarea(self::TRANSLATION,[
                 'label' => 'Content',
-                'constraints' => $this->locateConstraint()->getRequiredConstraints(),
+                'constraints' => $this->getConstraints()->getRequiredConstraints(),
             ])
             ;
     }

@@ -35,7 +35,7 @@ class PoolCategoryForm extends AbstractForm
         $this
             ->addText(self::COL_NAME, [
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
         ;

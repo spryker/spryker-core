@@ -62,8 +62,8 @@ class VoucherForm extends AbstractForm
                 ->addText(self::FIELD_QUANTITY, [
                     'label' => 'Quantity',
                     'constraints' => [
-                        $this->locateConstraint()->createConstraintNotBlank(),
-                        $this->locateConstraint()->createConstraintGreaterThan(1),
+                        $this->getConstraints()->createConstraintNotBlank(),
+                        $this->getConstraints()->createConstraintGreaterThan(1),
                     ],
                 ])
             ;
@@ -86,7 +86,7 @@ class VoucherForm extends AbstractForm
                 'label' => 'Random Generated Code Length',
                 'choices' => $this->getCodeLengthChoices(),
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintCallback([
+                    $this->getConstraints()->createConstraintCallback([
                         'methods' => [
                             function ($length, ExecutionContextInterface $context) use ($codeLengthValidator) {
                                 $formData = $context->getRoot()->getData();
@@ -115,7 +115,7 @@ class VoucherForm extends AbstractForm
                 'placeholder' => 'Select one',
                 'choices' => $this->getPools(),
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
         ;

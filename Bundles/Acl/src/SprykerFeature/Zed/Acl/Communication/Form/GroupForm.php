@@ -48,10 +48,10 @@ class GroupForm extends AbstractForm
     {
         $this->addText(self::FIELD_TITLE, [
             'constraints' => [
-                $this->locateConstraint()->createConstraintNotBlank([
+                $this->getConstraints()->createConstraintNotBlank([
                     'groups' => [self::VALIDATE_ADD, self::VALIDATE_EDIT],
                 ]),
-                $this->locateConstraint()->createConstraintCallback([
+                $this->getConstraints()->createConstraintCallback([
                     'groups' => [self::VALIDATE_ADD],
                     'methods' => [
                         function ($name, ExecutionContextInterface $contextInterface) {

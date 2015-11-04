@@ -37,7 +37,7 @@ class CategoryFormEdit extends CategoryFormAdd
 
         return $this->addText(self::NAME, [
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
             ->addText(self::ATTRIBUTE_META_TITLE, [
@@ -62,7 +62,7 @@ class CategoryFormEdit extends CategoryFormAdd
                 'label' => 'Parent',
                 'choices' => $categoriesWithPath,
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
                 'multiple' => false,
             ])

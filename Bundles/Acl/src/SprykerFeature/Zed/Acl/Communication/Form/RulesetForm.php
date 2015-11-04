@@ -39,7 +39,7 @@ class RulesetForm extends AbstractForm
             [
                 'label' => 'Bundle',
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ]
         );
@@ -57,7 +57,7 @@ class RulesetForm extends AbstractForm
             [
                 'label' => 'Controller',
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ]
         );
@@ -75,7 +75,7 @@ class RulesetForm extends AbstractForm
             [
                 'label' => 'Action',
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ]
         );

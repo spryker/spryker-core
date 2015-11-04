@@ -71,9 +71,9 @@ class RefundForm extends AbstractForm
             ->addNumber(self::FIELD_AMOUNT, [
                 'label' => 'Total Refund Amount (autocalculated / in Cents)',
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
-                    $this->locateConstraint()->createConstraintGreaterThan(['value' => 0]),
-                    $this->locateConstraint()->createConstraintLessThanOrEqual(['value' => $maxAmount]),
+                    $this->getConstraints()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintGreaterThan(['value' => 0]),
+                    $this->getConstraints()->createConstraintLessThanOrEqual(['value' => $maxAmount]),
                 ],
                 'attr' => ['readonly' => true],
             ])
@@ -83,7 +83,7 @@ class RefundForm extends AbstractForm
                     'rows' => 7,
                 ],
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
         ;
@@ -92,12 +92,12 @@ class RefundForm extends AbstractForm
             $this
                 ->addText(self::FIELD_IBAN, [
                     'constraints' => [
-                        $this->locateConstraint()->createConstraintNotBlank(),
+                        $this->getConstraints()->createConstraintNotBlank(),
                     ],
                 ])
                 ->addText(self::FIELD_BIC, [
                     'constraints' => [
-                        $this->locateConstraint()->createConstraintNotBlank(),
+                        $this->getConstraints()->createConstraintNotBlank(),
                     ],
                 ])
             ;

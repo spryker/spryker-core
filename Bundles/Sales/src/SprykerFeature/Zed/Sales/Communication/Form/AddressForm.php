@@ -54,19 +54,19 @@ class AddressForm extends AbstractForm
             ])
             ->addText(self::FIRST_NAME, [
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
             ->addText(self::MIDDLE_NAME)
             ->addText(self::LAST_NAME, [
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
             ->addText(self::EMAIL, [
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
-                    $this->locateConstraint()->createConstraintEmail(),
+                    $this->getConstraints()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintEmail(),
                 ],
             ])
             ->addText(self::ADDRESS_1)

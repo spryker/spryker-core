@@ -78,9 +78,9 @@ class CmsPageForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-        $urlConstraints = $this->locateConstraint()->getMandatoryConstraints();
+        $urlConstraints = $this->getConstraints()->getMandatoryConstraints();
 
-        $urlConstraints[] = $this->locateConstraint()->createConstraintCallback([
+        $urlConstraints[] = $this->getConstraints()->createConstraintCallback([
             'methods' => [
                 function ($url, ExecutionContext $context) {
                     if ($this->urlFacade->hasUrl($url) && $this->pageUrl !== $url) {

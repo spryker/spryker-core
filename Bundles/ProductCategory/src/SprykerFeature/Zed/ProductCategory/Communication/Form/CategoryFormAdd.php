@@ -78,14 +78,14 @@ class CategoryFormAdd extends AbstractForm
     {
         return $this->addText(self::NAME, [
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
             ->addSelect2ComboBox(self::FK_PARENT_CATEGORY_NODE, [
                 'label' => 'Parent',
                 'choices' => $this->getCategoriesWithPaths(),
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
             ->addHidden(self::PK_CATEGORY_NODE)

@@ -25,7 +25,7 @@ class ResetPasswordForm extends AbstractForm
             [
                 'label'       => 'Current password',
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                     new CurrentPassword([
                         'facadeUser' => $this->getLocator()->user()->facade(),
                     ]),
@@ -35,7 +35,7 @@ class ResetPasswordForm extends AbstractForm
             self::PASSWORD,
             [
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
                 'invalid_message' => 'The password fields must match.',
                 'first_options' => ['label' => 'Password'],

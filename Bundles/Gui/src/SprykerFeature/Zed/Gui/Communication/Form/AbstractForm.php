@@ -84,7 +84,7 @@ abstract class AbstractForm
     /**
      * @return ConstraintsPlugin
      */
-    public function locateConstraint()
+    public function getConstraints()
     {
         if (is_null($this->constraintsPlugin)) {
             $this->constraintsPlugin = $this->getLocator()->gui()->pluginConstraintsPlugin();

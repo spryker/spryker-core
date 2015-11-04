@@ -38,10 +38,10 @@ class CountryForm extends AbstractForm
             [
                 'label' => 'ISO2 Code',
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank([
+                    $this->getConstraints()->createConstraintNotBlank([
                         'message' => 'Please provide correct ISO2 Code',
                     ]),
-                    $this->locateConstraint()->createConstraintLength([
+                    $this->getConstraints()->createConstraintLength([
                         'min' => 2,
                         'max' => 2,
                     ]),
@@ -52,8 +52,8 @@ class CountryForm extends AbstractForm
                 [
                     'label' => 'ISO3 Code',
                     'constraints' => [
-                        $this->locateConstraint()->createConstraintNotBlank(),
-                        $this->locateConstraint()->createConstraintLength([
+                        $this->getConstraints()->createConstraintNotBlank(),
+                        $this->getConstraints()->createConstraintLength([
                             'min' => 3,
                             'max' => 3,
                         ]),
@@ -64,7 +64,7 @@ class CountryForm extends AbstractForm
                 [
                     'label' => 'Country Name',
                     'constraints' => [
-                        $this->locateConstraint()->createConstraintNotBlank(),
+                        $this->getConstraints()->createConstraintNotBlank(),
                     ],
                 ]
             )

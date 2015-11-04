@@ -60,17 +60,17 @@ class AddressForm extends AbstractForm
             ->addText(self::FIRST_NAME, [
                     'label' => 'First Name',
                     'constraints' => [
-                        $this->locateConstraint()->createConstraintRequired(),
-                        $this->locateConstraint()->createConstraintNotBlank(),
-                        $this->locateConstraint()->createConstraintLength(['max' => 100]),
+                        $this->getConstraints()->createConstraintRequired(),
+                        $this->getConstraints()->createConstraintNotBlank(),
+                        $this->getConstraints()->createConstraintLength(['max' => 100]),
                     ],
                 ])
             ->addText(self::LAST_NAME, [
                     'label' => 'Last Name',
                     'constraints' => [
-                        $this->locateConstraint()->createConstraintRequired(),
-                        $this->locateConstraint()->createConstraintNotBlank(),
-                        $this->locateConstraint()->createConstraintLength(['max' => 100]),
+                        $this->getConstraints()->createConstraintRequired(),
+                        $this->getConstraints()->createConstraintNotBlank(),
+                        $this->getConstraints()->createConstraintLength(['max' => 100]),
                     ],
                 ])
             ->addText('address1', [
@@ -88,7 +88,7 @@ class AddressForm extends AbstractForm
             ->addText('zip_code', [
                     'label' => 'Zip Code',
                     'constraints' => [
-                        $this->locateConstraint()->createConstraintLength(['max' => 15]),
+                        $this->getConstraints()->createConstraintLength(['max' => 15]),
                     ],
                 ])
             ->addChoice('fk_country', [
@@ -110,7 +110,7 @@ class AddressForm extends AbstractForm
             ->addTextarea('comment', [
                     'label' => 'Comment',
                     'constraints' => [
-                        $this->locateConstraint()->createConstraintLength(['max' => 255]),
+                        $this->getConstraints()->createConstraintLength(['max' => 255]),
                     ],
                 ])
             ;

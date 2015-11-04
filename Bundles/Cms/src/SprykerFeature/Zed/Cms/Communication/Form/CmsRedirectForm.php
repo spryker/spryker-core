@@ -62,9 +62,9 @@ class CmsRedirectForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-        $urlConstraints = $this->locateConstraint()->getMandatoryConstraints();
+        $urlConstraints = $this->getConstraints()->getMandatoryConstraints();
 
-        $urlConstraints[] = $this->locateConstraint()->createConstraintCallback([
+        $urlConstraints[] = $this->getConstraints()->createConstraintCallback([
             'methods' => [
                 function ($url, ExecutionContext $context) {
                     if ($this->urlFacade->hasUrl($url) && $this->redirectUrl !== $url) {
@@ -81,7 +81,7 @@ class CmsRedirectForm extends AbstractForm
             ])
             ->addText(self::TO_URL, [
                 'label' => 'To URL',
-                'constraints' => $this->locateConstraint()->getMandatoryConstraints(),
+                'constraints' => $this->getConstraints()->getMandatoryConstraints(),
             ])
             ->addText(self::STATUS)
             ;

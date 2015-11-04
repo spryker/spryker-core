@@ -22,8 +22,8 @@ class LoginForm extends AbstractForm
         return $this
             ->addText(self::USERNAME, [
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintRequired(),
-                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintRequired(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
                 'attr' => [
                     'placeholder' => 'Email Address',
@@ -31,8 +31,8 @@ class LoginForm extends AbstractForm
             ])
             ->addPassword(self::PASSWORD, [
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintRequired(),
-                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintRequired(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
                 'attr' => [
                     'placeholder' => 'Password',

@@ -91,9 +91,9 @@ class CmsBlockForm extends AbstractForm
      */
     protected function buildFormFields()
     {
-        $blockConstraints = $this->locateConstraint()->getMandatoryConstraints();
+        $blockConstraints = $this->getConstraints()->getMandatoryConstraints();
 
-        $blockConstraints[] = $this->locateConstraint()->createConstraintCallback([
+        $blockConstraints[] = $this->getConstraints()->createConstraintCallback([
             'methods' => [
                 function ($name, ExecutionContext $context) {
                     $formData = $context->getRoot()->getViewData();

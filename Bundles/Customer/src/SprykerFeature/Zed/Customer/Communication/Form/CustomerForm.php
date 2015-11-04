@@ -55,13 +55,13 @@ class CustomerForm extends AbstractForm
     public function buildFormFields()
     {
         $emailConstraints = [
-            $this->locateConstraint()->createConstraintNotBlank(),
-            $this->locateConstraint()->createConstraintRequired(),
-            $this->locateConstraint()->createConstraintEmail(),
+            $this->getConstraints()->createConstraintNotBlank(),
+            $this->getConstraints()->createConstraintRequired(),
+            $this->getConstraints()->createConstraintEmail(),
         ];
 
         if (self::ADD === $this->type) {
-            $emailConstraints[] = $this->locateConstraint()->createConstraintCallback([
+            $emailConstraints[] = $this->getConstraints()->createConstraintCallback([
                 'methods' => [
                     function ($email, ExecutionContext $context) {
                         if ($this->customerQuery->findByEmail($email)
@@ -95,17 +95,17 @@ class CustomerForm extends AbstractForm
             ->addText('first_name', [
                 'label' => 'First Name',
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintRequired(),
-                    $this->locateConstraint()->createConstraintNotBlank(),
-                    $this->locateConstraint()->createConstraintLength(['max' => 100]),
+                    $this->getConstraints()->createConstraintRequired(),
+                    $this->getConstraints()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintLength(['max' => 100]),
                 ],
             ])
             ->addText('last_name', [
                 'label' => 'Last Name',
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintRequired(),
-                    $this->locateConstraint()->createConstraintNotBlank(),
-                    $this->locateConstraint()->createConstraintLength(['max' => 100]),
+                    $this->getConstraints()->createConstraintRequired(),
+                    $this->getConstraints()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintLength(['max' => 100]),
                 ],
             ])
             ->addChoice(self::GENDER, [
@@ -113,7 +113,7 @@ class CustomerForm extends AbstractForm
                 'placeholder' => 'Select one',
                 'choices' => $this->getGenderOptions(),
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintRequired(),
+                    $this->getConstraints()->createConstraintRequired(),
                 ],
             ])
         ;

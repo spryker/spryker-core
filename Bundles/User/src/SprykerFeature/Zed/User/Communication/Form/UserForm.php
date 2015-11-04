@@ -48,7 +48,7 @@ class UserForm extends AbstractForm
             [
                 'label'       => 'Username',
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ]
         );
@@ -65,7 +65,7 @@ class UserForm extends AbstractForm
             self::PASSWORD,
             [
                 'constraints'     => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
                 'invalid_message' => 'The password fields must match.',
                 'first_options'   => ['label' => 'Password'],
@@ -87,7 +87,7 @@ class UserForm extends AbstractForm
             self::FIRST_NAME,
             [
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ]
         );
@@ -104,7 +104,7 @@ class UserForm extends AbstractForm
             self::LAST_NAME,
             [
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ]
         );
@@ -121,7 +121,7 @@ class UserForm extends AbstractForm
             self::GROUP,
             [
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintChoice([
+                    $this->getConstraints()->createConstraintChoice([
                         'choices'  => array_keys($this->getGroupChoices()),
                         'multiple' => true,
                         'min'      => 1

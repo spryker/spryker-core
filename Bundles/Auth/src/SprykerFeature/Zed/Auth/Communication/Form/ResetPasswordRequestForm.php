@@ -22,9 +22,9 @@ class ResetPasswordRequestForm extends AbstractForm
         return $this
             ->addText(self::EMAIL, [
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank(),
-                    $this->locateConstraint()->createConstraintRequired(),
-                    $this->locateConstraint()->createConstraintEmail(),
+                    $this->getConstraints()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintRequired(),
+                    $this->getConstraints()->createConstraintEmail(),
                 ],
                 'attr' => [
                     'placeholder' => 'Email Address'

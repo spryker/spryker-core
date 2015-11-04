@@ -113,8 +113,8 @@ class TranslationForm extends AbstractForm
     protected function getFieldDefaultConstraints()
     {
         return [
-            $this->locateConstraint()->createConstraintNotBlank(),
-            $this->locateConstraint()->createConstraintRequired(),
+            $this->getConstraints()->createConstraintNotBlank(),
+            $this->getConstraints()->createConstraintRequired(),
         ];
     }
 

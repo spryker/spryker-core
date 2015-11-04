@@ -29,10 +29,10 @@ class OrderItemSplitForm extends AbstractForm
             [
                 'label' => 'Quantity',
                 'constraints' => [
-                    $this->locateConstraint()->createConstraintNotBlank([
+                    $this->getConstraints()->createConstraintNotBlank([
                         'message' => self::VALIDATION_MESSAGE_QUANTITY,
                     ]),
-                    $this->locateConstraint()->createConstraintRegex([
+                    $this->getConstraints()->createConstraintRegex([
                         'pattern' => '/^\d+$/',
                         'message' => self::VALIDATE_MESSAGE_NUMERIC,
                     ]),
