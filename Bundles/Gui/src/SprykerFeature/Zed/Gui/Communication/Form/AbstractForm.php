@@ -133,6 +133,7 @@ abstract class AbstractForm
 
     /**
      * @return $this
+     *
      * @deprecated this method will become private and will be called in this class ONLY in handleRequest()
      */
     public function init()
@@ -622,6 +623,7 @@ abstract class AbstractForm
      * @param array $options
      *
      * @return $this
+     *
      * @deprecated Forms should not have submit buttons http://symfony.com/doc/current/best_practices/forms.html#form-button-configuration
      */
     public function addSubmit($name = 'submit', $options = [])
@@ -694,4 +696,5 @@ abstract class AbstractForm
     {
         return $this->formName;
     }
+
 }

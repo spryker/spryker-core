@@ -31,7 +31,7 @@ class Select2ComboBoxType extends AbstractType
     {
         $resolver->setDefaults([
             'choices' => [],
-            'placeholder' => '-Select value-'
+            'placeholder' => '-Select value-',
         ]);
     }
 
