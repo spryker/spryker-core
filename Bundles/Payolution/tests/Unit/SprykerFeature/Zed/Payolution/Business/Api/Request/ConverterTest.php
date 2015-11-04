@@ -7,9 +7,9 @@
 namespace Unit\SprykerFeature\Zed\Payolution\Business\Api\Request;
 
 use Generated\Shared\Transfer\PayolutionRequestTransfer;
-use SprykerFeature\Zed\Payolution\Business\Api\Constants;
 use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\Converter;
+use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
 
 class ConverterTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,20 +21,20 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(
             [
                 'SECURITY.SENDER' => '1234567890',
-                'TRANSACTION.MODE' => Constants::TRANSACTION_MODE_TEST,
+                'TRANSACTION.MODE' => ApiConstants::TRANSACTION_MODE_TEST,
                 'TRANSACTION.CHANNEL' => '0987654321',
                 'USER.LOGIN' => 'john.doe',
                 'USER.PWD' => 'test123',
                 'IDENTIFICATION.TRANSACTIONID' => '123',
                 'IDENTIFICATION.SHOPPERID' => 'customer123',
-                'PAYMENT.CODE' => Constants::PAYMENT_CODE_PRE_AUTHORIZATION,
+                'PAYMENT.CODE' => ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION,
                 'PRESENTATION.AMOUNT' => 100.00,
                 'PRESENTATION.CURRENCY' => 'EUR',
                 'PRESENTATION.USAGE' => 'Clock',
                 'NAME.FAMILY' => 'Doe',
                 'NAME.GIVEN' => 'John',
                 'NAME.BIRTHDATE' => '1970-01-01',
-                'NAME.SEX' => Constants::SEX_MALE,
+                'NAME.SEX' => ApiConstants::SEX_MALE,
                 'NAME.TITLE' => 'Mr',
                 'ADDRESS.COUNTRY' => 'DE',
                 'ADDRESS.CITY' => 'Berlin',
@@ -57,16 +57,16 @@ class ConverterTest extends \PHPUnit_Framework_TestCase
         return (new PayolutionRequestTransfer())
             ->setSecuritySender('1234567890')
             ->setTransactionChannel('0987654321')
-            ->setTransactionMode(Constants::TRANSACTION_MODE_TEST)
+            ->setTransactionMode(ApiConstants::TRANSACTION_MODE_TEST)
             ->setUserLogin('john.doe')
             ->setUserPwd('test123')
-            ->setPaymentCode(Constants::PAYMENT_CODE_PRE_AUTHORIZATION)
+            ->setPaymentCode(ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION)
             ->setPresentationAmount(100.00)
             ->setPresentationCurrency('EUR')
             ->setPresentationUsage('Clock')
             ->setNameFamily('Doe')
             ->setNameGiven('John')
-            ->setNameSex(Constants::SEX_MALE)
+            ->setNameSex(ApiConstants::SEX_MALE)
             ->setNameTitle('Mr')
             ->setNameBirthdate('1970-01-01')
             ->setAddressCity('Berlin')

@@ -42,6 +42,10 @@
         <property name="contactPhone" type="string"/>
         <property name="contactMobile" type="string"/>
         <property name="accountBrand" type="string"/>
+        <property name="sender" type="string" />
+        <property name="paymentOperationtype" type="string" />
+        <property name="paymentPaymenttype" type="string" />
+        <property name="presentationVat" type="string" />
         <property name="analysisCriteria" singular="analysisCriterion" type="PayolutionRequestAnalysisCriterion[]"/>
     </transfer>
 

@@ -8,7 +8,7 @@ namespace Functional\SprykerFeature\Zed\Payolution\Business;
 
 use Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http\PreAuthorizationAdapterMock;
 use Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http\ReversalAdapterMock;
-use SprykerFeature\Zed\Payolution\Business\Api\Constants;
+use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use Orm\Zed\Payolution\Persistence\Base\SpyPaymentPayolutionTransactionStatusLog;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;
 
@@ -44,7 +44,7 @@ class PayolutionFacadeRevertTest extends AbstractFacadeTest
         /** @var SpyPaymentPayolutionTransactionRequestLog $requestLog */
         $requestLog = $this->getRequestLogCollectionForPayment()->getLast();
         $this->assertEquals(2, $this->getRequestLogCollectionForPayment()->count());
-        $this->assertEquals(Constants::PAYMENT_CODE_REVERSAL, $requestLog->getPaymentCode());
+        $this->assertEquals(ApiConstants::PAYMENT_CODE_REVERSAL, $requestLog->getPaymentCode());
         $this->assertEquals($this->getOrderEntity()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
         $this->assertEquals($preAuthorizationResponse->getIdentificationUniqueid(), $requestLog->getReferenceId());
 
@@ -86,7 +86,7 @@ class PayolutionFacadeRevertTest extends AbstractFacadeTest
         /** @var SpyPaymentPayolutionTransactionRequestLog $requestLog */
         $requestLog = $this->getRequestLogCollectionForPayment()->getLast();
         $this->assertEquals(2, $this->getRequestLogCollectionForPayment()->count());
-        $this->assertEquals(Constants::PAYMENT_CODE_REVERSAL, $requestLog->getPaymentCode());
+        $this->assertEquals(ApiConstants::PAYMENT_CODE_REVERSAL, $requestLog->getPaymentCode());
         $this->assertEquals($this->getOrderEntity()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
         $this->assertEquals($preAuthorizationResponse->getIdentificationUniqueid(), $requestLog->getReferenceId());
 

@@ -12,8 +12,7 @@ use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
 use Generated\Shared\Transfer\PayolutionRequestTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
-use SprykerFeature\Zed\Payolution\Business\Api\Constants;
+use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper\Invoice;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
@@ -29,13 +28,13 @@ class InvoiceTest extends Test
         $requestTransfer = $methodMapper->mapToPreCheck($checkoutRequestTransfer);
 
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionRequestTransfer', $requestTransfer);
-        $this->assertSame(PayolutionApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
-        $this->assertSame(PayolutionApiConstants::PAYMENT_CODE_PRE_CHECK, $requestTransfer->getPaymentCode());
+        $this->assertSame(ApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
+        $this->assertSame(ApiConstants::PAYMENT_CODE_PRE_CHECK, $requestTransfer->getPaymentCode());
         $this->assertSame('Straße des 17. Juni 135', $requestTransfer->getAddressStreet());
 
         $criteria = $requestTransfer->getAnalysisCriteria();
         $this->assertCount(2, $criteria);
-        $this->assertSame($criteria[0]->getName(), Constants::CRITERION_PRE_CHECK);
+        $this->assertSame($criteria[0]->getName(), ApiConstants::CRITERION_PRE_CHECK);
         $this->assertSame($criteria[0]->getValue(), 'TRUE');
     }
 
@@ -69,7 +68,7 @@ class InvoiceTest extends Test
             ->setGender('Male')
             ->setDateOfBirth('1970-01-01')
             ->setClientIp('127.0.0.1')
-            ->setAccountBrand(PayolutionApiConstants::BRAND_INVOICE)
+            ->setAccountBrand(ApiConstants::BRAND_INVOICE)
             ->setAddress($addressTransfer);
 
         $checkoutRequestTransfer = new CheckoutRequestTransfer();
@@ -90,8 +89,8 @@ class InvoiceTest extends Test
 
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionRequestTransfer', $requestTransfer);
         $this->assertSame($paymentEntityMock->getEmail(), $requestTransfer->getContactEmail());
-        $this->assertSame(PayolutionApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
-        $this->assertSame(Constants::PAYMENT_CODE_PRE_AUTHORIZATION, $requestTransfer->getPaymentCode());
+        $this->assertSame(ApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
+        $this->assertSame(ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION, $requestTransfer->getPaymentCode());
         $this->assertCount(1, $requestTransfer->getAnalysisCriteria());
     }
 
@@ -103,8 +102,8 @@ class InvoiceTest extends Test
         $requestTransfer = $methodMapper->mapToReAuthorization($paymentEntityMock, $uniqueId);
 
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionRequestTransfer', $requestTransfer);
-        $this->assertSame(PayolutionApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
-        $this->assertSame(Constants::PAYMENT_CODE_RE_AUTHORIZATION, $requestTransfer->getPaymentCode());
+        $this->assertSame(ApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
+        $this->assertSame(ApiConstants::PAYMENT_CODE_RE_AUTHORIZATION, $requestTransfer->getPaymentCode());
         $this->assertSame($uniqueId, $requestTransfer->getIdentificationReferenceid());
         $this->testForAbsentCustomerData($requestTransfer);
     }
@@ -117,8 +116,8 @@ class InvoiceTest extends Test
         $requestTransfer = $methodMapper->mapToReversal($paymentEntityMock, $uniqueId);
 
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionRequestTransfer', $requestTransfer);
-        $this->assertSame(PayolutionApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
-        $this->assertSame(Constants::PAYMENT_CODE_REVERSAL, $requestTransfer->getPaymentCode());
+        $this->assertSame(ApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
+        $this->assertSame(ApiConstants::PAYMENT_CODE_REVERSAL, $requestTransfer->getPaymentCode());
         $this->assertSame($uniqueId, $requestTransfer->getIdentificationReferenceid());
         $this->testForAbsentCustomerData($requestTransfer);
     }
@@ -131,8 +130,8 @@ class InvoiceTest extends Test
         $requestTransfer = $methodMapper->mapToCapture($paymentEntityMock, $uniqueId);
 
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionRequestTransfer', $requestTransfer);
-        $this->assertSame(PayolutionApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
-        $this->assertSame(Constants::PAYMENT_CODE_CAPTURE, $requestTransfer->getPaymentCode());
+        $this->assertSame(ApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
+        $this->assertSame(ApiConstants::PAYMENT_CODE_CAPTURE, $requestTransfer->getPaymentCode());
         $this->assertSame($uniqueId, $requestTransfer->getIdentificationReferenceid());
         $this->testForAbsentCustomerData($requestTransfer);
     }
@@ -145,8 +144,8 @@ class InvoiceTest extends Test
         $requestTransfer = $methodMapper->mapToRefund($paymentEntityMock, $uniqueId);
 
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionRequestTransfer', $requestTransfer);
-        $this->assertSame(PayolutionApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
-        $this->assertSame(Constants::PAYMENT_CODE_REFUND, $requestTransfer->getPaymentCode());
+        $this->assertSame(ApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
+        $this->assertSame(ApiConstants::PAYMENT_CODE_REFUND, $requestTransfer->getPaymentCode());
         $this->assertSame($uniqueId, $requestTransfer->getIdentificationReferenceid());
         $this->testForAbsentCustomerData($requestTransfer);
     }
@@ -211,7 +210,7 @@ class InvoiceTest extends Test
         $paymentEntityMock
             ->setIdPaymentPayolution(1)
             ->setClientIp('127.0.0.1')
-            ->setAccountBrand(PayolutionApiConstants::BRAND_INVOICE)
+            ->setAccountBrand(ApiConstants::BRAND_INVOICE)
             ->setFirstName('John')
             ->setLastName('Doe')
             ->setEmail('john@doe.com')

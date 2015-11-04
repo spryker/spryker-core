@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Payolution\Business\Log;
 
 use Generated\Shared\Payolution\OrderInterface;
-use SprykerFeature\Zed\Payolution\Business\Api\Constants;
+use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 
 class TransactionStatusLog implements TransactionStatusLogInterface
@@ -35,8 +35,8 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     {
         return $this->hasTransactionLogStatus(
             $orderTransfer,
-            Constants::PAYMENT_CODE_PRE_AUTHORIZATION,
-            Constants::STATUS_REASON_CODE_SUCCESS
+            ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION,
+            ApiConstants::STATUS_REASON_CODE_SUCCESS
         );
     }
 
@@ -49,8 +49,8 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     {
         return $this->hasTransactionLogStatus(
             $orderTransfer,
-            Constants::PAYMENT_CODE_RE_AUTHORIZATION,
-            Constants::STATUS_REASON_CODE_SUCCESS
+            ApiConstants::PAYMENT_CODE_RE_AUTHORIZATION,
+            ApiConstants::STATUS_REASON_CODE_SUCCESS
         );
     }
 
@@ -63,8 +63,8 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     {
         return $this->hasTransactionLogStatus(
             $orderTransfer,
-            Constants::PAYMENT_CODE_REVERSAL,
-            Constants::STATUS_REASON_CODE_SUCCESS
+            ApiConstants::PAYMENT_CODE_REVERSAL,
+            ApiConstants::STATUS_REASON_CODE_SUCCESS
         );
     }
 
@@ -77,8 +77,8 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     {
         return $this->hasTransactionLogStatus(
             $orderTransfer,
-            Constants::PAYMENT_CODE_CAPTURE,
-            Constants::STATUS_REASON_CODE_SUCCESS
+            ApiConstants::PAYMENT_CODE_CAPTURE,
+            ApiConstants::STATUS_REASON_CODE_SUCCESS
         );
     }
 
@@ -91,8 +91,8 @@ class TransactionStatusLog implements TransactionStatusLogInterface
     {
         return $this->hasTransactionLogStatus(
             $orderTransfer,
-            Constants::PAYMENT_CODE_REFUND,
-            Constants::STATUS_REASON_CODE_SUCCESS
+            ApiConstants::PAYMENT_CODE_REFUND,
+            ApiConstants::STATUS_REASON_CODE_SUCCESS
         );
     }
 

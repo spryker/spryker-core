@@ -4,27 +4,69 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Business\Api;
+namespace SprykerFeature\Zed\Payolution\Business\Payment\Method;
 
-use SprykerFeature\Shared\Library\ConfigInterface;
-use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
-
-interface Constants extends ConfigInterface
+interface ApiConstants
 {
-
+    
     const PAYMENT_CODE_PRE_AUTHORIZATION = 'VA.PA';
     const PAYMENT_CODE_RE_AUTHORIZATION = 'VA.PA';
     const PAYMENT_CODE_CAPTURE = 'VA.CP';
     const PAYMENT_CODE_REVERSAL = 'VA.RV';
     const PAYMENT_CODE_REFUND = 'VA.RF';
 
+    const ACCOUNT_BRAND = 'ACCOUNT.BRAND';
+    const BRAND_INVOICE = 'PAYOLUTION_INVOICE';
+    const BRAND_INSTALLMENT = 'PAYOLUTION_INS';
+
+    const TRANSACTION_MODE = 'TRANSACTION.MODE';
     const TRANSACTION_MODE_TEST = 'CONNECTOR_TEST';
     const TRANSACTION_MODE_LIVE = 'LIVE';
+    const TRANSACTION_CHANNEL = 'TRANSACTION.CHANNEL';
+
+    const SECURITY_SENDER = 'SECURITY.SENDER';
+    const USER_LOGIN = 'USER.LOGIN';
+    const USER_PWD = 'USER.PWD';
+
+    const PRESENTATION_AMOUNT = 'PRESENTATION.AMOUNT';
+    const PRESENTATION_USAGE = 'PRESENTATION.USAGE';
+    const PRESENTATION_CURRENCY = 'PRESENTATION.CURRENCY';
+
+    const IDENTIFICATION_TRANSACTIONID = 'IDENTIFICATION.TRANSACTIONID';
+    const IDENTIFICATION_SHOPPERID = 'IDENTIFICATION.SHOPPERID';
+    const IDENTIFICATION_REFERENCEID = 'IDENTIFICATION.REFERENCEID';
+
+    const NAME_GIVEN = 'NAME.GIVEN';
+    const NAME_FAMILY = 'NAME.FAMILY';
+    const NAME_TITLE = 'NAME.TITLE';
+    const NAME_SEX = 'NAME.SEX';
+    const NAME_BIRTHDATE = 'NAME.BIRTHDATE';
 
     const SEX_MALE = 'M';
     const SEX_FEMALE = 'F';
 
-    const STATUS_REASON_CODE_SUCCESS = PayolutionApiConstants::STATUS_CODE_SUCCESS . '.' . PayolutionApiConstants::REASON_CODE_SUCCESS;
+    const ADDRESS_STREET = 'ADDRESS.STREET';
+    const ADDRESS_ZIP = 'ADDRESS.ZIP';
+    const ADDRESS_CITY = 'ADDRESS.CITY';
+    const ADDRESS_COUNTRY = 'ADDRESS.COUNTRY';
+
+    const CONTACT_EMAIL = 'CONTACT.EMAIL';
+    const CONTACT_PHONE = 'CONTACT.PHONE';
+    const CONTACT_MOBILE = 'CONTACT.MOBILE';
+    const CONTACT_IP = 'CONTACT.IP';
+
+    const PAYMENT_CODE = 'PAYMENT.CODE';
+
+    const PAYMENT_CODE_PRE_CHECK = 'VA.PA';
+    const PAYMENT_CODE_PRE_AUTHORIZATION = 'VA.PA';
+    const PAYMENT_CODE_RE_AUTHORIZATION = 'VA.PA';
+    const PAYMENT_CODE_CAPTURE = 'VA.CP';
+    const PAYMENT_CODE_REVERSAL = 'VA.RV';
+    const PAYMENT_CODE_REFUND = 'VA.RF';
+
+    const STATUS_CODE_SUCCESS = '90';
+    const REASON_CODE_SUCCESS = '00';
+    const STATUS_REASON_CODE_SUCCESS = self::STATUS_CODE_SUCCESS . '.' . self::REASON_CODE_SUCCESS;
 
     /**
      * Analysis/Criteria keys
@@ -72,10 +114,6 @@ interface Constants extends ConfigInterface
     const CRITERION_CUSTOMER_CONFIRMED_AMOUNT = 'PAYOLUTION_CUSTOMER_CONFIRMED_AMOUNT';
     const CRITERION_CUSTOMER_INTERNAL_SCORE = 'PAYOLUTION_CUSTOMER_INTERNAL_SCORE';
     const CRITERION_WEBSHOP_URL = 'PAYOLUTION_WEBSHOP_URL';
-
-    /**
-     * Available values for CRITERION_SHIPPING_TYPE
-     */
     const CRITERION_SHIPPING_TYPE_BRANCH_PICKUP = 'BRANCH_PICKUP';
     const CRITERION_SHIPPING_TYPE_POST_OFFICE_PICKUP = 'POST_OFFICE_PICKUP';
     const CRITERION_SHIPPING_TYPE_PACK_STATION = 'PACK_STATION';

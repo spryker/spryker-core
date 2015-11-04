@@ -37,7 +37,7 @@ class PayolutionFacade extends AbstractFacade
     {
         $payolutionResponseTransfer = $this
             ->getDependencyContainer()
-            ->createPaymentCommunicator()
+            ->createPaymentTransactionHandler()
             ->preCheckPayment($checkoutRequestTransfer);
 
         return $payolutionResponseTransfer;
@@ -52,7 +52,7 @@ class PayolutionFacade extends AbstractFacade
     {
         return $this
             ->getDependencyContainer()
-            ->createPaymentCommunicator()
+            ->createPaymentTransactionHandler()
             ->preAuthorizePayment($idPayment);
     }
 
@@ -65,7 +65,7 @@ class PayolutionFacade extends AbstractFacade
     {
         return $this
             ->getDependencyContainer()
-            ->createPaymentCommunicator()
+            ->createPaymentTransactionHandler()
             ->reAuthorizePayment($idPayment);
     }
 
@@ -78,7 +78,7 @@ class PayolutionFacade extends AbstractFacade
     {
         return $this
             ->getDependencyContainer()
-            ->createPaymentCommunicator()
+            ->createPaymentTransactionHandler()
             ->revertPayment($idPayment);
     }
 
@@ -91,7 +91,7 @@ class PayolutionFacade extends AbstractFacade
     {
         return $this
             ->getDependencyContainer()
-            ->createPaymentCommunicator()
+            ->createPaymentTransactionHandler()
             ->capturePayment($idPayment);
     }
 
@@ -104,8 +104,23 @@ class PayolutionFacade extends AbstractFacade
     {
         return $this
             ->getDependencyContainer()
-            ->createPaymentCommunicator()
+            ->createPaymentTransactionHandler()
             ->refundPayment($idPayment);
+    }
+
+    /**
+     * @param CheckoutRequestInterface $checkoutRequestTransfer
+     *
+     * @return PayolutionResponseInterface
+     */
+    public function calculateInstallmentPayments(CheckoutRequestInterface $checkoutRequestTransfer)
+    {
+        $payolutionResponseTransfer = $this
+            ->getDependencyContainer()
+            ->createPaymentCalculationHandler()
+            ->calculateInstallmentPayments($checkoutRequestTransfer);
+
+        return $payolutionResponseTransfer;
     }
 
     /**

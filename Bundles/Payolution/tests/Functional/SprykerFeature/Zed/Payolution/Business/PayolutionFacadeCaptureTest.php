@@ -8,7 +8,7 @@ namespace Functional\SprykerFeature\Zed\Payolution\Business;
 
 use Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http\CaptureAdapterMock;
 use Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http\PreAuthorizationAdapterMock;
-use SprykerFeature\Zed\Payolution\Business\Api\Constants;
+use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
 
 /**
  * @group Zed
@@ -48,7 +48,7 @@ class PayolutionFacadeCaptureTest extends AbstractFacadeTest
         /** @var SpyPaymentPayolutionTransactionRequestLog $requestLog */
         $requestLog = $this->getRequestLogCollectionForPayment()->getLast();
         $this->assertEquals(2, $this->getRequestLogCollectionForPayment()->count());
-        $this->assertEquals(Constants::PAYMENT_CODE_CAPTURE, $requestLog->getPaymentCode());
+        $this->assertEquals(ApiConstants::PAYMENT_CODE_CAPTURE, $requestLog->getPaymentCode());
         $this->assertEquals($this->getOrderEntity()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
         $this->assertEquals($preAuthorizationResponse->getIdentificationUniqueid(), $requestLog->getReferenceId());
 
@@ -90,7 +90,7 @@ class PayolutionFacadeCaptureTest extends AbstractFacadeTest
         /** @var SpyPaymentPayolutionTransactionRequestLog $requestLog */
         $requestLog = $this->getRequestLogCollectionForPayment()->getLast();
         $this->assertEquals(2, $this->getRequestLogCollectionForPayment()->count());
-        $this->assertEquals(Constants::PAYMENT_CODE_CAPTURE, $requestLog->getPaymentCode());
+        $this->assertEquals(ApiConstants::PAYMENT_CODE_CAPTURE, $requestLog->getPaymentCode());
         $this->assertEquals($this->getOrderEntity()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
         $this->assertEquals($preAuthorizationResponse->getIdentificationUniqueid(), $requestLog->getReferenceId());
 

@@ -4,14 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Business\Payment;
+namespace SprykerFeature\Zed\Payolution\Business\Payment\Handler\Transaction;
 
-use Generated\Shared\Payolution\CheckoutRequestInterface;
 use Generated\Shared\Payolution\PayolutionResponseInterface;
+use Generated\Shared\Payolution\CheckoutRequestInterface;
 
-interface CommunicatorInterface
+interface TransactionInterface
 {
-
     /**
      * @param CheckoutRequestInterface $checkoutRequestTransfer
      *
