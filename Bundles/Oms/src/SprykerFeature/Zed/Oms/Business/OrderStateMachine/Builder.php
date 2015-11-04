@@ -106,6 +106,7 @@ class Builder implements BuilderInterface
     }
 
     /**
+     * @return void
      */
     protected function mergeSubProcessFiles()
     {
@@ -121,6 +122,8 @@ class Builder implements BuilderInterface
     /**
      * @param SimpleXMLElement $fromXmlElement
      * @param SimpleXMLElement $intoXmlNode
+     *
+     * @return void
      */
     protected function recursiveMerge($fromXmlElement, $intoXmlNode)
     {
@@ -235,6 +238,8 @@ class Builder implements BuilderInterface
 
     /**
      * @param ProcessInterface[] $processMap
+     *
+     * @return void
      */
     protected function createSubprocesses(array $processMap)
     {
@@ -301,6 +306,8 @@ class Builder implements BuilderInterface
      * @param EventInterface[] $eventMap
      *
      * @throws LogicException
+     *
+     * @return void
      */
     protected function createTransitions(array $stateToProcessMap, array $processMap, array $eventMap)
     {
@@ -373,7 +380,7 @@ class Builder implements BuilderInterface
      */
     protected function getAttributeBoolean(SimpleXMLElement $xmlElement, $attributeName)
     {
-        return 'true' === (string) $xmlElement->attributes()[$attributeName];
+        return (string) $xmlElement->attributes()[$attributeName] === 'true';
     }
 
 }

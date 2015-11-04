@@ -31,10 +31,12 @@ class CheckConditionConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
+     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getFacade()->checkConditions([]);
+        $this->getFacade()->checkConditions();
     }
 
 }

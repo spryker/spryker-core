@@ -137,7 +137,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      *
      * @return int
      */
-    public function checkConditions(array $logContext)
+    public function checkConditions(array $logContext = [])
     {
         return $this->getDependencyContainer()
             ->createOrderStateMachineOrderStateMachine($logContext)
@@ -149,13 +149,13 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      *
      * @return int
      */
-    public function checkTimeouts(array $logContext)
+    public function checkTimeouts(array $logContext = [])
     {
         $orderStateMachine = $this->getDependencyContainer()
             ->createOrderStateMachineOrderStateMachine($logContext);
 
         return $this->getDependencyContainer()
-            ->createOrderStateMachineTimeout($logContext)
+            ->createOrderStateMachineTimeout()
             ->checkTimeouts($orderStateMachine);
     }
 
