@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Gui\Communication\Table;
 
 interface TableOptionsInterface
 {
+
     /**
      * @param array $classesArray
      */
@@ -22,4 +23,5 @@ interface TableOptionsInterface
      * @return array
      */
     public function toArray();
+
 }

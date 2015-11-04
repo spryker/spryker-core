@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Gui\Communication\Table;
 
 use Generated\Shared\Transfer\DataTablesTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -445,7 +444,7 @@ abstract class AbstractTable
 
         $data = $query->find();
 
-        if (true === $returnRawResults) {
+        if ($returnRawResults === true) {
             return $data;
         }
 
@@ -495,7 +494,7 @@ abstract class AbstractTable
     {
         $position = mb_strpos($key, '.');
 
-        return (false !== $position) ? mb_substr($key, $position + 1) : $key;
+        return ($position !== false) ? mb_substr($key, $position + 1) : $key;
     }
 
     /**
@@ -696,6 +695,7 @@ abstract class AbstractTable
                     $this->filterSearchValue($search[self::PARAMETER_VALUE]) . ' 23:59:59'
                 )
             );
+
             return;
         }
 

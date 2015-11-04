@@ -21,7 +21,6 @@ class CreateActionButton extends AbstractActionButton
         return '<i class="fa fa-plus"></i> ';
     }
 
-
     /**
      * @return string
      */

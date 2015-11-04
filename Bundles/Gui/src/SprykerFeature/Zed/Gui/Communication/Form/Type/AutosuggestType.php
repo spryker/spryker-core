@@ -4,7 +4,6 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-
 namespace SprykerFeature\Zed\Gui\Communication\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
