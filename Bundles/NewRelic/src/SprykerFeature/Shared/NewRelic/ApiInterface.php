@@ -174,6 +174,6 @@ interface ApiInterface
      *
      * @return $this
      */
-    public function deployment(array $params = []);
+    public function recordDeployment(array $params = []);
 
 }

@@ -6,8 +6,9 @@
 
 namespace SprykerFeature\Shared\NewRelic;
 
+use Guzzle\Http\Client;
 use SprykerEngine\Shared\Config;
-use SprykerFeature\Shared\NewRelic\Exception\DeploymentException;
+use SprykerFeature\Shared\NewRelic\Exception\RecordDeploymentException;
 
 /**
  * The PHP API for New Relic
@@ -307,40 +308,55 @@ class Api implements ApiInterface
     /**
      * @param array $params
      *
-     * @throws DeploymentException
+     * @throws RecordDeploymentException
      *
      * @return self
      */
-    public function deployment(array $params = [])
+    public function recordDeployment(array $params = [])
     {
         if (!$this->active) {
             return $this;
         }
 
-        $header = ['x-api-key:' . Config::get(NewRelicConfig::NEWRELIC_API_KEY)];
+        $request = $this->createRecordDeploymentRequest($params);
+
+        $response = $request->send();
+
+        if ($response->isError()) {
+            throw new RecordDeploymentException(sprintf(
+                'Record deployment to New Relic request failed with code %d. %s',
+                $response->getStatusCode(),
+                $response->getBody()
+            ));
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param array $params
+     *
+     * @throws \Exception
+     *
+     * @return \Guzzle\Http\Message\EntityEnclosingRequestInterface|\Guzzle\Http\Message\RequestInterface
+     */
+    protected function createRecordDeploymentRequest(array $params)
+    {
+        $headers = [
+            'x-api-key' => Config::get(NewRelicConfig::NEWRELIC_API_KEY),
+        ];
 
         $data['deployment'] = [];
         foreach ($params as $key => $value) {
             $data['deployment'][$key] = $value;
         }
 
-        $resource = curl_init();
+        $httpClient = new Client(self::NEWRELIC_DEPLOYMENT_API_URL);
 
-        curl_setopt($resource, CURLOPT_URL, self::NEWRELIC_DEPLOYMENT_API_URL);
-        curl_setopt($resource, CURLOPT_HEADER, 1);
-        curl_setopt($resource, CURLOPT_HTTPHEADER, $header);
-        curl_setopt($resource, CURLOPT_POSTFIELDS, http_build_query($data));
+        $request = $httpClient->post(null, $headers);
+        $request->addPostFields($data);
 
-        curl_exec($resource);
-        $error = curl_error($resource);
-
-        curl_close($resource);
-
-        if ($error !== '') {
-            throw new DeploymentException($error);
-        }
-
-        return $this;
+        return $request;
     }
 
 }

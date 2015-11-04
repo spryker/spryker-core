@@ -15,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class DeploymentConsole extends Console
 {
 
-    const COMMAND_NAME = 'newrelic:deployment';
+    const COMMAND_NAME = 'newrelic:record-deployment';
     const DESCRIPTION = 'Send deployment notification to New Relic';
 
     const ARGUMENT_APPLICATION_NAME = 'app_name';
@@ -90,7 +90,7 @@ class DeploymentConsole extends Console
         $arguments = $input->getArguments();
         unset($arguments['command']);
 
-        Api::getInstance()->deployment($arguments);
+        Api::getInstance()->recordDeployment($arguments);
 
         return 0;
     }
