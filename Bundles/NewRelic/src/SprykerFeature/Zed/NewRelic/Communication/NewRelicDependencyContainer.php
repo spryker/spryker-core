@@ -6,6 +6,7 @@
 namespace SprykerFeature\Zed\NewRelic\Communication;
 
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use SprykerFeature\Shared\NewRelic\Api;
 use SprykerFeature\Zed\NewRelic\NewRelicConfig;
 
 /**
@@ -13,5 +14,13 @@ use SprykerFeature\Zed\NewRelic\NewRelicConfig;
  */
 class NewRelicDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
+    /**
+     * @return Api
+     */
+    public function createNewRelicApi()
+    {
+        return Api::getInstance();
+    }
 
 }

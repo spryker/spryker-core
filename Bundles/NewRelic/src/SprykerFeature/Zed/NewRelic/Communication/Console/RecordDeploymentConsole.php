@@ -6,13 +6,16 @@
 
 namespace SprykerFeature\Zed\NewRelic\Communication\Console;
 
-use SprykerFeature\Shared\NewRelic\Api;
 use SprykerFeature\Zed\Console\Business\Model\Console;
+use SprykerFeature\Zed\NewRelic\Communication\NewRelicDependencyContainer;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class DeploymentConsole extends Console
+/**
+ * @method NewRelicDependencyContainer getDependencyContainer()
+ */
+class RecordDeploymentConsole extends Console
 {
 
     const COMMAND_NAME = 'newrelic:record-deployment';
@@ -90,7 +93,8 @@ class DeploymentConsole extends Console
         $arguments = $input->getArguments();
         unset($arguments['command']);
 
-        Api::getInstance()->recordDeployment($arguments);
+        $newRelicApi = $this->getDependencyContainer()->createNewRelicApi();
+        $newRelicApi->recordDeployment($arguments);
 
         return 0;
     }
