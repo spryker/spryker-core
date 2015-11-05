@@ -93,16 +93,9 @@ class Environment
         ini_set('display_errors', Config::get(ApplicationConfig::DISPLAY_ERRORS, false));
 
         $store = Store::getInstance();
-        $locale2 = $store->getCurrentLocale();
-        $locale1 = $locale2 . '.UTF-8';
+        $locale = current($store->getLocales());
 
-        // We set LC_NUMERIC hard to en_US so numeric conversion is always the same to avoid decimal point problems
-        setlocale(LC_COLLATE, $locale1, $locale2);
-        setlocale(LC_CTYPE, $locale1, $locale2);
-        setlocale(LC_MONETARY, $locale1, $locale2);
-        setlocale(LC_TIME, $locale1, $locale2);
-        setlocale(LC_MESSAGES, $locale1, $locale2);
-        setlocale(LC_NUMERIC, 'en_US.UTF-8', 'en_US');
+        self::initializeLocale($locale);
 
         mb_internal_encoding('UTF-8');
         mb_regex_encoding('UTF-8');
@@ -193,6 +186,24 @@ class Environment
                 throw new \ErrorException($message, 0, 0, $script, $line);
             }
         );
+    }
+
+    /**
+     * @param $currentLocale
+     *
+     * @return void
+     */
+    public static function initializeLocale($currentLocale)
+    {
+        $locale = $currentLocale . '.UTF-8';
+
+        // We set LC_NUMERIC hard to en_US so numeric conversion is always the same to avoid decimal point problems
+        setlocale(LC_COLLATE, $locale, $currentLocale);
+        setlocale(LC_CTYPE, $locale, $currentLocale);
+        setlocale(LC_MONETARY, $locale, $currentLocale);
+        setlocale(LC_TIME, $locale, $currentLocale);
+        setlocale(LC_MESSAGES, $locale, $currentLocale);
+        setlocale(LC_NUMERIC, 'en_US.UTF-8', 'en_US');
     }
 
 }

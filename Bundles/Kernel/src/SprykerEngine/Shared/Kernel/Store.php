@@ -6,6 +6,7 @@
 
 namespace SprykerEngine\Shared\Kernel;
 
+use Elastica\Exception\RuntimeException;
 use SprykerFeature\Shared\Application\ApplicationConfig;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\NewRelic\Api;
@@ -14,6 +15,7 @@ use SprykerFeature\Shared\System\SystemConfig;
 class Store
 {
 
+    const APPLICATION_ZED = 'ZED';
     /**
      * @var Store
      */
@@ -115,13 +117,17 @@ class Store
 
     protected function publish()
     {
-        header('X-Locale: ' . $this->getCurrentLocale());
         header('X-Store: ' . $this->getStoreName());
         header('X-Env: ' . APPLICATION_ENV);
 
         $newRelicApi = new Api();
         $newRelicApi->addCustomParameter('locale', $this->getCurrentLocale());
         $newRelicApi->addCustomParameter('store', $this->getStoreName());
+
+        if ($this->currentLocale !== null) {
+            header('X-Locale: ' . $this->getCurrentLocale());
+            $newRelicApi->addCustomParameter('locale', $this->getCurrentLocale());
+        }
     }
 
     /**
@@ -167,14 +173,12 @@ class Store
 
         $this->storeName = $currentStoreName;
         $this->allStoreNames = array_keys($stores);
-        $this->setCurrentLocale(current($this->locales));
-        $this->setCurrentCountry(current($this->countries));
 
-        foreach ($vars as $k => $v) {
-            if (empty($this->$k)) {
-                throw new \Exception('Missing setup-key: ' . $k);
-            }
+        if (APPLICATION === self::APPLICATION_ZED) {
+            $this->setCurrentLocale(current($this->locales));
         }
+
+        $this->setCurrentCountry(current($this->countries));
     }
 
     /**
@@ -182,6 +186,10 @@ class Store
      */
     public function getCurrentLocale()
     {
+        if ($this->currentLocale === null) {
+            throw new RuntimeException('Locale is not defined.');
+        }
+
         return $this->currentLocale;
     }
 
