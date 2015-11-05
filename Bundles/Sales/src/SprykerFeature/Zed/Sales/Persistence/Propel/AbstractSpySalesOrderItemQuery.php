@@ -19,6 +19,5 @@ use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItemQuery as BaseSpySalesOrderIt
  */
 abstract class AbstractSpySalesOrderItemQuery extends BaseSpySalesOrderItemQuery
 {
-
 } // SpySalesOrderItemQuery
 

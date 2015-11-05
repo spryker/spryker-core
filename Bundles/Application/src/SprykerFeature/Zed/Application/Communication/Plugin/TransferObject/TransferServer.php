@@ -79,7 +79,7 @@ class TransferServer
         /** @var LocatorLocatorInterface|AutoCompletion $locator */
         $locator = Locator::getInstance();
 
-        if (is_null($repeater)) {
+        if ($repeater === null) {
             $repeater = $locator->application()->pluginTransferObjectRepeater();
         }
 

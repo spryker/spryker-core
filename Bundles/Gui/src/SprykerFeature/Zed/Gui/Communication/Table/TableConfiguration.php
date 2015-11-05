@@ -63,7 +63,7 @@ class TableConfiguration
      * @todo Zed Translation in Template
      *
      * @param array $header Provide php names for table columns
-     *                       if you are goin to user Propel Query as data population
+     *   if you are goin to user Propel Query as data population
      */
     public function setHeader(array $header)
     {

@@ -20,6 +20,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 abstract class AbstractForm
 {
+
     use FormBuilderTrait;
 
     /**

@@ -19,5 +19,4 @@ use Orm\Zed\Sales\Persistence\Base\SpySalesOrderNote as BaseSpySalesOrderNote;
  */
 abstract class AbstractSpySalesOrderNote extends BaseSpySalesOrderNote
 {
-
 }

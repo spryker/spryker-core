@@ -57,7 +57,7 @@ class UrlBuilder implements UrlBuilderInterface
     protected static function removeNullValues(array $mca)
     {
         $filterCallback = function ($value) {
-            return !is_null($value);
+            return $value !== null;
         };
 
         return array_filter($mca, $filterCallback);

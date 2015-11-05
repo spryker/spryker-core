@@ -528,4 +528,5 @@ class ConstraintsPlugin extends AbstractPlugin
     {
         return new Required($options);
     }
+
 }

@@ -8,5 +8,4 @@ namespace SprykerFeature\Zed\Sales\Communication\Exception;
 
 class FormNotFoundException extends \Exception
 {
-
 }

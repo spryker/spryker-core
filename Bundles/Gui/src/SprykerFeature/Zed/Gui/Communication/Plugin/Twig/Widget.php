@@ -25,7 +25,7 @@ class Widget extends TwigFunction
     protected function getFunction()
     {
         return function ($path, array $params = [], $id = null) {
-            if (is_null($id)) {
+            if ($id === null) {
                 $id = $this->createId($path);
             }
             $url = $this->buildUrl($path, $params);

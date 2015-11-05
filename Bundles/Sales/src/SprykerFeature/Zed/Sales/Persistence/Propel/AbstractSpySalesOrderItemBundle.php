@@ -19,5 +19,4 @@ use Orm\Zed\Sales\Persistence\Base\SpySalesOrderItemBundle as BaseSpySalesOrderI
  */
 abstract class AbstractSpySalesOrderItemBundle extends BaseSpySalesOrderItemBundle
 {
-
 }

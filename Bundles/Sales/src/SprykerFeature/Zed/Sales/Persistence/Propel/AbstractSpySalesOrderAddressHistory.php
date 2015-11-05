@@ -19,5 +19,4 @@ use Orm\Zed\Sales\Persistence\Base\SpySalesOrderAddressHistory as BaseSpySalesOr
  */
 abstract class AbstractSpySalesOrderAddressHistory extends BaseSpySalesOrderAddressHistory
 {
-
 }

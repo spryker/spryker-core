@@ -19,6 +19,5 @@ use Orm\Zed\Sales\Persistence\Base\SpySalesOrderCommentQuery as BaseSpySalesOrde
  */
 abstract class AbstractSpySalesOrderCommentQuery extends BaseSpySalesOrderCommentQuery
 {
-
 } // SpySalesOrderCommentQuery
 
