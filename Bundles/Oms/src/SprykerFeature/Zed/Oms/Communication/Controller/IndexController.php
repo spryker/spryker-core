@@ -38,7 +38,7 @@ class IndexController extends AbstractController
     public function drawAction(Request $request)
     {
         $processName = $request->query->get('process');
-        if (is_null($processName)) {
+        if ($processName === null) {
             return $this->redirectResponse('/oms');
         }
 
@@ -47,11 +47,11 @@ class IndexController extends AbstractController
         $highlightState = $request->query->get('state');
 
         $reload = false;
-        if (is_null($format)) {
+        if ($format === null) {
             $format = 'gif';
             $reload = true;
         }
-        if (is_null($fontSize)) {
+        if ($fontSize === null) {
             $fontSize = '14';
             $reload = true;
         }
@@ -93,7 +93,7 @@ class IndexController extends AbstractController
     public function drawPreviewVersionAction(Request $request)
     {
         $processName = $request->query->get('process');
-        if (is_null($processName)) {
+        if ($processName === null) {
             return $this->redirectResponse('/oms');
         }
 
