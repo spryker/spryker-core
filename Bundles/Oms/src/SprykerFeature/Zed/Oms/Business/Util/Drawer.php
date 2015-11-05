@@ -188,7 +188,7 @@ class Drawer implements DrawerInterface
      */
     protected function addNode(StateInterface $state, $attributes = [], $name = null, $highlight = false)
     {
-        $name = is_null($name) ? $state->getName() : $name;
+        $name = $name === null ? $state->getName() : $name;
 
         $label = [];
         $label[] = str_replace(' ', $this->br, trim($name));

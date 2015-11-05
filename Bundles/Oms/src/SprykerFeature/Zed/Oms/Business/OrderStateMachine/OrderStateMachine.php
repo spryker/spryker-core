@@ -467,8 +467,9 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     protected function updateStateByEvent($eventId, array $orderItems, array $sourceStateBuffer, TransitionLogInterface $log)
     {
-        assert(is_string($eventId) || is_null($eventId));
-        if (is_null($sourceStateBuffer)) {
+        assert($eventId === null || is_string($eventId));
+
+        if ($sourceStateBuffer === null) {
             $sourceStateBuffer = [];
         }
 
@@ -509,7 +510,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     protected function updateStateByTransition($stateToTransitionsMap, array $orderItems, array $sourceStateBuffer, TransitionLogInterface $log)
     {
-        if (is_null($sourceStateBuffer)) {
+        if ($sourceStateBuffer === null) {
             $sourceStateBuffer = [];
         }
         $targetStateMap = [];
