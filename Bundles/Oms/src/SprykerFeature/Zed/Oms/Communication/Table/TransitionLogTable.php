@@ -42,7 +42,7 @@ class TransitionLogTable extends AbstractTable
             SpyOmsTransitionLogTableMap::COL_SOURCE_STATE => 'Source state',
             SpyOmsTransitionLogTableMap::COL_TARGET_STATE => 'Target state',
             SpyOmsTransitionLogTableMap::COL_COMMAND => 'Command',
-            SpyOmsTransitionLogTableMap::COL_ERROR => 'Error',
+            SpyOmsTransitionLogTableMap::COL_IS_ERROR => 'Is error',
             SpyOmsTransitionLogTableMap::COL_ERROR_MESSAGE => 'Error message',
             SpyOmsTransitionLogTableMap::COL_PATH => 'Path',
             SpyOmsTransitionLogTableMap::COL_HOSTNAME => 'Hostname',
