@@ -19,5 +19,4 @@ use Orm\Zed\Sales\Persistence\Base\SpySalesOrderAddress as BaseSpySalesOrderAddr
  */
 abstract class AbstractSpySalesOrderAddress extends BaseSpySalesOrderAddress
 {
-
 }

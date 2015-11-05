@@ -8,5 +8,4 @@ namespace SprykerFeature\Zed\Sales\Business\Exception;
 
 class InvalidSalesOrderException extends \Exception
 {
-
 }

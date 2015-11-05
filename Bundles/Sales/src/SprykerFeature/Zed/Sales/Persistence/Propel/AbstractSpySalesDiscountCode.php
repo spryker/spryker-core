@@ -19,5 +19,4 @@ use Orm\Zed\Sales\Persistence\Base\SpySalesDiscountCode as BaseSpySalesDiscountC
  */
 abstract class AbstractSpySalesDiscountCode extends BaseSpySalesDiscountCode
 {
-
 }

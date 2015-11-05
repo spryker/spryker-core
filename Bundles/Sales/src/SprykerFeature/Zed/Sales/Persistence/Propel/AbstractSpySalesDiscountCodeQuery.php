@@ -19,6 +19,5 @@ use Orm\Zed\Sales\Persistence\Base\SpySalesDiscountCodeQuery as BaseSpySalesDisc
  */
 abstract class AbstractSpySalesDiscountCodeQuery extends BaseSpySalesDiscountCodeQuery
 {
-
 } // SpySalesDiscountCodeQuery
 

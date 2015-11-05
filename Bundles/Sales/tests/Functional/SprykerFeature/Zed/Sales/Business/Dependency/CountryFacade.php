@@ -7,5 +7,4 @@ use SprykerFeature\Zed\Sales\Dependency\Facade\SalesToCountryInterface;
 
 class CountryFacade extends SprykerCountryFacade implements SalesToCountryInterface
 {
-
 }

@@ -12,7 +12,7 @@ interface CalculatorInterface
 
     /**
      * @param SpySalesOrderItem $salesOrderItem
-     * @param int           $quantity
+     * @param int $quantity
      *
      * @return int
      */
