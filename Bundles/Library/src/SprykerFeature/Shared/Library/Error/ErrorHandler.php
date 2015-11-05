@@ -24,6 +24,9 @@ class ErrorHandler
 
     const DEVELOPMENT = 'development';
 
+    /**
+     * Do not allow object instantiation
+     */
     private function __construct()
     {
     }
@@ -35,8 +38,6 @@ class ErrorHandler
     {
         if (!self::$instance) {
             self::$instance = new self();
-//            set_exception_handler([self::$instance, 'handleException']);
-//            register_shutdown_function([self::$instance, 'handleFatal']);
 
             return self::$instance;
         }
@@ -44,6 +45,13 @@ class ErrorHandler
         return self::$instance;
     }
 
+    /**
+     * @param \Exception $exception
+     * @param bool $output
+     * @param bool $exit
+     *
+     * @return void
+     */
     public function handleException(\Exception $exception, $output = true, $exit = true)
     {
         ErrorLogger::log($exception);
@@ -62,7 +70,6 @@ class ErrorHandler
                     $this->showErrorPage();
                 }
             }
-
         } catch (\Exception $internalException) {
             ErrorLogger::log($internalException);
         }
@@ -72,6 +79,9 @@ class ErrorHandler
         }
     }
 
+    /**
+     * @return void
+     */
     public function handleFatal()
     {
         $error = error_get_last();
@@ -82,6 +92,9 @@ class ErrorHandler
         }
     }
 
+    /**
+     * @return void
+     */
     protected function send500Header()
     {
         if (!headers_sent()) {
@@ -104,6 +117,8 @@ class ErrorHandler
     /**
      * @param \Exception $exception
      * @param $output
+     *
+     * @return void
      */
     protected function echoOutput(\Exception $exception, $output)
     {
@@ -113,19 +128,28 @@ class ErrorHandler
         }
     }
 
+    /**
+     * @throws \Exception
+     * @return void
+     */
     protected function showErrorPage()
     {
-        if (!headers_sent()) {
-            $errorPage = Config::get(SystemConfig::ZED_ERROR_PAGE);
-
-            if (APPLICATION === self::YVES) {
-                $errorPage = Config::get(YvesConfig::YVES_ERROR_PAGE);
-            }
-
-            require_once $errorPage;
+        if (headers_sent()) {
+            return;
         }
+
+        $errorPage = Config::get(SystemConfig::ZED_ERROR_PAGE);
+
+        if (APPLICATION === self::YVES) {
+            $errorPage = Config::get(YvesConfig::YVES_ERROR_PAGE);
+        }
+
+        require_once $errorPage;
     }
 
+    /**
+     * @return void
+     */
     protected function doDatabaseRollback()
     {
         if (APPLICATION === self::ZED && class_exists('Propel', false)) {
@@ -133,6 +157,9 @@ class ErrorHandler
         }
     }
 
+    /**
+     * @return void
+     */
     protected function cleanOutputBuffer()
     {
         while (ob_get_level()) {

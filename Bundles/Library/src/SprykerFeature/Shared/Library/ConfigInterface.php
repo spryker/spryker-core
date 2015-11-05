@@ -11,5 +11,4 @@ namespace SprykerFeature\Shared\Library;
  */
 interface ConfigInterface
 {
-
 }

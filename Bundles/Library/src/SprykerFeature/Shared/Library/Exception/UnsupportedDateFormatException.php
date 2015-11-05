@@ -5,4 +5,6 @@
 
 namespace SprykerFeature\Shared\Library\Exception;
 
-class UnsupportedDateFormatException extends \Exception {}
+class UnsupportedDateFormatException extends \Exception
+{
+}
