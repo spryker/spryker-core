@@ -13,8 +13,6 @@ use Symfony\CS\Tokenizer\Tokens;
 
 /**
  * Fixer NoIsNull
- *
- * @author Mark Scherer
  */
 class NoIsNullFixer extends AbstractFixer
 {
@@ -37,7 +35,7 @@ class NoIsNullFixer extends AbstractFixer
         /** @var Token $token */
         foreach ($tokens as $index => $token) {
             $tokenContent = $token->getContent();
-            if (empty($tokenContent) || $tokenContent !== self::STRING_MATCH) {
+            if ($tokenContent !== self::STRING_MATCH) {
                 continue;
             }
 
