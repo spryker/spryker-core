@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer;
 
 use Symfony\CS\AbstractFixer;
-use Symfony\CS\DocBlock\DocBlock;
 use Symfony\CS\FixerInterface;
 use Symfony\CS\Tokenizer\Token;
 use Symfony\CS\Tokenizer\Tokens;
@@ -75,7 +74,7 @@ class NoIsNullFixer extends AbstractFixer
                 $replacement .= $tokens[$i]->getContent();
             }
 
-            $replacement .= ' ' . ($negated? '!' : '=') . '== null';
+            $replacement .= ' ' . ($negated ? '!' : '=') . '== null';
             if ($needsBrackets) {
                 $replacement = '(' . $replacement . ')';
             }
