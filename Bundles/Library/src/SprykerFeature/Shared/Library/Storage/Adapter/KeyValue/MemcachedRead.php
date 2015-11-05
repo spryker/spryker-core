@@ -41,7 +41,8 @@ class MemcachedRead extends Memcached implements ReadInterface
      */
     public function getStats()
     {
-        if (!($stats = $this->getResource()->getStats())) {
+        $stats = $this->getResource()->getStats();
+        if (!$stats) {
             $stats = [];
         }
 

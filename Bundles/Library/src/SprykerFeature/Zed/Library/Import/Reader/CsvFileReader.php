@@ -74,7 +74,7 @@ class CsvFileReader implements ReaderInterface
             if (!$row) {
                 continue;
             }
-            if (null === $headerRow) {
+            if ($headerRow === null) {
                 $headerRow = $row;
                 continue;
             }

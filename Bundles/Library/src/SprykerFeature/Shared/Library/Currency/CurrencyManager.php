@@ -160,12 +160,12 @@ class CurrencyManager
      */
     protected function formatCurrency(CurrencyInterface $currency, $value, $includeSymbol = true)
     {
-        if (null === $value) {
+        if ($value === null) {
             return $value;
         }
         $value = $this->formatNumber($currency, $value);
 
-        if (true === $includeSymbol) {
+        if ($includeSymbol === true) {
             $value = str_replace(
                 [CurrencyInterface::PLACEHOLDER_VALUE, CurrencyInterface::PLACEHOLDER_SYMBOL],
                 [$value, $currency->getSymbol()],

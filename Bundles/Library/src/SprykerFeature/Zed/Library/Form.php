@@ -22,10 +22,10 @@ class Form extends \Zend_Form
      */
     public function __construct($dataSource = null, Request $request = null)
     {
-        if (!is_null($dataSource)) {
+        if ($dataSource !== null) {
             $this->dataSource = $dataSource;
         }
-        if (!is_null($request)) {
+        if ($request !== null) {
             $this->request = $request;
         }
 
@@ -46,7 +46,7 @@ class Form extends \Zend_Form
      */
     public function isValid($data = null)
     {
-        if (null === $data) {
+        if ($data === null) {
             $data = $this->getRequest()->request->all();
         }
 
@@ -82,7 +82,7 @@ class Form extends \Zend_Form
      */
     public function render(\Zend_View_Interface $view = null)
     {
-        if (null !== $view) {
+        if ($view !== null) {
             $this->setView($view);
         }
 

@@ -36,7 +36,7 @@ class RedisRead extends Redis implements ReadInterface
     }
 
     /**
-     * @param array  $keys
+     * @param array $keys
      * @param string $prefix
      *
      * @return array

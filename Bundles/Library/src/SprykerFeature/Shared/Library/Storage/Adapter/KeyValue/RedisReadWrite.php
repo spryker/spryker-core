@@ -98,7 +98,7 @@ class RedisReadWrite extends RedisRead implements ReadWriteInterface
             $dataKey = $this->getKeyName($key, $prefix);
             $items[] = $dataKey;
         }
-        
+
         $this->getResource()->del($items);
         $this->addMultiDeleteAccessStats($items);
     }

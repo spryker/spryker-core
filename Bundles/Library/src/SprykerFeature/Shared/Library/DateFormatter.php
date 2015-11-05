@@ -9,6 +9,7 @@ use SprykerFeature\Shared\Library\Exception\UnsupportedDateFormatException;
 
 class DateFormatter
 {
+
     const DATE_FORMAT_SHORT = 'short';
     const DATE_FORMAT_MEDIUM = 'medium';
     const DATE_FORMAT_RFC = 'rfc';
@@ -86,7 +87,7 @@ class DateFormatter
             throw new UnsupportedDateFormatException(sprintf('Unsupported date format: %s', $dateFormat));
         }
 
-        if (null === $timezone) {
+        if ($timezone === null) {
             return $this->context->dateTimeConvertTo($date, $this->context->dateFormat[$dateFormat]);
         }
 

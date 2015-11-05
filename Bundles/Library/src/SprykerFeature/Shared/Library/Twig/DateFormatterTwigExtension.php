@@ -9,6 +9,7 @@ use SprykerFeature\Shared\Library\DateFormatter;
 
 class DateFormatterTwigExtension extends \Twig_Extension
 {
+
     private static $filterFunctions = [
         'formatDateShort',
         'formatDateMedium',
@@ -114,10 +115,11 @@ class DateFormatterTwigExtension extends \Twig_Extension
      */
     private function convertDateTimeZone($timezone = null)
     {
-        if (null !== $timezone) {
+        if ($timezone !== null) {
             return new \DateTimeZone($timezone);
         }
 
         return null;
     }
+
 }

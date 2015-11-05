@@ -23,7 +23,6 @@ class MysqlReadWrite extends MysqlRead implements ReadWriteInterface
         $this->addWriteAccessStats($key);
 
         return $result;
-
     }
 
     /**

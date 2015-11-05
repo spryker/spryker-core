@@ -49,10 +49,9 @@ class ErrorRenderer
      */
     protected static function renderForCli(\Exception $e)
     {
-
-        if(isset($_SERVER['argv']) && is_array($_SERVER['argv'])){
+        if (isset($_SERVER['argv']) && is_array($_SERVER['argv'])) {
             $uri = implode(' ', $_SERVER['argv']);
-        }else{
+        } else {
             $uri = 'n/a';
         }
 
@@ -61,7 +60,7 @@ class ErrorRenderer
 
         $string .= 'in ' . $e->getFile() . ' (' . $e->getLine() . ')';
         $string .= PHP_EOL . PHP_EOL;
-        $string .= 'Cli: ' . $uri;
+        $string .= 'Command: ' . $uri;
         $string .= PHP_EOL . PHP_EOL;
         $string .= 'Trace:' . PHP_EOL;
         $string .= $e->getTraceAsString() . PHP_EOL;

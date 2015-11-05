@@ -114,7 +114,7 @@ class Image
         foreach ($images as $seoFilename) {
             $parts = array_reverse(explode('-', $seoFilename));
 
-            if (null === $virtualDirectory) {
+            if ($virtualDirectory === null) {
                 $virtualDirectory = $parts[self::POSITION_DIRECTORY];
             } else {
                 if ($virtualDirectory !== $parts[self::POSITION_DIRECTORY]) {

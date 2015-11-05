@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Library;
 
 class Translate extends \Zend_Translate
 {
-
 }
 
 /**
