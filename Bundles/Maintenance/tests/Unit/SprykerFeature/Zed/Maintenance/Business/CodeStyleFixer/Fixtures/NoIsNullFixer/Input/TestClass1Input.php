@@ -17,7 +17,7 @@ class TestClass1Input
 
         $foo = !is_null($foo);
 
-        $foo = $foo || is_null($foo);
+        $foo = $foo || ! is_null($foo);
 
         $foo = (int) is_null($foo);
     }

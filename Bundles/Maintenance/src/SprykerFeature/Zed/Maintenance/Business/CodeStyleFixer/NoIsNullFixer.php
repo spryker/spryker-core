@@ -80,7 +80,7 @@ class NoIsNullFixer extends AbstractFixer
             }
 
             if ($negated) {
-                --$index;
+                $index -= $index - $prevIndex;
             }
             for ($i = $index; $i < $lastIndex; ++$i) {
                 $tokens[$i]->clear();
