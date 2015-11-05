@@ -14,6 +14,7 @@ use Symfony\Component\Validator\Constraint;
  */
 trait FormBuilderTrait
 {
+
     /**
      * @deprecated use AbstractFormType instead
      *
@@ -545,4 +546,5 @@ trait FormBuilderTrait
 
         return $this;
     }
+
 }
