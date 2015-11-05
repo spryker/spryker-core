@@ -13,8 +13,6 @@ use Orm\Zed\Oms\Persistence\Map\SpyOmsTransitionLogTableMap;
 class TransitionLogTable extends AbstractTable
 {
 
-    const ACTIONS = 'Actions';
-
     /**
      * @var OmsQueryContainerInterface
      */
@@ -90,7 +88,7 @@ class TransitionLogTable extends AbstractTable
      * @param array $row
      * @param string $column
      *
-     * @return mixed
+     * @return array
      */
     protected function formatArray(array $row, $column)
     {
@@ -98,8 +96,8 @@ class TransitionLogTable extends AbstractTable
 
         if (!empty($array)) {
             foreach ($array as $i => $value) {
-                $expl = explode('\\', $value);
-                $conditionShort = end($expl);
+                $pieces = explode('\\', $value);
+                $conditionShort = end($pieces);
                 $array[$i] = '<alt title="' . $value . '">' . $conditionShort . '</alt>';
             }
         }
@@ -109,7 +107,7 @@ class TransitionLogTable extends AbstractTable
     }
 
     /**
-     * @return mixed
+     * @return int
      */
     protected function getIdOrder()
     {
