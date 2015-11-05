@@ -272,7 +272,7 @@ abstract class AbstractController
         $securityContext = $this->getSecurityContext();
         $token = $securityContext->getToken();
 
-        return is_null($token);
+        return $token === null;
     }
 
     /**
@@ -283,7 +283,7 @@ abstract class AbstractController
     protected function getSecurityContext()
     {
         $securityContext = $this->getApplication()['security'];
-        if (is_null($securityContext)) {
+        if ($securityContext === null) {
             throw new \LogicException('Security is not enabled!');
         }
 
@@ -310,7 +310,7 @@ abstract class AbstractController
     {
         $securityContext = $this->getSecurityContext();
         $token = $securityContext->getToken();
-        if (is_null($token)) {
+        if ($token === null) {
             throw new \LogicException('No logged in user found.');
         }
 
@@ -361,7 +361,7 @@ abstract class AbstractController
     private function getTwig()
     {
         $twig = $this->getApplication()['twig'];
-        if (is_null($twig)) {
+        if ($twig === null) {
             throw new \LogicException('Twig environment not set up.');
         }
 

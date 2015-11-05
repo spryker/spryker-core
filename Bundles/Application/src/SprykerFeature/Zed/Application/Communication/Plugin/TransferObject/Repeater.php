@@ -29,7 +29,7 @@ class Repeater extends AbstractPlugin
     public function getRepeatData($mvc = null)
     {
         $this->isRepeatInProgress = true;
-        if (!is_null($mvc)) {
+        if ($mvc !== null) {
             return Log::getFlashInFile('last_yves_request_' . $mvc . '.log');
         } else {
             return Log::getFlashInFile('last_yves_request.log');
