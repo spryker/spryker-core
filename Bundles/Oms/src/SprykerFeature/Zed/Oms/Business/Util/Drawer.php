@@ -41,6 +41,8 @@ class Drawer implements DrawerInterface
 
     protected $commandModels = [];
 
+    const ATTRIBUTE_FONT_SIZE = 'fontsize';
+
     const EDGE_UPPER_HALF = 'upper half';
     const EDGE_LOWER_HALF = 'lower half';
     const EDGE_FULL = 'edge full';
@@ -182,11 +184,11 @@ class Drawer implements DrawerInterface
      * @param StateInterface $state
      * @param array $attributes
      * @param string|null $name
-     * @param bool $highlight
+     * @param bool $highlighted
      *
      * @return void
      */
-    protected function addNode(StateInterface $state, $attributes = [], $name = null, $highlight = false)
+    protected function addNode(StateInterface $state, $attributes = [], $name = null, $highlighted = false)
     {
         $name = $name === null ? $state->getName() : $name;
 
@@ -208,7 +210,7 @@ class Drawer implements DrawerInterface
             $attributes['peripheries'] = 2;
         }
 
-        if ($highlight) {
+        if ($highlighted) {
             $attributes['fillcolor'] = '#FFFFCC';
         }
 
@@ -399,7 +401,7 @@ class Drawer implements DrawerInterface
 
     /**
      * @param TransitionInterface $transition
-     * @param string $toName
+     * @param string|null $toName
      *
      * @return string
      */
@@ -411,8 +413,8 @@ class Drawer implements DrawerInterface
     }
 
     /**
-     * @param string $format
-     * @param $fontSize
+     * @param string|null $format
+     * @param int|null $fontSize
      *
      * @return void
      */
@@ -423,9 +425,9 @@ class Drawer implements DrawerInterface
         }
 
         if ($fontSize !== null) {
-            $this->attributesState['fontsize'] = $fontSize;
-            $this->attributesProcess['fontsize'] = $fontSize - 2;
-            $this->attributesTransition['fontsize'] = $fontSize - 2;
+            $this->attributesState[self::ATTRIBUTE_FONT_SIZE] = $fontSize;
+            $this->attributesProcess[self::ATTRIBUTE_FONT_SIZE] = $fontSize - 2;
+            $this->attributesTransition[self::ATTRIBUTE_FONT_SIZE] = $fontSize - 2;
             $this->fontSizeBig = $fontSize;
             $this->fontSizeSmall = $fontSize - 2;
         }
