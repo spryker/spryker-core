@@ -50,8 +50,8 @@ config/Yves/cache_bust.php
 /profiler
 
 npm-debug.log
-*/*/tests/_output
-*/*/tests/_support/_generated
+Bundles/*/tests/_output
+Bundles/*/tests/_support/_generated
 
 # PHP CS Fixer
 Bundles/.php_cs.cache

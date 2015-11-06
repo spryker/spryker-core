@@ -1,5 +1,5 @@
 {
-  "name": "spryker/auth-mail-connector",
+  "name": "spryker/calculation-checkout-connector",
   "autoload": {
     "psr-0": {
       "SprykerFeature": "src/",

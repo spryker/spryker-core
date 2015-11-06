@@ -1,5 +1,5 @@
 {
-  "name": "spryker/auth-mail-connector",
+  "name": "spryker/flash-messenger",
   "autoload": {
     "psr-0": {
       "SprykerFeature": "src/",
