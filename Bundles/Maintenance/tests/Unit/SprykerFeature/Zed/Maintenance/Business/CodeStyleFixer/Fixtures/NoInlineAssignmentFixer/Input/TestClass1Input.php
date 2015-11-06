@@ -21,6 +21,9 @@ class TestClass1Input
     public function replaceNotYet()
     {
         $foo = 2/($foo = 2);
+
+        if (!($stats = $this->getResource()->getStats())) {
+        }
     }
 
     /**

@@ -120,6 +120,12 @@ class NoInlineAssignmentFixer extends AbstractFixer
                 break;
             }
 
+            // Negations we also cannot handle just yet
+            if ($currentToken->equals('!')) {
+                $hasInlineAssignment = false;
+                break;
+            }
+
             if (!$currentToken->equals('=')) {
                 continue;
             }
