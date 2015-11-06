@@ -7,6 +7,7 @@ namespace SprykerFeature\Zed\User\Communication\Form;
 
 class UserCreateForm extends UserForm
 {
+
     /**
      * @return self
      */
@@ -24,4 +25,5 @@ class UserCreateForm extends UserForm
     {
         return [];
     }
+
 }

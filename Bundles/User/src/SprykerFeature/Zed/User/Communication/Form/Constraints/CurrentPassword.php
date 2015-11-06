@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Constraint;
 
 class CurrentPassword extends Constraint
 {
+
     /**
      * @var string
      */
@@ -36,4 +37,5 @@ class CurrentPassword extends Constraint
     {
         return $this->message;
     }
+
 }

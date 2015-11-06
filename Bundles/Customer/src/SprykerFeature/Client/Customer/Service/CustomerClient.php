@@ -32,7 +32,7 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
         ;
 
         $hasCustomer = $customerResponseTransfer->getHasCustomer();
-        if (true === $hasCustomer) {
+        if ($hasCustomer === true) {
             $this->setCustomer($customerResponseTransfer->getCustomerTransfer());
         }
 

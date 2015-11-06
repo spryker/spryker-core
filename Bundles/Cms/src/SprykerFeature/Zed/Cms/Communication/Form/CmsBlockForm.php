@@ -123,7 +123,7 @@ class CmsBlockForm extends AbstractForm
                 'choices' => [
                     self::TYPE_STATIC => 'Static',
                     self::CATEGORY => 'Category',
-                    self::PRODUCT => 'Product'
+                    self::PRODUCT => 'Product',
                 ],
             ])
             ->addText(self::SELECT_VALUE, [
@@ -174,7 +174,7 @@ class CmsBlockForm extends AbstractForm
                 self::SELECT_VALUE => $pageUrlTemplate->getCategoryName(),
                 self::VALUE => $pageUrlTemplate->getValue(),
                 self::CURRENT_TEMPLATE => $pageUrlTemplate->getFkTemplate(),
-                self::IS_ACTIVE => (bool)$pageUrlTemplate->getIsActive(),
+                self::IS_ACTIVE => (bool) $pageUrlTemplate->getIsActive(),
             ];
         }
     }
@@ -197,4 +197,5 @@ class CmsBlockForm extends AbstractForm
             ->getData()
             ;
     }
+
 }

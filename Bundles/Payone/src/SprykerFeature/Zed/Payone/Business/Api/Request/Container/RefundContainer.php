@@ -95,10 +95,10 @@ class RefundContainer extends AbstractRequestContainer
 
     /**
      * @param int $amount
-     * Amount of refund (in smallest currency unit! e.g.
-     * cent). The amount must be less than or equal to
-     * the amount of the corresponding booking.
-     * (Always provide a negative amount)
+     *   Amount of refund (in smallest currency unit! e.g.
+     *   cent). The amount must be less than or equal to
+     *   the amount of the corresponding booking.
+     *   (Always provide a negative amount)
      *
      * @return $this
      */

@@ -18,6 +18,5 @@ use Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslationQuery as BaseSpyGlos
  */
 abstract class AbstractSpyGlossaryTranslationQuery extends BaseSpyGlossaryTranslationQuery
 {
-
 } // SpyGlossaryTranslationQuery
 

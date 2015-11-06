@@ -10,5 +10,4 @@ use SprykerFeature\Shared\Discount\Dependency\Transfer\DiscountableItemCollectio
 
 interface ItemCollectionInterface extends DiscountableItemCollectionInterface
 {
-
 }

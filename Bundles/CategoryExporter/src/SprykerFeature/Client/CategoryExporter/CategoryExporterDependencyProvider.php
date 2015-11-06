@@ -10,6 +10,4 @@ use SprykerEngine\Client\Kernel\AbstractDependencyProvider;
 
 class CategoryExporterDependencyProvider extends AbstractDependencyProvider
 {
-
-
 }

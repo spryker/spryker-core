@@ -68,7 +68,6 @@ class ExportProcessor implements ExportProcessorInterface
     protected function processVariants(array &$concreteProducts, $idLocale)
     {
         foreach ($concreteProducts as $index => $concreteProduct) {
-
             $idProduct = $this->productFacade->getConcreteProductIdBySku($concreteProduct['sku']);
 
             $concreteProducts[$index]['configs'] = $this->processConfigs($idProduct);
@@ -102,7 +101,7 @@ class ExportProcessor implements ExportProcessorInterface
     protected function processConfigValues($idConfigPreset)
     {
         $values = $this->productOptionFacade->getValueUsagesForConfigPreset($idConfigPreset);
-        foreach($values as $index => $value) {
+        foreach ($values as $index => $value) {
             $values[$index] = (int) $value;
         }
 
@@ -161,7 +160,7 @@ class ExportProcessor implements ExportProcessorInterface
     {
         $typeUsageTaxRate = $this->productOptionFacade->getEffectiveTaxRateForTypeUsage($idTypeUsage);
 
-        if (null === $typeUsageTaxRate) {
+        if ($typeUsageTaxRate === null) {
             $typeUsageTaxRate = $this->productFacade
                ->getEffectiveTaxRateForConcreteProduct($sku);
         }

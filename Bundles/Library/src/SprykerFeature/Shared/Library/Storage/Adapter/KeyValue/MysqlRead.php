@@ -40,7 +40,7 @@ class MysqlRead extends Mysql implements ReadInterface
      */
     public function getStats()
     {
-//        $stats = [];
+        //        $stats = [];
 ////        $result = $this->runQuery('SHOW GLOBAL STATUS');
 //
 //        $statement = $this->resource->query('SHOW GLOBAL STATUS');
@@ -60,7 +60,7 @@ class MysqlRead extends Mysql implements ReadInterface
      */
     public function getAllKeys()
     {
-//        $keys = [];
+        //        $keys = [];
 //        $query = sprintf(
 //            'SELECT `%s` FROM `%s`',
 //            $this->getResource()->escape_string(self::FIELD_KEY),
@@ -107,7 +107,7 @@ class MysqlRead extends Mysql implements ReadInterface
      */
     protected function runGetMulti(array $keys)
     {
-//        if (empty($keys)) {
+        //        if (empty($keys)) {
 //            return [];
 //        }
 //

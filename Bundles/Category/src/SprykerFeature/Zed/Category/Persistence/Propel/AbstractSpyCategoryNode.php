@@ -18,5 +18,4 @@ use Orm\Zed\Category\Persistence\Base\SpyCategoryNode as BaseSpyCategoryNode;
  */
 abstract class AbstractSpyCategoryNode extends BaseSpyCategoryNode
 {
-
 }

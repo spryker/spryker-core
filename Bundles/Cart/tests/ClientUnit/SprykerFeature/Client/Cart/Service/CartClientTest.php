@@ -8,8 +8,6 @@ namespace ClientUnit\SprykerFeature\Client\Cart\Service;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
-use SprykerEngine\Client\Kernel\Factory;
-use SprykerEngine\Client\Kernel\Locator;
 use SprykerFeature\Client\Cart\Service\CartClient;
 use SprykerFeature\Client\Cart\Service\Session\CartSessionInterface;
 use SprykerFeature\Client\Cart\Service\Storage\CartStorageInterface;
@@ -269,19 +267,19 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
             ['createSession', 'createZedStub', 'createStorage'], [], '', false)
         ;
 
-        if (!is_null($cartSession)) {
+        if ($cartSession !== null) {
             $dependencyContainerMock->expects($this->any())
                 ->method('createSession')
                 ->will($this->returnValue($cartSession))
             ;
         }
-        if (!is_null($cartStub)) {
+        if ($cartStub !== null) {
             $dependencyContainerMock->expects($this->any())
                 ->method('createZedStub')
                 ->will($this->returnValue($cartStub))
             ;
         }
-        if (!is_null($cartStorage)) {
+        if ($cartStorage !== null) {
             $dependencyContainerMock->expects($this->any())
                 ->method('createStorage')
                 ->will($this->returnValue($cartStorage))
@@ -319,7 +317,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
             'getCart',
             'setCart',
             'getItemCount',
-            'setItemCount'
+            'setItemCount',
         ]);
 
         return $sessionMock;
@@ -338,7 +336,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
             'addCoupon',
             'removeCoupon',
             'clearCoupons',
-            'recalculate'
+            'recalculate',
         ]);
     }
 

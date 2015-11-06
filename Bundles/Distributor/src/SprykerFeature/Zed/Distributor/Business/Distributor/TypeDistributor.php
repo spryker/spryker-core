@@ -65,7 +65,7 @@ class TypeDistributor
 
             $this->itemDistributor->distributeByType($itemType, $batchIterator);
 
-            if (!is_null($messenger)) {
+            if ($messenger !== null) {
                 $messenger->info(
                     sprintf(
                         '%s Items of type %s successfully distributed',

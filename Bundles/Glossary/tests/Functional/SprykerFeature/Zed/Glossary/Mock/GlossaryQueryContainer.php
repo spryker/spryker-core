@@ -10,5 +10,4 @@ use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 
 class GlossaryQueryContainer extends SprykerGlossaryQueryContainer implements GlossaryQueryContainerInterface
 {
-
 }

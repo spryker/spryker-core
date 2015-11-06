@@ -16,6 +16,7 @@ use SprykerFeature\Zed\ItemGrouperCheckoutConnector\ItemGrouperCheckoutConnector
  */
 class ItemGrouperCheckoutConnectorDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return ItemGrouperFacade
      */

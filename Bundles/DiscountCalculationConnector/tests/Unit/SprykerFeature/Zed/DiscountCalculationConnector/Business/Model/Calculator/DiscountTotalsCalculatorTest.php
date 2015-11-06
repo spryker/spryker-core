@@ -8,9 +8,6 @@ namespace Functional\SprykerFeature\Zed\DiscountCalculationConnector\Business\Mo
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\TotalsTransfer;
-use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Kernel\AbstractLocatorLocator;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator\DiscountTotalsCalculator;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -92,7 +89,7 @@ class DiscountTotalsCalculatorTest extends Test
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setGrossPrice(self::ITEM_GROSS_PRICE_1000);
         $itemTransfer->setQuantity(1);
-        $expenseTransfer =  new ExpenseTransfer();
+        $expenseTransfer = new ExpenseTransfer();
 
         $discountTransfer = new DiscountTransfer();
         $discountTransfer->setAmount(self::SALES_DISCOUNT_50);

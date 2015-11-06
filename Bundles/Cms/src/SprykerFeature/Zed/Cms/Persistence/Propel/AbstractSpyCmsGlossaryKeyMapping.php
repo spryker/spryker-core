@@ -19,5 +19,4 @@ use Orm\Zed\Cms\Persistence\Base\SpyCmsGlossaryKeyMapping as BaseSpyCmsGlossaryK
  */
 abstract class AbstractSpyCmsGlossaryKeyMapping extends BaseSpyCmsGlossaryKeyMapping
 {
-
 }

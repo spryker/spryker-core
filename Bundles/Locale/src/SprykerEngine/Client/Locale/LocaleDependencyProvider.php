@@ -10,6 +10,4 @@ use SprykerEngine\Client\Kernel\AbstractDependencyProvider;
 
 class LocaleDependencyProvider extends AbstractDependencyProvider
 {
-
-
 }

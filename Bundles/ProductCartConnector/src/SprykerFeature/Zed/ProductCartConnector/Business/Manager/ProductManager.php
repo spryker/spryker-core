@@ -33,7 +33,6 @@ class ProductManager implements ProductManagerInterface
     public function expandItems(ChangeInterface $change)
     {
         foreach ($change->getItems() as $cartItem) {
-
             $concreteProductTransfer = $this->productFacade->getConcreteProduct($cartItem->getSku());
 
             $cartItem->setId($concreteProductTransfer->getIdConcreteProduct())
@@ -43,7 +42,7 @@ class ProductManager implements ProductManagerInterface
 
             $taxSetTransfer = $concreteProductTransfer->getTaxSet();
 
-            if (null !== $taxSetTransfer) {
+            if ($taxSetTransfer !== null) {
                 $cartItem->setTaxSet($taxSetTransfer);
             }
         }

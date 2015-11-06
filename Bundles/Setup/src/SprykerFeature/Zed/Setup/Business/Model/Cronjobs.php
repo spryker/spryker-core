@@ -267,7 +267,7 @@ class Cronjobs
 
         $curl_response = curl_exec($ch);
 
-        if (false === $curl_response) {
+        if ($curl_response === false) {
             throw new \ErrorException('cURL error: ' . curl_error($ch) . ' while calling Jenkins URL ' . $postUrl);
         } else {
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);

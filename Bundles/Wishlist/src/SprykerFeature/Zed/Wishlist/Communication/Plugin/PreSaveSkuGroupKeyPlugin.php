@@ -11,6 +11,7 @@ use SprykerFeature\Zed\Wishlist\Dependency\PreSavePluginInterface;
 
 class PreSaveSkuGroupKeyPlugin extends AbstractPlugin implements PreSavePluginInterface
 {
+
     /**
      * @param ItemInterface[] $items
      */
@@ -36,6 +37,6 @@ class PreSaveSkuGroupKeyPlugin extends AbstractPlugin implements PreSavePluginIn
         $groupKey = $groupKey . '-' . $cartItem->getSku();
 
         return $groupKey;
-
     }
+
 }

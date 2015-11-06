@@ -33,4 +33,5 @@ interface CmsToTouchInterface
      * @return bool
      */
     public function touchDeleted($itemType, $itemId);
+
 }

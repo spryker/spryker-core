@@ -148,7 +148,7 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
      *
      * @return CmsGlossaryForm
      */
-    public function createCmsGlossaryForm($idPage, $idMapping = null, $placeholder = null, $cmsFacade)
+    public function createCmsGlossaryForm($idPage, $idMapping, $placeholder, $cmsFacade)
     {
         $glossaryMappingByIdQuery = $this->getQueryContainer()
             ->queryGlossaryKeyMappingWithKeyById($idMapping)
@@ -170,4 +170,5 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
             ->getTemplateRealPath($templateRelativePath)
             ;
     }
+
 }

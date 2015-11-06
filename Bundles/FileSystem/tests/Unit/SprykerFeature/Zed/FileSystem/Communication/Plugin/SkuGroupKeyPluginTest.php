@@ -8,7 +8,6 @@ namespace Unit\SprykerFeature\Zed\Cart\Communication\Plugin;
 
 use Generated\Shared\Transfer\ChangeTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use SprykerEngine\Zed\Kernel\AbstractUnitTest;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Cart\Communication\Plugin\SkuGroupKeyPlugin;

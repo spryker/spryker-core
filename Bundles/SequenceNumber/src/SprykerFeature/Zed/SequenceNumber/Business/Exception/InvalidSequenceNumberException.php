@@ -8,5 +8,4 @@ namespace SprykerFeature\Zed\SequenceNumber\Business\Exception;
 
 class InvalidSequenceNumberException extends \Exception
 {
-
 }

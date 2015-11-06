@@ -80,7 +80,7 @@ class UrlManager implements UrlManagerInterface
         $this->checkUrlDoesNotExist($url);
 
         $fkLocale = $locale->getIdLocale();
-        if (null === $fkLocale) {
+        if ($fkLocale === null) {
             $fkLocale = $this->localeFacade->getLocale($locale->getLocaleName())->getIdLocale();
         }
 

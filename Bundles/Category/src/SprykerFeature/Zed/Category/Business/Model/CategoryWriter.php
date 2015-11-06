@@ -86,7 +86,6 @@ class CategoryWriter implements CategoryWriterInterface
 
     /**
      * @param CategoryInterface $category
-
      *
      * @throws PropelException
      *

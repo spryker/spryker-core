@@ -186,4 +186,5 @@ class CmsGlossaryTable extends AbstractTable
 
         return $foundPlaceholders;
     }
+
 }

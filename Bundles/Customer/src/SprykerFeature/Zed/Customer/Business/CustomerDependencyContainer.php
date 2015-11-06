@@ -16,7 +16,6 @@ use SprykerFeature\Zed\Customer\Dependency\Facade\CustomerToCountryInterface;
 use SprykerFeature\Zed\Customer\Dependency\Facade\CustomerToLocaleInterface;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use SprykerFeature\Zed\Customer\Business\ReferenceGenerator\CustomerReferenceGenerator;
-use SprykerFeature\Zed\Customer\Business\ReferenceGenerator\CustomerSequence;
 use SprykerFeature\Zed\SequenceNumber\Business\SequenceNumberFacade;
 
 /**

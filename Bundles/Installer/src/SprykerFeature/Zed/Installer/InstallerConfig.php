@@ -35,4 +35,5 @@ abstract class InstallerConfig extends AbstractBundleConfig
             . '/spryker/spryker/Bundles/*/src/SprykerFeature/*/*/Ressources/glossary.yml'
         );
     }
+
 }

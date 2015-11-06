@@ -92,7 +92,6 @@ class CmsGlossaryForm extends AbstractForm
             'constraints' => $placeholderConstraints,
         ];
 
-
         $placeholderParams['disabled'] = 'disabled';
 
         return $this->addHidden(self::FK_PAGE)
@@ -109,7 +108,7 @@ class CmsGlossaryForm extends AbstractForm
                 ],
             ])
             ->addText(self::GLOSSARY_KEY)
-            ->addTextarea(self::TRANSLATION,[
+            ->addTextarea(self::TRANSLATION, [
                 'label' => 'Content',
                 'constraints' => $this->getConstraints()->getRequiredConstraints(),
                 'attr' => [
@@ -145,4 +144,5 @@ class CmsGlossaryForm extends AbstractForm
 
         return $formItems;
     }
+
 }

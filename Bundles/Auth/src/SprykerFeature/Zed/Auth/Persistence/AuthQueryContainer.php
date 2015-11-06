@@ -12,6 +12,7 @@ use Orm\Zed\Auth\Persistence\Map\SpyResetPasswordTableMap;
 
 class AuthQueryContainer extends AbstractQueryContainer
 {
+
     /**
      * @return SpyResetPasswordQuery
      */

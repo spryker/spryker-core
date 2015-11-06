@@ -26,11 +26,11 @@ trait InternalClassBuilderForTests
      */
     public function getFacade($namespace = null, $bundle = null)
     {
-        if (is_null($namespace)) {
+        if ($namespace === null) {
             $namespace = $this->getNamespaceFromTestClassName();
         }
 
-        if (is_null($bundle)) {
+        if ($bundle === null) {
             $bundle = $this->getBundleFromTestClassName();
         }
 

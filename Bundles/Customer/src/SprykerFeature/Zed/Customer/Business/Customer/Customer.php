@@ -237,7 +237,7 @@ class Customer
         $customerEntity = $this->queryContainer->queryCustomerByRegistrationKey($customerTransfer->getRegistrationKey())
             ->findOne()
         ;
-        if (null === $customerEntity) {
+        if ($customerEntity === null) {
             throw new CustomerNotFoundException('Customer not found.');
         }
 
@@ -543,7 +543,7 @@ class Customer
             ;
         }
 
-        if (null !== $customerEntity) {
+        if ($customerEntity !== null) {
             return $customerEntity;
         }
 
@@ -572,7 +572,7 @@ class Customer
             ;
         }
 
-        if (null !== $customerEntity) {
+        if ($customerEntity !== null) {
             $result = true;
         }
 
@@ -592,7 +592,7 @@ class Customer
             ->findOne()
         ;
 
-        if (null !== $customerEntity) {
+        if ($customerEntity !== null) {
             $result = $this->isValidPassword($customerEntity->getPassword(), $customerTransfer->getPassword());
         }
 

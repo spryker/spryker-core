@@ -48,12 +48,12 @@ abstract class AbstractOptInHandler
         $subscriberQuery = $this->queryContainer->querySubscriber();
 
         $idNewsletterSubscriber = $subscriberTransfer->getIdNewsletterSubscriber();
-        if (null !== $idNewsletterSubscriber) {
+        if ($idNewsletterSubscriber !== null) {
             return $subscriberQuery->findOneByIdNewsletterSubscriber($idNewsletterSubscriber);
         }
 
         $email = $subscriberTransfer->getEmail();
-        if (null !== $email) {
+        if ($email !== null) {
             return $subscriberQuery->findOneByEmail($email);
         }
 

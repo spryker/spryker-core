@@ -15,5 +15,4 @@ use Orm\Zed\Shipment\Persistence\Base\SpyShipmentMethodQuery as BaseSpyShipmentM
  */
 abstract class AbstractSpyShipmentMethodQuery extends BaseSpyShipmentMethodQuery
 {
-
 }

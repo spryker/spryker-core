@@ -26,7 +26,7 @@ interface NestedFilterBuilderInterface
     /**
      * @param string $fieldName
      * @param string $nestedFieldName
-     * @param array  $nestedFieldValues
+     * @param array $nestedFieldValues
      *
      * @return Nested
      */

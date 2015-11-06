@@ -23,7 +23,7 @@ class TranslationFileLoaderFactory
      */
     public static function getLoader($format)
     {
-        switch($format) {
+        switch ($format) {
             case 'po':
                 return new PoFileLoader();
             case 'csv':

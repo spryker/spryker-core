@@ -11,6 +11,7 @@ use SprykerEngine\Client\Kernel\Service\AbstractClient;
 
 class CmsClient extends AbstractClient implements CmsClientInterface
 {
+
     /**
      * @param CmsBlockTransfer $cmsBlockTransfer
      *
@@ -22,11 +23,11 @@ class CmsClient extends AbstractClient implements CmsClientInterface
     }
 
     /**
-     *
      * @return CmsBlockStorageInterface
      */
     private function createCmsBlockFinder()
     {
         return $this->getDependencyContainer()->createCmsBlockFinder();
     }
+
 }

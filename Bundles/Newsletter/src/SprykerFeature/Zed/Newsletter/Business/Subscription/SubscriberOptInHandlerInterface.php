@@ -9,8 +9,10 @@ use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
 
 interface SubscriberOptInHandlerInterface
 {
+
     /**
      * @param NewsletterSubscriberInterface $subscriberTransfer
      */
     public function optIn(NewsletterSubscriberInterface $subscriberTransfer);
+
 }

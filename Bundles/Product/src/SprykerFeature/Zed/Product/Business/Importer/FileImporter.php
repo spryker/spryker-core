@@ -51,11 +51,11 @@ class FileImporter implements FileImporterInterface
     private $productBatchResult;
 
     /**
-     * @param DataValidatorInterface        $importProductValidator
-     * @param File\IteratorReaderInterface  $reader
-     * @param ProductBuilderInterface       $productBuilder
-     * @param ProductWriterInterface        $writer
-     * @param ProductBatchResultInterface   $productBatchResult
+     * @param DataValidatorInterface $importProductValidator
+     * @param File\IteratorReaderInterface $reader
+     * @param ProductBuilderInterface $productBuilder
+     * @param ProductWriterInterface $writer
+     * @param ProductBatchResultInterface $productBatchResult
      */
     public function __construct(
         DataValidatorInterface $importProductValidator,

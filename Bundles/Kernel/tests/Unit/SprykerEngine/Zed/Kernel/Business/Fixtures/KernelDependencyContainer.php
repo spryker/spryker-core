@@ -10,5 +10,4 @@ use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 
 class KernelDependencyContainer extends AbstractBusinessDependencyContainer
 {
-
 }

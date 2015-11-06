@@ -133,7 +133,7 @@ class ReaderTest extends Test
             ->findOne()
         ;
 
-        if (null === $abstractProduct) {
+        if ($abstractProduct === null) {
             $abstractProduct = new SpyAbstractProduct();
         }
 
@@ -147,7 +147,7 @@ class ReaderTest extends Test
             ->findOne()
         ;
 
-        if (null === $concreteProduct) {
+        if ($concreteProduct === null) {
             $concreteProduct = new SpyProduct();
         }
         $concreteProduct->setSku(self::DUMMY_SKU_CONCRETE_PRODUCT)

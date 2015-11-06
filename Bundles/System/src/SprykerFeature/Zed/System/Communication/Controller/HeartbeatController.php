@@ -6,10 +6,8 @@
 
 namespace SprykerFeature\Zed\System\Communication\Controller;
 
-use SprykerFeature\Shared\Library\Error\ErrorLogger;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\System\Communication\SystemDependencyContainer;
-use SprykerFeature\Zed\System\SystemDependencyProvider;
 use Symfony\Component\HttpFoundation\Response;
 
 /**

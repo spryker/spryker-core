@@ -15,5 +15,4 @@ use Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneTransactionStatusLogOrderIte
  */
 abstract class AbstractSpyPaymentPayoneTransactionStatusLogOrderItemQuery extends BaseSpyPaymentPayoneTransactionStatusLogOrderItemQuery
 {
-
 }

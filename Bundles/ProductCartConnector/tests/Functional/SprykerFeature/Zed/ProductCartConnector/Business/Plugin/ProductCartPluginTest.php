@@ -67,7 +67,6 @@ class ProductCartPluginTest extends AbstractFunctionalTest
         $this->productCartConnectorFacade = $this->getFacade();
     }
 
-
     public function testPluginExpandsCartItemWithExpectedProductData()
     {
         $localeName = Store::getInstance()->getCurrentLocale();

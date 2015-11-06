@@ -9,8 +9,10 @@ use Generated\Shared\Wishlist\ItemInterface;
 
 interface PreSavePluginInterface
 {
+
     /**
-     * @param ItemInterface[] $items
+     * @param \ArrayObject|ItemInterface[] $items
      */
     public function trigger(\ArrayObject $items);
+
 }

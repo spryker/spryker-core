@@ -16,7 +16,7 @@ interface FacetFilterHandlerInterface
 {
 
     /**
-     * @param Query   $query
+     * @param Query $query
      * @param Request $request
      */
     public function addFacetFiltersToQuery(Query $query, Request $request);

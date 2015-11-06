@@ -21,6 +21,7 @@ use SprykerFeature\Zed\ProductOptionCheckoutConnector\Business\ProductOptionOrde
  */
 class ProductOptionOrderHydratorTest extends \PHPUnit_Framework_TestCase
 {
+
     const CONCRETE_SKU = 'concrete sku';
 
     const LABEL_OPTION_TYPE = 'label option type';

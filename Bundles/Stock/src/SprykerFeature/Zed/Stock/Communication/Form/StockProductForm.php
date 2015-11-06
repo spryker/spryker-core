@@ -107,7 +107,7 @@ class StockProductForm extends AbstractForm
     protected function getDefaultData()
     {
         $idStockProduct = $this->getIdStockProduct();
-        if (!is_null($idStockProduct)) {
+        if ($idStockProduct !== null) {
             $stockProduct = $this->queryContainer
                 ->queryStockProductByIdStockProduct((int) $idStockProduct)
                 ->findOne()

@@ -8,5 +8,4 @@ namespace SprykerFeature\Shared\NewRelic\Exception;
 
 class RecordDeploymentException extends \Exception
 {
-
 }

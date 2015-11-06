@@ -25,4 +25,5 @@ class CmsConfig extends AbstractBundleConfig
 
         return $physicalAddress;
     }
+
 }

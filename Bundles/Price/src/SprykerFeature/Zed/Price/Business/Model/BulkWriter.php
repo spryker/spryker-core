@@ -10,6 +10,7 @@ use Orm\Zed\Price\Persistence\SpyPriceProduct;
 
 class BulkWriter extends Writer implements BulkWriterInterface
 {
+
     /**
      * @var array
      */

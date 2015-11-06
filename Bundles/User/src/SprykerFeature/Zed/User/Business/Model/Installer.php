@@ -48,7 +48,6 @@ class Installer implements InstallerInterface
     public function install()
     {
         $this->addUsers($this->settings->getInstallerUsers());
-
     }
 
     protected function addUsers(array $usersArray)

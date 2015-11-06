@@ -11,6 +11,7 @@ use SprykerFeature\Zed\ProductOptionCartConnector\Business\ProductOptionCartConn
 
 class ProductOptionCartConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return ProductOptionCartConnectorFacade
      */
@@ -18,4 +19,5 @@ class ProductOptionCartConnectorDependencyContainer extends AbstractCommunicatio
     {
         return $this->getProvidedDependency(ProductOptionCartConnectorDependencyProvider::FACADE_PRODUCT_OPTION_CART_CONNECTOR);
     }
+
 }

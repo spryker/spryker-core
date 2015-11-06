@@ -11,6 +11,7 @@ use SprykerFeature\Shared\Collector\Code\KeyBuilder\SharedResourceKeyBuilder;
 
 class CmsBlockKeyBuilder extends SharedResourceKeyBuilder
 {
+
     /**
      * @return string
      */
@@ -18,4 +19,5 @@ class CmsBlockKeyBuilder extends SharedResourceKeyBuilder
     {
         return CmsConfig::RESOURCE_TYPE_BLOCK;
     }
+
 }

@@ -18,5 +18,4 @@ use Orm\Zed\Discount\Persistence\Base\SpyDiscountVoucherPool as BaseSpyDiscountV
  */
 abstract class AbstractSpyDiscountVoucherPool extends BaseSpyDiscountVoucherPool
 {
-
 }

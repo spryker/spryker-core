@@ -40,7 +40,7 @@ interface BatchIteratorInterface
      * @link http://php.net/manual/en/iterator.valid.php
      *
      * @return bool The return value will be casted to boolean and then evaluated.
-     * Returns true on success or false on failure.
+     *   Returns true on success or false on failure.
      */
     public function valid();
 
@@ -59,9 +59,9 @@ interface BatchIteratorInterface
      * @link http://php.net/manual/en/countable.count.php
      *
      * @return int The custom count as an integer.
-     * </p>
-     * <p>
-     * The return value is cast to an integer.
+     *   </p>
+     *   <p>
+     *   The return value is cast to an integer.
      */
     public function count();
 

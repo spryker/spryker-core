@@ -133,7 +133,6 @@ class CalculatorTest extends AbstractFunctionalTest
 
     public function testCanRecalculateAnExampleOrderWithTwoItemsAndExpenseOnItems()
     {
-
         $order = $this->getOrderWithFixtureData();
 //        $item = $this->getItemWithFixtureData();
 //        $item->setGrossPrice(self::ITEM_GROSS_PRICE);

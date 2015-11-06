@@ -7,13 +7,14 @@ namespace SprykerFeature\Zed\User\Communication\Form;
 
 class UserUpdateForm extends UserForm
 {
+
     /**
-     * @var integer
+     * @var int
      */
     private $idUser;
 
     /**
-     * @param integer $idUser
+     * @param int $idUser
      */
     public function __construct($idUser)
     {
@@ -30,7 +31,6 @@ class UserUpdateForm extends UserForm
         $this->addUserStatus();
 
         return $this;
-
     }
 
     /**
@@ -65,6 +65,8 @@ class UserUpdateForm extends UserForm
                 $formData[UserForm::GROUP][] = $aclGroupTransfer->getIdAclGroup();
             }
         }
+
         return $formData;
     }
+
 }

@@ -10,5 +10,4 @@ use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
 class TouchQueryContainer extends SprykerTouchQueryContainer implements TouchQueryContainerInterface
 {
-
 }

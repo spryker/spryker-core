@@ -7,7 +7,6 @@
 namespace Unit\SprykerFeature\Zed\Heartbeat\Business\Ambulance;
 
 use Generated\Shared\Transfer\HealthIndicatorReportTransfer;
-use Generated\Shared\Transfer\HealthReportTransfer;
 use SprykerFeature\Zed\Heartbeat\Business\Ambulance\Doctor;
 
 /**

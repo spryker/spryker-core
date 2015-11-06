@@ -12,7 +12,8 @@ use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
 use SprykerFeature\Zed\Cart\Business\Operator\OperatorInterface;
 use SprykerFeature\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
 use SprykerFeature\Zed\Cart\CartConfig;
-use SprykerFeature\Zed\Cart\CartDependencyProvider;use SprykerFeature\Zed\ItemGrouper\Business\ItemGrouperFacade;
+use SprykerFeature\Zed\Cart\CartDependencyProvider;
+use SprykerFeature\Zed\ItemGrouper\Business\ItemGrouperFacade;
 
 /**
  * @method CartBusiness getFactory()

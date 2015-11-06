@@ -18,6 +18,5 @@ use Orm\Zed\Glossary\Persistence\Base\SpyGlossaryKeyQuery as BaseSpyGlossaryKeyQ
  */
 abstract class AbstractSpyGlossaryKeyQuery extends BaseSpyGlossaryKeyQuery
 {
-
 } // SpyGlossaryKeyQuery
 

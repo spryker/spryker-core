@@ -19,6 +19,5 @@ use Orm\Zed\Cms\Persistence\Base\SpyCmsPageQuery as BaseSpyCmsPageQuery;
  */
 abstract class AbstractSpyCmsPageQuery extends BaseSpyCmsPageQuery
 {
-
 } // SpyCmsPageQuery
 

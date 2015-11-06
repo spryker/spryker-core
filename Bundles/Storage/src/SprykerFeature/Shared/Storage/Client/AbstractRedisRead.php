@@ -36,7 +36,7 @@ abstract class AbstractRedisRead extends AbstractRedis implements ReadInterface
     }
 
     /**
-     * @param array  $keys
+     * @param array $keys
      * @param string $prefix
      *
      * @return array

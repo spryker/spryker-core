@@ -13,6 +13,7 @@ use Generated\Shared\Cart\ItemInterface;
 
 class InMemoryProvider implements StorageProviderInterface
 {
+
     /**
      * @param CartInterface $cart
      * @param ChangeInterface $increasedItems
@@ -96,7 +97,7 @@ class InMemoryProvider implements StorageProviderInterface
 
     /**
      * @param ItemInterface[] $existingItems
-     * @param integer $index
+     * @param int $index
      * @param ItemInterface $item
      */
     private function decreaseExistingItem($existingItems, $index, $item)
@@ -120,6 +121,7 @@ class InMemoryProvider implements StorageProviderInterface
         foreach ($existingItems as $key => $cartIndexItem) {
             if ($cartIndexItem->getSku() === $changedItem->getSku()) {
                 $this->decreaseExistingItem($existingItems, $key, $changedItem);
+
                 return;
             }
         }

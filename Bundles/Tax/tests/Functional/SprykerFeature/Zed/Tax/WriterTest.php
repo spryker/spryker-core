@@ -9,7 +9,6 @@ namespace Functional\SprykerFeature\Zed\Tax;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\TaxRateTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
-use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException;

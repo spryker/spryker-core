@@ -56,4 +56,5 @@ class ProductOptionPriceToPayCalculator implements CalculatorPluginInterface
     {
         return $calculableContainer->getCalculableObject()->getItems();
     }
+
 }

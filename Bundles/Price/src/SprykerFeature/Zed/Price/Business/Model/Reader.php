@@ -38,7 +38,7 @@ class Reader implements ReaderInterface
     /**
      * @var array
      */
-    protected $priceTypeEntityByNameCache = array();
+    protected $priceTypeEntityByNameCache = [];
 
     /**
      * @param PriceQueryContainer $queryContainer
@@ -98,7 +98,7 @@ class Reader implements ReaderInterface
     {
         if (!isset($this->priceTypeEntityByNameCache[$priceTypeName])) {
             $priceTypeEntity = $this->queryContainer->queryPriceType($priceTypeName)->findOne();
-            if (null === $priceTypeEntity) {
+            if ($priceTypeEntity === null) {
                 throw new \Exception(self::PRICE_TYPE_UNKNOWN . $priceTypeName);
             }
 
@@ -268,7 +268,7 @@ class Reader implements ReaderInterface
      */
     protected function handleDefaultPriceType($priceType = null)
     {
-        if (null === $priceType) {
+        if ($priceType === null) {
             $priceType = $this->priceSettings->getPriceTypeDefaultName();
         }
 

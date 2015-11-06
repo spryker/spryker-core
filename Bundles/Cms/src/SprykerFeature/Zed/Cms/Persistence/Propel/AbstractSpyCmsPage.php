@@ -19,5 +19,4 @@ use Orm\Zed\Cms\Persistence\Base\SpyCmsPage as BaseSpyCmsPage;
  */
 abstract class AbstractSpyCmsPage extends BaseSpyCmsPage
 {
-
 }

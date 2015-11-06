@@ -9,6 +9,7 @@ use Generated\Shared\Wishlist\WishlistInterface;
 
 interface StorageInterface
 {
+
     /**
      * @param WishlistChangeInterface $wishlistChange
      *
@@ -36,4 +37,5 @@ interface StorageInterface
      * @return WishlistInterface
      */
     public function decreaseItems(WishlistChangeInterface $wishlistChange);
+
 }

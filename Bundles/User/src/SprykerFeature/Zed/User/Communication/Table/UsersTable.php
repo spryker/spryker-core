@@ -13,6 +13,7 @@ use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
 
 class UsersTable extends AbstractTable
 {
+
     const ACTION = 'Action';
     const UPDATE_USER_URL = '/user/edit/update?id-user=%d';
     const DEACTIVATE_USER_URL = '/user/edit/deactivate-user?id-user=%d';
@@ -42,7 +43,7 @@ class UsersTable extends AbstractTable
         $config->setHeader([
             SpyUserTableMap::COL_USERNAME => 'User ID',
             SpyUserTableMap::COL_FIRST_NAME => 'First Name',
-            SpyUserTableMap::COL_LAST_NAME  => 'Last Name',
+            SpyUserTableMap::COL_LAST_NAME => 'Last Name',
             SpyUserTableMap::COL_LAST_LOGIN => 'Last Login',
             SpyUserTableMap::COL_STATUS => 'Status',
             self::ACTION => self::ACTION,
@@ -142,4 +143,5 @@ class UsersTable extends AbstractTable
 
         return $statusLabel;
     }
+
 }

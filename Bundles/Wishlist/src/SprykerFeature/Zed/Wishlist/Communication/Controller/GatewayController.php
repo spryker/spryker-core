@@ -17,6 +17,7 @@ use SprykerFeature\Zed\Wishlist\Business\WishlistFacadeInterface;
  */
 class GatewayController extends AbstractGatewayController
 {
+
     /**
      * @param WishlistChangeInterface $changeTransfer
      *
@@ -66,4 +67,5 @@ class GatewayController extends AbstractGatewayController
     {
         return $this->getFacade()->getCustomerWishlist($customer);
     }
+
 }

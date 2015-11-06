@@ -17,6 +17,7 @@ use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
 
 class PropelTest extends \PHPUnit_Framework_TestCase
 {
+
     public function testAddItemToExisting()
     {
         $wishlist = new WishlistTransfer();
@@ -151,8 +152,6 @@ class PropelTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($spyWishlistItem->isDelete());
     }
 
-
-
     /**
      * @return \PHPUnit_Framework_MockObject_MockObject
      */
@@ -171,7 +170,6 @@ class PropelTest extends \PHPUnit_Framework_TestCase
             ->expects($this->any())
             ->method('findOneByFkCustomer')
             ->will($this->returnValue($wishlistSpy));
-
 
         $wishlistQueryContainerMock
             ->expects($this->any())
@@ -253,9 +251,11 @@ class PropelTest extends \PHPUnit_Framework_TestCase
 
         return $productFacadeMock;
     }
+
 }
 
-trait WishlistSpyTrait {
+trait WishlistSpyTrait
+{
 
     protected $delete = true;
     protected $save = true;
@@ -270,7 +270,7 @@ trait WishlistSpyTrait {
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isDelete()
     {
@@ -278,7 +278,7 @@ trait WishlistSpyTrait {
     }
 
     /**
-     * @return boolean
+     * @return bool
      */
     public function isSave()
     {
@@ -287,12 +287,16 @@ trait WishlistSpyTrait {
 
 }
 
-class WishlistItemSpy extends SpyWishlistItem {
+class WishlistItemSpy extends SpyWishlistItem
+{
+
     use WishlistSpyTrait;
+
 }
 
-class WishlistSpy extends SpyWishlist {
+class WishlistSpy extends SpyWishlist
+{
+
     use WishlistSpyTrait;
+
 }
-
-

@@ -19,6 +19,7 @@ use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
  */
 class IndexController extends AbstractController
 {
+
     /**
      * @return array
      */
@@ -27,7 +28,7 @@ class IndexController extends AbstractController
         $usersTable = $this->getDependencyContainer()->createUserTable();
 
         return [
-            'users' => $usersTable->render()
+            'users' => $usersTable->render(),
         ];
     }
 
@@ -42,4 +43,5 @@ class IndexController extends AbstractController
             $table->fetchData()
         );
     }
+
 }

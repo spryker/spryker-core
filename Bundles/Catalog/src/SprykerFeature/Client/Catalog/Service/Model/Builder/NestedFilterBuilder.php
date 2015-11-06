@@ -73,8 +73,7 @@ class NestedFilterBuilder implements NestedFilterBuilderInterface
         $maxValue,
         $greaterParam = 'gte',
         $lessParam = 'lte'
-    )
-    {
+    ) {
         return $this->bindMultipleNestedFilter($fieldName, [
                 $this->filterBuilder->createTermFilter($fieldName . '.facet-name', $nestedFieldName),
                 $this->filterBuilder->createRangeFilter($fieldName . '.facet-value', $minValue, $maxValue, $greaterParam, $lessParam),

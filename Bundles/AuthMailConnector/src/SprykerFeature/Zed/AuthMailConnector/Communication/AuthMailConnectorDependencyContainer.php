@@ -11,6 +11,7 @@ use SprykerFeature\Zed\AuthMailConnector\AuthMailConnectorDependencyProvider;
 
 class AuthMailConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return MailFacade
      */
@@ -18,4 +19,5 @@ class AuthMailConnectorDependencyContainer extends AbstractCommunicationDependen
     {
         return $this->getProvidedDependency(AuthMailConnectorDependencyProvider::FACADE_MAIL);
     }
+
 }

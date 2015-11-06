@@ -10,5 +10,4 @@ use SprykerFeature\Shared\CategoryExporter\Code\KeyBuilder\NavigationKeyBuilder 
 
 class NavigationKeyBuilder extends SharedNavigationKeyBuilder
 {
-
 }

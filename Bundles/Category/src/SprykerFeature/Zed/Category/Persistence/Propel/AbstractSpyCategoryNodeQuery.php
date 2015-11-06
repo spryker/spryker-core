@@ -18,6 +18,5 @@ use Orm\Zed\Category\Persistence\Base\SpyCategoryNodeQuery as BaseSpyCategoryNod
  */
 abstract class AbstractSpyCategoryNodeQuery extends BaseSpyCategoryNodeQuery
 {
-
 } // SpyCategoryNodeQuery
 

@@ -117,7 +117,7 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createModelCalculatorItemTotalPriceCalculator();
     }
-    
+
     /**
      * @return SubtotalWithoutItemExpensesTotalsCalculator
      */

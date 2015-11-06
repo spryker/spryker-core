@@ -4,5 +4,4 @@ namespace SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization
 
 class InvoiceContainer extends AbstractPaymentMethodContainer
 {
-
 }

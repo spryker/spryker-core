@@ -97,7 +97,7 @@ class ItemDistributor implements ItemDistributorInterface
         $processedItems = [];
 
         foreach ($processorPipeline as $processor) {
-             $processedItems = $processor->processItems($processableItems, $processedItems);
+            $processedItems = $processor->processItems($processableItems, $processedItems);
         }
 
         return $processedItems;

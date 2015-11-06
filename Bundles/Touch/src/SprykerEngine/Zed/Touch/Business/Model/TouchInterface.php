@@ -6,11 +6,11 @@
 
 namespace SprykerEngine\Zed\Touch\Business\Model;
 
-
 use Generated\Shared\Transfer\TouchTransfer;
 
 interface TouchInterface
 {
+
     /**
      * @param string $itemType
      *
@@ -26,4 +26,5 @@ interface TouchInterface
      * @return int
      */
     public function bulkUpdateTouchRecords($itemType, $itemEvent, array $itemIds = []);
+
 }

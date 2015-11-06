@@ -38,4 +38,5 @@ class InstallerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->getGlossaryInstaller();
     }
+
 }

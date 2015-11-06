@@ -5,7 +5,6 @@
 
 namespace SprykerFeature\Zed\ItemGrouper\Business\Model;
 
-use Generated\Shared\ItemGrouper;
 use Generated\Shared\ItemGrouper\GroupableContainerInterface;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -19,7 +18,7 @@ class Group
     private $groupedItems = [];
 
     /**
-     * @var integer
+     * @var int
      */
     private $threshold;
 
@@ -29,8 +28,8 @@ class Group
     private $regroupAllItemCollection;
 
     /**
-     * @param integer $threshold
-     * @param boolean $regroupAllItemCollection;
+     * @param int $threshold
+     * @param bool $regroupAllItemCollection;
      */
     public function __construct($threshold, $regroupAllItemCollection)
     {

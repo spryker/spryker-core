@@ -5,7 +5,6 @@
 
 namespace Unit\SprykerFeature\Zed\ProductCartConnector\Business\Manager;
 
-
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;

@@ -7,6 +7,7 @@ namespace SprykerFeature\Zed\Newsletter\Business\Subscription;
 
 class SubscriberKeyGenerator implements SubscriberKeyGeneratorInterface
 {
+
     /**
      * @return string
      */
@@ -14,4 +15,5 @@ class SubscriberKeyGenerator implements SubscriberKeyGeneratorInterface
     {
         return uniqid();
     }
+
 }

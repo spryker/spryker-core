@@ -318,4 +318,5 @@ class CmsFacadeTest extends Test
 
         $this->glossaryFacade->setOwnQueryContainer($this->glossaryQueryContainer);
     }
+
 }

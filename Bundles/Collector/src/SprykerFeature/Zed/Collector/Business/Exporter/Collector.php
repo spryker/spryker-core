@@ -49,21 +49,18 @@ class Collector
         $results = [];
 
         foreach ($types as $type) {
-
             $startTime = microtime(true);
 
-            if(isset($output))
-            {
-                $output->writeln('Started export for type: '.$type);
+            if (isset($output)) {
+                $output->writeln('Started export for type: ' . $type);
             }
 
             $result = $this->exporter->exportByType($type, $locale);
 
             $this->handleResult($result);
 
-            if(isset($output))
-            {
-                $output->writeln('Finished export for type: '.$type.' after '.number_format(microtime(true) - $startTime, 4).' s');
+            if (isset($output)) {
+                $output->writeln('Finished export for type: ' . $type . ' after ' . number_format(microtime(true) - $startTime, 4) . ' s');
             }
 
             if ($result instanceof BatchResultInterface) {

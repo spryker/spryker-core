@@ -74,7 +74,7 @@ class TaxChangeTouchPluginTest extends Test
 
         $this->assertEquals(2, $query->count());
 
-        foreach($query as $touchEntity) {
+        foreach ($query as $touchEntity) {
             $this->assertContains($touchEntity->getItemId(), $this->abstractProductIds);
         }
     }

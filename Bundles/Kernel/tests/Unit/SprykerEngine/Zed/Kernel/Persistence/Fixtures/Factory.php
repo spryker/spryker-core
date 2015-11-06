@@ -10,5 +10,4 @@ use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 
 class Factory extends PersistenceFactory
 {
-
 }

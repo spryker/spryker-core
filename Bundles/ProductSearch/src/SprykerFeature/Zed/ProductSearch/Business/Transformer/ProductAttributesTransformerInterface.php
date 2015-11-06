@@ -13,8 +13,8 @@ interface ProductAttributesTransformerInterface
 {
 
     /**
-     * @param array  $productsRaw
-     * @param array  $searchableProducts
+     * @param array $productsRaw
+     * @param array $searchableProducts
      *
      * @return array
      */

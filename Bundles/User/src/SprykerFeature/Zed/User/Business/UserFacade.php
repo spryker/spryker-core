@@ -178,9 +178,9 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @param integer $idUser
+     * @param int $idUser
      *
-     * @return boolean
+     * @return bool
      */
     public function activateUser($idUser)
     {
@@ -188,7 +188,7 @@ class UserFacade extends AbstractFacade
     }
 
     /**
-     * @param integer $idUser
+     * @param int $idUser
      *
      * @return bool
      */
@@ -196,4 +196,5 @@ class UserFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->getUserModel()->deactivateUser($idUser);
     }
+
 }

@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\ProductOption\Business\Model;
 use SprykerFeature\Zed\ProductOption\Persistence\ProductOptionQueryContainerInterface;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionType;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValue;
-use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueTranslation;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValuePrice;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionTypeUsageExclusion;
 use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageConstraint;
@@ -137,7 +136,7 @@ class DataImportWriter implements DataImportWriterInterface
             ->queryProductOptionValueByImportKeyAndFkProductOptionType($importKeyProductOptionValue, $idProductOptionType)
             ->findOneOrCreate();
 
-        if (null !== $price) {
+        if ($price !== null) {
             $priceEntity = (new SpyProductOptionValuePrice())
                 ->setPrice($price);
             $productOptionValueEntity->setSpyProductOptionValuePrice($priceEntity);
@@ -396,7 +395,7 @@ class DataImportWriter implements DataImportWriterInterface
             ->findOne()
         ;
 
-        if (null === $productOptionType) {
+        if ($productOptionType === null) {
             throw new MissingProductOptionTypeException(
                 sprintf(
                     'Tried to retrieve a product option type with import key %s, but it does not exist.',
@@ -422,7 +421,7 @@ class DataImportWriter implements DataImportWriterInterface
             ->findOne()
         ;
 
-        if (null === $productOptionValue) {
+        if ($productOptionValue === null) {
             throw new MissingProductOptionValueException(
                 sprintf(
                     'Tried to retrieve a product option value with import key %s, but it does not exist.',
@@ -503,7 +502,7 @@ class DataImportWriter implements DataImportWriterInterface
             ->findOne()
         ;
 
-        if (null === $productOptionTypeUsage) {
+        if ($productOptionTypeUsage === null) {
             throw new MissingProductOptionTypeUsageException('Tried to retrieve a product option type usage, but it does not exist.');
         }
 
@@ -535,7 +534,7 @@ class DataImportWriter implements DataImportWriterInterface
             ->queryProductOptionValueUsageByFKs($idProductOptionTypeUsage, $idProductOptionValue)
             ->findOne();
 
-        if (null === $productOptionValueUsage) {
+        if ($productOptionValueUsage === null) {
             throw new MissingProductOptionValueUsageException('Tried to retrieve a product option value usage, but it does not exist.');
         }
 

@@ -11,6 +11,7 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class ItemGrouperWishlistConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const FACADE_ITEM_GROUPER = 'facade item groupper';
 
     /**
@@ -26,4 +27,5 @@ class ItemGrouperWishlistConnectorDependencyProvider extends AbstractBundleDepen
 
         return $container;
     }
+
 }

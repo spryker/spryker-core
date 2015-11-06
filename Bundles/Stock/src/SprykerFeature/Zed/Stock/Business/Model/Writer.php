@@ -101,7 +101,7 @@ class Writer implements WriterInterface
             ->queryStockByName($stockTypeTransfer->getName())
             ->findOne()
         ;
-        if (is_null($stockTypeEntity)) {
+        if ($stockTypeEntity === null) {
             throw new StockTypeNotFoundException();
         }
         $stockTypeEntity->setName($stockTypeTransfer->getName());

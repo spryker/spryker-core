@@ -4,7 +4,6 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-
 namespace SprykerFeature\Zed\ItemGrouperWishlistConnector\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
@@ -15,6 +14,7 @@ use Generated\Shared\ItemGrouper\GroupableContainerInterface;
  */
 class ItemGrouperWishlistConnectorFacade extends AbstractFacade
 {
+
     /**
      * @param GroupableContainerInterface $items
      *
@@ -24,4 +24,5 @@ class ItemGrouperWishlistConnectorFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->createItemGrouperFacade()->groupItemsByKey($items);
     }
+
 }

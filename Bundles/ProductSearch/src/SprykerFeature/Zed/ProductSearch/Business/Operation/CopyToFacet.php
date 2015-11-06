@@ -13,10 +13,10 @@ class CopyToFacet implements OperationInterface
     const FACET_VALUE_FIELD = 'facet-value';
 
     /**
-     * @param array     $sourceDocument
-     * @param array     $targetDocument
-     * @param mixed     $sourceField
-     * @param string    $targetField
+     * @param array $sourceDocument
+     * @param array $targetDocument
+     * @param mixed $sourceField
+     * @param string $targetField
      *
      * @return array
      */

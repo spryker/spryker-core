@@ -222,7 +222,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
                 ->findOne();
 
-            if (null === $mapping) {
+            if ($mapping === null) {
                 continue;
             }
 
@@ -248,7 +248,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
                 ->findOneOrCreate();
 
-            if (null === $mapping) {
+            if ($mapping === null) {
                 continue;
             }
 
@@ -274,7 +274,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
                 ->findOne();
 
-            if (null === $mapping) {
+            if ($mapping === null) {
                 continue;
             }
 
@@ -302,7 +302,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
             $mapping = $this->getProductCategoryMappingById($idCategory, $idProduct)
                 ->findOne();
 
-            if (null === $mapping) {
+            if ($mapping === null) {
                 continue;
             }
 

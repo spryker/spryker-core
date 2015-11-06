@@ -14,7 +14,7 @@ interface TranslatorInterface extends \Symfony\Component\Translation\TranslatorI
     /**
      * Constructor.
      *
-     * @param string $locale   The locale
+     * @param string $locale The locale
      * @param MessageSelector|null $selector The message selector for pluralization
      * @param TranslationFileFinder $fileFinder
      * @param TranslationFileLoaderFactory $fileLoaderFactory
@@ -25,7 +25,7 @@ interface TranslatorInterface extends \Symfony\Component\Translation\TranslatorI
      */
     public function __construct(
         $locale,
-        MessageSelector $selector = null,
+        MessageSelector $selector,
         TranslationFileFinder $fileFinder,
         TranslationFileLoaderFactory $fileLoaderFactory
     );

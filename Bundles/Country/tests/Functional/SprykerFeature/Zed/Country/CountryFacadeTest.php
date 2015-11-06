@@ -7,17 +7,13 @@
 namespace Functional\SprykerFeature\Zed\Country;
 
 use Generated\Zed\Ide\AutoCompletion;
-use Propel\Runtime\Propel;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Country\Business\CountryFacade;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainer;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
-use Orm\Zed\Country\Persistence\Map\SpyCountryTableMap;
 use Orm\Zed\Country\Persistence\SpyCountry;
-use Orm\Zed\Country\Persistence\SpyCountryQuery;
-use Symfony\Component\Config\Definition\Exception\Exception;
 use SprykerEngine\Zed\Kernel\Persistence\Factory;
 
 /**

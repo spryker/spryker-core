@@ -10,5 +10,4 @@ use SprykerFeature\Shared\SearchPage\Code\KeyBuilder\SharedSearchPageConfigKeyBu
 
 class SearchPageConfigKeyBuilder extends SharedSearchPageConfigKeyBuilder
 {
-
 }

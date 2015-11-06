@@ -13,8 +13,9 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 
 class ProductSkuGroupKeyHydrationPlugin extends AbstractPlugin implements CheckoutOrderHydrationInterface
 {
+
     /**
-     * @param OrderTransfer           $orderTransfer
+     * @param OrderTransfer $orderTransfer
      * @param CheckoutRequestTransfer $checkoutRequest
      */
     public function hydrateOrder(OrderTransfer $orderTransfer, CheckoutRequestTransfer $checkoutRequest)
@@ -38,4 +39,5 @@ class ProductSkuGroupKeyHydrationPlugin extends AbstractPlugin implements Checko
 
         return $groupKey;
     }
+
 }

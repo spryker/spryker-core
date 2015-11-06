@@ -9,9 +9,6 @@ namespace SprykerFeature\Zed\User\Communication;
 use Generated\Zed\Ide\FactoryAutoCompletion\UserCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Acl\Business\AclFacade;
-use SprykerFeature\Zed\User\Communication\Form\DetailsUserForm;
-use SprykerFeature\Zed\User\Communication\Form\ResetPasswordRequestForm;
-use SprykerFeature\Zed\User\Communication\Form\UpdateUserForm;
 use SprykerFeature\Zed\User\Communication\Form\UserCreateForm;
 use SprykerFeature\Zed\User\Communication\Form\UserUpdateForm;
 use SprykerFeature\Zed\User\Communication\Table\UsersTable;
@@ -25,6 +22,7 @@ use SprykerFeature\Zed\User\UserDependencyProvider;
  */
 class UserDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return ResetPasswordForm
      */
@@ -52,7 +50,7 @@ class UserDependencyContainer extends AbstractCommunicationDependencyContainer
     }
 
     /**
-     * @param integer $idUser
+     * @param int $idUser
      *
      * @return UserUpdateForm
      */
@@ -68,4 +66,5 @@ class UserDependencyContainer extends AbstractCommunicationDependencyContainer
     {
         return $this->getProvidedDependency(UserDependencyProvider::FACADE_ACL);
     }
+
 }

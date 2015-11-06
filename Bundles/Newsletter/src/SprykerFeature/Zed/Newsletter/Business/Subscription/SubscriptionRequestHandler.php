@@ -170,7 +170,7 @@ class SubscriptionRequestHandler
         $loadedNewsletterSubscriberTransfer = $this->subscriberManager->loadSubscriberByEmail($email);
         $this->subscriberExists = true;
 
-        if (null === $loadedNewsletterSubscriberTransfer) {
+        if ($loadedNewsletterSubscriberTransfer === null) {
             $loadedNewsletterSubscriberTransfer = $this->subscriberManager->createSubscriberFromTransfer($newsletterSubscriberTransfer);
             $this->subscriberExists = false;
         }

@@ -18,5 +18,4 @@ use Orm\Zed\Category\Persistence\Base\SpyCategoryClosureTable as BaseSpyCategory
  */
 abstract class AbstractSpyCategoryClosureTable extends BaseSpyCategoryClosureTable
 {
-
 }

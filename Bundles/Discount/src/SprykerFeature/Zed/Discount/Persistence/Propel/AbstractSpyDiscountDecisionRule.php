@@ -18,5 +18,4 @@ use Orm\Zed\Discount\Persistence\Base\SpyDiscountDecisionRule as BaseSpyDiscount
  */
 abstract class AbstractSpyDiscountDecisionRule extends BaseSpyDiscountDecisionRule
 {
-
 }

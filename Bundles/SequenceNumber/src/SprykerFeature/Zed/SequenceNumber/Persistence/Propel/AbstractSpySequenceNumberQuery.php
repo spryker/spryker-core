@@ -15,5 +15,4 @@ use Orm\Zed\SequenceNumber\Persistence\Base\SpySequenceNumberQuery as BaseSpySeq
  */
 abstract class AbstractSpySequenceNumberQuery extends BaseSpySequenceNumberQuery
 {
-
 }

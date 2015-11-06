@@ -38,4 +38,5 @@ class ProductSearchConsole extends Console
     {
         $this->getFacade()->install($this->getMessenger());
     }
+
 }

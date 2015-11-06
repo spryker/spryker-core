@@ -10,5 +10,4 @@ use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
 
 class ProductOptionWishlistConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
 }

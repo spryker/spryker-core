@@ -10,5 +10,4 @@ use Silex\ServiceProviderInterface;
 
 interface TranslationServiceProviderInterface extends ServiceProviderInterface
 {
-
 }

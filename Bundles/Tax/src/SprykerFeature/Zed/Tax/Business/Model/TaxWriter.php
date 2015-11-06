@@ -86,7 +86,7 @@ class TaxWriter implements TaxWriterInterface
     {
         $taxRateEntity = $this->queryContainer->queryTaxRate($taxRateTransfer->getIdTaxRate())->findOne();
 
-        if (null === $taxRateEntity) {
+        if ($taxRateEntity === null) {
             throw new ResourceNotFoundException();
         }
 
@@ -142,7 +142,7 @@ class TaxWriter implements TaxWriterInterface
     {
         $taxSetEntity = $this->queryContainer->queryTaxSet($taxSetTransfer->getIdTaxSet())->findOne();
 
-        if (null === $taxSetEntity) {
+        if ($taxSetEntity === null) {
             throw new ResourceNotFoundException();
         }
 

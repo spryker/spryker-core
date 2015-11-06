@@ -8,5 +8,4 @@ namespace SprykerFeature\Zed\OmsCheckoutConnector\Business\Exception;
 
 class NoStatemachineProcessException extends \Exception
 {
-
 }

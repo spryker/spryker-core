@@ -142,4 +142,5 @@ class CmsPageForm extends AbstractForm
             ];
         }
     }
+
 }

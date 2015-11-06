@@ -53,7 +53,7 @@ class TemplateWriter implements TemplateWriterInterface
         $idTemplate = $template->getIdPageElementTemplate();
         $templateEntity = $this->templateReader->getTemplateById($idTemplate);
 
-        if (is_null($templateEntity)) {
+        if ($templateEntity === null) {
             throw new TemplateDoesNotExistException(
                 sprintf(
                     'Template "%s" does not exist in the DB.',

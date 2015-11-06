@@ -15,5 +15,4 @@ use Orm\Zed\Refund\Persistence\Base\SpyRefundQuery as BaseSpyRefundQuery;
  */
 abstract class AbstractSpyRefundQuery extends BaseSpyRefundQuery
 {
-
 }

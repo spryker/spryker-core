@@ -27,7 +27,6 @@ class ShipmentOrderHydrator implements ShipmentOrderHydratorInterface
     /**
      * @param OrderInterface $order
      * @param CheckoutRequestInterface $request
-     *
      */
     public function hydrateOrderTransfer(OrderInterface $order, CheckoutRequestInterface $request)
     {

@@ -19,5 +19,4 @@ use Orm\Zed\Cms\Persistence\Base\SpyCmsTemplate as BaseSpyCmsTemplate;
  */
 abstract class AbstractSpyCmsTemplate extends BaseSpyCmsTemplate
 {
-
 }

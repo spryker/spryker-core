@@ -15,5 +15,4 @@ use Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneDetailQuery as BaseSpyPaymen
  */
 abstract class AbstractSpyPaymentPayoneDetailQuery extends BaseSpyPaymentPayoneDetailQuery
 {
-
 }

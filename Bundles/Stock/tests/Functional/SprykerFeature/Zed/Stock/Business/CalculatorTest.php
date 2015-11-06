@@ -63,7 +63,7 @@ class CalculatorTest extends Test
             ->findOne()
         ;
 
-        if (null === $abstractProduct) {
+        if ($abstractProduct === null) {
             $abstractProduct = new SpyAbstractProduct();
             $abstractProduct->setSku('test');
         }
@@ -77,7 +77,7 @@ class CalculatorTest extends Test
             ->findOne()
         ;
 
-        if (null === $product) {
+        if ($product === null) {
             $product = new SpyProduct();
             $product->setSku('test2');
         }

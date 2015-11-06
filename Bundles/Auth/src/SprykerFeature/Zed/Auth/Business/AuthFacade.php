@@ -118,7 +118,6 @@ class AuthFacade extends AbstractFacade
         return $this->getDependencyContainer()->createPasswordReset()->requestToken($email);
     }
 
-
     /**
      * @param string $token
      *

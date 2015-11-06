@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class WishlistSession implements WishlistSessionInterface
 {
+
     const WISHLIST_SESSION_IDENTIFIER = 'wishlist session identifier';
 
     /**
@@ -47,4 +48,5 @@ class WishlistSession implements WishlistSessionInterface
 
         return $this;
     }
+
 }

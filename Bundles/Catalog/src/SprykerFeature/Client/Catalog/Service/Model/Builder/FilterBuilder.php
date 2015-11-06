@@ -68,7 +68,7 @@ class FilterBuilder implements FilterBuilderInterface
 
     /**
      * @param string $field
-     * @param array  $values
+     * @param array $values
      *
      * @return Terms
      */

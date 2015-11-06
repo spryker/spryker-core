@@ -15,5 +15,4 @@ use SprykerEngine\Zed\Kernel\Business\Factory as BusinessFactory;
  */
 class Factory extends BusinessFactory
 {
-
 }

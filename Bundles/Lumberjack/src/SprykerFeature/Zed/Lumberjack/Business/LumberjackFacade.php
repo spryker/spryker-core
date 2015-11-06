@@ -27,7 +27,8 @@ class LumberjackFacade extends AbstractFacade
     /**
      * @param array $fields
      */
-    public function logEvent(array $fields) {
+    public function logEvent(array $fields)
+    {
         $this->saveEvent(
             (new Event())->addFields($fields)
         );

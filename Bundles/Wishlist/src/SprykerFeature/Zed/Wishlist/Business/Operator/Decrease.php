@@ -10,6 +10,7 @@ use Generated\Shared\Wishlist\WishlistInterface;
 
 class Decrease extends AbstractOperator
 {
+
     const OPERATION_NAME = 'DECREASE';
 
     /**
@@ -29,4 +30,5 @@ class Decrease extends AbstractOperator
     {
         return self::OPERATION_NAME;
     }
+
 }

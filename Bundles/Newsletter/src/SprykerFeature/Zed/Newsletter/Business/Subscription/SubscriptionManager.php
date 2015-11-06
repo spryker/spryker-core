@@ -65,7 +65,7 @@ class SubscriptionManager implements SubscriptionManagerInterface
     {
         $subscriptionEntity = $this->getSubscription($newsletterSubscriber, $newsletterType);
 
-        if (null !== $subscriptionEntity) {
+        if ($subscriptionEntity !== null) {
             $subscriptionEntity->delete();
 
             return true;
@@ -92,7 +92,7 @@ class SubscriptionManager implements SubscriptionManagerInterface
             ->findOneByName($newsletterType->getName())
         ;
 
-        if (null !== $newsletterTypeEntity) {
+        if ($newsletterTypeEntity !== null) {
             return $newsletterTypeEntity->getIdNewsletterType();
         }
 

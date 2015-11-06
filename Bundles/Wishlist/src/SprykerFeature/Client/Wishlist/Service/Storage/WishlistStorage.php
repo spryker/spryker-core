@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Client\Wishlist\Service\Storage;
 
-use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Wishlist\WishlistInterface;
 use SprykerFeature\Client\Product\Service\ProductClientInterface;
@@ -14,6 +13,7 @@ use SprykerFeature\Client\Storage\Service\StorageClientInterface;
 
 class WishlistStorage implements WishlistStorageInterface
 {
+
     /**
      * @var StorageClientInterface
      */
@@ -58,4 +58,5 @@ class WishlistStorage implements WishlistStorageInterface
             }
         }
     }
+
 }

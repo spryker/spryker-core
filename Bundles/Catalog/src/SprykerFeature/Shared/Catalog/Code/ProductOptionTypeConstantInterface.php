@@ -11,5 +11,4 @@ interface ProductOptionTypeConstantInterface
 
     //added option types in project code
 
-
 }

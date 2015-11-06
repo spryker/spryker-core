@@ -180,9 +180,9 @@ class TaskWorker implements LoggerAwareInterface, TaskWorkerInterface
                 );
             }
         } catch (\Exception $exception) {
-             $this->handleError($queueMessage, $exception);
+            $this->handleError($queueMessage, $exception);
 
-             return false;
+            return false;
         }
 
         if (!is_null($this->responseQueueName)) {

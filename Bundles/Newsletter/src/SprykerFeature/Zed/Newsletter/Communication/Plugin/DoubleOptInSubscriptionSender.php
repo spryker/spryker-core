@@ -61,7 +61,7 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
     protected function setMailTransferSubject(MailTransfer $mailTransfer, NewsletterConfig $config)
     {
         $subject = $config->getPasswordRestoreSubject();
-        if (null !== $subject) {
+        if ($subject !== null) {
             $mailTransfer->setSubject($this->translate($subject));
         }
     }
@@ -152,12 +152,12 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
     protected function setMailTransferFrom(MailTransfer $mailTransfer, NewsletterConfig $config)
     {
         $fromName = $config->getFromEmailName();
-        if (null !== $fromName) {
+        if ($fromName !== null) {
             $mailTransfer->setFromName($fromName);
         }
 
         $fromEmail = $config->getFromEmailAddress();
-        if (null !== $fromEmail) {
+        if ($fromEmail !== null) {
             $mailTransfer->setFromEmail($fromEmail);
         }
     }

@@ -10,5 +10,4 @@ use SprykerEngine\Shared\Lumberjack\Model\AbstractEventJournal;
 
 class EventJournalClient extends AbstractEventJournal
 {
-
 }

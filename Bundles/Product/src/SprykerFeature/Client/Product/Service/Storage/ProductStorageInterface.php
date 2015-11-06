@@ -10,6 +10,7 @@ interface ProductStorageInterface
 
     /**
      * @param $idAbstractProduct
+     *
      * @return mixed
      */
     public function getAbstractProductFromStorageById($idAbstractProduct);

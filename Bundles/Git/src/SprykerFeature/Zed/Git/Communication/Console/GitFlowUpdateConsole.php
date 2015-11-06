@@ -6,10 +6,6 @@
 
 namespace SprykerFeature\Zed\Git\Communication\Console;
 
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Process\Process;
-
 class GitFlowUpdateConsole extends AbstractGitFlowConsole
 {
 

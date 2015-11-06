@@ -12,6 +12,7 @@ use SprykerFeature\Zed\OmsDiscountConnector\OmsDiscountConnectorDependencyProvid
 
 class OmsDiscountConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {
+
     /**
      * @return DiscountFacade
      */
@@ -19,4 +20,5 @@ class OmsDiscountConnectorDependencyContainer extends AbstractCommunicationDepen
     {
         return $this->getProvidedDependency(OmsDiscountConnectorDependencyProvider::FACADE_DISCOUNT);
     }
+
 }

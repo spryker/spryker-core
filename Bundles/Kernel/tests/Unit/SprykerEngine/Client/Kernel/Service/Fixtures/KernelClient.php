@@ -6,5 +6,4 @@ use SprykerEngine\Client\Kernel\Service\AbstractClient;
 
 class KernelClient extends AbstractClient
 {
-
 }

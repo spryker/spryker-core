@@ -8,5 +8,4 @@ namespace SprykerFeature\Zed\Newsletter\Business\Exception;
 
 class MissingNewsletterSubscriberException extends \Exception
 {
-
 }

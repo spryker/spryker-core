@@ -23,8 +23,7 @@ class RegionManager implements RegionManagerInterface
      */
     public function __construct(
         CountryQueryContainerInterface $countryQueryContainer
-    )
-    {
+    ) {
         $this->countryQueryContainer = $countryQueryContainer;
     }
 

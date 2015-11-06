@@ -15,10 +15,10 @@ use Orm\Zed\Touch\Persistence\Base\SpyTouchQuery as BaseSpyTouchQuery;
  * You should add additional methods to this class to meet the
  * application requirements.  This class will only be generated as
  * long as it does not already exist in the output directory.
- *
  */
 abstract class AbstractSpyTouchQuery extends BaseSpyTouchQuery
 {
+
     /**
      * @var array
      */
@@ -53,4 +53,6 @@ abstract class AbstractSpyTouchQuery extends BaseSpyTouchQuery
     {
         self::$cache[$key] = $value;
     }
+
 } // SpyTouchQuery
+

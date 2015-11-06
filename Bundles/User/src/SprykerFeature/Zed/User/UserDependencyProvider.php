@@ -11,6 +11,7 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class UserDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const FACADE_ACL = 'facade acl';
 
     /**
@@ -24,6 +25,7 @@ class UserDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->acl()->facade();
         };
 
-         return $container;
+        return $container;
     }
+
 }

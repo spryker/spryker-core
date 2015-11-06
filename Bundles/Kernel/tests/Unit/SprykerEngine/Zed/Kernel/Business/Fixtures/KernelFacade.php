@@ -10,5 +10,4 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 class KernelFacade extends AbstractFacade
 {
-
 }

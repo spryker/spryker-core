@@ -7,8 +7,6 @@ namespace SprykerFeature\Zed\Installer\Business\Model;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
-use SprykerFeature\Zed\Glossary\Communication\GlossaryDependencyContainer;
-use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainer;
 use Symfony\Component\Yaml\Yaml;
 
 class GlossaryInstaller extends AbstractInstaller
@@ -31,13 +29,12 @@ class GlossaryInstaller extends AbstractInstaller
         $this->yamlParser = new Yaml();
     }
 
-
     /**
      * @return array
      */
     public function install()
     {
-        $results = array();
+        $results = [];
 
         foreach ($this->paths as $filePath) {
             $translations = $this->parseYamlFile($filePath);
@@ -60,6 +57,7 @@ class GlossaryInstaller extends AbstractInstaller
 
     /**
      * @param array $translations
+     *
      * @return array
      */
     protected function installKeysAndTranslations(array $translations)
@@ -82,7 +80,7 @@ class GlossaryInstaller extends AbstractInstaller
                 if (!$this->glossaryFacade->hasTranslation($keyName, $locale)) {
                     $this->glossaryFacade->createAndTouchTranslation($keyName, $locale, $text, true);
                     $results[$keyName]['translation'][$localeName]['created'] = true;
-                } elseif ($this->glossaryFacade->getTranslation($keyName, $locale)->getValue() != $text) {
+                } elseif ($this->glossaryFacade->getTranslation($keyName, $locale)->getValue() !== $text) {
                     $this->glossaryFacade->updateAndTouchTranslation($keyName, $locale, $text, true);
                     $results[$keyName]['translation'][$localeName]['updated'] = true;
                 }

@@ -11,6 +11,7 @@ use SprykerEngine\Client\Kernel\Container;
 
 class WishlistDependencyProvider extends AbstractDependencyProvider
 {
+
     const SERVICE_ZED = 'service zed';
     const SESSION = 'session';
     const STORAGE = 'store';
@@ -46,4 +47,5 @@ class WishlistDependencyProvider extends AbstractDependencyProvider
 
         return $container;
     }
+
 }

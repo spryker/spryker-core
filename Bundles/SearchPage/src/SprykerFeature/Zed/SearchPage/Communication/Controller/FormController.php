@@ -68,7 +68,6 @@ class FormController extends AbstractController
 
     public function deletePageElementAction(Request $request)
     {
-
     }
 
 }

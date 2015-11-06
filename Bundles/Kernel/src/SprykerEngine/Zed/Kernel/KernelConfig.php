@@ -8,5 +8,4 @@ namespace SprykerEngine\Zed\Kernel;
 
 class KernelConfig extends AbstractBundleConfig
 {
-
 }

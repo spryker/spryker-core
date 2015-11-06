@@ -8,5 +8,4 @@ namespace SprykerFeature\Zed\SequenceNumber\Persistence;
 
 interface SequenceNumberQueryContainerInterface
 {
-
 }

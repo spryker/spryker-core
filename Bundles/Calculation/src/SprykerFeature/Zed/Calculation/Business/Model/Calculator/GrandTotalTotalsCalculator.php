@@ -77,7 +77,8 @@ class GrandTotalTotalsCalculator implements TotalsCalculatorPluginInterface
      *
      * @return int
      */
-    protected function getSubtotal(TotalsInterface $totalsTransfer, $calculableItems) {
+    protected function getSubtotal(TotalsInterface $totalsTransfer, $calculableItems)
+    {
         if ($totalsTransfer->getSubtotal()) {
             return $totalsTransfer->getSubtotal();
         } else {

@@ -184,7 +184,7 @@ $command</command>";
 
         $roles = $this->getRoles();
 
-        if (false === $roles) {
+        if ($roles === false) {
             $roles = [self::DEFAULT_ROLE];
         }
 

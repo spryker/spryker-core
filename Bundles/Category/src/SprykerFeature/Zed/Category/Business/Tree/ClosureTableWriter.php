@@ -42,7 +42,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
         $nodeId = $categoryNode->getIdCategoryNode();
         $parentId = $categoryNode->getFkParentCategoryNode();
 
-        if (is_null($parentId)) {
+        if ($parentId === null) {
             $this->createRootNode($categoryNode);
         } else {
             $this->persistNode($nodeId, $parentId);

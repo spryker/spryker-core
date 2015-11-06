@@ -11,6 +11,7 @@ use SprykerEngine\Client\Kernel\Container;
 
 class ProductDependencyProvider extends AbstractDependencyProvider
 {
+
     const CLIENT_LOCALE = 'client locale';
     const KV_STORAGE = 'kv storage';
 

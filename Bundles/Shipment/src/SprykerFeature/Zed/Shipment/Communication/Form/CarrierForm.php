@@ -60,7 +60,7 @@ class CarrierForm extends AbstractForm
         $result = [];
         $carrierId = $this->request->get(self::CARRIER_ID);
 
-        if (null !== $carrierId) {
+        if ($carrierId !== null) {
             $carrier = $this->carrierQuery->findOneByIdShipmentCarrier($carrierId);
             $result = [
                 self::NAME_FIELD => $carrier->getFkGlossaryKeyCarrierName(),

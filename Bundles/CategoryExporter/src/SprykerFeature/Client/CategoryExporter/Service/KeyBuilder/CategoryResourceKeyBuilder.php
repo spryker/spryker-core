@@ -10,5 +10,4 @@ use SprykerFeature\Shared\CategoryExporter\Code\KeyBuilder\SharedCategoryResourc
 
 class CategoryResourceKeyBuilder extends SharedCategoryResourceKeyBuilder
 {
-
 }

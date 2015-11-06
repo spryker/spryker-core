@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\ShipmentCheckoutConnector\Business;
 use Generated\Zed\Ide\FactoryAutoCompletion\ShipmentCheckoutConnectorBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentOrderHydratorInterface;
-use SprykerFeature\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentOrderSaver;
 use SprykerFeature\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentOrderSaverInterface;
 use SprykerFeature\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorConfig;
 
@@ -26,6 +25,7 @@ class ShipmentCheckoutConnectorDependencyContainer extends AbstractBusinessDepen
     public function createShipmentOrderHydrator()
     {
         $queryContainer = $this->getQueryContainer();
+
         return $this->getFactory()->createModelShipmentOrderHydrator($queryContainer);
     }
 
@@ -35,6 +35,7 @@ class ShipmentCheckoutConnectorDependencyContainer extends AbstractBusinessDepen
     public function createShipmentOrderSaver()
     {
         $queryContainer = $this->getQueryContainer();
+
         return $this->getFactory()->createModelShipmentOrderSaver($queryContainer);
     }
 

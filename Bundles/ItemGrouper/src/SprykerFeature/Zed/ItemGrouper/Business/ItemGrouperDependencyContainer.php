@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\ItemGrouper\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\ItemGrouperBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\ItemGrouper\Business\Model;
 use SprykerFeature\Zed\ItemGrouper\ItemGrouperConfig;
 
 /**
@@ -17,6 +16,7 @@ use SprykerFeature\Zed\ItemGrouper\ItemGrouperConfig;
  */
 class ItemGrouperDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @param bool $regroupAllItemCollection
      *
@@ -27,4 +27,5 @@ class ItemGrouperDependencyContainer extends AbstractBusinessDependencyContainer
         return $this->getFactory()
             ->createModelGroup($this->getConfig()->getGroupingThreshold(), $regroupAllItemCollection);
     }
+
 }

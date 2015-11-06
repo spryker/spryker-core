@@ -8,5 +8,4 @@ namespace SprykerFeature\Zed\Checkout\Dependency\Plugin;
 
 interface CheckoutPreHydrationInterface extends CheckoutStepExecutionInterface
 {
-
 }

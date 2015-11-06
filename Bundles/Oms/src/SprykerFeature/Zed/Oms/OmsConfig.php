@@ -6,9 +6,7 @@
 
 namespace SprykerFeature\Zed\Oms;
 
-use Generated\Shared\SequenceNumber\SequenceNumberSettingsInterface;
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class OmsConfig extends AbstractBundleConfig

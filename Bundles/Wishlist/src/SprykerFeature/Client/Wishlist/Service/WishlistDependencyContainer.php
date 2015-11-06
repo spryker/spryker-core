@@ -61,4 +61,5 @@ class WishlistDependencyContainer extends AbstractServiceDependencyContainer
     {
         return $this->getProvidedDependency(WishlistDependencyProvider::CLIENT_CUSTOMER);
     }
+
 }

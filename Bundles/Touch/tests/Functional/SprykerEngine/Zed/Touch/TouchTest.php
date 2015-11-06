@@ -6,15 +6,11 @@
 
 namespace Functional\SprykerEngine\Zed\Touch;
 
-use Codeception\TestCase\Test;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
-use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Touch\Business\TouchFacade;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainer;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
-use SprykerEngine\Zed\Touch\TouchDependencyProvider;
 
 /**
  * @group Zed

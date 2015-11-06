@@ -8,5 +8,4 @@ namespace SprykerEngine\Shared\Lumberjack\Model;
 
 class DataInvalidException extends \Exception
 {
-
 }

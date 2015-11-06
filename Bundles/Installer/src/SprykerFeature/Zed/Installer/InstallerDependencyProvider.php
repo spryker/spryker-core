@@ -16,18 +16,18 @@ class InstallerDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @param Container $container
+     *
      * @return Container
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container = parent::provideBusinessLayerDependencies($container);
 
-        $container[InstallerDependencyProvider::GLOSSARY_FACADE] = function (Container $container) {
+        $container[self::GLOSSARY_FACADE] = function (Container $container) {
             return $container->getLocator()->glossary()->facade();
         };
 
         return $container;
     }
-
 
 }

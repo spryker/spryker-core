@@ -13,6 +13,7 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
  */
 class ProductOptionCartConnectorFacade extends AbstractFacade
 {
+
     /**
      * @param ChangeInterface $change
      *
@@ -32,4 +33,5 @@ class ProductOptionCartConnectorFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->createGroupKeyExpander()->expand($change);
     }
+
 }

@@ -6,5 +6,4 @@ use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class GlossaryQueueConfig extends AbstractBundleConfig
 {
-
 }

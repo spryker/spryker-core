@@ -10,10 +10,12 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 
 interface CmsBlockStorageInterface
 {
+
     /**
      * @param CmsBlockTransfer $cmsBlockTransfer
      *
      * @return array
      */
     public function getBlockByName(CmsBlockTransfer $cmsBlockTransfer);
+
 }

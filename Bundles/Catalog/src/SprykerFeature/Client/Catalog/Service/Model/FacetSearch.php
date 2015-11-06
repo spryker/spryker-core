@@ -31,15 +31,15 @@ class FacetSearch extends AbstractSearch
     protected $category;
 
     /**
-     * @param Request                          $request
-     * @param FacetConfig                      $facetConfig
-     * @param Index                            $searchIndex
+     * @param Request $request
+     * @param FacetConfig $facetConfig
+     * @param Index $searchIndex
      * @param FacetAggregationBuilderInterface $facetAggregation
-     * @param FacetFilterHandlerInterface      $facetFilterHandler
-     * @param AggregationExtractorInterface    $facetExtractor
-     * @param AggregationExtractorInterface    $rangeExtractor
-     * @param CatalogInterface                 $catalogModel
-     * @param array                            $category
+     * @param FacetFilterHandlerInterface $facetFilterHandler
+     * @param AggregationExtractorInterface $facetExtractor
+     * @param AggregationExtractorInterface $rangeExtractor
+     * @param CatalogInterface $catalogModel
+     * @param array $category
      */
     public function __construct(
         Request $request,

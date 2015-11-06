@@ -15,6 +15,7 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
  */
 class ItemTotalPriceCalculatorPlugin extends AbstractPlugin implements CalculatorPluginInterface
 {
+
     /**
      * @param CalculableInterface $calculableContainer
      */
@@ -22,4 +23,5 @@ class ItemTotalPriceCalculatorPlugin extends AbstractPlugin implements Calculato
     {
         $this->getFacade()->calculateItemTotalPrice($calculableContainer);
     }
+
 }

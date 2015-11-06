@@ -8,5 +8,4 @@ namespace SprykerEngine\Zed\Kernel;
 
 class KernelDependencyProvider extends AbstractBundleDependencyProvider
 {
-
 }

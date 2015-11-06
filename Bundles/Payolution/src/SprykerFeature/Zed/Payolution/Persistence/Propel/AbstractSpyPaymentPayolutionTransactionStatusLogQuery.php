@@ -15,5 +15,4 @@ use Orm\Zed\Payolution\Persistence\Base\SpyPaymentPayolutionTransactionStatusLog
  */
 abstract class AbstractSpyPaymentPayolutionTransactionStatusLogQuery extends BaseSpyPaymentPayolutionTransactionStatusLogQuery
 {
-
 }

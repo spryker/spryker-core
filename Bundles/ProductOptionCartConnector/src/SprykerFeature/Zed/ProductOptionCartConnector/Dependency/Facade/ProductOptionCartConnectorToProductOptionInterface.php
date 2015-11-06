@@ -17,4 +17,5 @@ interface ProductOptionCartConnectorToProductOptionInterface
      * @return ProductOptionTransfer
      */
     public function getProductOption($idProductOptionValueUsage, $idLocale);
+
 }

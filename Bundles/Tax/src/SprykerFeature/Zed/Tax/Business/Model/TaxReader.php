@@ -61,7 +61,7 @@ class TaxReader implements TaxReaderInterface
     {
         $taxRateEntity = $this->queryContainer->queryTaxRate($id)->findOne();
 
-        if (null === $taxRateEntity) {
+        if ($taxRateEntity === null) {
             throw new ResourceNotFoundException();
         }
 
@@ -112,7 +112,7 @@ class TaxReader implements TaxReaderInterface
     {
         $taxSetEntity = $this->queryContainer->queryTaxSet($id)->findOne();
 
-        if (null === $taxSetEntity) {
+        if ($taxSetEntity === null) {
             throw new ResourceNotFoundException();
         }
 

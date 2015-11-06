@@ -384,7 +384,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     protected function getTreeNodesRecursively(SpyCategoryNode $node = null, LocaleTransfer $localeTransfer, $isRoot = false)
     {
         $tree = [];
-        if (null === $node) {
+        if ($node === null) {
             $children = $this->getRootNodes();
         } else {
             $children = $this->getChildren($node->getIdCategoryNode(), $localeTransfer);

@@ -9,11 +9,7 @@ namespace SprykerEngine\Zed\Translation\Business;
 use SprykerEngine\Shared\Translation\TranslationInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
-use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
-use SprykerEngine\Zed\Kernel\Business\DependencyContainer\DependencyContainerInterface;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+
 class TranslationFacade extends AbstractFacade implements TranslationInterface
 {
 

@@ -15,7 +15,6 @@ use Orm\Zed\Touch\Persistence\Map\SpyTouchStorageTableMap;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
-use Orm\Zed\Touch\Persistence\SpyTouchStorage;
 
 class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryContainerInterface
 {
@@ -151,6 +150,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
      * @param string $itemType
      *
      * @throws PropelException
+     *
      * @return SpyTouchQuery
      */
     public function queryTouchDeleteOnlyByItemType($itemType)

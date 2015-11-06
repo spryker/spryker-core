@@ -76,10 +76,10 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     {
         $property = [
             'name' => $name,
-            'type' => (is_null($return)) ? $type : $return,
+            'type' => ($return === null) ? $type : $return,
         ];
 
-        if (!is_null($singular)) {
+        if ($singular !== null) {
             $property['singular'] = $singular;
         }
 
@@ -321,15 +321,15 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
             'property' => $property,
         ];
 
-        if (!is_null($var)) {
+        if ($var !== null) {
             $method['var'] = $var;
         }
 
-        if (!is_null($return)) {
+        if ($return !== null) {
             $method['return'] = $return;
         }
 
-        if (!is_null($typeHint)) {
+        if ($typeHint !== null) {
             $method['typeHint'] = $typeHint;
         }
 

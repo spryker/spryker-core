@@ -11,7 +11,7 @@ interface LocatorLocatorInterface
 
     /**
      * @param string $bundle
-     * @param array  $arguments
+     * @param array $arguments
      *
      * @return BundleProxy
      */

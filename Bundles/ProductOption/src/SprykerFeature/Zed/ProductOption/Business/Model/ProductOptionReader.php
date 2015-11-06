@@ -31,7 +31,6 @@ class ProductOptionReader implements ProductOptionReaderInterface
 
     const COL_TRANSLATION_VALUE_ALIAS = 'value';
 
-
     /**
      * @var ProductOptionQueryContainerInterface
      */
@@ -69,12 +68,12 @@ class ProductOptionReader implements ProductOptionReaderInterface
         $productOptionTransfer->setIdOptionValueUsage($idProductOptionValueUsage)
             ->setLocaleCode($localeCode);
 
-        $result =  $this->queryContainer->queryProductOptionValueUsageWithAssociatedAttributes(
+        $result = $this->queryContainer->queryProductOptionValueUsageWithAssociatedAttributes(
             $idProductOptionValueUsage, $localeTransfer->getIdLocale()
         )->select([
             self::COL_PRICE,
             self::COL_TRANSLATION_TYPE,
-            self::COL_TRANSLATION_VALUE
+            self::COL_TRANSLATION_VALUE,
         ])->findOne();
 
         $productOptionTransfer->setLabelOptionType(
@@ -86,7 +85,7 @@ class ProductOptionReader implements ProductOptionReaderInterface
         );
 
         $price = $result[self::COL_PRICE];
-        if (null === $price) {
+        if ($price === null) {
             $productOptionTransfer->setGrossPrice(0);
         } else {
             $productOptionTransfer->setGrossPrice((int) $price);
@@ -94,7 +93,7 @@ class ProductOptionReader implements ProductOptionReaderInterface
 
         $taxSetEntity = $this->queryContainer->queryTaxSetForProductOptionValueUsage($idProductOptionValueUsage)
             ->findOne();
-        if (null !== $taxSetEntity) {
+        if ($taxSetEntity !== null) {
             $this->addTaxesToProductOptionTransfer($productOptionTransfer, $taxSetEntity);
         }
 
@@ -160,7 +159,6 @@ class ProductOptionReader implements ProductOptionReaderInterface
             ->setName($taxSetEntity->getName());
 
         foreach ($taxSetEntity->getSpyTaxRates() as $taxRate) {
-
             $taxRateTransfer = new TaxRateTransfer();
             $taxRateTransfer->setIdTaxRate($taxRate->getIdTaxRate())
                 ->setName($taxRate->getName())

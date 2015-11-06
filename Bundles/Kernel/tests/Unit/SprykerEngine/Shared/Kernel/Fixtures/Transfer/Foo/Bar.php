@@ -10,5 +10,4 @@ use SprykerEngine\Shared\Transfer\AbstractTransfer;
 
 class Bar extends AbstractTransfer
 {
-
 }

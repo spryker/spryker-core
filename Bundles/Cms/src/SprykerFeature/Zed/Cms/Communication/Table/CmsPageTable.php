@@ -93,4 +93,5 @@ class CmsPageTable extends AbstractTable
 
         return $result;
     }
+
 }

@@ -15,5 +15,4 @@ use Orm\Zed\Discount\Persistence\Base\SpyDiscountCollectorQuery as BaseSpyDiscou
  */
 abstract class AbstractSpyDiscountCollectorQuery extends BaseSpyDiscountCollectorQuery
 {
-
 }

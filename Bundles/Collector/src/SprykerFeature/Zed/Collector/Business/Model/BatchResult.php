@@ -200,4 +200,5 @@ class BatchResult implements BatchResultInterface
     {
         $this->deletedCount += $amount;
     }
+
 }

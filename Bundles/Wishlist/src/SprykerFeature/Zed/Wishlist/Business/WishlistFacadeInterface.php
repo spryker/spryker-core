@@ -8,12 +8,12 @@ use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Wishlist\WishlistChangeInterface;
 use Generated\Shared\Wishlist\WishlistInterface;
 
-
 /**
  * @method WishlistDependencyContainer getDependencyContainer()
  */
 interface WishlistFacadeInterface
 {
+
     /**
      * @param WishlistChangeInterface $wishlistChange
      *
@@ -48,4 +48,5 @@ interface WishlistFacadeInterface
      * @return WishlistInterface
      */
     public function getCustomerWishlist(CustomerInterface $customerTransfer);
+
 }

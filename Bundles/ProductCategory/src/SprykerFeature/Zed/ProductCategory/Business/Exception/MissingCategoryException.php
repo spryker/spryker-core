@@ -8,5 +8,4 @@ namespace SprykerFeature\Zed\ProductCategory\Business\Exception;
 
 class MissingCategoryException extends \Exception
 {
-
 }

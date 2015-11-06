@@ -89,14 +89,14 @@ abstract class AbstractSearch
     abstract protected function createSearchQuery(Request $request);
 
     /**
-     * @param Request                          $request
-     * @param FacetConfig                      $facetConfig
-     * @param Index                            $searchIndex
+     * @param Request $request
+     * @param FacetConfig $facetConfig
+     * @param Index $searchIndex
      * @param FacetAggregationBuilderInterface $facetAggregation
-     * @param FacetFilterHandlerInterface      $facetFilterHandler
-     * @param AggregationExtractorInterface    $facetExtractor
-     * @param AggregationExtractorInterface    $rangeExtractor
-     * @param CatalogInterface                 $catalogModel
+     * @param FacetFilterHandlerInterface $facetFilterHandler
+     * @param AggregationExtractorInterface $facetExtractor
+     * @param AggregationExtractorInterface $rangeExtractor
+     * @param CatalogInterface $catalogModel
      */
     public function __construct(
         Request $request,

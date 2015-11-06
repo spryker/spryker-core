@@ -67,5 +67,4 @@ interface StorageProviderInterface
      */
     public function clearCouponCodes(CartInterface $cart);
 
-
 }

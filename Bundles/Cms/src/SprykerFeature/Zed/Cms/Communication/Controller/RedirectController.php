@@ -175,4 +175,5 @@ class RedirectController extends AbstractController
 
         return $redirectTransfer;
     }
+
 }

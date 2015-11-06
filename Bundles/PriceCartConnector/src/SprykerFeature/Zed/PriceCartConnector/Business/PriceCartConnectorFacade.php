@@ -18,6 +18,7 @@ class PriceCartConnectorFacade extends AbstractFacade
     /**
      * @param ChangeInterface $change
      * @param null $grossPriceType
+     *
      * @return ChangeInterface
      */
     public function addGrossPriceToItems(ChangeInterface $change, $grossPriceType = null)

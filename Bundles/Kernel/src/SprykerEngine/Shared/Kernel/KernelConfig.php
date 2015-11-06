@@ -10,5 +10,4 @@ use SprykerFeature\Shared\Library\ConfigInterface;
 
 interface KernelConfig extends ConfigInterface
 {
-
 }

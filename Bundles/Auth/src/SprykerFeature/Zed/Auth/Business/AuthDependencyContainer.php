@@ -22,6 +22,7 @@ use SprykerFeature\Zed\Auth\Persistence\AuthQueryContainer;
  */
 class AuthDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @return Auth
      */
@@ -50,14 +51,14 @@ class AuthDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createPasswordReset()
     {
-        $passwordReset =  $this->getFactory()->createModelPasswordReset(
+        $passwordReset = $this->getFactory()->createModelPasswordReset(
             $this->getQueryContainer(),
             $this->getProvidedDependency(AuthDependencyProvider::FACADE_USER),
             $this->getConfig()
         );
 
         $passwordResetNotificationSender = $this->getProvidedDependency(AuthDependencyProvider::PASSWORD_RESET_SENDER);
-        if (null !== $passwordResetNotificationSender) {
+        if ($passwordResetNotificationSender !== null) {
             $passwordReset->setUserPasswordResetNotificationSender($passwordResetNotificationSender);
         }
 

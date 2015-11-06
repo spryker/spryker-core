@@ -10,6 +10,7 @@ use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class ItemGrouperConfig extends AbstractBundleConfig
 {
+
     /**
      * @return int
      */
@@ -17,4 +18,5 @@ class ItemGrouperConfig extends AbstractBundleConfig
     {
         return 1;
     }
+
 }

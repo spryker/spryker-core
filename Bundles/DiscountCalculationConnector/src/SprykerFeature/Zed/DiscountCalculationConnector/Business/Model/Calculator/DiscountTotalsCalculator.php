@@ -164,7 +164,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
 
     /**
      * @param DiscountTotalItemTransfer $discountTotalItemTransfer
-     * @param DiscountInterface         $discountTransfer
+     * @param DiscountInterface $discountTransfer
      */
     protected function setUsedCodes(
         DiscountTotalItemTransfer $discountTotalItemTransfer,

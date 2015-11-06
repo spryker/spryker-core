@@ -9,17 +9,18 @@ use Orm\Zed\Wishlist\Persistence\SpyWishlistQuery;
 
 interface WishlistQueryContainerInterface
 {
+
     /**
-     * @param integer $idWishlist
-     * @param integer $idProduct
+     * @param int $idWishlist
+     * @param int $idProduct
      *
      * @return SpyWishlistItemQuery
      */
     public function queryCustomerWishlistByProductId($idWishlist, $idProduct);
 
     /**
-     * @param integer $idWishlist
-     * @param string  $groupKey
+     * @param int $idWishlist
+     * @param string $groupKey
      *
      * @return SpyWishlistItemQuery
      */
