@@ -24,6 +24,9 @@ class TestClass1Input
 
         if (!($stats = $this->getResource()->getStats())) {
         }
+
+        if (null !== ($obj = Map::getInstanceFromPool($key))) {
+        }
     }
 
     /**

@@ -126,6 +126,12 @@ class NoInlineAssignmentFixer extends AbstractFixer
                 break;
             }
 
+            // Comparison inside is also more complex
+            if ($currentToken->isGivenKind([T_IS_EQUAL, T_IS_NOT_EQUAL, T_IS_IDENTICAL, T_IS_NOT_IDENTICAL])) {
+                $hasInlineAssignment = false;
+                break;
+            }
+
             if (!$currentToken->equals('=')) {
                 continue;
             }
