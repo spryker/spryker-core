@@ -19,7 +19,7 @@ use SprykerEngine\Zed\Propel\Business\PropelFacade;
 class PostgresqlCompatibilityConsole extends Console
 {
 
-    const COMMAND_NAME = 'setup:propel:pg-sql-compat';
+    const COMMAND_NAME = 'propel:pg-sql-compat';
 
     protected function configure()
     {

@@ -16,7 +16,7 @@ use Symfony\Component\Process\Process;
 class CreateDatabaseConsole extends Console
 {
 
-    const COMMAND_NAME = 'setup:propel:database:create';
+    const COMMAND_NAME = 'propel:database:create';
 
     protected function configure()
     {

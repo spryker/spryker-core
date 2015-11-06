@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Setup;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerEngine\Zed\Propel\Communication\Console\PropelConsole;
+use SprykerEngine\Zed\Propel\Communication\Console\PropelInstallConsole;
 use SprykerEngine\Zed\Transfer\Communication\Console\GeneratorConsole;
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Application\Communication\Console\BuildNavigationConsole;
@@ -75,7 +75,7 @@ class SetupConfig extends AbstractBundleConfig
         return [
             DeleteAllCachesConsole::COMMAND_NAME,
             RemoveGeneratedDirectoryConsole::COMMAND_NAME,
-            PropelConsole::COMMAND_NAME,
+            PropelInstallConsole::COMMAND_NAME => ['--' . PropelInstallConsole::OPTION_NO_DIFF => true],
             GeneratorConsole::COMMAND_NAME,
             InitializeDatabaseConsole::COMMAND_NAME,
             GenerateIdeAutoCompletionConsole::COMMAND_NAME,

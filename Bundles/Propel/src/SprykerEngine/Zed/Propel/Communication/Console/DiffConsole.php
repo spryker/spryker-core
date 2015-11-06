@@ -16,7 +16,7 @@ use Symfony\Component\Process\Process;
 class DiffConsole extends Console
 {
 
-    const COMMAND_NAME = 'setup:propel:diff';
+    const COMMAND_NAME = 'propel:diff';
 
     const PROCESS_TIMEOUT = 300;
 

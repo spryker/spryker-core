@@ -16,7 +16,7 @@ use Symfony\Component\Process\Process;
 class BuildSqlConsole extends Console
 {
 
-    const COMMAND_NAME = 'setup:propel:sql:build';
+    const COMMAND_NAME = 'propel:sql:build';
 
     protected function configure()
     {

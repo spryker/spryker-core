@@ -16,7 +16,7 @@ use Symfony\Component\Process\Process;
 class BuildModelConsole extends Console
 {
 
-    const COMMAND_NAME = 'setup:propel:model:build';
+    const COMMAND_NAME = 'propel:model:build';
 
     protected function configure()
     {
