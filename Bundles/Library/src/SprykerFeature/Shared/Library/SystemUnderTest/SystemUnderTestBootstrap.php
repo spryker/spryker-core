@@ -69,7 +69,6 @@ class SystemUnderTestBootstrap
         error_reporting(E_ALL | E_STRICT);
         ini_set('display_errors', 1);
 
-        defined('IS_CLI') or define('IS_CLI', false);
         defined('APPLICATION') or define('APPLICATION', strtoupper($application));
         defined('APPLICATION_ENV') or define('APPLICATION_ENV', self::TEST_ENVIRONMENT);
 

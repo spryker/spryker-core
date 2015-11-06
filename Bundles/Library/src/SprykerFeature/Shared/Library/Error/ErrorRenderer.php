@@ -11,6 +11,8 @@ use SprykerFeature\Shared\Library\Application\Version;
 class ErrorRenderer
 {
 
+    const SAPI_CLI = 'cli';
+
     /**
      * @param \Exception $e
      *
@@ -92,7 +94,7 @@ class ErrorRenderer
      */
     protected static function isCliCall()
     {
-        return defined('IS_CLI') && IS_CLI === true;
+        return php_sapi_name() == self::SAPI_CLI;
     }
 
 }
