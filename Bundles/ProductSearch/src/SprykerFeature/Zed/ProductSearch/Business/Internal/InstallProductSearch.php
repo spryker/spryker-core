@@ -82,9 +82,17 @@ class InstallProductSearch extends AbstractInstaller
                     'type' => 'object',
                     'include_in_all' => false,
                     'properties' => [
-                        'sku' => ['type' => 'string'],
-                        'name' => ['type' => 'string'],
-                        'url' => ['type' => 'string'],
+                        'sku' => [
+                            'type' => 'string',
+                            'index' => 'not_analyzed',
+                        ],
+                        'name' => [
+                            'type' => 'string',
+                        ],
+                        'url' => [
+                            'type' => 'string',
+                            'index' => 'not_analyzed',
+                        ],
                     ],
                 ],
                 'string-facet' => [
@@ -107,7 +115,8 @@ class InstallProductSearch extends AbstractInstaller
                     'type' => 'nested',
                     'include_in_all' => false,
                     'properties' => [
-                        'facet-name' => ['type' => 'string', 'index' => 'not_analyzed'],
+                        'facet-name' => [
+                            'type' => 'string','index' => 'not_analyzed'],
                         'facet-value' => ['type' => 'float'],
                     ],
                 ],
@@ -123,7 +132,10 @@ class InstallProductSearch extends AbstractInstaller
                     'type' => 'object',
                     'include_in_all' => false,
                     'properties' => [
-                        'name' => ['type' => 'string'],
+                        'name' => [
+                            'type' => 'string',
+                            'index' => 'not_analyzed',
+                        ],
                     ],
                 ],
                 'integer-sort' => [
