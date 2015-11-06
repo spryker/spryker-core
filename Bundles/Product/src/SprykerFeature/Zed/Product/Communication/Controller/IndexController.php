@@ -63,12 +63,12 @@ class IndexController extends AbstractController
             ->findOne()
         ;
 
-        $concreteProductsCollenction = $this->getQueryContainer()
+        $concreteProductCollection = $this->getQueryContainer()
             ->queryConcreteProductByAbstractProduct($abstractProduct)
             ->find()
         ;
 
-        $concreteProducts = $this->createConcreteProductsCollection($concreteProductsCollenction);
+        $concreteProducts = $this->createConcreteProductsCollection($concreteProductCollection);
 
         $currentLocale = $this->getCurrentLocale();
 
@@ -135,31 +135,27 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param ObjectCollection $concreteProductsCollenction
+     * @param ObjectCollection|SpyProduct[] $concreteProductsCollection
      *
      * @return array
      */
-    protected function createConcreteProductsCollection(ObjectCollection $concreteProductsCollenction)
+    protected function createConcreteProductsCollection(ObjectCollection $concreteProductsCollection)
     {
         $concreteProducts = [];
-        /** @var SpyProduct $product */
-        foreach ($concreteProductsCollenction as $product) {
+        foreach ($concreteProductsCollection as $concreteProduct) {
             $productOptions = $this->getDependencyContainer()
                 ->createProductOptionsFacade()
                 ->getProductOptionsByIdProduct(
-                    $product->getIdProduct(),
+                    $concreteProduct->getIdProduct(),
                     $this->getCurrentLocale()->getIdLocale()
                 )
             ;
 
             $concreteProducts[] = [
-                'sku' => $product->getSku(),
-                'format' => $product->getFormat(),
-                'weight' => $product->getWeight(),
-                'type' => $product->getSpyAbstractProduct()->getType(),
-                'idProduct' => $product->getIdProduct(),
-                'isActive' => $product->getIsActive(),
-                'priceList' => $this->getProductPriceList($product),
+                'sku' => $concreteProduct->getSku(),
+                'idProduct' => $concreteProduct->getIdProduct(),
+                'isActive' => $concreteProduct->getIsActive(),
+                'priceList' => $this->getProductPriceList($concreteProduct),
                 'productOptions' => $productOptions,
             ];
         }
@@ -175,7 +171,7 @@ class IndexController extends AbstractController
     protected function getProductCategories(SpyAbstractProduct $abstractProduct)
     {
         $categoryEntityList = $this->getDependencyContainer()
-            ->getProvidedDependency(ProductDependencyProvider::QUERY_CONTAINER_PRODUCT)
+            ->createProductCategoryQueryContainer()
             ->queryLocalizedProductCategoryMappingByProduct($abstractProduct)
             ->find()
         ;
