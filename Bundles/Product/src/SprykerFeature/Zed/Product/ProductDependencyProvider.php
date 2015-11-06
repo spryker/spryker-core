@@ -15,9 +15,10 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_LOCALE = 'facade locale';
     const FACADE_URL = 'facade url';
     const FACADE_TOUCH = 'facade touch';
-    const FACADE_PRODUCT_CATEGORIES = 'facade product categories';
-    const FACADE_PRODUCT_OPTIONS = 'facade product options';
-    const QUERY_CONTAINER_PRODUCT = 'query container product ';
+    const FACADE_PRODUCT_CATEGORY = 'facade product category';
+    const FACADE_PRODUCT_OPTION = 'facade product option';
+    const QUERY_CONTAINER_PRODUCT = 'query container product';
+    const QUERY_CONTAINER_PRODUCT_CATEGORY = 'query container product category';
 
     /**
      * @param Container $container
@@ -52,11 +53,11 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->locale()->facade();
         };
 
-        $container[self::FACADE_PRODUCT_CATEGORIES] = function (Container $container) {
+        $container[self::FACADE_PRODUCT_CATEGORY] = function (Container $container) {
             return $container->getLocator()->productCategory()->facade();
         };
 
-        $container[self::FACADE_PRODUCT_OPTIONS] = function (Container $container) {
+        $container[self::FACADE_PRODUCT_OPTION] = function (Container $container) {
             return $container->getLocator()->productOption()->facade();
         };
 
@@ -66,6 +67,10 @@ class ProductDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
             return $container->getLocator()->product()->queryContainer();
+        };
+
+        $container[self::QUERY_CONTAINER_PRODUCT_CATEGORY] = function (Container $container) {
+            return $container->getLocator()->productCategory()->queryContainer();
         };
 
         return $container;
