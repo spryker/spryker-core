@@ -44,15 +44,4 @@ class OmsConfig extends AbstractBundleConfig
         return null;
     }
 
-    /**
-     * @return SequenceNumberSettingsInterface
-     */
-    public function getCreditMemoReferenceDefaults()
-    {
-        $sequenceNumberSettingsTransfer = new SequenceNumberSettingsTransfer();
-        $sequenceNumberSettingsTransfer->setName(self::NAME_CREDIT_MEMO_REFERENCE);
-
-        return $sequenceNumberSettingsTransfer;
-    }
-
 }
