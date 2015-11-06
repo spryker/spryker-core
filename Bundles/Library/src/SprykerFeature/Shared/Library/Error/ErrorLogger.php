@@ -54,7 +54,7 @@ class ErrorLogger
             $event->addField('file_name', $exception->getFile());
             $event->addField('line', $exception->getLine());
             $event->addField(Event::FIELD_NAME, 'exception');
-            self::addDeploymentInfo($event);
+            self::addDeploymentInformation($event);
             $eventJournal->saveEvent($event);
         } catch (\Exception $internalException) {
             if (!$ignoreInternalExceptions) {
@@ -113,10 +113,10 @@ class ErrorLogger
      *
      * @return void
      */
-    protected static function addDeploymentInfo(EventInterface $event)
+    protected static function addDeploymentInformation(EventInterface $event)
     {
-        $deployData = (new Version())->toArray();
-        foreach ($deployData as $name => $data) {
+        $deploymentInformation = (new Version())->toArray();
+        foreach ($deploymentInformation as $name => $data) {
             if (!empty($data)) {
                 $event->addField('deployment_' . $name, $data);
             }
