@@ -11,6 +11,8 @@ interface TransitionInterface
 
     /**
      * @param mixed $happy
+     *
+     * @return void
      */
     public function setHappy($happy);
 
@@ -21,6 +23,8 @@ interface TransitionInterface
 
     /**
      * @param string $condition
+     *
+     * @return void
      */
     public function setCondition($condition);
 
@@ -36,6 +40,8 @@ interface TransitionInterface
 
     /**
      * @param EventInterface $event
+     *
+     * @return void
      */
     public function setEvent($event);
 
@@ -51,6 +57,8 @@ interface TransitionInterface
 
     /**
      * @param StateInterface $source
+     *
+     * @return void
      */
     public function setSource($source);
 
@@ -61,6 +69,8 @@ interface TransitionInterface
 
     /**
      * @param StateInterface $target
+     *
+     * @return void
      */
     public function setTarget($target);
 

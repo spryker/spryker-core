@@ -29,4 +29,16 @@
             </cronjob-index>
         </pages>
     </system>
+    <maintenance>
+        <pages>
+            <repeat>
+                <label>Transfer repeat</label>
+                <title>Transfer repeat</title>
+                <bundle>setup</bundle>
+                <controller>transfer</controller>
+                <action>repeat</action>
+                <icon>fa-repeat</icon>
+            </repeat>
+        </pages>
+    </maintenance>
 </config>

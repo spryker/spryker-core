@@ -126,7 +126,7 @@ class ArrayFilter implements \Iterator, \Countable, \ArrayAccess
      * @link http://php.net/manual/en/iterator.valid.php
      *
      * @return bool The return value will be casted to boolean and then evaluated.
-     * Returns true on success or false on failure.
+     *   Returns true on success or false on failure.
      */
     public function valid()
     {
@@ -151,13 +151,13 @@ class ArrayFilter implements \Iterator, \Countable, \ArrayAccess
      * @link http://php.net/manual/en/arrayaccess.offsetexists.php
      *
      * @param mixed $offset <p>
-     * An offset to check for.
-     * </p>
+     *   An offset to check for.
+     *   </p>
      *
      * @return bool true on success or false on failure.
-     * </p>
-     * <p>
-     * The return value will be casted to boolean if non-boolean was returned.
+     *   </p>
+     *   <p>
+     *   The return value will be casted to boolean if non-boolean was returned.
      */
     public function offsetExists($offset)
     {
@@ -171,8 +171,8 @@ class ArrayFilter implements \Iterator, \Countable, \ArrayAccess
      * @link http://php.net/manual/en/arrayaccess.offsetget.php
      *
      * @param mixed $offset <p>
-     * The offset to retrieve.
-     * </p>
+     *   The offset to retrieve.
+     *   </p>
      *
      * @return mixed Can return all value types.
      */
@@ -188,11 +188,11 @@ class ArrayFilter implements \Iterator, \Countable, \ArrayAccess
      * @link http://php.net/manual/en/arrayaccess.offsetset.php
      *
      * @param mixed $offset <p>
-     * The offset to assign the value to.
-     * </p>
+     *   The offset to assign the value to.
+     *   </p>
      * @param mixed $value <p>
-     * The value to set.
-     * </p>
+     *   The value to set.
+     *   </p>
      */
     public function offsetSet($offset, $value)
     {
@@ -208,8 +208,8 @@ class ArrayFilter implements \Iterator, \Countable, \ArrayAccess
      * @link http://php.net/manual/en/arrayaccess.offsetunset.php
      *
      * @param mixed $offset <p>
-     * The offset to unset.
-     * </p>
+     *   The offset to unset.
+     *   </p>
      */
     public function offsetUnset($offset)
     {
@@ -223,9 +223,9 @@ class ArrayFilter implements \Iterator, \Countable, \ArrayAccess
      * @link http://php.net/manual/en/countable.count.php
      *
      * @return int The custom count as an integer.
-     * </p>
-     * <p>
-     * The return value is cast to an integer.
+     *   </p>
+     *   <p>
+     *   The return value is cast to an integer.
      */
     public function count()
     {

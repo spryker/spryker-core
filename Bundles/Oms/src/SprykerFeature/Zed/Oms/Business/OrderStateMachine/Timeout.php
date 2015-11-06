@@ -74,6 +74,8 @@ class Timeout implements TimeoutInterface
      *
      * @throws Exception
      * @throws PropelException
+     *
+     * @return void
      */
     public function setNewTimeout(ProcessInterface $process, SpySalesOrderItem $orderItem, DateTime $currentTime)
     {
@@ -108,6 +110,8 @@ class Timeout implements TimeoutInterface
      *
      * @throws Exception
      * @throws PropelException
+     *
+     * @return void
      */
     public function dropOldTimeout(ProcessInterface $process, $stateId, SpySalesOrderItem $orderItem)
     {

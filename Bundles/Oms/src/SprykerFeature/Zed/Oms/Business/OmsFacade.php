@@ -137,7 +137,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      *
      * @return int
      */
-    public function checkConditions(array $logContext)
+    public function checkConditions(array $logContext = [])
     {
         return $this->getDependencyContainer()
             ->createOrderStateMachineOrderStateMachine($logContext)
@@ -149,31 +149,31 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
      *
      * @return int
      */
-    public function checkTimeouts(array $logContext)
+    public function checkTimeouts(array $logContext = [])
     {
         $orderStateMachine = $this->getDependencyContainer()
             ->createOrderStateMachineOrderStateMachine($logContext);
 
         return $this->getDependencyContainer()
-            ->createOrderStateMachineTimeout($logContext)
+            ->createOrderStateMachineTimeout()
             ->checkTimeouts($orderStateMachine);
     }
 
     /**
      * @param string $processName
-     * @param bool $highlightState
-     * @param null $format
-     * @param null $fontsize
+     * @param string|null $highlightState
+     * @param string|null $format
+     * @param int|null $fontSize
      *
      * @return bool
      */
-    public function drawProcess($processName, $highlightState = null, $format = null, $fontsize = null)
+    public function drawProcess($processName, $highlightState = null, $format = null, $fontSize = null)
     {
         $process = $this->getDependencyContainer()
             ->createOrderStateMachineBuilder()
             ->createProcess($processName);
 
-        return $process->draw($highlightState, $format, $fontsize);
+        return $process->draw($highlightState, $format, $fontSize);
     }
 
     /**
@@ -198,7 +198,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     public function getDummy()
     {
         return $this->getDependencyContainer()
-            ->createOrderStateMachineDummy();
+            ->createModelDummy();
     }
 
     /**
@@ -241,14 +241,15 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
 
     /**
      * @param SpySalesOrder $order
+     * @param array $logContext
      *
      * @return SpyOmsTransitionLog[]
      */
-    public function getLogForOrder(SpySalesOrder $order)
+    public function getLogForOrder(SpySalesOrder $order, array $logContext = [])
     {
         // FIXME Ticket core-119
         return $this->getDependencyContainer()
-            ->createUtilTransitionLog()
+            ->createUtilTransitionLog($logContext)
             ->getLogForOrder($order);
     }
 

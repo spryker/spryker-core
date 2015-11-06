@@ -6,8 +6,6 @@
 
 namespace SprykerFeature\Shared\Library;
 
-use SprykerEngine\Shared\Kernel\Store;
-
 class Autoloader
 {
 

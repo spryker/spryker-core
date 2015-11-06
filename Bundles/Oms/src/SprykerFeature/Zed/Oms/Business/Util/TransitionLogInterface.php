@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Oms\Business\Util;
 
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
-use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
@@ -19,54 +18,73 @@ interface TransitionLogInterface
 
     /**
      * @param EventInterface $event
+     *
+     * @return void
      */
     public function setEvent(EventInterface $event);
 
     /**
-     * @param SpySalesOrderItem[] $items
+     * @param SpySalesOrderItem[] $salesOrderItems
+     *
+     * @return void
      */
-    public function addItems(array $items);
+    public function init(array $salesOrderItems);
 
     /**
      * @param SpySalesOrderItem $item
      * @param CommandInterface $command
+     *
+     * @return void
      */
     public function addCommand(SpySalesOrderItem $item, CommandInterface $command);
 
     /**
      * @param SpySalesOrderItem $item
      * @param ConditionInterface $condition
+     *
+     * @return void
      */
     public function addCondition(SpySalesOrderItem $item, ConditionInterface $condition);
 
     /**
      * @param SpySalesOrderItem $item
-     * @param StateInterface $state
+     * @param string $stateName
+     *
+     * @return void
      */
-    public function addSourceState(SpySalesOrderItem $item, StateInterface $state);
+    public function addSourceState(SpySalesOrderItem $item, $stateName);
 
     /**
      * @param SpySalesOrderItem $item
-     * @param StateInterface $state
+     * @param string $stateName
+     *
+     * @return void
      */
-    public function addTargetState(SpySalesOrderItem $item, StateInterface $state);
+    public function addTargetState(SpySalesOrderItem $item, $stateName);
 
     /**
      * @param bool $error
+     *
+     * @return void
      */
-    public function setError($error);
+    public function setIsError($error);
+
+    /**
+     * @param SpySalesOrderItem $salesOrderItem
+     *
+     * @return void
+     */
+    public function save(SpySalesOrderItem $salesOrderItem);
 
     /**
      * @param string $errorMessage
+     *
+     * @return void
      */
     public function setErrorMessage($errorMessage);
 
     /**
-     * @param SpySalesOrderItem $orderItem
-     */
-    public function save(SpySalesOrderItem $orderItem);
-
-    /**
+     * @return void
      */
     public function saveAll();
 

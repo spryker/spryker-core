@@ -26,6 +26,8 @@ interface StateInterface
 
     /**
      * @param TransitionInterface[] $outgoingTransitions
+     *
+     * @return void
      */
     public function setOutgoingTransitions(array $outgoingTransitions);
 
@@ -74,16 +76,22 @@ interface StateInterface
 
     /**
      * @param TransitionInterface $transition
+     *
+     * @return void
      */
     public function addIncomingTransition(TransitionInterface $transition);
 
     /**
      * @param TransitionInterface $transition
+     *
+     * @return void
      */
     public function addOutgoingTransition(TransitionInterface $transition);
 
     /**
      * @param string $name
+     *
+     * @return void
      */
     public function setName($name);
 
@@ -94,6 +102,8 @@ interface StateInterface
 
     /**
      * @param ProcessInterface $process
+     *
+     * @return void
      */
     public function setProcess($process);
 
@@ -104,6 +114,8 @@ interface StateInterface
 
     /**
      * @param bool $reserved
+     *
+     * @return void
      */
     public function setReserved($reserved);
 
@@ -138,6 +150,8 @@ interface StateInterface
 
     /**
      * @param string $flag
+     *
+     * @return void
      */
     public function addFlag($flag);
 
@@ -165,6 +179,8 @@ interface StateInterface
 
     /**
      * @param string $display
+     *
+     * @return void
      */
     public function setDisplay($display);
 

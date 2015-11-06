@@ -49,7 +49,7 @@ class Copy
                         continue;
                     }
 
-                    if (null !== $value) {
+                    if ($value !== null) {
                         $transfer->$setMethod($value);
                     }
                 }
@@ -108,7 +108,7 @@ class Copy
                      *
                      * Only set values which are not NULL and which are not an empty string
                      */
-                    if (!is_null($value) && !($value === '')) {
+                    if ($value !== null && $value !== '') {
                         $entity->$setMethod($value);
                     }
                 }

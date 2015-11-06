@@ -15,6 +15,7 @@
                 <controller>index</controller>
                 <action>index</action>
                 <icon>fa-archive</icon>
+                <visible>0</visible>
             </packages>
             <phpinfo>
                 <label>PHP Info</label>

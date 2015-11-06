@@ -24,7 +24,7 @@ class Transition implements TransitionInterface
     /**
      * @var StateInterface
      */
-    private $source;
+    protected $source;
 
     /**
      * @var StateInterface
@@ -33,6 +33,8 @@ class Transition implements TransitionInterface
 
     /**
      * @param mixed $happy
+     *
+     * @return void
      */
     public function setHappy($happy)
     {
@@ -49,6 +51,8 @@ class Transition implements TransitionInterface
 
     /**
      * @param string $condition
+     *
+     * @return void
      */
     public function setCondition($condition)
     {
@@ -73,6 +77,8 @@ class Transition implements TransitionInterface
 
     /**
      * @param EventInterface $event
+     *
+     * @return void
      */
     public function setEvent($event)
     {
@@ -97,6 +103,8 @@ class Transition implements TransitionInterface
 
     /**
      * @param StateInterface $source
+     *
+     * @return void
      */
     public function setSource($source)
     {
@@ -113,6 +121,8 @@ class Transition implements TransitionInterface
 
     /**
      * @param StateInterface $target
+     *
+     * @return void
      */
     public function setTarget($target)
     {

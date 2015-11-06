@@ -25,21 +25,23 @@ class Drawer implements DrawerInterface
 
     protected $attributesTransition = ['fontname' => 'Verdana', 'fontsize' => 12];
 
-    protected $brLeft = '<BR align="left" />  ';
+    protected $brLeft = '<br align="left" />  ';
 
-    protected $notImplemented = '<FONT color="red">(not implemented)</FONT>';
+    protected $notImplemented = '<font color="red">(not implemented)</font>';
 
-    protected $br = '<BR />';
+    protected $br = '<br/>';
 
     protected $format = 'svg';
 
-    protected $fontsizeBig = null;
+    protected $fontSizeBig = null;
 
-    protected $fontsizeSmall = null;
+    protected $fontSizeSmall = null;
 
     protected $conditionModels = [];
 
     protected $commandModels = [];
+
+    const ATTRIBUTE_FONT_SIZE = 'fontsize';
 
     const EDGE_UPPER_HALF = 'upper half';
     const EDGE_LOWER_HALF = 'lower half';
@@ -73,15 +75,15 @@ class Drawer implements DrawerInterface
 
     /**
      * @param ProcessInterface $process
-     * @param string $highlightState
-     * @param null $format
-     * @param int $fontsize
+     * @param string|null $highlightState
+     * @param string|null $format
+     * @param int|null $fontSize
      *
      * @return bool
      */
-    public function draw(ProcessInterface $process, $highlightState = null, $format = null, $fontsize = null)
+    public function draw(ProcessInterface $process, $highlightState = null, $format = null, $fontSize = null)
     {
-        $this->init($format, $fontsize);
+        $this->init($format, $fontSize);
 
         $this->drawStates($process, $highlightState);
 
@@ -94,19 +96,23 @@ class Drawer implements DrawerInterface
 
     /**
      * @param ProcessInterface $process
-     * @param string $highlightState
+     * @param string|null $highlightState
+     *
+     * @return void
      */
     public function drawStates(ProcessInterface $process, $highlightState = null)
     {
         $states = $process->getAllStates();
         foreach ($states as $state) {
-            $highlight = $highlightState === $state->getName();
-            $this->addNode($state, [], null, $highlight);
+            $isHighlighted = $highlightState === $state->getName();
+            $this->addNode($state, [], null, $isHighlighted);
         }
     }
 
     /**
      * @param ProcessInterface $process
+     *
+     * @return void
      */
     public function drawTransitions(ProcessInterface $process)
     {
@@ -119,6 +125,8 @@ class Drawer implements DrawerInterface
 
     /**
      * @param StateInterface $state
+     *
+     * @return void
      */
     public function drawTransitionsEvents(StateInterface $state)
     {
@@ -144,6 +152,8 @@ class Drawer implements DrawerInterface
 
     /**
      * @param StateInterface $state
+     *
+     * @return void
      */
     public function drawTransitionsConditions(StateInterface $state)
     {
@@ -158,6 +168,8 @@ class Drawer implements DrawerInterface
 
     /**
      * @param ProcessInterface $process
+     *
+     * @return void
      */
     public function drawClusters(ProcessInterface $process)
     {
@@ -171,23 +183,25 @@ class Drawer implements DrawerInterface
     /**
      * @param StateInterface $state
      * @param array $attributes
-     * @param string $name
-     * @param bool $highlight
+     * @param string|null $name
+     * @param bool $highlighted
+     *
+     * @return void
      */
-    protected function addNode(StateInterface $state, $attributes = [], $name = null, $highlight = false)
+    protected function addNode(StateInterface $state, $attributes = [], $name = null, $highlighted = false)
     {
-        $name = is_null($name) ? $state->getName() : $name;
+        $name = $name === null ? $state->getName() : $name;
 
         $label = [];
         $label[] = str_replace(' ', $this->br, trim($name));
 
         if ($state->isReserved()) {
-            $label[] = '<FONT color="blue" point-size="' . $this->fontsizeSmall . '">' . 'reserved' . '</FONT>';
+            $label[] = '<font color="blue" point-size="' . $this->fontSizeSmall . '">' . 'reserved' . '</font>';
         }
 
         if ($state->hasFlags()) {
             $flags = implode(', ', $state->getFlags());
-            $label[] = '<FONT color="violet" point-size="' . $this->fontsizeSmall . '">' . $flags . '</FONT>';
+            $label[] = '<font color="violet" point-size="' . $this->fontSizeSmall . '">' . $flags . '</font>';
         }
 
         $attributes['label'] = implode($this->br, $label);
@@ -196,7 +210,7 @@ class Drawer implements DrawerInterface
             $attributes['peripheries'] = 2;
         }
 
-        if ($highlight) {
+        if ($highlighted) {
             $attributes['fillcolor'] = '#FFFFCC';
         }
 
@@ -227,8 +241,10 @@ class Drawer implements DrawerInterface
      * @param TransitionInterface $transition
      * @param string $type
      * @param array $attributes
-     * @param null $fromName
-     * @param null $toName
+     * @param string|null $fromName
+     * @param string|null $toName
+     *
+     * @return void
      */
     protected function addEdge(TransitionInterface $transition, $type = self::EDGE_FULL, $attributes = [], $fromName = null, $toName = null)
     {
@@ -283,9 +299,9 @@ class Drawer implements DrawerInterface
             $event = $transition->getEvent();
 
             if ($event->isOnEnter()) {
-                $label[] = '<B>' . $event->getName() . ' (on enter)</B>';
+                $label[] = '<b>' . $event->getName() . ' (on enter)</b>';
             } else {
-                $label[] = '<B>' . $event->getName() . '</B>';
+                $label[] = '<b>' . $event->getName() . '</b>';
             }
 
             if ($event->hasTimeout()) {
@@ -374,44 +390,46 @@ class Drawer implements DrawerInterface
      * @param TransitionInterface $transition
      * @param string $fromName
      *
-     * @return mixed
+     * @return string
      */
     protected function addEdgeFromState(TransitionInterface $transition, $fromName)
     {
-        $fromName = isset($fromName) ? $fromName : $transition->getSource()->getName();
+        $fromName = $fromName !== null ? $fromName : $transition->getSource()->getName();
 
         return $fromName;
     }
 
     /**
      * @param TransitionInterface $transition
-     * @param string $toName
+     * @param string|null $toName
      *
-     * @return mixed
+     * @return string
      */
     protected function addEdgeToState(TransitionInterface $transition, $toName)
     {
-        $toName = isset($toName) ? $toName : $transition->getTarget()->getName();
+        $toName = $toName !== null ? $toName : $transition->getTarget()->getName();
 
         return $toName;
     }
 
     /**
-     * @param string $format
-     * @param $fontsize
+     * @param string|null $format
+     * @param int|null $fontSize
+     *
+     * @return void
      */
-    protected function init($format, $fontsize)
+    protected function init($format, $fontSize)
     {
-        if (isset($format)) {
+        if ($format !== null) {
             $this->format = $format;
         }
 
-        if (isset($fontsize)) {
-            $this->attributesState['fontsize'] = $fontsize;
-            $this->attributesProcess['fontsize'] = $fontsize - 2;
-            $this->attributesTransition['fontsize'] = $fontsize - 2;
-            $this->fontsizeBig = $fontsize;
-            $this->fontsizeSmall = $fontsize - 2;
+        if ($fontSize !== null) {
+            $this->attributesState[self::ATTRIBUTE_FONT_SIZE] = $fontSize;
+            $this->attributesProcess[self::ATTRIBUTE_FONT_SIZE] = $fontSize - 2;
+            $this->attributesTransition[self::ATTRIBUTE_FONT_SIZE] = $fontSize - 2;
+            $this->fontSizeBig = $fontSize;
+            $this->fontSizeSmall = $fontSize - 2;
         }
     }
 

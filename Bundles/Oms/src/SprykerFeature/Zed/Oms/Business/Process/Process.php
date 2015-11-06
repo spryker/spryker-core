@@ -36,7 +36,7 @@ class Process implements ProcessInterface
     /**
      * @var ProcessInterface[]
      */
-    protected $subprocesses = [];
+    protected $subProcesses = [];
 
     /**
      * @param DrawerInterface $drawer
@@ -47,51 +47,57 @@ class Process implements ProcessInterface
     }
 
     /**
-     * @param bool $highlightState
-     * @param string $format
-     * @param int $fontsize
+     * @param string|null $highlightState
+     * @param string|null $format
+     * @param int|null $fontSize
      *
      * @return bool
      */
-    public function draw($highlightState = false, $format = null, $fontsize = null)
+    public function draw($highlightState = null, $format = null, $fontSize = null)
     {
-        return $this->drawer->draw($this, $highlightState, $format, $fontsize);
+        return $this->drawer->draw($this, $highlightState, $format, $fontSize);
     }
 
     /**
-     * @param ProcessInterface[] $subprocesses
+     * @param ProcessInterface[] $subProcesses
+     *
+     * @return void
      */
-    public function setSubprocesses($subprocesses)
+    public function setSubProcesses($subProcesses)
     {
-        $this->subprocesses = $subprocesses;
+        $this->subProcesses = $subProcesses;
     }
 
     /**
      * @return ProcessInterface[]
      */
-    public function getSubprocesses()
+    public function getSubProcesses()
     {
-        return $this->subprocesses;
+        return $this->subProcesses;
     }
 
     /**
      * @return bool
      */
-    public function hasSubprocesses()
+    public function hasSubProcesses()
     {
-        return count($this->subprocesses) > 0;
+        return count($this->subProcesses) > 0;
     }
 
     /**
-     * @param ProcessInterface $subprocess
+     * @param ProcessInterface $subProcess
+     *
+     * @return void
      */
-    public function addSubprocess(ProcessInterface $subprocess)
+    public function addSubProcess(ProcessInterface $subProcess)
     {
-        $this->subprocesses[] = $subprocess;
+        $this->subProcesses[] = $subProcess;
     }
 
     /**
      * @param mixed $main
+     *
+     * @return void
      */
     public function setMain($main)
     {
@@ -108,6 +114,8 @@ class Process implements ProcessInterface
 
     /**
      * @param mixed $name
+     *
+     * @return void
      */
     public function setName($name)
     {
@@ -124,6 +132,8 @@ class Process implements ProcessInterface
 
     /**
      * @param StateInterface[] $states
+     *
+     * @return void
      */
     public function setStates($states)
     {
@@ -132,6 +142,8 @@ class Process implements ProcessInterface
 
     /**
      * @param StateInterface $state
+     *
+     * @return void
      */
     public function addState(StateInterface $state)
     {
@@ -194,6 +206,8 @@ class Process implements ProcessInterface
 
     /**
      * @param TransitionInterface $transition
+     *
+     * @return void
      */
     public function addTransition(TransitionInterface $transition)
     {
@@ -202,6 +216,8 @@ class Process implements ProcessInterface
 
     /**
      * @param TransitionInterface[] $transitions
+     *
+     * @return void
      */
     public function setTransitions($transitions)
     {
@@ -233,8 +249,8 @@ class Process implements ProcessInterface
         if ($this->hasStates()) {
             $states = $this->getStates();
         }
-        if ($this->hasSubprocesses()) {
-            foreach ($this->getSubprocesses() as $subProcess) {
+        if ($this->hasSubProcesses()) {
+            foreach ($this->getSubProcesses() as $subProcess) {
                 if ($subProcess->hasStates()) {
                     $states = array_merge($states, $subProcess->getStates());
                 }
@@ -269,7 +285,7 @@ class Process implements ProcessInterface
         if ($this->hasTransitions()) {
             $transitions = $this->getTransitions();
         }
-        foreach ($this->getSubprocesses() as $subProcess) {
+        foreach ($this->getSubProcesses() as $subProcess) {
             if ($subProcess->hasTransitions()) {
                 $transitions = array_merge($transitions, $subProcess->getTransitions());
             }
@@ -299,18 +315,18 @@ class Process implements ProcessInterface
      */
     public function getManualEvents()
     {
-        $manuallyExecuteableEventList = [];
+        $manuallyExecutableEventList = [];
         $transitions = $this->getAllTransitions();
         foreach ($transitions as $transition) {
             if ($transition->hasEvent()) {
                 $event = $transition->getEvent();
                 if ($event->isManual()) {
-                    $manuallyExecuteableEventList[] = $event;
+                    $manuallyExecutableEventList[] = $event;
                 }
             }
         }
 
-        return $manuallyExecuteableEventList;
+        return $manuallyExecutableEventList;
     }
 
     /**
@@ -344,12 +360,14 @@ class Process implements ProcessInterface
     {
         $processes = [];
         $processes[] = $this;
-        $processes = array_merge($processes, $this->getSubprocesses());
+        $processes = array_merge($processes, $this->getSubProcesses());
 
         return $processes;
     }
     /**
      * @param mixed $file
+     *
+     * @return void
      */
     public function setFile($file)
     {

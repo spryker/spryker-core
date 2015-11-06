@@ -48,6 +48,14 @@ interface OmsQueryContainerInterface
     public function queryLogForOrder(SpySalesOrder $order);
 
     /**
+     * @param int $idOrder
+     * @param bool $orderById
+     *
+     * @return SpyOmsTransitionLogQuery
+     */
+    public function queryLogByIdOrder($idOrder, $orderById = true);
+
+    /**
      * @param DateTime $now
      *
      * @return SpySalesOrderItemQuery

@@ -19,5 +19,4 @@ use Orm\Zed\Oms\Persistence\Base\SpyOmsEventTimeout as BaseSpyOmsEventTimeout;
  */
 abstract class AbstractSpyOmsEventTimeout extends BaseSpyOmsEventTimeout
 {
-
 }

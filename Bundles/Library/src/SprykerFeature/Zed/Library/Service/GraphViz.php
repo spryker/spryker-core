@@ -173,17 +173,17 @@ class GraphViz
      * Setting the name of the Graph is useful for including multiple image
      * maps on one page. If not set, the graph will be named 'G'.
      *
-     * @param bool $directed    Directed (TRUE) or undirected (FALSE) graph.
-     *                             Note: You MUST pass a boolean, and not just
-     *                             an  expression that evaluates to TRUE or
-     *                             FALSE (i.e. NULL, empty string, 0 will NOT
-     *                             work)
-     * @param array   $attributes  Attributes of the graph
-     * @param string  $name        Name of the Graph
-     * @param bool $strict      Whether to collapse multiple edges between
-     *                             same nodes
+     * @param bool $directed Directed (TRUE) or undirected (FALSE) graph.
+     *   Note: You MUST pass a boolean, and not just
+     *   an  expression that evaluates to TRUE or
+     *   FALSE (i.e. NULL, empty string, 0 will NOT
+     *   work)
+     * @param array $attributes Attributes of the graph
+     * @param string $name Name of the Graph
+     * @param bool $strict Whether to collapse multiple edges between
+     *   same nodes
      * @param bool $returnError Set to TRUE to return PEAR_Error instances
-     *                             on failures instead of FALSE
+     *   on failures instead of FALSE
      */
     public function __construct($directed = true, $attributes = [],
                             $name = 'G', $strict = true, $returnError = false)
@@ -191,7 +191,7 @@ class GraphViz
         $this->setDirected($directed);
         $this->setAttributes($attributes);
         $this->graph['name'] = $name;
-        $this->graph['strict'] = (boolean) $strict;
+        $this->graph['strict'] = (bool) $strict;
 
         $this->_returnFalseOnError = !$returnError;
     }
@@ -201,8 +201,8 @@ class GraphViz
      *
      * This methods send HTTP headers
      *
-     * @param string $format  Format of the output image. This may be one
-     *                        of the formats supported by GraphViz.
+     * @param string $format Format of the output image. This may be one
+     *   of the formats supported by GraphViz.
      * @param string $command "dot" or "neato"
      *
      * @return bool TRUE on success, FALSE or PEAR_Error otherwise
@@ -327,12 +327,12 @@ class GraphViz
     /**
      * Returns image (data) of the graph in a given format.
      *
-     * @param string $format  Format of the output image. This may be one
-     *                        of the formats supported by GraphViz.
+     * @param string $format Format of the output image. This may be one
+     *   of the formats supported by GraphViz.
      * @param string $command "dot" or "neato"
      *
      * @return string The image (data) created by GraphViz, FALSE or PEAR_Error
-     *                on error
+     *   on error
      *
      * @since  Method available since Release 1.1.0
      */
@@ -374,14 +374,14 @@ class GraphViz
     /**
      * Renders a given dot file into a given format.
      *
-     * @param string $dotfile    The absolute path of the dot file to use.
+     * @param string $dotfile The absolute path of the dot file to use.
      * @param string $outputfile The absolute path of the file to save to.
-     * @param string $format     Format of the output image. This may be one
-     *                           of the formats supported by GraphViz.
-     * @param string $command    "dot" or "neato"
+     * @param string $format Format of the output image. This may be one
+     *   of the formats supported by GraphViz.
+     * @param string $command "dot" or "neato"
      *
      * @return bool TRUE if the file was saved, FALSE or PEAR_Error
-     *                 otherwise.
+     *   otherwise.
      */
     public function renderDotFile($dotfile, $outputfile, $format = 'svg',
                            $command = null)
@@ -429,10 +429,10 @@ class GraphViz
      *
      * A cluster is a subgraph with a rectangle around it.
      *
-     * @param string $id         ID.
-     * @param array  $title      Title.
-     * @param array  $attributes Attributes of the cluster.
-     * @param string $group      ID of group to nest cluster into
+     * @param string $id ID.
+     * @param array $title Title.
+     * @param array $attributes Attributes of the cluster.
+     * @param string $group ID of group to nest cluster into
      *
      * @see    addSubgraph()
      */
@@ -446,10 +446,10 @@ class GraphViz
     /**
      * Adds a subgraph to the graph.
      *
-     * @param string $id         ID.
-     * @param array  $title      Title.
-     * @param array  $attributes Attributes of the cluster.
-     * @param string $group      ID of group to nest subgraph into
+     * @param string $id ID.
+     * @param array $title Title.
+     * @param array $attributes Attributes of the cluster.
+     * @param string $group ID of group to nest subgraph into
      */
     public function addSubgraph($id, $title, $attributes = [], $group = 'default')
     {
@@ -461,9 +461,9 @@ class GraphViz
     /**
      * Adds a note to the graph.
      *
-     * @param string $name       Name of the node.
-     * @param array  $attributes Attributes of the node.
-     * @param string $group      Group of the node.
+     * @param string $name Name of the node.
+     * @param array $attributes Attributes of the node.
+     * @param string $group Group of the node.
      */
     public function addNode($name, $attributes = [], $group = 'default')
     {
@@ -480,7 +480,7 @@ class GraphViz
      *
      * This method doesn't remove edges associated with the node.
      *
-     * @param string $name  Name of the node to be removed.
+     * @param string $name Name of the node to be removed.
      * @param string $group Group of the node.
      */
     public function removeNode($name, $group = 'default')
@@ -508,9 +508,9 @@ class GraphViz
      *                                                    'node8' => 'portD'));
      * </code>
      *
-     * @param array $edge       Start => End node of the edge.
+     * @param array $edge Start => End node of the edge.
      * @param array $attributes Attributes of the edge.
-     * @param array $ports      Start node => port, End node => port
+     * @param array $ports Start node => port, End node => port
      *
      * @return int an edge ID that can be used with {@link removeEdge()}
      */
@@ -554,9 +554,9 @@ class GraphViz
     /**
      * Removes an edge from the graph.
      *
-     * @param array   $edge Start and End node of the edge to be removed.
-     * @param int $id   specific edge ID (only usefull when multiple edges
-     *                      exist between the same 2 nodes)
+     * @param array $edge Start and End node of the edge to be removed.
+     * @param int $id specific edge ID (only usefull when multiple edges
+     *   exist between the same 2 nodes)
      */
     public function removeEdge($edge, $id = null)
     {
@@ -567,7 +567,7 @@ class GraphViz
         $from = key($edge);
         $to = $edge[$from];
 
-        if (!is_null($id)) {
+        if ($id !== null) {
             if (isset($this->graph['edgesFrom'][$from][$to][$id])) {
                 unset($this->graph['edgesFrom'][$from][$to][$id]);
 
@@ -638,8 +638,8 @@ class GraphViz
     /**
      * Returns a safe "ID" in DOT syntax
      *
-     * @param string  $input string to use as "ID"
-     * @param bool $html  whether to attempt detecting HTML-like content
+     * @param string $input string to use as "ID"
+     * @param bool $html whether to attempt detecting HTML-like content
      *
      * @return string
      */
@@ -746,7 +746,7 @@ class GraphViz
      * @throws \ErrorException
      *
      * @return string File the graph was saved to, FALSE or PEAR_Error on
-     *                failure.
+     *   failure.
      */
     public function save($file = '')
     {
@@ -758,7 +758,7 @@ class GraphViz
 
         $fp = @fopen($file, 'wb');
         if ($fp) {
-            @fputs($fp, $serializedGraph);
+            @fwrite($fp, $serializedGraph);
             @fclose($fp);
 
             return $file;
@@ -921,7 +921,7 @@ class GraphViz
     /**
      * Output nodes
      *
-     * @param array  $nodes  nodes list
+     * @param array $nodes nodes list
      * @param string $indent space indentation
      *
      * @return string output

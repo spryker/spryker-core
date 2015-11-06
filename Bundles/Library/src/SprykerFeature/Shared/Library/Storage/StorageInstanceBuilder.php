@@ -81,7 +81,7 @@ class StorageInstanceBuilder
 
     /**
      * @param string $type
-     * @param bool   $debug
+     * @param bool $debug
      *
      * @throws \Exception
      *

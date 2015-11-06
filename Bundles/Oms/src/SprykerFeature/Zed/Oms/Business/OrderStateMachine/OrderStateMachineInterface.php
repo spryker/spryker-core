@@ -15,11 +15,10 @@ interface OrderStateMachineInterface
      * @param string $eventId
      * @param SpySalesOrderItem[] $orderItems
      * @param array $data
-     * @param array $logContext
      *
      * @return array
      */
-    public function triggerEvent($eventId, array $orderItems, $data, array $logContext = []);
+    public function triggerEvent($eventId, array $orderItems, $data);
 
     /**
      * @param SpySalesOrderItem[] $orderItems
@@ -28,7 +27,7 @@ interface OrderStateMachineInterface
      *
      * @return array
      */
-    public function triggerEventForNewItem(array $orderItems, array $data, array $logContext = []);
+    public function triggerEventForNewItem(array $orderItems, $data);
 
     /**
      * @param array $logContext
@@ -43,7 +42,7 @@ interface OrderStateMachineInterface
      *
      * @return array
      */
-    public function triggerEventForNewOrderItems(array $orderItemIds, array $data);
+    public function triggerEventForNewOrderItems(array $orderItemIds, $data);
 
     /**
      * @param string $eventId
@@ -52,7 +51,7 @@ interface OrderStateMachineInterface
      *
      * @return array
      */
-    public function triggerEventForOneOrderItem($eventId, $orderItemId, array $data);
+    public function triggerEventForOneOrderItem($eventId, $orderItemId, $data);
 
     /**
      * @param string $eventId
@@ -61,6 +60,6 @@ interface OrderStateMachineInterface
      *
      * @return array
      */
-    public function triggerEventForOrderItems($eventId, array $orderItemIds, array $data);
+    public function triggerEventForOrderItems($eventId, array $orderItemIds, $data);
 
 }

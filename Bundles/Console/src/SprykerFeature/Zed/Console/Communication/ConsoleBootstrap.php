@@ -26,6 +26,7 @@ class ConsoleBootstrap extends Application
         Environment::initialize();
 
         parent::__construct($name, $version);
+        $this->setCatchExceptions(false);
     }
 
     /**

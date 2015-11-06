@@ -9,6 +9,7 @@ use SprykerEngine\Shared\Kernel\Store;
  */
 class Context
 {
+
     const CONTEXT_SHARED = '*';
     const CONTEXT_YVES = 'yves';
     const CONTEXT_ZED = 'zed';
@@ -36,7 +37,7 @@ class Context
      */
     public static function getInstance($context = null)
     {
-        if ($context instanceof Context) {
+        if ($context instanceof self) {
             return $context;
         }
         if (empty($context)) {
@@ -57,10 +58,12 @@ class Context
      * Sets default context, should be used only while bootstrapping the system
      *
      * @param string|Context $context
+     *
+     * @return void
      */
     public static function setDefaultContext($context = self::CONTEXT_SHARED)
     {
-        if ($context instanceof Context) {
+        if ($context instanceof self) {
             static::$defaultContext = $context->_contextName;
         } else {
             static::$defaultContext = $context;
@@ -85,6 +88,8 @@ class Context
 
     /**
      * Loads and builds available contexts.
+     *
+     * @return void
      */
     protected static function loadContexts()
     {
@@ -191,7 +196,7 @@ class Context
      *
      * @return string
      */
-    public function dateTimeConverToFrom($contextFrom, $dateTime, $format = 'Y-m-d H:i:s')
+    public function dateTimeConvertToFrom($contextFrom, $dateTime, $format = 'Y-m-d H:i:s')
     {
         if (!($dateTime instanceof \DateTime)) {
             $dateTime = new \DateTime($dateTime, new \DateTimeZone(self::getInstance($contextFrom)->timezone));

@@ -62,11 +62,13 @@ class Config
     /**
      * Loads config_default and config_local and merges them
      *
-     * @param null $environment
+     * @param string|null $environment
+     *
+     * @return void
      */
     public static function init($environment = null)
     {
-        if (is_null($environment)) {
+        if ($environment === null) {
             $environment = Environment::getInstance()->getEnvironment();
         }
 
@@ -113,7 +115,7 @@ class Config
      *
      * @return \ArrayObject
      */
-    protected static function buildConfig($type = null, \ArrayObject $config)
+    protected static function buildConfig($type, \ArrayObject $config)
     {
         $fileName = APPLICATION_ROOT_DIR . self::CONFIG_FILE_PREFIX . $type . self::CONFIG_FILE_SUFFIX;
         if (file_exists($fileName)) {

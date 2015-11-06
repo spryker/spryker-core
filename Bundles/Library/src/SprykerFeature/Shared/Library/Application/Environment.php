@@ -29,6 +29,8 @@ class Environment
      * @param bool $disableApplicationCheck
      *
      * @throws \Exception
+     *
+     * @return void
      */
     public static function initialize($application, $disableApplicationCheck = false)
     {
@@ -151,6 +153,8 @@ class Environment
     /**
      * ErrorHandler is initialized lazy as in most cases
      * we will not use it
+     *
+     * @return void
      */
     protected static function initializeErrorHandler()
     {

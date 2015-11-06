@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Oms\Persistence;
 
 use DateTime;
-use Generated\Zed\Ide\FactoryAutoCompletion\OmsPersistence;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
@@ -20,7 +19,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 
 /**
- * @method OmsPersistence getFactory()
  */
 class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContainerInterface
 {
@@ -49,7 +47,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     }
 
     /**
-     * @param $idOrder
+     * @param int $idOrder
      *
      * @return SpySalesOrderItemQuery
      */
@@ -69,6 +67,26 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         return SpyOmsTransitionLogQuery::create()
             ->filterByOrder($order)
             ->orderBy(SpyOmsTransitionLogTableMap::COL_ID_OMS_TRANSITION_LOG, Criteria::DESC);
+    }
+
+    /**
+     * @param int $idOrder
+     * @param bool $orderById
+     *
+     * @return SpyOmsTransitionLogQuery
+     */
+    public function queryLogByIdOrder($idOrder, $orderById = true)
+    {
+        $transitionLogQuery = new SpyOmsTransitionLogQuery();
+
+        $transitionLogQuery
+            ->filterByFkSalesOrder($idOrder);
+
+        if ($orderById) {
+            $transitionLogQuery->orderBy(SpyOmsTransitionLogTableMap::COL_ID_OMS_TRANSITION_LOG, Criteria::DESC);
+        }
+
+        return $transitionLogQuery;
     }
 
     /**

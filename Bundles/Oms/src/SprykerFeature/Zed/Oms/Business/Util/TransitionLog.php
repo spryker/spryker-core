@@ -6,63 +6,19 @@
 
 namespace SprykerFeature\Zed\Oms\Business\Util;
 
+use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\Library\System;
-use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
-use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
-use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
-use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Orm\Zed\Oms\Persistence\SpyOmsTransitionLog;
+use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
+use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
+use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 
 class TransitionLog implements TransitionLogInterface
 {
-
-    /**
-     * @var array
-     */
-    protected $logItems = [];
-
-    /**
-     * @var SpySalesOrderItem[]
-     */
-    protected $items = [];
-
-    /**
-     * @var EventInterface
-     */
-    protected $event;
-
-    /**
-     * @var CommandInterface[]
-     */
-    protected $commands = [];
-
-    /**
-     * @var ConditionInterface[]
-     */
-    protected $conditions = [];
-
-    /**
-     * @var StateInterface[]
-     */
-    protected $sources = [];
-
-    /**
-     * @var StateInterface[]
-     */
-    protected $targets = [];
-
-    /**
-     * @var bool
-     */
-    protected $error = false;
-
-    /**
-     * @var string
-     */
-    protected $errorMessage;
 
     /**
      * @var OmsQueryContainerInterface
@@ -73,6 +29,11 @@ class TransitionLog implements TransitionLogInterface
      * @var array
      */
     protected $logContext;
+
+    /**
+     * @var SpyOmsTransitionLog[]
+     */
+    protected $logEntities;
 
     /**
      * @param OmsQueryContainerInterface $queryContainer
@@ -86,172 +47,174 @@ class TransitionLog implements TransitionLogInterface
 
     /**
      * @param EventInterface $event
+     *
+     * @return void
      */
     public function setEvent(EventInterface $event)
     {
-        $this->event = $event;
+        $nameEvent = $event->getName();
+
+        if ($event->isOnEnter()) {
+            $nameEvent .= ' (on enter)';
+        }
+
+        foreach ($this->logEntities as $logEntity) {
+            $logEntity->setEvent($nameEvent);
+        }
     }
 
-    /**
-     * @param SpySalesOrderItem[] $items
+    /***
+     * @param SpySalesOrderItem[] $salesOrderItems
+     *
+     * @return void
      */
-    public function addItems(array $items)
+    public function init(array $salesOrderItems)
     {
-        $this->items = $items;
+        $this->logEntities = [];
+
+        foreach ($salesOrderItems as $salesOrderItem) {
+            $logEntity = $this->initEntity($salesOrderItem);
+            $this->logEntities[$salesOrderItem->getIdSalesOrderItem()] = $logEntity;
+        }
     }
 
     /**
      * @param SpySalesOrderItem $item
      * @param CommandInterface $command
+     *
+     * @return void
      */
     public function addCommand(SpySalesOrderItem $item, CommandInterface $command)
     {
-        $this->commands[$item->getIdSalesOrderItem()] = $command;
+        $this->logEntities[$item->getIdSalesOrderItem()]->setCommand(get_class($command));
     }
 
     /**
      * @param SpySalesOrderItem $item
      * @param ConditionInterface $condition
+     *
+     * @return void
      */
     public function addCondition(SpySalesOrderItem $item, ConditionInterface $condition)
     {
-        $this->conditions[$item->getIdSalesOrderItem()] = $condition;
+        $this->logEntities[$item->getIdSalesOrderItem()]->setCondition(get_class($condition));
     }
 
     /**
      * @param SpySalesOrderItem $item
-     * @param StateInterface $state
+     * @param string $stateName
+     *
+     * @return void
      */
-    public function addSourceState(SpySalesOrderItem $item, StateInterface $state)
+    public function addSourceState(SpySalesOrderItem $item, $stateName)
     {
-        $this->sources[$item->getIdSalesOrderItem()] = $state;
+        $this->logEntities[$item->getIdSalesOrderItem()]->setSourceState($stateName);
     }
 
     /**
      * @param SpySalesOrderItem $item
-     * @param StateInterface $state
+     * @param string $stateName
+     *
+     * @return void
      */
-    public function addTargetState(SpySalesOrderItem $item, StateInterface $state)
+    public function addTargetState(SpySalesOrderItem $item, $stateName)
     {
-        $this->targets[$item->getIdSalesOrderItem()] = $state;
+        $this->logEntities[$item->getIdSalesOrderItem()]->setTargetState($stateName);
     }
 
     /**
      * @param bool $error
+     *
+     * @return void
      */
-    public function setError($error)
+    public function setIsError($error)
     {
-        $this->error = $error;
+        foreach ($this->logEntities as $logEntity) {
+            $logEntity->setIsError($error);
+        }
     }
 
     /**
      * @param string $errorMessage
+     *
+     * @return void
      */
     public function setErrorMessage($errorMessage)
     {
-        $this->errorMessage = $errorMessage;
+        foreach ($this->logEntities as $logEntity) {
+            $logEntity->setErrorMessage($errorMessage);
+        }
     }
 
     /**
-     * @param SpySalesOrderItem $orderItem
+     * @param SpySalesOrderItem $salesOrderItem
+     *
+     * @return SpyOmsTransitionLog
      */
-    public function save(SpySalesOrderItem $orderItem)
+    protected function initEntity(SpySalesOrderItem $salesOrderItem)
     {
-        $logItem = $this->getEntity();
-        $this->logItems[] = $logItem;
+        $logEntity = $this->getEntity();
+        $logEntity->setOrderItem($salesOrderItem);
+        $logEntity->setQuantity($salesOrderItem->getQuantity());
+        $logEntity->setFkSalesOrder($salesOrderItem->getFkSalesOrder());
+        $logEntity->setFkOmsOrderProcess($salesOrderItem->getFkOmsOrderProcess());
 
-        $logItem->setProcess($orderItem->getProcess());
+        $logEntity->setHostname(System::getHostname());
 
-        if (isset($this->event)) {
-            $eventStr = $this->event->getName();
-
-            if ($this->event->isOnEnter()) {
-                $eventStr .= ' (on enter)';
+        $path = 'cli';
+        $request = $this->getRequest();
+        if (isset($request)) {
+            $path = $request->getPathInfo();
+        } else {
+            if (isset($_SERVER['argv']) && is_array($_SERVER['argv'])) {
+                $path = implode(' ', $_SERVER['argv']);
             }
-            $logItem->setEvent($eventStr);
         }
-        $itemId = $orderItem->getIdSalesOrderItem();
+        $logEntity->setPath($path);
 
-        if (isset($this->sources[$itemId])) {
-            $logItem->setSourceState($this->sources[$itemId]->getName());
-        }
+        //FIXME: get/post params
+        $logEntity->setParams(['a' => 'todo']);
 
-        if (isset($this->targets[$itemId])) {
-            $logItem->setTargetState($this->targets[$itemId]->getName());
-        }
-
-        if (isset($this->commands[$itemId])) {
-            $logItem->addCommand(get_class($this->commands[$itemId]));
-        }
-
-        if (isset($this->conditions[$itemId])) {
-            $logItem->addCondition(get_class($this->conditions[$itemId]));
-        }
-
-        $logItem->setHostname(System::getHostname());
-
-        if (isset($this->logContext['module'])) {
-            $logItem->setModule($this->logContext['module']);
-        } else {
-            $logItem->setModule('Not available.');
-        }
-
-        if (isset($this->logContext['controller'])) {
-            $logItem->setController($this->logContext['controller']);
-        } else {
-            $logItem->setController('Not available.');
-        }
-
-        if (isset($this->logContext['action'])) {
-            $logItem->setAction($this->logContext['action']);
-        } else {
-            $logItem->setAction('Not available.');
-        }
-
-        if (isset($this->logContext['params'])) {
-            $params = [];
-            $this->getOutputParams($this->logContext['params'], $params);
-            $logItem->setParams($params);
-        } else {
-            $logItem->setParams(['Not available.']);
-        }
-
-        $logItem->setOrder($orderItem->getOrder());
-        $logItem->setOrderItem($orderItem);
-
-        $logItem->setError($this->error);
-        $logItem->setErrorMessage($this->errorMessage);
-
-        $logItem->save();
+        return $logEntity;
     }
 
     /**
+     * TODO Refactor: dependency
+     *
+     * @return Request
+     */
+    protected function getRequest()
+    {
+        return Locator::getInstance()->application()->pluginPimple()->getApplication()['request'];
+    }
+
+    /**
+     * @param SpySalesOrderItem $salesOrderItem
+     *
+     * @return void
+     */
+    public function save(SpySalesOrderItem $salesOrderItem)
+    {
+        $this->logEntities[$salesOrderItem->getIdSalesOrderItem()]->save();
+    }
+
+    /**
+     * @return void
      */
     public function saveAll()
     {
-        foreach ($this->items as $item) {
-            if ($item->isModified()) {
-                $this->save($item);
+        foreach ($this->logEntities as $logEntity) {
+            if ($logEntity->isModified()) {
+                $logEntity->save();
             }
         }
-    }
-
-    /**
-     * @return mixed|null
-     */
-    protected function getAclUser()
-    {
-//        $auth = Auth::getInstance();
-//        if ($auth->hasIdentity()) {
-//            return $auth->getIdentity();
-//        }
-
-        return;
     }
 
     /**
      * @param array $params
-     * @param array $result
+     * @param array &$result
+     *
+     * @return void
      */
     protected function getOutputParams(array $params, array &$result)
     {

@@ -19,5 +19,4 @@ use Orm\Zed\Oms\Persistence\Base\SpyOmsOrderProcess as BaseSpyOmsOrderProcess;
  */
 abstract class AbstractSpyOmsOrderProcess extends BaseSpyOmsOrderProcess
 {
-
 }

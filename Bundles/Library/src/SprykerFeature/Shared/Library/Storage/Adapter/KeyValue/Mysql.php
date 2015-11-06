@@ -31,8 +31,9 @@ abstract class Mysql extends AbstractKeyValue
             $database = $this->config['database'] ? $this->config['database'] : null;
             $port = $this->config['port'] ? $this->config['port'] : null;
 
+            $dsn = 'mysql:host=' . $host . ';port=' . $port . ';dbname=' . $database;
             $resource = new \PDO(
-                $dsn = 'mysql:host=' . $host . ';port=' . $port . ';dbname=' . $database,
+                $dsn,
                 $this->config['user'] ? $this->config['user'] : null,
                 $this->config['password'] ? $this->config['password'] : null
             );

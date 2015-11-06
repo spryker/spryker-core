@@ -26,7 +26,7 @@ class TransferSession
     }
 
     /**
-     * @param string            $name
+     * @param string $name
      * @param TransferInterface $transferObject
      */
     public function set($name, TransferInterface $transferObject)
@@ -35,7 +35,7 @@ class TransferSession
     }
 
     /**
-     * @param string            $name
+     * @param string $name
      * @param TransferInterface $transferObject
      *
      * @return TransferInterface

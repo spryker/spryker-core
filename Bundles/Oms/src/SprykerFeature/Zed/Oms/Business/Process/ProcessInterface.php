@@ -10,36 +10,42 @@ interface ProcessInterface
 {
 
     /**
-     * @param string $highlightState
-     * @param null $format
-     * @param int $fontsize
+     * @param string|null $highlightState
+     * @param string|null $format
+     * @param int|null $fontSize
      *
      * @return bool
      */
-    public function draw($highlightState = null, $format = null, $fontsize = null);
+    public function draw($highlightState = null, $format = null, $fontSize = null);
 
     /**
-     * @param ProcessInterface[] $subprocesses
+     * @param ProcessInterface[] $subProcesses
+     *
+     * @return void
      */
-    public function setSubprocesses($subprocesses);
+    public function setSubProcesses($subProcesses);
 
     /**
      * @return ProcessInterface[]
      */
-    public function getSubprocesses();
+    public function getSubProcesses();
 
     /**
      * @return bool
      */
-    public function hasSubprocesses();
+    public function hasSubProcesses();
 
     /**
-     * @param ProcessInterface $subprocess
+     * @param ProcessInterface $subProcess
+     *
+     * @return void
      */
-    public function addSubprocess(ProcessInterface $subprocess);
+    public function addSubProcess(ProcessInterface $subProcess);
 
     /**
      * @param mixed $main
+     *
+     * @return void
      */
     public function setMain($main);
 
@@ -50,6 +56,8 @@ interface ProcessInterface
 
     /**
      * @param mixed $name
+     *
+     * @return void
      */
     public function setName($name);
 
@@ -60,11 +68,15 @@ interface ProcessInterface
 
     /**
      * @param StateInterface[] $states
+     *
+     * @return void
      */
     public function setStates($states);
 
     /**
      * @param StateInterface $state
+     *
+     * @return void
      */
     public function addState(StateInterface $state);
 
@@ -103,11 +115,15 @@ interface ProcessInterface
 
     /**
      * @param TransitionInterface $transition
+     *
+     * @return void
      */
     public function addTransition(TransitionInterface $transition);
 
     /**
      * @param TransitionInterface[] $transitions
+     *
+     * @return void
      */
     public function setTransitions($transitions);
 
@@ -158,6 +174,8 @@ interface ProcessInterface
 
     /**
      * @param mixed $file
+     *
+     * @return void
      */
     public function setFile($file);
 

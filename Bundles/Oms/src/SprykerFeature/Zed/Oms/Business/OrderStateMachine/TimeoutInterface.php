@@ -29,6 +29,8 @@ interface TimeoutInterface
      *
      * @throws Exception
      * @throws PropelException
+     *
+     * @return void
      */
     public function setNewTimeout(ProcessInterface $process, SpySalesOrderItem $orderItem, DateTime $currentTime);
 
@@ -39,6 +41,8 @@ interface TimeoutInterface
      *
      * @throws Exception
      * @throws PropelException
+     *
+     * @return void
      */
     public function dropOldTimeout(ProcessInterface $process, $stateId, SpySalesOrderItem $orderItem);
 

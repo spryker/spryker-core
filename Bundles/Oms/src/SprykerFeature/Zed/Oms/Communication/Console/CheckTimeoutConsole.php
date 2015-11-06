@@ -20,6 +20,9 @@ class CheckTimeoutConsole extends Console
     const COMMAND_NAME = 'oms:check-timeout';
     const COMMAND_DESCRIPTION = 'Check timeouts';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
@@ -31,10 +34,12 @@ class CheckTimeoutConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
+     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->getFacade()->checkTimeouts([]);
+        $this->getFacade()->checkTimeouts();
     }
 
 }

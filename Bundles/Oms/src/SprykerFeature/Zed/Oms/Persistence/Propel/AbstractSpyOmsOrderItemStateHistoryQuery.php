@@ -19,6 +19,5 @@ use Orm\Zed\Oms\Persistence\Base\SpyOmsOrderItemStateHistoryQuery as BaseSpyOmsO
  */
 abstract class AbstractSpyOmsOrderItemStateHistoryQuery extends BaseSpyOmsOrderItemStateHistoryQuery
 {
-
 } // SpyOmsOrderItemStateHistoryQuery
 

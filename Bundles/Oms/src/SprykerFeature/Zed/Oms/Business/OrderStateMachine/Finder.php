@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
 
+use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;

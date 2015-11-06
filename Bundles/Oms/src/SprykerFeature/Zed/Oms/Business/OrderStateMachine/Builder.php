@@ -56,7 +56,7 @@ class Builder implements BuilderInterface
      * @param StateInterface $state
      * @param TransitionInterface $transition
      * @param ProcessInterface $process
-     * @param string $xmlFolder
+     * @param string|null $xmlFolder
      */
     public function __construct(EventInterface $event, StateInterface $state, TransitionInterface $transition, $process, $xmlFolder = null)
     {
@@ -91,7 +91,7 @@ class Builder implements BuilderInterface
 
             $stateToProcessMap = $this->createStates($processMap);
 
-            $this->createSubprocesses($processMap);
+            $this->createSubProcesses($processMap);
 
             $eventMap = $this->createEvents();
 
@@ -106,6 +106,7 @@ class Builder implements BuilderInterface
     }
 
     /**
+     * @return void
      */
     protected function mergeSubProcessFiles()
     {
@@ -121,6 +122,8 @@ class Builder implements BuilderInterface
     /**
      * @param SimpleXMLElement $fromXmlElement
      * @param SimpleXMLElement $intoXmlNode
+     *
+     * @return void
      */
     protected function recursiveMerge($fromXmlElement, $intoXmlNode)
     {
@@ -129,8 +132,8 @@ class Builder implements BuilderInterface
             return;
         }
 
+        /** @var SimpleXMLElement $xmlElement */
         foreach ($xmlElements as $xmlElement) {
-            /* @var SimpleXMLElement $xmlElement */
             $child = $intoXmlNode->addChild($xmlElement->getName(), $xmlElement);
             $attributes = $xmlElement->attributes();
             foreach ($attributes as $k => $v) {
@@ -193,7 +196,7 @@ class Builder implements BuilderInterface
                 $event->setManual($this->getAttributeBoolean($xmlEvent, 'manual'));
                 $event->setOnEnter($this->getAttributeBoolean($xmlEvent, 'onEnter'));
                 $event->setTimeout($this->getAttributeString($xmlEvent, 'timeout'));
-                if (is_null($eventId)) {
+                if ($eventId === null) {
                     continue;
                 }
 
@@ -214,9 +217,9 @@ class Builder implements BuilderInterface
     {
         $mainProcess = null;
         $xmlProcesses = $this->rootElement->children();
-        foreach ($xmlProcesses as $xmlProcess) {
-            /* @var SimpleXMLElement $xmlProcess */
 
+        /** @var SimpleXMLElement $xmlProcess */
+        foreach ($xmlProcesses as $xmlProcess) {
             $process = clone $this->process;
             $processName = $this->getAttributeString($xmlProcess, 'name');
             $process->setName($processName);
@@ -235,8 +238,10 @@ class Builder implements BuilderInterface
 
     /**
      * @param ProcessInterface[] $processMap
+     *
+     * @return void
      */
-    protected function createSubprocesses(array $processMap)
+    protected function createSubProcesses(array $processMap)
     {
         foreach ($this->rootElement as $xmlProcess) {
             $processName = $this->getAttributeString($xmlProcess, 'name');
@@ -249,7 +254,7 @@ class Builder implements BuilderInterface
                 foreach ($xmlSubProcesses as $xmlSubProcess) {
                     $subProcessName = (string) $xmlSubProcess;
                     $subProcess = $processMap[$subProcessName];
-                    $process->addSubprocess($subProcess);
+                    $process->addSubProcess($subProcess);
                 }
             }
         }
@@ -271,8 +276,8 @@ class Builder implements BuilderInterface
 
             if (!empty($xmlProcess->states)) {
                 $xmlStates = $xmlProcess->states->children();
+                /** @var SimpleXMLElement $xmlState */
                 foreach ($xmlStates as $xmlState) {
-                    /* @var SimpleXMLElement $xmlState */
                     $state = clone $this->state;
                     $state->setName($this->getAttributeString($xmlState, 'name'));
                     $state->setDisplay($this->getAttributeString($xmlState, 'display'));
@@ -301,6 +306,8 @@ class Builder implements BuilderInterface
      * @param EventInterface[] $eventMap
      *
      * @throws LogicException
+     *
+     * @return void
      */
     protected function createTransitions(array $stateToProcessMap, array $processMap, array $eventMap)
     {
@@ -373,7 +380,7 @@ class Builder implements BuilderInterface
      */
     protected function getAttributeBoolean(SimpleXMLElement $xmlElement, $attributeName)
     {
-        return 'true' === (string) $xmlElement->attributes()[$attributeName];
+        return (string) $xmlElement->attributes()[$attributeName] === 'true';
     }
 
 }
