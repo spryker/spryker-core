@@ -44,7 +44,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     }
 
     /**
-     * @var Container
+     * @param Container $container
      *
      * @return Container
      */
