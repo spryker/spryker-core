@@ -87,6 +87,14 @@ class PayolutionConfig extends AbstractBundleConfig
     /**
      * @return string
      */
+    public function getCalculationMode()
+    {
+        return $this->get(PayolutionConfigConstants::CALCULATION_MODE);
+    }
+
+    /**
+     * @return string
+     */
     public function getTransactionChannelInvoice()
     {
         return $this->get(PayolutionConfigConstants::TRANSACTION_CHANNEL_INVOICE);
@@ -106,6 +114,14 @@ class PayolutionConfig extends AbstractBundleConfig
     public function getTransactionChannelPreCheck()
     {
         return $this->get(PayolutionConfigConstants::TRANSACTION_CHANNEL_PRE_CHECK);
+    }
+
+    /**
+     * @return string
+     */
+    public function getTransactionChannelCalculation()
+    {
+        return $this->get(PayolutionConfigConstants::CALCULATION_CHANNEL);
     }
 
     /**
