@@ -124,13 +124,13 @@ class AddressForm extends AbstractForm
         $result = [];
 
         $idCustomer = $this->request->get(self::ID_CUSTOMER);
-        if (false === is_null($idCustomer)) {
+        if ($idCustomer !== null) {
             $customerDetailEntity = $this->customerQuery->findOneByIdCustomer($idCustomer);
             $customerDetails = $customerDetailEntity->toArray();
         }
 
         $idCustomerAddress = $this->request->get(self::ID_CUSTOMER_ADDRESS);
-        if (false === is_null($idCustomerAddress)) {
+        if ($idCustomerAddress !== null) {
             $addressDetailEntity = $this->addressQuery->findOneByIdCustomerAddress($idCustomerAddress);
             $result = $addressDetailEntity->toArray();
         }

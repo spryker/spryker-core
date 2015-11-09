@@ -364,7 +364,7 @@ abstract class AbstractTable
                 'searchable' => $this->config->getSearchable(),
                 'sortable' => $this->config->getSortable(),
                 'pageLength' => $this->config->getPageLength(),
-                'url' => (true === is_null($this->config->getUrl())) ? $this->defaultUrl : $this->config->getUrl(),
+                'url' => ($this->config->getUrl() === null) ? $this->defaultUrl : $this->config->getUrl(),
             ];
         } else {
             $configArray = [

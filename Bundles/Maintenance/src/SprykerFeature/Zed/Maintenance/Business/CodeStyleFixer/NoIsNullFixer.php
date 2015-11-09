@@ -164,6 +164,7 @@ class NoIsNullFixer extends AbstractFixer
             $prevPrevIndex = $tokens->getPrevMeaningfulToken($prevIndex);
             if ($tokens[$prevPrevIndex]->getContent() === 'true' || $tokens[$prevPrevIndex]->getContent() === 'false') {
                 $this->startIndex = $prevPrevIndex;
+
                 return true;
             }
         }
@@ -177,6 +178,7 @@ class NoIsNullFixer extends AbstractFixer
 
             if ($tokens[$nextNextIndex]->getContent() === 'true' || $tokens[$nextNextIndex]->getContent() === 'false') {
                 $this->endIndex = $nextNextIndex;
+
                 return true;
             }
         }
