@@ -10,6 +10,9 @@ use SprykerEngine\Shared\Translation\TranslationInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Transfer\LocaleTransfer;
 
+/**
+ * @method TranslationDependencyContainer getDependencyContainer()
+ */
 class TranslationFacade extends AbstractFacade implements TranslationInterface
 {
 
