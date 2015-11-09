@@ -8,6 +8,7 @@
 namespace Generated\Shared\Transfer;
 
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
+use SprykerEngine\Shared\Transfer\Exception\RequiredTransferPropertyException;
 {% for use in uses %}
 use {{ use }};
 {% endfor %}
@@ -38,11 +39,8 @@ class {{ className }} extends AbstractTransfer
 {% if methodName starts with 'add' %}
 {{ macro.addAdd(method) }}
 {% endif %}
-{#{% if methodName starts with 'has' %}#}
-{#{{ macro.addHas(method) }}#}
-{#{% endif %}#}
-{#{% if methodName starts with 'remove' %}#}
-{#{{ macro.addRemove(method) }}#}
-{#{% endif %}#}
+{% if methodName starts with 'require' %}
+{{ macro.addRequire(method) }}
+{% endif %}
 {% endfor %}
 }

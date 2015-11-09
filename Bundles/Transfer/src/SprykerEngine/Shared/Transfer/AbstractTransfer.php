@@ -285,29 +285,36 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
 
     /**
      * @param string $property
-     * @param bool $isRequired
      *
      * @throws RequiredTransferPropertyException
      *
      * @return void
      */
-    protected function assertIsRequired($property, $isRequired)
+    protected function assertPropertyIsSet($property)
     {
-        if ($isRequired === false) {
-            return;
-        }
-
-        if ($this->$property instanceof \ArrayObject && $this->$property->count() === 0) {
+        if ($this->$property === null) {
             throw new RequiredTransferPropertyException(sprintf(
-                'Empty required collection property "%s" for transfer %s.',
+                'Missing required property "%s" for transfer %s.',
                 $property,
                 get_class($this)
             ));
         }
+    }
 
-        if ($this->$property === null) {
+    /**
+     * @param string $property
+     *
+     * @throws RequiredTransferPropertyException
+     *
+     * @return void
+     */
+    protected function assertCollectionPropertyIsSet($property)
+    {
+        /** @var \ArrayObject $collection */
+        $collection = $this->$property;
+        if ($collection->count() === 0) {
             throw new RequiredTransferPropertyException(sprintf(
-                'Missing required property "%s" for transfer %s.',
+                'Empty required collection property "%s" for transfer %s.',
                 $property,
                 get_class($this)
             ));

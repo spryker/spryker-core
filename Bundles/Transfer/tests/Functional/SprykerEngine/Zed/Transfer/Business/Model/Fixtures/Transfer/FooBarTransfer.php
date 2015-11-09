@@ -7,6 +7,7 @@
 namespace Generated\Shared\Transfer;
 
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
+use SprykerEngine\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Generated\Shared\Project\FooBarInterface as ProjectFooBarInterface;
 use Generated\Shared\Vendor\FooBarInterface as VendorFooBarInterface;
 
@@ -51,15 +52,23 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     }
 
     /**
-     * @param bool $isRequired
-     *
      * @return string
      */
-    public function getName($isRequired = false)
+    public function getName()
     {
-        $this->assertIsRequired('name', $isRequired);
-
         return $this->name;
+    }
+
+    /**
+     * @throws RequiredTransferPropertyException
+     *
+     * @return self
+     */
+    public function requireName()
+    {
+        $this->assertPropertyIsSet('name');
+
+        return $this;
     }
 
     /**
@@ -76,15 +85,23 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     }
 
     /**
-     * @param bool $isRequired
-     *
      * @return int
      */
-    public function getBla($isRequired = false)
+    public function getBla()
     {
-        $this->assertIsRequired('bla', $isRequired);
-
         return $this->bla;
+    }
+
+    /**
+     * @throws RequiredTransferPropertyException
+     *
+     * @return self
+     */
+    public function requireBla()
+    {
+        $this->assertPropertyIsSet('bla');
+
+        return $this;
     }
 
     /**
@@ -101,14 +118,10 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     }
 
     /**
-     * @param bool $isRequired
-     *
      * @return FooBarTransfer[]
      */
-    public function getSelfReference($isRequired = false)
+    public function getSelfReference()
     {
-        $this->assertIsRequired('selfReference', $isRequired);
-
         return $this->selfReference;
     }
 
@@ -121,6 +134,18 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     {
         $this->selfReference[] = $selfReference;
         $this->addModifiedProperty('selfReference');
+
+        return $this;
+    }
+
+    /**
+     * @throws RequiredTransferPropertyException
+     *
+     * @return self
+     */
+    public function requireSelfReference()
+    {
+        $this->assertCollectionPropertyIsSet('selfReference');
 
         return $this;
     }

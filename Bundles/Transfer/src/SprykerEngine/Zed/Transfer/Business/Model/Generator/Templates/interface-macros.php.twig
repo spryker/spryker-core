@@ -8,11 +8,9 @@
 {% endmacro -%}
 {%- macro addGet(method) %}
     /**
-     * @param bool $isRequired
-     *
      * @return {{ method.return }}
      */
-    public function {{ method.name }}($isRequired = false);
+    public function {{ method.name }}();
 {% endmacro -%}
 {%- macro addAdd(method) %}
     /**
@@ -21,4 +19,12 @@
      * @return $this
      */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }});
+{% endmacro -%}
+{%- macro addRequire(method) %}
+    /**
+     * @throws RequiredTransferPropertyException
+     *
+     * @return self
+     */
+    public function {{ method.name }}();
 {% endmacro -%}

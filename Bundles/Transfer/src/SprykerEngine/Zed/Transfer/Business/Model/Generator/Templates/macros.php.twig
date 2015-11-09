@@ -32,14 +32,10 @@
 {% endmacro -%}
 {%- macro addGet(method) %}
     /**
-     * @param bool $isRequired
-     *
      * @return {{ method.return }}
      */
-    public function {{ method.name }}($isRequired = false)
+    public function {{ method.name }}()
     {
-        $this->assertIsRequired('{{ method.property }}', $isRequired);
-
         return $this->{{ method.property }};
     }
 {% endmacro -%}
@@ -78,6 +74,23 @@
     {
         $this->{{ method.parent }}->remove(${{ method.property }});
         $this->addModifiedProperty('{{ method.parent }}');
+
+        return $this;
+    }
+{% endmacro -%}
+{%- macro addRequire(method) %}
+    /**
+     * @throws RequiredTransferPropertyException
+     *
+     * @return self
+     */
+    public function {{ method.name }}()
+    {
+{% if method.isCollection %}
+        $this->assertCollectionPropertyIsSet('{{ method.property }}');
+{% else %}
+        $this->assertPropertyIsSet('{{ method.property }}');
+{% endif %}
 
         return $this;
     }

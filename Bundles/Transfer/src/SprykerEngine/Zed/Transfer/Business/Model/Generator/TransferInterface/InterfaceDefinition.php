@@ -252,6 +252,8 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
         } else {
             $this->buildGetterAndSetter($property);
         }
+
+        $this->buildRequireMethod($property);
     }
 
     /**
@@ -434,6 +436,20 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
         }
 
         return $method;
+    }
+
+    /**
+     * @param array $property
+     */
+    private function buildRequireMethod(array $property)
+    {
+        $propertyName = $this->getPropertyName($property);
+        $methodName = 'require' . ucfirst($propertyName);
+        $method = [
+            'name' => $methodName,
+            'property' => $propertyName,
+        ];
+        $this->methods[$methodName] = $method;
     }
 
 }

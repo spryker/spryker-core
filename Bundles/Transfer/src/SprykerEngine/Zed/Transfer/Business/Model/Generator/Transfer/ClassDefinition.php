@@ -269,8 +269,10 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         if ($this->isCollection($property)) {
             $this->buildCollectionMethods($property);
+            $this->buildRequireMethod($property, true);
         } else {
             $this->buildGetterAndSetter($property);
+            $this->buildRequireMethod($property, false);
         }
     }
 
@@ -472,6 +474,22 @@ class ClassDefinition implements ClassDefinitionInterface
         }
 
         return $method;
+    }
+
+    /**
+     * @param array $property
+     * @param bool $isCollection
+     */
+    private function buildRequireMethod(array $property, $isCollection)
+    {
+        $propertyName = $this->getPropertyName($property);
+        $methodName = 'require' . ucfirst($propertyName);
+        $method = [
+            'name' => $methodName,
+            'property' => $propertyName,
+            'isCollection' => $isCollection,
+        ];
+        $this->methods[$methodName] = $method;
     }
 
 }

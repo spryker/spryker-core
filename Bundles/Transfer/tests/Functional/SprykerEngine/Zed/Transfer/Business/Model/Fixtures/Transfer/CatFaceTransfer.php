@@ -7,6 +7,7 @@
 namespace Generated\Shared\Transfer;
 
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
+use SprykerEngine\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Generated\Shared\Test\CatFaceInterface as TestCatFaceInterface;
 use Generated\Shared\Transfer\ItemTransfer;
 
@@ -51,15 +52,23 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     }
 
     /**
-     * @param bool $isRequired
-     *
      * @return string
      */
-    public function getName($isRequired = false)
+    public function getName()
     {
-        $this->assertIsRequired('name', $isRequired);
-
         return $this->name;
+    }
+
+    /**
+     * @throws RequiredTransferPropertyException
+     *
+     * @return self
+     */
+    public function requireName()
+    {
+        $this->assertPropertyIsSet('name');
+
+        return $this;
     }
 
     /**
@@ -76,15 +85,23 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     }
 
     /**
-     * @param bool $isRequired
-     *
      * @return ItemTransfer
      */
-    public function getItem($isRequired = false)
+    public function getItem()
     {
-        $this->assertIsRequired('item', $isRequired);
-
         return $this->item;
+    }
+
+    /**
+     * @throws RequiredTransferPropertyException
+     *
+     * @return self
+     */
+    public function requireItem()
+    {
+        $this->assertPropertyIsSet('item');
+
+        return $this;
     }
 
     /**
@@ -101,14 +118,10 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     }
 
     /**
-     * @param bool $isRequired
-     *
      * @return ItemTransfer[]
      */
-    public function getItems($isRequired = false)
+    public function getItems()
     {
-        $this->assertIsRequired('items', $isRequired);
-
         return $this->items;
     }
 
@@ -121,6 +134,18 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     {
         $this->items[] = $item;
         $this->addModifiedProperty('items');
+
+        return $this;
+    }
+
+    /**
+     * @throws RequiredTransferPropertyException
+     *
+     * @return self
+     */
+    public function requireItems()
+    {
+        $this->assertCollectionPropertyIsSet('items');
 
         return $this;
     }
