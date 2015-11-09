@@ -6,6 +6,7 @@
 
 namespace SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer;
 
+use Zend\Filter\Word\CamelCaseToUnderscore;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
 class ClassDefinition implements ClassDefinitionInterface
@@ -25,6 +26,11 @@ class ClassDefinition implements ClassDefinitionInterface
      * @var array
      */
     private $interfaces = [];
+
+    /**
+     * @var array
+     */
+    private $constants = [];
 
     /**
      * @var array
@@ -56,6 +62,7 @@ class ClassDefinition implements ClassDefinitionInterface
 
         if (isset($definition['property'])) {
             $properties = $this->normalizePropertyTypes($definition['property']);
+            $this->addConstants($properties);
             $this->addProperties($properties);
             $this->addMethods($properties);
         }
@@ -128,6 +135,30 @@ class ClassDefinition implements ClassDefinitionInterface
     public function getUses()
     {
         return $this->uses;
+    }
+
+    /**
+     * @param array $properties
+     */
+    private function addConstants(array $properties)
+    {
+        foreach ($properties as $property) {
+            $this->addConstant($property);
+        }
+    }
+
+    /**
+     * @param array $property
+     */
+    private function addConstant(array $property)
+    {
+        $property['name'] = lcfirst($property['name']);
+        $propertyInfo = [
+            'name' => $this->getPropertyConstantName($property),
+            'value' => $property['name'],
+        ];
+
+        $this->constants[$property['name']] = $propertyInfo;
     }
 
     /**
@@ -247,6 +278,14 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @return array
      */
+    public function getConstants()
+    {
+        return $this->constants;
+    }
+
+    /**
+     * @return array
+     */
     public function getProperties()
     {
         return $this->properties;
@@ -318,6 +357,18 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $this->buildSetMethod($property);
         $this->buildGetMethod($property);
+    }
+
+    /**
+     * @param array $property
+     *
+     * @return string
+     */
+    private function getPropertyConstantName(array $property)
+    {
+        $filter = new CamelCaseToUnderscore();
+
+        return mb_strtoupper($filter->filter($property['name']));
     }
 
     /**
@@ -412,6 +463,7 @@ class ClassDefinition implements ClassDefinitionInterface
         $method = [
             'name' => $methodName,
             'property' => $propertyName,
+            'propertyConst' => $this->getPropertyConstantName($property),
             'return' => $this->getReturnType($property),
         ];
         $this->methods[$methodName] = $method;
@@ -427,6 +479,7 @@ class ClassDefinition implements ClassDefinitionInterface
         $method = [
             'name' => $methodName,
             'property' => $propertyName,
+            'propertyConst' => $this->getPropertyConstantName($property),
             'var' => $this->getSetVar($property),
         ];
         $method = $this->addTypeHint($property, $method);
@@ -440,6 +493,7 @@ class ClassDefinition implements ClassDefinitionInterface
     private function buildAddMethod($property)
     {
         $parent = $this->getPropertyName($property);
+        $propertyConstant = $this->getPropertyConstantName($property);
         if (array_key_exists('singular', $property)) {
             $property['name'] = $property['singular'];
         }
@@ -448,6 +502,7 @@ class ClassDefinition implements ClassDefinitionInterface
         $method = [
             'name' => $methodName,
             'property' => $propertyName,
+            'propertyConst' => $propertyConstant,
             'parent' => $parent,
             'var' => $this->getAddVar($property),
         ];
@@ -487,6 +542,7 @@ class ClassDefinition implements ClassDefinitionInterface
         $method = [
             'name' => $methodName,
             'property' => $propertyName,
+            'propertyConst' => $this->getPropertyConstantName($property),
             'isCollection' => $isCollection,
         ];
         $this->methods[$methodName] = $method;

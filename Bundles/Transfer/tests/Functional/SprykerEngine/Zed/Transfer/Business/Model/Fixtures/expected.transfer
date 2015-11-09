@@ -18,6 +18,12 @@ use Generated\Shared\Transfer\ItemTransfer;
 class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
 {
 
+    const NAME = 'name';
+
+    const ITEM = 'item';
+
+    const ITEMS = 'items';
+
     /**
      * @var string
      */
@@ -46,7 +52,7 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     public function setName($name)
     {
         $this->name = $name;
-        $this->addModifiedProperty('name');
+        $this->addModifiedProperty(self::NAME);
 
         return $this;
     }
@@ -66,7 +72,7 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
      */
     public function requireName()
     {
-        $this->assertPropertyIsSet('name');
+        $this->assertPropertyIsSet(self::NAME);
 
         return $this;
     }
@@ -79,7 +85,7 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     public function setItem(ItemTransfer $item)
     {
         $this->item = $item;
-        $this->addModifiedProperty('item');
+        $this->addModifiedProperty(self::ITEM);
 
         return $this;
     }
@@ -99,7 +105,7 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
      */
     public function requireItem()
     {
-        $this->assertPropertyIsSet('item');
+        $this->assertPropertyIsSet(self::ITEM);
 
         return $this;
     }
@@ -112,7 +118,7 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     public function setItems(\ArrayObject $items)
     {
         $this->items = $items;
-        $this->addModifiedProperty('items');
+        $this->addModifiedProperty(self::ITEMS);
 
         return $this;
     }
@@ -133,7 +139,7 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     public function addItem(ItemTransfer $item)
     {
         $this->items[] = $item;
-        $this->addModifiedProperty('items');
+        $this->addModifiedProperty(self::ITEMS);
 
         return $this;
     }
@@ -145,7 +151,7 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
      */
     public function requireItems()
     {
-        $this->assertCollectionPropertyIsSet('items');
+        $this->assertCollectionPropertyIsSet(self::ITEMS);
 
         return $this;
     }

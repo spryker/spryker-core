@@ -24,6 +24,10 @@ class {{ className }} extends AbstractTransfer
 {% endif %}
 {
 
+{% for constant in constants %}
+{{ macro.addConstant(constant) }}
+{% endfor -%}
+
 {% for property in properties %}
 {{ macro.addProperty(property) }}
 {% endfor -%}

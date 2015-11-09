@@ -18,6 +18,12 @@ use Generated\Shared\Vendor\FooBarInterface as VendorFooBarInterface;
 class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface, VendorFooBarInterface
 {
 
+    const NAME = 'name';
+
+    const BLA = 'bla';
+
+    const SELF_REFERENCE = 'selfReference';
+
     /**
      * @var string
      */
@@ -46,7 +52,7 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     public function setName($name)
     {
         $this->name = $name;
-        $this->addModifiedProperty('name');
+        $this->addModifiedProperty(self::NAME);
 
         return $this;
     }
@@ -66,7 +72,7 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
      */
     public function requireName()
     {
-        $this->assertPropertyIsSet('name');
+        $this->assertPropertyIsSet(self::NAME);
 
         return $this;
     }
@@ -79,7 +85,7 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     public function setBla($bla)
     {
         $this->bla = $bla;
-        $this->addModifiedProperty('bla');
+        $this->addModifiedProperty(self::BLA);
 
         return $this;
     }
@@ -99,7 +105,7 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
      */
     public function requireBla()
     {
-        $this->assertPropertyIsSet('bla');
+        $this->assertPropertyIsSet(self::BLA);
 
         return $this;
     }
@@ -112,7 +118,7 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     public function setSelfReference(\ArrayObject $selfReference)
     {
         $this->selfReference = $selfReference;
-        $this->addModifiedProperty('selfReference');
+        $this->addModifiedProperty(self::SELF_REFERENCE);
 
         return $this;
     }
@@ -133,7 +139,7 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     public function addSelfReference(FooBarTransfer $selfReference)
     {
         $this->selfReference[] = $selfReference;
-        $this->addModifiedProperty('selfReference');
+        $this->addModifiedProperty(self::SELF_REFERENCE);
 
         return $this;
     }
@@ -145,7 +151,7 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
      */
     public function requireSelfReference()
     {
-        $this->assertCollectionPropertyIsSet('selfReference');
+        $this->assertCollectionPropertyIsSet(self::SELF_REFERENCE);
 
         return $this;
     }

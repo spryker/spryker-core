@@ -1,3 +1,7 @@
+{% macro addConstant(constant) %}
+    const {{ constant.name }} = '{{ constant.value }}';
+{% endmacro %}
+
 {% macro addProperty(property) %}
     /**
      * @var {{ property.type }}
@@ -25,7 +29,7 @@
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }})
     {
         $this->{{ method.property }} = ${{ method.property }};
-        $this->addModifiedProperty('{{ method.property }}');
+        $this->addModifiedProperty(self::{{ method.propertyConst }});
 
         return $this;
     }
@@ -48,32 +52,7 @@
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }})
     {
         $this->{{ method.parent }}[] = ${{ method.property }};
-        $this->addModifiedProperty('{{ method.parent }}');
-
-        return $this;
-    }
-{% endmacro -%}
-{%- macro addHas(method) %}
-    /**
-     * @param {{ method.var }} ${{ method.property }}
-     *
-     * @return bool
-     */
-    public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }})
-    {
-        return $this->{{ method.parent }}->has(${{ method.property }});
-    }
-{% endmacro -%}
-{%- macro addRemove(method) %}
-    /**
-     * @param {{ method.var }} ${{ method.property }}
-     *
-     * @return $this
-     */
-    public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }})
-    {
-        $this->{{ method.parent }}->remove(${{ method.property }});
-        $this->addModifiedProperty('{{ method.parent }}');
+        $this->addModifiedProperty(self::{{ method.propertyConst }});
 
         return $this;
     }
@@ -87,9 +66,9 @@
     public function {{ method.name }}()
     {
 {% if method.isCollection %}
-        $this->assertCollectionPropertyIsSet('{{ method.property }}');
+        $this->assertCollectionPropertyIsSet(self::{{ method.propertyConst }});
 {% else %}
-        $this->assertPropertyIsSet('{{ method.property }}');
+        $this->assertPropertyIsSet(self::{{ method.propertyConst }});
 {% endif %}
 
         return $this;
