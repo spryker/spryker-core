@@ -54,7 +54,17 @@ abstract class AbstractPaymentMethod
     /**
      * @return string
      */
-    abstract public function getTransactionChannel();
+    abstract protected function getTransactionChannel();
+
+    /**
+     * @return int
+     */
+    abstract public function getMinGrandTotal();
+
+    /**
+     * @return int
+     */
+    abstract public function getMaxGrandTotal();
 
     /**
      * @param int $grandTotal

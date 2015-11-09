@@ -71,9 +71,15 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     public function preAuthorizePayment($idPayment)
     {
         $paymentEntity = $this->getPaymentEntity($idPayment);
-        $requestData = $this
-            ->getMethodMapper($paymentEntity->getAccountBrand())
-            ->buildPreAuthorizationRequest($paymentEntity);
+        $methodMapper = $this->getMethodMapper($paymentEntity->getAccountBrand());
+
+        $this->checkMaxMinGrandTotal(
+            $paymentEntity->getSpySalesOrder()->getGrandTotal(),
+            $methodMapper->getMinGrandTotal(),
+            $methodMapper->getMaxGrandTotal()
+        );
+
+        $requestData = $methodMapper->buildPreAuthorizationRequest($paymentEntity);
 
         return $this->sendLoggedRequest($requestData, $paymentEntity);
     }

@@ -58,4 +58,19 @@ interface InvoiceInterface
      */
     public function buildRefundRequest(SpyPaymentPayolution $paymentEntity, $uniqueId);
 
+    /**
+     * @return string
+     */
+    public function getAccountBrand();
+
+    /**
+     * @return int
+     */
+    public function getMinGrandTotal();
+
+    /**
+     * @return int
+     */
+    public function getMaxGrandTotal();
+
 }

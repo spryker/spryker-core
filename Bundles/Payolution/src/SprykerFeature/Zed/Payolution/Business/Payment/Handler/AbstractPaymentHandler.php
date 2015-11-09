@@ -88,19 +88,21 @@ abstract class AbstractPaymentHandler
 
     /**
      * @param int $amount
+     * @param int $min
+     * @param int $max
      *
      * @throws OrderGrandTotalException
      *
      * @return void
      */
-    private function checkMaxMinGrandTotal($amount)
+    protected function checkMaxMinGrandTotal($amount, $min, $max)
     {
-        if ($amount < $this->config->getMinOrderGrandTotalInvoice())
+        if ($amount < $min)
         {
             throw new OrderGrandTotalException('The grand total is less than the allowed minimum amount');
         }
 
-        if ($amount > $this->config->getMaxOrderGrandTotalInvoice())
+        if ($amount > $max)
         {
             throw new OrderGrandTotalException('The grand total is greater than the allowed maximum amount');
         }

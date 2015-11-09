@@ -22,9 +22,28 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
         return ApiConstants::BRAND_INVOICE;
     }
 
-    public function getTransactionChannel()
+    /**
+     * @return string
+     */
+    protected function getTransactionChannel()
     {
         return $this->getConfig()->getTransactionChannelInvoice();
+    }
+
+    /**
+     * @return int
+     */
+    public function getMinGrandTotal()
+    {
+        return $this->getConfig()->getMinOrderGrandTotalInvoice();
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxGrandTotal()
+    {
+        return $this->getConfig()->getMaxOrderGrandTotalInvoice();
     }
 
     /**

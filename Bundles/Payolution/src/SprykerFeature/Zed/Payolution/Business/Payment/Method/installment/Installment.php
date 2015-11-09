@@ -22,9 +22,28 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
         return ApiConstants::BRAND_INSTALLMENT;
     }
 
-    public function getTransactionChannel()
+    /**
+     * @return string
+     */
+    protected function getTransactionChannel()
     {
         return $this->getConfig()->getTransactionChannelInstallment();
+    }
+
+    /**
+     * @return int
+     */
+    public function getMinGrandTotal()
+    {
+        return $this->getConfig()->getMinOrderGrandTotalInstallment();
+    }
+
+    /**
+     * @return int
+     */
+    public function getMaxGrandTotal()
+    {
+        return $this->getConfig()->getMaxOrderGrandTotalInstallment();
     }
 
     /**
