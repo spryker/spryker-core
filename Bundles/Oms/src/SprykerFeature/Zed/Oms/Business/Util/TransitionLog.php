@@ -36,13 +36,20 @@ class TransitionLog implements TransitionLogInterface
     protected $logEntities;
 
     /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
      * @param OmsQueryContainerInterface $queryContainer
      * @param array $logContext
+     * @param Request $request
      */
-    public function __construct(OmsQueryContainerInterface $queryContainer, array $logContext)
+    public function __construct(OmsQueryContainerInterface $queryContainer, array $logContext, Request $request = null)
     {
         $this->queryContainer = $queryContainer;
         $this->logContext = $logContext;
+        $this->request = $request;
     }
 
     /**
@@ -162,9 +169,8 @@ class TransitionLog implements TransitionLogInterface
         $logEntity->setHostname(System::getHostname());
 
         $path = 'cli';
-        $request = $this->getRequest();
-        if (isset($request)) {
-            $path = $request->getPathInfo();
+        if (isset($this->request)) {
+            $path = $this->request->getPathInfo();
         } else {
             if (isset($_SERVER['argv']) && is_array($_SERVER['argv'])) {
                 $path = implode(' ', $_SERVER['argv']);
@@ -173,19 +179,9 @@ class TransitionLog implements TransitionLogInterface
         $logEntity->setPath($path);
 
         //FIXME: get/post params
-        $logEntity->setParams(['a' => 'todo']);
+        //$logEntity->setParams(['a' => 'todo']);
 
         return $logEntity;
-    }
-
-    /**
-     * TODO Refactor: dependency
-     *
-     * @return Request
-     */
-    protected function getRequest()
-    {
-        return Locator::getInstance()->application()->pluginPimple()->getApplication()['request'];
     }
 
     /**

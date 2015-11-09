@@ -12,7 +12,7 @@
         <column name="event" required="false" size="100" type="VARCHAR"/>
         <column name="hostname" type="VARCHAR" size="128" required="true"/>
         <column name="path" type="VARCHAR" size="256" required="false"/>
-        <column name="params" type="ARRAY" required="true"/>
+        <column name="params" type="ARRAY" required="false"/>
         <column name="source_state" type="VARCHAR" size="128" required="false"/>
         <column name="target_state" type="VARCHAR" size="128" required="false"/>
         <column name="command" type="VARCHAR" required="false"/>
