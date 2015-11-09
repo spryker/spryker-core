@@ -169,7 +169,7 @@ class TransitionLog implements TransitionLogInterface
         $logEntity->setHostname(System::getHostname());
 
         $path = 'cli';
-        if (isset($this->request)) {
+        if ($this->request !== null) {
             $path = $this->request->getPathInfo();
         } else {
             if (isset($_SERVER['argv']) && is_array($_SERVER['argv'])) {
