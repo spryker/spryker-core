@@ -24,7 +24,6 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
     {
         $this->translator = new Translator(
             'de',
-            null,
             new TranslationFileFinder([]),
             new TranslationFileLoaderFactory()
         );
