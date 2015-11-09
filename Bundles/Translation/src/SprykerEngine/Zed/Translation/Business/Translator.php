@@ -15,9 +15,9 @@ class Translator extends \Symfony\Component\Translation\Translator
      * Constructor.
      *
      * @param string $locale The locale
-     * @param MessageSelector|null $selector The message selector for pluralization
      * @param TranslationFileFinder $fileFinder
      * @param TranslationFileLoaderFactory $fileLoaderFactory
+     * @param MessageSelector|null $selector The message selector for pluralization
      *
      * @throws \InvalidArgumentException If a locale contains invalid characters
      *
@@ -25,9 +25,9 @@ class Translator extends \Symfony\Component\Translation\Translator
      */
     public function __construct(
         $locale,
-        MessageSelector $selector,
         TranslationFileFinder $fileFinder,
-        TranslationFileLoaderFactory $fileLoaderFactory
+        TranslationFileLoaderFactory $fileLoaderFactory,
+        MessageSelector $selector = null
     ) {
         parent::__construct($locale, $selector);
 

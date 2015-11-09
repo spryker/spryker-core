@@ -6,11 +6,13 @@
 
 namespace SprykerEngine\Zed\Translation\Business;
 
+use Generated\Zed\Ide\FactoryAutoCompletion\TranslationBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerEngine\Zed\Kernel\Business\Factory;
+use SprykerEngine\Zed\Translation\TranslationConfig;
 
 /**
- * @method Factory getFactory()
+ * @method TranslationBusiness getFactory()
+ * @method TranslationConfig getConfig()
  */
 class TranslationDependencyContainer extends AbstractBusinessDependencyContainer
 {
@@ -30,7 +32,6 @@ class TranslationDependencyContainer extends AbstractBusinessDependencyContainer
 
         $translator = $this->getFactory()->createTranslator(
             $locale,
-            null,
             $translationFileFinder,
             $translationFileLoaderFactory
         );
