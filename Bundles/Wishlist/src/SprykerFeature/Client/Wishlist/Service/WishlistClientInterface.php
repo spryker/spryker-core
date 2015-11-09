@@ -7,12 +7,12 @@ namespace SprykerFeature\Client\Wishlist\Service;
 use Generated\Shared\Wishlist\ItemInterface;
 use Generated\Shared\Wishlist\WishlistInterface;
 
-
 /**
  * @method WishlistDependencyContainer getDependencyContainer()
  */
 interface WishlistClientInterface
 {
+
     /**
      * @param ItemInterface $wishlistItem
      *
@@ -50,4 +50,5 @@ interface WishlistClientInterface
      * @return WishlistInterface
      */
     public function synchronizeSession();
+
 }

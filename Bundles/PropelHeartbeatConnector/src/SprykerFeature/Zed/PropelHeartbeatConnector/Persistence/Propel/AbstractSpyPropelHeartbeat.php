@@ -15,5 +15,4 @@ use Orm\Zed\PropelHeartbeatConnector\Persistence\Base\SpyPropelHeartbeat as Base
  */
 abstract class AbstractSpyPropelHeartbeat extends BaseSpyPropelHeartbeat
 {
-
 }

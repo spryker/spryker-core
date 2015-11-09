@@ -12,6 +12,7 @@ use SprykerFeature\Zed\Auth\Dependency\Plugin\AuthPasswordResetSenderInterface;
 
 class AuthDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const FACADE_USER = 'facade user';
     const PASSWORD_RESET_SENDER = 'Password reset sender';
 
@@ -51,10 +52,10 @@ class AuthDependencyProvider extends AbstractBundleDependencyProvider
      * @param Container $container
      *
      * @return AuthPasswordResetSenderInterface;
-     *
      */
     protected function getPasswordResetNotificationSender(Container $container)
     {
         return;
     }
+
 }

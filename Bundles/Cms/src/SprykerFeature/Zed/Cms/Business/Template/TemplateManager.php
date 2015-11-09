@@ -20,6 +20,7 @@ use Symfony\Component\Finder\Finder;
 
 class TemplateManager implements TemplateManagerInterface
 {
+
     /**
      * @var CmsQueryContainerInterface
      */
@@ -273,7 +274,7 @@ class TemplateManager implements TemplateManagerInterface
             try {
                 $this->getTemplateByPath($cmsTemplateFolderPath . $fileFullName);
             } catch (MissingTemplateException $e) {
-                $fileName = basename($templateFolder . $fileFullName, ".twig");
+                $fileName = basename($templateFolder . $fileFullName, '.twig');
                 $this->createTemplate($fileName, $cmsTemplateFolderPath . $fileFullName);
                 $isSynced = true;
             }
@@ -281,4 +282,5 @@ class TemplateManager implements TemplateManagerInterface
 
         return $isSynced;
     }
+
 }

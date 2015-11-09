@@ -59,4 +59,5 @@ class TaskWorkerTest extends Test
 
         return $mockTaskPlugin;
     }
+
 }

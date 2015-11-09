@@ -273,4 +273,5 @@ class ProductFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->createProductManager()->getConcreteProduct($concreteSku);
     }
+
 }

@@ -9,6 +9,7 @@ use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 
 class ResetPasswordForm extends AbstractForm
 {
+
     const PASSWORD = 'password';
 
     /**
@@ -29,19 +30,19 @@ class ResetPasswordForm extends AbstractForm
                     'label' => 'Password',
                     'attr' => [
                         'placeholder' => 'Password',
-                    ]
+                    ],
                 ],
                 'second_options' => [
                     'label' => 'Repeat Password',
                     'attr' => [
                         'placeholder' => 'Repeat Password',
-                    ]
+                    ],
                 ],
                 'required' => true,
                 'type' => 'password',
                 'attr' => [
                     'class' => 'btn btn-default btn-block btn-outline',
-                ]
+                ],
             ]
         );
     }
@@ -55,4 +56,5 @@ class ResetPasswordForm extends AbstractForm
     {
         return [];
     }
+
 }

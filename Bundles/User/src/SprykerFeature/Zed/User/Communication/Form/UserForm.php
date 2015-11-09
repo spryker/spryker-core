@@ -10,6 +10,7 @@ use Orm\Zed\User\Persistence\Map\SpyUserTableMap;
 
 class UserForm extends AbstractForm
 {
+
     const USERNAME = 'username';
     const GROUP = 'group';
     const FIRST_NAME = 'first_name';
@@ -46,7 +47,7 @@ class UserForm extends AbstractForm
         $this->addText(
             self::USERNAME,
             [
-                'label'       => 'Username',
+                'label' => 'Username',
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
@@ -64,14 +65,14 @@ class UserForm extends AbstractForm
         $this->addRepeated(
             self::PASSWORD,
             [
-                'constraints'     => [
+                'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
                 'invalid_message' => 'The password fields must match.',
-                'first_options'   => ['label' => 'Password'],
-                'second_options'  => ['label' => 'Repeat Password'],
-                'required'        => true,
-                'type'            => 'password',
+                'first_options' => ['label' => 'Password'],
+                'second_options' => ['label' => 'Repeat Password'],
+                'required' => true,
+                'type' => 'password',
             ]
         );
 
@@ -122,15 +123,15 @@ class UserForm extends AbstractForm
             [
                 'constraints' => [
                     $this->getConstraints()->createConstraintChoice([
-                        'choices'  => array_keys($this->getGroupChoices()),
+                        'choices' => array_keys($this->getGroupChoices()),
                         'multiple' => true,
-                        'min'      => 1
-                    ])
+                        'min' => 1,
+                    ]),
                 ],
-                'label'       => 'Assigned groups',
-                'multiple'    => true,
-                'expanded'    => true,
-                'choices'     => $this->getGroupChoices(),
+                'label' => 'Assigned groups',
+                'multiple' => true,
+                'expanded' => true,
+                'choices' => $this->getGroupChoices(),
             ]
         );
 
@@ -164,8 +165,8 @@ class UserForm extends AbstractForm
                 $this->allAclGroups[$groupTransfer->getIdAclGroup()] =
                     $this->formatGroupName($groupTransfer->getName());
             }
-
         }
+
         return $this->allAclGroups;
     }
 

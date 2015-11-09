@@ -10,5 +10,4 @@ use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 
 class KernelDependencyContainer extends AbstractPersistenceDependencyContainer
 {
-
 }

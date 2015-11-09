@@ -10,6 +10,7 @@ use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 
 class ResetPasswordRequestForm extends AbstractForm
 {
+
     const EMAIL = 'email';
     const SUBMIT = 'submit';
     const LOGIN = 'login';
@@ -27,21 +28,21 @@ class ResetPasswordRequestForm extends AbstractForm
                     $this->getConstraints()->createConstraintEmail(),
                 ],
                 'attr' => [
-                    'placeholder' => 'Email Address'
+                    'placeholder' => 'Email Address',
                 ],
             ])
             ->addSubmit(self::SUBMIT, [
                 'label' => 'Recover password',
                 'attr' => [
                     'class' => 'btn btn-primary btn-block btn-outline',
-                ]
+                ],
             ])
             ->addUrl(self::LOGIN, [
                 'attr' => [
                     'href' => '/auth/login',
                     'class' => 'btn btn-success btn-block btn-outline',
                     'title' => 'Login',
-                ]
+                ],
             ])
         ;
     }

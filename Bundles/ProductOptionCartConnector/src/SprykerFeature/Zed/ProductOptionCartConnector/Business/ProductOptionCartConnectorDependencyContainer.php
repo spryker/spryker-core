@@ -37,4 +37,5 @@ class ProductOptionCartConnectorDependencyContainer extends AbstractBusinessDepe
     {
         return $this->getFactory()->createModelGroupKeyExpander();
     }
+
 }

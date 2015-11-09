@@ -6,5 +6,4 @@ use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController
 
 class FixtureGatewayController extends AbstractGatewayController
 {
-
 }

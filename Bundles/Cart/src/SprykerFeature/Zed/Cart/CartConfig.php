@@ -19,4 +19,5 @@ class CartConfig extends AbstractBundleConfig
     {
         return [];
     }
+
 }

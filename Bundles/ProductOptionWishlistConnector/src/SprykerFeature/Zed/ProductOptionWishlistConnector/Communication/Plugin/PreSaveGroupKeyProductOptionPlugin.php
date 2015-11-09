@@ -12,6 +12,7 @@ use SprykerFeature\Zed\Wishlist\Dependency\PreSavePluginInterface;
 
 class PreSaveGroupKeyProductOptionPlugin extends AbstractPlugin implements PreSavePluginInterface
 {
+
     /**
      * @param \ArrayObject $items
      */
@@ -75,8 +76,8 @@ class PreSaveGroupKeyProductOptionPlugin extends AbstractPlugin implements PreSa
             }
             $groupKeyPart[] = $option->getIdOptionValueUsage();
         }
+
         return implode('-', $groupKeyPart);
     }
-
 
 }

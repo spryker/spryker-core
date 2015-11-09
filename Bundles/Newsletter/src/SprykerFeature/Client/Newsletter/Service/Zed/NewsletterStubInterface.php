@@ -35,7 +35,6 @@ interface NewsletterStubInterface
      */
     public function approveDoubleOptInSubscriber(NewsletterSubscriberInterface $newsletterSubscriber);
 
-
     /**
      * @param NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest
      *

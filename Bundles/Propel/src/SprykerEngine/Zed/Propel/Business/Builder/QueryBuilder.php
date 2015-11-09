@@ -28,8 +28,8 @@ class QueryBuilder extends PropelQueryBuilder
             \$locator = \\SprykerEngine\\Zed\\Kernel\\Locator::getInstance();
             $objName = \$locator->"
         . lcfirst($bundle)
-        . "()->entity"
-        . str_replace('Child', '', $this->getObjectClassName()) . "();";
+        . '()->entity'
+        . str_replace('Child', '', $this->getObjectClassName()) . '();';
     }
 
     /**
@@ -65,13 +65,13 @@ class QueryBuilder extends PropelQueryBuilder
         $ARClassName = $this->getObjectClassName();
         $this->declareClassFromBuilder($this->getStubObjectBuilder());
         $this->declareClasses('\PDO');
-        $selectColumns = array();
+        $selectColumns = [];
         foreach ($table->getColumns() as $column) {
             if (!$column->isLazyLoad()) {
                 $selectColumns [] = $this->quoteIdentifier($column->getName());
             }
         }
-        $conditions = array();
+        $conditions = [];
         foreach ($table->getPrimaryKey() as $index => $column) {
             $conditions [] = sprintf('%s = :p%d', $this->quoteIdentifier($column->getName()), $index);
         }
@@ -81,13 +81,13 @@ class QueryBuilder extends PropelQueryBuilder
             $this->quoteIdentifier($table->getName()),
             implode(' AND ', $conditions)
         );
-        $pks = array();
+        $pks = [];
         if ($table->hasCompositePrimaryKey()) {
             foreach ($table->getPrimaryKey() as $index => $column) {
                 $pks [] = "\$key[$index]";
             }
         } else {
-            $pks [] = "\$key";
+            $pks [] = '$key';
         }
 
         $pkHashFromRow = $this->getTableMapBuilder()->getInstancePoolKeySnippet($pks);
@@ -114,7 +114,7 @@ class QueryBuilder extends PropelQueryBuilder
         } else {
             $pk = $table->getPrimaryKey();
             $column = $pk[0];
-            $script .= $platform->getColumnBindingPHP($column, "':p0'", "\$key", '            ');
+            $script .= $platform->getColumnBindingPHP($column, "':p0'", '$key', '            ');
         }
         $script .= "
             \$stmt->execute();
@@ -129,13 +129,13 @@ class QueryBuilder extends PropelQueryBuilder
             $script .= "
             \$cls = {$tableMapClassName}::getOMClass(\$row, 0, false);
             /** @var $ARClassName \$obj */
-            " . $this->buildObjectInstanceCreationCode('$obj', '$cls') . "
-            ;";
+            " . $this->buildObjectInstanceCreationCode('$obj', '$cls') . '
+            ;';
         } else {
             $script .= "
             /** @var $ARClassName \$obj */
-            " . $this->buildObjectInstanceCreationCode('$obj', '$cls') . "
-            ";
+            " . $this->buildObjectInstanceCreationCode('$obj', '$cls') . '
+            ';
         }
         $script .= "
             \$obj->hydrate(\$row);

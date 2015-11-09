@@ -10,5 +10,4 @@ use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 
 class SessionDependencyContainer extends AbstractServiceDependencyContainer
 {
-
 }

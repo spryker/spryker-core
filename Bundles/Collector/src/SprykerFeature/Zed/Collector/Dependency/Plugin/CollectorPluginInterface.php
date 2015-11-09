@@ -23,7 +23,7 @@ interface CollectorPluginInterface
      * @param TouchUpdaterInterface $touchUpdater
      */
     public function run(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result, WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater);
-    
+
     /**
      * @param SpyTouchQuery $baseQuery
      * @param LocaleTransfer $locale

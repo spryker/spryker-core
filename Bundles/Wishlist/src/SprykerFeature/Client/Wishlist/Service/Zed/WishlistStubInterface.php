@@ -10,6 +10,7 @@ use Generated\Shared\Wishlist\WishlistInterface;
 
 interface WishlistStubInterface
 {
+
     /**
      * @param WishlistChangeInterface $wishlistChange
      *
@@ -44,4 +45,5 @@ interface WishlistStubInterface
      * @return WishlistInterface
      */
     public function getCustomerWishlist(CustomerInterface $customer);
+
 }

@@ -8,5 +8,4 @@ namespace SprykerFeature\Zed\Collector\Business\Exporter\Exception;
 
 class BatchResultException extends \RuntimeException
 {
-
 }

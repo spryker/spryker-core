@@ -27,4 +27,5 @@ interface Messages
     const CUSTOMER_EMAIL_ALREADY_USED = 'customer.email.already.used';
     const CUSTOMER_EMAIL_INVALID = 'customer.email.invalid';
     const CUSTOMER_TOKEN_INVALID = 'customer.token.invalid';
+
 }

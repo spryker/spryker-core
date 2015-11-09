@@ -1,4 +1,5 @@
 <?php
+
 namespace SprykerEngine\Zed\FlashMessenger\Business\Model;
 
 use Generated\Shared\Transfer\FlashMessagesTransfer;
@@ -6,6 +7,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class MessageTray
 {
+
     const FLASH_MESSAGES_SUCCESS = 'flash.messages.success';
 
     const FLASH_MESSAGES_ERROR= 'flash.messages.error';

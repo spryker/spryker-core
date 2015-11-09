@@ -58,7 +58,7 @@ class CmsBlockTable extends AbstractTable
             SpyCmsBlockTableMap::COL_TYPE,
             SpyCmsBlockTableMap::COL_VALUE,
             SpyCmsBlockTableMap::COL_NAME,
-            SpyCategoryAttributeTableMap::COL_NAME
+            SpyCategoryAttributeTableMap::COL_NAME,
         ]);
 
         return $config;
@@ -104,8 +104,9 @@ class CmsBlockTable extends AbstractTable
 
     private function buildValueItem(array $item)
     {
-        $result = $item[CmsQueryContainer::CATEGORY_NAME].'<br><div style="font-size:.8em">'.$item[CmsQueryContainer::URL].'<div>';
+        $result = $item[CmsQueryContainer::CATEGORY_NAME] . '<br><div style="font-size:.8em">' . $item[CmsQueryContainer::URL] . '<div>';
 
         return $result;
     }
+
 }

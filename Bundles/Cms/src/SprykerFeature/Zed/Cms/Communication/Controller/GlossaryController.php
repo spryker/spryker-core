@@ -33,6 +33,7 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class GlossaryController extends AbstractController
 {
+
     const REDIRECT_ADDRESS = '/cms/glossary/';
     const SEARCH_LIMIT = 10;
     const ID_FORM = 'id-form';
@@ -58,7 +59,7 @@ class GlossaryController extends AbstractController
         $cmsPage = $this->findCmsPageById($idPage);
         $localeTransfer = $this->getLocaleFacade()->getCurrentLocale();
 
-        if (null === $block) {
+        if ($block === null) {
             $title = $cmsPage->getUrl();
         } else {
             $type = CmsConfig::RESOURCE_TYPE_BLOCK;
@@ -77,7 +78,7 @@ class GlossaryController extends AbstractController
             $formViews[] = $form->createView();
         }
 
-        if (null !== $idForm) {
+        if ($idForm !== null) {
             return $this->handleAjaxRequest($forms, $idForm, $localeTransfer);
         }
 
@@ -88,7 +89,6 @@ class GlossaryController extends AbstractController
             'forms' => $formViews,
         ];
     }
-
 
     /**
      * @param Request $request
@@ -166,20 +166,22 @@ class GlossaryController extends AbstractController
     private function searchGlossaryKeysAndTranslations($value, $key)
     {
         $searchedItems = [];
-        if (null !== $value) {
+        if ($value !== null) {
             $searchedItems = $this->getQueryContainer()
                 ->queryTranslationWithKeyByValue($value)
                 ->limit(self::SEARCH_LIMIT)
                 ->find()
             ;
+
             return $searchedItems;
-        } else if (null !== $key) {
+        } elseif ($key !== null) {
             $searchedItems = $this->getQueryContainer()
                 ->queryKeyWithTranslationByKey($key)
                 ->limit(self::SEARCH_LIMIT)
                 ->find()
             ;
         }
+
         return $searchedItems;
     }
 
@@ -347,7 +349,7 @@ class GlossaryController extends AbstractController
         $keyTranslationTransfer->setGlossaryKey($this->glossaryKeyName);
 
         $keyTranslationTransfer->setLocales([
-            $localeTransfer->getLocaleName() => $data[CmsGlossaryForm::TRANSLATION]
+            $localeTransfer->getLocaleName() => $data[CmsGlossaryForm::TRANSLATION],
         ]);
 
         return $keyTranslationTransfer;
@@ -357,6 +359,7 @@ class GlossaryController extends AbstractController
      * @param $idPage
      *
      * @throws MissingPageException
+     *
      * @return SpyCmsPage
      */
     private function findCmsPageById($idPage)
@@ -366,7 +369,7 @@ class GlossaryController extends AbstractController
             ->findOne()
         ;
 
-        if (null === $cmsPage) {
+        if ($cmsPage === null) {
             throw new MissingPageException(
                 sprintf('Page with id %s not found', $idPage)
             );
@@ -385,7 +388,7 @@ class GlossaryController extends AbstractController
             ->findOne()
         ;
 
-        if (null !== $blockEntity) {
+        if ($blockEntity !== null) {
             $blockTransfer = $this->createBlockTransfer($blockEntity);
             $this->getFacade()
                 ->touchBlockActive($blockTransfer)
@@ -405,4 +408,5 @@ class GlossaryController extends AbstractController
 
         return $blockTransfer;
     }
+
 }

@@ -99,7 +99,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param ItemInterface  $itemToFind
+     * @param ItemInterface $itemToFind
      *
      * @return ItemInterface
      */

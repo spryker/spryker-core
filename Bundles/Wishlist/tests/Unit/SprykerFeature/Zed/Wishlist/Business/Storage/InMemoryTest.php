@@ -13,6 +13,7 @@ use SprykerFeature\Zed\Wishlist\Business\Storage\InMemory;
 
 class InMemoryTest extends \PHPUnit_Framework_TestCase
 {
+
     public function testAddItemToExisting()
     {
         $wishlistTransfer = new WishlistTransfer();
@@ -104,7 +105,6 @@ class InMemoryTest extends \PHPUnit_Framework_TestCase
         $wishlist = $inMemory->decreaseItems($wishlistChangeTransfer);
 
         $this->assertCount(0, $wishlist->getItems());
-
     }
 
     public function testRemoveItem()
@@ -127,7 +127,6 @@ class InMemoryTest extends \PHPUnit_Framework_TestCase
         $wishlist = $inMemory->decreaseItems($wishlistChangeTransfer);
 
         $this->assertCount(0, $wishlist->getItems());
-
     }
 
     public function testIncreaseItem()
@@ -172,4 +171,5 @@ class InMemoryTest extends \PHPUnit_Framework_TestCase
 
         return $productFacadeMock;
     }
+
 }

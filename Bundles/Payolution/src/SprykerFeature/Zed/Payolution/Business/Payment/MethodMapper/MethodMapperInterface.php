@@ -14,7 +14,7 @@ interface MethodMapperInterface
 {
 
     /**
-     * @param  CheckoutRequestInterface $checkoutRequestTransfer
+     * @param CheckoutRequestInterface $checkoutRequestTransfer
      *
      * @return PayolutionRequestInterface
      */

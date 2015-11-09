@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Wishlist\Business\Storage;
 
 use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Product\ConcreteProductInterface;
-use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Wishlist\ItemInterface;
 use Generated\Shared\Wishlist\WishlistChangeInterface;
@@ -21,6 +20,7 @@ use SprykerFeature\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
 
 class Propel implements StorageInterface
 {
+
     /**
      * @var WishlistQueryContainerInterface
      */
@@ -43,10 +43,10 @@ class Propel implements StorageInterface
 
     /**
      * @param WishlistQueryContainerInterface $wishlistQueryContainer
-     * @param Customer               $customer
-     * @param WishlistInterface      $wishlistTransfer
-     * @param CustomerInterface      $customerTransfer
-     * @param ProductFacade          $facadeProduct
+     * @param Customer $customer
+     * @param WishlistInterface $wishlistTransfer
+     * @param CustomerInterface $customerTransfer
+     * @param ProductFacade $facadeProduct
      */
     public function __construct(
         WishlistQueryContainerInterface $wishlistQueryContainer,
@@ -151,7 +151,7 @@ class Propel implements StorageInterface
 
     /**
      * @param ItemInterface $wishlistItemTransfer
-     * @param integer       $idWishlist
+     * @param int $idWishlist
      * @param ConcreteProductInterface $concreteProductTransfer
      *
      * @return SpyWishlistItem
@@ -175,7 +175,7 @@ class Propel implements StorageInterface
 
     /**
      * @param ItemInterface $wishlistItemTransfer
-     * @param integer $idWishlist
+     * @param int $idWishlist
      *
      * @return null|SpyWishlistItem
      */
@@ -186,7 +186,6 @@ class Propel implements StorageInterface
             $wishlistItemEntity = $this->wishlistQueryContainer
                 ->queryCustomerWishlistByGroupKey($idWishlist, $wishlistItemTransfer->getGroupKey())
                 ->findOne();
-
         }
 
         if (empty($wishlistItemEntity)) {
@@ -200,7 +199,7 @@ class Propel implements StorageInterface
     }
 
     /**
-     * @param integer $idCustomer
+     * @param int $idCustomer
      *
      * @return SpyWishlist
      */
@@ -214,7 +213,7 @@ class Propel implements StorageInterface
     }
 
     /**
-     * @param integer $idCustomer
+     * @param int $idCustomer
      *
      * @return SpyWishlist
      */

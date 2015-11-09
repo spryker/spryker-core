@@ -9,7 +9,6 @@ use SprykerFeature\Zed\Console\Business\Model\Console;
 use SprykerFeature\Zed\Installer\Business\InstallerFacade;
 use SprykerFeature\Zed\Installer\Business\Model\GlossaryInstaller;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -49,6 +48,7 @@ class GlossaryInstallConsole extends Console
 
     /**
      * @param array $results
+     *
      * @return string
      */
     private function buildSummary(array $results)

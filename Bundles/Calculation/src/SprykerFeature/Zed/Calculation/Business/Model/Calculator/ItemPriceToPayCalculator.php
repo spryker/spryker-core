@@ -134,6 +134,7 @@ class ItemPriceToPayCalculator implements CalculatorPluginInterface
 
     /**
      * //@todo why set to gross, why not keep 0?
+     *
      * @param ItemTransfer $itemTransfer
      * @param int $priceToPay
      *
@@ -145,6 +146,7 @@ class ItemPriceToPayCalculator implements CalculatorPluginInterface
         if ($priceToPay === 0) {
             $priceToPay = $itemTransfer->getGrossPrice();
         }
+
         return $priceToPay;
     }
 

@@ -54,7 +54,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
             ->setRate(self::TAX_PERCENTAGE_20)
             ->setIdTaxRate(self::ID_TAX_SET_2);
 
-        $taxSetTransfer = (new TaxSetTransfer)
+        $taxSetTransfer = (new TaxSetTransfer())
             ->setIdTaxSet(self::ID_TAX_SET_1)
             ->addTaxRate($taxRate10)
             ->addTaxRate($taxRate20);
@@ -85,7 +85,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
             ->setRate(self::TAX_PERCENTAGE_20)
             ->setIdTaxRate(self::ID_TAX_RATE_2);
 
-        $taxSetTransfer1 = (new TaxSetTransfer)
+        $taxSetTransfer1 = (new TaxSetTransfer())
             ->setIdTaxSet(self::ID_TAX_SET_1)
             ->addTaxRate($taxRate10)
             ->addTaxRate($taxRate20);
@@ -96,7 +96,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
             ->setRate(self::TAX_PERCENTAGE_30)
             ->setIdTaxRate(self::ID_TAX_RATE_3);
 
-        $taxSetTransfer3 = (new TaxSetTransfer)
+        $taxSetTransfer3 = (new TaxSetTransfer())
             ->setIdTaxSet(self::ID_TAX_SET_2)
             ->addTaxRate($taxRate30);
 
@@ -146,7 +146,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $taxRate10 = (new TaxRateTransfer())
             ->setRate(self::TAX_PERCENTAGE_30)
             ->setIdTaxRate(self::ID_TAX_SET_1);
-        $taxSetTransfer = (new TaxSetTransfer)
+        $taxSetTransfer = (new TaxSetTransfer())
             ->setIdTaxSet(self::ID_TAX_SET_1)
             ->addTaxRate($taxRate10);
 
@@ -197,7 +197,7 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $taxRate10 = (new TaxRateTransfer())
             ->setRate(self::TAX_PERCENTAGE_30)
             ->setIdTaxRate(self::ID_TAX_SET_1);
-        $taxSetTransfer = (new TaxSetTransfer)
+        $taxSetTransfer = (new TaxSetTransfer())
             ->setIdTaxSet(self::ID_TAX_SET_1)
             ->addTaxRate($taxRate10);
 

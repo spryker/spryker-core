@@ -10,8 +10,8 @@ class DefaultOperation implements OperationInterface
 {
 
     /**
-     * @param array  $sourceDocument
-     * @param array  $targetDocument
+     * @param array $sourceDocument
+     * @param array $targetDocument
      * @param string $sourceField
      * @param string $targetField
      *

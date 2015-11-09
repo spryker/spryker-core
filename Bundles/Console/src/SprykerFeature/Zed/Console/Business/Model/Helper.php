@@ -5,8 +5,6 @@ namespace SprykerFeature\Zed\Console\Business\Model;
 use Silex\Application;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Symfony\Component\Console\Helper\HelperSet;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 
 trait Helper
 {
@@ -32,11 +30,11 @@ trait Helper
     public function error($message)
     {
         $width = $this->getApplication()->getTerminalDimensions()[0];
-        $width = ($width)?: 200;
+        $width = ($width) ?: 200;
         $width -= strlen($message);
         $width = max(0, $width);
         $subOne = false;
-        if ($width % 2 != 0) {
+        if ($width % 2 !== 0) {
             $width += 1;
             $subOne = true;
         }
@@ -59,10 +57,10 @@ trait Helper
     public function warning($message)
     {
         $width = $this->getApplication()->getTerminalDimensions()[0];
-        $width = ($width)?: 200;
+        $width = ($width) ?: 200;
         $width -= strlen($message);
         $subOne = false;
-        if ($width % 2 != 0) {
+        if ($width % 2 !== 0) {
             $width += 1;
             $subOne = true;
         }
@@ -88,10 +86,10 @@ trait Helper
     public function success($message)
     {
         $width = $this->getApplication()->getTerminalDimensions()[0];
-        $width = ($width)?: 200;
+        $width = ($width) ?: 200;
         $width -= strlen($message);
         $subOne = false;
-        if ($width % 2 != 0) {
+        if ($width % 2 !== 0) {
             $width += 1;
             $subOne = true;
         }
@@ -117,17 +115,20 @@ trait Helper
     {
         $question = $question . '? <fg=green>[yes|no]</fg=green> ';
         $dialog = $this->getHelperSet()->get('dialog');
+
         return $dialog->askConfirmation($this->output, $question, false);
     }
 
     /**
      * @param string $question
      * @param null $default
+     *
      * @return mixed
      */
     public function ask($question, $default = null)
     {
         $dialog = $this->getHelperSet()->get('dialog');
+
         return $dialog->ask($this->output, $question, $default);
     }
 
@@ -157,7 +158,7 @@ trait Helper
     public function printLineSeparator($wrapInInfoTags = true)
     {
         $width = $this->getApplication()->getTerminalDimensions()[0];
-        $width = ($width)?: 200;
+        $width = ($width) ?: 200;
         $this->info(str_repeat('-', $width), $wrapInInfoTags);
     }
 

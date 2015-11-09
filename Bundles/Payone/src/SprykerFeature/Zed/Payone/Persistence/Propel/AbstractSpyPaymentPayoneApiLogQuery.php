@@ -19,6 +19,5 @@ use Orm\Zed\Payone\Persistence\Base\SpyPaymentPayoneApiLogQuery as BaseSpyPaymen
  */
 abstract class AbstractSpyPaymentPayoneApiLogQuery extends BaseSpyPaymentPayoneApiLogQuery
 {
-
 } // SpyPaymentPayoneApiLogQuery
 

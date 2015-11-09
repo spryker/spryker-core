@@ -12,8 +12,9 @@ use Symfony\Component\Validator\Exception\UnexpectedTypeException;
 
 class CurrentPasswordValidator extends ConstraintValidator
 {
+
     /**
-     * @param mixed               $value
+     * @param mixed $value
      * @param Constraint|CurrentPassword $constraint
      */
     public function validate($value, Constraint $constraint)
@@ -30,7 +31,7 @@ class CurrentPasswordValidator extends ConstraintValidator
     }
 
     /**
-     * @param string   $password
+     * @param string $password
      * @param CurrentPassword $constraint
      *
      * @return bool
@@ -38,6 +39,8 @@ class CurrentPasswordValidator extends ConstraintValidator
     protected function isProvidedPasswordEqualsToPersisted($password, CurrentPassword $constraint)
     {
         $userTransfer = $constraint->getFacadeUser()->getCurrentUser();
+
         return $constraint->getFacadeUser()->isValidPassword($password, $userTransfer->getPassword());
     }
+
 }

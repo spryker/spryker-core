@@ -10,6 +10,7 @@ use Generated\Shared\Wishlist\WishlistInterface;
 
 class Remove extends AbstractOperator
 {
+
     const OPERATION_NAME = 'REMOVE';
 
     /**
@@ -29,4 +30,5 @@ class Remove extends AbstractOperator
     {
         return self::OPERATION_NAME;
     }
+
 }

@@ -10,6 +10,7 @@ use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
 class ItemTotalPriceCalculator implements CalculatorPluginInterface
 {
+
     /**
      * @param CalculableInterface $calculableContainer
      */
@@ -19,4 +20,5 @@ class ItemTotalPriceCalculator implements CalculatorPluginInterface
             $item->setTotalPrice($item->getPriceToPayWithoutDiscount() * $item->getQuantity());
         }
     }
+
 }

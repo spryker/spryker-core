@@ -93,7 +93,7 @@ class GatewayController extends AbstractGatewayController
         ;
 
         $result = new CustomerResponseTransfer();
-        if (true === $isAuthorized) {
+        if ($isAuthorized === true) {
             $result->setCustomerTransfer($this->getFacade()->getCustomer($customerTransfer));
         }
 
@@ -177,7 +177,7 @@ class GatewayController extends AbstractGatewayController
         $addressesTransfer = $this->getFacade()
             ->getAddresses($customerTransfer)
         ;
-        if (null === $addressesTransfer) {
+        if ($addressesTransfer === null) {
             $this->setSuccess(false);
 
             return;
@@ -212,7 +212,7 @@ class GatewayController extends AbstractGatewayController
             ->updateAddressAndCustomerDefaultAddresses($addressTransfer)
         ;
 
-        $isSuccess = (null !== $customerTransfer);
+        $isSuccess = ($customerTransfer !== null);
         $this->setSuccess($isSuccess);
 
         return $customerTransfer;
@@ -229,7 +229,7 @@ class GatewayController extends AbstractGatewayController
             ->createAddressAndUpdateCustomerDefaultAddresses($addressTransfer)
         ;
 
-        $isSuccess = (null !== $customerTransfer);
+        $isSuccess = ($customerTransfer !== null);
         $this->setSuccess($isSuccess);
 
         return $customerTransfer;
@@ -259,6 +259,7 @@ class GatewayController extends AbstractGatewayController
     {
         try {
             $this->getFacade()->deleteAddress($addressTransfer);
+
             return $addressTransfer;
         } catch (AddressNotFoundException $e) {
             $this->setSuccess(false);

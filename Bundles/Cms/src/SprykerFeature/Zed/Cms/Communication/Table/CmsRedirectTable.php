@@ -99,4 +99,5 @@ class CmsRedirectTable extends AbstractTable
 
         return $result;
     }
+
 }

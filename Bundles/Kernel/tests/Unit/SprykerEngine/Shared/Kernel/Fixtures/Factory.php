@@ -10,5 +10,4 @@ use SprykerEngine\Shared\Kernel\AbstractFactory;
 
 class Factory extends AbstractFactory
 {
-
 }

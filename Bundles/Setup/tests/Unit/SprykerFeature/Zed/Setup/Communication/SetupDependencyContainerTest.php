@@ -21,4 +21,5 @@ class SetupDependencyContainerTest extends AbstractUnitTest
 
         $this->assertInternalType('array', $dependencyContainer->createSetupInstallCommandNames());
     }
+
 }

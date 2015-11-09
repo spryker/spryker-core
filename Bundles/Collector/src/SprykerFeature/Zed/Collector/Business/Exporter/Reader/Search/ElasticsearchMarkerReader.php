@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Collector\Business\Exporter\Reader\Search;
 use Elastica\Client;
 use Elastica\Exception\ResponseException;
 use Elastica\Index;
-use Elastica\Type\Mapping;
 use SprykerFeature\Zed\Collector\Business\Exporter\Reader\ReaderInterface;
 
 class ElasticsearchMarkerReader implements ReaderInterface

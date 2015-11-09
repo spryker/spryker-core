@@ -38,7 +38,7 @@ class PageElementReader implements PageElementReaderInterface
         $elementQuery = $this->searchPageQueryContainer->queryPageElementById($idPageElement);
         $pageElementEntity = $elementQuery->findOne();
 
-        if (is_null($pageElementEntity)) {
+        if ($pageElementEntity === null) {
             throw new PageElementDoesNotExistException(
                 sprintf(
                     'PageElement %s does not exist in the DB',

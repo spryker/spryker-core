@@ -10,5 +10,4 @@ use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 class QueryContainer extends AbstractQueryContainer
 {
-
 }

@@ -7,5 +7,4 @@ use SprykerFeature\Zed\GlossaryQueue\Dependency\Facade\GlossaryQueueToGlossaryIn
 
 class MockGlossaryFacade extends GlossaryFacade implements GlossaryQueueToGlossaryInterface
 {
-
 }

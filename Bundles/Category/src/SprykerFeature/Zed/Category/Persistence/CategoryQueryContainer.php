@@ -472,7 +472,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         $query = SpyCategoryNodeQuery::create()
             ->filterByFkCategory($idCategory);
 
-        if (null !== $isMain) {
+        if ($isMain !== null) {
             $query->filterByIsMain($isMain);
         }
 

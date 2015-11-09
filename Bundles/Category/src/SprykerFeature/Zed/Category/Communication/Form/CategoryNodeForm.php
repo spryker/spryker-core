@@ -76,7 +76,7 @@ class CategoryNodeForm extends AbstractForm
             ->queryNodeById($this->getCategoryIdNode())
             ->findOne()
         ;
-        if (!is_null($nodeEntity)) {
+        if ($nodeEntity !== null) {
             return $nodeEntity->toArray();
         }
 

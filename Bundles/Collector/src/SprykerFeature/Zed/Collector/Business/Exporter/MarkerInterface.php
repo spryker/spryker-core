@@ -28,6 +28,7 @@ interface MarkerInterface
 
     /**
      * @param array $keys
+     *
      * @return bool
      */
     public function deleteTimestamps(array $keys);

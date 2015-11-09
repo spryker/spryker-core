@@ -19,6 +19,5 @@ use Orm\Zed\Url\Persistence\Base\SpyRedirectQuery as BaseSpyRedirectQuery;
  */
 abstract class AbstractSpyRedirectQuery extends BaseSpyRedirectQuery
 {
-
 } // SpyRedirectQuery
 

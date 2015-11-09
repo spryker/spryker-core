@@ -21,7 +21,7 @@ interface CatalogInterface
     public function getProductDataById($id);
 
     /**
-     * @param array       $ids
+     * @param array $ids
      * @param string|null $indexByKey
      *
      * @throws ProductNotFoundException

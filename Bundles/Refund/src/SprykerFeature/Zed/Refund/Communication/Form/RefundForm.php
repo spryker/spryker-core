@@ -23,7 +23,7 @@ class RefundForm extends AbstractForm
     const FIELD_EXPENSES = 'expenses';
 
     /**
-     * @var  SpyRefundQuery
+     * @var SpyRefundQuery
      */
     protected $refundQuery;
 

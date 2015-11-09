@@ -11,5 +11,4 @@ namespace SprykerEngine\Yves\Kernel\DependencyContainer;
  */
 interface DependencyContainerInterface
 {
-
 }

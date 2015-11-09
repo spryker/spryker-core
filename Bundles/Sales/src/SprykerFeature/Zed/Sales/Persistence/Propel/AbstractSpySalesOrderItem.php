@@ -36,6 +36,7 @@ class AbstractSpySalesOrderItem extends BaseSpySalesOrderItem
     public function preSave(ConnectionInterface $con = null)
     {
         $this->statusChanged = in_array(SpySalesOrderItemTableMap::COL_FK_OMS_ORDER_ITEM_STATE, $this->modifiedColumns);
+
         return true;
     }
 

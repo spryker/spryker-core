@@ -32,7 +32,7 @@ class IPv4
      */
     public function __construct($environment = null)
     {
-        if (null === $environment) {
+        if ($environment === null) {
             $this->environment = Environment::isProduction() ? 'production' : 'staging';
         }
         $this->environment = $environment;
@@ -127,7 +127,6 @@ class IPv4
      */
     public function getCookieName($applicationName, $store = null)
     {
-
         if (!$store) {
             $store = Store::getInstance()->getStoreName();
         }

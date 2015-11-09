@@ -8,6 +8,7 @@ use Generated\Shared\Wishlist\WishlistInterface;
 
 interface WishlistSessionInterface
 {
+
     /**
      * @return WishlistInterface
      */
@@ -19,4 +20,5 @@ interface WishlistSessionInterface
      * @return $this
      */
     public function setWishlist(WishlistInterface $wishlist);
+
 }

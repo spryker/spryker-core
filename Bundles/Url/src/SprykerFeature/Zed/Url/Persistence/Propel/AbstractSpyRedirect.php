@@ -19,5 +19,4 @@ use Orm\Zed\Url\Persistence\Base\SpyRedirect as BaseSpyRedirect;
  */
 abstract class AbstractSpyRedirect extends BaseSpyRedirect
 {
-
 }

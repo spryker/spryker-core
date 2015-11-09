@@ -6,5 +6,4 @@ use SprykerEngine\Client\Kernel\Service\Factory;
 
 class KernelFactory extends Factory
 {
-
 }

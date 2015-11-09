@@ -32,7 +32,6 @@ class GlossaryTaskWorkerPlugin extends AbstractPlugin implements
      */
     public function getQueueName()
     {
-
         return sprintf(
             '%s.%s',
             $this->getStoreId(),

@@ -10,5 +10,4 @@ use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class SearchPageConfig extends AbstractBundleConfig
 {
-
 }

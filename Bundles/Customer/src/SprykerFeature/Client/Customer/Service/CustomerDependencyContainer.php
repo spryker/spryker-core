@@ -10,7 +10,6 @@ use Generated\Client\Ide\FactoryAutoCompletion\CustomerService;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Customer\CustomerDependencyProvider;
 use SprykerFeature\Client\Customer\Service\Session\CustomerSessionInterface;
-use SprykerFeature\Client\Customer\Service\Symfony\CustomerSecurityInterface;
 use SprykerFeature\Client\Customer\Service\Zed\CustomerStubInterface;
 
 /**

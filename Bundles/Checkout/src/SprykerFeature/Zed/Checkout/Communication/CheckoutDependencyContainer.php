@@ -10,5 +10,4 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContai
 
 class CheckoutDependencyContainer extends AbstractCommunicationDependencyContainer
 {
-
 }

@@ -22,7 +22,7 @@ class ProductOptionCartConnectorDependencyProvider extends AbstractBundleDepende
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[ProductOptionCartConnectorDependencyProvider::FACADE_PRODUCT_OPTION] = function (Container $container) {
+        $container[self::FACADE_PRODUCT_OPTION] = function (Container $container) {
             return $container->getLocator()->productOption()->facade();
         };
 
@@ -36,11 +36,11 @@ class ProductOptionCartConnectorDependencyProvider extends AbstractBundleDepende
      */
     public function provideCommunicationLayerDependencies(Container $container)
     {
-        $container[ProductOptionCartConnectorDependencyProvider::FACADE_PRODUCT_OPTION_CART_CONNECTOR] = function (Container $container) {
+        $container[self::FACADE_PRODUCT_OPTION_CART_CONNECTOR] = function (Container $container) {
             return $container->getLocator()->productOptionCartConnector()->facade();
         };
 
         return $container;
     }
-}
 
+}

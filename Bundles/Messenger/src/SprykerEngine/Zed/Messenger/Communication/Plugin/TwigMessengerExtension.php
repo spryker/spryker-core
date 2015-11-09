@@ -6,5 +6,4 @@ use SprykerEngine\Shared\Messenger\Communication\Plugin\AbstractTwigMessengerExt
 
 class TwigMessengerExtension extends AbstractTwigMessengerExtension
 {
-
 }

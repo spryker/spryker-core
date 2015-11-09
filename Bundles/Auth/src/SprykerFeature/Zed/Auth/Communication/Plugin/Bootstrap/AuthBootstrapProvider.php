@@ -26,7 +26,6 @@ class AuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInt
      */
     public function register(Application $app)
     {
-
     }
 
     /**

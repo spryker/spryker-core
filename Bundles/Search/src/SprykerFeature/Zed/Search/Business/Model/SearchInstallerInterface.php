@@ -6,8 +6,6 @@
 
 namespace SprykerFeature\Zed\Search\Business\Model;
 
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-
 interface SearchInstallerInterface
 {
 

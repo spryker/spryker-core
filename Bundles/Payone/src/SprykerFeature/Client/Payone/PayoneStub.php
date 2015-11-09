@@ -13,5 +13,4 @@ use SprykerEngine\Client\Kernel\Service\AbstractClient;
  */
 class PayoneStub extends AbstractClient
 {
-
 }

@@ -11,8 +11,6 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContai
 use SprykerFeature\Zed\Customer\Communication\Form\AddressForm;
 use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
-use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
 use SprykerFeature\Zed\Customer\Communication\Table\AddressTable;
 use SprykerFeature\Zed\Customer\Communication\Table\CustomerTable;
 

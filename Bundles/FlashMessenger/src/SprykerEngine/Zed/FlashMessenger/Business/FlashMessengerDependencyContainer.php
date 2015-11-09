@@ -12,7 +12,6 @@ use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerEngine\Zed\FlashMessenger\FlashMessengerConfig;
 
 /**
- *
  * @method FlashMessengerBusiness getFactory()
  * @method FlashMessengerConfig getConfig()
  */
@@ -25,6 +24,7 @@ class FlashMessengerDependencyContainer extends AbstractBusinessDependencyContai
     public function createMessageTray()
     {
         $session = $this->getProvidedDependency(FlashMessengerDependencyProvider::SESSION);
+
         return $this->getFactory()->createModelMessageTray($session);
     }
 

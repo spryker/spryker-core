@@ -10,5 +10,4 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContai
 
 class CartDependencyContainer extends AbstractCommunicationDependencyContainer
 {
-
 }

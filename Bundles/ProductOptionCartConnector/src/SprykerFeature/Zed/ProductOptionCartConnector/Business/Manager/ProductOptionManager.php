@@ -45,7 +45,6 @@ class ProductOptionManager implements ProductOptionManagerInterface
     public function expandProductOptionTransfers(ItemInterface $cartItem)
     {
         foreach ($cartItem->getProductOptions() as &$productOptionTransfer) {
-
             if ($productOptionTransfer->getIdOptionValueUsage() === null || $productOptionTransfer->getLocaleCode() === null) {
                 throw new \RuntimeException('Unable to expand product option. Missing required values: idOptionValueUsage, localeCode');
             }
@@ -57,4 +56,5 @@ class ProductOptionManager implements ProductOptionManagerInterface
             $productOptionTransfer->setQuantity($cartItem->getQuantity());
         }
     }
+
 }

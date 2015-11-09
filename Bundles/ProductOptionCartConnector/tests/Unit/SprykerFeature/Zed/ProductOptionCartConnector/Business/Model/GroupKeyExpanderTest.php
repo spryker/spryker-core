@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ChangeTransfer;
 
 class GroupKeyExpanderTest extends \PHPUnit_Framework_TestCase
 {
+
     public function testKeyGroupByProvidedOptions()
     {
         $changeTransfer = $this->createCartChangeTransfer(
@@ -20,7 +21,7 @@ class GroupKeyExpanderTest extends \PHPUnit_Framework_TestCase
                 'cartItem1' => [
                    (new ProductOptionTransfer())->setIdOptionValueUsage(2),
                    (new ProductOptionTransfer())->setIdOptionValueUsage(1),
-                ]
+                ],
             ]
         );
 
@@ -38,7 +39,7 @@ class GroupKeyExpanderTest extends \PHPUnit_Framework_TestCase
                 'cartItem1' => [
                    (new ProductOptionTransfer())->setIdOptionValueUsage(2),
                    (new ProductOptionTransfer())->setIdOptionValueUsage(1),
-                ]
+                ],
             ]
         );
 
@@ -66,10 +67,9 @@ class GroupKeyExpanderTest extends \PHPUnit_Framework_TestCase
                     (new ProductOptionTransfer())->setIdOptionValueUsage(1),
                     (new ProductOptionTransfer())->setIdOptionValueUsage(3),
                     (new ProductOptionTransfer())->setIdOptionValueUsage('A'),
-                ]
+                ],
             ]
         );
-
 
         $groupKeyExpander = new GroupKeyExpander();
         $groupKeyExpander->expand($changeTransfer);
@@ -96,7 +96,7 @@ class GroupKeyExpanderTest extends \PHPUnit_Framework_TestCase
             $changeTransfer->addItem($cartItem);
         }
 
-
         return $changeTransfer;
     }
+
 }

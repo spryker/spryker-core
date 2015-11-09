@@ -18,5 +18,4 @@ use Orm\Zed\Glossary\Persistence\Base\SpyGlossaryKey as BaseSpyGlossaryKey;
  */
 abstract class AbstractSpyGlossaryKey extends BaseSpyGlossaryKey
 {
-
 }

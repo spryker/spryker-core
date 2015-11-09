@@ -11,6 +11,7 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class ShipmentCheckoutConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
 
     const QUERY_CONTAINER_SHIPMENT = 'QUERY_CONTAINER_SHIPMENT';
@@ -30,7 +31,6 @@ class ShipmentCheckoutConnectorDependencyProvider extends AbstractBundleDependen
 
         return $container;
     }
-
 
     /**
      * @param Container $container

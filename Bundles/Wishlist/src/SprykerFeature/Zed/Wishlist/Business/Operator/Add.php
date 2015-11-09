@@ -10,6 +10,7 @@ use Generated\Shared\Wishlist\WishlistInterface;
 
 class Add extends AbstractOperator
 {
+
     const OPERATION_NAME = 'ADD';
 
     /**
@@ -19,7 +20,7 @@ class Add extends AbstractOperator
      */
     protected function applyOperation(WishlistChangeInterface $wishlistItem)
     {
-         return $this->storage->addItems($wishlistItem);
+        return $this->storage->addItems($wishlistItem);
     }
 
     /**
@@ -29,4 +30,5 @@ class Add extends AbstractOperator
     {
         return self::OPERATION_NAME;
     }
+
 }

@@ -9,7 +9,6 @@ use Generated\Zed\Ide\FactoryAutoCompletion\ShipmentPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
-use Orm\Zed\Shipment\Persistence\Base\SpyShipmentCarrierQuery;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use SprykerFeature\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use SprykerFeature\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorDependencyProvider;
@@ -22,6 +21,7 @@ class ShipmentCheckoutConnectorQueryContainer extends AbstractQueryContainer imp
 
     /**
      * @param $idSalesOrder
+     *
      * @return SpySalesOrderQuery
      */
     public function querySalesOrderById($idSalesOrder)
@@ -31,6 +31,7 @@ class ShipmentCheckoutConnectorQueryContainer extends AbstractQueryContainer imp
 
     /**
      * @param $idShipmentMethod
+     *
      * @return SpyShipmentMethodQuery
      */
     public function queryShipmentOrderById($idShipmentMethod)
@@ -53,4 +54,5 @@ class ShipmentCheckoutConnectorQueryContainer extends AbstractQueryContainer imp
     {
         return $this->getProvidedDependency(ShipmentCheckoutConnectorDependencyProvider::QUERY_CONTAINER_SHIPMENT);
     }
+
 }

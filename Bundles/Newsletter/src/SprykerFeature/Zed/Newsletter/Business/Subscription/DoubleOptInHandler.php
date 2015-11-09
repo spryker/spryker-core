@@ -41,7 +41,7 @@ class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
     {
         $subscriberEntity = $this->findSubscriberEntity($subscriberTransfer);
 
-        if (null === $subscriberEntity) {
+        if ($subscriberEntity === null) {
             throw new MissingNewsletterSubscriberException(sprintf(
                 'Newsletter subscriber #%d could not be found.',
                 $subscriberTransfer->getIdNewsletterSubscriber()
@@ -78,7 +78,7 @@ class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
             ->findOneBySubscriberKey($newsletterSubscriber->getSubscriberKey())
         ;
 
-        if (null === $subscriberEntity) {
+        if ($subscriberEntity === null) {
             $result->setIsSuccess(false);
             $result->setErrorMessage(Messages::INVALID_SUBSCRIBER_KEY);
 

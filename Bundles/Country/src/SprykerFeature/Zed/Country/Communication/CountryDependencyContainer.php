@@ -10,7 +10,6 @@ use Generated\Zed\Ide\FactoryAutoCompletion\CountryCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Country\Business\CountryFacade;
 use SprykerFeature\Zed\Country\Communication\Form\CountryForm;
-use SprykerFeature\Zed\Country\Communication\Table\DetailsTable;
 use SprykerFeature\Zed\Country\CountryDependencyProvider;
 use SprykerFeature\Zed\Country\Communication\Table\CountryTable;
 use SprykerFeature\Zed\User\Persistence\UserQueryContainer;

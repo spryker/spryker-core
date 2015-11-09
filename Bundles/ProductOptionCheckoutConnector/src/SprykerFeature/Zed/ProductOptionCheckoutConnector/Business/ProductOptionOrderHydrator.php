@@ -9,10 +9,10 @@ namespace SprykerFeature\Zed\ProductOptionCheckoutConnector\Business;
 use Generated\Shared\ProductOptionCheckoutConnector\CheckoutRequestInterface;
 use Generated\Shared\ProductOptionCheckoutConnector\OrderInterface;
 use Generated\Shared\ProductOptionCheckoutConnector\ItemInterface;
-use \ArrayObject;
 
 class ProductOptionOrderHydrator implements ProductOptionOrderHydratorInterface
 {
+
     /**
      * @param OrderInterface $order
      * @param CheckoutRequestInterface $request
@@ -42,7 +42,6 @@ class ProductOptionOrderHydrator implements ProductOptionOrderHydratorInterface
     private function transferItemOptions(ItemInterface $cartItem, \ArrayObject $orderItems)
     {
         foreach ($orderItems as $orderItem) {
-
             if ($cartItem->getSku() !== $orderItem->getSku()) {
                 continue;
             }
@@ -51,7 +50,7 @@ class ProductOptionOrderHydrator implements ProductOptionOrderHydratorInterface
                 continue;
             }
 
-            $orderItem->setProductOptions(new ArrayObject());
+            $orderItem->setProductOptions(new \ArrayObject());
             foreach ($cartItem->getProductOptions() as $productOptionTransfer) {
                 $orderItem->addProductOption(clone $productOptionTransfer);
             }

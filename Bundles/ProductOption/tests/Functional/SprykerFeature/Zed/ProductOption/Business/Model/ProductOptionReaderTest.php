@@ -233,7 +233,6 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
 
     protected function buildProductOptionFacade()
     {
-
         $container = new Container();
         $container[self::FACADE_PRODUCT] = function (Container $container) {
             return $this->productFacade;
@@ -246,11 +245,12 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
         };
         $locator = Locator::getInstance();
         $container[self::PROPEL_CONNECTION] = function () use ($locator) {
-            /** @var $locator AutoCompletion */
+            /* @var $locator AutoCompletion */
             return $locator->propel()->pluginConnection()->get();
         };
         $this->productOptionQueryContainer->setContainer($container);
         $this->facade->setExternalDependencies($container);
         $this->facade->setOwnQueryContainer($this->productOptionQueryContainer);
     }
+
 }

@@ -113,7 +113,7 @@ class ConstructableMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
                         if ($param->isOptional() && !$constructor->isInternal()) {
                             $paramData .= ' = ';
                             $defaultValue = $param->getDefaultValue();
-                            if (is_null($defaultValue)) {
+                            if ($defaultValue === null) {
                                 $paramData .= 'null';
                             } elseif (is_bool($defaultValue)) {
                                 $paramData .= ($defaultValue) ? 'true' : 'false';

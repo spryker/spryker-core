@@ -77,4 +77,5 @@ class NewsletterStub implements NewsletterStubInterface
     {
         return $this->zedStub->call('/newsletter/gateway/check-subscription', $newsletterUnsubscriptionRequest);
     }
+
 }

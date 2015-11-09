@@ -10,5 +10,4 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContai
 
 class DiscountCheckoutConnectorDependencyContainer extends AbstractCommunicationDependencyContainer
 {
-
 }

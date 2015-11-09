@@ -19,7 +19,7 @@ class PropelArraySetFormatter extends SimpleArrayFormatter
      * Define the hydration schema based on a query object.
      * Fills the Formatter's properties using a Criteria as source
      *
-     * @param BaseModelCriteria    $criteria
+     * @param BaseModelCriteria $criteria
      * @param DataFetcherInterface $dataFetcher
      *
      * @return $this|AbstractFormatter The current formatter object

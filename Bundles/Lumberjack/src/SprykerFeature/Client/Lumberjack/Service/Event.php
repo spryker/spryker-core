@@ -10,5 +10,4 @@ use SprykerEngine\Shared\Lumberjack\Model\Event as SharedEvent;
 
 class Event extends SharedEvent
 {
-
 }

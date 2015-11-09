@@ -7,11 +7,11 @@
 namespace Unit\SprykerFeature\Zed\Queue\Mock;
 
 use Generated\Shared\Queue\QueueMessageInterface;
-
 use SprykerFeature\Zed\Queue\Dependency\Plugin\TaskPluginInterface;
 
 class MockTaskPlugin implements TaskPluginInterface
 {
+
     /**
      * @var string
      */
@@ -54,4 +54,5 @@ class MockTaskPlugin implements TaskPluginInterface
     public function run(QueueMessageInterface $queueMessage)
     {
     }
+
 }

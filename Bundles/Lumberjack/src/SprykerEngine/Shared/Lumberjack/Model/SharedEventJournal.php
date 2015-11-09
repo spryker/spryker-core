@@ -12,5 +12,4 @@ namespace SprykerEngine\Shared\Lumberjack\Model;
  */
 class SharedEventJournal extends AbstractEventJournal
 {
-
 }

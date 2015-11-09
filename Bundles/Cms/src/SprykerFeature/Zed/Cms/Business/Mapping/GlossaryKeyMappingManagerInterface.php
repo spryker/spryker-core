@@ -100,4 +100,5 @@ interface GlossaryKeyMappingManagerInterface
      * @return string
      */
     public function generateGlossaryKeyName($templateName, $placeholder);
+
 }

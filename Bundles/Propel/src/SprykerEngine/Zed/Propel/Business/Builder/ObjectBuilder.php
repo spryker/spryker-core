@@ -20,7 +20,7 @@ class ObjectBuilder extends PropelObjectBuilder
      * @see parent::addColumnMutators()
      *
      * @param string &$script The script will be modified in this method.
-     * @param Column $col     The current column.
+     * @param Column $col The current column.
      *
      * @return void
      */
@@ -51,9 +51,9 @@ class ObjectBuilder extends PropelObjectBuilder
 
         if (\$this->$clo !== \$v) {
             \$this->$clo = \$v;
-            \$this->modifiedColumns[".$this->getColumnConstant($col)."] = true;
+            \$this->modifiedColumns[" . $this->getColumnConstant($col) . '] = true;
         }
-";
+';
         $this->addMutatorClose($script, $col);
     }
 

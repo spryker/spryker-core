@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\CmsBlockTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;
-use SprykerFeature\Zed\Cms\Business\Exception\MissingTemplateException;
 use SprykerFeature\Zed\Cms\CmsDependencyProvider;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsBlockForm;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsPageForm;
@@ -83,7 +82,7 @@ class BlockController extends AbstractController
 
         return $this->viewResponse([
             'form' => $form->createView(),
-            'isSynced' => $isSynced
+            'isSynced' => $isSynced,
         ]);
     }
 
@@ -118,7 +117,7 @@ class BlockController extends AbstractController
 
         return $this->viewResponse([
             'form' => $form->createView(),
-            'isSynced' => $isSynced
+            'isSynced' => $isSynced,
         ]);
     }
 
@@ -185,7 +184,7 @@ class BlockController extends AbstractController
         $term = $request->get('term');
         $localId = $this->getLocaleFacade()->getCurrentLocale()->getIdLocale();
 
-        $searchedItems = $this->getQueryContainer()->queryNodeByCategoryName($term,$localId)
+        $searchedItems = $this->getQueryContainer()->queryNodeByCategoryName($term, $localId)
             ->find();
 
         $result = [];
@@ -199,4 +198,5 @@ class BlockController extends AbstractController
 
         return $this->jsonResponse($result);
     }
+
 }

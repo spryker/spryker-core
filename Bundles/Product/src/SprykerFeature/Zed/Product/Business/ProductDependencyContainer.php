@@ -28,7 +28,6 @@ use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerFeature\Zed\Product\ProductConfig;
 use SprykerFeature\Zed\Product\ProductDependencyProvider;
-
 use SprykerFeature\Zed\Product\Business\Product\ProductManager;
 
 /**
@@ -38,6 +37,7 @@ use SprykerFeature\Zed\Product\Business\Product\ProductManager;
  */
 class ProductDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @var ProductManager
      */

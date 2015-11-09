@@ -6,7 +6,6 @@
 namespace SprykerFeature\Zed\ItemGrouper\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use Generated\Shared\ItemGrouper;
 use Generated\Shared\ItemGrouper\GroupableContainerInterface;
 
 /**
@@ -14,6 +13,7 @@ use Generated\Shared\ItemGrouper\GroupableContainerInterface;
  */
 class ItemGrouperFacade extends AbstractFacade
 {
+
     /**
      * @param GroupableContainerInterface $groupAbleItems
      *
@@ -35,4 +35,5 @@ class ItemGrouperFacade extends AbstractFacade
             ->createGrouper($regroupAllItemCollection = true)
             ->groupByKey($groupableItems);
     }
+
 }

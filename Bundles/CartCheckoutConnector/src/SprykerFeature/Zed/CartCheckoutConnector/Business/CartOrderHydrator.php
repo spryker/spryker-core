@@ -13,6 +13,7 @@ use Generated\Shared\Transfer\ItemTransfer;
 
 class CartOrderHydrator implements CartOrderHydratorInterface
 {
+
     /**
      * @param OrderInterface $order
      * @param CheckoutRequestInterface $request
@@ -57,6 +58,7 @@ class CartOrderHydrator implements CartOrderHydratorInterface
         for ($i = 1; $i <= $cartItem->getQuantity(); $i++) {
             $result[] = $this->createItemTransfer($cartItem);
         }
+
         return $result;
     }
 

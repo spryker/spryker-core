@@ -15,6 +15,7 @@ use SprykerFeature\Zed\Wishlist\Dependency\PreSavePluginInterface;
 
 abstract class AbstractOperator
 {
+
     /**
      * @var PreSavePluginInterface[]
      */
@@ -36,7 +37,7 @@ abstract class AbstractOperator
     private $wishlistChange;
 
     /**
-     * @param StorageInterface        $storage
+     * @param StorageInterface $storage
      * @param WishlistChangeInterface $wishlistChange
      */
     public function __construct(StorageInterface $storage, WishlistChangeInterface $wishlistChange)
@@ -99,7 +100,6 @@ abstract class AbstractOperator
 
     /**
      * @param WishlistChangeInterface $wishlistItem
-     *
      */
     abstract protected function applyOperation(WishlistChangeInterface $wishlistItem);
 
@@ -107,6 +107,5 @@ abstract class AbstractOperator
      * @return string
      */
     abstract protected function getOperatorName();
-
 
 }

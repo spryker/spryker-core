@@ -10,5 +10,4 @@ use SprykerFeature\Shared\Collector\Code\KeyBuilder\UrlKeyBuilder as SharedUrlKe
 
 class UrlKeyBuilder extends SharedUrlKeyBuilder
 {
-
 }

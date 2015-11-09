@@ -9,7 +9,6 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
-use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 
 /**

@@ -186,6 +186,4 @@ class CalculationFacade extends AbstractFacade
         $calculator->recalculateTotals($totalsTransfer, $calculableContainer, $calculableItems);
     }
 
-
-
 }

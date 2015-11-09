@@ -81,8 +81,7 @@ class Install extends AbstractInstaller
         CldrDataProviderInterface $codeMappingsProvider,
         CldrDataProviderInterface $postalCodeDataProvider,
         CountryConfig $countrySettings
-    )
-    {
+    ) {
         //parent::__construct();
         $this->countrySettings = $countrySettings;
         $this->cldrDataProvider = $cldrDataProvider;

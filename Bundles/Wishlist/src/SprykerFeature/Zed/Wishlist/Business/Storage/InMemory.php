@@ -13,6 +13,7 @@ use SprykerFeature\Zed\Product\Business\ProductFacade;
 
 class InMemory implements StorageInterface
 {
+
     /**
      * @var ProductFacade
      */
@@ -25,7 +26,7 @@ class InMemory implements StorageInterface
 
     /**
      * @param WishlistInterface $wishlist
-     * @param ProductFacade     $facadeProduct
+     * @param ProductFacade $facadeProduct
      */
     public function __construct(WishlistInterface $wishlist, ProductFacade $facadeProduct)
     {
@@ -42,7 +43,6 @@ class InMemory implements StorageInterface
     {
         $wishlistIndex = $this->createIndex();
         foreach ($wishlistChange->getItems() as $wishlistItem) {
-
             if (isset($wishlistIndex[$wishlistItem->getGroupKey()])) {
                 $key = $wishlistIndex[$wishlistItem->getGroupKey()];
                 $existingItem = $this->wishlist->getItems()[$key];
@@ -66,7 +66,6 @@ class InMemory implements StorageInterface
     {
         $wishlistIndex = $this->createIndex();
         foreach ($wishlistChange->getItems() as $key => $wishlistItem) {
-
             if (isset($wishlistIndex[$wishlistItem->getGroupKey()])) {
                 $this->decreaseItem($wishlistIndex[$wishlistItem->getGroupKey()], $wishlistItem);
             } else {
@@ -98,7 +97,7 @@ class InMemory implements StorageInterface
     }
 
     /**
-     * @param array         $wishlistIndex
+     * @param array $wishlistIndex
      * @param ItemInterface $itemToChange
      */
     protected function decreaseByProductIdentifier(array $wishlistIndex, ItemInterface $itemToChange)
@@ -106,13 +105,14 @@ class InMemory implements StorageInterface
         foreach ($this->wishlist->getItems() as $key => $item) {
             if ($item->getSku() === $itemToChange->getSku()) {
                 $this->decreaseItem($wishlistIndex[$item->getGroupKey()], $itemToChange);
+
                 return;
             }
         }
     }
 
     /**
-     * @param integer       $index
+     * @param int $index
      * @param ItemInterface $itemToChange
      */
     protected function decreaseItem($index, ItemInterface $itemToChange)
@@ -143,4 +143,5 @@ class InMemory implements StorageInterface
 
         return $wishlistIndex;
     }
+
 }

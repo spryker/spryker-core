@@ -5,8 +5,6 @@
 
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Business;
 
-use Generated\Shared\Calculation\CalculableContainerInterface;
-use Generated\Shared\DiscountCalculationConnector\OrderInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Generated\Shared\Calculation\TotalsInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
@@ -53,4 +51,5 @@ class DiscountCalculationConnectorFacade extends AbstractFacade
         $calculator = $this->getDependencyContainer()->getRemoveAllCalculatedDiscountsCalculator();
         $calculator->recalculate($container);
     }
+
 }

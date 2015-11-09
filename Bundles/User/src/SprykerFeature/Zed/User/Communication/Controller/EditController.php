@@ -25,6 +25,7 @@ use SprykerFeature\Zed\User\Communication\Form\ResetPasswordForm;
  */
 class EditController extends AbstractController
 {
+
     const USER_LISTING_URL = '/user';
 
     /**
@@ -50,6 +51,7 @@ class EditController extends AbstractController
                 $this->addSuccessMessage(
                     sprintf('User with id "%d" created', $userTransfer->getIdUser())
                 );
+
                 return $this->redirectResponse(self::USER_LISTING_URL);
             } else {
                 $this->addErrorMessage('Failed to create new user!');
@@ -57,7 +59,7 @@ class EditController extends AbstractController
         }
 
         return [
-            'userForm' => $userForm->createView()
+            'userForm' => $userForm->createView(),
         ];
     }
 
@@ -71,6 +73,7 @@ class EditController extends AbstractController
         $idUser = $request->get('id-user');
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');
+
             return $this->redirectResponse(self::USER_LISTING_URL);
         }
 
@@ -88,6 +91,7 @@ class EditController extends AbstractController
             $this->addAclGroups($formData, $userTransfer);
 
             $this->addSuccessMessage('User updated.');
+
             return $this->redirectResponse(self::USER_LISTING_URL);
         }
 
@@ -108,6 +112,7 @@ class EditController extends AbstractController
 
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');
+
             return $this->redirectResponse(self::USER_LISTING_URL);
         }
 
@@ -120,7 +125,6 @@ class EditController extends AbstractController
         }
 
         return $this->redirectResponse(self::USER_LISTING_URL);
-
     }
 
     /**
@@ -134,6 +138,7 @@ class EditController extends AbstractController
 
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');
+
             return $this->redirectResponse(self::USER_LISTING_URL);
         }
 
@@ -159,12 +164,13 @@ class EditController extends AbstractController
 
         if (empty($idUser)) {
             $this->addErrorMessage('Missing user id!');
+
             return $this->redirectResponse(self::USER_LISTING_URL);
         }
 
         $userTransfer = $this->getFacade()->removeUser($idUser);
 
-        if ($userTransfer->getStatus() == SpyUserTableMap::COL_STATUS_DELETED) {
+        if ($userTransfer->getStatus() === SpyUserTableMap::COL_STATUS_DELETED) {
             $this->addSuccessMessage(sprintf('User with id "%d" successfully deleted.', $idUser));
         } else {
             $this->addErrorMessage(sprintf('Failed to delete user with id "%d".', $idUser));
@@ -195,12 +201,12 @@ class EditController extends AbstractController
         }
 
         return [
-            'resetPasswordForm' => $resetPasswordForm->createView()
+            'resetPasswordForm' => $resetPasswordForm->createView(),
         ];
     }
 
     /**
-     * @param array        $formData
+     * @param array $formData
      * @param UserTransfer $userTransfer
      *
      * @return bool
@@ -220,7 +226,7 @@ class EditController extends AbstractController
     }
 
     /**
-     * @param integer $idUser
+     * @param int $idUser
      */
     protected function deleteAclGroups($idUser)
     {
@@ -230,4 +236,5 @@ class EditController extends AbstractController
             $aclFacade->removeUserFromGroup($idUser, $aclGroupTransfer->getIdAclGroup());
         }
     }
+
 }

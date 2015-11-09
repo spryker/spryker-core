@@ -14,6 +14,7 @@ use SprykerFeature\Zed\Auth\AuthConfig;
 
 class PasswordReset
 {
+
     /**
      * @var AuthQueryContainer
      */
@@ -35,9 +36,9 @@ class PasswordReset
     private $authConfig;
 
     /**
-     * @param AuthQueryContainer               $authQueryContainer
-     * @param UserFacade                       $facadeUser
-     * @param AuthConfig                       $authConfig
+     * @param AuthQueryContainer $authQueryContainer
+     * @param UserFacade $facadeUser
+     * @param AuthConfig $authConfig
      */
     public function __construct(
         AuthQueryContainer $authQueryContainer,
@@ -75,7 +76,6 @@ class PasswordReset
 
         return $affectedRows > 0;
     }
-
 
     /**
      * @param string $token
@@ -123,6 +123,7 @@ class PasswordReset
         if ($currentDateTime > $expiresAt) {
             $resetPasswordEntity->setStatus(SpyResetPasswordTableMap::COL_STATUS_EXPIRED);
             $resetPasswordEntity->save();
+
             return false;
         }
 
@@ -156,4 +157,5 @@ class PasswordReset
     ) {
         $this->userPasswordResetNotificationSender = $userPasswordResetNotificationSender;
     }
+
 }

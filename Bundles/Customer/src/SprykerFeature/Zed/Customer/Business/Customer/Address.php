@@ -95,7 +95,7 @@ class Address
     protected function getAddressTransferById($idAddress, $idCustomer = null)
     {
         $addressQuery = $this->queryContainer->queryAddress($idAddress);
-        if (null !== $idCustomer) {
+        if ($idCustomer !== null) {
             $addressQuery->filterByFkCustomer($idCustomer);
         }
         $addressEntity = $addressQuery->findOne();
@@ -325,7 +325,7 @@ class Address
     {
         $idCountry = $this->countryFacade->getIdCountryByIso2Code($this->getIsoCode());
 
-        if (is_null($idCountry)) {
+        if ($idCountry === null) {
             throw new CountryNotFoundException();
         }
 

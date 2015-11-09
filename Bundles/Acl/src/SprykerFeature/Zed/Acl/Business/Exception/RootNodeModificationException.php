@@ -7,5 +7,4 @@ namespace SprykerFeature\Zed\Acl\Business\Exception;
 
 class RootNodeModificationException extends \Exception
 {
-
 }

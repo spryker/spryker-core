@@ -15,6 +15,7 @@ use Orm\Zed\User\Persistence\SpyUserQuery;
  */
 class UserQueryContainer extends AbstractQueryContainer
 {
+
     /**
      * @param string $username
      *

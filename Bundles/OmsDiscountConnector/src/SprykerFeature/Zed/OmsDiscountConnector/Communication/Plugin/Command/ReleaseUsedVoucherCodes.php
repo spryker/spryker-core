@@ -49,6 +49,8 @@ class ReleaseUsedVoucherCodes extends AbstractCommand implements CommandByOrderI
                 $voucherCodes[$salesDiscountCodesEntity->getCode()] = $salesDiscountCodesEntity->getCode();
             }
         }
+
         return $voucherCodes;
     }
+
 }

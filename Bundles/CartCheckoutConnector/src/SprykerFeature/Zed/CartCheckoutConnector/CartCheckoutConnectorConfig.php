@@ -10,5 +10,4 @@ use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class CartCheckoutConnectorConfig extends AbstractBundleConfig
 {
-
 }

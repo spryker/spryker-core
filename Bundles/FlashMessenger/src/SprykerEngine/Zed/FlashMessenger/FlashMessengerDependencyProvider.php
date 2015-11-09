@@ -20,7 +20,7 @@ class FlashMessengerDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[FlashMessengerDependencyProvider::SESSION] = function (Container $container) {
+        $container[self::SESSION] = function (Container $container) {
             return $container->getLocator()->application()->pluginPimple()->getApplication()['request']->getSession();
         };
 

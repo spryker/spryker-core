@@ -2,7 +2,6 @@
 
 namespace Unit\SprykerFeature\Zed\FileSystem\Business\Manager;
 
-
 /**
  * @group SprykerFeature
  * @group Zed
@@ -12,8 +11,10 @@ namespace Unit\SprykerFeature\Zed\FileSystem\Business\Manager;
  */
 class FileSystemManagerTest extends \PHPUnit_Framework_TestCase
 {
+
     public function testMe()
     {
         $this->assertTrue(true);
     }
+
 }

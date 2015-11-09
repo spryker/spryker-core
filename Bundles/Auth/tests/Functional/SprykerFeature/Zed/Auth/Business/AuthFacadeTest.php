@@ -7,7 +7,6 @@
 namespace Functional\SprykerFeature\Zed\Auth\Business;
 
 use Codeception\TestCase\Test;
-use Propel\Runtime\Propel;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Auth\Business\AuthFacade;
 use Orm\Zed\Auth\Persistence\SpyResetPasswordQuery;
@@ -16,6 +15,7 @@ use Orm\Zed\Auth\Persistence\Map\SpyResetPasswordTableMap;
 
 class AuthFacadeTest extends Test
 {
+
     const TEST_MAIL = 'username@example.com';
 
     /**
@@ -112,4 +112,5 @@ class AuthFacadeTest extends Test
 
         return $userEntity;
     }
+
 }

@@ -49,7 +49,7 @@ class MandrillMailSender implements MailSenderInterface
         $async = $mailTransfer->getAsync();
         $ipPool = $mailTransfer->getIpPool();
         $sendAt = $mailTransfer->getSendAt();
-        if (!is_null($sendAt)) {
+        if ($sendAt !== null) {
             $sendAt = (new \DateTime($sendAt))->format('Y-m-d H:i:s');
         }
 

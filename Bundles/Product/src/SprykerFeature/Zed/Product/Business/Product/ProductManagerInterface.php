@@ -14,7 +14,6 @@ use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Product\Business\Exception\AbstractProductExistsException;
 use SprykerFeature\Zed\Product\Business\Exception\ConcreteProductExistsException;
 use SprykerFeature\Zed\Product\Business\Exception\MissingProductException;
-use Orm\Zed\Product\Persistence\SpyAbstractProduct;
 use SprykerFeature\Zed\Url\Business\Exception\UrlExistsException;
 
 interface ProductManagerInterface
@@ -149,8 +148,9 @@ interface ProductManagerInterface
     /**
      * @param string $sku
      *
-     * @return string
      * @throws MissingProductException
+     *
+     * @return string
      */
     public function getAbstractSkuFromConcreteProduct($sku);
 

@@ -14,8 +14,9 @@ use Generated\Shared\ProductOptionCartConnector\ItemInterface;
 
 class GroupKeyProductOptionHydrationPlugin extends AbstractPlugin implements CheckoutOrderHydrationInterface
 {
+
     /**
-     * @param OrderTransfer           $orderTransfer
+     * @param OrderTransfer $orderTransfer
      * @param CheckoutRequestTransfer $checkoutRequest
      */
     public function hydrateOrder(OrderTransfer $orderTransfer, CheckoutRequestTransfer $checkoutRequest)
@@ -79,6 +80,8 @@ class GroupKeyProductOptionHydrationPlugin extends AbstractPlugin implements Che
 
             $groupKeyPart[] = $option->getIdOptionValueUsage();
         }
+
         return implode('-', $groupKeyPart);
     }
+
 }

@@ -16,6 +16,7 @@ use SprykerFeature\Zed\Collector\Dependency\Plugin\CollectorPluginInterface;
 
 abstract class AbstractCollectorPlugin extends AbstractPlugin implements CollectorPluginInterface
 {
+
     /**
      * @param SpyTouchQuery $baseQuery
      * @param LocaleTransfer $locale
@@ -45,7 +46,6 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
         WriterInterface $dataWriter,
         TouchUpdaterInterface $touchUpdater
     ) {
-
     }
 
 }

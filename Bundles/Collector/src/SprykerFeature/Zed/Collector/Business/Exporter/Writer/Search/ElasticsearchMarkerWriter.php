@@ -33,6 +33,7 @@ class ElasticsearchMarkerWriter implements WriterInterface
 
     /**
      * TODO stateful property must be refactored
+     *
      * @var array
      */
     protected $metaData = [];
@@ -76,7 +77,9 @@ class ElasticsearchMarkerWriter implements WriterInterface
     /**
      * Deletes all timestamps. Parameter $dataSet is ignored.
      * TODO Needs refactoring
+     *
      * @param array $dataSet
+     *
      * @throws \Exception
      */
     public function delete(array $dataSet)

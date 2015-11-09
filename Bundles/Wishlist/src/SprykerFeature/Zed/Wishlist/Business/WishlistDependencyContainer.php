@@ -28,6 +28,7 @@ use SprykerFeature\Zed\Wishlist\WishlistDependencyProvider;
  */
 class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
 {
+
     /**
      * @param WishlistChangeInterface $wishlistChange
      *
@@ -38,6 +39,7 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
         $storage = $this->createStorage($wishlistChange);
         $operator = $this->getFactory()->createOperatorAdd($storage, $wishlistChange);
         $this->provideOperatorPlugins($operator);
+
         return $operator;
     }
 
@@ -51,6 +53,7 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
         $storage = $this->createStorage($wishlistChange);
         $operator = $this->getFactory()->createOperatorIncrease($storage, $wishlistChange);
         $this->provideOperatorPlugins($operator);
+
         return $operator;
     }
 
@@ -64,6 +67,7 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
         $storage = $this->createStorage($wishlistChange);
         $operator = $this->getFactory()->createOperatorDecrease($storage, $wishlistChange);
         $this->provideOperatorPlugins($operator);
+
         return $operator;
     }
 
@@ -77,6 +81,7 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
         $storage = $this->createStorage($wishlistChange);
         $operator = $this->getFactory()->createOperatorRemove($storage, $wishlistChange);
         $this->provideOperatorPlugins($operator);
+
         return $operator;
     }
 
@@ -99,8 +104,8 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
         if (null !== $wishlistChange->getCustomer()) {
             return $this->createPropelStorage($wishlistChange);
         }
-        return $this->createInMemoryStrorage($wishlistChange);
 
+        return $this->createInMemoryStrorage($wishlistChange);
     }
 
     /**
@@ -141,4 +146,5 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createModelCustomer($this->getQueryContainer(), $customerTransfer);
     }
+
 }

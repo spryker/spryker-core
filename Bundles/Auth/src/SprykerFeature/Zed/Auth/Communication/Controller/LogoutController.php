@@ -17,6 +17,7 @@ use SprykerFeature\Zed\Auth\Business\AuthFacade;
  */
 class LogoutController extends AbstractController
 {
+
     /**
      * @return RedirectResponse
      */

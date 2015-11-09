@@ -19,6 +19,7 @@ use SprykerEngine\Client\Locale\Service\LocaleClient;
  */
 class ProductDependencyContainer extends AbstractServiceDependencyContainer
 {
+
     /**
      * @param string $locale
      *

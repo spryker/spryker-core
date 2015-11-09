@@ -39,11 +39,12 @@ class CmsBlockStorage implements CmsBlockStorageInterface
      */
     public function getBlockByName(CmsBlockTransfer $cmsBlockTransfer)
     {
-        $blockName = $cmsBlockTransfer->getName().'-'.$cmsBlockTransfer->getType().'-'.$cmsBlockTransfer->getValue();
+        $blockName = $cmsBlockTransfer->getName() . '-' . $cmsBlockTransfer->getType() . '-' . $cmsBlockTransfer->getValue();
 
         $key = $this->keyBuilder->generateKey($blockName, $cmsBlockTransfer->getLocale()->getLocaleName());
         $block = $this->storage->get($key);
 
         return $block;
     }
+
 }

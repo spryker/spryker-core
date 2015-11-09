@@ -19,5 +19,5 @@ class SetupDependencyContainer extends AbstractCommunicationDependencyContainer
     {
         return $this->getConfig()->getSetupInstallCommandNames();
     }
-}
 
+}

@@ -13,6 +13,7 @@ use SprykerFeature\Client\ZedRequest\Service\Client\Response;
 
 interface CustomerStubInterface
 {
+
     /**
      * @param CustomerInterface $customerTransfer
      *

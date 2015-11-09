@@ -9,7 +9,6 @@ use SprykerFeature\Zed\Product\Communication\ProductDependencyContainer;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainer;
 use Orm\Zed\Product\Persistence\SpyAbstractProduct;
 use Orm\Zed\Product\Persistence\SpyProduct;
-use SprykerFeature\Zed\Product\ProductDependencyProvider;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 

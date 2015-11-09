@@ -28,6 +28,7 @@ use Orm\Zed\Newsletter\Persistence\SpyNewsletterType;
  */
 class NewsletterFacadeTest extends Test
 {
+
     const TEST_TYPE1 = 'TEST_TYPE1';
     const TEST_TYPE2 = 'TEST_TYPE2';
 
@@ -55,7 +56,7 @@ class NewsletterFacadeTest extends Test
 
         $response = $this->newsletterFacade->subscribeWithSingleOptIn($request);
 
-        foreach($response->getSubscriptionResults() as $result) {
+        foreach ($response->getSubscriptionResults() as $result) {
             $this->assertTrue($result->getIsSuccess(), $result->getErrorMessage());
         }
     }
@@ -86,7 +87,7 @@ class NewsletterFacadeTest extends Test
 
         $response = $this->newsletterFacade->subscribeWithDoubleOptIn($request);
 
-        foreach($response->getSubscriptionResults() as $result) {
+        foreach ($response->getSubscriptionResults() as $result) {
             $this->assertTrue($result->getIsSuccess(), $result->getErrorMessage());
         }
     }
@@ -128,10 +129,9 @@ class NewsletterFacadeTest extends Test
 
         $response = $this->newsletterFacade->unsubscribe($request);
 
-        foreach($response->getSubscriptionResults() as $result) {
+        foreach ($response->getSubscriptionResults() as $result) {
             $this->assertTrue($result->getIsSuccess(), $result->getErrorMessage());
         }
-
     }
 
     public function testUnsubscribeFromNotSubscribedTypesShouldFail()
@@ -152,7 +152,7 @@ class NewsletterFacadeTest extends Test
 
         $response = $this->newsletterFacade->unsubscribe($request);
 
-        foreach($response->getSubscriptionResults() as $result) {
+        foreach ($response->getSubscriptionResults() as $result) {
             $this->assertFalse($result->getIsSuccess(), $result->getErrorMessage());
         }
     }

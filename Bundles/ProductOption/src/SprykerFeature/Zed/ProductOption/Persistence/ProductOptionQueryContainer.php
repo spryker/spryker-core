@@ -7,8 +7,6 @@
 namespace SprykerFeature\Zed\ProductOption\Persistence;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductOptionPersistence;
-use Propel\Runtime\Connection\ConnectionInterface;
-use Propel\Runtime\Propel;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Product\Persistence\Base\SpyAbstractProductQuery;
 use Orm\Zed\Product\Persistence\Map\SpyAbstractProductTableMap;
@@ -297,7 +295,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
         ;
     }
 
-
     /**
      * @param int $idProductOptionValueUsage
      * @param int $idLocale
@@ -438,7 +435,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryValueConstraintsForValueUsage($idValueUsage)
     {
-
         $queryA = SpyProductOptionValueUsageConstraintQuery::create()
             ->withColumn(SpyProductOptionValueUsageConstraintTableMap::COL_FK_PRODUCT_OPTION_VALUE_USAGE_B, self::VALUE_USAGE_ID)
             ->filterByFkProductOptionValueUsageA($idValueUsage)
@@ -488,7 +484,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
 
         $result = [];
         if (!empty($mergedArray)) {
-            foreach($mergedArray as $value) {
+            foreach ($mergedArray as $value) {
                 $result[] = $value[self::VALUE_USAGE_ID];
             }
         }
@@ -503,7 +499,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryConfigPresetsForConcreteProduct($idProduct)
     {
-
         $query = SpyProductOptionConfigurationPresetQuery::create()
             ->withColumn(SpyProductOptionConfigurationPresetTableMap::COL_IS_DEFAULT, self::IS_DEFAULT)
             ->withColumn(SpyProductOptionConfigurationPresetTableMap::COL_ID_PRODUCT_OPTION_CONFIGURATION_PRESET, self::PRESET_ID)
@@ -559,7 +554,6 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
      */
     public function queryEffectiveTaxRateForTypeUsage($idTypeUsage)
     {
-
         $query = SpyProductOptionTypeUsageQuery::create()
             ->withColumn('SUM(' . SpyTaxRateTableMap::COL_RATE . ')', self::TAX_RATE)
             ->useSpyProductOptionTypeQuery()
@@ -579,4 +573,5 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
 
         return $result;
     }
+
 }

@@ -17,7 +17,6 @@ class ProductController extends AbstractController
 
     public function indexAction(Request $request)
     {
-
     }
 
 }

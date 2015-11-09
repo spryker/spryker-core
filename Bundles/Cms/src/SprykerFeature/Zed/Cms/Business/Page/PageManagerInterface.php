@@ -77,4 +77,5 @@ interface PageManagerInterface
      * @return PageTransfer
      */
     public function savePageBlockAndTouch(PageTransfer $page, CmsBlockInterface $blockTransfer);
+
 }

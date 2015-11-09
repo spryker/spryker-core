@@ -10,5 +10,4 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 
 class Bar extends AbstractPlugin
 {
-
 }

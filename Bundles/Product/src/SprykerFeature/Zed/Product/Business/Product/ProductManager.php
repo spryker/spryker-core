@@ -31,6 +31,7 @@ use Generated\Shared\Transfer\TaxRateTransfer;
 
 class ProductManager implements ProductManagerInterface
 {
+
     const COL_ID_CONCRETE_PRODUCT = 'SpyProduct.IdProduct';
 
     const COL_ABSTRACT_SKU = 'SpyAbstractProduct.Sku';
@@ -174,6 +175,7 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param AbstractProductInterface $abstractProductTransfer
+     *
      * @throws AbstractProductAttributesExistException
      * @throws PropelException
      */
@@ -203,6 +205,7 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param int $idAbstractProduct
      * @param LocaleTransfer $locale
+     *
      * @deprecated Use hasAbstractProductAttributes() instead.
      *
      * @throws AbstractProductAttributesExistException
@@ -325,6 +328,7 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param ConcreteProductInterface $concreteProductTransfer
+     *
      * @throws ConcreteProductAttributesExistException
      * @throws PropelException
      */
@@ -489,7 +493,7 @@ class ProductManager implements ProductManagerInterface
         $effectiveTaxRate = 0;
 
         $taxSetEntity = $abstractProduct->getSpyTaxSet();
-        if (null === $taxSetEntity) {
+        if ($taxSetEntity === null) {
             return $effectiveTaxRate;
         }
 
@@ -517,7 +521,7 @@ class ProductManager implements ProductManagerInterface
             self::COL_ID_CONCRETE_PRODUCT,
             self::COL_ABSTRACT_SKU,
             self::COL_ID_ABSTRACT_PRODUCT,
-            self::COL_NAME
+            self::COL_NAME,
         ])->findOne();
 
         if (!$concreteProduct) {
@@ -550,7 +554,7 @@ class ProductManager implements ProductManagerInterface
             ->queryTaxSetForAbstractProduct($concreteProductTransfer->getIdAbstractProduct())
             ->findOne();
 
-        if (null === $taxSetEntity) {
+        if ($taxSetEntity === null) {
             return;
         }
 
@@ -559,7 +563,6 @@ class ProductManager implements ProductManagerInterface
             ->setName($taxSetEntity->getName());
 
         foreach ($taxSetEntity->getSpyTaxRates() as $taxRate) {
-
             $taxRateTransfer = new TaxRateTransfer();
             $taxRateTransfer->setIdTaxRate($taxRate->getIdTaxRate())
                 ->setName($taxRate->getName())
@@ -597,8 +600,9 @@ class ProductManager implements ProductManagerInterface
     /**
      * @param string $sku
      *
-     * @return string
      * @throws MissingProductException
+     *
+     * @return string
      */
     public function getAbstractSkuFromConcreteProduct($sku)
     {

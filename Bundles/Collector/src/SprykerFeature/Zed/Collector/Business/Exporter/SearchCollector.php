@@ -8,5 +8,4 @@ namespace SprykerFeature\Zed\Collector\Business\Exporter;
 
 class SearchCollector extends AbstractCollector
 {
-
 }

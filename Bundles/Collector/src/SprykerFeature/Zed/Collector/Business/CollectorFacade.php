@@ -46,7 +46,6 @@ class CollectorFacade extends AbstractFacade
 
     /**
      * @param LocaleTransfer $locale
-
      *
      * @return BatchResult[]
      */
@@ -83,6 +82,7 @@ class CollectorFacade extends AbstractFacade
 
     /**
      * @param array $keys
+     *
      * @return bool
      */
     public function deleteSearchTimestamps(array $keys = [])
@@ -92,10 +92,12 @@ class CollectorFacade extends AbstractFacade
 
     /**
      * @param array $keys
+     *
      * @return bool
      */
     public function deleteStorageTimestamps(array $keys = [])
     {
         return $this->getDependencyContainer()->createKeyValueMarker()->deleteTimestamps($keys);
     }
+
 }

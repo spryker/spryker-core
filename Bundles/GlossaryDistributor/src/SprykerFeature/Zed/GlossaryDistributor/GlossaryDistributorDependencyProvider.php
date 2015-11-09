@@ -6,5 +6,4 @@ use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
 
 class GlossaryDistributorDependencyProvider extends AbstractBundleDependencyProvider
 {
-
 }

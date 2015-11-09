@@ -8,5 +8,4 @@ namespace SprykerFeature\Zed\Collector\Business\Model;
 
 interface CountableIteratorInterface extends \Iterator, \Countable
 {
-
 }

@@ -40,7 +40,6 @@ class ReaderTest extends Test
         $locator = Locator::getInstance();
         $this->stockFacade = new StockFacade(new \SprykerEngine\Zed\Kernel\Business\Factory('Stock'), $locator);
         $this->stockQueryContainer = new StockQueryContainer(new Factory('Stock'), $locator);
-
     }
 
     public function testIsNeverOutOfStock()
@@ -61,7 +60,7 @@ class ReaderTest extends Test
             ->findOne()
         ;
 
-        if (null === $abstractProduct) {
+        if ($abstractProduct === null) {
             $abstractProduct = new SpyAbstractProduct();
             $abstractProduct->setSku('test');
         }
@@ -75,7 +74,7 @@ class ReaderTest extends Test
             ->findOne()
         ;
 
-        if (null === $product) {
+        if ($product === null) {
             $product = new SpyProduct();
             $product->setSku('test2');
         }

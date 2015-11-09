@@ -15,5 +15,4 @@ use Orm\Zed\Payolution\Persistence\Base\SpyPaymentPayolutionOrderItemQuery as Ba
  */
 abstract class AbstractSpyPaymentPayolutionOrderItemQuery extends BaseSpyPaymentPayolutionOrderItemQuery
 {
-
 }

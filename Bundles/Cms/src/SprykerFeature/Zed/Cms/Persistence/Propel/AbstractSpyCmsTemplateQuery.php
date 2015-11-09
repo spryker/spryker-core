@@ -19,6 +19,5 @@ use Orm\Zed\Cms\Persistence\Base\SpyCmsTemplateQuery as BaseSpyCmsTemplateQuery;
  */
 abstract class AbstractSpyCmsTemplateQuery extends BaseSpyCmsTemplateQuery
 {
-
 } // SpyCmsTemplateQuery
 

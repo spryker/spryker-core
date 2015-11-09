@@ -18,5 +18,4 @@ use Orm\Zed\ProductCategory\Persistence\Base\SpyProductCategory as BaseSpyProduc
  */
 abstract class AbstractSpyProductCategory extends BaseSpyProductCategory
 {
-
 }

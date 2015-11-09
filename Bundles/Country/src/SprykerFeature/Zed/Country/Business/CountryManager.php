@@ -25,8 +25,7 @@ class CountryManager implements CountryManagerInterface
      */
     public function __construct(
         CountryQueryContainerInterface $countryQueryContainer
-    )
-    {
+    ) {
         $this->countryQueryContainer = $countryQueryContainer;
     }
 
@@ -77,7 +76,6 @@ class CountryManager implements CountryManagerInterface
     public function saveCountry(CountryInterface $countryTransfer)
     {
         return $this->createCountry($countryTransfer->getIso2Code(), $countryTransfer->toArray());
-
     }
 
     /**

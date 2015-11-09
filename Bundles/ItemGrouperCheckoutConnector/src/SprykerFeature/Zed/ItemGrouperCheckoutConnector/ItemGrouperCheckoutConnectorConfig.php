@@ -9,5 +9,4 @@ use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class ItemGrouperCheckoutConnectorConfig extends AbstractBundleConfig
 {
-
 }

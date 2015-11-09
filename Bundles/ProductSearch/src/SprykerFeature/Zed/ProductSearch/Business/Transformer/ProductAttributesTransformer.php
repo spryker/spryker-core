@@ -46,8 +46,8 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
     }
 
     /**
-     * @param array  $productsRaw
-     * @param array  $searchableProducts
+     * @param array $productsRaw
+     * @param array $searchableProducts
      *
      * @return array
      */
@@ -80,10 +80,10 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
                     }
                     $encodedAttributes = $concreteAttributes[$i];
                     $encodedLocalizedAttributes = $concreteLocalizedAttributes[$i];
-                    if (null === $encodedAttributes) {
+                    if ($encodedAttributes === null) {
                         $encodedAttributes = [];
                     }
-                    if (null === $encodedLocalizedAttributes) {
+                    if ($encodedLocalizedAttributes === null) {
                         $encodedLocalizedAttributes = [];
                     }
                     $mergedAttributes = array_merge($encodedAttributes, $encodedLocalizedAttributes);
@@ -105,7 +105,7 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
     }
 
     /**
-     * @param array  $attributes
+     * @param array $attributes
      *
      * @return array
      */

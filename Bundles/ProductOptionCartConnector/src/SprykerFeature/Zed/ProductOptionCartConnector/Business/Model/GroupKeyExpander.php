@@ -11,6 +11,7 @@ use Generated\Shared\ProductOptionCartConnector\ItemInterface;
 
 class GroupKeyExpander
 {
+
     /**
      * @param ChangeInterface $change
      *
@@ -24,7 +25,7 @@ class GroupKeyExpander
 
         return $change;
     }
-    
+
     /**
      * @param ItemInterface $cartItem
      *
@@ -78,6 +79,8 @@ class GroupKeyExpander
             }
             $groupKeyPart[] = $option->getIdOptionValueUsage();
         }
+
         return implode('-', $groupKeyPart);
     }
+
 }

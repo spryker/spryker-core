@@ -16,4 +16,5 @@ interface ProductOptionManagerInterface
      * @return ChangeInterface
      */
     public function expandProductOptions(ChangeInterface $change);
+
 }

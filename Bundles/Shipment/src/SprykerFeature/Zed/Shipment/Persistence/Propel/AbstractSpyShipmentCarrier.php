@@ -15,5 +15,4 @@ use Orm\Zed\Shipment\Persistence\Base\SpyShipmentCarrier as BaseSpyShipmentCarri
  */
 abstract class AbstractSpyShipmentCarrier extends BaseSpyShipmentCarrier
 {
-
 }

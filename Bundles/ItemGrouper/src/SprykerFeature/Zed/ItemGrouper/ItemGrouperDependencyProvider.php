@@ -9,5 +9,4 @@ use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
 
 class ItemGrouperDependencyProvider extends AbstractBundleDependencyProvider
 {
-
 }

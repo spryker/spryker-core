@@ -68,4 +68,5 @@ interface TemplateManagerInterface
      * @return bool
      */
     public function syncTemplate($cmsTemplateFolderPath);
+
 }

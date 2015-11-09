@@ -18,5 +18,4 @@ use Orm\Zed\Discount\Persistence\Base\SpyDiscount as BaseSpyDiscount;
  */
 abstract class AbstractSpyDiscount extends BaseSpyDiscount
 {
-
 }

@@ -15,6 +15,7 @@ use SprykerFeature\Zed\ProductOptionCartConnector\Business\ProductOptionCartConn
 */
 class CartItemGroupKeyOptionPlugin extends AbstractPlugin implements ItemExpanderPluginInterface
 {
+
     /**
      * @param ChangeInterface $change
      *
@@ -24,4 +25,5 @@ class CartItemGroupKeyOptionPlugin extends AbstractPlugin implements ItemExpande
     {
         return $this->getFacade()->expandGroupKey($change);
     }
+
 }

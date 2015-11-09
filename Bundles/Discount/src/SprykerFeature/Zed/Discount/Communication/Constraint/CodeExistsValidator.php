@@ -26,8 +26,8 @@ class CodeExistsValidator extends ConstraintValidator
         $discountQueryContainer = $constraint->getQueryContainer();
         $voucherEntity = $discountQueryContainer->queryVoucher($value)->findOne();
 
-        if (!is_null($voucherEntity)) {
-            if (is_null($voucherId)) {
+        if ($voucherEntity !== null) {
+            if ($voucherId === null) {
                 $this->addValidation($value, $constraint);
             }
             if ($voucherId !== $voucherEntity->getIdDiscountVoucher()) {

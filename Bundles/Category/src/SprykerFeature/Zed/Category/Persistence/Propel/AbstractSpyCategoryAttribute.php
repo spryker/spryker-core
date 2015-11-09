@@ -18,5 +18,4 @@ use Orm\Zed\Category\Persistence\Base\SpyCategoryAttribute as BaseSpyCategoryAtt
  */
 abstract class AbstractSpyCategoryAttribute extends BaseSpyCategoryAttribute
 {
-
 }

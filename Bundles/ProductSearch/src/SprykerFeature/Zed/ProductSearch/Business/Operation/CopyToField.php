@@ -10,10 +10,10 @@ class CopyToField implements OperationInterface
 {
 
     /**
-     * @param array     $sourceDocument
-     * @param array     $targetDocument
-     * @param mixed     $sourceField
-     * @param string    $targetField
+     * @param array $sourceDocument
+     * @param array $targetDocument
+     * @param mixed $sourceField
+     * @param string $targetField
      *
      * @return array
      */

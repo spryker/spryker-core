@@ -8,8 +8,10 @@ use Generated\Shared\Wishlist\WishlistInterface;
 
 interface WishlistStorageInterface
 {
+
     /**
      * @return mixed
      */
     public function expandProductDetails(WishlistInterface $wishlist);
+
 }

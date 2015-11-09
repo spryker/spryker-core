@@ -11,6 +11,7 @@ use Generated\Shared\DiscountCheckoutConnector\OrderInterface;
 
 class DiscountOrderHydrator implements DiscountOrderHydratorInterface
 {
+
     /**
      * @param OrderInterface $orderTransfer
      * @param CheckoutRequestInterface $request

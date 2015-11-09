@@ -15,5 +15,4 @@ use Orm\Zed\Discount\Persistence\Base\SpyDiscountCollector as BaseSpyDiscountCol
  */
 abstract class AbstractSpyDiscountCollector extends BaseSpyDiscountCollector
 {
-
 }

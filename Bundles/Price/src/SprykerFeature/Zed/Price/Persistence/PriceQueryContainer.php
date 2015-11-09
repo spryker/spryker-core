@@ -130,7 +130,6 @@ class PriceQueryContainer extends AbstractQueryContainer
      * @param int $idPriceProduct
      *
      * @return SpyPriceProductQuery
-
      */
     public function queryPriceProductEntity($idPriceProduct)
     {

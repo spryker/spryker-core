@@ -14,8 +14,8 @@ use SprykerFeature\Shared\FrontendExporter\Code\KeyBuilder\KeyBuilderInterface;
 
 class CmsDependencyContainer extends AbstractServiceDependencyContainer
 {
+
     /**
-     *
      * @return CmsBlockStorageInterface
      */
     public function createCmsBlockFinder()
@@ -41,4 +41,5 @@ class CmsDependencyContainer extends AbstractServiceDependencyContainer
     {
         return $this->getFactory()->createKeyBuilderCmsBlockKeyBuilder();
     }
+
 }

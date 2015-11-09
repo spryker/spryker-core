@@ -358,7 +358,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param integer $idUser
+     * @param int $idUser
      *
      * @return bool
      */
@@ -372,7 +372,7 @@ class User implements UserInterface
     }
 
     /**
-     * @param integer $idUser
+     * @param int $idUser
      *
      * @return bool
      */

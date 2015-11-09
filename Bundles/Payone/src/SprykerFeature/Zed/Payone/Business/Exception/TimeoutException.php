@@ -8,5 +8,4 @@ namespace SprykerFeature\Zed\Payone\Business\Exception;
 
 class TimeoutException extends \ErrorException
 {
-
 }

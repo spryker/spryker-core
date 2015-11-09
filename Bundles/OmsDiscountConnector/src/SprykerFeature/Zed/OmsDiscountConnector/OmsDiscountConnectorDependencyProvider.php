@@ -11,6 +11,7 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class OmsDiscountConnectorDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const FACADE_DISCOUNT = 'facade discount';
 
     /**
@@ -26,4 +27,5 @@ class OmsDiscountConnectorDependencyProvider extends AbstractBundleDependencyPro
 
         return $container;
     }
+
 }

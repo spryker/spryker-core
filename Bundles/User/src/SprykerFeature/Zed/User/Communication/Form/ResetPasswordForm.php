@@ -10,6 +10,7 @@ use SprykerFeature\Zed\User\Communication\Form\Constraints\CurrentPassword;
 
 class ResetPasswordForm extends AbstractForm
 {
+
     const CURRENT_PASSWORD = 'current_password';
     const PASSWORD = 'password';
 
@@ -23,7 +24,7 @@ class ResetPasswordForm extends AbstractForm
         return $this->addPassword(
             self::CURRENT_PASSWORD,
             [
-                'label'       => 'Current password',
+                'label' => 'Current password',
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                     new CurrentPassword([
@@ -55,4 +56,5 @@ class ResetPasswordForm extends AbstractForm
     {
         return [];
     }
+
 }

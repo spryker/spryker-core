@@ -6,20 +6,22 @@
 
 namespace SprykerFeature\Client\Product\Service;
 
-
 interface ProductClientInterface
 {
+
     /**
-     * @param integer $idAbstractProduct
+     * @param int $idAbstractProduct
      * @param string $locale
+     *
      * @return array
      */
     public function getAbstractProductFromStorageById($idAbstractProduct, $locale);
 
     /**
-     * @param integer $idAbstractProduct
+     * @param int $idAbstractProduct
      *
      * @return array
      */
     public function getAbstractProductFromStorageByIdForCurrentLocale($idAbstractProduct);
+
 }

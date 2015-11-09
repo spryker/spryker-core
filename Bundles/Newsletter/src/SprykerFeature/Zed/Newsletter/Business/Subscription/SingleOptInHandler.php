@@ -7,8 +7,6 @@ namespace SprykerFeature\Zed\Newsletter\Business\Subscription;
 
 use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
 use SprykerFeature\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberException;
-use SprykerFeature\Zed\Newsletter\Persistence\NewsletterQueryContainer;
-use Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriber;
 
 class SingleOptInHandler extends AbstractOptInHandler implements SubscriberOptInHandlerInterface
 {
@@ -22,7 +20,7 @@ class SingleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
     {
         $subscriberEntity = $this->findSubscriberEntity($subscriberTransfer);
 
-        if (null === $subscriberEntity) {
+        if ($subscriberEntity === null) {
             throw new MissingNewsletterSubscriberException(sprintf(
                 'Newsletter subscriber #%d could not be found.',
                 $subscriberTransfer->getIdNewsletterSubscriber()
@@ -34,4 +32,5 @@ class SingleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
             $subscriberEntity->save();
         }
     }
+
 }

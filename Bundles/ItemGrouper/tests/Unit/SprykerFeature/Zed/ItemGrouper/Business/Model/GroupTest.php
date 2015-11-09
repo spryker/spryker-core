@@ -4,7 +4,6 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-
 namespace Unit\SprykerFeature\Zed\ItemGrouper\Business\Model;
 
 use Generated\Shared\Transfer\ItemTransfer;
@@ -13,6 +12,7 @@ use SprykerFeature\Zed\ItemGrouper\Business\Model\Group;
 
 class GroupTest extends \PHPUnit_Framework_TestCase
 {
+
     public function testIsGroupedBySku()
     {
         $this->markTestSkipped('Test is broken');
@@ -30,7 +30,6 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $secondItem = array_shift($groupedItems);
         $this->assertEquals('B', $secondItem->getGroupKey());
         $this->assertEquals(1, $secondItem->getQuantity());
-
     }
 
     public function testIsThresholdValidatorApplied()
@@ -82,5 +81,5 @@ class GroupTest extends \PHPUnit_Framework_TestCase
 
         return $groupAbleContainer;
     }
-}
 
+}

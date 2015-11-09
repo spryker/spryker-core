@@ -40,7 +40,6 @@ class WriterTest extends Test
         $locator = Locator::getInstance();
         $this->stockFacade = new StockFacade(new \SprykerEngine\Zed\Kernel\Business\Factory('Stock'), $locator);
         $this->stockQueryContainer = new StockQueryContainer(new Factory('Stock'), $locator);
-
     }
 
     public function testDecrementStock()
@@ -60,7 +59,6 @@ class WriterTest extends Test
         $newQuantity = $stockEntity->getQuantity();
 
         $this->assertEquals($oldQuantity - 1, $newQuantity);
-
     }
 
     public function testIncrementStock()
@@ -78,7 +76,6 @@ class WriterTest extends Test
         $newQuantity = $stockEntity->getQuantity();
 
         $this->assertEquals($oldQuantity + 1, $newQuantity);
-
     }
 
     protected function setData()
@@ -88,7 +85,7 @@ class WriterTest extends Test
             ->findOne()
         ;
 
-        if (null === $abstractProduct) {
+        if ($abstractProduct === null) {
             $abstractProduct = new SpyAbstractProduct();
             $abstractProduct->setSku('test');
         }
@@ -102,7 +99,7 @@ class WriterTest extends Test
             ->findOne()
         ;
 
-        if (null === $product) {
+        if ($product === null) {
             $product = new SpyProduct();
             $product->setSku('test2');
         }
@@ -117,7 +114,7 @@ class WriterTest extends Test
             ->findOne()
         ;
 
-        if (null === $product) {
+        if ($product === null) {
             $product = new SpyProduct();
             $product->setSku('test2');
         }

@@ -18,5 +18,4 @@ use Orm\Zed\Glossary\Persistence\Base\SpyGlossaryTranslation as BaseSpyGlossaryT
  */
 abstract class AbstractSpyGlossaryTranslation extends BaseSpyGlossaryTranslation
 {
-
 }

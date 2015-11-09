@@ -15,5 +15,4 @@ use Orm\Zed\Payolution\Persistence\Base\SpyPaymentPayolutionQuery as BaseSpyPaym
  */
 abstract class AbstractSpyPaymentPayolutionQuery extends BaseSpyPaymentPayolutionQuery
 {
-
 }

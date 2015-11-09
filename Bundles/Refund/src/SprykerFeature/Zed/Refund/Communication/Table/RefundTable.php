@@ -93,7 +93,7 @@ class RefundTable extends AbstractTable
     }
 
     /**
-     * @param int  $value
+     * @param int $value
      * @param bool $includeSymbol
      *
      * @return string

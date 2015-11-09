@@ -12,6 +12,7 @@ use SprykerFeature\Shared\System\SystemConfig;
 
 class NewsletterConfig extends AbstractBundleConfig
 {
+
     /**
      * @param string $token
      *

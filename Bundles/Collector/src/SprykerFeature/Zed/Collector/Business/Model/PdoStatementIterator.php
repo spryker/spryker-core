@@ -65,7 +65,7 @@ class PdoStatementIterator implements \Iterator, \Countable
     {
         $this->currentRow = $this->statement->fetch(\PDO::FETCH_ASSOC);
         $this->currentKey++;
-        $this->isValid = (boolean) $this->currentRow;
+        $this->isValid = (bool) $this->currentRow;
 
         if (!$this->isValid) {
             $this->statement->closeCursor();
@@ -92,7 +92,7 @@ class PdoStatementIterator implements \Iterator, \Countable
      * @link http://php.net/manual/en/iterator.valid.php
      *
      * @return bool The return value will be casted to boolean and then evaluated.
-     * Returns true on success or false on failure.
+     *   Returns true on success or false on failure.
      */
     public function valid()
     {
@@ -117,9 +117,9 @@ class PdoStatementIterator implements \Iterator, \Countable
      * @link http://php.net/manual/en/countable.count.php
      *
      * @return int The custom count as an integer.
-     * </p>
-     * <p>
-     * The return value is cast to an integer.
+     *   </p>
+     *   <p>
+     *   The return value is cast to an integer.
      */
     public function count()
     {

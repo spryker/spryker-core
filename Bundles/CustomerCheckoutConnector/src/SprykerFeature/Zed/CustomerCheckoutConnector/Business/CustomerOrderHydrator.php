@@ -38,7 +38,7 @@ class CustomerOrderHydrator implements CustomerOrderHydratorInterface
         $customerTransfer->setEmail($request->getEmail());
 
         $idUser = $request->getIdUser();
-        if (null !== $idUser) {
+        if ($idUser !== null) {
             $customerTransfer->setIdCustomer($idUser);
             $customerTransfer = $this->customerFacade->getCustomer($customerTransfer);
         } else {
@@ -46,7 +46,7 @@ class CustomerOrderHydrator implements CustomerOrderHydratorInterface
         }
 
         $billingAddress = $request->getBillingAddress();
-        if (null !== $billingAddress) {
+        if ($billingAddress !== null) {
             $orderTransfer->setBillingAddress($billingAddress);
 
             $customerAddressTransfer = new AddressTransfer();
@@ -56,7 +56,7 @@ class CustomerOrderHydrator implements CustomerOrderHydratorInterface
         }
 
         $shippingAddress = $request->getShippingAddress();
-        if (null !== $shippingAddress) {
+        if ($shippingAddress !== null) {
             $orderTransfer->setShippingAddress($shippingAddress);
 
             $customerAddressTransfer = new AddressTransfer();

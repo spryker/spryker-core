@@ -148,7 +148,6 @@ class Reader implements ReaderInterface
         }
 
         return $stockProductEntity->getIdStockProduct();
-
     }
 
     /**
@@ -206,7 +205,7 @@ class Reader implements ReaderInterface
             ->findOne()
         ;
 
-        if (is_null($stockProductEntity)) {
+        if ($stockProductEntity === null) {
             throw new StockProductNotFoundException();
         }
 

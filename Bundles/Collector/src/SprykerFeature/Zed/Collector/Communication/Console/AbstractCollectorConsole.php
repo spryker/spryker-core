@@ -29,7 +29,7 @@ abstract class AbstractCollectorConsole extends Console
                 '<fg=white>Total:</fg=white> %d' . PHP_EOL .
                 '<fg=white>Processed:</fg=white> %d' . PHP_EOL .
                 '<fg=white>Succeeded:</fg=white> %d' . PHP_EOL .
-                '<fg=white>Deleted:</fg=white> %d' . PHP_EOL.
+                '<fg=white>Deleted:</fg=white> %d' . PHP_EOL .
                 '<fg=white>Failed:</fg=white> %d' . PHP_EOL . PHP_EOL,
                 $type,
                 $result->isFailed() ? '<fg=red>failed</fg=red>' : 'finished successful',

@@ -22,4 +22,5 @@ class LocaleClient extends AbstractClient implements LocaleClientInterface
     {
         return Store::getInstance()->getCurrentLocale();
     }
+
 }

@@ -43,7 +43,7 @@ class ProductOptionCartConnectorFacadeTest extends AbstractFunctionalTest
 
     public function testExpandProductOption()
     {
-        $productOptionTransfer = (new ProductOptionTransfer)
+        $productOptionTransfer = (new ProductOptionTransfer())
             ->setIdOptionValueUsage($this->ids['idUsageLarge'])
             ->setLocaleCode(self::LOCALE_CODE);
 
@@ -71,4 +71,5 @@ class ProductOptionCartConnectorFacadeTest extends AbstractFunctionalTest
         $this->assertEquals('Foo', $taxRateTransfer->getName());
         $this->assertEquals('10', $taxRateTransfer->getRate());
     }
+
 }

@@ -15,7 +15,7 @@ class CategoryNameExistsValidator extends ConstraintValidator
     /**
      * Checks if the passed value is valid.
      *
-     * @param mixed      $value      The value that should be validated
+     * @param mixed $value The value that should be validated
      * @param Constraint|CategoryNameExists $constraint The constraint for the validation
      *
      * @api
@@ -31,8 +31,8 @@ class CategoryNameExistsValidator extends ConstraintValidator
             ->queryCategory($value, $idLocale)
             ->findOne();
 
-        if (!is_null($categoryEntity)) {
-            if (is_null($idCategory)
+        if ($categoryEntity !== null) {
+            if ($idCategory === null
                 || $idCategory !== $categoryEntity->getIdCategory()) {
                 $this->addViolation($value, $constraint);
             }

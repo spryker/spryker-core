@@ -6,9 +6,7 @@
 
 namespace SprykerFeature\Client\Wishlist\Service;
 
-
 use Generated\Shared\Customer\CustomerInterface;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
 use Generated\Shared\Wishlist\ItemInterface;
 use Generated\Shared\Wishlist\WishlistInterface;
@@ -19,8 +17,10 @@ use SprykerEngine\Client\Kernel\Service\AbstractClient;
  */
 class WishlistClient extends AbstractClient implements WishlistClientInterface
 {
+
     /**
-     * @param ItemInterface     $wishlistItem
+     * @param ItemInterface $wishlistItem
+     *
      * @return WishlistInterface
      */
     public function addItem(ItemInterface $wishlistItem)
@@ -33,7 +33,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * @param ItemInterface     $wishlistItem
+     * @param ItemInterface $wishlistItem
      *
      * @return WishlistInterface
      */
@@ -48,7 +48,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * @param ItemInterface     $wishlistItem
+     * @param ItemInterface $wishlistItem
      *
      * @return WishlistInterface
      */
@@ -63,7 +63,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * @param ItemInterface     $wishlistItem
+     * @param ItemInterface $wishlistItem
      *
      * @return WishlistInterface
      */
@@ -83,6 +83,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     {
         $wishlistItems = $this->getSession()->getWishlist();
         $this->getStorage()->expandProductDetails($wishlistItems);
+
         return $wishlistItems;
     }
 
@@ -105,11 +106,10 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
         $this->getSession()->setWishlist($wishlist);
 
         return $wishlist;
-
     }
 
     /**
-     * @param ItemInterface     $wishlistItemTransfer
+     * @param ItemInterface $wishlistItemTransfer
      *
      * @return WishlistChangeTransfer
      */
@@ -122,7 +122,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
         $wishlistChange->addItem($wishlistItemTransfer);
         $customerTransfer = $this->getCustomerTransfer();
 
-        if (null !== $customerTransfer) {
+        if ($customerTransfer !== null) {
             $wishlistChange->setCustomer($customerTransfer);
         }
 
@@ -163,4 +163,5 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     {
         return $this->getDependencyContainer()->createStorage();
     }
+
 }
