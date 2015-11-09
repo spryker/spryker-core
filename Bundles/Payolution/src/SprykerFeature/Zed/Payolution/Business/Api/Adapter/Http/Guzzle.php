@@ -23,10 +23,11 @@ class Guzzle extends AbstractHttpAdapter
 
     /**
      * @param string $gatewayUrl
+     * @param string $contentType
      */
-    public function __construct($gatewayUrl)
+    public function __construct($gatewayUrl, $contentType)
     {
-        parent::__construct($gatewayUrl);
+        parent::__construct($gatewayUrl, $contentType);
 
         $this->client = new GuzzleClient([
             'timeout' => self::DEFAULT_TIMEOUT
@@ -42,7 +43,7 @@ class Guzzle extends AbstractHttpAdapter
     {
         return $this->client->post(
             $this->gatewayUrl,
-            ['Content-Type' => self::$request_content_types['xml']],
+            ['Content-Type' => self::$request_content_types[$this->contentType]],
             $data
         );
     }

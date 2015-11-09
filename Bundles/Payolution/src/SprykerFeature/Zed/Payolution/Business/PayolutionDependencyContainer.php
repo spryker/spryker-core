@@ -13,6 +13,7 @@ use SprykerFeature\Zed\Payolution\Business\Api\Response\ConverterInterface as Re
 use SprykerFeature\Zed\Payolution\Business\Payment\Handler\Transaction\TransactionInterface;
 use SprykerFeature\Zed\Payolution\Business\Payment\Handler\Calculation\CalculationInterface;
 use SprykerFeature\Zed\Payolution\Business\Log\TransactionStatusLogInterface;
+use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
 use SprykerFeature\Zed\CustomerCheckoutConnector\Business\CustomerOrderSaverInterface;
@@ -32,7 +33,7 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
     public function createPaymentTransactionHandler()
     {
         $paymentTransactionHandler = $this->getFactory()->createPaymentHandlerTransactionTransaction(
-            $this->createAdapter($this->getConfig()->getTransactionGatewayUrl()),
+            $this->createAdapter($this->getConfig()->getTransactionGatewayUrl(), ApiConstants::TRANSACTION_REQUEST_CONTENT_TYPE),
             $this->createResponseConverter(),
             $this->getQueryContainer(),
             $this->getConfig()
@@ -54,7 +55,7 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
     public function createPaymentCalculationHandler()
     {
         $paymentCalculationHandler = $this->getFactory()->createPaymentHandlerCalculationCalculation(
-            $this->createAdapter($this->getConfig()->getCalculationGatewayUrl()),
+            $this->createAdapter($this->getConfig()->getCalculationGatewayUrl(), ApiConstants::CALCULATION_REQUEST_CONTENT_TYPE),
             $this->createResponseConverter(),
             $this->getConfig()
         );
@@ -71,9 +72,9 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
      *
      * @return AdapterInterface
      */
-    protected function createAdapter($gatewayUrl)
+    protected function createAdapter($gatewayUrl, $contentType)
     {
-        return $this->getFactory()->createApiAdapterHttpGuzzle($gatewayUrl);
+        return $this->getFactory()->createApiAdapterHttpGuzzle($gatewayUrl, $contentType);
     }
 
     /**

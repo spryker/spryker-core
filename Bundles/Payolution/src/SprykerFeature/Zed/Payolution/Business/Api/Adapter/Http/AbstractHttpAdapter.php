@@ -12,10 +12,10 @@ use SprykerFeature\Zed\Payolution\Business\Exception\ApiHttpRequestException;
 abstract class AbstractHttpAdapter implements AdapterInterface
 {
 
-    static $request_content_types = array(
-        'form' => 'application/x-www-form-urlencoded;charset=UTF-8',
-        'xml' => 'text/xml;charset=UTF-8'
-    );
+    static $request_content_types = [
+        'FORM' => 'application/x-www-form-urlencoded;charset=UTF-8',
+        'XML' => 'text/xml;charset=UTF-8'
+    ];
 
     /**
      * @var string
@@ -23,11 +23,18 @@ abstract class AbstractHttpAdapter implements AdapterInterface
     protected $gatewayUrl;
 
     /**
-     * @param string $gatewayUrl
+     * @var string
      */
-    public function __construct($gatewayUrl)
+    protected $contentType;
+
+    /**
+     * @param string $gatewayUrl
+     * @param string $contentType
+     */
+    public function __construct($gatewayUrl, $contentType)
     {
         $this->gatewayUrl = $gatewayUrl;
+        $this->contentType = $contentType;
     }
 
     /**
