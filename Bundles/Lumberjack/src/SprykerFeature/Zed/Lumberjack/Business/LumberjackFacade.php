@@ -17,10 +17,14 @@ class LumberjackFacade extends AbstractFacade
 
     /**
      * @param EventInterface $event
+     *
+     * @return void
      */
     public function saveEvent(EventInterface $event)
     {
-        $this->getDependencyContainer()->createEventJournal()->saveEvent($event);
+        $this->getDependencyContainer()
+             ->createEventJournal()
+             ->saveEvent($event);
     }
 
 }

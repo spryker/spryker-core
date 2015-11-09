@@ -16,6 +16,8 @@ class LumberjackClient extends AbstractClient
 
     /**
      * @param EventInterface $event
+     *
+     * @return void
      */
     public function saveEvent(EventInterface $event)
     {

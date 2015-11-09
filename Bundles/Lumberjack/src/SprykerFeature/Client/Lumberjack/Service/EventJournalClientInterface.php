@@ -11,6 +11,8 @@ interface EventJournalClientInterface
 
     /**
      * @param EventInterface $event
+     *
+     * @return void
      */
     public function saveEvent(EventInterface $event);
 
