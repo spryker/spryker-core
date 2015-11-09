@@ -8,6 +8,6 @@ namespace SprykerFeature\Client\Lumberjack\Service;
 
 use SprykerEngine\Shared\Lumberjack\Model\AbstractEventJournal;
 
-class EventJournalClient extends AbstractEventJournal
+class EventJournalClient extends AbstractEventJournal implements EventJournalClientInterface
 {
 }

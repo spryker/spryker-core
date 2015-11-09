@@ -17,7 +17,8 @@ class LumberjackDependencyContainer extends AbstractServiceDependencyContainer
     /**
      * @return EventJournalClientInterface
      */
-    public function createEventJournalClient() {
+    public function createEventJournalClient()
+    {
         return $this->getFactory()->createEventJournalClient();
     }
 

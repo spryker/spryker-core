@@ -1,6 +1,5 @@
 <?php
 /**
- *
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
@@ -18,7 +17,9 @@ class LumberjackClient extends AbstractClient
     /**
      * @param EventInterface $event
      */
-    public function saveEvent(EventInterface $event) {
+    public function saveEvent(EventInterface $event)
+    {
         $this->getDependencyContainer()->createEventJournalClient()->saveEvent($event);
     }
+
 }

@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Lumberjack\Business;
 
-use SprykerEngine\Shared\Lumberjack\Model\Event;
 use SprykerEngine\Shared\Lumberjack\Model\EventInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
