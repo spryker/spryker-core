@@ -80,7 +80,6 @@ class CountryForm extends AbstractForm
             )
             ->addHidden('id_country')
         ;
-
     }
 
     /**
@@ -91,7 +90,7 @@ class CountryForm extends AbstractForm
         $result = [];
 
         $idCountry = $this->request->get('id_country');
-        if (false === is_null($idCountry)) {
+        if ($idCountry !== null) {
             $countryDetailEntity = $this
                 ->countryQuery
                 ->findOneByIdCountry($idCountry);

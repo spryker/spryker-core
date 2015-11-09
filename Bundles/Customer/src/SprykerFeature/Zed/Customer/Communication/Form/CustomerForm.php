@@ -148,10 +148,10 @@ class CustomerForm extends AbstractForm
 
         $idCustomer = $this->request->get(self::ID_CUSTOMER);
 
-        if (false === is_null($idCustomer)) {
+        if ($idCustomer !== null) {
             $customerDetailEntity = $this->customerQuery->findOneByIdCustomer($idCustomer);
 
-            if (false === is_null($customerDetailEntity)) {
+            if ($customerDetailEntity !== null) {
                 $result = $customerDetailEntity->toArray();
             }
         }

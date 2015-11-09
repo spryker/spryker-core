@@ -19,6 +19,10 @@ class NoIsNullFixer extends AbstractFixer
 
     const STRING_MATCH = 'is_null';
 
+    protected $startIndex;
+
+    protected $endIndex;
+
     /**
      * @see http://php.net/manual/en/language.operators.precedence.php
      *
@@ -44,23 +48,34 @@ class NoIsNullFixer extends AbstractFixer
                 continue;
             }
 
-            $needsBrackets = false;
-
-            if ($tokens[$prevIndex]->isCast()) {
-                $needsBrackets = true;
-            }
-
-            $negated = false;
-            if ($tokens[$prevIndex]->getContent() === '!') {
-                $negated = true;
-            }
-
             $nextIndex = $tokens->getNextMeaningfulToken($index);
             if ($tokens[$nextIndex]->getContent() !== '(') {
                 continue;
             }
 
             $lastIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $nextIndex);
+
+            $needsBrackets = false;
+            if ($tokens[$prevIndex]->isCast() || $tokens[$prevIndex]->isGivenKind([T_IS_NOT_EQUAL, T_IS_EQUAL, T_IS_IDENTICAL, T_IS_NOT_IDENTICAL])) {
+                $needsBrackets = true;
+            }
+
+            $endBraceIndex = $tokens->getNextTokenOfKind($nextIndex, [')']);
+
+            $nextEndBraceIndex = $tokens->getNextMeaningfulToken($endBraceIndex);
+            if ($tokens[$nextEndBraceIndex]->isGivenKind([T_IS_NOT_EQUAL, T_IS_EQUAL, T_IS_IDENTICAL, T_IS_NOT_IDENTICAL])) {
+                $needsBrackets = true;
+            }
+
+            // Special fix: true/false === is_null() => !==/=== null
+            if ($this->isFixableComparison($tokens, $prevIndex, $nextEndBraceIndex)) {
+                $needsBrackets = false;
+            }
+
+            $negated = false;
+            if ($tokens[$prevIndex]->getContent() === '!') {
+                $negated = true;
+            }
 
             $replacement = '';
             for ($i = $nextIndex + 1; $i < $lastIndex; ++$i) {
@@ -72,14 +87,37 @@ class NoIsNullFixer extends AbstractFixer
                 $replacement .= $tokens[$i]->getContent();
             }
 
+            if ($this->startIndex !== null) {
+                $index = $this->startIndex;
+                $this->endIndex = $lastIndex;
+                $negated = $tokens[$this->startIndex]->getContent() === 'false' ? true : false;
+                $needsBrackets = false;
+            }
+
+            if ($this->endIndex !== null) {
+                $lastIndex = $this->endIndex;
+
+                if ($this->startIndex !== null) {
+                    $token = $tokens[$this->startIndex];
+                } else {
+                    $token = $tokens[$this->endIndex];
+                }
+
+                $negated = $token->getContent() === 'false' ? true : false;
+                $needsBrackets = false;
+            }
+
             $replacement .= ' ' . ($negated ? '!' : '=') . '== null';
             if ($needsBrackets) {
                 $replacement = '(' . $replacement . ')';
             }
 
-            if ($negated) {
-                $index -= $index - $prevIndex;
+            $offset = 0;
+            if ($negated && $this->startIndex === null && $this->endIndex === null) {
+                $offset = -($index - $prevIndex);
             }
+
+            $index += $offset;
             for ($i = $index; $i < $lastIndex; ++$i) {
                 $tokens[$i]->clear();
             }
@@ -94,7 +132,7 @@ class NoIsNullFixer extends AbstractFixer
      */
     public function getPriority()
     {
-        return -100;
+        return -10;
     }
 
     /**
@@ -111,6 +149,41 @@ class NoIsNullFixer extends AbstractFixer
     public function getDescription()
     {
         return 'Always use strict null check instead if is_null() method invocation.';
+    }
+
+    /**
+     * @param Tokens $tokens
+     * @param int $prevIndex
+     * @param int $nextEndBraceIndex
+     *
+     * @return bool
+     */
+    protected function isFixableComparison($tokens, $prevIndex, $nextEndBraceIndex)
+    {
+        if ($tokens[$prevIndex]->isGivenKind([T_IS_NOT_IDENTICAL, T_IS_IDENTICAL])) {
+            $prevPrevIndex = $tokens->getPrevMeaningfulToken($prevIndex);
+            if ($tokens[$prevPrevIndex]->getContent() === 'true' || $tokens[$prevPrevIndex]->getContent() === 'false') {
+                $this->startIndex = $prevPrevIndex;
+
+                return true;
+            }
+        }
+
+        if ($nextEndBraceIndex === null) {
+            return false;
+        }
+
+        if ($tokens[$nextEndBraceIndex]->isGivenKind([T_IS_NOT_IDENTICAL, T_IS_IDENTICAL])) {
+            $nextNextIndex = $tokens->getNextMeaningfulToken($nextEndBraceIndex);
+
+            if ($tokens[$nextNextIndex]->getContent() === 'true' || $tokens[$nextNextIndex]->getContent() === 'false') {
+                $this->endIndex = $nextNextIndex;
+
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

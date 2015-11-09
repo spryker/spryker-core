@@ -20,6 +20,17 @@ class TestClass1Input
         $foo = $foo || ! is_null($foo);
 
         $foo = (int) is_null($foo);
+
+        if (is_null($foo) === true) {
+        }
+        if (is_null($foo) === false) {
+        }
+
+        // We also fix these deprecated ones
+        if (true === is_null($foo)) {
+        }
+        if (false === is_null($foo)) {
+        }
     }
 
     /**

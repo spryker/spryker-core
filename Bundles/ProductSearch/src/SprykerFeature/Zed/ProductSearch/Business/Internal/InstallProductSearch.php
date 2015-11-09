@@ -116,7 +116,7 @@ class InstallProductSearch extends AbstractInstaller
                     'include_in_all' => false,
                     'properties' => [
                         'facet-name' => [
-                            'type' => 'string','index' => 'not_analyzed'],
+                            'type' => 'string', 'index' => 'not_analyzed', ],
                         'facet-value' => ['type' => 'float'],
                     ],
                 ],

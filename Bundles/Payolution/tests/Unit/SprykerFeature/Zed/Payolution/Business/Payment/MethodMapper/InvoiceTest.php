@@ -179,10 +179,10 @@ class InvoiceTest extends Test
     {
         return $this->getMock(
             'SprykerFeature\Zed\Payolution\PayolutionConfig',
-            $methods = [],
-            $arguments = [],
-            $mockClassName = '',
-            $callOriginalConstructor = false
+            [],
+            [],
+            '',
+            false
         );
     }
 
@@ -193,13 +193,13 @@ class InvoiceTest extends Test
     {
         $orderEntityMock = $this->getMock(
             'Orm\Zed\Sales\Persistence\SpySalesOrder',
-            $methods = []
+            []
         );
 
         /** @var SpyPaymentPayolution|\PHPUnit_Framework_MockObject_MockObject $paymentEntityMock */
         $paymentEntityMock = $this->getMock(
             'Orm\Zed\Payolution\Persistence\SpyPaymentPayolution',
-            $methods = [
+            [
                 'getSpySalesOrder',
             ]
         );
