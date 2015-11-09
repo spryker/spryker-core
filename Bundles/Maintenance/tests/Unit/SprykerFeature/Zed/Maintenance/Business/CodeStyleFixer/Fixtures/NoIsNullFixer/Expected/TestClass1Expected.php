@@ -20,6 +20,17 @@ class TestClass1Input
         $foo = $foo || $foo !== null;
 
         $foo = (int) ($foo === null);
+
+        if ($foo === null) {
+        }
+        if ($foo !== null) {
+        }
+
+        // We also fix these deprecated ones
+        if ($foo === null) {
+        }
+        if ($foo !== null) {
+        }
     }
 
     /**
