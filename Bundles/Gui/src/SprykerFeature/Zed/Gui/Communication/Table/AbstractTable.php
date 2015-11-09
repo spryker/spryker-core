@@ -33,27 +33,27 @@ abstract class AbstractTable
     /**
      * @var AutoCompletion
      */
-    private $locator;
+    protected $locator;
 
     /**
      * @var array
      */
-    private $data;
+    protected $data;
 
     /**
      * @var TableConfiguration
      */
-    private $config;
+    protected $config;
 
     /**
      * @var int
      */
-    private $total;
+    protected $total;
 
     /**
      * @var int
      */
-    private $filtered = 0;
+    protected $filtered = 0;
 
     /**
      * @var int
@@ -73,7 +73,7 @@ abstract class AbstractTable
     /**
      * @var bool
      */
-    private $initialized = false;
+    protected $initialized = false;
 
     /**
      * @var string
