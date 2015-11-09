@@ -1,18 +1,17 @@
 <?php
-
 /**
  * (c) Copyright Spryker Systems GmbH 2015
  */
 
-namespace SprykerFeature\Zed\Lumberjack\Business;
+namespace SprykerFeature\Client\Lumberjack\Service;
 
+use SprykerEngine\Client\Kernel\Service\AbstractClient;
 use SprykerEngine\Shared\Lumberjack\Model\EventInterface;
-use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
  * @method LumberjackDependencyContainer getDependencyContainer()
  */
-class LumberjackFacade extends AbstractFacade
+class LumberjackClient extends AbstractClient
 {
 
     /**
@@ -22,9 +21,7 @@ class LumberjackFacade extends AbstractFacade
      */
     public function saveEvent(EventInterface $event)
     {
-        $this->getDependencyContainer()
-             ->createEventJournal()
-             ->saveEvent($event);
+        $this->getDependencyContainer()->createEventJournalClient()->saveEvent($event);
     }
 
 }
