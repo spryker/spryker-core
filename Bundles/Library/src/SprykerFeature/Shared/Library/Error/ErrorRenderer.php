@@ -94,7 +94,7 @@ class ErrorRenderer
      */
     protected static function isCliCall()
     {
-        return php_sapi_name() === self::SAPI_CLI;
+        return PHP_SAPI === self::SAPI_CLI;
     }
 
 }

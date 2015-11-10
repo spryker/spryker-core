@@ -13,7 +13,7 @@ class TestClass1Input
         $foo = is_integer(2);
         $foo = 2/is_writeable($foo);
         $foo = join('', array());
-        $foo = fputs($foo, 'xyz');
+        $foo = FPUTS($foo, 'xyz');
         $foo = sizeof(array());
     }
 

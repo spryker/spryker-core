@@ -16,8 +16,6 @@ use Symfony\CS\Utils;
  * Fixer PhpdocParams
  *
  * Copy of the php-cs-fixer file with very little adjustments
- *
- * @author Mark Scherer
  */
 class PhpdocParamsFixer extends AbstractFixer
 {

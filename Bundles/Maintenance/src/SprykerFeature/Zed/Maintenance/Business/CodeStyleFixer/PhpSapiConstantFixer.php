@@ -12,18 +12,10 @@ use Symfony\CS\Tokenizer\Token;
 use Symfony\CS\Tokenizer\Tokens;
 
 /**
- * Fixer ShortCast
+ * Fixer PhpSapiConstant
  */
-class ShortCastFixer extends AbstractFixer
+class PhpSapiConstantFixer extends AbstractFixer
 {
-
-    /**
-     * @var array
-     */
-    public static $matching = [
-        '(boolean)' => '(bool)',
-        '(integer)' => '(int)',
-    ];
 
     /**
      * @param \SplFileInfo $file
@@ -47,22 +39,32 @@ class ShortCastFixer extends AbstractFixer
      */
     protected function fixContent(Tokens $tokens)
     {
+        $wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR];
+
         foreach ($tokens as $index => $token) {
-            // Don't use !!
-            if ($token->getContent() === '!' && $tokens[$index - 1]->getContent() === '!') {
-                $tokens[$index - 1]->setContent('');
-                $tokens[$index]->setContent('(bool)');
+            $tokenContent = $token->getContent();
+            if (strtolower($tokenContent) !== 'php_sapi_name') {
                 continue;
             }
 
-            // Don't use long form
-            if ($token->isCast()) {
-                $content = $token->getContent();
-                $key = strtolower($content);
+            $openingBrace = $tokens->getNextMeaningfulToken($index);
+            if ($openingBrace === null || $tokens[$openingBrace]->getContent() !== '(') {
+                continue;
+            }
 
-                if (isset(self::$matching[$key])) {
-                    $tokens[$index]->setContent(self::$matching[$key]);
-                }
+            $closingBrace = $tokens->getNextMeaningfulToken($openingBrace);
+            if ($closingBrace === null || $tokens[$closingBrace]->getContent() !== ')') {
+                continue;
+            }
+
+            $prevIndex = $tokens->getPrevNonWhitespace($index);
+            if ($prevIndex === null || in_array($tokens[$prevIndex]->getId(), $wrongTokens, true)) {
+                continue;
+            }
+
+            $tokens[$index]->setContent('PHP_SAPI');
+            for ($i = $openingBrace; $i <= $closingBrace; ++$i) {
+                $tokens[$i]->clear();
             }
         }
     }
@@ -88,7 +90,7 @@ class ShortCastFixer extends AbstractFixer
      */
     public function getDescription()
     {
-        return 'Use short forms (bool) and (int) for casts and do not use !!.';
+        return 'Always use the simple constant for checking PHP_SAPI as invoking a method is slower.';
     }
 
 }

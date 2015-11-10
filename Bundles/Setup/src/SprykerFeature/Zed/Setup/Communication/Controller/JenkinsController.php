@@ -278,7 +278,7 @@ $command</command>";
      */
     protected function getRoles()
     {
-        if (php_sapi_name() !== 'cli') {
+        if (PHP_SAPI !== 'cli') {
             return false;
         }
 

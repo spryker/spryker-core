@@ -12,8 +12,6 @@ use Symfony\CS\Tokenizer\Tokens;
 
 /**
  * Fixer RemoveFunctionAlias
- *
- * @author Mark Scherer
  */
 class RemoveFunctionAliasFixer extends AbstractFixer
 {
@@ -51,7 +49,7 @@ class RemoveFunctionAliasFixer extends AbstractFixer
         $wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR];
 
         foreach ($tokens as $index => $token) {
-            $tokenContent = $token->getContent();
+            $tokenContent = strtolower($token->getContent());
             if (empty($tokenContent) || !isset(self::$matching[$tokenContent])) {
                 continue;
             }
