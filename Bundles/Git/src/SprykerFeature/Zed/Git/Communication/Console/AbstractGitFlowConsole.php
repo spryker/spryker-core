@@ -41,7 +41,7 @@ abstract class AbstractGitFlowConsole extends Console
             self::OPTION_LEVEL,
             self::OPTION_LEVEL_SHORT,
             InputOption::VALUE_OPTIONAL,
-            self::OPTION_LEVEL_DESCRIPTION,
+            self::OPTION_LEVEL_DESCRIPTION . ' (' . self::OPTION_LEVEL_PROJECT . '|' . self::OPTION_LEVEL_CORE . ')',
             self::OPTION_LEVEL_PROJECT
         );
         $this->addOption(
