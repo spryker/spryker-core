@@ -44,7 +44,7 @@ class PhpSapiConstantFixer extends AbstractFixer
 
         foreach ($tokens as $index => $token) {
             $tokenContent = $token->getContent();
-            if (empty($tokenContent)) {
+            if (strtolower($tokenContent) !== 'php_sapi_name') {
                 continue;
             }
 
