@@ -20,3 +20,11 @@
      */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }});
 {% endmacro -%}
+{%- macro addRequire(method) %}
+    /**
+     * @throws RequiredTransferPropertyException
+     *
+     * @return self
+     */
+    public function {{ method.name }}();
+{% endmacro -%}

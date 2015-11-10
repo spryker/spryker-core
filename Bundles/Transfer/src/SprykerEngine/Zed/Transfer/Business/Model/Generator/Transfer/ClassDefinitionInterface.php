@@ -24,6 +24,11 @@ interface ClassDefinitionInterface extends DefinitionInterface
     /**
      * @return array
      */
+    public function getConstants();
+
+    /**
+     * @return array
+     */
     public function getProperties();
 
     /**

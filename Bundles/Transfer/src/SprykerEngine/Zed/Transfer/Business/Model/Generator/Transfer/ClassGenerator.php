@@ -67,6 +67,7 @@ class ClassGenerator implements GeneratorInterface
             'uses' => $classDefinition->getUses(),
             'interfaces' => $classDefinition->getInterfaces(),
             'constructorDefinition' => $classDefinition->getConstructorDefinition(),
+            'constants' => $classDefinition->getConstants(),
             'properties' => $classDefinition->getProperties(),
             'methods' => $classDefinition->getMethods(),
         ];

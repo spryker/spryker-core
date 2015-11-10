@@ -8,6 +8,7 @@ namespace Generated\Shared\Test;
 
 use Generated\Shared\Transfer\ItemTransfer;
 use SprykerEngine\Shared\Transfer\TransferInterface;
+use SprykerEngine\Shared\Transfer\Exception\RequiredTransferPropertyException;
 
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
@@ -29,6 +30,13 @@ interface CatFaceInterface extends TransferInterface
     public function getName();
 
     /**
+     * @throws RequiredTransferPropertyException
+     *
+     * @return self
+     */
+    public function requireName();
+
+    /**
      * @param ItemTransfer $item
      *
      * @return $this
@@ -39,6 +47,13 @@ interface CatFaceInterface extends TransferInterface
      * @return ItemTransfer
      */
     public function getItem();
+
+    /**
+     * @throws RequiredTransferPropertyException
+     *
+     * @return self
+     */
+    public function requireItem();
 
     /**
      * @param \ArrayObject|ItemTransfer[] $items
@@ -58,5 +73,12 @@ interface CatFaceInterface extends TransferInterface
      * @return $this
      */
     public function addItem(ItemTransfer $item);
+
+    /**
+     * @throws RequiredTransferPropertyException
+     *
+     * @return self
+     */
+    public function requireItems();
 
 }

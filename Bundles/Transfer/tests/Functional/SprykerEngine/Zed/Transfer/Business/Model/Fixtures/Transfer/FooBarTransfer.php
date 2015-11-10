@@ -7,6 +7,7 @@
 namespace Generated\Shared\Transfer;
 
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
+use SprykerEngine\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use Generated\Shared\Project\FooBarInterface as ProjectFooBarInterface;
 use Generated\Shared\Vendor\FooBarInterface as VendorFooBarInterface;
 
@@ -16,6 +17,12 @@ use Generated\Shared\Vendor\FooBarInterface as VendorFooBarInterface;
  */
 class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface, VendorFooBarInterface
 {
+
+    const NAME = 'name';
+
+    const BLA = 'bla';
+
+    const SELF_REFERENCE = 'selfReference';
 
     /**
      * @var string
@@ -45,7 +52,7 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     public function setName($name)
     {
         $this->name = $name;
-        $this->addModifiedProperty('name');
+        $this->addModifiedProperty(self::NAME);
 
         return $this;
     }
@@ -59,6 +66,18 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     }
 
     /**
+     * @throws RequiredTransferPropertyException
+     *
+     * @return self
+     */
+    public function requireName()
+    {
+        $this->assertPropertyIsSet(self::NAME);
+
+        return $this;
+    }
+
+    /**
      * @param int $bla
      *
      * @return $this
@@ -66,7 +85,7 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     public function setBla($bla)
     {
         $this->bla = $bla;
-        $this->addModifiedProperty('bla');
+        $this->addModifiedProperty(self::BLA);
 
         return $this;
     }
@@ -80,6 +99,18 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     }
 
     /**
+     * @throws RequiredTransferPropertyException
+     *
+     * @return self
+     */
+    public function requireBla()
+    {
+        $this->assertPropertyIsSet(self::BLA);
+
+        return $this;
+    }
+
+    /**
      * @param \ArrayObject|FooBarTransfer[] $selfReference
      *
      * @return $this
@@ -87,7 +118,7 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     public function setSelfReference(\ArrayObject $selfReference)
     {
         $this->selfReference = $selfReference;
-        $this->addModifiedProperty('selfReference');
+        $this->addModifiedProperty(self::SELF_REFERENCE);
 
         return $this;
     }
@@ -108,7 +139,19 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     public function addSelfReference(FooBarTransfer $selfReference)
     {
         $this->selfReference[] = $selfReference;
-        $this->addModifiedProperty('selfReference');
+        $this->addModifiedProperty(self::SELF_REFERENCE);
+
+        return $this;
+    }
+
+    /**
+     * @throws RequiredTransferPropertyException
+     *
+     * @return self
+     */
+    public function requireSelfReference()
+    {
+        $this->assertCollectionPropertyIsSet(self::SELF_REFERENCE);
 
         return $this;
     }

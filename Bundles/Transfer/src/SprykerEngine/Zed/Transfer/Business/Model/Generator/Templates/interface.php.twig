@@ -11,6 +11,7 @@ namespace {{ namespace }};
 use {{ use }};
 {% endfor %}
 use SprykerEngine\Shared\Transfer\TransferInterface;
+use SprykerEngine\Shared\Transfer\Exception\RequiredTransferPropertyException;
 
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
@@ -28,6 +29,9 @@ interface {{ name }} extends TransferInterface
 {% endif %}
 {% if methodName starts with 'add' %}
 {{ macro.addAdd(method) }}
+{% endif %}
+{% if methodName starts with 'require' %}
+{{ macro.addRequire(method) }}
 {% endif %}
 {% endfor %}
 }
