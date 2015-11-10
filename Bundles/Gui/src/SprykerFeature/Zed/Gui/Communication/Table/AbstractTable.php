@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\DataTablesTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
+use Propel\Runtime\Propel;
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\System\SystemConfig;
@@ -425,11 +426,12 @@ abstract class AbstractTable
                     $filter = '::TEXT';
                 }
 
+                $conditionParameter = '%' . mb_strtolower($searchTerm[self::PARAMETER_VALUE]) . '%';
                 $condition = sprintf(
-                    "LOWER(%s%s) LIKE '%s'",
+                    "LOWER(%s%s) LIKE %s",
                     $value,
                     $filter,
-                    '%' . mb_strtolower($searchTerm[self::PARAMETER_VALUE]) . '%'
+                    Propel::getConnection()->quote($conditionParameter)
                 );
                 $query->where($condition);
             }
