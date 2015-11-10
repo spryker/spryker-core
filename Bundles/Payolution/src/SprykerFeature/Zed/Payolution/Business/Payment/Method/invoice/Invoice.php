@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Payolution\Business\Payment\Method\invoice;
 use Generated\Shared\Payolution\CheckoutRequestInterface;
 use SprykerFeature\Zed\Payolution\Business\Payment\Method\AbstractPaymentMethod;
 use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 
 class Invoice extends AbstractPaymentMethod implements InvoiceInterface
 {
@@ -101,6 +101,19 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
         $this->addRequestData(
             $requestData,
             [
+                ApiConstants::NAME_GIVEN => $paymentEntity->getFirstName(),
+                ApiConstants::NAME_FAMILY => $paymentEntity->getLastName(),
+                ApiConstants::NAME_TITLE => $paymentEntity->getSalutation(),
+                ApiConstants::NAME_SEX => $this->mapGender($paymentEntity->getGender()),
+                ApiConstants::NAME_BIRTHDATE => $paymentEntity->getDateOfBirth(self::PAYOLUTION_DATE_FORMAT),
+                ApiConstants::ADDRESS_STREET => $paymentEntity->getStreet(),
+                ApiConstants::ADDRESS_ZIP => $paymentEntity->getZipCode(),
+                ApiConstants::ADDRESS_CITY => $paymentEntity->getCity(),
+                ApiConstants::ADDRESS_COUNTRY => $paymentEntity->getCountryIso2Code(),
+                ApiConstants::CONTACT_EMAIL => $paymentEntity->getEmail(),
+                ApiConstants::CONTACT_PHONE => $paymentEntity->getPhone(),
+                ApiConstants::CONTACT_MOBILE => $paymentEntity->getCellPhone(),
+                ApiConstants::CONTACT_IP => $paymentEntity->getClientIp(),
                 ApiConstants::IDENTIFICATION_SHOPPERID => $paymentEntity->getSpySalesOrder()->getFkCustomer(),
                 ApiConstants::CRITERION_CUSTOMER_LANGUAGE => $paymentEntity->getLanguageIso2Code(),
             ]

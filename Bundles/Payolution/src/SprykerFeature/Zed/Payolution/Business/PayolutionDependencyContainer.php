@@ -10,13 +10,13 @@ use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Request\ConverterInterface as RequestConverterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Response\ConverterInterface as ResponseConverterInterface;
+use SprykerFeature\Zed\Payolution\Business\Order\SaverInterface;
 use SprykerFeature\Zed\Payolution\Business\Payment\Handler\Transaction\TransactionInterface;
 use SprykerFeature\Zed\Payolution\Business\Payment\Handler\Calculation\CalculationInterface;
 use SprykerFeature\Zed\Payolution\Business\Log\TransactionStatusLogInterface;
 use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
-use SprykerFeature\Zed\CustomerCheckoutConnector\Business\CustomerOrderSaverInterface;
 use Generated\Zed\Ide\FactoryAutoCompletion\PayolutionBusiness;
 
 /**
@@ -69,6 +69,7 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
 
     /**
      * @param string $gatewayUrl
+     * @param string $contentType
      *
      * @return AdapterInterface
      */
@@ -78,19 +79,11 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return CustomerOrderSaverInterface
+     * @return SaverInterface
      */
     public function createOrderSaver()
     {
         return $this->getFactory()->createOrderSaver();
-    }
-
-    /**
-     * @return RequestConverterInterface
-     */
-    public function createRequestConverter()
-    {
-        return $this->getFactory()->createApiRequestConverter();
     }
 
     /**

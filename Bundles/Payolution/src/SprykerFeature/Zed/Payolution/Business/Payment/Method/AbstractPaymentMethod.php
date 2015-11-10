@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use SprykerFeature\Zed\Payolution\Business\Exception\GenderNotDefinedException;
 use SprykerFeature\Zed\Payolution\Persistence\Propel\Map\SpyPaymentPayolutionTableMap;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 
 abstract class AbstractPaymentMethod
 {
@@ -114,19 +114,6 @@ abstract class AbstractPaymentMethod
                 ApiConstants::TRANSACTION_CHANNEL => $this->getTransactionChannel(),
                 ApiConstants::PAYMENT_CODE => $paymentCode,
                 ApiConstants::IDENTIFICATION_REFERENCEID => $uniqueId,
-                ApiConstants::NAME_GIVEN => $paymentEntity->getFirstName(),
-                ApiConstants::NAME_FAMILY => $paymentEntity->getLastName(),
-                ApiConstants::NAME_TITLE => $paymentEntity->getSalutation(),
-                ApiConstants::NAME_SEX => $this->mapGender($paymentEntity->getGender()),
-                ApiConstants::NAME_BIRTHDATE => $paymentEntity->getDateOfBirth(self::PAYOLUTION_DATE_FORMAT),
-                ApiConstants::ADDRESS_STREET => $paymentEntity->getStreet(),
-                ApiConstants::ADDRESS_ZIP => $paymentEntity->getZipCode(),
-                ApiConstants::ADDRESS_CITY => $paymentEntity->getCity(),
-                ApiConstants::ADDRESS_COUNTRY => $paymentEntity->getCountryIso2Code(),
-                ApiConstants::CONTACT_EMAIL => $paymentEntity->getEmail(),
-                ApiConstants::CONTACT_PHONE => $paymentEntity->getPhone(),
-                ApiConstants::CONTACT_MOBILE => $paymentEntity->getCellPhone(),
-                ApiConstants::CONTACT_IP => $paymentEntity->getClientIp(),
             ]
         );
 

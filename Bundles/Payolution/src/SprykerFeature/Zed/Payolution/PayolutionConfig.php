@@ -119,7 +119,7 @@ class PayolutionConfig extends AbstractBundleConfig
     /**
      * @return string
      */
-    public function getTransactionChannelCalculation()
+    public function getCalculationChannel()
     {
         return $this->get(PayolutionConfigConstants::CALCULATION_CHANNEL);
     }

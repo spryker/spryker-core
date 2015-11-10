@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Payolution\Business\Payment\Method\installment;
 use Generated\Shared\Payolution\CheckoutRequestInterface;
 use SprykerFeature\Zed\Payolution\Business\Payment\Method\AbstractPaymentMethod;
 use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 
 class Installment extends AbstractPaymentMethod implements InstallmentInterface
 {
@@ -49,33 +49,83 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
     /**
      * @param CheckoutRequestInterface $checkoutRequestTransfer
      *
-     * @return string
+     * @return array
      */
     public function buildCalculationRequest(CheckoutRequestInterface $checkoutRequestTransfer)
     {
-        return
-            "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?>".
-            "<Request version=\"2.0\">".
-                "<Sender>Spy</Sender>".
-                "<Transaction mode=\"TEST\" channel=\"spryker-installment\">".
-                    "<Identification>".
-                        "<TransactionID>4ab2</TransactionID>".
-                    "</Identification>".
-                    "<Payment>".
-                        "<OperationType>CALCULATION</OperationType>".
-                        "<PaymentType>INSTALLMENT</PaymentType>".
-                        "<Presentation>".
-                            "<Currency>EUR</Currency>".
-                            "<Usage>Order with ID 4ab2</Usage>".
-                            "<Amount>499.99</Amount>".
-                            "<VAT>83</VAT>".
-                        "</Presentation>".
-                    "</Payment>".
-                    "<Analysis>".
-                        "<Criterion name=\"PAYOLUTION_CALCULATION_TARGET_COUNTRY\">DE</Criterion>".
-                    "</Analysis>".
-                "</Transaction>".
-            "</Request>";
+        return [
+            'name' => 'Request',
+            'attributes' => [
+                'version' => '2.0',
+            ],
+            [
+                'name' => 'Sender',
+                'value' => $this->getConfig()->getCalculationSender(),
+            ],
+            [
+                'name' => 'Transaction',
+                'attributes' => [
+                    'mode' => $this->getConfig()->getCalculationMode(),
+                    'channel' => $this->getConfig()->getCalculationChannel(),
+                ],
+                [
+                    'name' => 'Identification',
+                    [
+                        'name' => 'TransactionID',
+                        'value' => uniqid('tran_'),
+                    ],
+                ],
+                [
+                    'name' => 'Payment',
+                    [
+                        'name' => 'OperationType',
+                        'value' => ApiConstants::CALCULATION_OPERATION_TYPE,
+                    ],
+                    [
+                        'name' => 'PaymentType',
+                        'value' => ApiConstants::CALCULATION_PAYMENT_TYPE,
+                    ],
+                    [
+                        'name' => 'Presentation',
+                        [
+                            'name' => 'Currency',
+                            'value' => $checkoutRequestTransfer
+                                ->getPayolutionPayment()
+                                ->getCurrencyIso3Code(),
+                        ],
+                        [
+                            'name' => 'Usage',
+                            'value' => null,
+                        ],
+                        [
+                            'name' => 'Amount',
+                            'value' => $checkoutRequestTransfer
+                                ->getCart()
+                                ->getTotals()
+                                ->getGrandTotal(),
+                        ],
+                        [
+                            'name' => 'VAT',
+                            'value' => null,
+                        ],
+                    ],
+                ],
+                [
+                    'name' => 'Analysis',
+                    [
+                        'name' => 'Criterion',
+                        'attributes' => [
+                            'name' => ApiConstants::CALCULATION_TARGET_COUNTRY,
+                        ],
+                        'value' => $checkoutRequestTransfer
+                            ->getPayolutionPayment()
+                            ->getAddress()
+                            ->getIso2Code(),
+                    ],
+                ],
+
+            ],
+        ];
     }
 
     /**
@@ -113,6 +163,12 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                 ApiConstants::CONTACT_IP => $payolutionTransfer->getClientIp(),
                 ApiConstants::CRITERION_PRE_CHECK => 'TRUE',
                 ApiConstants::CRITERION_CUSTOMER_LANGUAGE => $payolutionTransfer->getLanguageIso2Code(),
+                ApiConstants::CRITERION_INSTALLMENT_AMOUNT => $payolutionTransfer->getInstallmentAmount(),
+                ApiConstants::CRITERION_DURATION => $payolutionTransfer->getInstallmentDuration(),
+                ApiConstants::CRITERION_ACCOUNT_HOLDER => $payolutionTransfer->getBankAccountHolder(),
+                ApiConstants::CRITERION_ACCOUNT_BIC => $payolutionTransfer->getBankAccountBic(),
+                ApiConstants::CRITERION_ACCOUNT_IBAN => $payolutionTransfer->getBankAccountIban(),
+                ApiConstants::CRITERION_ACCOUNT_COUNTRY => $addressTransfer->getIso2Code(),
             ]
         );
 
@@ -132,8 +188,27 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
         $this->addRequestData(
             $requestData,
             [
+                ApiConstants::NAME_GIVEN => $paymentEntity->getFirstName(),
+                ApiConstants::NAME_FAMILY => $paymentEntity->getLastName(),
+                ApiConstants::NAME_TITLE => $paymentEntity->getSalutation(),
+                ApiConstants::NAME_SEX => $this->mapGender($paymentEntity->getGender()),
+                ApiConstants::NAME_BIRTHDATE => $paymentEntity->getDateOfBirth(self::PAYOLUTION_DATE_FORMAT),
+                ApiConstants::ADDRESS_STREET => $paymentEntity->getStreet(),
+                ApiConstants::ADDRESS_ZIP => $paymentEntity->getZipCode(),
+                ApiConstants::ADDRESS_CITY => $paymentEntity->getCity(),
+                ApiConstants::ADDRESS_COUNTRY => $paymentEntity->getCountryIso2Code(),
+                ApiConstants::CONTACT_EMAIL => $paymentEntity->getEmail(),
+                ApiConstants::CONTACT_PHONE => $paymentEntity->getPhone(),
+                ApiConstants::CONTACT_MOBILE => $paymentEntity->getCellPhone(),
+                ApiConstants::CONTACT_IP => $paymentEntity->getClientIp(),
                 ApiConstants::IDENTIFICATION_SHOPPERID => $paymentEntity->getSpySalesOrder()->getFkCustomer(),
                 ApiConstants::CRITERION_CUSTOMER_LANGUAGE => $paymentEntity->getLanguageIso2Code(),
+                ApiConstants::CRITERION_INSTALLMENT_AMOUNT => $paymentEntity->getInstallmentAmount(),
+                ApiConstants::CRITERION_DURATION => $paymentEntity->getInstallmentDuration(),
+                ApiConstants::CRITERION_ACCOUNT_HOLDER => $paymentEntity->getBankAccountHolder(),
+                ApiConstants::CRITERION_ACCOUNT_BIC => $paymentEntity->getBankAccountBic(),
+                ApiConstants::CRITERION_ACCOUNT_IBAN => $paymentEntity->getBankAccountIban(),
+                ApiConstants::CRITERION_ACCOUNT_COUNTRY => $paymentEntity->getCountryIso2Code(),
             ]
         );
 

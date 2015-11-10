@@ -12,8 +12,8 @@ use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterf
 use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;
 use SprykerFeature\Zed\Payolution\Communication\PayolutionDependencyContainer;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrder;
-use SprykerFeature\Zed\Sales\Persistence\Propel\SpySalesOrderItem;
+use Orm\Zed\Sales\Persistence\SpySalesOrder;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use Generated\Shared\Transfer\MailTransfer;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 

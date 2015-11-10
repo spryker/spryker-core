@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\Payolution\Business\Payment\Method\invoice;
 
 use Generated\Shared\Payolution\CheckoutRequestInterface;
-use SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 
 interface InvoiceInterface
 {
