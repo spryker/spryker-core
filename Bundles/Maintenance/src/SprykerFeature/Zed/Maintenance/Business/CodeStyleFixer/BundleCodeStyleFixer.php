@@ -137,7 +137,7 @@ class BundleCodeStyleFixer
         $command = $this->applicationRoot . 'vendor/bin/php-cs-fixer fix ' . $pathToFiles . ' -vvv';
 
         $pathToCore = $this->getPathToCore();
-        $process = new Process($command, $pathToCore, null, null, 3600);
+        $process = new Process($command, $pathToCore, null, null, 4800);
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
