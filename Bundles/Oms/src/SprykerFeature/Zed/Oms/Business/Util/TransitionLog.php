@@ -18,6 +18,11 @@ use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
 class TransitionLog implements TransitionLogInterface
 {
 
+    const SAPI_CLI = 'cli';
+    const QUERY_STRING = 'QUERY_STRING';
+    const DOCUMENT_URI = 'DOCUMENT_URI';
+    const ARGV = 'argv';
+
     /**
      * @var OmsQueryContainerInterface
      */
@@ -159,19 +164,19 @@ class TransitionLog implements TransitionLogInterface
 
         $logEntity->setHostname(System::getHostname());
 
-        if (PHP_SAPI === 'cli') {
-            $path = 'cli';
-            if (isset($_SERVER['argv']) && is_array($_SERVER['argv'])) {
-                $path = implode(' ', $_SERVER['argv']);
+        if (PHP_SAPI === self::SAPI_CLI) {
+            $path = self::SAPI_CLI;
+            if (isset($_SERVER[self::ARGV]) && is_array($_SERVER[self::ARGV])) {
+                $path = implode(' ', $_SERVER[self::ARGV]);
             }
         } else {
-            $path = $_SERVER['DOCUMENT_URI'];
+            $path = $_SERVER[self::DOCUMENT_URI];
         }
         $logEntity->setPath($path);
 
         $params = [];
-        if (!empty($_SERVER['QUERY_STRING'])) {
-            $params = $this->getParamsFromQueryString($_SERVER['QUERY_STRING']);
+        if (!empty($_SERVER[self::QUERY_STRING])) {
+            $params = $this->getParamsFromQueryString($_SERVER[self::QUERY_STRING]);
         }
 
         $logEntity->setParams($params);
