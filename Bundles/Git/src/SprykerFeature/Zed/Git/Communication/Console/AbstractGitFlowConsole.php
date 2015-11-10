@@ -72,6 +72,11 @@ abstract class AbstractGitFlowConsole extends Console
     {
         $from = $this->getFrom();
         $branch = $this->getBranch();
+
+        if ($from === $branch) {
+            $this->warning(sprintf('Warning: You want to integrate %s into %s', $from, $branch));
+        }
+
         $commandList = $this->getCommandList($from, $branch);
 
         foreach ($commandList as $command) {
