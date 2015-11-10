@@ -308,10 +308,10 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     /**
      * @param string $method
      * @param string $property
-     * @param string $var
-     * @param null $return
-     * @param null $typeHint
-     * @param string $constant
+     * @param string|null $var
+     * @param string|null $return
+     * @param string|null $typeHint
+     * @param string|null $constant
      *
      * @return array
      */
@@ -345,10 +345,10 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
      * @param string $method
      * @param string $property
      * @param string $parent
-     * @param string $var
-     * @param null $return
-     * @param null $typeHint
-     * @param string $constant
+     * @param string|null $var
+     * @param string|null $return
+     * @param string|null $typeHint
+     * @param string|null $constant
      *
      * @return array
      */
