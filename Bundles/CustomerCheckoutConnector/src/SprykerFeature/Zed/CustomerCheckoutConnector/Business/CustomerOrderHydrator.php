@@ -45,7 +45,7 @@ class CustomerOrderHydrator implements CustomerOrderHydratorInterface
             $orderTransfer->setFkCustomer($idUser);
             $customerTransfer->setIdCustomer($idUser);
             $customerTransfer = $this->customerFacade->getCustomer($customerTransfer);
-        } else if(!$customerTransfer->getPassword()) {
+        } else if (!$customerTransfer->getPassword()) {
             $customerTransfer->setIsGuest($request->getIsGuest());
         }
 
@@ -73,7 +73,7 @@ class CustomerOrderHydrator implements CustomerOrderHydratorInterface
     }
 
     /**
-     * @param OrderInterface           $orderTransfer
+     * @param OrderInterface $orderTransfer
      * @param CheckoutRequestInterface $request
      */
     protected function setGuestProperties(

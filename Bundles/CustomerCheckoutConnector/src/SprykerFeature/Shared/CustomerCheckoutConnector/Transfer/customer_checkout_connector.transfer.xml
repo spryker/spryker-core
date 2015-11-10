@@ -17,7 +17,7 @@
     <transfer name="CheckoutRequest">
         <property name="isGuest" type="bool" />
         <property name="idUser" type="int" />
-        <property name="customerPassword" type="int" />
+        <property name="customerPassword" type="string" />
         <property name="email" type="string" />
         <property name="billingAddress" type="Address" />
         <property name="shippingAddress" type="Address" />
