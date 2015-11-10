@@ -121,7 +121,6 @@ class Store
         header('X-Env: ' . APPLICATION_ENV);
 
         $newRelicApi = new Api();
-        $newRelicApi->addCustomParameter('locale', $this->getCurrentLocale());
         $newRelicApi->addCustomParameter('store', $this->getStoreName());
 
         if ($this->currentLocale !== null) {
