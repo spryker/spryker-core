@@ -425,7 +425,13 @@ abstract class AbstractTable
                     $filter = '::TEXT';
                 }
 
-                $query->where(sprintf("LOWER(%s%s) LIKE '%s'", $value, $filter, '%' . mb_strtolower($searchTerm[self::PARAMETER_VALUE]) . '%'));
+                $condition = sprintf(
+                    "LOWER(%s%s) LIKE '%s'",
+                    $value,
+                    $filter,
+                    '%' . mb_strtolower($searchTerm[self::PARAMETER_VALUE]) . '%'
+                );
+                $query->where($condition);
             }
 
             $this->filtered = $query->count();
