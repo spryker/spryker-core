@@ -12,6 +12,9 @@ class GitFlowUpdateConsole extends AbstractGitFlowConsole
     const COMMAND_NAME = 'gitflow:update';
     const DESCRIPTION = 'Update branch';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         parent::configure();
