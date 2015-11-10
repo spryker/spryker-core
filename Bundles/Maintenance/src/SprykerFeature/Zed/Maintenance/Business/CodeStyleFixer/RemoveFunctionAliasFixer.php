@@ -46,7 +46,7 @@ class RemoveFunctionAliasFixer extends AbstractFixer
     public function fix(\SplFileInfo $file, $content)
     {
         $tokens = Tokens::fromCode($content);
-        $wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR];
+        $wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR, T_NEW];
 
         foreach ($tokens as $index => $token) {
             $tokenContent = strtolower($token->getContent());
@@ -55,6 +55,9 @@ class RemoveFunctionAliasFixer extends AbstractFixer
             }
 
             $prevIndex = $tokens->getPrevNonWhitespace($index);
+
+            var_dump($tokens[$prevIndex]->toArray());ob_flush();
+
             if (in_array($tokens[$prevIndex]->getId(), $wrongTokens, true)) {
                 continue;
             }

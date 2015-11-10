@@ -24,6 +24,8 @@ class TestClass1Input
     {
         $foo = is_int(2);
         $foo = is_writable($foo);
+        $foo = new Join();
+        $foo = Join::foo();
     }
 
 }
