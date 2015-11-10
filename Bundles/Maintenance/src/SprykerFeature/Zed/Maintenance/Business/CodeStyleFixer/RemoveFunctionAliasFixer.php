@@ -12,8 +12,6 @@ use Symfony\CS\Tokenizer\Tokens;
 
 /**
  * Fixer RemoveFunctionAlias
- *
- * @author Mark Scherer
  */
 class RemoveFunctionAliasFixer extends AbstractFixer
 {

@@ -13,8 +13,6 @@ use Symfony\CS\Tokenizer\Tokens;
 
 /**
  * Fixer PhpSapiConstant
- *
- * @author Mark Scherer
  */
 class PhpSapiConstantFixer extends AbstractFixer
 {

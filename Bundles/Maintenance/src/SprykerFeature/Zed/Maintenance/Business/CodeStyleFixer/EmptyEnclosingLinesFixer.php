@@ -26,8 +26,19 @@ class EmptyEnclosingLinesFixer extends AbstractFixer
     {
         $tokens = Tokens::fromCode($content);
 
+        $this->fixContent($tokens);
+
+        return $tokens->generateCode();
+    }
+
+    /**
+     * @param Tokens|Token[] $tokens
+     *
+     * @return void
+     */
+    protected function fixContent(Tokens $tokens)
+    {
         foreach ($tokens as $index => $token) {
-            /* @var Token $openingBrace */
             if ($token->isGivenKind([T_CLASS, T_INTERFACE, T_TRAIT])) {
                 $openingBraceIndex = $tokens->getNextTokenOfKind($index, ['{']);
                 $closingBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $openingBraceIndex);
@@ -49,8 +60,6 @@ class EmptyEnclosingLinesFixer extends AbstractFixer
                 }
             }
         }
-
-        return $tokens->generateCode();
     }
 
     /**

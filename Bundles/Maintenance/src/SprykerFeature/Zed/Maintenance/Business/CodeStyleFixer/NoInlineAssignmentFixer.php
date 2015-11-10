@@ -14,10 +14,7 @@ use Symfony\CS\Utils;
 
 /**
  * Fixer NoInlineAssignment
- *
- * @author Mark Scherer
  */
-
 class NoInlineAssignmentFixer extends AbstractFixer
 {
 
@@ -31,8 +28,19 @@ class NoInlineAssignmentFixer extends AbstractFixer
     {
         $tokens = Tokens::fromCode($content);
 
+        $this->fixContent($tokens);
+
+        return $tokens->generateCode();
+    }
+
+    /**
+     * @param Tokens|Token[] $tokens
+     *
+     * @return void
+     */
+    protected function fixContent(Tokens $tokens)
+    {
         for ($index = $tokens->count() - 1; $index >= 0; --$index) {
-            /* @var Token $token */
             $token = $tokens[$index];
 
             // We skip T_FOR, T_WHILE for now as they can have valid inline assignment
@@ -72,8 +80,6 @@ class NoInlineAssignmentFixer extends AbstractFixer
             $content = $string . PHP_EOL . $content;
             $tokens[$index]->setContent($content);
         }
-
-        return $tokens->generateCode();
     }
 
     /**

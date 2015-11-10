@@ -8,12 +8,11 @@ namespace SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer;
 
 use Symfony\CS\AbstractFixer;
 use Symfony\CS\FixerInterface;
+use Symfony\CS\Tokenizer\Token;
 use Symfony\CS\Tokenizer\Tokens;
 
 /**
  * Fixer MethodArgumentDefaultValue
- *
- * @author Mark Scherer
  */
 class MethodArgumentDefaultValueFixer extends AbstractFixer
 {
@@ -38,6 +37,18 @@ class MethodArgumentDefaultValueFixer extends AbstractFixer
     {
         $tokens = Tokens::fromCode($content);
 
+        $this->fixContent($tokens);
+
+        return $tokens->generateCode();
+    }
+
+    /**
+     * @param Tokens|Token[] $tokens
+     *
+     * @return void
+     */
+    protected function fixContent(Tokens $tokens)
+    {
         for ($index = $tokens->count() - 1; $index >= 0; --$index) {
             $token = $tokens[$index];
 
@@ -73,8 +84,6 @@ class MethodArgumentDefaultValueFixer extends AbstractFixer
 
             $this->fixDefaultValues($tokens, $i, $endIndex - 1);
         }
-
-        return $tokens->generateCode();
     }
 
     /**

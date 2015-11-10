@@ -8,12 +8,11 @@ namespace SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer;
 
 use Symfony\CS\AbstractFixer;
 use Symfony\CS\FixerInterface;
+use Symfony\CS\Tokenizer\Token;
 use Symfony\CS\Tokenizer\Tokens;
 
 /**
  * Fixer ShortCast
- *
- * @author Mark Scherer
  */
 class ShortCastFixer extends AbstractFixer
 {
@@ -35,6 +34,19 @@ class ShortCastFixer extends AbstractFixer
     public function fix(\SplFileInfo $file, $content)
     {
         $tokens = Tokens::fromCode($content);
+
+        $this->fixContent($tokens);
+
+        return $tokens->generateCode();
+    }
+
+    /**
+     * @param Tokens|Token[] $tokens
+     *
+     * @return void
+     */
+    protected function fixContent(Tokens $tokens)
+    {
         foreach ($tokens as $index => $token) {
             // Don't use !!
             if ($token->getContent() === '!' && $tokens[$index - 1]->getContent() === '!') {
@@ -53,8 +65,6 @@ class ShortCastFixer extends AbstractFixer
                 }
             }
         }
-
-        return $tokens->generateCode();
     }
 
     /**

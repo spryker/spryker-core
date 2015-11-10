@@ -34,9 +34,21 @@ class NoIsNullFixer extends AbstractFixer
     public function fix(\SplFileInfo $file, $content)
     {
         $tokens = Tokens::fromCode($content);
+
+        $this->fixContent($tokens);
+
+        return $tokens->generateCode();
+    }
+
+    /**
+     * @param Tokens|Token[] $tokens
+     *
+     * @return void
+     */
+    protected function fixContent(Tokens $tokens)
+    {
         $wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR];
 
-        /** @var Token $token */
         foreach ($tokens as $index => $token) {
             $tokenContent = $token->getContent();
             if ($tokenContent !== self::STRING_MATCH) {
@@ -123,8 +135,6 @@ class NoIsNullFixer extends AbstractFixer
             }
             $tokens[$lastIndex]->setContent($replacement);
         }
-
-        return $tokens->generateCode();
     }
 
     /**

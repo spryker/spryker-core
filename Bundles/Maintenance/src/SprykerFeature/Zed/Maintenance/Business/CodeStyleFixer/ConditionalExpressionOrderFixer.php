@@ -20,10 +20,7 @@ if (!defined('T_LESS_THAN')) {
 
 /**
  * Fixer ConditionalExpressionOrder
- *
- * @author Mark Scherer
  */
-
 class ConditionalExpressionOrderFixer extends AbstractFixer
 {
 
@@ -37,7 +34,7 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
     {
         $tokens = Tokens::fromCode($content);
 
-        $this->fixConditions($file, $tokens);
+        $this->fixConditions($tokens);
 
         return $tokens->generateCode();
     }
@@ -45,12 +42,11 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
     /**
      * @see http://php.net/manual/en/language.operators.precedence.php
      *
-     * @param \SplFileInfo $file
      * @param Tokens|Token[] $tokens
      *
      * @return void
      */
-    protected function fixConditions(\SplFileInfo $file, Tokens $tokens)
+    protected function fixConditions(Tokens $tokens)
     {
         foreach ($tokens as $index => $token) {
             if ($token->getContent() !== '(') {
