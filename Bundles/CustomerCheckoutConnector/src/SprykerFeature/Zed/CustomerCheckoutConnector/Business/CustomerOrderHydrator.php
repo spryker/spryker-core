@@ -36,12 +36,16 @@ class CustomerOrderHydrator implements CustomerOrderHydratorInterface
     {
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setEmail($request->getEmail());
+        $customerTransfer->setPassword($request->getCustomerPassword());
+
+        $this->setGuestProperties($orderTransfer, $request);
 
         $idUser = $request->getIdUser();
         if ($idUser !== null) {
+            $orderTransfer->setFkCustomer($idUser);
             $customerTransfer->setIdCustomer($idUser);
             $customerTransfer = $this->customerFacade->getCustomer($customerTransfer);
-        } else {
+        } elseif (!$customerTransfer->getPassword()) {
             $customerTransfer->setIsGuest($request->getIsGuest());
         }
 
@@ -66,6 +70,22 @@ class CustomerOrderHydrator implements CustomerOrderHydratorInterface
         }
 
         $orderTransfer->setCustomer($customerTransfer);
+    }
+
+    /**
+     * @param OrderInterface $orderTransfer
+     * @param CheckoutRequestInterface $request
+     *
+     * @return void
+     */
+    protected function setGuestProperties(
+        OrderInterface $orderTransfer,
+        CheckoutRequestInterface $request
+    ) {
+        $orderTransfer->setEmail($request->getEmail());
+        $orderTransfer->setFirstName($request->getBillingAddress()->getFirstName());
+        $orderTransfer->setLastName($request->getBillingAddress()->getLastName());
+        $orderTransfer->setSalutation($request->getBillingAddress()->getSalutation());
     }
 
 }

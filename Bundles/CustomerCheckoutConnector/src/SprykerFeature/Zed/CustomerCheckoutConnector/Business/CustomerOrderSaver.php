@@ -44,9 +44,12 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
         } else {
             $customerTransfer->setFirstName($orderTransfer->getBillingAddress()->getFirstName());
             $customerTransfer->setLastName($orderTransfer->getBillingAddress()->getLastName());
-            $customerTransfer->setEmail($orderTransfer->getBillingAddress()->getEmail());
+            if (!$customerTransfer->getEmail()) {
+                $customerTransfer->setEmail($orderTransfer->getBillingAddress()->getEmail());
+            }
             $customerResponseTransfer = $this->customerFacade->registerCustomer($customerTransfer);
             $orderTransfer->setCustomer($customerResponseTransfer->getCustomerTransfer());
+            $orderTransfer->setFkCustomer($customerResponseTransfer->getCustomerTransfer()->getIdCustomer());
         }
 
         $this->persistAddresses($customerTransfer);
@@ -58,6 +61,7 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     protected function persistAddresses(CustomerTransfer $customer)
     {
         foreach ($customer->getBillingAddress() as $billingAddress) {
+            $billingAddress->setFkCustomer($customer->getIdCustomer());
             if (is_null($billingAddress->getIdCustomerAddress())) {
                 $newAddress = $this->customerFacade->createAddress($billingAddress);
                 $billingAddress->setIdCustomerAddress($newAddress->getIdCustomerAddress());
@@ -67,6 +71,7 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
         }
 
         foreach ($customer->getShippingAddress() as $shippingAddress) {
+            $shippingAddress->setFkCustomer($customer->getIdCustomer());
             if (is_null($shippingAddress->getIdCustomerAddress())) {
                 $newAddress = $this->customerFacade->createAddress($shippingAddress);
                 $shippingAddress->setIdCustomerAddress($newAddress->getIdCustomerAddress());
