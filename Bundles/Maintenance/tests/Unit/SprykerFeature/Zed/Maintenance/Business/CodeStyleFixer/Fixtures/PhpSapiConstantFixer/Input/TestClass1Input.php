@@ -11,7 +11,7 @@ class TestClass1Input
     public function replaceFunction()
     {
         $foo = php_sapi_name();
-        $foo = substr(php_sapi_name(), 0, 3);
+        $foo = substr(php_SaPi_name(), 0, 3);
     }
 
     /**
