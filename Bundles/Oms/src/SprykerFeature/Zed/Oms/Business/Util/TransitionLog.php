@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Oms\Business\Util;
 
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\Library\System;
 use SprykerFeature\Zed\Oms\Business\Process\EventInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
@@ -15,7 +14,6 @@ use Orm\Zed\Oms\Persistence\SpyOmsTransitionLog;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class TransitionLog implements TransitionLogInterface
 {
@@ -36,20 +34,13 @@ class TransitionLog implements TransitionLogInterface
     protected $logEntities;
 
     /**
-     * @var Request
-     */
-    protected $request;
-
-    /**
      * @param OmsQueryContainerInterface $queryContainer
      * @param array $logContext
-     * @param Request $request
      */
-    public function __construct(OmsQueryContainerInterface $queryContainer, array $logContext, Request $request = null)
+    public function __construct(OmsQueryContainerInterface $queryContainer, array $logContext)
     {
         $this->queryContainer = $queryContainer;
         $this->logContext = $logContext;
-        $this->request = $request;
     }
 
     /**

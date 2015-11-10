@@ -123,7 +123,7 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
         $queryContainer = $this->getQueryContainer();
 
         return $this->getFactory()
-            ->createUtilTransitionLog($queryContainer, $logContext, $this->getProvidedDependency(OmsDependencyProvider::REQUEST))
+            ->createUtilTransitionLog($queryContainer, $logContext)
         ;
     }
 

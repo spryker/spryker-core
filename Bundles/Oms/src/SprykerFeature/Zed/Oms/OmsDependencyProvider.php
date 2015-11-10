@@ -10,7 +10,6 @@ use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Condition\ConditionInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 class OmsDependencyProvider extends AbstractBundleDependencyProvider
 {
@@ -20,8 +19,6 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
     const COMMAND_PLUGINS = 'COMMAND_PLUGINS';
 
     const QUERY_CONTAINER_SALES = 'QUERY_CONTAINER_SALES';
-
-    const REQUEST = 'Request';
 
     /**
      * @param Container $container
@@ -36,10 +33,6 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::COMMAND_PLUGINS] = function (Container $container) {
             return $this->getCommandPlugins($container);
-        };
-
-        $container[self::REQUEST] = function (Container $container) {
-            return $this->getRequest($container);
         };
 
         return $container;
@@ -75,18 +68,6 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::QUERY_CONTAINER_SALES] = function (Container $container) {
             return $container->getLocator()->sales()->queryContainer();
         };
-    }
-
-    /**
-     * @param Container $container
-     *
-     * @return Request|null
-     */
-    public function getRequest(Container $container) {
-        if (PHP_SAPI === 'cli') {
-            return null;
-        }
-        return $container->getLocator()->application()->pluginPimple()->getApplication()['request'];
     }
 
 }
