@@ -182,7 +182,7 @@ class CustomerTable extends AbstractTable
             ->withColumn(SpyCustomerAddressTableMap::COL_ZIP_CODE, self::COL_ZIP_CODE)
             ->withColumn(SpyCustomerAddressTableMap::COL_CITY, self::COL_CITY)
             ->withColumn(SpyCustomerAddressTableMap::COL_FK_COUNTRY, self::COL_FK_COUNTRY)
-        ;
+            ->withColumn(SpyCustomerAddressTableMap::COL_PHONE, self::COL_PHONE);
 
         return $query;
     }

@@ -5,6 +5,11 @@
 
     <transfer name="Order">
         <property name="customer" type="Customer" />
+        <property name="fkCustomer" type="int" />
+        <property name="firstName" type="string" />
+        <property name="lastName" type="string" />
+        <property name="salutation" type="string" />
+        <property name="email" type="string" />
         <property name="billingAddress" type="Address" />
         <property name="shippingAddress" type="Address" />
     </transfer>
@@ -12,6 +17,7 @@
     <transfer name="CheckoutRequest">
         <property name="isGuest" type="bool" />
         <property name="idUser" type="int" />
+        <property name="customerPassword" type="int" />
         <property name="email" type="string" />
         <property name="billingAddress" type="Address" />
         <property name="shippingAddress" type="Address" />
