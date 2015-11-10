@@ -28,7 +28,6 @@ class CustomerTable extends AbstractTable
     const COL_EMAIL = 'email';
     const COL_FIRST_NAME = 'first_name';
     const COL_LAST_NAME = 'last_name';
-    const COL_PHONE = 'phone';
 
     /**
      * @var SpyCustomerQuery
@@ -56,7 +55,6 @@ class CustomerTable extends AbstractTable
             self::COL_EMAIL => 'Email',
             self::COL_LAST_NAME => 'Last Name',
             self::COL_FIRST_NAME => 'First Name',
-            self::COL_PHONE => 'Phone Number',
             self::COL_ZIP_CODE => 'Zip Code',
             self::COL_CITY => 'City',
             self::COL_FK_COUNTRY => 'Country',
