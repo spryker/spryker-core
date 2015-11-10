@@ -83,7 +83,7 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
      * @return Request|null
      */
     public function getRequest(Container $container) {
-        if (php_sapi_name() === 'cli') {
+        if (PHP_SAPI === 'cli') {
             return null;
         }
         return $container->getLocator()->application()->pluginPimple()->getApplication()['request'];
