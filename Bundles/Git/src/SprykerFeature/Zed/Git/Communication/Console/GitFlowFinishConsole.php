@@ -12,6 +12,9 @@ class GitFlowFinishConsole extends AbstractGitFlowConsole
     const COMMAND_NAME = 'gitflow:finish';
     const DESCRIPTION = 'Finish branch';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         parent::configure();

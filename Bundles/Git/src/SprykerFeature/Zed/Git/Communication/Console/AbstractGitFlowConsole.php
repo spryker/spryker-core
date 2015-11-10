@@ -35,6 +35,9 @@ abstract class AbstractGitFlowConsole extends Console
 
     const SPRYKER = 'spryker';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->addOption(
