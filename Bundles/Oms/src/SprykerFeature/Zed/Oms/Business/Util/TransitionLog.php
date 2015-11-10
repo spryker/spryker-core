@@ -168,18 +168,22 @@ class TransitionLog implements TransitionLogInterface
 
         $logEntity->setHostname(System::getHostname());
 
-        $path = 'cli';
-        if ($this->request !== null) {
-            $path = $this->request->getPathInfo();
-        } else {
+        if (PHP_SAPI === 'cli') {
+            $path = 'cli';
             if (isset($_SERVER['argv']) && is_array($_SERVER['argv'])) {
                 $path = implode(' ', $_SERVER['argv']);
             }
+        } else {
+            $path = $_SERVER['DOCUMENT_URI'];
         }
         $logEntity->setPath($path);
 
-        //FIXME: get/post params
-        //$logEntity->setParams(['a' => 'todo']);
+        $params = [];
+        if (!empty($_SERVER['QUERY_STRING'])) {
+            $params = $this->getParamsFromQueryString($_SERVER['QUERY_STRING']);
+        }
+
+        $logEntity->setParams($params);
 
         return $logEntity;
     }
@@ -239,6 +243,16 @@ class TransitionLog implements TransitionLogInterface
     public function getLogForOrder(SpySalesOrder $order)
     {
         return $this->queryContainer->queryLogForOrder($order)->find();
+    }
+
+    /**
+     * @param string $queryString
+     *
+     * @return array
+     */
+    protected function getParamsFromQueryString($queryString)
+    {
+        return explode('&', $queryString);
     }
 
 }
