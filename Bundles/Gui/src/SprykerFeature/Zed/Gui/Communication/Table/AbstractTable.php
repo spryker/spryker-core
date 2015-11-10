@@ -10,7 +10,10 @@ use Generated\Shared\Transfer\DataTablesTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Map\TableMap;
+use Propel\Runtime\Propel;
+use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Shared\System\SystemConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractTable
@@ -416,8 +419,21 @@ abstract class AbstractTable
                     $isFirst = false;
                 }
 
+                $filter = '';
+                $sqlDriver = Config::getInstance()->get(SystemConfig::ZED_DB_ENGINE);
                 // @todo fix this in CD-412
-                $query->where(sprintf("LOWER(%s::TEXT) LIKE '%s'", $value, '%' . mb_strtolower($searchTerm[self::PARAMETER_VALUE]) . '%'));
+                if ($sqlDriver === 'pgsql') {
+                    $filter = '::TEXT';
+                }
+
+                $conditionParameter = '%' . mb_strtolower($searchTerm[self::PARAMETER_VALUE]) . '%';
+                $condition = sprintf(
+                    "LOWER(%s%s) LIKE %s",
+                    $value,
+                    $filter,
+                    Propel::getConnection()->quote($conditionParameter)
+                );
+                $query->where($condition);
             }
 
             $this->filtered = $query->count();
