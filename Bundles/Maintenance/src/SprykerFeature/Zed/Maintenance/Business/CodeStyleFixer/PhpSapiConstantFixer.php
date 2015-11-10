@@ -39,7 +39,7 @@ class PhpSapiConstantFixer extends AbstractFixer
      */
     protected function fixContent(Tokens $tokens)
     {
-        $wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR];
+        $wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR, T_NEW];
 
         foreach ($tokens as $index => $token) {
             $tokenContent = $token->getContent();

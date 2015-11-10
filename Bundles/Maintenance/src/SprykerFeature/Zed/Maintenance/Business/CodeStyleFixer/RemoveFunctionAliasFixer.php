@@ -56,8 +56,6 @@ class RemoveFunctionAliasFixer extends AbstractFixer
 
             $prevIndex = $tokens->getPrevNonWhitespace($index);
 
-            var_dump($tokens[$prevIndex]->toArray());ob_flush();
-
             if (in_array($tokens[$prevIndex]->getId(), $wrongTokens, true)) {
                 continue;
             }
