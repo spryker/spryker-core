@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\Sales\Communication\Controller;
 
+use Orm\Zed\Oms\Persistence\Map\SpyOmsOrderItemStateHistoryTableMap;
+use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Sales\Communication\SalesDependencyContainer;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
@@ -41,6 +43,13 @@ class DetailsController extends AbstractController
         $orderItems = $this->getQueryContainer()
             ->querySalesOrderItemsWithState($idOrder)
             ->find();
+
+        foreach ($orderItems as $orderItem) {
+            $criteria = new Criteria();
+            $criteria->addDescendingOrderByColumn(SpyOmsOrderItemStateHistoryTableMap::COL_ID_OMS_ORDER_ITEM_STATE_HISTORY);
+            $orderItem->getStateHistoriesJoinState($criteria);
+            $orderItem->resetPartialStateHistories(false);
+        }
 
         $orderItemSplitFormCollection = $this->getDependencyContainer()->getOrderItemSplitFormCollection($orderItems);
 
