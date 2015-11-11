@@ -224,11 +224,21 @@ class Service implements ServiceInterface
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getAllKeys()
     {
-        return $this->client->keys($this->getSearchPattern(self::KV_PREFIX));
+        return $this->getKeys('*');
+    }
+
+    /**
+     * @param string $pattern
+     *
+     * @return array
+     */
+    public function getKeys($pattern)
+    {
+        return $this->client->keys($this->getSearchPattern($pattern));
     }
 
     /**
@@ -240,11 +250,13 @@ class Service implements ServiceInterface
     }
 
     /**
+     * @param string $pattern
+     *
      * @return string
      */
-    protected function getSearchPattern()
+    protected function getSearchPattern($pattern = '*')
     {
-        return self::KV_PREFIX . '*';
+        return self::KV_PREFIX . $pattern;
     }
 
     /**

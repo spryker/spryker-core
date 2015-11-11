@@ -60,6 +60,13 @@ interface StorageClientInterface
     public function getAllKeys();
 
     /**
+     * @param string $pattern
+     *
+     * @return array
+     */
+    public function getKeys($pattern);
+
+    /**
      */
     public function resetAccessStats();
 
