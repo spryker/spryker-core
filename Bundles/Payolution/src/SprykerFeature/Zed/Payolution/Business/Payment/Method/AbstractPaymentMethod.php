@@ -20,10 +20,10 @@ abstract class AbstractPaymentMethod
     /**
      * @const array
      */
-    protected static $genderMap = array(
+    protected static $genderMap = [
         SpyPaymentPayolutionTableMap::COL_GENDER_MALE => ApiConstants::SEX_MALE,
         SpyPaymentPayolutionTableMap::COL_GENDER_FEMALE => ApiConstants::SEX_FEMALE,
-    );
+    ];
 
     /**
      * @var PayolutionConfig

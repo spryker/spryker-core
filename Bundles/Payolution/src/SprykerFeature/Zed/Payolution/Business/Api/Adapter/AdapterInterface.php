@@ -12,7 +12,7 @@ interface AdapterInterface
     /**
      * @param array|string $data
      *
-     * @return array
+     * @return string
      */
     public function sendRequest($data);
 
@@ -21,7 +21,7 @@ interface AdapterInterface
      * @param string $user
      * @param string $password
      *
-     * @return array
+     * @return string
      */
     public function sendAuthorizedRequest($data, $user, $password);
 

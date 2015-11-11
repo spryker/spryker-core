@@ -5,11 +5,12 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Payment\Handler;
 
+use Generated\Shared\Payolution\PayolutionCalculationResponseInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use SprykerFeature\Zed\Payolution\Business\Api\Response\ConverterInterface as ResponseConverterInterface;
+use SprykerFeature\Zed\Payolution\Business\Api\Converter\ConverterInterface;
 use SprykerFeature\Zed\Payolution\Business\Exception\NoMethodMapperException;
 use SprykerFeature\Zed\Payolution\Business\Exception\OrderGrandTotalException;
-use Generated\Shared\Payolution\PayolutionResponseInterface;
+use Generated\Shared\Payolution\PayolutionTransactionResponseInterface;
 use SprykerFeature\Zed\Payolution\Business\Payment\Method\installment\InstallmentInterface;
 use SprykerFeature\Zed\Payolution\Business\Payment\Method\invoice\InvoiceInterface;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
@@ -23,9 +24,9 @@ abstract class AbstractPaymentHandler
     protected $executionAdapter;
 
     /**
-     * @var ResponseConverterInterface
+     * @var ConverterInterface
      */
-    protected $responseConverter;
+    protected $converter;
 
     /**
      * @var PayolutionConfig
@@ -39,16 +40,16 @@ abstract class AbstractPaymentHandler
 
     /**
      * @param AdapterInterface $executionAdapter
-     * @param ResponseConverterInterface $responseConverter
+     * @param ConverterInterface $converter
      * @param PayolutionConfig $config
      */
     public function __construct(
         AdapterInterface $executionAdapter,
-        ResponseConverterInterface $responseConverter,
+        ConverterInterface $converter,
         PayolutionConfig $config
     ) {
         $this->executionAdapter = $executionAdapter;
-        $this->responseConverter = $responseConverter;
+        $this->converter = $converter;
         $this->config = $config;
     }
 
@@ -79,7 +80,7 @@ abstract class AbstractPaymentHandler
      */
     protected function getMethodMapper($accountBrand)
     {
-        if (!isset($this->methodMappers[$accountBrand])) {
+        if (isset($this->methodMappers[$accountBrand]) === false) {
             throw new NoMethodMapperException('The method mapper is not registered.');
         }
 
@@ -97,13 +98,11 @@ abstract class AbstractPaymentHandler
      */
     protected function checkMaxMinGrandTotal($amount, $min, $max)
     {
-        if ($amount < $min)
-        {
+        if ($amount < $min) {
             throw new OrderGrandTotalException('The grand total is less than the allowed minimum amount');
         }
 
-        if ($amount > $max)
-        {
+        if ($amount > $max) {
             throw new OrderGrandTotalException('The grand total is greater than the allowed maximum amount');
         }
     }
@@ -111,7 +110,7 @@ abstract class AbstractPaymentHandler
     /**
      * @param array | string $requestData
      *
-     * @return PayolutionResponseInterface
+     * @return PayolutionTransactionResponseInterface | PayolutionCalculationResponseInterface
      */
     abstract protected function sendRequest($requestData);
 

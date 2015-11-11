@@ -8,7 +8,8 @@ namespace SprykerFeature\Zed\Payolution\Business;
 
 use Generated\Shared\Payolution\CheckoutRequestInterface;
 use Generated\Shared\Payolution\OrderInterface;
-use Generated\Shared\Payolution\PayolutionResponseInterface;
+use Generated\Shared\Payolution\PayolutionTransactionResponseInterface;
+use Generated\Shared\Payolution\PayolutionCalculationResponseInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -31,7 +32,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param CheckoutRequestInterface $checkoutRequestTransfer
      *
-     * @return PayolutionResponseInterface
+     * @return PayolutionTransactionResponseInterface
      */
     public function preCheckPayment(CheckoutRequestInterface $checkoutRequestTransfer)
     {
@@ -46,7 +47,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PayolutionResponseInterface
+     * @return PayolutionTransactionResponseInterface
      */
     public function preAuthorizePayment($idPayment)
     {
@@ -59,7 +60,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PayolutionResponseInterface
+     * @return PayolutionTransactionResponseInterface
      */
     public function reAuthorizePayment($idPayment)
     {
@@ -72,7 +73,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PayolutionResponseInterface
+     * @return PayolutionTransactionResponseInterface
      */
     public function revertPayment($idPayment)
     {
@@ -85,7 +86,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PayolutionResponseInterface
+     * @return PayolutionTransactionResponseInterface
      */
     public function capturePayment($idPayment)
     {
@@ -98,7 +99,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PayolutionResponseInterface
+     * @return PayolutionTransactionResponseInterface
      */
     public function refundPayment($idPayment)
     {
@@ -111,7 +112,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param CheckoutRequestInterface $checkoutRequestTransfer
      *
-     * @return PayolutionResponseInterface
+     * @return PayolutionCalculationResponseInterface
      */
     public function calculateInstallmentPayments(CheckoutRequestInterface $checkoutRequestTransfer)
     {

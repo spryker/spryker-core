@@ -21,7 +21,7 @@ class PayolutionFacadeRefundTest extends AbstractFacadeTest
         $idPayment = $this->getPaymentEntity()->getIdPaymentPayolution();
         $preAuthorizationAdapterMock = new PreAuthorizationAdapterMock();
         $facade = $this->getFacadeMock($preAuthorizationAdapterMock);
-        $facade->preAuthorizePayment($idPayment);
+        $preAuthorizationResponse = $facade->preAuthorizePayment($idPayment);
 
         $captureAdapterMock = new CaptureAdapterMock();
         $facade = $this->getFacadeMock($captureAdapterMock);
@@ -31,10 +31,10 @@ class PayolutionFacadeRefundTest extends AbstractFacadeTest
         $facade = $this->getFacadeMock($adapterMock);
         $response = $facade->refundPayment($idPayment);
 
-        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
+        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionTransactionResponseTransfer', $response);
 
         $expectedResponseData = $adapterMock->getSuccessResponse();
-        $expectedResponse = $this->getResponseConverter()->fromArray($expectedResponseData);
+        $expectedResponse = $this->getResponseConverter()->toTransactionResponseTransfer($expectedResponseData);
 
         $this->assertEquals($expectedResponse, $response);
         $this->assertEquals($expectedResponse->getPaymentCode(), $response->getPaymentCode());
@@ -42,7 +42,7 @@ class PayolutionFacadeRefundTest extends AbstractFacadeTest
         $this->assertEquals($expectedResponse->getProcessingReasonCode(), $response->getProcessingReasonCode());
         $this->assertEquals($expectedResponse->getProcessingStatusCode(), $response->getProcessingStatusCode());
         $this->assertEquals(
-            $captureResponse->getIdentificationUniqueid(),
+            $preAuthorizationResponse->getIdentificationUniqueid(),
             $expectedResponse->getIdentificationReferenceid()
         );
 
@@ -51,7 +51,7 @@ class PayolutionFacadeRefundTest extends AbstractFacadeTest
         $this->assertEquals(3, $this->getRequestLogCollectionForPayment()->count());
         $this->assertEquals(ApiConstants::PAYMENT_CODE_REFUND, $requestLog->getPaymentCode());
         $this->assertEquals($this->getOrderEntity()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
-        $this->assertEquals($captureResponse->getIdentificationUniqueid(), $requestLog->getReferenceId());
+        $this->assertEquals($preAuthorizationResponse->getIdentificationUniqueid(), $requestLog->getReferenceId());
 
         /** @var SpyPaymentPayolutionTransactionStatusLog $statusLog */
         $statusLog = $this->getStatusLogCollectionForPayment()->getLast();
@@ -66,7 +66,7 @@ class PayolutionFacadeRefundTest extends AbstractFacadeTest
         $idPayment = $this->getPaymentEntity()->getIdPaymentPayolution();
         $preAuthorizationAdapterMock = new PreAuthorizationAdapterMock();
         $facade = $this->getFacadeMock($preAuthorizationAdapterMock);
-        $facade->preAuthorizePayment($idPayment);
+        $preAuthorizationResponse = $facade->preAuthorizePayment($idPayment);
 
         $captureAdapterMock = new CaptureAdapterMock();
         $facade = $this->getFacadeMock($captureAdapterMock);
@@ -77,10 +77,10 @@ class PayolutionFacadeRefundTest extends AbstractFacadeTest
         $facade = $this->getFacadeMock($adapterMock);
         $response = $facade->refundPayment($idPayment);
 
-        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
+        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionTransactionResponseTransfer', $response);
 
         $expectedResponseData = $adapterMock->getFailureResponse();
-        $expectedResponse = $this->getResponseConverter()->fromArray($expectedResponseData);
+        $expectedResponse = $this->getResponseConverter()->toTransactionResponseTransfer($expectedResponseData);
 
         $this->assertEquals($expectedResponse, $response);
         $this->assertEquals($expectedResponse->getPaymentCode(), $response->getPaymentCode());
@@ -88,7 +88,7 @@ class PayolutionFacadeRefundTest extends AbstractFacadeTest
         $this->assertEquals($expectedResponse->getProcessingReasonCode(), $response->getProcessingReasonCode());
         $this->assertEquals($expectedResponse->getProcessingStatusCode(), $response->getProcessingStatusCode());
         $this->assertEquals(
-            $captureResponse->getIdentificationUniqueid(),
+            $preAuthorizationResponse->getIdentificationUniqueid(),
             $expectedResponse->getIdentificationReferenceid()
         );
 
@@ -97,7 +97,7 @@ class PayolutionFacadeRefundTest extends AbstractFacadeTest
         $this->assertEquals(3, $this->getRequestLogCollectionForPayment()->count());
         $this->assertEquals(ApiConstants::PAYMENT_CODE_REFUND, $requestLog->getPaymentCode());
         $this->assertEquals($this->getOrderEntity()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
-        $this->assertEquals($captureResponse->getIdentificationUniqueid(), $requestLog->getReferenceId());
+        $this->assertEquals($preAuthorizationResponse->getIdentificationUniqueid(), $requestLog->getReferenceId());
 
         /** @var SpyPaymentPayolutionTransactionStatusLog $statusLog */
         $statusLog = $this->getStatusLogCollectionForPayment()->getLast();

@@ -8,8 +8,7 @@ namespace SprykerFeature\Zed\Payolution\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\ConverterInterface as RequestConverterInterface;
-use SprykerFeature\Zed\Payolution\Business\Api\Response\ConverterInterface as ResponseConverterInterface;
+use SprykerFeature\Zed\Payolution\Business\Api\Converter\ConverterInterface;
 use SprykerFeature\Zed\Payolution\Business\Order\SaverInterface;
 use SprykerFeature\Zed\Payolution\Business\Payment\Handler\Transaction\TransactionInterface;
 use SprykerFeature\Zed\Payolution\Business\Payment\Handler\Calculation\CalculationInterface;
@@ -34,7 +33,7 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $paymentTransactionHandler = $this->getFactory()->createPaymentHandlerTransactionTransaction(
             $this->createAdapter($this->getConfig()->getTransactionGatewayUrl(), ApiConstants::TRANSACTION_REQUEST_CONTENT_TYPE),
-            $this->createResponseConverter(),
+            $this->createConverter(),
             $this->getQueryContainer(),
             $this->getConfig()
         );
@@ -56,7 +55,7 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $paymentCalculationHandler = $this->getFactory()->createPaymentHandlerCalculationCalculation(
             $this->createAdapter($this->getConfig()->getCalculationGatewayUrl(), ApiConstants::CALCULATION_REQUEST_CONTENT_TYPE),
-            $this->createResponseConverter(),
+            $this->createConverter(),
             $this->getConfig()
         );
 
@@ -87,11 +86,11 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return ResponseConverterInterface
+     * @return ConverterInterface
      */
-    public function createResponseConverter()
+    public function createConverter()
     {
-        return $this->getFactory()->createApiResponseConverter();
+        return $this->getFactory()->createApiConverterConverter();
     }
 
     /**

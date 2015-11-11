@@ -31,6 +31,7 @@ class RevertPlugin extends AbstractPlugin implements CommandByOrderInterface
     {
         $paymentEntity = $this->SpyPaymentPayolution($orderEntity);
         $this->getFacade()->revertPayment($paymentEntity->getIdPaymentPayolution());
+
         return [];
     }
 
@@ -42,6 +43,7 @@ class RevertPlugin extends AbstractPlugin implements CommandByOrderInterface
     protected function SpyPaymentPayolution(SpySalesOrder $orderEntity)
     {
         $paymentEntity = $orderEntity->getSpyPaymentPayolutions()->getFirst();
+
         return $paymentEntity;
     }
 

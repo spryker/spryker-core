@@ -31,6 +31,7 @@ class RefundPlugin  extends AbstractPlugin implements CommandByOrderInterface
     {
         $paymentEntity = $this->getPaymentEntity($orderEntity);
         $this->getFacade()->refundPayment($paymentEntity->getIdPaymentPayolution());
+
         return [];
     }
 
@@ -42,6 +43,7 @@ class RefundPlugin  extends AbstractPlugin implements CommandByOrderInterface
     protected function getPaymentEntity(SpySalesOrder $orderEntity)
     {
         $paymentEntity = $orderEntity->getSpyPaymentPayolutions()->getFirst();
+
         return $paymentEntity;
     }
 

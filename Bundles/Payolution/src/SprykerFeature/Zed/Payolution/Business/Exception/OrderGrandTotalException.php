@@ -7,5 +7,4 @@ namespace SprykerFeature\Zed\Payolution\Business\Exception;
 
 class OrderGrandTotalException extends \Exception
 {
-
 }

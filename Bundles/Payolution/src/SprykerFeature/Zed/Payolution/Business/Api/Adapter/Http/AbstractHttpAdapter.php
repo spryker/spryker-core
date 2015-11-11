@@ -12,9 +12,9 @@ use SprykerFeature\Zed\Payolution\Business\Exception\ApiHttpRequestException;
 abstract class AbstractHttpAdapter implements AdapterInterface
 {
 
-    static $request_content_types = [
+    public static $request_content_types = [
         'FORM' => 'application/x-www-form-urlencoded;charset=UTF-8',
-        'XML' => 'text/xml;charset=UTF-8'
+        'XML' => 'text/xml;charset=UTF-8',
     ];
 
     /**
@@ -40,11 +40,12 @@ abstract class AbstractHttpAdapter implements AdapterInterface
     /**
      * @param array|string $data
      *
-     * @return array
+     * @return string
      */
     public function sendRequest($data)
     {
         $request = $this->buildRequest($data);
+
         return $this->send($request);
     }
 
@@ -53,12 +54,13 @@ abstract class AbstractHttpAdapter implements AdapterInterface
      * @param string $user
      * @param string $password
      *
-     * @return array
+     * @return string
      */
     public function sendAuthorizedRequest($data, $user, $password)
     {
         $request = $this->buildRequest($data);
         $this->authorizeRequest($request, $user, $password);
+
         return $this->send($request);
     }
 
@@ -83,7 +85,8 @@ abstract class AbstractHttpAdapter implements AdapterInterface
      *
      * @throws ApiHttpRequestException
      *
-     * @return array
+     * @return string
      */
     abstract protected function send($request);
+
 }

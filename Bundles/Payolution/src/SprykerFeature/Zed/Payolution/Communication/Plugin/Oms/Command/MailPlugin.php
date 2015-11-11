@@ -88,7 +88,7 @@ class MailPlugin extends AbstractPlugin implements CommandByOrderInterface
     protected function setMailTransferSubject(MailTransfer $mailTransfer, PayolutionConfig $config)
     {
         $subject = $config->getEmailSubject();
-        if (null !== $subject) {
+        if ($subject !== null) {
             $mailTransfer->setSubject($this->translate($subject));
         }
     }

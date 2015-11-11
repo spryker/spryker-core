@@ -8,6 +8,8 @@ namespace Functional\SprykerFeature\Zed\Payolution\Business;
 
 use Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http\CaptureAdapterMock;
 use Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http\PreAuthorizationAdapterMock;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
 
 /**
@@ -30,10 +32,10 @@ class PayolutionFacadeCaptureTest extends AbstractFacadeTest
         $facade = $this->getFacadeMock($adapterMock);
         $response = $facade->capturePayment($idPayment);
 
-        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
+        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionTransactionResponseTransfer', $response);
 
         $expectedResponseData = $adapterMock->getSuccessResponse();
-        $expectedResponse = $this->getResponseConverter()->fromArray($expectedResponseData);
+        $expectedResponse = $this->getResponseConverter()->toTransactionResponseTransfer($expectedResponseData);
 
         $this->assertEquals($expectedResponse, $response);
         $this->assertEquals($expectedResponse->getPaymentCode(), $response->getPaymentCode());
@@ -72,10 +74,10 @@ class PayolutionFacadeCaptureTest extends AbstractFacadeTest
         $facade = $this->getFacadeMock($adapterMock);
         $response = $facade->capturePayment($idPayment);
 
-        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
+        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionTransactionResponseTransfer', $response);
 
         $expectedResponseData = $adapterMock->getFailureResponse();
-        $expectedResponse = $this->getResponseConverter()->fromArray($expectedResponseData);
+        $expectedResponse = $this->getResponseConverter()->toTransactionResponseTransfer($expectedResponseData);
 
         $this->assertEquals($expectedResponse, $response);
         $this->assertEquals($expectedResponse->getPaymentCode(), $response->getPaymentCode());

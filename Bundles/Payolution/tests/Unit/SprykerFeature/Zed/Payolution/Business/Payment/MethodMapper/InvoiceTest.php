@@ -10,10 +10,9 @@ use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\PayolutionPaymentTransfer;
-use Generated\Shared\Transfer\PayolutionRequestTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
-use SprykerFeature\Zed\Payolution\Business\Payment\MethodMapper\Invoice;
+use SprykerFeature\Zed\Payolution\Business\Payment\Method\Invoice\Invoice;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
@@ -25,17 +24,13 @@ class InvoiceTest extends Test
     {
         $checkoutRequestTransfer = $this->getCheckoutRequestTransfer();
         $methodMapper = new Invoice($this->getBundleConfigMock());
-        $requestTransfer = $methodMapper->mapToPreCheck($checkoutRequestTransfer);
+        $requestData = $methodMapper->buildPreCheckRequest($checkoutRequestTransfer);
 
-        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionRequestTransfer', $requestTransfer);
-        $this->assertSame(ApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
-        $this->assertSame(ApiConstants::PAYMENT_CODE_PRE_CHECK, $requestTransfer->getPaymentCode());
-        $this->assertSame('Straße des 17. Juni 135', $requestTransfer->getAddressStreet());
-
-        $criteria = $requestTransfer->getAnalysisCriteria();
-        $this->assertCount(2, $criteria);
-        $this->assertSame($criteria[0]->getName(), ApiConstants::CRITERION_PRE_CHECK);
-        $this->assertSame($criteria[0]->getValue(), 'TRUE');
+        $this->assertSame(ApiConstants::BRAND_INVOICE, $requestData['ACCOUNT.BRAND']);
+        $this->assertSame(ApiConstants::PAYMENT_CODE_PRE_CHECK, $requestData['PAYMENT.CODE']);
+        $this->assertSame('Straße des 17. Juni 135', $requestData['ADDRESS.STREET']);
+        $this->assertSame(ApiConstants::CRITERION_PRE_CHECK, 'CRITERION.PAYOLUTION_PRE_CHECK');
+        $this->assertSame('TRUE', $requestData['CRITERION.PAYOLUTION_PRE_CHECK']);
     }
 
     /**
@@ -85,13 +80,11 @@ class InvoiceTest extends Test
     {
         $methodMapper = new Invoice($this->getBundleConfigMock());
         $paymentEntityMock = $this->getPaymentEntityMock();
-        $requestTransfer = $methodMapper->mapToPreAuthorization($paymentEntityMock);
+        $requestData = $methodMapper->buildPreAuthorizationRequest($paymentEntityMock);
 
-        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionRequestTransfer', $requestTransfer);
-        $this->assertSame($paymentEntityMock->getEmail(), $requestTransfer->getContactEmail());
-        $this->assertSame(ApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
-        $this->assertSame(ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION, $requestTransfer->getPaymentCode());
-        $this->assertCount(1, $requestTransfer->getAnalysisCriteria());
+        $this->assertSame($paymentEntityMock->getEmail(), $requestData['CONTACT.EMAIL']);
+        $this->assertSame(ApiConstants::BRAND_INVOICE, $requestData['ACCOUNT.BRAND']);
+        $this->assertSame(ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION, $requestData['PAYMENT.CODE']);
     }
 
     public function testMapToReAuthorization()
@@ -99,13 +92,11 @@ class InvoiceTest extends Test
         $uniqueId = uniqid('test_');
         $methodMapper = new Invoice($this->getBundleConfigMock());
         $paymentEntityMock = $this->getPaymentEntityMock();
-        $requestTransfer = $methodMapper->mapToReAuthorization($paymentEntityMock, $uniqueId);
+        $requestData = $methodMapper->buildReAuthorizationRequest($paymentEntityMock, $uniqueId);
 
-        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionRequestTransfer', $requestTransfer);
-        $this->assertSame(ApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
-        $this->assertSame(ApiConstants::PAYMENT_CODE_RE_AUTHORIZATION, $requestTransfer->getPaymentCode());
-        $this->assertSame($uniqueId, $requestTransfer->getIdentificationReferenceid());
-        $this->testForAbsentCustomerData($requestTransfer);
+        $this->assertSame(ApiConstants::BRAND_INVOICE, $requestData['ACCOUNT.BRAND']);
+        $this->assertSame(ApiConstants::PAYMENT_CODE_RE_AUTHORIZATION, $requestData['PAYMENT.CODE']);
+        $this->assertSame($uniqueId, $requestData['IDENTIFICATION.REFERENCEID']);
     }
 
     public function testMapToReversal()
@@ -113,13 +104,11 @@ class InvoiceTest extends Test
         $uniqueId = uniqid('test_');
         $methodMapper = new Invoice($this->getBundleConfigMock());
         $paymentEntityMock = $this->getPaymentEntityMock();
-        $requestTransfer = $methodMapper->mapToReversal($paymentEntityMock, $uniqueId);
+        $requestData = $methodMapper->buildRevertRequest($paymentEntityMock, $uniqueId);
 
-        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionRequestTransfer', $requestTransfer);
-        $this->assertSame(ApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
-        $this->assertSame(ApiConstants::PAYMENT_CODE_REVERSAL, $requestTransfer->getPaymentCode());
-        $this->assertSame($uniqueId, $requestTransfer->getIdentificationReferenceid());
-        $this->testForAbsentCustomerData($requestTransfer);
+        $this->assertSame(ApiConstants::BRAND_INVOICE, $requestData['ACCOUNT.BRAND']);
+        $this->assertSame(ApiConstants::PAYMENT_CODE_REVERSAL, $requestData['PAYMENT.CODE']);
+        $this->assertSame($uniqueId, $requestData['IDENTIFICATION.REFERENCEID']);
     }
 
     public function testMapToCapture()
@@ -127,13 +116,11 @@ class InvoiceTest extends Test
         $uniqueId = uniqid('test_');
         $methodMapper = new Invoice($this->getBundleConfigMock());
         $paymentEntityMock = $this->getPaymentEntityMock();
-        $requestTransfer = $methodMapper->mapToCapture($paymentEntityMock, $uniqueId);
+        $requestData = $methodMapper->buildCaptureRequest($paymentEntityMock, $uniqueId);
 
-        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionRequestTransfer', $requestTransfer);
-        $this->assertSame(ApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
-        $this->assertSame(ApiConstants::PAYMENT_CODE_CAPTURE, $requestTransfer->getPaymentCode());
-        $this->assertSame($uniqueId, $requestTransfer->getIdentificationReferenceid());
-        $this->testForAbsentCustomerData($requestTransfer);
+        $this->assertSame(ApiConstants::BRAND_INVOICE, $requestData['ACCOUNT.BRAND']);
+        $this->assertSame(ApiConstants::PAYMENT_CODE_CAPTURE, $requestData['PAYMENT.CODE']);
+        $this->assertSame($uniqueId, $requestData['IDENTIFICATION.REFERENCEID']);
     }
 
     public function testMapToRefund()
@@ -141,34 +128,11 @@ class InvoiceTest extends Test
         $uniqueId = uniqid('test_');
         $methodMapper = new Invoice($this->getBundleConfigMock());
         $paymentEntityMock = $this->getPaymentEntityMock();
-        $requestTransfer = $methodMapper->mapToRefund($paymentEntityMock, $uniqueId);
+        $requestData = $methodMapper->buildRefundRequest($paymentEntityMock, $uniqueId);
 
-        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionRequestTransfer', $requestTransfer);
-        $this->assertSame(ApiConstants::BRAND_INVOICE, $requestTransfer->getAccountBrand());
-        $this->assertSame(ApiConstants::PAYMENT_CODE_REFUND, $requestTransfer->getPaymentCode());
-        $this->assertSame($uniqueId, $requestTransfer->getIdentificationReferenceid());
-        $this->testForAbsentCustomerData($requestTransfer);
-    }
-
-    /**
-     * For some requests (e.g. re-authorization) we don't expect customer data
-     *
-     * @param PayolutionRequestTransfer $requestTransfer
-     */
-    private function testForAbsentCustomerData(PayolutionRequestTransfer $requestTransfer)
-    {
-        $this->assertNull($requestTransfer->getNameGiven());
-        $this->assertNull($requestTransfer->getNameFamily());
-        $this->assertNull($requestTransfer->getNameTitle());
-        $this->assertNull($requestTransfer->getNameSex());
-        $this->assertNull($requestTransfer->getNameBirthdate());
-        $this->assertNull($requestTransfer->getAddressCity());
-        $this->assertNull($requestTransfer->getAddressCountry());
-        $this->assertNull($requestTransfer->getAddressStreet());
-        $this->assertNull($requestTransfer->getAddressZip());
-        $this->assertNull($requestTransfer->getContactEmail());
-        $this->assertNull($requestTransfer->getContactIp());
-        $this->assertNull($requestTransfer->getIdentificationShopperid());
+        $this->assertSame(ApiConstants::BRAND_INVOICE, $requestData['ACCOUNT.BRAND']);
+        $this->assertSame(ApiConstants::PAYMENT_CODE_REFUND, $requestData['PAYMENT.CODE']);
+        $this->assertSame($uniqueId, $requestData['IDENTIFICATION.REFERENCEID']);
     }
 
     /**

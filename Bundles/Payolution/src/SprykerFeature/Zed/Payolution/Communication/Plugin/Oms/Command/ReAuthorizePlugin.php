@@ -30,6 +30,7 @@ class ReAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterfac
     {
         $paymentEntity = $this->getPaymentEntity($orderEntity);
         $this->getFacade()->reAuthorizePayment($paymentEntity->getIdPaymentPayolution());
+
         return [];
     }
 
@@ -41,6 +42,7 @@ class ReAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterfac
     protected function getPaymentEntity(SpySalesOrder $orderEntity)
     {
         $paymentEntity = $orderEntity->getSpyPaymentPayolutions()->getFirst();
+
         return $paymentEntity;
     }
 

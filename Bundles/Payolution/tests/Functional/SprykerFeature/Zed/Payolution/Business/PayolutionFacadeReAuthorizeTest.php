@@ -25,10 +25,10 @@ class PayolutionFacadeReAuthorizeTest extends AbstractFacadeTest
         $facade = $this->getFacadeMock($adapterMock);
         $response = $facade->reAuthorizePayment($this->getPaymentEntity()->getIdPaymentPayolution());
 
-        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
+        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionTransactionResponseTransfer', $response);
 
         $expectedResponseData = $adapterMock->getSuccessResponse();
-        $expectedResponse = $this->getResponseConverter()->fromArray($expectedResponseData);
+        $expectedResponse = $this->getResponseConverter()->toTransactionResponseTransfer($expectedResponseData);
 
         $this->assertEquals($expectedResponse, $response);
         $this->assertEquals($expectedResponse->getPaymentCode(), $response->getPaymentCode());
@@ -66,10 +66,10 @@ class PayolutionFacadeReAuthorizeTest extends AbstractFacadeTest
         $facade = $this->getFacadeMock($adapterMock);
         $response = $facade->reAuthorizePayment($this->getPaymentEntity()->getIdPaymentPayolution());
 
-        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
+        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionTransactionResponseTransfer', $response);
 
         $expectedResponseData = $adapterMock->getFailureResponse();
-        $expectedResponse = $this->getResponseConverter()->fromArray($expectedResponseData);
+        $expectedResponse = $this->getResponseConverter()->toTransactionResponseTransfer($expectedResponseData);
 
         $this->assertEquals($expectedResponse, $response);
         $this->assertEquals($expectedResponse->getPaymentCode(), $response->getPaymentCode());

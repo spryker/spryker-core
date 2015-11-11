@@ -31,6 +31,7 @@ class PreAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterfa
     {
         $paymentEntity = $this->getPaymentEntity($orderEntity);
         $this->getFacade()->preAuthorizePayment($paymentEntity->getIdPaymentPayolution());
+
         return [];
     }
 
@@ -42,6 +43,7 @@ class PreAuthorizePlugin extends AbstractPlugin implements CommandByOrderInterfa
     protected function getPaymentEntity(SpySalesOrder $orderEntity)
     {
         $paymentEntity = $orderEntity->getSpyPaymentPayolutions()->getFirst();
+
         return $paymentEntity;
     }
 

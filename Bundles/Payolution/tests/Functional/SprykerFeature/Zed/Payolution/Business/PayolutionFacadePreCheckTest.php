@@ -25,10 +25,10 @@ class PayolutionFacadePreCheckTest extends AbstractFacadeTest
         $facade = $this->getFacadeMock($adapterMock);
         $response = $facade->preCheckPayment($this->getCheckoutRequestTransfer());
 
-        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
+        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionTransactionResponseTransfer', $response);
 
         $expectedResponseData = $adapterMock->getSuccessResponse();
-        $expectedResponse = $this->getResponseConverter()->fromArray($expectedResponseData);
+        $expectedResponse = $this->getResponseConverter()->toTransactionResponseTransfer($expectedResponseData);
 
         $this->assertEquals($expectedResponse, $response);
         $this->assertSame($expectedResponse->getProcessingReasonCode(), $response->getProcessingReasonCode());
@@ -41,10 +41,10 @@ class PayolutionFacadePreCheckTest extends AbstractFacadeTest
         $facade = $this->getFacadeMock($adapterMock);
         $response = $facade->preCheckPayment($this->getCheckoutRequestTransfer());
 
-        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
+        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionTransactionResponseTransfer', $response);
 
         $expectedResponseData = $adapterMock->getFailureResponse();
-        $expectedResponse = $this->getResponseConverter()->fromArray($expectedResponseData);
+        $expectedResponse = $this->getResponseConverter()->toTransactionResponseTransfer($expectedResponseData);
 
         $this->assertEquals($expectedResponse, $response);
         $this->assertSame($expectedResponse->getProcessingReasonCode(), $response->getProcessingReasonCode());

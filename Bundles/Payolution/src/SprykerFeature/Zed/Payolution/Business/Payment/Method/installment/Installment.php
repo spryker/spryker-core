@@ -54,70 +54,70 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
     public function buildCalculationRequest(CheckoutRequestInterface $checkoutRequestTransfer)
     {
         return [
-            'name' => 'Request',
-            'attributes' => [
-                'version' => '2.0',
+            ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_REQUEST_ELEMENT,
+            ApiConstants::CALCULATION_XML_ELEMENT_ATTRIBUTES => [
+                ApiConstants::CALCULATION_XML_REQUEST_VERSION_ATTRIBUTE => ApiConstants::CALCULATION_REQUEST_VERSION,
             ],
             [
-                'name' => 'Sender',
-                'value' => $this->getConfig()->getCalculationSender(),
+                ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_SENDER_ELEMENT,
+                ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $this->getConfig()->getCalculationSender(),
             ],
             [
-                'name' => 'Transaction',
-                'attributes' => [
-                    'mode' => $this->getConfig()->getCalculationMode(),
-                    'channel' => $this->getConfig()->getCalculationChannel(),
+                ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_TRANSACTION_ELEMENT,
+                ApiConstants::CALCULATION_XML_ELEMENT_ATTRIBUTES => [
+                    ApiConstants::CALCULATION_XML_TRANSACTION_MODE_ATTRIBUTE => $this->getConfig()->getCalculationMode(),
+                    ApiConstants::CALCULATION_XML_TRANSACTION_CHANNEL_ATTRIBUTE => $this->getConfig()->getCalculationChannel(),
                 ],
                 [
-                    'name' => 'Identification',
+                    ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_IDENTIFICATION_ELEMENT,
                     [
-                        'name' => 'TransactionID',
-                        'value' => uniqid('tran_'),
+                        ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_TRANSACTIONID_ELEMENT,
+                        ApiConstants::CALCULATION_XML_ELEMENT_VALUE => uniqid('tran_'),
                     ],
                 ],
                 [
-                    'name' => 'Payment',
+                    ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_PAYMENT_ELEMENT,
                     [
-                        'name' => 'OperationType',
-                        'value' => ApiConstants::CALCULATION_OPERATION_TYPE,
+                        ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_OPERATION_TYPE_ELEMENT,
+                        ApiConstants::CALCULATION_XML_ELEMENT_VALUE => ApiConstants::CALCULATION_OPERATION_TYPE,
                     ],
                     [
-                        'name' => 'PaymentType',
-                        'value' => ApiConstants::CALCULATION_PAYMENT_TYPE,
+                        ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_PAYMENT_TYPE_ELEMENT,
+                        ApiConstants::CALCULATION_XML_ELEMENT_VALUE => ApiConstants::CALCULATION_PAYMENT_TYPE,
                     ],
                     [
-                        'name' => 'Presentation',
+                        ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_PRESENTATION_ELEMENT,
                         [
-                            'name' => 'Currency',
-                            'value' => $checkoutRequestTransfer
+                            ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_CURRENCY_ELEMENT,
+                            ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $checkoutRequestTransfer
                                 ->getPayolutionPayment()
                                 ->getCurrencyIso3Code(),
                         ],
                         [
-                            'name' => 'Usage',
-                            'value' => null,
+                            ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_USAGE_ELEMENT,
+                            ApiConstants::CALCULATION_XML_ELEMENT_VALUE => null,
                         ],
                         [
-                            'name' => 'Amount',
-                            'value' => $checkoutRequestTransfer
+                            ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_AMOUNT_ELEMENT,
+                            ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $checkoutRequestTransfer
                                 ->getCart()
                                 ->getTotals()
                                 ->getGrandTotal(),
                         ],
                         [
-                            'name' => 'VAT',
-                            'value' => null,
+                            ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_VAT_ELEMENT,
+                            ApiConstants::CALCULATION_XML_ELEMENT_VALUE => null,
                         ],
                     ],
                 ],
                 [
-                    'name' => 'Analysis',
+                    ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_ANALYSIS_ELEMENT,
                     [
-                        'name' => 'Criterion',
-                        'attributes' => [
-                            'name' => ApiConstants::CALCULATION_TARGET_COUNTRY,
+                        ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_CRITERION_ELEMENT,
+                        ApiConstants::CALCULATION_XML_ELEMENT_ATTRIBUTES => [
+                            ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_TARGET_COUNTRY,
                         ],
-                        'value' => $checkoutRequestTransfer
+                        ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $checkoutRequestTransfer
                             ->getPayolutionPayment()
                             ->getAddress()
                             ->getIso2Code(),

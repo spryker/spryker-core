@@ -20,7 +20,7 @@
         <property name="installmentDuration" type="int"/>
     </transfer>
 
-    <transfer name="PayolutionResponse">
+    <transfer name="PayolutionTransactionResponse">
         <property name="processingRiskScore" type="string"/>
         <property name="p3Validation" type="string"/>
         <property name="nameGiven" type="string"/>
@@ -70,6 +70,38 @@
         <property name="clearingFxdate" type="string"/>
         <property name="addressZip" type="string"/>
         <property name="nameTitle" type="string"/>
+    </transfer>
+
+    <transfer name="PayolutionCalculationResponse">
+        <property name="version" type="string"/>
+        <property name="transactionType" type="string"/>
+        <property name="paymentType" type="string"/>
+        <property name="identificationTransactionid" type="string"/>
+        <property name="identificationUniqueid" type="string"/>
+        <property name="status" type="string"/>
+        <property name="statusCode" type="string"/>
+        <property name="description" type="string"/>
+        <property name="paymentDetails" type="PayolutionCalculationPaymentDetail[]" singular="paymentDetail"/>
+        <property name="tacUrl" type="string"/>
+        <property name="dataPrivacyConsentUrl" type="string"/>
+    </transfer>
+
+    <transfer name="PayolutionCalculationPaymentDetail">
+        <property name="installments" type="PayolutionCalculationInstallment[]" singular="installment"/>
+        <property name="originalAmount" type="string"/>
+        <property name="totalAmount" type="string"/>
+        <property name="minimumInstallmentFee" type="string"/>
+        <property name="duration" type="string"/>
+        <property name="interestRate" type="string"/>
+        <property name="effectiveInterestRate" type="string"/>
+        <property name="usage" type="string"/>
+        <property name="currency" type="string"/>
+        <property name="standardCreditInformationUrl" type="string"/>
+    </transfer>
+
+    <transfer name="PayolutionCalculationInstallment">
+        <property name="amount" type="string"/>
+        <property name="due" type="string"/>
     </transfer>
 
     <transfer name="Order">

@@ -30,7 +30,7 @@ class Guzzle extends AbstractHttpAdapter
         parent::__construct($gatewayUrl, $contentType);
 
         $this->client = new GuzzleClient([
-            'timeout' => self::DEFAULT_TIMEOUT
+            'timeout' => self::DEFAULT_TIMEOUT,
         ]);
     }
 
@@ -53,6 +53,7 @@ class Guzzle extends AbstractHttpAdapter
      * @param string $user
      * @param string $password
      *
+     * @return void
      */
     protected function authorizeRequest($request, $user, $password)
     {
@@ -64,7 +65,7 @@ class Guzzle extends AbstractHttpAdapter
      *
      * @throws ApiHttpRequestException
      *
-     * @return array
+     * @return string
      */
     protected function send($request)
     {
@@ -74,9 +75,7 @@ class Guzzle extends AbstractHttpAdapter
             throw new ApiHttpRequestException($requestException->getMessage());
         }
 
-        parse_str($response->getBody(true), $out);
-
-        return $out;
+        return $response->getbody(true);
     }
 
 }

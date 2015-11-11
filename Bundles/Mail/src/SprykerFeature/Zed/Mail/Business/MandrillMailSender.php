@@ -73,8 +73,7 @@ class MandrillMailSender implements MailSenderInterface
     {
         $responsesTransfer = new SendMailResponsesTransfer();
 
-        foreach ($responses as $response)
-        {
+        foreach ($responses as $response) {
             $responseTransfer = new SendMailResponseTransfer();
             $responseTransfer->setEmail($response['email']);
             $responseTransfer->setIsSent($response['status'] === self::STATUS_SENT);
