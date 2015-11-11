@@ -246,7 +246,7 @@ class CheckoutFacadeTest extends Test
         $this->assertNotNull($orderItem2);
 
         $this->assertNotEquals(OmsConfig::INITIAL_STATUS, $orderItem1->getState()->getName());
-        $this->assertEquals('request to pay sent', $orderItem2->getState()->getName());
+        $this->assertEquals('waiting for payment', $orderItem2->getState()->getName());
     }
 
     /**
