@@ -9,12 +9,13 @@
         <column name="reference" required="true" type="VARCHAR"/>
         <column name="transaction_id" type="INTEGER"/>
 
-        <foreign-key foreignTable="spy_sales_order" phpName="SpySalesOrder">
+        <foreign-key name="spy_payment_payone-fk_sales_order" foreignTable="spy_sales_order" phpName="SpySalesOrder">
             <reference foreign="id_sales_order" local="fk_sales_order"/>
         </foreign-key>
 
         <behavior name="timestampable"/>
-    <id-method-parameter value="spy_payment_payone_pk_seq"/></table>
+        <id-method-parameter value="spy_payment_payone_pk_seq"/>
+    </table>
 
     <table name="spy_payment_payone_detail" phpName="SpyPaymentPayoneDetail">
         <column name="id_payment_payone" type="INTEGER" primaryKey="true" />
@@ -34,12 +35,13 @@
         <column name="bic" type="VARCHAR" size="11"/>
         <column name="type" type="VARCHAR" size="3"/>
 
-        <foreign-key foreignTable="spy_payment_payone" phpName="SpyPaymentPayone">
+        <foreign-key name="spy_payment_payone_detail-id_payment_payone" foreignTable="spy_payment_payone" phpName="SpyPaymentPayone">
             <reference foreign="id_payment_payone" local="id_payment_payone"/>
         </foreign-key>
 
         <behavior name="timestampable"/>
-    <id-method-parameter value="spy_payment_payone_detail_pk_seq"/></table>
+        <id-method-parameter value="spy_payment_payone_detail_pk_seq"/>
+    </table>
 
     <table name="spy_payment_payone_api_log">
         <column name="id_payment_payone_api_log" required="true" type="INTEGER" primaryKey="true" autoIncrement="true"/>
@@ -60,12 +62,13 @@
 
         <column name="redirect_url" type="LONGVARCHAR"/>
 
-        <foreign-key foreignTable="spy_payment_payone">
+        <foreign-key name="spy_payment_payone_api_log-fk_payment_payone" foreignTable="spy_payment_payone">
             <reference foreign="id_payment_payone" local="fk_payment_payone"/>
         </foreign-key>
 
         <behavior name="timestampable"/>
-    <id-method-parameter value="spy_payment_payone_api_log_pk_seq"/></table>
+        <id-method-parameter value="spy_payment_payone_api_log_pk_seq"/>
+    </table>
 
     <table name="spy_payment_payone_transaction_status_log">
 
@@ -90,11 +93,11 @@
 
         <column name="reminder_level" type="VARCHAR"/>
 
-        <index>
+        <index name="spy_payment_payone_transaction_status_log-transaction_id">
             <index-column name="transaction_id"/>
         </index>
 
-        <foreign-key foreignTable="spy_payment_payone">
+        <foreign-key name="spy_payment_payone_transaction_status_log-fk_payment_payone" foreignTable="spy_payment_payone">
             <reference foreign="id_payment_payone" local="fk_payment_payone"/>
         </foreign-key>
 
@@ -111,10 +114,10 @@
             <parameter name="disable_updated_at" value="true"/>
         </behavior>
 
-        <foreign-key foreignTable="spy_payment_payone_transaction_status_log">
+        <foreign-key name="spy_payment_payone_transaction_status_log_order_item-id_payment_payone_transaction_status_log" foreignTable="spy_payment_payone_transaction_status_log">
             <reference foreign="id_payment_payone_transaction_status_log" local="id_payment_payone_transaction_status_log"/>
         </foreign-key>
-        <foreign-key foreignTable="spy_sales_order_item">
+        <foreign-key name="spy_payment_payone_transaction_status_log_order_item-id_sales_order_item" foreignTable="spy_sales_order_item">
             <reference foreign="id_sales_order_item" local="id_sales_order_item"/>
         </foreign-key>
 

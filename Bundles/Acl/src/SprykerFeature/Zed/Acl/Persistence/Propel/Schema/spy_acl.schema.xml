@@ -4,12 +4,13 @@
     <table name="spy_acl_role" idMethod="native" phpName="SpyAclRole">
         <column name="id_acl_role" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" required="true" size="255" type="VARCHAR"/>
-        <unique>
+        <unique name="spy_acl_role-name">
             <unique-column name="name"/>
         </unique>
         <behavior name="timestampable"/>
         <behavior name="archivable"/>
-    <id-method-parameter value="spy_acl_role_pk_seq"/></table>
+        <id-method-parameter value="spy_acl_role_pk_seq"/>
+    </table>
 
     <table name="spy_acl_rule" idMethod="native" phpName="SpyAclRule">
         <column name="id_acl_rule" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
@@ -20,28 +21,30 @@
         <column name="type" required="true" size="10" type="ENUM" valueSet="allow,deny"/>
         <behavior name="timestampable"/>
         <behavior name="archivable"/>
-        <foreign-key foreignTable="spy_acl_role" phpName="AclRole" refPhpName="AclRule" onDelete="CASCADE">
+        <foreign-key name="spy_acl_rule-fk_acl_role" foreignTable="spy_acl_role" phpName="AclRole" refPhpName="AclRule" onDelete="CASCADE">
             <reference foreign="id_acl_role" local="fk_acl_role"/>
         </foreign-key>
-    <id-method-parameter value="spy_acl_rule_pk_seq"/></table>
+        <id-method-parameter value="spy_acl_rule_pk_seq"/>
+    </table>
 
     <table name="spy_acl_group" idMethod="native" phpName="SpyAclGroup">
         <column name="id_acl_group" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" required="true" size="255" type="VARCHAR"/>
-        <unique>
+        <unique name="spy_acl_group-name">
             <unique-column name="name"/>
         </unique>
         <behavior name="timestampable"/>
         <behavior name="archivable"/>
-    <id-method-parameter value="spy_acl_group_pk_seq"/></table>
+        <id-method-parameter value="spy_acl_group_pk_seq"/>
+    </table>
 
     <table name="spy_acl_user_has_group" isCrossRef="true">
         <column name="fk_user" type="integer" primaryKey="true"/>
         <column name="fk_acl_group" type="integer" primaryKey="true"/>
-        <foreign-key foreignTable="spy_user" onDelete="CASCADE">
+        <foreign-key name="spy_acl_user_has_group-fk_user" foreignTable="spy_user" onDelete="CASCADE">
             <reference local="fk_user" foreign="id_user"/>
         </foreign-key>
-        <foreign-key foreignTable="spy_acl_group" onDelete="CASCADE">
+        <foreign-key name="spy_acl_user_has_group-fk_acl_group" foreignTable="spy_acl_group" onDelete="CASCADE">
             <reference local="fk_acl_group" foreign="id_acl_group"/>
         </foreign-key>
     </table>
@@ -49,10 +52,10 @@
     <table name="spy_acl_groups_has_roles" isCrossRef="true">
         <column name="fk_acl_role" type="integer" primaryKey="true"/>
         <column name="fk_acl_group" type="integer" primaryKey="true"/>
-        <foreign-key foreignTable="spy_acl_role" onDelete="CASCADE">
+        <foreign-key name="spy_acl_groups_has_roles-fk_acl_role" foreignTable="spy_acl_role" onDelete="CASCADE">
             <reference local="fk_acl_role" foreign="id_acl_role"/>
         </foreign-key>
-        <foreign-key foreignTable="spy_acl_group" onDelete="CASCADE">
+        <foreign-key name="spy_acl_groups_has_roles-fk_acl_group" foreignTable="spy_acl_group" onDelete="CASCADE">
             <reference local="fk_acl_group" foreign="id_acl_group"/>
         </foreign-key>
     </table>

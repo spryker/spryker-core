@@ -9,7 +9,7 @@
         <column name="adjustment_fee" type="INTEGER"/>
         <column name="comment" type="VARCHAR"/>
 
-        <foreign-key foreignTable="spy_sales_order">
+        <foreign-key name="spy_refund-fk_sales_order" foreignTable="spy_sales_order">
             <reference foreign="id_sales_order" local="fk_sales_order"/>
         </foreign-key>
 

@@ -8,11 +8,11 @@
 
         <column name="fk_resource_redirect" type="INTEGER"/>
 
-        <foreign-key foreignTable="spy_locale" phpName="SpyLocale" onDelete="CASCADE">
+        <foreign-key name="spy_url-fk_locale" foreignTable="spy_locale" phpName="SpyLocale" onDelete="CASCADE">
             <reference foreign="id_locale" local="fk_locale"/>
         </foreign-key>
 
-        <foreign-key foreignTable="spy_redirect" phpName="SpyRedirect" onDelete="CASCADE">
+        <foreign-key name="spy_url-fk_resource_redirect" foreignTable="spy_redirect" phpName="SpyRedirect" onDelete="CASCADE">
             <reference foreign="id_redirect" local="fk_resource_redirect"/>
         </foreign-key>
 
@@ -20,17 +20,19 @@
             <unique-column name="url"/>
         </unique>
 
-    <id-method-parameter value="spy_url_pk_seq"/></table>
+        <id-method-parameter value="spy_url_pk_seq"/>
+    </table>
 
     <table name="spy_redirect" phpName="SpyRedirect">
         <column name="id_redirect" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="to_url" type="VARCHAR" size="255" required="true"/>
         <column name="status" type="INTEGER" required="true" default="301"/>
 
-        <index>
+        <index name="spy_redirect-to_url">
             <index-column name="to_url"/>
             <index-column name="status"/>
         </index>
-    <id-method-parameter value="spy_redirect_pk_seq"/></table>
+        <id-method-parameter value="spy_redirect_pk_seq"/>
+    </table>
 
 </database>

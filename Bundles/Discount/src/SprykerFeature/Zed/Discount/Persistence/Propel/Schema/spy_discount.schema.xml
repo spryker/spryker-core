@@ -16,14 +16,15 @@
 
         <behavior name="timestampable"/>
 
-        <foreign-key foreignTable="spy_discount_voucher_pool" phpName="VoucherPool" refPhpName="Discount">
+        <foreign-key name="spy_discount-fk_discount_voucher_pool" foreignTable="spy_discount_voucher_pool" phpName="VoucherPool" refPhpName="Discount">
             <reference local="fk_discount_voucher_pool" foreign="id_discount_voucher_pool"/>
         </foreign-key>
 
-        <unique>
+        <unique name="spy_discount-fk_discount_voucher_pool">
             <unique-column name="fk_discount_voucher_pool" />
         </unique>
-    <id-method-parameter value="spy_discount_pk_seq"/></table>
+        <id-method-parameter value="spy_discount_pk_seq"/>
+    </table>
 
     <table name="spy_discount_decision_rule" phpName="SpyDiscountDecisionRule">
         <column name="id_discount_decision_rule" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
@@ -34,10 +35,11 @@
 
         <behavior name="timestampable"/>
 
-        <foreign-key foreignTable="spy_discount" phpName="Discount" refPhpName="DecisionRule">
+        <foreign-key name="spy_discount_decision_rule-fk_discount" foreignTable="spy_discount" phpName="Discount" refPhpName="DecisionRule">
             <reference local="fk_discount" foreign="id_discount"/>
         </foreign-key>
-    <id-method-parameter value="spy_discount_decision_rule_pk_seq"/></table>
+        <id-method-parameter value="spy_discount_decision_rule_pk_seq"/>
+    </table>
 
     <table name="spy_discount_collector" phpName="SpyDiscountCollector">
         <column name="id_discount_collector" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
@@ -47,7 +49,7 @@
 
         <behavior name="timestampable"/>
 
-        <foreign-key foreignTable="spy_discount" phpName="Discount" refPhpName="DiscountCollector">
+        <foreign-key name="spy_discount_collector-fk_discount" foreignTable="spy_discount" phpName="Discount" refPhpName="DiscountCollector">
             <reference local="fk_discount" foreign="id_discount"/>
         </foreign-key>
 
@@ -63,10 +65,11 @@
 
         <behavior name="timestampable"/>
 
-        <foreign-key foreignTable="spy_discount_voucher_pool_category" phpName="VoucherPoolCategory" refPhpName="DiscountVoucherPool">
+        <foreign-key name="spy_discount_voucher_pool-fk_discount_voucher_pool_category" foreignTable="spy_discount_voucher_pool_category" phpName="VoucherPoolCategory" refPhpName="DiscountVoucherPool">
             <reference local="fk_discount_voucher_pool_category" foreign="id_discount_voucher_pool_category"/>
         </foreign-key>
-    <id-method-parameter value="spy_discount_voucher_pool_pk_seq"/></table>
+        <id-method-parameter value="spy_discount_voucher_pool_pk_seq"/>
+    </table>
 
     <table name="spy_discount_voucher" phpName="SpyDiscountVoucher">
         <column name="id_discount_voucher" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
@@ -79,19 +82,21 @@
 
         <behavior name="timestampable"/>
 
-        <unique>
+        <unique name="spy_discount_voucher-code">
             <unique-column name="code"/>
         </unique>
 
-        <foreign-key foreignTable="spy_discount_voucher_pool" phpName="VoucherPool" refPhpName="DiscountVoucher">
+        <foreign-key name="spy_discount_voucher-fk_discount_voucher_pool" foreignTable="spy_discount_voucher_pool" phpName="VoucherPool" refPhpName="DiscountVoucher">
             <reference local="fk_discount_voucher_pool" foreign="id_discount_voucher_pool"/>
         </foreign-key>
-    <id-method-parameter value="spy_discount_voucher_pk_seq"/></table>
+        <id-method-parameter value="spy_discount_voucher_pk_seq"/>
+    </table>
 
     <table name="spy_discount_voucher_pool_category" phpName="SpyDiscountVoucherPoolCategory">
         <column name="id_discount_voucher_pool_category" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
 
         <behavior name="timestampable"/>
-    <id-method-parameter value="spy_discount_voucher_pool_category_pk_seq"/></table>
+        <id-method-parameter value="spy_discount_voucher_pool_category_pk_seq"/>
+    </table>
 </database>

@@ -10,23 +10,23 @@
 
         <behavior name="timestampable"/>
 
-        <unique>
+        <unique name="spy_newsletter_subscriber-email">
             <unique-column name="email"/>
         </unique>
-        <unique>
+        <unique name="spy_newsletter_subscriber-subscriber_key">
             <unique-column name="subscriber_key"/>
         </unique>
 
-        <index>
+        <index name="spy_newsletter_subscriber-email">
             <index-column name="email" />
         </index>
-        <index>
+        <index name="spy_newsletter_subscriber-subscriber_key">
             <index-column name="subscriber_key" />
         </index>
 
         <id-method-parameter value="spy_newsletter_subscriber_pk_seq"/>
 
-        <foreign-key foreignTable="spy_customer">
+        <foreign-key name="spy_newsletter_subscriber-fk_customer" foreignTable="spy_customer">
             <reference local="fk_customer" foreign="id_customer"/>
         </foreign-key>
     </table>
@@ -37,11 +37,11 @@
 
         <behavior name="timestampable"/>
 
-        <unique>
+        <unique name="spy_newsletter_type-name">
             <unique-column name="name"/>
         </unique>
 
-        <index>
+        <index name="spy_newsletter_type-name">
             <index-column name="name" />
         </index>
 
@@ -54,10 +54,10 @@
 
         <behavior name="timestampable"/>
 
-        <foreign-key foreignTable="spy_newsletter_subscriber">
+        <foreign-key name="spy_newsletter_subscription-fk_newsletter_subscriber" foreignTable="spy_newsletter_subscriber">
             <reference local="fk_newsletter_subscriber" foreign="id_newsletter_subscriber"/>
         </foreign-key>
-        <foreign-key foreignTable="spy_newsletter_type">
+        <foreign-key name="spy_newsletter_subscription-fk_newsletter_type" foreignTable="spy_newsletter_type">
             <reference local="fk_newsletter_type" foreign="id_newsletter_type"/>
         </foreign-key>
     </table>

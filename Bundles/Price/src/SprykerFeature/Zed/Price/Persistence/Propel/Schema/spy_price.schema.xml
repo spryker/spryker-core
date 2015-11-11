@@ -8,31 +8,33 @@
         <column name="fk_price_type" type="INTEGER" required="true"/>
         <column name="fk_abstract_product" type="INTEGER" required="false"/>
 
-        <foreign-key foreignTable="spy_product" phpName="Product" refPhpName="PriceProduct">
+        <foreign-key name="spy_price_product-fk_product" foreignTable="spy_product" phpName="Product" refPhpName="PriceProduct">
             <reference local="fk_product" foreign="id_product"/>
         </foreign-key>
 
-        <foreign-key foreignTable="spy_price_type" phpName="PriceType" refPhpName="PriceProduct">
+        <foreign-key name="spy_price_product-fk_price_type" foreignTable="spy_price_type" phpName="PriceType" refPhpName="PriceProduct">
             <reference local="fk_price_type" foreign="id_price_type"/>
         </foreign-key>
 
-        <foreign-key foreignTable="spy_abstract_product" phpName="SpyAbstractProduct" refPhpName="PriceProduct">
+        <foreign-key name="spy_price_product-fk_abstract_product" foreignTable="spy_abstract_product" phpName="SpyAbstractProduct" refPhpName="PriceProduct">
             <reference local="fk_abstract_product" foreign="id_abstract_product"/>
         </foreign-key>
 
-        <unique>
+        <unique name="spy_price_product-fk_abstract_product">
             <unique-column name="fk_abstract_product"/>
             <unique-column name="fk_product"/>
             <unique-column name="fk_price_type"/>
         </unique>
-    <id-method-parameter value="spy_price_product_pk_seq"/></table>
+        <id-method-parameter value="spy_price_product_pk_seq"/>
+    </table>
 
     <table name="spy_price_type" phpName="SpyPriceType">
         <column name="id_price_type" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
-        <unique>
+        <unique name="spy_price_type-name">
             <unique-column name="name"/>
         </unique>
-    <id-method-parameter value="spy_price_type_pk_seq"/></table>
+        <id-method-parameter value="spy_price_type_pk_seq"/>
+    </table>
 
 </database>

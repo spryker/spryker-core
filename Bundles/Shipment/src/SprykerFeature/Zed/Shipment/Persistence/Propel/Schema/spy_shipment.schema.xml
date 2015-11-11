@@ -7,10 +7,11 @@
         <column name="name" required="true" size="255" type="VARCHAR"/>
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
 
-        <index>
+        <index name="spy_shipment_carrier-is_active">
             <index-column name="is_active"/>
         </index>
-    <id-method-parameter value="spy_shipment_carrier_pk_seq"/></table>
+        <id-method-parameter value="spy_shipment_carrier_pk_seq"/>
+    </table>
 
     <table name="spy_shipment_method" phpName="SpyShipmentMethod" identifierQuoting="true">
         <column name="id_shipment_method" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
@@ -26,17 +27,18 @@
         <column name="delivery_time_plugin" size="255" type="VARCHAR"/>
         <column name="tax_calculation_plugin" size="255" type="VARCHAR"/>
 
-        <foreign-key foreignTable="spy_shipment_carrier" phpName="ShipmentCarrier" refPhpName="ShipmentMethods">
+        <foreign-key name="spy_shipment_method-fk_shipment_carrier" foreignTable="spy_shipment_carrier" phpName="ShipmentCarrier" refPhpName="ShipmentMethods">
             <reference local="fk_shipment_carrier" foreign="id_shipment_carrier"/>
         </foreign-key>
 
-        <foreign-key foreignTable="spy_tax_set" phpName="TaxSet" refPhpName="ShipmentMethods">
+        <foreign-key name="spy_shipment_method-fk_tax_set" foreignTable="spy_tax_set" phpName="TaxSet" refPhpName="ShipmentMethods">
             <reference local="fk_tax_set" foreign="id_tax_set"/>
         </foreign-key>
 
-        <index>
+        <index name="spy_shipment_method-is_active">
             <index-column name="is_active"/>
         </index>
-    <id-method-parameter value="spy_shipment_method_pk_seq"/></table>
+        <id-method-parameter value="spy_shipment_method_pk_seq"/>
+    </table>
 
 </database>

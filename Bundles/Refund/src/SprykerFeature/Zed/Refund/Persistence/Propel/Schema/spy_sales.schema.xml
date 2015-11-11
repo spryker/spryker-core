@@ -4,7 +4,7 @@
     <table name="spy_sales_order_item">
         <column name="fk_refund" type="INTEGER"/>
 
-        <foreign-key foreignTable="spy_refund">
+        <foreign-key name="spy_sales_order_item-fk_refund" foreignTable="spy_refund">
             <reference foreign="id_refund" local="fk_refund"/>
         </foreign-key>
     </table>
@@ -12,7 +12,7 @@
     <table name="spy_sales_expense">
         <column name="fk_refund" type="INTEGER"/>
 
-        <foreign-key foreignTable="spy_refund">
+        <foreign-key name="spy_sales_expense-fk_refund" foreignTable="spy_refund">
             <reference local="fk_refund" foreign="id_refund"/>
         </foreign-key>
     </table>
