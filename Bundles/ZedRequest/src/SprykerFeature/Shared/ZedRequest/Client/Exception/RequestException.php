@@ -10,5 +10,4 @@ use SprykerFeature\Shared\Library\Exception\AbstractErrorRendererException;
 
 class RequestException extends AbstractErrorRendererException
 {
-
 }

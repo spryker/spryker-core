@@ -23,32 +23,32 @@ class ErrorRenderer
     {
         $uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : 'n/a';
 
-        $string = '<div style="font-family: courier; font-size: 14px">';
+        $errorString = '<div style="font-family: courier; font-size: 14px">';
         $message = get_class($e) . ' - ' . $e->getMessage();
-        $string .= '<h1>' . APPLICATION . ' Exception</h1><div style="background: #dadada; padding: 5px"><font style="12"><b>' . $message . '</b></font></div><br/>';
+        $errorString .= '<h1>' . APPLICATION . ' Exception</h1><div style="background: #dadada; padding: 5px"><font style="12"><b>' . $message . '</b></font></div><br/>';
 
-        $string .= 'in ' . $e->getFile() . ' (' . $e->getLine() . ')';
-        $string .= '<br/><br/>';
-        $string .= '<b>Url:</b> ' . $uri;
-        $string .= '<br/><br/>';
-        $string .= '<b>Trace:</b>';
-        $string .= '<br/>';
-        $string .= '<pre>' . $e->getTraceAsString() . '</pre>';
-        $string .= '</div>';
+        $errorString .= 'in ' . $e->getFile() . ' (' . $e->getLine() . ')';
+        $errorString .= '<br/><br/>';
+        $errorString .= '<b>Url:</b> ' . $uri;
+        $errorString .= '<br/><br/>';
+        $errorString .= '<b>Trace:</b>';
+        $errorString .= '<br/>';
+        $errorString .= '<pre>' . $e->getTraceAsString() . '</pre>';
+        $errorString .= '</div>';
 
         $version = new Version();
         if ($version->hasData()) {
-            $string .= '<hr>';
-            $string .= 'DeployInfo (Revision: ' . $version->getRevision() . ', Path: ' . $version->getPath() . ', Date: ' . $version->getDate() . ')';
+            $errorString .= '<hr>';
+            $errorString .= 'DeployInfo (Revision: ' . $version->getRevision() . ', Path: ' . $version->getPath() . ', Date: ' . $version->getDate() . ')';
         }
 
-        $string = '<pre>' . $string . '</pre>';
+        $errorString = '<pre>' . $errorString . '</pre>';
 
         if ($e instanceof AbstractErrorRendererException) {
-            $string .= '<br/><hr/><br/>' . (string) $e->getExtra();
+            $errorString .= '<br/><hr/><br/>' . (string) $e->getExtra();
         }
 
-        return $string;
+        return $errorString;
     }
 
     /**
@@ -65,25 +65,25 @@ class ErrorRenderer
         }
 
         $message = get_class($e) . ' - ' . $e->getMessage();
-        $string = PHP_EOL . APPLICATION . ' Exception: ' . $message . PHP_EOL;
+        $errorString = PHP_EOL . APPLICATION . ' Exception: ' . $message . PHP_EOL;
 
-        $string .= 'in ' . $e->getFile() . ' (' . $e->getLine() . ')';
-        $string .= PHP_EOL . PHP_EOL;
-        $string .= 'Command: ' . $uri;
-        $string .= PHP_EOL . PHP_EOL;
-        $string .= 'Trace:' . PHP_EOL;
-        $string .= $e->getTraceAsString() . PHP_EOL;
+        $errorString .= 'in ' . $e->getFile() . ' (' . $e->getLine() . ')';
+        $errorString .= PHP_EOL . PHP_EOL;
+        $errorString .= 'Command: ' . $uri;
+        $errorString .= PHP_EOL . PHP_EOL;
+        $errorString .= 'Trace:' . PHP_EOL;
+        $errorString .= $e->getTraceAsString() . PHP_EOL;
 
         $version = new Version();
         if ($version->hasData()) {
-            $string .= 'DeployInfo (Revision: ' . $version->getRevision() . ', Path: ' . $version->getPath() . ', Date: ' . $version->getDate() . ')' . PHP_EOL;
+            $errorString .= 'DeployInfo (Revision: ' . $version->getRevision() . ', Path: ' . $version->getPath() . ', Date: ' . $version->getDate() . ')' . PHP_EOL;
         }
 
         if ($e instanceof AbstractErrorRendererException) {
-            $string .= PHP_EOL . PHP_EOL . (string) $e->getExtra();
+            $errorString .= PHP_EOL . PHP_EOL . (string) $e->getExtra();
         }
 
-        return $string;
+        return $errorString;
     }
 
     /**
