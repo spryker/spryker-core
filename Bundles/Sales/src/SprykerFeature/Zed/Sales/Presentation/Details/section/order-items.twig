@@ -34,6 +34,7 @@
                 <th>{{ "Gross price" | trans }}</th>
                 <th>{{ "Price to pay" | trans }}</th>
                 <th>{{ "Current state" | trans }}</th>
+                <th>{{ "History" | trans }}</th>
                 <th>{{ "Trigger event" | trans }}</th>
                 <th>{{ "Process" | trans }}</th>
             </tr>
@@ -48,7 +49,22 @@
                     <td>{{ orderItem.PriceToPay | currency }}</td>
                     <td>{{ orderItem.State.Name }}</td>
                     <td>
-                        {% if events[orderItem.IdSalesOrderItem] |length > 0 %}
+                        {% for stateHistory in orderItem.StateHistories | slice(0, 3) %}
+                            <div>{{ stateHistory.State.Name }} ({{ stateHistory.CreatedAt | date('Y-m-d G:i:s', false) }})</div>
+                        {% endfor %}
+
+                        {% if orderItem.StateHistories | length > 3 %}
+                            <div id="history_details_{{ orderItem.IdSalesOrderItem }}" style="display: none">
+                            {% for stateHistory in orderItem.StateHistories | slice(3) %}
+                                <div>{{ stateHistory.State.Name }} ({{ stateHistory.CreatedAt | date('Y-m-d G:i:s', false) }})</div>
+                            {% endfor %}
+                            </div>
+
+                            <a class="btn btn-sm" onclick="$('#history_details_{{ orderItem.IdSalesOrderItem }}').toggle();">{{ "Show more" | trans }}</a>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if events[orderItem.IdSalesOrderItem] | length > 0 %}
                             {% for event in events[orderItem.IdSalesOrderItem] %}
                                 <a class="btn btn-sm btn-primary"
                                    href="/oms/trigger/trigger-event-for-order-items?id-sales-order-item={{ orderItem.IdSalesOrderItem }}&event={{ event }}&redirect=/sales/details?id-sales-order={{ idOrder }}">
