@@ -8,6 +8,7 @@ namespace SprykerFeature\Shared\ZedRequest\Client;
 
 use Generated\Client\Ide\AutoCompletion;
 use Guzzle\Http\Client;
+use Guzzle\Http\Exception\RequestException as GuzzleRequestException;
 use Guzzle\Http\Message\EntityEnclosingRequest;
 use Guzzle\Http\Message\Response;
 use Guzzle\Plugin\Cookie\Cookie;
@@ -23,6 +24,7 @@ use SprykerEngine\Shared\Lumberjack\Model\Event;
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Shared\Yves\YvesConfig;
 use SprykerEngine\Shared\Transfer\TransferInterface;
+use SprykerFeature\Shared\ZedRequest\Client\Exception\RequestException;
 use SprykerFeature\Shared\ZedRequest\Client\ResponseInterface as ZedResponse;
 use SprykerFeature\Zed\ZedRequest\Business\Client\Request;
 
@@ -136,7 +138,14 @@ abstract class AbstractHttpClient implements HttpClientInterface
         $this->logRequest($pathInfo, $requestTransfer, (string) $request->getBody());
 
         $this->forwardDebugSession($request);
-        $response = $this->sendRequest($request);
+        try {
+            $response = $this->sendRequest($request);
+        } catch (GuzzleRequestException $e) {
+            $requestException = new RequestException($e->getMessage(), $e->getCode(), $e);
+            $requestException->setExtra((string) $e->getRequest()->getResponse());
+
+            throw $requestException;
+        }
         $responseTransfer = $this->getTransferFromResponse($response);
         $this->logResponse($pathInfo, $responseTransfer, $response->getBody(true));
 

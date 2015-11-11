@@ -7,6 +7,7 @@
 namespace SprykerFeature\Shared\Library\Error;
 
 use SprykerFeature\Shared\Library\Application\Version;
+use SprykerFeature\Shared\Library\Exception\AbstractErrorRendererException;
 
 class ErrorRenderer
 {
@@ -41,7 +42,13 @@ class ErrorRenderer
             $string .= 'DeployInfo (Revision: ' . $version->getRevision() . ', Path: ' . $version->getPath() . ', Date: ' . $version->getDate() . ')';
         }
 
-        return '<pre>' . $string . '</pre>';
+        $string = '<pre>' . $string . '</pre>';
+
+        if ($e instanceof AbstractErrorRendererException) {
+            $string .= '<br/><hr/><br/>' . (string) $e->getExtra();
+        }
+
+        return $string;
     }
 
     /**
@@ -70,6 +77,10 @@ class ErrorRenderer
         $version = new Version();
         if ($version->hasData()) {
             $string .= 'DeployInfo (Revision: ' . $version->getRevision() . ', Path: ' . $version->getPath() . ', Date: ' . $version->getDate() . ')' . PHP_EOL;
+        }
+
+        if ($e instanceof AbstractErrorRendererException) {
+            $string .= PHP_EOL . PHP_EOL . (string) $e->getExtra();
         }
 
         return $string;
