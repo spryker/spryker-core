@@ -23,7 +23,9 @@ abstract class AbstractErrorRendererException extends \Exception
     }
 
     /**
-     * @param string $extra
+     * @param $extra
+     *
+     * @return void
      */
     public function setExtra($extra)
     {
