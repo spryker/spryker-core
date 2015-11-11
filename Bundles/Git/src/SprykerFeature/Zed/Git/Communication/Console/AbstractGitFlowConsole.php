@@ -80,11 +80,15 @@ abstract class AbstractGitFlowConsole extends Console
         $commandList = $this->getCommandList($from, $branch);
 
         foreach ($commandList as $command) {
-            if ($this->askConfirmation(sprintf('Run "%s"', $command))) {
-                $this->runProcess($command);
-                $this->info(sprintf('Executed "%s"', $command));
-            } else {
-                $this->warning(sprintf('Not executed "%s"', $command));
+            try {
+                if ($this->askConfirmation(sprintf('Run "%s"', $command))) {
+                    $this->runProcess($command);
+                    $this->info(sprintf('Executed "%s"', $command));
+                } else {
+                    $this->warning(sprintf('Not executed "%s"', $command));
+                }
+            } catch (\RuntimeException $e) {
+                //TODO: Abort gracefully by switching back to the from branch if currently on to branch
             }
         }
     }

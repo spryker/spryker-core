@@ -4,7 +4,9 @@ namespace SprykerFeature\Zed\Console\Business\Model;
 
 use Silex\Application;
 use Symfony\Component\Console\Formatter\OutputFormatterStyle;
+use Symfony\Component\Console\Helper\DialogHelper;
 use Symfony\Component\Console\Helper\HelperSet;
+use Symfony\Component\Console\Output\OutputInterface;
 
 trait Helper
 {
@@ -113,10 +115,40 @@ trait Helper
      */
     public function askConfirmation($question)
     {
-        $question = $question . '? <fg=green>[yes|no]</fg=green> ';
-        $dialog = $this->getHelperSet()->get('dialog');
+        $question = $question . '? <fg=green>[yes|no|abort]</fg=green> ';
 
-        return $dialog->askConfirmation($this->output, $question, false);
+        $result = $this->askAbortableConfirmation($this->output, $question, false);
+
+        return $result;
+    }
+
+    /**
+     * Asks a confirmation to the user.
+     *
+     * The question will be asked until the user answers by nothing, yes, or no.
+     *
+     * @param OutputInterface $output   An Output instance
+     * @param string|array    $question The question to ask
+     * @param bool            $default  The default answer if the user enters nothing
+     *
+     * @return bool true if the user has confirmed, false otherwise
+     */
+    public function askAbortableConfirmation(OutputInterface $output, $question, $default = true)
+    {
+        $answer = 'z';
+        while ($answer && !in_array(strtolower($answer[0]), array('y', 'n', 'a'))) {
+            $answer = $this->ask($output, $question);
+        }
+
+        if (strtolower($answer[0]) === 'a') {
+            throw new \RuntimeException('Aborted');
+        }
+
+        if (false === $default) {
+            return $answer && 'y' == strtolower($answer[0]);
+        }
+
+        return !$answer || 'y' == strtolower($answer[0]);
     }
 
     /**
@@ -127,6 +159,7 @@ trait Helper
      */
     public function ask($question, $default = null)
     {
+        /* @var DialogHelper $dialog */
         $dialog = $this->getHelperSet()->get('dialog');
 
         return $dialog->ask($this->output, $question, $default);
@@ -141,6 +174,7 @@ trait Helper
      */
     public function select($question, array $options, $default)
     {
+        /* @var DialogHelper $dialog */
         $dialog = $this->getHelperSet()->get('dialog');
         $selected = $dialog->select(
             $this->output,
