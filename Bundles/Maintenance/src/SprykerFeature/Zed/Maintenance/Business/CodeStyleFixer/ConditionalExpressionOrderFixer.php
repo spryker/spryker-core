@@ -82,14 +82,18 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
 
             $rightIndexStart = $tokens->getNextMeaningfulToken($index);
 
-            $rightIndexEnd = $this->detectRightEnd($tokens, $rightIndexStart);
-            if ($prevContent === '(') {
-                $closingBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $prevIndex);
-                if ($tokens[$closingBraceIndex]->getContent() !== ')') {
-                    continue;
+            if ($tokens[$rightIndexStart]->getContent() === '(') {
+                $rightIndexEnd = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $rightIndexStart);
+            } else {
+                $rightIndexEnd = $this->detectRightEnd($tokens, $rightIndexStart);
+                if ($prevContent === '(') {
+                    $closingBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $prevIndex);
+                    if ($tokens[$closingBraceIndex]->getContent() !== ')') {
+                        continue;
+                    }
+                    $rightIndexEndLimit = $tokens->getPrevMeaningfulToken($closingBraceIndex);
+                    $rightIndexEnd = min($rightIndexEndLimit, $rightIndexEnd);
                 }
-                $rightIndexEndLimit = $tokens->getPrevMeaningfulToken($closingBraceIndex);
-                $rightIndexEnd = min($rightIndexEndLimit, $rightIndexEnd);
             }
 
             $this->applyFix($tokens, $index, $leftIndexStart, $leftIndexEnd, $rightIndexStart, $rightIndexEnd);

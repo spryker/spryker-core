@@ -30,6 +30,8 @@ class TestClass1Input
         }
         if (true === array_key_exists($fromXmlElementName, $toXmlElements)) {
         }
+        if (false === ($results instanceof ObjectCollection)) {
+        }
     }
 
     /**
