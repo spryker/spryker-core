@@ -5,6 +5,5 @@ namespace Unit\SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\Fixtures\E
 interface TestClass3Input
 {
     public function aFunction();
-
     public function bFunction();
 }

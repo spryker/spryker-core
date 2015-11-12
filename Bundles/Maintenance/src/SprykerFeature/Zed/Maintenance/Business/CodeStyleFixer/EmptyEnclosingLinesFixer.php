@@ -59,6 +59,30 @@ class EmptyEnclosingLinesFixer extends AbstractFixer
                     }
                 }
             }
+
+            if ($token->isGivenKind([T_FUNCTION])) {
+                $openingBraceIndex = $tokens->getNextTokenOfKind($index, ['{']);
+                if ($openingBraceIndex === null) {
+                    $openingBracketIndex = $tokens->getNextTokenOfKind($index, ['(']);
+                    $closingBracketIndex = $tokens->getNextTokenOfKind($index, [')']);
+
+                    $nextIndex = $tokens->getNextMeaningfulToken($closingBracketIndex);
+                    if (!$tokens[$nextIndex]->equals(';')) {
+                        continue;
+                    }
+
+                    if (!$this->isEmptyLineAfterIndex($tokens, $nextIndex)) {
+                        $tokens[$nextIndex + 1]->setContent("\n" . $tokens[$nextIndex + 1]->getContent());
+                    }
+
+                    continue;
+                }
+                $closingBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_CURLY_BRACE, $openingBraceIndex);
+
+                if (!$this->isEmptyLineAfterIndex($tokens, $closingBraceIndex)) {
+                    $tokens[$closingBraceIndex + 1]->setContent("\n" . $tokens[$closingBraceIndex + 1]->getContent());
+                }
+            }
         }
     }
 

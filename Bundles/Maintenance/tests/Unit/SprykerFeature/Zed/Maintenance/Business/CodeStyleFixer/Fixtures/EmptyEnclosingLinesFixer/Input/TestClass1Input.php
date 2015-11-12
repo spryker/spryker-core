@@ -8,7 +8,6 @@ class TestClass1Input
     {
 
     }
-
     public function bFunction()
     {
 
