@@ -38,7 +38,6 @@ class CollectorStorageExportConsole extends AbstractCollectorConsole
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $locale = $this->getDependencyContainer()->createLocaleFacade()->getCurrentLocale();
-//        $locale = $this->getDependencyContainer()->createLocaleFacade()->getLocale('en_US');
         $exportResults = $this->getFacade()->exportKeyValueForLocale($locale, $output);
 
         $this->info($this->buildSummary($exportResults));

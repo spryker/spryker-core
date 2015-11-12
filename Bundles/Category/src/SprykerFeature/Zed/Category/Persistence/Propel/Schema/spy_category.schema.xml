@@ -3,6 +3,7 @@
 
     <table name="spy_category" idMethod="native" phpName="SpyCategory">
         <column name="id_category" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
+        <column name="category_key" required="true" type="VARCHAR" size="255"/>
         <column name="is_active" default="true" type="BOOLEAN"/>
         <column name="is_in_menu" default="true" type="BOOLEAN" />
         <column name="is_clickable" default="true" type="BOOLEAN" />
@@ -21,15 +22,14 @@
 
         <behavior name="timestampable"/>
 
-        <foreign-key name="spy_category_attribute-fk_locale" foreignTable="spy_locale" phpName="Locale">
+        <foreign-key foreignTable="spy_locale" phpName="Locale">
             <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
 
-        <foreign-key name="spy_category_attribute-fk_category" foreignTable="spy_category" phpName="Category" refPhpName="Attribute">
+        <foreign-key foreignTable="spy_category" phpName="Category" refPhpName="Attribute">
             <reference foreign="id_category" local="fk_category"/>
         </foreign-key>
-        <id-method-parameter value="spy_category_attribute_pk_seq"/>
-    </table>
+    <id-method-parameter value="spy_category_attribute_pk_seq"/></table>
 
     <table name="spy_category_node" idMethod="native" phpName="SpyCategoryNode">
         <column name="id_category_node" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
@@ -39,20 +39,19 @@
         <column name="is_main" default="false" type="BOOLEAN" />
         <column name="node_order" type="INTEGER" required="false" default="0"/>
 
-        <foreign-key name="spy_category_node-fk_parent_category_node" foreignTable="spy_category_node" phpName="ParentCategoryNode" refPhpName="Node">
+        <foreign-key foreignTable="spy_category_node" phpName="ParentCategoryNode" refPhpName="Node">
             <reference foreign="id_category_node" local="fk_parent_category_node"/>
         </foreign-key>
 
-        <foreign-key name="spy_category_node-fk_category" foreignTable="spy_category" phpName="Category" refPhpName="Node">
+        <foreign-key foreignTable="spy_category" phpName="Category" refPhpName="Node">
             <reference foreign="id_category" local="fk_category"/>
         </foreign-key>
 
-        <index name="spy_category_node-node_order">
+        <index>
             <index-column name="node_order"/>
         </index>
 
-        <id-method-parameter value="spy_category_node_pk_seq"/>
-    </table>
+    <id-method-parameter value="spy_category_node_pk_seq"/></table>
 
     <table name="spy_category_closure_table" idMethod="native" phpName="SpyCategoryClosureTable">
         <column name="id_category_closure_table" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
@@ -60,13 +59,12 @@
         <column name="fk_category_node_descendant" required="true" type="INTEGER"/>
         <column name="depth" required="true" type="INTEGER"/>
 
-        <foreign-key name="spy_category_closure_table-fk_category_node" foreignTable="spy_category_node" phpName="Node" refPhpName="ClosureTable">
+        <foreign-key foreignTable="spy_category_node" phpName="Node" refPhpName="ClosureTable">
             <reference foreign="id_category_node" local="fk_category_node"/>
         </foreign-key>
 
-        <foreign-key name="spy_category_closure_table-fk_category_node_descendant" foreignTable="spy_category_node" phpName="DescendantNode" refPhpName="Descendant">
+        <foreign-key foreignTable="spy_category_node" phpName="DescendantNode" refPhpName="Descendant">
             <reference foreign="id_category_node" local="fk_category_node_descendant"/>
         </foreign-key>
-        <id-method-parameter value="spy_category_closure_table_pk_seq"/>
-    </table>
+    <id-method-parameter value="spy_category_closure_table_pk_seq"/></table>
 </database>

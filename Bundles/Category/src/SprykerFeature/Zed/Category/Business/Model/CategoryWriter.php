@@ -120,6 +120,25 @@ class CategoryWriter implements CategoryWriterInterface
     }
 
     /**
+     * @param CategoryInterface $category
+     * @param LocaleTransfer $locale
+     *
+     * @throws PropelException
+     *
+     * @return void
+     */
+    public function addCategoryAttribute(CategoryInterface $category, LocaleTransfer $locale)
+    {
+        $categoryAttributeEntity = new SpyCategoryAttribute();
+
+        $categoryAttributeEntity->fromArray($category->toArray());
+        $categoryAttributeEntity->setFkCategory($category->getIdCategory());
+        $categoryAttributeEntity->setFkLocale($locale->getIdLocale());
+
+        $categoryAttributeEntity->save();
+    }
+
+    /**
      * @param int $idCategory
      *
      * @return void

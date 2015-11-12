@@ -40,6 +40,11 @@ class CategoryFormEdit extends CategoryFormAdd
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
+            ->addText(self::CATEGORY_KEY, [
+                'constraints' => [
+                    $this->getConstraints()->createConstraintNotBlank(),
+                ],
+            ])
             ->addText(self::ATTRIBUTE_META_TITLE, [
                 'label' => 'Meta Title',
             ])
@@ -143,6 +148,7 @@ class CategoryFormEdit extends CategoryFormAdd
                 self::FK_PARENT_CATEGORY_NODE => $categoryEntity[self::FK_PARENT_CATEGORY_NODE],
                 self::FK_NODE_CATEGORY => $categoryEntity[self::FK_NODE_CATEGORY],
                 self::NAME => $categoryEntity[self::NAME],
+                self::CATEGORY_KEY => $categoryEntity[self::CATEGORY_KEY],
                 //meta
                 self::ATTRIBUTE_META_TITLE => $categoryEntity[self::ATTRIBUTE_META_TITLE],
                 self::ATTRIBUTE_META_DESCRIPTION => $categoryEntity[self::ATTRIBUTE_META_DESCRIPTION],

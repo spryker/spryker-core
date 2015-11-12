@@ -96,6 +96,7 @@ class ProductCategoryFacadeTest extends AbstractFunctionalTest
         $categoryName = 'ATestCategory';
         $localeName = 'ABCDE';
         $abstractName = 'abstractName';
+        $categoryKey = '100TEST';
 
         $locale = $this->localeFacade->createLocale($localeName);
 
@@ -118,6 +119,7 @@ class ProductCategoryFacadeTest extends AbstractFunctionalTest
 
         $categoryTransfer = new CategoryTransfer();
         $categoryTransfer->setName($categoryName);
+        $categoryTransfer->setCategoryKey($categoryKey);
         $idCategory = $this->categoryFacade->createCategory($categoryTransfer, $locale);
 
         $categoryNodeTransfer = new NodeTransfer();
