@@ -7,12 +7,10 @@ class TestClass2Input
 
     public function aFunction()
     {
-
     }
 
     public function bFunction()
     {
-
     }
 
     /**
@@ -20,7 +18,6 @@ class TestClass2Input
      */
     public function cFunction()
     {
-
     }
 
 }
