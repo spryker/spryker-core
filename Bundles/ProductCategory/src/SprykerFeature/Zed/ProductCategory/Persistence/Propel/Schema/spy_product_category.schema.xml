@@ -7,17 +7,18 @@
         <column name="fk_category" required="true" type="INTEGER"/>
         <column name="product_order" required="false" default="0" type="INTEGER"/>
 
-        <foreign-key foreignTable="spy_category">
+        <foreign-key name="spy_product_category-fk_category" foreignTable="spy_category">
             <reference foreign="id_category" local="fk_category"/>
         </foreign-key>
 
-        <foreign-key foreignTable="spy_abstract_product">
+        <foreign-key name="spy_product_category-fk_abstract_product" foreignTable="spy_abstract_product">
             <reference foreign="id_abstract_product" local="fk_abstract_product"/>
         </foreign-key>
 
-        <unique>
+        <unique name="spy_product_category-fk_abstract_product">
             <unique-column name="fk_abstract_product"/>
             <unique-column name="fk_category"/>
         </unique>
-        <id-method-parameter value="spy_product_category_pk_seq"/></table>
+            <id-method-parameter value="spy_product_category_pk_seq"/>
+    </table>
 </database>

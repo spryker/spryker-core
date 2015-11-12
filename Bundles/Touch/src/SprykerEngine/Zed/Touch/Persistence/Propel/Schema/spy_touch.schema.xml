@@ -7,21 +7,21 @@
         <column name="item_event" type="ENUM" valueSet="active, inactive, deleted" required="true"/>
         <column name="item_id" type="INTEGER" required="true"/>
         <column name="touched" type="TIMESTAMP" required="true"/>
-        <unique>
+        <unique name="spy_touch-item_id">
             <unique-column name="item_id"/>
             <unique-column name="item_event"/>
             <unique-column name="item_type"/>
         </unique>
-        <index>
+        <index name="spy_touch-touched">
             <index-column name="touched"/>
         </index>
-        <index>
+        <index name="spy_touch-item_id">
             <index-column name="item_id"/>
         </index>
-        <index>
+        <index name="spy_touch-item_type">
             <index-column name="item_type"/>
         </index>
-        <index>
+        <index name="spy_touch-item_event">
             <index-column name="item_event"/>
         </index>
         <id-method-parameter value="spy_touch_pk_seq"/>
@@ -35,21 +35,21 @@
         <column name="fk_locale" type="INTEGER" required="true"/>
         <column name="fk_touch" type="INTEGER" required="true"/>
         <column name="key" type="VARCHAR" required="true"/>
-        <unique>
+        <unique name="spy_touch_storage-fk_locale">
             <unique-column name="fk_locale"/>
             <unique-column name="key"/>
         </unique>
-        <index>
+        <index name="spy_touch_storage-key">
             <index-column name="key"/>
         </index>
         <id-method-parameter value="spy_touch_storage_pk_seq"/>
         <behavior name="query_cache">
             <parameter name="backend" value="custom" />
         </behavior>
-        <foreign-key foreignTable="spy_touch" phpName="Touch" refPhpName="TouchStorage">
+        <foreign-key name="spy_touch_storage-fk_touch" foreignTable="spy_touch" phpName="Touch" refPhpName="TouchStorage">
             <reference foreign="id_touch" local="fk_touch"/>
         </foreign-key>
-        <foreign-key foreignTable="spy_locale" phpName="Locale" refPhpName="TouchStorage">
+        <foreign-key name="spy_touch_storage-fk_locale" foreignTable="spy_locale" phpName="Locale" refPhpName="TouchStorage">
             <reference foreign="id_locale" local="fk_locale"/>
         </foreign-key>
     </table>
@@ -59,21 +59,21 @@
         <column name="fk_locale" type="INTEGER" required="true"/>
         <column name="fk_touch" type="INTEGER" required="true"/>
         <column name="key" type="VARCHAR" required="true"/>
-        <unique>
+        <unique name="spy_touch_search-fk_locale">
             <unique-column name="fk_locale"/>
             <unique-column name="key"/>
         </unique>
-        <index>
+        <index name="spy_touch_search-key">
             <index-column name="key"/>
         </index>
         <id-method-parameter value="spy_touch_search_pk_seq"/>
         <behavior name="query_cache">
             <parameter name="backend" value="custom" />
         </behavior>
-        <foreign-key foreignTable="spy_touch" phpName="Touch" refPhpName="TouchSearch">
+        <foreign-key name="spy_touch_search-fk_touch" foreignTable="spy_touch" phpName="Touch" refPhpName="TouchSearch">
             <reference foreign="id_touch" local="fk_touch"/>
         </foreign-key>
-        <foreign-key foreignTable="spy_locale" phpName="Locale" refPhpName="TouchSearch">
+        <foreign-key name="spy_touch_search-fk_locale" foreignTable="spy_locale" phpName="Locale" refPhpName="TouchSearch">
             <reference foreign="id_locale" local="fk_locale"/>
         </foreign-key>
     </table>

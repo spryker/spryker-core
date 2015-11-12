@@ -5,16 +5,17 @@
         <column name="id_glossary_key" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="key" type="VARCHAR" size="255" required="true"/>
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
-        <unique>
+        <unique name="spy_glossary_key-key">
             <unique-column name="key"/>
         </unique>
-        <index>
+        <index name="spy_glossary_key-key">
             <index-column name="key"/>
         </index>
-        <index>
+        <index name="spy_glossary_key-is_active">
             <index-column name="is_active"/>
         </index>
-    <id-method-parameter value="spy_glossary_key_pk_seq"/></table>
+        <id-method-parameter value="spy_glossary_key_pk_seq"/>
+    </table>
 
     <table name="spy_glossary_translation" phpName="SpyGlossaryTranslation" identifierQuoting="true">
         <column name="id_glossary_translation" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
@@ -22,21 +23,22 @@
         <column name="fk_locale" type="INTEGER" required="true"/>
         <column name="value" type="LONGVARCHAR" required="true"/>
         <column name="is_active" type="BOOLEAN" default="true" required="true"/>
-        <foreign-key foreignTable="spy_glossary_key" phpName="GlossaryKey" onDelete="CASCADE">
+        <foreign-key name="spy_glossary_translation-fk_glossary_key" foreignTable="spy_glossary_key" phpName="GlossaryKey" onDelete="CASCADE">
             <reference foreign="id_glossary_key" local="fk_glossary_key"/>
         </foreign-key>
-        <foreign-key foreignTable="spy_locale" phpName="Locale" onDelete="CASCADE">
+        <foreign-key name="spy_glossary_translation-fk_locale" foreignTable="spy_locale" phpName="Locale" onDelete="CASCADE">
             <reference foreign="id_locale" local="fk_locale"/>
         </foreign-key>
-        <unique>
+        <unique name="spy_glossary_translation-fk_glossary_key">
             <unique-column name="fk_glossary_key"/>
             <unique-column name="fk_locale"/>
         </unique>
-        <index>
+        <index name="spy_glossary_translation-fk_locale">
             <index-column name="fk_locale"/>
         </index>
-        <index>
+        <index name="spy_glossary_translation-is_active">
             <index-column name="is_active"/>
         </index>
-    <id-method-parameter value="spy_glossary_translation_pk_seq"/></table>
+        <id-method-parameter value="spy_glossary_translation_pk_seq"/>
+    </table>
 </database>

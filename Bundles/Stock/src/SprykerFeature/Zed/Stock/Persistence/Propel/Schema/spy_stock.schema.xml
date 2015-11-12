@@ -5,10 +5,11 @@
         <column name="id_stock" type="INTEGER" primaryKey="true" autoIncrement="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
 
-        <unique>
+        <unique name="spy_stock-name">
             <unique-column name="name"/>
         </unique>
-    <id-method-parameter value="spy_stock_pk_seq"/></table>
+        <id-method-parameter value="spy_stock_pk_seq"/>
+    </table>
 
     <table name="spy_stock_product" phpName="SpyStockProduct">
         <column name="id_stock_product" type="INTEGER" required="true" primaryKey="true" autoIncrement="true"/>
@@ -17,18 +18,19 @@
         <column name="quantity" type="INTEGER" defaultValue="0"/>
         <column name="is_never_out_of_stock" type="BOOLEAN" defaultValue="false"/>
 
-        <foreign-key foreignTable="spy_product" phpName="SpyProduct" refPhpName="StockProduct">
+        <foreign-key name="spy_stock_product-fk_product" foreignTable="spy_product" phpName="SpyProduct" refPhpName="StockProduct">
             <reference local="fk_product" foreign="id_product"/>
         </foreign-key>
 
-        <foreign-key foreignTable="spy_stock" phpName="Stock" refPhpName="StockProduct">
+        <foreign-key name="spy_stock_product-fk_stock" foreignTable="spy_stock" phpName="Stock" refPhpName="StockProduct">
             <reference local="fk_stock" foreign="id_stock"/>
         </foreign-key>
 
-        <unique>
+        <unique name="spy_stock_product-fk_stock">
             <unique-column name="fk_stock"/>
             <unique-column name="fk_product"/>
         </unique>
-    <id-method-parameter value="spy_stock_product_pk_seq"/></table>
+        <id-method-parameter value="spy_stock_product_pk_seq"/>
+    </table>
 
 </database>

@@ -19,13 +19,13 @@
         <column name="default_billing_address" type="INTEGER"/>
         <column name="default_shipping_address" type="INTEGER"/>
         <behavior name="timestampable"/>
-        <unique>
+        <unique name="spy_customer-email">
             <unique-column name="email"/>
         </unique>
-        <foreign-key foreignTable="spy_customer_address" phpName="BillingAddress" refPhpName="CustomerBillingAddress">
+        <foreign-key name="spy_customer-default_billing_address" foreignTable="spy_customer_address" phpName="BillingAddress" refPhpName="CustomerBillingAddress">
             <reference foreign="id_customer_address" local="default_billing_address"/>
         </foreign-key>
-        <foreign-key foreignTable="spy_customer_address" phpName="ShippingAddress" refPhpName="CustomerShippingAddress">
+        <foreign-key name="spy_customer-default_shipping_address" foreignTable="spy_customer_address" phpName="ShippingAddress" refPhpName="CustomerShippingAddress">
             <reference foreign="id_customer_address" local="default_shipping_address"/>
         </foreign-key>
         <id-method-parameter value="spy_customer_pk_seq"/>
@@ -50,16 +50,16 @@
         <column name="comment" size="255" type="VARCHAR"/>
         <column name="deleted_at" required="false" type="TIMESTAMP"/>
 
-        <foreign-key foreignTable="spy_customer" phpName="Customer" refPhpName="Address">
+        <foreign-key name="spy_customer_address-fk_customer" foreignTable="spy_customer" phpName="Customer" refPhpName="Address">
             <reference foreign="id_customer" local="fk_customer"/>
         </foreign-key>
-        <foreign-key foreignTable="spy_region" phpName="Region" refPhpName="CustomerAddress">
+        <foreign-key name="spy_customer_address-fk_region" foreignTable="spy_region" phpName="Region" refPhpName="CustomerAddress">
             <reference local="fk_region" foreign="id_region"/>
         </foreign-key>
-        <foreign-key foreignTable="spy_country" phpName="Country" refPhpName="CustomerAddress">
+        <foreign-key name="spy_customer_address-fk_country" foreignTable="spy_country" phpName="Country" refPhpName="CustomerAddress">
             <reference local="fk_country" foreign="id_country"/>
         </foreign-key>
-        <index>
+        <index name="spy_customer_address-fk_customer">
             <index-column name="fk_customer"/>
         </index>
 

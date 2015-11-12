@@ -6,10 +6,10 @@
         <column name="sku" required="true" type="VARCHAR" size="255"/>
         <column name="attributes" required="true" type="LONGVARCHAR"/>
         <column name="fk_tax_set" type="INTEGER" required="false"/>
-        <foreign-key foreignTable="spy_tax_set">
+        <foreign-key name="spy_abstract_product-fk_tax_set" foreignTable="spy_tax_set">
             <reference local="fk_tax_set" foreign="id_tax_set"/>
         </foreign-key>
-        <unique>
+        <unique name="spy_abstract_product-sku">
             <unique-column name="sku"/>
         </unique>
         <behavior name="timestampable"/>
@@ -22,13 +22,13 @@
         <column name="fk_locale" required="true" type="INTEGER"/>
         <column name="name" required="true" type="VARCHAR"/>
         <column name="attributes" required="true" type="LONGVARCHAR"/>
-        <foreign-key foreignTable="spy_abstract_product" onDelete="CASCADE" onUpdate="CASCADE">
+        <foreign-key name="spy_abstract_product_localized_attributes-fk_abstract_product" foreignTable="spy_abstract_product" onDelete="CASCADE" onUpdate="CASCADE">
             <reference local="fk_abstract_product" foreign="id_abstract_product"/>
         </foreign-key>
-        <foreign-key foreignTable="spy_locale" phpName="Locale">
+        <foreign-key name="spy_abstract_product_localized_attributes-fk_locale" foreignTable="spy_locale" phpName="Locale">
             <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
-        <unique>
+        <unique name="spy_abstract_product_localized_attributes-fk_abstract_product">
             <unique-column name="fk_abstract_product"/>
             <unique-column name="fk_locale"/>
         </unique>
@@ -42,10 +42,10 @@
         <column name="is_active" required="true" defaultValue="true" type="BOOLEAN"/>
         <column name="attributes" required="true" type="LONGVARCHAR"/>
         <column name="fk_abstract_product" required="true" type="INTEGER"/>
-        <unique>
+        <unique name="spy_product-sku">
             <unique-column name="sku"/>
         </unique>
-        <foreign-key foreignTable="spy_abstract_product">
+        <foreign-key name="spy_product-fk_abstract_product" foreignTable="spy_abstract_product">
             <reference local="fk_abstract_product" foreign="id_abstract_product"/>
         </foreign-key>
         <behavior name="timestampable"/>
@@ -59,13 +59,13 @@
         <column name="name" required="true" type="VARCHAR"/>
         <column name="attributes" required="true" type="LONGVARCHAR"/>
         <column name="is_complete" required="false" defaultValue="true" type="BOOLEAN"/>
-        <foreign-key foreignTable="spy_product" onDelete="CASCADE" onUpdate="CASCADE">
+        <foreign-key name="spy_product_localized_attributes-fk_product" foreignTable="spy_product" onDelete="CASCADE" onUpdate="CASCADE">
             <reference local="fk_product" foreign="id_product"/>
         </foreign-key>
-        <foreign-key foreignTable="spy_locale" phpName="Locale">
+        <foreign-key name="spy_product_localized_attributes-fk_locale" foreignTable="spy_locale" phpName="Locale">
             <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
-        <unique>
+        <unique name="spy_product_localized_attributes-fk_product">
             <unique-column name="fk_product"/>
             <unique-column name="fk_locale"/>
         </unique>
@@ -76,10 +76,10 @@
     <table name="spy_product_to_bundle" identifierQuoting="true">
         <column name="fk_product" type="INTEGER" required="true" primaryKey="true"/>
         <column name="fk_related_product" type="INTEGER" required="true" primaryKey="true"/>
-        <foreign-key foreignTable="spy_product">
+        <foreign-key name="spy_product_to_bundle-fk_product" foreignTable="spy_product">
             <reference local="fk_product" foreign="id_product"/>
         </foreign-key>
-        <foreign-key foreignTable="spy_product" phpName="BundleProduct" refPhpName="BundleProduct">
+        <foreign-key name="spy_product_to_bundle-fk_related_product" foreignTable="spy_product" phpName="BundleProduct" refPhpName="BundleProduct">
             <reference local="fk_related_product" foreign="id_product"/>
         </foreign-key>
     </table>
@@ -89,7 +89,7 @@
         <column name="key" required="true" type="VARCHAR"/>
         <column name="is_editable" required="true" defaultValue="true" type="BOOLEAN"/>
         <column name="fk_type" type="INTEGER"/>
-        <foreign-key foreignTable="spy_attribute_type">
+        <foreign-key name="spy_attributes_metadata-fk_type" foreignTable="spy_attribute_type">
             <reference local="fk_type" foreign="id_type"/>
         </foreign-key>
         <id-method-parameter value="spy_attributes_metadata_pk_seq"/>
@@ -100,7 +100,7 @@
         <column name="name" type="VARCHAR" required="true"/>
         <column name="fk_parent_type" type="INTEGER" required="false"/>
         <column name="input_representation" type="VARCHAR" required="true"/>
-        <foreign-key foreignTable="spy_attribute_type">
+        <foreign-key name="spy_attribute_type-fk_parent_type" foreignTable="spy_attribute_type">
             <reference local="fk_parent_type" foreign="id_type"/>
         </foreign-key>
         <id-method-parameter value="spy_attribute_type_pk_seq"/>
@@ -112,10 +112,10 @@
         <column name="key" type="VARCHAR" required="true"/>
         <column name="value" type="VARCHAR" required="true"/>
         <column name="fk_locale" type="INTEGER" required="false"/>
-        <foreign-key foreignTable="spy_locale" phpName="Locale">
+        <foreign-key name="spy_attribute_type_value-fk_locale" foreignTable="spy_locale" phpName="Locale">
             <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
-        <unique>
+        <unique name="spy_attribute_type_value-fk_locale">
             <unique-column name="fk_locale"/>
             <unique-column name="fk_type"/>
             <unique-column name="key"/>

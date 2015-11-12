@@ -17,6 +17,19 @@ abstract class AbstractAutoCompletion extends \PHPUnit_Framework_TestCase
         $this->baseDir = __DIR__ . '/Fixtures/';
     }
 
+    public function setUp()
+    {
+        $testDirectory = $this->baseDir . 'test';
+        if (!is_dir($testDirectory)) {
+            mkdir($testDirectory, 0777, true);
+        }
+    }
+
+    public function tearDown()
+    {
+        $this->cleanUpTestDir();
+    }
+
     protected function cleanUpTestDir()
     {
         if ($this->baseDir . 'test/') {

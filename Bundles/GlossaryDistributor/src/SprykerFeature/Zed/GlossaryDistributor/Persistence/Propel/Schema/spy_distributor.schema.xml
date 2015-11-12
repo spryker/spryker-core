@@ -5,7 +5,7 @@
 
         <column name="fk_glossary_translation" type="integer" />
 
-        <foreign-key foreignTable="spy_glossary_translation">
+        <foreign-key name="spy_distributor_item-fk_glossary_translation" foreignTable="spy_glossary_translation">
             <reference local="fk_glossary_translation" foreign="id_glossary_translation" phpName="GlossaryTranslation" refPhpName="DistributorItem"/>
         </foreign-key>
 

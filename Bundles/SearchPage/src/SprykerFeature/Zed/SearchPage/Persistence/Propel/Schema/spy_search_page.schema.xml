@@ -9,19 +9,20 @@
         <column name="fk_search_document_attribute" type="INTEGER" required="true"/>
         <column name="fk_search_page_element_template" type="INTEGER" required="true"/>
 
-        <foreign-key foreignTable="spy_search_document_attribute" phpName="DocumentAttribute">
+        <foreign-key name="spy_search_page_element-fk_search_document_attribute" foreignTable="spy_search_document_attribute" phpName="DocumentAttribute">
             <reference foreign="id_search_document_attribute" local="fk_search_document_attribute"/>
         </foreign-key>
 
-        <foreign-key foreignTable="spy_search_page_element_template" phpName="ElementTemplate">
+        <foreign-key name="spy_search_page_element-fk_search_page_element_template" foreignTable="spy_search_page_element_template" phpName="ElementTemplate">
             <reference foreign="id_search_page_element_template" local="fk_search_page_element_template"/>
         </foreign-key>
 
-        <unique>
+        <unique name="spy_search_page_element-element_key">
             <unique-column name="element_key"/>
         </unique>
 
-    <id-method-parameter value="spy_search_page_element_pk_seq"/></table>
+        <id-method-parameter value="spy_search_page_element_pk_seq"/>
+    </table>
 
     <table name="spy_search_document_attribute" phpName="SpySearchDocumentAttribute">
 
@@ -29,21 +30,23 @@
         <column name="attribute_name" type="VARCHAR" required="true"/>
         <column name="attribute_type" type="VARCHAR" required="true"/>
 
-        <unique>
+        <unique name="spy_search_document_attribute-attribute_name">
             <unique-column name="attribute_name"/>
         </unique>
 
-    <id-method-parameter value="spy_search_document_attribute_pk_seq"/></table>
+        <id-method-parameter value="spy_search_document_attribute_pk_seq"/>
+    </table>
 
     <table name="spy_search_page_element_template" phpName="SpySearchPageElementTemplate">
 
         <column name="id_search_page_element_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="template_name" type="VARCHAR" required="true"/>
 
-        <unique>
+        <unique name="spy_search_page_element_template-template_name">
             <unique-column name="template_name"/>
         </unique>
 
-    <id-method-parameter value="spy_search_page_element_template_pk_seq"/></table>
+        <id-method-parameter value="spy_search_page_element_template_pk_seq"/>
+    </table>
 
 </database>

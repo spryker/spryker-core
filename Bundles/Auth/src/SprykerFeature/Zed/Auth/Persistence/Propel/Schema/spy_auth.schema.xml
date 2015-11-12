@@ -6,14 +6,15 @@
         <column name="fk_user" type="integer" primaryKey="true"/>
         <column name="code" required="true" size="35" type="VARCHAR"/>
         <column name="status" required="true" size="10" type="ENUM" valueSet="active,expired,used"/>
-        <unique>
+        <unique name="spy_auth_reset_password-code">
             <unique-column name="code"/>
         </unique>
         <behavior name="timestampable"/>
         <behavior name="archivable"/>
-        <foreign-key foreignTable="spy_user" phpName="User" refPhpName="User" onDelete="CASCADE">
+        <foreign-key name="spy_auth_reset_password-fk_user" foreignTable="spy_user" phpName="User" refPhpName="User" onDelete="CASCADE">
             <reference foreign="id_user" local="fk_user"/>
         </foreign-key>
-    <id-method-parameter value="spy_auth_reset_password_pk_seq"/></table>
+        <id-method-parameter value="spy_auth_reset_password_pk_seq"/>
+    </table>
 
 </database>

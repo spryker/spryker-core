@@ -85,7 +85,6 @@ class IdeAutoCompletionGeneratorTest extends AbstractAutoCompletion
 
     public function testGetNameShouldReturnNameOfGenerator()
     {
-        $options = $this->getOptions();
         $this->assertSame(
             IdeAutoCompletionGenerator::GENERATOR_NAME,
             (new IdeAutoCompletionGenerator($this->getOptions()))->getName()

@@ -9,13 +9,14 @@
         <column name="name" type="VARCHAR" size="255" required="false"/>
         <column name="postal_code_mandatory" type="BOOLEAN" default="false"/>
         <column name="postal_code_regex" type="VARCHAR" size="500"/>
-        <unique>
+        <unique name="spy_country-iso2_code">
             <unique-column name="iso2_code"/>
         </unique>
-        <unique>
+        <unique name="spy_country-iso3_code">
             <unique-column name="iso3_code"/>
         </unique>
-    <id-method-parameter value="spy_country_pk_seq"/></table>
+        <id-method-parameter value="spy_country_pk_seq"/>
+    </table>
 
     <table name="spy_region" phpName="SpyRegion">
         <column name="id_region" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
@@ -24,13 +25,14 @@
         <column name="name" type="VARCHAR" size="100" required="true"/>
         <column name="iso2_code" type="VARCHAR" size="6" required="true"/>
 
-        <unique>
+        <unique name="spy_region-iso2_code">
             <unique-column name="iso2_code"/>
         </unique>
 
-        <foreign-key foreignTable="spy_country" phpName="SpyCountry">
+        <foreign-key name="spy_region-fk_country" foreignTable="spy_country" phpName="SpyCountry">
             <reference local="fk_country" foreign="id_country"/>
         </foreign-key>
-    <id-method-parameter value="spy_region_pk_seq"/></table>
+        <id-method-parameter value="spy_region_pk_seq"/>
+    </table>
 
 </database>
