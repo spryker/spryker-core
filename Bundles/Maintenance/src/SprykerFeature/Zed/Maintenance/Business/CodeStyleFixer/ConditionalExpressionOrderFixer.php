@@ -57,11 +57,11 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
                 $token->override([T_GREATER_THAN, '>', $token->getLine()]);
             }
 
-            if (!$token->isGivenKind([T_IS_IDENTICAL,T_IS_NOT_IDENTICAL, T_IS_EQUAL, T_IS_NOT_EQUAL, T_IS_GREATER_OR_EQUAL, T_IS_SMALLER_OR_EQUAL, T_SMALLER_THAN, T_GREATER_THAN])) {
+            if (!$token->isGivenKind([T_IS_IDENTICAL, T_IS_NOT_IDENTICAL, T_IS_EQUAL, T_IS_NOT_EQUAL, T_IS_GREATER_OR_EQUAL, T_IS_SMALLER_OR_EQUAL, T_SMALLER_THAN, T_GREATER_THAN])) {
                 continue;
             }
 
-            // Only sniff for specified tokens
+            // Only sniff for specified tokens on left side
             $prevIndex = $tokens->getPrevMeaningfulToken($index);
             if (!$tokens[$prevIndex]->isNativeConstant()
                 && !in_array($tokens[$prevIndex]->getId(), [T_LNUMBER, T_CONSTANT_ENCAPSED_STRING])
@@ -121,7 +121,7 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens $tokens
+     * @param Tokens|Token[] $tokens
      * @param int $comparisonIndex
      *
      * @return int

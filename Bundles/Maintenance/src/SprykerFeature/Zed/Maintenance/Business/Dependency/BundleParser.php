@@ -125,7 +125,7 @@ class BundleParser
                 $expl = explode('\\', $fileDependency);
                 $foreignBundle = $expl[2];
                 if ($bundle !== $foreignBundle) {
-                    if (false === array_key_exists($foreignBundle, $bundleDependencies)) {
+                    if (array_key_exists($foreignBundle, $bundleDependencies) === false) {
                         $bundleDependencies[$foreignBundle] = 0;
                     }
                     $bundleDependencies[$foreignBundle]++;
