@@ -28,6 +28,8 @@ class TestClass1Input
         }
         if ($this->foo() <= 2) {
         }
+        if (array_key_exists($fromXmlElementName, $toXmlElements) === true) {
+        }
     }
 
     /**

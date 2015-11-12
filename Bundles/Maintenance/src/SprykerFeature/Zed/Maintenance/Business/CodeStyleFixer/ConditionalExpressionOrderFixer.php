@@ -92,24 +92,7 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
                 $rightIndexEnd = min($rightIndexEndLimit, $rightIndexEnd);
             }
 
-            // Check if we need to inverse comparison operator
-            $comparisonValue = $this->getComparisonValue($tokens, $index);
-
-            // Fix the error
-            $leftValue = '';
-            for ($i = $leftIndexStart; $i <= $leftIndexEnd; ++$i) {
-                $leftValue .= $tokens[$i]->getContent();
-                $tokens[$i]->setContent('');
-            }
-            $rightValue = '';
-            for ($i = $rightIndexStart; $i <= $rightIndexEnd; ++$i) {
-                $rightValue .= $tokens[$i]->getContent();
-                $tokens[$i]->setContent('');
-            }
-
-            $tokens[$index]->setContent($comparisonValue);
-            $tokens[$leftIndexEnd]->setContent($rightValue);
-            $tokens[$rightIndexStart]->setContent($leftValue);
+            $this->applyFix($tokens, $index, $leftIndexStart, $leftIndexEnd, $rightIndexStart, $rightIndexEnd);
         }
     }
 
@@ -146,8 +129,8 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
     protected function getComparisonValue(Tokens $tokens, $comparisonIndex)
     {
         $comparisonIndexValue = $tokens[$comparisonIndex]->getContent();
-        if (in_array($tokens[$comparisonIndex]->getId(), [T_GREATER_THAN, T_SMALLER_THAN,
-            T_IS_GREATER_OR_EQUAL, T_IS_SMALLER_OR_EQUAL, ])) {
+        $operatorsToMap = [T_GREATER_THAN, T_SMALLER_THAN, T_IS_GREATER_OR_EQUAL, T_IS_SMALLER_OR_EQUAL];
+        if (in_array($tokens[$comparisonIndex]->getId(), $operatorsToMap, true)) {
             $mapping = [
                 T_GREATER_THAN => '<',
                 T_SMALLER_THAN => '>',
@@ -191,8 +174,14 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
                 return $rightEndIndex;
             }
 
-            if ($content === '(' && $max === null) {
-                $max = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $nextIndex);
+            if ($content === '(') {
+                $nextIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $nextIndex);
+                if ($nextIndex === null) {
+                    return $rightEndIndex;
+                }
+                if ($max === null) {
+                    $max = $nextIndex;
+                }
             }
 
             if ($max !== null && $nextIndex > $max) {
@@ -203,6 +192,37 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
         }
 
         return $rightEndIndex;
+    }
+
+    /**
+     * @param Tokens|Token[] $tokens
+     * @param int $index
+     * @param int $leftIndexStart
+     * @param int int $leftIndexEnd
+     * @param int $rightIndexStart
+     * @param int $rightIndexEnd
+     *
+     * @return void
+     */
+    protected function applyFix(Tokens $tokens, $index, $leftIndexStart, $leftIndexEnd, $rightIndexStart, $rightIndexEnd)
+    {
+        // Check if we need to inverse comparison operator
+        $comparisonValue = $this->getComparisonValue($tokens, $index);
+
+        $leftValue = '';
+        for ($i = $leftIndexStart; $i <= $leftIndexEnd; ++$i) {
+            $leftValue .= $tokens[$i]->getContent();
+            $tokens[$i]->setContent('');
+        }
+        $rightValue = '';
+        for ($i = $rightIndexStart; $i <= $rightIndexEnd; ++$i) {
+            $rightValue .= $tokens[$i]->getContent();
+            $tokens[$i]->setContent('');
+        }
+
+        $tokens[$index]->setContent($comparisonValue);
+        $tokens[$leftIndexEnd]->setContent($rightValue);
+        $tokens[$rightIndexStart]->setContent($leftValue);
     }
 
 }
