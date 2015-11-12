@@ -32,6 +32,8 @@ class TestClass1Input
         }
         if (false === ($results instanceof ObjectCollection)) {
         }
+        if (0 === $taxSetTransfer->getTaxRates()->count()) {
+        }
     }
 
     /**

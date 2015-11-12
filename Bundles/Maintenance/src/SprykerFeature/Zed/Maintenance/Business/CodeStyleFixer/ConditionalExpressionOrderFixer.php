@@ -160,6 +160,13 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
         $rightEndIndex = $index;
         $nextIndex = $index;
         $max = null;
+        $braceCounter = 0;
+        if ($tokens[$index]->getContent() === '(') {
+            ++$braceCounter;
+            $braceEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $index);
+
+            return $braceEndIndex;
+        }
 
         while (true) {
             $nextIndex = $tokens->getNextMeaningfulToken($nextIndex);
@@ -178,14 +185,15 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
                 return $rightEndIndex;
             }
 
+            if ($content === ')') {
+                --$braceCounter;
+            }
+            if ($braceCounter < 0) {
+                return $rightEndIndex;
+            }
+
             if ($content === '(') {
                 $nextIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $nextIndex);
-                if ($nextIndex === null) {
-                    return $rightEndIndex;
-                }
-                if ($max === null) {
-                    $max = $nextIndex;
-                }
             }
 
             if ($max !== null && $nextIndex > $max) {
