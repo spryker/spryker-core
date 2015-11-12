@@ -179,7 +179,7 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
 
             if (
                 !$token->isCast()
-                && !$token->isGivenKind([T_VARIABLE, T_OBJECT_OPERATOR, T_STRING, T_CONST, T_DOUBLE_COLON])
+                && !$token->isGivenKind([T_VARIABLE, T_OBJECT_OPERATOR, T_STRING, T_CONST, T_DOUBLE_COLON, T_CONSTANT_ENCAPSED_STRING])
                 && !in_array($content, ['(', ')', '[', ']'], true)
             ) {
                 return $rightEndIndex;

@@ -34,6 +34,8 @@ class TestClass1Input
         }
         if ($taxSetTransfer->getTaxRates()->count() === 0) {
         }
+        if ($row['sku_product_concrete'] !== true) {
+        }
     }
 
     /**
