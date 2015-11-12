@@ -46,7 +46,7 @@ class Repeater extends AbstractPlugin
             return;
         }
 
-        if (Config::get(ApplicationConfig::SET_REPEAT_DATA, false)) {
+        if (Config::get(ApplicationConfig::SET_REPEAT_DATA, false) === false) {
             return;
         }
 
