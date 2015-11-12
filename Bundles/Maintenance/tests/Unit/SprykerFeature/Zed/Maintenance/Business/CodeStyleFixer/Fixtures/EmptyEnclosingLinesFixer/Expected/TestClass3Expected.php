@@ -9,4 +9,9 @@ interface TestClass3Input
 
     public function bFunction();
 
+    /**
+     * @return void
+     */
+    public function cFunction();
+
 }

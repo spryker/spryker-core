@@ -15,4 +15,12 @@ class TestClass1Input
 
     }
 
+    /**
+     * @return void
+     */
+    public function cFunction()
+    {
+
+    }
+
 }
