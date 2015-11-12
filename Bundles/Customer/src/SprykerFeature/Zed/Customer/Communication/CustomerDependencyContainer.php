@@ -6,10 +6,15 @@
 
 namespace SprykerFeature\Zed\Customer\Communication;
 
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
+use Orm\Zed\Customer\Persistence\SpyCustomer;
+use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
+use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Customer\Communication\Form\AddressForm;
 use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
+use SprykerFeature\Zed\Customer\Communication\Form\CustomerTypeForm;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use SprykerFeature\Zed\Customer\Communication\Table\AddressTable;
 use SprykerFeature\Zed\Customer\Communication\Table\CustomerTable;
@@ -68,22 +73,38 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
 
     /**
      * @param string $type
+     * @param int $idCustomer
      *
      * @return CustomerForm
      */
-    public function createCustomerForm($type)
+    public function createCustomerForm(CustomerTransfer $customer = null, $type, $idCustomer = 0)
     {
         $customerQuery = $this->getQueryContainer()
             ->queryCustomers()
         ;
 
-        $addressQuery = $this->getQueryContainer()
+        $customerAddressQuery = $this->getQueryContainer()
             ->queryAddresses()
         ;
 
-        return $this->getFactory()
-            ->createFormCustomerForm($customerQuery, $addressQuery, $type)
+        $customerFormType = $this->createCustomerTypeForm($customerQuery, $customerAddressQuery, $type, $idCustomer);
+
+        return $this->getFormFactory()
+            ->create($customerFormType, $customer)
         ;
+    }
+
+    /**
+     * @param SpyCustomerQuery $customerQuery
+     * @param SpyCustomerAddressQuery $customerAddressQuery
+     * @param string $type
+     * @param int $idCustomer
+     *
+     * @return CustomerTypeForm
+     */
+    public function createCustomerTypeForm(SpyCustomerQuery $customerQuery, SpyCustomerAddressQuery $customerAddressQuery, $type, $idCustomer)
+    {
+        return new CustomerTypeForm($customerQuery, $customerAddressQuery, $type, $idCustomer);
     }
 
     /**

@@ -7,8 +7,8 @@
 
 {% block action %}
     {{ backActionButton('/customer/', 'Back to Customers' | trans) }}
-    {{ viewActionButton('/customer/view?id_customer=' ~ id_customer, 'View Customer' | trans) }}
-    {{ viewActionButton('/customer/address/?id_customer=' ~ id_customer, 'Manage Addresses' | trans) }}
+    {{ viewActionButton('/customer/view?id-customer=' ~ idCustomer, 'View Customer' | trans) }}
+    {{ viewActionButton('/customer/address/?id-customer=' ~ idCustomer, 'Manage Addresses' | trans) }}
 {% endblock %}
 
 {% block content %}

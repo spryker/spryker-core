@@ -13,6 +13,7 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
 use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
+use SprykerFeature\Zed\Customer\Communication\Form\CustomerTypeForm;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -33,41 +34,47 @@ class EditController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCustomer = $request->get('id_customer');
+        $idCustomer = $request->get(CustomerTypeForm::PARAM_ID_CUSTOMER);
 
-        /** @var CustomerForm $form */
+        $customerTransfer = new CustomerTransfer();
+        $customerTransfer->setIdCustomer($idCustomer);
+        $customer = $this->getFacade()->getCustomer($customerTransfer);
+
+        $customerTransfer = $customerTransfer->fromArray($customer->toArray(), true);
+
+        /** @var CustomerTypeForm $form */
         $form = $this->getDependencyContainer()
-            ->createCustomerForm('update')
+            ->createCustomerForm($customerTransfer, CustomerTypeForm::UPDATE, $idCustomer)
         ;
 
-        $form->handleRequest();
+        $form->handleRequest($request);
 
         if ($form->isValid() === true) {
             $data = $form->getData();
 
             /** @var CustomerTransfer $customer */
             $customer = $this->createCustomerTransfer();
-            $customer->fromArray($data, true);
+            $customer->fromArray($data->toArray(), true);
             $this->getFacade()
                 ->updateCustomer($customer)
             ;
 
-            $defaultBilling = !empty($data['default_billing_address']) ? $data['default_billing_address'] : false;
+            $defaultBilling = !empty($data[CustomerTransfer::DEFAULT_BILLING_ADDRESS]) ? $data[CustomerTransfer::DEFAULT_BILLING_ADDRESS] : false;
             if (!empty($defaultBilling)) {
                 $this->updateBillingAddress($idCustomer, $defaultBilling);
             }
 
-            $defaultShipping = !empty($data['default_shipping_address']) ? $data['default_shipping_address'] : false;
+            $defaultShipping = !empty($data[CustomerTransfer::DEFAULT_SHIPPING_ADDRESS]) ? $data[CustomerTransfer::DEFAULT_SHIPPING_ADDRESS] : false;
             if (!empty($defaultShipping)) {
                 $this->updateShippingAddress($idCustomer, $defaultShipping);
             }
 
-            return $this->redirectResponse(sprintf('/customer/view/?id_customer=%d', $idCustomer));
+            return $this->redirectResponse(sprintf('/customer/view/?%s=%d', CustomerTypeForm::PARAM_ID_CUSTOMER, $idCustomer));
         }
 
         return $this->viewResponse([
             'form' => $form->createView(),
-            'id_customer' => $idCustomer,
+            'idCustomer' => $idCustomer,
         ]);
     }
 

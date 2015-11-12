@@ -6,10 +6,12 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
+use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
+use SprykerFeature\Zed\Customer\Communication\Form\CustomerTypeForm;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -30,21 +32,26 @@ class ViewController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCustomer = $request->get('id_customer');
+        $idCustomer = $request->get(CustomerTypeForm::PARAM_ID_CUSTOMER);
 
         $customerTransfer = $this->createCustomerTransfer();
         $customerTransfer->setIdCustomer($idCustomer);
 
-        /** @var CustomerTransfer $customer */
-        $customer = $this->getFacade()
+        /** @var CustomerTransfer $customerTransfer */
+        $customerTransfer = $this->getFacade()
             ->getCustomer($customerTransfer)
         ;
-        $addresses = $customer->getAddresses();
+        $addresses = $customerTransfer->getAddresses()->toArray();
+        $customerArray = $customerTransfer->toArray();
+
+        if ($addresses[AddressesTransfer::ADDRESSES] instanceof \ArrayObject && $addresses[AddressesTransfer::ADDRESSES]->count() < 1) {
+            $addresses = [];
+        }
 
         return $this->viewResponse([
-            'customer' => $customer->toArray(),
-            'addresses' => $addresses->toArray(),
-            'id_customer' => $idCustomer,
+            'customer' => $customerArray,
+            'addresses' => $addresses,
+            'idCustomer' => $idCustomer,
         ]);
     }
 

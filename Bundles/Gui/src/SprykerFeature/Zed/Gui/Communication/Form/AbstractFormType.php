@@ -38,4 +38,13 @@ abstract class AbstractFormType extends AbstractType
         return Locator::getInstance();
     }
 
+    /**
+     * @param array $array
+     *
+     * @return array
+     */
+    public function getEnumSet(array $array)
+    {
+        return array_combine($array, $array);
+    }
 }
