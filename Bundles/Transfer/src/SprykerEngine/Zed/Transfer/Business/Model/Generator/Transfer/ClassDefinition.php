@@ -160,7 +160,7 @@ class ClassDefinition implements ClassDefinitionInterface
 
         $propertyType = [
             'name' => 'TYPE_'.$this->getPropertyConstantName($property),
-            'value' => $property['type'],
+            'value' => $property['type_fully_qualified'],
         ];
 
         $this->constants[$property['name']] = $propertyInfo;
@@ -221,13 +221,17 @@ class ClassDefinition implements ClassDefinitionInterface
             if (!preg_match('/^int|integer|float|string|array|bool|boolean/', $property['type'])) {
                 if (preg_match('/\[\]$/', $property['type'])) {
                     $property['type'] = str_replace('[]', '', $property['type']) . 'Transfer[]';
+                    $property['type_fully_qualified'] = 'Generated\\Shared\\Transfer\\'.str_replace('[]', '', $property['type']) ;
                 } else {
                     $property['type'] = $property['type'] . 'Transfer';
+                    $property['type_fully_qualified'] = 'Generated\\Shared\\Transfer\\'.$property['type'] ;
                 }
+            }
+            if(array_key_exists('type_fully_qualified', $property) === false){
+                $property['type_fully_qualified'] = $property['type'];
             }
             $normalizedProperties[] = $property;
         }
-
         return $normalizedProperties;
     }
 
