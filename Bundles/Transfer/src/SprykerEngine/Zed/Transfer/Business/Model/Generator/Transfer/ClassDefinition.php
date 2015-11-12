@@ -158,7 +158,13 @@ class ClassDefinition implements ClassDefinitionInterface
             'value' => $property['name'],
         ];
 
+        $propertyType = [
+            'name' => 'TYPE_'.$this->getPropertyConstantName($property),
+            'value' => $property['type'],
+        ];
+
         $this->constants[$property['name']] = $propertyInfo;
+        $this->constants['type_'.$property['name']] = $propertyType;
     }
 
     /**

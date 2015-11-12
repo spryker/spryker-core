@@ -124,7 +124,8 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
             $getter = 'get' . ucfirst($property);
             $getterReturn = $this->getGetterReturn($getter);
             $setter = 'set' . ucfirst($property);
-            $type = $this->getSetterType($setter);
+
+            $type = $this->getTypeForProperty($key);
 
             // Process Array
             if (is_array($value) && $this->isArray($getterReturn) && $type === 'ArrayObject') {
@@ -210,18 +211,6 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
         $return = $reflection->getDocBlock()->getTag('return');
 
         return $return->getTypes()[0];
-    }
-
-    /**
-     * @param string $setter
-     *
-     * @return string
-     */
-    private function getSetterType($setter)
-    {
-        $reflection = new MethodReflection(get_class($this), $setter);
-
-        return $reflection->getParameters()[0]->getType();
     }
 
     /**
@@ -319,6 +308,18 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
                 get_class($this)
             ));
         }
+    }
+
+    /**
+     * @param $key
+     * @return string
+     */
+    protected function getTypeForProperty($key)
+    {
+        $typeCheck = 'TYPE_' . strtoupper($key);
+        $className = get_class($this);
+        $type = constant("$className::$typeCheck");
+        return $type;
     }
 
 }
