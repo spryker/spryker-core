@@ -74,7 +74,7 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
             $prevIndex = $tokens->getPrevMeaningfulToken($leftIndexStart);
             $prevContent = $tokens[$prevIndex]->getContent();
             if (
-                !$tokens[$prevIndex]->isGivenKind([T_BOOLEAN_AND, T_BOOLEAN_OR])
+                !$tokens[$prevIndex]->isGivenKind([T_BOOLEAN_AND, T_BOOLEAN_OR, T_RETURN])
                 && $prevContent !== '=' && $prevContent !== '('
             ) {
                 continue;

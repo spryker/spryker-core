@@ -189,7 +189,7 @@ class VoucherEngine
             ->findOneByCode($voucherCode)
         ;
 
-        return null !== $voucherCodeEntity;
+        return $voucherCodeEntity !== null;
     }
 
     /**

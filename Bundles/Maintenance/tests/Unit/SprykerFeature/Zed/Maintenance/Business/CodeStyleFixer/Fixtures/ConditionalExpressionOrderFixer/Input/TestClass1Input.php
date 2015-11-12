@@ -36,6 +36,7 @@ class TestClass1Input
         }
         if (true !== $row['sku_product_concrete']) {
         }
+        return null !== $xyz;
     }
 
     /**

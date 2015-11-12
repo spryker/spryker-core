@@ -51,7 +51,7 @@ class PriceGridController extends AbstractController
     protected function orderData(array $data)
     {
         foreach ($data as $index => $row) {
-            if (null !== $row['sku_product_concrete']) {
+            if ($row['sku_product_concrete'] !== null) {
                 $data[$index]['sku_product'] = $row['sku_product_concrete'];
                 $data[$index]['/**
  * @method PriceDependencyContainer getDependencyContainer()
