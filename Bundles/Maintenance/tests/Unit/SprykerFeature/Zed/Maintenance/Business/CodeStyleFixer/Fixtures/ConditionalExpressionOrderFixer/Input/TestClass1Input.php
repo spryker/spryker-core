@@ -18,16 +18,10 @@ class TestClass1Input
         }
         if (2 > $foo) {
         }
-    }
-
-    /**
-     * @return void
-     */
-    public function replaceNotYet()
-    {
-        $foo = false;
+        if (null !== $redirectData[self::FROM_URL]) {
+        }
         $foo = 2 == $foo;
-        $foo = 2 === $foo;
+        $foo = 3 === $foo;
         if (null === $foo && false === $this->foo()) {
         }
         if (2 <= $this->foo()) {
@@ -39,9 +33,17 @@ class TestClass1Input
     /**
      * @return void
      */
+    public function replaceNotYet()
+    {
+        if (MyClass::CONSTANT === $foo) {
+        }
+    }
+
+    /**
+     * @return void
+     */
     public function doNotReplace()
     {
-        $foo = false;
         $foo = $foo == 2;
         $foo = $foo === 2;
         if ($foo === true) {
