@@ -102,7 +102,7 @@ class Filesystem extends \Twig_Loader_Filesystem
 
         $this->validateName($name);
 
-        if (isset($name[0]) && '@' === $name[0]) {
+        if (isset($name[0]) && $name[0] === '@') {
             $pos = strpos($name, '/');
             if ($pos === false) {
                 $this->cache[$name] = false;

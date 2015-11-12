@@ -36,6 +36,8 @@ class TestClass1Input
         }
         if ($row['sku_product_concrete'] !== true) {
         }
+        if (isset($name[0]) && $name[0] === '@') {
+        }
         return $xyz !== null;
     }
 
