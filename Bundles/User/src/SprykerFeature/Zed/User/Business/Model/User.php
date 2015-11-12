@@ -117,11 +117,11 @@ class User implements UserInterface
         $userEntity->setFirstName($userTransfer->getFirstName());
         $userEntity->setLastName($userTransfer->getLastName());
         $userEntity->setUsername($userTransfer->getUsername());
-        if (null !== $userTransfer->getStatus()) {
+        if ($userTransfer->getStatus() !== null) {
             $userEntity->setStatus($userTransfer->getStatus());
         }
 
-        if (null !== $userTransfer->getLastLogin()) {
+        if ($userTransfer->getLastLogin() !== null) {
             $userEntity->setLastLogin($userTransfer->getLastLogin());
         }
 
@@ -158,7 +158,7 @@ class User implements UserInterface
     {
         $results = $this->queryContainer->queryUsers()->find();
 
-        if (false === ($results instanceof ObjectCollection)) {
+        if (($results instanceof ObjectCollection) === false) {
             throw new UserNotFoundException();
         }
 

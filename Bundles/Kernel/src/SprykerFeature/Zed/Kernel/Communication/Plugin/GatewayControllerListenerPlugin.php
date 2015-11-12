@@ -110,7 +110,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
             return true;
         }
 
-        if ('SprykerEngine\Shared\Transfer\TransferInterface' === $class->getName()) {
+        if ($class->getName() === 'SprykerEngine\Shared\Transfer\TransferInterface') {
             return true;
         }
 

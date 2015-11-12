@@ -42,7 +42,7 @@ class RequestDataCollector extends AbstractDataCollector
 
         $this->setDefaultOptions();
 
-        if (null === self::$idRequest) {
+        if (self::$idRequest === null) {
             self::$idRequest = uniqid('', true);
         }
     }

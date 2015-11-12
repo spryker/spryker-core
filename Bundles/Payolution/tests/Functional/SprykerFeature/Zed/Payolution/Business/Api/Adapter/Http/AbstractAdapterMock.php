@@ -50,7 +50,7 @@ abstract class AbstractAdapterMock implements AdapterInterface
     {
         $this->requestData = $data;
 
-        if (true === $this->expectSuccess) {
+        if ($this->expectSuccess === true) {
             return $this->getSuccessResponse();
         }
 

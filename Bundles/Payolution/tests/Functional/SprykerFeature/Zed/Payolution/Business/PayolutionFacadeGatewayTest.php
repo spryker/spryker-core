@@ -55,7 +55,7 @@ class PayolutionFacadeGatewayTest extends Test
      */
     public function testSaveOrderPayment()
     {
-        if (false === $this->enableTests) {
+        if ($this->enableTests === false) {
             return;
         }
 
@@ -98,7 +98,7 @@ class PayolutionFacadeGatewayTest extends Test
 
     public function testPreCheckPayment()
     {
-        if (false === $this->enableTests) {
+        if ($this->enableTests === false) {
             return;
         }
 
@@ -142,7 +142,7 @@ class PayolutionFacadeGatewayTest extends Test
 
     public function testPreAuthorizePayment()
     {
-        if (false === $this->enableTests) {
+        if ($this->enableTests === false) {
             return;
         }
 
@@ -157,7 +157,7 @@ class PayolutionFacadeGatewayTest extends Test
 
     public function testReAuthorizePayment()
     {
-        if (false === $this->enableTests) {
+        if ($this->enableTests === false) {
             return;
         }
 
@@ -200,7 +200,7 @@ class PayolutionFacadeGatewayTest extends Test
 
     public function testRevertPayment()
     {
-        if (false === $this->enableTests) {
+        if ($this->enableTests === false) {
             return;
         }
 
@@ -231,7 +231,7 @@ class PayolutionFacadeGatewayTest extends Test
 
     public function testRefundPayment()
     {
-        if (false === $this->enableTests) {
+        if ($this->enableTests === false) {
             return;
         }
 

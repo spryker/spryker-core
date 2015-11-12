@@ -48,7 +48,7 @@ class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
             ));
         }
 
-        if (false === $subscriberEntity->getIsConfirmed()) {
+        if ($subscriberEntity->getIsConfirmed() === false) {
             $subscriberTransfer->fromArray($subscriberEntity->toArray(), true);
 
             $this->triggerSubscriberOptInSenders($subscriberTransfer);

@@ -41,7 +41,7 @@ class CreditCardCheck extends AbstractCall
         $container = new CreditCardCheckContainer();
         $this->applyStandardParameter($container);
 
-        if (null === $container->getStoreCardData()) {
+        if ($container->getStoreCardData() === null) {
             $container->setStoreCardData($this->standardParameter->getStoreCardData());
         }
 

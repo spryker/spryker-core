@@ -27,7 +27,7 @@ class RedirectableUrlMatcher extends UrlMatcher implements RedirectableUrlMatche
                 throw $e;
             }
 
-            if ('/' === substr($pathinfo, -1)) {
+            if (substr($pathinfo, -1) === '/') {
                 $pathInfoForRedirect = substr($pathinfo, 0, -1);
             } else {
                 $pathInfoForRedirect = $pathinfo . '/';
@@ -72,9 +72,9 @@ class RedirectableUrlMatcher extends UrlMatcher implements RedirectableUrlMatche
         if ($this->context->getHost()) {
             if ($scheme) {
                 $port = '';
-                if ('http' === $scheme && 80 !== $this->context->getHttpPort()) {
+                if ($scheme === 'http' && $this->context->getHttpPort() !== 80) {
                     $port = ':' . $this->context->getHttpPort();
-                } elseif ('https' === $scheme && 443 !== $this->context->getHttpsPort()) {
+                } elseif ($scheme === 'https' && $this->context->getHttpsPort() !== 443) {
                     $port = ':' . $this->context->getHttpsPort();
                 }
 

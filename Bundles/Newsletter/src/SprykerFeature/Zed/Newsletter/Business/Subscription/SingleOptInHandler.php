@@ -27,7 +27,7 @@ class SingleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
             ));
         }
 
-        if (false === $subscriberEntity->getIsConfirmed()) {
+        if ($subscriberEntity->getIsConfirmed() === false) {
             $subscriberEntity->setIsConfirmed(true);
             $subscriberEntity->save();
         }

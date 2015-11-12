@@ -93,7 +93,7 @@ class Context
      */
     protected static function loadContexts()
     {
-        if (null === static::$contexts) {
+        if (static::$contexts === null) {
             $contexts = Store::getInstance()->getContexts();
             if (isset($contexts['*'])) {
                 $defaults = is_array($contexts['*']) ? $contexts['*'] : [];

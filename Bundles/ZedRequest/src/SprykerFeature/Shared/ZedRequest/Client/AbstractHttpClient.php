@@ -170,7 +170,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     protected function isRequestAllowed($isBackgroundRequest)
     {
         if (!$isBackgroundRequest) {
-            if (true === self::$alreadyRequested) {
+            if (self::$alreadyRequested === true) {
                 return false;
             }
             self::$alreadyRequested = true;

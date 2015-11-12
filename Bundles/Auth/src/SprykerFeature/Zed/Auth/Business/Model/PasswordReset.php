@@ -144,7 +144,7 @@ class PasswordReset
      */
     protected function sendResetRequest($email, $passwordResetToken)
     {
-        if (null !== $this->userPasswordResetNotificationSender) {
+        if ($this->userPasswordResetNotificationSender !== null) {
             $this->userPasswordResetNotificationSender->send($email, $passwordResetToken);
         }
     }

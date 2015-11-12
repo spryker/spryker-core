@@ -84,7 +84,7 @@ class DiscountVoucherCodesTable extends AbstractTable
             ->filterByFkDiscountVoucherPool($this->idPool)
         ;
 
-        if ('' !== $this->batchValue) {
+        if ($this->batchValue !== '') {
             $generatedVoucherCodesQuery->filterByVoucherBatch($this->batchValue);
         }
 

@@ -48,7 +48,7 @@ class Group
             return $groupableItems;
         }
 
-        if (false === $this->isThresholdReached($groupableItems)) {
+        if ($this->isThresholdReached($groupableItems) === false) {
             return $groupableItems;
         }
 
@@ -92,7 +92,7 @@ class Group
      */
     protected function setQuantity($item)
     {
-        if (true === $this->regroupAllItemCollection) {
+        if ($this->regroupAllItemCollection === true) {
             $item->setQuantity(1);
         }
     }

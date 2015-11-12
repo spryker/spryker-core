@@ -339,7 +339,7 @@ class GlossaryController extends AbstractController
     {
         $this->glossaryKeyName = $data[CmsGlossaryForm::GLOSSARY_KEY];
 
-        if (null === $this->glossaryKeyName) {
+        if ($this->glossaryKeyName === null) {
             $this->glossaryKeyName = $this->getFacade()
                 ->generateGlossaryKeyName($data[CmsGlossaryForm::TEMPLATE_NAME], $data[CmsGlossaryForm::PLACEHOLDER])
             ;

@@ -166,7 +166,7 @@ class Auth implements AuthInterface
      */
     protected function authorizeUserToken($token)
     {
-        if (false === $this->userTokenIsValid($token)) {
+        if ($this->userTokenIsValid($token) === false) {
             return false;
         }
 
@@ -250,7 +250,7 @@ class Auth implements AuthInterface
         $token = $this->staticToken;
         foreach ($credentials as $username => $credential) {
             $token->setRawToken($credential['token']);
-            if (true === $token->check($hash)) {
+            if ($token->check($hash) === true) {
                 $user->setFirstName($username);
                 $user->setLastName($username);
                 $user->setUsername($username);

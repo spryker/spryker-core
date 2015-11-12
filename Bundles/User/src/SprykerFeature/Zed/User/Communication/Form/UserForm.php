@@ -158,7 +158,7 @@ class UserForm extends AbstractForm
      */
     protected function getGroupChoices()
     {
-        if (null === $this->allAclGroups) {
+        if ($this->allAclGroups === null) {
             $groupsTransfer = $this->getLocator()->acl()->facade()->getAllGroups();
 
             foreach ($groupsTransfer->getGroups() as $groupTransfer) {

@@ -38,7 +38,7 @@ class Config
             self::init();
         }
 
-        if (!self::hasValue($key) && null !== $default) {
+        if (!self::hasValue($key) && $default !== null) {
             self::$config[$key] = $default;
         }
 

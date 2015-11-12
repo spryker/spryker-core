@@ -363,7 +363,7 @@ class Drawer implements DrawerInterface
         $attributes = array_merge($this->attributesTransition, $attributes);
         $attributes['label'] = '  ' . $label;
 
-        if (false === $transition->hasEvent()) {
+        if ($transition->hasEvent() === false) {
             $attributes['style'] = 'dashed';
         }
 

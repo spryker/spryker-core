@@ -302,7 +302,7 @@ class Process implements ProcessInterface
         $transitions = [];
         $allTransitions = $this->getAllTransitions();
         foreach ($allTransitions as $transition) {
-            if (false === $transition->hasEvent()) {
+            if ($transition->hasEvent() === false) {
                 $transitions[] = $transition;
             }
         }

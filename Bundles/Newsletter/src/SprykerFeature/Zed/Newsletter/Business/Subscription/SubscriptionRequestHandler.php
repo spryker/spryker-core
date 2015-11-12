@@ -80,7 +80,7 @@ class SubscriptionRequestHandler
                 $subscriptionResponse->addSubscriptionResult($subscriptionResult);
             }
 
-            if (false === $this->subscriberExists) {
+            if ($this->subscriberExists === false) {
                 $optInHandler->optIn($newsletterSubscriberTransfer);
             }
 
@@ -163,7 +163,7 @@ class SubscriptionRequestHandler
     protected function getNewsletterSubscriber(NewsletterSubscriberInterface $newsletterSubscriberTransfer)
     {
         $email = $newsletterSubscriberTransfer->getEmail();
-        if (null === $newsletterSubscriberTransfer->getEmail()) {
+        if ($newsletterSubscriberTransfer->getEmail() === null) {
             throw new MissingNewsletterSubscriberEmailException('Missing newsletter subscriber email.');
         }
 

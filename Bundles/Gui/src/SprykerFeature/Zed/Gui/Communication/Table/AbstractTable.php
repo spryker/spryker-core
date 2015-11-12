@@ -246,7 +246,7 @@ abstract class AbstractTable
      */
     public function getTableIdentifier()
     {
-        if (null === $this->tableIdentifier) {
+        if ($this->tableIdentifier === null) {
             $this->generateTableIdentifier();
         }
 
@@ -428,7 +428,7 @@ abstract class AbstractTable
 
                 $conditionParameter = '%' . mb_strtolower($searchTerm[self::PARAMETER_VALUE]) . '%';
                 $condition = sprintf(
-                    "LOWER(%s%s) LIKE %s",
+                    'LOWER(%s%s) LIKE %s',
                     $value,
                     $filter,
                     Propel::getConnection()->quote($conditionParameter)
@@ -624,7 +624,7 @@ abstract class AbstractTable
 
         $html = '<a href="' . $url . '" class="btn btn-xs btn-outline ' . $class . '"' . $parameters . '>';
 
-        if (true === array_key_exists(self::BUTTON_ICON, $buttonOptions) && null !== $buttonOptions[self::BUTTON_ICON]) {
+        if (array_key_exists(self::BUTTON_ICON, $buttonOptions) === true && $buttonOptions[self::BUTTON_ICON] !== null) {
             $html .= '<i class="fa ' . $buttonOptions[self::BUTTON_ICON] . '"></i> ';
         }
 
@@ -646,11 +646,11 @@ abstract class AbstractTable
         if (array_key_exists(self::BUTTON_CLASS, $defaultOptions)) {
             $class .= ' ' . $defaultOptions[self::BUTTON_CLASS];
         }
-        if (null !== $options && array_key_exists(self::BUTTON_CLASS, $options)) {
+        if ($options !== null && array_key_exists(self::BUTTON_CLASS, $options)) {
             $class .= ' ' . $options[self::BUTTON_CLASS];
         }
 
-        if (true === empty($class)) {
+        if (empty($class) === true) {
             return self::BUTTON_DEFAULT_CLASS;
         }
 
@@ -666,7 +666,7 @@ abstract class AbstractTable
     {
         $parameters = '';
         foreach ($buttonOptions as $argument => $value) {
-            if (true === in_array($argument, [self::BUTTON_CLASS, self::BUTTON_HREF, self::BUTTON_ICON])) {
+            if (in_array($argument, [self::BUTTON_CLASS, self::BUTTON_HREF, self::BUTTON_ICON]) === true) {
                 continue;
             }
             $parameters .= sprintf(' %s="%s"', $argument, $value);
@@ -684,7 +684,7 @@ abstract class AbstractTable
     private function generateButtonOptions(array $defaultOptions, array $options = null)
     {
         $buttonOptions = $defaultOptions;
-        if (true === is_array($options)) {
+        if (is_array($options) === true) {
             $buttonOptions = array_merge($defaultOptions, $options);
         }
 

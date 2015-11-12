@@ -170,7 +170,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
 
         foreach ($fromXmlElement->children() as $fromXmlChildTagName => $fromXmlChildElement) {
             $fromXmlElementName = $this->getElementName($fromXmlChildElement, $fromXmlChildTagName);
-            if (true === array_key_exists($fromXmlElementName, $toXmlElements)) {
+            if (array_key_exists($fromXmlElementName, $toXmlElements) === true) {
                 $toXmlElementChild = $toXmlElements[$fromXmlElementName];
             } else {
                 $toXmlElementChild = $toXmlElement->addChild($fromXmlChildTagName, $fromXmlChildElement);

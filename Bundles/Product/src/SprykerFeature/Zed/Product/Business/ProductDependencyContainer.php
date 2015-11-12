@@ -170,7 +170,7 @@ class ProductDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createProductManager()
     {
-        if (null === $this->productManager) {
+        if ($this->productManager === null) {
             $this->productManager = $this->getFactory()->createProductProductManager(
                 $this->getQueryContainer(),
                 $this->getTouchFacade(),

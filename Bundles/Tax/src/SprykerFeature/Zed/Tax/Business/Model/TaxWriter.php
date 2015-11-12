@@ -113,7 +113,7 @@ class TaxWriter implements TaxWriterInterface
         $taxSetEntity = new SpyTaxSet();
         $taxSetEntity->setName($taxSetTransfer->getName());
 
-        if (0 === $taxSetTransfer->getTaxRates()->count()) {
+        if ($taxSetTransfer->getTaxRates()->count() === 0) {
             throw new MissingTaxRateException();
         }
 
@@ -146,7 +146,7 @@ class TaxWriter implements TaxWriterInterface
             throw new ResourceNotFoundException();
         }
 
-        if (0 === $taxSetTransfer->getTaxRates()->count()) {
+        if ($taxSetTransfer->getTaxRates()->count() === 0) {
             throw new MissingTaxRateException();
         }
 
@@ -220,7 +220,7 @@ class TaxWriter implements TaxWriterInterface
             return;
         }
 
-        if (1 === $taxSetEntity->getSpyTaxRates()->count()) {
+        if ($taxSetEntity->getSpyTaxRates()->count() === 1) {
             throw new MissingTaxRateException();
         }
 

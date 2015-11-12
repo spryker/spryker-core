@@ -73,7 +73,7 @@ class AddressController extends AbstractController
         $addressDetails = $this->getFacade()
             ->getAddress($customerAddress)
         ;
-        if (false === empty($addressDetails)) {
+        if (empty($addressDetails) === false) {
             $idCustomer = $addressDetails->getFkCustomer();
         }
 
@@ -108,18 +108,17 @@ class AddressController extends AbstractController
             ->getAddress($customerAddress)
         ;
 
-        if (false === empty($addressDetails)) {
+        if (empty($addressDetails) === false) {
             $idCustomer = $addressDetails->getFkCustomer();
         }
 
         $addressForm = $this->getDependencyContainer()
             ->createAddressForm('update')
         ;
-        $addressForm->init();
 
         $addressForm->handleRequest();
 
-        if (true === $addressForm->isValid()) {
+        if ($addressForm->isValid() === true) {
             $data = $addressForm->getData();
 
             $customerAddress = $this->createCustomerAddressTransfer();
@@ -154,7 +153,7 @@ class AddressController extends AbstractController
 
         $addressForm->handleRequest();
 
-        if (true === $addressForm->isValid()) {
+        if ($addressForm->isValid() === true) {
             $data = $addressForm->getData();
             $data['fk_customer'] = $idCustomer;
 

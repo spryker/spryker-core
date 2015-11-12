@@ -44,7 +44,7 @@ class StorageInstanceBuilder
     {
         $adapterName = self::SEARCH_ELASTICA_ADAPTER;
 
-        if (false === array_key_exists($adapterName, self::$searchInstances)) {
+        if (array_key_exists($adapterName, self::$searchInstances) === false) {
             self::$searchInstances[$adapterName] = new Client([
                 'protocol' => Config::get(SystemConfig::ELASTICA_PARAMETER__TRANSPORT),
                 'port' => Config::get(SystemConfig::ELASTICA_PARAMETER__PORT),

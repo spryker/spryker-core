@@ -71,7 +71,7 @@ class JenkinsController extends AbstractController
      */
     private function prepareJobXml($job)
     {
-        $disabled = (true === $job['enable']) ? 'false' : 'true';
+        $disabled = ($job['enable'] === true) ? 'false' : 'true';
         $schedule = $this->getSchedule($job);
         $daysToKeep = $this->getDaysToKeep($job);
         $command = $job['command'];
@@ -112,7 +112,7 @@ class JenkinsController extends AbstractController
 
     protected function getSchedule(array $job)
     {
-        $schedule = ('' === $job['schedule']) ? '' : ' <hudson.triggers.TimerTrigger><spec>' . $job['schedule'] . '</spec></hudson.triggers.TimerTrigger>';
+        $schedule = ($job['schedule'] === '') ? '' : ' <hudson.triggers.TimerTrigger><spec>' . $job['schedule'] . '</spec></hudson.triggers.TimerTrigger>';
 
         if (array_key_exists('run_on_non_production', $job) && $job['run_on_non_production'] === true) {
             return $schedule;
@@ -204,7 +204,7 @@ $command</command>";
             }
 
             // Enable jobs only for roles matching those specified via command line argument
-            if (false === array_search($jobRole, $roles)) {
+            if (array_search($jobRole, $roles) === false) {
                 continue;
             }
 
@@ -224,7 +224,7 @@ $command</command>";
             foreach ($existing_jobs as $v) {
                 $name = basename(dirname($v));
 
-                if (false === array_search($name, array_keys($job_by_name))) {
+                if (array_search($name, array_keys($job_by_name)) === false) {
                     // Job does not exist anymore - we have to delete it.
                     $url = 'job/' . $name . '/doDelete';
                     $code = $this->callJenkins($url);

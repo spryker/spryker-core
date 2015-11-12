@@ -156,18 +156,18 @@ class CustomerForm extends AbstractForm
             }
         }
 
-        if (false === empty($result[self::SALUTATION])) {
+        if (empty($result[self::SALUTATION]) === false) {
             $salutations = array_flip($this->getSalutationOptions());
 
-            if (true === isset($salutations[$result[self::SALUTATION]])) {
+            if (isset($salutations[$result[self::SALUTATION]]) === true) {
                 $result[self::SALUTATION] = $salutations[$result[self::SALUTATION]];
             }
         }
 
-        if (false === empty($result[self::GENDER])) {
+        if (empty($result[self::GENDER]) === false) {
             $genders = array_flip($this->getGenderOptions());
 
-            if (true === isset($genders[$result[self::GENDER]])) {
+            if (isset($genders[$result[self::GENDER]]) === true) {
                 $result[self::GENDER] = $genders[$result[self::GENDER]];
             }
         }
@@ -200,7 +200,7 @@ class CustomerForm extends AbstractForm
         $addresses = $this->customerAddressQuery->findByFkCustomer($idCustomer);
 
         $result = [];
-        if (false === empty($addresses)) {
+        if (empty($addresses) === false) {
             foreach ($addresses->getData() as $address) {
                 $result[$address->getIdCustomerAddress()] = sprintf('%s %s (%s, %s %s)', $address->getFirstName(), $address->getLastName(), $address->getAddress1(), $address->getZipCode(), $address->getCity());
             }

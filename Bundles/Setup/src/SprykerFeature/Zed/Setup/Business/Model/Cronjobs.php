@@ -154,7 +154,7 @@ class Cronjobs
             }
 
             // Enable jobs only for roles matching those specified via command line argument
-            if (false === array_search($jobRole, $roles)) {
+            if (array_search($jobRole, $roles) === false) {
                 continue;
             }
 
@@ -195,7 +195,7 @@ class Cronjobs
             foreach ($existing_jobs as $v) {
                 $name = basename(dirname($v));
 
-                if (false === in_array($name, array_keys($jobsByName))) {
+                if (in_array($name, array_keys($jobsByName)) === false) {
                     // Job does not exist anymore - we have to delete it.
                     $url = 'job/' . $name . '/doDelete';
                     $code = $this->callJenkins($url);
@@ -290,7 +290,7 @@ class Cronjobs
      */
     private function prepareJobXml(array $job)
     {
-        $disabled = (true === $job['enable']) ? 'false' : 'true';
+        $disabled = ($job['enable'] === true) ? 'false' : 'true';
         $schedule = $this->getSchedule($job);
         $daysToKeep = $this->getDaysToKeep($job);
         $command = htmlspecialchars($job['command']);
@@ -366,7 +366,7 @@ class Cronjobs
      */
     protected function getSchedule(array $job)
     {
-        $schedule = ('' === $job['schedule']) ? '' : ' <hudson.triggers.TimerTrigger><spec>' . $job['schedule'] . '</spec></hudson.triggers.TimerTrigger>';
+        $schedule = ($job['schedule'] === '') ? '' : ' <hudson.triggers.TimerTrigger><spec>' . $job['schedule'] . '</spec></hudson.triggers.TimerTrigger>';
 
         if (array_key_exists('run_on_non_production', $job) && $job['run_on_non_production'] === true) {
             return $schedule;

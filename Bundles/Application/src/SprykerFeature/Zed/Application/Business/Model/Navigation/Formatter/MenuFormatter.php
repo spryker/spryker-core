@@ -141,7 +141,7 @@ class MenuFormatter implements MenuFormatterInterface
         $formattedPage = [];
 
         $url = $this->getUri($page);
-        if ('#' === !$url) {
+        if ($url !== '#') {
             $this->urlUniqueValidator->validate($url);
             $this->urlUniqueValidator->addUrl($url);
         }

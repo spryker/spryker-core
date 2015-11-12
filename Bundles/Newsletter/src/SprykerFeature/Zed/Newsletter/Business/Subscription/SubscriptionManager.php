@@ -83,7 +83,7 @@ class SubscriptionManager implements SubscriptionManagerInterface
      */
     protected function getIdNewsletterType(NewsletterTypeInterface $newsletterType)
     {
-        if (null !== $newsletterType->getIdNewsletterType()) {
+        if ($newsletterType->getIdNewsletterType() !== null) {
             return $newsletterType->getIdNewsletterType();
         }
 
@@ -107,7 +107,7 @@ class SubscriptionManager implements SubscriptionManagerInterface
      */
     protected function getSubscription(NewsletterSubscriberInterface $newsletterSubscriber, NewsletterTypeInterface $newsletterType)
     {
-        if (null !== $newsletterSubscriber->getSubscriberKey()) {
+        if ($newsletterSubscriber->getSubscriberKey() !== null) {
             $subscriptionEntity = $this->queryContainer
                 ->querySubscriptionBySubscriberKeyAndNewsletterTypeName($newsletterSubscriber->getSubscriberKey(), $newsletterType->getName())
                 ->findOne()
@@ -116,7 +116,7 @@ class SubscriptionManager implements SubscriptionManagerInterface
             return $subscriptionEntity;
         }
 
-        if (null !== $newsletterSubscriber->getFkCustomer()) {
+        if ($newsletterSubscriber->getFkCustomer() !== null) {
             $subscriptionEntity = $this->queryContainer
                 ->querySubscriptionByIdCustomerAndNewsletterTypeName($newsletterSubscriber->getFkCustomer(), $newsletterType->getName())
                 ->findOne()

@@ -80,7 +80,7 @@ class File extends AbstractWriter
      */
     protected function getOrCreateRandomFileHandle()
     {
-        if (null !== self::$preferredHandle) {
+        if (self::$preferredHandle !== null) {
             return self::$preferredHandle;
         }
         $fileName = $this->getRandomFileName();

@@ -118,9 +118,9 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
             ->match($path, $service)
             ->bind($name);
 
-        if (true === $this->sslEnabled) {
+        if ($this->sslEnabled === true) {
             $controller->requireHttps();
-        } elseif (false === $this->sslEnabled) {
+        } elseif ($this->sslEnabled === false) {
             $controller->requireHttp();
         }
 
@@ -192,7 +192,7 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
     private function addJsonParsing(Controller $controller)
     {
         $controller->before(function (Request $request) {
-            $isJson = (0 === strpos($request->headers->get('Content-Type'), 'application/json'));
+            $isJson = (strpos($request->headers->get('Content-Type'), 'application/json') === 0);
             if ($isJson) {
                 $data = json_decode($request->getContent(), true);
                 $request->request->replace(is_array($data) ? $data : []);

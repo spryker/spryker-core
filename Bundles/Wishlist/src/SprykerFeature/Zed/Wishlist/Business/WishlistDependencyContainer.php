@@ -101,7 +101,7 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createStorage(WishlistChangeInterface $wishlistChange)
     {
-        if (null !== $wishlistChange->getCustomer()) {
+        if ($wishlistChange->getCustomer() !== null) {
             return $this->createPropelStorage($wishlistChange);
         }
 

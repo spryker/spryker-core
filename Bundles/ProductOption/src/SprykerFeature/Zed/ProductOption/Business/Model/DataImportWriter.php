@@ -97,7 +97,7 @@ class DataImportWriter implements DataImportWriterInterface
         }
 
         foreach ($localizedNames as $localeName => $localizedOptionTypeName) {
-            if (false === $this->localeFacade->hasLocale($localeName)) {
+            if ($this->localeFacade->hasLocale($localeName) === false) {
                 continue;
             }
 
@@ -168,7 +168,7 @@ class DataImportWriter implements DataImportWriterInterface
     protected function createOrUpdateOptionValueTranslations(SpyProductOptionValue $productOptionValueEntity, array $localizedNames)
     {
         foreach ($localizedNames as $localeName => $localizedOptionValueName) {
-            if (false === $this->localeFacade->hasLocale($localeName)) {
+            if ($this->localeFacade->hasLocale($localeName) === false) {
                 continue;
             }
 

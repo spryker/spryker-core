@@ -102,7 +102,7 @@ class Log
         $logPath = DataDirectory::getLocalStoreSpecificPath($dir);
         if ($dir === 'logs') {
             $logPath .= APPLICATION . DIRECTORY_SEPARATOR;
-            if (false === is_dir($logPath)) {
+            if (is_dir($logPath) === false) {
                 mkdir($logPath, 0777, true);
             }
         }

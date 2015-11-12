@@ -141,7 +141,7 @@ class VoucherEngine
                 $code = $this->getCodeWithTemplate($discountVoucherPool, $code);
             }
 
-            if (true === $this->voucherCodeExists($code)) {
+            if ($this->voucherCodeExists($code) === true) {
                 $codeCollisions++;
                 continue;
             }

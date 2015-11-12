@@ -120,7 +120,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      */
     public function savePageKeyMapping(PageKeyMappingTransfer $pageKeyMapping)
     {
-        if (null === $pageKeyMapping->getIdCmsGlossaryKeyMapping()) {
+        if ($pageKeyMapping->getIdCmsGlossaryKeyMapping() === null) {
             return $this->createPageKeyMapping($pageKeyMapping);
         } else {
             return $this->updatePageKeyMapping($pageKeyMapping);
