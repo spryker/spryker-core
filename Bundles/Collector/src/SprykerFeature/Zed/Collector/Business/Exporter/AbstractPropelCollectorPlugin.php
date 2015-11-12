@@ -47,7 +47,7 @@ abstract class AbstractPropelCollectorPlugin
     ) {
         $itemType = $baseQuery->get(SpyTouchTableMap::COL_ITEM_TYPE);
 
-        if (null === $this->touchQueryContainer) {
+        if ($this->touchQueryContainer === null) {
             throw new DependencyException(sprintf('touchQueryContainer does not exist in %s', get_class($this)));
         }
 

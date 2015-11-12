@@ -432,7 +432,7 @@ class Address
         $fkCountry = $addressTransfer->getFkCountry();
         if (empty($fkCountry)) {
             $iso2Code = $addressTransfer->getIso2Code();
-            if (false === empty($iso2Code)) {
+            if (empty($iso2Code) === false) {
                 $fkCountry = $this->countryFacade->getIdCountryByIso2Code($iso2Code);
             } else {
                 $fkCountry = $this->getCustomerCountryId();
@@ -570,11 +570,11 @@ class Address
      */
     protected function updateCustomerDefaultAddresses(AddressTransfer $addressTransfer, SpyCustomer $customerEntity, SpyCustomerAddress $entity)
     {
-        if (null === $customerEntity->getDefaultBillingAddress() || $addressTransfer->getIsDefaultBilling()) {
+        if ($customerEntity->getDefaultBillingAddress() === null || $addressTransfer->getIsDefaultBilling()) {
             $customerEntity->setDefaultBillingAddress($entity->getIdCustomerAddress());
         }
 
-        if (null === $customerEntity->getDefaultShippingAddress() || $addressTransfer->getIsDefaultShipping()) {
+        if ($customerEntity->getDefaultShippingAddress() === null || $addressTransfer->getIsDefaultShipping()) {
             $customerEntity->setDefaultShippingAddress($entity->getIdCustomerAddress());
         }
 

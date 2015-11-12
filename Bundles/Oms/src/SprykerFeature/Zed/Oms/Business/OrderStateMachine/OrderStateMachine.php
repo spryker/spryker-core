@@ -115,7 +115,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         assert('is_string($eventId)');
         assert('count($orderItems) > 0');
 
-        if (false === $this->checkForEventRepetitions($eventId)) {
+        if ($this->checkForEventRepetitions($eventId) === false) {
             return [];
         }
 
@@ -324,7 +324,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         $processes = [];
         foreach ($orderItems as $orderItem) {
             $processName = $orderItem->getProcess()->getName();
-            if (false === array_key_exists($processName, $processes)) {
+            if (array_key_exists($processName, $processes) === false) {
                 $processes[$processName] = $this->builder->createProcess($processName);
             }
         }
@@ -594,7 +594,7 @@ class OrderStateMachine implements OrderStateMachineInterface
                 && $targetState->hasOnEnterEvent()
             ) {
                 $event = $targetState->getOnEnterEvent();
-                if (false === array_key_exists($event->getName(), $orderItemsWithOnEnterEvent)) {
+                if (array_key_exists($event->getName(), $orderItemsWithOnEnterEvent) === false) {
                     $orderItemsWithOnEnterEvent[$event->getName()] = [];
                 }
                 $orderItemsWithOnEnterEvent[$event->getName()][] = $orderItem;
@@ -627,7 +627,7 @@ class OrderStateMachine implements OrderStateMachineInterface
      */
     protected function checkForEventRepetitions($eventId)
     {
-        if (false === array_key_exists($eventId, $this->eventCounter)) {
+        if (array_key_exists($eventId, $this->eventCounter) === false) {
             $this->eventCounter[$eventId] = 0;
         }
         $this->eventCounter[$eventId]++;
@@ -660,7 +660,7 @@ class OrderStateMachine implements OrderStateMachineInterface
         $stateToTransitionsMap = [];
         foreach ($transitions as $transition) {
             $sourceId = $transition->getSource()->getName();
-            if (false === array_key_exists($sourceId, $stateToTransitionsMap)) {
+            if (array_key_exists($sourceId, $stateToTransitionsMap) === false) {
                 $stateToTransitionsMap[$sourceId] = [];
             }
             $stateToTransitionsMap[$sourceId][] = $transition;

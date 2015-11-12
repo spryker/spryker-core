@@ -78,7 +78,7 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
      */
     public function getProvidedDependency($key)
     {
-        if (false === $this->container->offsetExists($key)) {
+        if ($this->container->offsetExists($key) === false) {
             throw new \ErrorException('Key ' . $key . ' does not exist in container.');
         }
 

@@ -29,13 +29,11 @@ class FormController extends AbstractController
     {
         $form = $this->getDependencyContainer()->getStockForm($request);
 
-        $form->init();
-
         if ($form->isValid()) {
             $stockTypeTransfer = new TypeTransfer();
             $stockTypeTransfer->fromArray($form->getRequestData());
 
-            if (null === $stockTypeTransfer->getIdStock()) {
+            if ($stockTypeTransfer->getIdStock() === null) {
                 $this->getFacade()->createStockType($stockTypeTransfer);
             } else {
                 $this->getFacade()->updateStockType($stockTypeTransfer);
@@ -55,13 +53,11 @@ class FormController extends AbstractController
     {
         $form = $this->getDependencyContainer()->getStockProductForm($request);
 
-        $form->init();
-
         if ($form->isValid()) {
             $stockProduct = new \Generated\Shared\Transfer\StockProductTransfer();
             $stockProduct->fromArray($form->getRequestData());
 
-            if (null === $stockProduct->getIdStockProduct()) {
+            if ($stockProduct->getIdStockProduct() === null) {
                 $this->getStockFacade()->createStockProduct($stockProduct);
             } else {
                 $this->getStockFacade()->updateStockProduct($stockProduct);

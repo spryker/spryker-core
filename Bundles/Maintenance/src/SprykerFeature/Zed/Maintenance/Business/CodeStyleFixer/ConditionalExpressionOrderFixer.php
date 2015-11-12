@@ -14,8 +14,8 @@ use Symfony\CS\Tokenizer\Tokens;
 if (!defined('T_GREATER_THAN')) {
     define('T_GREATER_THAN', 1024);
 }
-if (!defined('T_LESS_THAN')) {
-    define('T_LESS_THAN', 1025);
+if (!defined('T_SMALLER_THAN')) {
+    define('T_SMALLER_THAN', 1025);
 }
 
 /**
@@ -49,76 +49,54 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
     protected function fixConditions(Tokens $tokens)
     {
         foreach ($tokens as $index => $token) {
-            if ($token->getContent() !== '(') {
+            // Fix incomplete token parsing
+            if ($token->getContent() === '<') {
+                $token->override([T_SMALLER_THAN, '<', $token->getLine()]);
+            }
+            if ($token->getContent() === '>') {
+                $token->override([T_GREATER_THAN, '>', $token->getLine()]);
+            }
+
+            if (!$token->isGivenKind([T_IS_IDENTICAL, T_IS_NOT_IDENTICAL, T_IS_EQUAL, T_IS_NOT_EQUAL, T_IS_GREATER_OR_EQUAL, T_IS_SMALLER_OR_EQUAL, T_SMALLER_THAN, T_GREATER_THAN])) {
                 continue;
             }
 
-            // Look for the first expression
-            $leftIndex = $tokens->getNextMeaningfulToken($index);
-            if (!$leftIndex || $tokens[$leftIndex]->getContent() === ')') {
-                continue;
-            }
-
-            // Only sniff for specified tokens
-            if (!$tokens[$leftIndex]->isNativeConstant()
-                && !in_array($tokens[$leftIndex]->getId(), [T_LNUMBER, T_CONSTANT_ENCAPSED_STRING])
+            // Only sniff for specified tokens on left side
+            $prevIndex = $tokens->getPrevMeaningfulToken($index);
+            if (!$tokens[$prevIndex]->isNativeConstant()
+                && !in_array($tokens[$prevIndex]->getId(), [T_LNUMBER, T_CONSTANT_ENCAPSED_STRING])
             ) {
                 continue;
             }
-            $leftIndexStart = $leftIndex;
+            $leftIndexEnd = $prevIndex;
+            $leftIndexStart = $prevIndex;
 
-            // Get the comparison operator
-            $comparisonIndex = $tokens->getNextMeaningfulToken($leftIndex);
-
-            // Fix incomplete token parsing
-            if ($tokens[$comparisonIndex]->getContent() === '<') {
-                $tokens[$comparisonIndex]->override([T_LESS_THAN, '<', $tokens[$comparisonIndex]->getLine()]);
-            }
-            if ($tokens[$comparisonIndex]->getContent() === '>') {
-                $tokens[$comparisonIndex]->override([T_GREATER_THAN, '>', $tokens[$comparisonIndex]->getLine()]);
-            }
-
-            $tokensToCheck = [T_IS_IDENTICAL, T_IS_NOT_IDENTICAL, T_IS_EQUAL, T_IS_NOT_EQUAL, T_GREATER_THAN, T_LESS_THAN,
-                T_IS_GREATER_OR_EQUAL, T_IS_SMALLER_OR_EQUAL, ];
-            if (!in_array($tokens[$comparisonIndex]->getId(), $tokensToCheck)) {
+            $prevIndex = $tokens->getPrevMeaningfulToken($leftIndexStart);
+            $prevContent = $tokens[$prevIndex]->getContent();
+            if (
+                !$tokens[$prevIndex]->isGivenKind([T_BOOLEAN_AND, T_BOOLEAN_OR, T_RETURN])
+                && $prevContent !== '=' && $prevContent !== '('
+            ) {
                 continue;
             }
 
-            // Look for the right expression
-            $rightIndex = $tokens->getNextMeaningfulToken($comparisonIndex);
-            if (!$rightIndex) {
-                // Cannot fix this right now
-                continue;
+            $rightIndexStart = $tokens->getNextMeaningfulToken($index);
+
+            if ($tokens[$rightIndexStart]->getContent() === '(') {
+                $rightIndexEnd = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $rightIndexStart);
+            } else {
+                $rightIndexEnd = $this->detectRightEnd($tokens, $rightIndexStart);
+                if ($prevContent === '(') {
+                    $closingBraceIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $prevIndex);
+                    if ($tokens[$closingBraceIndex]->getContent() !== ')') {
+                        continue;
+                    }
+                    $rightIndexEndLimit = $tokens->getPrevMeaningfulToken($closingBraceIndex);
+                    $rightIndexEnd = min($rightIndexEndLimit, $rightIndexEnd);
+                }
             }
 
-            $rightIndexStart = $rightIndex;
-
-            // If its T_OPEN_PARENTHESIS we need to find the closing one
-            if ($tokens[$rightIndex]->getContent() === '(') {
-                // Skip for now
-                continue;
-            }
-
-            // Check if we need to inverse comparison operator
-            $comparisonIndexValue = $this->getComparisonIndexValue($tokens, $comparisonIndex);
-
-            $rightIndexEnd = $tokens->getNextMeaningfulToken($rightIndexStart);
-            if (!$rightIndex || $tokens[$rightIndexEnd]->getContent() !== ')') {
-                // Skip for now
-                continue;
-            }
-
-            // Fix the error
-            $tmp = '';
-            for ($i = $leftIndexStart; $i <= $leftIndex; $i++) {
-                $tmp .= $tokens[$i]->getContent();
-            }
-            $rightIndexValue = $tokens[$rightIndex]->getContent();
-
-            for ($i = $leftIndexStart; $i < $rightIndexStart; $i++) {
-                $tokens[$i]->setContent('');
-            }
-            $tokens[$rightIndex]->setContent($rightIndexValue . ' ' . $comparisonIndexValue . ' ' . $tmp);
+            $this->applyFix($tokens, $index, $leftIndexStart, $leftIndexEnd, $rightIndexStart, $rightIndexEnd);
         }
     }
 
@@ -147,19 +125,19 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
     }
 
     /**
-     * @param Tokens $tokens
+     * @param Tokens|Token[] $tokens
      * @param int $comparisonIndex
      *
      * @return int
      */
-    protected function getComparisonIndexValue(Tokens $tokens, $comparisonIndex)
+    protected function getComparisonValue(Tokens $tokens, $comparisonIndex)
     {
         $comparisonIndexValue = $tokens[$comparisonIndex]->getContent();
-        if (in_array($tokens[$comparisonIndex]->getId(), [T_GREATER_THAN, T_LESS_THAN,
-            T_IS_GREATER_OR_EQUAL, T_IS_SMALLER_OR_EQUAL, ])) {
+        $operatorsToMap = [T_GREATER_THAN, T_SMALLER_THAN, T_IS_GREATER_OR_EQUAL, T_IS_SMALLER_OR_EQUAL];
+        if (in_array($tokens[$comparisonIndex]->getId(), $operatorsToMap, true)) {
             $mapping = [
                 T_GREATER_THAN => '<',
-                T_LESS_THAN => '>',
+                T_SMALLER_THAN => '>',
                 T_IS_GREATER_OR_EQUAL => '<=',
                 T_IS_SMALLER_OR_EQUAL => '>=',
             ];
@@ -169,6 +147,94 @@ class ConditionalExpressionOrderFixer extends AbstractFixer
         }
 
         return $comparisonIndexValue;
+    }
+
+    /**
+     * @param Tokens|Token[] $tokens
+     * @param int $index
+     *
+     * @return int
+     */
+    protected function detectRightEnd(Tokens $tokens, $index)
+    {
+        $rightEndIndex = $index;
+        $nextIndex = $index;
+        $max = null;
+        $braceCounter = 0;
+        if ($tokens[$index]->getContent() === '(') {
+            ++$braceCounter;
+            $braceEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $index);
+
+            return $braceEndIndex;
+        }
+
+        while (true) {
+            $nextIndex = $tokens->getNextMeaningfulToken($nextIndex);
+            if ($nextIndex === null) {
+                return $rightEndIndex;
+            }
+
+            $token = $tokens[$nextIndex];
+            $content = $token->getContent();
+
+            if (
+                !$token->isCast()
+                && !$token->isGivenKind([T_VARIABLE, T_OBJECT_OPERATOR, T_STRING, T_CONST, T_DOUBLE_COLON, T_CONSTANT_ENCAPSED_STRING, T_LNUMBER])
+                && !in_array($content, ['(', ')', '[', ']'], true)
+            ) {
+                return $rightEndIndex;
+            }
+
+            if ($content === ')') {
+                --$braceCounter;
+            }
+            if ($braceCounter < 0) {
+                return $rightEndIndex;
+            }
+
+            if ($content === '(') {
+                $nextIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $nextIndex);
+            }
+
+            if ($max !== null && $nextIndex > $max) {
+                return $rightEndIndex;
+            }
+
+            $rightEndIndex = $nextIndex;
+        }
+
+        return $rightEndIndex;
+    }
+
+    /**
+     * @param Tokens|Token[] $tokens
+     * @param int $index
+     * @param int $leftIndexStart
+     * @param int int $leftIndexEnd
+     * @param int $rightIndexStart
+     * @param int $rightIndexEnd
+     *
+     * @return void
+     */
+    protected function applyFix(Tokens $tokens, $index, $leftIndexStart, $leftIndexEnd, $rightIndexStart, $rightIndexEnd)
+    {
+        // Check if we need to inverse comparison operator
+        $comparisonValue = $this->getComparisonValue($tokens, $index);
+
+        $leftValue = '';
+        for ($i = $leftIndexStart; $i <= $leftIndexEnd; ++$i) {
+            $leftValue .= $tokens[$i]->getContent();
+            $tokens[$i]->setContent('');
+        }
+        $rightValue = '';
+        for ($i = $rightIndexStart; $i <= $rightIndexEnd; ++$i) {
+            $rightValue .= $tokens[$i]->getContent();
+            $tokens[$i]->setContent('');
+        }
+
+        $tokens[$index]->setContent($comparisonValue);
+        $tokens[$leftIndexEnd]->setContent($rightValue);
+        $tokens[$rightIndexStart]->setContent($leftValue);
     }
 
 }

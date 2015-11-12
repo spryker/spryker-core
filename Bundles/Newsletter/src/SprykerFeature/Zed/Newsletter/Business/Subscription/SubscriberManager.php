@@ -63,7 +63,7 @@ class SubscriberManager implements SubscriberManagerInterface
         $subscriberEntity = new SpyNewsletterSubscriber();
         $subscriberEntity->fromArray($newsletterSubscriberTransfer->toArray());
 
-        if (null === $subscriberEntity->getSubscriberKey()) {
+        if ($subscriberEntity->getSubscriberKey() === null) {
             $subscriberKey = $this->subscriberKeyGenerator->generateKey();
             $subscriberEntity->setSubscriberKey($subscriberKey);
         }

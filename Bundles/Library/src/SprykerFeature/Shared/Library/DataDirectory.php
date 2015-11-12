@@ -124,7 +124,7 @@ class DataDirectory
      */
     protected static function addRelativePath($path, $relativePath)
     {
-        if (null !== $path && $relativePath !== '/') {
+        if ($path !== null && $relativePath !== '/') {
             $path .= DIRECTORY_SEPARATOR . $relativePath;
         }
         if (substr($path, -1) !== DIRECTORY_SEPARATOR) {
@@ -143,14 +143,14 @@ class DataDirectory
      */
     protected static function createDirectoryIfNotExisting($path)
     {
-        if (false === is_dir($path)) {
+        if (is_dir($path) === false) {
             try {
                 mkdir($path, 0775, true);
             } catch (\ErrorException $e) {
                 throw new \Exception('Could not create data directory "' . $path . '"!');
             }
         }
-        if (false === is_writable($path)) {
+        if (is_writable($path) === false) {
             throw new \Exception('Data directory not writable! (' . $path . ')');
         }
 

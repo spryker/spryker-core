@@ -141,7 +141,7 @@ class VoucherEngine
                 $code = $this->getCodeWithTemplate($discountVoucherPool, $code);
             }
 
-            if (true === $this->voucherCodeExists($code)) {
+            if ($this->voucherCodeExists($code) === true) {
                 $codeCollisions++;
                 continue;
             }
@@ -189,7 +189,7 @@ class VoucherEngine
             ->findOneByCode($voucherCode)
         ;
 
-        return null !== $voucherCodeEntity;
+        return $voucherCodeEntity !== null;
     }
 
     /**

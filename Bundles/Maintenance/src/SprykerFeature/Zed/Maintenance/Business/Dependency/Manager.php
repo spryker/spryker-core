@@ -47,7 +47,7 @@ class Manager
                 $dependencies = []; // TODO illegal try-catch
             }
             if (array_key_exists($bundleName, $dependencies)) {
-                if (false === array_key_exists($foreignBundle, $incomingDependencies)) {
+                if (array_key_exists($foreignBundle, $incomingDependencies) === false) {
                     $incomingDependencies[$foreignBundle] = 0;
                 }
                 $incomingDependencies[$foreignBundle] += $dependencies[$bundleName];

@@ -249,7 +249,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
         $query->groupByAttributes();
         $query->groupByIdAbstractProduct();
 
-        if ('' !== trim($term)) {
+        if (trim($term) !== '') {
             $term = '%' . mb_strtoupper($term) . '%';
 
             $query->where('UPPER(' . SpyAbstractProductTableMap::COL_SKU . ') LIKE ?', $term, \PDO::PARAM_STR)

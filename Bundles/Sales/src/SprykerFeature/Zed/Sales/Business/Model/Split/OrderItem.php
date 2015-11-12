@@ -70,7 +70,7 @@ class OrderItem implements ItemInterface
             ->findOneByIdSalesOrderItem($idSalesOrderItem);
 
         $splitResponse = new ItemSplitResponseTransfer();
-        if (false === $this->validator->isValid($salesOrderItem, $quantityToSplit)) {
+        if ($this->validator->isValid($salesOrderItem === false, $quantityToSplit)) {
             return $splitResponse
                 ->setSuccess(false)
                 ->setValidationMessages($this->validator->getMessages());
@@ -100,7 +100,7 @@ class OrderItem implements ItemInterface
      */
     protected function getConnection()
     {
-        if (null === $this->databaseConnection) {
+        if ($this->databaseConnection === null) {
             $this->databaseConnection = Propel::getConnection();
         }
 

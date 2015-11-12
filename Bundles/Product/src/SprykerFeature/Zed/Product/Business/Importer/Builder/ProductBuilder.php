@@ -59,7 +59,7 @@ class ProductBuilder implements ProductBuilderInterface
     {
         $properties = [self::PRODUCT_URL_FIELD, self::PRODUCT_NAME_FIELD, self::PRODUCT_SKU_FIELD];
 
-        return (false !== array_search($name, $properties));
+        return (array_search($name, $properties) !== false);
     }
 
     /**

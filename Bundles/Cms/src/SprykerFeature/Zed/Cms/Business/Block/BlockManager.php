@@ -54,7 +54,7 @@ class BlockManager implements BlockManagerInterface
     {
         $this->checkPageExists($cmsBlockTransfer->getFkPage());
 
-        if (null === $this->getCmsBlockByIdPage($cmsBlockTransfer->getFkPage())) {
+        if ($this->getCmsBlockByIdPage($cmsBlockTransfer->getFkPage()) === null) {
             $block = $this->createBlock($cmsBlockTransfer);
         } else {
             $block = $this->updateBlock($cmsBlockTransfer);

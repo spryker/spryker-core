@@ -145,7 +145,7 @@ class Writer implements WriterInterface
      */
     protected function loadAbstractProductIdForPriceProductTransfer(PriceProductTransfer $transferPriceProduct)
     {
-        if (null === $transferPriceProduct->getIdAbstractProduct()) {
+        if ($transferPriceProduct->getIdAbstractProduct() === null) {
             $transferPriceProduct->setIdAbstractProduct(
                 $this->reader->getAbstractProductIdBySku($transferPriceProduct->getSkuAbstractProduct())
             );
@@ -158,7 +158,7 @@ class Writer implements WriterInterface
     protected function loadConcreteProductIdForPriceProductTransfer(PriceProductTransfer $transferPriceProduct)
     {
         if (
-            null === $transferPriceProduct->getIdProduct() &&
+            $transferPriceProduct->getIdProduct() === null &&
             $this->reader->hasConcreteProduct($transferPriceProduct->getSkuProduct())
         ) {
             $transferPriceProduct->setIdProduct(
@@ -211,7 +211,7 @@ class Writer implements WriterInterface
      */
     protected function setPriceType(PriceProductTransfer $transferPriceProduct)
     {
-        if (null === $transferPriceProduct->getPriceTypeName()) {
+        if ($transferPriceProduct->getPriceTypeName() === null) {
             $transferPriceProduct->setPriceTypeName($this->priceSettings->getPriceTypeDefaultName());
         }
 
@@ -245,7 +245,7 @@ class Writer implements WriterInterface
         $priceType = $this->reader->getPriceTypeByName($transferPriceProduct->getPriceTypeName());
         $priceEntities = $this->queryContainer
             ->queryPriceEntityForAbstractProduct($transferPriceProduct->getSkuProduct(), $priceType);
-        if (null !== $transferPriceProduct->getIdPriceProduct()) {
+        if ($transferPriceProduct->getIdPriceProduct() !== null) {
             $this->queryContainer->addFilter($priceEntities, $transferPriceProduct->getIdPriceProduct());
         }
 
@@ -276,7 +276,7 @@ class Writer implements WriterInterface
         $priceType = $this->reader->getPriceTypeByName($transferPriceProduct->getPriceTypeName());
         $priceEntities = $this->queryContainer
             ->queryPriceEntityForConcreteProduct($transferPriceProduct->getSkuProduct(), $priceType);
-        if (null !== $transferPriceProduct->getIdPriceProduct()) {
+        if ($transferPriceProduct->getIdPriceProduct() !== null) {
             $this->queryContainer->addFilter($priceEntities, $transferPriceProduct->getIdPriceProduct());
         }
 

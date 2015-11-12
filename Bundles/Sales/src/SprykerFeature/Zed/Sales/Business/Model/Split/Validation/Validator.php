@@ -64,7 +64,7 @@ class Validator implements ValidatorInterface
      */
     protected function isBundled(SpySalesOrderItem $salesOrderItem)
     {
-        if (null !== $salesOrderItem->getFkSalesOrderItemBundle()) {
+        if ($salesOrderItem->getFkSalesOrderItemBundle() !== null) {
             $this->messages[] = Messages::VALIDATE_BUNDLE_MESSAGE;
 
             return true;

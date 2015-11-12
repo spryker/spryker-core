@@ -29,13 +29,11 @@ class PriceFormController extends AbstractController
     {
         $form = $this->getDependencyContainer()->getPriceForm($request);
 
-        $form->init();
-
         if ($form->isValid()) {
             $transferPriceProduct = new PriceProductTransfer();
             $transferPriceProduct->fromArray($form->getRequestData());
 
-            if (null === $transferPriceProduct->getIdPriceProduct()) {
+            if ($transferPriceProduct->getIdPriceProduct() === null) {
                 $this->getFacade()->createPriceForProduct($transferPriceProduct);
             } else {
                 $this->getFacade()->setPriceForProduct($transferPriceProduct);
@@ -53,8 +51,6 @@ class PriceFormController extends AbstractController
     public function priceTypeAction(Request $request)
     {
         $form = $this->getDependencyContainer()->getPriceTypeForm($request);
-
-        $form->init();
 
         if ($form->isValid()) {
             $data = $form->getRequestData();

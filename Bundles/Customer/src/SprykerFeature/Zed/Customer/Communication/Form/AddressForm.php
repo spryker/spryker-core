@@ -135,23 +135,23 @@ class AddressForm extends AbstractForm
             $result = $addressDetailEntity->toArray();
         }
 
-        if (true === empty($result[self::SALUTATION])) {
+        if (empty($result[self::SALUTATION]) === true) {
             $result[self::SALUTATION] = !empty($customerDetails[self::SALUTATION]) ? $customerDetails[self::SALUTATION] : false;
         }
 
-        if (false === empty($result[self::SALUTATION])) {
+        if (empty($result[self::SALUTATION]) === false) {
             $salutations = array_flip($this->getSalutationOptions());
 
-            if (true === isset($salutations[$result[self::SALUTATION]])) {
+            if (isset($salutations[$result[self::SALUTATION]]) === true) {
                 $result[self::SALUTATION] = $salutations[$result[self::SALUTATION]];
             }
         }
 
-        if (true === empty($result[self::FIRST_NAME])) {
+        if (empty($result[self::FIRST_NAME]) === true) {
             $result[self::FIRST_NAME] = !empty($customerDetails[self::FIRST_NAME]) ? $customerDetails[self::FIRST_NAME] : '';
         }
 
-        if (true === empty($result[self::LAST_NAME])) {
+        if (empty($result[self::LAST_NAME]) === true) {
             $result[self::LAST_NAME] = !empty($customerDetails[self::LAST_NAME]) ? $customerDetails[self::LAST_NAME] : '';
         }
 
@@ -180,7 +180,7 @@ class AddressForm extends AbstractForm
         ;
 
         $result = [];
-        if (false === empty($countries)) {
+        if (empty($countries) === false) {
             foreach ($countries->getData() as $country) {
                 $result[$country->getIdCountry()] = $country->getName();
             }

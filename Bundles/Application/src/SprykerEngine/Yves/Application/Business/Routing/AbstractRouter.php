@@ -105,7 +105,7 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
         $scheme = $this->context->getScheme();
 
         if (self::NETWORK_PATH !== $referenceType &&
-            ('http' === $scheme && true === $this->sslEnabled || 'https' === $scheme && false === $this->sslEnabled)
+            ($scheme === 'http' && $this->sslEnabled === true || $scheme === 'https' && $this->sslEnabled === false)
         ) {
             $referenceType = self::ABSOLUTE_URL;
         }
@@ -150,9 +150,9 @@ abstract class AbstractRouter extends AbstractPlugin implements RouterInterface
     private function getPortPart($scheme)
     {
         $port = '';
-        if ('http' === $scheme && 80 !== $this->context->getHttpPort()) {
+        if ($scheme === 'http' && $this->context->getHttpPort() !== 80) {
             $port = ':' . $this->context->getHttpPort();
-        } elseif ('https' === $scheme && 443 !== $this->context->getHttpsPort()) {
+        } elseif ($scheme === 'https' && $this->context->getHttpsPort() !== 443) {
             $port = ':' . $this->context->getHttpsPort();
         }
 

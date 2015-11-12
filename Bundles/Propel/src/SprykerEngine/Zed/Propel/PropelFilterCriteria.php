@@ -44,18 +44,18 @@ class PropelFilterCriteria implements PropelFilterCriteriaInterface
     {
         $criteria = new Criteria();
 
-        if (null !== $this->filterTransfer->getLimit()) {
+        if ($this->filterTransfer->getLimit() !== null) {
             $criteria->setLimit($this->filterTransfer->getLimit());
         }
 
-        if (null !== $this->filterTransfer->getOffset()) {
+        if ($this->filterTransfer->getOffset() !== null) {
             $criteria->setOffset($this->filterTransfer->getOffset());
         }
 
-        if (null !== $this->filterTransfer->getOrderBy()) {
-            if ('ASC' === $this->filterTransfer->getOrderDirection()) {
+        if ($this->filterTransfer->getOrderBy() !== null) {
+            if ($this->filterTransfer->getOrderDirection() === 'ASC') {
                 $criteria->addAscendingOrderByColumn($this->filterTransfer->getOrderBy());
-            } elseif ('DESC' === $this->filterTransfer->getOrderDirection()) {
+            } elseif ($this->filterTransfer->getOrderDirection() === 'DESC') {
                 $criteria->addDescendingOrderByColumn($this->filterTransfer->getOrderBy());
             }
         }

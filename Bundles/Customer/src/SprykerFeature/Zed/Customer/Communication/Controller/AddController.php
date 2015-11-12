@@ -30,7 +30,7 @@ class AddController extends AbstractController
 
         $form->handleRequest();
 
-        if (true === $form->isValid()) {
+        if ($form->isValid() === true) {
             $data = $form->getData();
 
             $customerTransfer = $this->createCustomerTransfer();

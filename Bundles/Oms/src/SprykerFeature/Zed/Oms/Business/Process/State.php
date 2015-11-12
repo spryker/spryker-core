@@ -253,7 +253,7 @@ class State implements StateInterface
         $transitions = $this->getOutgoingTransitions();
         foreach ($transitions as $transition) {
             if ($transition->hasEvent()) {
-                if (true === $transition->getEvent()->isOnEnter()) {
+                if ($transition->getEvent()->isOnEnter() === true) {
                     return true;
                 }
             }
@@ -272,7 +272,7 @@ class State implements StateInterface
         $transitions = $this->getOutgoingTransitions();
         foreach ($transitions as $transition) {
             if ($transition->hasEvent()) {
-                if (true === $transition->getEvent()->isOnEnter()) {
+                if ($transition->getEvent()->isOnEnter() === true) {
                     return $transition->getEvent();
                 }
             }
@@ -288,7 +288,7 @@ class State implements StateInterface
         $transitions = $this->getOutgoingTransitions();
         foreach ($transitions as $transition) {
             if ($transition->hasEvent()) {
-                if (true === $transition->getEvent()->hasTimeout()) {
+                if ($transition->getEvent()->hasTimeout() === true) {
                     return true;
                 }
             }
@@ -309,7 +309,7 @@ class State implements StateInterface
         $transitions = $this->getOutgoingTransitions();
         foreach ($transitions as $transition) {
             if ($transition->hasEvent()) {
-                if (true === $transition->getEvent()->hasTimeout()) {
+                if ($transition->getEvent()->hasTimeout() === true) {
                     $events[] = $transition->getEvent();
                 }
             }

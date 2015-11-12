@@ -119,10 +119,10 @@ class AddressTable extends AbstractTable
                 $id = !empty($value[SpyCustomerAddressTableMap::COL_ID_CUSTOMER_ADDRESS]) ? $value[SpyCustomerAddressTableMap::COL_ID_CUSTOMER_ADDRESS] : false;
 
                 $tags = [];
-                if ((false === is_bool($id)) && ($id === $defaultBillingAddress)) {
+                if ((is_bool($id) === false) && ($id === $defaultBillingAddress)) {
                     $tags[] = '<span class="label label-danger" title="Default billing address">BILLING</span>';
                 }
-                if ((false === is_bool($id)) && ($id === $defaultShippingAddress)) {
+                if ((is_bool($id) === false) && ($id === $defaultShippingAddress)) {
                     $tags[] = '<span class="label label-danger" title="Default shipping address">SHIPPING</span>';
                 }
 

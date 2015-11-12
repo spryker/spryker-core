@@ -136,11 +136,11 @@ class CartRule implements CartRuleInterface
     protected function updateDateTimeZoneToStoreDefault(array $discount)
     {
         foreach ($discount as $field => $value) {
-            if (false === in_array($field, $this->dateTypeFields)) {
+            if (in_array($field, $this->dateTypeFields) === false) {
                 continue;
             }
 
-            if (false === ($value instanceof DateTime)) {
+            if (($value instanceof DateTime) === false) {
                 $discount[$field] = DateTime::createFromFormat(
                     self::DATABASE_DATE_FORMAT,
                     $value,
@@ -159,7 +159,7 @@ class CartRule implements CartRuleInterface
      */
     protected function saveDiscount($discountTransfer)
     {
-        if (null === $discountTransfer->getIdDiscount()) {
+        if ($discountTransfer->getIdDiscount() === null) {
             return $this->discountWriter->create($discountTransfer);
         }
 

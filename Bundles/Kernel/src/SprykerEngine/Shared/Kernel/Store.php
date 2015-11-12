@@ -135,7 +135,7 @@ class Store
     {
         $stores = require APPLICATION_ROOT_DIR . '/config/Shared/stores.php';
 
-        if (false === array_key_exists($currentStoreName, $stores)) {
+        if (array_key_exists($currentStoreName, $stores) === false) {
             throw new \Exception('Missing setup for store: ' . $currentStoreName);
         }
 

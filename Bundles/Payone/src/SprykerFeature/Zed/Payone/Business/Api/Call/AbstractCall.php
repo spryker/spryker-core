@@ -49,28 +49,28 @@ abstract class AbstractCall
      */
     protected function applyStandardParameter(AbstractRequestContainer $container)
     {
-        if (null === $container->getPortalid()) {
+        if ($container->getPortalid() === null) {
             $container->setPortalid($this->standardParameter->getPortalId());
         }
-        if (null === $container->getAid()) {
+        if ($container->getAid() === null) {
             $container->setAid($this->standardParameter->getAid());
         }
-        if (null === $container->getMid()) {
+        if ($container->getMid() === null) {
             $container->setMid($this->standardParameter->getMid());
         }
-        if (null === $container->getEncoding()) {
+        if ($container->getEncoding() === null) {
             $container->setEncoding($this->standardParameter->getEncoding());
         }
-        if (null === $container->getMode()) {
+        if ($container->getMode() === null) {
             $container->setMode($this->modeDetector->getMode());
         }
-        if (null === $container->getLanguage()) {
+        if ($container->getLanguage() === null) {
             $container->setLanguage($this->standardParameter->getLanguage());
         }
-        if (null === $container->getApiVersion()) {
+        if ($container->getApiVersion() === null) {
             $container->setApiVersion($this->standardParameter->getApiVersion());
         }
-        if (null === $container->getResponsetype()) {
+        if ($container->getResponsetype() === null) {
             $container->setResponsetype($this->standardParameter->getResponseType());
         }
     }

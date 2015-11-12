@@ -18,6 +18,27 @@ class TestClass1Input
         }
         if (2 > $foo) {
         }
+        if (null !== $redirectData[self::FROM_URL]) {
+        }
+        $foo = 2 == $foo;
+        $foo = 3 === $foo;
+        if (null === $foo && false === $this->foo()) {
+        }
+        if (2 <= $this->foo()) {
+        }
+        if (2 >= $this->foo()) {
+        }
+        if (true === array_key_exists($fromXmlElementName, $toXmlElements)) {
+        }
+        if (false === ($results instanceof ObjectCollection)) {
+        }
+        if (0 === $taxSetTransfer->getTaxRates()->count()) {
+        }
+        if (true !== $row['sku_product_concrete']) {
+        }
+        if (isset($name[0]) && '@' === $name[0]) {
+        }
+        return null !== $xyz;
     }
 
     /**
@@ -25,14 +46,7 @@ class TestClass1Input
      */
     public function replaceNotYet()
     {
-        $foo = false;
-        $foo = 2 == $foo;
-        $foo = 2 === $foo;
-        if (null === $foo && false === $this->foo()) {
-        }
-        if (2 <= $this->foo()) {
-        }
-        if (2 >= $this->foo()) {
+        if (MyClass::CONSTANT === $foo) {
         }
     }
 
@@ -41,7 +55,6 @@ class TestClass1Input
      */
     public function doNotReplace()
     {
-        $foo = false;
         $foo = $foo == 2;
         $foo = $foo === 2;
         if ($foo === true) {

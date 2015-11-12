@@ -43,7 +43,7 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function getCurrentLocale()
     {
-        if (null === $this->currentLocale) {
+        if ($this->currentLocale === null) {
             $this->currentLocale = $this->createCurrentLocale();
         }
 

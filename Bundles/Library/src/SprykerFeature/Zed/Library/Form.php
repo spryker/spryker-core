@@ -58,7 +58,7 @@ class Form extends \Zend_Form
      */
     protected function getRequest()
     {
-        if (null === $this->request) {
+        if ($this->request === null) {
             $this->request = Request::createFromGlobals();
         }
 

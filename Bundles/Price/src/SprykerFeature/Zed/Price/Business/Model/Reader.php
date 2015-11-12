@@ -274,6 +274,7 @@ class Reader implements ReaderInterface
 
         return $priceType;
     }
+
     /**
      * @param string $sku
      *

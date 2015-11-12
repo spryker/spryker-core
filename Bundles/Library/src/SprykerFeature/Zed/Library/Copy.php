@@ -136,7 +136,7 @@ class Copy
         foreach ($methods as $method) {
             if (strpos($method, 'get') === 0) {
                 $setMethod = str_replace('get', 'set', $method);
-                if (method_exists($entity, $setMethod) && null !== $transfer->$method()) {
+                if (method_exists($entity, $setMethod) && $transfer->$method() !== null) {
                     $entity->$setMethod($transfer->$method());
                 }
             }

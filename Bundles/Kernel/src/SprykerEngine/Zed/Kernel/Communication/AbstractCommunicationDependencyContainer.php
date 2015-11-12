@@ -50,7 +50,7 @@ abstract class AbstractCommunicationDependencyContainer extends BaseDependencyCo
             throw new \ErrorException('Container does not exist in ' . get_class($this));
         }
 
-        if (false === $this->container->offsetExists($key)) {
+        if ($this->container->offsetExists($key) === false) {
             throw new \ErrorException('Key ' . $key . ' does not exist in container: ' . get_class($this));
         }
 

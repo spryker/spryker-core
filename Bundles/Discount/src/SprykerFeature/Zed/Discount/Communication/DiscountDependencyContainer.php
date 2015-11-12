@@ -137,7 +137,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     public function createCartRuleForm(FormTypeInterface $form, array $defaultData = null)
     {
         $defaultDataArray = $this->getCartRuleDefaultData();
-        if (true === is_array($defaultData)) {
+        if (is_array($defaultData) === true) {
             $defaultDataArray = array_merge($this->getCartRuleDefaultData(), $defaultData);
         }
 

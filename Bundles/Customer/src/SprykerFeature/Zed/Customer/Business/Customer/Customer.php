@@ -634,7 +634,7 @@ class Customer
     {
         $newPassword = $currentPassword;
 
-        if ('$2' !== mb_substr($currentPassword, 0, 2)) {
+        if (mb_substr($currentPassword, 0, 2) !== '$2') {
             $encoder = new BCryptPasswordEncoder(self::BCRYPT_FACTOR);
 
             $newPassword = $encoder->encodePassword($currentPassword, self::BCRYPT_SALT);
