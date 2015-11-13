@@ -32,6 +32,7 @@ include:
  - Bundles/Kernel
  - Bundles/Library
  - Bundles/Locale
+ - Bundles/Log
  - Bundles/Lumberjack
  - Bundles/Mail
  - Bundles/Maintenance

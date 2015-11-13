@@ -13,6 +13,10 @@ use SprykerFeature\Shared\Library\Monolog\LumberjackHandler;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
 
+/**
+ * @deprecated Use SprykerFeature\Shared\Log\LoggerTrait where ever you need to log something with monolog
+ * instead of using the silex monolog service.
+ */
 class MonologServiceProvider implements ServiceProviderInterface
 {
 
