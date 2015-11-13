@@ -55,9 +55,11 @@ class RemoveFunctionAliasFixer extends AbstractFixer
 
     /**
      * @param Tokens|Token[] $tokens
+     *
      * @return void
      */
-    protected function fixContent(Tokens $tokens) {
+    protected function fixContent(Tokens $tokens)
+    {
         $wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR, T_NEW];
 
         foreach ($tokens as $index => $token) {
