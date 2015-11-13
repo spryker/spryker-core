@@ -43,7 +43,7 @@ class Guzzle extends AbstractHttpAdapter
     {
         return $this->client->post(
             $this->gatewayUrl,
-            ['Content-Type' => self::$request_content_types[$this->contentType]],
+            ['Content-Type' => self::$requestContentTypes[$this->contentType]],
             $data
         );
     }

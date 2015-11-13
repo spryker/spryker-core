@@ -101,6 +101,7 @@ class MailPlugin extends AbstractPlugin implements CommandByOrderInterface
     protected function translate($keyName)
     {
         $glossaryFacade = $this->getDependencyContainer()->getGlossaryFacade();
+
         if ($glossaryFacade->hasTranslation($keyName)) {
             return $glossaryFacade->translate($keyName);
         }

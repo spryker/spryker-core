@@ -56,7 +56,7 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
         $payolutionTransfer = $checkoutRequestTransfer->getPayolutionPayment();
         $addressTransfer = $payolutionTransfer->getAddress();
 
-        $requestData = $this->getBaseRequestTransfer(
+        $requestData = $this->getBaseTransactionRequest(
             $checkoutRequestTransfer->getCart()->getTotals()->getGrandTotal(),
             $payolutionTransfer->getCurrencyIso3Code(),
             $isSalesOrder = null
@@ -94,7 +94,7 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
      */
     public function buildPreAuthorizationRequest(SpyPaymentPayolution $paymentEntity)
     {
-        $requestData = $this->getBaseRequestTransferForPayment(
+        $requestData = $this->getBaseTransactionRequestForPayment(
             $paymentEntity,
             ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION,
             null);
@@ -130,7 +130,7 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
      */
     public function buildReAuthorizationRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
-        return $this->getBaseRequestTransferForPayment($paymentEntity,
+        return $this->getBaseTransactionRequestForPayment($paymentEntity,
             ApiConstants::PAYMENT_CODE_RE_AUTHORIZATION,
             $uniqueId);
     }
@@ -143,7 +143,7 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
      */
     public function buildRevertRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
-        return $this->getBaseRequestTransferForPayment($paymentEntity,
+        return $this->getBaseTransactionRequestForPayment($paymentEntity,
             ApiConstants::PAYMENT_CODE_REVERSAL,
             $uniqueId);
     }
@@ -156,7 +156,7 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
      */
     public function buildCaptureRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
-        return $this->getBaseRequestTransferForPayment($paymentEntity,
+        return $this->getBaseTransactionRequestForPayment($paymentEntity,
             ApiConstants::PAYMENT_CODE_CAPTURE,
             $uniqueId);
     }
@@ -169,7 +169,7 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
      */
     public function buildRefundRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
-        return $this->getBaseRequestTransferForPayment($paymentEntity,
+        return $this->getBaseTransactionRequestForPayment($paymentEntity,
             ApiConstants::PAYMENT_CODE_REFUND,
             $uniqueId);
     }

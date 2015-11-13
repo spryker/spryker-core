@@ -18,7 +18,7 @@ abstract class AbstractPaymentMethod
     const PAYOLUTION_DATE_FORMAT = 'Y-m-d';
 
     /**
-     * @const array
+     * @var static string[]
      */
     protected static $genderMap = [
         SpyPaymentPayolutionTableMap::COL_GENDER_MALE => ApiConstants::SEX_MALE,
@@ -73,7 +73,7 @@ abstract class AbstractPaymentMethod
      *
      * @return array
      */
-    protected function getBaseRequestTransfer($grandTotal, $currency, $idOrder)
+    protected function getBaseTransactionRequest($grandTotal, $currency, $idOrder)
     {
         return [
             ApiConstants::ACCOUNT_BRAND => $this->getAccountBrand(),
@@ -95,14 +95,14 @@ abstract class AbstractPaymentMethod
      *
      * @return array
      */
-    protected function getBaseRequestTransferForPayment(
+    protected function getBaseTransactionRequestForPayment(
         SpyPaymentPayolution $paymentEntity,
         $paymentCode,
         $uniqueId
     ) {
         $orderEntity = $paymentEntity->getSpySalesOrder();
 
-        $requestData = $this->getBaseRequestTransfer(
+        $requestData = $this->getBaseTransactionRequest(
             $orderEntity->getGrandTotal(),
             $paymentEntity->getCurrencyIso3Code(),
             $orderEntity->getIdSalesOrder()
@@ -128,8 +128,8 @@ abstract class AbstractPaymentMethod
      */
     protected function addRequestData(&$requestData, $additionalData)
     {
-        foreach ($additionalData as $field_name => $value) {
-            $requestData[$field_name] = $value;
+        foreach ($additionalData as $fieldName => $value) {
+            $requestData[$fieldName] = $value;
         }
     }
 

@@ -39,7 +39,8 @@ class Calculation extends AbstractPaymentHandler implements CalculationInterface
         $responseData = $this->executionAdapter->sendAuthorizedRequest(
             $calculationRequest,
             $this->getConfig()->getCalculationUserLogin(),
-            $this->getConfig()->getCalculationUserPassword());
+            $this->getConfig()->getCalculationUserPassword()
+        );
         $responseTransfer = $this->converter->toCalculationResponseTransfer($responseData);
 
         return $responseTransfer;

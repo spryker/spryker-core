@@ -138,7 +138,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
         $payolutionTransfer = $checkoutRequestTransfer->getPayolutionPayment();
         $addressTransfer = $payolutionTransfer->getAddress();
 
-        $requestData = $this->getBaseRequestTransfer(
+        $requestData = $this->getBaseTransactionRequest(
             $checkoutRequestTransfer->getCart()->getTotals()->getGrandTotal(),
             $payolutionTransfer->getCurrencyIso3Code(),
             $isSalesOrder = null
@@ -182,7 +182,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
      */
     public function buildPreAuthorizationRequest(SpyPaymentPayolution $paymentEntity)
     {
-        $requestData = $this->getBaseRequestTransferForPayment($paymentEntity,
+        $requestData = $this->getBaseTransactionRequestForPayment($paymentEntity,
             ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION,
             null);
         $this->addRequestData(
@@ -223,7 +223,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
      */
     public function buildReAuthorizationRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
-        return $this->getBaseRequestTransferForPayment($paymentEntity,
+        return $this->getBaseTransactionRequestForPayment($paymentEntity,
             ApiConstants::PAYMENT_CODE_RE_AUTHORIZATION,
             $uniqueId);
     }
@@ -236,7 +236,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
      */
     public function buildRevertRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
-        return $this->getBaseRequestTransferForPayment($paymentEntity,
+        return $this->getBaseTransactionRequestForPayment($paymentEntity,
             ApiConstants::PAYMENT_CODE_REVERSAL,
             $uniqueId);
     }
@@ -249,7 +249,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
      */
     public function buildCaptureRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
-        return $this->getBaseRequestTransferForPayment($paymentEntity,
+        return $this->getBaseTransactionRequestForPayment($paymentEntity,
             ApiConstants::PAYMENT_CODE_CAPTURE,
             $uniqueId);
     }
@@ -262,7 +262,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
      */
     public function buildRefundRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
-        return $this->getBaseRequestTransferForPayment($paymentEntity,
+        return $this->getBaseTransactionRequestForPayment($paymentEntity,
             ApiConstants::PAYMENT_CODE_REFUND,
             $uniqueId);
     }

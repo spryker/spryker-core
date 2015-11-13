@@ -12,7 +12,10 @@ use SprykerFeature\Zed\Payolution\Business\Exception\ApiHttpRequestException;
 abstract class AbstractHttpAdapter implements AdapterInterface
 {
 
-    public static $request_content_types = [
+    /**
+     * @var static string[]
+     */
+    public static $requestContentTypes = [
         'FORM' => 'application/x-www-form-urlencoded;charset=UTF-8',
         'XML' => 'text/xml;charset=UTF-8',
     ];

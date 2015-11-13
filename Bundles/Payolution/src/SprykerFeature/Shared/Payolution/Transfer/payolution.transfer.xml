@@ -88,19 +88,19 @@
 
     <transfer name="PayolutionCalculationPaymentDetail">
         <property name="installments" type="PayolutionCalculationInstallment[]" singular="installment"/>
-        <property name="originalAmount" type="string"/>
-        <property name="totalAmount" type="string"/>
-        <property name="minimumInstallmentFee" type="string"/>
-        <property name="duration" type="string"/>
-        <property name="interestRate" type="string"/>
-        <property name="effectiveInterestRate" type="string"/>
+        <property name="originalAmount" type="int"/>
+        <property name="totalAmount" type="int"/>
+        <property name="minimumInstallmentFee" type="int"/>
+        <property name="duration" type="int"/>
+        <property name="interestRate" type="int"/>
+        <property name="effectiveInterestRate" type="int"/>
         <property name="usage" type="string"/>
         <property name="currency" type="string"/>
         <property name="standardCreditInformationUrl" type="string"/>
     </transfer>
 
     <transfer name="PayolutionCalculationInstallment">
-        <property name="amount" type="string"/>
+        <property name="amount" type="int"/>
         <property name="due" type="string"/>
     </transfer>
 

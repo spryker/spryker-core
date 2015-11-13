@@ -16,6 +16,7 @@ use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
 use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use DOMDocument;
+use DOMElement;
 
 class Converter implements ConverterInterface
 {
@@ -96,7 +97,7 @@ class Converter implements ConverterInterface
      *
      * @return string
      */
-    public function arrayToXml(array $data)
+    protected function arrayToXml(array $data)
     {
         $xml = new DOMDocument();
 
@@ -116,30 +117,55 @@ class Converter implements ConverterInterface
      */
     protected function createXml(DOMDocument $xml, array $data)
     {
-        $element_value = empty($data[ApiConstants::CALCULATION_XML_ELEMENT_VALUE]) === false ?
-            $data[ApiConstants::CALCULATION_XML_ELEMENT_VALUE] :
-            null;
-        $element = $xml->createElement(
-            $data[ApiConstants::CALCULATION_XML_ELEMENT_NAME],
-            $element_value
-        );
+        $element = $this->createXmlElement($xml, $data);
 
-        if (empty($data[ApiConstants::CALCULATION_XML_ELEMENT_ATTRIBUTES]) === false &&
-            is_array($data[ApiConstants::CALCULATION_XML_ELEMENT_ATTRIBUTES]) === true
-        ) {
-            foreach ($data[ApiConstants::CALCULATION_XML_ELEMENT_ATTRIBUTES] as $attribute_key => $attribute_value) {
-                $element->setAttribute($attribute_key, $attribute_value);
-            }
-        }
+        $element = $this->fillXmlAttributes($element, $data);
 
-        foreach ($data as $data_key => $child_data) {
-            if (is_numeric($data_key) === false) {
+        foreach ($data as $dataKey => $childData) {
+            if (is_numeric($dataKey) === false) {
                 continue;
             }
 
-            $child = $this->createXml($xml, $child_data);
-            if ($child) {
+            $child = $this->createXml($xml, $childData);
+            if ($child !== false) {
                 $element->appendChild($child);
+            }
+        }
+
+        return $element;
+    }
+
+    /**
+     * @param DOMDocument $xml
+     * @param array $data
+     *
+     * @return DOMElement
+     */
+    protected function createXmlElement(DOMDocument $xml, array $data)
+    {
+        $elementValue = empty($data[ApiConstants::CALCULATION_XML_ELEMENT_VALUE]) === false ?
+            $data[ApiConstants::CALCULATION_XML_ELEMENT_VALUE] :
+            null;
+
+        return $xml->createElement(
+            $data[ApiConstants::CALCULATION_XML_ELEMENT_NAME],
+            $elementValue
+        );
+    }
+
+    /**
+     * @param DOMElement $element
+     * @param array $data
+     *
+     * @return DOMElement
+     */
+    protected function fillXmlAttributes(DOMElement $element, array $data)
+    {
+        if (empty($data[ApiConstants::CALCULATION_XML_ELEMENT_ATTRIBUTES]) === false &&
+            is_array($data[ApiConstants::CALCULATION_XML_ELEMENT_ATTRIBUTES]) === true
+        ) {
+            foreach ($data[ApiConstants::CALCULATION_XML_ELEMENT_ATTRIBUTES] as $attributeKey => $attributeValue) {
+                $element->setAttribute($attributeKey, $attributeValue);
             }
         }
 
@@ -151,7 +177,7 @@ class Converter implements ConverterInterface
      *
      * @return PayolutionCalculationResponseInterface
      */
-    public function xmlToCalculationResponseTransfer($xmlString)
+    protected function xmlToCalculationResponseTransfer($xmlString)
     {
         $xml = simplexml_load_string($xmlString);
         $arrayData = $this->xmlToArray($xml);
@@ -196,12 +222,12 @@ class Converter implements ConverterInterface
     protected function arrayToCalculationPaymentDetailTransfer(array $data)
     {
         $paymentDetailTransfer = (new PayolutionCalculationPaymentDetailTransfer())
-            ->setOriginalAmount($data['OriginalAmount'])
-            ->setTotalAmount($data['TotalAmount'])
-            ->setMinimumInstallmentFee($data['MinimumInstallmentFee'])
+            ->setOriginalAmount($data['OriginalAmount'] * 100)
+            ->setTotalAmount($data['TotalAmount'] * 100)
+            ->setMinimumInstallmentFee($data['MinimumInstallmentFee'] * 100)
             ->setDuration($data['Duration'])
-            ->setInterestRate($data['InterestRate'])
-            ->setEffectiveInterestRate($data['EffectiveInterestRate'])
+            ->setInterestRate($data['InterestRate'] * 100)
+            ->setEffectiveInterestRate($data['EffectiveInterestRate'] * 100)
             ->setUsage($data['Usage'])
             ->setCurrency($data['Currency'])
             ->setStandardCreditInformationUrl($data['StandardCreditInformationUrl']);
@@ -223,6 +249,7 @@ class Converter implements ConverterInterface
      */
     protected function arrayToCalculationInstallmentTransfer(array $data)
     {
+        $data['Amount'] = $data['Amount'] * 100;
         return (new PayolutionCalculationInstallmentTransfer())->fromArray($data);
     }
 
