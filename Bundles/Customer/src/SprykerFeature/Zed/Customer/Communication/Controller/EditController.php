@@ -12,7 +12,6 @@ use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
-use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
 use SprykerFeature\Zed\Customer\Communication\Form\CustomerTypeForm;
 use SprykerFeature\Zed\Customer\CustomerConfig;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
@@ -53,18 +52,18 @@ class EditController extends AbstractController
             $data = $form->getData();
 
             $customer = $this->createCustomerTransfer();
-            $customer->fromArray($data->toArray(), true);
+            $customer->fromArray($data, true);
             $this->getFacade()
                 ->updateCustomer($customer)
             ;
 
             $defaultBilling = !empty($data[CustomerTransfer::DEFAULT_BILLING_ADDRESS]) ? $data[CustomerTransfer::DEFAULT_BILLING_ADDRESS] : false;
-            if (!empty($defaultBilling)) {
+            if (empty($defaultBilling) === false) {
                 $this->updateBillingAddress($idCustomer, $defaultBilling);
             }
 
             $defaultShipping = !empty($data[CustomerTransfer::DEFAULT_SHIPPING_ADDRESS]) ? $data[CustomerTransfer::DEFAULT_SHIPPING_ADDRESS] : false;
-            if (!empty($defaultShipping)) {
+            if (empty($defaultShipping) === false) {
                 $this->updateShippingAddress($idCustomer, $defaultShipping);
             }
 

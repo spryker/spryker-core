@@ -128,7 +128,7 @@ class ProfileController extends AbstractController
             ->createCustomerForm($request)
         ;
 
-        if ($form->isValid()) {
+        if ($form->isValid() === true) {
             $customerTransfer = new CustomerTransfer();
             $customerTransfer->fromArray($form->getRequestData());
             $this->getFacade()
@@ -164,7 +164,7 @@ class ProfileController extends AbstractController
             ->createAddressForm($request)
         ;
 
-        if ($form->isValid()) {
+        if ($form->isValid() === true) {
             $addressTransfer = new AddressTransfer();
             $addressTransfer->fromArray($form->getRequestData());
             if ($addressTransfer->getIdCustomerAddress()) {

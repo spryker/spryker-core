@@ -116,7 +116,7 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
      *
      * @return FormInterface
      */
-    public function createAddressForm(AddressTransfer $addressTransfer = null, $type)
+    public function createAddressForm(AddressTransfer $addressTransfer, $type)
     {
         $customerQuery = $this->getQueryContainer()
             ->queryCustomers()
@@ -179,6 +179,5 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
 
         return $customer->toArray();
     }
-
 
 }

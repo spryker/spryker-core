@@ -54,6 +54,12 @@ class AddressTypeForm extends AbstractFormType
         $this->type = $type;
     }
 
+    /**
+     * @param FormBuilderInterface $builder
+     * @param array $options
+     *
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
@@ -133,7 +139,7 @@ class AddressTypeForm extends AbstractFormType
         ;
 
         $result = [];
-        if (false === empty($countries)) {
+        if (empty($countries) === false) {
             foreach ($countries->getData() as $country) {
                 $result[$country->getIdCountry()] = $country->getName();
             }
@@ -152,6 +158,9 @@ class AddressTypeForm extends AbstractFormType
         return $this->getEnumSet($salutation);
     }
 
+    /**
+     * @return string
+     */
     public function getName()
     {
         return 'customer_address';

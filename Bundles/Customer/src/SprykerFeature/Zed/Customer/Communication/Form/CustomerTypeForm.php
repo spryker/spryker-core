@@ -11,6 +11,7 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
 class CustomerTypeForm extends AbstractFormType
 {
+
     const SALUTATION = 'salutation';
     const GENDER = 'gender';
     const ADD = 'add';
@@ -50,8 +51,7 @@ class CustomerTypeForm extends AbstractFormType
         SpyCustomerAddressQuery $customerAddressQuery,
         $formType,
         $idCustomer
-    )
-    {
+    ) {
         $this->customerQuery = $customerQuery;
         $this->customerAddressQuery = $customerAddressQuery;
         $this->formType = $formType;

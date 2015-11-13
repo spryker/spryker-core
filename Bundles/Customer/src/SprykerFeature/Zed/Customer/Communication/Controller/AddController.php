@@ -11,6 +11,7 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 use SprykerFeature\Zed\Customer\Communication\Form\CustomerTypeForm;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -22,7 +23,9 @@ class AddController extends AbstractController
 {
 
     /**
-     * @return array
+     * @param Request $request
+     *
+     * @return array|RedirectResponse
      */
     public function indexAction(Request $request)
     {
