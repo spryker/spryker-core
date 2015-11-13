@@ -133,6 +133,31 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     }
 
     /**
+     * @return SpyOmsOrderProcess[]
+     */
+    public function getActiveProcesses()
+    {
+        return $this->getDependencyContainer()
+            ->createUtilOrderProcess($this->getDependencyContainer()
+                ->getConfig())
+            ->getActiveProcesses()
+        ;
+    }
+
+    /**
+     * @param array $orderItemStates
+     * @return array
+     */
+    public function getOrderItemStateNames($orderItemStates)
+    {
+        return $this->getDependencyContainer()
+            ->createUtilOrderProcess($this->getDependencyContainer()
+                ->getConfig())
+            ->getOrderItemStateNames($orderItemStates)
+        ;
+    }
+
+    /**
      * @param array $logContext
      *
      * @return int
@@ -384,6 +409,14 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
         return $this->getDependencyContainer()
             ->createOrderStateMachineOrderStateMachine($logContext)
             ->triggerEvent($eventId, $orderItemsArray, $data);
+    }
+
+    /**
+     * @return array
+     */
+    public function getOrderItemMatrix()
+    {
+        return $this->getDependencyContainer()->createUtilOrderItemMatrix()->getMatrix();
     }
 
 }

@@ -2,7 +2,7 @@
 <config>
     <sales>
         <pages>
-            <order-matrix>
+            <order-list>
                 <label>Orders</label>
                 <title>Orders</title>
                 <bundle>sales</bundle>
@@ -19,7 +19,17 @@
                         <visible>0</visible>
                     </order-item>
                 </pages>
+            </order-list>
+
+            <order-matrix>
+                <label>Order Matrix</label>
+                <title>Order Matrix</title>
+                <bundle>sales</bundle>
+                <controller>matrix</controller>
+                <action>index</action>
+                <visible>1</visible>
             </order-matrix>
+
         </pages>
     </sales>
 </config>

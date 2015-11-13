@@ -7,6 +7,8 @@
 namespace SprykerFeature\Zed\Oms\Persistence;
 
 use DateTime;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
@@ -175,6 +177,28 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     {
         return $this->getSalesQueryContainer()->querySalesOrder()
             ->filterByIdSalesOrder($idOrder);
+    }
+
+    /**
+     * @param array|string[] $activeProcesses
+     *
+     * @return SpyOmsOrderProcessQuery
+     */
+    public function getActiveProcesses($activeProcesses)
+    {
+        $query = SpyOmsOrderProcessQuery::create();
+        return $query->filterByName($activeProcesses);
+    }
+
+    /**
+     * @param array $orderItemStates
+     *
+     * @return SpyOmsOrderItemStateQuery
+     */
+    public function getOrderItemStates(array $orderItemStates)
+    {
+        $query = SpyOmsOrderItemStateQuery::create();
+        return $query->filterByIdOmsOrderItemState($orderItemStates);
     }
 
 }

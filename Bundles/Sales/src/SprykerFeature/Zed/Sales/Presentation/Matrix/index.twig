@@ -1,0 +1,31 @@
+{% extends '@Gui/Layout/layout.twig' %}
+
+{% block content %}
+
+    {% embed '@Gui/Partials/widget.twig' with { widget_title: 'Matrix' } %}
+
+        {% block widget_content %}
+
+            <table>
+                <thead>
+
+
+                </thead>
+                <tbody>
+                {% for row in matrix %}
+                    <tr>
+                    {% for element in row %}
+                        <td>
+                        {{ element }}
+                        </td>
+                    {% endfor %}
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        {% endblock %}
+
+    {% endembed %}
+
+{% endblock %}

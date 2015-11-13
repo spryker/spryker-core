@@ -15,14 +15,14 @@ use SprykerFeature\Shared\Library\Currency\CurrencyManager;
 class OrdersTable extends AbstractTable
 {
 
-    const URL = 'Url';
+    const URL = 'URL';
 
     /**
-     * @param SpySalesOrderQuery $salesQuery
+     * @param SpySalesOrderQuery $orderQuery
      */
-    public function __construct(SpySalesOrderQuery $salesQuery)
+    public function __construct(SpySalesOrderQuery $orderQuery)
     {
-        $this->salesQuery = $salesQuery;
+        $this->orderQuery = $orderQuery;
     }
 
     /**
@@ -69,7 +69,7 @@ class OrdersTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->salesQuery;
+        $query = $this->orderQuery;
         $queryResults = $this->runQuery($query, $config);
         $results = [];
         foreach ($queryResults as $item) {

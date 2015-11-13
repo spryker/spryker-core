@@ -11,6 +11,7 @@ use Propel\Runtime\Collection\ObjectCollection;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Oms\Business\OmsFacade;
 use SprykerFeature\Zed\Sales\Communication\Form\OrderItemSplitForm\Collection;
+use SprykerFeature\Zed\Sales\Communication\Table\MatrixTable;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
 use Symfony\Component\HttpFoundation\Request;
@@ -130,6 +131,17 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
         $orderQuery = $this->getQueryContainer()->querySalesOrder();
 
         return $this->getFactory()->createTableOrdersTable($orderQuery);
+    }
+
+    /**
+     * @return MatrixTable
+     */
+    public function createMatrixTable()
+    {
+        $orderItemQuery = $this->getQueryContainer()->querySalesOrderItem();
+        $omsFacade = $this->getOmsFacade();
+
+        return $this->getFactory()->createTableMatrixTable($orderItemQuery, $omsFacade);
     }
 
     /**
