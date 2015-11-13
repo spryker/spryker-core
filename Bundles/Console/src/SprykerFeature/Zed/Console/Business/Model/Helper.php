@@ -112,6 +112,11 @@ trait Helper
     }
 
     /**
+     * @param $question
+     *
+     * @throws \RuntimeException
+     *
+     * @return bool
      */
     public function askConfirmation($question)
     {
@@ -131,13 +136,15 @@ trait Helper
      * @param string|array    $question The question to ask
      * @param bool            $default  The default answer if the user enters nothing
      *
+     * @throws \RuntimeException
+     *
      * @return bool true if the user has confirmed, false otherwise
      */
     public function askAbortableConfirmation(OutputInterface $output, $question, $default = true)
     {
         $answer = 'z';
         while ($answer && !in_array(strtolower($answer[0]), array('y', 'n', 'a'))) {
-            $answer = $this->ask($output, $question);
+            $answer = $this->ask($question, $default);
         }
 
         if (strtolower($answer[0]) === 'a') {

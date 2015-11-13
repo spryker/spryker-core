@@ -89,6 +89,14 @@ abstract class AbstractGitFlowConsole extends Console
                 }
             } catch (\RuntimeException $e) {
                 //TODO: Abort gracefully by switching back to the from branch if currently on to branch
+                $workingDirectory = $this->getWorkingDirectory();
+                $process = new Process('git checkout ' . $branch, $workingDirectory);
+
+                $process->run();
+                $output = $process->getOutput();
+
+                $this->error('Aborted. Switching back to branch ' . $branch . '.' . PHP_EOL . $output);
+                return 1;
             }
         }
     }
