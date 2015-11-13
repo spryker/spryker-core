@@ -22,7 +22,7 @@ class LoggerMultiton
     /**
      * @param LoggerConfigInterface $loggerConfig
      *
-     * @return LoggerInterface
+     * @return LoggerInterface|null
      */
     public static function getInstance(LoggerConfigInterface $loggerConfig = null)
     {

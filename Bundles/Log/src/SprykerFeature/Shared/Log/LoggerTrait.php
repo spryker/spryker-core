@@ -15,7 +15,7 @@ trait LoggerTrait
     /**
      * @param LoggerConfigInterface $loggerConfig
      *
-     * @return LoggerInterface
+     * @return LoggerInterface|null
      */
     protected function getLogger(LoggerConfigInterface $loggerConfig = null)
     {
