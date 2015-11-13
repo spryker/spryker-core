@@ -113,7 +113,7 @@ class PhpdocPipeFixer extends AbstractFixer
 
             foreach ($items as $j => $item) {
                 $pieces = explode('|', $item['hint']);
-                
+
                 $hints = [];
                 foreach ($pieces as $piece) {
                     $hints[] = trim($piece);
