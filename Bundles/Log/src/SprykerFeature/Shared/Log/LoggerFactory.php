@@ -11,7 +11,7 @@ use Psr\Log\LoggerInterface;
 use SprykerFeature\Shared\Log\Config\DefaultLoggerConfig;
 use SprykerFeature\Shared\Log\Config\LoggerConfigInterface;
 
-class LoggerMultiton
+class LoggerFactory
 {
 
     /**
@@ -36,7 +36,7 @@ class LoggerMultiton
     /**
      * @param LoggerConfigInterface $loggerConfig
      *
-     * @return string
+     * @return LoggerInterface
      */
     protected static function createInstanceIfNotExists(LoggerConfigInterface $loggerConfig)
     {

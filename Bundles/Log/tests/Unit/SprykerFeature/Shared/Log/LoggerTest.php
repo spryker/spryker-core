@@ -10,6 +10,7 @@ use Codeception\TestCase\Test;
 use Unit\SprykerFeature\Shared\Log\Fixtures\TestLoggerConfig;
 use Psr\Log\LoggerInterface;
 use SprykerFeature\Shared\Log\LoggerTrait;
+use Unit\SprykerFeature\Shared\Log\Fixtures\TestLoggerConfig2;
 
 class LoggerTest extends Test
 {
@@ -26,6 +27,14 @@ class LoggerTest extends Test
         $logger2 = $this->getLogger(new TestLoggerConfig());
 
         $this->assertSame($logger1, $logger2);
+    }
+
+    public function testGetLoggerWithDifferentConfigShouldReturnDifferentLoggerInstances()
+    {
+        $logger1 = $this->getLogger(new TestLoggerConfig());
+        $logger2 = $this->getLogger(new TestLoggerConfig2());
+
+        $this->assertNotSame($logger1, $logger2);
     }
 
 }

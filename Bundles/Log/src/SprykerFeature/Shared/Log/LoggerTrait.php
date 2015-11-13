@@ -19,7 +19,7 @@ trait LoggerTrait
      */
     protected function getLogger(LoggerConfigInterface $loggerConfig = null)
     {
-        return LoggerMultiton::getInstance($loggerConfig);
+        return LoggerFactory::getInstance($loggerConfig);
     }
 
 }

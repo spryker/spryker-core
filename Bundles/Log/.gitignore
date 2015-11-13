@@ -13,10 +13,6 @@
 /src/*/Zed/*/Static/Public
 /src/*/Zed/*/Static/Assets/sprite
 
-# propel classes
-/src/*/Zed/*/Persistence/Propel/Base/*
-/src/*/Zed/*/Persistence/Propel/Map/*
-
 # OS
 .DS_Store
 
