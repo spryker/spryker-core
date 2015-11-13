@@ -313,8 +313,8 @@ class Service implements ServiceInterface
 
         if (!$result) {
             throw new \Exception(
-                'could not set redisKeys for items: "[' . implode(',',
-                    array_keys($items)) . ']" with values: "[' . implode(',', array_values($items)) . ']"'
+                'could not set redisKeys for items: "[' . implode(',', array_keys($items))
+                . ']" with values: "[' . implode(',', array_values($items)) . ']"'
             );
         }
 
