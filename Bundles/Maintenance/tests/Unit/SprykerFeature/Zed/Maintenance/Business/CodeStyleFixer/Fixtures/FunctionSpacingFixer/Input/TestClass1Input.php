@@ -11,6 +11,8 @@ class TestClass1Input
     }
     public function bFunction()
     {
+        $x['e'] = array('foo', function () {
+        });
     }
     /**
      * @return void
