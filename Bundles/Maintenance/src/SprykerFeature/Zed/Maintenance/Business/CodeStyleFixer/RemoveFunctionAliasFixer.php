@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer;
 
 use Symfony\CS\AbstractFixer;
 use Symfony\CS\FixerInterface;
+use Symfony\CS\Tokenizer\Token;
 use Symfony\CS\Tokenizer\Tokens;
 
 /**
@@ -46,6 +47,17 @@ class RemoveFunctionAliasFixer extends AbstractFixer
     public function fix(\SplFileInfo $file, $content)
     {
         $tokens = Tokens::fromCode($content);
+
+        $this->fixContent($tokens);
+
+        return $tokens->generateCode();
+    }
+
+    /**
+     * @param Tokens|Token[] $tokens
+     * @return void
+     */
+    protected function fixContent(Tokens $tokens) {
         $wrongTokens = [T_FUNCTION, T_OBJECT_OPERATOR, T_NEW];
 
         foreach ($tokens as $index => $token) {
@@ -67,8 +79,6 @@ class RemoveFunctionAliasFixer extends AbstractFixer
 
             $tokens[$index]->setContent(self::$matching[$tokenContent]);
         }
-
-        return $tokens->generateCode();
     }
 
     /**
