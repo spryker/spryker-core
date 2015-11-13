@@ -7,9 +7,6 @@
 namespace SprykerEngine\Shared\Transfer;
 
 use SprykerEngine\Shared\Transfer\Exception\RequiredTransferPropertyException;
-use Zend\Code\Generator\DocBlock\Tag\ReturnTag;
-use Zend\Code\Reflection\MethodReflection;
-use Zend\Filter\Word\CamelCaseToUnderscore;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
 abstract class AbstractTransfer extends \ArrayObject implements TransferInterface
@@ -19,6 +16,17 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
      * @var array
      */
     private $modifiedProperties = [];
+
+    /**
+     * Filled in generated transfer objects
+     * @var array
+     */
+    protected $transferMetadata =[];
+
+    /**
+     * @var UnderscoreToCamelCase
+     */
+    private static $filterUnderscoreToCamelCase;
 
     /**
      * @param bool $recursive
@@ -31,31 +39,24 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
         $propertyNames = $this->getPropertyNames();
 
         $recursive = true;
-        $filter = new CamelCaseToUnderscore();
         foreach ($propertyNames as $property) {
-            $getter = 'get' . ucfirst($property);
-            $value = $this->$getter();
 
-            $key = strtolower($filter->filter($property));
+            $value = $this->callGetMethod($property);
+
+            $arrayKey = $this->transformUnderscoreArrayKey($property);
 
             if (is_object($value)) {
                 if ($recursive && $value instanceof TransferInterface) {
-                    $values[$key] = $value->toArray($recursive);
-                } elseif ($recursive && $value instanceof \ArrayObject && count($value) >= 1) {
-                    foreach ($value as $elementKey => $arrayElement) {
-                        if (is_array($arrayElement) || is_scalar($arrayElement)) {
-                            $values[$key][$elementKey] = $arrayElement;
-                        } else {
-                            $values[$key][$elementKey] = $arrayElement->toArray($recursive);
-                        }
-                    }
+                    $values[$arrayKey] = $value->toArray($recursive);
+                } elseif ($recursive && $this->isCollection($property) && count($value) >= 1) {
+                    $values = $this->addValuesToCollection($recursive, $value, $values, $arrayKey);
                 } else {
-                    $values[$key] = $value;
+                    $values[$arrayKey] = $value;
                 }
                 continue;
             }
 
-            $values[$key] = $value;
+            $values[$arrayKey] = $value;
         }
 
         return $values;
@@ -68,6 +69,8 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     {
         $classVars = get_class_vars(get_class($this));
         unset($classVars['modifiedProperties']);
+        unset($classVars['transferMetadata']);
+        unset($classVars['filterUnderscoreToCamelCase']);
 
         return array_keys($classVars);
     }
@@ -106,52 +109,22 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
      */
     public function fromArray(array $data, $ignoreMissingProperty = false)
     {
-        $filter = new UnderscoreToCamelCase();
-        $properties = $this->getPropertyNames();
-        foreach ($data as $key => $value) {
-            $property = lcfirst($filter->filter($key));
+        $allProperties = $this->getPropertyNames();
+        foreach ($data as $property => $value) {
 
-            if (!in_array($property, $properties)) {
-                if ($ignoreMissingProperty) {
-                    continue;
-                } else {
-                    throw new \InvalidArgumentException(
-                        sprintf('Missing property "%s" in "%s"', $property, get_class($this))
-                    );
-                }
+            $property = $this->filterPropertyUnderscoreToCamelCase($property);
+
+            if($this->hasProperty($property, $allProperties, $ignoreMissingProperty) === false){
+                continue;
             }
 
-            $getter = 'get' . ucfirst($property);
-            $getterReturn = $this->getGetterReturn($getter);
-            $setter = 'set' . ucfirst($property);
-
-            $type = $this->getTypeForProperty($key);
-
-            // Process Array
-            if (is_array($value) && $this->isArray($getterReturn) && $type === 'ArrayObject') {
-                $elementType = $this->getArrayTypeWithNamespace($getterReturn);
-                $value = $this->processArrayObject($elementType, $value);
+            if ($this->isCollection($property)) {
+                $value = $this->processCollection($value, $property);
+            }elseif ($this->isTransferClass($property)) {
+                $value = $this->initializeNestedTransferObject($property, $value);
             }
 
-            // Process nested Transfer Objects
-            if ($this->isTransferClass($type)) {
-                /** @var TransferInterface $transferObject */
-                $transferObject = new $type();
-                if (is_array($value)) {
-                    $transferObject->fromArray($value);
-                    $value = $transferObject;
-                }
-            }
-
-            try {
-                $this->$setter($value);
-            } catch (\Exception $e) {
-                if ($ignoreMissingProperty) {
-                    throw new \InvalidArgumentException(
-                        sprintf('Missing property "%s" in "%s" (setter %s)', $property, get_class($this), $setter)
-                    );
-                }
-            }
+            $this->callSetMethod($property, $value, $ignoreMissingProperty);
         }
 
         return $this;
@@ -159,23 +132,22 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
 
     /**
      * @param string $elementType
-     * @param array $arrayObject
+     * @param array|\ArrayObject $arrayObject
      *
      * @return \ArrayObject
      */
-    protected function processArrayObject($elementType, array $arrayObject)
+    protected function processArrayObject($elementType, $arrayObject)
     {
-        /* @var TransferInterface $transferObject */
         $transferObjectsArray = new \ArrayObject();
         foreach ($arrayObject as $arrayElement) {
             if (is_array($arrayElement)) {
                 if ($this->isAssociativeArray($arrayElement)) {
-                    $transferObject = new $elementType();
+                    $transferObject = $this->createInstance($elementType);
                     $transferObject->fromArray($arrayElement);
                     $transferObjectsArray->append($transferObject);
                 } else {
                     foreach ($arrayElement as $arrayElementItem) {
-                        $transferObject = new $elementType();
+                        $transferObject = $this->createInstance($elementType);
                         $transferObject->fromArray($arrayElementItem);
                         $transferObjectsArray->append($transferObject);
                     }
@@ -199,67 +171,22 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     }
 
     /**
-     * @param string $getterMethod
-     *
-     * @return string
+     * @param $property
+     * @return mixed
      */
-    private function getGetterReturn($getterMethod)
+    private function isCollection($property)
     {
-        $reflection = new MethodReflection(get_class($this), $getterMethod);
-
-        /** @var ReturnTag $return */
-        $return = $reflection->getDocBlock()->getTag('return');
-
-        return $return->getTypes()[0];
+        return $this->transferMetadata[$property]['is_collection'];
     }
 
     /**
-     * @param string $returnType
+     * @param string $property
      *
      * @return bool
      */
-    private function isArray($returnType)
+    private function isTransferClass($property)
     {
-        return strpos($returnType, '[]') > -1;
-    }
-
-    /**
-     * @param string $returnType
-     *
-     * @return string
-     */
-    private function getArrayTypeWithNamespace($returnType)
-    {
-        return $this->getNamespace() . str_replace('[]', '', $returnType);
-    }
-
-    /**
-     * @return string
-     */
-    protected function getNamespace()
-    {
-        return 'Generated\\Shared\\Transfer\\';
-    }
-
-    /**
-     * @param string $type
-     *
-     * @return bool
-     */
-    private function isTransferClass($type)
-    {
-        if (!is_string($type)) {
-            return false;
-        }
-
-        $name = explode('\\', $type);
-
-        return (
-            count($name) > 3 &&
-            $name[0] === 'Generated' &&
-            $name[1] === 'Shared' &&
-            $name[2] === 'Transfer'
-        );
+        return $this->transferMetadata[$property]['is_transfer'];
     }
 
     /**
@@ -316,10 +243,149 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
      */
     protected function getTypeForProperty($key)
     {
-        $typeCheck = 'TYPE_' . strtoupper($key);
-        $className = get_class($this);
-        $type = constant("$className::$typeCheck");
-        return $type;
+        return $this->transferMetadata[$key]['type'];
     }
+
+    /**
+     * Performance-Speedup. We do not want another instance of the filter for each property.
+     * @return UnderscoreToCamelCase
+     */
+    private function getFilterUnderscoreToCamelCase()
+    {
+        if(isset(self::$filterUnderscoreToCamelCase) === false){
+            self::$filterUnderscoreToCamelCase = new UnderscoreToCamelCase();
+        }
+        return self::$filterUnderscoreToCamelCase;
+    }
+
+    /**
+     * @param $property
+     * @param $value
+     * @param $ignoreMissingProperty
+     */
+    private function callSetMethod($property, $value, $ignoreMissingProperty)
+    {
+        $setter = 'set' . ucfirst($property);
+        try {
+            $this->$setter($value);
+        } catch (\Exception $e) {
+            if ($ignoreMissingProperty) {
+                throw new \InvalidArgumentException(
+                    sprintf('Missing property "%s" in "%s" (setter %s)', $property, get_class($this), $setter)
+                );
+            }
+        }
+    }
+
+    /**
+     * @param $property
+     * @param $value
+     * @return TransferInterface
+     */
+    private function initializeNestedTransferObject($property, $value)
+    {
+        $type = $this->getTypeForProperty($property);
+        $transferObject = $this->createInstance($type);
+        if (is_array($value)) {
+            $transferObject->fromArray($value);
+            $value = $transferObject;
+            return $value;
+        }
+        return $value;
+    }
+
+    /**
+     * @param $value
+     * @param $property
+     * @return \ArrayObject
+     */
+    private function processCollection($value, $property)
+    {
+        $elementType = $this->transferMetadata[$property]['type'];
+        $value = $this->processArrayObject($elementType, $value);
+        return $value;
+
+    }
+
+    /**
+     * @param $property
+     * @return TransferInterface
+     */
+    private function createInstance($type)
+    {
+        return new $type();
+    }
+
+    /**
+     * @param $property
+     * @param $properties
+     * @param $ignoreMissingProperty
+     * @return bool
+     */
+    private function hasProperty($property, $properties, $ignoreMissingProperty)
+    {
+        if (in_array($property, $properties) === false) {
+            if ($ignoreMissingProperty) {
+                    return false;
+            } else {
+                throw new \InvalidArgumentException(
+                    sprintf('Missing property "%s" in "%s"', $property, get_class($this))
+                );
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @param $key
+     * @return string
+     */
+    private function filterPropertyUnderscoreToCamelCase($key)
+    {
+        $filter = $this->getFilterUnderscoreToCamelCase();
+        $property = lcfirst($filter->filter($key));
+        return $property;
+    }
+
+    /**
+     * @param $property
+     * @return mixed
+     */
+    private function callGetMethod($property)
+    {
+        $getter = 'get' . ucfirst($property);
+        $value = $this->$getter();
+        return $value;
+    }
+
+    /**
+     * @param $property
+     * @return mixed
+     */
+    private function transformUnderscoreArrayKey($property)
+    {
+        $property = $this->transferMetadata[$property]['name_underscore'];
+        return $property;
+    }
+
+    /**
+     * @param $recursive
+     * @param $value
+     * @param $values
+     * @param $arrayKey
+     * @return mixed
+     */
+    private function addValuesToCollection($recursive, $value, $values, $arrayKey)
+    {
+        foreach ($value as $elementKey => $arrayElement) {
+            if (is_array($arrayElement) || is_scalar($arrayElement)) {
+                $values[$arrayKey][$elementKey] = $arrayElement;
+            } else {
+                $values[$arrayKey][$elementKey] = $arrayElement->toArray($recursive);
+            }
+        }
+        return $values;
+    }
+
 
 }

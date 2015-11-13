@@ -41,4 +41,9 @@ interface ClassDefinitionInterface extends DefinitionInterface
      */
     public function getMethods();
 
+    /**
+     * @return array
+     */
+    public function getNormalizedProperties();
+
 }

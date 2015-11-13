@@ -2,6 +2,22 @@
     const {{ constant.name }} = '{{ constant.value }}';
 {% endmacro %}
 
+{% macro addMetadata(normalizedProperties) %}
+    /**
+    * @var array
+    */
+    protected $transferMetadata = [
+    {% for property in normalizedProperties %}
+    '{{ property.name }}' => [
+          'type' => '{{ property.type_fully_qualified }}',
+          'name_underscore' => '{{ property.name_underscore }}',
+          'is_collection' => {{ property.is_collection ? 'true':'false' }},
+          'is_transfer' => {{ property.is_transfer ? 'true':'false' }}
+        ],
+    {% endfor -%}
+];
+{% endmacro %}
+
 {% macro addProperty(property) %}
     /**
      * @var {{ property.type }}
