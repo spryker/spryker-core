@@ -70,7 +70,7 @@ class OrderItem implements ItemInterface
             ->findOneByIdSalesOrderItem($idSalesOrderItem);
 
         $splitResponse = new ItemSplitResponseTransfer();
-        if ($this->validator->isValid($salesOrderItem === false, $quantityToSplit)) {
+        if ($this->validator->isValid($salesOrderItem, $quantityToSplit) === false) {
             return $splitResponse
                 ->setSuccess(false)
                 ->setValidationMessages($this->validator->getMessages());
