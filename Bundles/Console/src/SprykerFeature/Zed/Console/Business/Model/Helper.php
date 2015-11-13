@@ -14,6 +14,8 @@ trait Helper
     /**
      * @param string $message
      * @param bool $wrapInInfoTags
+     *
+     * @return void
      */
     public function info($message, $wrapInInfoTags = true)
     {
@@ -28,6 +30,8 @@ trait Helper
 
     /**
      * @param string $message
+     *
+     * @return void
      */
     public function error($message)
     {
@@ -55,6 +59,8 @@ trait Helper
 
     /**
      * @param string $message
+     *
+     * @return void
      */
     public function warning($message)
     {
@@ -84,6 +90,8 @@ trait Helper
 
     /**
      * @param string $message
+     *
+     * @return void
      */
     public function success($message)
     {
@@ -152,10 +160,10 @@ trait Helper
         }
 
         if (false === $default) {
-            return $answer && 'y' == strtolower($answer[0]);
+            return $answer && strtolower($answer[0]) === 'y';
         }
 
-        return !$answer || 'y' == strtolower($answer[0]);
+        return !$answer || strtolower($answer[0]) === 'y';
     }
 
     /**
@@ -194,7 +202,9 @@ trait Helper
     }
 
     /**
+     * @param bool $wrapInInfoTags
      *
+     * @return void
      */
     public function printLineSeparator($wrapInInfoTags = true)
     {

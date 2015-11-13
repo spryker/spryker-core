@@ -34,6 +34,7 @@ abstract class AbstractGitFlowConsole extends Console
     const ERROR_INVALID_LEVEL = '"%s" is not a valid level, allowed levels are "%s" and "%s"';
 
     const SPRYKER = 'spryker';
+    const CODE_ERROR = 1;
 
     /**
      * @return void
@@ -88,15 +89,14 @@ abstract class AbstractGitFlowConsole extends Console
                     $this->warning(sprintf('Not executed "%s"', $command));
                 }
             } catch (\RuntimeException $e) {
-                //TODO: Abort gracefully by switching back to the from branch if currently on to branch
                 $workingDirectory = $this->getWorkingDirectory();
                 $process = new Process('git checkout ' . $branch, $workingDirectory);
-
                 $process->run();
-                $output = $process->getOutput();
 
+                $output = $process->getOutput();
                 $this->error('Aborted. Switching back to branch ' . $branch . '.' . PHP_EOL . $output);
-                return 1;
+
+                return self::CODE_ERROR;
             }
         }
     }
