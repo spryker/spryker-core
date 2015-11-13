@@ -181,12 +181,13 @@ class Store
     }
 
     /**
+     * @throws \Exception
      * @return string
      */
     public function getCurrentLocale()
     {
         if ($this->currentLocale === null) {
-            throw new RuntimeException('Locale is not defined.');
+            throw new \Exception('Locale is not defined.');
         }
 
         return $this->currentLocale;
