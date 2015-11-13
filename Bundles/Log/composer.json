@@ -1,0 +1,13 @@
+{
+  "name": "spryker/log",
+  "autoload": {
+    "psr-0": {
+      "SprykerFeature": "src/",
+      "Unit": "tests/"
+    }
+  },
+  "require": {
+  },
+  "require-dev": {
+  }
+}
