@@ -126,6 +126,7 @@ class MenuFormatter implements MenuFormatterInterface
         $controller = (
             isset($page[self::CONTROLLER]) &&
             self::INDEX !== $page[self::CONTROLLER]) ? $page[self::CONTROLLER] : null;
+
         $action = (isset($page[self::ACTION]) && self::INDEX !== $page[self::ACTION]) ? $page[self::ACTION] : null;
 
         return $this->urlBuilder->build($page[self::BUNDLE], $controller, $action);
@@ -141,10 +142,6 @@ class MenuFormatter implements MenuFormatterInterface
         $formattedPage = [];
 
         $url = $this->getUri($page);
-        if ($url !== '#') {
-            $this->urlUniqueValidator->validate($url);
-            $this->urlUniqueValidator->addUrl($url);
-        }
         $formattedPage[self::URI] = $url;
         $formattedPage[self::LABEL] = $page[self::LABEL];
         $formattedPage[self::TITLE] = $page[self::TITLE];
