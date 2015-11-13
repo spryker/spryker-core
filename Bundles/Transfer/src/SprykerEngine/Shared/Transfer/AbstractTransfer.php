@@ -308,7 +308,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     }
 
     /**
-     * @param $property
+     * @param $type
      * @return TransferInterface
      */
     private function createInstance($type)
