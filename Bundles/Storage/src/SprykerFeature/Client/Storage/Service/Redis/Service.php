@@ -63,14 +63,6 @@ class Service implements ServiceInterface
     }
 
     /**
-     * @return bool
-     */
-    private function getDebug()
-    {
-        return $this->debug;
-    }
-
-    /**
      * @param $debug
      *
      * @return self
