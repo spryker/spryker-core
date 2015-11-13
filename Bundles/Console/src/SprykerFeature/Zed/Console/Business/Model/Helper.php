@@ -138,7 +138,9 @@ trait Helper
     /**
      * Asks a confirmation to the user.
      *
-     * The question will be asked until the user answers by nothing, yes, or no.
+     * The question will be asked until the user answers by yes, or no.
+     * If he answers nothing, it will use the default value. If he answers abort,
+     * it will throw a RuntimeException.
      *
      * @param OutputInterface $output An Output instance
      * @param string|array $question The question to ask
