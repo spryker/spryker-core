@@ -115,10 +115,12 @@ class CustomerTable extends AbstractTable
             return '';
         }
 
-        return $this->generateViewButton('/customer/view/?id_customer=' . $customer->getIdCustomer(), 'View')
-            . ' ' . $this->generateEditButton('/customer/edit/?id_customer=' . $customer->getIdCustomer(), 'Edit')
-            . ' ' . $this->generateViewButton('/customer/address/?id_customer=' . $customer->getIdCustomer(), 'Manage Addresses')
-        ;
+        $buttons = [];
+        $buttons[] = $this->generateViewButton('/customer/view/?id-customer=' . $customer->getIdCustomer(), 'View');
+        $buttons[] = $this->generateEditButton('/customer/edit/?id-customer=' . $customer->getIdCustomer(), 'Edit');
+        $buttons[] = $this->generateViewButton('/customer/address/?id-customer=' . $customer->getIdCustomer(), 'Manage Addresses');
+
+        return implode(' ', $buttons);
     }
 
     /**

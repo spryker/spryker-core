@@ -6,18 +6,18 @@
 
 namespace SprykerFeature\Zed\Customer\Communication;
 
+use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
-use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Customer\Communication\Form\AddressForm;
-use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
+use SprykerFeature\Zed\Customer\Communication\Form\AddressTypeForm;
 use SprykerFeature\Zed\Customer\Communication\Form\CustomerTypeForm;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use SprykerFeature\Zed\Customer\Communication\Table\AddressTable;
 use SprykerFeature\Zed\Customer\Communication\Table\CustomerTable;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method CustomerCommunication getFactory()
@@ -72,12 +72,13 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
+     * @param CustomerTransfer|null $customer
      * @param string $type
      * @param int $idCustomer
      *
-     * @return CustomerForm
+     * @return FormInterface
      */
-    public function createCustomerForm(CustomerTransfer $customer = null, $type, $idCustomer = 0)
+    public function createCustomerForm(CustomerTransfer $customer, $type, $idCustomer = 0)
     {
         $customerQuery = $this->getQueryContainer()
             ->queryCustomers()
@@ -87,10 +88,12 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
             ->queryAddresses()
         ;
 
-        $customerFormType = $this->createCustomerTypeForm($customerQuery, $customerAddressQuery, $type, $idCustomer);
+        $customerFormType = $this->createCustomerFormType($customerQuery, $customerAddressQuery, $type, $idCustomer);
+
+        $defaultData = $this->getCustomerDefaultData($customer);
 
         return $this->getFormFactory()
-            ->create($customerFormType, $customer)
+            ->create($customerFormType, $defaultData)
         ;
     }
 
@@ -102,17 +105,18 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
      *
      * @return CustomerTypeForm
      */
-    public function createCustomerTypeForm(SpyCustomerQuery $customerQuery, SpyCustomerAddressQuery $customerAddressQuery, $type, $idCustomer)
+    public function createCustomerFormType(SpyCustomerQuery $customerQuery, SpyCustomerAddressQuery $customerAddressQuery, $type, $idCustomer)
     {
         return new CustomerTypeForm($customerQuery, $customerAddressQuery, $type, $idCustomer);
     }
 
     /**
+     * @param AddressTransfer $addressTransfer
      * @param string $type
      *
-     * @return AddressForm
+     * @return FormInterface
      */
-    public function createAddressForm($type)
+    public function createAddressForm(AddressTransfer $addressTransfer = null, $type)
     {
         $customerQuery = $this->getQueryContainer()
             ->queryCustomers()
@@ -122,9 +126,59 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
             ->queryAddresses()
         ;
 
-        return $this->getFactory()
-            ->createFormAddressForm($addressQuery, $customerQuery, $type)
+        $customerAddressForm = $this->createCustomerAddressFormType($addressQuery, $customerQuery, $type);
+
+        $defaultData = $this->getAddressFormDefaultData($addressTransfer);
+
+        return $this->getFormFactory()
+            ->create($customerAddressForm, $defaultData)
         ;
     }
+
+    /**
+     * @param SpyCustomerAddressQuery $addressQuery
+     * @param SpyCustomerQuery $customerQuery
+     * @param string $type
+     *
+     * @return AddressTypeForm
+     */
+    protected function createCustomerAddressFormType(
+        SpyCustomerAddressQuery $addressQuery,
+        SpyCustomerQuery $customerQuery,
+        $type
+    ) {
+        $customerAddressForm = new AddressTypeForm($addressQuery, $customerQuery, $type);
+
+        return $customerAddressForm;
+    }
+
+    /**
+     * @param AddressTransfer $addressTransfer
+     *
+     * @return array
+     */
+    protected function getAddressFormDefaultData(AddressTransfer $addressTransfer = null)
+    {
+        if ($addressTransfer === null) {
+            return [];
+        }
+
+        return $addressTransfer->toArray();
+    }
+
+    /**
+     * @param CustomerTransfer $customer
+     *
+     * @return array
+     */
+    protected function getCustomerDefaultData(CustomerTransfer $customer = null)
+    {
+        if ($customer === null) {
+            return [];
+        }
+
+        return $customer->toArray();
+    }
+
 
 }

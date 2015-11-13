@@ -27,11 +27,11 @@ class AddController extends AbstractController
     public function indexAction(Request $request)
     {
         $form = $this->getDependencyContainer()
-            ->createCustomerForm(null, CustomerTypeForm::ADD)
+            ->createCustomerForm(new CustomerTransfer(), CustomerTypeForm::ADD)
         ;
         $form->handleRequest($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid() === true) {
             $data = $form->getData();
 
             $customerTransfer = $this->createCustomerTransfer();

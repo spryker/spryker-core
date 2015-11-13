@@ -11,6 +11,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
+use SprykerFeature\Zed\Customer\CustomerConfig;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -31,7 +32,7 @@ class AddressController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCustomer = $request->get('id_customer');
+        $idCustomer = $request->get(CustomerConfig::PARAM_ID_CUSTOMER);
 
         $table = $this->getDependencyContainer()
             ->createCustomerAddressTable($idCustomer)
@@ -39,7 +40,7 @@ class AddressController extends AbstractController
 
         return $this->viewResponse([
             'addressTable' => $table->render(),
-            'id_customer' => $idCustomer,
+            'idCustomer' => $idCustomer,
         ]);
     }
 
@@ -48,7 +49,7 @@ class AddressController extends AbstractController
      */
     public function tableAction(Request $request)
     {
-        $idCustomer = $request->get('id_customer');
+        $idCustomer = $request->get(CustomerConfig::PARAM_ID_CUSTOMER);
 
         $table = $this->getDependencyContainer()
             ->createCustomerAddressTable($idCustomer)
@@ -65,7 +66,7 @@ class AddressController extends AbstractController
     public function viewAction(Request $request)
     {
         $idCustomer = false;
-        $idCustomerAddress = $request->get('id_customer_address');
+        $idCustomerAddress = $request->get(CustomerConfig::PARAM_ID_CUSTOMER_ADDRESS);
 
         $customerAddress = $this->createCustomerAddressTransfer();
         $customerAddress->setIdCustomerAddress($idCustomerAddress);
@@ -86,8 +87,8 @@ class AddressController extends AbstractController
 
         return $this->viewResponse([
             'address' => $address->toArray(),
-            'id_customer' => $idCustomer,
-            'id_customer_address' => $idCustomerAddress,
+            'idCustomer' => $idCustomer,
+            'idCustomerAddress' => $idCustomerAddress,
         ]);
     }
 
@@ -99,7 +100,7 @@ class AddressController extends AbstractController
     public function editAction(Request $request)
     {
         $idCustomer = false;
-        $idCustomerAddress = $request->get('id_customer_address');
+        $idCustomerAddress = $request->get(CustomerConfig::PARAM_ID_CUSTOMER_ADDRESS);
 
         $customerAddress = $this->createCustomerAddressTransfer();
         $customerAddress->setIdCustomerAddress($idCustomerAddress);
@@ -108,15 +109,14 @@ class AddressController extends AbstractController
             ->getAddress($customerAddress)
         ;
 
-        if (empty($addressDetails) === false) {
+        if (!empty($addressDetails)) {
             $idCustomer = $addressDetails->getFkCustomer();
         }
 
         $addressForm = $this->getDependencyContainer()
-            ->createAddressForm('update')
+            ->createAddressForm($addressDetails, 'update')
         ;
-
-        $addressForm->handleRequest();
+        $addressForm->handleRequest($request);
 
         if ($addressForm->isValid() === true) {
             $data = $addressForm->getData();
@@ -128,13 +128,13 @@ class AddressController extends AbstractController
                 ->updateAddress($customerAddress)
             ;
 
-            return $this->redirectResponse(sprintf('/customer/address/?id_customer=%d', $idCustomer));
+            return $this->redirectResponse(sprintf('/customer/address/?%s=%d', CustomerConfig::PARAM_ID_CUSTOMER, $idCustomer));
         }
 
         return $this->viewResponse([
             'form' => $addressForm->createView(),
-            'id_customer' => $idCustomer,
-            'id_customer_address' => $idCustomerAddress,
+            'idCustomer' => $idCustomer,
+            'idCustomerAddress' => $idCustomerAddress,
         ]);
     }
 
@@ -145,13 +145,13 @@ class AddressController extends AbstractController
      */
     public function addAction(Request $request)
     {
-        $idCustomer = intval($request->get('id_customer'));
+        $idCustomer = intval($request->get(CustomerConfig::PARAM_ID_CUSTOMER));
 
         $addressForm = $this->getDependencyContainer()
-            ->createAddressForm('add')
+            ->createAddressForm($this->createCustomerAddressTransfer(), 'add')
         ;
 
-        $addressForm->handleRequest();
+        $addressForm->handleRequest($request);
 
         if ($addressForm->isValid() === true) {
             $data = $addressForm->getData();
@@ -164,12 +164,12 @@ class AddressController extends AbstractController
                 ->createAddress($customerAddress)
             ;
 
-            return $this->redirectResponse(sprintf('/customer/address/?id_customer=%d', $idCustomer));
+            return $this->redirectResponse(sprintf('/customer/address/?%s=%d', CustomerConfig::PARAM_ID_CUSTOMER, $idCustomer));
         }
 
         return $this->viewResponse([
             'form' => $addressForm->createView(),
-            'id_customer' => $idCustomer,
+            'idCustomer' => $idCustomer,
         ]);
     }
 

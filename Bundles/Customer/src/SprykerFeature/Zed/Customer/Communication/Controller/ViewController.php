@@ -11,7 +11,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
-use SprykerFeature\Zed\Customer\Communication\Form\CustomerTypeForm;
+use SprykerFeature\Zed\Customer\CustomerConfig;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Generated\Shared\Transfer\CustomerTransfer;
@@ -32,12 +32,11 @@ class ViewController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCustomer = $request->get(CustomerTypeForm::PARAM_ID_CUSTOMER);
+        $idCustomer = $request->get(CustomerConfig::PARAM_ID_CUSTOMER);
 
         $customerTransfer = $this->createCustomerTransfer();
         $customerTransfer->setIdCustomer($idCustomer);
 
-        /** @var CustomerTransfer $customerTransfer */
         $customerTransfer = $this->getFacade()
             ->getCustomer($customerTransfer)
         ;

@@ -14,6 +14,7 @@ use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
 use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
 use SprykerFeature\Zed\Customer\Communication\Form\CustomerTypeForm;
+use SprykerFeature\Zed\Customer\CustomerConfig;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -42,7 +43,6 @@ class EditController extends AbstractController
 
         $customerTransfer = $customerTransfer->fromArray($customer->toArray(), true);
 
-        /** @var CustomerTypeForm $form */
         $form = $this->getDependencyContainer()
             ->createCustomerForm($customerTransfer, CustomerTypeForm::UPDATE, $idCustomer)
         ;
@@ -52,7 +52,6 @@ class EditController extends AbstractController
         if ($form->isValid() === true) {
             $data = $form->getData();
 
-            /** @var CustomerTransfer $customer */
             $customer = $this->createCustomerTransfer();
             $customer->fromArray($data->toArray(), true);
             $this->getFacade()
@@ -69,7 +68,7 @@ class EditController extends AbstractController
                 $this->updateShippingAddress($idCustomer, $defaultShipping);
             }
 
-            return $this->redirectResponse(sprintf('/customer/view/?%s=%d', CustomerTypeForm::PARAM_ID_CUSTOMER, $idCustomer));
+            return $this->redirectResponse(sprintf('/customer/view/?%s=%d', CustomerConfig::PARAM_ID_CUSTOMER, $idCustomer));
         }
 
         return $this->viewResponse([

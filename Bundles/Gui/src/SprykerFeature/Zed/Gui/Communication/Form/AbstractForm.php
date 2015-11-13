@@ -286,4 +286,15 @@ abstract class AbstractForm
         return $this->formName;
     }
 
+    /**
+     * @deprecated use AbstractFormType instead
+     *
+     * @param array $array
+     *
+     * @return array
+     */
+    public function getEnumSet(array $array)
+    {
+        return array_combine($array, $array);
+    }
 }

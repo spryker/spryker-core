@@ -93,7 +93,7 @@ class ProfileController extends AbstractController
         }
 
         return [
-            'id_customer' => $customerTransfer->getIdCustomer(),
+            'idCustomer' => $customerTransfer->getIdCustomer(),
             'customerJson' => json_encode($form->toArray()),
             'registered' => $customerTransfer->getRegistered(),
             'addresses' => $addresses,
@@ -127,7 +127,6 @@ class ProfileController extends AbstractController
         $form = $this->getDependencyContainer()
             ->createCustomerForm($request)
         ;
-        $form->init();
 
         if ($form->isValid()) {
             $customerTransfer = new CustomerTransfer();
@@ -164,7 +163,6 @@ class ProfileController extends AbstractController
         $form = $this->getDependencyContainer()
             ->createAddressForm($request)
         ;
-        $form->init();
 
         if ($form->isValid()) {
             $addressTransfer = new AddressTransfer();

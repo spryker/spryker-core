@@ -17,6 +17,8 @@ class CustomerConfig extends AbstractBundleConfig
 {
 
     const NAME_CUSTOMER_REFERENCE = 'CustomerReference';
+    const PARAM_ID_CUSTOMER = 'id-customer';
+    const PARAM_ID_CUSTOMER_ADDRESS = 'id-customer-address';
 
     /**
      * @return string
