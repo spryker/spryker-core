@@ -20,6 +20,9 @@ class FunctionSpacingFixerTest extends \PHPUnit_Framework_TestCase
      */
     protected $fixer;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -31,6 +34,8 @@ class FunctionSpacingFixerTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $expected
      * @param string $input
+     *
+     * @return void
      */
     public function testFix($expected, $input = null)
     {
@@ -38,6 +43,9 @@ class FunctionSpacingFixerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, $this->fixer->fix($fileInfo, $input));
     }
 
+    /**
+     * @return array
+     */
     public function provideFixCases()
     {
         $fixturePath = __DIR__ . '/Fixtures/' . self::FIXER_NAME . '/';
