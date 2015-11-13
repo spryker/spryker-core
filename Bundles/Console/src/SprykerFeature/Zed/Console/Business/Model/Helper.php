@@ -140,9 +140,9 @@ trait Helper
      *
      * The question will be asked until the user answers by nothing, yes, or no.
      *
-     * @param OutputInterface $output   An Output instance
-     * @param string|array    $question The question to ask
-     * @param bool            $default  The default answer if the user enters nothing
+     * @param OutputInterface $output An Output instance
+     * @param string|array $question The question to ask
+     * @param bool $default The default answer if the user enters nothing
      *
      * @throws \RuntimeException
      *
@@ -151,7 +151,7 @@ trait Helper
     public function askAbortableConfirmation(OutputInterface $output, $question, $default = true)
     {
         $answer = 'z';
-        while ($answer && !in_array(strtolower($answer[0]), array('y', 'n', 'a'))) {
+        while ($answer && !in_array(strtolower($answer[0]), ['y', 'n', 'a'])) {
             $answer = $this->ask($question, $default);
         }
 
@@ -159,7 +159,7 @@ trait Helper
             throw new \RuntimeException('Aborted');
         }
 
-        if (false === $default) {
+        if ($default === false) {
             return $answer && strtolower($answer[0]) === 'y';
         }
 
