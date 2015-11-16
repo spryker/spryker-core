@@ -2,7 +2,9 @@
 
 namespace SprykerFeature\Zed\Product\Communication\Controller;
 
+use Generated\Shared\Transfer\AbstractProductTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
+use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Product\Business\ProductFacade;
 use SprykerFeature\Zed\Product\Communication\ProductDependencyContainer;
@@ -169,17 +171,17 @@ class IndexController extends AbstractController
      */
     protected function getProductCategories(SpyAbstractProduct $abstractProduct)
     {
-        $categoryEntityList = $this->getDependencyContainer()
+        $productCategoryEntityList = $this->getDependencyContainer()
             ->createProductCategoryQueryContainer()
-            ->queryLocalizedProductCategoryMappingByProduct($abstractProduct)
+            ->queryLocalizedProductCategoryMappingByIdProduct($abstractProduct->getIdAbstractProduct())
             ->find()
         ;
 
         $categories = [];
-        foreach ($categoryEntityList as $categoryEntity) {
+        foreach ($productCategoryEntityList as $productCategory) {
             $categories[] = [
-                self::COL_ID_PRODUCT_CATEGORY => $categoryEntity->getIdProductCategory(),
-                self::COL_CATEGORY_NAME => $categoryEntity->getVirtualColumn(self::COL_CATEGORY_NAME),
+                self::COL_ID_PRODUCT_CATEGORY => $productCategory->getIdProductCategory(),
+                self::COL_CATEGORY_NAME => $productCategory->getSpyCategory()->getAttributes()->getFirst()->getName()
             ];
         }
 

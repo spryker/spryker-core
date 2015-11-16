@@ -10,9 +10,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyProductTableMap;
-use Orm\Zed\Product\Persistence\SpyAbstractProduct;
 use Orm\Zed\Locale\Persistence\Map\SpyLocaleTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyAbstractProductTableMap;
 use Orm\Zed\Product\Persistence\Map\SpyLocalizedAbstractProductAttributesTableMap;
@@ -110,20 +108,14 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     }
 
     /**
-     * @param SpyAbstractProduct $abstractProduct
+     * @param int $idAbstractProduct
      *
      * @return SpyProductCategoryQuery
      */
-    public function queryLocalizedProductCategoryMappingByProduct(SpyAbstractProduct $abstractProduct)
+    public function queryLocalizedProductCategoryMappingByIdProduct($idAbstractProduct)
     {
         $query = $this->queryProductCategoryMappings();
-        $query->filterByFkAbstractProduct($abstractProduct->getIdAbstractProduct())
-            ->useSpyCategoryQuery()
-                ->useAttributeQuery()
-                    ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::COL_CATEGORY_NAME)
-                ->endUse()
-            ->endUse()
-        ;
+        $query->filterByFkAbstractProduct($idAbstractProduct);
 
         return $query;
     }

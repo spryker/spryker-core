@@ -48,11 +48,11 @@ interface ProductCategoryQueryContainerInterface
     public function queryLocalizedProductCategoryMappingBySkuAndCategoryName($sku, $categoryName, LocaleTransfer $locale);
 
     /**
-     * @param SpyAbstractProduct $abstractProduct
+     * @param int $idAbstractProduct
      *
      * @return SpyProductCategoryQuery
      */
-    public function queryLocalizedProductCategoryMappingByProduct(SpyAbstractProduct $abstractProduct);
+    public function queryLocalizedProductCategoryMappingByIdProduct($idAbstractProduct);
 
     /**
      * @param int $idCategory
