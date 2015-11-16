@@ -71,7 +71,7 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     /**
      * @param string $name
      *
-     * @return $this
+     * @return self
      */
     public function setName($name)
     {
@@ -104,7 +104,7 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     /**
      * @param ItemTransfer $item
      *
-     * @return $this
+     * @return self
      */
     public function setItem(ItemTransfer $item)
     {
@@ -137,7 +137,7 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     /**
      * @param \ArrayObject|ItemTransfer[] $items
      *
-     * @return $this
+     * @return self
      */
     public function setItems(\ArrayObject $items)
     {
@@ -158,7 +158,7 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     /**
      * @param ItemTransfer $item
      *
-     * @return $this
+     * @return self
      */
     public function addItem(ItemTransfer $item)
     {

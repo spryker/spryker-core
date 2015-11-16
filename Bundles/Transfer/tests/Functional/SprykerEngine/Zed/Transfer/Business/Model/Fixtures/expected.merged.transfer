@@ -71,7 +71,7 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     /**
      * @param string $name
      *
-     * @return $this
+     * @return self
      */
     public function setName($name)
     {
@@ -104,7 +104,7 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     /**
      * @param int $bla
      *
-     * @return $this
+     * @return self
      */
     public function setBla($bla)
     {
@@ -137,7 +137,7 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     /**
      * @param \ArrayObject|FooBarTransfer[] $selfReference
      *
-     * @return $this
+     * @return self
      */
     public function setSelfReference(\ArrayObject $selfReference)
     {
@@ -158,7 +158,7 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     /**
      * @param FooBarTransfer $selfReference
      *
-     * @return $this
+     * @return self
      */
     public function addSelfReference(FooBarTransfer $selfReference)
     {

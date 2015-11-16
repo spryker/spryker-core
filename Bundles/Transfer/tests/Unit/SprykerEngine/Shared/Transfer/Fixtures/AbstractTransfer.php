@@ -31,7 +31,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     protected $string;
 
     /**
-     * @var integer
+     * @var int
      */
     protected $integer;
 
@@ -66,7 +66,7 @@ class AbstractTransfer extends ParentAbstractTransfer
             'is_transfer' => false,
         ],
         self::INTEGER => [
-            'type' => 'integer',
+            'type' => 'int',
             'name_underscore' => 'integer',
             'is_collection' => false,
             'is_transfer' => false,
@@ -106,7 +106,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     /**
      * @param string $string
      *
-     * @return $this
+     * @return self
      */
     public function setString($string)
     {
@@ -137,9 +137,9 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @param integer $integer
+     * @param int $integer
      *
-     * @return $this
+     * @return self
      */
     public function setInteger($integer)
     {
@@ -150,7 +150,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @return integer
+     * @return int
      */
     public function getInteger()
     {
@@ -172,7 +172,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     /**
      * @param bool $bool
      *
-     * @return $this
+     * @return self
      */
     public function setBool($bool)
     {
@@ -205,7 +205,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     /**
      * @param array $arr
      *
-     * @return $this
+     * @return self
      */
     public function setArr(array $arr)
     {
@@ -226,7 +226,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     /**
      * @param array $arr
      *
-     * @return $this
+     * @return self
      */
     public function addArr($arr)
     {
@@ -251,7 +251,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     /**
      * @param TransferInterface $transfer
      *
-     * @return $this
+     * @return self
      */
     public function setTransfer(TransferInterface $transfer)
     {
@@ -284,7 +284,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     /**
      * @param \ArrayObject|TransferInterface[] $transferCollection
      *
-     * @return $this
+     * @return self
      */
     public function setTransferCollection(\ArrayObject $transferCollection)
     {
@@ -305,7 +305,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     /**
      * @param TransferInterface $transferCollection
      *
-     * @return $this
+     * @return self
      */
     public function addTransferCollection(TransferInterface $transferCollection)
     {

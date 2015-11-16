@@ -2,7 +2,7 @@
     /**
      * @param {{ method.var }} ${{ method.property }}
      *
-     * @return $this
+     * @return self
      */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }});
 {% endmacro -%}
@@ -16,7 +16,7 @@
     /**
      * @param {{ method.var }} ${{ method.property }}
      *
-     * @return $this
+     * @return self
      */
     public function {{ method.name }}({% if method.typeHint %}{{ method.typeHint }} {% endif %}${{ method.property }});
 {% endmacro -%}

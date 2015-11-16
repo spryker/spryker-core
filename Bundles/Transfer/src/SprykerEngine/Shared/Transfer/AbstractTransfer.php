@@ -174,7 +174,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     /**
      * @param string $property
      *
-     * @return mixed
+     * @return bool
      */
     private function isCollection($property)
     {
