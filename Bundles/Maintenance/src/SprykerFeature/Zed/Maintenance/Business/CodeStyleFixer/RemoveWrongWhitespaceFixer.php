@@ -27,7 +27,7 @@ class RemoveWrongWhitespaceFixer extends AbstractFixer
     {
         $tokens = Tokens::fromCode($content);
 
-        $this->fixContent($tokens);
+        $this->fixWhitespaceAfterReturnToken($tokens);
 
         return $tokens->generateCode();
     }
@@ -37,7 +37,7 @@ class RemoveWrongWhitespaceFixer extends AbstractFixer
      *
      * @return void
      */
-    protected function fixContent(Tokens $tokens)
+    protected function fixWhitespaceAfterReturnToken(Tokens $tokens)
     {
         foreach ($tokens as $index => $token) {
             if (!$token->isGivenKind([T_RETURN])) {
@@ -77,7 +77,7 @@ class RemoveWrongWhitespaceFixer extends AbstractFixer
      */
     public function getDescription()
     {
-        return 'Prent multi-spaces after return statement and alike.';
+        return 'Fix whitespace after return statement and alike.';
     }
 
 }
