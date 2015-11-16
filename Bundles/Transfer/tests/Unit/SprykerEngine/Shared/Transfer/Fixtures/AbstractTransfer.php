@@ -6,11 +6,24 @@
 
 namespace Unit\SprykerEngine\Shared\Transfer\Fixtures;
 
+use SprykerEngine\Shared\Transfer\Exception\RequiredTransferPropertyException;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerEngine\Shared\Transfer\AbstractTransfer as ParentAbstractTransfer;
 
 class AbstractTransfer extends ParentAbstractTransfer
 {
+
+    const STRING = 'string';
+
+    const INTEGER = 'integer';
+
+    const BOOL = 'bool';
+
+    const ARR = 'arr';
+
+    const TRANSFER = 'transfer';
+
+    const TRANSFER_COLLECTION = 'transferCollection';
 
     /**
      * @var string
@@ -18,7 +31,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     protected $string;
 
     /**
-     * @var int
+     * @var integer
      */
     protected $integer;
 
@@ -30,7 +43,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     /**
      * @var array
      */
-    protected $array;
+    protected $arr;
 
     /**
      * @var TransferInterface
@@ -42,17 +55,65 @@ class AbstractTransfer extends ParentAbstractTransfer
      */
     protected $transferCollection;
 
+    /**
+     * @var array
+     */
+    protected $transferMetadata = [
+        self::STRING => [
+            'type' => 'string',
+            'name_underscore' => 'string',
+            'is_collection' => false,
+            'is_transfer' => false,
+        ],
+        self::INTEGER => [
+            'type' => 'integer',
+            'name_underscore' => 'integer',
+            'is_collection' => false,
+            'is_transfer' => false,
+        ],
+        self::BOOL => [
+            'type' => 'bool',
+            'name_underscore' => 'bool',
+            'is_collection' => false,
+            'is_transfer' => false,
+        ],
+        self::ARR => [
+            'type' => 'array',
+            'name_underscore' => 'arr',
+            'is_collection' => false,
+            'is_transfer' => false,
+        ],
+        self::TRANSFER => [
+            'type' => 'Unit\SprykerEngine\Shared\Transfer\Fixtures\AbstractTransfer',
+            'name_underscore' => 'transfer',
+            'is_collection' => false,
+            'is_transfer' => true,
+        ],
+        self::TRANSFER_COLLECTION => [
+            'type' => 'Unit\SprykerEngine\Shared\Transfer\Fixtures\AbstractTransfer',
+            'name_underscore' => 'transfer_collection',
+            'is_collection' => true,
+            'is_transfer' => true,
+        ],
+    ];
+
     public function __construct()
     {
+        $this->arr = new \ArrayObject();
         $this->transferCollection = new \ArrayObject();
     }
 
     /**
-     * @return string
+     * @param string $string
+     *
+     * @return $this
      */
-    protected function getNamespace()
+    public function setString($string)
     {
-        return 'Unit\\SprykerEngine\\Shared\\Transfer\\Fixtures\\';
+        $this->string = $string;
+        $this->addModifiedProperty(self::STRING);
+
+        return $this;
     }
 
     /**
@@ -64,20 +125,32 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @param string $string
+     * @throws RequiredTransferPropertyException
      *
-     * @return AbstractTransfer
+     * @return self
      */
-    public function setString($string)
+    public function requireString()
     {
-        $this->string = $string;
-        $this->addModifiedProperty('string');
+        $this->assertPropertyIsSet(self::STRING);
 
         return $this;
     }
 
     /**
-     * @return int
+     * @param integer $integer
+     *
+     * @return $this
+     */
+    public function setInteger($integer)
+    {
+        $this->integer = $integer;
+        $this->addModifiedProperty(self::INTEGER);
+
+        return $this;
+    }
+
+    /**
+     * @return integer
      */
     public function getInteger()
     {
@@ -85,14 +158,26 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @param int $integer
+     * @throws RequiredTransferPropertyException
      *
-     * @return AbstractTransfer
+     * @return self
      */
-    public function setInteger($integer)
+    public function requireInteger()
     {
-        $this->integer = $integer;
-        $this->addModifiedProperty('integer');
+        $this->assertPropertyIsSet(self::INTEGER);
+
+        return $this;
+    }
+
+    /**
+     * @param bool $bool
+     *
+     * @return $this
+     */
+    public function setBool($bool)
+    {
+        $this->bool = $bool;
+        $this->addModifiedProperty(self::BOOL);
 
         return $this;
     }
@@ -106,14 +191,26 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @param bool $bool
+     * @throws RequiredTransferPropertyException
      *
-     * @return AbstractTransfer
+     * @return self
      */
-    public function setBool($bool)
+    public function requireBool()
     {
-        $this->bool = $bool;
-        $this->addModifiedProperty('bool');
+        $this->assertPropertyIsSet(self::BOOL);
+
+        return $this;
+    }
+
+    /**
+     * @param array $arr
+     *
+     * @return $this
+     */
+    public function setArr(array $arr)
+    {
+        $this->arr = $arr;
+        $this->addModifiedProperty(self::ARR);
 
         return $this;
     }
@@ -121,20 +218,45 @@ class AbstractTransfer extends ParentAbstractTransfer
     /**
      * @return array
      */
-    public function getArray()
+    public function getArr()
     {
-        return $this->array;
+        return $this->arr;
     }
 
     /**
-     * @param array|\ArrayObject $array
+     * @param array $arr
      *
-     * @return AbstractTransfer
+     * @return $this
      */
-    public function setArray($array)
+    public function addArr($arr)
     {
-        $this->array = $array;
-        $this->addModifiedProperty('array');
+        $this->arr[] = $arr;
+        $this->addModifiedProperty(self::ARR);
+
+        return $this;
+    }
+
+    /**
+     * @throws RequiredTransferPropertyException
+     *
+     * @return self
+     */
+    public function requireArr()
+    {
+        $this->assertCollectionPropertyIsSet(self::ARR);
+
+        return $this;
+    }
+
+    /**
+     * @param TransferInterface $transfer
+     *
+     * @return $this
+     */
+    public function setTransfer(TransferInterface $transfer)
+    {
+        $this->transfer = $transfer;
+        $this->addModifiedProperty(self::TRANSFER);
 
         return $this;
     }
@@ -148,20 +270,32 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @param TransferInterface $transfer
+     * @throws RequiredTransferPropertyException
      *
-     * @return AbstractTransfer
+     * @return self
      */
-    public function setTransfer(TransferInterface $transfer)
+    public function requireTransfer()
     {
-        $this->transfer = $transfer;
-        $this->addModifiedProperty('transfer');
+        $this->assertPropertyIsSet(self::TRANSFER);
 
         return $this;
     }
 
     /**
-     * @return AbstractTransfer[]|\ArrayObject()
+     * @param \ArrayObject|TransferInterface[] $transferCollection
+     *
+     * @return $this
+     */
+    public function setTransferCollection(\ArrayObject $transferCollection)
+    {
+        $this->transferCollection = $transferCollection;
+        $this->addModifiedProperty(self::TRANSFER_COLLECTION);
+
+        return $this;
+    }
+
+    /**
+     * @return TransferInterface[]
      */
     public function getTransferCollection()
     {
@@ -169,14 +303,26 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @param \ArrayObject|AbstractTransfer[] $transferCollection
+     * @param TransferInterface $transferCollection
      *
-     * @return AbstractTransfer
+     * @return $this
      */
-    public function setTransferCollection(\ArrayObject $transferCollection)
+    public function addTransferCollection(TransferInterface $transferCollection)
     {
-        $this->transferCollection = $transferCollection;
-        $this->addModifiedProperty('transferCollection');
+        $this->transferCollection[] = $transferCollection;
+        $this->addModifiedProperty(self::TRANSFER_COLLECTION);
+
+        return $this;
+    }
+
+    /**
+     * @throws RequiredTransferPropertyException
+     *
+     * @return self
+     */
+    public function requireTransferCollection()
+    {
+        $this->assertCollectionPropertyIsSet(self::TRANSFER_COLLECTION);
 
         return $this;
     }

@@ -4,15 +4,15 @@
 
 {% macro addMetadata(normalizedProperties) %}
     /**
-    * @var array
-    */
+     * @var array
+     */
     protected $transferMetadata = [
     {% for property in normalizedProperties %}
-    '{{ property.name }}' => [
+    self::{{ property.propertyConst }} => [
           'type' => '{{ property.type_fully_qualified }}',
           'name_underscore' => '{{ property.name_underscore }}',
-          'is_collection' => {{ property.is_collection ? 'true':'false' }},
-          'is_transfer' => {{ property.is_transfer ? 'true':'false' }}
+          'is_collection' => {{ property.is_collection ? 'true' : 'false' }},
+          'is_transfer' => {{ property.is_transfer ? 'true' : 'false' }},
         ],
     {% endfor -%}
 ];

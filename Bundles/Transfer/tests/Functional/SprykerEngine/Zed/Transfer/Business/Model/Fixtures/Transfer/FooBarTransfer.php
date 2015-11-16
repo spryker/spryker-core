@@ -39,6 +39,30 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
      */
     protected $selfReference;
 
+    /**
+     * @var array
+     */
+    protected $transferMetadata = [
+        self::NAME => [
+          'type' => 'string',
+          'name_underscore' => 'name',
+          'is_collection' => false,
+          'is_transfer' => false,
+        ],
+        self::BLA => [
+          'type' => 'int',
+          'name_underscore' => 'bla',
+          'is_collection' => false,
+          'is_transfer' => false,
+        ],
+        self::SELF_REFERENCE => [
+          'type' => 'Generated\Shared\Transfer\FooBarTransfer',
+          'name_underscore' => 'self_reference',
+          'is_collection' => true,
+          'is_transfer' => true,
+        ],
+    ];
+
     public function __construct()
     {
         $this->selfReference = new \ArrayObject();

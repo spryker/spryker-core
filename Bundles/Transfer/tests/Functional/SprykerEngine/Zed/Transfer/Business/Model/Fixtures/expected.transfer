@@ -39,6 +39,30 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
      */
     protected $items;
 
+    /**
+     * @var array
+     */
+    protected $transferMetadata = [
+        self::NAME => [
+          'type' => 'string',
+          'name_underscore' => 'name',
+          'is_collection' => false,
+          'is_transfer' => false,
+        ],
+        self::ITEM => [
+          'type' => 'Generated\Shared\Transfer\ItemTransfer',
+          'name_underscore' => 'item',
+          'is_collection' => false,
+          'is_transfer' => true,
+        ],
+        self::ITEMS => [
+          'type' => 'Generated\Shared\Transfer\ItemTransfer',
+          'name_underscore' => 'items',
+          'is_collection' => true,
+          'is_transfer' => true,
+        ],
+    ];
+
     public function __construct()
     {
         $this->items = new \ArrayObject();

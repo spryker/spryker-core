@@ -71,6 +71,7 @@ class ClassDefinition implements ClassDefinitionInterface
             $this->addProperties($properties);
             $this->addMethods($properties);
         }
+
         return $this;
     }
 
@@ -214,31 +215,29 @@ class ClassDefinition implements ClassDefinitionInterface
      */
     private function normalizePropertyTypes(array $properties)
     {
-
         $filter = new CamelCaseToUnderscore();
 
         $normalizedProperties = [];
         foreach ($properties as $property) {
+            $property['type_fully_qualified'] = $property['type'];
+            $property['is_collection'] = false;
+            $property['is_transfer'] = false;
+            $property['propertyConst'] = $this->getPropertyConstantName($property);
+            $property['name_underscore'] = strtolower($filter->filter($property['name']));
+
             if (!preg_match('/^int|integer|float|string|array|bool|boolean/', $property['type'])) {
                 if (preg_match('/\[\]$/', $property['type'])) {
                     $property['type'] = str_replace('[]', '', $property['type']) . 'Transfer[]';
-                    $property['type_fully_qualified'] = 'Generated\\Shared\\Transfer\\'.str_replace('[]', '', $property['type']) ;
+                    $property['type_fully_qualified'] = 'Generated\\Shared\\Transfer\\' . str_replace('[]', '', $property['type']);
                     $property['is_collection'] = true;
                     $property['is_transfer'] = true;
                 } else {
                     $property['type'] = $property['type'] . 'Transfer';
-                    $property['type_fully_qualified'] = 'Generated\\Shared\\Transfer\\'.$property['type'] ;
+                    $property['type_fully_qualified'] = 'Generated\\Shared\\Transfer\\' . $property['type'];
                     $property['is_collection'] = false;
                     $property['is_transfer'] = true;
                 }
             }
-            if(array_key_exists('type_fully_qualified', $property) === false){
-                $property['type_fully_qualified'] = $property['type'];
-                $property['is_collection'] = false;
-                $property['is_transfer'] = false;
-            }
-
-            $property['name_underscore'] = strtolower($filter->filter($property['name']));
 
             $normalizedProperties[] = $property;
         }
