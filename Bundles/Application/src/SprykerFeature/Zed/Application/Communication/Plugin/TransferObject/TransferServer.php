@@ -67,7 +67,7 @@ class TransferServer
     /**
      * @param Repeater $repeater
      *
-     * @return $this
+     * @return self
      * @static
      */
     public static function getInstance(Repeater $repeater = null)
@@ -128,7 +128,7 @@ class TransferServer
     /**
      * @param HttpRequest $httpRequest
      *
-     * @return $this
+     * @return self
      */
     public function setRequest(HttpRequest $httpRequest)
     {
@@ -140,7 +140,7 @@ class TransferServer
     /**
      * @param ResponseInterface $response
      *
-     * @return $this
+     * @return self
      */
     public function setResponse(ResponseInterface $response)
     {

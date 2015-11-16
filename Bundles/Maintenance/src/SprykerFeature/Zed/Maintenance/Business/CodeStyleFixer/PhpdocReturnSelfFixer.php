@@ -67,7 +67,6 @@ class PhpdocReturnSelfFixer extends AbstractFixer
     protected function fixDocBlock($content)
     {
         $replace = function ($matches) {
-            dump($matches);
             return '@return ' . $matches[1] . 'self' . $matches[2];
         };
 
