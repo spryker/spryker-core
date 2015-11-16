@@ -8,6 +8,7 @@ use SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\RemoveWrongWhitespace
  * @group SprykerFeature
  * @group Zed
  * @group Maintenance
+ * @group Business
  * @group CodeStyleFixer
  */
 class RemoveWrongWhitespaceFixerTest extends \PHPUnit_Framework_TestCase

@@ -11,9 +11,6 @@ use Symfony\CS\FixerInterface;
 use Symfony\CS\Tokenizer\Token;
 use Symfony\CS\Tokenizer\Tokens;
 
-/**
- * Fixer RemoveWrongWhitespace
- */
 class RemoveWrongWhitespaceFixer extends AbstractFixer
 {
 
