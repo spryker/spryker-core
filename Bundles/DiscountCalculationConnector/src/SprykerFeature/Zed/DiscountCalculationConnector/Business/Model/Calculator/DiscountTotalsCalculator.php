@@ -22,9 +22,11 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
 {
 
     /**
-     * @param TotalsInterface     $totalsTransfer
+     * @param TotalsInterface $totalsTransfer
      * @param CalculableInterface $discountableContainer
      * @param $calculableItems
+     *
+     * @return void
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
@@ -39,7 +41,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
      * @param CalculableInterface $discountableContainer
      * @param $calculableItems
      *
-     * @return array|int
+     * @return int
      */
     public function calculateDiscount(
         CalculableInterface $discountableContainer,
@@ -125,7 +127,9 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
 
     /**
      * @param \ArrayObject|ItemInterface[] $calculableItems
-     * @param array|DiscountTotalItemInterface[]$discountTotalItemCollection
+     * @param array|DiscountTotalItemInterface[] $discountTotalItemCollection
+     *
+     * @return void
      */
     protected function calculateItemTotals(\ArrayObject $calculableItems, &$discountTotalItemCollection)
     {
@@ -161,9 +165,11 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param DiscountInterface                  $discountTransfer
+     * @param DiscountInterface $discountTransfer
      * @param array|DiscountTotalItemInterface[] $discountTotalItemCollection
-     * @param int                                $quantity
+     * @param int $quantity
+     *
+     * @return void
      */
     protected function transformDiscountToDiscountTotalItemInArray(
         DiscountInterface $discountTransfer,
@@ -188,6 +194,8 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     /**
      * @param DiscountTotalItemTransfer $discountTotalItemTransfer
      * @param DiscountInterface $discountTransfer
+     *
+     * @return void
      */
     protected function setUsedCodes(
         DiscountTotalItemTransfer $discountTotalItemTransfer,
