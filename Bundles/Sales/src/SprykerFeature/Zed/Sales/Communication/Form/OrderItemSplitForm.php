@@ -20,7 +20,7 @@ class OrderItemSplitForm extends AbstractForm
     /**
      * Prepares form
      *
-     * @return $this
+     * @return self
      */
     protected function buildFormFields()
     {
@@ -47,7 +47,7 @@ class OrderItemSplitForm extends AbstractForm
     /**
      * Set the values for fields
      *
-     * @return $this
+     * @return self
      */
     protected function populateFormFields()
     {

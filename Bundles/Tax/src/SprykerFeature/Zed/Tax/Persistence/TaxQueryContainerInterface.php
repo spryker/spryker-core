@@ -40,7 +40,7 @@ interface TaxQueryContainerInterface
     /**
      * @param ModelCriteria $expandableQuery
      *
-     * @return $this
+     * @return self
      */
     public function joinTaxRates(ModelCriteria $expandableQuery);
 

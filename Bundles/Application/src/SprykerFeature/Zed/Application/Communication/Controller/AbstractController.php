@@ -188,7 +188,7 @@ abstract class AbstractController
      *
      * @throws \ErrorException
      *
-     * @return $this
+     * @return self
      */
     protected function addSuccessMessage($message)
     {
@@ -200,7 +200,7 @@ abstract class AbstractController
      *
      * @throws \Exception
      *
-     * @return $this
+     * @return self
      */
     protected function addInfoMessage($message)
     {
@@ -214,7 +214,7 @@ abstract class AbstractController
      *
      * @throws \ErrorException
      *
-     * @return $this
+     * @return self
      */
     protected function addErrorMessage($message)
     {

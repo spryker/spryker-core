@@ -101,7 +101,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     }
 
     /**
-     * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return self|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function joinLocales()
     {

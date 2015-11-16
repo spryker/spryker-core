@@ -17,7 +17,7 @@ interface WishlistSessionInterface
     /**
      * @param WishlistInterface $wishlist
      *
-     * @return $this
+     * @return self
      */
     public function setWishlist(WishlistInterface $wishlist);
 

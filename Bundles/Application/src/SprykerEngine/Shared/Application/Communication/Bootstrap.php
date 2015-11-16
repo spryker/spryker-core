@@ -99,7 +99,7 @@ class Bootstrap
     /**
      * @param BeforeBootExtensionInterface $beforeBootExtension
      *
-     * @return $this
+     * @return self
      */
     public function addBeforeBootExtension(BeforeBootExtensionInterface $beforeBootExtension)
     {
@@ -121,7 +121,7 @@ class Bootstrap
     /**
      * @param AfterBootExtensionInterface $afterBootExtension
      *
-     * @return $this
+     * @return self
      */
     public function addAfterBootExtension(AfterBootExtensionInterface $afterBootExtension)
     {
@@ -143,7 +143,7 @@ class Bootstrap
     /**
      * @param TwigExtensionInterface $twigExtension
      *
-     * @return $this
+     * @return self
      */
     public function addTwigExtension(TwigExtensionInterface $twigExtension)
     {
@@ -171,7 +171,7 @@ class Bootstrap
     /**
      * @param GlobalTemplateVariableExtensionInterface $globalTemplateVariableExtension
      *
-     * @return $this
+     * @return self
      */
     public function addGlobalTemplateVariableExtension(GlobalTemplateVariableExtensionInterface $globalTemplateVariableExtension)
     {
@@ -212,7 +212,7 @@ class Bootstrap
     /**
      * @param ServiceProviderExtensionInterface $serviceProviderExtension
      *
-     * @return $this
+     * @return self
      */
     public function addServiceProviderExtension(ServiceProviderExtensionInterface $serviceProviderExtension)
     {
@@ -254,7 +254,7 @@ class Bootstrap
     /**
      * @param RouterExtensionInterface $routerExtension
      *
-     * @return $this
+     * @return self
      */
     public function addRouterExtension(RouterExtensionInterface $routerExtension)
     {

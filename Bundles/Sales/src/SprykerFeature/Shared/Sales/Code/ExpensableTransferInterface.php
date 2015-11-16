@@ -13,21 +13,21 @@ interface ExpensableTransferInterface
     /**
      * @param ExpenseItemInterface $expense
      *
-     * @return $this
+     * @return self
      */
     public function removeExpense(ExpenseItemInterface $expense);
 
     /**
      * @param ExpenseItemInterface $expense
      *
-     * @return $this
+     * @return self
      */
     public function addExpense(ExpenseItemInterface $expense);
 
     /**
      * @param ExpenseItemCollectionInterface $expenses
      *
-     * @return $this
+     * @return self
      */
     public function setExpenses(ExpenseItemCollectionInterface $expenses);
 

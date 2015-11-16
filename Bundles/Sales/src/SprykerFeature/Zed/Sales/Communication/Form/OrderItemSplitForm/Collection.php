@@ -36,7 +36,7 @@ class Collection
     }
 
     /**
-     * @return $this
+     * @return self
      */
     public function create()
     {

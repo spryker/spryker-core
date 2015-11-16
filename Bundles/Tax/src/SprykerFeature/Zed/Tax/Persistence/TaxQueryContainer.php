@@ -57,7 +57,7 @@ class TaxQueryContainer extends AbstractQueryContainer implements TaxQueryContai
     /**
      * @param ModelCriteria $expandableQuery
      *
-     * @return $this
+     * @return self
      */
     public function joinTaxRates(ModelCriteria $expandableQuery)
     {

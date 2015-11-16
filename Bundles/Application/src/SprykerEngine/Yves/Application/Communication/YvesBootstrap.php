@@ -30,7 +30,7 @@ class YvesBootstrap extends Bootstrap
     /**
      * @param ControllerProviderExtensionInterface $controllerProviderExtension
      *
-     * @return $this
+     * @return self
      */
     public function addControllerProviderExtension(ControllerProviderExtensionInterface $controllerProviderExtension)
     {

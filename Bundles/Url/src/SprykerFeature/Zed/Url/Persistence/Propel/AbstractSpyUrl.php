@@ -81,7 +81,7 @@ abstract class AbstractSpyUrl extends BaseSpyUrl
      *
      * @throws UnknownResourceTypeException
      *
-     * @return $this
+     * @return self
      */
     public function setResource($resourceType, $resourceId)
     {

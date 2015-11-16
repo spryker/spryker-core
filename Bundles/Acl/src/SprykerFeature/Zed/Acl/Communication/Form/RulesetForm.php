@@ -17,7 +17,7 @@ class RulesetForm extends AbstractForm
     const TYPE = 'type';
 
     /**
-     * @return $this
+     * @return self
      */
     protected function buildFormFields()
     {
@@ -30,7 +30,7 @@ class RulesetForm extends AbstractForm
     }
 
     /**
-     * @return $this
+     * @return self
      */
     protected function addBundleName()
     {
@@ -48,7 +48,7 @@ class RulesetForm extends AbstractForm
     }
 
     /**
-     * @return $this
+     * @return self
      */
     protected function addControllerName()
     {
@@ -66,7 +66,7 @@ class RulesetForm extends AbstractForm
     }
 
     /**
-     * @return $this
+     * @return self
      */
     protected function addActionName()
     {
@@ -84,7 +84,7 @@ class RulesetForm extends AbstractForm
     }
 
     /**
-     * @return $this
+     * @return self
      */
     protected function addPermissionSelect()
     {
