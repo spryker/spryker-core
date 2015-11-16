@@ -2,7 +2,7 @@
 
 namespace Unit\SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer;
 
-use SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\RemoveWrongWhitespaceFixer;
+use SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\WhitespaceAfterReturnFixer;
 
 /**
  * @group SprykerFeature
@@ -11,20 +11,20 @@ use SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\RemoveWrongWhitespace
  * @group Business
  * @group CodeStyleFixer
  */
-class RemoveWrongWhitespaceFixerTest extends \PHPUnit_Framework_TestCase
+class WhitespaceAfterReturnTest extends \PHPUnit_Framework_TestCase
 {
 
-    const FIXER_NAME = 'RemoveWrongWhitespaceFixer';
+    const FIXER_NAME = 'WhitespaceAfterReturnFixer';
 
     /**
-     * @var RemoveWrongWhitespaceFixer
+     * @var WhitespaceAfterReturnFixer
      */
     protected $fixer;
 
     protected function setUp()
     {
         parent::setUp();
-        $this->fixer = new RemoveWrongWhitespaceFixer();
+        $this->fixer = new WhitespaceAfterReturnFixer();
     }
 
     /**
