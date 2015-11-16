@@ -114,10 +114,10 @@
             <parameter name="disable_updated_at" value="true"/>
         </behavior>
 
-        <foreign-key name="spy_payment_payone_transaction_status_log_order_item-id_payment_payone_transaction_status_log" foreignTable="spy_payment_payone_transaction_status_log">
+        <foreign-key name="spy_payone_transaction_log_order_item-id_payone_transaction_log" foreignTable="spy_payment_payone_transaction_status_log">
             <reference foreign="id_payment_payone_transaction_status_log" local="id_payment_payone_transaction_status_log"/>
         </foreign-key>
-        <foreign-key name="spy_payment_payone_transaction_status_log_order_item-id_sales_order_item" foreignTable="spy_sales_order_item">
+        <foreign-key name="spy_payone_transaction_log_order_item-id_sales_order_item" foreignTable="spy_sales_order_item">
             <reference foreign="id_sales_order_item" local="id_sales_order_item"/>
         </foreign-key>
 

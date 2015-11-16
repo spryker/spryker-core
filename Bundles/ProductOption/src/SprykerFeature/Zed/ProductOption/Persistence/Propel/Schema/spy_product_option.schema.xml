@@ -138,10 +138,10 @@
         <column name="fk_product_option_type_usage_a" type="INTEGER" primaryKey="true"/>
         <column name="fk_product_option_type_usage_b" type="INTEGER" primaryKey="true"/>
 
-        <foreign-key name="spy_product_option_type_usage_exclusion-fk_product_option_type_usage_a" foreignTable="spy_product_option_type_usage" onDelete="CASCADE" phpName="productOptionTypeUsageA">
+        <foreign-key name="spy_product_option_type_usage_exc-fk_product_option_type_usage1" foreignTable="spy_product_option_type_usage" onDelete="CASCADE" phpName="productOptionTypeUsageA">
             <reference local="fk_product_option_type_usage_a" foreign="id_product_option_type_usage"/>
         </foreign-key>
-        <foreign-key name="spy_product_option_type_usage_exclusion-fk_product_option_type_usage_b" foreignTable="spy_product_option_type_usage" onDelete="CASCADE" phpName="productOptionTypeUsageB">
+        <foreign-key name="spy_product_option_type_usage_exc-fk_product_option_type_usage2" foreignTable="spy_product_option_type_usage" onDelete="CASCADE" phpName="productOptionTypeUsageB">
             <reference local="fk_product_option_type_usage_b" foreign="id_product_option_type_usage"/>
         </foreign-key>
 
@@ -157,10 +157,10 @@
         <column name="fk_product_option_value_usage_b" type="INTEGER" primaryKey="true"/>
         <column name="operator" type="VARCHAR" size="255" required="true"/>
 
-        <foreign-key name="spy_product_option_value_usage_constraint-fk_product_option_value_usage_a" foreignTable="spy_product_option_value_usage" onDelete="CASCADE" phpName="productOptionValueUsageA">
+        <foreign-key name="spy_product_option_value_usage_c-fk_product_option_value_usage1" foreignTable="spy_product_option_value_usage" onDelete="CASCADE" phpName="productOptionValueUsageA">
             <reference local="fk_product_option_value_usage_a" foreign="id_product_option_value_usage"/>
         </foreign-key>
-        <foreign-key name="spy_product_option_value_usage_constraint-fk_product_option_value_usage_b" foreignTable="spy_product_option_value_usage" onDelete="CASCADE" phpName="productOptionValueUsageB">
+        <foreign-key name="spy_product_option_value_usage_c-fk_product_option_value_usage2" foreignTable="spy_product_option_value_usage" onDelete="CASCADE" phpName="productOptionValueUsageB">
             <reference local="fk_product_option_value_usage_b" foreign="id_product_option_value_usage"/>
         </foreign-key>
 
@@ -193,10 +193,10 @@
         <column name="fk_product_option_configuration_preset" type="INTEGER" primaryKey="true"/>
         <column name="fk_product_option_value_usage" type="INTEGER" primaryKey="true"/>
 
-        <foreign-key name="spy_product_option_configuration_preset_value-fk_product_option_configuration_preset" foreignTable="spy_product_option_configuration_preset" onDelete="CASCADE">
+        <foreign-key name="spy_product_option_config_value-fk_product_option_config" foreignTable="spy_product_option_configuration_preset" onDelete="CASCADE">
             <reference local="fk_product_option_configuration_preset" foreign="id_product_option_configuration_preset"/>
         </foreign-key>
-        <foreign-key name="spy_product_option_configuration_preset_value-fk_product_option_value_usage" foreignTable="spy_product_option_value_usage" onDelete="CASCADE">
+        <foreign-key name="spy_product_option_config_value-fk_product_option_value_usage" foreignTable="spy_product_option_value_usage" onDelete="CASCADE">
             <reference local="fk_product_option_value_usage" foreign="id_product_option_value_usage"/>
         </foreign-key>
 

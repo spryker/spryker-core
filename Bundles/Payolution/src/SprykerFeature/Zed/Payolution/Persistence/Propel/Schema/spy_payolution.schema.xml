@@ -48,7 +48,7 @@
         <column name="payment_code" required="true" type="VARCHAR"/>
         <column name="presentation_amount" required="true"  type="VARCHAR"/>
         <column name="presentation_currency" required="true"  type="VARCHAR"/>
-        <foreign-key name="spy_payment_payolution_transaction_request_log-fk_payment_payolution" foreignTable="spy_payment_payolution">
+        <foreign-key name="spy_payolution_transaction_request_log-fk_payment_payolution" foreignTable="spy_payment_payolution">
             <reference foreign="id_payment_payolution" local="fk_payment_payolution"/>
         </foreign-key>
         <behavior name="timestampable"/>
@@ -78,10 +78,10 @@
         <column name="processing_connectordetail_connectortxid1" type="VARCHAR"/>
         <column name="processing_connectordetail_paymentreference" type="VARCHAR"/>
         <column name="processing_timestamp" required="true" type="VARCHAR"/>
-        <foreign-key name="spy_payment_payolution_transaction_status_log-fk_payment_payolution" foreignTable="spy_payment_payolution">
+        <foreign-key name="spy_payolution_transaction_status_log-fk_payolution" foreignTable="spy_payment_payolution">
             <reference foreign="id_payment_payolution" local="fk_payment_payolution"/>
         </foreign-key>
-        <foreign-key name="spy_payment_payolution_transaction_status_log-identification_transactionid" foreignTable="spy_payment_payolution_transaction_request_log">
+        <foreign-key name="spy_payolution_transaction_status_log-transactionid" foreignTable="spy_payment_payolution_transaction_request_log">
             <reference
                 foreign="transaction_id"
                 local="identification_transactionid"
@@ -97,7 +97,7 @@
         <behavior name="timestampable">
             <parameter name="disable_updated_at" value="true"/>
         </behavior>
-        <foreign-key name="spy_payment_payolution_order_item-fk_payment_payolution" foreignTable="spy_payment_payolution">
+        <foreign-key name="spy_payolution_order_item-fk_payolution" foreignTable="spy_payment_payolution">
             <reference foreign="id_payment_payolution" local="fk_payment_payolution"/>
         </foreign-key>
         <foreign-key name="spy_payment_payolution_order_item-fk_sales_order_item" foreignTable="spy_sales_order_item">
