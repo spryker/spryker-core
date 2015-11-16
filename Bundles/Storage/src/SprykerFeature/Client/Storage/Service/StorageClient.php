@@ -122,4 +122,14 @@ class StorageClient extends AbstractClient implements StorageClientInterface
         return $this->getService()->getCountItems();
     }
 
+    /**
+     * @param string $pattern
+     *
+     * @return array
+     */
+    public function getKeys($pattern = '*')
+    {
+        return $this->getService()->getKeys($pattern);
+    }
+
 }

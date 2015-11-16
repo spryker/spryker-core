@@ -7,7 +7,7 @@
 namespace SprykerFeature\Client\Storage\Service\Redis;
 
 use Predis\Client;
-use Predis\Connection\ConnectionException;
+use Predis\ClientInterface;
 
 class Service implements ServiceInterface
 {
@@ -15,14 +15,9 @@ class Service implements ServiceInterface
     const KV_PREFIX = 'kv:';
 
     /**
-     * @var array
+     * @var ClientInterface
      */
-    private $config;
-
-    /**
-     * @var Client
-     */
-    private $resource;
+    private $client;
 
     /**
      * @var bool
@@ -35,12 +30,12 @@ class Service implements ServiceInterface
     private $accessStats;
 
     /**
-     * @param array $config
+     * @param ClientInterface $client
      * @param bool $debug
      */
-    public function __construct(array $config, $debug = false)
+    public function __construct(ClientInterface $client, $debug = false)
     {
-        $this->config = $config;
+        $this->client = $client;
         $this->debug = $debug;
         $this->resetAccessStats();
     }
@@ -50,30 +45,8 @@ class Service implements ServiceInterface
      */
     public function __destruct()
     {
-        if ($this->resource) {
-            $this->resource->disconnect();
-        }
-    }
-
-    /**
-     * @throws \MemcachedException
-     */
-    public function connect()
-    {
-        if (!$this->resource) {
-            $resource = new Client(
-                [
-                    'protocol' => $this->config['protocol'],
-                    'host' => $this->config['host'],
-                    'port' => $this->config['port'],
-                ]
-            );
-
-            if (!$resource) {
-                throw new ConnectionException($resource, 'Could not connect to redis server');
-            }
-
-            $this->resource = $resource;
+        if ($this->client) {
+            $this->client->disconnect();
         }
     }
 
@@ -87,48 +60,6 @@ class Service implements ServiceInterface
         $this->config = $config;
 
         return $this;
-    }
-
-    /**
-     * @return array
-     */
-    private function getConfig()
-    {
-        return $this->config;
-    }
-
-    /**
-     * @param $resource
-     *
-     * @return self
-     */
-    private function setResource($resource)
-    {
-        $this->resource = $resource;
-
-        return $this;
-    }
-
-    /**
-     * @throws \Exception
-     *
-     * @return Client
-     */
-    private function getResource()
-    {
-        if (!$this->resource) {
-            $this->connect();
-        }
-
-        return $this->resource;
-    }
-
-    /**
-     * @return bool
-     */
-    private function getDebug()
-    {
-        return $this->debug;
     }
 
     /**
@@ -244,7 +175,7 @@ class Service implements ServiceInterface
     public function get($key)
     {
         $key = $this->getKeyName($key);
-        $value = $this->getResource()->get($key);
+        $value = $this->client->get($key);
         $this->addReadAccessStats($key);
 
         $result = json_decode($value, true);
@@ -268,7 +199,7 @@ class Service implements ServiceInterface
             $transformedKeys[] = $this->getKeyName($key, self::KV_PREFIX);
         }
 
-        $values = array_combine($transformedKeys, $this->getResource()->mget($transformedKeys));
+        $values = array_combine($transformedKeys, $this->client->mget($transformedKeys));
         $this->addMultiReadAccessStats($keys);
 
         return $values;
@@ -281,15 +212,25 @@ class Service implements ServiceInterface
      */
     public function getStats($section = null)
     {
-        return $this->getResource()->info($section);
+        return $this->client->info($section);
     }
 
     /**
-     * @return mixed
+     * @return array
      */
     public function getAllKeys()
     {
-        return $this->getResource()->keys($this->getSearchPattern(self::KV_PREFIX));
+        return $this->getKeys('*');
+    }
+
+    /**
+     * @param string $pattern
+     *
+     * @return array
+     */
+    public function getKeys($pattern)
+    {
+        return $this->client->keys($this->getSearchPattern($pattern));
     }
 
     /**
@@ -297,15 +238,17 @@ class Service implements ServiceInterface
      */
     public function getCountItems()
     {
-        return count($this->getResource()->keys($this->getSearchPattern(self::KV_PREFIX)));
+        return count($this->client->keys($this->getSearchPattern(self::KV_PREFIX)));
     }
 
     /**
+     * @param string $pattern
+     *
      * @return string
      */
-    protected function getSearchPattern()
+    protected function getSearchPattern($pattern = '*')
     {
-        return self::KV_PREFIX . '*';
+        return self::KV_PREFIX . $pattern;
     }
 
     /**
@@ -329,7 +272,7 @@ class Service implements ServiceInterface
     public function set($key, $value)
     {
         $key = $this->getKeyName($key);
-        $result = $this->getResource()->set($key, $value);
+        $result = $this->client->set($key, $value);
         $this->addWriteAccessStats($key);
         if (!$result) {
             throw new \Exception(
@@ -365,13 +308,13 @@ class Service implements ServiceInterface
             return false;
         }
 
-        $result = $this->getResource()->mset($data);
+        $result = $this->client->mset($data);
         $this->addMultiWriteAccessStats($data);
 
         if (!$result) {
             throw new \Exception(
-                'could not set redisKeys for items: "[' . implode(',',
-                    array_keys($items)) . ']" with values: "[' . implode(',', array_values($items)) . ']"'
+                'could not set redisKeys for items: "[' . implode(',', array_keys($items))
+                . ']" with values: "[' . implode(',', array_values($items)) . ']"'
             );
         }
 
@@ -386,7 +329,7 @@ class Service implements ServiceInterface
     public function delete($key)
     {
         $key = $this->getKeyName($key);
-        $result = $this->getResource()->del([$key]);
+        $result = $this->client->del([$key]);
         $this->addDeleteAccessStats($key);
 
         return $result;
@@ -397,7 +340,7 @@ class Service implements ServiceInterface
      */
     public function deleteMulti(array $keys)
     {
-        $this->getResource()->del($keys);
+        $this->client->del($keys);
         $this->addMultiDeleteAccessStats($keys);
     }
 

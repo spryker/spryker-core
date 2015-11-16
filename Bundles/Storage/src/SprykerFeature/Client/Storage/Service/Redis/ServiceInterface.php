@@ -12,22 +12,10 @@ interface ServiceInterface extends StorageClientInterface
 {
 
     /**
-     * @param array $config
-     *
-     * @return self
-     */
-    public function setConfig(array $config);
-
-    /**
      * @param $debug
      *
      * @return self
      */
     public function setDebug($debug);
-
-    /**
-     * @throws \MemcachedException
-     */
-    public function connect();
 
 }
