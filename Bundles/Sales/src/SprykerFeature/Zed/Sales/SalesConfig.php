@@ -118,7 +118,7 @@ class SalesConfig extends AbstractBundleConfig
      */
     public function getMarkAsTestConditions()
     {
-        return  [
+        return [
             'last_name' => 'Tester',
         ];
     }

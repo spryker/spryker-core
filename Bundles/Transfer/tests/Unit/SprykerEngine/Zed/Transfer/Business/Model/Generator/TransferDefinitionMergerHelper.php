@@ -29,7 +29,7 @@ class TransferDefinitionMergerHelper
      */
     public function getTransferDefinition2()
     {
-        return  [
+        return [
             'name' => 'Transfer',
             'interface' => [
                 [
