@@ -12,6 +12,7 @@ use Generated\Shared\DiscountCalculationConnector\DiscountInterface;
 use Generated\Shared\DiscountCalculationConnector\ExpenseInterface;
 use Generated\Shared\DiscountCalculationConnector\ItemInterface;
 use Generated\Shared\DiscountCalculationConnector\ProductOptionInterface;
+use Generated\Shared\Sales\DiscountTotalItemInterface;
 use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\DiscountTotalItemTransfer;
 use Generated\Shared\Sales\OrderItemsInterface;
@@ -21,36 +22,36 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
 {
 
     /**
-     * @param TotalsInterface $totalsTransfer
+     * @param TotalsInterface     $totalsTransfer
      * @param CalculableInterface $discountableContainer
-     * @param $discountableContainers
+     * @param $calculableItems
      */
     public function recalculateTotals(
         TotalsInterface $totalsTransfer,
         CalculableInterface $discountableContainer,
-        $discountableContainers
+        $calculableItems
     ) {
-        $discountTransfer = $this->createDiscountTransfer($discountableContainer, $discountableContainers);
+        $discountTransfer = $this->createDiscountTransfer($discountableContainer, $calculableItems);
         $totalsTransfer->setDiscount($discountTransfer);
     }
 
     /**
      * @param CalculableInterface $discountableContainer
-     * @param $discountableItems
+     * @param $calculableItems
      *
      * @return array|int
      */
     public function calculateDiscount(
         CalculableInterface $discountableContainer,
-        $discountableItems
+        $calculableItems
     ) {
         $discountAmount = 0;
 
-        if ($discountableItems instanceof OrderItemsInterface) {
-            $discountableItems = $discountableItems->getOrderItems();
+        if ($calculableItems instanceof OrderItemsInterface) {
+            $calculableItems = $calculableItems->getOrderItems();
         }
 
-        foreach ($discountableItems as $itemTransfer) {
+        foreach ($calculableItems as $itemTransfer) {
             $discountAmount += $this->calculateItemDiscountAmount($itemTransfer);
         }
 
@@ -79,20 +80,21 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
 
     /**
      * @param CalculableInterface $discountableContainer
-     * @param $discountableContainers
+     * @param \ArrayObject|ItemInterface[] $calculableItems
      *
      * @return DiscountTotalsTransfer
      */
     protected function createDiscountTransfer(
         CalculableInterface $discountableContainer,
-        $discountableContainers
+        \ArrayObject $calculableItems
     ) {
         $discountTransfer = new DiscountTotalsTransfer();
-        $discountTransfer->setTotalAmount($this->calculateDiscount($discountableContainer, $discountableContainers));
+        $totalDiscountAmount = $this->calculateDiscount($discountableContainer, $calculableItems);
+        $discountTransfer->setTotalAmount($totalDiscountAmount);
 
-        $totalDiscountAmounts = $this->sumDiscountItems($discountableContainer, $discountableContainers);
-        foreach ($totalDiscountAmounts as $discountTotalItem) {
-            $discountTransfer->addDiscountItem($discountTotalItem);
+        $discountTotalItemCollection = $this->calculateDiscountTotals($discountableContainer, $calculableItems);
+        foreach ($discountTotalItemCollection as $discountTotalItemTransfer) {
+            $discountTransfer->addDiscountItem($discountTotalItemTransfer);
         }
 
         return $discountTransfer;
@@ -100,66 +102,87 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
 
     /**
      * @param CalculableInterface $discountableContainer
-     * @param $discountableItems
+     * @param \ArrayObject|ItemInterface[] $calculableItems
      *
-     * @return array
+     * @return array|DiscountTotalItemInterface[]
      */
-    protected function sumDiscountItems(
+    protected function calculateDiscountTotals(
         CalculableInterface $discountableContainer,
-        $discountableItems
+        \ArrayObject $calculableItems
     ) {
-        $orderExpenseItems = [];
+        $discountTotalItemCollection = [];
 
-        foreach ($discountableContainer->getCalculableObject()->getDiscounts() as $discount) {
-            $this->transformDiscountToDiscountTotalItemInArray($discount, $orderExpenseItems);
-        }
-
-        foreach ($discountableContainer->getCalculableObject()->getExpenses() as $expenses) {
-            foreach ($expenses->getDiscounts() as $discount) {
-                $this->transformDiscountToDiscountTotalItemInArray($discount, $orderExpenseItems);
+        foreach ($discountableContainer->getCalculableObject()->getExpenses() as $expensesTransfer) {
+            foreach ($expensesTransfer->getDiscounts() as $discountTransfer) {
+                $this->transformDiscountToDiscountTotalItemInArray($discountTransfer, $discountTotalItemCollection);
             }
         }
 
-        foreach ($discountableItems as $container) {
-            foreach ($container->getDiscounts() as $discount) {
-                $this->transformDiscountToDiscountTotalItemInArray($discount, $orderExpenseItems);
-            }
+        $this->calculateItemTotals($calculableItems, $discountTotalItemCollection);
 
-            foreach ($container->getProductOptions() as $option) {
-                foreach ($option->getDiscounts() as $discount) {
-                    $this->transformDiscountToDiscountTotalItemInArray($discount, $orderExpenseItems);
-                }
-            }
-
-            foreach ($container->getExpenses() as $expenses) {
-                foreach ($expenses->getDiscounts() as $discount) {
-                    $this->transformDiscountToDiscountTotalItemInArray($discount, $orderExpenseItems);
-                }
-            }
-        }
-
-        return $orderExpenseItems;
+        return $discountTotalItemCollection;
     }
 
     /**
-     * @param DiscountInterface $discountTransfer
-     * @param array $arrayOfExpenseTotalItems
+     * @param \ArrayObject|ItemInterface[] $calculableItems
+     * @param array|DiscountTotalItemInterface[]$discountTotalItemCollection
+     */
+    protected function calculateItemTotals(\ArrayObject $calculableItems, &$discountTotalItemCollection)
+    {
+        foreach ($calculableItems as $itemTransfer) {
+            foreach ($itemTransfer->getDiscounts() as $discountTransfer) {
+                $this->transformDiscountToDiscountTotalItemInArray(
+                    $discountTransfer,
+                    $discountTotalItemCollection,
+                    $itemTransfer->getQuantity()
+                );
+            }
+
+            foreach ($itemTransfer->getProductOptions() as $optionTransfer) {
+                foreach ($optionTransfer->getDiscounts() as $discountTransfer) {
+                    $this->transformDiscountToDiscountTotalItemInArray(
+                        $discountTransfer,
+                        $discountTotalItemCollection,
+                        $optionTransfer->getQuantity()
+                    );
+                }
+            }
+
+            foreach ($itemTransfer->getExpenses() as $expensesTransfer) {
+                foreach ($expensesTransfer->getDiscounts() as $discountTransfer) {
+                    $this->transformDiscountToDiscountTotalItemInArray(
+                        $discountTransfer,
+                        $discountTotalItemCollection,
+                        $expensesTransfer->getQuantity()
+                    );
+                }
+            }
+        }
+    }
+
+    /**
+     * @param DiscountInterface                  $discountTransfer
+     * @param array|DiscountTotalItemInterface[] $discountTotalItemCollection
+     * @param int                                $quantity
      */
     protected function transformDiscountToDiscountTotalItemInArray(
         DiscountInterface $discountTransfer,
-        array &$arrayOfExpenseTotalItems
+        array &$discountTotalItemCollection,
+        $quantity = 1
     ) {
-        if (!isset($arrayOfExpenseTotalItems[$discountTransfer->getDisplayName()])) {
+        if (!isset($discountTotalItemCollection[$discountTransfer->getDisplayName()])) {
             $discountTotalItemTransfer = $this->getDiscountTotalItem();
             $discountTotalItemTransfer->setName($discountTransfer->getDisplayName());
         } else {
-            $discountTotalItemTransfer = $arrayOfExpenseTotalItems[$discountTransfer->getDisplayName()];
+            $discountTotalItemTransfer = $discountTotalItemCollection[$discountTransfer->getDisplayName()];
         }
 
         $this->setUsedCodes($discountTotalItemTransfer, $discountTransfer);
 
-        $discountTotalItemTransfer->setAmount($discountTotalItemTransfer->getAmount() + $discountTransfer->getAmount());
-        $arrayOfExpenseTotalItems[$discountTransfer->getDisplayName()] = $discountTotalItemTransfer;
+        $discountTotalItemTransfer->setAmount(
+            $discountTotalItemTransfer->getAmount() + ($discountTransfer->getAmount() * $quantity)
+        );
+        $discountTotalItemCollection[$discountTransfer->getDisplayName()] = $discountTotalItemTransfer;
     }
 
     /**

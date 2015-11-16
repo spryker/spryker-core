@@ -18,7 +18,6 @@
         <property name="couponCodes" type="array" singular="couponCode" />
         <property name="createdAt" type="string" />
         <property name="isTest" type="string" />
-        <property name="discounts" type="Discount[]" singular="discount" />
         <property name="totals" type="Totals" />
         <property name="expenses" type="Expense[]" singular="expense" />
         <property name="invoice" type="Invoice[]" />

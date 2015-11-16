@@ -30,8 +30,6 @@ class RemoveAllCalculatedDiscountsCalculator
         foreach ($calculableContainer->getCalculableObject()->getExpenses() as $expense) {
             $expense->setDiscounts(new \ArrayObject());
         }
-
-        $calculableContainer->getCalculableObject()->setDiscounts(new \ArrayObject());
     }
 
 }

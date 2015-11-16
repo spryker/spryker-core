@@ -24,7 +24,6 @@ class CartOrderHydrator implements CartOrderHydratorInterface
 
         $order->setItems($this->transformCartItemsToOrderItems($cart->getItems()))
             ->setTotals($cart->getTotals())
-            ->setDiscounts($cart->getDiscounts())
             ->setExpenses($cart->getExpenses());
     }
 

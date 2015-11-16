@@ -14,11 +14,11 @@ interface DiscountTotalsCalculatorInterface extends TotalsCalculatorPluginInterf
 
     /**
      * @param CalculableInterface $discountableContainer
-     * @param $discountableItems
+     * @param $calculableItems
      */
     public function calculateDiscount(
         CalculableInterface $discountableContainer,
-        $discountableItems
+        $calculableItems
     );
 
 }
