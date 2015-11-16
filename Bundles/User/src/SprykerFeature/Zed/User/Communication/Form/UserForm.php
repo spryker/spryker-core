@@ -26,7 +26,7 @@ class UserForm extends AbstractForm
     /**
      * Prepares form
      *
-     * @return $this
+     * @return self
      */
     protected function buildFormFields()
     {
@@ -40,7 +40,7 @@ class UserForm extends AbstractForm
     }
 
     /**
-     * @return $this
+     * @return self
      */
     protected function addUsername()
     {
@@ -58,7 +58,7 @@ class UserForm extends AbstractForm
     }
 
     /**
-     * @return $this
+     * @return self
      */
     protected function addRepeatedUserPassword()
     {
@@ -80,7 +80,7 @@ class UserForm extends AbstractForm
     }
 
     /**
-     * @return $this
+     * @return self
      */
     protected function addFirstName()
     {
@@ -97,7 +97,7 @@ class UserForm extends AbstractForm
     }
 
     /**
-     * @return $this
+     * @return self
      */
     protected function addLastName()
     {
@@ -114,7 +114,7 @@ class UserForm extends AbstractForm
     }
 
     /**
-     * @return $this
+     * @return self
      */
     protected function addGroupSelect()
     {
@@ -139,7 +139,7 @@ class UserForm extends AbstractForm
     }
 
     /**
-     * @return $this
+     * @return self
      */
     public function addUserStatus()
     {

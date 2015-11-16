@@ -14,7 +14,7 @@ class RoleForm extends AbstractForm
     const ID_ROLE = 'id_acl_role';
 
     /**
-     * @return $this
+     * @return self
      */
     protected function buildFormFields()
     {
@@ -25,7 +25,7 @@ class RoleForm extends AbstractForm
     }
 
     /**
-     * @return $this
+     * @return self
      */
     protected function addName()
     {
@@ -43,7 +43,7 @@ class RoleForm extends AbstractForm
     }
 
     /**
-     * @return $this
+     * @return self
      */
     protected function addRoleId()
     {

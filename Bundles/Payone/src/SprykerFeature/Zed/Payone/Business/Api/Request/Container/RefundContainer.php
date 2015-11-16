@@ -100,7 +100,7 @@ class RefundContainer extends AbstractRequestContainer
      *   the amount of the corresponding booking.
      *   (Always provide a negative amount)
      *
-     * @return $this
+     * @return self
      */
     public function setAmount($amount)
     {
@@ -120,7 +120,7 @@ class RefundContainer extends AbstractRequestContainer
     /**
      * @param string $currency
      *
-     * @return $this
+     * @return self
      */
     public function setCurrency($currency)
     {
@@ -140,7 +140,7 @@ class RefundContainer extends AbstractRequestContainer
     /**
      * @param string $narrative_text
      *
-     * @return $this
+     * @return self
      */
     public function setNarrativeText($narrative_text)
     {
@@ -160,7 +160,7 @@ class RefundContainer extends AbstractRequestContainer
     /**
      * @param TransactionContainer $invoicing
      *
-     * @return $this
+     * @return self
      */
     public function setInvoicing(TransactionContainer $invoicing)
     {
@@ -180,7 +180,7 @@ class RefundContainer extends AbstractRequestContainer
     /**
      * @param BankAccountContainer $paymentMethod
      *
-     * @return $this;
+     * @return self;
      */
     public function setPaymentMethod(BankAccountContainer $paymentMethod)
     {
@@ -200,7 +200,7 @@ class RefundContainer extends AbstractRequestContainer
     /**
      * @param int $sequencenumber
      *
-     * @return $this
+     * @return self
      */
     public function setSequenceNumber($sequencenumber)
     {
@@ -220,7 +220,7 @@ class RefundContainer extends AbstractRequestContainer
     /**
      * @param string $txid
      *
-     * @return $this
+     * @return self
      */
     public function setTxid($txid)
     {
@@ -240,7 +240,7 @@ class RefundContainer extends AbstractRequestContainer
     /**
      * @param string $use_customerdata
      *
-     * @return $this
+     * @return self
      */
     public function setUseCustomerData($use_customerdata)
     {
@@ -268,7 +268,7 @@ class RefundContainer extends AbstractRequestContainer
     /**
      * @param string $bankcountry
      *
-     * @return $this
+     * @return self
      */
     public function setBankcountry($bankcountry)
     {
@@ -288,7 +288,7 @@ class RefundContainer extends AbstractRequestContainer
     /**
      * @param string $bankaccount
      *
-     * @return $this
+     * @return self
      */
     public function setBankaccount($bankaccount)
     {
@@ -308,7 +308,7 @@ class RefundContainer extends AbstractRequestContainer
     /**
      * @param string $bankcode
      *
-     * @return $this
+     * @return self
      */
     public function setBankcode($bankcode)
     {
@@ -328,7 +328,7 @@ class RefundContainer extends AbstractRequestContainer
     /**
      * @param string $bankbranchcode
      *
-     * @return $this
+     * @return self
      */
     public function setBankbranchcode($bankbranchcode)
     {
@@ -348,7 +348,7 @@ class RefundContainer extends AbstractRequestContainer
     /**
      * @param string $bankcheckdigit
      *
-     * @return $this
+     * @return self
      */
     public function setBankcheckdigit($bankcheckdigit)
     {
@@ -368,7 +368,7 @@ class RefundContainer extends AbstractRequestContainer
     /**
      * @param string $iban
      *
-     * @return $this
+     * @return self
      */
     public function setIban($iban)
     {
@@ -388,7 +388,7 @@ class RefundContainer extends AbstractRequestContainer
     /**
      * @param string $bic
      *
-     * @return $this
+     * @return self
      */
     public function setBic($bic)
     {
