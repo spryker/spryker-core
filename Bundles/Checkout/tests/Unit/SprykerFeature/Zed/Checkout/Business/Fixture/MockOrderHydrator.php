@@ -33,7 +33,7 @@ class MockOrderHydrator implements CheckoutOrderHydrationInterface
      */
     public function hydrateOrder(OrderTransfer $orderTransfer, CheckoutRequestTransfer $checkoutRequest)
     {
-        $orderTransfer->fromArray($this->orderTransfer->toArray(true));
+        $orderTransfer->fromArray($this->orderTransfer->toArray(true), true);
     }
 
 }

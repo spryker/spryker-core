@@ -119,7 +119,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
             }
 
             if ($this->isCollection($property)) {
-                $value = $this->processCollection($value, $property);
+                $value = $this->processCollection($value, $property, $ignoreMissingProperty);
             } elseif ($this->isTransferClass($property)) {
                 $value = $this->initializeNestedTransferObject($property, $value);
             }
@@ -133,22 +133,23 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     /**
      * @param string $elementType
      * @param array|\ArrayObject $arrayObject
+     * @param bool $ignoreMissingProperty
      *
      * @return \ArrayObject
      */
-    protected function processArrayObject($elementType, $arrayObject)
+    protected function processArrayObject($elementType, $arrayObject, $ignoreMissingProperty = false)
     {
         $transferObjectsArray = new \ArrayObject();
         foreach ($arrayObject as $arrayElement) {
             if (is_array($arrayElement)) {
                 if ($this->isAssociativeArray($arrayElement)) {
                     $transferObject = $this->createInstance($elementType);
-                    $transferObject->fromArray($arrayElement);
+                    $transferObject->fromArray($arrayElement, $ignoreMissingProperty);
                     $transferObjectsArray->append($transferObject);
                 } else {
                     foreach ($arrayElement as $arrayElementItem) {
                         $transferObject = $this->createInstance($elementType);
-                        $transferObject->fromArray($arrayElementItem);
+                        $transferObject->fromArray($arrayElementItem, $ignoreMissingProperty);
                         $transferObjectsArray->append($transferObject);
                     }
                 }
@@ -276,7 +277,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
         try {
             $this->$setter($value);
         } catch (\Exception $e) {
-            if ($ignoreMissingProperty) {
+            if ($ignoreMissingProperty === false) {
                 throw new \InvalidArgumentException(
                     sprintf('Missing property "%s" in "%s" (setter %s)', $property, get_class($this), $setter)
                 );
@@ -307,13 +308,14 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     /**
      * @param mixed $value
      * @param string $property
+     * @param bool $ignoreMissingProperty
      *
      * @return \ArrayObject
      */
-    private function processCollection($value, $property)
+    private function processCollection($value, $property, $ignoreMissingProperty = false)
     {
         $elementType = $this->transferMetadata[$property]['type'];
-        $value = $this->processArrayObject($elementType, $value);
+        $value = $this->processArrayObject($elementType, $value, $ignoreMissingProperty);
 
         return $value;
     }

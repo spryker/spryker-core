@@ -33,7 +33,7 @@ class MockOrderSaver implements CheckoutSaveOrderInterface
      */
     public function saveOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
-        $checkoutResponse->fromArray($this->checkoutResponse->toArray(true));
+        $checkoutResponse->fromArray($this->checkoutResponse->toArray(true), true);
     }
 
 }

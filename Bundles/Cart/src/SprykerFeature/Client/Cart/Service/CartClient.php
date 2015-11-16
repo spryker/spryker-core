@@ -284,9 +284,7 @@ class CartClient extends AbstractClient implements CartClientInterface
      */
     protected function mergeCartItems(ItemInterface $newItemTransfer, ItemInterface $oldItemByIdentifier)
     {
-        $newItemTransfer->fromArray(
-            $oldItemByIdentifier->toArray()
-        );
+        $newItemTransfer->fromArray($oldItemByIdentifier->toArray(), true);
 
         return $newItemTransfer;
     }
