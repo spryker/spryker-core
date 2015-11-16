@@ -49,6 +49,8 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
     ) {
         $grandTotal = $this->calculateGrandTotal($totalsTransfer, $container, $items);
         $grandTotal -= $this->getDiscount($totalsTransfer, $container, $items);
+        $grandTotal = $this->adjustGrandTotalAmount($grandTotal);
+
         $totalsTransfer->setGrandTotalWithDiscounts($grandTotal);
     }
 
@@ -90,6 +92,20 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
         } else {
             return $this->discountTotalsCalculator->calculateDiscount($calculableContainer, $calculableItems);
         }
+    }
+
+    /**
+     * @param int $grandTotal
+     *
+     * @return int
+     */
+    protected function adjustGrandTotalAmount($grandTotal)
+    {
+        if ($grandTotal < 0) {
+            $grandTotal = 0;
+        }
+
+        return $grandTotal;
     }
 
 }
