@@ -154,7 +154,7 @@ class CategoryFormAdd extends AbstractForm
             $formattedPath[] = $path['name'];
         }
 
-        return  '/' . implode('/', $formattedPath);
+        return '/' . implode('/', $formattedPath);
     }
 
     /**

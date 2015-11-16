@@ -203,7 +203,7 @@ class ProductDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function getUrlFacade()
     {
-        return  $this->getProvidedDependency(ProductDependencyProvider::FACADE_URL);
+        return $this->getProvidedDependency(ProductDependencyProvider::FACADE_URL);
     }
 
     /**
