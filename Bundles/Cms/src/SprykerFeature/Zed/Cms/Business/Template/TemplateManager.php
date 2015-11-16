@@ -269,12 +269,12 @@ class TemplateManager implements TemplateManagerInterface
         ;
 
         foreach ($this->finder->files() as $file) {
-            $fileFullName = $file->getRelativePathname();
-            $cmsTemplateCount = $this->cmsQueryContainer->queryTemplateByPath($cmsTemplateFolderPath . $fileFullName)->count();
+            $fullFileName = $file->getRelativePathname();
+            $cmsTemplateCount = $this->cmsQueryContainer->queryTemplateByPath($cmsTemplateFolderPath . $fullFileName)->count();
 
             if ($cmsTemplateCount === 0) {
-                $fileName = basename($templateFolder . $fileFullName, '.twig');
-                $this->createTemplate($fileName, $cmsTemplateFolderPath . $fileFullName);
+                $fileName = basename($templateFolder . $fullFileName, '.twig');
+                $this->createTemplate($fileName, $cmsTemplateFolderPath . $fullFileName);
                 $isSynced = true;
             }
         }
