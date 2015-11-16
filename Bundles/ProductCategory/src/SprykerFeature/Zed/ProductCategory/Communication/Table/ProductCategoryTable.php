@@ -139,7 +139,7 @@ class ProductCategoryTable extends AbstractTable
      */
     protected function getCheckboxHtml(array $productCategory)
     {
-        return  sprintf(
+        return sprintf(
             '<input id="product_category_checkbox_%d" type="checkbox" checked="checked" onclick="categoryTableClickMarkAsSelected(this.checked, %d, \'%s\', \'%s\'); return" /> ',
             $productCategory['id_abstract_product'],
             $productCategory['id_abstract_product'],
