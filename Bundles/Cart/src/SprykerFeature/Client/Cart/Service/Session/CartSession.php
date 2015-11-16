@@ -46,7 +46,7 @@ class CartSession implements CartSessionInterface
     /**
      * @param CartInterface $cartTransfer
      *
-     * @return $this
+     * @return self
      */
     public function setCart(CartInterface $cartTransfer)
     {
@@ -70,7 +70,7 @@ class CartSession implements CartSessionInterface
     /**
      * @param $itemCount
      *
-     * @return $this
+     * @return self
      */
     public function setItemCount($itemCount)
     {

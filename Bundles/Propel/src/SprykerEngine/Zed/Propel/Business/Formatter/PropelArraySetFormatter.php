@@ -22,7 +22,7 @@ class PropelArraySetFormatter extends SimpleArrayFormatter
      * @param BaseModelCriteria $criteria
      * @param DataFetcherInterface $dataFetcher
      *
-     * @return $this|AbstractFormatter The current formatter object
+     * @return self|AbstractFormatter The current formatter object
      */
     public function init(BaseModelCriteria $criteria, DataFetcherInterface $dataFetcher = null)
     {
@@ -37,6 +37,7 @@ class PropelArraySetFormatter extends SimpleArrayFormatter
 
         return $this;
     }
+
     /**
      * @param DataFetcherInterface $dataFetcher
      *

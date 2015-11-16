@@ -17,7 +17,7 @@ interface ItemInterface
     /**
      * @param string $identifier
      *
-     * @return $this
+     * @return self
      */
     public function setId($identifier);
 
@@ -29,7 +29,7 @@ interface ItemInterface
     /**
      * @param int $quantity
      *
-     * @return $this
+     * @return self
      */
     public function setQuantity($quantity);
 
