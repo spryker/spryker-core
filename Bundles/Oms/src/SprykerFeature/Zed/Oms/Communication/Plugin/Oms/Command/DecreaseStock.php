@@ -21,7 +21,8 @@ class DecreaseStock implements CommandByItemInterface
      */
     public function run(SpySalesOrderItem $orderItem, ReadOnlyArrayObject $data)
     {
-        Log::log('Command DecreaseStock by Item for Item ' . $orderItem->getIdSalesOrderItem(), 'statemachine.log');
+        $message = sprintf('Command DecreaseStock by Item for Item %s', $orderItem->getIdSalesOrderItem());
+        Log::log($message, 'statemachine.log');
 
         return [];
     }
