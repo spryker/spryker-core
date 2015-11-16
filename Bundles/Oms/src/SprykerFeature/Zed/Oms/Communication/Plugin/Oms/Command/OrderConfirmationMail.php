@@ -25,6 +25,8 @@ class OrderConfirmationMail implements CommandByOrderInterface
     {
         $message = sprintf('Command OrderConfirmationMail by Order for Order %s (%s items)', $orderEntity->getIdSalesOrder(), count($orderItems));
         Log::log($message, 'statemachine.log');
+
+        return [];
     }
 
 }
