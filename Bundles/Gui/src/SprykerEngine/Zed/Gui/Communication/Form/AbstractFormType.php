@@ -4,11 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Gui\Communication\Form;
+namespace SprykerEngine\Zed\Gui\Communication\Form;
 
+use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Gui\Communication\Plugin\ConstraintsPlugin;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractFormType extends AbstractType
 {
@@ -31,9 +33,9 @@ abstract class AbstractFormType extends AbstractType
     }
 
     /**
-     * @return Locator
+     * @return AutoCompletion
      */
-    public function getLocator()
+    private function getLocator()
     {
         return Locator::getInstance();
     }
@@ -46,5 +48,13 @@ abstract class AbstractFormType extends AbstractType
     public function getEnumSet(array $array)
     {
         return array_combine($array, $array);
+    }
+
+    /**
+     * @return Request
+     */
+    protected function getRequest()
+    {
+        return $this->getLocator()->application()->pluginPimple()->getApplication()['request'];
     }
 }

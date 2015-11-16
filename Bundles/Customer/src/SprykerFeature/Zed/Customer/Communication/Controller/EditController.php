@@ -8,21 +8,17 @@ namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
-use SprykerFeature\Zed\Customer\Communication\Form\CustomerTypeForm;
+use SprykerFeature\Zed\Customer\Communication\Form\CustomerFormType;
 use SprykerFeature\Zed\Customer\CustomerConfig;
-use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method CustomerCommunication getFactory()
- * @method CustomerQueryContainerInterface getQueryContainer()
- * @method CustomerDependencyContainer getDependencyContainer()
  * @method CustomerFacade getFacade()
+ * @method CustomerDependencyContainer getDependencyContainer()
  */
 class EditController extends AbstractController
 {
@@ -34,17 +30,10 @@ class EditController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCustomer = $request->get(CustomerTypeForm::PARAM_ID_CUSTOMER);
-
-        $customerTransfer = new CustomerTransfer();
-        $customerTransfer->setIdCustomer($idCustomer);
-        $customer = $this->getFacade()->getCustomer($customerTransfer);
-
-        $customerTransfer = $customerTransfer->fromArray($customer->toArray(), true);
+        $idCustomer = $request->get(CustomerFormType::PARAM_ID_CUSTOMER);
 
         $form = $this->getDependencyContainer()
-            ->createCustomerForm($customerTransfer, CustomerTypeForm::UPDATE, $idCustomer)
-        ;
+            ->createCustomerForm(CustomerFormType::UPDATE);
 
         $form->handleRequest($request);
 
@@ -54,8 +43,7 @@ class EditController extends AbstractController
             $customer = $this->createCustomerTransfer();
             $customer->fromArray($data, true);
             $this->getFacade()
-                ->updateCustomer($customer)
-            ;
+                ->updateCustomer($customer);
 
             $defaultBilling = !empty($data[CustomerTransfer::DEFAULT_BILLING_ADDRESS]) ? $data[CustomerTransfer::DEFAULT_BILLING_ADDRESS] : false;
             if (empty($defaultBilling) === false) {
@@ -100,8 +88,7 @@ class EditController extends AbstractController
     {
         $addressTransfer = $this->createCustomAddressTransfer($idCustomer, $defaultBillingAddress);
         $this->getFacade()
-            ->setDefaultBillingAddress($addressTransfer)
-        ;
+            ->setDefaultBillingAddress($addressTransfer);
     }
 
     /**
@@ -112,8 +99,7 @@ class EditController extends AbstractController
     {
         $addressTransfer = $this->createCustomAddressTransfer($idCustomer, $defaultShippingAddress);
         $this->getFacade()
-            ->setDefaultShippingAddress($addressTransfer)
-        ;
+            ->setDefaultShippingAddress($addressTransfer);
     }
 
     /**

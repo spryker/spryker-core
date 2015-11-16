@@ -89,6 +89,17 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     /**
      * @inheritdoc
      */
+    public function queryAddressByIdCustomer($idCustomer)
+    {
+        return $this
+            ->getDependencyContainer()
+            ->createSpyCustomerAddressQuery()
+            ->filterByFkCustomer($idCustomer);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function queryAddress($idAddress)
     {
         $query = $this->getDependencyContainer()->createSpyCustomerAddressQuery();

@@ -7,11 +7,13 @@
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
+use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
- * @method CustomerDependencyContainer getDependencyContainer
+ * @method CustomerFacade getFacade()
+ * @method CustomerDependencyContainer getDependencyContainer()
  */
 class IndexController extends AbstractController
 {
@@ -22,8 +24,7 @@ class IndexController extends AbstractController
     public function indexAction()
     {
         $table = $this->getDependencyContainer()
-            ->createCustomerTable()
-        ;
+            ->createCustomerTable();
 
         return $this->viewResponse([
             'customerTable' => $table->render(),
@@ -36,8 +37,7 @@ class IndexController extends AbstractController
     public function tableAction()
     {
         $table = $this->getDependencyContainer()
-            ->createCustomerTable()
-        ;
+            ->createCustomerTable();
 
         return $this->jsonResponse($table->fetchData());
     }

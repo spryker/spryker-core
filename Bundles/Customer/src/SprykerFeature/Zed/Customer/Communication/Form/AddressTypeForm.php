@@ -5,7 +5,7 @@ namespace SprykerFeature\Zed\Customer\Communication\Form;
 use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
-use SprykerFeature\Zed\Gui\Communication\Form\AbstractFormType;
+use SprykerEngine\Zed\Gui\Communication\Form\AbstractFormType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class AddressTypeForm extends AbstractFormType

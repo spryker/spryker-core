@@ -7,20 +7,16 @@
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\AddressesTransfer;
-use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
+use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
 use SprykerFeature\Zed\Customer\CustomerConfig;
-use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
-use Generated\Shared\Transfer\CustomerTransfer;
 
 /**
- * @method CustomerCommunication getFactory()
- * @method CustomerQueryContainerInterface getQueryContainer()
- * @method CustomerDependencyContainer getDependencyContainer()
  * @method CustomerFacade getFacade()
+ * @method CustomerDependencyContainer getDependencyContainer()
  */
 class ViewController extends AbstractController
 {
@@ -38,8 +34,7 @@ class ViewController extends AbstractController
         $customerTransfer->setIdCustomer($idCustomer);
 
         $customerTransfer = $this->getFacade()
-            ->getCustomer($customerTransfer)
-        ;
+            ->getCustomer($customerTransfer);
         $addresses = $customerTransfer->getAddresses()->toArray();
         $customerArray = $customerTransfer->toArray();
 

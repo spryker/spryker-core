@@ -13,7 +13,8 @@ use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Customer\Communication\Form\AddressTypeForm;
-use SprykerFeature\Zed\Customer\Communication\Form\CustomerTypeForm;
+use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
+use SprykerFeature\Zed\Customer\Communication\Form\CustomerFormType;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use SprykerFeature\Zed\Customer\Communication\Table\AddressTable;
 use SprykerFeature\Zed\Customer\Communication\Table\CustomerTable;
@@ -72,43 +73,21 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
-     * @param CustomerTransfer|null $customer
-     * @param string $type
-     * @param int $idCustomer
-     *
-     * @return FormInterface
+     * @param $formTypeName
+     * @return mixed
+     * @throws \ErrorException
      */
-    public function createCustomerForm(CustomerTransfer $customer, $type, $idCustomer = 0)
+    public function createCustomerForm($formTypeName)
     {
-        $customerQuery = $this->getQueryContainer()
-            ->queryCustomers()
-        ;
+        $customerFormType = $this->getFactory()
+            ->createFormCustomerFormType($this->getQueryContainer(), $formTypeName);
 
-        $customerAddressQuery = $this->getQueryContainer()
-            ->queryAddresses()
-        ;
+        $customerForm = $this->getFactory()
+            ->createFormCustomerForm($this->getQueryContainer(), $customerFormType);
 
-        $customerFormType = $this->createCustomerFormType($customerQuery, $customerAddressQuery, $type, $idCustomer);
-
-        $defaultData = $this->getCustomerDefaultData($customer);
-
-        return $this->getFormFactory()
-            ->create($customerFormType, $defaultData)
-        ;
+        return $customerForm->create();
     }
 
-    /**
-     * @param SpyCustomerQuery $customerQuery
-     * @param SpyCustomerAddressQuery $customerAddressQuery
-     * @param string $type
-     * @param int $idCustomer
-     *
-     * @return CustomerTypeForm
-     */
-    public function createCustomerFormType(SpyCustomerQuery $customerQuery, SpyCustomerAddressQuery $customerAddressQuery, $type, $idCustomer)
-    {
-        return new CustomerTypeForm($customerQuery, $customerAddressQuery, $type, $idCustomer);
-    }
 
     /**
      * @param AddressTransfer $addressTransfer
@@ -119,38 +98,20 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
     public function createAddressForm(AddressTransfer $addressTransfer, $type)
     {
         $customerQuery = $this->getQueryContainer()
-            ->queryCustomers()
-        ;
+            ->queryCustomers();
 
         $addressQuery = $this->getQueryContainer()
-            ->queryAddresses()
-        ;
+            ->queryAddresses();
 
-        $customerAddressForm = $this->createCustomerAddressFormType($addressQuery, $customerQuery, $type);
+        $customerAddressFormType = $this->getFactory()
+            ->createFormAddressTypeForm($addressQuery, $customerQuery, $type);
 
         $defaultData = $this->getAddressFormDefaultData($addressTransfer);
 
         return $this->getFormFactory()
-            ->create($customerAddressForm, $defaultData)
-        ;
+            ->create($customerAddressFormType, $defaultData);
     }
 
-    /**
-     * @param SpyCustomerAddressQuery $addressQuery
-     * @param SpyCustomerQuery $customerQuery
-     * @param string $type
-     *
-     * @return AddressTypeForm
-     */
-    protected function createCustomerAddressFormType(
-        SpyCustomerAddressQuery $addressQuery,
-        SpyCustomerQuery $customerQuery,
-        $type
-    ) {
-        $customerAddressForm = new AddressTypeForm($addressQuery, $customerQuery, $type);
-
-        return $customerAddressForm;
-    }
 
     /**
      * @param AddressTransfer $addressTransfer
@@ -177,7 +138,13 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
             return [];
         }
 
-        return $customer->toArray();
+        return $customer->toArray()
+
+
+
+
+
+            ;
     }
 
 }

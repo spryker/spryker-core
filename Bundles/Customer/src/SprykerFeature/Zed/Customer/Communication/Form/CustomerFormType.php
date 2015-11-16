@@ -3,13 +3,12 @@
 namespace SprykerFeature\Zed\Customer\Communication\Form;
 
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
-use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
-use SprykerFeature\Zed\Gui\Communication\Form\AbstractFormType;
+use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
+use SprykerEngine\Zed\Gui\Communication\Form\AbstractFormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 
-class CustomerTypeForm extends AbstractFormType
+class CustomerFormType extends AbstractFormType
 {
 
     const SALUTATION = 'salutation';
@@ -22,40 +21,24 @@ class CustomerTypeForm extends AbstractFormType
     const DEFAULT_SHIPPING_ADDRESS = 'default_shipping_address';
 
     /**
-     * @var SpyCustomerQuery
-     */
-    protected $customerQuery;
-
-    /**
-     * @var SpyCustomerAddressQuery
-     */
-    protected $customerAddressQuery;
-
-    /**
      * @var string
      */
-    protected $formType = '';
+    protected $addOrUpdate;
 
     /**
-     * @var int
+     * @var CustomerQueryContainerInterface
      */
-    protected $idCustomer;
+    protected $customerQueryContainer;
 
     /**
-     * @param SpyCustomerQuery $customerQuery
-     * @param SpyCustomerAddressQuery $customerAddressQuery
-     * @param string $formType
+     * CustomerFormType constructor.
+     * @param CustomerQueryContainerInterface $customerQueryContainer
+     * @param $addOrUpdate
      */
-    public function __construct(
-        SpyCustomerQuery $customerQuery,
-        SpyCustomerAddressQuery $customerAddressQuery,
-        $formType,
-        $idCustomer
-    ) {
-        $this->customerQuery = $customerQuery;
-        $this->customerAddressQuery = $customerAddressQuery;
-        $this->formType = $formType;
-        $this->idCustomer = $idCustomer;
+    public function __construct(CustomerQueryContainerInterface $customerQueryContainer, $addOrUpdate)
+    {
+        $this->customerQueryContainer = $customerQueryContainer;
+        $this->addOrUpdate = $addOrUpdate;
     }
 
     /**
@@ -71,7 +54,7 @@ class CustomerTypeForm extends AbstractFormType
             'constraints' => $this->getEmailConstraints(),
         ];
 
-        if (self::UPDATE === $this->formType) {
+        if (self::UPDATE === $this->addOrUpdate) {
             $emailParameters['disabled'] = 'disabled';
         }
 
@@ -98,10 +81,9 @@ class CustomerTypeForm extends AbstractFormType
                 'constraints' => [
                     $this->getConstraints()->createConstraintRequired(),
                 ],
-            ])
-        ;
+            ]);
 
-        if (self::UPDATE === $this->formType) {
+        if (self::UPDATE === $this->addOrUpdate) {
             $builder
                 ->add(self::DEFAULT_BILLING_ADDRESS, 'choice', [
                     'label' => 'Billing Address',
@@ -112,8 +94,7 @@ class CustomerTypeForm extends AbstractFormType
                     'label' => 'Shipping Address',
                     'placeholder' => 'Select one',
                     'choices' => $this->getAddressOptions(),
-                ])
-            ;
+                ]);
         }
 
         $builder->add(self::FIELD_SEND_PASSWORD_TOKEN, 'checkbox', [
@@ -126,11 +107,11 @@ class CustomerTypeForm extends AbstractFormType
      */
     protected function getAddressOptions()
     {
-        $addresses = $this->customerAddressQuery->findByFkCustomer($this->idCustomer);
+        $addresses = $this->customerQueryContainer->queryAddressByIdCustomer($this->getIdCustomer())->find();
 
         $result = [];
         if (!empty($addresses)) {
-            foreach ($addresses->getData() as $address) {
+            foreach ($addresses as $address) {
                 $result[$address->getIdCustomerAddress()] = sprintf(
                     '%s %s (%s, %s %s)',
                     $address->getFirstName(),
@@ -143,6 +124,14 @@ class CustomerTypeForm extends AbstractFormType
         }
 
         return $result;
+    }
+
+    /**
+     * return int
+     */
+    protected function getIdCustomer()
+    {
+        return $this->getRequest()->query->get('id-customer');
     }
 
     /**
@@ -184,7 +173,7 @@ class CustomerTypeForm extends AbstractFormType
             $this->getConstraints()->createConstraintEmail(),
         ];
 
-        if (self::ADD === $this->formType) {
+        if (self::ADD === $this->addOrUpdate) {
             $emailConstraints[] = $this->getConstraints()->createConstraintCallback([
                 'methods' => [
                     function ($email, ExecutionContextInterface $context) {

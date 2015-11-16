@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
-use SprykerFeature\Zed\Gui\Communication\Form\AbstractFormType;
+use SprykerEngine\Zed\Gui\Communication\Form\AbstractFormType;
 
 abstract class AbstractRuleType extends AbstractFormType
 {
