@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-require_once __DIR__.'/../../../../../autoload.php';
+require_once __DIR__ . '/../../../../../autoload.php';
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -36,8 +36,8 @@ class ClassMapBuilder
     private function getDirectories()
     {
         $directories = [
-            __DIR__.'/../../*/src',
-            __DIR__.'/../../../../../../src',
+            __DIR__ . '/../../*/src',
+            __DIR__ . '/../../../../../../src',
         ];
 
         return $directories;
@@ -79,7 +79,7 @@ class ClassMapBuilder
 
     /**
      * @param SplFileInfo $file
-     * @param array       $map
+     * @param array $map
      *
      * @return array
      */
@@ -98,11 +98,11 @@ class ClassMapBuilder
             $layer = $classNameParts[self::CLASS_PART_LAYER];
             $absoluteBundlePath = $this->getAbsoluteBundlePath($namespace, $application, $bundle, $layer);
             $factoryMethodName = $this->extractFactoryMethodName($absoluteBundlePath, $className);
-            $map[$application.'|'.$bundle.'|'.$layer.'|'.$factoryMethodName] = $className;
+            $map[$application . '|' . $bundle . '|' . $layer . '|' . $factoryMethodName] = $className;
         } else {
             $absoluteBundlePath = $this->getAbsoluteBundlePath($namespace, $application, $bundle);
             $factoryMethodName = $this->extractFactoryMethodName($absoluteBundlePath, $className);
-            $map[$application.'|'.$bundle.'|'.$factoryMethodName] = $className;
+            $map[$application . '|' . $bundle . '|' . $factoryMethodName] = $className;
         }
 
         return $map;
@@ -115,8 +115,8 @@ class ClassMapBuilder
      */
     private function getClassNameFromFile(SplFileInfo $file)
     {
-        $path = $file->getRelativePath().DIRECTORY_SEPARATOR.$file->getFilename();
-        $className = '\\'.str_replace(DIRECTORY_SEPARATOR, '\\', $path);
+        $path = $file->getRelativePath() . DIRECTORY_SEPARATOR . $file->getFilename();
+        $className = '\\' . str_replace(DIRECTORY_SEPARATOR, '\\', $path);
         $className = str_replace('.php', '', $className);
 
         return $className;
@@ -145,7 +145,7 @@ class ClassMapBuilder
      */
     private function saveMapToFile(array $map)
     {
-        $content = '<?php return '.var_export($map, true).';';
+        $content = '<?php return ' . var_export($map, true) . ';';
 
         $savedFile = file_put_contents(
             $this->getPathToClassMap(),
@@ -158,10 +158,10 @@ class ClassMapBuilder
     }
 
     /**
-     * @param $namespace
-     * @param $application
-     * @param $bundle
-     * @param $layer
+     * @param string $namespace
+     * @param string $application
+     * @param string $bundle
+     * @param string $layer
      *
      * @return string
      */
