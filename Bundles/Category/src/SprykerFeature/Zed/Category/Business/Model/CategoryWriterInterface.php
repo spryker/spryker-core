@@ -35,4 +35,12 @@ interface CategoryWriterInterface
      */
     public function delete($idCategory);
 
+    /**
+     * @param CategoryInterface $category
+     * @param LocaleTransfer $locale
+     *
+     * @return void
+     */
+    public function addCategoryAttribute(CategoryInterface $category, LocaleTransfer $locale);
+
 }

@@ -112,11 +112,20 @@ class CategoryWriter implements CategoryWriterInterface
     {
         $categoryAttributeEntity = $this->queryContainer->queryAttributeByCategoryId($category->getIdCategory())->findOneOrCreate();
 
-        $categoryAttributeEntity->fromArray($category->toArray());
-        $categoryAttributeEntity->setFkCategory($category->getIdCategory());
-        $categoryAttributeEntity->setFkLocale($locale->getIdLocale());
+        $this->saveCategoryAttribute($category, $locale, $categoryAttributeEntity);
+    }
 
-        $categoryAttributeEntity->save();
+    /**
+     * @param CategoryInterface $category
+     * @param LocaleTransfer $locale
+     *
+     * @return void
+     */
+    public function addCategoryAttribute(CategoryInterface $category, LocaleTransfer $locale)
+    {
+        $categoryAttributeEntity = new SpyCategoryAttribute();
+
+        $this->saveCategoryAttribute($category, $locale, $categoryAttributeEntity);
     }
 
     /**
@@ -157,6 +166,22 @@ class CategoryWriter implements CategoryWriterInterface
             ->queryCategoryById($idCategory)
             ->findOne()
         ;
+    }
+
+    /**
+     * @param CategoryInterface $category
+     * @param LocaleTransfer $locale
+     * @param SpyCategoryAttribute $categoryAttributeEntity
+     *
+     * @return void
+     */
+    protected function saveCategoryAttribute(CategoryInterface $category, LocaleTransfer $locale, SpyCategoryAttribute $categoryAttributeEntity)
+    {
+        $categoryAttributeEntity->fromArray($category->toArray());
+        $categoryAttributeEntity->setFkCategory($category->getIdCategory());
+        $categoryAttributeEntity->setFkLocale($locale->getIdLocale());
+
+        $categoryAttributeEntity->save();
     }
 
 }

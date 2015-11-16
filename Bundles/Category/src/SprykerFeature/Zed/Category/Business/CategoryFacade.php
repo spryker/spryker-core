@@ -161,6 +161,20 @@ class CategoryFacade extends AbstractFacade
     }
 
     /**
+     * @param CategoryTransfer $category
+     * @param LocaleTransfer $locale
+     *
+     * @return void
+     */
+    public function addCategoryAttribute(CategoryTransfer $category, LocaleTransfer $locale)
+    {
+        $this->getDependencyContainer()
+            ->createCategoryWriter()
+            ->addCategoryAttribute($category, $locale)
+        ;
+    }
+
+    /**
      * @param int $idCategory
      *
      * @return void

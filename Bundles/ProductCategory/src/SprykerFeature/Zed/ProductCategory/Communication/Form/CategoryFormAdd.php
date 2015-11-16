@@ -21,6 +21,7 @@ class CategoryFormAdd extends AbstractForm
 
     const NAME = 'name';
     const PK_CATEGORY = 'id_category';
+    const CATEGORY_KEY = 'category_key';
     const PK_CATEGORY_NODE = 'id_category_node';
     const FK_PARENT_CATEGORY_NODE = 'fk_parent_category_node';
     const FK_NODE_CATEGORY = 'fk_category';
@@ -77,6 +78,11 @@ class CategoryFormAdd extends AbstractForm
     protected function buildFormFields()
     {
         return $this->addText(self::NAME, [
+                'constraints' => [
+                    $this->getConstraints()->createConstraintNotBlank(),
+                ],
+            ])
+            ->addText(self::CATEGORY_KEY, [
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
