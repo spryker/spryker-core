@@ -11,14 +11,10 @@ use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInter
 
 interface DiscountTotalsCalculatorInterface extends TotalsCalculatorPluginInterface
 {
-
     /**
      * @param CalculableInterface $discountableContainer
-     * @param $calculableItems
+     * @param \ArrayObject $calculableItems
      */
-    public function calculateDiscount(
-        CalculableInterface $discountableContainer,
-        $calculableItems
-    );
+    public function calculateDiscount(CalculableInterface $discountableContainer, \ArrayObject $calculableItems);
 
 }

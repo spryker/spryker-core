@@ -24,7 +24,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     /**
      * @param TotalsInterface $totalsTransfer
      * @param CalculableInterface $discountableContainer
-     * @param $calculableItems
+     * @param \ArrayObject $calculableItems
      *
      * @return void
      */
@@ -39,13 +39,13 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
 
     /**
      * @param CalculableInterface $discountableContainer
-     * @param $calculableItems
+     * @param \ArrayObject $calculableItems
      *
      * @return int
      */
     public function calculateDiscount(
         CalculableInterface $discountableContainer,
-        $calculableItems
+        \ArrayObject $calculableItems
     ) {
         $discountAmount = 0;
 
