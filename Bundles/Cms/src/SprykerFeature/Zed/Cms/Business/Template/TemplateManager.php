@@ -270,10 +270,9 @@ class TemplateManager implements TemplateManagerInterface
 
         foreach ($this->finder->files() as $file) {
             $fileFullName = $file->getRelativePathname();
+            $templateEntity = $this->cmsQueryContainer->queryTemplateByPath($cmsTemplateFolderPath . $fileFullName)->findOne();
 
-            try {
-                $this->getTemplateByPath($cmsTemplateFolderPath . $fileFullName);
-            } catch (MissingTemplateException $e) {
+            if ($templateEntity === null) {
                 $fileName = basename($templateFolder . $fileFullName, '.twig');
                 $this->createTemplate($fileName, $cmsTemplateFolderPath . $fileFullName);
                 $isSynced = true;
