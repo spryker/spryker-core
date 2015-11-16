@@ -119,8 +119,6 @@ class CategoryWriter implements CategoryWriterInterface
      * @param CategoryInterface $category
      * @param LocaleTransfer $locale
      *
-     * @throws PropelException
-     *
      * @return void
      */
     public function addCategoryAttribute(CategoryInterface $category, LocaleTransfer $locale)
@@ -173,11 +171,11 @@ class CategoryWriter implements CategoryWriterInterface
     /**
      * @param CategoryInterface $category
      * @param LocaleTransfer $locale
-     * @param $categoryAttributeEntity
+     * @param SpyCategoryAttribute $categoryAttributeEntity
      *
      * @return void
      */
-    protected function saveCategoryAttribute(CategoryInterface $category, LocaleTransfer $locale,SpyCategoryAttribute $categoryAttributeEntity)
+    protected function saveCategoryAttribute(CategoryInterface $category, LocaleTransfer $locale, SpyCategoryAttribute $categoryAttributeEntity)
     {
         $categoryAttributeEntity->fromArray($category->toArray());
         $categoryAttributeEntity->setFkCategory($category->getIdCategory());

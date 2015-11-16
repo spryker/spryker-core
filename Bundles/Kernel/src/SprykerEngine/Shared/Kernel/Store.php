@@ -7,6 +7,7 @@
 namespace SprykerEngine\Shared\Kernel;
 
 use Elastica\Exception\RuntimeException;
+use SprykerEngine\Shared\Kernel\Locale\LocaleNotFoundException;
 use SprykerFeature\Shared\Application\ApplicationConfig;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\NewRelic\Api;
@@ -187,7 +188,7 @@ class Store
     public function getCurrentLocale()
     {
         if ($this->currentLocale === null) {
-            throw new \Exception('Locale is not defined.');
+            throw new LocaleNotFoundException('Locale is not defined.');
         }
 
         return $this->currentLocale;

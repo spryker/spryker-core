@@ -39,8 +39,6 @@ interface CategoryWriterInterface
      * @param CategoryInterface $category
      * @param LocaleTransfer $locale
      *
-     * @throws PropelException
-     *
      * @return void
      */
     public function addCategoryAttribute(CategoryInterface $category, LocaleTransfer $locale);
