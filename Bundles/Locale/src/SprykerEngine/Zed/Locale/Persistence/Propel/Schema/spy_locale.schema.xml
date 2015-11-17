@@ -6,11 +6,11 @@
         <column name="locale_name" required="true" size="5" type="VARCHAR"/>
         <column name="is_active" required="true" type="BOOLEAN" defaultValue="true"/>
 
-        <index name="spy_locale-locale_name">
+        <index name="spy_locale-index-locale_name">
             <index-column name="locale_name"/>
         </index>
 
-        <unique name="spy_locale-locale_name">
+        <unique name="spy_locale-unique-locale_name">
             <unique-column name="locale_name"/>
         </unique>
         <id-method-parameter value="spy_locale_pk_seq"/>

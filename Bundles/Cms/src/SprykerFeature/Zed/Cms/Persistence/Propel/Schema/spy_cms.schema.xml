@@ -5,7 +5,7 @@
         <column name="id_cms_template" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="template_name" type="VARCHAR" size="255" required="true"/>
         <column name="template_path" type="VARCHAR" size="255" required="true"/>
-        <unique name="spy_cms_template-template_path">
+        <unique name="spy_cms_template-unique-template_path">
             <unique-column name="template_path"/>
         </unique>
         <index name="spy_cms_template-template_path">
@@ -37,7 +37,7 @@
         <foreign-key name="spy_cms_glossary_key_mapping-fk_glossary_key" foreignTable="spy_glossary_key" phpName="GlossaryKey" onDelete="CASCADE">
             <reference foreign="id_glossary_key" local="fk_glossary_key"/>
         </foreign-key>
-        <unique name="spy_cms_glossary_key_mapping-fk_page">
+        <unique name="spy_cms_glossary_key_mapping-unique-fk_page">
             <unique-column name="fk_page"/>
             <unique-column name="placeholder"/>
         </unique>
@@ -54,10 +54,10 @@
         <column name="name" type="VARCHAR" required="true" size="255"/>
         <column name="type" type="VARCHAR" size="255"/>
         <column name="value" type="INTEGER" />
-        <foreign-key name="spy_cms_block-fk_page" foreignTable="spy_cms_page" phpName="SpyCmsPage" onDelete="CASCADE">
+        <foreign-key name="spy_cms_block-foreign-fk_page" foreignTable="spy_cms_page" phpName="SpyCmsPage" onDelete="CASCADE">
             <reference foreign="id_cms_page" local="fk_page"/>
         </foreign-key>
-        <unique name="spy_cms_block-fk_page">
+        <unique name="spy_cms_block-unique-fk_page">
             <unique-column name="fk_page"/>
         </unique>
         <unique name="spy_cms_block-name">
@@ -65,7 +65,7 @@
             <unique-column name="type"/>
             <unique-column name="value"/>
         </unique>
-        <index name="spy_cms_block-fk_page">
+        <index name="spy_cms_block-index-fk_page">
             <index-column name="fk_page"/>
         </index>
         <id-method-parameter value="spy_cms_block_pk_seq"/>

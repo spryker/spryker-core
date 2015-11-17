@@ -15,6 +15,9 @@ use SprykerFeature\Zed\Setup\SetupConfig;
 class SetupDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
+    /**
+     * @return array
+     */
     public function createSetupInstallCommandNames()
     {
         return $this->getConfig()->getSetupInstallCommandNames();
