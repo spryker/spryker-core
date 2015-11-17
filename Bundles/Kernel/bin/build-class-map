@@ -175,10 +175,10 @@ class ClassMapBuilder
     }
 
     /**
-     * @param $absoluteBundlePath
-     * @param $className
+     * @param string $absoluteBundlePath
+     * @param string $className
      *
-     * @return mixed
+     * @return string
      */
     private function extractFactoryMethodName($absoluteBundlePath, $className)
     {
