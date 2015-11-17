@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-require_once(__DIR__ . '/../../../../../autoload.php');
+require_once __DIR__ . '/../../../../../autoload.php';
 
 use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
@@ -10,7 +10,6 @@ class ClassMapBuilder
 {
 
     const CLASS_MAP_FILE_NAME = '.class_map';
-
     const CLASS_PART_NAMESPACE = 1;
     const CLASS_PART_APPLICATION = 2;
     const CLASS_PART_BUNDLE = 3;
@@ -141,22 +140,30 @@ class ClassMapBuilder
 
     /**
      * @param array $map
+     *
+     * @throws Exception
+     *
+     * @return void
      */
     private function saveMapToFile(array $map)
     {
         $content = '<?php return ' . var_export($map, true) . ';';
 
-        file_put_contents(
+        $savedFile = file_put_contents(
             $this->getPathToClassMap(),
             $content
         );
+
+        if ($savedFile === false) {
+            throw new \Exception('Could not save class map file, please check permissions.');
+        }
     }
 
     /**
-     * @param $namespace
-     * @param $application
-     * @param $bundle
-     * @param $layer
+     * @param string $namespace
+     * @param string $application
+     * @param string $bundle
+     * @param string $layer
      *
      * @return string
      */
@@ -168,10 +175,10 @@ class ClassMapBuilder
     }
 
     /**
-     * @param $absoluteBundlePath
-     * @param $className
+     * @param string $absoluteBundlePath
+     * @param string $className
      *
-     * @return mixed
+     * @return string
      */
     private function extractFactoryMethodName($absoluteBundlePath, $className)
     {
