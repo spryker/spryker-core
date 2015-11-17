@@ -178,10 +178,10 @@ class IndexController extends AbstractController
         ;
 
         $categories = [];
-        foreach ($productCategoryEntityList as $productCategory) {
+        foreach ($productCategoryEntityList as $productCategoryEntity) {
             $categories[] = [
-                self::COL_ID_PRODUCT_CATEGORY => $productCategory->getIdProductCategory(),
-                self::COL_CATEGORY_NAME => $productCategory->getSpyCategory()->getAttributes()->getFirst()->getName()
+                self::COL_ID_PRODUCT_CATEGORY => $productCategoryEntity->getIdProductCategory(),
+                self::COL_CATEGORY_NAME => $productCategoryEntity->getSpyCategory()->getAttributes()->getFirst()->getName()
             ];
         }
 
