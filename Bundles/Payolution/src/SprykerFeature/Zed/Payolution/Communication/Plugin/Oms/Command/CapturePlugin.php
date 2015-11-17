@@ -42,7 +42,7 @@ class CapturePlugin extends AbstractPlugin implements CommandByOrderInterface
      */
     protected function getPaymentEntity(SpySalesOrder $orderEntity)
     {
-        $paymentEntity = $orderEntity->getSpyPaymentPayolutions()->getFirst();
+        $paymentEntity = $orderEntity->getSpyPaymentPayolution();
 
         return $paymentEntity;
     }

@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Sales\Persistence\Propel;
 
+use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Orm\Zed\Sales\Persistence\Base\SpySalesOrder as BaseSpySalesOrder;
 
 /**
@@ -44,6 +45,14 @@ abstract class AbstractSpySalesOrder extends BaseSpySalesOrder
     public function getIncrementId()
     {
         return $this->getOrderReference();
+    }
+
+    /**
+     * @return SpyPaymentPayolution
+     */
+    public function getSpyPaymentPayolution()
+    {
+        return $this->getSpyPaymentPayolutions()->getFirst();
     }
 
 }
