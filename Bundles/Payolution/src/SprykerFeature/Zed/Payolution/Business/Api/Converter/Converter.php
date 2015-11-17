@@ -250,6 +250,7 @@ class Converter implements ConverterInterface
     protected function arrayToCalculationInstallmentTransfer(array $data)
     {
         $data['Amount'] = $data['Amount'] * 100;
+
         return (new PayolutionCalculationInstallmentTransfer())->fromArray($data);
     }
 
