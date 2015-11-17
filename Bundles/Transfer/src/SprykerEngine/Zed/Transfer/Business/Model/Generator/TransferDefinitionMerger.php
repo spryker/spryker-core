@@ -6,7 +6,7 @@
 
 namespace SprykerEngine\Zed\Transfer\Business\Model\Generator;
 
-class TransferDefinitionMerger
+class TransferDefinitionMerger implements MergerInterface
 {
 
     const ERROR_MESSAGE_PROPERTIES_NOT_IDENTICALLY =

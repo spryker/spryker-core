@@ -14,6 +14,11 @@ use Zend\Filter\Word\UnderscoreToCamelCase;
 class TransferDefinitionLoader
 {
 
+    const KEY_BUNDLE = 'bundle';
+    const KEY_CONTAINING_BUNDLE = 'containing bundle';
+    const KEY_TRANSFER = 'transfer';
+    const TRANSFER_SCHEMA_SUFFIX = '.transfer.xml';
+
     /**
      * @var DefinitionNormalizer
      */
@@ -62,8 +67,9 @@ class TransferDefinitionLoader
         $xmlTransferDefinitions = $this->getXmlTransferDefinitionFiles($sourceDirectories);
         foreach ($xmlTransferDefinitions as $xmlTransferDefinition) {
             $bundle = $this->getBundleFromPathName($xmlTransferDefinition->getFilename());
+            $containingBundle = $this->getContainingBundleFromPathName($xmlTransferDefinition->getPathname());
             $definition = Factory::fromFile($xmlTransferDefinition->getPathname(), true)->toArray();
-            $this->addDefinition($definition, $bundle);
+            $this->addDefinition($definition, $bundle, $containingBundle);
         }
     }
 
@@ -75,14 +81,13 @@ class TransferDefinitionLoader
     private function getXmlTransferDefinitionFiles(array $sourceDirectories)
     {
         $finder = new Finder();
-
         $finder->in($sourceDirectories)->name('*.transfer.xml')->depth('< 1');
 
         return $finder;
     }
 
     /**
-     * @param $fileName
+     * @param string $fileName
      *
      * @return string
      */
@@ -90,23 +95,42 @@ class TransferDefinitionLoader
     {
         $filter = new UnderscoreToCamelCase();
 
-        return $filter->filter(str_replace('.transfer.xml', '', $fileName));
+        return $filter->filter(str_replace(self::TRANSFER_SCHEMA_SUFFIX, '', $fileName));
+    }
+
+    /**
+     * @param string $filePath
+     *
+     * @return string
+     */
+    private function getContainingBundleFromPathName($filePath)
+    {
+        $pathParts = explode(DIRECTORY_SEPARATOR, $filePath);
+        $sharedDirectoryNamePosition = array_search('Shared', array_values($pathParts));
+
+        $containingBundle = $pathParts[$sharedDirectoryNamePosition + 1];
+
+        return $containingBundle;
     }
 
     /**
      * @param array $definition
      * @param string $bundle
+     * @param string $containingBundle
      */
-    private function addDefinition(array $definition, $bundle)
+    private function addDefinition(array $definition, $bundle, $containingBundle)
     {
-        if (isset($definition['transfer'][0])) {
-            foreach ($definition['transfer'] as $transfer) {
-                $transfer['bundle'] = $bundle;
+        if (isset($definition[self::KEY_TRANSFER][0])) {
+            foreach ($definition[self::KEY_TRANSFER] as $transfer) {
+                $transfer[self::KEY_BUNDLE] = $bundle;
+                $transfer[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
+
                 $this->transferDefinitions[] = $transfer;
             }
         } else {
-            $transfer = $definition['transfer'];
-            $transfer['bundle'] = $bundle;
+            $transfer = $definition[self::KEY_TRANSFER];
+            $transfer[self::KEY_BUNDLE] = $bundle;
+            $transfer[self::KEY_CONTAINING_BUNDLE] = $containingBundle;
             $this->transferDefinitions[] = $transfer;
         }
     }

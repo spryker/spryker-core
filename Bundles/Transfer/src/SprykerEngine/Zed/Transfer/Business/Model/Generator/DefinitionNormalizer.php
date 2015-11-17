@@ -9,6 +9,12 @@ namespace SprykerEngine\Zed\Transfer\Business\Model\Generator;
 class DefinitionNormalizer
 {
 
+    const KEY_BUNDLE = 'bundle';
+    const KEY_CONTAINING_BUNDLE = 'containing bundle';
+    const KEY_NAME = 'name';
+    const KEY_PROPERTY = 'property';
+    const KEY_INTERFACE = 'interface';
+
     /**
      * @param array $transferDefinitions
      *
@@ -19,15 +25,16 @@ class DefinitionNormalizer
         $normalizedDefinitions = [];
         foreach ($transferDefinitions as $transferDefinition) {
             $normalizedDefinition = [
-                'bundle' => $transferDefinition['bundle'],
-                'name' => $transferDefinition['name'],
-                'property' => $this->normalizeAttributes($transferDefinition['property'], $transferDefinition['bundle']),
+                self::KEY_BUNDLE => $transferDefinition[self::KEY_BUNDLE],
+                self::KEY_CONTAINING_BUNDLE => $transferDefinition[self::KEY_CONTAINING_BUNDLE],
+                self::KEY_NAME => $transferDefinition[self::KEY_NAME],
+                self::KEY_PROPERTY => $this->normalizeAttributes($transferDefinition[self::KEY_PROPERTY], $transferDefinition[self::KEY_BUNDLE]),
             ];
 
-            $normalizedDefinition['interface'] = [
+            $normalizedDefinition[self::KEY_INTERFACE] = [
                 [
-                    'name' => 'Generated\\Shared\\' . $transferDefinition['bundle'] . '\\' . $transferDefinition['name'] . 'Interface',
-                    'bundle' => $transferDefinition['bundle'],
+                    self::KEY_NAME => 'Generated\\Shared\\' . $transferDefinition[self::KEY_BUNDLE] . '\\' . $transferDefinition[self::KEY_NAME] . 'Interface',
+                    self::KEY_BUNDLE => $transferDefinition[self::KEY_BUNDLE],
                 ],
             ];
 
@@ -61,7 +68,7 @@ class DefinitionNormalizer
     private function addBundleToAttributes(array $attributes, $bundle)
     {
         foreach ($attributes as &$attribute) {
-            $attribute['bundle'] = $bundle;
+            $attribute[self::KEY_BUNDLE] = $bundle;
         }
 
         return $attributes;

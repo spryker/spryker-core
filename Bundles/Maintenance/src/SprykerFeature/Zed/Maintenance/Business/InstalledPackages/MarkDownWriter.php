@@ -11,6 +11,8 @@ use Generated\Shared\Maintenance\InstalledPackagesInterface;
 class MarkDownWriter implements MarkDownWriterInterface
 {
 
+    const SEPARATOR = ';';
+
     /**
      * @var InstalledPackagesInterface
      */
@@ -34,11 +36,16 @@ class MarkDownWriter implements MarkDownWriterInterface
     public function write()
     {
         $markDownLines = [];
-        $markDownLines[] = '|Name|Version|License|Url|Type|';
-        $markDownLines[] = '|----|-------|-------|---|----|';
+        $header = ['Name', 'Version', 'License', 'Url', 'Type'];
+        $markDownLines[] = implode(self::SEPARATOR, $header) . self::SEPARATOR;
 
         foreach ($this->installedPackages->getPackages() as $package) {
-            $markDownLines[] = '|' . $package->getName() . '|' . $package->getVersion() . '|' . implode(', ', (array) $package->getLicense()) . '|' . $package->getUrl() . '|' . $package->getType() . '|';
+            $markDownLines[] = $package->getName() . self::SEPARATOR
+                . $package->getVersion() . self::SEPARATOR
+                . implode(', ', (array) $package->getLicense()) . self::SEPARATOR
+                . $package->getUrl() . self::SEPARATOR
+                . $package->getType() . self::SEPARATOR
+            ;
         }
 
         file_put_contents($this->path, implode("\n", $markDownLines));

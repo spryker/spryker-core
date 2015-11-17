@@ -27,7 +27,7 @@ class TransferDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**
-     * @param MessengerInterface $messenger
+     * @param LoggerInterface $messenger
      *
      * @return TransferGenerator
      */
@@ -74,7 +74,7 @@ class TransferDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @param MessengerInterface $messenger
+     * @param LoggerInterface $messenger
      *
      * @return TransferGenerator
      */
@@ -104,7 +104,7 @@ class TransferDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createModelGeneratorTransferInterfaceTransferInterfaceDefinitionBuilder(
             $this->createLoader(),
-            $this->getFactory()->createModelGeneratorTransferDefinitionMerger(),
+            $this->getFactory()->createModelGeneratorTransferInterfaceTransferInterfaceDefinitionMerger(),
             $this->getFactory()->createModelGeneratorTransferInterfaceInterfaceDefinition()
         );
     }

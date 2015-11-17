@@ -7,13 +7,11 @@
 namespace SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferInterface;
 
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\AbstractDefinitionBuilder;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\MergerInterface;
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\DefinitionInterface;
 
-/**
- * @todo remove merger code here
- */
 class TransferInterfaceDefinitionBuilder extends AbstractDefinitionBuilder
 {
 
@@ -34,10 +32,10 @@ class TransferInterfaceDefinitionBuilder extends AbstractDefinitionBuilder
 
     /**
      * @param TransferDefinitionLoader $loader
-     * @param TransferDefinitionMerger $merger
+     * @param MergerInterface $merger
      * @param InterfaceDefinition $interfaceDefinition
      */
-    public function __construct(TransferDefinitionLoader $loader, TransferDefinitionMerger $merger, InterfaceDefinition $interfaceDefinition)
+    public function __construct(TransferDefinitionLoader $loader, MergerInterface $merger, InterfaceDefinition $interfaceDefinition)
     {
         $this->loader = $loader;
         $this->merger = $merger;
@@ -50,6 +48,7 @@ class TransferInterfaceDefinitionBuilder extends AbstractDefinitionBuilder
     public function getDefinitions()
     {
         $definitions = $this->loader->getDefinitions();
+        $definitions = $this->merger->merge($definitions);
 
         return $this->buildDefinitions($definitions, $this->interfaceDefinition);
     }
