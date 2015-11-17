@@ -225,13 +225,14 @@ class ClassDefinition implements ClassDefinitionInterface
 
             if (!preg_match('/^int|integer|float|string|array|bool|boolean/', $property['type'])) {
                 $property['is_transfer'] = true;
+                $property['type_fully_qualified'] = 'Generated\\Shared\\Transfer\\';
                 if (preg_match('/\[\]$/', $property['type'])) {
                     $property['type'] = str_replace('[]', '', $property['type']) . 'Transfer[]';
-                    $property['type_fully_qualified'] = 'Generated\\Shared\\Transfer\\' . str_replace('[]', '', $property['type']);
+                    $property['type_fully_qualified'] .= str_replace('[]', '', $property['type']);
                     $property['is_collection'] = true;
                 } else {
                     $property['type'] = $property['type'] . 'Transfer';
-                    $property['type_fully_qualified'] = 'Generated\\Shared\\Transfer\\' . $property['type'];
+                    $property['type_fully_qualified'] .= $property['type'];
                 }
             }
 
