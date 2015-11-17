@@ -14,6 +14,7 @@ use SprykerFeature\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Process\Process;
 
 /**
  * @method ApplicationFacade getFacade()
@@ -46,9 +47,21 @@ class ApplicationIntegrationCheckConsole extends Console
             throw new \Exception('This command is only allowed to run in development environment');
         }
 
+        $this->info('Build class map');
+        $this->buildClassMap();
+
         $this->checkApplication(
             $this->getCheckSteps()
         );
+    }
+
+    /**
+     * @return void
+     */
+    private function buildClassMap()
+    {
+        $process = new Process('vendor/bin/build-class-map', APPLICATION_ROOT_DIR);
+        $process->run();
     }
 
     /**
