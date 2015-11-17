@@ -142,6 +142,8 @@ class ClassMapBuilder
      * @param array $map
      *
      * @throws Exception
+     *
+     * @return void
      */
     private function saveMapToFile(array $map)
     {
@@ -192,6 +194,7 @@ class ClassMapBuilder
     {
         return __DIR__ . self::PATH_TO_CLASS_MAP;
     }
+
 }
 
 $classMapBuilder = new ClassMapBuilder();
