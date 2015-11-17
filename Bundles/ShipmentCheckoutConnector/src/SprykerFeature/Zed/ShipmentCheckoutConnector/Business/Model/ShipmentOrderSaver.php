@@ -21,6 +21,9 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
      */
     protected $queryContainer;
 
+    /**
+     * @param ShipmentCheckoutConnectorQueryContainerInterface $queryContainer
+     */
     public function __construct(ShipmentCheckoutConnectorQueryContainerInterface $queryContainer)
     {
         $this->queryContainer = $queryContainer;
@@ -29,6 +32,8 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     /**
      * @param OrderInterface $orderTransfer
      * @param CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
      */
     public function saveShipmentForOrder(OrderInterface $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
@@ -41,7 +46,11 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
             if (ShipmentConstants::SHIPMENT_EXPENSE_TYPE === $expenseTransfer->getType()) {
                 $salesOrderExpense = new SpySalesExpense();
                 $salesOrderExpense->fromArray($expenseTransfer->toArray());
-                $salesOrderExpense->setTaxPercentage($expenseTransfer->getTaxSet()->getEffectiveRate());
+
+                $taxSetTransfer = $expenseTransfer->getTaxSet();
+                if ($taxSetTransfer !== null) {
+                    $salesOrderExpense->setTaxPercentage($taxSetTransfer->getEffectiveRate());
+                }
                 $salesOrderExpense->save();
                 $expenseTransfer->setIdSalesExpense($salesOrderExpense->getIdSalesExpense());
 
