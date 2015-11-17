@@ -119,7 +119,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
             if ($this->isCollection($property)) {
                 $value = $this->processCollection($value, $property, $ignoreMissingProperty);
             } elseif ($this->isTransferClass($property)) {
-                $value = $this->initializeNestedTransferObject($property, $value);
+                $value = $this->initializeNestedTransferObject($property, $value, $ignoreMissingProperty);
             }
 
             $this->callSetMethod($property, $value, $ignoreMissingProperty);
@@ -238,13 +238,13 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     }
 
     /**
-     * @param string $key
+     * @param string $property
      *
      * @return string
      */
-    protected function getTypeForProperty($key)
+    protected function getTypeForProperty($property)
     {
-        return $this->transferMetadata[$key]['type'];
+        return $this->transferMetadata[$property]['type'];
     }
 
     /**
@@ -286,18 +286,18 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     /**
      * @param string $property
      * @param mixed $value
+     * @param bool $ignoreMissingProperty
      *
      * @return TransferInterface
      */
-    private function initializeNestedTransferObject($property, $value)
+    private function initializeNestedTransferObject($property, $value, $ignoreMissingProperty = false)
     {
         $type = $this->getTypeForProperty($property);
         $transferObject = $this->createInstance($type);
-        if (is_array($value)) {
-            $transferObject->fromArray($value);
-            $value = $transferObject;
 
-            return $value;
+        if (is_array($value)) {
+            $transferObject->fromArray($value, $ignoreMissingProperty);
+            $value = $transferObject;
         }
 
         return $value;

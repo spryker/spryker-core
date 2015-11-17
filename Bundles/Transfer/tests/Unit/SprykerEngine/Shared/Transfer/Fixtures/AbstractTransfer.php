@@ -15,11 +15,11 @@ class AbstractTransfer extends ParentAbstractTransfer
 
     const STRING = 'string';
 
-    const INTEGER = 'integer';
+    const INT = 'int';
 
     const BOOL = 'bool';
 
-    const ARR = 'arr';
+    const ARRAY_PROPERTY = 'array';
 
     const TRANSFER = 'transfer';
 
@@ -33,7 +33,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     /**
      * @var int
      */
-    protected $integer;
+    protected $int;
 
     /**
      * @var bool
@@ -43,7 +43,7 @@ class AbstractTransfer extends ParentAbstractTransfer
     /**
      * @var array
      */
-    protected $arr;
+    protected $array;
 
     /**
      * @var TransferInterface
@@ -65,9 +65,9 @@ class AbstractTransfer extends ParentAbstractTransfer
             'is_collection' => false,
             'is_transfer' => false,
         ],
-        self::INTEGER => [
+        self::INT => [
             'type' => 'int',
-            'name_underscore' => 'integer',
+            'name_underscore' => 'int',
             'is_collection' => false,
             'is_transfer' => false,
         ],
@@ -77,9 +77,9 @@ class AbstractTransfer extends ParentAbstractTransfer
             'is_collection' => false,
             'is_transfer' => false,
         ],
-        self::ARR => [
+        self::ARRAY_PROPERTY => [
             'type' => 'array',
-            'name_underscore' => 'arr',
+            'name_underscore' => 'array',
             'is_collection' => false,
             'is_transfer' => false,
         ],
@@ -99,7 +99,7 @@ class AbstractTransfer extends ParentAbstractTransfer
 
     public function __construct()
     {
-        $this->arr = new \ArrayObject();
+        $this->array = new \ArrayObject();
         $this->transferCollection = new \ArrayObject();
     }
 
@@ -137,14 +137,14 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @param int $integer
+     * @param int $int
      *
      * @return self
      */
-    public function setInteger($integer)
+    public function setInt($int)
     {
-        $this->integer = $integer;
-        $this->addModifiedProperty(self::INTEGER);
+        $this->int = $int;
+        $this->addModifiedProperty(self::INT);
 
         return $this;
     }
@@ -152,9 +152,9 @@ class AbstractTransfer extends ParentAbstractTransfer
     /**
      * @return int
      */
-    public function getInteger()
+    public function getInt()
     {
-        return $this->integer;
+        return $this->int;
     }
 
     /**
@@ -162,9 +162,9 @@ class AbstractTransfer extends ParentAbstractTransfer
      *
      * @return self
      */
-    public function requireInteger()
+    public function requireInt()
     {
-        $this->assertPropertyIsSet(self::INTEGER);
+        $this->assertPropertyIsSet(self::INT);
 
         return $this;
     }
@@ -203,14 +203,14 @@ class AbstractTransfer extends ParentAbstractTransfer
     }
 
     /**
-     * @param array $arr
+     * @param array $array
      *
      * @return self
      */
-    public function setArr(array $arr)
+    public function setArray(array $array)
     {
-        $this->arr = $arr;
-        $this->addModifiedProperty(self::ARR);
+        $this->array = $array;
+        $this->addModifiedProperty(self::ARRAY_PROPERTY);
 
         return $this;
     }
@@ -218,9 +218,9 @@ class AbstractTransfer extends ParentAbstractTransfer
     /**
      * @return array
      */
-    public function getArr()
+    public function getArray()
     {
-        return $this->arr;
+        return $this->array;
     }
 
     /**
@@ -230,8 +230,8 @@ class AbstractTransfer extends ParentAbstractTransfer
      */
     public function addArr($arr)
     {
-        $this->arr[] = $arr;
-        $this->addModifiedProperty(self::ARR);
+        $this->array[] = $arr;
+        $this->addModifiedProperty(self::ARRAY_PROPERTY);
 
         return $this;
     }
@@ -243,7 +243,7 @@ class AbstractTransfer extends ParentAbstractTransfer
      */
     public function requireArr()
     {
-        $this->assertCollectionPropertyIsSet(self::ARR);
+        $this->assertCollectionPropertyIsSet(self::ARRAY_PROPERTY);
 
         return $this;
     }
