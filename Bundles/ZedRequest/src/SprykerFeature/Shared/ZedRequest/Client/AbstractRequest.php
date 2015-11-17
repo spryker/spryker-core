@@ -159,7 +159,7 @@ abstract class AbstractRequest extends AbstractObject implements EmbeddedTransfe
             );
 
             if (!empty($this->values['transfer'])) {
-                $transfer->fromArray($this->values['transfer']);
+                $transfer->fromArray($this->values['transfer'], true);
             }
 
             return $transfer;
