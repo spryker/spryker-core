@@ -7,14 +7,42 @@
 namespace Unit\SprykerFeature\Shared\ZedRequest\Client\Fixture;
 
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
+use SprykerEngine\Shared\Transfer\Exception\RequiredTransferPropertyException;
 
 class Transfer extends AbstractTransfer
 {
+
+    const KEY = 'key';
 
     /**
      * @var string
      */
     protected $key;
+
+    /**
+     * @var array
+     */
+    protected $transferMetadata = [
+        self::KEY => [
+            'type' => 'string',
+            'name_underscore' => 'key',
+            'is_collection' => false,
+            'is_transfer' => false,
+        ],
+    ];
+
+    /**
+     * @param string $key
+     *
+     * @return $this
+     */
+    public function setKey($key)
+    {
+        $this->key = $key;
+        $this->addModifiedProperty(self::KEY);
+
+        return $this;
+    }
 
     /**
      * @return string
@@ -25,13 +53,13 @@ class Transfer extends AbstractTransfer
     }
 
     /**
-     * @param string $key
+     * @throws RequiredTransferPropertyException
      *
-     * @return Transfer
+     * @return self
      */
-    public function setKey($key)
+    public function requireKey()
     {
-        $this->key = $key;
+        $this->assertPropertyIsSet(self::KEY);
 
         return $this;
     }

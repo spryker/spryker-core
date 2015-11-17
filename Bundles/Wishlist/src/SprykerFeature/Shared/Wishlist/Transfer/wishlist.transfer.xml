@@ -20,7 +20,7 @@
         <property name="quantity" type="int" />
         <property name="sku" type="string" />
         <property name="groupKey" type="string" />
-        <property name="options" type="ProductOptions[]" singular="option" />
+        <property name="options" type="ProductOption[]" singular="option" />
         <property name="concreteProduct" type="ConcreteProduct" />
     </transfer>
 </transfers>

@@ -20,7 +20,7 @@ interface CatFaceInterface extends TransferInterface
     /**
      * @param string $name
      *
-     * @return $this
+     * @return self
      */
     public function setName($name);
 
@@ -39,7 +39,7 @@ interface CatFaceInterface extends TransferInterface
     /**
      * @param ItemTransfer $item
      *
-     * @return $this
+     * @return self
      */
     public function setItem(ItemTransfer $item);
 
@@ -58,7 +58,7 @@ interface CatFaceInterface extends TransferInterface
     /**
      * @param \ArrayObject|ItemTransfer[] $items
      *
-     * @return $this
+     * @return self
      */
     public function setItems(\ArrayObject $items);
 
@@ -70,7 +70,7 @@ interface CatFaceInterface extends TransferInterface
     /**
      * @param ItemTransfer $item
      *
-     * @return $this
+     * @return self
      */
     public function addItem(ItemTransfer $item);
 

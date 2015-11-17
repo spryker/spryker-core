@@ -32,7 +32,7 @@ class ResponseManipulatorPrecondition implements CheckoutPreconditionInterface
      */
     public function checkCondition(CheckoutRequestTransfer $checkoutRequest, CheckoutResponseTransfer $checkoutResponse)
     {
-        $checkoutResponse->fromArray($this->checkoutResponse->toArray(true));
+        $checkoutResponse->fromArray($this->checkoutResponse->toArray(true), true);
     }
 
 }

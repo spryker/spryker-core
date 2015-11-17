@@ -77,7 +77,7 @@ class CartOrderHydrator implements CartOrderHydratorInterface
     protected function createItemTransfer(ItemInterface $cartItemTransfer)
     {
         $orderItemTransfer = $this->getItemTransfer();
-        $orderItemTransfer->fromArray($cartItemTransfer->toArray());
+        $orderItemTransfer->fromArray($cartItemTransfer->toArray(), true);
         $orderItemTransfer->setGroupKey(null);
         $orderItemTransfer->setQuantity(1);
 

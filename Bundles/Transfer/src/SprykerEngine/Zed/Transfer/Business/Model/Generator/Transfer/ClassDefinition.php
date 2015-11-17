@@ -40,6 +40,11 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @var array
      */
+    private $normalizedProperties = [];
+
+    /**
+     * @var array
+     */
     private $methods = [];
 
     /**
@@ -212,15 +217,29 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $normalizedProperties = [];
         foreach ($properties as $property) {
+            $property['type_fully_qualified'] = $property['type'];
+            $property['is_collection'] = false;
+            $property['is_transfer'] = false;
+            $property['propertyConst'] = $this->getPropertyConstantName($property);
+            $property['name_underscore'] = mb_strtolower($property['propertyConst']);
+
             if (!preg_match('/^int|integer|float|string|array|bool|boolean/', $property['type'])) {
+                $property['is_transfer'] = true;
+                $property['type_fully_qualified'] = 'Generated\\Shared\\Transfer\\';
                 if (preg_match('/\[\]$/', $property['type'])) {
                     $property['type'] = str_replace('[]', '', $property['type']) . 'Transfer[]';
+                    $property['type_fully_qualified'] .= str_replace('[]', '', $property['type']);
+                    $property['is_collection'] = true;
                 } else {
                     $property['type'] = $property['type'] . 'Transfer';
+                    $property['type_fully_qualified'] .= $property['type'];
                 }
             }
+
             $normalizedProperties[] = $property;
         }
+
+        $this->normalizedProperties = $normalizedProperties;
 
         return $normalizedProperties;
     }
@@ -339,6 +358,14 @@ class ClassDefinition implements ClassDefinitionInterface
     public function getMethods()
     {
         return $this->methods;
+    }
+
+    /**
+     * @return array
+     */
+    public function getNormalizedProperties()
+    {
+        return $this->normalizedProperties;
     }
 
     /**

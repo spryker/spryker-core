@@ -39,6 +39,30 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
      */
     protected $items;
 
+    /**
+     * @var array
+     */
+    protected $transferMetadata = [
+        self::NAME => [
+          'type' => 'string',
+          'name_underscore' => 'name',
+          'is_collection' => false,
+          'is_transfer' => false,
+        ],
+        self::ITEM => [
+          'type' => 'Generated\Shared\Transfer\ItemTransfer',
+          'name_underscore' => 'item',
+          'is_collection' => false,
+          'is_transfer' => true,
+        ],
+        self::ITEMS => [
+          'type' => 'Generated\Shared\Transfer\ItemTransfer',
+          'name_underscore' => 'items',
+          'is_collection' => true,
+          'is_transfer' => true,
+        ],
+    ];
+
     public function __construct()
     {
         $this->items = new \ArrayObject();
@@ -47,7 +71,7 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     /**
      * @param string $name
      *
-     * @return $this
+     * @return self
      */
     public function setName($name)
     {
@@ -80,7 +104,7 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     /**
      * @param ItemTransfer $item
      *
-     * @return $this
+     * @return self
      */
     public function setItem(ItemTransfer $item)
     {
@@ -113,7 +137,7 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     /**
      * @param \ArrayObject|ItemTransfer[] $items
      *
-     * @return $this
+     * @return self
      */
     public function setItems(\ArrayObject $items)
     {
@@ -134,7 +158,7 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     /**
      * @param ItemTransfer $item
      *
-     * @return $this
+     * @return self
      */
     public function addItem(ItemTransfer $item)
     {

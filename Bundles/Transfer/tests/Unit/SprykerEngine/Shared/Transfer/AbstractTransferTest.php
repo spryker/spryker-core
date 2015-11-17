@@ -20,7 +20,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
     {
         $data = [
             'string' => 'string',
-            'integer' => 1,
+            'int' => 1,
             'bool' => true,
             'array' => [],
         ];
@@ -29,7 +29,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $transfer->fromArray($data);
 
         $this->assertSame('string', $transfer->getString());
-        $this->assertSame(1, $transfer->getInteger());
+        $this->assertSame(1, $transfer->getInt());
         $this->assertTrue($transfer->getBool());
         $this->assertInternalType('array', $transfer->getArray());
     }
@@ -38,31 +38,34 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
     {
         $data = [
             'transfer' => new AbstractTransfer(),
-            'transferCollection' => new AbstractTransfer(),
-        ];
-
-        $transfer = new AbstractTransfer();
-        $transfer->fromArray($data);
-
-        $this->assertInstanceOf('SprykerEngine\Shared\Transfer\TransferInterface', $transfer->getTransfer());
-        $this->assertInstanceOf('SprykerEngine\Shared\Transfer\TransferInterface', $transfer->getTransferCollection());
-    }
-
-    public function testFromArrayShouldOnlyWorkForGivenTransferNotForInnerTransfers()
-    {
-        $data = [
-            'string' => 'foo',
-            'integer' => 1,
-            'transfer' => [
-                'string' => 'foo',
-                'integer' => 1,
+            'transferCollection' => [
+                new AbstractTransfer(),
             ],
         ];
 
         $transfer = new AbstractTransfer();
         $transfer->fromArray($data);
 
-        $this->assertNull($transfer->getTransfer());
+        $this->assertInstanceOf('SprykerEngine\Shared\Transfer\TransferInterface', $transfer->getTransfer());
+        $this->assertInstanceOf('\ArrayObject', $transfer->getTransferCollection());
+        $this->assertCount(1, $transfer->getTransferCollection());
+    }
+
+    public function testFromArrayShouldWorkForGivenTransferAndInnerTransfers()
+    {
+        $data = [
+            'string' => 'foo',
+            'int' => 1,
+            'transfer' => [
+                'string' => 'foo',
+                'int' => 1,
+            ],
+        ];
+
+        $transfer = new AbstractTransfer();
+        $transfer->fromArray($data);
+
+        $this->assertInstanceOf('SprykerEngine\Shared\Transfer\TransferInterface', $transfer->getTransfer());
     }
 
     public function testFromArrayWithIgnoreMissingPropertyFalseShouldThrowExceptionIfPropertyIsInArrayButNotInObject()
@@ -89,21 +92,21 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
     {
         $data = [
             'string' => 'level1',
-            'integer' => 1,
+            'int' => 1,
             'transfer_collection' => [
                 [
                     'string' => 'level2',
-                    'integer' => 1,
+                    'int' => 1,
                 ], [
                     'string' => 'level2',
-                    'integer' => 2,
+                    'int' => 2,
                     'transfer_collection' => [
                         [
                             'string' => 'level3',
-                            'integer' => 1,
+                            'int' => 1,
                         ], [
                             'string' => 'level3',
-                            'integer' => 2,
+                            'int' => 2,
                         ],
                     ],
                 ],
@@ -124,9 +127,9 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $given = $transfer->toArray();
         $expected = [
             'string' => null,
-            'integer' => null,
+            'int' => null,
             'bool' => null,
-            'array' => null,
+            'array' => new \ArrayObject(),
             'transfer' => null,
             'transfer_collection' => new \ArrayObject(),
         ];
@@ -138,14 +141,14 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
     {
         $transfer = new AbstractTransfer();
         $transfer->setString('foo');
-        $transfer->setInteger(2);
+        $transfer->setInt(2);
 
         $given = $transfer->toArray();
         $expected = [
             'string' => 'foo',
-            'integer' => 2,
+            'int' => 2,
             'bool' => null,
-            'array' => null,
+            'array' => new \ArrayObject(),
             'transfer' => null,
             'transfer_collection' => new \ArrayObject(),
         ];
@@ -157,25 +160,25 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
     {
         $transfer = new AbstractTransfer();
         $transfer->setString('foo');
-        $transfer->setInteger(2);
+        $transfer->setInt(2);
 
         $innerTransfer = new AbstractTransfer();
         $innerTransfer->setString('bar');
-        $innerTransfer->setInteger(3);
+        $innerTransfer->setInt(3);
 
         $transfer->setTransfer($innerTransfer);
 
         $given = $transfer->toArray();
         $expected = [
             'string' => 'foo',
-            'integer' => 2,
+            'int' => 2,
             'bool' => null,
-            'array' => null,
+            'array' => new \ArrayObject(),
             'transfer' => [
                 'string' => 'bar',
-                'integer' => 3,
+                'int' => 3,
                 'bool' => null,
-                'array' => null,
+                'array' => new \ArrayObject(),
                 'transfer' => null,
                 'transfer_collection' => new \ArrayObject(),
             ],
@@ -189,20 +192,20 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
     {
         $transfer = new AbstractTransfer();
         $transfer->setString('foo');
-        $transfer->setInteger(2);
+        $transfer->setInt(2);
 
         $innerTransfer = new AbstractTransfer();
         $innerTransfer->setString('bar');
-        $innerTransfer->setInteger(3);
+        $innerTransfer->setInt(3);
 
         $transfer->setTransfer($innerTransfer);
 
         $given = $transfer->toArray(false);
         $expected = [
             'string' => 'foo',
-            'integer' => 2,
+            'int' => 2,
             'bool' => null,
-            'array' => null,
+            'array' => new \ArrayObject(),
             'transfer' => $innerTransfer->toArray(false),
             'transfer_collection' => new \ArrayObject(),
         ];
@@ -214,12 +217,12 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
     {
         $transfer = new AbstractTransfer();
         $transfer->setString('foo');
-        $transfer->setInteger(2);
+        $transfer->setInt(2);
 
         $given = $transfer->modifiedToArray();
         $expected = [
             'string' => 'foo',
-            'integer' => 2,
+            'int' => 2,
         ];
 
         $this->assertEquals($expected, $given);
@@ -229,23 +232,23 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
     {
         $transfer = new AbstractTransfer();
         $transfer->setString('foo');
-        $transfer->setInteger(2);
+        $transfer->setInt(2);
         $transfer->setArray([]);
 
         $innerTransfer = new AbstractTransfer();
         $innerTransfer->setString('bar');
-        $innerTransfer->setInteger(3);
+        $innerTransfer->setInt(3);
 
         $transfer->setTransfer($innerTransfer);
 
         $given = $transfer->modifiedToArray(true);
         $expected = [
             'string' => 'foo',
-            'integer' => 2,
+            'int' => 2,
             'array' => [],
             'transfer' => [
                 'string' => 'bar',
-                'integer' => 3,
+                'int' => 3,
             ],
         ];
 
@@ -256,7 +259,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
     {
         $transfer = new AbstractTransfer();
         $transfer->setString('foo');
-        $transfer->setInteger(2);
+        $transfer->setInt(2);
 
         $serialized = serialize($transfer);
         $unSerialized = unserialize($serialized);
@@ -264,9 +267,9 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $given = $unSerialized->toArray();
         $expected = [
             'string' => 'foo',
-            'integer' => 2,
+            'int' => 2,
             'bool' => null,
-            'array' => null,
+            'array' => new \ArrayObject(),
             'transfer' => null,
             'transfer_collection' => new \ArrayObject(),
         ];
@@ -278,12 +281,32 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
     {
         $transfer = new AbstractTransfer();
         $transfer->setString('foo');
-        $transfer->setInteger(2);
+        $transfer->setInt(2);
         $transfer->setTransfer(new AbstractTransfer());
 
         $clonedTransfer = clone $transfer;
 
         $this->assertEquals($transfer, $clonedTransfer);
+    }
+
+    public function testFromArrayShouldWorkWithCyclicReferences()
+    {
+        $transfer = new AbstractTransfer();
+
+        $data = [
+            'string' => 'foo',
+            'transfer' => [
+                'string' => 'bar',
+                'transfer' => $transfer,
+            ],
+        ];
+
+        $transfer->fromArray($data);
+
+        $this->assertEquals('foo', $transfer->getString());
+        $this->assertEquals('bar', $transfer->getTransfer()->getString());
+        $this->assertEquals('foo', $transfer->getTransfer()->getTransfer()->getString());
+        $this->assertEquals('bar', $transfer->getTransfer()->getTransfer()->getTransfer()->getString());
     }
 
 }
