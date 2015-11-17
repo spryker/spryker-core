@@ -29,6 +29,8 @@ class TranslationFileFinder
     {
         $translationFilePaths = [];
 
+        return $translationFilePaths; // TODO SP-158 This is deactivated because the glob() function is far too slow.
+
         foreach ($this->pathPatterns as $pathPattern) {
             $paths = glob($pathPattern);
 
