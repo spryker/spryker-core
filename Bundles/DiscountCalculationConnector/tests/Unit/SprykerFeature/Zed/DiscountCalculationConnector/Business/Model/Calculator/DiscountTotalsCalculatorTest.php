@@ -92,14 +92,18 @@ class DiscountTotalsCalculatorTest extends Test
         $expenseTransfer = new ExpenseTransfer();
 
         $discountTransfer = new DiscountTransfer();
+        $discountTransfer->setDisplayName('test1');
+
         $discountTransfer->setAmount(self::SALES_DISCOUNT_50);
 
         $expenseTransfer->setGrossPrice(self::EXPENSE_1000);
+        $expenseTransfer->setQuantity(1);
         $expenseTransfer->addDiscountItem($discountTransfer);
 
         $itemTransfer->addExpense($expenseTransfer);
 
         $discountTransfer = new DiscountTransfer();
+        $discountTransfer->setDisplayName('test1');
         $discountTransfer->setAmount(self::SALES_DISCOUNT_100);
         $itemTransfer->addDiscount($discountTransfer);
         $calculableContainer->getCalculableObject()->addItem($itemTransfer);

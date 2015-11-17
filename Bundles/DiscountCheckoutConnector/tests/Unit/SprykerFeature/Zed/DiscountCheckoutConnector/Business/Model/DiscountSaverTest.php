@@ -34,29 +34,9 @@ class DiscountSaverTest extends AbstractUnitTest
     const USED_CODE_1 = 'used code 1';
     const USED_CODE_2 = 'used code 2';
 
-    public function testSaveDiscountMustSaveSalesDiscount()
-    {
-        $discountQueryContainerMock = $this->getDiscountQueryContainerMock();
-        $discountSaver = $this->getDiscountSaverMock(['persistSalesDiscount']);
-        $discountSaver->expects($this->once())
-            ->method('persistSalesDiscount')
-        ;
-
-        $discountTransfer = new DiscountTransfer();
-        $discountTransfer->setDisplayName(self::DISCOUNT_DISPLAY_NAME);
-        $discountTransfer->setAmount(self::DISCOUNT_AMOUNT);
-        $discountTransfer->setAction(self::DISCOUNT_ACTION);
-
-        $orderTransfer = new OrderTransfer();
-        $orderTransfer->addDiscount($discountTransfer);
-        $checkoutResponseTransfer = new CheckoutResponseTransfer();
-
-        $discountSaver->saveDiscounts($orderTransfer, $checkoutResponseTransfer);
-    }
 
     public function testSaveDiscountMustSaveSalesItemsDiscount()
     {
-        $discountQueryContainerMock = $this->getDiscountQueryContainerMock();
         $discountSaver = $this->getDiscountSaverMock(['persistSalesDiscount']);
         $discountSaver->expects($this->once())
             ->method('persistSalesDiscount')
@@ -81,7 +61,6 @@ class DiscountSaverTest extends AbstractUnitTest
 
     public function testSaveDiscountMustNotSaveSalesDiscountCodeIfUsedCodesCanNotBeFound()
     {
-        $discountQueryContainerMock = $this->getDiscountQueryContainerMock();
         $discountSaver = $this->getDiscountSaverMock(['persistSalesDiscount', 'saveUsedCodes']);
         $discountSaver->expects($this->once())
             ->method('persistSalesDiscount')
@@ -91,8 +70,15 @@ class DiscountSaverTest extends AbstractUnitTest
         ;
 
         $orderTransfer = new OrderTransfer();
+
+        $discountTransfer = new DiscountTransfer();
+
+        $orderItemTransfer = new ItemTransfer();
+        $orderItemTransfer->addDiscount($discountTransfer);
+
+        $orderTransfer->addItem($orderItemTransfer);
+
         $orderTransfer->setIdSalesOrder(self::ID_SALES_ORDER);
-        $orderTransfer->addDiscount(new DiscountTransfer());
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
         $discountSaver->saveDiscounts($orderTransfer, $checkoutResponseTransfer);
@@ -100,7 +86,6 @@ class DiscountSaverTest extends AbstractUnitTest
 
     public function testSaveDiscountMustSaveSalesDiscountCodesIfUsedCodesPresent()
     {
-        $discountQueryContainerMock = $this->getDiscountQueryContainerMock();
         $discountSaver = $this->getDiscountSaverMock(['persistSalesDiscount', 'persistSalesDiscountCode', 'getDiscountVoucherEntityByCode']);
         $discountSaver->expects($this->once())
             ->method('persistSalesDiscount')
@@ -117,8 +102,12 @@ class DiscountSaverTest extends AbstractUnitTest
         $discountTransfer->setUsedCodes([self::USED_CODE_1, self::USED_CODE_2]);
 
         $orderTransfer = new OrderTransfer();
+
+        $orderItemTransfer = new ItemTransfer();
+        $orderItemTransfer->addDiscount($discountTransfer);
+        $orderTransfer->addItem($orderItemTransfer);
+
         $orderTransfer->setIdSalesOrder(self::ID_SALES_ORDER);
-        $orderTransfer->addDiscount($discountTransfer);
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
         $discountSaver->saveDiscounts($orderTransfer, $checkoutResponseTransfer);
@@ -126,7 +115,6 @@ class DiscountSaverTest extends AbstractUnitTest
 
     public function testSaveDiscountMustNotSaveSalesDiscountCodesIfUsedCodeCanNotBeFound()
     {
-        $discountQueryContainerMock = $this->getDiscountQueryContainerMock();
         $discountSaver = $this->getDiscountSaverMock(['persistSalesDiscount', 'persistSalesDiscountCode', 'getDiscountVoucherEntityByCode']);
         $discountSaver->expects($this->once())
             ->method('persistSalesDiscount')
@@ -143,8 +131,12 @@ class DiscountSaverTest extends AbstractUnitTest
         $discountTransfer->setUsedCodes([self::USED_CODE_1]);
 
         $orderTransfer = new OrderTransfer();
+
+        $orderItemTransfer = new ItemTransfer();
+        $orderItemTransfer->addDiscount($discountTransfer);
+        $orderTransfer->addItem($orderItemTransfer);
+
         $orderTransfer->setIdSalesOrder(self::ID_SALES_ORDER);
-        $orderTransfer->addDiscount($discountTransfer);
         $checkoutResponseTransfer = new CheckoutResponseTransfer();
 
         $discountSaver->saveDiscounts($orderTransfer, $checkoutResponseTransfer);
