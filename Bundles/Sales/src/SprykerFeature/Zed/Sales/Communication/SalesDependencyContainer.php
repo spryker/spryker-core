@@ -134,17 +134,6 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
     }
 
     /**
-     * @return MatrixTable
-     */
-    public function createMatrixTable()
-    {
-        $orderItemQuery = $this->getQueryContainer()->querySalesOrderItem();
-        $omsFacade = $this->getOmsFacade();
-
-        return $this->getFactory()->createTableMatrixTable($orderItemQuery, $omsFacade);
-    }
-
-    /**
      * @return OmsFacade
      */
     public function getOmsFacade()

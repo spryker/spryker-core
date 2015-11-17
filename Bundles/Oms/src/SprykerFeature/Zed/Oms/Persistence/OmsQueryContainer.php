@@ -201,4 +201,20 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         return $query->filterByIdOmsOrderItemState($orderItemStates);
     }
 
+    /**
+     * @param array $processIds
+     * @param array $stateBlacklist
+     *
+     * @return SpySalesOrderItemQuery
+     */
+    public function queryMatrixOrderItems(array $processIds, array $stateBlacklist)
+    {
+        $query = SpySalesOrderItemQuery::create();
+        $query->filterByFkOmsOrderProcess($processIds);
+        if ($stateBlacklist) {
+            $query->filterByFkOmsOrderItemState($stateBlacklist, Criteria::NOT_IN);
+        }
+        return $query;
+    }
+
 }

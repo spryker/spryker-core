@@ -42,4 +42,12 @@ class OmsConfig extends AbstractBundleConfig
         return null;
     }
 
+    /**
+     * @return array
+     */
+    public function getStateBlacklist()
+    {
+        return [];
+    }
+
 }

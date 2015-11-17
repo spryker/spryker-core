@@ -18,11 +18,6 @@ class OrderItemMatrix
     const COL_STATE = 'COL_STATE';
 
     /**
-     * @var SalesFacade
-     */
-    protected $salesFacade;
-
-    /**
      * @var OmsQueryContainerInterface
      */
     protected $queryContainer;
@@ -53,21 +48,15 @@ class OrderItemMatrix
     protected $orderItemStateBlacklist = [];
 
     /**
-     * @param SalesFacade $salesFacade
      * @param OmsQueryContainerInterface $queryContainer
      * @param OmsConfig $config
      */
-    public function __construct(SalesFacade $salesFacade, OmsQueryContainerInterface $queryContainer, OmsConfig $config)
+    public function __construct(OmsQueryContainerInterface $queryContainer, OmsConfig $config)
     {
-        $this->salesFacade = $salesFacade;
         $this->queryContainer = $queryContainer;
         $this->config = $config;
 
-
-        $this->orderItemQuery = $orderItemQuery;
-        $this->omsFacade = $omsFacade;
-
-        $activeProcesses = $omsFacade->getActiveProcesses();
+        $activeProcesses = $this->getActiveProcesses();
 
         $processes = [];
         foreach ($activeProcesses as $process) {
@@ -75,8 +64,8 @@ class OrderItemMatrix
         }
         $this->processes = $processes;
 
-        $orderItems = $this->orderItemQuery
-            ->filterByFkOmsOrderProcess(array_keys($processes))
+        $stateBlacklist = $config->getStateBlacklist();
+        $orderItems = $this->queryContainer->queryMatrixOrderItems(array_keys($processes), $stateBlacklist)
             ->find();
 
         $items = [];
@@ -96,14 +85,9 @@ class OrderItemMatrix
      */
     public function getMatrix()
     {
-        $results = $this->getHeaderColumns();
+        $results = [$this->getHeaderColumns()];
 
-        $statesUsed = $this->omsFacade->getOrderItemStateNames($this->orderItemStates);
-        foreach ($statesUsed as $key => $value) {
-            if (in_array($value, $this->orderItemStateBlacklist)) {
-                unset($statesUsed[$key]);
-            }
-        }
+        $statesUsed = $this->getOrderItemStateNames($this->orderItemStates);
 
         foreach ($this->orderItems as $idState => $orderItemsPerProcess) {
             if (!isset($statesUsed[$idState])) {
@@ -181,6 +165,32 @@ class OrderItemMatrix
         }
 
         return implode(' | ', $grid);
+    }
+
+    /**
+     * @return SpyOmsOrderProcess[]
+     */
+    protected function getActiveProcesses()
+    {
+        return $this->queryContainer
+            ->getActiveProcesses($this->config->getActiveProcesses())
+            ->find();
+    }
+
+    /**
+     * @param array $orderItemStates
+     * @return array
+     */
+    protected function getOrderItemStateNames(array $orderItemStates)
+    {
+        $results = $this->queryContainer->getOrderItemStates($orderItemStates)->find();
+
+        $orderItemStates = [];
+        foreach ($results as $result) {
+            $orderItemStates[$result->getIdOmsOrderItemState()] = $result->getName();
+        }
+
+        return $orderItemStates;
     }
 
 }

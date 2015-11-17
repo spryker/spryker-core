@@ -6,17 +6,24 @@
 
         {% block widget_content %}
 
-            <table>
+            <table class="table">
                 <thead>
-
-
+                {% for row in matrix | slice(0, 1) %}
+                    <tr>
+                        {% for element in row %}
+                            <th>
+                                {{ element | raw }}
+                            </th>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
                 </thead>
                 <tbody>
-                {% for row in matrix %}
+                {% for row in matrix | slice(1) %}
                     <tr>
                     {% for element in row %}
                         <td>
-                        {{ element }}
+                        {{ element | raw }}
                         </td>
                     {% endfor %}
                     </tr>

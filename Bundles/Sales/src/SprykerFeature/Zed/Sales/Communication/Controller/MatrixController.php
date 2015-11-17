@@ -22,7 +22,6 @@ class MatrixController extends AbstractController
     {
         $matrix = $this->getDependencyContainer()->getOmsFacade()->getOrderItemMatrix();
 
-        die(dump($matrix));
         return [
             'matrix' => $matrix,
         ];

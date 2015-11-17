@@ -133,18 +133,6 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     }
 
     /**
-     * @return SpyOmsOrderProcess[]
-     */
-    public function getActiveProcesses()
-    {
-        return $this->getDependencyContainer()
-            ->createUtilOrderProcess($this->getDependencyContainer()
-                ->getConfig())
-            ->getActiveProcesses()
-        ;
-    }
-
-    /**
      * @param array $orderItemStates
      * @return array
      */

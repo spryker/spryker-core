@@ -199,8 +199,7 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createUtilOrderItemMatrix()
     {
-        $salesQueryContainer = $this->getProvidedDependency(OmsDependencyProvider::QUERY_CONTAINER_SALES);
-        return $this->getFactory()->createUtilOrderItemMatrix($salesQueryContainer);
+        return $this->getFactory()->createUtilOrderItemMatrix($this->getQueryContainer(), $this->getConfig());
     }
 
 }

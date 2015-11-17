@@ -110,4 +110,12 @@ interface OmsQueryContainerInterface
      */
     public function getOrderItemStates(array $orderItemStates);
 
+    /**
+     * @param array $processIds
+     * @param array $stateBlacklist
+     *
+     * @return SpySalesOrderItemQuery
+     */
+    public function queryMatrixOrderItems(array $processIds, array $stateBlacklist);
+
 }
