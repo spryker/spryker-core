@@ -18,8 +18,6 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
     private $modifiedProperties = [];
 
     /**
-     * Filled in generated transfer objects
-     *
      * @var array
      */
     protected $transferMetadata = [];
