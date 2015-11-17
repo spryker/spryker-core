@@ -56,29 +56,11 @@ class OrderItemMatrix
         $this->queryContainer = $queryContainer;
         $this->config = $config;
 
-        $activeProcesses = $this->getActiveProcesses();
+        $this->processes = $this->getProcesses();
 
-        $processes = [];
-        foreach ($activeProcesses as $process) {
-            $processes[$process->getIdOmsOrderProcess()] = $process->getName();
-        }
-        $this->processes = $processes;
-
-        $stateBlacklist = $this->getStateBlacklist();
-
-        $orderItems = $this->queryContainer->queryMatrixOrderItems(array_keys($processes), $stateBlacklist)
+        $orderItems = $this->queryContainer->queryMatrixOrderItems(array_keys($this->processes), $this->getStateBlacklist())
             ->find();
-
-        $items = [];
-        foreach ($orderItems as $orderItem) {
-            $idState = $orderItem->getFkOmsOrderItemState();
-            if (!in_array($idState, $this->orderItemStates)) {
-                $this->orderItemStates[] = $idState;
-            }
-            $idProcess = $orderItem->getFkOmsOrderProcess();
-            $items[$idState][$idProcess][] = $orderItem;
-        }
-        $this->orderItems = $items;
+        $this->orderItems = $this->preProcessItems($orderItems);
     }
 
     /**
@@ -206,6 +188,40 @@ class OrderItemMatrix
             $blacklist[] = $row->getIdOmsOrderItemState();
         }
         return $blacklist;
+    }
+
+    /**
+     * @param SpySalesOrderItem[] $orderItems
+     *
+     * @return array
+     */
+    protected function preProcessItems($orderItems)
+    {
+        $items = [];
+        foreach ($orderItems as $orderItem) {
+            $idState = $orderItem->getFkOmsOrderItemState();
+            if (!in_array($idState, $this->orderItemStates)) {
+                $this->orderItemStates[] = $idState;
+            }
+            $idProcess = $orderItem->getFkOmsOrderProcess();
+            $items[$idState][$idProcess][] = $orderItem;
+        }
+        return $items;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getProcesses()
+    {
+        $activeProcesses = $this->getActiveProcesses();
+
+        $processes = [];
+        foreach ($activeProcesses as $process) {
+            $processes[$process->getIdOmsOrderProcess()] = $process->getName();
+        }
+        asort($processes);
+        return $processes;
     }
 
 }
