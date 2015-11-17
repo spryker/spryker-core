@@ -11,14 +11,18 @@ use Symfony\Component\Validator\Context\ExecutionContextInterface;
 class CustomerFormType extends AbstractFormType
 {
 
-    const SALUTATION = 'salutation';
-    const GENDER = 'gender';
     const ADD = 'add';
     const UPDATE = 'update';
     const PARAM_ID_CUSTOMER = 'id-customer';
+    const FIELD_SALUTATION = 'salutation';
+    const FIELD_GENDER = 'gender';
     const FIELD_SEND_PASSWORD_TOKEN = 'send_password_token';
+    const FIELD_ID_CUSTOMER = 'id_customer';
+    const FIELD_EMAIL = 'email';
     const DEFAULT_BILLING_ADDRESS = 'default_billing_address';
     const DEFAULT_SHIPPING_ADDRESS = 'default_shipping_address';
+    const FIELD_FIRST_NAME = 'first_name';
+    const FIELD_LAST_NAME = 'last_name';
 
     /**
      * @var string
@@ -59,22 +63,22 @@ class CustomerFormType extends AbstractFormType
         }
 
         $builder
-            ->add('id_customer', 'hidden')
-            ->add('email', 'email', $emailParameters)
-            ->add(self::SALUTATION, 'choice', [
+            ->add(self::FIELD_ID_CUSTOMER, 'hidden')
+            ->add(self::FIELD_EMAIL, self::FIELD_EMAIL, $emailParameters)
+            ->add(self::FIELD_SALUTATION, 'choice', [
                 'label' => 'Salutation',
                 'placeholder' => 'Select one',
                 'choices' => $this->getSalutationOptions(),
             ])
-            ->add('first_name', 'text', [
+            ->add(self::FIELD_FIRST_NAME, 'text', [
                 'label' => 'First Name',
                 'constraints' => $this->getTextConstraints(),
             ])
-            ->add('last_name', 'text', [
+            ->add(self::FIELD_LAST_NAME, 'text', [
                 'label' => 'Last Name',
                 'constraints' => $this->getTextConstraints(),
             ])
-            ->add(self::GENDER, 'choice', [
+            ->add(self::FIELD_GENDER, 'choice', [
                 'label' => 'Gender',
                 'placeholder' => 'Select one',
                 'choices' => $this->getGenderOptions(),
@@ -94,7 +98,8 @@ class CustomerFormType extends AbstractFormType
                     'label' => 'Shipping Address',
                     'placeholder' => 'Select one',
                     'choices' => $this->getAddressOptions(),
-                ]);
+                ])
+            ;
         }
 
         $builder->add(self::FIELD_SEND_PASSWORD_TOKEN, 'checkbox', [
@@ -174,10 +179,12 @@ class CustomerFormType extends AbstractFormType
         ];
 
         if (self::ADD === $this->addOrUpdate) {
+            $customerQuery = $this->customerQueryContainer->queryCustomers();
+
             $emailConstraints[] = $this->getConstraints()->createConstraintCallback([
                 'methods' => [
-                    function ($email, ExecutionContextInterface $context) {
-                        if ($this->customerQuery->findByEmail($email)->count() > 0) {
+                    function ($email, ExecutionContextInterface $context) use ($customerQuery) {
+                        if ($customerQuery->findByEmail($email)->count() > 0) {
                             $context->addViolation('Email is already used');
                         }
                     },
