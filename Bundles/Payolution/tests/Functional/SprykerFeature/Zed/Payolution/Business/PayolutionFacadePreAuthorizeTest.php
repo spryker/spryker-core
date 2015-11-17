@@ -7,7 +7,7 @@
 namespace Functional\SprykerFeature\Zed\Payolution\Business;
 
 use Functional\SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http\PreAuthorizationAdapterMock;
-use SprykerFeature\Zed\Payolution\Business\Api\Constants;
+use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 
@@ -20,10 +20,10 @@ class PayolutionFacadePreAuthorizeTest extends AbstractFacadeTest
         $facade = $this->getFacadeMock($adapterMock);
         $response = $facade->preAuthorizePayment($this->getPaymentEntity()->getIdPaymentPayolution());
 
-        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
+        $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionTransactionResponseTransfer', $response);
 
         $expectedResponseData = $adapterMock->getSuccessResponse();
-        $expectedResponse = $this->getResponseConverter()->fromArray($expectedResponseData);
+        $expectedResponse = $this->getResponseConverter()->toTransactionResponseTransfer($expectedResponseData);
 
         $this->assertEquals($expectedResponse, $response);
         $this->assertEquals($expectedResponse->getPaymentCode(), $response->getPaymentCode());
@@ -34,7 +34,7 @@ class PayolutionFacadePreAuthorizeTest extends AbstractFacadeTest
         /** @var SpyPaymentPayolutionTransactionRequestLog $requestLog */
         $requestLog = $this->getRequestLogCollectionForPayment()->getLast();
         $this->assertEquals(1, $this->getRequestLogCollectionForPayment()->count());
-        $this->assertEquals(Constants::PAYMENT_CODE_PRE_AUTHORIZATION, $requestLog->getPaymentCode());
+        $this->assertEquals(ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION, $requestLog->getPaymentCode());
         $this->assertEquals($this->getOrderEntity()->getGrandTotal() / 100, $requestLog->getPresentationAmount());
         $this->assertNull($requestLog->getReferenceId());
 
@@ -53,7 +53,7 @@ class PayolutionFacadePreAuthorizeTest extends AbstractFacadeTest
         $response = $facade->preAuthorizePayment($this->getPaymentEntity()->getIdPaymentPayolution());
 
         $expectedResponseData = $adapterMock->getFailureResponse();
-        $expectedResponse = $this->getResponseConverter()->fromArray($expectedResponseData);
+        $expectedResponse = $this->getResponseConverter()->toTransactionResponseTransfer($expectedResponseData);
 
         $this->assertEquals($expectedResponse, $response);
         $this->assertEquals($expectedResponse->getPaymentCode(), $response->getPaymentCode());

@@ -8,7 +8,8 @@ namespace SprykerFeature\Zed\Payolution\Business;
 
 use Generated\Shared\Payolution\CheckoutRequestInterface;
 use Generated\Shared\Payolution\OrderInterface;
-use Generated\Shared\Payolution\PayolutionResponseInterface;
+use Generated\Shared\Payolution\PayolutionTransactionResponseInterface;
+use Generated\Shared\Payolution\PayolutionCalculationResponseInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -31,13 +32,13 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param CheckoutRequestInterface $checkoutRequestTransfer
      *
-     * @return PayolutionResponseInterface
+     * @return PayolutionTransactionResponseInterface
      */
     public function preCheckPayment(CheckoutRequestInterface $checkoutRequestTransfer)
     {
         $payolutionResponseTransfer = $this
             ->getDependencyContainer()
-            ->createPaymentCommunicator()
+            ->createPaymentTransactionHandler()
             ->preCheckPayment($checkoutRequestTransfer);
 
         return $payolutionResponseTransfer;
@@ -46,66 +47,81 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PayolutionResponseInterface
+     * @return PayolutionTransactionResponseInterface
      */
     public function preAuthorizePayment($idPayment)
     {
         return $this
             ->getDependencyContainer()
-            ->createPaymentCommunicator()
+            ->createPaymentTransactionHandler()
             ->preAuthorizePayment($idPayment);
     }
 
     /**
      * @param int $idPayment
      *
-     * @return PayolutionResponseInterface
+     * @return PayolutionTransactionResponseInterface
      */
     public function reAuthorizePayment($idPayment)
     {
         return $this
             ->getDependencyContainer()
-            ->createPaymentCommunicator()
+            ->createPaymentTransactionHandler()
             ->reAuthorizePayment($idPayment);
     }
 
     /**
      * @param int $idPayment
      *
-     * @return PayolutionResponseInterface
+     * @return PayolutionTransactionResponseInterface
      */
     public function revertPayment($idPayment)
     {
         return $this
             ->getDependencyContainer()
-            ->createPaymentCommunicator()
+            ->createPaymentTransactionHandler()
             ->revertPayment($idPayment);
     }
 
     /**
      * @param int $idPayment
      *
-     * @return PayolutionResponseInterface
+     * @return PayolutionTransactionResponseInterface
      */
     public function capturePayment($idPayment)
     {
         return $this
             ->getDependencyContainer()
-            ->createPaymentCommunicator()
+            ->createPaymentTransactionHandler()
             ->capturePayment($idPayment);
     }
 
     /**
      * @param int $idPayment
      *
-     * @return PayolutionResponseInterface
+     * @return PayolutionTransactionResponseInterface
      */
     public function refundPayment($idPayment)
     {
         return $this
             ->getDependencyContainer()
-            ->createPaymentCommunicator()
+            ->createPaymentTransactionHandler()
             ->refundPayment($idPayment);
+    }
+
+    /**
+     * @param CheckoutRequestInterface $checkoutRequestTransfer
+     *
+     * @return PayolutionCalculationResponseInterface
+     */
+    public function calculateInstallmentPayments(CheckoutRequestInterface $checkoutRequestTransfer)
+    {
+        $payolutionResponseTransfer = $this
+            ->getDependencyContainer()
+            ->createPaymentCalculationHandler()
+            ->calculateInstallmentPayments($checkoutRequestTransfer);
+
+        return $payolutionResponseTransfer;
     }
 
     /**

@@ -10,6 +10,8 @@ use Generated\Shared\Transfer\AttachmentTransfer;
 use Generated\Shared\Transfer\MailHeaderTransfer;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailTransfer;
+use Generated\Shared\Transfer\SendMailResponsesTransfer;
+use Generated\Shared\Transfer\SendMailResponseTransfer;
 use SprykerFeature\Shared\Library\PHPUnit\Constraints\ArrayContainsKeyEqualToConstraint;
 use SprykerFeature\Zed\Mail\Business\MandrillMailSender;
 
@@ -885,22 +887,23 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
-    public function testSendMailReturnsResult()
+    public function testSendMailWithMoreThanOneMail()
     {
-        $mockResult = [
-            [
-                'email' => 'testrecipient1@testmail.com',
-                'status' => 'sent',
-                'reject_reason' => '',
-                '_id' => 'messageId1',
-            ],
-            [
-                'email' => 'testrecipient2@testmail.com',
-                'status' => 'rejected',
-                'reject_reason' => 'hard-bounce',
-                '_id' => 'messageId2',
-            ],
-        ];
+        $mockResult = new SendMailResponsesTransfer();
+
+        $mockResponse1 = new SendMailResponseTransfer();
+        $mockResponse1->setEmail('testrecipient1@testmail.com');
+        $mockResponse1->setIsSent(true);
+        $mockResponse1->setRejectReason('');
+        $mockResponse1->setIdMessage('messageId1');
+        $mockResult->addResponse($mockResponse1);
+
+        $mockResponse2 = new SendMailResponseTransfer();
+        $mockResponse2->setEmail('testrecipient2@testmail.com');
+        $mockResponse2->setIsSent(true);
+        $mockResponse2->setRejectReason('hard-bounce');
+        $mockResponse2->setIdMessage('messageId2');
+        $mockResult->addResponse($mockResponse2);
 
         $this->mandrillMock->messages
             ->expects($this->once())
@@ -908,8 +911,67 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
             ->will($this->returnValue($mockResult));
 
         $result = $this->mailSender->sendMail(new MailTransfer());
-
         $this->assertEquals($mockResult, $result);
+    }
+
+    public function testIsMailSentReturnsTrueWhenIsSent()
+    {
+        $mockResponses = new SendMailResponsesTransfer();
+
+        $mockResponse = new SendMailResponseTransfer();
+        $mockResponse->setEmail('testrecipient1@testmail.com');
+        $mockResponse->setIsSent(true);
+        $mockResponse->setRejectReason('');
+        $mockResponse->setIdMessage('messageId1');
+        $mockResponses->addResponse($mockResponse);
+
+        $result = $this->mailSender->isMailSent($mockResponses);
+        $this->assertTrue($result);
+    }
+
+    public function testIsMailSentReturnsTrueWhenMailIsQueued()
+    {
+        $mockResponses = new SendMailResponsesTransfer();
+
+        $mockResponse = new SendMailResponseTransfer();
+        $mockResponse->setEmail('testrecipient1@testmail.com');
+        $mockResponse->setIsQueued(true);
+        $mockResponse->setRejectReason('');
+        $mockResponse->setIdMessage('messageId1');
+        $mockResponses->addResponse($mockResponse);
+
+        $result = $this->mailSender->isMailSent($mockResponses);
+        $this->assertTrue($result);
+    }
+
+    public function testIsMailSentReturnsFalseWhenMailIsRejected()
+    {
+        $mockResponses = new SendMailResponsesTransfer();
+
+        $mockResponse = new SendMailResponseTransfer();
+        $mockResponse->setEmail('testrecipient1@testmail.com');
+        $mockResponse->setIsRejected(true);
+        $mockResponse->setRejectReason('');
+        $mockResponse->setIdMessage('messageId1');
+        $mockResponses->addResponse($mockResponse);
+
+        $result = $this->mailSender->isMailSent($mockResponses);
+        $this->assertFalse($result);
+    }
+
+    public function testIsMailSentReturnsFalseWhenMailIsInvalid()
+    {
+        $mockResponses = new SendMailResponsesTransfer();
+
+        $mockResponse = new SendMailResponseTransfer();
+        $mockResponse->setEmail('testrecipient1@testmail.com');
+        $mockResponse->setIsInvalid(true);
+        $mockResponse->setRejectReason('');
+        $mockResponse->setIdMessage('messageId1');
+        $mockResponses->addResponse($mockResponse);
+
+        $result = $this->mailSender->isMailSent($mockResponses);
+        $this->assertFalse($result);
     }
 
     public function testSendMailIsCalledWithRightAsync()

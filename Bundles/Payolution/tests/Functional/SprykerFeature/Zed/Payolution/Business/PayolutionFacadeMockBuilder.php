@@ -34,7 +34,7 @@ class PayolutionFacadeMockBuilder
         $payolutionConfig = new PayolutionConfig($config, $locator);
         $dependencyContainerMock = $testCase->getMock(
             'SprykerFeature\Zed\Payolution\Business\PayolutionDependencyContainer',
-            ['createExecutionAdapter'],
+            ['createAdapter'],
             [
                 $factory,
                 $locator,
@@ -43,7 +43,7 @@ class PayolutionFacadeMockBuilder
         );
         $dependencyContainerMock
             ->expects($testCase->any())
-            ->method('createExecutionAdapter')
+            ->method('createAdapter')
             ->will($testCase->returnValue($adapter));
 
         // Dependency container always requires a valid query container. Since we're creating

@@ -7,14 +7,14 @@
 namespace Functional\SprykerFeature\Zed\Payolution\Business;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Transfer\PayolutionResponseTransfer;
+use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
-use SprykerFeature\Zed\Payolution\Business\Api\Response\Converter as ResponseConverter;
+use SprykerFeature\Zed\Payolution\Business\Api\Converter\Converter as ResponseConverter;
 use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
@@ -87,8 +87,8 @@ class AbstractFacadeTest extends Test
 
         $this->orderEntity = (new SpySalesOrder())
             ->setEmail('john@doe.com')
-            ->setGrandTotal(10000)
-            ->setSubtotal(10000)
+            ->setGrandTotal(1000)
+            ->setSubtotal(1000)
             ->setIsTest(true)
             ->setFkSalesOrderAddressBilling($billingAddress->getIdSalesOrderAddress())
             ->setFkSalesOrderAddressShipping($billingAddress->getIdSalesOrderAddress())
@@ -190,11 +190,11 @@ class AbstractFacadeTest extends Test
 
     /**
      * @param SpyPaymentPayolutionTransactionStatusLog $statusLog
-     * @param PayolutionResponseTransfer $response
+     * @param PayolutionTransactionResponseTransfer $response
      */
     protected function matchStatusLogWithResponse(
         SpyPaymentPayolutionTransactionStatusLog $statusLog,
-        PayolutionResponseTransfer $response
+        PayolutionTransactionResponseTransfer $response
     ) {
         $this->assertEquals($response->getProcessingCode(), $statusLog->getProcessingCode());
         $this->assertEquals($response->getProcessingResult(), $statusLog->getProcessingResult());

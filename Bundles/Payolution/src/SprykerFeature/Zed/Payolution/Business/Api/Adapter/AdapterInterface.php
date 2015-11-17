@@ -10,10 +10,19 @@ interface AdapterInterface
 {
 
     /**
-     * @param array $data
+     * @param array|string $data
      *
-     * @return array
+     * @return string
      */
-    public function sendArrayDataRequest(array $data);
+    public function sendRequest($data);
+
+    /**
+     * @param array|string $data
+     * @param string $user
+     * @param string $password
+     *
+     * @return string
+     */
+    public function sendAuthorizedRequest($data, $user, $password);
 
 }

@@ -13,44 +13,14 @@
         <property name="languageIso2Code" type="string"/>
         <property name="currencyIso3Code" type="string"/>
         <property name="address" type="Address"/>
+        <property name="bankAccountHolder" type="string"/>
+        <property name="bankAccountBic" type="string"/>
+        <property name="bankAccountIban" type="string"/>
+        <property name="installmentAmount" type="int"/>
+        <property name="installmentDuration" type="int"/>
     </transfer>
 
-    <transfer name="PayolutionRequest">
-        <property name="securitySender" type="string"/>
-        <property name="transactionMode" type="string"/>
-        <property name="transactionChannel" type="string"/>
-        <property name="userLogin" type="string"/>
-        <property name="userPwd" type="string"/>
-        <property name="identificationReferenceid" type="string"/>
-        <property name="identificationTransactionid" type="string"/>
-        <property name="identificationShopperid" type="string"/>
-        <property name="paymentCode" type="string"/>
-        <property name="presentationCurrency" type="string"/>
-        <property name="presentationUsage" type="string"/>
-        <property name="presentationAmount" type="string"/>
-        <property name="nameFamily" type="string"/>
-        <property name="nameGiven" type="string"/>
-        <property name="nameSex" type="string"/>
-        <property name="nameTitle" type="string"/>
-        <property name="nameBirthdate" type="string"/>
-        <property name="addressCountry" type="string"/>
-        <property name="addressCity" type="string"/>
-        <property name="addressStreet" type="string"/>
-        <property name="addressZip" type="string"/>
-        <property name="contactIp" type="string"/>
-        <property name="contactEmail" type="string"/>
-        <property name="contactPhone" type="string"/>
-        <property name="contactMobile" type="string"/>
-        <property name="accountBrand" type="string"/>
-        <property name="analysisCriteria" singular="analysisCriterion" type="PayolutionRequestAnalysisCriterion[]"/>
-    </transfer>
-
-    <transfer name="PayolutionRequestAnalysisCriterion">
-        <property name="name" type="string"/>
-        <property name="value" type="string"/>
-    </transfer>
-
-    <transfer name="PayolutionResponse">
+    <transfer name="PayolutionTransactionResponse">
         <property name="processingRiskScore" type="string"/>
         <property name="p3Validation" type="string"/>
         <property name="nameGiven" type="string"/>
@@ -100,6 +70,38 @@
         <property name="clearingFxdate" type="string"/>
         <property name="addressZip" type="string"/>
         <property name="nameTitle" type="string"/>
+    </transfer>
+
+    <transfer name="PayolutionCalculationResponse">
+        <property name="version" type="string"/>
+        <property name="transactionType" type="string"/>
+        <property name="paymentType" type="string"/>
+        <property name="identificationTransactionid" type="string"/>
+        <property name="identificationUniqueid" type="string"/>
+        <property name="status" type="string"/>
+        <property name="statusCode" type="string"/>
+        <property name="description" type="string"/>
+        <property name="paymentDetails" type="PayolutionCalculationPaymentDetail[]" singular="paymentDetail"/>
+        <property name="tacUrl" type="string"/>
+        <property name="dataPrivacyConsentUrl" type="string"/>
+    </transfer>
+
+    <transfer name="PayolutionCalculationPaymentDetail">
+        <property name="installments" type="PayolutionCalculationInstallment[]" singular="installment"/>
+        <property name="originalAmount" type="int"/>
+        <property name="totalAmount" type="int"/>
+        <property name="minimumInstallmentFee" type="int"/>
+        <property name="duration" type="int"/>
+        <property name="interestRate" type="int"/>
+        <property name="effectiveInterestRate" type="int"/>
+        <property name="usage" type="string"/>
+        <property name="currency" type="string"/>
+        <property name="standardCreditInformationUrl" type="string"/>
+    </transfer>
+
+    <transfer name="PayolutionCalculationInstallment">
+        <property name="amount" type="int"/>
+        <property name="due" type="string"/>
     </transfer>
 
     <transfer name="Order">

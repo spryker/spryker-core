@@ -17,7 +17,6 @@ use SprykerEngine\Zed\Kernel\Locator;
 use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
-use SprykerFeature\Zed\Payolution\Business\Api\Constants;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;
@@ -25,6 +24,7 @@ use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderAddress;
 use Propel\Runtime\Exception\PropelException;
+use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
 
 /**
  * Note:
@@ -72,12 +72,12 @@ class PayolutionFacadeGatewayTest extends Test
             ->setSalutation(SpyCustomerTableMap::COL_SALUTATION_MR);
 
         $paymentTransfer = new PayolutionPaymentTransfer();
-        $paymentTransfer->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE)
+        $paymentTransfer->setAccountBrand(ApiConstants::BRAND_INVOICE)
             ->setClientIp('127.0.0.1')
             ->setDateOfBirth('1970-01-02')
             ->setGender(SpyCustomerTableMap::COL_GENDER_MALE)
             ->setAddress($addressTransfer)
-            ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE)
+            ->setAccountBrand(ApiConstants::BRAND_INVOICE)
             ->setLanguageIso2Code('de')
             ->setCurrencyIso3Code('EUR');
 
@@ -91,8 +91,8 @@ class PayolutionFacadeGatewayTest extends Test
 
         $paymentEntity = $this->orderEntity->getSpyPaymentPayolutions()->getFirst();
 
-        $this->assertInstanceOf('Orm\Zed\Payolution\Persistence\SpyPaymentPayolution', $paymentEntity);
-        $this->assertEquals(Constants::ACCOUNT_BRAND_INVOICE, $paymentEntity->getAccountBrand());
+        $this->assertInstanceOf('SprykerFeature\Zed\Payolution\Persistence\Propel\SpyPaymentPayolution', $paymentEntity);
+        $this->assertEquals(ApiConstants::BRAND_INVOICE, $paymentEntity->getAccountBrand());
         $this->assertEquals('127.0.0.1', $paymentEntity->getClientIp());
     }
 
@@ -124,7 +124,7 @@ class PayolutionFacadeGatewayTest extends Test
             ->setGender('Male')
             ->setDateOfBirth('1970-01-01')
             ->setClientIp('127.0.0.1')
-            ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE)
+            ->setAccountBrand(ApiConstants::BRAND_INVOICE)
             ->setAddress($addressTransfer)
             ->setLanguageIso2Code('de')
             ->setCurrencyIso3Code('EUR');
@@ -302,7 +302,7 @@ class PayolutionFacadeGatewayTest extends Test
     {
         $this->paymentEntity = (new SpyPaymentPayolution())
             ->setFkSalesOrder($this->orderEntity->getIdSalesOrder())
-            ->setAccountBrand(Constants::ACCOUNT_BRAND_INVOICE)
+            ->setAccountBrand(ApiConstants::BRAND_INVOICE)
             ->setClientIp('127.0.0.1')
             ->setFirstName('Jane')
             ->setLastName('Doe')

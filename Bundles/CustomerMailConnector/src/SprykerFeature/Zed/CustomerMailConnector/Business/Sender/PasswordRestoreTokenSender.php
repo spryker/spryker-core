@@ -28,9 +28,10 @@ class PasswordRestoreTokenSender extends AbstractSender
         $this->setMailTransferSubject($mailTransfer);
         $this->setMailMergeData($mailTransfer, $this->getMailGlobalMergeVars($token));
 
-        $result = $this->mailFacade->sendMail($mailTransfer);
+        $mailResponses = $this->mailFacade->sendMail($mailTransfer);
+        $result = $this->mailFacade->isMailSent($mailResponses);
 
-        return $this->isMailSent($result);
+        return $result;
     }
 
     /**

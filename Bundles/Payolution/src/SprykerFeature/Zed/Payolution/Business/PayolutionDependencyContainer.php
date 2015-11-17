@@ -7,16 +7,16 @@
 namespace SprykerFeature\Zed\Payolution\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use Generated\Zed\Ide\FactoryAutoCompletion\PayolutionBusiness;
-use SprykerFeature\Zed\CustomerCheckoutConnector\Business\CustomerOrderSaverInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use SprykerFeature\Zed\Payolution\Business\Api\Request\ConverterInterface as RequestConverterInterface;
-use SprykerFeature\Zed\Payolution\Business\Api\Response\ConverterInterface as ResponseConverterInterface;
+use SprykerFeature\Zed\Payolution\Business\Api\Converter\ConverterInterface;
+use SprykerFeature\Zed\Payolution\Business\Order\SaverInterface;
+use SprykerFeature\Zed\Payolution\Business\Payment\Handler\Transaction\TransactionInterface;
+use SprykerFeature\Zed\Payolution\Business\Payment\Handler\Calculation\CalculationInterface;
 use SprykerFeature\Zed\Payolution\Business\Log\TransactionStatusLogInterface;
-use SprykerFeature\Zed\Payolution\Business\Payment\CommunicatorInterface;
-use SprykerFeature\Zed\Payolution\PayolutionConfig;
+use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use SprykerFeature\Zed\Payolution\Persistence\PayolutionQueryContainerInterface;
-use Guzzle\Http\Client as GuzzleClient;
+use SprykerFeature\Zed\Payolution\PayolutionConfig;
+use Generated\Zed\Ide\FactoryAutoCompletion\PayolutionBusiness;
 
 /**
  * @method PayolutionBusiness getFactory()
@@ -27,43 +27,58 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**
-     * @return CommunicatorInterface
+     * @return TransactionInterface
      */
-    public function createPaymentCommunicator()
+    public function createPaymentTransactionHandler()
     {
-        $paymentManager = $this->getFactory()->createPaymentCommunicator(
-            $this->createExecutionAdapter(),
+        $paymentTransactionHandler = $this->getFactory()->createPaymentHandlerTransactionTransaction(
+            $this->createAdapter($this->getConfig()->getTransactionGatewayUrl(), ApiConstants::TRANSACTION_REQUEST_CONTENT_TYPE),
+            $this->createConverter(),
             $this->getQueryContainer(),
-            $this->createRequestConverter(),
-            $this->createResponseConverter()
+            $this->getConfig()
         );
 
-        $paymentManager->registerMethodMapper(
-            $this->getFactory()->createPaymentMethodMapperInvoice($this->getConfig())
+        $paymentTransactionHandler->registerMethodMapper(
+            $this->getFactory()->createPaymentMethodinvoiceInvoice($this->getConfig())
         );
-        $paymentManager->registerMethodMapper(
-            $this->getFactory()->createPaymentMethodMapperInstallment($this->getConfig())
+        $paymentTransactionHandler->registerMethodMapper(
+            $this->getFactory()->createPaymentMethodinstallmentInstallment($this->getConfig())
         );
 
-        return $paymentManager;
+        return $paymentTransactionHandler;
     }
 
     /**
+     * @return CalculationInterface
+     */
+    public function createPaymentCalculationHandler()
+    {
+        $paymentCalculationHandler = $this->getFactory()->createPaymentHandlerCalculationCalculation(
+            $this->createAdapter($this->getConfig()->getCalculationGatewayUrl(), ApiConstants::CALCULATION_REQUEST_CONTENT_TYPE),
+            $this->createConverter(),
+            $this->getConfig()
+        );
+
+        $paymentCalculationHandler->registerMethodMapper(
+            $this->getFactory()->createPaymentMethodinstallmentInstallment($this->getConfig())
+        );
+
+        return $paymentCalculationHandler;
+    }
+
+    /**
+     * @param string $gatewayUrl
+     * @param string $contentType
+     *
      * @return AdapterInterface
      */
-    protected function createExecutionAdapter()
+    protected function createAdapter($gatewayUrl, $contentType)
     {
-        $gatewayUrl = $this->getConfig()->getGatewayUrl();
-
-        $client = new GuzzleClient([
-            'timeout' => $this->getConfig()->getDefaultTimeout(),
-        ]);
-
-        return $this->getFactory()->createApiAdapterHttpGuzzle($client, $gatewayUrl);
+        return $this->getFactory()->createApiAdapterHttpGuzzle($gatewayUrl, $contentType);
     }
 
     /**
-     * @return CustomerOrderSaverInterface
+     * @return SaverInterface
      */
     public function createOrderSaver()
     {
@@ -71,19 +86,11 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return RequestConverterInterface
+     * @return ConverterInterface
      */
-    public function createRequestConverter()
+    public function createConverter()
     {
-        return $this->getFactory()->createApiRequestConverter();
-    }
-
-    /**
-     * @return ResponseConverterInterface
-     */
-    public function createResponseConverter()
-    {
-        return $this->getFactory()->createApiResponseConverter();
+        return $this->getFactory()->createApiConverterConverter();
     }
 
     /**

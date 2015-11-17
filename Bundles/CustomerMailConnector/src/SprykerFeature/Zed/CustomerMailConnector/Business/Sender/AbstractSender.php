@@ -43,25 +43,6 @@ abstract class AbstractSender
     }
 
     /**
-     * @param array $results
-     *
-     * @return bool
-     */
-    protected function isMailSent(array $results)
-    {
-        foreach ($results as $result) {
-            if (!isset($result['status'])) {
-                return false;
-            }
-            if ($result['status'] !== 'sent' || $result['status'] !== 'queued') {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
      * @return MailTransfer
      */
     protected function createMailTransfer()

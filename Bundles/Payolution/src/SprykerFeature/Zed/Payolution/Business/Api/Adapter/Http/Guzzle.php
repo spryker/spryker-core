@@ -6,13 +6,15 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http;
 
+use SprykerFeature\Zed\Payolution\Business\Exception\ApiHttpRequestException;
 use Guzzle\Http\Client as GuzzleClient;
 use Guzzle\Http\Exception\RequestException;
-use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
-use SprykerFeature\Zed\Payolution\Business\Exception\ApiHttpRequestException;
+use Guzzle\Http\Message\RequestInterface as GuzzleRequestInterface;
 
-class Guzzle implements AdapterInterface
+class Guzzle extends AbstractHttpAdapter
 {
+
+    const DEFAULT_TIMEOUT = 45;
 
     /**
      * @var GuzzleClient
@@ -20,44 +22,60 @@ class Guzzle implements AdapterInterface
     protected $client;
 
     /**
-     * @var string
-     */
-    private $gatewayUrl;
-
-    /**
      * @param string $gatewayUrl
+     * @param string $contentType
      */
-    public function __construct(GuzzleClient $client, $gatewayUrl)
+    public function __construct($gatewayUrl, $contentType)
     {
-        $this->client = $client;
-        $this->gatewayUrl = $gatewayUrl;
+        parent::__construct($gatewayUrl, $contentType);
+
+        $this->client = new GuzzleClient([
+            'timeout' => self::DEFAULT_TIMEOUT,
+        ]);
     }
 
     /**
-     * @param array $data
+     * @param array|string $data
+     *
+     * @return GuzzleRequestInterface
+     */
+    protected function buildRequest($data)
+    {
+        return $this->client->post(
+            $this->gatewayUrl,
+            ['Content-Type' => self::$requestContentTypes[$this->contentType]],
+            $data
+        );
+    }
+
+    /**
+     * @param GuzzleRequestInterface $request
+     * @param string $user
+     * @param string $password
+     *
+     * @return void
+     */
+    protected function authorizeRequest($request, $user, $password)
+    {
+        $request->setAuth($user, $password);
+    }
+
+    /**
+     * @param GuzzleRequestInterface $request
      *
      * @throws ApiHttpRequestException
      *
-     * @return array
+     * @return string
      */
-    public function sendArrayDataRequest(array $data)
+    protected function send($request)
     {
-        $headers = ['Content-Type' => 'application/x-www-form-urlencoded;charset=UTF-8'];
-        $guzzleRequest = $this->client->post(
-          $this->gatewayUrl,
-            $headers,
-            $data
-        );
-
         try {
-            $response = $guzzleRequest->send();
+            $response = $request->send();
         } catch (RequestException $requestException) {
             throw new ApiHttpRequestException($requestException->getMessage());
         }
 
-        parse_str($response->getBody(true), $out);
-
-        return $out;
+        return $response->getbody(true);
     }
 
 }
