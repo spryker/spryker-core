@@ -64,7 +64,8 @@ class OrderItemMatrix
         }
         $this->processes = $processes;
 
-        $stateBlacklist = $config->getStateBlacklist();
+        $stateBlacklist = $this->getStateBlacklist();
+
         $orderItems = $this->queryContainer->queryMatrixOrderItems(array_keys($processes), $stateBlacklist)
             ->find();
 
@@ -191,6 +192,20 @@ class OrderItemMatrix
         }
 
         return $orderItemStates;
+    }
+
+    /**
+     * @return array
+     */
+    protected function getStateBlacklist()
+    {
+        $blacklist = $this->config->getStateBlacklist();
+        $result = $this->queryContainer->querySalesOrderItemStatesByName($blacklist)->find();
+        $blacklist = [];
+        foreach ($result as $row) {
+            $blacklist[] = $row->getIdOmsOrderItemState();
+        }
+        return $blacklist;
     }
 
 }

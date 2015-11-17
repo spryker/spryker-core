@@ -217,4 +217,16 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         return $query;
     }
 
+    /**
+     * @param string[] $orderItemStates
+     *
+     * @return SpyOmsOrderItemStateQuery
+     */
+    public function querySalesOrderItemStatesByName($orderItemStates)
+    {
+        $query = SpyOmsOrderItemStateQuery::create();
+        $query->filterByName($orderItemStates);
+
+        return $query;
+    }
 }
