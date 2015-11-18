@@ -2,10 +2,9 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Form;
 
-use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use SprykerEngine\Zed\Gui\Communication\Form\AbstractFormType;
+use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class AddressTypeForm extends AbstractFormType
@@ -27,31 +26,19 @@ class AddressTypeForm extends AbstractFormType
     const FIELD_COMPANY = 'company';
     const FIELD_COMMENT = 'comment';
 
-    /**
-     * @var SpyCustomerAddressQuery
-     */
-    protected $customerAddressQuery;
+    const PREFERED_COUNTRY_NAME = 'Germany';
 
     /**
-     * @var SpyCustomerQuery
+     * @var CustomerQueryContainerInterface
      */
-    protected $customerQuery;
+    protected $customerQueryContainer;
 
     /**
-     * @var string
+     * @param CustomerQueryContainerInterface $queryContainer
      */
-    protected $type;
-
-    /**
-     * @param SpyCustomerAddressQuery $addressQuery
-     * @param SpyCustomerQuery $customerQuery
-     * @param string $type
-     */
-    public function __construct(SpyCustomerAddressQuery $addressQuery, SpyCustomerQuery $customerQuery, $type)
+    public function __construct(CustomerQueryContainerInterface $queryContainer)
     {
-        $this->customerQuery = $customerQuery;
-        $this->addressQuery = $addressQuery;
-        $this->type = $type;
+        $this->customerQueryContainer = $queryContainer;
     }
 
     /**
@@ -72,19 +59,11 @@ class AddressTypeForm extends AbstractFormType
             ])
             ->add(self::FIELD_FIRST_NAME, 'text', [
                 'label' => 'First Name',
-                'constraints' => [
-                    $this->getConstraints()->createConstraintRequired(),
-                    $this->getConstraints()->createConstraintNotBlank(),
-                    $this->getConstraints()->createConstraintLength(['max' => 100]),
-                ],
+                'constraints' => $this->getTextFieldConstraints(),
             ])
             ->add(self::FIELD_LAST_NAME, 'text', [
                 'label' => 'Last Name',
-                'constraints' => [
-                    $this->getConstraints()->createConstraintRequired(),
-                    $this->getConstraints()->createConstraintNotBlank(),
-                    $this->getConstraints()->createConstraintLength(['max' => 100]),
-                ],
+                'constraints' => $this->getTextFieldConstraints(),
             ])
             ->add(self::FIELD_ADDRESS_1, 'text', [
                 'label' => 'Address line 1',
@@ -109,8 +88,10 @@ class AddressTypeForm extends AbstractFormType
                 'placeholder' => 'Select one',
                 'choices' => $this->getCountryOptions(),
                 'preferred_choices' => [
-                    $this->addressQuery->useCountryQuery()
-                        ->findOneByName('Germany')
+                    $this->customerQueryContainer
+                        ->queryAddresses()
+                        ->useCountryQuery()
+                        ->findOneByName(self::PREFERED_COUNTRY_NAME)
                         ->getIdCountry(),
                 ],
             ])
@@ -134,7 +115,9 @@ class AddressTypeForm extends AbstractFormType
      */
     public function getCountryOptions()
     {
-        $countries = $this->addressQuery->useCountryQuery()
+        $countries = $this->customerQueryContainer
+            ->queryAddresses()
+            ->useCountryQuery()
             ->find()
         ;
 
@@ -156,6 +139,20 @@ class AddressTypeForm extends AbstractFormType
         $salutation = SpyCustomerTableMap::getValueSet(SpyCustomerTableMap::COL_SALUTATION);
 
         return $this->getEnumSet($salutation);
+    }
+
+    /**
+     * @return array
+     */
+    protected function getTextFieldConstraints()
+    {
+        return [
+            $this->getConstraints()->createConstraintRequired(),
+            $this->getConstraints()->createConstraintNotBlank(),
+            $this->getConstraints()->createConstraintLength([
+                'max' => 100,
+            ]),
+        ];
     }
 
     /**

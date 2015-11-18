@@ -88,6 +88,7 @@ interface CustomerQueryContainerInterface extends QueryContainerInterface
 
     /**
      * @param $idCustomer
+     *
      * @return SpyCustomerAddressQuery
      */
     public function queryAddressByIdCustomer($idCustomer);

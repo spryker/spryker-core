@@ -22,7 +22,7 @@ abstract class AbstractForm
      *
      * @var AbstractFormType
      */
-    protected $formType;
+    protected $formActionType;
 
     /**
      * Needs to be overwritten to populate the form
@@ -39,7 +39,7 @@ abstract class AbstractForm
      */
     public function create()
     {
-        if ($this->formType === null) {
+        if ($this->formActionType === null) {
             throw new \ErrorException('You need to initialize $this->formType which extends SprykerFeature\Zed\Gui\Communication\Form\AbstractFormType'); // TODO Exception type
         }
 
@@ -47,7 +47,7 @@ abstract class AbstractForm
 
         $populatedData = $this->populateFormFields();
 
-        return $this->getApplication()[self::FORM_FACTORY]->create($this->formType, $populatedData);
+        return $this->getApplication()[self::FORM_FACTORY]->create($this->formActionType, $populatedData);
     }
 
     protected function init()

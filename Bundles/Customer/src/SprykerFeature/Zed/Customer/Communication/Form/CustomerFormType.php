@@ -14,13 +14,14 @@ class CustomerFormType extends AbstractFormType
     const ADD = 'add';
     const UPDATE = 'update';
     const PARAM_ID_CUSTOMER = 'id-customer';
+
     const FIELD_SALUTATION = 'salutation';
     const FIELD_GENDER = 'gender';
     const FIELD_SEND_PASSWORD_TOKEN = 'send_password_token';
     const FIELD_ID_CUSTOMER = 'id_customer';
     const FIELD_EMAIL = 'email';
-    const DEFAULT_BILLING_ADDRESS = 'default_billing_address';
-    const DEFAULT_SHIPPING_ADDRESS = 'default_shipping_address';
+    const FIELD_DEFAULT_BILLING_ADDRESS = 'default_billing_address';
+    const FIELD_DEFAULT_SHIPPING_ADDRESS = 'default_shipping_address';
     const FIELD_FIRST_NAME = 'first_name';
     const FIELD_LAST_NAME = 'last_name';
 
@@ -36,8 +37,9 @@ class CustomerFormType extends AbstractFormType
 
     /**
      * CustomerFormType constructor.
+     *
      * @param CustomerQueryContainerInterface $customerQueryContainer
-     * @param $addOrUpdate
+     * @param string $addOrUpdate
      */
     public function __construct(CustomerQueryContainerInterface $customerQueryContainer, $addOrUpdate)
     {
@@ -58,7 +60,7 @@ class CustomerFormType extends AbstractFormType
             'constraints' => $this->getEmailConstraints(),
         ];
 
-        if (self::UPDATE === $this->addOrUpdate) {
+        if ($this->addOrUpdate === self::UPDATE) {
             $emailParameters['disabled'] = 'disabled';
         }
 
@@ -87,14 +89,14 @@ class CustomerFormType extends AbstractFormType
                 ],
             ]);
 
-        if (self::UPDATE === $this->addOrUpdate) {
+        if ($this->addOrUpdate === self::UPDATE) {
             $builder
-                ->add(self::DEFAULT_BILLING_ADDRESS, 'choice', [
+                ->add(self::FIELD_DEFAULT_BILLING_ADDRESS, 'choice', [
                     'label' => 'Billing Address',
                     'placeholder' => 'Select one',
                     'choices' => $this->getAddressOptions(),
                 ])
-                ->add(self::DEFAULT_SHIPPING_ADDRESS, 'choice', [
+                ->add(self::FIELD_DEFAULT_SHIPPING_ADDRESS, 'choice', [
                     'label' => 'Shipping Address',
                     'placeholder' => 'Select one',
                     'choices' => $this->getAddressOptions(),

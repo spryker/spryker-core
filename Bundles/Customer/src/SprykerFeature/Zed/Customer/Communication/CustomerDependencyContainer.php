@@ -9,12 +9,7 @@ namespace SprykerFeature\Zed\Customer\Communication;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
-use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Customer\Communication\Form\AddressTypeForm;
-use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
-use SprykerFeature\Zed\Customer\Communication\Form\CustomerFormType;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use SprykerFeature\Zed\Customer\Communication\Table\AddressTable;
 use SprykerFeature\Zed\Customer\Communication\Table\CustomerTable;
@@ -73,38 +68,37 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
-     * @param $formTypeName
-     * @return mixed
+     * @param string $formTypeName
+     *
      * @throws \ErrorException
+     *
+     * @return FormInterface
      */
     public function createCustomerForm($formTypeName)
     {
         $customerFormType = $this->getFactory()
-            ->createFormCustomerFormType($this->getQueryContainer(), $formTypeName);
+            ->createFormCustomerFormType($this->getQueryContainer(), $formTypeName)
+        ;
 
         $customerForm = $this->getFactory()
-            ->createFormCustomerForm($this->getQueryContainer(), $customerFormType);
+            ->createFormCustomerForm($this->getQueryContainer(), $customerFormType)
+        ;
 
         return $customerForm->create();
     }
 
-
     /**
      * @param AddressTransfer $addressTransfer
-     * @param string $type
      *
      * @return FormInterface
      */
-    public function createAddressForm(AddressTransfer $addressTransfer, $type)
+    public function createAddressForm(AddressTransfer $addressTransfer)
     {
-        $customerQuery = $this->getQueryContainer()
-            ->queryCustomers();
-
-        $addressQuery = $this->getQueryContainer()
-            ->queryAddresses();
+        $customerQueryContainer = $this->getQueryContainer();
 
         $customerAddressFormType = $this->getFactory()
-            ->createFormAddressTypeForm($addressQuery, $customerQuery, $type);
+            ->createFormAddressTypeForm($customerQueryContainer)
+        ;
 
         $defaultData = $this->getAddressFormDefaultData($addressTransfer);
 
@@ -112,9 +106,8 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
             ->create($customerAddressFormType, $defaultData);
     }
 
-
     /**
-     * @param AddressTransfer $addressTransfer
+     * @param AddressTransfer|null $addressTransfer
      *
      * @return array
      */
@@ -128,7 +121,7 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
-     * @param CustomerTransfer $customer
+     * @param CustomerTransfer|null $customer
      *
      * @return array
      */
@@ -138,13 +131,7 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
             return [];
         }
 
-        return $customer->toArray()
-
-
-
-
-
-            ;
+        return $customer->toArray();
     }
 
 }

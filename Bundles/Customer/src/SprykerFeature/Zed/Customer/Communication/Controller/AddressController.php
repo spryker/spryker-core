@@ -47,7 +47,8 @@ class AddressController extends AbstractController
         $idCustomer = $request->get(CustomerConfig::PARAM_ID_CUSTOMER);
 
         $table = $this->getDependencyContainer()
-            ->createCustomerAddressTable($idCustomer);
+            ->createCustomerAddressTable($idCustomer)
+        ;
 
         return $this->jsonResponse($table->fetchData());
     }
@@ -75,7 +76,8 @@ class AddressController extends AbstractController
         $customerAddressTransfer->setIdCustomerAddress($idCustomerAddress);
 
         $address = $this->getFacade()
-            ->getAddress($customerAddressTransfer);
+            ->getAddress($customerAddressTransfer)
+        ;
 
         return $this->viewResponse([
             'address' => $address->toArray(),
@@ -98,14 +100,16 @@ class AddressController extends AbstractController
         $customerAddress->setIdCustomerAddress($idCustomerAddress);
 
         $addressDetails = $this->getFacade()
-            ->getAddress($customerAddress);
+            ->getAddress($customerAddress)
+        ;
 
         if (!empty($addressDetails)) {
             $idCustomer = $addressDetails->getFkCustomer();
         }
 
         $addressForm = $this->getDependencyContainer()
-            ->createAddressForm($addressDetails, 'update');
+            ->createAddressForm($addressDetails, 'update')
+        ;
         $addressForm->handleRequest($request);
 
         if ($addressForm->isValid() === true) {
@@ -115,7 +119,8 @@ class AddressController extends AbstractController
             $customerAddress->fromArray($data, true);
 
             $this->getFacade()
-                ->updateAddress($customerAddress);
+                ->updateAddress($customerAddress)
+            ;
 
             return $this->redirectResponse(sprintf('/customer/address/?%s=%d', CustomerConfig::PARAM_ID_CUSTOMER, $idCustomer));
         }
@@ -149,7 +154,8 @@ class AddressController extends AbstractController
             $customerAddress->fromArray($data, true);
 
             $this->getFacade()
-                ->createAddress($customerAddress);
+                ->createAddress($customerAddress)
+            ;
 
             return $this->redirectResponse(sprintf('/customer/address/?%s=%d', CustomerConfig::PARAM_ID_CUSTOMER, $idCustomer));
         }
