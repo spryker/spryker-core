@@ -19,17 +19,17 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
     /**
      * @var string
      */
+    private $containingBundle;
+
+    /**
+     * @var string
+     */
     private $name;
 
     /**
      * @var array
      */
     private $uses = [];
-
-    /**
-     * @var array
-     */
-    private $interfaces = [];
 
     /**
      * @var array
@@ -42,11 +42,6 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
     private $methods = [];
 
     /**
-     * @var array
-     */
-    private $constructorDefinition = [];
-
-    /**
      * @param array $definition
      *
      * @return $this
@@ -54,6 +49,7 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
     public function setDefinition(array $definition)
     {
         $this->setBundle($definition);
+        $this->setContainingBundle($definition);
         $this->setName($definition);
 
         if (isset($definition['property'])) {
@@ -70,7 +66,7 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
      */
     public function getNamespace()
     {
-        return 'Generated\\Shared\\' . $this->getBundle();
+        return 'Generated\\Shared\\' . $this->getContainingBundle();
     }
 
     /**
@@ -87,6 +83,22 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
     public function getBundle()
     {
         return $this->bundle;
+    }
+
+    /**
+     * @param array $definition
+     */
+    public function setContainingBundle(array $definition)
+    {
+        $this->containingBundle = $definition['containing bundle'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getContainingBundle()
+    {
+        return $this->containingBundle;
     }
 
     /**

@@ -24,6 +24,7 @@ class InterfaceDefinitionTest extends \PHPUnit_Framework_TestCase
         $interfaceDefinition = new InterfaceDefinition();
         $interfaceDefinition->setDefinition([
             'bundle' => $expectedBundleName,
+            'containing bundle' => $expectedBundleName,
             'name' => 'Name',
         ]);
 
@@ -35,6 +36,7 @@ class InterfaceDefinitionTest extends \PHPUnit_Framework_TestCase
         $interfaceDefinition = new InterfaceDefinition();
         $interfaceDefinition->setDefinition([
             'bundle' => 'Bundle',
+            'containing bundle' => 'Bundle',
             'name' => 'Name',
         ]);
         $expectedName = 'NameInterface';
@@ -48,6 +50,7 @@ class InterfaceDefinitionTest extends \PHPUnit_Framework_TestCase
         $interfaceDefinition = new InterfaceDefinition();
         $interfaceDefinition->setDefinition([
             'bundle' => 'Bundle',
+            'containing bundle' => 'Bundle',
             'name' => $expectedName,
         ]);
 
@@ -59,6 +62,7 @@ class InterfaceDefinitionTest extends \PHPUnit_Framework_TestCase
         $interfaceDefinition = new InterfaceDefinition();
         $interfaceDefinition->setDefinition([
             'bundle' => 'Bundle',
+            'containing bundle' => 'Bundle',
             'name' => 'Name',
             'property' => [
                 [
@@ -78,6 +82,7 @@ class InterfaceDefinitionTest extends \PHPUnit_Framework_TestCase
         $interfaceDefinition = new InterfaceDefinition();
         $interfaceDefinition->setDefinition([
             'bundle' => 'Bundle',
+            'containing bundle' => 'Bundle',
             'name' => 'Name',
             'property' => [
                 [
@@ -98,6 +103,7 @@ class InterfaceDefinitionTest extends \PHPUnit_Framework_TestCase
         $interfaceDefinition = new InterfaceDefinition();
         $interfaceDefinition->setDefinition([
             'bundle' => 'Bundle',
+            'containing bundle' => 'Bundle',
             'name' => 'Name',
             'property' => [
                 [
@@ -118,6 +124,7 @@ class InterfaceDefinitionTest extends \PHPUnit_Framework_TestCase
         $interfaceDefinition = new InterfaceDefinition();
         $interfaceDefinition->setDefinition([
             'bundle' => 'Bundle',
+            'containing bundle' => 'Bundle',
             'name' => 'Name',
             'property' => [
                 [

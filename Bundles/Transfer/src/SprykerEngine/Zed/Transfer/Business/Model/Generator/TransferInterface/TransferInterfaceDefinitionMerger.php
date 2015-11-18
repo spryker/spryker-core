@@ -157,7 +157,8 @@ class TransferInterfaceDefinitionMerger implements MergerInterface
      */
     protected function getMergedKeyName($transferDefinition)
     {
-        $key = $transferDefinition[self::KEY_NAME] . $transferDefinition[self::KEY_CONTAINING_BUNDLE];
+        $key = $transferDefinition[self::KEY_CONTAINING_BUNDLE] . $transferDefinition[self::KEY_NAME];
+
         return $key;
     }
 

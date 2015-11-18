@@ -17,5 +17,6 @@
             "version": "1",
             "license": "BSD-3-Clause"
         }
-    ]
+    ],
+    "packages-dev": []
 }

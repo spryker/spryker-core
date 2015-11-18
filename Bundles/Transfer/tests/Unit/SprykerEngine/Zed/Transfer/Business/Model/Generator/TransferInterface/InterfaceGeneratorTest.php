@@ -50,6 +50,7 @@ class InterfaceGeneratorTest extends \PHPUnit_Framework_TestCase
         $interfaceDefinition = new InterfaceDefinition();
         $interfaceDefinition->setDefinition([
             'bundle' => 'Bundle',
+            'containing bundle' => 'Bundle',
             'name' => 'Name',
         ]);
         $interfaceGenerator->generate($interfaceDefinition);

@@ -19,6 +19,11 @@ interface InterfaceDefinitionInterface extends DefinitionInterface
     /**
      * @return string
      */
+    public function getContainingBundle();
+
+    /**
+     * @return string
+     */
     public function getNamespace();
 
     /**
