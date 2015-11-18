@@ -6,6 +6,7 @@
 
 namespace SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferInterface;
 
+use SprykerEngine\Zed\Transfer\Business\Exception\PropertyAmbiguous;
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\MergerInterface;
 
 class TransferInterfaceDefinitionMerger implements MergerInterface
@@ -79,7 +80,7 @@ class TransferInterfaceDefinitionMerger implements MergerInterface
             if (!array_key_exists($property[self::KEY_NAME], $mergedProperties)) {
                 $mergedProperties[$property[self::KEY_NAME]] = $property;
             } elseif (!$this->propertiesAreIdentically($property, $mergedProperties[$property[self::KEY_NAME]])) {
-                throw new \Exception(sprintf(self::ERROR_MESSAGE_PROPERTIES_NOT_IDENTICALLY, $property[self::KEY_NAME]));
+                throw new PropertyAmbiguous(sprintf(self::ERROR_MESSAGE_PROPERTIES_NOT_IDENTICALLY, $property[self::KEY_NAME]));
             }
         }
 
