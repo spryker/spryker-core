@@ -68,7 +68,7 @@ abstract class AbstractForm
      *
      * @deprecated use AbstractFormType instead
      *
-     * @return $this
+     * @return self
      */
     abstract protected function buildFormFields();
 
@@ -97,7 +97,7 @@ abstract class AbstractForm
     /**
      * @deprecated use AbstractFormType instead
      *
-     * @return $this
+     * @return self
      */
     protected function injectDependencies()
     {
@@ -125,7 +125,7 @@ abstract class AbstractForm
      *
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function setOptions(array $options)
     {
@@ -139,7 +139,7 @@ abstract class AbstractForm
      *
      * @param string $type
      *
-     * @return $this
+     * @return self
      */
     public function setDefaultDataType($type = null)
     {
@@ -171,7 +171,7 @@ abstract class AbstractForm
     /**
      * @deprecated use AbstractFormType instead
      *
-     * @return $this
+     * @return self
      */
     protected function init()
     {
@@ -192,7 +192,7 @@ abstract class AbstractForm
      *
      * @param array $data
      *
-     * @return $this
+     * @return self
      */
     public function setData($data)
     {
@@ -221,7 +221,7 @@ abstract class AbstractForm
     /**
      * @deprecated use AbstractFormType instead
      *
-     * @return $this
+     * @return self
      */
     public function handleRequest()
     {
@@ -297,4 +297,5 @@ abstract class AbstractForm
     {
         return array_combine($array, $array);
     }
+
 }

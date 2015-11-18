@@ -11,10 +11,9 @@ use SprykerEngine\Shared\Application\Communication\Application;
 use SprykerEngine\Zed\Kernel\Locator;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- */
 abstract class AbstractForm
 {
+
     const FORM_FACTORY = 'form.factory';
 
     /**
@@ -26,6 +25,7 @@ abstract class AbstractForm
 
     /**
      * Needs to be overwritten to populate the form
+     *
      * @return array
      */
     protected function populateFormFields()
@@ -34,7 +34,7 @@ abstract class AbstractForm
     }
 
     /**
-     * Move to abstract
+     * @throws \ErrorException
      * @return mixed
      */
     public function create()
@@ -50,6 +50,9 @@ abstract class AbstractForm
         return $this->getApplication()[self::FORM_FACTORY]->create($this->formActionType, $populatedData);
     }
 
+    /**
+     * @return void
+     */
     protected function init()
     {
         $this->request = $this->getRequest();
@@ -78,6 +81,5 @@ abstract class AbstractForm
     {
         return $this->getLocator()->application()->pluginPimple()->getApplication();
     }
-
 
 }

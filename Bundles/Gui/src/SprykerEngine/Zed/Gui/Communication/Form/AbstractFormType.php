@@ -57,4 +57,5 @@ abstract class AbstractFormType extends AbstractType
     {
         return $this->getLocator()->application()->pluginPimple()->getApplication()['request'];
     }
+
 }

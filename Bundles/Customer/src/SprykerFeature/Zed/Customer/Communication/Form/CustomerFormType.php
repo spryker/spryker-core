@@ -180,7 +180,7 @@ class CustomerFormType extends AbstractFormType
             $this->getConstraints()->createConstraintEmail(),
         ];
 
-        if (self::ADD === $this->addOrUpdate) {
+        if ($this->addOrUpdate === self::ADD) {
             $customerQuery = $this->customerQueryContainer->queryCustomers();
 
             $emailConstraints[] = $this->getConstraints()->createConstraintCallback([
@@ -192,8 +192,6 @@ class CustomerFormType extends AbstractFormType
                     },
                 ],
             ]);
-
-            return $emailConstraints;
         }
 
         return $emailConstraints;
