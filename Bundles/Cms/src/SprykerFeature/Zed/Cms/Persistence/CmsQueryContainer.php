@@ -12,6 +12,7 @@ use SprykerFeature\Shared\Cms\CmsConfig;
 use Orm\Zed\Category\Persistence\Base\SpyCategoryNodeQuery;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
+use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerFeature\Zed\Cms\CmsDependencyProvider;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsBlockForm;
 use SprykerFeature\Zed\Cms\Communication\Form\CmsPageForm;
@@ -109,7 +110,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->leftJoinCmsTemplate()
             ->withColumn(self::TEMPLATE_NAME)
             ->withColumn(self::TEMPLATE_PATH)
-            ;
+        ;
     }
 
     /**
@@ -122,13 +123,15 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->innerJoinSpyUrl()
             ->withColumn(self::TEMPLATE_NAME)
             ->withColumn(self::URL)
-            ;
+        ;
     }
 
     /**
-     * @return SpyCmsPageQuery
+     * @param int $idLocale
+     *
+     * @return SpyCmsBlockQuery
      */
-    public function queryPageWithTemplatesAndBlocks()
+    public function queryPageWithTemplatesAndBlocks($idLocale)
     {
         return $this->queryBlocks()
             ->leftJoinSpyCmsPage()
@@ -142,25 +145,25 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
                 Criteria::LEFT_JOIN
             )
             ->addJoin(
-                SpyCategoryNodeTableMap::COL_FK_CATEGORY,
-                SpyCategoryAttributeTableMap::COL_FK_CATEGORY,
+                [SpyCategoryNodeTableMap::COL_FK_CATEGORY, SpyCategoryAttributeTableMap::COL_FK_LOCALE],
+                [SpyCategoryAttributeTableMap::COL_FK_CATEGORY, $idLocale],
                 Criteria::LEFT_JOIN
             )
             ->addJoin(
-                SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE,
-                SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE,
+                [SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, SpyUrlTableMap::COL_FK_LOCALE],
+                [SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE, $idLocale],
                 Criteria::LEFT_JOIN
             )
             ->withColumn(SpyUrlTableMap::COL_URL, self::URL)
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::CATEGORY_NAME)
             ->withColumn(SpyCmsBlockTableMap::COL_NAME)
-            ;
+        ;
     }
 
     /**
      * @param int $idCmsBlock
      *
-     * @return SpyCmsPageQuery
+     * @return SpyCmsBlockQuery
      */
     public function queryPageWithTemplatesAndBlocksById($idCmsBlock)
     {
@@ -185,7 +188,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->withColumn(SpyCmsBlockTableMap::COL_NAME)
             ->withColumn(SpyCmsPageTableMap::COL_FK_TEMPLATE, CmsBlockForm::FK_TEMPLATE)
             ->withColumn(SpyCmsPageTableMap::COL_IS_ACTIVE, 'isActive')
-            ;
+        ;
     }
 
     /**
@@ -300,7 +303,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     {
         return $this->getProvidedDependency(CmsDependencyProvider::URL_QUERY_CONTAINER)
             ->queryUrlByIdWithRedirect($idUrl)
-            ;
+        ;
     }
 
     /**
@@ -312,7 +315,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     {
         return $this->getProvidedDependency(CmsDependencyProvider::URL_QUERY_CONTAINER)
             ->queryRedirectById($idRedirect)
-            ;
+        ;
     }
 
     /**
@@ -322,7 +325,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     {
         return $this->getProvidedDependency(CmsDependencyProvider::URL_QUERY_CONTAINER)
             ->queryUrlsWithRedirect()
-            ;
+        ;
     }
 
     /**
@@ -334,7 +337,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     {
         return $this->getProvidedDependency(CmsDependencyProvider::GLOSSARY_QUERY_CONTAINER)
             ->queryKey($key)
-            ;
+        ;
     }
 
     /**
@@ -353,7 +356,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->withColumn(SpyCmsTemplateTableMap::COL_TEMPLATE_PATH, self::TEMPLATE_PATH)
             ->withColumn(CmsPageForm::IS_ACTIVE)
             ->filterByIdCmsPage($idCmsPage)
-            ;
+        ;
     }
 
     /**
@@ -365,13 +368,11 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     {
         return $this->getProvidedDependency(CmsDependencyProvider::URL_QUERY_CONTAINER)
             ->queryUrlById($idUrl)
-            ;
+        ;
     }
 
     /**
      * @param string $value
-     *
-     * @throws \ErrorException
      *
      * @return SpyGlossaryTranslationQuery
      */
@@ -382,12 +383,11 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->innerJoinGlossaryKey()
             ->filterByIsActive(true)
             ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::LABEL)
-            ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::VALUE);
+            ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::VALUE)
+        ;
     }
     /**
      * @param string $key
-     *
-     * @throws \ErrorException
      *
      * @return SpyUrlQuery
      */
@@ -398,7 +398,8 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->rightJoinSpyGlossaryTranslation()
             ->filterByIsActive(true)
             ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::LABEL)
-            ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::VALUE);
+            ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::VALUE)
+        ;
     }
 
     /**
@@ -410,7 +411,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     {
         return $this->queryBlocks()
             ->filterByFkPage($idCmsPage)
-            ;
+        ;
     }
 
     /**
@@ -426,20 +427,18 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->filterByName($blockName)
             ->filterByType($blockType)
             ->filterByValue($blockValue)
-            ;
+        ;
     }
 
     /**
-     * @param $categoryName
-     * @param $idLocale
-     *
-     * @throws \ErrorException
+     * @param string $categoryName
+     * @param int $idLocale
      *
      * @return SpyCategoryNodeQuery
      */
     public function queryNodeByCategoryName($categoryName, $idLocale)
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::CATEGORY_QUERY_CONTAINER)
+        return $this->getCategoryQueryContainer()
             ->queryCategoryNode($idLocale)
             ->useCategoryQuery()
                 ->useAttributeQuery()
@@ -448,10 +447,19 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
                 ->endUse()
             ->endUse()
             ->useSpyUrlQuery()
+                ->filterByFkLocale($idLocale)
             ->endUse()
             ->withColumn(SpyUrlTableMap::COL_FK_RESOURCE_CATEGORYNODE, self::CATEGORY_NODE_ID)
             ->withColumn(SpyUrlTableMap::COL_URL, self::URL)
-            ;
+        ;
+    }
+
+    /**
+     * @return CategoryQueryContainer
+     */
+    protected function getCategoryQueryContainer()
+    {
+        return $this->getProvidedDependency(CmsDependencyProvider::CATEGORY_QUERY_CONTAINER);
     }
 
     /**
