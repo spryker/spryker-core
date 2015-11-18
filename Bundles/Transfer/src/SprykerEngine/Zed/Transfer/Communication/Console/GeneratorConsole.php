@@ -19,6 +19,9 @@ class GeneratorConsole extends Console
 
     const COMMAND_NAME = 'transfer:generate';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         parent::configure();
@@ -33,6 +36,8 @@ class GeneratorConsole extends Console
      * @param OutputInterface $output
      *
      * @throws \Exception
+     *
+     * @return void
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {

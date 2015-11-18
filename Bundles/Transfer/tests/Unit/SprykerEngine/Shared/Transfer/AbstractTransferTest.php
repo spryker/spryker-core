@@ -88,6 +88,7 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $transfer = new AbstractTransfer();
         $transfer->fromArray($data, true);
     }
+
     public function testFromArrayWithNestedTransferCollectionShouldReturnValidDataFromEmbeddedTransferObjects()
     {
         $data = [

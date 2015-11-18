@@ -43,7 +43,7 @@ class InterfaceGenerator implements GeneratorInterface
         $fileName = $definition->getName() . '.php';
         $fileContent = $this->twig->render('interface.php.twig', $twigData);
 
-        $targetDirectory = $this->targetDirectory . DIRECTORY_SEPARATOR . $definition->getBundle() . DIRECTORY_SEPARATOR;
+        $targetDirectory = $this->targetDirectory . DIRECTORY_SEPARATOR . $definition->getContainingBundle() . DIRECTORY_SEPARATOR;
 
         if (!is_dir($targetDirectory)) {
             mkdir($targetDirectory, 0755, true);
@@ -63,7 +63,6 @@ class InterfaceGenerator implements GeneratorInterface
     {
         return [
             'namespace' => $classDefinition->getNamespace(),
-            'bundle' => $classDefinition->getBundle(),
             'name' => $classDefinition->getName(),
             'uses' => $classDefinition->getUses(),
             'methods' => $classDefinition->getMethods(),

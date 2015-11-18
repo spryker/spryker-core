@@ -104,7 +104,7 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
      * @param array $data
      * @param bool $ignoreMissingProperty
      *
-     * @return $this
+     * @return self
      */
     public function fromArray(array $data, $ignoreMissingProperty = false)
     {

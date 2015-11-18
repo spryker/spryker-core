@@ -6,7 +6,6 @@
 
 namespace SprykerEngine\Zed\Transfer\Business;
 
-use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use Psr\Log\LoggerInterface;
 
@@ -17,7 +16,7 @@ class TransferFacade extends AbstractFacade
 {
 
     /**
-     * @param MessengerInterface $messenger
+     * @param LoggerInterface $messenger
      */
     public function generateTransferObjects(LoggerInterface $messenger)
     {
@@ -25,13 +24,16 @@ class TransferFacade extends AbstractFacade
     }
 
     /**
-     * @param MessengerInterface $messenger
+     * @param LoggerInterface $messenger
      */
     public function generateTransferInterfaces(LoggerInterface $messenger)
     {
         $this->getDependencyContainer()->createTransferInterfaceGenerator($messenger)->execute();
     }
 
+    /**
+     * @return void
+     */
     public function deleteGeneratedTransferObjects()
     {
         $this->getDependencyContainer()->createTransferCleaner()->cleanDirectory();
