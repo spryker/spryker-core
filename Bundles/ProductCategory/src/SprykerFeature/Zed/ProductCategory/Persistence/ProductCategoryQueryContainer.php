@@ -178,12 +178,6 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
                 SpyProductCategoryTableMap::COL_ID_PRODUCT_CATEGORY,
                 'id_product_category'
             )
-            //TODO remove when properly implementing product categories
-                //https://kartenmacherei.atlassian.net/browse/KSP-877
-/*            ->withColumn(
-                SpyProductCategoryTableMap::COL_FK_PRECONFIG_PRODUCT,
-                'preconfig_product'
-            )*/
             ->filterByFkCategory($idCategory)
             ->orderByFkAbstractProduct()
         ;
@@ -232,10 +226,6 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
         ->withColumn(
             SpyLocalizedAbstractProductAttributesTableMap::COL_ATTRIBUTES,
             'abstract_localized_attributes'
-        )
-        ->withColumn(
-            SpyAbstractProductTableMap::COL_SKU,
-            'sku'
         );
 
         $query->groupByAttributes();
