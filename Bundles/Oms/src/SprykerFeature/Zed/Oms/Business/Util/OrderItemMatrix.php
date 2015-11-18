@@ -144,7 +144,7 @@ class OrderItemMatrix
 
         foreach ($grid as $key => $value) {
             $url = sprintf('/sales?id-order-item-process=%s&id-order-item-process-state=%s&filter=%s', $idProcess, $idState, $key);
-            $grid[$key] = '<a href="' . $url . '">' . $value . '</a>';
+            $grid[$key] = '<a href="' . htmlentities($url) . '">' . $value . '</a>';
         }
 
         return implode(' | ', $grid);
