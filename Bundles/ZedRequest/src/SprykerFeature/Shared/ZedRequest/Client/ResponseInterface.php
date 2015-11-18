@@ -45,28 +45,28 @@ interface ResponseInterface
     /**
      * @return Message[]
      */
-    public function getMessages();
+    public function getInfoMessages();
 
     /**
      * @param string $messageString
      *
      * @return bool
      */
-    public function hasMessage($messageString);
+    public function hasInfoMessage($messageString);
 
     /**
      * @param Message $message
      *
      * @return self
      */
-    public function addMessage(Message $message);
+    public function addInfoMessage(Message $message);
 
     /**
      * @param array $messages
      *
      * @return self
      */
-    public function addMessages(array $messages);
+    public function addInfoMessages(array $messages);
 
     /**
      * @return bool

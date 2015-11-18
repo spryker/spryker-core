@@ -14,6 +14,8 @@ use SprykerFeature\Zed\Kernel\Communication\GatewayControllerListenerInterface;
 use SprykerFeature\Zed\ZedRequest\Business\Client\Request;
 use SprykerFeature\Zed\ZedRequest\Business\Client\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use SprykerEngine\Zed\FlashMessenger\FlashMessengerConfig;
+use SprykerEngine\Zed\FlashMessenger\Business\Model\InMemoryMessageTray;
 
 class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayControllerListenerInterface
 {
@@ -34,6 +36,9 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
         }
 
         $newController = function () use ($controller, $action) {
+
+            FlashMessengerConfig::setMessageTray(FlashMessengerConfig::IN_MEMORY_TRAY);
+
             $requestTransfer = $this->getRequestTransfer($controller, $action);
             $result = $controller->$action($requestTransfer->getTransfer(), $requestTransfer);
             $response = $this->getResponse($controller, $result);
@@ -92,11 +97,26 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
             $response->setTransfer($result);
         }
 
-        $response->addMessages($controller->getMessages());
-        $response->addErrorMessages($controller->getErrorMessages());
+        $this->setResponseMessages($response);
+
         $response->setSuccess($controller->getSuccess());
 
         return $response;
+    }
+
+    /**
+     * @param Response $response
+     *
+     * @return void
+     */
+    private function setResponseMessages(Response $response)
+    {
+        $flashMessengerTransfer = InMemoryMessageTray::getMessages();
+
+        if ($flashMessengerTransfer !== null) {
+            $response->addErrorMessages($flashMessengerTransfer->getErrorMessages());
+            $response->addInfoMessages($flashMessengerTransfer->getInfoMessages());
+        }
     }
 
     /**
@@ -116,5 +136,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
 
         throw new \LogicException('Only transfer classes are allowed in yves action as parameter');
     }
+
+
 
 }

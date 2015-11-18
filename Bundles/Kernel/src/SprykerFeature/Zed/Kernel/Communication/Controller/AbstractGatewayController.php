@@ -76,47 +76,4 @@ abstract class AbstractGatewayController extends AbstractController
 
         return $this;
     }
-
-    /**
-     * @param string $message
-     * @param array $data
-     *
-     * @return self
-     */
-    protected function addMessage($message, $data = [])
-    {
-        $messageObject = new Message();
-        $messageObject->setMessage($message);
-        $messageObject->setData($data);
-
-        $this->messages[] = $messageObject;
-
-        return $this;
-    }
-
-    /**
-     * @param string $message
-     * @param array $data
-     *
-     * @return self
-     */
-    protected function addErrorMessage($message, $data = [])
-    {
-        $messageObject = new Message();
-        $messageObject->setMessage($message);
-        $messageObject->setData($data);
-
-        $this->errorMessages[] = $messageObject;
-
-        return $this;
-    }
-
-    /**
-     * @return Message[]
-     */
-    public function getErrorMessages()
-    {
-        return $this->errorMessages;
-    }
-
 }

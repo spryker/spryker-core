@@ -99,4 +99,20 @@ abstract class AbstractZedClient
         return $this->lastResponse;
     }
 
+    /**
+     * @return array|Message[]
+     */
+    public function getLastResponseErrorMessages()
+    {
+        return $this->getLastResponse()->getErrorMessages();
+    }
+
+    /**
+     * @return array|Message[]
+     */
+    public function getLastResponseMessages()
+    {
+        return $this->getLastResponse()->getMessages();
+    }
+
 }

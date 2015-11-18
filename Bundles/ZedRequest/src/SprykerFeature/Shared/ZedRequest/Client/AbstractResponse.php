@@ -37,8 +37,8 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     {
         parent::fromArray($values);
 
-        foreach ($this->values['messages'] as $key => $message) {
-            $this->values['messages'][$key] = new Message($message);
+        foreach ($this->values['infoMessages'] as $key => $message) {
+            $this->values['infoMessages'][$key] = new Message($message);
         }
 
         foreach ($this->values['errorMessages'] as $key => $message) {
@@ -100,9 +100,9 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     /**
      * @return Message[]
      */
-    public function getMessages()
+    public function getInfoMessages()
     {
-        return $this->values['messages'];
+        return $this->values['infoMessages'];
     }
 
     /**
@@ -110,9 +110,9 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
      *
      * @return bool
      */
-    public function hasMessage($messageString)
+    public function hasInfoMessage($messageString)
     {
-        $messages = $this->getMessages();
+        $messages = $this->getInfoMessages();
         foreach ($messages as $message) {
             if ($message->getMessage() === $messageString) {
                 return true;
@@ -127,7 +127,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
      *
      * @return self
      */
-    public function addMessage(Message $message)
+    public function addInfoMessage(Message $message)
     {
         $this->values['messages'][] = $message;
 
@@ -139,10 +139,10 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
      *
      * @return self
      */
-    public function addMessages(array $messages)
+    public function addInfoMessages(array $messages)
     {
         foreach ($messages as $message) {
-            $this->addMessage($message);
+            $this->addInfoMessage($message);
         }
 
         return $this;
