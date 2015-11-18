@@ -27,13 +27,13 @@ class TransferInterfaceDefinitionMergerTest extends \PHPUnit_Framework_TestCase
             'bundle' => 'BundleA',
             'containing bundle' => 'ContainingBundle',
             'name' => 'TransferName',
-            'property' => []
+            'property' => [],
         ];
         $definitionTwo = [
             'bundle' => 'BundleB',
             'containing bundle' => 'ContainingBundle',
             'name' => 'TransferName',
-            'property' => []
+            'property' => [],
         ];
 
         $merger = new TransferInterfaceDefinitionMerger();
@@ -51,13 +51,13 @@ class TransferInterfaceDefinitionMergerTest extends \PHPUnit_Framework_TestCase
             'bundle' => 'BundleA',
             'containing bundle' => 'ContainingBundle',
             'name' => 'TransferA',
-            'property' => []
+            'property' => [],
         ];
         $definitionTwo = [
             'bundle' => 'BundleB',
             'containing bundle' => 'ContainingBundle',
             'name' => 'TransferB',
-            'property' => []
+            'property' => [],
         ];
 
         $merger = new TransferInterfaceDefinitionMerger();
@@ -75,13 +75,13 @@ class TransferInterfaceDefinitionMergerTest extends \PHPUnit_Framework_TestCase
             'bundle' => 'BundleA',
             'containing bundle' => 'ContainingBundleA',
             'name' => 'TransferName',
-            'property' => []
+            'property' => [],
         ];
         $definitionTwo = [
             'bundle' => 'BundleB',
             'containing bundle' => 'ContainingBundleB',
             'name' => 'TransferName',
-            'property' => []
+            'property' => [],
         ];
 
         $merger = new TransferInterfaceDefinitionMerger();
@@ -89,4 +89,5 @@ class TransferInterfaceDefinitionMergerTest extends \PHPUnit_Framework_TestCase
 
         $this->assertCount(2, $mergedDefinitions);
     }
+
 }

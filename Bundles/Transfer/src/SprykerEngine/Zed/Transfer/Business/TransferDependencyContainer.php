@@ -7,7 +7,6 @@
 namespace SprykerEngine\Zed\Transfer\Business;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\TransferBusiness;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface;
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer\ClassGenerator;

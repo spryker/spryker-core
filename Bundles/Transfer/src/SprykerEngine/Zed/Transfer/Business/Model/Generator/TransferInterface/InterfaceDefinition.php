@@ -44,7 +44,7 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
     /**
      * @param array $definition
      *
-     * @return $this
+     * @return self
      */
     public function setDefinition(array $definition)
     {
@@ -104,7 +104,7 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
     /**
      * @param array $definition
      *
-     * @return $this
+     * @return self
      */
     private function setName(array $definition)
     {
