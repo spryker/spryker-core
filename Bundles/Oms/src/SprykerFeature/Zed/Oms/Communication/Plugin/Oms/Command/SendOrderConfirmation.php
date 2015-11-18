@@ -11,7 +11,7 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 use SprykerFeature\Shared\Library\Log;
 
-class OrderConfirmationMail implements CommandByOrderInterface
+class SendOrderConfirmation implements CommandByOrderInterface
 {
 
     /**
@@ -23,7 +23,7 @@ class OrderConfirmationMail implements CommandByOrderInterface
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data)
     {
-        $message = sprintf('Command OrderConfirmationMail by Order for Order %s (%s items)', $orderEntity->getIdSalesOrder(), count($orderItems));
+        $message = sprintf('Command SendOrderConfirmation by Order for Order %s (%s items)', $orderEntity->getIdSalesOrder(), count($orderItems));
         Log::log($message, 'statemachine.log');
 
         return [];
