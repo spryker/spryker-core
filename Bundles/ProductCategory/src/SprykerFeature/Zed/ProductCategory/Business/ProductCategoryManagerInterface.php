@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Business;
 
+use Generated\Shared\Product\AbstractProductInterface;
+use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -52,11 +54,11 @@ interface ProductCategoryManagerInterface
     public function getProductsByCategory($idCategory, LocaleTransfer $locale);
 
     /**
-     * @param SpyAbstractProduct $abstractProduct
+     * @param AbstractProductInterface $abstractProductTransfer
      *
      * @return SpyProductCategory[]
      */
-    public function getCategoriesByAbstractProduct(SpyAbstractProduct $abstractProduct);
+    public function getCategoriesByAbstractProduct(AbstractProductInterface $abstractProductTransfer);
 
     /**
      * @param int $idCategory

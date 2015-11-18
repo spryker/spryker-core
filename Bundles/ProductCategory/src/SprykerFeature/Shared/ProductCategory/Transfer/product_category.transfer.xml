@@ -7,6 +7,7 @@
         <property name="idProductCategory" type="int" />
         <property name="fkAbstractProduct" type="int" />
         <property name="fkCategory" type="int" />
+        <property name="productOrder" type="int" />
     </transfer>
 
 </transfers>

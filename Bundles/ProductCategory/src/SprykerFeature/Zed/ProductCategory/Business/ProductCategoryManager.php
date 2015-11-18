@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Business;
 
+use Generated\Shared\Product\AbstractProductInterface;
+use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\NodeTransfer;
@@ -185,14 +187,14 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     }
 
     /**
-     * @param SpyAbstractProduct $abstractProduct
+     * @param AbstractProductInterface $abstractProductTransfer
      *
      * @return SpyProductCategory[]
      */
-    public function getCategoriesByAbstractProduct(SpyAbstractProduct $abstractProduct)
+    public function getCategoriesByAbstractProduct(AbstractProductInterface $abstractProductTransfer)
     {
         return $this->productCategoryQueryContainer
-            ->queryLocalizedProductCategoryMappingByProduct($abstractProduct)
+            ->queryLocalizedProductCategoryMappingByIdProduct($abstractProductTransfer->getIdAbstractProduct())
             ->find()
         ;
     }
