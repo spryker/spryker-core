@@ -87,6 +87,8 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
 
     /**
      * @param array $definition
+     *
+     * @return void
      */
     public function setContainingBundle(array $definition)
     {
@@ -378,6 +380,8 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
 
     /**
      * @param array $property
+     *
+     * @return void
      */
     private function buildGetMethod(array $property)
     {
@@ -393,6 +397,8 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
 
     /**
      * @param $property
+     *
+     * @return void
      */
     private function buildSetMethod($property)
     {
@@ -410,6 +416,8 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
 
     /**
      * @param $property
+     *
+     * @return void
      */
     private function buildAddMethod($property)
     {
@@ -452,6 +460,8 @@ class InterfaceDefinition implements InterfaceDefinitionInterface
 
     /**
      * @param array $property
+     *
+     * @return void
      */
     private function buildRequireMethod(array $property)
     {

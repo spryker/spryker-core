@@ -87,8 +87,8 @@ class TransferInterfaceDefinitionMerger implements MergerInterface
     }
 
     /**
-     * @param $property1
-     * @param $property2
+     * @param array $property1
+     * @param array $property2
      *
      * @return bool
      */
