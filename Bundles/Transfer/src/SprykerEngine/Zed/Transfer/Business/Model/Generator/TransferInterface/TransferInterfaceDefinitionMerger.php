@@ -17,7 +17,6 @@ class TransferInterfaceDefinitionMerger implements MergerInterface
     const KEY_BUNDLE = 'bundle';
     const KEY_CONTAINING_BUNDLE = 'containing bundle';
     const KEY_NAME = 'name';
-    const KEY_INTERFACE = 'interface';
     const KEY_PROPERTY = 'property';
 
     /**
@@ -56,7 +55,6 @@ class TransferInterfaceDefinitionMerger implements MergerInterface
             self::KEY_BUNDLE => $existingDefinition[self::KEY_BUNDLE],
             self::KEY_CONTAINING_BUNDLE => $existingDefinition[self::KEY_CONTAINING_BUNDLE],
             self::KEY_NAME => $existingDefinition[self::KEY_NAME],
-            self::KEY_INTERFACE => $this->mergeInterfaces($existingDefinition, $definitionToMerge),
             self::KEY_PROPERTY => $this->mergeProperty($existingDefinition[self::KEY_PROPERTY], $definitionToMerge[self::KEY_PROPERTY]),
         ];
     }
@@ -106,31 +104,6 @@ class TransferInterfaceDefinitionMerger implements MergerInterface
         }
 
         return false;
-    }
-
-    /**
-     * @param array $definition1
-     * @param array $definition2
-     *
-     * @return array
-     */
-    private function mergeInterfaces(array $definition1, array $definition2)
-    {
-        $mergedInterfaces = [];
-
-        if (isset($definition1[self::KEY_INTERFACE])) {
-            foreach ($definition1[self::KEY_INTERFACE] as $interface) {
-                $mergedInterfaces[$interface[self::KEY_NAME]] = $interface;
-            }
-        }
-
-        if (isset($definition2[self::KEY_INTERFACE])) {
-            foreach ($definition2[self::KEY_INTERFACE] as $interface) {
-                $mergedInterfaces[$interface[self::KEY_NAME]] = $interface;
-            }
-        }
-
-        return $mergedInterfaces;
     }
 
     /**

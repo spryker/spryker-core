@@ -106,9 +106,9 @@ class TransferDefinitionLoader
     private function getContainingBundleFromPathName($filePath)
     {
         $pathParts = explode(DIRECTORY_SEPARATOR, $filePath);
-        $sharedDirectoryNamePosition = array_search('Shared', array_values($pathParts));
+        $sharedDirectoryPosition = array_search('Shared', array_values($pathParts));
 
-        $containingBundle = $pathParts[$sharedDirectoryNamePosition + 1];
+        $containingBundle = $pathParts[$sharedDirectoryPosition + 1];
 
         return $containingBundle;
     }
