@@ -40,8 +40,9 @@ class InstalledPackageFinder implements InstalledPackageFinderInterface
     {
         $lockFileContent = file_get_contents($this->pathToComposerLock);
         $lockFileData = json_decode($lockFileContent, true);
+        $packages = array_merge($lockFileData['packages'], $lockFileData['packages-dev']);
 
-        foreach ($lockFileData['packages'] as $package) {
+        foreach ($packages as $package) {
             $installedPackage = new InstalledPackageTransfer();
             $installedPackage->setName($package['name']);
             $installedPackage->setVersion($package['version']);

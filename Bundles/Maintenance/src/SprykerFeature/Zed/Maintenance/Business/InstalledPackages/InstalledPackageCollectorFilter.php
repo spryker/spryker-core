@@ -32,7 +32,6 @@ class InstalledPackageCollectorFilter implements InstalledPackageCollectorInterf
     public function getInstalledPackages()
     {
         $packages = $this->installedPackageCollector->getInstalledPackages()->getPackages();
-
         $packageList = [];
         $filteredPackages = new InstalledPackagesTransfer();
         foreach ($packages as $package) {
