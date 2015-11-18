@@ -38,7 +38,7 @@ class BlockController extends AbstractController
     public function indexAction()
     {
         $blockTable = $this->getDependencyContainer()
-            ->createCmsBlockTable($this->getCurrentLocaleId())
+            ->createCmsBlockTable($this->getCurrentIdLocale())
         ;
 
         return [
@@ -52,7 +52,7 @@ class BlockController extends AbstractController
     public function tableAction()
     {
         $table = $this->getDependencyContainer()
-            ->createCmsBlockTable($this->getCurrentLocaleId())
+            ->createCmsBlockTable($this->getCurrentIdLocale())
         ;
 
         return $this->jsonResponse($table->fetchData());
@@ -181,7 +181,7 @@ class BlockController extends AbstractController
         $term = $request->get('term');
 
         $searchedItems = $this->getQueryContainer()
-            ->queryNodeByCategoryName($term, $this->getCurrentLocaleId())
+            ->queryNodeByCategoryName($term, $this->getCurrentIdLocale())
             ->find()
         ;
 
@@ -200,7 +200,7 @@ class BlockController extends AbstractController
     /**
      * @return int
      */
-    protected function getCurrentLocaleId()
+    protected function getCurrentIdLocale()
     {
         return $this->getLocaleFacade()->getCurrentLocale()->getIdLocale();
     }
