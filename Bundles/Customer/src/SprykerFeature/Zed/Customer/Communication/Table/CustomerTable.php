@@ -11,6 +11,7 @@ use Orm\Zed\Customer\Persistence\Map\SpyCustomerAddressTableMap;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
+use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainer;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -30,16 +31,16 @@ class CustomerTable extends AbstractTable
     const COL_LAST_NAME = 'last_name';
 
     /**
-     * @var SpyCustomerQuery
+     * @var CustomerQueryContainer
      */
-    protected $customerQuery;
+    protected $customerQueryContainer;
 
     /**
-     * @param SpyCustomerQuery $customerQuery
+     * @param CustomerQueryContainer $customerQueryContainer
      */
-    public function __construct(SpyCustomerQuery $customerQuery)
+    public function __construct(CustomerQueryContainer $customerQueryContainer)
     {
-        $this->customerQuery = $customerQuery;
+        $this->customerQueryContainer = $customerQueryContainer;
     }
 
     /**
@@ -177,7 +178,7 @@ class CustomerTable extends AbstractTable
      */
     protected function prepareQuery()
     {
-        $query = $this->customerQuery
+        $query = $this->customerQueryContainer->queryCustomers()
             ->leftJoinBillingAddress()
             ->withColumn(SpyCustomerAddressTableMap::COL_ZIP_CODE, self::COL_ZIP_CODE)
             ->withColumn(SpyCustomerAddressTableMap::COL_CITY, self::COL_CITY)

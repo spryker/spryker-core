@@ -38,12 +38,8 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createCustomerTable()
     {
-        $customerQuery = $this->getQueryContainer()
-            ->queryCustomers()
-        ;
-
         return $this->getFactory()
-            ->createTableCustomerTable($customerQuery)
+            ->createTableCustomerTable($this->getQueryContainer())
         ;
     }
 
@@ -54,16 +50,8 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createCustomerAddressTable($idCustomer)
     {
-        $addressQuery = $this->getQueryContainer()
-            ->queryAddresses()
-        ;
-
-        $customerQuery = $this->getQueryContainer()
-            ->queryCustomers()
-        ;
-
         return $this->getFactory()
-            ->createTableAddressTable($addressQuery, $customerQuery, $idCustomer)
+            ->createTableAddressTable($this->getQueryContainer(), $idCustomer)
         ;
     }
 
