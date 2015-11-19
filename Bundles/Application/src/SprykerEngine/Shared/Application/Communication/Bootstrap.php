@@ -327,12 +327,12 @@ class Bootstrap
      *
      * @throws \Exception
      *
-     * @return null
+     * @return void
      */
     private function addProtocolCheck(Application $application)
     {
         if (!Config::get(YvesConfig::YVES_SSL_ENABLED) || !Config::get(YvesConfig::YVES_COMPLETE_SSL_ENABLED)) {
-            return null;
+            return;
         }
 
         $application->before(
@@ -345,6 +345,8 @@ class Bootstrap
 
                     return new RedirectResponse($fakeRequest->getUri(), 301);
                 }
+
+                return null;
             },
             255
         );
