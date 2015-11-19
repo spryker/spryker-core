@@ -6,8 +6,6 @@
 
 namespace SprykerFeature\Zed\Customer\Communication;
 
-use Generated\Shared\Transfer\AddressTransfer;
-use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;

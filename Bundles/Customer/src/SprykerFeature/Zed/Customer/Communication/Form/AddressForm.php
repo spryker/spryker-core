@@ -45,4 +45,5 @@ class AddressForm extends AbstractForm
 
         return $address->toArray();
     }
+
 }

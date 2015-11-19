@@ -36,10 +36,11 @@ abstract class AbstractForm
     /**
      * @return array
      */
-    protected abstract function populateFormFields();
+    abstract protected function populateFormFields();
 
     /**
      * @throws \ErrorException
+     *
      * @return FormInterface
      */
     public function create()

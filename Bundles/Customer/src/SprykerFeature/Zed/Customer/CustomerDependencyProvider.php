@@ -51,7 +51,6 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
         return $container;
     }
 
-
     /**
      * Overwrite in project
      *
