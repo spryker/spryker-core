@@ -68,70 +68,39 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
-     * @param string $formTypeName
+     * @param string $formActionType
      *
      * @throws \ErrorException
      *
      * @return FormInterface
      */
-    public function createCustomerForm($formTypeName)
+    public function createCustomerForm($formActionType)
     {
         $customerFormType = $this->getFactory()
-            ->createFormCustomerFormType($this->getQueryContainer(), $formTypeName)
+            ->createFormCustomerFormType($this->getQueryContainer(), $formActionType)
         ;
 
         $customerForm = $this->getFactory()
-            ->createFormCustomerForm($this->getQueryContainer(), $customerFormType)
+            ->createFormCustomerForm($customerFormType, $this->getQueryContainer(), $formActionType)
         ;
 
         return $customerForm->create();
     }
 
     /**
-     * @param AddressTransfer $addressTransfer
-     *
      * @return FormInterface
      */
-    public function createAddressForm(AddressTransfer $addressTransfer)
+    public function createAddressForm()
     {
-        $customerQueryContainer = $this->getQueryContainer();
-
         $customerAddressFormType = $this->getFactory()
-            ->createFormAddressTypeForm($customerQueryContainer)
+            ->createFormAddressFormType($this->getQueryContainer())
         ;
 
-        $defaultData = $this->getAddressFormDefaultData($addressTransfer);
+        $customerAddressForm = $this->getFactory()
+            ->createFormAddressForm($customerAddressFormType, $this->getQueryContainer())
+        ;
 
-        return $this->getFormFactory()
-            ->create($customerAddressFormType, $defaultData);
-    }
-
-    /**
-     * @param AddressTransfer|null $addressTransfer
-     *
-     * @return array
-     */
-    protected function getAddressFormDefaultData(AddressTransfer $addressTransfer = null)
-    {
-        if ($addressTransfer === null) {
-            return [];
-        }
-
-        return $addressTransfer->toArray();
-    }
-
-    /**
-     * @param CustomerTransfer|null $customer
-     *
-     * @return array
-     */
-    protected function getCustomerDefaultData(CustomerTransfer $customer = null)
-    {
-        if ($customer === null) {
-            return [];
-        }
-
-        return $customer->toArray();
+        return $customerAddressForm->create();
     }
 
 }

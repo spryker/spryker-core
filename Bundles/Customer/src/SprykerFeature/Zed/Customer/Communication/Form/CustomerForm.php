@@ -3,7 +3,9 @@
 namespace SprykerFeature\Zed\Customer\Communication\Form;
 
 use SprykerEngine\Zed\Gui\Communication\Form\AbstractForm;
+use SprykerFeature\Zed\Customer\CustomerConfig;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
+use Symfony\Component\Form\FormTypeInterface;
 
 class CustomerForm extends AbstractForm
 {
@@ -22,8 +24,10 @@ class CustomerForm extends AbstractForm
      * @param CustomerQueryContainerInterface $customerQueryContainer
      * @param string $formActionType
      */
-    public function __construct(CustomerQueryContainerInterface $customerQueryContainer, $formActionType)
+    public function __construct(FormTypeInterface $formTypeInterface, CustomerQueryContainerInterface $customerQueryContainer, $formActionType)
     {
+        parent::__construct($formTypeInterface);
+
         $this->customerQueryContainer = $customerQueryContainer;
         $this->formActionType = $formActionType;
     }
@@ -33,7 +37,7 @@ class CustomerForm extends AbstractForm
      */
     protected function populateFormFields()
     {
-        $idCustomer = $this->getRequest()->query->get('id-customer', null);
+        $idCustomer = $this->getRequest()->query->get(CustomerConfig::PARAM_ID_CUSTOMER, null);
 
         if (empty($idCustomer)) {
             return [];

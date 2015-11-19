@@ -2,12 +2,12 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Form;
 
-use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use SprykerEngine\Zed\Gui\Communication\Form\AbstractFormType;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
+use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class AddressTypeForm extends AbstractFormType
+class AddressFormType extends AbstractFormType
 {
 
     const FIELD_SALUTATION = 'salutation';
@@ -89,8 +89,7 @@ class AddressTypeForm extends AbstractFormType
                 'choices' => $this->getCountryOptions(),
                 'preferred_choices' => [
                     $this->customerQueryContainer
-                        ->queryAddresses()
-                        ->useCountryQuery()
+                        ->queryCountries()
                         ->findOneByName(self::PREFERED_COUNTRY_NAME)
                         ->getIdCountry(),
                 ],
@@ -116,8 +115,7 @@ class AddressTypeForm extends AbstractFormType
     public function getCountryOptions()
     {
         $countries = $this->customerQueryContainer
-            ->queryAddresses()
-            ->useCountryQuery()
+            ->queryCountries()
             ->find()
         ;
 

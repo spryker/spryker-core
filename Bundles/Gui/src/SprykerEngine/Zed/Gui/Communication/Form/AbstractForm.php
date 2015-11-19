@@ -9,6 +9,8 @@ namespace SprykerEngine\Zed\Gui\Communication\Form;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Application\Communication\Application;
 use SprykerEngine\Zed\Kernel\Locator;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractForm
@@ -19,27 +21,30 @@ abstract class AbstractForm
     /**
      * This must be set from the outside (e.g. via constructor injection)
      *
-     * @var AbstractFormType
+     * @var FormTypeInterface
      */
-    protected $formActionType;
+    protected $formType;
 
     /**
-     * Needs to be overwritten to populate the form
-     *
-     * @return array
+     * @param FormTypeInterface|null $formType
      */
-    protected function populateFormFields()
+    public function __construct(FormTypeInterface $formType)
     {
-        return [];
+        $this->formType = $formType;
     }
 
     /**
+     * @return array
+     */
+    protected abstract function populateFormFields();
+
+    /**
      * @throws \ErrorException
-     * @return mixed
+     * @return FormInterface
      */
     public function create()
     {
-        if ($this->formActionType === null) {
+        if ($this->formType === null) {
             throw new \ErrorException('You need to initialize $this->formType which extends SprykerFeature\Zed\Gui\Communication\Form\AbstractFormType'); // TODO Exception type
         }
 
@@ -47,7 +52,10 @@ abstract class AbstractForm
 
         $populatedData = $this->populateFormFields();
 
-        return $this->getApplication()[self::FORM_FACTORY]->create($this->formActionType, $populatedData);
+        return $this->getApplication()[self::FORM_FACTORY]
+            ->createBuilder($this->formType, $populatedData)
+            ->getForm()
+        ;
     }
 
     /**

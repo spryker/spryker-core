@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
+use SprykerFeature\Zed\Customer\Communication\Form\AddressFormType;
 use SprykerFeature\Zed\Customer\CustomerConfig;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -68,6 +69,7 @@ class AddressController extends AbstractController
 
         $addressDetails = $this->getFacade()
             ->getAddress($customerAddress);
+
         if (empty($addressDetails) === false) {
             $idCustomer = $addressDetails->getFkCustomer();
         }
@@ -94,7 +96,7 @@ class AddressController extends AbstractController
     public function editAction(Request $request)
     {
         $idCustomer = false;
-        $idCustomerAddress = $request->get(CustomerConfig::PARAM_ID_CUSTOMER_ADDRESS);
+        $idCustomerAddress = $request->query->getInt(CustomerConfig::PARAM_ID_CUSTOMER_ADDRESS);
 
         $customerAddress = $this->createCustomerAddressTransfer();
         $customerAddress->setIdCustomerAddress($idCustomerAddress);
@@ -107,9 +109,7 @@ class AddressController extends AbstractController
             $idCustomer = $addressDetails->getFkCustomer();
         }
 
-        $addressForm = $this->getDependencyContainer()
-            ->createAddressForm($addressDetails, 'update')
-        ;
+        $addressForm = $this->getDependencyContainer()->createAddressForm();
         $addressForm->handleRequest($request);
 
         if ($addressForm->isValid() === true) {
@@ -139,16 +139,14 @@ class AddressController extends AbstractController
      */
     public function addAction(Request $request)
     {
-        $idCustomer = intval($request->get(CustomerConfig::PARAM_ID_CUSTOMER));
+        $idCustomer = $request->query->getInt(CustomerConfig::PARAM_ID_CUSTOMER);
 
-        $addressForm = $this->getDependencyContainer()
-            ->createAddressForm($this->createCustomerAddressTransfer(), 'add');
-
+        $addressForm = $this->getDependencyContainer()->createAddressForm();
         $addressForm->handleRequest($request);
 
         if ($addressForm->isValid() === true) {
             $data = $addressForm->getData();
-            $data['fk_customer'] = $idCustomer;
+            $data[AddressFormType::FIELD_FK_CUSTOMER] = $idCustomer;
 
             $customerAddress = $this->createCustomerAddressTransfer();
             $customerAddress->fromArray($data, true);
