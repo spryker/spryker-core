@@ -35,7 +35,7 @@
         <column name="fk_locale" type="INTEGER" required="true"/>
         <column name="fk_touch" type="INTEGER" required="true"/>
         <column name="key" type="VARCHAR" required="true"/>
-        <unique name="spy_touch_storage-fk_locale">
+        <unique name="spy_touch_storage-unique-fk_locale">
             <unique-column name="fk_locale"/>
             <unique-column name="key"/>
         </unique>

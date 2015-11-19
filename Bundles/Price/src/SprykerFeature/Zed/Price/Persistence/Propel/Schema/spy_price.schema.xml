@@ -20,7 +20,7 @@
             <reference local="fk_abstract_product" foreign="id_abstract_product"/>
         </foreign-key>
 
-        <unique name="spy_price_product-fk_abstract_product">
+        <unique name="spy_price_product-unique-fk_abstract_product">
             <unique-column name="fk_abstract_product"/>
             <unique-column name="fk_product"/>
             <unique-column name="fk_price_type"/>

@@ -96,7 +96,7 @@
 
         <behavior name="timestampable"/>
 
-        <unique name="spy_oms_event_timeout-fk_sales_order_item">
+        <unique name="spy_oms_event_timeout-unique-fk_sales_order_item">
             <unique-column name="fk_sales_order_item"/>
             <unique-column name="fk_oms_order_item_state"/>
         </unique>
