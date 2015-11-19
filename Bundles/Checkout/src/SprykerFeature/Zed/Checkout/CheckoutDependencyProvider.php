@@ -25,6 +25,11 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     const FACADE_OMS = 'oms facade';
     const FACADE_CALCULATION = 'calculation facade';
 
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[self::CHECKOUT_PRECONDITIONS] = function (Container $container) {
