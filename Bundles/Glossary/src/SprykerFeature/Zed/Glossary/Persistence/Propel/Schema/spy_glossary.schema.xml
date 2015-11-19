@@ -29,7 +29,7 @@
         <foreign-key name="spy_glossary_translation-fk_locale" foreignTable="spy_locale" phpName="Locale" onDelete="CASCADE">
             <reference foreign="id_locale" local="fk_locale"/>
         </foreign-key>
-        <unique name="spy_glossary_translation-fk_glossary_key">
+        <unique name="spy_glossary_translation-unique-fk_glossary_key">
             <unique-column name="fk_glossary_key"/>
             <unique-column name="fk_locale"/>
         </unique>

@@ -28,7 +28,7 @@
         <foreign-key name="spy_abstract_product_localized_attributes-fk_locale" foreignTable="spy_locale" phpName="Locale">
             <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
-        <unique name="spy_abstract_product_localized_attributes-fk_abstract_product">
+        <unique name="spy_abstract_product_localized_attributes-unique-fk_abstract_product">
             <unique-column name="fk_abstract_product"/>
             <unique-column name="fk_locale"/>
         </unique>
@@ -65,7 +65,7 @@
         <foreign-key name="spy_product_localized_attributes-fk_locale" foreignTable="spy_locale" phpName="Locale">
             <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
-        <unique name="spy_product_localized_attributes-fk_product">
+        <unique name="spy_product_localized_attributes-unique-fk_product">
             <unique-column name="fk_product"/>
             <unique-column name="fk_locale"/>
         </unique>
@@ -115,7 +115,7 @@
         <foreign-key name="spy_attribute_type_value-fk_locale" foreignTable="spy_locale" phpName="Locale">
             <reference local="fk_locale" foreign="id_locale"/>
         </foreign-key>
-        <unique name="spy_attribute_type_value-fk_locale">
+        <unique name="spy_attribute_type_value-unique-fk_locale">
             <unique-column name="fk_locale"/>
             <unique-column name="fk_type"/>
             <unique-column name="key"/>

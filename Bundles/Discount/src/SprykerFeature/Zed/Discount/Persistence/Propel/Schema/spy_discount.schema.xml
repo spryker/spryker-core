@@ -20,7 +20,7 @@
             <reference local="fk_discount_voucher_pool" foreign="id_discount_voucher_pool"/>
         </foreign-key>
 
-        <unique name="spy_discount-fk_discount_voucher_pool">
+        <unique name="spy_discount-unique-fk_discount_voucher_pool">
             <unique-column name="fk_discount_voucher_pool" />
         </unique>
         <id-method-parameter value="spy_discount_pk_seq"/>

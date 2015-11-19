@@ -4,7 +4,7 @@
     <table name="spy_wishlist" phpName="SpyWishlist">
         <column name="id_wishlist" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_customer" required="true" type="INTEGER"/>
-        <unique name="spy_wishlist-fk_customer">
+        <unique name="spy_wishlist-unique-fk_customer">
             <unique-column name="fk_customer"/>
         </unique>
         <foreign-key name="spy_wishlist-fk_customer" foreignTable="spy_customer">

@@ -199,7 +199,7 @@
         <foreign-key name="spy_sales_expense-fk_sales_order" foreignTable="spy_sales_order" phpName="Order" refPhpName="Expense">
             <reference local="fk_sales_order" foreign="id_sales_order"/>
         </foreign-key>
-        <unique name="spy_sales_expense-fk_sales_order">
+        <unique name="spy_sales_expense-unique-fk_sales_order">
             <unique-column name="fk_sales_order"/>
             <unique-column name="type"/>
         </unique>

@@ -26,7 +26,7 @@
             <reference local="fk_stock" foreign="id_stock"/>
         </foreign-key>
 
-        <unique name="spy_stock_product-fk_stock">
+        <unique name="spy_stock_product-unique-fk_stock">
             <unique-column name="fk_stock"/>
             <unique-column name="fk_product"/>
         </unique>
