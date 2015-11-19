@@ -8,9 +8,9 @@ namespace SprykerFeature\Zed\Oms\Business\Util;
 
 use Orm\Zed\Oms\Persistence\SpyOmsOrderProcess;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
+use SprykerFeature\Zed\Library\Sanitize\Html;
 use SprykerFeature\Zed\Oms\OmsConfig;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
-use SprykerFeature\Zed\Sales\Business\SalesFacade;
 
 class OrderItemMatrix
 {
@@ -144,7 +144,7 @@ class OrderItemMatrix
 
         foreach ($grid as $key => $value) {
             $url = sprintf('/sales?id-order-item-process=%s&id-order-item-process-state=%s&filter=%s', $idProcess, $idState, $key);
-            $grid[$key] = '<a href="' . htmlentities($url) . '">' . $value . '</a>';
+            $grid[$key] = '<a href="' . Html::escape($url) . '">' . $value . '</a>';
         }
 
         return implode(' | ', $grid);
@@ -162,6 +162,7 @@ class OrderItemMatrix
 
     /**
      * @param array $orderItemStates
+     *
      * @return array
      */
     protected function getOrderItemStateNames(array $orderItemStates)
