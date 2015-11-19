@@ -102,7 +102,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
             $checkoutResponse->setOrder($orderTransfer);
             if (!$this->hasErrors($checkoutResponse)) {
-                $this->triggerStateMachine($orderTransfer);
+                $this->triggerStateMachine($orderTransfer, $checkoutRequest);
                 $this->executePostHooks($orderTransfer, $checkoutResponse);
 
                 $checkoutResponse->setIsSuccess(true);
@@ -115,6 +115,8 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     /**
      * @param CheckoutRequestInterface $checkoutRequest
      * @param CheckoutResponseInterface $checkoutResponse
+     *
+     * @return void
      */
     protected function preHydrate(CheckoutRequestInterface $checkoutRequest, CheckoutResponseInterface $checkoutResponse)
     {
@@ -126,8 +128,10 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     /**
      * @param CheckoutRequestInterface $checkoutRequest
      * @param CheckoutResponseInterface $checkoutResponse
+     *
+     * @return void
      */
-    private function checkPreConditions(CheckoutRequestInterface $checkoutRequest, CheckoutResponseInterface $checkoutResponse)
+    protected function checkPreConditions(CheckoutRequestInterface $checkoutRequest, CheckoutResponseInterface $checkoutResponse)
     {
         try {
             foreach ($this->preConditionStack as $preCondition) {
@@ -148,7 +152,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      *
      * @return bool
      */
-    private function hasErrors(CheckoutResponseInterface $checkoutResponse)
+    protected function hasErrors(CheckoutResponseInterface $checkoutResponse)
     {
         return count($checkoutResponse->getErrors()) > 0;
     }
@@ -199,8 +203,11 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
     /**
      * @param OrderInterface $orderTransfer
+     * @param CheckoutRequestTransfer $checkoutRequest
+     *
+     * @return void
      */
-    private function triggerStateMachine(OrderInterface $orderTransfer)
+    protected function triggerStateMachine(OrderInterface $orderTransfer, CheckoutRequestTransfer $checkoutRequest)
     {
         $itemIds = [];
 
@@ -214,8 +221,10 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     /**
      * @param OrderTransfer $orderTransfer
      * @param CheckoutRequestTransfer $checkoutRequest
+     *
+     * @return void
      */
-    private function hydrateOrder(OrderTransfer $orderTransfer, CheckoutRequestTransfer $checkoutRequest)
+    protected function hydrateOrder(OrderTransfer $orderTransfer, CheckoutRequestTransfer $checkoutRequest)
     {
         foreach ($this->orderHydrationStack as $orderHydrator) {
             $orderHydrator->hydrateOrder($orderTransfer, $checkoutRequest);
@@ -225,8 +234,10 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     /**
      * @param OrderTransfer $orderTransfer
      * @param CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
      */
-    private function executePostHooks($orderTransfer, $checkoutResponse)
+    protected function executePostHooks($orderTransfer, $checkoutResponse)
     {
         try {
             foreach ($this->postSaveHookStack as $postSaveHook) {
