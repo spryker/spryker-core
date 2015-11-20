@@ -91,11 +91,6 @@ class NoIsNullFixer extends AbstractFixer
 
             $replacement = '';
             for ($i = $nextIndex + 1; $i < $lastIndex; ++$i) {
-                // We should only change trivial cases to avoid changing code behavior
-                if (!$tokens[$i]->isGivenKind([T_VARIABLE])) {
-                    continue 2;
-                }
-
                 $replacement .= $tokens[$i]->getContent();
             }
 

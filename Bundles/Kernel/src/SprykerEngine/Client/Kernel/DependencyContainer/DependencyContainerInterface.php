@@ -10,7 +10,7 @@ interface DependencyContainerInterface
     /**
      * @param Container $container
      *
-     * @return $this
+     * @return self
      */
     public function setContainer(Container $container);
 

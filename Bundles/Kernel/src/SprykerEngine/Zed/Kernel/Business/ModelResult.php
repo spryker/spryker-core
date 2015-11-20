@@ -85,7 +85,7 @@ class ModelResult
      *
      * @param TransferInterface $transfer
      *
-     * @return $this
+     * @return self
      */
     public function setTransfer(TransferInterface $transfer)
     {
@@ -129,7 +129,7 @@ class ModelResult
      *
      * @param ActiveRecordInterface $entity
      *
-     * @return $this
+     * @return self
      */
     public function setEntity(ActiveRecordInterface $entity)
     {
@@ -163,7 +163,7 @@ class ModelResult
      *
      * @param string $error
      *
-     * @return $this
+     * @return self
      */
     public function addError($error)
     {

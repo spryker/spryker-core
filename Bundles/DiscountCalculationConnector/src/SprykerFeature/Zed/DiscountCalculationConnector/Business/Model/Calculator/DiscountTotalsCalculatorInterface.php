@@ -11,6 +11,7 @@ use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInter
 
 interface DiscountTotalsCalculatorInterface extends TotalsCalculatorPluginInterface
 {
+
     /**
      * @param CalculableInterface $discountableContainer
      * @param \ArrayObject $calculableItems

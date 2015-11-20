@@ -102,7 +102,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
     }
 
     /**
-     * @return $this|\Propel\Runtime\ActiveQuery\ModelCriteria
+     * @return self|\Propel\Runtime\ActiveQuery\ModelCriteria
      */
     public function queryPagesWithTemplates()
     {
@@ -386,6 +386,7 @@ class CmsQueryContainer extends AbstractQueryContainer implements CmsQueryContai
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::VALUE)
         ;
     }
+
     /**
      * @param string $key
      *

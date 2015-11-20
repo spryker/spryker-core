@@ -10,7 +10,6 @@ use Symfony\CS\AbstractFixer;
 use Symfony\CS\FixerInterface;
 use Symfony\CS\Tokenizer\Token;
 use Symfony\CS\Tokenizer\Tokens;
-use Symfony\CS\Utils;
 
 class PhpdocReturnSelfFixer extends AbstractFixer
 {

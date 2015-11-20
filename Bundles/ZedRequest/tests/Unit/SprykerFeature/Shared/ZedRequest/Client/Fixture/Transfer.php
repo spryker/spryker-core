@@ -34,7 +34,7 @@ class Transfer extends AbstractTransfer
     /**
      * @param string $key
      *
-     * @return $this
+     * @return self
      */
     public function setKey($key)
     {

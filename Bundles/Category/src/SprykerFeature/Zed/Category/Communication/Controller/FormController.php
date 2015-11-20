@@ -38,7 +38,7 @@ class FormController extends AbstractController
             $category = new CategoryTransfer();
             $category->fromArray($form->getRequestData());
 
-            if (is_null($category->getIdCategory())) {
+            if ($category->getIdCategory() === null) {
                 $this->getFacade()->createCategory($category, $locale);
             } else {
                 $this->getFacade()->updateCategory($category, $locale);
@@ -64,7 +64,7 @@ class FormController extends AbstractController
             $categoryNode = new NodeTransfer();
             $categoryNode->fromArray($form->getRequestData());
 
-            if (is_null($categoryNode->getIdCategoryNode())) {
+            if ($categoryNode->getIdCategoryNode() === null) {
                 $this->getFacade()->createCategoryNode($categoryNode, $locale);
             } else {
                 $this->getFacade()->updateCategoryNode($categoryNode, $locale);

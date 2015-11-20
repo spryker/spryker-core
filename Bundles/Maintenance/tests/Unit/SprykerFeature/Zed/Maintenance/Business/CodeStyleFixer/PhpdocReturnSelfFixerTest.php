@@ -11,7 +11,7 @@ use SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\PhpdocReturnSelfFixer
  * @group Business
  * @group CodeStyleFixer
  */
-class PhpdocReturnSelfTest extends \PHPUnit_Framework_TestCase
+class PhpdocReturnSelfFixerTest extends \PHPUnit_Framework_TestCase
 {
 
     const FIXER_NAME = 'PhpdocReturnSelfFixer';

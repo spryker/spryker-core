@@ -264,6 +264,7 @@ trait WishlistSpyTrait
     {
         $this->save = true;
     }
+
     public function delete(ConnectionInterface $con = null)
     {
         $this->delete = true;

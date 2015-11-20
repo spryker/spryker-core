@@ -31,11 +31,10 @@ class TestTransfer extends AbstractTransfer
         ],
     ];
 
-
     /**
      * @param string $foo
      *
-     * @return $this
+     * @return self
      */
     public function setFoo($foo)
     {

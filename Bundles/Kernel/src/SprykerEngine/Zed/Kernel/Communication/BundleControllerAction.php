@@ -46,7 +46,7 @@ class BundleControllerAction implements BundleControllerActionInterface
      */
     private function getFilter()
     {
-        if (is_null($this->filter)) {
+        if ($this->filter === null) {
             $this->filter = new DashToCamelCase();
         }
 

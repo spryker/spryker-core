@@ -30,7 +30,7 @@ class IdeAutoCompletionGeneratorTest extends AbstractAutoCompletion
 
     public function getGeneratedFileContent()
     {
-        if (is_null($this->generatedFileContent)) {
+        if ($this->generatedFileContent === null) {
             $options = $this->getOptions();
 
             $generator = new IdeAutoCompletionGenerator($options);

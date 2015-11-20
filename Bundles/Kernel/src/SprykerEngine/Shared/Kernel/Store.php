@@ -6,7 +6,6 @@
 
 namespace SprykerEngine\Shared\Kernel;
 
-use Elastica\Exception\RuntimeException;
 use SprykerEngine\Shared\Kernel\Locale\LocaleNotFoundException;
 use SprykerFeature\Shared\Application\ApplicationConfig;
 use SprykerFeature\Shared\Library\Config;
@@ -102,7 +101,7 @@ class Store
      */
     public static function getDefaultStore()
     {
-        if (is_null(self::$defaultStore)) {
+        if (self::$defaultStore === null) {
             self::$defaultStore = require APPLICATION_ROOT_DIR . '/config/Shared/default_store.php';
         }
 
@@ -183,6 +182,7 @@ class Store
 
     /**
      * @throws \Exception
+     *
      * @return string
      */
     public function getCurrentLocale()
@@ -263,7 +263,7 @@ class Store
     /**
      * @param string $storeName
      *
-     * @return $this
+     * @return self
      */
     public function setStoreName($storeName)
     {

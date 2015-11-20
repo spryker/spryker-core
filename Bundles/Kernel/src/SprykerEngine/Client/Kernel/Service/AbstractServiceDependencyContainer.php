@@ -70,7 +70,7 @@ abstract class AbstractServiceDependencyContainer implements DependencyContainer
      */
     public function getProvidedDependency($key)
     {
-        if (is_null($this->container)) {
+        if ($this->container === null) {
             throw new \ErrorException('Container does not exist in ' . get_class($this));
         }
 

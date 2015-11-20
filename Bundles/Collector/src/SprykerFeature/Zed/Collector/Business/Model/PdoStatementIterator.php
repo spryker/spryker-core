@@ -123,7 +123,7 @@ class PdoStatementIterator implements \Iterator, \Countable
      */
     public function count()
     {
-        if (is_null($this->count)) {
+        if ($this->count === null) {
             $this->count = $this->statement->rowCount();
         }
 

@@ -35,7 +35,7 @@ class MessageTray
 
     public function init()
     {
-        if (is_null(self::$messages)) {
+        if (self::$messages === null) {
             self::$messages = new FlashMessagesTransfer();
         }
     }

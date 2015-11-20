@@ -93,7 +93,7 @@ abstract class AbstractIdeAutoCompletionGenerator
     /**
      * @param MethodTagBuilderInterface $methodTagBuilder
      *
-     * @return $this
+     * @return self
      */
     public function addMethodTagBuilder(MethodTagBuilderInterface $methodTagBuilder)
     {

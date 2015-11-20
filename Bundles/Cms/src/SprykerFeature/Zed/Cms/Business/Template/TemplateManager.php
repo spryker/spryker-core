@@ -142,7 +142,7 @@ class TemplateManager implements TemplateManagerInterface
      */
     public function saveTemplate(CmsTemplateTransfer $cmsTemplate)
     {
-        if (is_null($cmsTemplate->getIdCmsTemplate())) {
+        if ($cmsTemplate->getIdCmsTemplate() === null) {
             return $this->createTemplateFromTransfer($cmsTemplate);
         } else {
             return $this->updateTemplateFromTransfer($cmsTemplate);

@@ -21,7 +21,7 @@ class TransferServer extends CoreTransferServer
     /**
      * @param Request $request
      *
-     * @return $this
+     * @return self
      */
     public function setFixtureRequest(Request $request)
     {

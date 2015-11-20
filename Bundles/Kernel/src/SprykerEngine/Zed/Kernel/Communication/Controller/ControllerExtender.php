@@ -36,7 +36,7 @@ class ControllerExtender
     /**
      * @param array $extensions
      *
-     * @return $this
+     * @return self
      */
     public function addControllerExtensions(array $extensions)
     {
@@ -50,7 +50,7 @@ class ControllerExtender
     /**
      * @param ControllerExtensionInterface $extension
      *
-     * @return $this
+     * @return self
      */
     public function addControllerExtension(ControllerExtensionInterface $extension)
     {

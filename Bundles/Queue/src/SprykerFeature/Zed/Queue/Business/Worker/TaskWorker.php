@@ -78,7 +78,7 @@ class TaskWorker implements LoggerAwareInterface, TaskWorkerInterface
     /**
      * @param string $responseQueueName
      *
-     * @return $this
+     * @return self
      */
     public function setResponseQueueName($responseQueueName)
     {
@@ -90,7 +90,7 @@ class TaskWorker implements LoggerAwareInterface, TaskWorkerInterface
     /**
      * @param string $errorQueueName
      *
-     * @return $this
+     * @return self
      */
     public function setErrorQueueName($errorQueueName)
     {
@@ -102,7 +102,7 @@ class TaskWorker implements LoggerAwareInterface, TaskWorkerInterface
     /**
      * @param int $maxMessages
      *
-     * @return $this
+     * @return self
      */
     public function setMaxMessages($maxMessages)
     {
@@ -114,7 +114,7 @@ class TaskWorker implements LoggerAwareInterface, TaskWorkerInterface
     /**
      * @param ErrorHandlerInterface $errorHandler
      *
-     * @return $this
+     * @return self
      */
     public function setErrorHandler(ErrorHandlerInterface $errorHandler)
     {
@@ -170,7 +170,7 @@ class TaskWorker implements LoggerAwareInterface, TaskWorkerInterface
     {
         try {
             $this->task->run($queueMessage);
-            if (!is_null($this->logger)) {
+            if ($this->logger !== null) {
                 $this->logger->info(
                     sprintf(
                         '%s: finished task %s',
@@ -185,7 +185,7 @@ class TaskWorker implements LoggerAwareInterface, TaskWorkerInterface
             return false;
         }
 
-        if (!is_null($this->responseQueueName)) {
+        if ($this->responseQueueName !== null) {
             $this->responseQueueName->publish($this->responseQueueName, $queueMessage);
         }
 
@@ -216,10 +216,10 @@ class TaskWorker implements LoggerAwareInterface, TaskWorkerInterface
         );
 
         $queueMessage->setError($exception->getMessage());
-        if (!is_null($this->errorQueueName)) {
+        if ($this->errorQueueName !== null) {
             $this->queueConnection->publish($this->errorQueueName, $queueMessage);
         }
-        if (!is_null($this->errorHandler)) {
+        if ($this->errorHandler !== null) {
             $this->errorHandler->handleError($exception);
         }
     }

@@ -35,4 +35,5 @@ class TestLoggerConfig2 implements LoggerConfigInterface
     {
         return [];
     }
+
 }

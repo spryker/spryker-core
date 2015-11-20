@@ -62,6 +62,7 @@ interface RuleInterface
         $controller = AclConfig::VALIDATOR_WILDCARD,
         $action = AclConfig::VALIDATOR_WILDCARD
     );
+
     /**
      * @param int $idGroup
      *

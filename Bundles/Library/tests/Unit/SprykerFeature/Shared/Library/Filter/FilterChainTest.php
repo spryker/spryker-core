@@ -79,6 +79,7 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
         $filterChain->addFilter('string');
         $filterChain->filter('something');
     }
+
     /**
      * @dataProvider dataProvider
      * @expectedException \LogicException

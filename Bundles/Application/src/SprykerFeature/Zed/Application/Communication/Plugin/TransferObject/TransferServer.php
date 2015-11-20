@@ -118,7 +118,7 @@ class TransferServer
      */
     private function getHttpRequest()
     {
-        if (is_null($this->httpRequest)) {
+        if ($this->httpRequest === null) {
             throw new \LogicException('No Http Request found in TransferServer. Maybe you try to access data from it before the request object is injected.');
         }
 

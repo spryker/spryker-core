@@ -87,7 +87,7 @@ abstract class AbstractForm
      */
     public function getConstraints()
     {
-        if (is_null($this->constraintsPlugin)) {
+        if ($this->constraintsPlugin === null) {
             $this->constraintsPlugin = $this->getLocator()->gui()->pluginConstraintsPlugin();
         }
 
@@ -259,7 +259,7 @@ abstract class AbstractForm
     {
         $data = $this->form->getData();
 
-        if (is_null($this->getDefaultDataType()) && $this->getDefaultDataType() instanceof AbstractTransfer) {
+        if ($this->getDefaultDataType() === null && $this->getDefaultDataType() instanceof AbstractTransfer) {
             return $this->getDefaultDataType()->fromArray($data, true);
         }
 

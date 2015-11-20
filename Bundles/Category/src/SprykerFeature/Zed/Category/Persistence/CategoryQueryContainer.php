@@ -248,7 +248,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @param int $idNode
      *
-     * @return $this|SpyCategoryClosureTableQuery
+     * @return self|SpyCategoryClosureTableQuery
      */
     public function queryClosureTableFilterByIdNode($idNode)
     {
@@ -259,7 +259,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     /**
      * @param int $idNodeDescendant
      *
-     * @return $this|SpyCategoryClosureTableQuery
+     * @return self|SpyCategoryClosureTableQuery
      */
     public function queryClosureTableFilterByIdNodeDescendant($idNodeDescendant)
     {

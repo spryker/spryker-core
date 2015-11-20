@@ -42,7 +42,7 @@ abstract class AbstractLocator implements LocatorInterface
      */
     final public function __construct()
     {
-        if (is_null($this->application)) {
+        if ($this->application === null) {
             throw new LocatorException('Properties missing for: ' . get_class($this));
         }
     }

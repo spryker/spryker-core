@@ -60,7 +60,7 @@ class BundleControllerActionRouteNameResolver implements RouteNameResolverInterf
      */
     private function getFilter()
     {
-        if (is_null($this->filter)) {
+        if ($this->filter === null) {
             $filter = new FilterChain();
             $filter->attach(new CamelCaseToDash());
             $filter->attach(new StringToLower());

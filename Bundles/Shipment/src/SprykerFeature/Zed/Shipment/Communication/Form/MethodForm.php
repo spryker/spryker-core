@@ -159,7 +159,7 @@ class MethodForm extends AbstractForm
         ;
         $this->addCheckbox('isActive');
 
-        if (!is_null($this->idMethod)) {
+        if ($this->idMethod !== null) {
             $this->addHidden(self::ID_FIELD);
         }
 
@@ -200,7 +200,7 @@ class MethodForm extends AbstractForm
      */
     protected function populateFormFields()
     {
-        if (!is_null($this->idMethod)) {
+        if ($this->idMethod !== null) {
             $method = $this->methodQuery->findOneByIdShipmentMethod($this->idMethod);
 
             $data = [
