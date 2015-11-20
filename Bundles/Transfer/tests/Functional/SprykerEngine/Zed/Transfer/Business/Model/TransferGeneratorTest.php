@@ -132,9 +132,9 @@ class TransferGeneratorTest extends Test
             file_get_contents($targetDirectory . 'Test/CatFaceInterface.php')
         );
 
-        if (file_exists($targetDirectory . 'data/' . 'CatFaceInterface.php')) {
-            unlink($targetDirectory . 'data/' . 'CatFaceInterface.php');
-        }
+//        if (file_exists($targetDirectory . 'data/' . 'CatFaceInterface.php')) {
+//            unlink($targetDirectory . 'data/' . 'CatFaceInterface.php');
+//        }
     }
 
 }
