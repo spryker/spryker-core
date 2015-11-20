@@ -184,7 +184,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      *
      * @return SpyOmsOrderProcessQuery
      */
-    public function getActiveProcesses($activeProcesses)
+    public function getActiveProcesses(array $activeProcesses)
     {
         $query = SpyOmsOrderProcessQuery::create();
 
@@ -225,7 +225,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
      *
      * @return SpyOmsOrderItemStateQuery
      */
-    public function querySalesOrderItemStatesByName($orderItemStates)
+    public function querySalesOrderItemStatesByName(array $orderItemStates)
     {
         $query = SpyOmsOrderItemStateQuery::create();
         $query->filterByName($orderItemStates);

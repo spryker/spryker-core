@@ -203,7 +203,7 @@ class OrderItemMatrix
      *
      * @return array
      */
-    protected function preProcessItems($orderItems)
+    protected function preProcessItems(array $orderItems)
     {
         $items = [];
         foreach ($orderItems as $orderItem) {

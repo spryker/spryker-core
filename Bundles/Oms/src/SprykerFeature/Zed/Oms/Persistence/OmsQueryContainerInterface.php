@@ -101,7 +101,7 @@ interface OmsQueryContainerInterface
      *
      * @return SpyOmsOrderProcessQuery
      */
-    public function getActiveProcesses($activeProcesses);
+    public function getActiveProcesses(array $activeProcesses);
 
     /**
      * @param array $orderItemStates
@@ -123,6 +123,6 @@ interface OmsQueryContainerInterface
      *
      * @return SpyOmsOrderItemStateQuery
      */
-    public function querySalesOrderItemStatesByName($orderItemStates);
+    public function querySalesOrderItemStatesByName(array $orderItemStates);
 
 }
