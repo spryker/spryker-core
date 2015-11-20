@@ -31,9 +31,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 class TransferGeneratorTest extends Test
 {
 
+    /**
+     * @return void
+     */
     public function tearDown()
     {
-        $targetDirectory = __DIR__ . '/Fixtures/Transfer/';
+        $targetDirectory = $this->getTargetDirectory();
         $testFiles = [
             'Project/FooBarInterface.php',
             'Vendor/FooBarInterface.php',
@@ -46,71 +49,58 @@ class TransferGeneratorTest extends Test
         }
     }
 
+    /**
+     * @return void
+     */
     public function testExecuteShouldGenerateExpectedTransfer()
     {
-        $messenger = new ConsoleMessenger(new ConsoleOutput(OutputInterface::VERBOSITY_QUIET));
-
-        $targetDirectory = __DIR__ . '/Fixtures/Transfer/';
-        $generator = new ClassGenerator($targetDirectory);
-
         $sourceDirectories = [
-            __DIR__ . '/Fixtures',
+            __DIR__ . '/Fixtures/',
         ];
+        $definitionBuilder = $this->getDefinitionBuilder($sourceDirectories);
 
-        $normalizer = new DefinitionNormalizer();
-        $loader = new TransferDefinitionLoader($normalizer, $sourceDirectories);
-        $definitionBuilder = new TransferDefinitionBuilder(
-            $loader,
-            new TransferDefinitionMerger(),
-            new ClassDefinition()
-        );
+        $messenger = $this->getMessenger();
+        $generator = $this->getClassGenerator();
 
         $transferGenerator = new TransferGenerator($messenger, $generator, $definitionBuilder);
         $transferGenerator->execute();
 
-        $this->assertTrue(file_exists($targetDirectory . 'CatFaceTransfer.php'));
+        $this->assertTrue(file_exists($this->getTargetDirectory() . 'CatFaceTransfer.php'));
         $this->assertSame(
             file_get_contents(__DIR__ . '/Fixtures/expected.transfer'),
-            file_get_contents($targetDirectory . 'CatFaceTransfer.php')
+            file_get_contents($this->getTargetDirectory() . 'CatFaceTransfer.php')
         );
     }
 
+    /**
+     * @return void
+     */
     public function testExecuteShouldGenerateExpectedMergedTransfer()
     {
-        $messenger = new ConsoleMessenger(new ConsoleOutput(OutputInterface::VERBOSITY_QUIET));
-
-        $targetDirectory = __DIR__ . '/Fixtures/Transfer/';
-        $generator = new ClassGenerator($targetDirectory);
-
         $sourceDirectories = [
             __DIR__ . '/Fixtures/Project/',
             __DIR__ . '/Fixtures/Vendor/',
         ];
-        $normalizer = new DefinitionNormalizer();
-        $loader = new TransferDefinitionLoader($normalizer, $sourceDirectories);
-        $definitionBuilder = new TransferDefinitionBuilder(
-            $loader,
-            new TransferDefinitionMerger(),
-            new ClassDefinition()
-        );
+        $definitionBuilder = $this->getDefinitionBuilder($sourceDirectories);
+
+        $messenger = $this->getMessenger();
+        $generator = $this->getClassGenerator();
 
         $transferGenerator = new TransferGenerator($messenger, $generator, $definitionBuilder);
         $transferGenerator->execute();
 
-        $this->assertTrue(file_exists($targetDirectory . 'FooBarTransfer.php'));
+        $this->assertTrue(file_exists($this->getTargetDirectory() . 'FooBarTransfer.php'));
         $this->assertSame(
             file_get_contents(__DIR__ . '/Fixtures/expected.merged.transfer'),
-            file_get_contents($targetDirectory . 'FooBarTransfer.php')
+            file_get_contents($this->getTargetDirectory() . 'FooBarTransfer.php')
         );
     }
 
+    /**
+     * @return void
+     */
     public function testExecuteShouldGenerateExpectedTransferInterface()
     {
-        $messenger = new ConsoleMessenger(new ConsoleOutput(OutputInterface::VERBOSITY_QUIET));
-
-        $targetDirectory = __DIR__ . '/Fixtures/Transfer/';
-        $generator = new InterfaceGenerator($targetDirectory);
-
         $sourceDirectories = [
             __DIR__ . '/Fixtures/',
         ];
@@ -123,18 +113,66 @@ class TransferGeneratorTest extends Test
             new InterfaceDefinition()
         );
 
+        $messenger = $this->getMessenger();
+        $generator = new InterfaceGenerator($this->getTargetDirectory());
+
         $transferGenerator = new TransferGenerator($messenger, $generator, $definitionBuilder);
         $transferGenerator->execute();
 
-        $this->assertTrue(file_exists($targetDirectory . 'Test/CatFaceInterface.php'));
+        $this->assertTrue(file_exists($this->getTargetDirectory() . 'Test/CatFaceInterface.php'));
         $this->assertSame(
             file_get_contents(__DIR__ . '/Fixtures/expected.interface'),
-            file_get_contents($targetDirectory . 'Test/CatFaceInterface.php')
+            file_get_contents($this->getTargetDirectory() . 'Test/CatFaceInterface.php')
+        );
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTargetDirectory()
+    {
+        $targetDirectory = __DIR__ . '/Fixtures/Transfer/';
+
+        return $targetDirectory;
+    }
+
+    /**
+     * @return ConsoleMessenger
+     */
+    protected function getMessenger()
+    {
+        $messenger = new ConsoleMessenger(new ConsoleOutput(OutputInterface::VERBOSITY_QUIET));
+
+        return $messenger;
+    }
+
+    /**
+     * @return ClassGenerator
+     */
+    protected function getClassGenerator()
+    {
+        $targetDirectory = $this->getTargetDirectory();
+        $generator = new ClassGenerator($targetDirectory);
+
+        return $generator;
+    }
+
+    /**
+     * @param $sourceDirectories
+     *
+     * @return TransferDefinitionBuilder
+     */
+    protected function getDefinitionBuilder($sourceDirectories)
+    {
+        $normalizer = new DefinitionNormalizer();
+        $loader = new TransferDefinitionLoader($normalizer, $sourceDirectories);
+        $definitionBuilder = new TransferDefinitionBuilder(
+            $loader,
+            new TransferDefinitionMerger(),
+            new ClassDefinition()
         );
 
-        if (file_exists($targetDirectory . 'data/' . 'CatFaceInterface.php')) {
-            unlink($targetDirectory . 'data/' . 'CatFaceInterface.php');
-        }
+        return $definitionBuilder;
     }
 
 }
