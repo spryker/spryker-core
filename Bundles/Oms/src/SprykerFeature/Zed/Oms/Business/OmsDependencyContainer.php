@@ -20,7 +20,6 @@ use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use SprykerFeature\Zed\Oms\Business\Process\TransitionInterface;
 use SprykerFeature\Zed\Oms\Business\Util\DrawerInterface;
 use SprykerFeature\Zed\Oms\Business\Util\OrderItemMatrix;
-use SprykerFeature\Zed\Oms\Business\Util\OrderProcess;
 use SprykerFeature\Zed\Oms\Business\Util\ReadOnlyArrayObject;
 use SprykerFeature\Zed\Oms\Business\Util\TransitionLogInterface;
 use SprykerFeature\Zed\Oms\OmsConfig;
@@ -182,16 +181,6 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
                 $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS)
             )
         ; // @TODO do not inject the whole config, just inject what is needed
-    }
-
-    /**
-     * @param OmsConfig $config
-     *
-     * @return OrderProcess
-     */
-    public function createUtilOrderProcess(OmsConfig $config)
-    {
-        return $this->getFactory()->createUtilOrderProcess($this->getQueryContainer(), $config);
     }
 
     /**
