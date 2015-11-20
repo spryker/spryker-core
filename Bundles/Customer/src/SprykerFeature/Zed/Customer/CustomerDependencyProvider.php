@@ -17,7 +17,13 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
     const PASSWORD_RESTORED_CONFIRMATION_SENDERS = 'Password RestoredConfirmation Senders';
     const SENDER_PLUGINS = 'sender plugins';
     const FACADE_SEQUENCE_NUMBER = 'FACADE_SEQUENCE_NUMBER';
+    const COUNTRY_FACADE = 'COUNTRY_QUERY_CONTAINER';
 
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[self::SENDER_PLUGINS] = function (Container $container) {
@@ -26,6 +32,20 @@ class CustomerDependencyProvider extends AbstractBundleDependencyProvider
 
         $container[self::FACADE_SEQUENCE_NUMBER] = function (Container $container) {
             return $container->getLocator()->sequenceNumber()->facade();
+        };
+
+        return $container;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return Container
+     */
+    public function provideCommunicationLayerDependencies(Container $container)
+    {
+        $container[self::COUNTRY_FACADE] = function (Container $container) {
+            return $container->getLocator()->country()->facade();
         };
 
         return $container;

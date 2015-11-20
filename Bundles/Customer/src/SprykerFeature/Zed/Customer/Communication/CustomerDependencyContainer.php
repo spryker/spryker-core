@@ -8,11 +8,11 @@ namespace SprykerFeature\Zed\Customer\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerFeature\Zed\Customer\Communication\Form\AddressForm;
-use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
+use SprykerFeature\Zed\Customer\CustomerDependencyProvider;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use SprykerFeature\Zed\Customer\Communication\Table\AddressTable;
 use SprykerFeature\Zed\Customer\Communication\Table\CustomerTable;
+use Symfony\Component\Form\FormInterface;
 
 /**
  * @method CustomerCommunication getFactory()
@@ -37,12 +37,8 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createCustomerTable()
     {
-        $customerQuery = $this->getQueryContainer()
-            ->queryCustomers()
-        ;
-
         return $this->getFactory()
-            ->createTableCustomerTable($customerQuery)
+            ->createTableCustomerTable($this->getQueryContainer())
         ;
     }
 
@@ -53,57 +49,45 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createCustomerAddressTable($idCustomer)
     {
-        $addressQuery = $this->getQueryContainer()
-            ->queryAddresses()
-        ;
-
-        $customerQuery = $this->getQueryContainer()
-            ->queryCustomers()
-        ;
-
         return $this->getFactory()
-            ->createTableAddressTable($addressQuery, $customerQuery, $idCustomer)
+            ->createTableAddressTable($this->getQueryContainer(), $idCustomer)
         ;
     }
 
     /**
-     * @param string $type
+     * @param string $formActionType
      *
-     * @return CustomerForm
+     * @throws \ErrorException
+     *
+     * @return FormInterface
      */
-    public function createCustomerForm($type)
+    public function createCustomerForm($formActionType)
     {
-        $customerQuery = $this->getQueryContainer()
-            ->queryCustomers()
+        $customerFormType = $this->getFactory()
+            ->createFormCustomerFormType($this->getQueryContainer(), $formActionType)
         ;
 
-        $addressQuery = $this->getQueryContainer()
-            ->queryAddresses()
+        $customerForm = $this->getFactory()
+            ->createFormCustomerForm($customerFormType, $this->getQueryContainer(), $formActionType)
         ;
 
-        return $this->getFactory()
-            ->createFormCustomerForm($customerQuery, $addressQuery, $type)
-        ;
+        return $customerForm->create();
     }
 
     /**
-     * @param string $type
-     *
-     * @return AddressForm
+     * @return FormInterface
      */
-    public function createAddressForm($type)
+    public function createAddressForm()
     {
-        $customerQuery = $this->getQueryContainer()
-            ->queryCustomers()
+        $customerAddressFormType = $this->getFactory()
+            ->createFormAddressFormType($this->getProvidedDependency(CustomerDependencyProvider::COUNTRY_FACADE))
         ;
 
-        $addressQuery = $this->getQueryContainer()
-            ->queryAddresses()
+        $customerAddressForm = $this->getFactory()
+            ->createFormAddressForm($customerAddressFormType, $this->getQueryContainer())
         ;
 
-        return $this->getFactory()
-            ->createFormAddressForm($addressQuery, $customerQuery, $type)
-        ;
+        return $customerAddressForm->create();
     }
 
 }

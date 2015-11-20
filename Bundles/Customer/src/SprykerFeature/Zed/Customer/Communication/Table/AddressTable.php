@@ -7,8 +7,8 @@ namespace SprykerFeature\Zed\Customer\Communication\Table;
 
 use Propel\Runtime\Collection\ObjectCollection;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerAddressTableMap;
-use Orm\Zed\Customer\Persistence\SpyCustomerAddressQuery;
-use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
+use SprykerFeature\Zed\Customer\CustomerConfig;
+use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainer;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 
@@ -23,14 +23,9 @@ class AddressTable extends AbstractTable
     const COL_COMPANY = 'Company';
 
     /**
-     * @var SpyCustomerAddressQuery
+     * @var CustomerQueryContainer
      */
-    protected $addressQuery;
-
-    /**
-     * @var SpyCustomerQuery
-     */
-    protected $customerQuery;
+    protected $customerQueryContainer;
 
     /**
      * @var int
@@ -38,12 +33,12 @@ class AddressTable extends AbstractTable
     protected $idCustomer;
 
     /**
-     * @param SpyCustomerAddressQuery $addressQuery
+     * @param CustomerQueryContainer $customerQueryContainer
+     * @param int $idCustomer
      */
-    public function __construct(SpyCustomerAddressQuery $addressQuery, SpyCustomerQuery $customerQuery, $idCustomer)
+    public function __construct(CustomerQueryContainer $customerQueryContainer, $idCustomer)
     {
-        $this->addressQuery = $addressQuery;
-        $this->customerQuery = $customerQuery;
+        $this->customerQueryContainer = $customerQueryContainer;
         $this->idCustomer = $idCustomer;
     }
 
@@ -86,7 +81,7 @@ class AddressTable extends AbstractTable
             SpyCustomerAddressTableMap::COL_ZIP_CODE,
         ]);
 
-        $config->setUrl(sprintf('table?id_customer=%d', $this->idCustomer));
+        $config->setUrl(sprintf('table?id-customer=%d', $this->idCustomer));
 
         return $config;
     }
@@ -98,13 +93,13 @@ class AddressTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->addressQuery->filterByFkCustomer($this->idCustomer)
+        $query = $this->customerQueryContainer->queryAddresses()->filterByFkCustomer($this->idCustomer)
             ->leftJoinCountry('country')
             ->withColumn('country.name', self::COL_COMPANY)
         ;
         $lines = $this->runQuery($query, $config);
 
-        $customer = $this->customerQuery->findOneByIdCustomer($this->idCustomer);
+        $customer = $this->customerQueryContainer->queryCustomers()->findOneByIdCustomer($this->idCustomer);
 
         $defaultBillingAddress = $defaultShippingAddress = false;
         if ($customer !== null) {
@@ -136,30 +131,25 @@ class AddressTable extends AbstractTable
     }
 
     /**
-     * @param $details
+     * @param array $details
      *
-     * @return array|string
+     * @return string
      */
-    private function buildLinks($details)
+    private function buildLinks(array $details)
     {
-        $result = '';
+        $buttons = [];
 
-        $idCustomerAddress = !empty($details[SpyCustomerAddressTableMap::COL_ID_CUSTOMER_ADDRESS]) ? $details[SpyCustomerAddressTableMap::COL_ID_CUSTOMER_ADDRESS] : null;
+        $idCustomerAddress = !empty($details[SpyCustomerAddressTableMap::COL_ID_CUSTOMER_ADDRESS])
+            ? $details[SpyCustomerAddressTableMap::COL_ID_CUSTOMER_ADDRESS]
+            : null
+        ;
+
         if ($idCustomerAddress !== null) {
-            $links = [
-                'Edit' => '/customer/address/edit/?id_customer_address=',
-                'View' => '/customer/address/view/?id_customer_address=',
-            ];
-
-            $result = [];
-            foreach ($links as $key => $value) {
-                $result[] = '<a href="' . $value . $idCustomerAddress . '" class="btn btn-xs btn-white">' . $key . '</a>';
-            }
-
-            $result = implode('&nbsp;&nbsp;&nbsp;', $result);
+            $buttons[] = $this->generateEditButton(sprintf('/customer/address/edit/?%s=%d', CustomerConfig::PARAM_ID_CUSTOMER_ADDRESS, $idCustomerAddress), 'Edit');
+            $buttons[] = $this->generateViewButton(sprintf('/customer/address/view/?%s=%d', CustomerConfig::PARAM_ID_CUSTOMER_ADDRESS, $idCustomerAddress), 'View');
         }
 
-        return $result;
+        return implode(' ', $buttons);
     }
 
 }

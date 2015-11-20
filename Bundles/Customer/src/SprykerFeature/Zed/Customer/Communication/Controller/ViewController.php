@@ -6,19 +6,17 @@
 
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
+use Generated\Shared\Transfer\AddressesTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
-use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
+use SprykerFeature\Zed\Customer\CustomerConfig;
 use Symfony\Component\HttpFoundation\Request;
-use Generated\Shared\Transfer\CustomerTransfer;
 
 /**
- * @method CustomerCommunication getFactory()
- * @method CustomerQueryContainerInterface getQueryContainer()
- * @method CustomerDependencyContainer getDependencyContainer()
  * @method CustomerFacade getFacade()
+ * @method CustomerDependencyContainer getDependencyContainer()
  */
 class ViewController extends AbstractController
 {
@@ -30,21 +28,24 @@ class ViewController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCustomer = $request->get('id_customer');
+        $idCustomer = $request->get(CustomerConfig::PARAM_ID_CUSTOMER);
 
         $customerTransfer = $this->createCustomerTransfer();
         $customerTransfer->setIdCustomer($idCustomer);
 
-        /** @var CustomerTransfer $customer */
-        $customer = $this->getFacade()
-            ->getCustomer($customerTransfer)
-        ;
-        $addresses = $customer->getAddresses();
+        $customerTransfer = $this->getFacade()
+            ->getCustomer($customerTransfer);
+        $addresses = $customerTransfer->getAddresses()->toArray();
+        $customerArray = $customerTransfer->toArray();
+
+        if ($addresses[AddressesTransfer::ADDRESSES] instanceof \ArrayObject && $addresses[AddressesTransfer::ADDRESSES]->count() < 1) {
+            $addresses = [];
+        }
 
         return $this->viewResponse([
-            'customer' => $customer->toArray(),
-            'addresses' => $addresses->toArray(),
-            'id_customer' => $idCustomer,
+            'customer' => $customerArray,
+            'addresses' => $addresses,
+            'idCustomer' => $idCustomer,
         ]);
     }
 

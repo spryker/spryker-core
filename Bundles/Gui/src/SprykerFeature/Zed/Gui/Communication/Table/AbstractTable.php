@@ -119,7 +119,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @return $this
+     * @return self
      */
     private function init()
     {
@@ -256,7 +256,7 @@ abstract class AbstractTable
     /**
      * @param string $prefix
      *
-     * @return $this
+     * @return self
      */
     protected function generateTableIdentifier($prefix = 'table-')
     {

@@ -4,11 +4,16 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="Country">
+        <property name="idCountry" type="int" />
         <property name="iso2Code" type="string" />
         <property name="iso3Code" type="string" />
         <property name="name" type="string" />
         <property name="postalCodeMandatory" type="bool" />
         <property name="postalCodeRegex" type="string" />
+    </transfer>
+
+    <transfer name="CountryCollection">
+        <property name="countries" type="Country[]" />
     </transfer>
 
 </transfers>

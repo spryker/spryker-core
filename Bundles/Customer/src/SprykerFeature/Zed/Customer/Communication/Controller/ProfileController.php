@@ -17,8 +17,8 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method CustomerDependencyContainer getDependencyContainer()
  * @method CustomerFacade getFacade()
+ * @method CustomerDependencyContainer getDependencyContainer()
  */
 class ProfileController extends AbstractController
 {
@@ -45,20 +45,17 @@ class ProfileController extends AbstractController
         $this->setMenuHighlight($customerUri);
 
         $form = $this->getDependencyContainer()
-            ->createCustomerForm($request)
-        ;
+            ->createCustomerForm($request);
 
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setIdCustomer($idCustomer);
         $customerTransfer = $this->getFacade()
-            ->getCustomer($customerTransfer)
-        ;
+            ->getCustomer($customerTransfer);
 
         try {
             $idShippingAddress = $this->getFacade()
                 ->getDefaultShippingAddress($customerTransfer)
-                ->getIdCustomerAddress()
-            ;
+                ->getIdCustomerAddress();
         } catch (AddressNotFoundException $e) {
             $idShippingAddress = null;
         }
@@ -66,16 +63,14 @@ class ProfileController extends AbstractController
         try {
             $idBillingAddress = $this->getFacade()
                 ->getDefaultBillingAddress($customerTransfer)
-                ->getIdCustomerAddress()
-            ;
+                ->getIdCustomerAddress();
         } catch (AddressNotFoundException $e) {
             $idBillingAddress = null;
         }
 
         $addresses = [];
         $addressesItems = $customerTransfer->getAddresses()
-            ->getAddresses()
-        ;
+            ->getAddresses();
         foreach ($addressesItems as $address) {
             $addresses[] = [
                 'id' => $address->getIdCustomerAddress(),
@@ -93,7 +88,7 @@ class ProfileController extends AbstractController
         }
 
         return [
-            'id_customer' => $customerTransfer->getIdCustomer(),
+            'idCustomer' => $customerTransfer->getIdCustomer(),
             'customerJson' => json_encode($form->toArray()),
             'registered' => $customerTransfer->getRegistered(),
             'addresses' => $addresses,
@@ -111,8 +106,7 @@ class ProfileController extends AbstractController
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setIdCustomer($request->query->get('id'));
         $this->getFacade()
-            ->forgotPassword($customerTransfer)
-        ;
+            ->forgotPassword($customerTransfer);
 
         return $this->redirectResponse('/customer/profile?id=' . $request->query->get('id'));
     }
@@ -125,16 +119,13 @@ class ProfileController extends AbstractController
     public function editAction(Request $request)
     {
         $form = $this->getDependencyContainer()
-            ->createCustomerForm($request)
-        ;
-        $form->init();
+            ->createCustomerForm($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid() === true) {
             $customerTransfer = new CustomerTransfer();
             $customerTransfer->fromArray($form->getRequestData());
             $this->getFacade()
-                ->updateCustomer($customerTransfer)
-            ;
+                ->updateCustomer($customerTransfer);
         }
 
         return $this->jsonResponse($form->renderData());
@@ -148,8 +139,7 @@ class ProfileController extends AbstractController
     public function addressesAction(Request $request)
     {
         $grid = $this->getDependencyContainer()
-            ->createAddressGrid($request)
-        ;
+            ->createAddressGrid($request);
 
         return $this->jsonResponse($grid->renderData());
     }
@@ -162,24 +152,20 @@ class ProfileController extends AbstractController
     public function addressAction(Request $request)
     {
         $form = $this->getDependencyContainer()
-            ->createAddressForm($request)
-        ;
-        $form->init();
+            ->createAddressForm($request);
 
-        if ($form->isValid()) {
+        if ($form->isValid() === true) {
             $addressTransfer = new AddressTransfer();
             $addressTransfer->fromArray($form->getRequestData());
             if ($addressTransfer->getIdCustomerAddress()) {
                 $this->getFacade()
-                    ->updateAddress($addressTransfer)
-                ;
+                    ->updateAddress($addressTransfer);
 
                 return $this->jsonResponse($form->renderData());
             }
 
             $this->getFacade()
-                ->createAddress($addressTransfer)
-            ;
+                ->createAddress($addressTransfer);
         }
 
         return $this->jsonResponse($form->renderData());
@@ -196,8 +182,7 @@ class ProfileController extends AbstractController
         $addressTransfer->setIdCustomerAddress($request->query->get('address_id'));
         $addressTransfer->setFkCustomer($request->query->get('customer_id'));
         $this->getFacade()
-            ->setDefaultShippingAddress($addressTransfer)
-        ;
+            ->setDefaultShippingAddress($addressTransfer);
 
         return $this->redirectResponse('/customer/profile?id=' . $request->query->get('customer_id'));
     }
@@ -213,8 +198,7 @@ class ProfileController extends AbstractController
         $addressTransfer->setIdCustomerAddress($request->query->get('address_id'));
         $addressTransfer->setFkCustomer($request->query->get('customer_id'));
         $this->getFacade()
-            ->setDefaultBillingAddress($addressTransfer)
-        ;
+            ->setDefaultBillingAddress($addressTransfer);
 
         return $this->redirectResponse('/customer/profile?id=' . $request->query->get('customer_id'));
     }

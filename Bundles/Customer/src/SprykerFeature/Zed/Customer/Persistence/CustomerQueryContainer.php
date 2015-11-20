@@ -6,8 +6,10 @@
 
 namespace SprykerFeature\Zed\Customer\Persistence;
 
+use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
+use SprykerFeature\Zed\Customer\CustomerDependencyProvider;
 
 /**
  * @method CustomerDependencyContainer getDependencyContainer()
@@ -84,6 +86,17 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
         $query->filterByCustomer($customer);
 
         return $query;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function queryAddressByIdCustomer($idCustomer)
+    {
+        return $this
+            ->getDependencyContainer()
+            ->createSpyCustomerAddressQuery()
+            ->filterByFkCustomer($idCustomer);
     }
 
     /**

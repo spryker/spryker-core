@@ -6,29 +6,32 @@
 namespace SprykerFeature\Zed\Customer\Communication\Controller;
 
 use Generated\Shared\Transfer\CustomerTransfer;
-use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
-use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
+use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
+use SprykerFeature\Zed\Customer\Communication\Form\CustomerFormType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method CustomerCommunication getFactory()
- * @method CustomerQueryContainerInterface getQueryContainer()
  * @method CustomerFacade getFacade()
+ * @method CustomerDependencyContainer getDependencyContainer()
  */
 class AddController extends AbstractController
 {
 
     /**
-     * @return array
+     * @param Request $request
+     *
+     * @return array|RedirectResponse
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $form = $this->getDependencyContainer()
-            ->createCustomerForm('add')
+            ->createCustomerForm(CustomerFormType::ADD)
         ;
 
-        $form->handleRequest();
+        $form->handleRequest($request);
 
         if ($form->isValid() === true) {
             $data = $form->getData();

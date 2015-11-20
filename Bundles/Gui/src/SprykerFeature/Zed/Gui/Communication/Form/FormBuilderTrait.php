@@ -22,7 +22,7 @@ trait FormBuilderTrait
      * @param string|Constraint $type
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function add($name, $type, $options = [])
     {
@@ -37,7 +37,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addText($name, $options = [])
     {
@@ -52,7 +52,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addTextarea($name, $options = [])
     {
@@ -67,7 +67,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addEmail($name, $options = [])
     {
@@ -82,7 +82,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addInteger($name, $options = [])
     {
@@ -97,7 +97,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addMoney($name, $options = [])
     {
@@ -112,7 +112,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addNumber($name, $options = [])
     {
@@ -127,7 +127,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addPassword($name, $options = [])
     {
@@ -142,7 +142,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addPercent($name, $options = [])
     {
@@ -157,7 +157,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addSearch($name, $options = [])
     {
@@ -172,7 +172,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addUrl($name, $options = [])
     {
@@ -187,7 +187,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addChoice($name, $options = [])
     {
@@ -202,7 +202,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addEntity($name, $options = [])
     {
@@ -217,7 +217,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addCountry($name, $options = [])
     {
@@ -232,7 +232,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addLanguage($name, $options = [])
     {
@@ -247,7 +247,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addLocale($name, $options = [])
     {
@@ -262,7 +262,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addTimezone($name, $options = [])
     {
@@ -277,7 +277,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addCurrency($name, $options = [])
     {
@@ -292,7 +292,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addDate($name, $options = [])
     {
@@ -307,7 +307,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addDatetime($name, $options = [])
     {
@@ -322,7 +322,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addTime($name, $options = [])
     {
@@ -337,7 +337,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addBirthday($name, $options = [])
     {
@@ -352,7 +352,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addCheckbox($name, $options = [])
     {
@@ -367,7 +367,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addFile($name, $options = [])
     {
@@ -382,7 +382,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addRadio($name, $options = [])
     {
@@ -399,7 +399,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addCollection($name, $options = [])
     {
@@ -414,7 +414,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addRepeated($name, $options = [])
     {
@@ -429,7 +429,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addHidden($name, $options = [])
     {
@@ -444,7 +444,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addButton($name, $options = [])
     {
@@ -459,7 +459,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addReset($name, $options = [])
     {
@@ -472,7 +472,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      *
      * @deprecated Forms should not have submit buttons http://symfony.com/doc/current/best_practices/forms.html#form-button-configuration
      */
@@ -491,7 +491,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addForm($name, $options = [])
     {
@@ -506,7 +506,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addSelect($name, $options = [])
     {
@@ -523,7 +523,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addSelect2ComboBox($name, $options = [])
     {
@@ -538,7 +538,7 @@ trait FormBuilderTrait
      * @param string $name
      * @param array $options
      *
-     * @return $this
+     * @return self
      */
     public function addAutosuggest($name, $options = [])
     {
