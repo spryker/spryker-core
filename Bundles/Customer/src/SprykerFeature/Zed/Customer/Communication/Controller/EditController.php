@@ -48,12 +48,12 @@ class EditController extends AbstractController
             ;
 
             $defaultBilling = !empty($data[CustomerTransfer::DEFAULT_BILLING_ADDRESS]) ? $data[CustomerTransfer::DEFAULT_BILLING_ADDRESS] : false;
-            if (empty($defaultBilling) === false) {
+            if (empty($defaultBilling)) {
                 $this->updateBillingAddress($idCustomer, $defaultBilling);
             }
 
             $defaultShipping = !empty($data[CustomerTransfer::DEFAULT_SHIPPING_ADDRESS]) ? $data[CustomerTransfer::DEFAULT_SHIPPING_ADDRESS] : false;
-            if (empty($defaultShipping) === false) {
+            if (empty($defaultShipping)) {
                 $this->updateShippingAddress($idCustomer, $defaultShipping);
             }
 
@@ -85,22 +85,46 @@ class EditController extends AbstractController
     /**
      * @param int $idCustomer
      * @param int $defaultBillingAddress
+     *
+     * @return void
      */
     protected function updateBillingAddress($idCustomer, $defaultBillingAddress)
     {
         $addressTransfer = $this->createCustomAddressTransfer($idCustomer, $defaultBillingAddress);
+
+        if ($this->isValidAddressTransfer($addressTransfer) === false) {
+            return;
+        }
+
         $this->getFacade()
             ->setDefaultBillingAddress($addressTransfer)
         ;
     }
 
     /**
+     * @param AddressTransfer $addressTransfer
+     *
+     * @return bool
+     */
+    protected function isValidAddressTransfer(AddressTransfer $addressTransfer)
+    {
+        return (empty($addressTransfer->getIdCustomerAddress()) === false && $addressTransfer->getFkCustomer() !== null);
+    }
+
+    /**
      * @param int $idCustomer
      * @param int $defaultShippingAddress
+     *
+     * @return void
      */
     protected function updateShippingAddress($idCustomer, $defaultShippingAddress)
     {
         $addressTransfer = $this->createCustomAddressTransfer($idCustomer, $defaultShippingAddress);
+
+        if ($this->isValidAddressTransfer($addressTransfer) === false) {
+            return;
+        }
+
         $this->getFacade()
             ->setDefaultShippingAddress($addressTransfer)
         ;

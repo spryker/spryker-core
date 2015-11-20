@@ -3,6 +3,8 @@
 namespace SprykerFeature\Zed\Customer\Communication\Form;
 
 use SprykerEngine\Zed\Gui\Communication\Form\AbstractFormType;
+use SprykerFeature\Zed\Country\Business\CountryFacade;
+use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -29,16 +31,16 @@ class AddressFormType extends AbstractFormType
     const PREFERED_COUNTRY_NAME = 'Germany';
 
     /**
-     * @var CustomerQueryContainerInterface
+     * @var CountryFacade
      */
-    protected $customerQueryContainer;
+    protected $countryFacade;
 
     /**
-     * @param CustomerQueryContainerInterface $queryContainer
+     * @param CountryFacade $countryFacade
      */
-    public function __construct(CustomerQueryContainerInterface $queryContainer)
+    public function __construct(CountryFacade $countryFacade)
     {
-        $this->customerQueryContainer = $queryContainer;
+        $this->countryFacade = $countryFacade;
     }
 
     /**
@@ -49,6 +51,10 @@ class AddressFormType extends AbstractFormType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        $preferedCountry = $this->countryFacade
+            ->getPreferedCountryByName(self::PREFERED_COUNTRY_NAME)
+        ;
+
         $builder
             ->add(self::FIELD_ID_CUSTOMER_ADDRESS, 'hidden')
             ->add(self::FIELD_FK_CUSTOMER, 'hidden')
@@ -88,10 +94,7 @@ class AddressFormType extends AbstractFormType
                 'placeholder' => 'Select one',
                 'choices' => $this->getCountryOptions(),
                 'preferred_choices' => [
-                    $this->customerQueryContainer
-                        ->queryCountries()
-                        ->findOneByName(self::PREFERED_COUNTRY_NAME)
-                        ->getIdCountry(),
+                    $preferedCountry->getIdCountry(),
                 ],
             ])
             ->add(self::FIELD_PHONE, 'text', [
@@ -114,14 +117,11 @@ class AddressFormType extends AbstractFormType
      */
     public function getCountryOptions()
     {
-        $countries = $this->customerQueryContainer
-            ->queryCountries()
-            ->find()
-        ;
+        $countryCollection = $this->countryFacade->getAvailableCountries();
 
         $result = [];
-        if (empty($countries) === false) {
-            foreach ($countries->getData() as $country) {
+        if ($countryCollection->getCountries()->count() > 0) {
+            foreach ($countryCollection->getCountries() as $country) {
                 $result[$country->getIdCountry()] = $country->getName();
             }
         }

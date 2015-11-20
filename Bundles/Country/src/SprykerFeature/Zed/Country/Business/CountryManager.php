@@ -7,6 +7,8 @@
 namespace SprykerFeature\Zed\Country\Business;
 
 use Generated\Shared\Country\CountryInterface;
+use Generated\Shared\Transfer\CountryCollectionTransfer;
+use Generated\Shared\Transfer\CountryTransfer;
 use SprykerFeature\Zed\Country\Business\Exception\CountryExistsException;
 use SprykerFeature\Zed\Country\Business\Exception\MissingCountryException;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainerInterface;
@@ -39,6 +41,36 @@ class CountryManager implements CountryManagerInterface
         $query = $this->countryQueryContainer->queryCountryByIso2Code($iso2code);
 
         return $query->count() > 0;
+    }
+
+    /**
+     * @return CountryCollectionTransfer
+     */
+    public function getCountryCollection()
+    {
+        $countries = $this->countryQueryContainer->queryCountries()->find();
+        $countryCollectionTransfer = new CountryCollectionTransfer();
+
+        foreach ($countries as $country) {
+            $countryTransfer = (new CountryTransfer())->fromArray($country->toArray(), true);
+            $countryCollectionTransfer->addCountries($countryTransfer);
+        }
+
+        return $countryCollectionTransfer;
+    }
+
+    /**
+     * @param $countryName
+     *
+     * @return CountryTransfer
+     */
+    public function getPreferedCountryByName($countryName)
+    {
+        $country = $this->countryQueryContainer->queryCountries()->findOneByName($countryName);
+
+        $countryTransfer = (new CountryTransfer())->fromArray($country->toArray(), true);
+
+        return $countryTransfer;
     }
 
     /**

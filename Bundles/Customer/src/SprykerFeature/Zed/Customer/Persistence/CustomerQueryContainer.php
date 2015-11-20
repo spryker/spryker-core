@@ -135,16 +135,6 @@ class CustomerQueryContainer extends AbstractQueryContainer implements CustomerQ
     }
 
     /**
-     * @return SpyCountryQuery
-     */
-    public function queryCountries()
-    {
-        $query = $this->getProvidedDependency(CustomerDependencyProvider::COUNTRY_QUERY_CONTAINER);
-
-        return $query->queryCountries();
-    }
-
-    /**
      * @inheritdoc
      */
     public function queryCustomers()

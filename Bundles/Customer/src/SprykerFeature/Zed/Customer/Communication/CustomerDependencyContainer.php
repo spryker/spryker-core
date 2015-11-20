@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Customer\Communication;
 
 use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
+use SprykerFeature\Zed\Customer\CustomerDependencyProvider;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use SprykerFeature\Zed\Customer\Communication\Table\AddressTable;
 use SprykerFeature\Zed\Customer\Communication\Table\CustomerTable;
@@ -79,7 +80,7 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
     public function createAddressForm()
     {
         $customerAddressFormType = $this->getFactory()
-            ->createFormAddressFormType($this->getQueryContainer())
+            ->createFormAddressFormType($this->getProvidedDependency(CustomerDependencyProvider::COUNTRY_FACADE))
         ;
 
         $customerAddressForm = $this->getFactory()
