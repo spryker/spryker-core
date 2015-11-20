@@ -134,6 +134,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
 
     /**
      * @param array $orderItemStates
+     *
      * @return array
      */
     public function getOrderItemStateNames($orderItemStates)

@@ -187,6 +187,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     public function getActiveProcesses($activeProcesses)
     {
         $query = SpyOmsOrderProcessQuery::create();
+
         return $query->filterByName($activeProcesses);
     }
 
@@ -198,6 +199,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     public function getOrderItemStates(array $orderItemStates)
     {
         $query = SpyOmsOrderItemStateQuery::create();
+
         return $query->filterByIdOmsOrderItemState($orderItemStates);
     }
 
@@ -214,6 +216,7 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
         if ($stateBlacklist) {
             $query->filterByFkOmsOrderItemState($stateBlacklist, Criteria::NOT_IN);
         }
+
         return $query;
     }
 
@@ -229,4 +232,5 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
 
         return $query;
     }
+
 }

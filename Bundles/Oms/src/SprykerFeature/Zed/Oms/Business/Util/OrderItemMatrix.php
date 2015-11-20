@@ -78,7 +78,7 @@ class OrderItemMatrix
             }
 
             $result = [
-                self::COL_STATE => $statesUsed[$idState]
+                self::COL_STATE => $statesUsed[$idState],
             ];
 
             foreach ($this->processes as $idProcess => $process) {
@@ -99,9 +99,10 @@ class OrderItemMatrix
     /**
      * @return array
      */
-    protected function getHeaderColumns() {
+    protected function getHeaderColumns()
+    {
         $headersColumns = [
-            self::COL_STATE => ''
+            self::COL_STATE => '',
         ];
         foreach ($this->processes as $id => $name) {
             $headersColumns[$name] = $name;
@@ -193,6 +194,7 @@ class OrderItemMatrix
         foreach ($result as $row) {
             $blacklist[] = $row->getIdOmsOrderItemState();
         }
+
         return $blacklist;
     }
 
@@ -212,6 +214,7 @@ class OrderItemMatrix
             $idProcess = $orderItem->getFkOmsOrderProcess();
             $items[$idState][$idProcess][] = $orderItem;
         }
+
         return $items;
     }
 
@@ -227,6 +230,7 @@ class OrderItemMatrix
             $processes[$process->getIdOmsOrderProcess()] = $process->getName();
         }
         asort($processes);
+
         return $processes;
     }
 
