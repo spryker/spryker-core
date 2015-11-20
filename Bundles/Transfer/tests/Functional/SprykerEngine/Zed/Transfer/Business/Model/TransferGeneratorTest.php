@@ -48,7 +48,7 @@ class TransferGeneratorTest extends Test
 
     public function testExecuteShouldGenerateExpectedTransfer()
     {
-        $messenger = new ConsoleMessenger(new ConsoleOutput(OutputInterface::VERBOSITY_QUIET));
+        $messenger = $this->getMessenger();
 
         $targetDirectory = $this->getTargetDirectory();
         $generator = new ClassGenerator($targetDirectory);
@@ -77,7 +77,7 @@ class TransferGeneratorTest extends Test
 
     public function testExecuteShouldGenerateExpectedMergedTransfer()
     {
-        $messenger = new ConsoleMessenger(new ConsoleOutput(OutputInterface::VERBOSITY_QUIET));
+        $messenger = $this->getMessenger();
 
         $targetDirectory = $this->getTargetDirectory();
         $generator = new ClassGenerator($targetDirectory);
@@ -106,8 +106,7 @@ class TransferGeneratorTest extends Test
 
     public function testExecuteShouldGenerateExpectedTransferInterface()
     {
-        $messenger = new ConsoleMessenger(new ConsoleOutput(OutputInterface::VERBOSITY_QUIET));
-
+        $messenger = $this->getMessenger();
         $targetDirectory = $this->getTargetDirectory();
         $generator = new InterfaceGenerator($targetDirectory);
 
@@ -140,6 +139,15 @@ class TransferGeneratorTest extends Test
     {
         $targetDirectory = __DIR__ . '/Fixtures/Transfer/';
         return $targetDirectory;
+    }
+
+    /**
+     * @return ConsoleMessenger
+     */
+    protected function getMessenger()
+    {
+        $messenger = new ConsoleMessenger(new ConsoleOutput(OutputInterface::VERBOSITY_QUIET));
+        return $messenger;
     }
 
 }
