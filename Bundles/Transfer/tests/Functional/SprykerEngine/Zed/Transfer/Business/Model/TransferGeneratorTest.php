@@ -33,7 +33,7 @@ class TransferGeneratorTest extends Test
 
     public function tearDown()
     {
-        $targetDirectory = __DIR__ . '/Fixtures/Transfer/';
+        $targetDirectory = $this->getTargetDirectory();
         $testFiles = [
             'Project/FooBarInterface.php',
             'Vendor/FooBarInterface.php',
@@ -50,7 +50,7 @@ class TransferGeneratorTest extends Test
     {
         $messenger = new ConsoleMessenger(new ConsoleOutput(OutputInterface::VERBOSITY_QUIET));
 
-        $targetDirectory = __DIR__ . '/Fixtures/Transfer/';
+        $targetDirectory = $this->getTargetDirectory();
         $generator = new ClassGenerator($targetDirectory);
 
         $sourceDirectories = [
@@ -79,7 +79,7 @@ class TransferGeneratorTest extends Test
     {
         $messenger = new ConsoleMessenger(new ConsoleOutput(OutputInterface::VERBOSITY_QUIET));
 
-        $targetDirectory = __DIR__ . '/Fixtures/Transfer/';
+        $targetDirectory = $this->getTargetDirectory();
         $generator = new ClassGenerator($targetDirectory);
 
         $sourceDirectories = [
@@ -108,7 +108,7 @@ class TransferGeneratorTest extends Test
     {
         $messenger = new ConsoleMessenger(new ConsoleOutput(OutputInterface::VERBOSITY_QUIET));
 
-        $targetDirectory = __DIR__ . '/Fixtures/Transfer/';
+        $targetDirectory = $this->getTargetDirectory();
         $generator = new InterfaceGenerator($targetDirectory);
 
         $sourceDirectories = [
@@ -131,6 +131,15 @@ class TransferGeneratorTest extends Test
             file_get_contents(__DIR__ . '/Fixtures/expected.interface'),
             file_get_contents($targetDirectory . 'Test/CatFaceInterface.php')
         );
+    }
+
+    /**
+     * @return string
+     */
+    protected function getTargetDirectory()
+    {
+        $targetDirectory = __DIR__ . '/Fixtures/Transfer/';
+        return $targetDirectory;
     }
 
 }
