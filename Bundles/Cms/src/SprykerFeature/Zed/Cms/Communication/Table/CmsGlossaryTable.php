@@ -48,7 +48,7 @@ class CmsGlossaryTable extends AbstractTable
      * @param SpyCmsGlossaryKeyMappingQuery $glossaryQuery
      * @param array $searchArray
      */
-    public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryQuery, $idPage, array $placeholders = null, array $searchArray = null)
+    public function __construct(SpyCmsGlossaryKeyMappingQuery $glossaryQuery, $idPage, array $placeholders = [], array $searchArray = [])
     {
         $this->glossaryQuery = $glossaryQuery;
         $this->idPage = $idPage;
@@ -93,7 +93,7 @@ class CmsGlossaryTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        if (isset($this->searchArray['value']) && !empty($this->searchArray['value'])) {
+        if (!empty($this->searchArray['value'])) {
             $this->placeholders = $this->findPlaceholders($this->searchArray);
         }
 

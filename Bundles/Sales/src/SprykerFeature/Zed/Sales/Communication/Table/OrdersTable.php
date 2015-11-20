@@ -6,6 +6,9 @@
 
 namespace SprykerFeature\Zed\Sales\Communication\Table;
 
+use Orm\Zed\Sales\Persistence\Map\SpySalesOrderItemTableMap;
+use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
+use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerFeature\Zed\Gui\Communication\Table\AbstractTable;
 use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 use Orm\Zed\Sales\Persistence\Map\SpySalesOrderTableMap;
@@ -16,13 +19,27 @@ class OrdersTable extends AbstractTable
 {
 
     const URL = 'URL';
+    const ID_ORDER_ITEM_PROCESS = 'id-order-item-process';
+    const ID_ORDER_ITEM_STATE = 'id-order-item-state';
+    const FILTER = 'filter';
+
+    /**
+     * @var SpySalesOrderQuery
+     */
+    protected $orderQuery;
+
+    /**
+     * @var SpySalesOrderItemQuery
+     */
+    protected $orderItemQuery;
 
     /**
      * @param SpySalesOrderQuery $orderQuery
      */
-    public function __construct(SpySalesOrderQuery $orderQuery)
+    public function __construct(SpySalesOrderQuery $orderQuery, SpySalesOrderItemQuery $orderItemQuery)
     {
         $this->orderQuery = $orderQuery;
+        $this->orderItemQuery = $orderItemQuery;
     }
 
     /**
@@ -44,6 +61,8 @@ class OrdersTable extends AbstractTable
         $config->setSortable([
             SpySalesOrderTableMap::COL_CREATED_AT,
         ]);
+
+        $this->persistFilters($config);
 
         return $config;
     }
@@ -69,7 +88,7 @@ class OrdersTable extends AbstractTable
      */
     protected function prepareData(TableConfiguration $config)
     {
-        $query = $this->orderQuery;
+        $query = $this->buildQuery();
         $queryResults = $this->runQuery($query, $config);
         $results = [];
         foreach ($queryResults as $item) {
@@ -89,6 +108,61 @@ class OrdersTable extends AbstractTable
         unset($queryResults);
 
         return $results;
+    }
+
+    /**
+     * @return SpySalesOrderQuery
+     */
+    protected function buildQuery()
+    {
+        $query = $this->orderQuery;
+
+        $idOrderItemProcess = $this->request->get(self::ID_ORDER_ITEM_PROCESS);
+        if (!$idOrderItemProcess) {
+            return $query;
+        }
+
+        $idOrderItemItemState = $this->request->get(self::ID_ORDER_ITEM_STATE);
+        $filter = $this->request->get(self::FILTER);
+        $filterValue = null;
+        if ($filter === 'day') {
+            $filterValue = new \DateTime('-1 day');
+        } elseif ($filter === 'week') {
+            $filterValue = new \DateTime('-7 day');
+        }
+
+        $filterQuery = $this->orderItemQuery
+            ->filterByFkOmsOrderProcess($idOrderItemProcess)
+            ->filterByFkOmsOrderItemState($idOrderItemItemState);
+
+        if ($filterValue) {
+            $filterQuery->filterByLastStateChange($filterValue, Criteria::GREATER_EQUAL);
+        } else {
+            $filterQuery->filterByLastStateChange(new \DateTime('-7 day'), Criteria::LESS_THAN);
+        }
+
+        $orders = $filterQuery->groupByFkSalesOrder()
+            ->select(SpySalesOrderItemTableMap::COL_FK_SALES_ORDER)
+            ->find()->toArray();
+
+        $query->filterByIdSalesOrder($orders);
+
+        return $query;
+    }
+
+    /**
+     * @param TableConfiguration $config
+     *
+     * @return void
+     */
+    protected function persistFilters(TableConfiguration $config)
+    {
+        $idOrderItemProcess = $this->request->get(self::ID_ORDER_ITEM_PROCESS);
+        if ($idOrderItemProcess) {
+            $idOrderItemState = $this->request->get(self::ID_ORDER_ITEM_STATE);
+            $filter = $this->request->get(self::FILTER);
+            $config->setUrl(sprintf('table?id-order-item-process=%s&id-order-item-state=%s&filter=%s', $idOrderItemProcess, $idOrderItemState, $filter));
+        }
     }
 
 }
