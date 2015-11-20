@@ -55,7 +55,7 @@ class TransferGeneratorTest extends Test
     public function testExecuteShouldGenerateExpectedTransfer()
     {
         $sourceDirectories = [
-            __DIR__ . '/Fixtures',
+            __DIR__ . '/Fixtures/',
         ];
         $definitionBuilder = $this->getDefinitionBuilder($sourceDirectories);
 
