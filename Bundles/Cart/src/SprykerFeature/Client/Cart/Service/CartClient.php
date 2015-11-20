@@ -140,10 +140,9 @@ class CartClient extends AbstractClient implements CartClientInterface
 
         if ($itemTransfer->getQuantity() > $quantity) {
             return $this->decreaseItemQuantity($itemTransfer, $delta);
-        } else {
-            return $this->increaseItemQuantity($itemTransfer, $delta);
         }
 
+        return $this->increaseItemQuantity($itemTransfer, $delta);
     }
 
     /**
