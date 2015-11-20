@@ -80,7 +80,7 @@ class CurrencyManager
      * @return CurrencyInterface
      * @static
      */
-    private static function loadCurrencyClass($currencyIsoCode)
+    protected static function loadCurrencyClass($currencyIsoCode)
     {
         $class = '\SprykerFeature\\Shared\\Library\\Currency\\Config\\' . $currencyIsoCode;
 

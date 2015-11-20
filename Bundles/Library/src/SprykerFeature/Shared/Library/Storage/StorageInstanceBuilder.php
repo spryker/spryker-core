@@ -110,7 +110,7 @@ class StorageInstanceBuilder
      *
      * @return array
      */
-    private static function createAdapterConfig($kvAdapter)
+    protected static function createAdapterConfig($kvAdapter)
     {
         switch ($kvAdapter) {
             case self::KV_ADAPTER_REDIS:
@@ -135,7 +135,7 @@ class StorageInstanceBuilder
      *
      * @return string
      */
-    private static function createStorageAdapterName($type, $kvAdapter)
+    protected static function createStorageAdapterName($type, $kvAdapter)
     {
         $storageAdapter = self::KV_NAMESPACE . ucfirst(strtolower($kvAdapter)) . $type;
 
