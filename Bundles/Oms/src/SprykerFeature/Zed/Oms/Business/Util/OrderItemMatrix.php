@@ -143,6 +143,11 @@ class OrderItemMatrix
         }
 
         foreach ($grid as $key => $value) {
+            if (!$value) {
+                $grid[$key] = $value;
+                continue;
+            }
+
             $url = sprintf('/sales?id-order-item-process=%s&id-order-item-state=%s&filter=%s', $idProcess, $idState, $key);
             $grid[$key] = '<a href="' . Html::escape($url) . '">' . $value . '</a>';
         }
