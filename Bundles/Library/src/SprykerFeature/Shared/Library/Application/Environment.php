@@ -106,7 +106,7 @@ class Environment
     /**
      * @return void
      */
-    private static function defineEnvironment()
+    protected static function defineEnvironment()
     {
         if (!defined('APPLICATION_ENV')) {
             $env = getenv('APPLICATION_ENV');
@@ -126,7 +126,7 @@ class Environment
     /**
      * @return void
      */
-    private static function defineStore()
+    protected static function defineStore()
     {
         if (!defined('APPLICATION_STORE')) {
             $store = getenv('APPLICATION_STORE');
@@ -189,6 +189,8 @@ class Environment
     }
 
     /**
+     * We set LC_NUMERIC hard to en_US so numeric conversion is always the same to avoid decimal point problems
+     *
      * @param $currentLocale
      *
      * @return void
@@ -197,7 +199,6 @@ class Environment
     {
         $locale = $currentLocale . '.UTF-8';
 
-        // We set LC_NUMERIC hard to en_US so numeric conversion is always the same to avoid decimal point problems
         setlocale(LC_COLLATE, $locale, $currentLocale);
         setlocale(LC_CTYPE, $locale, $currentLocale);
         setlocale(LC_MONETARY, $locale, $currentLocale);
