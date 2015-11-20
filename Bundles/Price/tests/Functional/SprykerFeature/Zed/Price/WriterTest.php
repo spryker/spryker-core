@@ -96,7 +96,7 @@ class WriterTest extends Test
         $this->assertEquals(1, count($request));
     }
 
-    public function testSetPriceForAbstractProduct()
+    public function testSetPriceForExistingAbstractProductShouldChangePrice()
     {
         $abstractProduct = SpyAbstractProductQuery::create()->filterBySku(self::DUMMY_SKU_ABSTRACT_PRODUCT)->findOne();
 
@@ -108,23 +108,22 @@ class WriterTest extends Test
             self::DUMMY_SKU_ABSTRACT_PRODUCT,
             self::DUMMY_PRICE_TYPE_1
         );
+
         $this->priceFacade->createPriceForProduct($transferPriceProduct);
         $request = SpyPriceProductQuery::create()
             ->filterBySpyAbstractProduct($abstractProduct)
             ->findOne();
 
-        $transferPriceProduct = $this->setTransferPriceAbstractProduct(
-            self::DUMMY_SKU_ABSTRACT_PRODUCT,
-            self::DUMMY_PRICE_TYPE_2
-        );
+        $transferPriceProduct->setPrice(self::DUMMY_NEW_PRICE_2);
+
         $transferPriceProduct->setIdPriceProduct($request->getIdPriceProduct());
         $this->priceFacade->setPriceForProduct($transferPriceProduct);
 
         $request = SpyPriceProductQuery::create()
             ->filterBySpyAbstractProduct($abstractProduct)
-            ->find();
+            ->findOne();
 
-        $this->assertEquals(1, count($request));
+        $this->assertEquals(self::DUMMY_NEW_PRICE_2, $request->getPrice());
     }
 
     protected function setTransferPriceProduct($sku, $abstractSku, $priceType)
