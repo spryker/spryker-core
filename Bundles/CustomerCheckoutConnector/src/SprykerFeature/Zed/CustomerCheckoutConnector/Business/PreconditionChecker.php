@@ -34,7 +34,7 @@ class PreconditionChecker implements PreconditionCheckerInterface
      */
     public function checkPreconditions(CheckoutRequestInterface $request, CheckoutResponseTransfer $response)
     {
-        if (!is_null($request->getIdUser())) {
+        if ($request->getIdUser() !== null) {
             return;
         }
 

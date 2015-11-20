@@ -157,7 +157,7 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
         foreach ($this->getFieldOperations() as $fieldOperation) {
             $operationName = $fieldOperation->getOperation();
 
-            if (!is_null($this->operationLocator->findOperationByName($operationName))) {
+            if ($this->operationLocator->findOperationByName($operationName) !== null) {
                 $fieldName = $fieldOperation->getSpyProductAttributesMetadata()->getkey();
                 $this->fieldOperations[$fieldName][$operationName][] = $fieldOperation->getTargetField();
             } else {

@@ -35,6 +35,7 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
             $this->getQueryContainer()
         );
     }
+
     /**
      * @return Form\OrderItemSplitForm
      */

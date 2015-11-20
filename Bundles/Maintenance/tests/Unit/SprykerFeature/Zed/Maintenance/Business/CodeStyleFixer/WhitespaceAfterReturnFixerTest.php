@@ -11,7 +11,7 @@ use SprykerFeature\Zed\Maintenance\Business\CodeStyleFixer\WhitespaceAfterReturn
  * @group Business
  * @group CodeStyleFixer
  */
-class WhitespaceAfterReturnTest extends \PHPUnit_Framework_TestCase
+class WhitespaceAfterReturnFixerTest extends \PHPUnit_Framework_TestCase
 {
 
     const FIXER_NAME = 'WhitespaceAfterReturnFixer';

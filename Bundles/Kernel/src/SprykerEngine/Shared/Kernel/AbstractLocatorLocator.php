@@ -34,7 +34,7 @@ abstract class AbstractLocatorLocator implements LocatorLocatorInterface
      */
     public static function getInstance(array $locator = null)
     {
-        if (is_null(self::$instance)) {
+        if (self::$instance === null) {
             self::$instance = new static();
         }
 
@@ -67,7 +67,7 @@ abstract class AbstractLocatorLocator implements LocatorLocatorInterface
      */
     public function __call($bundle, array $arguments = null)
     {
-        if (is_null($this->bundleProxy)) {
+        if ($this->bundleProxy === null) {
             $this->bundleProxy = $this->getBundleProxy();
         }
 

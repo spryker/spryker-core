@@ -157,7 +157,7 @@ class Console extends SymfonyCommand
      */
     protected function getMessenger()
     {
-        if (is_null($this->messenger)) {
+        if ($this->messenger === null) {
             $this->messenger = new ConsoleMessenger($this->output);
         }
 

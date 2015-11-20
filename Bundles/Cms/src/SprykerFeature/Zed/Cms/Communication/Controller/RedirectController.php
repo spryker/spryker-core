@@ -148,7 +148,7 @@ class RedirectController extends AbstractController
      * @param $url
      * @param $data
      *
-     * @return $this
+     * @return self
      */
     private function createUrlTransfer($url, $data)
     {
@@ -165,7 +165,7 @@ class RedirectController extends AbstractController
      * @param $redirect
      * @param $data
      *
-     * @return $this
+     * @return self
      */
     private function createRedirectTransfer($redirect, $data)
     {

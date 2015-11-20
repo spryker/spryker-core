@@ -8,28 +8,28 @@ interface TaskWorkerInterface
     /**
      * @param string $responseQueueName
      *
-     * @return $this
+     * @return self
      */
     public function setResponseQueueName($responseQueueName);
 
     /**
      * @param string $errorQueueName
      *
-     * @return $this
+     * @return self
      */
     public function setErrorQueueName($errorQueueName);
 
     /**
      * @param int $maxMessages
      *
-     * @return $this
+     * @return self
      */
     public function setMaxMessages($maxMessages);
 
     /**
      * @param ErrorHandlerInterface $errorHandler
      *
-     * @return $this
+     * @return self
      */
     public function setErrorHandler(ErrorHandlerInterface $errorHandler);
 

@@ -14,6 +14,7 @@ use Unit\SprykerFeature\Shared\Log\Fixtures\TestLoggerConfig2;
 
 class LoggerTest extends Test
 {
+
     use LoggerTrait;
 
     public function testGetLoggerWithoutConfigShouldReturnDefaultLoggerInstance()

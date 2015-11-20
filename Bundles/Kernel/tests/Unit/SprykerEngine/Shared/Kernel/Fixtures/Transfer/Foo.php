@@ -28,7 +28,7 @@ class Foo extends AbstractTransfer
     /**
      * @param Bar $bar
      *
-     * @return $this
+     * @return self
      */
     public function setBar(Bar $bar)
     {

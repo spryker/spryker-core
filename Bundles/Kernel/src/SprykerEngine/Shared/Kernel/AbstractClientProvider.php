@@ -33,7 +33,7 @@ abstract class AbstractClientProvider
      */
     public function getInstance()
     {
-        if (is_null($this->client)) {
+        if ($this->client === null) {
             $this->client = $this->createClient();
         }
 

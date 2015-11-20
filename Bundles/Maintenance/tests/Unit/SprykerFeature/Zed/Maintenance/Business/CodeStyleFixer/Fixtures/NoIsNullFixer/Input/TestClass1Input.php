@@ -13,7 +13,7 @@ class TestClass1Input
         if (is_null($foo)) {
         }
         $foo = is_null($foo);
-        $foo = 2/is_null($this->foo());
+        $foo = is_null($this->foo);
 
         $foo = !is_null($foo);
 
@@ -38,6 +38,8 @@ class TestClass1Input
      */
     public function doNotReplaceFunction()
     {
+        $foo = is_null($this->foo());
+        $foo = 2/is_null($this->foo());
         $foo = is_null($x = $this->get());
     }
 

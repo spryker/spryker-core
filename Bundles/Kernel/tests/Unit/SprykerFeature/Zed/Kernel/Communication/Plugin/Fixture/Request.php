@@ -31,7 +31,7 @@ class Request extends \SprykerFeature\Shared\Library\Communication\Request
     /**
      * @param TransferInterface $transfer
      *
-     * @return $this
+     * @return self
      */
     public function setTransfer(TransferInterface $transfer)
     {

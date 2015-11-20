@@ -48,7 +48,7 @@ class ExpenseTotalsCalculator implements
         }
 
         foreach ($expenses as $expense) {
-            if (!is_null($expense->getGrossPrice())) {
+            if ($expense->getGrossPrice() !== null) {
                 $orderExpensesTotal += $expense->getGrossPrice();
             }
         }
@@ -72,7 +72,7 @@ class ExpenseTotalsCalculator implements
             }
 
             foreach ($expenses as $expense) {
-                if (!is_null($expense->getGrossPrice())) {
+                if ($expense->getGrossPrice() !== null) {
                     $itemExpenseTotal += $expense->getGrossPrice();
                 }
             }

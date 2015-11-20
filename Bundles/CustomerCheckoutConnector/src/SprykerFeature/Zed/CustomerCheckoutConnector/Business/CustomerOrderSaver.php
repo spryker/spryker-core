@@ -39,7 +39,7 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
             return;
         }
 
-        if (!is_null($customerTransfer->getIdCustomer())) {
+        if ($customerTransfer->getIdCustomer() !== null) {
             $this->customerFacade->updateCustomer($customerTransfer);
         } else {
             $customerTransfer->setFirstName($orderTransfer->getBillingAddress()->getFirstName());
@@ -62,7 +62,7 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     {
         foreach ($customer->getBillingAddress() as $billingAddress) {
             $billingAddress->setFkCustomer($customer->getIdCustomer());
-            if (is_null($billingAddress->getIdCustomerAddress())) {
+            if ($billingAddress->getIdCustomerAddress() === null) {
                 $newAddress = $this->customerFacade->createAddress($billingAddress);
                 $billingAddress->setIdCustomerAddress($newAddress->getIdCustomerAddress());
             } else {
@@ -72,7 +72,7 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
 
         foreach ($customer->getShippingAddress() as $shippingAddress) {
             $shippingAddress->setFkCustomer($customer->getIdCustomer());
-            if (is_null($shippingAddress->getIdCustomerAddress())) {
+            if ($shippingAddress->getIdCustomerAddress() === null) {
                 $newAddress = $this->customerFacade->createAddress($shippingAddress);
                 $shippingAddress->setIdCustomerAddress($newAddress->getIdCustomerAddress());
             } else {

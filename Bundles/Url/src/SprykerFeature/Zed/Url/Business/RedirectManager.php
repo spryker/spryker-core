@@ -128,7 +128,7 @@ class RedirectManager implements RedirectManagerInterface
      */
     public function saveRedirect(RedirectTransfer $redirect)
     {
-        if (is_null($redirect->getIdRedirect())) {
+        if ($redirect->getIdRedirect() === null) {
             return $this->createRedirectFromTransfer($redirect);
         } else {
             return $this->updateRedirectFromTransfer($redirect);

@@ -20,7 +20,7 @@ abstract class AbstractInstaller extends AbstractLogger implements MessengerInte
     /**
      * @param MessengerInterface $messenger
      *
-     * @return $this
+     * @return self
      */
     public function setMessenger(MessengerInterface $messenger)
     {

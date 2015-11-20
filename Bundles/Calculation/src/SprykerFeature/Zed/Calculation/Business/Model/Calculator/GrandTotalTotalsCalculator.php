@@ -94,7 +94,7 @@ class GrandTotalTotalsCalculator implements TotalsCalculatorPluginInterface
      */
     protected function getOrderExpenseTotal(TotalsInterface $totalsTransfer, CalculableInterface $calculableContainer)
     {
-        if (!is_null($totalsTransfer->getExpenses()->getTotalOrderAmount())) {
+        if ($totalsTransfer->getExpenses()->getTotalOrderAmount() !== null) {
             return $totalsTransfer->getExpenses()->getTotalOrderAmount();
         } else {
             return $this->expenseTotalsCalculator->calculateExpenseTotal($calculableContainer);

@@ -254,7 +254,7 @@ class UrlManager implements UrlManagerInterface
      */
     public function saveUrl(UrlTransfer $urlTransfer)
     {
-        if (is_null($urlTransfer->getIdUrl())) {
+        if ($urlTransfer->getIdUrl() === null) {
             return $this->createUrlFromTransfer($urlTransfer);
         } else {
             return $this->updateUrlFromTransfer($urlTransfer);

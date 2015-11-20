@@ -34,7 +34,6 @@ class DiscountSaverTest extends AbstractUnitTest
     const USED_CODE_1 = 'used code 1';
     const USED_CODE_2 = 'used code 2';
 
-
     public function testSaveDiscountMustSaveSalesItemsDiscount()
     {
         $discountSaver = $this->getDiscountSaverMock(['persistSalesDiscount']);

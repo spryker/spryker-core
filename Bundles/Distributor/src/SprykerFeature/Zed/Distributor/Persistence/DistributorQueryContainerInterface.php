@@ -18,7 +18,7 @@ interface DistributorQueryContainerInterface
     /**
      * @param string $typeKey
      *
-     * @return $this|SpyDistributorItemTypeQuery
+     * @return self|SpyDistributorItemTypeQuery
      */
     public function queryTypeByKey($typeKey);
 
@@ -33,7 +33,7 @@ interface DistributorQueryContainerInterface
     public function queryTouchedItemsByTypeKey($typeKey, $timestamp);
 
     /**
-     * @return $this|ModelCriteria
+     * @return self|ModelCriteria
      */
     public function queryReceivers();
 

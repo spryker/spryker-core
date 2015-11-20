@@ -39,7 +39,7 @@ class Request extends AbstractObject implements
     /**
      * @param string $host
      *
-     * @return $this
+     * @return self
      */
     public function setHost($host)
     {
@@ -72,7 +72,7 @@ class Request extends AbstractObject implements
      * @param string $name
      * @param TransferInterface $transferObject
      *
-     * @return $this
+     * @return self
      */
     public function addMetaTransfer($name, TransferInterface $transferObject)
     {
@@ -95,7 +95,7 @@ class Request extends AbstractObject implements
     /**
      * @param string $password
      *
-     * @return $this
+     * @return self
      */
     public function setPassword($password)
     {
@@ -115,7 +115,7 @@ class Request extends AbstractObject implements
     /**
      * @param string $sessionId
      *
-     * @return $this
+     * @return self
      */
     public function setSessionId($sessionId)
     {
@@ -135,7 +135,7 @@ class Request extends AbstractObject implements
     /**
      * @param string $time
      *
-     * @return $this
+     * @return self
      */
     public function setTime($time)
     {
@@ -162,7 +162,7 @@ class Request extends AbstractObject implements
     /**
      * @param TransferInterface $transferObject
      *
-     * @return $this
+     * @return self
      */
     public function setTransfer(TransferInterface $transferObject)
     {
@@ -183,7 +183,7 @@ class Request extends AbstractObject implements
     /**
      * @param string $username
      *
-     * @return $this
+     * @return self
      */
     public function setUsername($username)
     {

@@ -45,7 +45,7 @@ class BundleProxy
     /**
      * @param string $bundle
      *
-     * @return $this
+     * @return self
      */
     public function setBundle($bundle)
     {
@@ -57,7 +57,7 @@ class BundleProxy
     /**
      * @param array $locator
      *
-     * @return $this
+     * @return self
      */
     public function setLocator(array $locator = [])
     {
@@ -71,7 +71,7 @@ class BundleProxy
     /**
      * @param LocatorInterface $locator
      *
-     * @return $this
+     * @return self
      */
     public function addLocator(LocatorInterface $locator)
     {

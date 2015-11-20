@@ -14,7 +14,7 @@ interface EmbeddedTransferInterface
     /**
      * @param TransferInterface $transferObject
      *
-     * @return $this
+     * @return self
      */
     public function setTransfer(TransferInterface $transferObject);
 

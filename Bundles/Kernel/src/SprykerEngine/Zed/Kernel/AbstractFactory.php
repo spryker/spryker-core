@@ -48,7 +48,7 @@ abstract class AbstractFactory implements FactoryInterface
      */
     protected function getBundle()
     {
-        if (is_null($this->bundle)) {
+        if ($this->bundle === null) {
             $classNameParts = explode('\\', get_class($this));
             $bundleFactory = array_pop($classNameParts);
 

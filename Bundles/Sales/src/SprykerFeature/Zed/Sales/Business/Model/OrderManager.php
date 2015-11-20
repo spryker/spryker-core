@@ -131,7 +131,7 @@ class OrderManager
     protected function saveOrderItems(OrderTransfer $orderTransfer, $orderEntity, $orderProcess)
     {
         foreach ($orderTransfer->getItems() as $item) {
-            $quantity = !is_null($item->getQuantity()) ? $item->getQuantity() : 1;
+            $quantity = $item->getQuantity() !== null ? $item->getQuantity() : 1;
 
             $itemEntity = new SpySalesOrderItem();
 

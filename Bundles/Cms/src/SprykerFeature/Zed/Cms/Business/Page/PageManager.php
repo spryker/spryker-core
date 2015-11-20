@@ -97,7 +97,7 @@ class PageManager implements PageManagerInterface
     {
         $this->checkTemplateExists($page->getFkTemplate());
 
-        if (is_null($page->getIdCmsPage())) {
+        if ($page->getIdCmsPage() === null) {
             return $this->createPage($page);
         } else {
             return $this->updatePage($page);

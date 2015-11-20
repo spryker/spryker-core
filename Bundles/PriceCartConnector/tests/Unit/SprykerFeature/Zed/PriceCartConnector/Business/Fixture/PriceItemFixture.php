@@ -24,7 +24,7 @@ class PriceItemFixture extends CartItemFixture implements PriceItemInterface
     /**
      * @param int $grossPrice
      *
-     * @return $this
+     * @return self
      */
     public function setGrossPrice($grossPrice)
     {
@@ -44,7 +44,7 @@ class PriceItemFixture extends CartItemFixture implements PriceItemInterface
     /**
      * @param int $priceToPay
      *
-     * @return $this
+     * @return self
      */
     public function setPriceToPay($priceToPay)
     {

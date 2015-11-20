@@ -25,7 +25,7 @@ abstract class AbstractFormType extends AbstractType
      */
     public function getConstraints()
     {
-        if (is_null($this->constraintsPlugin)) {
+        if ($this->constraintsPlugin === null) {
             $this->constraintsPlugin = $this->getLocator()->gui()->pluginConstraintsPlugin();
         }
 

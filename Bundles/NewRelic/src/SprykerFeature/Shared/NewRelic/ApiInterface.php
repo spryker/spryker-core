@@ -18,7 +18,7 @@ interface ApiInterface
      * @param $message
      * @param \Exception $e
      *
-     * @return $this
+     * @return self
      */
     public function noticeError($message, \Exception $e);
 
@@ -32,7 +32,7 @@ interface ApiInterface
      *
      * @param $name
      *
-     * @return $this
+     * @return self
      */
     public function setAppName($name);
 
@@ -50,7 +50,7 @@ interface ApiInterface
      *
      * @param $name
      *
-     * @return $this
+     * @return self
      */
     public function setNameOfTransaction($name);
 
@@ -67,7 +67,7 @@ interface ApiInterface
      * very long time to download even small files, and you wouldn't want that download time to skew the real
      * transaction time.
      *
-     * @return $this
+     * @return self
      */
     public function markEndOfTransaction();
 
@@ -76,7 +76,7 @@ interface ApiInterface
      * slow for known reasons and you do not want them always being reported as the transaction trace or skewing your
      * site averages.
      *
-     * @return $this
+     * @return self
      */
     public function markIgnoreTransaction();
 
@@ -84,7 +84,7 @@ interface ApiInterface
      * Do not generate Apdex metrics for this transaction. This is useful when you have either very short or very long
      * transactions (such as file downloads) that can skew your apdex score.
      *
-     * @return $this
+     * @return self
      */
     public function markIgnoreApdex();
 
@@ -94,7 +94,7 @@ interface ApiInterface
      *
      * @param $flag
      *
-     * @return $this
+     * @return self
      */
     public function markAsBackgroundJob($flag = true);
 
@@ -105,7 +105,7 @@ interface ApiInterface
      * @param $metricName
      * @param $value
      *
-     * @return $this
+     * @return self
      */
     public function addCustomMetric($metricName, $value);
 
@@ -116,7 +116,7 @@ interface ApiInterface
      * @param $key
      * @param $value
      *
-     * @return $this
+     * @return self
      */
     public function addCustomParameter($key, $value);
 
@@ -126,7 +126,7 @@ interface ApiInterface
      *
      * @param string $tracer
      *
-     * @return $this
+     * @return self
      */
     public function addCustomTracer($tracer = 'classname::function_name');
 
@@ -137,7 +137,7 @@ interface ApiInterface
      *
      * @param bool $flag
      *
-     * @return $this
+     * @return self
      */
     public function getBrowserTimingHeader($flag = true);
 
@@ -148,7 +148,7 @@ interface ApiInterface
      *
      * @param bool $flag
      *
-     * @return $this
+     * @return self
      */
     public function getBrowserTimingFooter($flag = true);
 
@@ -156,7 +156,7 @@ interface ApiInterface
      * Prevents the output filter from attempting to insert RUM JAvaScript for this current transaction. Useful for
      * AJAX calls, for example.
      *
-     * @return $this
+     * @return self
      */
     public function disableAutoRUM();
 
@@ -165,7 +165,7 @@ interface ApiInterface
      *
      * @param array $params
      *
-     * @return $this
+     * @return self
      */
     public function recordDeployment(array $params = []);
 

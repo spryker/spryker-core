@@ -20,12 +20,12 @@ class Translate extends \Zend_Translate
 function __($string)
 {
     $registry = \Zend_Registry::getInstance();
-    /* @var Translate $instance */
-    if ($registry->isRegistered('Zend_Translate')) {
-        $instance = $registry->get('Zend_Translate');
-
-        return $instance->_($string);
-    } else {
+    if (!$registry->isRegistered('Zend_Translate')) {
         throw new \ErrorException('No instance of Zend_Translate initiated.');
     }
+
+    /* @var Translate $instance */
+    $instance = $registry->get('Zend_Translate');
+
+    return $instance->_($string);
 }
