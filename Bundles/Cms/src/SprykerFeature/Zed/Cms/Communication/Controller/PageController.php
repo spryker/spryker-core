@@ -106,7 +106,7 @@ class PageController extends AbstractController
             $pageTransfer = $this->getFacade()->savePage($pageTransfer);
             $this->getFacade()->touchPageActive($pageTransfer);
 
-            if (intval($data[CmsPageForm::CURRENT_TEMPLATE]) !== intval($data[CmsPageForm::FK_TEMPLATE])) {
+            if ((int) $data[CmsPageForm::CURRENT_TEMPLATE] !== (int) $data[CmsPageForm::FK_TEMPLATE]) {
                 $this->getFacade()->deleteGlossaryKeysByIdPage($idPage);
             }
 

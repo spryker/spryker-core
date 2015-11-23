@@ -99,7 +99,7 @@ class CmsBlockForm extends AbstractForm
                     $formData = $context->getRoot()->getViewData();
                     if (!empty($this->checkExistingBlock($name, $formData)) && ($this->blockName !== $name
                         || $this->blockType !== $formData['type']
-                        || $this->blockValue !== intval($formData['value']))
+                        || $this->blockValue !== (int) $formData['value'])
                     ) {
                         $context->addViolation('Block name with same Type and Value already exists.');
                     }

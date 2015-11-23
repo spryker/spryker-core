@@ -152,7 +152,8 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
         $dom->loadXML($xml->asXML());
 
         $callback = function ($a) {
-            return str_repeat(' ', intval(strlen($a[1]) / 2) * 4) . '<';
+            $multiplier = (strlen($a[1]) / 2) * 4;
+            return str_repeat(' ', $multiplier) . '<';
         };
 
         return preg_replace_callback('/^( +)</m', $callback, $dom->saveXML());
