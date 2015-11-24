@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\ProductSearch\Communication\Console;
 
-use Pyz\Zed\ProductSearch\Business\ProductSearchFacade;
 use SprykerFeature\Zed\Console\Business\Model\Console;
+use SprykerFeature\Zed\ProductSearch\Business\ProductSearchFacade;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -20,6 +20,9 @@ class ProductSearchConsole extends Console
     const COMMAND_NAME = 'product:search';
     const DESCRIPTION = 'This command will run installer for product search';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
