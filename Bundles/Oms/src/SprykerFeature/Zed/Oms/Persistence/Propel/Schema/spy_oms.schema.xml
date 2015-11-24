@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <database xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" name="zed" xsi:noNamespaceSchemaLocation="http://xsd.propelorm.org/1.6/database.xsd" namespace="Orm\Zed\Oms\Persistence" package="src.Orm.Zed.Oms.Persistence">
 
-    <table name="spy_oms_transition_log" phpName="SpyOmsTransitionLog">
+    <table name="spy_oms_transition_log" phpName="SpyOmsTransitionLog" identifierQuoting="true">
         <column name="id_oms_transition_log" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
         <column name="fk_sales_order" type="INTEGER" required="true"/>
@@ -36,7 +36,7 @@
         <id-method-parameter value="spy_oms_transition_log_pk_seq"/>
     </table>
 
-    <table name="spy_oms_order_process" phpName="SpyOmsOrderProcess">
+    <table name="spy_oms_order_process" phpName="SpyOmsOrderProcess" identifierQuoting="true">
         <column name="id_oms_order_process" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="name" type="VARCHAR" size="255" required="true"/>
 
@@ -48,7 +48,7 @@
         <id-method-parameter value="spy_oms_order_process_pk_seq"/>
     </table>
 
-    <table name="spy_oms_order_item_state" phpName="SpyOmsOrderItemState">
+    <table name="spy_oms_order_item_state" phpName="SpyOmsOrderItemState" identifierQuoting="true">
         <column name="id_oms_order_item_state" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
 
         <column name="name" type="VARCHAR" size="255" required="true"/>
@@ -61,7 +61,7 @@
         <id-method-parameter value="spy_oms_order_item_state_pk_seq"/>
     </table>
 
-    <table name="spy_oms_order_item_state_history" phpName="SpyOmsOrderItemStateHistory">
+    <table name="spy_oms_order_item_state_history" phpName="SpyOmsOrderItemStateHistory" identifierQuoting="true">
         <column name="id_oms_order_item_state_history" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
         <column name="fk_oms_order_item_state" type="INTEGER" required="true"/>
@@ -79,7 +79,7 @@
         <id-method-parameter value="spy_oms_order_item_state_history_pk_seq"/>
     </table>
 
-    <table name="spy_oms_event_timeout" phpName="SpyOmsEventTimeout">
+    <table name="spy_oms_event_timeout" phpName="SpyOmsEventTimeout" identifierQuoting="true">
         <column name="id_oms_event_timeout" required="true" type="INTEGER" autoIncrement="true" primaryKey="true"/>
         <column name="fk_sales_order_item" type="INTEGER" required="true"/>
         <column name="fk_oms_order_item_state" type="INTEGER" required="true"/>
