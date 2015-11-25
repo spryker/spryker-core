@@ -18,7 +18,7 @@ interface CommandByOrderInterface extends CommandInterface
      * @param SpySalesOrder $orderEntity
      * @param ReadOnlyArrayObject $data
      *
-     * @return array $returnArray
+     * @return array
      */
     public function run(array $orderItems, SpySalesOrder $orderEntity, ReadOnlyArrayObject $data);
 
