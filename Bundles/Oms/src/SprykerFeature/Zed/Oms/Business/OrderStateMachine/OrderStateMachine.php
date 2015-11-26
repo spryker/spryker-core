@@ -400,11 +400,11 @@ class OrderStateMachine implements OrderStateMachineInterface
     {
         if ($command instanceof CommandByOrderInterface) {
             return self::BY_ORDER;
-        } elseif ($command instanceof CommandByItemInterface) {
-            return self::BY_ITEM;
-        } else {
-            throw new LogicException('Unknown type of command: ' . get_class($command));
         }
+        if ($command instanceof CommandByItemInterface) {
+            return self::BY_ITEM;
+        }
+        throw new LogicException('Unknown type of command: ' . get_class($command));
     }
 
     /**
@@ -430,29 +430,31 @@ class OrderStateMachine implements OrderStateMachineInterface
 
             $log->setEvent($event);
 
-            if ($event->hasCommand()) {
-                $command = $this->getCommand($event->getCommand());
-                $type = $this->getCommandType($command);
+            if (!$event->hasCommand()) {
+                continue;
+            }
 
-                $log->addCommand($orderItem, $command);
+            $command = $this->getCommand($event->getCommand());
+            $type = $this->getCommandType($command);
 
-                try {
-                    if ($type === self::BY_ITEM) {
-                        $returnData = $command->run($orderItem, $data);
+            $log->addCommand($orderItem, $command);
+
+            try {
+                if ($type === self::BY_ITEM) {
+                    $returnData = $command->run($orderItem, $data);
+                    $this->returnData = array_merge($this->returnData, $returnData);
+                } else {
+                    $returnData = $command->run($orderItems, $orderEntity, $data);
+                    if (is_array($returnData)) {
                         $this->returnData = array_merge($this->returnData, $returnData);
-                    } else {
-                        $returnData = $command->run($orderItems, $orderEntity, $data);
-                        if (is_array($returnData)) {
-                            $this->returnData = array_merge($this->returnData, $returnData);
-                        }
-                        break;
                     }
-                } catch (Exception $e) {
-                    $log->setIsError(true);
-                    $log->setErrorMessage(get_class($e) . ' - ' . $e->getMessage());
-                    $log->saveAll();
-                    throw $e;
+                    break;
                 }
+            } catch (Exception $e) {
+                $log->setIsError(true);
+                $log->setErrorMessage(get_class($e) . ' - ' . $e->getMessage());
+                $log->saveAll();
+                throw $e;
             }
         }
     }
@@ -712,7 +714,6 @@ class OrderStateMachine implements OrderStateMachineInterface
             }
 
             if ($orderItem->isModified()) {
-                //Log::log($orderItem->toArray(), 'orderitems.log');
                 $orderItem->save();
                 $log->save($orderItem);
             }

@@ -21,8 +21,14 @@ class Event implements EventInterface
      */
     protected $onEnter;
 
+    /**
+     * @var string
+     */
     protected $command;
 
+    /**
+     * @var int
+     */
     protected $timeout;
 
     /**

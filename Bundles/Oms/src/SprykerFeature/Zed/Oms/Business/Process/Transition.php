@@ -14,6 +14,9 @@ class Transition implements TransitionInterface
      */
     protected $event;
 
+    /**
+     * @var string
+     */
     protected $condition;
 
     /**

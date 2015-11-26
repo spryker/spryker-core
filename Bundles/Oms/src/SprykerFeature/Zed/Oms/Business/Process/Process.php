@@ -24,8 +24,14 @@ class Process implements ProcessInterface
      */
     protected $transitions = [];
 
+    /**
+     * @var bool
+     */
     protected $main;
 
+    /**
+     * @var string
+     */
     protected $file;
 
     /**
