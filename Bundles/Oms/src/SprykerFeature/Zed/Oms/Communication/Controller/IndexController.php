@@ -20,6 +20,9 @@ use Symfony\Component\HttpFoundation\Request;
 class IndexController extends AbstractController
 {
 
+    const DEFAULT_FORMAT = 'svg';
+    const DEFAULT_FONT_SIZE = '14';
+
     /**
      * @return array
      */
@@ -48,11 +51,11 @@ class IndexController extends AbstractController
 
         $reload = false;
         if ($format === null) {
-            $format = 'svg';
+            $format = self::DEFAULT_FORMAT;
             $reload = true;
         }
         if ($fontSize === null) {
-            $fontSize = '14';
+            $fontSize = self::DEFAULT_FONT_SIZE;
             $reload = true;
         }
 
@@ -76,8 +79,8 @@ class IndexController extends AbstractController
     {
         $id = $request->query->get('id');
 
-        $format = $request->query->get('format', 'gif');
-        $fontSize = $request->query->get('font', '14');
+        $format = $request->query->get('format', self::DEFAULT_FORMAT);
+        $fontSize = $request->query->get('font', self::DEFAULT_FONT_SIZE);
 
         $orderItem = SpySalesOrderItemQuery::create()->findOneByIdSalesOrderItem($id);
         $processEntity = $orderItem->getProcess();
