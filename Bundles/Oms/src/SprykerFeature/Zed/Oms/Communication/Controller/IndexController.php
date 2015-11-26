@@ -48,7 +48,7 @@ class IndexController extends AbstractController
 
         $reload = false;
         if ($format === null) {
-            $format = 'gif';
+            $format = 'svg';
             $reload = true;
         }
         if ($fontSize === null) {
