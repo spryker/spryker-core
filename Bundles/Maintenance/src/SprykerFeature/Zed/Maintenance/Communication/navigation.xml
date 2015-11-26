@@ -8,8 +8,16 @@
         <action>index</action>
         <icon>fa-wrench</icon>
         <pages>
+            <dependencies>
+                <label>Dependencies</label>
+                <title>Bundle dependencies</title>
+                <bundle>maintenance</bundle>
+                <controller>dependency</controller>
+                <action>index</action>
+                <icon>fa-archive</icon>
+            </dependencies>
             <packages>
-                <label>packages</label>
+                <label>Packages</label>
                 <title>Installed packages</title>
                 <bundle>maintenance</bundle>
                 <controller>index</controller>

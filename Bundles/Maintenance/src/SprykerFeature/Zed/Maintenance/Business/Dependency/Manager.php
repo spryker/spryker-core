@@ -64,10 +64,9 @@ class Manager
      */
     protected function collectAllForeignBundles($bundleName)
     {
-        $allForeignBundles = [];
+        $bundles = $this->collectCoreBundles();
 
-        $pathToBundles = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/';
-        $bundles = (new Finder())->directories()->depth('== 0')->in($pathToBundles);
+        $allForeignBundles = [];
 
         /** @var $bundle SplFileInfo */
         foreach ($bundles as $bundle) {
@@ -76,8 +75,38 @@ class Manager
                 $allForeignBundles[] = $foreignBundleName;
             }
         }
+        asort($allForeignBundles);
 
         return $allForeignBundles;
+    }
+
+    /**
+     * @return array
+     */
+    public function collectAllBundles()
+    {
+        $bundles = $this->collectCoreBundles();
+
+        $allBundles = [];
+
+        /** @var $bundle SplFileInfo */
+        foreach ($bundles as $bundle) {
+            $allBundles[] = $bundle->getFilename();
+        }
+        asort($allBundles);
+
+        return $allBundles;
+    }
+
+    /**
+     * @return Finder
+     */
+    protected function collectCoreBundles()
+    {
+        $pathToBundles = APPLICATION_VENDOR_DIR . '/spryker/spryker/Bundles/';
+        $bundles = (new Finder())->directories()->depth('== 0')->in($pathToBundles);
+
+        return $bundles;
     }
 
 }

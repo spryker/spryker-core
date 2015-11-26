@@ -88,17 +88,19 @@ class Timeout implements TimeoutInterface
 
             $handledEvents = [];
             foreach ($events as $event) {
-                if (in_array($event->getName(), $handledEvents) === false) {
-                    $handledEvents[] = $event->getName();
-                    $timeoutDate = $this->calculateTimeoutDateFromEvent($currentTime, $event);
-
-                    (new SpyOmsEventTimeout())
-                        ->setTimeout($timeoutDate)
-                        ->setOrderItem($orderItem)
-                        ->setState($targetStateEntity)
-                        ->setEvent($event->getName())
-                        ->save();
+                if (in_array($event->getName(), $handledEvents)) {
+                    continue;
                 }
+
+                $handledEvents[] = $event->getName();
+                $timeoutDate = $this->calculateTimeoutDateFromEvent($currentTime, $event);
+
+                (new SpyOmsEventTimeout())
+                    ->setTimeout($timeoutDate)
+                    ->setOrderItem($orderItem)
+                    ->setState($targetStateEntity)
+                    ->setEvent($event->getName())
+                    ->save();
             }
         }
     }

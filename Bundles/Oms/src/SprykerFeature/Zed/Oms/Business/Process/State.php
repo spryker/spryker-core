@@ -11,25 +11,39 @@ use Exception;
 class State implements StateInterface
 {
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $name;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     protected $display;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     protected $reserved;
 
-    /** @var ProcessInterface */
+    /**
+     * @var ProcessInterface
+     */
     protected $process;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     protected $flags = [];
 
-    /** @var TransitionInterface[] */
+    /**
+     * @var TransitionInterface[]
+     */
     protected $outgoingTransitions = [];
 
-    /** @var TransitionInterface[] */
+    /**
+     * @var TransitionInterface[]
+     */
     protected $incomingTransitions = [];
 
     /**

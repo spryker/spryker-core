@@ -77,4 +77,12 @@ class MaintenanceFacade extends AbstractFacade
         return $this->getDependencyContainer()->createPropelMigrationCleaner()->clean();
     }
 
+    /**
+     * @return array
+     */
+    public function getAllBundles()
+    {
+        return $this->getDependencyContainer()->createDependencyManager()->collectAllBundles();
+    }
+
 }
