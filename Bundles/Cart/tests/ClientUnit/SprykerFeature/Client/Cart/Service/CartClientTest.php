@@ -205,10 +205,9 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
 
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setQuantity(1);
         $itemTransfer->setId('identifier');
 
-        $cartTransfer = $cartClientMock->changeItemQuantity($itemTransfer);
+        $cartTransfer = $cartClientMock->changeItemQuantity($itemTransfer, 1);
 
         $this->assertInstanceOf('Generated\Shared\Cart\CartInterface', $cartTransfer);
     }
@@ -242,10 +241,9 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
 
         $itemTransfer = new ItemTransfer();
-        $itemTransfer->setQuantity(2);
         $itemTransfer->setId('identifier');
 
-        $cartTransfer = $cartClientMock->changeItemQuantity($itemTransfer);
+        $cartTransfer = $cartClientMock->changeItemQuantity($itemTransfer, 2);
 
         $this->assertInstanceOf('Generated\Shared\Cart\CartInterface', $cartTransfer);
     }
