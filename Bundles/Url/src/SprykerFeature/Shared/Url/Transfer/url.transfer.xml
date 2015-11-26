@@ -20,7 +20,7 @@
         <property name="fkPage" type="int" />
         <property name="fkRedirect" type="int" />
         <property name="resourceType" type="string" />
-        <property name="resourceId" type="string" />
+        <property name="resourceId" type="int" />
     </transfer>
 
 </transfers>
