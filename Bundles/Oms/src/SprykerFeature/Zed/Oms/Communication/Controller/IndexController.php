@@ -82,7 +82,7 @@ class IndexController extends AbstractController
         $orderItem = SpySalesOrderItemQuery::create()->findOneByIdSalesOrderItem($id);
         $processEntity = $orderItem->getProcess();
 
-        echo $this->getFacade()->drawProcess($processEntity->getName(), $orderItem->getState()->getName()), $format, $fontSize;
+        echo $this->getFacade()->drawProcess($processEntity->getName(), $orderItem->getState()->getName(), $format, $fontSize);
     }
 
     /**
