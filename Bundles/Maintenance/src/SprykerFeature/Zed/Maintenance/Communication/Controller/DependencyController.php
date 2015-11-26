@@ -17,6 +17,8 @@ use Symfony\Component\HttpFoundation\StreamedResponse;
 class DependencyController extends AbstractController
 {
 
+    const QUERY_BUNDLE = 'bundle';
+
     /**
      * @param Request $request
      *
@@ -38,12 +40,12 @@ class DependencyController extends AbstractController
      */
     public function outgoingAction(Request $request)
     {
-        $bundleName = $request->query->get('bundle', 'Glossary');
+        $bundleName = $request->query->get(self::QUERY_BUNDLE);
 
         $dependencies = $this->getFacade()->showOutgoingDependenciesForBundle($bundleName);
 
         return $this->viewResponse([
-            'bundle' => $bundleName,
+            self::QUERY_BUNDLE => $bundleName,
             'dependencies' => $dependencies,
         ]);
     }
@@ -55,12 +57,12 @@ class DependencyController extends AbstractController
      */
     public function incomingAction(Request $request)
     {
-        $bundleName = $request->query->get('bundle', 'Glossary');
+        $bundleName = $request->query->get(self::QUERY_BUNDLE);
 
         $dependencies = $this->getFacade()->showIncomingDependenciesForBundle($bundleName);
 
         return $this->viewResponse([
-            'bundle' => $bundleName,
+            self::QUERY_BUNDLE => $bundleName,
             'dependencies' => $dependencies,
         ]);
     }
@@ -72,7 +74,7 @@ class DependencyController extends AbstractController
      */
     public function graphAction(Request $request)
     {
-        $bundleName = $request->query->get('bundle', 'Glossary');
+        $bundleName = $request->query->get(self::QUERY_BUNDLE);
         $response = $this->getFacade()->drawDependencyGraph($bundleName);
 
         $callback = function () use ($response) {
