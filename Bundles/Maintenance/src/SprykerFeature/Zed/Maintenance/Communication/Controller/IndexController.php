@@ -22,6 +22,15 @@ class IndexController extends AbstractController
      */
     public function indexAction()
     {
+        return $this->viewResponse([
+        ]);
+    }
+
+    /**
+     * @return array
+     */
+    public function packagesAction()
+    {
         $installedPackages = $this->getFacade()->getInstalledPackages();
 
         return $this->viewResponse([
