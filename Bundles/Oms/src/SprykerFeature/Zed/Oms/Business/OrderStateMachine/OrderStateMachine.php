@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Oms\Business\OrderStateMachine;
 
-use SprykerFeature\Shared\Library\Log;
 use SprykerFeature\Zed\Oms\Business\Process\ProcessInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByItemInterface;
 use SprykerFeature\Zed\Oms\Communication\Plugin\Oms\Command\CommandByOrderInterface;
