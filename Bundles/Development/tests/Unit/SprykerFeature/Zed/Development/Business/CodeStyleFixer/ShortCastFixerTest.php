@@ -7,7 +7,7 @@ use SprykerFeature\Zed\Development\Business\CodeStyleFixer\ShortCastFixer;
 /**
  * @group SprykerFeature
  * @group Zed
- * @group Maintenance
+ * @group Development
  * @group CodeStyleFixer
  */
 class ShortCastFixerTest extends \PHPUnit_Framework_TestCase

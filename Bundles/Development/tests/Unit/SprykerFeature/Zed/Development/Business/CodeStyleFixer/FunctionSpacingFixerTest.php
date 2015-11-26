@@ -7,7 +7,7 @@ use SprykerFeature\Zed\Development\Business\CodeStyleFixer\FunctionSpacingFixer;
 /**
  * @group SprykerFeature
  * @group Zed
- * @group Maintenance
+ * @group Development
  * @group CodeStyleFixer
  */
 class FunctionSpacingFixerTest extends \PHPUnit_Framework_TestCase

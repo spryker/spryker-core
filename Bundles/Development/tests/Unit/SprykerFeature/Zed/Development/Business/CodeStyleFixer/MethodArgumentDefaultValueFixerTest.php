@@ -7,7 +7,7 @@ use SprykerFeature\Zed\Development\Business\CodeStyleFixer\MethodArgumentDefault
 /**
  * @group SprykerFeature
  * @group Zed
- * @group Maintenance
+ * @group Development
  * @group CodeStyleFixer
  */
 class MethodArgumentDefaultValueFixerTest extends \PHPUnit_Framework_TestCase

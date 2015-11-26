@@ -7,7 +7,7 @@ use SprykerFeature\Zed\Development\Business\CodeStyleFixer\NoIsNullFixer;
 /**
  * @group SprykerFeature
  * @group Zed
- * @group Maintenance
+ * @group Development
  * @group CodeStyleFixer
  */
 class NoIsNullFixerTest extends \PHPUnit_Framework_TestCase

@@ -7,7 +7,7 @@ use SprykerFeature\Zed\Development\Business\CodeStyleFixer\PhpdocPipeFixer;
 /**
  * @group SprykerFeature
  * @group Zed
- * @group Maintenance
+ * @group Development
  * @group CodeStyleFixer
  */
 class PhpdocPipeFixerTest extends \PHPUnit_Framework_TestCase

@@ -7,7 +7,7 @@ use SprykerFeature\Zed\Development\Business\CodeStyleFixer\EmptyEnclosingLinesFi
 /**
  * @group SprykerFeature
  * @group Zed
- * @group Maintenance
+ * @group Development
  * @group CodeStyleFixer
  */
 class EmptyEnclosingLinesFixerTest extends \PHPUnit_Framework_TestCase

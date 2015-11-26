@@ -7,7 +7,7 @@ use SprykerFeature\Zed\Development\Business\CodeStyleFixer\RemoveFunctionAliasFi
 /**
  * @group SprykerFeature
  * @group Zed
- * @group Maintenance
+ * @group Development
  * @group CodeStyleFixer
  */
 class RemoveFunctionAliasFixerTest extends \PHPUnit_Framework_TestCase
