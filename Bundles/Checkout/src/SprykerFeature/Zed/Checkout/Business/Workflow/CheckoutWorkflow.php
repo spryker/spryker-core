@@ -105,7 +105,8 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
                 $this->triggerStateMachine($orderTransfer, $checkoutRequest);
                 $this->executePostHooks($orderTransfer, $checkoutResponse);
 
-                $checkoutResponse->setIsSuccess(true);
+                $isStillSuccess = !$this->hasErrors($checkoutResponse);
+                $checkoutResponse->setIsSuccess($isStillSuccess);
             }
         }
 
