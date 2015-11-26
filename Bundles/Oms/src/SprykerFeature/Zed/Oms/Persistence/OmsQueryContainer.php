@@ -7,6 +7,8 @@
 namespace SprykerFeature\Zed\Oms\Persistence;
 
 use DateTime;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
@@ -175,6 +177,60 @@ class OmsQueryContainer extends AbstractQueryContainer implements OmsQueryContai
     {
         return $this->getSalesQueryContainer()->querySalesOrder()
             ->filterByIdSalesOrder($idOrder);
+    }
+
+    /**
+     * @param array|string[] $activeProcesses
+     *
+     * @return SpyOmsOrderProcessQuery
+     */
+    public function getActiveProcesses(array $activeProcesses)
+    {
+        $query = SpyOmsOrderProcessQuery::create();
+
+        return $query->filterByName($activeProcesses);
+    }
+
+    /**
+     * @param array $orderItemStates
+     *
+     * @return SpyOmsOrderItemStateQuery
+     */
+    public function getOrderItemStates(array $orderItemStates)
+    {
+        $query = SpyOmsOrderItemStateQuery::create();
+
+        return $query->filterByIdOmsOrderItemState($orderItemStates);
+    }
+
+    /**
+     * @param array $processIds
+     * @param array $stateBlacklist
+     *
+     * @return SpySalesOrderItemQuery
+     */
+    public function queryMatrixOrderItems(array $processIds, array $stateBlacklist)
+    {
+        $query = SpySalesOrderItemQuery::create();
+        $query->filterByFkOmsOrderProcess($processIds);
+        if ($stateBlacklist) {
+            $query->filterByFkOmsOrderItemState($stateBlacklist, Criteria::NOT_IN);
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param string[] $orderItemStates
+     *
+     * @return SpyOmsOrderItemStateQuery
+     */
+    public function querySalesOrderItemStatesByName(array $orderItemStates)
+    {
+        $query = SpyOmsOrderItemStateQuery::create();
+        $query->filterByName($orderItemStates);
+
+        return $query;
     }
 
 }

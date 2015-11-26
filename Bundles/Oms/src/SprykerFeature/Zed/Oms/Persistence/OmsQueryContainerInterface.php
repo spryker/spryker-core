@@ -9,6 +9,8 @@
 
 namespace SprykerFeature\Zed\Oms\Persistence;
 
+use Orm\Zed\Oms\Persistence\SpyOmsOrderItemStateQuery;
+use Orm\Zed\Oms\Persistence\SpyOmsOrderProcessQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Oms\Persistence\SpyOmsTransitionLogQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrder;
@@ -93,5 +95,34 @@ interface OmsQueryContainerInterface
      * @return SpySalesOrderQuery
      */
     public function querySalesOrderById($idOrder);
+
+    /**
+     * @param array|string[] $activeProcesses
+     *
+     * @return SpyOmsOrderProcessQuery
+     */
+    public function getActiveProcesses(array $activeProcesses);
+
+    /**
+     * @param array $orderItemStates
+     *
+     * @return SpyOmsOrderItemStateQuery
+     */
+    public function getOrderItemStates(array $orderItemStates);
+
+    /**
+     * @param array $processIds
+     * @param array $stateBlacklist
+     *
+     * @return SpySalesOrderItemQuery
+     */
+    public function queryMatrixOrderItems(array $processIds, array $stateBlacklist);
+
+    /**
+     * @param string[] $orderItemStates
+     *
+     * @return SpyOmsOrderItemStateQuery
+     */
+    public function querySalesOrderItemStatesByName(array $orderItemStates);
 
 }

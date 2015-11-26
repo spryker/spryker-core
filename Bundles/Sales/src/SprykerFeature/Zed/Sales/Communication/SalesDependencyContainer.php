@@ -128,8 +128,9 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
     public function createOrdersTable()
     {
         $orderQuery = $this->getQueryContainer()->querySalesOrder();
+        $orderItemQuery = $this->getQueryContainer()->querySalesOrderItem();
 
-        return $this->getFactory()->createTableOrdersTable($orderQuery);
+        return $this->getFactory()->createTableOrdersTable($orderQuery, $orderItemQuery);
     }
 
     /**

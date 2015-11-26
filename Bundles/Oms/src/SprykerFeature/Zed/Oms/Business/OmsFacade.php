@@ -386,4 +386,12 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
             ->triggerEvent($eventId, $orderItemsArray, $data);
     }
 
+    /**
+     * @return array
+     */
+    public function getOrderItemMatrix()
+    {
+        return $this->getDependencyContainer()->createUtilOrderItemMatrix()->getMatrix();
+    }
+
 }
