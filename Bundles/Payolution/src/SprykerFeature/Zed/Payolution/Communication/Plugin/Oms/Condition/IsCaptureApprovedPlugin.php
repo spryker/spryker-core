@@ -12,7 +12,7 @@ use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;
 /**
  * @method PayolutionFacade getFacade()
  */
-class CaptureIsApprovedPlugin extends AbstractCheckPlugin
+class IsCaptureApprovedPlugin extends AbstractCheckPlugin
 {
 
     /**

@@ -12,7 +12,7 @@ use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;
 /**
  * @method PayolutionFacade getFacade()
  */
-class ReversalIsApprovedPlugin extends AbstractCheckPlugin
+class IsReAuthorizationApprovedPlugin extends AbstractCheckPlugin
 {
 
     /**
@@ -22,7 +22,7 @@ class ReversalIsApprovedPlugin extends AbstractCheckPlugin
      */
     protected function callFacade(OrderTransfer $orderTransfer)
     {
-        return $this->getFacade()->isReversalApproved($orderTransfer);
+        return $this->getFacade()->isReAuthorizationApproved($orderTransfer);
     }
 
 }
