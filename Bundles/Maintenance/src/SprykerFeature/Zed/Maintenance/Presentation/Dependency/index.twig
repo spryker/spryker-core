@@ -1,0 +1,13 @@
+{% extends '@Application/Layout/layout.twig' %}
+{% block content %}
+    <div class="spy-layout sparse">
+        <h3>{{ "Dependency graphs of all core bundles" | trans }}</h3>
+        <ul>
+            {% for bundle in bundles %}
+                <li>
+                    <a href="/maintenance/dependency/graph?bundle={{ bundle }}">{{ bundle }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

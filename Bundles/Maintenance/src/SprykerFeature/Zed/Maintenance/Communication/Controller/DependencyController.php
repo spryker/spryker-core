@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Maintenance\Communication\Controller;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Maintenance\Business\MaintenanceFacade;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 /**
  * @method MaintenanceFacade getFacade()
@@ -17,6 +18,22 @@ class DependencyController extends AbstractController
 {
 
     /**
+     * @param Request $request
+     *
+     * @return array
+     */
+    public function indexAction(Request $request)
+    {
+        $bundles = $this->getFacade()->getAllBundles();
+
+        return $this->viewResponse([
+            'bundles' => $bundles,
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     *
      * @return array
      */
     public function outgoingAction(Request $request)
@@ -31,6 +48,11 @@ class DependencyController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return array
+     */
     public function incomingAction(Request $request)
     {
         $bundleName = $request->query->get('bundle', 'Glossary');
@@ -43,6 +65,11 @@ class DependencyController extends AbstractController
         ]);
     }
 
+    /**
+     * @param Request $request
+     *
+     * @return StreamedResponse
+     */
     public function graphAction(Request $request)
     {
         $bundleName = $request->query->get('bundle', 'Glossary');
