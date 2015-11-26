@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
+use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
 use SprykerFeature\Zed\Customer\Communication\Form\CustomerFormType;
 use SprykerFeature\Zed\Customer\CustomerConfig;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -30,27 +31,30 @@ class EditController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCustomer = $request->get(CustomerFormType::PARAM_ID_CUSTOMER);
+        $idCustomer = $request->get(CustomerForm::PARAM_ID_CUSTOMER);
 
         $form = $this->getDependencyContainer()
-            ->createCustomerForm(CustomerFormType::UPDATE);
+            ->createCustomerForm(CustomerForm::UPDATE)
+        ;
 
         $form->handleRequest($request);
 
         if ($form->isValid() === true) {
+            /** @var CustomerTransfer $data */
             $data = $form->getData();
 
-            $customer = $this->createCustomerTransfer();
-            $customer->fromArray($data, true);
+//            $customer = $this->createCustomerTransfer();
+//            $customer->fromArray($data, true);
             $this->getFacade()
-                ->updateCustomer($customer);
+                ->updateCustomer($data)
+            ;
 
-            $defaultBilling = !empty($data[CustomerTransfer::DEFAULT_BILLING_ADDRESS]) ? $data[CustomerTransfer::DEFAULT_BILLING_ADDRESS] : false;
+            $defaultBilling = !empty($data->getBillingAddress()) ? $data->getBillingAddress() : false;
             if (empty($defaultBilling)) {
                 $this->updateBillingAddress($idCustomer, $defaultBilling);
             }
 
-            $defaultShipping = !empty($data[CustomerTransfer::DEFAULT_SHIPPING_ADDRESS]) ? $data[CustomerTransfer::DEFAULT_SHIPPING_ADDRESS] : false;
+            $defaultShipping = !empty($data->getShippingAddress()) ? $data->getShippingAddress() : false;
             if (empty($defaultShipping)) {
                 $this->updateShippingAddress($idCustomer, $defaultShipping);
             }

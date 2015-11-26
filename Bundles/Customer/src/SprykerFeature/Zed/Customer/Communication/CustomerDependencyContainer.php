@@ -61,12 +61,10 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
     public function createCustomerForm($formActionType)
     {
         $customerFormType = $this->getFactory()
-            ->createFormCustomerFormType($this->getQueryContainer(), $formActionType);
+            ->createFormCustomerForm($this->getQueryContainer(), $formActionType)
+        ;
 
-        $customerForm = $this->getFactory()
-            ->createFormCustomerForm($customerFormType, $this->getQueryContainer(), $formActionType);
-
-        return $customerForm->create();
+        return $this->createForm($customerFormType);
     }
 
     /**
