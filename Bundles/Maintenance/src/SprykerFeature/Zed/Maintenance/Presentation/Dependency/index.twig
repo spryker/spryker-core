@@ -5,7 +5,7 @@
         <ul>
             {% for bundle in bundles %}
                 <li>
-                    <a href="/maintenance/dependency/graph?bundle={{ bundle }}">{{ bundle }}</a>
+                    <a href="/maintenance/dependency/graph?bundle={{ bundle }}">{{ bundle }}</a> (<a href="/maintenance/dependency/incoming?bundle={{ bundle }}">in</a>/<a href="/maintenance/dependency/outgoing?bundle={{ bundle }}">out</a>)
                 </li>
             {% endfor %}
         </ul>
