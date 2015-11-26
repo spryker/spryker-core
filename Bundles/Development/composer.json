@@ -1,0 +1,16 @@
+{
+  "name": "spryker/development",
+  "autoload": {
+    "psr-0": {
+      "SprykerFeature": "src/",
+      "Acceptance": "tests/",
+      "Function": "tests/",
+      "Integration": "tests/",
+      "Unit": "tests/"
+    }
+  },
+  "require": {
+  },
+  "require-dev": {
+  }
+}
