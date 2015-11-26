@@ -75,7 +75,9 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
     public function getDummyForm()
     {
         $dummyFormType = $this->getFactory()
-            ->createFormDummyForm()
+            ->createFormDummyForm(
+                $this->getProvidedDependency(CustomerDependencyProvider::COUNTRY_FACADE)
+            )
         ;
 
         return $this->createForm($dummyFormType);

@@ -224,25 +224,6 @@ abstract class AbstractController
     }
 
     /**
-     * @deprecated create forms from DependencyContainer
-     *
-     * @param string $type
-     * @param null $data
-     * @param array $options
-     *
-     * @return FormInterface
-     */
-    protected function createForm($type = 'form', $data = null, array $options = [])
-    {
-        @trigger_error('The '.__METHOD__.' method is deprecated ', E_USER_DEPRECATED);
-
-        /** @var FormFactory $formFactory */
-        $formFactory = $this->application['form.factory'];
-
-        return $formFactory->create($type, $data, $options);
-    }
-
-    /**
      */
     protected function clearBreadcrumbs()
     {

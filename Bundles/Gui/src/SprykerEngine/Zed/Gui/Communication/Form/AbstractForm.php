@@ -21,6 +21,11 @@ abstract class AbstractForm implements FormTypeInterface
 {
 
     /**
+     * @var Request
+     */
+    protected $request;
+
+    /**
      * @var ConstraintsPlugin
      */
     protected $constraintsPlugin;
@@ -50,12 +55,17 @@ abstract class AbstractForm implements FormTypeInterface
      */
     abstract protected function getDataClass();
 
-
+    /**
+     * @param OptionsResolverInterface $resolver
+     *
+     * @return void
+     */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         if (!($this->getDataClass() instanceof TransferInterface)) {
             return;
         }
+
         $resolver->setDefault('data_class', get_class($this->getDataClass()));
     }
 
@@ -72,18 +82,6 @@ abstract class AbstractForm implements FormTypeInterface
     }
 
     /**
-     * @todo might not be needed any more
-     *
-     * Locator can be used here, but no form type class should use it. Keep it PRIVATE
-     *
-     * @return AutoCompletion
-     */
-    private function getLocator()
-    {
-        return Locator::getInstance();
-    }
-
-    /**
      * @param array $array
      *
      * @return array
@@ -94,17 +92,37 @@ abstract class AbstractForm implements FormTypeInterface
     }
 
     /**
-     * @todo might not be needed any more
-     *
+     * @param Request $request
+     */
+    public function setRequest($request)
+    {
+        $this->request = $request;
+    }
+
+    /**
      * @return Request
      */
     protected function getRequest()
     {
-        return $this->getLocator()
-            ->application()
-            ->pluginPimple()
-            ->getApplication()['request']
-        ;
+        if ($this->request === null) {
+            $this->request = $this->getLocator()
+                ->application()
+                ->pluginPimple()
+                ->getApplication()['request']
+            ;
+        }
+
+        return $this->request;
+    }
+
+    /**
+     * Locator can be used here, but no form type class should use it. Keep it PRIVATE
+     *
+     * @return AutoCompletion
+     */
+    private function getLocator()
+    {
+        return Locator::getInstance();
     }
 
     /**
