@@ -20,6 +20,9 @@ use Symfony\Component\HttpFoundation\Request;
 class IndexController extends AbstractController
 {
 
+    const DEFAULT_FORMAT = 'svg';
+    const DEFAULT_FONT_SIZE = '14';
+
     /**
      * @return array
      */
@@ -43,16 +46,16 @@ class IndexController extends AbstractController
         }
 
         $format = $request->query->get('format');
-        $fontSize = $request->query->get('font');
+        $fontSize = $request->query->getInt('font');
         $highlightState = $request->query->get('state');
 
         $reload = false;
         if ($format === null) {
-            $format = 'gif';
+            $format = self::DEFAULT_FORMAT;
             $reload = true;
         }
-        if ($fontSize === null) {
-            $fontSize = '14';
+        if ($fontSize === 0) {
+            $fontSize = self::DEFAULT_FONT_SIZE;
             $reload = true;
         }
 
@@ -76,13 +79,13 @@ class IndexController extends AbstractController
     {
         $id = $request->query->get('id');
 
-        $format = $request->query->get('format', 'gif');
-        $fontSize = $request->query->get('font', '14');
+        $format = $request->query->get('format', self::DEFAULT_FORMAT);
+        $fontSize = $request->query->getInt('font', self::DEFAULT_FONT_SIZE);
 
         $orderItem = SpySalesOrderItemQuery::create()->findOneByIdSalesOrderItem($id);
         $processEntity = $orderItem->getProcess();
 
-        echo $this->getFacade()->drawProcess($processEntity->getName(), $orderItem->getState()->getName()), $format, $fontSize;
+        echo $this->getFacade()->drawProcess($processEntity->getName(), $orderItem->getState()->getName(), $format, $fontSize);
     }
 
     /**
