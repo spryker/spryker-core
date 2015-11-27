@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Discount\Persistence;
 
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategoryQuery;
 use Propel\Runtime\Exception\PropelException;
+use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesForm;
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesType;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolTableMap;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherTableMap;
@@ -213,7 +214,7 @@ class DiscountQueryContainer extends AbstractQueryContainer implements DiscountQ
                 ->endUse()
             ->endUse()
             ->joinVoucherPoolCategory(SpyDiscountVoucherPoolCategoryTableMap::TABLE_NAME)
-            ->withColumn(SpyDiscountVoucherPoolCategoryTableMap::COL_NAME, VoucherCodesType::VOUCHER_POOL_CATEGORY)
+            ->withColumn(SpyDiscountVoucherPoolCategoryTableMap::COL_NAME, VoucherCodesForm::VOUCHER_POOL_CATEGORY)
             ->withColumn(SpyDiscountTableMap::COL_ID_DISCOUNT, self::ALIAS_COL_ID_DISCOUNT)
             ->withColumn(SpyDiscountTableMap::COL_AMOUNT, self::ALIAS_COL_AMOUNT)
             ->withColumn(SpyDiscountTableMap::COL_DESCRIPTION, self::ALIAS_COL_DESCRIPTION)

@@ -6,7 +6,8 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form\Transformers;
 
-use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesType;
+use SprykerEngine\Shared\Transfer\TransferInterface;
+use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesForm;
 use SprykerFeature\Zed\Discount\DiscountConfig;
 use Symfony\Component\Form\DataTransformerInterface;
 use Zend\Filter\Word\CamelCaseToUnderscore;
@@ -47,7 +48,7 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param array $formArray
+     * @param TransferInterface $formArray
      *
      * @return array
      */
@@ -57,13 +58,13 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
         $formArray = $this->filterDecisionRules($formArray);
         $formArray = $this->filterCollectorPlugins($formArray);
 
-        foreach ($formArray[VoucherCodesType::FIELD_DECISION_RULES] as $index => $fieldValue) {
+        foreach ($formArray[VoucherCodesForm::FIELD_DECISION_RULES] as $index => $fieldValue) {
             $fixedValueSet = [];
             foreach ($fieldValue as $key => $value) {
                 $fixedValueSet[$this->camelCaseToSnakeCase($key)] = $value;
             }
 
-            $formArray[VoucherCodesType::FIELD_DECISION_RULES][$index] = $fixedValueSet;
+            $formArray[VoucherCodesForm::FIELD_DECISION_RULES][$index] = $fixedValueSet;
         }
 
         return $formArray;

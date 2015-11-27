@@ -2,9 +2,11 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
+use Generated\Shared\Transfer\CartRuleTransfer;
+use SprykerEngine\Shared\Transfer\TransferInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class CartRuleType extends AbstractRuleType
+class CartRuleForm extends AbstractRuleForm
 {
 
     const FIELD_DISPLAY_NAME = 'display_name';
@@ -21,6 +23,36 @@ class CartRuleType extends AbstractRuleType
     const FIELD_COLLECTOR_LOGICAL_OPERATOR = 'collector_logical_operator';
 
     const DATE_NOW = 'now';
+
+    /**
+     * @return CartRuleTransfer|TransferInterface
+     */
+    public function populateFormFields()
+    {
+        return [
+            'decision_rules' => [
+                'rule_1' => [
+                    'value' => '',
+                    'rules' => '',
+                ],
+            ],
+            'collector_plugins' => [
+                'plugin_1' => [
+                    'collector_plugin' => '',
+                    'value' => '',
+                ],
+            ],
+            'group' => [],
+        ];
+    }
+
+    /**
+     * @return CartRuleTransfer
+     */
+    protected function getDataClass()
+    {
+        //return new CartRuleTransfer();
+    }
 
     /**
      * @param FormBuilderInterface $builder
@@ -49,7 +81,7 @@ class CartRuleType extends AbstractRuleType
                 'placeholder' => 'Default',
             ])
             ->add(self::FIELD_COLLECTOR_PLUGINS, 'collection', [
-                'type' => new CollectorPluginType($this->availableCollectorPlugins),
+                'type' => new CollectorPluginForm($this->availableCollectorPlugins),
                 'label' => null,
                 'allow_add' => true,
                 'allow_delete' => true,
@@ -69,7 +101,7 @@ class CartRuleType extends AbstractRuleType
                 'label' => 'Is Active',
             ])
             ->add(self::FIELD_DECISION_RULES, 'collection', [
-                'type' => new DecisionRuleType($this->availableDecisionRulePlugins),
+                'type' => new DecisionRuleForm($this->availableDecisionRulePlugins),
                 'label' => null,
                 'allow_add' => true,
                 'allow_delete' => true,

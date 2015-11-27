@@ -2,9 +2,9 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
-use SprykerEngine\Zed\Gui\Communication\Form\AbstractFormType;
+use SprykerEngine\Zed\Gui\Communication\Form\AbstractForm;
 
-abstract class AbstractRuleType extends AbstractFormType
+abstract class AbstractRuleForm extends AbstractForm
 {
 
     const DECISION_RULES_PREFIX = 'PLUGIN_DECISION_RULE_';

@@ -2,15 +2,15 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
+use Generated\Shared\Transfer\DiscountCollectorTransfer;
+use SprykerEngine\Zed\Gui\Communication\Form\NullFormTransfer;
+use SprykerEngine\Shared\Transfer\TransferInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class CollectorPluginType extends AbstractRuleType
+class CollectorPluginForm extends AbstractRuleForm
 {
 
-    const FIELD_COLLECTOR_PLUGIN = 'collector_plugin';
-    const FIELD_VALUE = 'value';
     const FIELD_REMOVE = 'remove';
-    const FIELD_ID_DISCOUNT_COLLECTOR = 'id_discount_collector';
 
     /**
      * @var array
@@ -27,6 +27,19 @@ class CollectorPluginType extends AbstractRuleType
         $this->availableCollectorPlugins = $availableCollectorPlugins;
     }
 
+    public function populateFormFields()
+    {
+        return [];
+    }
+
+    /**
+     * @return TransferInterface
+     */
+    protected function getDataClass()
+    {
+        //return new DiscountCollectorTransfer();
+    }
+
     /**
      * @param FormBuilderInterface $builder
      * @param array $options
@@ -34,8 +47,8 @@ class CollectorPluginType extends AbstractRuleType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add(self::FIELD_ID_DISCOUNT_COLLECTOR, 'hidden')
-            ->add(self::FIELD_COLLECTOR_PLUGIN, 'choice', [
+            ->add(DiscountCollectorTransfer::ID_DISCOUNT_COLLECTOR, 'hidden')
+            ->add(DiscountCollectorTransfer::COLLECTOR_PLUGIN, 'choice', [
                 'label' => 'Collector Plugin',
                 'multiple' => false,
                 'choices' => $this->getCollectorPluginsOptions(),
@@ -43,7 +56,7 @@ class CollectorPluginType extends AbstractRuleType
                     $this->getConstraints()->createConstraintRequired(),
                 ],
             ])
-            ->add(self::FIELD_VALUE, 'text', [
+            ->add(DiscountCollectorTransfer::VALUE, 'text', [
                 'label' => 'Value',
             ]);
 

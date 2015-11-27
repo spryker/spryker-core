@@ -6,9 +6,7 @@
 
 namespace SprykerEngine\Zed\Gui\Communication\Form;
 
-use Bundles\Gui\src\SprykerEngine\Zed\Gui\Communication\Form\NullFormTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Shared\Config;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Gui\Communication\Plugin\ConstraintsPlugin;
