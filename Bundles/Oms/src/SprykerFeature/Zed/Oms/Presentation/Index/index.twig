@@ -6,11 +6,15 @@
         {% block widget_content %}
 
             <div class="row">
+                <div class="col-md-12">
+                    <h1>Processes</h1>
+                </div>
+
                 {% for process in processes %}
                     <div class="col-md-4">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h1>Processes</h1>
+                                <h2>{{ process.name }}</h2>
                             </div>
                             <div class="panel-body">
                                 <a href="{{ url('/oms/index/draw', {process: process.name}) }}" target="_blank">{{ process.name }}</a>
