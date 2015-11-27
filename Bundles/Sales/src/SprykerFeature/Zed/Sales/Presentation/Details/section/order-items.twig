@@ -75,7 +75,7 @@
                         {%- endif %}
                     </td>
                     <td>
-                        <a href="/oms/index/draw-item?id={{ orderItem.IdSalesOrderItem }}" target="_blank">
+                        <a href="{{ url('/oms/index/draw-item', {id: orderItem.IdSalesOrderItem}) }}" target="_blank">
                             {{ orderItem.process.name }}
                         </a>
                     </td>
