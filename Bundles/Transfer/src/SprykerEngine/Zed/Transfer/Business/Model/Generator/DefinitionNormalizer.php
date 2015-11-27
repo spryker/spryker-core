@@ -29,7 +29,6 @@ class DefinitionNormalizer
                 self::KEY_CONTAINING_BUNDLE => $transferDefinition[self::KEY_CONTAINING_BUNDLE],
                 self::KEY_NAME => $transferDefinition[self::KEY_NAME],
                 self::KEY_PROPERTY => $this->normalizeAttributes($transferDefinition[self::KEY_PROPERTY], $transferDefinition[self::KEY_BUNDLE]),
-                self::KEY_BUNDLES => [$transferDefinition[self::KEY_BUNDLE]],
             ];
 
             $normalizedDefinitions[] = $normalizedDefinition;
@@ -63,6 +62,7 @@ class DefinitionNormalizer
     {
         foreach ($attributes as &$attribute) {
             $attribute[self::KEY_BUNDLE] = $bundle;
+            $attribute[self::KEY_BUNDLES] = [$bundle];
         }
 
         return $attributes;

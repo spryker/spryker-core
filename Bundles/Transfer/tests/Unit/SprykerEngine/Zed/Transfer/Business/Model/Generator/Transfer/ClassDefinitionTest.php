@@ -51,15 +51,18 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
     /**
      * @param $name
      * @param $type
-     * @param null $singular
+     * @param string|null $singular
+     * @param string|null $return
+     * @param array $bundles
      *
      * @return array
      */
-    private function getProperty($name, $type, $singular = null, $return = null)
+    private function getProperty($name, $type, $singular = null, $return = null, array $bundles = [])
     {
         $property = [
             'name' => $name,
             'type' => ($return === null) ? $type : $return,
+            'bundles' => $bundles,
         ];
 
         if ($singular !== null) {
@@ -240,9 +243,11 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 
     public function testCollectionPropertyShouldHaveGetSetAndAdd()
     {
+        $bundles = ['Bundle1'];
+
         $transferDefinition = [
             'name' => 'name',
-            'property' => [$this->getProperty('property1', 'Type[]')],
+            'property' => [$this->getProperty('property1', 'Type[]', null, null, $bundles)],
         ];
 
         $classDefinition = new ClassDefinition();
@@ -250,15 +255,15 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 
         $methods = $classDefinition->getMethods();
         $given = $methods['setProperty1'];
-        $expected = $this->getMethod('setProperty1', 'property1', '\\ArrayObject|TypeTransfer[]', null, '\\ArrayObject', 'PROPERTY1');
+        $expected = $this->getMethod('setProperty1', 'property1', '\\ArrayObject|TypeTransfer[]', null, '\\ArrayObject', 'PROPERTY1', $bundles);
         $this->assertEquals($expected, $given);
 
         $given = $methods['getProperty1'];
-        $expected = $this->getMethod('getProperty1', 'property1', null, 'TypeTransfer[]', null, 'PROPERTY1');
+        $expected = $this->getMethod('getProperty1', 'property1', null, 'TypeTransfer[]', null, 'PROPERTY1', $bundles);
         $this->assertEquals($expected, $given);
 
         $given = $methods['addProperty1'];
-        $expected = $this->getCollectionMethod('addProperty1', 'property1', 'property1', 'TypeTransfer', null, 'TypeTransfer', 'PROPERTY1');
+        $expected = $this->getCollectionMethod('addProperty1', 'property1', 'property1', 'TypeTransfer', null, 'TypeTransfer', 'PROPERTY1', $bundles);
         $this->assertEquals($expected, $given);
     }
 
@@ -295,14 +300,16 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
      * @param string|null $return
      * @param string|null $typeHint
      * @param string|null $constant
+     * @param array $bundles
      *
      * @return array
      */
-    private function getMethod($method, $property, $var = null, $return = null, $typeHint = null, $constant = null)
+    private function getMethod($method, $property, $var = null, $return = null, $typeHint = null, $constant = null, array $bundles = [])
     {
         $method = [
             'name' => $method,
             'property' => $property,
+            'bundles' => $bundles,
         ];
 
         if ($var !== null) {
@@ -332,12 +339,13 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
      * @param string|null $return
      * @param string|null $typeHint
      * @param string|null $constant
+     * @param array $bundles
      *
      * @return array
      */
-    private function getCollectionMethod($method, $property, $parent, $var = null, $return = null, $typeHint = null, $constant = null)
+    private function getCollectionMethod($method, $property, $parent, $var = null, $return = null, $typeHint = null, $constant = null, array $bundles = [])
     {
-        $method = $this->getMethod($method, $property, $var, $return, $typeHint, $constant);
+        $method = $this->getMethod($method, $property, $var, $return, $typeHint, $constant, $bundles);
         $method['parent'] = $parent;
 
         return $method;

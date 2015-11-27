@@ -61,10 +61,6 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $this->setName($definition['name']);
 
-        if (isset($definition['bundles'])) {
-            $this->addBundles($definition['bundles']);
-        }
-
         if (isset($definition['property'])) {
             $properties = $this->normalizePropertyTypes($definition['property']);
             $this->addConstants($properties);
@@ -174,6 +170,7 @@ class ClassDefinition implements ClassDefinitionInterface
         $propertyInfo = [
             'name' => $property['name'],
             'type' => $this->getPropertyType($property),
+            'bundles' => $property['bundles'],
         ];
 
         $this->properties[$property['name']] = $propertyInfo;
@@ -481,6 +478,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
             'return' => $this->getReturnType($property),
+            'bundles' => $property['bundles'],
         ];
         $this->methods[$methodName] = $method;
     }
@@ -497,6 +495,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
             'var' => $this->getSetVar($property),
+            'bundles' => $property['bundles'],
         ];
         $method = $this->addTypeHint($property, $method);
 
@@ -521,6 +520,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'propertyConst' => $propertyConstant,
             'parent' => $parent,
             'var' => $this->getAddVar($property),
+            'bundles' => $property['bundles'],
         ];
 
         $typeHint = $this->getAddTypeHint($property);
@@ -560,6 +560,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
             'isCollection' => $isCollection,
+            'bundles' => $property['bundles'],
         ];
         $this->methods[$methodName] = $method;
     }

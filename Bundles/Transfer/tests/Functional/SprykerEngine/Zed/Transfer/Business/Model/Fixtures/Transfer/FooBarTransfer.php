@@ -12,8 +12,6 @@ use SprykerEngine\Shared\Transfer\Exception\RequiredTransferPropertyException;
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
  * !!! DO NOT CHANGE ANYTHING IN THIS FILE
- *
- * @bundle Test
  */
 class FooBarTransfer extends AbstractTransfer
 {
@@ -71,6 +69,8 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @param string $name
      *
+     * @bundle Test
+     *
      * @return self
      */
     public function setName($name)
@@ -82,6 +82,8 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
+     * @bundle Test
+     *
      * @return string
      */
     public function getName()
@@ -91,6 +93,8 @@ class FooBarTransfer extends AbstractTransfer
 
     /**
      * @throws RequiredTransferPropertyException
+     *
+     * @bundle Test
      *
      * @return self
      */
@@ -104,6 +108,8 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @param int $bla
      *
+     * @bundle Test
+     *
      * @return self
      */
     public function setBla($bla)
@@ -115,6 +121,8 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
+     * @bundle Test
+     *
      * @return int
      */
     public function getBla()
@@ -124,6 +132,8 @@ class FooBarTransfer extends AbstractTransfer
 
     /**
      * @throws RequiredTransferPropertyException
+     *
+     * @bundle Test
      *
      * @return self
      */
@@ -137,6 +147,8 @@ class FooBarTransfer extends AbstractTransfer
     /**
      * @param \ArrayObject|FooBarTransfer[] $selfReference
      *
+     * @bundle Test
+     *
      * @return self
      */
     public function setSelfReference(\ArrayObject $selfReference)
@@ -148,6 +160,8 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
+     * @bundle Test
+     *
      * @return FooBarTransfer[]
      */
     public function getSelfReference()
@@ -157,6 +171,8 @@ class FooBarTransfer extends AbstractTransfer
 
     /**
      * @param FooBarTransfer $selfReference
+     *
+     * @bundle Test
      *
      * @return self
      */
@@ -170,6 +186,8 @@ class FooBarTransfer extends AbstractTransfer
 
     /**
      * @throws RequiredTransferPropertyException
+     *
+     * @bundle Test
      *
      * @return self
      */

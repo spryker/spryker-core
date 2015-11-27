@@ -13,8 +13,6 @@ use Generated\Shared\Transfer\ItemTransfer;
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
  * !!! DO NOT CHANGE ANYTHING IN THIS FILE
- *
- * @bundle Test
  */
 class CatFaceTransfer extends AbstractTransfer
 {
@@ -72,6 +70,8 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @param string $name
      *
+     * @bundle Test
+     *
      * @return self
      */
     public function setName($name)
@@ -83,6 +83,8 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
+     * @bundle Test
+     *
      * @return string
      */
     public function getName()
@@ -92,6 +94,8 @@ class CatFaceTransfer extends AbstractTransfer
 
     /**
      * @throws RequiredTransferPropertyException
+     *
+     * @bundle Test
      *
      * @return self
      */
@@ -105,6 +109,8 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @param ItemTransfer $item
      *
+     * @bundle Test
+     *
      * @return self
      */
     public function setItem(ItemTransfer $item)
@@ -116,6 +122,8 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
+     * @bundle Test
+     *
      * @return ItemTransfer
      */
     public function getItem()
@@ -125,6 +133,8 @@ class CatFaceTransfer extends AbstractTransfer
 
     /**
      * @throws RequiredTransferPropertyException
+     *
+     * @bundle Test
      *
      * @return self
      */
@@ -138,6 +148,8 @@ class CatFaceTransfer extends AbstractTransfer
     /**
      * @param \ArrayObject|ItemTransfer[] $items
      *
+     * @bundle Test
+     *
      * @return self
      */
     public function setItems(\ArrayObject $items)
@@ -149,6 +161,8 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
+     * @bundle Test
+     *
      * @return ItemTransfer[]
      */
     public function getItems()
@@ -158,6 +172,8 @@ class CatFaceTransfer extends AbstractTransfer
 
     /**
      * @param ItemTransfer $item
+     *
+     * @bundle Test
      *
      * @return self
      */
@@ -171,6 +187,8 @@ class CatFaceTransfer extends AbstractTransfer
 
     /**
      * @throws RequiredTransferPropertyException
+     *
+     * @bundle Test
      *
      * @return self
      */

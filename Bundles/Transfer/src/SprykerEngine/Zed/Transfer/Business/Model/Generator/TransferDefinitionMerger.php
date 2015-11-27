@@ -48,7 +48,6 @@ class TransferDefinitionMerger implements MergerInterface
     {
         return [
             'name' => $existingDefinition['name'],
-            'bundles' => $this->mergeBundles($existingDefinition['bundles'], $definitionToMerge['bundles']),
             'property' => $this->mergeProperty($existingDefinition['property'], $definitionToMerge['property']),
         ];
     }
@@ -74,6 +73,11 @@ class TransferDefinitionMerger implements MergerInterface
                 $mergedProperties[$property['name']] = $property;
             } elseif (!$this->propertiesAreIdentically($property, $mergedProperties[$property['name']])) {
                 throw new \Exception(sprintf(self::ERROR_MESSAGE_PROPERTIES_NOT_IDENTICALLY, $property['name']));
+            } else {
+                $mergedProperties[$property['name']] = $this->mergePropertyBundles(
+                    $mergedProperties[$property['name']],
+                    $property
+                );
             }
         }
 
@@ -81,19 +85,18 @@ class TransferDefinitionMerger implements MergerInterface
     }
 
     /**
-     * @param $property1
-     * @param $property2
+     * @param array $property1
+     * @param array $property2
      *
      * @return bool
      */
     private function propertiesAreIdentically(array $property1, array $property2)
     {
+        unset($property1['bundle'], $property1['bundles']);
+        unset($property2['bundle'], $property2['bundles']);
+
         $diff = array_diff($property1, $property2);
         if (count($diff) === 0) {
-            return true;
-        }
-
-        if (count($diff) === 1 && isset($diff['bundle'])) {
             return true;
         }
 
@@ -101,16 +104,18 @@ class TransferDefinitionMerger implements MergerInterface
     }
 
     /**
-     * @param array $bundles1
-     * @param array $bundles2
+     * @param array $property1
+     * @param array $property2
      *
      * @return array
      */
-    private function mergeBundles(array $bundles1, array $bundles2)
+    private function mergePropertyBundles(array $property1, array $property2)
     {
-        $mergedBundles = array_merge($bundles1, $bundles2);
+        $mergedPropertyBundles = array_merge($property1['bundles'], $property2['bundles']);
 
-        return array_unique($mergedBundles);
+        $property1['bundles'] = array_unique($mergedPropertyBundles);
+
+        return $property1;
     }
 
 }

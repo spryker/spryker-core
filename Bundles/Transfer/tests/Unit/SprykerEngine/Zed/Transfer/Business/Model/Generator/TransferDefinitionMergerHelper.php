@@ -12,13 +12,13 @@ class TransferDefinitionMergerHelper
     {
         return [
             'name' => 'Transfer',
-            'bundles' => [
-                'Bundle1',
-            ],
             'property' => [
                 [
                     'name' => 'propertyA',
                     'type' => 'string',
+                    'bundles' => [
+                        'Bundle1',
+                    ],
                 ],
             ],
         ];
@@ -31,17 +31,20 @@ class TransferDefinitionMergerHelper
     {
         return [
             'name' => 'Transfer',
-            'bundles' => [
-                'Bundle2',
-            ],
             'property' => [
                 [
                     'name' => 'propertyA',
                     'type' => 'string',
+                    'bundles' => [
+                        'Bundle2',
+                    ],
                 ],
                 [
                     'name' => 'propertyB',
                     'type' => 'int',
+                    'bundles' => [
+                        'Bundle2',
+                    ],
                 ],
             ],
         ];
@@ -54,18 +57,21 @@ class TransferDefinitionMergerHelper
     {
         return [
             'name' => 'Transfer',
-            'bundles' => [
-                'Bundle1',
-                'Bundle2',
-            ],
             'property' => [
                 'propertyA' => [
                     'name' => 'propertyA',
                     'type' => 'string',
+                    'bundles' => [
+                        'Bundle1',
+                        'Bundle2',
+                    ],
                 ],
                 'propertyB' => [
                     'name' => 'propertyB',
                     'type' => 'int',
+                    'bundles' => [
+                        'Bundle2',
+                    ],
                 ],
             ],
         ];
