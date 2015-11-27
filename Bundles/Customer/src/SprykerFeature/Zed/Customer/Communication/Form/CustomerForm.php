@@ -17,16 +17,6 @@ class CustomerForm extends AbstractForm
     const UPDATE = 'update';
     const PARAM_ID_CUSTOMER = 'id-customer';
 
-    const FIELD_SALUTATION = 'salutation';
-    const FIELD_GENDER = 'gender';
-    const FIELD_SEND_PASSWORD_TOKEN = 'send_password_token';
-    const FIELD_ID_CUSTOMER = 'id_customer';
-    const FIELD_EMAIL = 'email';
-    const FIELD_DEFAULT_BILLING_ADDRESS = 'default_billing_address';
-    const FIELD_DEFAULT_SHIPPING_ADDRESS = 'default_shipping_address';
-    const FIELD_FIRST_NAME = 'first_name';
-    const FIELD_LAST_NAME = 'last_name';
-
     /**
      * @var string
      */
@@ -89,7 +79,7 @@ class CustomerForm extends AbstractForm
         }
 
         $builder
-            ->add(self::FIELD_ID_CUSTOMER, 'hidden')
+            ->add(CustomerTransfer::ID_CUSTOMER, 'hidden')
             ->add(self::FIELD_EMAIL, self::FIELD_EMAIL, $emailParameters)
             ->add(self::FIELD_SALUTATION, 'choice', [
                 'label' => 'Salutation',

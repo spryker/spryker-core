@@ -9,9 +9,11 @@ use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
+use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
 use SprykerFeature\Zed\Customer\Communication\Form\CustomerFormType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method CustomerFacade getFacade()
@@ -28,15 +30,13 @@ class AddController extends AbstractController
     public function indexAction(Request $request)
     {
         $form = $this->getDependencyContainer()
-            ->createCustomerForm(CustomerFormType::ADD);
+            ->createCustomerForm(CustomerForm::ADD)
+        ;
 
         $form->handleRequest($request);
 
-        if ($form->isValid() === true) {
-            $data = $form->getData();
-
-            $customerTransfer = $this->createCustomerTransfer();
-            $customerTransfer->fromArray($data, true);
+        if ($form->isValid()) {
+            $customerTransfer = $form->getData();
 
             $this->getFacade()
                 ->registerCustomer($customerTransfer);

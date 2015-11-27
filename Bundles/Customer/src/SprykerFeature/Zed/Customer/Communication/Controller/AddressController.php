@@ -10,7 +10,7 @@ use Generated\Shared\Transfer\AddressTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
-use SprykerFeature\Zed\Customer\Communication\Form\AddressFormType;
+use SprykerFeature\Zed\Customer\Communication\Form\AddressForm;
 use SprykerFeature\Zed\Customer\CustomerConfig;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -110,15 +110,14 @@ class AddressController extends AbstractController
         $addressForm->handleRequest($request);
 
         if ($addressForm->isValid() === true) {
-            $data = $addressForm->getData();
-
-            $customerAddress = $this->createCustomerAddressTransfer();
-            $customerAddress->fromArray($data, true);
+            $customerAddress = $addressForm->getData();
 
             $this->getFacade()
                 ->updateAddress($customerAddress);
 
-            return $this->redirectResponse(sprintf('/customer/address/?%s=%d', CustomerConfig::PARAM_ID_CUSTOMER, $idCustomer));
+            return $this->redirectResponse(sprintf(
+                '/customer/address/?%s=%d', CustomerConfig::PARAM_ID_CUSTOMER, $idCustomer)
+            );
         }
 
         return $this->viewResponse([
@@ -141,16 +140,16 @@ class AddressController extends AbstractController
         $addressForm->handleRequest($request);
 
         if ($addressForm->isValid() === true) {
-            $data = $addressForm->getData();
-            $data[AddressFormType::FIELD_FK_CUSTOMER] = $idCustomer;
-
-            $customerAddress = $this->createCustomerAddressTransfer();
-            $customerAddress->fromArray($data, true);
+            /** @var AddressTransfer $data */
+            $customerAddress = $addressForm->getData();
+            $customerAddress->setFkCustomer($idCustomer);
 
             $this->getFacade()
                 ->createAddress($customerAddress);
 
-            return $this->redirectResponse(sprintf('/customer/address/?%s=%d', CustomerConfig::PARAM_ID_CUSTOMER, $idCustomer));
+            return $this->redirectResponse(
+                sprintf('/customer/address/?%s=%d', CustomerConfig::PARAM_ID_CUSTOMER, $idCustomer)
+            );
         }
 
         return $this->viewResponse([

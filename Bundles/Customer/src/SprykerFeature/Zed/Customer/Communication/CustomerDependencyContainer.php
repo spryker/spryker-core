@@ -60,11 +60,11 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createCustomerForm($formActionType)
     {
-        $customerFormType = $this->getFactory()
+        $customerForm = $this->getFactory()
             ->createFormCustomerForm($this->getQueryContainer(), $formActionType)
         ;
 
-        return $this->createForm($customerFormType);
+        return $this->createForm($customerForm);
     }
 
     /**
@@ -86,13 +86,14 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createAddressForm()
     {
-        $customerAddressFormType = $this->getFactory()
-            ->createFormAddressFormType($this->getProvidedDependency(CustomerDependencyProvider::COUNTRY_FACADE));
-
         $customerAddressForm = $this->getFactory()
-            ->createFormAddressForm($customerAddressFormType, $this->getQueryContainer());
+            ->createFormAddressForm(
+                $this->getProvidedDependency(CustomerDependencyProvider::COUNTRY_FACADE),
+                $this->getQueryContainer()
+            )
+        ;
 
-        return $customerAddressForm->create();
+        return $this->createForm($customerAddressForm);
     }
 
 }

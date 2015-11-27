@@ -43,8 +43,6 @@ class EditController extends AbstractController
             /** @var CustomerTransfer $data */
             $data = $form->getData();
 
-//            $customer = $this->createCustomerTransfer();
-//            $customer->fromArray($data, true);
             $this->getFacade()
                 ->updateCustomer($data)
             ;

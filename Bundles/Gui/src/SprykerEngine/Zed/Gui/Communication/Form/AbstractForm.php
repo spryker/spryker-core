@@ -6,7 +6,9 @@
 
 namespace SprykerEngine\Zed\Gui\Communication\Form;
 
+use Bundles\Gui\src\SprykerEngine\Zed\Gui\Communication\Form\NullFormTransfer;
 use Generated\Zed\Ide\AutoCompletion;
+use SprykerEngine\Shared\Config;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Gui\Communication\Plugin\ConstraintsPlugin;
@@ -46,12 +48,12 @@ abstract class AbstractForm implements FormTypeInterface
     abstract public function buildForm(FormBuilderInterface $builder, array $options);
 
     /**
-     * @return array|TransferInterface
+     * @return TransferInterface
      */
     abstract public function populateFormFields();
 
     /**
-     * @return null|TransferInterface
+     * @return TransferInterface
      */
     abstract protected function getDataClass();
 
@@ -62,11 +64,9 @@ abstract class AbstractForm implements FormTypeInterface
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        if (!($this->getDataClass() instanceof TransferInterface)) {
-            return;
+        if ($this->getDataClass() instanceof TransferInterface && !($this->getDataClass() instanceof NullFormTransfer)) {
+            $resolver->setDefault('data_class', get_class($this->getDataClass()));
         }
-
-        $resolver->setDefault('data_class', get_class($this->getDataClass()));
     }
 
     /**
