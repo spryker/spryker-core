@@ -11,6 +11,7 @@ use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountCollectorWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountWriter;
+use SprykerFeature\Zed\Discount\Communication\Form\CartRuleForm;
 use SprykerFeature\Zed\Discount\Communication\Form\CartRuleType;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
@@ -89,7 +90,7 @@ class CartRule implements CartRuleInterface
         $discountTransfer = (new DiscountTransfer())->fromArray($formData, true);
         $discountEntity = $this->saveDiscount($discountTransfer);
 
-        foreach ($formData[CartRuleType::FIELD_DECISION_RULES] as $cartRules) {
+        foreach ($formData[CartRuleForm::FIELD_DECISION_RULES] as $cartRules) {
             $decisionRuleTransfer = (new DecisionRuleTransfer())->fromArray($cartRules, true);
             $decisionRuleTransfer->setFkDiscount($discountEntity->getIdDiscount());
             $decisionRuleTransfer->setName($discountEntity->getDisplayName());
@@ -116,12 +117,12 @@ class CartRule implements CartRuleInterface
         $discount = $this->updateDateTimeZoneToStoreDefault($discountEntity->toArray());
 
         foreach ($discountEntity->getDecisionRules() as $key => $decisionRuleEntity) {
-            $discount[CartRuleType::FIELD_DECISION_RULES][self::CART_RULES_ITERATOR . (+$key)] =
+            $discount[CartRuleForm::FIELD_DECISION_RULES][self::CART_RULES_ITERATOR . (+$key)] =
                 $this->updateDateTimeZoneToStoreDefault($decisionRuleEntity->toArray());
         }
 
         foreach ($discountEntity->getDiscountCollectors() as $key => $collectorEntity) {
-            $discount[CartRuleType::FIELD_COLLECTOR_PLUGINS][self::COLLECTOR_ITERATOR . (+$key)] =
+            $discount[CartRuleForm::FIELD_COLLECTOR_PLUGINS][self::COLLECTOR_ITERATOR . (+$key)] =
                 $this->updateDateTimeZoneToStoreDefault($collectorEntity->toArray());
         }
 

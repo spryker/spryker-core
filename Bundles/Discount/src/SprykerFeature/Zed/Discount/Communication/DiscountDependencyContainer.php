@@ -131,42 +131,43 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     /**
      * @return FormTypeInterface
      */
-//    public function createCartRuleForm()
-//    {
-//
-//        $cartRuleForm = $this->getFactory()
-//            ->createFormCartRuleForm(
-//                $this->getConfig()->getAvailableDecisionRulePlugins()
+    public function createCartRuleForm()
+    {
+
+        $cartRuleForm = $this->getFactory()
+            ->createFormCartRuleForm(
+                $this->getConfig(),
+                $this->getDiscountFacade()
 //                $this->getDiscountFacade()->getVoucherPoolCategories(),
 //                $this->createCamelCaseToUnderscoreFilter(),
 //                $this->getQueryContainer()
-//            )
-//        ;
-//
-//        return $this->createForm($cartRuleForm);
-//    }
+            )
+        ;
+
+        return $this->createForm($cartRuleForm);
+    }
 
     /**
      * @return array
      */
-    protected function getCartRuleDefaultData()
-    {
-        return [
-            'decision_rules' => [
-                'rule_1' => [
-                    'value' => '',
-                    'rules' => '',
-                ],
-            ],
-            'collector_plugins' => [
-                'plugin_1' => [
-                    'collector_plugin' => '',
-                    'value' => '',
-                ],
-            ],
-            'group' => [],
-        ];
-    }
+//    protected function getCartRuleDefaultData()
+//    {
+//        return [
+//            'decision_rules' => [
+//                'rule_1' => [
+//                    'value' => '',
+//                    'rules' => '',
+//                ],
+//            ],
+//            'collector_plugins' => [
+//                'plugin_1' => [
+//                    'collector_plugin' => '',
+//                    'value' => '',
+//                ],
+//            ],
+//            'group' => [],
+//        ];
+//    }
 
     /**
      * @return CollectorPluginForm

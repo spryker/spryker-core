@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
-use Generated\Shared\Transfer\CartRuleTransfer;
-use SprykerEngine\Shared\Transfer\TransferInterface;
+use SprykerFeature\Zed\Discount\Business\DiscountFacade;
+use SprykerFeature\Zed\Discount\DiscountConfig;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CartRuleForm extends AbstractRuleForm
@@ -22,14 +22,45 @@ class CartRuleForm extends AbstractRuleForm
     const FIELD_DECISION_RULES = 'decision_rules';
     const FIELD_COLLECTOR_LOGICAL_OPERATOR = 'collector_logical_operator';
 
+    const VALID_FROM = 'valid_from';
+    const VALID_TO = 'valid_to';
+
     const DATE_NOW = 'now';
 
     /**
-     * @return CartRuleTransfer|TransferInterface
+     * @var DiscountFacade
+     */
+    protected $discountFacade;
+
+    public function __construct(DiscountConfig $config, DiscountFacade $discountFacade)
+    {
+        parent::__construct(
+            $config->getAvailableCalculatorPlugins(),
+            $config->getAvailableCollectorPlugins(),
+            $config->getAvailableDecisionRulePlugins()
+        );
+
+        $this->discountFacade = $discountFacade;
+
+    }
+
+
+    /**
+     * @return array
      */
     public function populateFormFields()
     {
+        $idDiscount = $this->getRequest()->query->getInt(DiscountConfig::PARAM_ID_DISCOUNT);
+
+        if ($idDiscount > 0) {
+            $cartRuleDefaultData = $this->discountFacade->getCurrentCartRulesDetailsByIdDiscount($idDiscount);
+
+            return $cartRuleDefaultData;
+        }
+
         return [
+            self::VALID_FROM => new \DateTime('now'),
+            self::VALID_TO => new \DateTime('now'),
             'decision_rules' => [
                 'rule_1' => [
                     'value' => '',
@@ -47,11 +78,10 @@ class CartRuleForm extends AbstractRuleForm
     }
 
     /**
-     * @return CartRuleTransfer
+     * @return void
      */
     protected function getDataClass()
     {
-        //return new CartRuleTransfer();
     }
 
     /**
