@@ -102,10 +102,10 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
 
         $cartTransfer = $cartClientMock->addItem($itemTransfer);
 
-        $this->assertInstanceOf('Generated\Shared\Cart\CartInterface', $cartTransfer);
+        $this->assertInstanceOf('Generated\Shared\Transfer\CartTransfer', $cartTransfer);
     }
 
-    public function testRemoveItemMustOnlyExceptTransferInterfaceAsArgument()
+    public function testRemoveItemMustOnlyExceptItemTransferAsArgument()
     {
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setId('identifier');
@@ -127,10 +127,10 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
 
         $cartTransfer = $cartClientMock->removeItem($itemTransfer);
 
-        $this->assertInstanceOf('Generated\Shared\Cart\CartInterface', $cartTransfer);
+        $this->assertInstanceOf('Generated\Shared\Transfer\CartTransfer', $cartTransfer);
     }
 
-    public function testChangeItemQuantityMustOnlyExceptTransferInterfaceAsArgument()
+    public function testChangeItemQuantityMustOnlyExceptItemTransferAsArgument()
     {
         $itemTransfer = new ItemTransfer();
         $itemTransfer->setQuantity(2);
@@ -161,7 +161,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
 
         $cartTransfer = $cartClientMock->changeItemQuantity($itemTransfer);
 
-        $this->assertInstanceOf('Generated\Shared\Cart\CartInterface', $cartTransfer);
+        $this->assertInstanceOf('Generated\Shared\Transfer\CartTransfer', $cartTransfer);
     }
 
     public function testChangeItemQuantityMustCallDecreaseItemQuantityWhenPassedItemQuantityIsLowerThenInCartGivenItem()
@@ -194,7 +194,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
 
         $cartTransfer = $cartClientMock->changeItemQuantity($itemTransfer, 1);
 
-        $this->assertInstanceOf('Generated\Shared\Cart\CartInterface', $cartTransfer);
+        $this->assertInstanceOf('Generated\Shared\Transfer\CartTransfer', $cartTransfer);
     }
 
     public function testChangeItemQuantityMustCallIncreaseItemQuantityWhenPassedItemQuantityIsLowerThenInCartGivenItem()
@@ -227,7 +227,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
 
         $cartTransfer = $cartClientMock->changeItemQuantity($itemTransfer, 2);
 
-        $this->assertInstanceOf('Generated\Shared\Cart\CartInterface', $cartTransfer);
+        $this->assertInstanceOf('Generated\Shared\Transfer\CartTransfer', $cartTransfer);
     }
 
     /**
