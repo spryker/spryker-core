@@ -25,7 +25,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @var array
      */
-    private $interfaces = [];
+    private $bundles = [];
 
     /**
      * @var array
@@ -61,8 +61,8 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $this->setName($definition['name']);
 
-        if (isset($definition['interface'])) {
-            $this->addInterfaces($definition['interface']);
+        if (isset($definition['bundles'])) {
+            $this->addBundles($definition['bundles']);
         }
 
         if (isset($definition['property'])) {
@@ -98,40 +98,29 @@ class ClassDefinition implements ClassDefinitionInterface
         return $this->name;
     }
 
-    /**
-     * @param array $interfaces
-     *
-     * @return self
-     */
-    private function addInterfaces(array $interfaces)
+    private function addBundles(array $bundles)
     {
-        foreach ($interfaces as $interface) {
-            $this->addInterface($interface);
+        foreach ($bundles as $bundle) {
+            $this->addBundle($bundle);
         }
-
-        return $this;
     }
 
     /**
-     * @param array $interface
+     * @param string $bundle
      */
-    private function addInterface(array $interface)
+    private function addBundle($bundle)
     {
-        if (!in_array($interface['name'], $this->interfaces)) {
-            $interfaceParts = explode('\\', $interface['name']);
-            $name = array_pop($interfaceParts);
-            $alias = $interface['bundle'] . $name;
-            $this->uses[] = $interface['name'] . ' as ' . $alias;
-            $this->interfaces[] = $alias;
+        if (!in_array($bundle, $this->bundles)) {
+            $this->bundles[] = $bundle;
         }
     }
 
     /**
      * @return array
      */
-    public function getInterfaces()
+    public function getBundles()
     {
-        return $this->interfaces;
+        return $this->bundles;
     }
 
     /**

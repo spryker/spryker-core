@@ -8,14 +8,15 @@ namespace Generated\Shared\Transfer;
 
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
 use SprykerEngine\Shared\Transfer\Exception\RequiredTransferPropertyException;
-use Generated\Shared\Test\CatFaceInterface as TestCatFaceInterface;
 use Generated\Shared\Transfer\ItemTransfer;
 
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
  * !!! DO NOT CHANGE ANYTHING IN THIS FILE
+ *
+ * @bundle Test
  */
-class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
+class CatFaceTransfer extends AbstractTransfer
 {
 
     const NAME = 'name';

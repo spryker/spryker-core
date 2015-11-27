@@ -8,14 +8,14 @@ namespace Generated\Shared\Transfer;
 
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
 use SprykerEngine\Shared\Transfer\Exception\RequiredTransferPropertyException;
-use Generated\Shared\Project\FooBarInterface as ProjectFooBarInterface;
-use Generated\Shared\Vendor\FooBarInterface as VendorFooBarInterface;
 
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
  * !!! DO NOT CHANGE ANYTHING IN THIS FILE
+ *
+ * @bundle Test
  */
-class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface, VendorFooBarInterface
+class FooBarTransfer extends AbstractTransfer
 {
 
     const NAME = 'name';

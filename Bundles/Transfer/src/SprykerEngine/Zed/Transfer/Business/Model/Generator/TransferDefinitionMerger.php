@@ -48,7 +48,7 @@ class TransferDefinitionMerger implements MergerInterface
     {
         return [
             'name' => $existingDefinition['name'],
-            'interface' => $this->mergeInterfaces($existingDefinition, $definitionToMerge),
+            'bundles' => $this->mergeBundles($existingDefinition['bundles'], $definitionToMerge['bundles']),
             'property' => $this->mergeProperty($existingDefinition['property'], $definitionToMerge['property']),
         ];
     }
@@ -101,28 +101,16 @@ class TransferDefinitionMerger implements MergerInterface
     }
 
     /**
-     * @param array $definition1
-     * @param array $definition2
+     * @param array $bundles1
+     * @param array $bundles2
      *
      * @return array
      */
-    private function mergeInterfaces(array $definition1, array $definition2)
+    private function mergeBundles(array $bundles1, array $bundles2)
     {
-        $mergedInterfaces = [];
+        $mergedBundles = array_merge($bundles1, $bundles2);
 
-        if (isset($definition1['interface'])) {
-            foreach ($definition1['interface'] as $interface) {
-                $mergedInterfaces[$interface['name']] = $interface;
-            }
-        }
-
-        if (isset($definition2['interface'])) {
-            foreach ($definition2['interface'] as $interface) {
-                $mergedInterfaces[$interface['name']] = $interface;
-            }
-        }
-
-        return $mergedInterfaces;
+        return array_unique($mergedBundles);
     }
 
 }

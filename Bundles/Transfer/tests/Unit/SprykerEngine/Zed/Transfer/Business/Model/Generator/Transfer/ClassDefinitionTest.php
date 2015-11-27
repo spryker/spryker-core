@@ -29,23 +29,6 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('NameTransfer', $classDefinition->getName());
     }
 
-    public function testGetUsesShouldReturnArrayWithDefinedInterface()
-    {
-        $transferDefinition = [
-            'name' => 'name',
-            'interface' => [
-                ['name' => 'Used\Interface', 'bundle' => 'Test'],
-            ],
-        ];
-
-        $classDefinition = new ClassDefinition();
-        $classDefinition->setDefinition($transferDefinition);
-
-        $uses = $classDefinition->getUses();
-        $this->assertTrue(is_array($uses));
-        $this->assertContains('Used\Interface as TestInterface', $uses);
-    }
-
     public function testIfOnePropertyIsSetGetPropertiesShouldReturnArrayWithOneProperty()
     {
         $property = $this->getProperty('property1', 'string');

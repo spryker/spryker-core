@@ -16,12 +16,12 @@ use {{ use }};
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
  * !!! DO NOT CHANGE ANYTHING IN THIS FILE
- */
-{% if interfaces %}
-class {{ className }} extends AbstractTransfer implements {{ interfaces|join(', ') }}
-{% else %}
-class {{ className }} extends AbstractTransfer
+{% if bundles is defined %}
+ *
+ * @bundle {{ bundles|join('|') }}
 {% endif %}
+ */
+class {{ className }} extends AbstractTransfer
 {
 
 {% for constant in constants %}

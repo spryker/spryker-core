@@ -12,8 +12,8 @@ class TransferDefinitionMergerHelper
     {
         return [
             'name' => 'Transfer',
-            'interface' => [
-                ['name' => 'Path\To\Interface'],
+            'bundles' => [
+                'Bundle1',
             ],
             'property' => [
                 [
@@ -31,13 +31,8 @@ class TransferDefinitionMergerHelper
     {
         return [
             'name' => 'Transfer',
-            'interface' => [
-                [
-                    'name' => 'Path\To\Interface',
-                ],
-                [
-                    'name' => 'Path\To\AnotherInterface',
-                ],
+            'bundles' => [
+                'Bundle2',
             ],
             'property' => [
                 [
@@ -59,13 +54,9 @@ class TransferDefinitionMergerHelper
     {
         return [
             'name' => 'Transfer',
-            'interface' => [
-                'Path\To\Interface' => [
-                    'name' => 'Path\To\Interface',
-                ],
-                'Path\To\AnotherInterface' => [
-                    'name' => 'Path\To\AnotherInterface',
-                ],
+            'bundles' => [
+                'Bundle1',
+                'Bundle2',
             ],
             'property' => [
                 'propertyA' => [
