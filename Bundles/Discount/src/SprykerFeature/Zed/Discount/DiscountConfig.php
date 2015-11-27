@@ -18,6 +18,9 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
 
     const DEFAULT_VOUCHER_CODE_LENGTH = 6;
 
+    const URL_DISCOUNT_POOL_EDIT = '/discount/pool/edit?%s=%d';
+    const PARAM_ID_POOL = 'id-pool';
+
     const PLUGIN_DECISION_RULE_VOUCHER = 'PLUGIN_DECISION_RULE_VOUCHER';
     const PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL = 'PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL';
     const PLUGIN_COLLECTOR_ITEM = 'PLUGIN_COLLECTOR_ITEM';

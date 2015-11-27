@@ -54,9 +54,7 @@ class CartRuleController extends AbstractController
     {
         $elements = $request->request->getInt(self::PARAM_CURRENT_ELEMENTS_COUNT);
 
-        $formType = $this->getDependencyContainer()->createDecisionRuleFormType();
-
-        $form = $this->getDependencyContainer()->createCartRuleForm($formType);
+        $form = $this->getDependencyContainer()->createDecisionRuleForm();
         $form->handleRequest($request);
 
         return [
@@ -74,9 +72,7 @@ class CartRuleController extends AbstractController
     {
         $elements = $request->request->getInt(self::PARAM_CURRENT_ELEMENTS_COUNT);
 
-        $formType = $this->getDependencyContainer()->createCollectorPluginFormType();
-
-        $form = $this->getDependencyContainer()->createCartRuleForm($formType);
+        $form = $this->getDependencyContainer()->createCollectorPluginForm();
         $form->handleRequest($request);
 
         return [

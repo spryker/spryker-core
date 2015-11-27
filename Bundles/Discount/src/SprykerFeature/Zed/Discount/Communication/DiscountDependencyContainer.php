@@ -7,15 +7,14 @@
 namespace SprykerFeature\Zed\Discount\Communication;
 
 use Generated\Shared\Transfer\DataTablesTransfer;
-use SprykerFeature\Zed\Discount\Communication\Form\CollectorPluginType;
-use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesType;
+use SprykerFeature\Zed\Discount\Communication\Form\CollectorPluginForm;
+use SprykerFeature\Zed\Discount\Communication\Form\DecisionRuleForm;
+use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesForm;
 use SprykerFeature\Zed\Discount\Communication\Table\DiscountsTable;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\DiscountCommunication;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
-use SprykerFeature\Zed\Discount\Communication\Form\CartRuleType;
-use SprykerFeature\Zed\Discount\Communication\Form\DecisionRuleType;
 use SprykerFeature\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
 use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\DiscountDependencyProvider;
@@ -119,35 +118,33 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
      *
      * @return PoolCategoryForm
      */
-    public function createPoolCategoryForm($idPoolCategory)
-    {
-        $poolCategoryQuery = $this->getQueryContainer()
-            ->queryDiscountVoucherPoolCategory();
+//    public function createPoolCategoryForm($idPoolCategory)
+//    {
 
-        return $this->getFactory()->createFormPoolCategoryForm($poolCategoryQuery, $idPoolCategory);
-    }
+//        $poolCategoryQuery = $this->getQueryContainer()
+//            ->queryDiscountVoucherPoolCategory()
+//        ;
+//
+//        return $this->getFactory()->createFormPoolCategoryForm($poolCategoryQuery, $idPoolCategory);
+//    }
 
     /**
-     * @param FormTypeInterface $form
-     * @param array $defaultData
-     *
-     * @return CartRuleType
+     * @return FormTypeInterface
      */
-    public function createCartRuleForm(FormTypeInterface $form, array $defaultData = null)
-    {
-        $defaultDataArray = $this->getCartRuleDefaultData();
-        if (is_array($defaultData) === true) {
-            $defaultDataArray = array_merge($this->getCartRuleDefaultData(), $defaultData);
-        }
-
-        $this->getDiscountFacade();
-
-        $formFactory = $this->getFormFactory();
-
-        return $formFactory->create($form, $defaultDataArray, [
-            'allow_extra_fields' => true,
-        ]);
-    }
+//    public function createCartRuleForm()
+//    {
+//
+//        $cartRuleForm = $this->getFactory()
+//            ->createFormCartRuleForm(
+//                $this->getConfig()->getAvailableDecisionRulePlugins()
+//                $this->getDiscountFacade()->getVoucherPoolCategories(),
+//                $this->createCamelCaseToUnderscoreFilter(),
+//                $this->getQueryContainer()
+//            )
+//        ;
+//
+//        return $this->createForm($cartRuleForm);
+//    }
 
     /**
      * @return array
@@ -172,37 +169,29 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
-     * @return CartRuleType
+     * @return CollectorPluginForm
      */
-    public function createCartRuleFormType()
+    public function createCollectorPluginForm()
     {
-        return new CartRuleType(
-            $this->getConfig()->getAvailableCalculatorPlugins(),
-            $this->getConfig()->getAvailableCollectorPlugins(),
-            $this->getConfig()->getAvailableDecisionRulePlugins()
-        );
-    }
-
-    /**
-     * @return CollectorPluginType
-     */
-    public function createCollectorPluginFormType()
-    {
-        return new CollectorPluginType(
+        $collectorPluginForm = new CollectorPluginForm(
             $this->getConfig()->getAvailableCollectorPlugins()
         );
+
+        return $this->createForm($collectorPluginForm);
     }
 
     /**
-     * @return VoucherCodesType
+     * @return VoucherCodesForm
      */
-    public function createVoucherCodesFormType()
+    public function createVoucherCodesForm()
     {
-        return new VoucherCodesType(
+        $voucherCodesForm = $this->getFactory()->createFormVoucherCodesForm(
             $this->getConfig(),
-            $this->getDiscountFacade()->getVoucherPoolCategories(),
-            $this->createCamelCaseToUnderscoreFilter()
+            $this->createCamelCaseToUnderscoreFilter(),
+            $this->getQueryContainer()
         );
+
+        return $this->createForm($voucherCodesForm);
     }
 
     /**
@@ -214,11 +203,11 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
-     * @return DecisionRuleType
+     * @return DecisionRuleForm
      */
     public function createDecisionRuleFormType()
     {
-        return new DecisionRuleType($this->getConfig()->getAvailableDecisionRulePlugins());
+        return new DecisionRuleForm($this->getConfig()->getAvailableDecisionRulePlugins());
     }
 
     /**
@@ -240,17 +229,15 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
-     * @param Request $request
-     *
      * @return DecisionRuleForm
      */
-    public function getDecisionRuleForm(Request $request)
+    public function createDecisionRuleForm()
     {
-        return $this->getFactory()->createFormDecisionRuleForm(
-            $request,
-            $this->getQueryContainer(),
-            $this->getDiscountFacade()
+        $decisionRulesForm = $this->getFactory()->createFormDecisionRuleForm(
+            $this->getConfig()->getAvailableDecisionRulePlugins()
         );
+
+        return $this->createForm($decisionRulesForm);
     }
 
     /**
