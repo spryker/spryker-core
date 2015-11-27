@@ -62,7 +62,7 @@
 
 <h5>{{ processName }}</h5>
 <div id="preview">
-    <img id="preview-image" src="/oms/index/draw?process={{ processName }}&format=svg&font=11" />
+    <img id="preview-image" src="{{ url('/oms/index/draw?process=' ~ processName ~ '&format=svg&font=11') }}" />
 </div>
 <div style="clear:both;"></div>
 
