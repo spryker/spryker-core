@@ -54,7 +54,7 @@ class IndexController extends AbstractController
             $format = self::DEFAULT_FORMAT;
             $reload = true;
         }
-        if ($fontSize === null) {
+        if ($fontSize === 0) {
             $fontSize = self::DEFAULT_FONT_SIZE;
             $reload = true;
         }
