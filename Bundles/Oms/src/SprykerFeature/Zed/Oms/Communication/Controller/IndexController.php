@@ -46,7 +46,7 @@ class IndexController extends AbstractController
         }
 
         $format = $request->query->get('format');
-        $fontSize = $request->query->get('font');
+        $fontSize = $request->query->getInt('font');
         $highlightState = $request->query->get('state');
 
         $reload = false;
@@ -80,7 +80,7 @@ class IndexController extends AbstractController
         $id = $request->query->get('id');
 
         $format = $request->query->get('format', self::DEFAULT_FORMAT);
-        $fontSize = $request->query->get('font', self::DEFAULT_FONT_SIZE);
+        $fontSize = $request->query->getInt('font', self::DEFAULT_FONT_SIZE);
 
         $orderItem = SpySalesOrderItemQuery::create()->findOneByIdSalesOrderItem($id);
         $processEntity = $orderItem->getProcess();
