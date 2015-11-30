@@ -56,6 +56,24 @@ class Url
     }
 
     /**
+     * Factory method to create an internal URL from a URL string
+     *
+     * @param string $url
+     * @param array $query
+     * @param array $options
+     *
+     * @return self
+     */
+    public static function generate($url, array $query = [], array $options = [])
+    {
+        $parts = [
+            'path' => $url,
+            'query' => $query,
+        ] + $options;
+        return new static($parts);
+    }
+
+    /**
      * Create a new URL from URL parts
      *
      * @param array $url
