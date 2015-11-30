@@ -42,8 +42,7 @@ class DecisionRuleType extends AbstractRuleType
             ])
             ->add(self::FIELD_VALUE, 'text', [
                 'label' => 'Value',
-            ])
-        ;
+            ]);
         $builder->add(self::FIELD_REMOVE, 'button', [
             'attr' => [
                 'class' => 'btn btn-xs btn-danger remove-form-collection',

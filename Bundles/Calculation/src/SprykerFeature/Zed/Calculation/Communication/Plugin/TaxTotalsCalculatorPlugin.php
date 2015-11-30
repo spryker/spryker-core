@@ -29,8 +29,7 @@ class TaxTotalsCalculatorPlugin extends AbstractPlugin implements TotalsCalculat
         $calculableItems
     ) {
         $this->getFacade()
-            ->recalculateTaxTotals($totalsTransfer, $calculableContainer, $calculableItems)
-        ;
+            ->recalculateTaxTotals($totalsTransfer, $calculableContainer, $calculableItems);
     }
 
 }

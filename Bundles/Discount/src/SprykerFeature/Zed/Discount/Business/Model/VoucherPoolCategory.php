@@ -31,8 +31,7 @@ class VoucherPoolCategory
         $categories = $this->discountQueryContainer
             ->queryDiscountVoucherPoolCategory()
             ->orderByName()
-            ->find()
-        ;
+            ->find();
 
         $availableVoucherPoolCategories = [];
 

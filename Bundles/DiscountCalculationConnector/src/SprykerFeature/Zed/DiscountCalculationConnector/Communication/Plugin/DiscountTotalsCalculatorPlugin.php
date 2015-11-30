@@ -30,8 +30,7 @@ class DiscountTotalsCalculatorPlugin extends AbstractPlugin implements TotalsCal
     ) {
         $this->getDependencyContainer()
             ->getDiscountCalculationFacade()
-            ->recalculateDiscountTotals($totalsTransfer, $calculableContainer, $calculableItems)
-        ;
+            ->recalculateDiscountTotals($totalsTransfer, $calculableContainer, $calculableItems);
     }
 
 }

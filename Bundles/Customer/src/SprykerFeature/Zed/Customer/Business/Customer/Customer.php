@@ -85,8 +85,7 @@ class Customer
     {
         $customerCount = $this->queryContainer
             ->queryCustomerByEmail($email)
-            ->count()
-        ;
+            ->count();
 
         return ($customerCount > 0);
     }
@@ -187,8 +186,7 @@ class Customer
     {
         $customerTransfer = $this->get($customerTransfer);
         $confirmationLink = $this->customerConfig
-            ->getCustomerPasswordRestoreTokenUrl($customerTransfer->getRestorePasswordKey())
-        ;
+            ->getCustomerPasswordRestoreTokenUrl($customerTransfer->getRestorePasswordKey());
         foreach ($this->passwordRestoreTokenSender as $sender) {
             $sender->send($customerTransfer->getEmail(), $confirmationLink);
         }
@@ -205,8 +203,7 @@ class Customer
             return false;
         }
         $confirmationLink = $this->customerConfig
-            ->getRegisterConfirmTokenUrl($customerTransfer->getRegistrationKey())
-        ;
+            ->getRegisterConfirmTokenUrl($customerTransfer->getRegistrationKey());
         foreach ($this->registrationTokenSender as $sender) {
             $sender->send($customerTransfer->getEmail(), $confirmationLink);
         }
@@ -235,8 +232,7 @@ class Customer
     public function confirmRegistration(CustomerInterface $customerTransfer)
     {
         $customerEntity = $this->queryContainer->queryCustomerByRegistrationKey($customerTransfer->getRegistrationKey())
-            ->findOne()
-        ;
+            ->findOne();
         if ($customerEntity === null) {
             throw new CustomerNotFoundException('Customer not found.');
         }
@@ -373,8 +369,7 @@ class Customer
 
         $customerResponseTransfer
             ->setIsSuccess($changedRows > 0)
-            ->setCustomerTransfer($customerTransfer)
-        ;
+            ->setCustomerTransfer($customerTransfer);
 
         $this->sendRegistrationToken($customerTransfer);
 
@@ -417,8 +412,7 @@ class Customer
     {
         $count = $this->queryContainer
             ->queryCustomerByEmailApartFromIdCustomer($customerEntity->getEmail(), $customerEntity->getIdCustomer())
-            ->count()
-        ;
+            ->count();
 
         return ($count === 0);
     }
@@ -450,8 +444,7 @@ class Customer
 
         $customerResponseTransfer
             ->setIsSuccess($changedRows > 0)
-            ->setCustomerTransfer($customerTransfer)
-        ;
+            ->setCustomerTransfer($customerTransfer);
 
         return $customerResponseTransfer;
     }
@@ -470,12 +463,10 @@ class Customer
         if (!$this->isValidPassword($customerEntity->getPassword(), $customerTransfer->getPassword())) {
             $customerErrorTransfer = new CustomerErrorTransfer();
             $customerErrorTransfer
-                ->setMessage(Messages::CUSTOMER_PASSWORD_INVALID)
-            ;
+                ->setMessage(Messages::CUSTOMER_PASSWORD_INVALID);
             $customerResponseTransfer
                 ->setIsSuccess(false)
-                ->addError($customerErrorTransfer)
-            ;
+                ->addError($customerErrorTransfer);
         }
 
         return $customerResponseTransfer;
@@ -531,16 +522,13 @@ class Customer
 
         if ($customerTransfer->getIdCustomer()) {
             $customerEntity = $this->queryContainer->queryCustomerById($customerTransfer->getIdCustomer())
-                ->findOne()
-            ;
+                ->findOne();
         } elseif ($customerTransfer->getEmail()) {
             $customerEntity = $this->queryContainer->queryCustomerByEmail($customerTransfer->getEmail())
-                ->findOne()
-            ;
+                ->findOne();
         } elseif ($customerTransfer->getRestorePasswordKey()) {
             $customerEntity = $this->queryContainer->queryCustomerByRestorePasswordKey($customerTransfer->getRestorePasswordKey())
-                ->findOne()
-            ;
+                ->findOne();
         }
 
         if ($customerEntity !== null) {
@@ -563,13 +551,11 @@ class Customer
         if ($customerTransfer->getIdCustomer()) {
             $customerEntity = $this->queryContainer
                 ->queryCustomerById($customerTransfer->getIdCustomer())
-                ->findOne()
-            ;
+                ->findOne();
         } elseif ($customerTransfer->getEmail()) {
             $customerEntity = $this->queryContainer
                 ->queryCustomerByEmail($customerTransfer->getEmail())
-                ->findOne()
-            ;
+                ->findOne();
         }
 
         if ($customerEntity !== null) {
@@ -589,8 +575,7 @@ class Customer
         $result = false;
 
         $customerEntity = $this->queryContainer->queryCustomerByEmail($customerTransfer->getEmail())
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($customerEntity !== null) {
             $result = $this->isValidPassword($customerEntity->getPassword(), $customerTransfer->getPassword());

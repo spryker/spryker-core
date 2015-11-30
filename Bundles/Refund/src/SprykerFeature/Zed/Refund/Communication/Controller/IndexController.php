@@ -69,16 +69,14 @@ class IndexController extends AbstractController
         $expenses = $this->getFacade()->getRefundableExpenses($idOrder);
 
         $form = $this->getDependencyContainer()
-            ->createRefundForm($orderTransfer)
-        ;
+            ->createRefundForm($orderTransfer);
 
         $form->handleRequest();
 
         $isPaymentDataRequired = $this->getDependencyContainer()
             ->getConfig()
             ->getPaymentDataPlugin()
-            ->isPaymentDataRequired($orderTransfer)
-        ;
+            ->isPaymentDataRequired($orderTransfer);
 
         if ($form->isValid()) {
             $formData = $form->getData();
@@ -86,8 +84,7 @@ class IndexController extends AbstractController
             if ($isPaymentDataRequired) {
                 $paymentDataTransfer = (new PaymentDataTransfer())->fromArray($formData, true);
                 $this->getDependencyContainer()->getConfig()->getPaymentDataPlugin()
-                    ->updatePaymentDetail($paymentDataTransfer, $idOrder)
-                ;
+                    ->updatePaymentDetail($paymentDataTransfer, $idOrder);
             }
 
             $refundTransfer = new RefundTransfer();

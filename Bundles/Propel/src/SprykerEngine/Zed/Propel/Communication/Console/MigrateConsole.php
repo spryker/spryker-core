@@ -38,8 +38,7 @@ class MigrateConsole extends Console
 
         $config = Config::get(SystemConfig::PROPEL);
         $command = 'vendor/bin/propel migrate --config-dir '
-            . $config['paths']['phpConfDir']
-        ;
+            . $config['paths']['phpConfDir'];
 
         $process = new Process($command, APPLICATION_ROOT_DIR);
 

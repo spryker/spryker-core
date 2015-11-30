@@ -66,8 +66,7 @@ class DiscountsTable extends AbstractTable
         $result = [];
 
         $query = $this->discountQuery
-            ->where('fk_discount_voucher_pool IS NULL')
-        ;
+            ->where('fk_discount_voucher_pool IS NULL');
 
         $queryResult = $this->runQuery($query, $config, true);
         /** @var SpyDiscount $item */

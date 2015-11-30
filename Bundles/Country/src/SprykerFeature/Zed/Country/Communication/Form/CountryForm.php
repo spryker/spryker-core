@@ -78,8 +78,7 @@ class CountryForm extends AbstractForm
                     'label' => 'Postal code (regex)',
                 ]
             )
-            ->addHidden('id_country')
-        ;
+            ->addHidden('id_country');
     }
 
     /**

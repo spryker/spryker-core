@@ -25,8 +25,7 @@ class SequenceNumberFacade extends AbstractFacade
     public function generate(SequenceNumberSettingsInterface $sequenceNumberSettings)
     {
         $sequenceNumber = $this->getDependencyContainer()
-            ->createSequenceNumber($sequenceNumberSettings)
-        ;
+            ->createSequenceNumber($sequenceNumberSettings);
 
         return $sequenceNumber->generate();
     }

@@ -96,8 +96,7 @@ class AttributeManager implements AttributeManagerInterface
         $attributeEntity = (new SpyProductAttributesMetadata())
             ->setKey($attributeName)
             ->setFkType($attributeTypeId)
-            ->setIsEditable($isEditable)
-        ;
+            ->setIsEditable($isEditable);
 
         $attributeEntity->save();
 
@@ -138,8 +137,7 @@ class AttributeManager implements AttributeManagerInterface
         $attributeTypeEntity
             ->setName($name)
             ->setInputRepresentation($inputType)
-            ->setFkParentType($fkParentAttributeType)
-        ;
+            ->setFkParentType($fkParentAttributeType);
 
         $attributeTypeEntity->save();
 

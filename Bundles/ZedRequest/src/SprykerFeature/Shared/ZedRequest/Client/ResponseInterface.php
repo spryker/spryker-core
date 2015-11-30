@@ -31,14 +31,14 @@ interface ResponseInterface
     /**
      * @param array $errorMessages
      *
-     * @return $this
+     * @return self
      */
     public function addErrorMessages(array $errorMessages);
 
     /**
      * @param Message $errorMessage
      *
-     * @return $this
+     * @return self
      */
     public function addErrorMessage(Message $errorMessage);
 
@@ -57,14 +57,14 @@ interface ResponseInterface
     /**
      * @param Message $message
      *
-     * @return $this
+     * @return self
      */
     public function addMessage(Message $message);
 
     /**
      * @param array $messages
      *
-     * @return $this
+     * @return self
      */
     public function addMessages(array $messages);
 
@@ -76,7 +76,7 @@ interface ResponseInterface
     /**
      * @param bool $success
      *
-     * @return $this
+     * @return self
      */
     public function setSuccess($success);
 
@@ -88,7 +88,7 @@ interface ResponseInterface
     /**
      * @param TransferInterface $transferObject
      *
-     * @return $this
+     * @return self
      */
     public function setTransfer(TransferInterface $transferObject);
 

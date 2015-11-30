@@ -74,8 +74,7 @@ class CartRuleType extends AbstractRuleType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'allow_extra_fields' => true,
-            ])
-        ;
+            ]);
     }
 
     /**

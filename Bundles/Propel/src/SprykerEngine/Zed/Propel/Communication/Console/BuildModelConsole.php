@@ -39,8 +39,7 @@ class BuildModelConsole extends Console
         $config = Config::get(SystemConfig::PROPEL);
         $command = 'vendor/bin/propel model:build --config-dir '
             . $config['paths']['phpConfDir']
-            . ' --schema-dir ' . $config['paths']['schemaDir'] . ' --disable-namespace-auto-package'
-        ;
+            . ' --schema-dir ' . $config['paths']['schemaDir'] . ' --disable-namespace-auto-package';
 
         $process = new Process($command, APPLICATION_ROOT_DIR);
 

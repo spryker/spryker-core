@@ -184,8 +184,7 @@ class PageManager implements PageManagerInterface
     public function getPageById($idPage)
     {
         $page = $this->cmsQueryContainer->queryPageById($idPage)
-            ->findOne()
-        ;
+            ->findOne();
         if (!$page) {
             throw new MissingPageException(sprintf('Tried to retrieve a missing page with id %s', $idPage));
         }
@@ -214,8 +213,7 @@ class PageManager implements PageManagerInterface
     public function touchPageActive(PageTransfer $page)
     {
         $pageMappings = $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($page->getIdCmsPage())
-            ->find()
-        ;
+            ->find();
         foreach ($pageMappings as $pageMapping) {
             $this->glossaryFacade->touchCurrentTranslationForKeyId($pageMapping->getFkGlossaryKey());
         }

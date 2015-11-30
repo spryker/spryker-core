@@ -6,10 +6,8 @@
 
 namespace SprykerFeature\Zed\Customer\Persistence;
 
-use Orm\Zed\Country\Persistence\SpyCountryQuery;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
-use SprykerFeature\Zed\Customer\CustomerDependencyProvider;
 
 /**
  * @method CustomerDependencyContainer getDependencyContainer()

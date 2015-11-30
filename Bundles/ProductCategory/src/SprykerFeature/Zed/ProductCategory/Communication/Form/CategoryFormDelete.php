@@ -33,8 +33,7 @@ class CategoryFormDelete extends CategoryFormEdit
                 ],
             ])
             ->addHidden(self::PK_CATEGORY_NODE)
-            ->addHidden(self::FK_NODE_CATEGORY)
-        ;
+            ->addHidden(self::FK_NODE_CATEGORY);
     }
 
     /**

@@ -75,8 +75,7 @@ class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
         $result = new NewsletterSubscriptionApprovalResultTransfer();
 
         $subscriberEntity = $this->queryContainer->querySubscriber()
-            ->findOneBySubscriberKey($newsletterSubscriber->getSubscriberKey())
-        ;
+            ->findOneBySubscriberKey($newsletterSubscriber->getSubscriberKey());
 
         if ($subscriberEntity === null) {
             $result->setIsSuccess(false);

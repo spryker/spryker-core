@@ -65,8 +65,7 @@ class VoucherForm extends AbstractForm
                         $this->getConstraints()->createConstraintNotBlank(),
                         $this->getConstraints()->createConstraintGreaterThan(1),
                     ],
-                ])
-            ;
+                ]);
         }
 
         $maxAllowedCodeCharactersLength = $this->discountConfig->getAllowedCodeCharactersLength();
@@ -117,8 +116,7 @@ class VoucherForm extends AbstractForm
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
-            ])
-        ;
+            ]);
     }
 
     /**

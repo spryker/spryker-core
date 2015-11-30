@@ -34,8 +34,7 @@ class DocumentAttributeReader implements DocumentAttributeReaderInterface
     public function hasDocumentAttributeByNameAndType($name, $type)
     {
         $documentAttributeQuery = $this->searchPageQueryContainer
-            ->queryDocumentAttributeByNameAndType($name, $type)
-        ;
+            ->queryDocumentAttributeByNameAndType($name, $type);
 
         return $documentAttributeQuery->count() > 0;
     }
@@ -58,8 +57,7 @@ class DocumentAttributeReader implements DocumentAttributeReaderInterface
     public function getDocumentAttributeById($idDocumentAttribute)
     {
         $documentAttributeQuery = $this->searchPageQueryContainer
-            ->queryDocumentAttributeByPrimaryKey($idDocumentAttribute)
-        ;
+            ->queryDocumentAttributeByPrimaryKey($idDocumentAttribute);
 
         return $documentAttributeQuery->findOne();
     }

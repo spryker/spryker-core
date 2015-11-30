@@ -27,8 +27,7 @@ class CustomerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createCustomer()
-            ->hasEmail($email)
-        ;
+            ->hasEmail($email);
     }
 
     /**
@@ -40,8 +39,7 @@ class CustomerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createCustomer()
-            ->register($customerTransfer)
-        ;
+            ->register($customerTransfer);
     }
 
     /**
@@ -53,8 +51,7 @@ class CustomerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createCustomer()
-            ->confirmRegistration($customerTransfer)
-        ;
+            ->confirmRegistration($customerTransfer);
     }
 
     /**
@@ -66,8 +63,7 @@ class CustomerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createCustomer()
-            ->forgotPassword($customerTransfer)
-        ;
+            ->forgotPassword($customerTransfer);
     }
 
     /**
@@ -79,8 +75,7 @@ class CustomerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createCustomer()
-            ->restorePassword($customerTransfer)
-        ;
+            ->restorePassword($customerTransfer);
     }
 
     /**
@@ -92,8 +87,7 @@ class CustomerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createCustomer()
-            ->delete($customerTransfer)
-        ;
+            ->delete($customerTransfer);
     }
 
     /**
@@ -105,8 +99,7 @@ class CustomerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createCustomer()
-            ->get($customerTransfer)
-        ;
+            ->get($customerTransfer);
     }
 
     /**
@@ -118,8 +111,7 @@ class CustomerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createCustomer()
-            ->update($customerTransfer)
-        ;
+            ->update($customerTransfer);
     }
 
     /**
@@ -131,8 +123,7 @@ class CustomerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createCustomer()
-            ->updatePassword($customerTransfer)
-        ;
+            ->updatePassword($customerTransfer);
     }
 
     /**
@@ -144,8 +135,7 @@ class CustomerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createAddress()
-            ->getAddress($addressTransfer)
-        ;
+            ->getAddress($addressTransfer);
     }
 
     /**
@@ -157,8 +147,7 @@ class CustomerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createAddress()
-            ->getAddresses($customerTransfer)
-        ;
+            ->getAddresses($customerTransfer);
     }
 
     /**
@@ -170,8 +159,7 @@ class CustomerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createAddress()
-            ->updateAddress($addressTransfer)
-        ;
+            ->updateAddress($addressTransfer);
     }
 
     /**
@@ -183,8 +171,7 @@ class CustomerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createAddress()
-            ->updateAddressAndCustomerDefaultAddresses($addressTransfer)
-        ;
+            ->updateAddressAndCustomerDefaultAddresses($addressTransfer);
     }
 
     /**
@@ -196,8 +183,7 @@ class CustomerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createAddress()
-            ->createAddressAndUpdateCustomerDefaultAddresses($addressTransfer)
-        ;
+            ->createAddressAndUpdateCustomerDefaultAddresses($addressTransfer);
     }
 
     /**
@@ -209,8 +195,7 @@ class CustomerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createAddress()
-            ->createAddress($addressTransfer)
-        ;
+            ->createAddress($addressTransfer);
     }
 
     /**
@@ -222,8 +207,7 @@ class CustomerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createAddress()
-            ->setDefaultBillingAddress($addressTransfer)
-        ;
+            ->setDefaultBillingAddress($addressTransfer);
     }
 
     /**
@@ -235,8 +219,7 @@ class CustomerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createAddress()
-            ->setDefaultShippingAddress($addressTransfer)
-        ;
+            ->setDefaultShippingAddress($addressTransfer);
     }
 
     /**
@@ -248,8 +231,7 @@ class CustomerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createAddress()
-            ->getFormattedAddressString($addressTransfer)
-        ;
+            ->getFormattedAddressString($addressTransfer);
     }
 
     /**
@@ -261,8 +243,7 @@ class CustomerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createAddress()
-            ->getDefaultShippingAddress($customerTransfer)
-        ;
+            ->getDefaultShippingAddress($customerTransfer);
     }
 
     /**
@@ -274,8 +255,7 @@ class CustomerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createAddress()
-            ->getDefaultBillingAddress($customerTransfer)
-        ;
+            ->getDefaultBillingAddress($customerTransfer);
     }
 
     /**
@@ -287,8 +267,7 @@ class CustomerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createAddress()
-            ->deleteAddress($addressTransfer)
-        ;
+            ->deleteAddress($addressTransfer);
     }
 
     /**
@@ -300,8 +279,7 @@ class CustomerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createCustomer()
-            ->tryAuthorizeCustomerByEmailAndPassword($customerTransfer)
-        ;
+            ->tryAuthorizeCustomerByEmailAndPassword($customerTransfer);
     }
 
 }

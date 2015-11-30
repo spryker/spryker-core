@@ -69,8 +69,7 @@ class CmsFacadeTest extends Test
         $this->locator = Locator::getInstance();
         $container = new Container();
         $container = (new CmsDependencyProvider())
-            ->provideBusinessLayerDependencies($container)
-        ;
+            ->provideBusinessLayerDependencies($container);
         $this->cmsFacade = new CmsFacade(new Factory('Cms'), $this->locator);
         $this->cmsFacade->setExternalDependencies($container);
         $this->urlFacade = new UrlFacade(new Factory('Url'), $this->locator);
@@ -136,16 +135,14 @@ class CmsFacadeTest extends Test
         $pageTransfer = $this->cmsFacade->savePage($pageTransfer);
 
         $pageEntity = $this->cmsQueryContainer->queryPageById($pageTransfer->getIdCmsPage())
-            ->findOne()
-        ;
+            ->findOne();
         $this->assertEquals($template1->getIdCmsTemplate(), $pageEntity->getFkTemplate());
 
         $pageTransfer->setFkTemplate($template2->getIdCmsTemplate());
         $this->cmsFacade->savePage($pageTransfer);
 
         $pageEntity = $this->cmsQueryContainer->queryPageById($pageTransfer->getIdCmsPage())
-            ->findOne()
-        ;
+            ->findOne();
 
         $this->assertEquals($template2->getIdCmsTemplate(), $pageEntity->getFkTemplate());
     }

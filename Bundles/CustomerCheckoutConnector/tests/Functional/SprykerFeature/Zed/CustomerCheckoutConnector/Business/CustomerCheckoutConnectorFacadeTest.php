@@ -63,15 +63,13 @@ class CustomerCheckoutConnectorFacadeTest extends Test
             ->setFirstName('Max')
             ->setLastName('Sprykermann')
             ->setPassword('5pryk3rRul3z')
-            ->setCustomerReference('foo')
-        ;
+            ->setCustomerReference('foo');
         $customerEntity->save();
 
         $checkoutRequest
             ->setIdUser($customerEntity->getIdCustomer())
             ->setBillingAddress(new AddressTransfer())
-            ->setShippingAddress(new AddressTransfer())
-        ;
+            ->setShippingAddress(new AddressTransfer());
 
         $this->customerCheckoutConnectorFacade->hydrateOrderTransfer($orderTransfer, $checkoutRequest);
 
@@ -91,8 +89,7 @@ class CustomerCheckoutConnectorFacadeTest extends Test
             ->setIsGuest(true)
             ->setEmail('max@sprykermann.de')
             ->setBillingAddress(new AddressTransfer())
-            ->setShippingAddress(new AddressTransfer())
-        ;
+            ->setShippingAddress(new AddressTransfer());
 
         $this->customerCheckoutConnectorFacade->hydrateOrderTransfer($orderTransfer, $checkoutRequest);
 
@@ -113,8 +110,7 @@ class CustomerCheckoutConnectorFacadeTest extends Test
             ->setAddress3('A3')
             ->setCity('City1')
             ->setIso2Code('de')
-            ->setZipCode('11111')
-        ;
+            ->setZipCode('11111');
 
         $shippingAddress = new AddressTransfer();
         $shippingAddress
@@ -123,13 +119,11 @@ class CustomerCheckoutConnectorFacadeTest extends Test
             ->setAddress3('B1')
             ->setCity('City2')
             ->setIso2Code('de')
-            ->setZipCode('11111')
-        ;
+            ->setZipCode('11111');
 
         $checkoutRequest
             ->setBillingAddress($billingAddress)
-            ->setShippingAddress($shippingAddress)
-        ;
+            ->setShippingAddress($shippingAddress);
 
         $this->customerCheckoutConnectorFacade->hydrateOrderTransfer($orderTransfer, $checkoutRequest);
 

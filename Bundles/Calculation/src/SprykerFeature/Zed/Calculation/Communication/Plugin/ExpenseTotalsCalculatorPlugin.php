@@ -29,8 +29,7 @@ class ExpenseTotalsCalculatorPlugin extends AbstractPlugin implements TotalsCalc
         $calculableItems
     ) {
         $this->getFacade()
-            ->recalculateExpenseTotals($totalsTransfer, $calculableContainer, $calculableItems)
-        ;
+            ->recalculateExpenseTotals($totalsTransfer, $calculableContainer, $calculableItems);
     }
 
 }

@@ -262,8 +262,7 @@ class Group implements GroupInterface
     {
         $entity = $this->queryContainer
             ->queryUserHasGroupById($idGroup, $idUser)
-            ->findOne()
-        ;
+            ->findOne();
 
         if (!$entity) {
             throw new UserAndGroupNotFoundException();

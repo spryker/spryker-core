@@ -55,8 +55,7 @@ class QueueDependencyContainer extends AbstractBusinessDependencyContainer
 
         return $taskWorker
             ->setErrorQueueName($this->getConfig()->getErrorChannelName())
-            ->setMaxMessages($this->getConfig()->getMaxWorkerMessageCount())
-        ;
+            ->setMaxMessages($this->getConfig()->getMaxWorkerMessageCount());
     }
 
     /**

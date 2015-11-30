@@ -57,8 +57,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     {
         return $this->queryContainer
             ->queryFirstLevelChildrenByIdLocale($idNode, $locale->getIdLocale())
-            ->find()
-        ;
+            ->find();
     }
 
     /**
@@ -85,8 +84,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     {
         return $this->queryContainer
             ->queryPath($idNode, $locale->getIdLocale(), $excludeRootNode, $onlyParents)
-            ->find()
-        ;
+            ->find();
     }
 
     /**
@@ -99,8 +97,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     {
         return $this->queryContainer
             ->getChildrenPath($idParentNode, $excludeRoot)
-            ->find()
-        ;
+            ->find();
     }
 
     /**
@@ -113,8 +110,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     {
         return $this->queryContainer
             ->getParentPath($idChildNode, $excludeRoot)
-            ->find()
-        ;
+            ->find();
     }
 
     /**
@@ -195,8 +191,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     {
         $childrenCount = $this->queryContainer
             ->queryFirstLevelChildren($idNode)
-            ->count()
-        ;
+            ->count();
 
         return $childrenCount > 0;
     }
@@ -275,8 +270,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     {
         return $this->queryContainer
             ->queryNodeById($idNode)
-            ->findOne()
-        ;
+            ->findOne();
     }
 
     /**
@@ -289,8 +283,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     {
         return $this->queryContainer
             ->queryNodeByIdCategoryAndParentNode($idCategory, $idParentNode)
-            ->findOne()
-        ;
+            ->findOne();
     }
 
     /**
@@ -300,8 +293,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     {
         return $this->queryContainer
             ->queryRootNode()
-            ->find()
-        ;
+            ->find();
     }
 
     /**
@@ -313,8 +305,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     {
         return $this->queryContainer
             ->queryAllNodesByCategoryId($idCategory)
-            ->find()
-        ;
+            ->find();
     }
 
     /**
@@ -326,8 +317,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     {
         return $this->queryContainer
             ->queryMainNodesByCategoryId($idCategory)
-            ->find()
-        ;
+            ->find();
     }
 
     /**
@@ -339,8 +329,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     {
         return $this->queryContainer
             ->queryNotMainNodesByCategoryId($idCategory)
-            ->find()
-        ;
+            ->find();
     }
 
     /**
@@ -353,8 +342,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     {
         return $this->queryContainer
             ->getCategoryNodesWithOrder($idParentNode, $idLocale)
-            ->find()
-        ;
+            ->find();
     }
 
     /**

@@ -77,8 +77,7 @@ class AddressForm extends AbstractForm
             ->addText(self::PHONE)
             ->addText(self::CELL_PHONE)
             ->addText(self::DESCRIPTION)
-            ->addTextarea(self::COMMENT)
-        ;
+            ->addTextarea(self::COMMENT);
     }
 
     /**

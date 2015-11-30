@@ -99,8 +99,7 @@ abstract class AbstractMultiFileMethodTagBuilder implements MethodTagBuilderInte
         $pathPattern = rtrim($dir, DIRECTORY_SEPARATOR)
             . '/*/' . $this->options[self::OPTION_KEY_APPLICATION] . '/'
             . $bundle . '/'
-            . $this->options[self::OPTION_KEY_PATH_PATTERN]
-        ;
+            . $this->options[self::OPTION_KEY_PATH_PATTERN];
 
         try {
             $finder = new Finder();

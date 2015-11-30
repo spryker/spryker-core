@@ -39,8 +39,7 @@ class NodeController extends AbstractController
         $nodeList = $this->getDependencyContainer()
             ->createCategoryQueryContainer()
             ->getCategoryNodesWithOrder($idCategoryNode, $locale->getIdLocale())
-            ->find()
-        ;
+            ->find();
 
         $items = [];
         foreach ($nodeList as $nodeEntity) {
@@ -77,15 +76,13 @@ class NodeController extends AbstractController
                 ->findOne();
 
             $nodeTransfer = (new NodeTransfer())
-                ->fromArray($nodeEntity->toArray())
-            ;
+                ->fromArray($nodeEntity->toArray());
 
             $nodeTransfer->setNodeOrder($order);
 
             $this->getDependencyContainer()
                 ->createCategoryFacade()
-                ->updateCategoryNode($nodeTransfer, $locale)
-            ;
+                ->updateCategoryNode($nodeTransfer, $locale);
 
             $order--;
         }

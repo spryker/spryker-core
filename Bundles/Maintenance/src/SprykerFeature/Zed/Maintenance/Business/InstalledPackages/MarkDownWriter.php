@@ -44,8 +44,7 @@ class MarkDownWriter implements MarkDownWriterInterface
                 . $package->getVersion() . self::SEPARATOR
                 . implode(', ', (array) $package->getLicense()) . self::SEPARATOR
                 . $package->getUrl() . self::SEPARATOR
-                . $package->getType() . self::SEPARATOR
-            ;
+                . $package->getType() . self::SEPARATOR;
         }
 
         file_put_contents($this->path, implode("\n", $markDownLines));

@@ -18,8 +18,7 @@ class GlossaryQueueFacade extends AbstractFacade
     {
         $this->getDependencyContainer()
             ->createQueueTranslationManager()
-            ->processTranslationMessage($queueMessage)
-        ;
+            ->processTranslationMessage($queueMessage);
     }
 
 }

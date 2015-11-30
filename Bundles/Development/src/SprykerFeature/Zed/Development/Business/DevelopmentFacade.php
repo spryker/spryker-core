@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Development\Business;
 
-use Generated\Shared\Development\InstalledPackagesInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**

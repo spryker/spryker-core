@@ -32,8 +32,7 @@ class PageElementController extends AbstractController
 
             $this->getDependencyContainer()
                 ->getSearchPageFacade()
-                ->switchActiveState($idPageElement, $isElementActive)
-            ;
+                ->switchActiveState($idPageElement, $isElementActive);
         }
 
         return $this->jsonResponse(['content' => $contentData], 200);

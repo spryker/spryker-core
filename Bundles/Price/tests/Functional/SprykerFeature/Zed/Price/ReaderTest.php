@@ -130,8 +130,7 @@ class ReaderTest extends Test
 
         $abstractProduct = SpyAbstractProductQuery::create()
             ->filterBySku(self::DUMMY_SKU_ABSTRACT_PRODUCT)
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($abstractProduct === null) {
             $abstractProduct = new SpyAbstractProduct();
@@ -139,13 +138,11 @@ class ReaderTest extends Test
 
         $abstractProduct->setSku(self::DUMMY_SKU_ABSTRACT_PRODUCT)
             ->setAttributes('{}')
-            ->save()
-        ;
+            ->save();
 
         $concreteProduct = SpyProductQuery::create()
             ->filterBySku(self::DUMMY_SKU_CONCRETE_PRODUCT)
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($concreteProduct === null) {
             $concreteProduct = new SpyProduct();
@@ -153,15 +150,13 @@ class ReaderTest extends Test
         $concreteProduct->setSku(self::DUMMY_SKU_CONCRETE_PRODUCT)
             ->setSpyAbstractProduct($abstractProduct)
             ->setAttributes('{}')
-            ->save()
-        ;
+            ->save();
 
         $this->deletePriceEntitiesConcrete($concreteProduct);
         $concreteProduct->setSku(self::DUMMY_SKU_CONCRETE_PRODUCT)
             ->setSpyAbstractProduct($abstractProduct)
             ->setAttributes('{}')
-            ->save()
-        ;
+            ->save();
 
         $this->deletePriceEntitiesAbstract($abstractProduct);
         (new SpyPriceProduct())

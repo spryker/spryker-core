@@ -21,8 +21,7 @@ class IndexController extends AbstractController
     public function indexAction()
     {
         $table = $this->getDependencyContainer()
-            ->createMethodTable()
-        ;
+            ->createMethodTable();
 
         return $this->viewResponse(['methodTable' => $table->render()]);
     }
@@ -33,8 +32,7 @@ class IndexController extends AbstractController
     public function tableAction()
     {
         $table = $this->getDependencyContainer()
-            ->createMethodTable()
-        ;
+            ->createMethodTable();
 
         return $this->jsonResponse($table->fetchData());
     }

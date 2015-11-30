@@ -29,8 +29,7 @@ class TableMapBuilder extends PropelTableMapBuilder
                 $objName = \$locator->"
                     . lcfirst($bundle)
                     . '()->entity'
-                    . $this->getObjectClassName() . '();'
-        ;
+                    . $this->getObjectClassName() . '();';
     }
 
     /**

@@ -217,20 +217,17 @@ class CartFacadeTest extends AbstractFunctionalTest
 
         $abstractProduct1 = SpyAbstractProductQuery::create()
             ->filterBySku(self::DUMMY_1_SKU_ABSTRACT_PRODUCT)
-            ->findOne()
-        ;
+            ->findOne();
         if (!$abstractProduct1) {
             $abstractProduct1 = new SpyAbstractProduct();
         }
         $abstractProduct1->setSku(self::DUMMY_1_SKU_ABSTRACT_PRODUCT)
             ->setAttributes('{}')
-            ->save()
-        ;
+            ->save();
 
         $concreteProduct1 = SpyProductQuery::create()
             ->filterBySku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
-            ->findOne()
-        ;
+            ->findOne();
 
         if (!$concreteProduct1) {
             $concreteProduct1 = new SpyProduct();
@@ -239,13 +236,11 @@ class CartFacadeTest extends AbstractFunctionalTest
             ->setSku(self::DUMMY_1_SKU_CONCRETE_PRODUCT)
             ->setSpyAbstractProduct($abstractProduct1)
             ->setAttributes('{}')
-            ->save()
-        ;
+            ->save();
 
         $abstractProduct2 = SpyAbstractProductQuery::create()
             ->filterBySku(self::DUMMY_2_SKU_ABSTRACT_PRODUCT)
-            ->findOne()
-        ;
+            ->findOne();
 
         if (!$abstractProduct2) {
             $abstractProduct2 = new SpyAbstractProduct();
@@ -254,13 +249,11 @@ class CartFacadeTest extends AbstractFunctionalTest
         $abstractProduct2
             ->setSku(self::DUMMY_2_SKU_ABSTRACT_PRODUCT)
             ->setAttributes('{}')
-            ->save()
-        ;
+            ->save();
 
         $concreteProduct2 = SpyProductQuery::create()
             ->filterBySku(self::DUMMY_2_SKU_CONCRETE_PRODUCT)
-            ->findOne()
-        ;
+            ->findOne();
         if (!$concreteProduct2) {
             $concreteProduct2 = new SpyProduct();
         }
@@ -268,8 +261,7 @@ class CartFacadeTest extends AbstractFunctionalTest
             ->setSku(self::DUMMY_2_SKU_CONCRETE_PRODUCT)
             ->setSpyAbstractProduct($abstractProduct2)
             ->setAttributes('{}')
-            ->save()
-        ;
+            ->save();
 
         $priceProductConcrete1 = SpyPriceProductQuery::create()
             ->filterByProduct($concreteProduct1)
@@ -277,8 +269,7 @@ class CartFacadeTest extends AbstractFunctionalTest
             ->filterByPriceType($defaultPriceType)
             ->findOneOrCreate()
             ->setPrice(100)
-            ->save()
-        ;
+            ->save();
 
         $priceProductConcrete2 = SpyPriceProductQuery::create()
             ->filterByProduct($concreteProduct2)
@@ -286,8 +277,7 @@ class CartFacadeTest extends AbstractFunctionalTest
             ->filterByPriceType($defaultPriceType)
             ->findOneOrCreate()
             ->setPrice(100)
-            ->save()
-        ;
+            ->save();
     }
 
 }

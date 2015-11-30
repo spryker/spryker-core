@@ -64,8 +64,7 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
         $dependencyContainer = $this->getDependencyContainer();
         if (isset($dependencyContainer)) {
             $this->getDependencyContainer()
-                ->setContainer($container)
-            ;
+                ->setContainer($container);
         }
     }
 

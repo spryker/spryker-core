@@ -314,8 +314,7 @@ class AclQueryContainer extends AbstractQueryContainer
             ->filterByBundle($bundle, Criteria::EQUAL)
             ->filterByController($controller, Criteria::EQUAL)
             ->filterByAction($action, Criteria::EQUAL)
-            ->filterByType($type, Criteria::EQUAL)
-        ;
+            ->filterByType($type, Criteria::EQUAL);
 
         return $query;
     }

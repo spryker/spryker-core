@@ -172,8 +172,7 @@ class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
     {
         $mock = $this->getMockBuilder(Api::class)
             ->disableOriginalConstructor()
-            ->getMock()
-        ;
+            ->getMock();
 
         return $mock;
     }

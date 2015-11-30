@@ -83,8 +83,7 @@ class ProductSearchQueryContainer extends AbstractQueryContainer implements Prod
         $query = SpyProductSearchAttributesOperationQuery::create();
         $query
             ->filterBySourceAttributeId($idAttribute)
-            ->filterByTargetField($copyTarget)
-        ;
+            ->filterByTargetField($copyTarget);
 
         return $query;
     }

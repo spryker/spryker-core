@@ -117,8 +117,7 @@ class ProductManager implements ProductManagerInterface
         $abstractProduct = new SpyAbstractProduct();
         $abstractProduct
             ->setAttributes($encodedAttributes)
-            ->setSku($sku)
-        ;
+            ->setSku($sku);
 
         $abstractProduct->save();
 
@@ -196,8 +195,7 @@ class ProductManager implements ProductManagerInterface
                 ->setFkAbstractProduct($idAbstractProduct)
                 ->setFkLocale($locale->getIdLocale())
                 ->setName($localizedAttributes->getName())
-                ->setAttributes($encodedAttributes)
-            ;
+                ->setAttributes($encodedAttributes);
             $abstractProductAttributesEntity->save();
         }
     }
@@ -260,8 +258,7 @@ class ProductManager implements ProductManagerInterface
             ->setSku($sku)
             ->setFkAbstractProduct($idAbstractProduct)
             ->setAttributes($encodedAttributes)
-            ->setIsActive($concreteProductTransfer->getIsActive())
-        ;
+            ->setIsActive($concreteProductTransfer->getIsActive());
 
         $concreteProductEntity->save();
 
@@ -346,8 +343,7 @@ class ProductManager implements ProductManagerInterface
                 ->setFkProduct($idConcreteProduct)
                 ->setFkLocale($locale->getIdLocale())
                 ->setName($localizedAttributes->getName())
-                ->setAttributes($encodedAttributes)
-            ;
+                ->setAttributes($encodedAttributes);
 
             $productAttributeEntity->save();
         }

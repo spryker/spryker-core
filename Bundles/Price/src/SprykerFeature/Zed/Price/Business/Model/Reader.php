@@ -165,14 +165,12 @@ class Reader implements ReaderInterface
             return $this->queryContainer
                 ->queryPriceEntityForConcreteProduct($sku, $priceType)
                 ->findOne()
-                ->getIdPriceProduct()
-            ;
+                ->getIdPriceProduct();
         } else {
             return $this->queryContainer
                 ->queryPriceEntityForConcreteProduct($sku, $priceType)
                 ->findOne()
-                ->getIdPriceProduct()
-            ;
+                ->getIdPriceProduct();
         }
     }
 
@@ -211,8 +209,7 @@ class Reader implements ReaderInterface
     {
         $priceProductCount = $this->queryContainer
             ->queryPriceEntityForConcreteProduct($sku, $priceType)
-            ->count()
-        ;
+            ->count();
 
         return $priceProductCount > 0;
     }
@@ -227,8 +224,7 @@ class Reader implements ReaderInterface
     {
         $priceProductCount = $this->queryContainer
             ->queryPriceEntityForAbstractProduct($sku, $priceType)
-            ->count()
-        ;
+            ->count();
 
         return $priceProductCount > 0;
     }
@@ -243,8 +239,7 @@ class Reader implements ReaderInterface
     {
         return $this->queryContainer
             ->queryPriceEntityForConcreteProduct($sku, $priceType)
-            ->findOne()
-            ;
+            ->findOne();
     }
 
     /**
@@ -257,8 +252,7 @@ class Reader implements ReaderInterface
     {
         return $this->queryContainer
             ->queryPriceEntityForAbstractProduct($sku, $priceType)
-            ->findOne()
-            ;
+            ->findOne();
     }
 
     /**

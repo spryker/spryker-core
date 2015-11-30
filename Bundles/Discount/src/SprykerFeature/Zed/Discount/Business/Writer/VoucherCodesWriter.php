@@ -120,13 +120,11 @@ class VoucherCodesWriter extends AbstractWriter
 
         $formCollectorPlugins = array_column(
             $voucherCodesTransferArray[self::COLLECTOR_PLUGINS],
-            self::ID_DISCOUNT_COLLECTOR)
-        ;
+            self::ID_DISCOUNT_COLLECTOR);
 
         $collectorPluginsCollection = $this->getQueryContainer()
             ->queryDiscountCollectorByDiscountId($voucherCodesTransfer->getIdDiscount())
-            ->find()
-        ;
+            ->find();
 
         foreach ($collectorPluginsCollection as $collectorPlugin) {
             if (in_array($collectorPlugin->getIdDiscountCollector(), $formCollectorPlugins)) {
@@ -171,8 +169,7 @@ class VoucherCodesWriter extends AbstractWriter
 
         $decisionRulesCollection = $this->getQueryContainer()
             ->queryDecisionRules($voucherCodesTransfer->getIdDiscount())
-            ->find()
-        ;
+            ->find();
 
         foreach ($decisionRulesCollection as $decisionRule) {
             if (in_array($decisionRule->getIdDiscountDecisionRule(), $formDecisionRules)) {

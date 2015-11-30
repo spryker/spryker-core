@@ -45,8 +45,7 @@ class CartClient extends AbstractClient implements CartClientInterface
 
         $this->getSession()
             ->setItemCount(0)
-            ->setCart($cartTransfer)
-        ;
+            ->setCart($cartTransfer);
 
         return $cartTransfer;
     }

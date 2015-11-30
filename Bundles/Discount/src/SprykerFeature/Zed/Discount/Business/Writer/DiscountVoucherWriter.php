@@ -39,8 +39,7 @@ class DiscountVoucherWriter extends AbstractWriter
         $queryContainer = $this->getQueryContainer();
         $discountVoucherEntity = $queryContainer
             ->queryDiscountVoucher()
-            ->findPk($discountVoucherTransfer->getIdDiscountVoucher())
-        ;
+            ->findPk($discountVoucherTransfer->getIdDiscountVoucher());
         $discountVoucherEntity->fromArray($discountVoucherTransfer->toArray());
         $discountVoucherEntity->save();
 

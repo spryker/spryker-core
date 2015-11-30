@@ -42,8 +42,7 @@ class LastDistributionMarker implements LastDistributionMarkerInterface
     {
         $itemType = $this->queryContainer
             ->queryTypeByKey($typeKey)
-            ->findOne()
-        ;
+            ->findOne();
 
         if (empty($itemType)) {
             throw new ItemTypeDoesNotExistException();

@@ -32,8 +32,7 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getLocator()
             ->customer()
-            ->queryContainer()
-            ;
+            ->queryContainer();
     }
 
     /**
@@ -71,8 +70,7 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
     public function createAddress()
     {
         return $this->getFactory()
-            ->createCustomerAddress($this->createQueryContainer(), $this->createCountryFacade(), $this->createLocaleFacade())
-            ;
+            ->createCustomerAddress($this->createQueryContainer(), $this->createCountryFacade(), $this->createLocaleFacade());
     }
 
     /**
@@ -82,8 +80,7 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getLocator()
             ->country()
-            ->facade()
-            ;
+            ->facade();
     }
 
     /**
@@ -93,8 +90,7 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getLocator()
             ->locale()
-            ->facade()
-            ;
+            ->facade();
     }
 
     /**

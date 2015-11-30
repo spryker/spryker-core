@@ -48,18 +48,14 @@ class UrlForm extends AbstractForm
                     ]),
                     new Constraints\NotBlank(),
                 ]),
-            ])
-        ;
+            ]);
         $fields[] = $this->addField('fk_locale')
-            ->setAccepts($this->getLocales())
-        ;
+            ->setAccepts($this->getLocales());
         $fields[] = $this->addField('resource_type')
-            ->setAccepts($this->getResourceTypes())
-        ;
+            ->setAccepts($this->getResourceTypes());
         $fields[] = $this->addField('resource')
             ->setRefresh(true)
-            ->setAccepts($this->getResources())
-        ;
+            ->setAccepts($this->getResources());
 
         return $fields;
     }
@@ -109,8 +105,7 @@ class UrlForm extends AbstractForm
         $locales = $this->getLocaleQueryContainer()
             ->queryLocales()
             ->find()
-            ->toArray()
-        ;
+            ->toArray();
 
         return $this->formatLocalesArray($locales);
     }

@@ -59,8 +59,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     public function queryProductOptionTypeByImportKey($importKeyProductOptionType)
     {
         return SpyProductOptionTypeQuery::create()
-            ->filterByImportKey($importKeyProductOptionType)
-        ;
+            ->filterByImportKey($importKeyProductOptionType);
     }
 
     /**
@@ -73,8 +72,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         return SpyProductOptionTypeTranslationQuery::create()
             ->filterByFkProductOptionType($fkProductOptionType)
-            ->filterByFkLocale($fkLocale)
-        ;
+            ->filterByFkLocale($fkLocale);
     }
 
     /**
@@ -85,8 +83,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     public function queryOptionValueById($idProductOptionValue)
     {
         return SpyProductOptionTypeUsageQuery::create()
-            ->filterByIdProductOptionTypeUsage($idProductOptionValue)
-        ;
+            ->filterByIdProductOptionTypeUsage($idProductOptionValue);
     }
 
     /**
@@ -99,8 +96,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         return SpyProductOptionValueQuery::create()
             ->filterByImportKey($importKeyProductOptionValue)
-            ->filterByFkProductOptionType($fkProductOptionType)
-        ;
+            ->filterByFkProductOptionType($fkProductOptionType);
     }
 
     /**
@@ -111,8 +107,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     public function queryProductOptionValueByImportKey($importKeyProductOptionValue)
     {
         return SpyProductOptionValueQuery::create()
-            ->filterByImportKey($importKeyProductOptionValue)
-        ;
+            ->filterByImportKey($importKeyProductOptionValue);
     }
 
     /**
@@ -125,8 +120,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         return SpyProductOptionValueTranslationQuery::create()
             ->filterByFkProductOptionValue($fkProductOptionValue)
-            ->filterByFkLocale($fkLocale)
-        ;
+            ->filterByFkLocale($fkLocale);
     }
 
     /**
@@ -137,8 +131,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     public function queryProductOptionTypeUsageById($idProductOptionTypeUsage)
     {
         return SpyProductOptionTypeUsageQuery::create()
-            ->filterByIdProductOptionTypeUsage($idProductOptionTypeUsage)
-        ;
+            ->filterByIdProductOptionTypeUsage($idProductOptionTypeUsage);
     }
 
     /**
@@ -151,8 +144,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         return SpyProductOptionTypeUsageQuery::create()
             ->filterByFkProduct($fkProduct)
-            ->filterByFkProductOptionType($fkProductOptionType)
-        ;
+            ->filterByFkProductOptionType($fkProductOptionType);
     }
 
     /**
@@ -163,8 +155,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     public function queryProductOptionValueUsageById($idProductOptionValueUsage)
     {
         return SpyProductOptionValueUsageQuery::create()
-            ->filterByIdProductOptionValueUsage($idProductOptionValueUsage)
-        ;
+            ->filterByIdProductOptionValueUsage($idProductOptionValueUsage);
     }
 
     /**
@@ -177,8 +168,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         return SpyProductOptionValueUsageQuery::create()
             ->filterByFkProductOptionTypeUsage($fkProductOptionTypeUsage)
-            ->filterByFkProductOptionValue($fkProductOptionValue)
-        ;
+            ->filterByFkProductOptionValue($fkProductOptionValue);
     }
 
     /**
@@ -191,8 +181,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         return SpyProductOptionValueUsageQuery::create()
             ->filterByFkProductOptionTypeUsage($fkProductOptionTypeUsage)
-            ->filterByFkProductOptionValue($fkProductOptionType)
-        ;
+            ->filterByFkProductOptionValue($fkProductOptionType);
     }
 
     /**
@@ -205,8 +194,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         return SpyProductOptionTypeUsageExclusionQuery::create()
             ->filterByFkProductOptionTypeUsageA([$fkProductOptionTypeUsageA, $fkProductOptionTypeUsageB])
-            ->filterByFkProductOptionTypeUsageB([$fkProductOptionTypeUsageA, $fkProductOptionTypeUsageB])
-        ;
+            ->filterByFkProductOptionTypeUsageB([$fkProductOptionTypeUsageA, $fkProductOptionTypeUsageB]);
     }
 
     /**
@@ -219,8 +207,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         return SpyProductOptionValueUsageConstraintQuery::create()
             ->filterByFkProductOptionValueUsageA([$fkProductOptionValueUsageA, $fkProductOptionValueUsageB])
-            ->filterByFkProductOptionValueUsageB([$fkProductOptionValueUsageA, $fkProductOptionValueUsageB])
-        ;
+            ->filterByFkProductOptionValueUsageB([$fkProductOptionValueUsageA, $fkProductOptionValueUsageB]);
     }
 
     /**
@@ -239,8 +226,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                 ->endUse()
             ->endUse()
             ->groupByIdAbstractProduct()
-            ->select([SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT])
-        ;
+            ->select([SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT]);
     }
 
     /**
@@ -261,8 +247,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                 ->endUse()
             ->endUse()
             ->groupByIdAbstractProduct()
-            ->select([SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT])
-        ;
+            ->select([SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT]);
     }
 
     /**
@@ -278,8 +263,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                     ->filterByIdProductOptionTypeUsage($idProductOptionTypeUsage)
                 ->endUse()
             ->endUse()
-            ->groupByIdAbstractProduct()
-        ;
+            ->groupByIdAbstractProduct();
     }
 
     /**
@@ -291,8 +275,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         return SpyProductOptionConfigurationPresetQuery::create()
             ->filterByFkProduct($idProduct)
-            ->orderBySequence()
-        ;
+            ->orderBySequence();
     }
 
     /**
@@ -316,8 +299,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                     ->filterByFkLocale($idLocale)
                 ->endUse()
             ->endUse()
-            ->filterByIdProductOptionValueUsage($idProductOptionValueUsage)
-        ;
+            ->filterByIdProductOptionValueUsage($idProductOptionValueUsage);
     }
 
     /**
@@ -334,8 +316,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
                         ->filterByIdProductOptionValueUsage($idProductOptionValueUsage)
                     ->endUse()
                 ->endUse()
-            ->endUse()
-        ;
+            ->endUse();
     }
 
     /**
@@ -360,8 +341,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             ->filterByFkProduct($idProduct)
             ->orderBySequence()
             ->select([self::ID_TYPE_USAGE, self::IS_OPTIONAL, self::LABEL])
-            ->find()
-        ;
+            ->find();
 
         $result = $query->toArray();
 
@@ -394,8 +374,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             ->endUse()
             ->orderByIdProductOptionValueUsage()
             ->select([self::ID_VALUE_USAGE, self::SEQUENCE, self::LABEL, self::PRICE])
-            ->find()
-        ;
+            ->find();
 
         $result = $query->toArray();
 
@@ -413,15 +392,13 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             ->withColumn(SpyProductOptionTypeUsageExclusionTableMap::COL_FK_PRODUCT_OPTION_TYPE_USAGE_B, self::EXCLUDES)
             ->filterByFkProductOptionTypeUsageA($idTypeUsage)
             ->select([self::EXCLUDES])
-            ->find()
-        ;
+            ->find();
 
         $queryB = SpyProductOptionTypeUsageExclusionQuery::create()
             ->withColumn(SpyProductOptionTypeUsageExclusionTableMap::COL_FK_PRODUCT_OPTION_TYPE_USAGE_A, self::EXCLUDES)
             ->filterByFkProductOptionTypeUsageB($idTypeUsage)
             ->select([self::EXCLUDES])
-            ->find()
-        ;
+            ->find();
 
         $result = array_merge($queryA->toArray(), $queryB->toArray());
 
@@ -440,16 +417,14 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             ->filterByFkProductOptionValueUsageA($idValueUsage)
             ->orderByOperator()
             ->select([self::OPERATOR])
-            ->find()
-        ;
+            ->find();
 
         $queryB = SpyProductOptionValueUsageConstraintQuery::create()
             ->withColumn(SpyProductOptionValueUsageConstraintTableMap::COL_FK_PRODUCT_OPTION_VALUE_USAGE_A, self::VALUE_USAGE_ID)
             ->filterByFkProductOptionValueUsageB($idValueUsage)
             ->orderByOperator()
             ->select([self::OPERATOR])
-            ->find()
-        ;
+            ->find();
 
         $result = array_merge($queryA->toArray(), $queryB->toArray());
 
@@ -469,16 +444,14 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             ->filterByFkProductOptionValueUsageA($idValueUsage)
             ->filterByOperator($operator)
             ->select([self::OPERATOR])
-            ->find()
-        ;
+            ->find();
 
         $queryB = SpyProductOptionValueUsageConstraintQuery::create()
             ->withColumn(SpyProductOptionValueUsageConstraintTableMap::COL_FK_PRODUCT_OPTION_VALUE_USAGE_A, self::VALUE_USAGE_ID)
             ->filterByFkProductOptionValueUsageB($idValueUsage)
             ->filterByOperator($operator)
             ->select([self::OPERATOR])
-            ->find()
-        ;
+            ->find();
 
         $mergedArray = array_merge($queryA->toArray(), $queryB->toArray());
 
@@ -505,8 +478,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             ->filterByFkProduct($idProduct)
             ->orderBySequence()
             ->select([self::PRESET_ID, self::IS_DEFAULT])
-            ->find()
-        ;
+            ->find();
 
         $result = $query->toArray();
 
@@ -524,8 +496,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             ->withColumn(SpyProductOptionConfigurationPresetValueTableMap::COL_FK_PRODUCT_OPTION_VALUE_USAGE, self::VALUE_USAGE_ID)
             ->filterByFkProductOptionConfigurationPreset($idConfigPreset)
             ->select([self::VALUE_USAGE_ID])
-            ->find()
-        ;
+            ->find();
 
         $result = $query->toArray();
 
@@ -541,8 +512,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
     {
         $query = SpyProductOptionTypeUsageQuery::create();
         $query->filterByFkProduct($idProduct)
-            ->setDistinct()
-        ;
+            ->setDistinct();
 
         return $query;
     }
@@ -566,8 +536,7 @@ class ProductOptionQueryContainer extends AbstractQueryContainer implements Prod
             ->endUse()
             ->filterByIdProductOptionTypeUsage($idTypeUsage)
             ->select([self::TAX_RATE])
-            ->find()
-        ;
+            ->find();
 
         $result = $query->getFirst();
 

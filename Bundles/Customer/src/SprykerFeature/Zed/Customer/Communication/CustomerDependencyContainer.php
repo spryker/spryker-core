@@ -28,8 +28,7 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
     {
         return $this->getLocator()
             ->customer()
-            ->queryContainer()
-        ;
+            ->queryContainer();
     }
 
     /**
@@ -38,8 +37,7 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
     public function createCustomerTable()
     {
         return $this->getFactory()
-            ->createTableCustomerTable($this->getQueryContainer())
-        ;
+            ->createTableCustomerTable($this->getQueryContainer());
     }
 
     /**
@@ -50,8 +48,7 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
     public function createCustomerAddressTable($idCustomer)
     {
         return $this->getFactory()
-            ->createTableAddressTable($this->getQueryContainer(), $idCustomer)
-        ;
+            ->createTableAddressTable($this->getQueryContainer(), $idCustomer);
     }
 
     /**
@@ -64,12 +61,10 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
     public function createCustomerForm($formActionType)
     {
         $customerFormType = $this->getFactory()
-            ->createFormCustomerFormType($this->getQueryContainer(), $formActionType)
-        ;
+            ->createFormCustomerFormType($this->getQueryContainer(), $formActionType);
 
         $customerForm = $this->getFactory()
-            ->createFormCustomerForm($customerFormType, $this->getQueryContainer(), $formActionType)
-        ;
+            ->createFormCustomerForm($customerFormType, $this->getQueryContainer(), $formActionType);
 
         return $customerForm->create();
     }
@@ -80,12 +75,10 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
     public function createAddressForm()
     {
         $customerAddressFormType = $this->getFactory()
-            ->createFormAddressFormType($this->getProvidedDependency(CustomerDependencyProvider::COUNTRY_FACADE))
-        ;
+            ->createFormAddressFormType($this->getProvidedDependency(CustomerDependencyProvider::COUNTRY_FACADE));
 
         $customerAddressForm = $this->getFactory()
-            ->createFormAddressForm($customerAddressFormType, $this->getQueryContainer())
-        ;
+            ->createFormAddressForm($customerAddressFormType, $this->getQueryContainer());
 
         return $customerAddressForm->create();
     }

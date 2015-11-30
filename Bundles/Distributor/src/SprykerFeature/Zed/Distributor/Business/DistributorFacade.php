@@ -19,8 +19,7 @@ class DistributorFacade extends AbstractFacade
     {
         $this->getDependencyContainer()
             ->createItemWriter()
-            ->touchItem($itemType, $idItem)
-        ;
+            ->touchItem($itemType, $idItem);
     }
 
     /**
@@ -31,8 +30,7 @@ class DistributorFacade extends AbstractFacade
     {
         $this->getDependencyContainer()
             ->createDistributor()
-            ->distributeData($messenger, $itemTypes)
-        ;
+            ->distributeData($messenger, $itemTypes);
     }
 
     public function installItemTypes()

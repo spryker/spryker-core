@@ -39,8 +39,7 @@ class ConsoleBootstrap extends Application
         $locatedCommands = $this->getLocator()
             ->console()
             ->facade()
-            ->getConsoleCommands()
-        ;
+            ->getConsoleCommands();
 
         foreach ($locatedCommands as $command) {
             $commands[$command->getName()] = $command;

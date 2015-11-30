@@ -55,8 +55,7 @@ class DocumentAttributeWriter implements DocumentAttributeWriterInterface
     {
         $idDocumentAttribute = $documentAttribute->getIdSearchDocumentAttribute();
         $documentAttributeEntity = $this->documentAttributeReader
-            ->getDocumentAttributeById($idDocumentAttribute)
-        ;
+            ->getDocumentAttributeById($idDocumentAttribute);
 
         if ($documentAttributeEntity === null) {
             throw new DocumentAttributeDoesNotExistException('The document-attribute does not exist in the DB');

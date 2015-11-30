@@ -94,26 +94,21 @@ class MethodForm extends AbstractForm
             'label' => 'Carrier',
             'placeholder' => 'Select one',
             'choices' => $this->getCarrierOptions(),
-        ])
-        ;
+        ]);
         $this->addText(self::NAME_FIELD, [
             'label' => 'Name',
-        ])
-        ;
+        ]);
         $this->addAutosuggest(self::NAME_GLOSSARY_FIELD, [
             'label' => 'Name glossary key',
             'url' => '/glossary/ajax/keys',
-        ])
-        ;
+        ]);
         $this->addAutosuggest(self::DESCRIPTION_GLOSSARY_FIELD, [
             'label' => 'Description glossary key',
             'url' => '/glossary/ajax/keys',
-        ])
-        ;
+        ]);
         $this->addMoney(self::PRICE_FIELD, [
             'label' => 'Price',
-        ])
-        ;
+        ]);
         $this->addChoice(self::AVAILABILITY_PLUGIN_FIELD, [
             'label' => 'Availability Plugin',
             'placeholder' => 'Select one',
@@ -121,8 +116,7 @@ class MethodForm extends AbstractForm
                 array_keys($this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS]),
                 array_keys($this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS])
             ),
-        ])
-        ;
+        ]);
         $this->addChoice(self::PRICE_CALCULATION_PLUGIN_FIELD, [
             'label' => 'Price Calculation Plugin',
             'placeholder' => 'Select one',
@@ -130,8 +124,7 @@ class MethodForm extends AbstractForm
                 array_keys($this->plugins[ShipmentDependencyProvider::PRICE_CALCULATION_PLUGINS]),
                 array_keys($this->plugins[ShipmentDependencyProvider::PRICE_CALCULATION_PLUGINS])
             ),
-        ])
-        ;
+        ]);
         $this->addChoice(self::DELIVERY_TIME_PLUGIN_FIELD, [
             'label' => 'Delivery Time Plugin',
             'placeholder' => 'Select one',
@@ -139,8 +132,7 @@ class MethodForm extends AbstractForm
                 array_keys($this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS]),
                 array_keys($this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS])
             ),
-        ])
-        ;
+        ]);
         $this->addChoice(self::TAX_PLUGIN_FIELD, [
             'label' => 'Tax Calculation Plugin',
             'placeholder' => 'Select one',
@@ -148,15 +140,13 @@ class MethodForm extends AbstractForm
                 array_keys($this->plugins[ShipmentDependencyProvider::TAX_CALCULATION_PLUGINS]),
                 array_keys($this->plugins[ShipmentDependencyProvider::TAX_CALCULATION_PLUGINS])
             ),
-        ])
-        ;
+        ]);
 
         $this->addChoice(self::TAX_SET, [
             'label' => 'Tax Set',
             'placeholder' => 'Select one',
             'choices' => $this->loadTaxSets(),
-        ])
-        ;
+        ]);
         $this->addCheckbox('isActive');
 
         if ($this->idMethod !== null) {

@@ -102,8 +102,7 @@ class DocumentAttributeInstaller extends AbstractInstaller
             $attributeType = $documentAttribute[self::ATTRIBUTE_TYPE];
 
             $hasDocument = $this->documentAttributeReader
-                ->hasDocumentAttributeByNameAndType($attributeName, $attributeType)
-            ;
+                ->hasDocumentAttributeByNameAndType($attributeName, $attributeType);
 
             if ($hasDocument) {
                 throw new DocumentAttributeAlreadyExistsException(

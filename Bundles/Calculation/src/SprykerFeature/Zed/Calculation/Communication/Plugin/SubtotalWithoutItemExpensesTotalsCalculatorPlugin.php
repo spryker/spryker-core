@@ -30,8 +30,7 @@ class SubtotalWithoutItemExpensesTotalsCalculatorPlugin extends AbstractPlugin i
         $calculableItems
     ) {
         $this->getFacade()
-            ->recalculateSubtotalWithoutItemExpensesTotals($totalsTransfer, $calculableContainer, $calculableItems)
-        ;
+            ->recalculateSubtotalWithoutItemExpensesTotals($totalsTransfer, $calculableContainer, $calculableItems);
     }
 
 }

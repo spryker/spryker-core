@@ -32,8 +32,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
 {
 
     const META_TRANSFER_ERROR =
-        'Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.'
-    ;
+        'Adding MetaTransfer failed. Either name missing/invalid or no object of TransferInterface provided.';
 
     const EVENT_FIELD_TRANSFER_DATA = 'transfer_data';
 

@@ -45,8 +45,7 @@ class CollectorPluginType extends AbstractRuleType
             ])
             ->add(self::FIELD_VALUE, 'text', [
                 'label' => 'Value',
-            ])
-        ;
+            ]);
 
         $builder->add(self::FIELD_REMOVE, 'button', [
             'attr' => [

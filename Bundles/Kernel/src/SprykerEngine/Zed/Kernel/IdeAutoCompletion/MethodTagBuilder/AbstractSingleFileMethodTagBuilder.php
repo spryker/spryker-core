@@ -114,8 +114,7 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
         if (!($file instanceof SplFileInfo)) {
             $pathPattern = rtrim($this->options[self::OPTION_KEY_VENDOR_PATH_PATTERN], DIRECTORY_SEPARATOR)
                 . DIRECTORY_SEPARATOR
-                . $pattern
-            ;
+                . $pattern;
 
             return $this->getFileIn($name, $pathPattern);
         }

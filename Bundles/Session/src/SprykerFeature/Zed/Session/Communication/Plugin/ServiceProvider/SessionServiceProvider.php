@@ -108,8 +108,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
         if (SessionConfig::SESSION_HANDLER_REDIS === $saveHandler) {
             $path = Config::get(SystemConfig::ZED_STORAGE_SESSION_REDIS_PROTOCOL)
                 . '://' . Config::get(SystemConfig::ZED_STORAGE_SESSION_REDIS_HOST)
-                . ':' . Config::get(SystemConfig::ZED_STORAGE_SESSION_REDIS_PORT)
-            ;
+                . ':' . Config::get(SystemConfig::ZED_STORAGE_SESSION_REDIS_PORT);
         }
 
         if (SessionConfig::SESSION_HANDLER_FILE === $saveHandler) {

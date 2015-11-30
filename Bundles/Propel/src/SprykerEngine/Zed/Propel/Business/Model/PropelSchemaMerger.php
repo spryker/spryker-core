@@ -153,6 +153,7 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
 
         $callback = function ($a) {
             $multiplier = (strlen($a[1]) / 2) * 4;
+
             return str_repeat(' ', $multiplier) . '<';
         };
 

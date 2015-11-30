@@ -35,8 +35,7 @@ class SequenceNumberDependencyContainer extends AbstractBusinessDependencyContai
             ->createGeneratorRandomNumberGenerator(
                 $min,
                 $max
-            )
-        ;
+            );
     }
 
     /**
@@ -55,8 +54,7 @@ class SequenceNumberDependencyContainer extends AbstractBusinessDependencyContai
                 $generator,
                 $settings,
                 Propel::getConnection()
-            )
-        ;
+            );
     }
 
 }

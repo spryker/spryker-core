@@ -54,8 +54,7 @@ class GlossaryTaskWorkerPluginTest extends Test
         $this->glossaryFacade = $this->createGlossaryFacade();
         $container = new Container();
         $container = (new \SprykerFeature\Zed\Glossary\GlossaryDependencyProvider())
-            ->provideBusinessLayerDependencies($container)
-        ;
+            ->provideBusinessLayerDependencies($container);
         $this->glossaryFacade->setExternalDependencies($container);
 
         $glossaryQueueFacade = $this->createGlossaryQueueFacade();
@@ -148,8 +147,7 @@ class GlossaryTaskWorkerPluginTest extends Test
             ->useLocaleQuery()
             ->filterByLocaleName('xx_XX')
             ->endUse()
-            ->count()
-        ;
+            ->count();
 
         $this->assertEquals(1, $keyResult);
         $this->assertEquals(1, $translationResult);
@@ -182,8 +180,7 @@ class GlossaryTaskWorkerPluginTest extends Test
             ->useLocaleQuery()
             ->filterByLocaleName('xx_XX')
             ->endUse()
-            ->count()
-        ;
+            ->count();
 
         $this->assertEquals(1, $updatedTranslationCount);
     }

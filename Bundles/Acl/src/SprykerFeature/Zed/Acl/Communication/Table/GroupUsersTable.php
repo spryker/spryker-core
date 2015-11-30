@@ -87,8 +87,7 @@ class GroupUsersTable extends AbstractTable
             ->withColumn(SpyAclUserHasGroupTableMap::COL_FK_USER, self::COL_FK_USER)
             ->withColumn(SpyUserTableMap::COL_FIRST_NAME, self::COL_FIRST_NAME)
             ->withColumn(SpyUserTableMap::COL_LAST_NAME, self::COL_LAST_NAME)
-            ->withColumn(SpyUserTableMap::COL_USERNAME, self::COL_EMAIL)
-        ;
+            ->withColumn(SpyUserTableMap::COL_USERNAME, self::COL_EMAIL);
         $usersResult = $this->runQuery($query, $config);
 
         $users = [];

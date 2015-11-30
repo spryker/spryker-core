@@ -4,8 +4,6 @@ namespace SprykerFeature\Zed\Customer\Communication\Form;
 
 use SprykerEngine\Zed\Gui\Communication\Form\AbstractFormType;
 use SprykerFeature\Zed\Country\Business\CountryFacade;
-use SprykerFeature\Zed\Customer\Business\CustomerFacade;
-use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Symfony\Component\Form\FormBuilderInterface;
 
@@ -52,8 +50,7 @@ class AddressFormType extends AbstractFormType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $preferedCountry = $this->countryFacade
-            ->getPreferedCountryByName(self::PREFERED_COUNTRY_NAME)
-        ;
+            ->getPreferedCountryByName(self::PREFERED_COUNTRY_NAME);
 
         $builder
             ->add(self::FIELD_ID_CUSTOMER_ADDRESS, 'hidden')
@@ -108,8 +105,7 @@ class AddressFormType extends AbstractFormType
                 'constraints' => [
                     $this->getConstraints()->createConstraintLength(['max' => 255]),
                 ],
-            ])
-        ;
+            ]);
     }
 
     /**

@@ -74,7 +74,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     /**
      * @param array $errorMessages
      *
-     * @return $this
+     * @return self
      */
     public function addErrorMessages(array $errorMessages)
     {
@@ -88,7 +88,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     /**
      * @param Message $errorMessage
      *
-     * @return $this
+     * @return self
      */
     public function addErrorMessage(Message $errorMessage)
     {
@@ -125,7 +125,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     /**
      * @param Message $message
      *
-     * @return $this
+     * @return self
      */
     public function addMessage(Message $message)
     {
@@ -137,7 +137,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     /**
      * @param array $messages
      *
-     * @return $this
+     * @return self
      */
     public function addMessages(array $messages)
     {
@@ -159,7 +159,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     /**
      * @param bool $success
      *
-     * @return $this
+     * @return self
      */
     public function setSuccess($success)
     {
@@ -200,7 +200,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     /**
      * @param TransferInterface $transferObject
      *
-     * @return $this
+     * @return self
      */
     public function setTransfer(TransferInterface $transferObject)
     {

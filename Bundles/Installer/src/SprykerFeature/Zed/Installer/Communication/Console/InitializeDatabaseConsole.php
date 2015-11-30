@@ -25,8 +25,7 @@ class InitializeDatabaseConsole extends Console
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME)
-            ->setDescription(self::DESCRIPTION)
-        ;
+            ->setDescription(self::DESCRIPTION);
     }
 
     /**

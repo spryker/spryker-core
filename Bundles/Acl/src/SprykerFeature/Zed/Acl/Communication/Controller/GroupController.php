@@ -137,8 +137,7 @@ class GroupController extends AbstractController
 
         foreach ($formData[GroupForm::FIELD_ROLES] as $idRole) {
             $roleTransfer = (new RoleTransfer())
-                ->setIdAclRole($idRole)
-            ;
+                ->setIdAclRole($idRole);
             $roles->addRole($roleTransfer);
         }
 

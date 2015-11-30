@@ -110,8 +110,7 @@ class AclFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createRoleModel()
-            ->hasRoleName($name)
-        ;
+            ->hasRoleName($name);
     }
 
     /**

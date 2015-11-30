@@ -43,8 +43,7 @@ class SubscriberManager implements SubscriberManagerInterface
     {
         $subscriberEntity = $this->queryContainer->querySubscriber()
             ->filterByEmail($email)
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($subscriberEntity === null) {
             return null;
@@ -85,8 +84,7 @@ class SubscriberManager implements SubscriberManagerInterface
         }
 
         $subscriberEntity = $this->queryContainer->querySubscriber()
-            ->findOneByEmail($subscriber->getEmail())
-        ;
+            ->findOneByEmail($subscriber->getEmail());
 
         if ($subscriberEntity !== null) {
             $subscriberEntity->setFkCustomer($subscriber->getFkCustomer());

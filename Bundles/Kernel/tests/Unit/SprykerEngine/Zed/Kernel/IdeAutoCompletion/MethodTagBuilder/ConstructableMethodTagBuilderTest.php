@@ -31,13 +31,11 @@ class ConstructableMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $methodTags = $methodTagBuilder->buildMethodTags('Bundle');
 
         $expectedMethodTag =
-            ' * @method \VendorNamespace\Application\Bundle\Communication\Plugin\Foo createPluginFoo()'
-        ;
+            ' * @method \VendorNamespace\Application\Bundle\Communication\Plugin\Foo createPluginFoo()';
         $this->assertContains($expectedMethodTag, $methodTags);
 
         $expectedMethodTag =
-            ' * @method \VendorNamespace\Application\Bundle\Communication\Plugin\Bar createPluginBar()'
-        ;
+            ' * @method \VendorNamespace\Application\Bundle\Communication\Plugin\Bar createPluginBar()';
 
         $this->assertContains($expectedMethodTag, $methodTags);
     }
@@ -58,8 +56,7 @@ class ConstructableMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $methodTags = $methodTagBuilder->buildMethodTags('Bundle');
 
         $expectedMethodTag =
-            ' * @method \ProjectNamespace\Application\Bundle\Communication\Plugin\Baz createPluginBaz()'
-        ;
+            ' * @method \ProjectNamespace\Application\Bundle\Communication\Plugin\Baz createPluginBaz()';
         $this->assertContains($expectedMethodTag, $methodTags);
     }
 
@@ -78,8 +75,7 @@ class ConstructableMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $methodTags = $methodTagBuilder->buildMethodTags('Bundle');
 
         $expectedMethodTag =
-            ' * @method \ProjectNamespace\Application\Bundle\Communication\Form\FooForm createCommunicationFormFooForm()'
-        ;
+            ' * @method \ProjectNamespace\Application\Bundle\Communication\Form\FooForm createCommunicationFormFooForm()';
         $this->assertContains($expectedMethodTag, $methodTags);
     }
 
@@ -97,8 +93,7 @@ class ConstructableMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $methodTagBuilder = new ConstructableMethodTagBuilder($options);
         $methodTags = $methodTagBuilder->buildMethodTags('Bundle');
         $expectedMethodTag =
-            ' * @method \ProjectNamespace\Application\Bundle\Persistence\BundleQueryContainer createBundleQueryContainer(array $foo, $bar = true, $baz = null, $baz2 = \'abc\', $baz3 = \'\\\\\')'
-        ;
+            ' * @method \ProjectNamespace\Application\Bundle\Persistence\BundleQueryContainer createBundleQueryContainer(array $foo, $bar = true, $baz = null, $baz2 = \'abc\', $baz3 = \'\\\\\')';
         $this->assertContains($expectedMethodTag, $methodTags);
     }
 
@@ -118,13 +113,11 @@ class ConstructableMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $methodTags = $methodTagBuilder->buildMethodTags('Bundle');
 
         $expectedMethodTag =
-            ' * @method \ProjectNamespace\Application\Bundle\Communication\Plugin\Baz createPluginBaz()'
-        ;
+            ' * @method \ProjectNamespace\Application\Bundle\Communication\Plugin\Baz createPluginBaz()';
         $this->assertContains($expectedMethodTag, $methodTags);
 
         $notAllowedMethodTag =
-            ' * @method \ProjectNamespace\Application\Bundle\Communication\Plugin\AbstractFoo createPluginAbstractFoo()'
-        ;
+            ' * @method \ProjectNamespace\Application\Bundle\Communication\Plugin\AbstractFoo createPluginAbstractFoo()';
         $this->assertNotContains($notAllowedMethodTag, $methodTags);
     }
 

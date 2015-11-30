@@ -59,8 +59,7 @@ class GroupTable extends AbstractTable
         $query = $this->aclGroupQuery
             ->leftJoinSpyAclGroupsHasRoles()
             ->groupByIdAclGroup()
-            ->withColumn('COUNT(fk_acl_role)', self::ROLES)
-        ;
+            ->withColumn('COUNT(fk_acl_role)', self::ROLES);
 
         $groupCollection = $this->runQuery($query, $config);
 

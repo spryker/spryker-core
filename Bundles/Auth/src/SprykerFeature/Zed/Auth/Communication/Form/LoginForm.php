@@ -37,8 +37,7 @@ class LoginForm extends AbstractForm
                 'attr' => [
                     'placeholder' => 'Password',
                 ],
-            ])
-        ;
+            ]);
     }
 
 }

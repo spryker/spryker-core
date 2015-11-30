@@ -57,8 +57,7 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
         $roleCollection = $this->getQueryContainer()
             ->queryGroupRoles($idGroup)
             ->find()
-            ->toArray()
-        ;
+            ->toArray();
 
         return [
             'code' => Response::HTTP_OK,

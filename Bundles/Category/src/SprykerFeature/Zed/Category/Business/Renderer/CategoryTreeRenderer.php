@@ -79,8 +79,7 @@ class CategoryTreeRenderer
     {
         $children = $this->queryContainer
             ->queryFirstLevelChildrenByIdLocale($node->getPrimaryKey(), $this->locale->getIdLocale())
-            ->find()
-        ;
+            ->find();
 
         $deleteLink = '/category-tree/index/delete-node?id=';
         $deleteString = '<br/>click to delete';

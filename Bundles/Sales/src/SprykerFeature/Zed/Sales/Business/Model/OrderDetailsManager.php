@@ -63,8 +63,7 @@ class OrderDetailsManager
     {
         $orderEntity = $this->queryContainer
             ->querySalesOrderById($idOrder)
-            ->findOne()
-        ;
+            ->findOne();
 
         Copy::transferToEntity($orderTransfer, $orderEntity);
 
@@ -155,8 +154,7 @@ class OrderDetailsManager
     {
         $orderEntity = $this->queryContainer
             ->querySalesOrderDetails($orderTransfer->getIdSalesOrder(), $orderTransfer->getFkCustomer())
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($orderEntity === null) {
             throw new InvalidSalesOrderException();

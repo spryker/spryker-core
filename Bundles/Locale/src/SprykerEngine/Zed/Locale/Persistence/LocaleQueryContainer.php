@@ -21,8 +21,7 @@ class LocaleQueryContainer extends AbstractQueryContainer implements LocaleQuery
     {
         $query = SpyLocaleQuery::create();
         $query
-            ->filterByLocaleName($localeName)
-        ;
+            ->filterByLocaleName($localeName);
 
         return $query;
     }

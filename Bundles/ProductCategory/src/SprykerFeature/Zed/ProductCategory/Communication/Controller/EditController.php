@@ -277,8 +277,7 @@ class EditController extends AddController
         $existingCategoryNode = $this->getDependencyContainer()
             ->createCategoryQueryContainer()
             ->queryNodeByIdCategoryAndParentNode($categoryTransfer->getIdCategory(), $nodeTransfer->getFkParentCategoryNode())
-            ->findOne()
-        ;
+            ->findOne();
 
         $this->createOrUpdateCategoryNode($existingCategoryNode, $nodeTransfer, $locale);
 

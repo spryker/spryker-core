@@ -32,8 +32,7 @@ class PageController extends AbstractController
     public function indexAction()
     {
         $pageTable = $this->getDependencyContainer()
-            ->createCmsPageTable()
-        ;
+            ->createCmsPageTable();
 
         return [
             'pages' => $pageTable->render(),
@@ -46,8 +45,7 @@ class PageController extends AbstractController
     public function tableAction()
     {
         $table = $this->getDependencyContainer()
-            ->createCmsPageTable()
-        ;
+            ->createCmsPageTable();
 
         return $this->jsonResponse($table->fetchData());
     }
@@ -58,8 +56,7 @@ class PageController extends AbstractController
     public function addAction()
     {
         $form = $this->getDependencyContainer()
-            ->createCmsPageForm('add')
-        ;
+            ->createCmsPageForm('add');
 
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
@@ -70,8 +67,7 @@ class PageController extends AbstractController
             $pageTransfer = $this->createPageTransfer($data);
 
             $this->getFacade()
-                ->savePageUrlAndTouch($pageTransfer, $data[CmsPageForm::URL])
-            ;
+                ->savePageUrlAndTouch($pageTransfer, $data[CmsPageForm::URL]);
             $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $pageTransfer->getIdCmsPage();
 
             return $this->redirectResponse($redirectUrl);
@@ -93,8 +89,7 @@ class PageController extends AbstractController
         $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
 
         $form = $this->getDependencyContainer()
-            ->createCmsPageForm('update', $idPage)
-        ;
+            ->createCmsPageForm('update', $idPage);
 
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
@@ -130,8 +125,7 @@ class PageController extends AbstractController
     private function getUrlFacade()
     {
         return $this->getDependencyContainer()
-            ->getProvidedDependency(CmsDependencyProvider::FACADE_URL)
-            ;
+            ->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
     }
 
     /**
@@ -158,8 +152,7 @@ class PageController extends AbstractController
     {
         $url = $this->getQueryContainer()
             ->queryUrlById($idUrl)
-            ->findOne()
-        ;
+            ->findOne();
 
         $urlTransfer = new UrlTransfer();
 

@@ -32,8 +32,7 @@ class IndexController extends AbstractController
     public function indexAction()
     {
         $rootCategories = $this->getDependencyContainer()
-            ->createRootNodeTable()
-        ;
+            ->createRootNodeTable();
 
         return $this->viewResponse([
             'rootCategories' => $rootCategories->render(),
@@ -46,8 +45,7 @@ class IndexController extends AbstractController
     public function rootNodeTableAction()
     {
         $table = $this->getDependencyContainer()
-            ->createRootNodeTable()
-        ;
+            ->createRootNodeTable();
 
         return $this->jsonResponse(
             $table->fetchData()
@@ -106,8 +104,7 @@ class IndexController extends AbstractController
 
         /** @var CategoryAttributeTable $table */
         $table = $this->getDependencyContainer()
-            ->createCategoryAttributeTable($idCategory)
-        ;
+            ->createCategoryAttributeTable($idCategory);
 
         $tableData = $this->getTableArrayFormat($table);
 
@@ -124,8 +121,7 @@ class IndexController extends AbstractController
         $idCategory = $request->get(self::PARAM_ID_CATEGORY_NODE);
 
         $table = $this->getDependencyContainer()
-            ->createUrlTable($idCategory)
-        ;
+            ->createUrlTable($idCategory);
 
         $tableData = $this->getTableArrayFormat($table);
 
@@ -140,8 +136,7 @@ class IndexController extends AbstractController
     public function rebuildClosureTableAction(Request $request)
     {
         $this->getFacade()
-            ->rebuildClosureTable()
-        ;
+            ->rebuildClosureTable();
 
         exit('<br/>Done');
     }
@@ -172,8 +167,7 @@ class IndexController extends AbstractController
             ->getTreeNodeChildrenByIdCategoryAndLocale(
                 $idCategory,
                 $this->getDependencyContainer()->createCurrentLocale()
-            )
-        ;
+            );
     }
 
 }

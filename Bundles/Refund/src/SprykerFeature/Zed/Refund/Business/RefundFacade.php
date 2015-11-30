@@ -63,8 +63,7 @@ class RefundFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createSalesFacade()
-            ->getOrderByIdSalesOrder($idSalesOrder)
-        ;
+            ->getOrderByIdSalesOrder($idSalesOrder);
     }
 
     /**
@@ -76,8 +75,7 @@ class RefundFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createRefundModel()
-            ->saveRefund($refundTransfer)
-        ;
+            ->saveRefund($refundTransfer);
     }
 
     /**

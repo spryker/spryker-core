@@ -38,8 +38,7 @@ class BlockController extends AbstractController
     public function indexAction()
     {
         $blockTable = $this->getDependencyContainer()
-            ->createCmsBlockTable($this->getCurrentIdLocale())
-        ;
+            ->createCmsBlockTable($this->getCurrentIdLocale());
 
         return [
             'blocks' => $blockTable->render(),
@@ -52,8 +51,7 @@ class BlockController extends AbstractController
     public function tableAction()
     {
         $table = $this->getDependencyContainer()
-            ->createCmsBlockTable($this->getCurrentIdLocale())
-        ;
+            ->createCmsBlockTable($this->getCurrentIdLocale());
 
         return $this->jsonResponse($table->fetchData());
     }
@@ -95,8 +93,7 @@ class BlockController extends AbstractController
         $idBlock = $request->get(CmsBlockTable::REQUEST_ID_BLOCK);
 
         $form = $this->getDependencyContainer()
-            ->createCmsBlockForm('update', $idBlock)
-        ;
+            ->createCmsBlockForm('update', $idBlock);
 
         $isSynced = $this->getFacade()->syncTemplate(self::CMS_FOLDER_PATH);
 
@@ -182,8 +179,7 @@ class BlockController extends AbstractController
 
         $searchedItems = $this->getQueryContainer()
             ->queryNodeByCategoryName($term, $this->getCurrentIdLocale())
-            ->find()
-        ;
+            ->find();
 
         $result = [];
         foreach ($searchedItems as $category) {

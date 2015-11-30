@@ -74,8 +74,7 @@ class CategoryNodeForm extends AbstractForm
     {
         $nodeEntity = $this->queryContainer
             ->queryNodeById($this->getCategoryIdNode())
-            ->findOne()
-        ;
+            ->findOne();
         if ($nodeEntity !== null) {
             return $nodeEntity->toArray();
         }
@@ -92,8 +91,7 @@ class CategoryNodeForm extends AbstractForm
                 new Constraints\Type([
                     'type' => 'bool',
                 ]),
-            ])
-        ;
+            ]);
         $this->addField(self::FK_CATEGORY)
             ->setAccepts($this->getCategories())
             ->setRefresh(false)
@@ -108,8 +106,7 @@ class CategoryNodeForm extends AbstractForm
             ])
             ->setValueHook(function ($value) {
                 return $value ? (int) $value : null;
-            })
-        ;
+            });
 
         $this->addField(self::FK_PARENT_CATEGORY_NODE)
             ->setAccepts($this->getParentCategories())
@@ -126,8 +123,7 @@ class CategoryNodeForm extends AbstractForm
             ])
             ->setValueHook(function ($value) {
                 return $value ? (int) $value : null;
-            })
-        ;
+            });
     }
 
     /**
@@ -138,8 +134,7 @@ class CategoryNodeForm extends AbstractForm
         $categories = $this->queryContainer
             ->queryCategory($this->locale->getIdLocale())
             ->setFormatter(new PropelArraySetFormatter())
-            ->find()
-        ;
+            ->find();
 
         $data = [];
         foreach ($categories as $category) {
@@ -164,8 +159,7 @@ class CategoryNodeForm extends AbstractForm
         $categoryNodes = $this->queryContainer
             ->queryCategoryNode($this->locale->getIdLocale())
             ->setFormatter(new PropelArraySetFormatter())
-            ->find()
-        ;
+            ->find();
 
         $data = [];
         foreach ($categoryNodes as $categoryNode) {

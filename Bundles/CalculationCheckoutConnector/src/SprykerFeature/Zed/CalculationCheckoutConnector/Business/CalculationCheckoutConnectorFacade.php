@@ -33,8 +33,7 @@ class CalculationCheckoutConnectorFacade extends AbstractFacade
             $error = new CheckoutErrorTransfer();
             $error
                 ->setErrorCode(CheckoutConfig::ERROR_CODE_CART_AMOUNT_DIFFERENT)
-                ->setMessage('Cart-Werte stimmen nicht überein')
-            ;
+                ->setMessage('Cart values are not the same.');
 
             $response->addError($error);
         }

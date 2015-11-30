@@ -89,8 +89,7 @@ class UrlManager implements UrlManagerInterface
             ->setUrl($url)
             ->setFkLocale($fkLocale)
             ->setResource($resourceType, $idResource)
-            ->save()
-        ;
+            ->save();
 
         return $urlEntity;
     }
@@ -147,8 +146,7 @@ class UrlManager implements UrlManagerInterface
             ->setResourceType($urlEntity->getResourceType())
             ->setResourceId($urlEntity->getResourceId())
             ->$setterName($urlEntity->getResourceId())
-            ->setIdUrl($urlEntity->getIdUrl())
-        ;
+            ->setIdUrl($urlEntity->getIdUrl());
 
         return $transferUrl;
     }
@@ -272,8 +270,7 @@ class UrlManager implements UrlManagerInterface
     public function deleteUrl(UrlTransfer $urlTransfer)
     {
         $urlEntity = $this->urlQueryContainer->queryUrlById($urlTransfer->getIdUrl())
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($urlEntity) {
             $this->touchUrlDeleted($urlTransfer->getIdUrl());
@@ -360,8 +357,7 @@ class UrlManager implements UrlManagerInterface
             ->setFkLocale($urlTransfer->getFkLocale())
             ->setResource($urlTransfer->getResourceType(), $urlTransfer->getResourceId())
             ->setUrl($urlTransfer->getUrl())
-            ->setIdUrl($urlTransfer->getIdUrl())
-        ;
+            ->setIdUrl($urlTransfer->getIdUrl());
     }
 
     /**
@@ -383,8 +379,7 @@ class UrlManager implements UrlManagerInterface
         $urlEntity
             ->setFkLocale($fkLocale)
             ->setUrl($url)
-            ->setResource($resourceType, $idResource)
-        ;
+            ->setResource($resourceType, $idResource);
 
         $urlEntity->save();
 
@@ -403,8 +398,7 @@ class UrlManager implements UrlManagerInterface
             ->queryUrls()
             ->filterByFkResourceAbstractProduct($idAbstractProduct)
             ->filterByFkLocale($idLocale)
-            ->findOne()
-        ;
+            ->findOne();
 
         $urlTransfer = new UrlTransfer();
         if ($urlEntity) {

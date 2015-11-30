@@ -95,8 +95,7 @@ class CalculatorTest extends AbstractFunctionalTest
         $expense->setName(self::EXPENSE_NAME_SHIPPING_COSTS)
             ->setType(ExpenseConstants::EXPENSE_SHIPPING)
             ->setPriceToPay(self::ORDER_SHIPPING_COSTS)
-            ->setGrossPrice(self::ORDER_SHIPPING_COSTS)
-        ;
+            ->setGrossPrice(self::ORDER_SHIPPING_COSTS);
 
         $expensesCollection = $this->getExpenseCollection();
         $expensesCollection->addCalculationExpense($expense);

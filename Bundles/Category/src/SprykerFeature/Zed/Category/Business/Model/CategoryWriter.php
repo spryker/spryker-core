@@ -76,8 +76,7 @@ class CategoryWriter implements CategoryWriterInterface
         $this->deleteAttributes($idCategory);
         $categoryEntity = $this->queryContainer
             ->queryCategoryById($idCategory)
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($categoryEntity) {
             $categoryEntity->delete();
@@ -151,8 +150,7 @@ class CategoryWriter implements CategoryWriterInterface
     {
         return $this->queryContainer
             ->queryAttributeByCategoryIdAndLocale($idCategory, $locale->getIdLocale())
-            ->findOne()
-        ;
+            ->findOne();
     }
 
     /**
@@ -164,8 +162,7 @@ class CategoryWriter implements CategoryWriterInterface
     {
         return $this->queryContainer
             ->queryCategoryById($idCategory)
-            ->findOne()
-        ;
+            ->findOne();
     }
 
     /**

@@ -34,8 +34,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     {
         return $this->getDependencyContainer()
             ->createOrderStateMachineFinder()
-            ->getManualEvents($idOrderItem)
-        ;
+            ->getManualEvents($idOrderItem);
     }
 
     /**
@@ -48,8 +47,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     {
         return $this->getDependencyContainer()
             ->createOrderStateMachineFinder()
-            ->isOrderFlagged($idOrder, $flag)
-        ;
+            ->isOrderFlagged($idOrder, $flag);
     }
 
     /**
@@ -62,8 +60,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     {
         return $this->getDependencyContainer()
             ->createOrderStateMachineFinder()
-            ->isOrderFlaggedAll($idOrder, $flag)
-        ;
+            ->isOrderFlaggedAll($idOrder, $flag);
     }
 
     /**
@@ -79,8 +76,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
 
         return $this->getDependencyContainer()
             ->createOrderStateMachineOrderStateMachine()
-            ->triggerEventForOrderItems($eventId, $orderItemIds, $data)
-        ;
+            ->triggerEventForOrderItems($eventId, $orderItemIds, $data);
     }
 
     /**
@@ -93,8 +89,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     {
         return $this->getDependencyContainer()
             ->createOrderStateMachineOrderStateMachine()
-            ->triggerEventForNewOrderItems($orderItemIds, $data)
-        ;
+            ->triggerEventForNewOrderItems($orderItemIds, $data);
     }
 
     /**
@@ -108,8 +103,7 @@ class OmsFacade extends AbstractFacade implements AvailabilityToOmsFacadeInterfa
     {
         return $this->getDependencyContainer()
             ->createOrderStateMachineOrderStateMachine()
-            ->triggerEventForOneOrderItem($eventId, $orderItemId, $data)
-        ;
+            ->triggerEventForOneOrderItem($eventId, $orderItemId, $data);
     }
 
     /**

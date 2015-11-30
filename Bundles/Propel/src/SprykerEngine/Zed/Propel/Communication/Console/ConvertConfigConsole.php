@@ -40,8 +40,7 @@ class ConvertConfigConsole extends Console
         ];
 
         $dsn = Config::get(SystemConfig::ZED_DB_ENGINE) . ':host=' . Config::get(SystemConfig::ZED_DB_HOST)
-            . ';dbname=' . Config::get(SystemConfig::ZED_DB_DATABASE)
-        ;
+            . ';dbname=' . Config::get(SystemConfig::ZED_DB_DATABASE);
 
         $config['propel']['database']['connections']['default']['dsn'] = $dsn;
         $config['propel']['database']['connections']['default']['user'] = Config::get(SystemConfig::ZED_DB_USERNAME);
@@ -53,8 +52,7 @@ class ConvertConfigConsole extends Console
 
         $fileName = $config['propel']['paths']['phpConfDir']
             . DIRECTORY_SEPARATOR
-            . 'propel.json'
-        ;
+            . 'propel.json';
 
         if (!is_dir(dirname($fileName))) {
             mkdir(dirname($fileName), 0777, true);

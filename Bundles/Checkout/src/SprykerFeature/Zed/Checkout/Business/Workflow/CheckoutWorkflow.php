@@ -143,8 +143,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
             $checkoutResponse
                 ->addError($error)
-                ->setIsSuccess(false)
-            ;
+                ->setIsSuccess(false);
         }
     }
 
@@ -187,8 +186,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
             $checkoutResponse
                 ->addError($error)
-                ->setIsSuccess(false)
-            ;
+                ->setIsSuccess(false);
         }
 
         return $orderTransfer;
@@ -249,8 +247,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 
             $checkoutResponse
                 ->addError($error)
-                ->setIsSuccess(false)
-            ;
+                ->setIsSuccess(false);
         }
     }
 
@@ -269,8 +266,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
             ->setMessage($exception->getMessage())
             ->setErrorCode(CheckoutConfig::ERROR_CODE_UNKNOWN_ERROR)
             ->setType(get_class($exception))
-            ->setTrace($exception->getTraceAsString())
-        ;
+            ->setTrace($exception->getTraceAsString());
 
         return $error;
     }

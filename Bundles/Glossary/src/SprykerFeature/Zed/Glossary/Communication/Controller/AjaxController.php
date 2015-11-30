@@ -38,8 +38,7 @@ class AjaxController extends AbstractController
                 SpyGlossaryKeyTableMap::COL_KEY,
             ])
             ->find()
-            ->toArray()
-        ;
+            ->toArray();
 
         return new JsonResponse($keys);
     }

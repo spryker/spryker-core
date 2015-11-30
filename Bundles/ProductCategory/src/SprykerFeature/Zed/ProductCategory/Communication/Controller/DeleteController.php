@@ -39,14 +39,12 @@ class DeleteController extends EditController
 
         $form = $this->getDependencyContainer()
             ->createCategoryFormDelete($idCategory)
-            ->handleRequest()
-        ;
+            ->handleRequest();
 
         if ($form->isValid()) {
             $data = $form->getData();
             $localeTransfer = $this->getDependencyContainer()
-                ->createCurrentLocale()
-            ;
+                ->createCurrentLocale();
             $this->getFacade()->deleteCategory(
                 $data['id_category_node'],
                 $data['fk_parent_category_node'],
@@ -70,8 +68,7 @@ class DeleteController extends EditController
         $categoryCount = $this->getDependencyContainer()
             ->createCategoryQueryContainer()
             ->queryCategoryById($idCategory)
-            ->count()
-        ;
+            ->count();
 
         if ($categoryCount === 0) {
             return false;
@@ -89,22 +86,18 @@ class DeleteController extends EditController
     protected function getViewData($idCategory, Form $form)
     {
         $locale = $this->getDependencyContainer()
-            ->createCurrentLocale()
-        ;
+            ->createCurrentLocale();
 
         $categoryEntity = $this->getDependencyContainer()
             ->createCategoryQueryContainer()
             ->queryCategoryById($idCategory)
-            ->findOne()
-        ;
+            ->findOne();
 
         $productCategoryTable = $this->getDependencyContainer()
-            ->createProductCategoryTable($locale, $idCategory)
-        ;
+            ->createProductCategoryTable($locale, $idCategory);
 
         $productTable = $this->getDependencyContainer()
-            ->createProductTable($locale, $idCategory)
-        ;
+            ->createProductTable($locale, $idCategory);
 
         return [
             'idCategory' => $idCategory,

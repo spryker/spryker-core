@@ -95,8 +95,7 @@ class AddressTable extends AbstractTable
     {
         $query = $this->customerQueryContainer->queryAddresses()->filterByFkCustomer($this->idCustomer)
             ->leftJoinCountry('country')
-            ->withColumn('country.name', self::COL_COMPANY)
-        ;
+            ->withColumn('country.name', self::COL_COMPANY);
         $lines = $this->runQuery($query, $config);
 
         $customer = $this->customerQueryContainer->queryCustomers()->findOneByIdCustomer($this->idCustomer);
@@ -141,8 +140,7 @@ class AddressTable extends AbstractTable
 
         $idCustomerAddress = !empty($details[SpyCustomerAddressTableMap::COL_ID_CUSTOMER_ADDRESS])
             ? $details[SpyCustomerAddressTableMap::COL_ID_CUSTOMER_ADDRESS]
-            : null
-        ;
+            : null;
 
         if ($idCustomerAddress !== null) {
             $buttons[] = $this->generateEditButton(sprintf('/customer/address/edit/?%s=%d', CustomerConfig::PARAM_ID_CUSTOMER_ADDRESS, $idCustomerAddress), 'Edit');

@@ -29,8 +29,7 @@ class MethodController extends AbstractController
     public function addAction()
     {
         $form = $this->getDependencyContainer()
-            ->createMethodForm()
-        ;
+            ->createMethodForm();
         $form->handleRequest();
 
         if ($form->isValid()) {
@@ -38,8 +37,7 @@ class MethodController extends AbstractController
             $methodTransfer = new ShipmentMethodTransfer();
             $methodTransfer->fromArray($data, true);
             $this->getFacade()
-                ->createMethod($methodTransfer)
-            ;
+                ->createMethod($methodTransfer);
 
             $this->addSuccessMessage('Shipment method ' . $methodTransfer->getName() . ' saved');
 
@@ -62,8 +60,7 @@ class MethodController extends AbstractController
 
         if ($this->getFacade()->hasMethod($idMethod)) {
             $form = $this->getDependencyContainer()
-                ->createMethodForm($idMethod)
-            ;
+                ->createMethodForm($idMethod);
             $form->handleRequest();
 
             if ($form->isValid()) {
@@ -72,8 +69,7 @@ class MethodController extends AbstractController
                 $methodTransfer->fromArray($data, true);
 
                 $this->getFacade()
-                    ->updateMethod($methodTransfer)
-                ;
+                    ->updateMethod($methodTransfer);
                 $this->addSuccessMessage('Shipment method ' . $methodTransfer->getName() . ' updated');
 
                 return $this->redirectResponse('/shipment/');

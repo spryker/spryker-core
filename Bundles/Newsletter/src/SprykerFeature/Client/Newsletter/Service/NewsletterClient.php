@@ -26,8 +26,7 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     public function subscribeWithSingleOptIn(NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest)
     {
         return $this->getDependencyContainer()->createZedNewsletterStub()
-            ->subscribeWithSingleOptIn($newsletterSubscriptionRequest)
-        ;
+            ->subscribeWithSingleOptIn($newsletterSubscriptionRequest);
     }
 
     /**
@@ -38,8 +37,7 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     public function subscribeWithDoubleOptIn(NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest)
     {
         return $this->getDependencyContainer()->createZedNewsletterStub()
-            ->subscribeWithDoubleOptIn($newsletterSubscriptionRequest)
-        ;
+            ->subscribeWithDoubleOptIn($newsletterSubscriptionRequest);
     }
 
     /**
@@ -50,8 +48,7 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     public function approveDoubleOptInSubscriber(NewsletterSubscriberInterface $newsletterSubscriber)
     {
         return $this->getDependencyContainer()->createZedNewsletterStub()
-            ->approveDoubleOptInSubscriber($newsletterSubscriber)
-        ;
+            ->approveDoubleOptInSubscriber($newsletterSubscriber);
     }
 
     /**
@@ -62,8 +59,7 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     public function unsubscribe(NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest)
     {
         return $this->getDependencyContainer()->createZedNewsletterStub()
-            ->unsubscribe($newsletterSubscriptionRequest)
-        ;
+            ->unsubscribe($newsletterSubscriptionRequest);
     }
 
     /**
@@ -74,8 +70,7 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
     public function checkSubscription(NewsletterSubscriptionRequestInterface $newsletterUnsubscriptionRequest)
     {
         return $this->getDependencyContainer()->createZedNewsletterStub()
-            ->checkSubscription($newsletterUnsubscriptionRequest)
-        ;
+            ->checkSubscription($newsletterUnsubscriptionRequest);
     }
 
 }

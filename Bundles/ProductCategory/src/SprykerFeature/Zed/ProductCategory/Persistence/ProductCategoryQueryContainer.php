@@ -61,8 +61,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
     {
         return $this->getDependencyContainer()
             ->createProductCategoryQuery()
-            ->filterByFkCategory($idCategory)
-        ;
+            ->filterByFkCategory($idCategory);
     }
 
     /**
@@ -76,8 +75,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
         $query = $this->queryProductCategoryMappings();
         $query
             ->filterByFkAbstractProduct($idAbstractProduct)
-            ->filterByFkCategory($idCategory)
-        ;
+            ->filterByFkCategory($idCategory);
 
         return $query;
     }
@@ -101,8 +99,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
                     ->filterByFkLocale($locale->getIdLocale())
                     ->filterByName($categoryName)
                 ->endUse()
-            ->endUse()
-        ;
+            ->endUse();
 
         return $query;
     }
@@ -179,8 +176,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
                 'id_product_category'
             )
             ->filterByFkCategory($idCategory)
-            ->orderByFkAbstractProduct()
-        ;
+            ->orderByFkAbstractProduct();
     }
 
     /**
@@ -236,8 +232,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
 
             $query->where('UPPER(' . SpyAbstractProductTableMap::COL_SKU . ') LIKE ?', $term, \PDO::PARAM_STR)
                 ->_or()
-                ->where('UPPER(' . SpyLocalizedAbstractProductAttributesTableMap::COL_NAME . ') LIKE ?', $term, \PDO::PARAM_STR)
-            ;
+                ->where('UPPER(' . SpyLocalizedAbstractProductAttributesTableMap::COL_NAME . ') LIKE ?', $term, \PDO::PARAM_STR);
         }
 
         if ($idExcludedCategory > 0) {
@@ -268,8 +263,7 @@ class ProductCategoryQueryContainer extends AbstractQueryContainer implements Pr
                 SpyProductTableMap::COL_IS_ACTIVE,
                 true,
                 Criteria::EQUAL
-            )
-        ;
+            );
     }
 
 }

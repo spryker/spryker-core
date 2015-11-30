@@ -94,8 +94,7 @@ class CategoryFormAdd extends AbstractForm
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
-            ->addHidden(self::PK_CATEGORY_NODE)
-        ;
+            ->addHidden(self::PK_CATEGORY_NODE);
     }
 
     /**
@@ -105,8 +104,7 @@ class CategoryFormAdd extends AbstractForm
     {
         $categoryEntityList = $this->categoryQueryContainer
             ->queryCategory($this->locale->getIdLocale())
-            ->find()
-        ;
+            ->find();
 
         $categories = [];
         $pathCache = [];
@@ -152,8 +150,7 @@ class CategoryFormAdd extends AbstractForm
     {
         $pathTokens = $this->categoryQueryContainer
             ->queryPath($node->getIdCategoryNode(), $this->locale->getIdLocale(), false, true)
-            ->find()
-        ;
+            ->find();
 
         $formattedPath = [];
         foreach ($pathTokens as $path) {
@@ -170,8 +167,7 @@ class CategoryFormAdd extends AbstractForm
     {
         $productEntityList = $this->productCategoryQueryContainer
             ->queryProductsByCategoryId($this->idCategory, $this->locale)
-            ->find()
-        ;
+            ->find();
 
         $assignedProducts = [];
         foreach ($productEntityList as $productEntity) {
@@ -189,8 +185,7 @@ class CategoryFormAdd extends AbstractForm
     {
         $productCategoryEntityList = $this->productCategoryQueryContainer
             ->queryProductsByCategoryId($this->idCategory, $this->locale)
-            ->find()
-        ;
+            ->find();
 
         $products = [];
         foreach ($productCategoryEntityList as $productCategoryEntity) {
@@ -216,8 +211,7 @@ class CategoryFormAdd extends AbstractForm
             ->innerJoinNode()
             ->withColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE, self::FK_PARENT_CATEGORY_NODE)
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, self::PK_CATEGORY_NODE)
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($categoryEntity) {
             $categoryEntity = $categoryEntity->toArray();

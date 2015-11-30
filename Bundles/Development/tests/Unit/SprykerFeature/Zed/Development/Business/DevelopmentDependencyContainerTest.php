@@ -6,7 +6,6 @@
 
 namespace Functional\SprykerFeature\Zed\Development\Business\Model;
 
-use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Locator;

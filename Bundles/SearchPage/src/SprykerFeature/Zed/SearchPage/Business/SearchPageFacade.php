@@ -26,8 +26,7 @@ class SearchPageFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createPageElementWriter()
-            ->createPageElement($pageElement)
-        ;
+            ->createPageElement($pageElement);
     }
 
     /**
@@ -39,8 +38,7 @@ class SearchPageFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createPageElementWriter()
-            ->createPageElement($pageElement)
-        ;
+            ->createPageElement($pageElement);
     }
 
     /**
@@ -52,8 +50,7 @@ class SearchPageFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createPageElementWriter()
-            ->createPageElement($pageElement)
-        ;
+            ->createPageElement($pageElement);
     }
 
     /**
@@ -66,8 +63,7 @@ class SearchPageFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createPageElementWriter()
-            ->switchActiveState($idPageElement, $isElementActive)
-        ;
+            ->switchActiveState($idPageElement, $isElementActive);
     }
 
     /**
@@ -77,8 +73,7 @@ class SearchPageFacade extends AbstractFacade
     {
         $this->getDependencyContainer()
             ->createDocumentAttributeInstaller($messenger)
-            ->install()
-        ;
+            ->install();
     }
 
     /**
@@ -88,8 +83,7 @@ class SearchPageFacade extends AbstractFacade
     {
         $this->getDependencyContainer()
             ->createTemplateInstaller($messenger)
-            ->install()
-        ;
+            ->install();
     }
 
     /**
@@ -102,8 +96,7 @@ class SearchPageFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createSearchPageConfigProcessor()
-            ->processSearchPageConfig($configRaw, $localeDto)
-        ;
+            ->processSearchPageConfig($configRaw, $localeDto);
     }
 
 }

@@ -238,8 +238,7 @@ class User implements UserInterface
         $entity = $this->queryContainer
             ->queryUserById($id)
             ->filterByStatus(SpyUserTableMap::COL_STATUS_ACTIVE)
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($entity === null) {
             throw new UserNotFoundException();
@@ -318,8 +317,7 @@ class User implements UserInterface
             $transferUser->setFirstName($username)
                 ->setLastName($username)
                 ->setUsername($username)
-                ->setPassword($username)
-            ;
+                ->setPassword($username);
 
             $collection->addUser($transferUser);
         }

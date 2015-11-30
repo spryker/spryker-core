@@ -108,11 +108,9 @@ class OrderManager
         $orderEntity->setShippingAddress($this->saveAddressTransfer($orderTransfer->getShippingAddress()));
 
         $orderEntity->setGrandTotal($orderTransfer->getTotals()
-            ->getGrandTotalWithDiscounts())
-        ;
+            ->getGrandTotalWithDiscounts());
         $orderEntity->setSubtotal($orderTransfer->getTotals()
-            ->getSubtotal())
-        ;
+            ->getSubtotal());
 
         $orderEntity->setOrderReference($this->orderReferenceGenerator->generateOrderReference($orderTransfer));
 
@@ -141,8 +139,7 @@ class OrderManager
 
             $itemEntity->setFkSalesOrder($orderEntity->getIdSalesOrder());
             $itemEntity->setFkOmsOrderItemState($this->omsFacade->getInitialStateEntity()
-                ->getIdOmsOrderItemState())
-            ;
+                ->getIdOmsOrderItemState());
 
             $itemEntity->setProcess($orderProcess);
 
@@ -239,8 +236,7 @@ class OrderManager
     {
         $orderEntity = $this->queryContainer
             ->querySalesOrderById($idSalesOrder)
-            ->findOne()
-        ;
+            ->findOne();
 
         return (new OrderTransfer())->fromArray($orderEntity->toArray(), true);
     }

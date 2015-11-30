@@ -25,8 +25,7 @@ class NavigationCacheBuilderTest extends \PHPUnit_Framework_TestCase
             ['isEnabled', 'setNavigation', 'getNavigation']
         );
         $navigationCacheMock->expects($this->once())
-            ->method('setNavigation')
-        ;
+            ->method('setNavigation');
 
         $navigationCollectorMock = $this->getMock(
             'SprykerFeature\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface',
@@ -34,8 +33,7 @@ class NavigationCacheBuilderTest extends \PHPUnit_Framework_TestCase
         );
         $navigationCollectorMock->expects($this->once())
             ->method('getNavigation')
-            ->will($this->returnValue([]))
-        ;
+            ->will($this->returnValue([]));
 
         $navigationCacheBuilder = new NavigationCacheBuilder($navigationCollectorMock, $navigationCacheMock);
         $navigationCacheBuilder->writeNavigationCache();

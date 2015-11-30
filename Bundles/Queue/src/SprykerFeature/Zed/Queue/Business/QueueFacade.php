@@ -20,8 +20,7 @@ class QueueFacade extends AbstractFacade
     {
         $this->getDependencyContainer()
             ->createQueueConnection()
-            ->publish($queueName, $queueMessage)
-        ;
+            ->publish($queueName, $queueMessage);
     }
 
     /**
@@ -38,8 +37,7 @@ class QueueFacade extends AbstractFacade
     ) {
         $this->getDependencyContainer()
             ->createTaskWorker($queueName, $messenger)
-            ->work($timeout, $fetchSize)
-        ;
+            ->work($timeout, $fetchSize);
     }
 
 }

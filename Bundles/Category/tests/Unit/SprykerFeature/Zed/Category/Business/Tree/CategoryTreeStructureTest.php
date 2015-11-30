@@ -52,8 +52,7 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
 
         $treeStructure = $this->factory
             ->createTreeFormatterCategoryTreeFormatter($categories)
-            ->getCategoryTree()
-        ;
+            ->getCategoryTree();
 
         $this->assertSame($this->expected->getOrderedCategoriesArray(), $treeStructure);
     }
@@ -67,8 +66,7 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
 
         $treeStructure = $this->factory
             ->createTreeFormatterCategoryTreeFormatter($categories)
-            ->getCategoryTree()
-        ;
+            ->getCategoryTree();
 
         $this->assertSame($this->expected->getSecondOrderedCategoriesArray(), $treeStructure);
     }
@@ -82,8 +80,7 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
 
         $treeStructure = $this->factory
             ->createTreeFormatterCategoryTreeFormatter($categories)
-            ->getCategoryTree()
-        ;
+            ->getCategoryTree();
 
         $this->assertSame($this->expected->getCategoryStructureWithChildrenBeforeParent(), $treeStructure);
     }
@@ -97,8 +94,7 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
 
         $treeStructure = $this->factory
             ->createTreeFormatterCategoryTreeFormatter($categories)
-            ->getCategoryTree()
-        ;
+            ->getCategoryTree();
 
         $this->assertSame($this->expected->getCategoryStructureWithNonexistantParent(), $treeStructure);
     }

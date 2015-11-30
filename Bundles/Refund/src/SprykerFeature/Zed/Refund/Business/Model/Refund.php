@@ -170,8 +170,7 @@ class Refund
             ->querySalesOrderItem()
             ->filterByFkSalesOrder($idOrder)
             ->filterByFkRefund(null, Criteria::ISNULL)
-            ->find()
-        ;
+            ->find();
     }
 
     /**
@@ -185,8 +184,7 @@ class Refund
             ->querySalesExpense()
             ->filterByFkSalesOrder($idOrder)
             ->filterByFkRefund(null, Criteria::ISNULL)
-            ->find()
-        ;
+            ->find();
     }
 
 }

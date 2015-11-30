@@ -27,8 +27,7 @@ class PropelMigrationCleanerConsole extends Console
         parent::configure();
         $this
             ->setName(self::COMMAND_NAME)
-            ->setDescription(self::COMMAND_DESCRIPTION)
-        ;
+            ->setDescription(self::COMMAND_DESCRIPTION);
     }
 
     /**

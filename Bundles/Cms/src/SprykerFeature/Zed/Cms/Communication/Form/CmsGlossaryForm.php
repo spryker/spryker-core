@@ -114,8 +114,7 @@ class CmsGlossaryForm extends AbstractForm
                 'attr' => [
                     'class' => 'html-editor',
                 ],
-            ])
-        ;
+            ]);
     }
 
     /**

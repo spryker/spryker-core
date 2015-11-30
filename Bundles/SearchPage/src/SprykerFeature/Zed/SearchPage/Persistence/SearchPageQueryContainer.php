@@ -35,8 +35,7 @@ class SearchPageQueryContainer extends AbstractQueryContainer
     {
         return SpySearchDocumentAttributeQuery::create()
             ->withColumn(SpySearchDocumentAttributeTableMap::COL_ID_SEARCH_DOCUMENT_ATTRIBUTE, 'id')
-            ->withColumn(SpySearchDocumentAttributeTableMap::COL_ATTRIBUTE_NAME, 'name')
-        ;
+            ->withColumn(SpySearchDocumentAttributeTableMap::COL_ATTRIBUTE_NAME, 'name');
     }
 
     /**
@@ -47,8 +46,7 @@ class SearchPageQueryContainer extends AbstractQueryContainer
     public function queryDocumentAttributeByPrimaryKey($idDocumentAttribute)
     {
         return SpySearchDocumentAttributeQuery::create()
-            ->filterByIdSearchDocumentAttribute($idDocumentAttribute)
-        ;
+            ->filterByIdSearchDocumentAttribute($idDocumentAttribute);
     }
 
     /**
@@ -61,8 +59,7 @@ class SearchPageQueryContainer extends AbstractQueryContainer
     {
         return SpySearchDocumentAttributeQuery::create()
             ->filterByAttributeName($name)
-            ->filterByAttributeType($type)
-        ;
+            ->filterByAttributeType($type);
     }
 
     /**
@@ -80,8 +77,7 @@ class SearchPageQueryContainer extends AbstractQueryContainer
     {
         return SpySearchPageElementTemplateQuery::create()
             ->withColumn(SpySearchPageElementTemplateTableMap::COL_ID_SEARCH_PAGE_ELEMENT_TEMPLATE, 'id')
-            ->withColumn(SpySearchPageElementTemplateTableMap::COL_TEMPLATE_NAME, 'name')
-        ;
+            ->withColumn(SpySearchPageElementTemplateTableMap::COL_TEMPLATE_NAME, 'name');
     }
 
     /**
@@ -92,8 +88,7 @@ class SearchPageQueryContainer extends AbstractQueryContainer
     public function queryPageElementTemplateByPrimaryKey($idTemplate)
     {
         return SpySearchPageElementTemplateQuery::create()
-            ->filterByIdSearchPageElementTemplate($idTemplate)
-        ;
+            ->filterByIdSearchPageElementTemplate($idTemplate);
     }
 
     /**
@@ -104,8 +99,7 @@ class SearchPageQueryContainer extends AbstractQueryContainer
     public function queryPageElementTemplateByName($name)
     {
         return SpySearchPageElementTemplateQuery::create()
-            ->filterByTemplateName($name)
-        ;
+            ->filterByTemplateName($name);
     }
 
     /**
@@ -116,8 +110,7 @@ class SearchPageQueryContainer extends AbstractQueryContainer
     public function queryPageElementById($idPageElement)
     {
         return SpySearchPageElementQuery::create()
-            ->filterByPrimaryKey($idPageElement)
-        ;
+            ->filterByPrimaryKey($idPageElement);
     }
 
     /**
@@ -130,8 +123,7 @@ class SearchPageQueryContainer extends AbstractQueryContainer
             ->withColumn(SpySearchPageElementTemplateTableMap::COL_TEMPLATE_NAME, 'template_name')
             ->joinDocumentAttribute()
             ->withColumn(SpySearchDocumentAttributeTableMap::COL_ATTRIBUTE_NAME, 'attribute_name')
-            ->withColumn(SpySearchDocumentAttributeTableMap::COL_ATTRIBUTE_TYPE, 'attribute_type')
-        ;
+            ->withColumn(SpySearchDocumentAttributeTableMap::COL_ATTRIBUTE_TYPE, 'attribute_type');
     }
 
     /**
@@ -143,8 +135,7 @@ class SearchPageQueryContainer extends AbstractQueryContainer
     {
         return $this->getDependencyContainer()
             ->createSearchPageConfigQueryExpander()
-            ->expandQuery($expandableQuery)
-        ;
+            ->expandQuery($expandableQuery);
     }
 
 }

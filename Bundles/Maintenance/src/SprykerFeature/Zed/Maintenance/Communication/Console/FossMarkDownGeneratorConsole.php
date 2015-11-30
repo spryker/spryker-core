@@ -27,8 +27,7 @@ class FossMarkDownGeneratorConsole extends Console
         parent::configure();
         $this
             ->setName(self::COMMAND_NAME)
-            ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>')
-        ;
+            ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>');
     }
 
     /**

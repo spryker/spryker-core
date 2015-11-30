@@ -130,8 +130,7 @@ class CheckoutWorkflowTest extends Test
         $checkoutResponse = new CheckoutResponseTransfer();
         $checkoutResponse
             ->setIsExternalRedirect(true)
-            ->setRedirectUrl('anUrl')
-        ;
+            ->setRedirectUrl('anUrl');
 
         $mock1 = new ResponseManipulatorPrecondition($checkoutResponse);
         $mock2 = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutSaveOrderInterface');
@@ -157,8 +156,7 @@ class CheckoutWorkflowTest extends Test
 
         $checkoutResponse
             ->addError($error)
-            ->setIsSuccess(false)
-        ;
+            ->setIsSuccess(false);
 
         $mock1 = new ResponseManipulatorPrecondition($checkoutResponse);
         $mock2 = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutSaveOrderInterface');
@@ -180,8 +178,7 @@ class CheckoutWorkflowTest extends Test
 
         $orderTransfer
             ->setProcess('a process')
-            ->setIdSalesOrder(10)
-        ;
+            ->setIdSalesOrder(10);
 
         $mock1 = new MockOrderHydrator($orderTransfer);
         $mock2 = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutSaveOrderInterface');
@@ -205,8 +202,7 @@ class CheckoutWorkflowTest extends Test
 
         $checkoutResponse
             ->addError($error)
-            ->setIsSuccess(false)
-        ;
+            ->setIsSuccess(false);
 
         $mock1 = new MockOrderSaver($checkoutResponse);
         $mock2 = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPostSaveHookInterface');
@@ -228,8 +224,7 @@ class CheckoutWorkflowTest extends Test
 
         $checkoutResponse
             ->addError($error)
-            ->setIsSuccess(true)
-        ;
+            ->setIsSuccess(true);
 
         $mock = new MockPostHook($checkoutResponse);
         $omsMock = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Facade\\CheckoutToOmsInterface');

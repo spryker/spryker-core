@@ -81,9 +81,7 @@ class RedirectManager implements RedirectManagerInterface
         $redirect
             ->setToUrl($toUrl)
             ->setStatus($status)
-
-            ->save()
-        ;
+            ->save();
 
         $this->connection->commit();
 

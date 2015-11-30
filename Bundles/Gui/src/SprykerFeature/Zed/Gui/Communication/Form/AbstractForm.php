@@ -104,8 +104,7 @@ abstract class AbstractForm
         $app = $this->getLocator()
             ->application()
             ->pluginPimple()
-            ->getApplication()
-        ;
+            ->getApplication();
 
         $this->request = $app['request'];
         $this->formFactory = $app['form.factory'];

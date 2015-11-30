@@ -33,8 +33,7 @@ class EditController extends AbstractController
         $idCustomer = $request->get(CustomerFormType::PARAM_ID_CUSTOMER);
 
         $form = $this->getDependencyContainer()
-            ->createCustomerForm(CustomerFormType::UPDATE)
-        ;
+            ->createCustomerForm(CustomerFormType::UPDATE);
 
         $form->handleRequest($request);
 
@@ -44,8 +43,7 @@ class EditController extends AbstractController
             $customer = $this->createCustomerTransfer();
             $customer->fromArray($data, true);
             $this->getFacade()
-                ->updateCustomer($customer)
-            ;
+                ->updateCustomer($customer);
 
             $defaultBilling = !empty($data[CustomerTransfer::DEFAULT_BILLING_ADDRESS]) ? $data[CustomerTransfer::DEFAULT_BILLING_ADDRESS] : false;
             if (empty($defaultBilling)) {
@@ -97,8 +95,7 @@ class EditController extends AbstractController
         }
 
         $this->getFacade()
-            ->setDefaultBillingAddress($addressTransfer)
-        ;
+            ->setDefaultBillingAddress($addressTransfer);
     }
 
     /**
@@ -126,8 +123,7 @@ class EditController extends AbstractController
         }
 
         $this->getFacade()
-            ->setDefaultShippingAddress($addressTransfer)
-        ;
+            ->setDefaultShippingAddress($addressTransfer);
     }
 
     /**

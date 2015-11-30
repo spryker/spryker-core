@@ -48,8 +48,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         $query
             ->setQueryKey(self::TOUCH_ENTRY_QUERY_KEY)
             ->filterByItemType($itemType)
-            ->filterByItemId($itemId)
-        ;
+            ->filterByItemId($itemId);
 
         return $query;
     }
@@ -67,8 +66,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         $query
             ->filterByItemType($itemType)
             ->filterByItemId($itemId)
-            ->filterByItemEvent($itemEvent)
-        ;
+            ->filterByItemEvent($itemEvent);
 
         return $query;
     }
@@ -89,8 +87,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
             ->filterByItemType($itemType)
             ->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
             ->filterByTouched(['min' => $lastTouchedAt])
-            ->withColumn(SpyTouchTableMap::COL_ID_TOUCH, self::TOUCH_EXPORTER_ID)
-        ;
+            ->withColumn(SpyTouchTableMap::COL_ID_TOUCH, self::TOUCH_EXPORTER_ID);
 
         return $query;
     }
@@ -104,8 +101,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         $query
             ->addSelectColumn(SpyTouchTableMap::COL_ITEM_TYPE)
             ->setDistinct()
-            ->setFormatter(new PropelArraySetFormatter())
-        ;
+            ->setFormatter(new PropelArraySetFormatter());
 
         return $query;
     }
@@ -140,8 +136,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
             ->leftJoinTouchSearch()
             ->leftJoinTouchStorage()
             ->addAnd(SpyTouchSearchTableMap::COL_FK_TOUCH, null, Criteria::ISNULL)
-            ->addAnd(SpyTouchStorageTableMap::COL_FK_TOUCH, null, Criteria::ISNULL)
-        ;
+            ->addAnd(SpyTouchStorageTableMap::COL_FK_TOUCH, null, Criteria::ISNULL);
 
         return $query;
     }
@@ -157,8 +152,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
     {
         $query = SpyTouchQuery::create();
         $query->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
-            ->filterByItemType($itemType)
-        ;
+            ->filterByItemType($itemType);
 
         return $query;
     }

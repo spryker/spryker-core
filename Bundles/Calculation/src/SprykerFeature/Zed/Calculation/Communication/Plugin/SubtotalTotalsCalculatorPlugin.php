@@ -29,8 +29,7 @@ class SubtotalTotalsCalculatorPlugin extends AbstractPlugin implements TotalsCal
         $calculableItems
     ) {
         $this->getFacade()
-            ->recalculateSubtotalTotals($totalsTransfer, $calculableContainer, $calculableItems)
-        ;
+            ->recalculateSubtotalTotals($totalsTransfer, $calculableContainer, $calculableItems);
     }
 
 }

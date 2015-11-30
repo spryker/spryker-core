@@ -52,8 +52,7 @@ class Finder implements FinderInterface
     {
         $orderItem = $this->queryContainer
             ->querySalesOrderItems([$idOrderItem])
-            ->findOne()
-        ;
+            ->findOne();
 
         $state = $orderItem->getState()->getName();
         $processName = $orderItem->getProcess()->getName();
@@ -78,8 +77,7 @@ class Finder implements FinderInterface
     {
         $order = $this->queryContainer
             ->querySalesOrderById($idOrder)
-            ->findOne()
-        ;
+            ->findOne();
 
         $flaggedOrderItems = $this->getItemsByFlag($order, $flag, true);
 
@@ -96,13 +94,11 @@ class Finder implements FinderInterface
     {
         $order = $this->queryContainer
             ->querySalesOrderById($idOrder)
-            ->findOne()
-        ;
+            ->findOne();
 
         $orderItems = $this->queryContainer
             ->querySalesOrderItemsByIdOrder($idOrder)
-            ->find()
-        ;
+            ->find();
 
         $flaggedOrderItems = $this->getItemsByFlag($order, $flag, true);
 

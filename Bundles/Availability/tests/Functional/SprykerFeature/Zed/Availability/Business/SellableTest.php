@@ -71,28 +71,24 @@ class SellableTest extends AbstractFunctionalTest
         $abstractProduct = new SpyAbstractProduct();
         $abstractProduct
             ->setSku('AP1337')
-            ->setAttributes('{}')
-        ;
+            ->setAttributes('{}');
 
         $concreteProduct = new SpyProduct();
         $concreteProduct
             ->setSku('P1337')
             ->setSpyAbstractProduct($abstractProduct)
-            ->setAttributes('{}')
-        ;
+            ->setAttributes('{}');
 
         $stock = new SpyStock();
         $stock
-            ->setName('TestStock1')
-        ;
+            ->setName('TestStock1');
 
         $stockProduct = new SpyStockProduct();
         $stockProduct
             ->setStock($stock)
             ->setSpyProduct($concreteProduct)
             ->setQuantity(5)
-            ->save()
-        ;
+            ->save();
 
         $this->assertFalse($this->availabilityFacade->isProductSellable('P1337', 6));
     }
@@ -101,8 +97,7 @@ class SellableTest extends AbstractFunctionalTest
     {
         $abstractProduct = SpyAbstractProductQuery::create()
             ->filterBySku('test2')
-            ->findOne()
-        ;
+            ->findOne();
 
         if (!$abstractProduct) {
             $abstractProduct = new SpyAbstractProduct();
@@ -111,14 +106,12 @@ class SellableTest extends AbstractFunctionalTest
         $abstractProduct
             ->setSku('test2')
             ->setAttributes('{}')
-            ->save()
-        ;
+            ->save();
 
         $productEntity = SpyProductQuery::create()
             ->filterByFkAbstractProduct($abstractProduct->getIdAbstractProduct())
             ->filterBySku('test1')
-            ->findOne()
-        ;
+            ->findOne();
 
         if (!$productEntity) {
             $productEntity = new SpyProduct();
@@ -128,8 +121,7 @@ class SellableTest extends AbstractFunctionalTest
             ->setFkAbstractProduct($abstractProduct->getIdAbstractProduct())
             ->setSku('test1')
             ->setAttributes('{}')
-            ->save()
-        ;
+            ->save();
 
         $stockType1 = SpyStockQuery::create()
             ->filterByName('warehouse1')
@@ -139,30 +131,25 @@ class SellableTest extends AbstractFunctionalTest
 
         $stockType2 = SpyStockQuery::create()
             ->filterByName('warehouse2')
-            ->findOneOrCreate()
-        ;
+            ->findOneOrCreate();
         $stockType2->setName('warehouse2')->save();
 
         $stockProduct1 = SpyStockProductQuery::create()
             ->filterByFkStock($stockType1->getIdStock())
             ->filterByFkProduct($productEntity->getIdProduct())
-            ->findOneOrCreate()
-        ;
+            ->findOneOrCreate();
         $stockProduct1->setFkStock($stockType1->getIdStock())
             ->setQuantity(10)
             ->setFkProduct($productEntity->getIdProduct())
-            ->save()
-        ;
+            ->save();
         $stockProduct2 = SpyStockProductQuery::create()
             ->filterByFkStock($stockType2->getIdStock())
             ->filterByFkProduct($productEntity->getIdProduct())
-            ->findOneOrCreate()
-        ;
+            ->findOneOrCreate();
         $stockProduct2->setFkStock($stockType2->getIdStock())
             ->setQuantity(20)
             ->setFkProduct($productEntity->getIdProduct())
-            ->save()
-        ;
+            ->save();
     }
 
 }

@@ -368,8 +368,7 @@ class TransactionStatusUpdateManager
 
         $relations = $this->queryContainer
             ->getTransactionStatusLogOrderItemsByLogIds($idSalesOrderItem, array_keys($ids))
-            ->find()
-            ;
+            ->find();
 
         /** @var SpyPaymentPayoneTransactionStatusLogOrderItem $relation */
         foreach ($relations as $relation) {
