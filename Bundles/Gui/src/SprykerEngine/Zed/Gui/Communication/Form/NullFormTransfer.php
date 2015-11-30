@@ -6,5 +6,4 @@ use SprykerEngine\Shared\Transfer\AbstractTransfer;
 
 class NullFormTransfer extends AbstractTransfer
 {
-
 }

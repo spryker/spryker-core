@@ -39,7 +39,7 @@ abstract class AbstractForm implements FormTypeInterface
      * @see FormTypeExtensionInterface::buildForm()
      *
      * @param FormBuilderInterface $builder The form builder
-     * @param array                $options The options
+     * @param array $options The options
      *
      * @return void
      */
@@ -72,7 +72,7 @@ abstract class AbstractForm implements FormTypeInterface
      */
     public function getConstraints()
     {
-        if (is_null($this->constraintsPlugin)) {
+        if ($this->constraintsPlugin === null) {
             $this->constraintsPlugin = $this->getLocator()->gui()->pluginConstraintsPlugin();
         }
 
@@ -148,9 +148,9 @@ abstract class AbstractForm implements FormTypeInterface
      *
      * @see FormTypeExtensionInterface::buildView()
      *
-     * @param FormView      $view    The view
-     * @param FormInterface $form    The form
-     * @param array         $options The options
+     * @param FormView $view The view
+     * @param FormInterface $form The form
+     * @param array $options The options
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
@@ -169,9 +169,9 @@ abstract class AbstractForm implements FormTypeInterface
      *
      * @see FormTypeExtensionInterface::finishView()
      *
-     * @param FormView      $view    The view
-     * @param FormInterface $form    The form
-     * @param array         $options The options
+     * @param FormView $view The view
+     * @param FormInterface $form The form
+     * @param array $options The options
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {
