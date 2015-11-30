@@ -13,9 +13,10 @@ use SprykerFeature\Zed\Development\Business\CodeStyleFixer\BundleCodeStyleFixer;
 use SprykerFeature\Zed\Maintenance\Business\Dependency\BundleParser;
 use SprykerFeature\Zed\Maintenance\Business\Dependency\Graph;
 use SprykerFeature\Zed\Maintenance\Business\Dependency\Manager;
-use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackageFinder;
+use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackageFinder as ComposerInstalledPackageFinder;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorInterface;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter;
+use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\NodePackageManager\InstalledPackageFinder as NodeInstalledPackageFinder;
 use SprykerFeature\Zed\Maintenance\Business\Model\PropelBaseFolderFinder;
 use SprykerFeature\Zed\Maintenance\Business\Model\PropelMigrationCleanerInterface;
 use SprykerFeature\Zed\Maintenance\MaintenanceConfig;
@@ -58,7 +59,7 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @param InstalledPackagesTransfer $collection
      *
-     * @return InstalledPackageFinder
+     * @return ComposerInstalledPackageFinder
      */
     private function createComposerInstalledPackageFinder(InstalledPackagesTransfer $collection)
     {
@@ -71,7 +72,7 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @param InstalledPackagesTransfer $collection
      *
-     * @return InstalledPackageFinder
+     * @return NodeInstalledPackageFinder
      */
     private function createNodePackageManagerInstalledPackageFinder(InstalledPackagesTransfer $collection, $path)
     {
