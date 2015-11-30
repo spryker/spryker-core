@@ -136,17 +136,6 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return BundleCodeStyleFixer
-     */
-    public function createBundleCodeStyleFixer()
-    {
-        return $this->getFactory()->createCodeStyleFixerBundleCodeStyleFixer(
-            $this->getConfig()->getPathToRoot(),
-            $this->getConfig()->getBundleDirectory()
-        );
-    }
-
-    /**
      * @return PropelMigrationCleanerInterface
      */
     public function createPropelMigrationCleaner()

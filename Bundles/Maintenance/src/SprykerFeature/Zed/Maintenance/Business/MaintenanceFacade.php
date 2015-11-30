@@ -57,17 +57,6 @@ class MaintenanceFacade extends AbstractFacade
     }
 
     /**
-     * @param string|null $bundle
-     * @param bool $clear
-     *
-     * @return void
-     */
-    public function fixCodeStyle($bundle = null, $clear = false)
-    {
-        $this->getDependencyContainer()->createBundleCodeStyleFixer()->fixBundleCodeStyle($bundle, $clear);
-    }
-
-    /**
      * @todo move this to propel bundle
      *
      * @return bool
