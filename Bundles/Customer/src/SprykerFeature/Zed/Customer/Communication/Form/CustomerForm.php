@@ -5,6 +5,7 @@ namespace SprykerFeature\Zed\Customer\Communication\Form;
 use Generated\Shared\Transfer\CustomerTransfer;
 use Orm\Zed\Customer\Persistence\Map\SpyCustomerTableMap;
 use Pyz\Zed\Customer\CustomerConfig;
+use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;
 use SprykerEngine\Zed\Gui\Communication\Form\AbstractForm;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -15,12 +16,11 @@ class CustomerForm extends AbstractForm
 
     const ADD = 'add';
     const UPDATE = 'update';
-    const PARAM_ID_CUSTOMER = 'id-customer';
 
     /**
      * @var string
      */
-    protected $addOrUpdate;
+    protected $formActionType;
 
     /**
      * @var CustomerQueryContainerInterface
@@ -28,20 +28,21 @@ class CustomerForm extends AbstractForm
     protected $customerQueryContainer;
 
     /**
-     * CustomerFormType constructor.
-     *
-     * @param CustomerQueryContainerInterface $customerQueryContainer
-     * @param string $addOrUpdate
+     * @param CustomerQueryContainerInterface $customerQueryContainerInterface
+     * @param string $formActionType
      */
-    public function __construct(CustomerQueryContainerInterface $customerQueryContainer, $addOrUpdate)
+    public function __construct(CustomerQueryContainerInterface $customerQueryContainerInterface, $formActionType)
     {
-        $this->customerQueryContainer = $customerQueryContainer;
-        $this->addOrUpdate = $addOrUpdate;
+        $this->customerQueryContainer = $customerQueryContainerInterface;
+        $this->formActionType = $formActionType;
     }
 
+    /**
+     * @return TransferInterface
+     */
     public function populateFormFields()
     {
-        $idCustomer = $this->getRequest()->query->get(CustomerConfig::PARAM_ID_CUSTOMER, null);
+        $idCustomer = $this->getRequest()->query->getInt(CustomerConfig::PARAM_ID_CUSTOMER);
         $customerTransfer = $this->getDataClass();
 
         if (empty($idCustomer)) {
@@ -56,6 +57,9 @@ class CustomerForm extends AbstractForm
         return $customerTransfer->fromArray($customerEntity->toArray(), true);
     }
 
+    /**
+     * @return CustomerTransfer
+     */
     protected function getDataClass()
     {
         return new CustomerTransfer();
@@ -74,7 +78,7 @@ class CustomerForm extends AbstractForm
             'constraints' => $this->getEmailConstraints(),
         ];
 
-        if ($this->addOrUpdate === self::UPDATE) {
+        if ($this->formActionType === self::UPDATE) {
             $emailParameters['disabled'] = 'disabled';
         }
 
@@ -103,7 +107,7 @@ class CustomerForm extends AbstractForm
                 ],
             ]);
 
-        if ($this->addOrUpdate === self::UPDATE) {
+        if ($this->formActionType === self::UPDATE) {
             $builder
                 ->add(CustomerTransfer::DEFAULT_BILLING_ADDRESS, 'choice', [
                     'label' => 'Billing Address',
@@ -193,7 +197,7 @@ class CustomerForm extends AbstractForm
             $this->getConstraints()->createConstraintEmail(),
         ];
 
-        if ($this->addOrUpdate === self::ADD) {
+        if ($this->formActionType === self::ADD) {
             $customerQuery = $this->customerQueryContainer->queryCustomers();
 
             $emailConstraints[] = $this->getConstraints()->createConstraintCallback([

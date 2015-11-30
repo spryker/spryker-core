@@ -30,7 +30,7 @@ class EditController extends AbstractController
      */
     public function indexAction(Request $request)
     {
-        $idCustomer = $request->get(CustomerForm::PARAM_ID_CUSTOMER);
+        $idCustomer = $request->query->getInt(CustomerConfig::PARAM_ID_CUSTOMER);
 
         $form = $this->getDependencyContainer()
             ->createCustomerForm(CustomerForm::UPDATE);
@@ -54,7 +54,9 @@ class EditController extends AbstractController
                 $this->updateShippingAddress($idCustomer, $defaultShipping);
             }
 
-            return $this->redirectResponse(sprintf('/customer/view/?%s=%d', CustomerConfig::PARAM_ID_CUSTOMER, $idCustomer));
+            return $this->redirectResponse(
+                sprintf('/customer/view/?%s=%d', CustomerConfig::PARAM_ID_CUSTOMER, $idCustomer)
+            );
         }
 
         return $this->viewResponse([
