@@ -33,7 +33,7 @@ class Url
     protected $fragment;
 
     /**
-     * Factory method to create a new URL from a URL string
+     * Factory method to create a new URL from a complete URL string
      *
      * @param string $url Full URL used to create a Url object
      *
@@ -65,7 +65,7 @@ class Url
     }
 
     /**
-     * Factory method to create an internal URL from a URL string
+     * Factory method to create an internal URL from a path string
      *
      * @param string $url
      * @param array $query
@@ -158,7 +158,7 @@ class Url
     }
 
     /**
-     * @param array|string $path Path string or array of path segments
+     * @param array|string $path
      *
      * @return self
      */
@@ -204,7 +204,7 @@ class Url
     /**
      * Add a relative path to the currently set path
      *
-     * @param array|string $relativePath Relative path to add
+     * @param array|string $relativePath
      *
      * @return self
      */
