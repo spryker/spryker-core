@@ -172,12 +172,12 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     }
 
     /**
-     * @param array|string[] $messages
+     * @param \ArrayObject $messages
      * @param array|Message[] $storedMessages
      *
-     * @return array|\SprykerFeature\Shared\ZedRequest\Client\Message[]
+     * @return array|Message[]
      */
-    private function createResponseMessages(array $messages, array $storedMessages = [])
+    private function createResponseMessages(\ArrayObject $messages, array $storedMessages = [])
     {
         foreach ($messages as $message) {
             $responseMessage = new Message();
