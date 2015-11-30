@@ -12,7 +12,7 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use SprykerFeature\Shared\Checkout\CheckoutConfig;
 use SprykerFeature\Zed\CustomerCheckoutConnector\Dependency\Facade\CustomerCheckoutConnectorToCustomerInterface;
 
-class PreconditionChecker implements PreconditionCheckerInterface
+class PreConditionChecker implements PreConditionCheckerInterface
 {
 
     /**
@@ -32,7 +32,7 @@ class PreconditionChecker implements PreconditionCheckerInterface
      * @param CheckoutRequestTransfer $request
      * @param CheckoutResponseTransfer $response
      */
-    public function checkPreconditions(CheckoutRequestTransfer $request, CheckoutResponseTransfer $response)
+    public function checkPreConditions(CheckoutRequestTransfer $request, CheckoutResponseTransfer $response)
     {
         if ($request->getIdUser() !== null) {
             return;

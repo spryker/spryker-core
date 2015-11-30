@@ -11,13 +11,13 @@ use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin as BaseAbstractPlugin;
 use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
-use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreconditionInterface;
+use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;
 
 /**
  * @method PayolutionFacade getFacade()
  */
-class PreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreconditionInterface
+class PreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreConditionInterface
 {
 
     /**

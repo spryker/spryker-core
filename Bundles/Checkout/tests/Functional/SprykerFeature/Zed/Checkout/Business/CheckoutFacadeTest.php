@@ -63,14 +63,14 @@ class CheckoutFacadeTest extends Test
 
         $container = new Container();
 
-        $container[CheckoutDependencyProvider::CHECKOUT_PRECONDITIONS] = function (Container $container) {
+        $container[CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS] = function (Container $container) {
             return [
                 $container->getLocator()->customerCheckoutConnector()->pluginCustomerPreconditionCheckerPlugin(),
                 $container->getLocator()->availabilityCheckoutConnector()->pluginProductsAvailablePreconditionPlugin(),
             ];
         };
 
-        $container[CheckoutDependencyProvider::CHECKOUT_ORDERHYDRATORS] = function (Container $container) {
+        $container[CheckoutDependencyProvider::CHECKOUT_ORDER_HYDRATORS] = function (Container $container) {
             return [
                 $container->getLocator()->customerCheckoutConnector()->pluginOrderCustomerHydrationPlugin(),
                 $container->getLocator()->cartCheckoutConnector()->pluginOrderCartHydrationPlugin(),
@@ -82,14 +82,14 @@ class CheckoutFacadeTest extends Test
             return [];
         };
 
-        $container[CheckoutDependencyProvider::CHECKOUT_ORDERSAVERS] = function (Container $container) {
+        $container[CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS] = function (Container $container) {
             return [
                 $container->getLocator()->salesCheckoutConnector()->pluginSalesOrderSaverPlugin(),
                 $container->getLocator()->customerCheckoutConnector()->pluginOrderCustomerSavePlugin(),
             ];
         };
 
-        $container[CheckoutDependencyProvider::CHECKOUT_POSTHOOKS] = function (Container $container) use ($locator) {
+        $container[CheckoutDependencyProvider::CHECKOUT_POST_HOOKS] = function (Container $container) use ($locator) {
             return [];
         };
 

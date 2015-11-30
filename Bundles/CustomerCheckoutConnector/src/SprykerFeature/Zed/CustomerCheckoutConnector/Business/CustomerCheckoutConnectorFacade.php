@@ -37,7 +37,7 @@ class CustomerCheckoutConnectorFacade extends AbstractFacade
 
     public function checkPreconditions(CheckoutRequestTransfer $checkoutRequest, CheckoutResponseTransfer $checkoutResponse)
     {
-        $this->getDependencyContainer()->createPreconditionChecker()->checkPreconditions($checkoutRequest, $checkoutResponse);
+        $this->getDependencyContainer()->createPreconditionChecker()->checkPreConditions($checkoutRequest, $checkoutResponse);
     }
 
 }

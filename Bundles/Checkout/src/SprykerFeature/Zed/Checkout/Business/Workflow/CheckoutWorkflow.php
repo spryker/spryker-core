@@ -16,7 +16,7 @@ use SprykerFeature\Shared\Library\Error\ErrorHandler;
 use SprykerFeature\Zed\Checkout\Dependency\Facade\CheckoutToOmsInterface;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
-use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreconditionInterface;
+use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreHydrationInterface;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
 
@@ -24,7 +24,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
 {
 
     /**
-     * @var CheckoutPreconditionInterface[]
+     * @var CheckoutPreConditionInterface[]
      */
     protected $preConditionStack;
 
@@ -54,7 +54,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     protected $omsFacade;
 
     /**
-     * @param CheckoutPreconditionInterface[] $preConditionStack
+     * @param CheckoutPreConditionInterface[] $preConditionStack
      * @param CheckoutPreHydrationInterface[] $preHydrationStack
      * @param CheckoutOrderHydrationInterface[] $orderHydrationStack
      * @param CheckoutSaveOrderInterface[] $saveOrderStack

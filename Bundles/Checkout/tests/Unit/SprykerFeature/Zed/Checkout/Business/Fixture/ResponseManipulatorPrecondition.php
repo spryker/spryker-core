@@ -8,9 +8,9 @@ namespace Unit\SprykerFeature\Zed\Checkout\Business\Fixture;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
-use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreconditionInterface;
+use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 
-class ResponseManipulatorPrecondition implements CheckoutPreconditionInterface
+class ResponseManipulatorPreCondition implements CheckoutPreConditionInterface
 {
 
     /**
