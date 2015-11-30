@@ -10,7 +10,6 @@ use Generated\Shared\Transfer\AddressTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
-use SprykerFeature\Zed\Customer\Communication\Form\AddressForm;
 use SprykerFeature\Zed\Customer\CustomerConfig;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -140,7 +139,7 @@ class AddressController extends AbstractController
         $addressForm->handleRequest($request);
 
         if ($addressForm->isValid()) {
-            /** @var AddressTransfer $data */
+            /* @var AddressTransfer $data */
             $customerAddress = $addressForm->getData();
             $customerAddress->setFkCustomer($idCustomer);
 

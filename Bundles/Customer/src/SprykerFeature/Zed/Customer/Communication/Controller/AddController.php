@@ -10,10 +10,8 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
 use SprykerFeature\Zed\Customer\Communication\CustomerDependencyContainer;
 use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
-use SprykerFeature\Zed\Customer\Communication\Form\CustomerFormType;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 
 /**
  * @method CustomerFacade getFacade()
