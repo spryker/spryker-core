@@ -11,6 +11,7 @@ use SprykerFeature\Zed\Discount\DiscountConfigInterface;
 
 class CollectorResolver
 {
+
     const OPERATOR_OR = 'OR';
     const OPERATOR_AND = 'AND';
 

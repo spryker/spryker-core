@@ -13,13 +13,13 @@ use SprykerFeature\Zed\Discount\Business\Model\CollectorResolver;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCollectorPluginInterface;
 use SprykerFeature\Zed\Discount\DiscountConfigInterface;
 use SprykerFeature\Zed\Cart\Business\Model\CalculableContainer;
-use \Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 
 class CollectorResolverTest extends Test
 {
+
     const COLLECTOR_1 = 'COLLECTOR_1';
     const COLLECTOR_2 = 'COLLECTOR_2';
-
 
     public function testWhenANDConditionUsedWithCollectorsProvidingDifferentItemsThenNoItemsReturned()
     {
@@ -158,7 +158,6 @@ class CollectorResolverTest extends Test
         return $collectorPluginMock;
     }
 
-
     /**
      * @param array $collectorPlugins
      *
@@ -185,6 +184,7 @@ class CollectorResolverTest extends Test
 
     /**
      * @param string $sku
+     *
      * @return ItemTransfer
      */
     protected function createItemTransfer($sku)
