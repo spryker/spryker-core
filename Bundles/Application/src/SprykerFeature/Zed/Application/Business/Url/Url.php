@@ -84,8 +84,6 @@ class Url
     }
 
     /**
-     * Create a new URL from URL parts
-     *
      * @param array $url
      */
     public function __construct(array $url = [])
@@ -94,8 +92,6 @@ class Url
     }
 
     /**
-     * Returns the URL as a URL string
-     *
      * @return string
      */
     public function __toString()
@@ -145,8 +141,6 @@ class Url
     }
 
     /**
-     * Get the parts of the URL as an array
-     *
      * @return array
      */
     public function toArray()
@@ -164,8 +158,6 @@ class Url
     }
 
     /**
-     * Set the path part of the URL
-     *
      * @param array|string $path Path string or array of path segments
      *
      * @return self
