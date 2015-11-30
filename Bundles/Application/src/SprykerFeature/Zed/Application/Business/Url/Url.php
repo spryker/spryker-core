@@ -116,7 +116,7 @@ class Url
     }
 
     /**
-     * Build a URL from parse_url parts. The generated URL will be a relative URL if a scheme or host are not provided.
+     * Build a URL. The generated URL will be a relative URL if a scheme or host are not provided.
      *
      * @return string
      */
