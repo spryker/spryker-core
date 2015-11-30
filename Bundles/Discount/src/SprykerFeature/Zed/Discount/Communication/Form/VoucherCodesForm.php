@@ -51,12 +51,11 @@ class VoucherCodesForm extends AbstractRuleForm
 
     /**
      * @param DiscountConfig $config
-     * @param array $availablePoolCategories
      * @param CamelCaseToUnderscore $camelCaseToUnderscore
+     * @param DiscountQueryContainer $discountQueryContainer
      */
     public function __construct(
         DiscountConfig $config,
-//        array $availablePoolCategories,
         CamelCaseToUnderscore $camelCaseToUnderscore,
         DiscountQueryContainer $discountQueryContainer
     ) {

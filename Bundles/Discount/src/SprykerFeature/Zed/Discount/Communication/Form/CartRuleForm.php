@@ -44,7 +44,6 @@ class CartRuleForm extends AbstractRuleForm
 
     }
 
-
     /**
      * @return array
      */

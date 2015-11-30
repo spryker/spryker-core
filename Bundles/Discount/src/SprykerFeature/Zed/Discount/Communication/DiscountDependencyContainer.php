@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Discount\Communication;
 
 use Generated\Shared\Transfer\DataTablesTransfer;
+use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Zed\Discount\Communication\Form\CollectorPluginForm;
 use SprykerFeature\Zed\Discount\Communication\Form\DecisionRuleForm;
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesForm;
@@ -18,7 +19,6 @@ use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
 use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\DiscountDependencyProvider;
-use SprykerFeature\Zed\Discount\Communication\Table\DiscountVoucherTable;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
@@ -104,70 +104,18 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
-     * @return DiscountVoucherTable
-     */
-    public function createDiscountVoucherTable()
-    {
-        $discountVoucherQuery = $this->getQueryContainer()->queryDiscountVoucher();
-
-        return $this->getFactory()->createTableDiscountVoucherTable($discountVoucherQuery);
-    }
-
-    /**
-     * @param id $idPoolCategory
-     *
-     * @return PoolCategoryForm
-     */
-//    public function createPoolCategoryForm($idPoolCategory)
-//    {
-
-//        $poolCategoryQuery = $this->getQueryContainer()
-//            ->queryDiscountVoucherPoolCategory()
-//        ;
-//
-//        return $this->getFactory()->createFormPoolCategoryForm($poolCategoryQuery, $idPoolCategory);
-//    }
-
-    /**
      * @return FormTypeInterface
      */
     public function createCartRuleForm()
     {
-
         $cartRuleForm = $this->getFactory()
             ->createFormCartRuleForm(
                 $this->getConfig(),
                 $this->getDiscountFacade()
-//                $this->getDiscountFacade()->getVoucherPoolCategories(),
-//                $this->createCamelCaseToUnderscoreFilter(),
-//                $this->getQueryContainer()
-            )
-        ;
+            );
 
         return $this->createForm($cartRuleForm);
     }
-
-    /**
-     * @return array
-     */
-//    protected function getCartRuleDefaultData()
-//    {
-//        return [
-//            'decision_rules' => [
-//                'rule_1' => [
-//                    'value' => '',
-//                    'rules' => '',
-//                ],
-//            ],
-//            'collector_plugins' => [
-//                'plugin_1' => [
-//                    'collector_plugin' => '',
-//                    'value' => '',
-//                ],
-//            ],
-//            'group' => [],
-//        ];
-//    }
 
     /**
      * @return CollectorPluginForm
@@ -212,24 +160,6 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
-     * @param $idPool
-     *
-     * @return Form\PoolForm
-     */
-    public function createPoolForm($idPool=0)
-    {
-        $poolQuery = $this->getQueryContainer()
-            ->queryDiscountVoucherPool();
-
-        $discountQuery = $this->getQueryContainer()
-            ->queryDiscount();
-
-        $store = $this->getProvidedDependency(DiscountDependencyProvider::STORE_CONFIG);
-
-        return $this->getFactory()->createFormPoolForm($poolQuery, $discountQuery, $store, $idPool);
-    }
-
-    /**
      * @return DecisionRuleForm
      */
     public function createDecisionRuleForm()
@@ -239,128 +169,6 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
         );
 
         return $this->createForm($decisionRulesForm);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return DiscountForm
-     */
-    public function getDiscountForm(Request $request)
-    {
-        return $this->getFactory()->createFormDiscountForm(
-            $request,
-            $this->getQueryContainer(),
-            $this->getDiscountFacade()
-        );
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return VoucherForm
-     */
-    public function getVoucherForm(Request $request)
-    {
-        return $this->getFactory()->createFormVoucherForm(
-            $request,
-            $this->getQueryContainer(),
-            $this->getDiscountFacade(),
-            $this->getFactory()
-        );
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return VoucherPoolCategoryForm
-     */
-    public function getVoucherPoolCategoryForm(Request $request)
-    {
-        return $this->getFactory()->createFormVoucherPoolCategoryForm(
-            $request,
-            $this->getQueryContainer(),
-            $this->getDiscountFacade()
-        );
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return VoucherPoolForm
-     */
-    public function getVoucherPoolForm(Request $request)
-    {
-        return $this->getFactory()->createFormVoucherPoolForm(
-            $request,
-            $this->getQueryContainer(),
-            $this->getDiscountFacade()
-        );
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return DiscountGrid
-     */
-    public function getDiscountGrid(Request $request)
-    {
-        return $this->getFactory()->createGridDiscountGrid(
-            $this->getQueryContainer()->queryDiscount(),
-            $request
-        );
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return DecisionRuleGrid
-     */
-    public function getDecisionRuleGrid(Request $request)
-    {
-        return $this->getFactory()->createGridDecisionRuleGrid(
-            $this->getQueryContainer()->queryDiscountDecisionRule(),
-            $request
-        );
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return VoucherGrid
-     */
-    public function getVoucherGrid(Request $request)
-    {
-        return $this->getFactory()->createGridVoucherGrid(
-            $this->getQueryContainer()->queryDiscountVoucher(),
-            $request
-        );
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return VoucherPoolGrid
-     */
-    public function getVoucherPoolGrid(Request $request)
-    {
-        return $this->getFactory()->createGridVoucherGrid(
-            $this->getQueryContainer()->queryDiscountVoucherPoolJoinedVoucherPoolCategory(),
-            $request
-        );
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return VoucherPoolCategoryGrid
-     */
-    public function getVoucherPoolCategoryGrid(Request $request)
-    {
-        return $this->getFactory()->createGridVoucherGrid(
-            $this->getQueryContainer()->queryDiscountVoucherPoolCategory(),
-            $request
-        );
     }
 
     /**

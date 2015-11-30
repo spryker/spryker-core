@@ -106,8 +106,7 @@ abstract class AbstractForm implements FormTypeInterface
             $this->request = $this->getLocator()
                 ->application()
                 ->pluginPimple()
-                ->getApplication()['request']
-            ;
+                ->getApplication()['request'];
         }
 
         return $this->request;

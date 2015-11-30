@@ -2,14 +2,14 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
-use Generated\Shared\Transfer\DiscountCollectorTransfer;
-use SprykerEngine\Zed\Gui\Communication\Form\NullFormTransfer;
-use SprykerEngine\Shared\Transfer\TransferInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class CollectorPluginForm extends AbstractRuleForm
 {
 
+    const FIELD_ID_DISCOUNT_COLLECTOR = 'id_discount_collector';
+    const FIELD_COLLECTOR_PLUGIN = 'collector_plugin';
+    const FIELD_VALUE = 'value';
     const FIELD_REMOVE = 'remove';
 
     /**
@@ -27,17 +27,19 @@ class CollectorPluginForm extends AbstractRuleForm
         $this->availableCollectorPlugins = $availableCollectorPlugins;
     }
 
+    /**
+     * @return array
+     */
     public function populateFormFields()
     {
         return [];
     }
 
     /**
-     * @return TransferInterface
+     * @return void
      */
     protected function getDataClass()
     {
-        //return new DiscountCollectorTransfer();
     }
 
     /**
@@ -47,8 +49,8 @@ class CollectorPluginForm extends AbstractRuleForm
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add(DiscountCollectorTransfer::ID_DISCOUNT_COLLECTOR, 'hidden')
-            ->add(DiscountCollectorTransfer::COLLECTOR_PLUGIN, 'choice', [
+            ->add(self::FIELD_ID_DISCOUNT_COLLECTOR, 'hidden')
+            ->add(self::FIELD_COLLECTOR_PLUGIN, 'choice', [
                 'label' => 'Collector Plugin',
                 'multiple' => false,
                 'choices' => $this->getCollectorPluginsOptions(),
@@ -56,7 +58,7 @@ class CollectorPluginForm extends AbstractRuleForm
                     $this->getConstraints()->createConstraintRequired(),
                 ],
             ])
-            ->add(DiscountCollectorTransfer::VALUE, 'text', [
+            ->add(self::FIELD_VALUE, 'text', [
                 'label' => 'Value',
             ]);
 
