@@ -5,8 +5,8 @@
  */
 namespace SprykerFeature\Client\Customer\Service\Zed;
 
-use Generated\Shared\Customer\AddressInterface;
-use Generated\Shared\Customer\CustomerInterface;
+use Generated\Shared\Transfer\AddressTransfer;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
 use SprykerFeature\Client\ZedRequest\Service\Client\Response;
@@ -15,129 +15,129 @@ interface CustomerStubInterface
 {
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
      * @return CustomerResponseTransfer
      */
-    public function hasCustomerWithEmailAndPassword(CustomerInterface $customerTransfer);
+    public function hasCustomerWithEmailAndPassword(CustomerTransfer $customerTransfer);
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
      * @return CustomerResponseTransfer
      */
-    public function forgotPassword(CustomerInterface $customerTransfer);
+    public function forgotPassword(CustomerTransfer $customerTransfer);
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
      * @return CustomerResponseTransfer
      */
-    public function restorePassword(CustomerInterface $customerTransfer);
+    public function restorePassword(CustomerTransfer $customerTransfer);
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerInterface
+     * @return CustomerTransfer
      */
-    public function confirmRegistration(CustomerInterface $customerTransfer);
+    public function confirmRegistration(CustomerTransfer $customerTransfer);
 
     /**
-     * @param CustomerInterface $customerTransfer
-     *
-     * @return CustomerResponseTransfer
-     */
-    public function register(CustomerInterface $customerTransfer);
-
-    /**
-     * @param CustomerInterface $customerTransfer
-     *
-     * @return CustomerInterface
-     */
-    public function get(CustomerInterface $customerTransfer);
-
-    /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
      * @return CustomerResponseTransfer
      */
-    public function update(CustomerInterface $customerTransfer);
+    public function register(CustomerTransfer $customerTransfer);
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return CustomerTransfer
+     */
+    public function get(CustomerTransfer $customerTransfer);
+
+    /**
+     * @param CustomerTransfer $customerTransfer
      *
      * @return CustomerResponseTransfer
      */
-    public function updatePassword(CustomerInterface $customerTransfer);
+    public function update(CustomerTransfer $customerTransfer);
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransfer $customerTransfer
+     *
+     * @return CustomerResponseTransfer
+     */
+    public function updatePassword(CustomerTransfer $customerTransfer);
+
+    /**
+     * @param CustomerTransfer $customerTransfer
      *
      * @return Response
      */
-    public function delete(CustomerInterface $customerTransfer);
+    public function delete(CustomerTransfer $customerTransfer);
 
     /**
-     * @param AddressInterface $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
-     * @return AddressInterface
+     * @return AddressTransfer
      */
-    public function createAddress(AddressInterface $addressTransfer);
+    public function createAddress(AddressTransfer $addressTransfer);
 
     /**
-     * @param AddressInterface $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
-     * @return AddressInterface
+     * @return AddressTransfer
      */
-    public function updateAddress(AddressInterface $addressTransfer);
+    public function updateAddress(AddressTransfer $addressTransfer);
 
     /**
-     * @param AddressInterface $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
-     * @return CustomerInterface
+     * @return CustomerTransfer
      */
-    public function updateAddressAndCustomerDefaultAddresses(AddressInterface $addressTransfer);
+    public function updateAddressAndCustomerDefaultAddresses(AddressTransfer $addressTransfer);
 
     /**
-     * @param AddressInterface $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
-     * @return CustomerInterface
+     * @return CustomerTransfer
      */
-    public function createAddressAndUpdateCustomerDefaultAddresses(AddressInterface $addressTransfer);
+    public function createAddressAndUpdateCustomerDefaultAddresses(AddressTransfer $addressTransfer);
 
     /**
-     * @param AddressInterface $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
-     * @return AddressInterface
+     * @return AddressTransfer
      */
-    public function getAddress(AddressInterface $addressTransfer);
+    public function getAddress(AddressTransfer $addressTransfer);
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
      * @return AddressesTransfer
      */
-    public function getAddresses(CustomerInterface $customerTransfer);
+    public function getAddresses(CustomerTransfer $customerTransfer);
 
     /**
-     * @param AddressInterface $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
-     * @return AddressInterface
+     * @return AddressTransfer
      */
-    public function deleteAddress(AddressInterface $addressTransfer);
+    public function deleteAddress(AddressTransfer $addressTransfer);
 
     /**
-     * @param AddressInterface $AddressInterface
+     * @param AddressTransfer $AddressTransfer
      *
-     * @return AddressInterface
+     * @return AddressTransfer
      */
-    public function setDefaultBillingAddress(AddressInterface $AddressInterface);
+    public function setDefaultBillingAddress(AddressTransfer $AddressTransfer);
 
     /**
-     * @param AddressInterface $AddressInterface
+     * @param AddressTransfer $AddressTransfer
      *
-     * @return AddressInterface
+     * @return AddressTransfer
      */
-    public function setDefaultShippingAddress(AddressInterface $AddressInterface);
+    public function setDefaultShippingAddress(AddressTransfer $AddressTransfer);
 
 }

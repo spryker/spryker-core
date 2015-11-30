@@ -6,15 +6,15 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Distributor;
 
-use Generated\Shared\Discount\DiscountInterface;
+use Generated\Shared\Transfer\DiscountTransfer;
 
 interface DistributorInterface
 {
 
     /**
      * @param array $discountableObjects
-     * @param DiscountInterface $discountTransfer
+     * @param DiscountTransfer $discountTransfer
      */
-    public function distribute(array $discountableObjects, DiscountInterface $discountTransfer);
+    public function distribute(array $discountableObjects, DiscountTransfer $discountTransfer);
 
 }

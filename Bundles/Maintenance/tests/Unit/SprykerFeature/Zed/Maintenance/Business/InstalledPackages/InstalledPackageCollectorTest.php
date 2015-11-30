@@ -28,7 +28,7 @@ class InstalledPackageCollectorTest extends \PHPUnit_Framework_TestCase
         $collector = new InstalledPackageCollector($collection, $finder);
 
         $this->assertInstanceOf(
-            'Generated\Shared\Maintenance\InstalledPackagesInterface',
+            'Generated\Shared\Transfer\InstalledPackagesTransfer',
             $collector->getInstalledPackages()
         );
     }

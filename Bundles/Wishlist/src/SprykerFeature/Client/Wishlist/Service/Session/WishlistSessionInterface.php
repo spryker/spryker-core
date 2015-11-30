@@ -4,21 +4,21 @@
  */
 namespace SprykerFeature\Client\Wishlist\Service\Session;
 
-use Generated\Shared\Wishlist\WishlistInterface;
+use Generated\Shared\Transfer\WishlistTransfer;
 
 interface WishlistSessionInterface
 {
 
     /**
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
     public function getWishlist();
 
     /**
-     * @param WishlistInterface $wishlist
+     * @param WishlistTransfer $wishlist
      *
      * @return self
      */
-    public function setWishlist(WishlistInterface $wishlist);
+    public function setWishlist(WishlistTransfer $wishlist);
 
 }

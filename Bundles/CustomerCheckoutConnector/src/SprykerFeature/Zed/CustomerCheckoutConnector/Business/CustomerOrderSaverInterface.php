@@ -6,16 +6,16 @@
 
 namespace SprykerFeature\Zed\CustomerCheckoutConnector\Business;
 
-use Generated\Shared\CustomerCheckoutConnector\OrderInterface;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 
 interface CustomerOrderSaverInterface
 {
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      * @param CheckoutResponseTransfer $checkoutResponse
      */
-    public function saveOrder(OrderInterface $orderTransfer, CheckoutResponseTransfer $checkoutResponse);
+    public function saveOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse);
 
 }

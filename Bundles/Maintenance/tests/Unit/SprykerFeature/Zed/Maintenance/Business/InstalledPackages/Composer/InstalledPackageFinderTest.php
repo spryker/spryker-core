@@ -33,7 +33,7 @@ class InstalledPackageFinderTest extends \PHPUnit_Framework_TestCase
         $finder = new InstalledPackageFinder($collection, $this->getFixturesDirectory() . DIRECTORY_SEPARATOR . 'composerLock.mock');
 
         $this->assertInstanceOf(
-            'Generated\Shared\Maintenance\InstalledPackagesInterface',
+            'Generated\Shared\Transfer\InstalledPackagesTransfer',
             $finder->findInstalledPackages()
         );
     }

@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Heartbeat\Business\Ambulance;
 
-use Generated\Shared\Heartbeat\HealthReportInterface;
 use Generated\Shared\Transfer\HealthReportTransfer;
 use SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface;
 
@@ -14,7 +13,7 @@ class Doctor
 {
 
     /**
-     * @var HealthReportInterface
+     * @var HealthReportTransfer
      */
     protected $healthReport;
 
@@ -54,7 +53,7 @@ class Doctor
     }
 
     /**
-     * @return HealthReportInterface
+     * @return HealthReportTransfer
      */
     public function getReport()
     {

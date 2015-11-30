@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Maintenance\Business\InstalledPackages;
 
-use Generated\Shared\Maintenance\InstalledPackagesInterface;
+use Generated\Shared\Transfer\InstalledPackagesTransfer;
 
 class MarkDownWriter implements MarkDownWriterInterface
 {
@@ -14,7 +14,7 @@ class MarkDownWriter implements MarkDownWriterInterface
     const SEPARATOR = ';';
 
     /**
-     * @var InstalledPackagesInterface
+     * @var InstalledPackagesTransfer
      */
     private $installedPackages;
 
@@ -24,10 +24,10 @@ class MarkDownWriter implements MarkDownWriterInterface
     private $path;
 
     /**
-     * @param InstalledPackagesInterface $installedPackages
+     * @param InstalledPackagesTransfer $installedPackages
      * @param string $path
      */
-    public function __construct(InstalledPackagesInterface $installedPackages, $path)
+    public function __construct(InstalledPackagesTransfer $installedPackages, $path)
     {
         $this->installedPackages = $installedPackages;
         $this->path = $path;

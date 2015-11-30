@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Queue\Dependency\Plugin;
 
-use Generated\Shared\Queue\QueueMessageInterface;
+use Generated\Shared\Transfer\QueueMessageTransfer;
 
 interface TaskPluginInterface
 {
@@ -18,8 +18,8 @@ interface TaskPluginInterface
     public function getQueueName();
 
     /**
-     * @param QueueMessageInterface $queueMessage
+     * @param QueueMessageTransfer $queueMessage
      */
-    public function run(QueueMessageInterface $queueMessage);
+    public function run(QueueMessageTransfer $queueMessage);
 
 }

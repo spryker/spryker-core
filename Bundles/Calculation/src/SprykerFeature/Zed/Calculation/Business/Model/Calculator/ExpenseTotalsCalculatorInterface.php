@@ -6,19 +6,19 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Calculation\TotalsInterface;
+use Generated\Shared\Transfer\TotalsTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 
 interface ExpenseTotalsCalculatorInterface
 {
 
     /**
-     * @param TotalsInterface $totalsTransfer
+     * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
      */
     public function recalculateTotals(
-        TotalsInterface $totalsTransfer,
+        TotalsTransfer $totalsTransfer,
         CalculableInterface $calculableContainer,
         $calculableItems
     );

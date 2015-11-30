@@ -6,65 +6,65 @@
 
 namespace SprykerFeature\Zed\Cart\Business\StorageProvider;
 
-use Generated\Shared\Cart\CartInterface;
-use Generated\Shared\Cart\ChangeInterface;
+use Generated\Shared\Transfer\CartTransfer;
+use Generated\Shared\Transfer\ChangeTransfer;
 
 interface StorageProviderInterface
 {
 
     /**
-     * @param CartInterface $cart
-     * @param ChangeInterface $change
+     * @param CartTransfer $cart
+     * @param ChangeTransfer $change
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function addItems(CartInterface $cart, ChangeInterface $change);
+    public function addItems(CartTransfer $cart, ChangeTransfer $change);
 
     /**
-     * @param CartInterface $cart
-     * @param ChangeInterface $change
+     * @param CartTransfer $cart
+     * @param ChangeTransfer $change
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function removeItems(CartInterface $cart, ChangeInterface $change);
+    public function removeItems(CartTransfer $cart, ChangeTransfer $change);
 
     /**
-     * @param CartInterface $cart
-     * @param ChangeInterface $change
+     * @param CartTransfer $cart
+     * @param ChangeTransfer $change
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function increaseItems(CartInterface $cart, ChangeInterface $change);
+    public function increaseItems(CartTransfer $cart, ChangeTransfer $change);
 
     /**
-     * @param CartInterface $cart
-     * @param ChangeInterface $change
+     * @param CartTransfer $cart
+     * @param ChangeTransfer $change
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function decreaseItems(CartInterface $cart, ChangeInterface $change);
+    public function decreaseItems(CartTransfer $cart, ChangeTransfer $change);
 
     /**
-     * @param CartInterface $cart
-     * @param ChangeInterface $change
+     * @param CartTransfer $cart
+     * @param ChangeTransfer $change
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function addCouponCode(CartInterface $cart, ChangeInterface $change);
+    public function addCouponCode(CartTransfer $cart, ChangeTransfer $change);
 
     /**
-     * @param CartInterface $cart
-     * @param ChangeInterface $change
+     * @param CartTransfer $cart
+     * @param ChangeTransfer $change
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function removeCouponCode(CartInterface $cart, ChangeInterface $change);
+    public function removeCouponCode(CartTransfer $cart, ChangeTransfer $change);
 
     /**
-     * @param CartInterface $cart
+     * @param CartTransfer $cart
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function clearCouponCodes(CartInterface $cart);
+    public function clearCouponCodes(CartTransfer $cart);
 
 }

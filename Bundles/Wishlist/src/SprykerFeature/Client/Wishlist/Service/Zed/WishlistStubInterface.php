@@ -4,46 +4,46 @@
  */
 namespace SprykerFeature\Client\Wishlist\Service\Zed;
 
-use Generated\Shared\Customer\CustomerInterface;
-use Generated\Shared\Wishlist\WishlistChangeInterface;
-use Generated\Shared\Wishlist\WishlistInterface;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\WishlistChangeTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
 
 interface WishlistStubInterface
 {
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function addItem(WishlistChangeInterface $wishlistChange);
+    public function addItem(WishlistChangeTransfer $wishlistChange);
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function removeItem(WishlistChangeInterface $wishlistChange);
+    public function removeItem(WishlistChangeTransfer $wishlistChange);
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function descreaseQuantity(WishlistChangeInterface $wishlistChange);
+    public function descreaseQuantity(WishlistChangeTransfer $wishlistChange);
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function increaseQuantity(WishlistChangeInterface $wishlistChange);
+    public function increaseQuantity(WishlistChangeTransfer $wishlistChange);
 
     /**
-     * @param CustomerInterface $customer
+     * @param CustomerTransfer $customer
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function getCustomerWishlist(CustomerInterface $customer);
+    public function getCustomerWishlist(CustomerTransfer $customer);
 
 }

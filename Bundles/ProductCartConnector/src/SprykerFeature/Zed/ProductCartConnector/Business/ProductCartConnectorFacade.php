@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\ProductCartConnector\Business;
 
-use Generated\Shared\ProductCartConnector\ChangeInterface;
+use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -16,11 +16,11 @@ class ProductCartConnectorFacade extends AbstractFacade
 {
 
     /**
-     * @param ChangeInterface $change
+     * @param ChangeTransfer $change
      *
-     * @return ChangeInterface
+     * @return ChangeTransfer
      */
-    public function expandItems(ChangeInterface $change)
+    public function expandItems(ChangeTransfer $change)
     {
         return $this->getDependencyContainer()->createProductManager()->expandItems($change);
     }

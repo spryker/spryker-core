@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\DiscountCheckoutConnector\Business;
 
-use Generated\Shared\DiscountCheckoutConnector\CheckoutRequestInterface;
-use Generated\Shared\DiscountCheckoutConnector\OrderInterface;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
@@ -21,16 +21,16 @@ class DiscountCheckoutConnectorFacade extends AbstractFacade
      * @param $orderTransfer
      * @param $checkoutRequest
      */
-    public function hydrateOrder(OrderInterface $orderTransfer, CheckoutRequestInterface $checkoutRequest)
+    public function hydrateOrder(OrderTransfer $orderTransfer, CheckoutRequestTransfer $checkoutRequest)
     {
         $this->getDependencyContainer()->createOrderHydrator()->hydrateOrder($orderTransfer, $checkoutRequest);
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      * @param CheckoutResponseTransfer $checkoutResponseTransfer
      */
-    public function saveDiscounts(OrderInterface $orderTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function saveDiscounts(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         $this->getDependencyContainer()->createDiscountSaver()->saveDiscounts($orderTransfer, $checkoutResponseTransfer);
     }

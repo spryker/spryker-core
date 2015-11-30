@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Dependency\Plugin;
 
-use Generated\Shared\Discount\DiscountInterface;
+use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 
@@ -14,13 +14,13 @@ interface DiscountDecisionRulePluginInterface
 {
 
     /**
-     * @param DiscountInterface $discountTransfer
+     * @param DiscountTransfer $discountTransfer
      * @param CalculableInterface $discountableContainer
      *
      * @return ModelResult
      */
     public function check(
-        DiscountInterface $discountTransfer,
+        DiscountTransfer $discountTransfer,
         CalculableInterface $discountableContainer
     );
 

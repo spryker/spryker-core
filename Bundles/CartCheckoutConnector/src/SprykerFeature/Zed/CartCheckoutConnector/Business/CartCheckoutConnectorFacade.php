@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\CartCheckoutConnector\Business;
 
-use Generated\Shared\CartCheckoutConnector\CheckoutRequestInterface;
-use Generated\Shared\CartCheckoutConnector\OrderInterface;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -16,7 +16,7 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 class CartCheckoutConnectorFacade extends AbstractFacade
 {
 
-    public function hydrateOrderTransfer(OrderInterface $order, CheckoutRequestInterface $request)
+    public function hydrateOrderTransfer(OrderTransfer $order, CheckoutRequestTransfer $request)
     {
         $this->getDependencyContainer()->createCartOrderHydrator()->hydrateOrderTransfer($order, $request);
     }

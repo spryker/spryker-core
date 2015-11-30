@@ -6,8 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Dependency\Facade;
 
-use Generated\Shared\Discount\DiscountCollectorInterface;
-use Generated\Shared\Discount\VoucherInterface;
+use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 use Generated\Shared\Transfer\DiscountTransfer;
@@ -71,14 +70,14 @@ interface DiscountFacadeInterface
     public function distributeAmount(array $discountableObjects, DiscountTransfer $discountTransfer);
 
     /**
-     * @param VoucherInterface $voucherTransfer
+     * @param VoucherTransfer $voucherTransfer
      */
-    public function createVoucherCodes(VoucherInterface $voucherTransfer);
+    public function createVoucherCodes(VoucherTransfer $voucherTransfer);
 
     /**
-     * @param VoucherInterface $voucherTransfer
+     * @param VoucherTransfer $voucherTransfer
      */
-    public function createVoucherCode(VoucherInterface $voucherTransfer);
+    public function createVoucherCode(VoucherTransfer $voucherTransfer);
 
     /**
      * @return array
@@ -164,35 +163,35 @@ interface DiscountFacadeInterface
 
     /**
      * @param CalculableInterface $container
-     * @param DiscountCollectorInterface $discountCollectorTransfer
+     * @param DiscountCollectorTransfer $discountCollectorTransfer
      *
      * @return DiscountableInterface[]
      */
     public function getDiscountableItems(
         CalculableInterface $container,
-        DiscountCollectorInterface $discountCollectorTransfer
+        DiscountCollectorTransfer $discountCollectorTransfer
     );
 
     /**
      * @param CalculableInterface $container
-     * @param DiscountCollectorInterface $discountCollectorTransfer
+     * @param DiscountCollectorTransfer $discountCollectorTransfer
      *
      * @return DiscountableInterface[]
      */
     public function getDiscountableItemExpenses(
         CalculableInterface $container,
-        DiscountCollectorInterface $discountCollectorTransfer
+        DiscountCollectorTransfer $discountCollectorTransfer
     );
 
     /**
      * @param CalculableInterface $container
-     * @param DiscountCollectorInterface $discountCollectorTransfer
+     * @param DiscountCollectorTransfer $discountCollectorTransfer
      *
      * @return DiscountableInterface[]
      */
     public function getDiscountableOrderExpenses(
         CalculableInterface $container,
-        DiscountCollectorInterface $discountCollectorTransfer
+        DiscountCollectorTransfer $discountCollectorTransfer
     );
 
     /**

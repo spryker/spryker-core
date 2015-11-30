@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Calculation\TotalsInterface;
-use Generated\Shared\Cart\ItemInterface;
+use Generated\Shared\Transfer\TotalsTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
@@ -16,12 +16,12 @@ class SubtotalWithoutItemExpensesTotalsCalculator implements
 {
 
     /**
-     * @param TotalsInterface $totalsTransfer
+     * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
      */
     public function recalculateTotals(
-        TotalsInterface $totalsTransfer,
+        TotalsTransfer $totalsTransfer,
         CalculableInterface $calculableContainer,
         $calculableItems
     ) {
@@ -46,11 +46,11 @@ class SubtotalWithoutItemExpensesTotalsCalculator implements
     }
 
     /**
-     * @param ItemInterface $itemTransfer
+     * @param ItemTransfer $itemTransfer
      *
      * @return int
      */
-    protected function sumOptions(ItemInterface $itemTransfer)
+    protected function sumOptions(ItemTransfer $itemTransfer)
     {
         $optionsPrice = 0;
         foreach ($itemTransfer->getProductOptions() as $optionTransfer) {

@@ -6,10 +6,10 @@
 
 namespace SprykerFeature\Zed\Newsletter\Business;
 
-use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
-use Generated\Shared\Newsletter\NewsletterSubscriptionApprovalResultInterface;
-use Generated\Shared\Newsletter\NewsletterSubscriptionRequestInterface;
-use Generated\Shared\Newsletter\NewsletterSubscriptionResponseInterface;
+use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
+use Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer;
+use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
+use Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -19,11 +19,11 @@ class NewsletterFacade extends AbstractFacade
 {
 
     /**
-     * @param NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest
+     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseInterface
+     * @return NewsletterSubscriptionResponseTransfer
      */
-    public function subscribeWithSingleOptIn(NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest)
+    public function subscribeWithSingleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
         $optInHandler = $this->getDependencyContainer()->createSingleOptInHandler();
 
@@ -35,11 +35,11 @@ class NewsletterFacade extends AbstractFacade
     }
 
     /**
-     * @param NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest
+     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseInterface
+     * @return NewsletterSubscriptionResponseTransfer
      */
-    public function subscribeWithDoubleOptIn(NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest)
+    public function subscribeWithDoubleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
         $optInHandler = $this->getDependencyContainer()->createDoubleOptInHandler();
 
@@ -51,11 +51,11 @@ class NewsletterFacade extends AbstractFacade
     }
 
     /**
-     * @param NewsletterSubscriberInterface $newsletterSubscriber
+     * @param NewsletterSubscriberTransfer $newsletterSubscriber
      *
-     * @return NewsletterSubscriptionApprovalResultInterface
+     * @return NewsletterSubscriptionApprovalResultTransfer
      */
-    public function approveDoubleOptInSubscriber(NewsletterSubscriberInterface $newsletterSubscriber)
+    public function approveDoubleOptInSubscriber(NewsletterSubscriberTransfer $newsletterSubscriber)
     {
         return $this->getDependencyContainer()
             ->createDoubleOptInHandler()
@@ -63,11 +63,11 @@ class NewsletterFacade extends AbstractFacade
     }
 
     /**
-     * @param NewsletterSubscriptionRequestInterface $newsletterUnsubscriptionRequest
+     * @param NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseInterface
+     * @return NewsletterSubscriptionResponseTransfer
      */
-    public function checkSubscription(NewsletterSubscriptionRequestInterface $newsletterUnsubscriptionRequest)
+    public function checkSubscription(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest)
     {
         $subscriptionResponse = $this->getDependencyContainer()
             ->createSubscriptionRequestHandler()
@@ -77,11 +77,11 @@ class NewsletterFacade extends AbstractFacade
     }
 
     /**
-     * @param NewsletterSubscriptionRequestInterface $newsletterUnsubscriptionRequest
+     * @param NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseInterface
+     * @return NewsletterSubscriptionResponseTransfer
      */
-    public function unsubscribe(NewsletterSubscriptionRequestInterface $newsletterUnsubscriptionRequest)
+    public function unsubscribe(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest)
     {
         $subscriptionResponse = $this->getDependencyContainer()
             ->createSubscriptionRequestHandler()
@@ -91,11 +91,11 @@ class NewsletterFacade extends AbstractFacade
     }
 
     /**
-     * @param NewsletterSubscriberInterface $newsletterSubscriber
+     * @param NewsletterSubscriberTransfer $newsletterSubscriber
      *
      * @return void
      */
-    public function assignCustomerToExistingSubscriber(NewsletterSubscriberInterface $newsletterSubscriber)
+    public function assignCustomerToExistingSubscriber(NewsletterSubscriberTransfer $newsletterSubscriber)
     {
         $this->getDependencyContainer()
             ->createSubscriptionRequestHandler()

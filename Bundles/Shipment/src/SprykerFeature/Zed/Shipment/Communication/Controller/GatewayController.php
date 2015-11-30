@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\Shipment\Communication\Controller;
 
-use Generated\Shared\Shipment\ShipmentInterface;
-use Generated\Shared\Shipment\ShipmentMethodAvailabilityInterface;
+use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use SprykerFeature\Zed\Shipment\Business\ShipmentFacade;
 
@@ -18,11 +18,11 @@ class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailability
+     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability
      *
-     * @return ShipmentInterface
+     * @return ShipmentTransfer
      */
-    public function getAvailableMethodsAction(ShipmentMethodAvailabilityInterface $shipmentMethodAvailability)
+    public function getAvailableMethodsAction(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability)
     {
         return $this->getFacade()
             ->getAvailableMethods($shipmentMethodAvailability);

@@ -8,14 +8,13 @@ namespace Generated\Shared\Transfer;
 
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
 use SprykerEngine\Shared\Transfer\Exception\RequiredTransferPropertyException;
-use Generated\Shared\Test\CatFaceInterface as TestCatFaceInterface;
 use Generated\Shared\Transfer\ItemTransfer;
 
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
  * !!! DO NOT CHANGE ANYTHING IN THIS FILE
  */
-class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
+class CatFaceTransfer extends AbstractTransfer
 {
 
     const NAME = 'name';
@@ -69,6 +68,8 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     }
 
     /**
+     * @bundle Test
+     *
      * @param string $name
      *
      * @return self
@@ -82,6 +83,8 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     }
 
     /**
+     * @bundle Test
+     *
      * @return string
      */
     public function getName()
@@ -90,6 +93,8 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     }
 
     /**
+     * @bundle Test
+     *
      * @throws RequiredTransferPropertyException
      *
      * @return self
@@ -102,6 +107,8 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     }
 
     /**
+     * @bundle Test
+     *
      * @param ItemTransfer $item
      *
      * @return self
@@ -115,6 +122,8 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     }
 
     /**
+     * @bundle Test
+     *
      * @return ItemTransfer
      */
     public function getItem()
@@ -123,6 +132,8 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     }
 
     /**
+     * @bundle Test
+     *
      * @throws RequiredTransferPropertyException
      *
      * @return self
@@ -135,6 +146,8 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     }
 
     /**
+     * @bundle Test
+     *
      * @param \ArrayObject|ItemTransfer[] $items
      *
      * @return self
@@ -148,6 +161,8 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     }
 
     /**
+     * @bundle Test
+     *
      * @return ItemTransfer[]
      */
     public function getItems()
@@ -156,6 +171,8 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     }
 
     /**
+     * @bundle Test
+     *
      * @param ItemTransfer $item
      *
      * @return self
@@ -169,6 +186,8 @@ class CatFaceTransfer extends AbstractTransfer implements TestCatFaceInterface
     }
 
     /**
+     * @bundle Test
+     *
      * @throws RequiredTransferPropertyException
      *
      * @return self

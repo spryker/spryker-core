@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Communication\Plugin;
 
-use Generated\Shared\Calculation\TotalsInterface;
+use Generated\Shared\Transfer\TotalsTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 use SprykerFeature\Zed\DiscountCalculationConnector\Communication\DiscountCalculationConnectorDependencyContainer;
@@ -19,12 +19,12 @@ class DiscountTotalsCalculatorPlugin extends AbstractPlugin implements TotalsCal
 {
 
     /**
-     * @param TotalsInterface $totalsTransfer
+     * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
      */
     public function recalculateTotals(
-        TotalsInterface $totalsTransfer,
+        TotalsTransfer $totalsTransfer,
         CalculableInterface $calculableContainer,
         $calculableItems
     ) {

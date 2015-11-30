@@ -6,17 +6,17 @@
 
 namespace SprykerFeature\Client\Checkout\Service\Zed;
 
-use Generated\Shared\Checkout\CheckoutRequestInterface;
-use Generated\Shared\Checkout\CheckoutResponseInterface;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 
 interface CheckoutStubInterface
 {
 
     /**
-     * @param CheckoutRequestInterface $transferCheckout
+     * @param CheckoutRequestTransfer $transferCheckout
      *
-     * @return CheckoutResponseInterface
+     * @return CheckoutResponseTransfer
      */
-    public function requestCheckout(CheckoutRequestInterface $transferCheckout);
+    public function requestCheckout(CheckoutRequestTransfer $transferCheckout);
 
 }

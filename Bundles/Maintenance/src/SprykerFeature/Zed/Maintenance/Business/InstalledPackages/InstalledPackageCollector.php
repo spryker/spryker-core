@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Maintenance\Business\InstalledPackages;
 
-use Generated\Shared\Maintenance\InstalledPackagesInterface;
+use Generated\Shared\Transfer\InstalledPackagesTransfer;
 
 class InstalledPackageCollector implements InstalledPackageCollectorInterface
 {
@@ -17,22 +17,22 @@ class InstalledPackageCollector implements InstalledPackageCollectorInterface
     private $installedPackageFinder;
 
     /**
-     * @var InstalledPackagesInterface
+     * @var InstalledPackagesTransfer
      */
     private $installedPackageCollection;
 
     /**
-     * @param InstalledPackagesInterface $installedPackageCollection
+     * @param InstalledPackagesTransfer $installedPackageCollection
      * @param array $installedPackageFinder
      */
-    public function __construct(InstalledPackagesInterface $installedPackageCollection, array $installedPackageFinder)
+    public function __construct(InstalledPackagesTransfer $installedPackageCollection, array $installedPackageFinder)
     {
         $this->installedPackageCollection = $installedPackageCollection;
         $this->installedPackageFinder = $installedPackageFinder;
     }
 
     /**
-     * @return InstalledPackagesInterface
+     * @return InstalledPackagesTransfer
      */
     public function getInstalledPackages()
     {

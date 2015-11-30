@@ -6,8 +6,8 @@
 namespace SprykerFeature\Zed\ProductOptionWishlistConnector\Communication\Plugin;
 
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use Generated\Shared\ProductOption\ProductOptionInterface;
-use Generated\Shared\ProductOptionCartConnector\ItemInterface;
+use Generated\Shared\Transfer\ProductOptionTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use SprykerFeature\Zed\Wishlist\Dependency\PreSavePluginInterface;
 
 class PreSaveGroupKeyProductOptionPlugin extends AbstractPlugin implements PreSavePluginInterface
@@ -24,11 +24,11 @@ class PreSaveGroupKeyProductOptionPlugin extends AbstractPlugin implements PreSa
     }
 
     /**
-     * @param ItemInterface $item
+     * @param ItemTransfer $item
      *
      * @return string
      */
-    protected function buildGroupKey(ItemInterface $item)
+    protected function buildGroupKey(ItemTransfer $item)
     {
         $currentGroupKey = $item->getGroupKey();
         if (empty($item->getProductOptions())) {
@@ -46,7 +46,7 @@ class PreSaveGroupKeyProductOptionPlugin extends AbstractPlugin implements PreSa
     }
 
     /**
-     * @param ProductOptionInterface[] $options
+     * @param ProductOptionTransfer[] $options
      *
      * @return array
      */
@@ -54,7 +54,7 @@ class PreSaveGroupKeyProductOptionPlugin extends AbstractPlugin implements PreSa
     {
         usort(
             $options,
-            function (ProductOptionInterface $productOptionLeft, ProductOptionInterface $productOptionRight) {
+            function (ProductOptionTransfer $productOptionLeft, ProductOptionTransfer $productOptionRight) {
                 return ($productOptionLeft->getIdOptionValueUsage() < $productOptionRight->getIdOptionValueUsage()) ? -1 : 1;
             }
         );
@@ -63,7 +63,7 @@ class PreSaveGroupKeyProductOptionPlugin extends AbstractPlugin implements PreSa
     }
 
     /**
-     * @param ProductOptionInterface[] $sortedProductOptions
+     * @param ProductOptionTransfer[] $sortedProductOptions
      *
      * @return string
      */

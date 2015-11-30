@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Client\Customer\Service\Session;
 
-use Generated\Shared\Customer\CustomerInterface;
+use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Client\Session\Service\SessionClientInterface;
 
 class CustomerSession implements CustomerSessionInterface
@@ -41,7 +41,7 @@ class CustomerSession implements CustomerSessionInterface
     }
 
     /**
-     * @return CustomerInterface
+     * @return CustomerTransfer
      */
     public function getCustomer()
     {
@@ -49,11 +49,11 @@ class CustomerSession implements CustomerSessionInterface
     }
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerInterface
+     * @return CustomerTransfer
      */
-    public function setCustomer(CustomerInterface $customerTransfer)
+    public function setCustomer(CustomerTransfer $customerTransfer)
     {
         $this->sessionClient->set(
             self::SESSION_KEY,

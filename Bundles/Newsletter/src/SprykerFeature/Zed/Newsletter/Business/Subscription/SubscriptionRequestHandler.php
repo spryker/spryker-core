@@ -6,10 +6,9 @@
 
 namespace SprykerFeature\Zed\Newsletter\Business\Subscription;
 
-use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
-use Generated\Shared\Newsletter\NewsletterSubscriptionRequestInterface;
-use Generated\Shared\Newsletter\NewsletterSubscriptionResponseInterface;
-use Generated\Shared\Newsletter\NewsletterTypeInterface;
+use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
+use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
+use Generated\Shared\Transfer\NewsletterTypeTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionResultTransfer;
 use SprykerFeature\Shared\Newsletter\Messages\Messages;
@@ -55,16 +54,16 @@ class SubscriptionRequestHandler
     }
 
     /**
-     * @param NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest
+     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      * @param SubscriberOptInHandlerInterface $optInHandler
      *
      * @throws MissingNewsletterSubscriberEmailException
      * @throws \Exception
      *
-     * @return NewsletterSubscriptionResponseInterface
+     * @return NewsletterSubscriptionResponseTransfer
      */
     public function processNewsletterSubscriptions(
-        NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest,
+        NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest,
         SubscriberOptInHandlerInterface $optInHandler
     ) {
         $subscriptionResponse = $this->createSubscriptionResponse();
@@ -94,14 +93,14 @@ class SubscriptionRequestHandler
     }
 
     /**
-     * @param NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest
+     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
      * @throws MissingNewsletterSubscriberEmailException
      * @throws \Exception
      *
-     * @return NewsletterSubscriptionResponseInterface
+     * @return NewsletterSubscriptionResponseTransfer
      */
-    public function processNewsletterUnsubscriptions(NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest)
+    public function processNewsletterUnsubscriptions(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
         $subscriptionResponse = $this->createSubscriptionResponse();
 
@@ -128,11 +127,11 @@ class SubscriptionRequestHandler
     }
 
     /**
-     * @param NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest
+     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseInterface
+     * @return NewsletterSubscriptionResponseTransfer
      */
-    public function checkNewsletterSubscriptions(NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest)
+    public function checkNewsletterSubscriptions(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
         $subscriptionResponse = $this->createSubscriptionResponse();
 
@@ -154,13 +153,13 @@ class SubscriptionRequestHandler
     }
 
     /**
-     * @param NewsletterSubscriberInterface $newsletterSubscriberTransfer
+     * @param NewsletterSubscriberTransfer $newsletterSubscriberTransfer
      *
      * @throws MissingNewsletterSubscriberEmailException
      *
-     * @return NewsletterSubscriberInterface
+     * @return NewsletterSubscriberTransfer
      */
-    protected function getNewsletterSubscriber(NewsletterSubscriberInterface $newsletterSubscriberTransfer)
+    protected function getNewsletterSubscriber(NewsletterSubscriberTransfer $newsletterSubscriberTransfer)
     {
         $email = $newsletterSubscriberTransfer->getEmail();
         if ($newsletterSubscriberTransfer->getEmail() === null) {
@@ -179,12 +178,12 @@ class SubscriptionRequestHandler
     }
 
     /**
-     * @param NewsletterSubscriberInterface $newsletterSubscriberTransfer
-     * @param NewsletterTypeInterface $newsletterTypeTransfer
+     * @param NewsletterSubscriberTransfer $newsletterSubscriberTransfer
+     * @param NewsletterTypeTransfer $newsletterTypeTransfer
      *
      * @return NewsletterSubscriptionResultTransfer
      */
-    protected function processSubscription(NewsletterSubscriberInterface $newsletterSubscriberTransfer, NewsletterTypeInterface $newsletterTypeTransfer)
+    protected function processSubscription(NewsletterSubscriberTransfer $newsletterSubscriberTransfer, NewsletterTypeTransfer $newsletterTypeTransfer)
     {
         $isAlreadySubscribed = $this->subscriptionManager->isAlreadySubscribed($newsletterSubscriberTransfer, $newsletterTypeTransfer);
 
@@ -199,7 +198,7 @@ class SubscriptionRequestHandler
     }
 
     /**
-     * @return NewsletterSubscriptionResponseInterface
+     * @return NewsletterSubscriptionResponseTransfer
      */
     protected function createSubscriptionResponse()
     {
@@ -209,11 +208,11 @@ class SubscriptionRequestHandler
     }
 
     /**
-     * @param NewsletterTypeInterface $newsletterTypeTransfer
+     * @param NewsletterTypeTransfer $newsletterTypeTransfer
      *
      * @return NewsletterSubscriptionResultTransfer
      */
-    protected function createAlreadySubscribedResult(NewsletterTypeInterface $newsletterTypeTransfer)
+    protected function createAlreadySubscribedResult(NewsletterTypeTransfer $newsletterTypeTransfer)
     {
         $subscriptionResultTransfer = $this->createSubscriptionResultTransfer($newsletterTypeTransfer, false);
         $subscriptionResultTransfer->setErrorMessage(Messages::ALREADY_SUBSCRIBED);
@@ -222,12 +221,12 @@ class SubscriptionRequestHandler
     }
 
     /**
-     * @param NewsletterTypeInterface $newsletterType
+     * @param NewsletterTypeTransfer $newsletterType
      * @param bool $isSuccess
      *
      * @return NewsletterSubscriptionResultTransfer
      */
-    protected function createSubscriptionResultTransfer(NewsletterTypeInterface $newsletterType, $isSuccess)
+    protected function createSubscriptionResultTransfer(NewsletterTypeTransfer $newsletterType, $isSuccess)
     {
         $subscriptionResultTransfer = new NewsletterSubscriptionResultTransfer();
         $subscriptionResultTransfer->setNewsletterType($newsletterType);
@@ -237,11 +236,11 @@ class SubscriptionRequestHandler
     }
 
     /**
-     * @param NewsletterSubscriberInterface $subscriber
+     * @param NewsletterSubscriberTransfer $subscriber
      *
      * @return void
      */
-    public function assignCustomerToExistingSubscriber(NewsletterSubscriberInterface $subscriber)
+    public function assignCustomerToExistingSubscriber(NewsletterSubscriberTransfer $subscriber)
     {
         $this->subscriberManager->assignCustomerToExistingSubscriber($subscriber);
     }

@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\SequenceNumber\Business;
 
-use Generated\Shared\SequenceNumber\SequenceNumberSettingsInterface;
+use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\SequenceNumberBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
@@ -18,11 +18,11 @@ class SequenceNumberFacade extends AbstractFacade
 {
 
     /***
-     * @param SequenceNumberSettingsInterface $sequenceNumberSettings
+     * @param SequenceNumberSettingsTransfer $sequenceNumberSettings
      *
      * @return string
      */
-    public function generate(SequenceNumberSettingsInterface $sequenceNumberSettings)
+    public function generate(SequenceNumberSettingsTransfer $sequenceNumberSettings)
     {
         $sequenceNumber = $this->getDependencyContainer()
             ->createSequenceNumber($sequenceNumberSettings);

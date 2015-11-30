@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Order;
 
-use Generated\Shared\Payone\OrderInterface as PayoneOrderInterface;
+use Generated\Shared\Transfer\OrderInterface as PayoneOrderTransfer;
 
 interface OrderManagerInterface
 {

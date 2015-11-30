@@ -5,13 +5,13 @@
 
 namespace SprykerFeature\Zed\Wishlist\Dependency;
 
-use Generated\Shared\Wishlist\ItemInterface;
+use Generated\Shared\Transfer\ItemTransfer;
 
 interface PreSavePluginInterface
 {
 
     /**
-     * @param \ArrayObject|ItemInterface[] $items
+     * @param \ArrayObject|ItemTransfer[] $items
      */
     public function trigger(\ArrayObject $items);
 

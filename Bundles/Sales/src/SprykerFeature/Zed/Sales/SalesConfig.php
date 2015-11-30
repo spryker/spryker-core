@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Sales;
 
-use Generated\Shared\SequenceNumber\SequenceNumberSettingsInterface;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
@@ -124,7 +123,7 @@ class SalesConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return SequenceNumberSettingsInterface
+     * @return SequenceNumberSettingsTransfer
      */
     public function getOrderReferenceDefaults()
     {

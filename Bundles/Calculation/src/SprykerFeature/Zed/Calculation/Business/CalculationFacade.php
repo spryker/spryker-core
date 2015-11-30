@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Calculation\Business;
 
-use Generated\Shared\Calculation\TotalsInterface;
+use Generated\Shared\Transfer\TotalsTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\CalculationConfig;
@@ -46,7 +46,7 @@ class CalculationFacade extends AbstractFacade
      * @param CalculableInterface $calculableContainer
      * @param null $calculableItems
      *
-     * @return TotalsInterface
+     * @return TotalsTransfer
      */
     public function recalculateTotals(
         CalculableInterface $calculableContainer,
@@ -72,12 +72,12 @@ class CalculationFacade extends AbstractFacade
     }
 
     /**
-     * @param TotalsInterface $totalsTransfer
+     * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
      */
     public function recalculateExpenseTotals(
-        TotalsInterface $totalsTransfer,
+        TotalsTransfer $totalsTransfer,
         CalculableInterface $calculableContainer,
         $calculableItems
     ) {
@@ -86,12 +86,12 @@ class CalculationFacade extends AbstractFacade
     }
 
     /**
-     * @param TotalsInterface $totalsTransfer
+     * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
      */
     public function recalculateGrandTotalTotals(
-        TotalsInterface $totalsTransfer,
+        TotalsTransfer $totalsTransfer,
         CalculableInterface $calculableContainer,
         $calculableItems
     ) {
@@ -145,12 +145,12 @@ class CalculationFacade extends AbstractFacade
     }
 
     /**
-     * @param TotalsInterface $totalsTransfer
+     * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
      */
     public function recalculateSubtotalTotals(
-        TotalsInterface $totalsTransfer,
+        TotalsTransfer $totalsTransfer,
         CalculableInterface $calculableContainer,
         $calculableItems
     ) {
@@ -159,12 +159,12 @@ class CalculationFacade extends AbstractFacade
     }
 
     /**
-     * @param TotalsInterface $totalsTransfer
+     * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
      */
     public function recalculateSubtotalWithoutItemExpensesTotals(
-        TotalsInterface $totalsTransfer,
+        TotalsTransfer $totalsTransfer,
         CalculableInterface $calculableContainer,
         $calculableItems
     ) {
@@ -173,12 +173,12 @@ class CalculationFacade extends AbstractFacade
     }
 
     /**
-     * @param TotalsInterface $totalsTransfer
+     * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
      */
     public function recalculateTaxTotals(
-        TotalsInterface $totalsTransfer,
+        TotalsTransfer $totalsTransfer,
         CalculableInterface $calculableContainer,
         $calculableItems
     ) {

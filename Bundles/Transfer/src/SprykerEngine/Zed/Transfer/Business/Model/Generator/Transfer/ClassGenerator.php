@@ -65,7 +65,6 @@ class ClassGenerator implements GeneratorInterface
         return [
             'className' => $classDefinition->getName(),
             'uses' => $classDefinition->getUses(),
-            'interfaces' => $classDefinition->getInterfaces(),
             'constructorDefinition' => $classDefinition->getConstructorDefinition(),
             'constants' => $classDefinition->getConstants(),
             'properties' => $classDefinition->getProperties(),

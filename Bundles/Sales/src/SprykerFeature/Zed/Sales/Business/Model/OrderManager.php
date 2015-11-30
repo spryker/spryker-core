@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Sales\Business\Model;
 
-use Generated\Shared\Sales\OrderListInterface;
+use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -199,11 +199,11 @@ class OrderManager
     }
 
     /**
-     * @param OrderListInterface $orderListTransfer
+     * @param OrderListTransfer $orderListTransfer
      *
-     * @return OrderListInterface
+     * @return OrderListTransfer
      */
-    public function getOrders(OrderListInterface $orderListTransfer)
+    public function getOrders(OrderListTransfer $orderListTransfer)
     {
         $filter = $orderListTransfer->getFilter();
         $criteria = new Criteria();

@@ -5,12 +5,12 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Payment\Handler;
 
-use Generated\Shared\Payolution\PayolutionCalculationResponseInterface;
+use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Converter\ConverterInterface;
 use SprykerFeature\Zed\Payolution\Business\Exception\NoMethodMapperException;
 use SprykerFeature\Zed\Payolution\Business\Exception\OrderGrandTotalException;
-use Generated\Shared\Payolution\PayolutionTransactionResponseInterface;
+use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
 use SprykerFeature\Zed\Payolution\Business\Payment\Method\installment\InstallmentInterface;
 use SprykerFeature\Zed\Payolution\Business\Payment\Method\invoice\InvoiceInterface;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
@@ -110,7 +110,7 @@ abstract class AbstractPaymentHandler
     /**
      * @param array | string $requestData
      *
-     * @return PayolutionTransactionResponseInterface | PayolutionCalculationResponseInterface
+     * @return PayolutionTransactionResponseTransfer | PayolutionCalculationResponseTransfer
      */
     abstract protected function sendRequest($requestData);
 

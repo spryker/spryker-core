@@ -6,44 +6,44 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Log;
 
-use Generated\Shared\Payolution\OrderInterface;
+use Generated\Shared\Transfer\OrderTransfer;
 
 interface TransactionStatusLogInterface
 {
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isPreAuthorizationApproved(OrderInterface $orderTransfer);
+    public function isPreAuthorizationApproved(OrderTransfer $orderTransfer);
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isReAuthorizationApproved(OrderInterface $orderTransfer);
+    public function isReAuthorizationApproved(OrderTransfer $orderTransfer);
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isReversalApproved(OrderInterface $orderTransfer);
+    public function isReversalApproved(OrderTransfer $orderTransfer);
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isCaptureApproved(OrderInterface $orderTransfer);
+    public function isCaptureApproved(OrderTransfer $orderTransfer);
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isRefundApproved(OrderInterface $orderTransfer);
+    public function isRefundApproved(OrderTransfer $orderTransfer);
 
 }

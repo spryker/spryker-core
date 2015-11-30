@@ -6,30 +6,29 @@
 
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Business\Model\Calculator;
 
-use Generated\Shared\Calculation\DiscountItemsInterface;
-use Generated\Shared\Calculation\TotalsInterface;
-use Generated\Shared\DiscountCalculationConnector\DiscountInterface;
-use Generated\Shared\DiscountCalculationConnector\ExpenseInterface;
-use Generated\Shared\DiscountCalculationConnector\ItemInterface;
-use Generated\Shared\DiscountCalculationConnector\ProductOptionInterface;
-use Generated\Shared\Sales\DiscountTotalItemInterface;
+use Generated\Shared\Transfer\DiscountItemsTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\DiscountTotalItemTransfer;
-use Generated\Shared\Sales\OrderItemsInterface;
+use Generated\Shared\Transfer\OrderItemsTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 
 class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
 {
 
     /**
-     * @param TotalsInterface $totalsTransfer
+     * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $discountableContainer
      * @param \ArrayObject $calculableItems
      *
      * @return void
      */
     public function recalculateTotals(
-        TotalsInterface $totalsTransfer,
+        TotalsTransfer $totalsTransfer,
         CalculableInterface $discountableContainer,
         $calculableItems
     ) {
@@ -49,7 +48,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     ) {
         $discountAmount = 0;
 
-        if ($calculableItems instanceof OrderItemsInterface) {
+        if ($calculableItems instanceof OrderItemsTransfer) {
             $calculableItems = $calculableItems->getOrderItems();
         }
 
@@ -63,11 +62,11 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param ItemInterface $itemTransfer
+     * @param ItemTransfer $itemTransfer
      *
      * @return int
      */
-    protected function calculateItemDiscountAmount(ItemInterface $itemTransfer)
+    protected function calculateItemDiscountAmount(ItemTransfer $itemTransfer)
     {
         $itemDiscountAmount = 0;
 
@@ -82,7 +81,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
 
     /**
      * @param CalculableInterface $discountableContainer
-     * @param \ArrayObject|ItemInterface[] $calculableItems
+     * @param \ArrayObject|ItemTransfer[] $calculableItems
      *
      * @return DiscountTotalsTransfer
      */
@@ -104,9 +103,9 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
 
     /**
      * @param CalculableInterface $discountableContainer
-     * @param \ArrayObject|ItemInterface[] $calculableItems
+     * @param \ArrayObject|ItemTransfer[] $calculableItems
      *
-     * @return array|DiscountTotalItemInterface[]
+     * @return array|DiscountTotalItemTransfer[]
      */
     protected function calculateDiscountTotals(
         CalculableInterface $discountableContainer,
@@ -126,8 +125,8 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|ItemInterface[] $calculableItems
-     * @param array|DiscountTotalItemInterface[] $discountTotalItemCollection
+     * @param \ArrayObject|ItemTransfer[] $calculableItems
+     * @param array|DiscountTotalItemTransfer[] $discountTotalItemCollection
      *
      * @return void
      */
@@ -165,14 +164,14 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param DiscountInterface $discountTransfer
-     * @param array|DiscountTotalItemInterface[] $discountTotalItemCollection
+     * @param DiscountTransfer $discountTransfer
+     * @param array|DiscountTotalItemTransfer[] $discountTotalItemCollection
      * @param int $quantity
      *
      * @return void
      */
     protected function transformDiscountToDiscountTotalItemInArray(
-        DiscountInterface $discountTransfer,
+        DiscountTransfer $discountTransfer,
         array &$discountTotalItemCollection,
         $quantity = 1
     ) {
@@ -193,13 +192,13 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
 
     /**
      * @param DiscountTotalItemTransfer $discountTotalItemTransfer
-     * @param DiscountInterface $discountTransfer
+     * @param DiscountTransfer $discountTransfer
      *
      * @return void
      */
     protected function setUsedCodes(
         DiscountTotalItemTransfer $discountTotalItemTransfer,
-        DiscountInterface $discountTransfer
+        DiscountTransfer $discountTransfer
     ) {
         $storedCodes = (array) $discountTotalItemTransfer->getCodes();
         foreach ($discountTransfer->getUsedCodes() as $code) {
@@ -218,7 +217,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|DiscountItemsInterface $discounts
+     * @param \ArrayObject|DiscountItemsTransfer $discounts
      *
      * @return int
      */
@@ -226,7 +225,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     {
         $discountAmount = 0;
 
-        if ($discounts instanceof DiscountItemsInterface) {
+        if ($discounts instanceof DiscountItemsTransfer) {
             $discounts = $discounts->getDiscounts();
         }
 
@@ -238,7 +237,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|ExpenseInterface[] $expenses
+     * @param \ArrayObject|ExpenseTransfer[] $expenses
      *
      * @return int
      */
@@ -247,7 +246,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
         $discountAmount = 0;
 
         foreach ($expenses as $expense) {
-            if ($expense instanceof ExpenseInterface) {
+            if ($expense instanceof ExpenseTransfer) {
                 foreach ($expense->getDiscounts() as $discount) {
                     $discountAmount += $discount->getAmount();
                 }
@@ -258,7 +257,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
     }
 
     /**
-     * @param \ArrayObject|ProductOptionInterface[] $options
+     * @param \ArrayObject|ProductOptionTransfer[] $options
      *
      * @return int
      */
@@ -267,7 +266,7 @@ class DiscountTotalsCalculator implements DiscountTotalsCalculatorInterface
         $discountAmount = 0;
 
         foreach ($options as $option) {
-            if ($option instanceof ProductOptionInterface) {
+            if ($option instanceof ProductOptionTransfer) {
                 foreach ($option->getDiscounts() as $discount) {
                     $discountAmount += $discount->getAmount();
                 }

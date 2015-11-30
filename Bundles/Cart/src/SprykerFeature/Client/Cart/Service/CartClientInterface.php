@@ -6,19 +6,19 @@
 
 namespace SprykerFeature\Client\Cart\Service;
 
-use Generated\Shared\Cart\CartInterface;
-use Generated\Shared\Cart\ItemInterface;
+use Generated\Shared\Transfer\CartTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 
 interface CartClientInterface
 {
 
     /**
-     * @return CartInterface
+     * @return CartTransfer
      */
     public function getCart();
 
     /**
-     * @return CartInterface
+     * @return CartTransfer
      */
     public function clearCart();
 
@@ -28,64 +28,64 @@ interface CartClientInterface
     public function getItemCount();
 
     /**
-     * @param ItemInterface $itemTransfer
+     * @param ItemTransfer $itemTransfer
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function addItem(ItemInterface $itemTransfer);
+    public function addItem(ItemTransfer $itemTransfer);
 
     /**
-     * @param ItemInterface $itemTransfer
+     * @param ItemTransfer $itemTransfer
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function removeItem(ItemInterface $itemTransfer);
+    public function removeItem(ItemTransfer $itemTransfer);
 
     /**
-     * @param ItemInterface $itemTransfer
+     * @param ItemTransfer $itemTransfer
      * @param int $quantity
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function changeItemQuantity(ItemInterface $itemTransfer, $quantity = 1);
+    public function changeItemQuantity(ItemTransfer $itemTransfer, $quantity = 1);
 
     /**
-     * @param ItemInterface $itemTransfer
+     * @param ItemTransfer $itemTransfer
      * @param int $quantity
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function decreaseItemQuantity(ItemInterface $itemTransfer, $quantity = 1);
+    public function decreaseItemQuantity(ItemTransfer $itemTransfer, $quantity = 1);
 
     /**
-     * @param ItemInterface $itemTransfer
+     * @param ItemTransfer $itemTransfer
      * @param int $quantity
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function increaseItemQuantity(ItemInterface $itemTransfer, $quantity = 1);
+    public function increaseItemQuantity(ItemTransfer $itemTransfer, $quantity = 1);
 
     /**
-     * @return CartInterface
+     * @return CartTransfer
      */
     public function recalculate();
 
     /**
      * @param string $coupon
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
     public function addCoupon($coupon);
 
     /**
      * @param string $coupon
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
     public function removeCoupon($coupon);
 
     /**
-     * @return CartInterface
+     * @return CartTransfer
      */
     public function clearCoupons();
 

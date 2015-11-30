@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Category\Business;
 
 use Generated\Shared\Transfer\NodeTransfer;
 use Generated\Shared\Transfer\CategoryTransfer;
-use Generated\Shared\Locale\LocaleInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
@@ -279,11 +278,11 @@ class CategoryFacade extends AbstractFacade
 
     /**
      * @param int $idCategory
-     * @param LocaleInterface $locale
+     * @param LocaleTransfer $locale
      *
      * @return array
      */
-    public function getTreeNodeChildrenByIdCategoryAndLocale($idCategory, LocaleInterface $locale)
+    public function getTreeNodeChildrenByIdCategoryAndLocale($idCategory, LocaleTransfer $locale)
     {
         return $this->getDependencyContainer()
             ->createCategoryTreeReader()

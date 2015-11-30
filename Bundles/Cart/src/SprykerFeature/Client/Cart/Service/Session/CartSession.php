@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Client\Cart\Service\Session;
 
-use Generated\Shared\Cart\CartInterface;
 use Generated\Shared\Transfer\CartTransfer;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -30,7 +29,7 @@ class CartSession implements CartSessionInterface
     }
 
     /**
-     * @return CartInterface
+     * @return CartTransfer
      */
     public function getCart()
     {
@@ -44,11 +43,11 @@ class CartSession implements CartSessionInterface
     }
 
     /**
-     * @param CartInterface $cartTransfer
+     * @param CartTransfer $cartTransfer
      *
      * @return self
      */
-    public function setCart(CartInterface $cartTransfer)
+    public function setCart(CartTransfer $cartTransfer)
     {
         $this->session->set(self::CART_SESSION_IDENTIFIER, $cartTransfer);
 

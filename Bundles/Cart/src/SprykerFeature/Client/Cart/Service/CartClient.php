@@ -6,8 +6,7 @@
 
 namespace SprykerFeature\Client\Cart\Service;
 
-use Generated\Shared\Cart\CartInterface;
-use Generated\Shared\Cart\ItemInterface;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
@@ -21,7 +20,7 @@ class CartClient extends AbstractClient implements CartClientInterface
 {
 
     /**
-     * @return CartInterface|CartTransfer
+     * @return CartTransfer|CartTransfer
      */
     public function getCart()
     {
@@ -37,7 +36,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @return CartInterface
+     * @return CartTransfer
      */
     public function clearCart()
     {
@@ -59,11 +58,11 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param ItemInterface $itemTransfer
+     * @param ItemTransfer $itemTransfer
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function addItem(ItemInterface $itemTransfer)
+    public function addItem(ItemTransfer $itemTransfer)
     {
         $changeTransfer = $this->prepareCartChange($itemTransfer);
         $cartTransfer = $this->getZedStub()->addItem($changeTransfer);
@@ -80,11 +79,11 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param ItemInterface $itemTransfer
+     * @param ItemTransfer $itemTransfer
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function removeItem(ItemInterface $itemTransfer)
+    public function removeItem(ItemTransfer $itemTransfer)
     {
         $itemTransfer = $this->mergeCartItems(
             $itemTransfer,
@@ -98,11 +97,11 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param ItemInterface $itemToFind
+     * @param ItemTransfer $itemToFind
      *
-     * @return ItemInterface
+     * @return ItemTransfer
      */
-    protected function findItem(ItemInterface $itemToFind)
+    protected function findItem(ItemTransfer $itemToFind)
     {
         $cartTransfer = $this->getCart();
 
@@ -119,12 +118,12 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param ItemInterface $itemTransfer
+     * @param ItemTransfer $itemTransfer
      * @param int $quantity
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function changeItemQuantity(ItemInterface $itemTransfer, $quantity = 1)
+    public function changeItemQuantity(ItemTransfer $itemTransfer, $quantity = 1)
     {
         if ($quantity === 0) {
             return $this->removeItem($itemTransfer);
@@ -145,12 +144,12 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param ItemInterface $itemTransfer
+     * @param ItemTransfer $itemTransfer
      * @param int $quantity
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function decreaseItemQuantity(ItemInterface $itemTransfer, $quantity = 1)
+    public function decreaseItemQuantity(ItemTransfer $itemTransfer, $quantity = 1)
     {
         $changeTransfer = $this->createChangeTransferWithAdjustedQuantity($itemTransfer, $quantity);
 
@@ -160,12 +159,12 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param ItemInterface $itemTransfer
+     * @param ItemTransfer $itemTransfer
      * @param int $quantity
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function increaseItemQuantity(ItemInterface $itemTransfer, $quantity = 1)
+    public function increaseItemQuantity(ItemTransfer $itemTransfer, $quantity = 1)
     {
         $changeTransfer = $this->createChangeTransferWithAdjustedQuantity($itemTransfer, $quantity);
 
@@ -175,7 +174,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @return CartInterface
+     * @return CartTransfer
      */
     public function recalculate()
     {
@@ -198,11 +197,11 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param ItemInterface $itemTransfer
+     * @param ItemTransfer $itemTransfer
      *
      * @return ChangeTransfer
      */
-    protected function prepareCartChange(ItemInterface $itemTransfer)
+    protected function prepareCartChange(ItemTransfer $itemTransfer)
     {
         $changeTransfer = $this->createCartChange();
         $changeTransfer->addItem($itemTransfer);
@@ -213,7 +212,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     /**
      * @param string $coupon
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
     public function addCoupon($coupon)
     {
@@ -228,7 +227,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     /**
      * @param string $coupon
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
     public function removeCoupon($coupon)
     {
@@ -241,7 +240,7 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @return CartInterface
+     * @return CartTransfer
      */
     public function clearCoupons()
     {
@@ -252,12 +251,12 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param ItemInterface $itemTransfer
+     * @param ItemTransfer $itemTransfer
      * @param int $quantity
      *
      * @return ChangeTransfer
      */
-    protected function createChangeTransferWithAdjustedQuantity(ItemInterface $itemTransfer, $quantity)
+    protected function createChangeTransferWithAdjustedQuantity(ItemTransfer $itemTransfer, $quantity)
     {
         $itemTransfer = $this->mergeCartItems(
             $itemTransfer,
@@ -270,11 +269,11 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param CartInterface $cartTransfer
+     * @param CartTransfer $cartTransfer
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    protected function handleCartResponse(CartInterface $cartTransfer)
+    protected function handleCartResponse(CartTransfer $cartTransfer)
     {
         $this->getSession()->setCart($cartTransfer);
 
@@ -282,12 +281,12 @@ class CartClient extends AbstractClient implements CartClientInterface
     }
 
     /**
-     * @param ItemInterface $newItemTransfer
-     * @param ItemInterface $oldItemByIdentifier
+     * @param ItemTransfer $newItemTransfer
+     * @param ItemTransfer $oldItemByIdentifier
      *
-     * @return ItemInterface
+     * @return ItemTransfer
      */
-    protected function mergeCartItems(ItemInterface $newItemTransfer, ItemInterface $oldItemByIdentifier)
+    protected function mergeCartItems(ItemTransfer $newItemTransfer, ItemTransfer $oldItemByIdentifier)
     {
         $newItemTransfer->fromArray($oldItemByIdentifier->toArray(), true);
 

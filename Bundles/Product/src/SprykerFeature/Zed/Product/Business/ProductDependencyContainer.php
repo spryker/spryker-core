@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Product\Business;
 
-use Generated\Shared\Locale\LocaleInterface;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Product\Business\Attribute\AttributeManagerInterface;
@@ -207,7 +207,7 @@ class ProductDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return LocaleInterface
+     * @return LocaleTransfer
      */
     protected function getCurrentLocale()
     {

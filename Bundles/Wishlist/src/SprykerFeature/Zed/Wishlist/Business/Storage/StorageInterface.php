@@ -4,38 +4,38 @@
  */
 namespace SprykerFeature\Zed\Wishlist\Business\Storage;
 
-use Generated\Shared\Wishlist\WishlistChangeInterface;
-use Generated\Shared\Wishlist\WishlistInterface;
+use Generated\Shared\Transfer\WishlistChangeTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
 
 interface StorageInterface
 {
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function addItems(WishlistChangeInterface $wishlistChange);
+    public function addItems(WishlistChangeTransfer $wishlistChange);
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function removeItems(WishlistChangeInterface $wishlistChange);
+    public function removeItems(WishlistChangeTransfer $wishlistChange);
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function increaseItems(WishlistChangeInterface $wishlistChange);
+    public function increaseItems(WishlistChangeTransfer $wishlistChange);
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function decreaseItems(WishlistChangeInterface $wishlistChange);
+    public function decreaseItems(WishlistChangeTransfer $wishlistChange);
 
 }

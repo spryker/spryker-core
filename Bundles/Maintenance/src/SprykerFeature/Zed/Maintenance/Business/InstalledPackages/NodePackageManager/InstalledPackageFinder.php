@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Maintenance\Business\InstalledPackages\NodePackageManager;
 
-use Generated\Shared\Maintenance\InstalledPackagesInterface;
+use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use Generated\Shared\Transfer\InstalledPackageTransfer;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageFinderInterface;
 use Symfony\Component\Process\Process;
@@ -15,7 +15,7 @@ class InstalledPackageFinder implements InstalledPackageFinderInterface
 {
 
     /**
-     * @var InstalledPackagesInterface
+     * @var InstalledPackagesTransfer
      */
     private $collection;
 
@@ -30,11 +30,11 @@ class InstalledPackageFinder implements InstalledPackageFinderInterface
     private $path;
 
     /**
-     * @param InstalledPackagesInterface $collection
+     * @param InstalledPackagesTransfer $collection
      * @param Process $process
      * @param string $path
      */
-    public function __construct(InstalledPackagesInterface $collection, Process $process, $path)
+    public function __construct(InstalledPackagesTransfer $collection, Process $process, $path)
     {
         $this->collection = $collection;
         $this->process = $process;
@@ -42,7 +42,7 @@ class InstalledPackageFinder implements InstalledPackageFinderInterface
     }
 
     /**
-     * @return InstalledPackagesInterface
+     * @return InstalledPackagesTransfer
      */
     public function findInstalledPackages()
     {

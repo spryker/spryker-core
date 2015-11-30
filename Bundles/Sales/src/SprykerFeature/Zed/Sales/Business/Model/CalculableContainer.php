@@ -3,27 +3,27 @@
 namespace SprykerFeature\Zed\Sales\Business\Model;
 
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
-use Generated\Shared\Calculation\CalculableContainerInterface;
-use Generated\Shared\Sales\OrderInterface;
+use Generated\Shared\Transfer\CalculableContainerTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 
 class CalculableContainer implements CalculableInterface
 {
 
     /**
-     * @var OrderInterface
+     * @var OrderTransfer
      */
     private $order;
 
     /**
-     * @param OrderInterface $order
+     * @param OrderTransfer $order
      */
-    public function __construct(OrderInterface $order)
+    public function __construct(OrderTransfer $order)
     {
         $this->order = $order;
     }
 
     /**
-     * @return CalculableContainerInterface
+     * @return CalculableContainerTransfer
      */
     public function getCalculableObject()
     {

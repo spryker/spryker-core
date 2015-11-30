@@ -6,14 +6,14 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Order;
 
-use Generated\Shared\Payolution\OrderInterface;
+use Generated\Shared\Transfer\OrderTransfer;
 
 interface SaverInterface
 {
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      */
-    public function saveOrderPayment(OrderInterface $orderTransfer);
+    public function saveOrderPayment(OrderTransfer $orderTransfer);
 
 }

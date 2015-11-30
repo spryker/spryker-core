@@ -6,10 +6,6 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Api\Converter;
 
-use Generated\Shared\Payolution\PayolutionTransactionResponseInterface;
-use Generated\Shared\Payolution\PayolutionCalculationResponseInterface;
-use Generated\Shared\Payolution\PayolutionCalculationInstallmentInterface;
-use Generated\Shared\Payolution\PayolutionCalculationPaymentDetailInterface;
 use Generated\Shared\Transfer\PayolutionCalculationInstallmentTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationPaymentDetailTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
@@ -24,7 +20,7 @@ class Converter implements ConverterInterface
     /**
      * @param string $stringData
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
     public function toTransactionResponseTransfer($stringData)
     {
@@ -47,7 +43,7 @@ class Converter implements ConverterInterface
     /**
      * @param string $stringData
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
     public function toCalculationResponseTransfer($stringData)
     {
@@ -69,7 +65,7 @@ class Converter implements ConverterInterface
     /**
      * @param array $data
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
     protected function arrayToTransactionResponseTransfer(array $data)
     {
@@ -175,7 +171,7 @@ class Converter implements ConverterInterface
     /**
      * @param string $xmlString
      *
-     * @return PayolutionCalculationResponseInterface
+     * @return PayolutionCalculationResponseTransfer
      */
     protected function xmlToCalculationResponseTransfer($xmlString)
     {
@@ -217,7 +213,7 @@ class Converter implements ConverterInterface
     /**
      * @param array $data
      *
-     * @return PayolutionCalculationPaymentDetailInterface
+     * @return PayolutionCalculationPaymentDetailTransfer
      */
     protected function arrayToCalculationPaymentDetailTransfer(array $data)
     {
@@ -245,7 +241,7 @@ class Converter implements ConverterInterface
     /**
      * @param array $data
      *
-     * @return PayolutionCalculationInstallmentInterface
+     * @return PayolutionCalculationInstallmentTransfer
      */
     protected function arrayToCalculationInstallmentTransfer(array $data)
     {

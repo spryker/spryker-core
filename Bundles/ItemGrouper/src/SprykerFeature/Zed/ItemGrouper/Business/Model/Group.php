@@ -5,7 +5,6 @@
 
 namespace SprykerFeature\Zed\ItemGrouper\Business\Model;
 
-use Generated\Shared\ItemGrouper\GroupableContainerInterface;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 
@@ -38,11 +37,11 @@ class Group
     }
 
     /**
-     * @param GroupableContainerInterface $groupableItems
+     * @param GroupableContainerTransfer $groupableItems
      *
-     * @return GroupableContainerInterface
+     * @return GroupableContainerTransfer
      */
-    public function groupByKey(GroupableContainerInterface $groupableItems)
+    public function groupByKey(GroupableContainerTransfer $groupableItems)
     {
         if ($this->neverGroup()) {
             return $groupableItems;
@@ -78,11 +77,11 @@ class Group
     }
 
     /**
-     * @param GroupableContainerInterface $groupableItems
+     * @param GroupableContainerTransfer $groupableItems
      *
      * @return bool
      */
-    protected function isThresholdReached(GroupableContainerInterface $groupableItems)
+    protected function isThresholdReached(GroupableContainerTransfer $groupableItems)
     {
         return ($this->threshold < count($groupableItems->getItems()));
     }

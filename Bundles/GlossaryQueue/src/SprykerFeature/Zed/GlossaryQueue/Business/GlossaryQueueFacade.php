@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\GlossaryQueue\Business;
 
-use Generated\Shared\Queue\QueueMessageInterface;
+use Generated\Shared\Transfer\QueueMessageTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -12,9 +12,9 @@ class GlossaryQueueFacade extends AbstractFacade
 {
 
     /**
-     * @param QueueMessageInterface $queueMessage
+     * @param QueueMessageTransfer $queueMessage
      */
-    public function processTranslationMessage(QueueMessageInterface $queueMessage)
+    public function processTranslationMessage(QueueMessageTransfer $queueMessage)
     {
         $this->getDependencyContainer()
             ->createQueueTranslationManager()

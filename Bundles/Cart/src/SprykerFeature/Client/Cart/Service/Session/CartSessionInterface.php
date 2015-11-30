@@ -6,22 +6,22 @@
 
 namespace SprykerFeature\Client\Cart\Service\Session;
 
-use Generated\Shared\Cart\CartInterface;
+use Generated\Shared\Transfer\CartTransfer;
 
 interface CartSessionInterface
 {
 
     /**
-     * @return CartInterface
+     * @return CartTransfer
      */
     public function getCart();
 
     /**
-     * @param CartInterface $cartTransfer
+     * @param CartTransfer $cartTransfer
      *
      * @return self
      */
-    public function setCart(CartInterface $cartTransfer);
+    public function setCart(CartTransfer $cartTransfer);
 
     /**
      * @return int

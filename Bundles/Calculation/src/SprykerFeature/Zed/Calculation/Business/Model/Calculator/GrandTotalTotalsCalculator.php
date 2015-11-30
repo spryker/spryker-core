@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Calculation\TotalsInterface;
+use Generated\Shared\Transfer\TotalsTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
@@ -36,12 +36,12 @@ class GrandTotalTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @param TotalsInterface $totalsTransfer
+     * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
      */
     public function recalculateTotals(
-        TotalsInterface $totalsTransfer,
+        TotalsTransfer $totalsTransfer,
         CalculableInterface $calculableContainer,
         $calculableItems
     ) {
@@ -54,14 +54,14 @@ class GrandTotalTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @param TotalsInterface $totalsTransfer
+     * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
      *
      * @return int
      */
     protected function calculateGrandTotal(
-        TotalsInterface $totalsTransfer,
+        TotalsTransfer $totalsTransfer,
         CalculableInterface $calculableContainer,
         $calculableItems
     ) {
@@ -72,12 +72,12 @@ class GrandTotalTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @param TotalsInterface $totalsTransfer
+     * @param TotalsTransfer $totalsTransfer
      * @param $calculableItems
      *
      * @return int
      */
-    protected function getSubtotal(TotalsInterface $totalsTransfer, $calculableItems)
+    protected function getSubtotal(TotalsTransfer $totalsTransfer, $calculableItems)
     {
         if ($totalsTransfer->getSubtotal()) {
             return $totalsTransfer->getSubtotal();
@@ -87,12 +87,12 @@ class GrandTotalTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @param TotalsInterface $totalsTransfer
+     * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      *
      * @return int
      */
-    protected function getOrderExpenseTotal(TotalsInterface $totalsTransfer, CalculableInterface $calculableContainer)
+    protected function getOrderExpenseTotal(TotalsTransfer $totalsTransfer, CalculableInterface $calculableContainer)
     {
         if ($totalsTransfer->getExpenses()->getTotalOrderAmount() !== null) {
             return $totalsTransfer->getExpenses()->getTotalOrderAmount();

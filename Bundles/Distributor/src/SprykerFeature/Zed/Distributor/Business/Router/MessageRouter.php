@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Distributor\Business\Router;
 
-use Generated\Shared\Distributor\QueueMessageInterface;
+use Generated\Shared\Transfer\QueueMessageTransfer;
 use SprykerFeature\Zed\Distributor\Dependency\Facade\DistributorToQueueInterface;
 
 class MessageRouter implements MessageRouterInterface
@@ -22,10 +22,10 @@ class MessageRouter implements MessageRouterInterface
     }
 
     /**
-     * @param QueueMessageInterface $message
+     * @param QueueMessageTransfer $message
      * @param array $queueList
      */
-    public function routeMessage(QueueMessageInterface $message, array $queueList)
+    public function routeMessage(QueueMessageTransfer $message, array $queueList)
     {
         foreach ($queueList as $queueName) {
             $this->queueFacade->publishMessage($queueName, $message);

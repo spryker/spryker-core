@@ -6,51 +6,51 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Payment\Handler\Transaction;
 
-use Generated\Shared\Payolution\PayolutionTransactionResponseInterface;
-use Generated\Shared\Payolution\CheckoutRequestInterface;
+use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
 
 interface TransactionInterface
 {
 
     /**
-     * @param CheckoutRequestInterface $checkoutRequestTransfer
+     * @param CheckoutRequestTransfer $checkoutRequestTransfer
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
-    public function preCheckPayment(CheckoutRequestInterface $checkoutRequestTransfer);
+    public function preCheckPayment(CheckoutRequestTransfer $checkoutRequestTransfer);
 
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
     public function preAuthorizePayment($idPayment);
 
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
     public function reAuthorizePayment($idPayment);
 
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
     public function revertPayment($idPayment);
 
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
     public function capturePayment($idPayment);
 
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
     public function refundPayment($idPayment);
 

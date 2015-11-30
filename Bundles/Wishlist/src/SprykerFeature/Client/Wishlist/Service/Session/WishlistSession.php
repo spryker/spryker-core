@@ -7,7 +7,6 @@
 namespace SprykerFeature\Client\Wishlist\Service\Session;
 
 use Generated\Shared\Transfer\WishlistTransfer;
-use Generated\Shared\Wishlist\WishlistInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class WishlistSession implements WishlistSessionInterface
@@ -24,7 +23,7 @@ class WishlistSession implements WishlistSessionInterface
     }
 
     /**
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
     public function getWishlist()
     {
@@ -38,11 +37,11 @@ class WishlistSession implements WishlistSessionInterface
     }
 
     /**
-     * @param WishlistInterface $wishlist
+     * @param WishlistTransfer $wishlist
      *
      * @return self
      */
-    public function setWishlist(WishlistInterface $wishlist)
+    public function setWishlist(WishlistTransfer $wishlist)
     {
         $this->session->set(self::WISHLIST_SESSION_IDENTIFIER, $wishlist);
 

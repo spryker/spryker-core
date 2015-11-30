@@ -5,18 +5,18 @@
 
 namespace SprykerFeature\Zed\Newsletter\Business\Subscription;
 
-use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
+use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use SprykerFeature\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberException;
 
 class SingleOptInHandler extends AbstractOptInHandler implements SubscriberOptInHandlerInterface
 {
 
     /**
-     * @param NewsletterSubscriberInterface $subscriberTransfer
+     * @param NewsletterSubscriberTransfer $subscriberTransfer
      *
      * @throws MissingNewsletterSubscriberException
      */
-    public function optIn(NewsletterSubscriberInterface $subscriberTransfer)
+    public function optIn(NewsletterSubscriberTransfer $subscriberTransfer)
     {
         $subscriberEntity = $this->findSubscriberEntity($subscriberTransfer);
 

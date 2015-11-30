@@ -6,17 +6,17 @@
 
 namespace SprykerFeature\Client\Shipment\Service\Zed;
 
-use Generated\Shared\Shipment\ShipmentInterface;
-use Generated\Shared\Shipment\ShipmentMethodAvailabilityInterface;
+use Generated\Shared\Transfer\ShipmentTransfer;
+use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 
 interface ShipmentStubInterface
 {
 
     /**
-     * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailability
+     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability
      *
-     * @return ShipmentInterface
+     * @return ShipmentTransfer
      */
-    public function getAvailableMethods(ShipmentMethodAvailabilityInterface $shipmentMethodAvailability);
+    public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability);
 
 }

@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Maintenance\Business;
 
-use Generated\Shared\Maintenance\InstalledPackagesInterface;
+use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -16,7 +16,7 @@ class MaintenanceFacade extends AbstractFacade
 {
 
     /**
-     * @return InstalledPackagesInterface
+     * @return InstalledPackagesTransfer
      */
     public function getInstalledPackages()
     {
@@ -24,9 +24,9 @@ class MaintenanceFacade extends AbstractFacade
     }
 
     /**
-     * @param InstalledPackagesInterface $installedPackages
+     * @param InstalledPackagesTransfer $installedPackages
      */
-    public function writeInstalledPackagesToMarkDownFile(InstalledPackagesInterface $installedPackages)
+    public function writeInstalledPackagesToMarkDownFile(InstalledPackagesTransfer $installedPackages)
     {
         $this->getDependencyContainer()->createMarkDownWriter($installedPackages)->write();
     }

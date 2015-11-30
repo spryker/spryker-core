@@ -71,19 +71,6 @@ class TransferFacadeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @depends testDeleteGeneratedTransferObjectsShouldDeleteAllGeneratedTransferObjects
-     */
-    public function testGenerateTransferInterfacesShouldGenerateTransferInterfaces()
-    {
-        $this->getFacade()->generateTransferInterfaces($this->getMessenger());
-
-        $finder = new Finder();
-        $finder->in($this->getConfig()->getGeneratedTargetDirectory())->name('*Interface.php');
-
-        $this->assertTrue($finder->count() > 0);
-    }
-
-    /**
      * @return TransferConfig
      */
     private function getConfig()

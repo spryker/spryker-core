@@ -6,16 +6,16 @@
 
 namespace SprykerFeature\Zed\ProductCartConnector\Business\Manager;
 
-use Generated\Shared\ProductCartConnector\ChangeInterface;
+use Generated\Shared\Transfer\ChangeTransfer;
 
 interface ProductManagerInterface
 {
 
     /**
-     * @param ChangeInterface $change
+     * @param ChangeTransfer $change
      *
-     * @return ChangeInterface
+     * @return ChangeTransfer
      */
-    public function expandItems(ChangeInterface $change);
+    public function expandItems(ChangeTransfer $change);
 
 }

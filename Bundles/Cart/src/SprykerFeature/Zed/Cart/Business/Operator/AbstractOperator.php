@@ -6,10 +6,10 @@
 
 namespace SprykerFeature\Zed\Cart\Business\Operator;
 
-use Generated\Shared\Cart\CartInterface;
+use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\GroupableContainerTransfer;
 use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
-use Generated\Shared\Cart\ChangeInterface;
+use Generated\Shared\Transfer\ChangeTransfer;
 use Psr\Log\LoggerInterface;
 use SprykerFeature\Zed\Cart\Business\Model\CalculableContainer;
 use SprykerFeature\Zed\Cart\Business\StorageProvider\StorageProviderInterface;
@@ -64,11 +64,11 @@ abstract class AbstractOperator implements OperatorInterface
     }
 
     /**
-     * @param ChangeInterface $cartChange
+     * @param ChangeTransfer $cartChange
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function executeOperation(ChangeInterface $cartChange)
+    public function executeOperation(ChangeTransfer $cartChange)
     {
         $changedItems = $this->expandChangedItems($cartChange);
         $cart = $this->changeCart($cartChange->getCart(), $changedItems);
@@ -83,11 +83,11 @@ abstract class AbstractOperator implements OperatorInterface
     }
 
     /**
-     * @param CartInterface $cart
+     * @param CartTransfer $cart
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    private function recalculate(CartInterface $cart)
+    private function recalculate(CartTransfer $cart)
     {
         $calculableCart = new CalculableContainer($cart);
         $cart = $this->cartCalculator->recalculate($calculableCart);
@@ -96,12 +96,12 @@ abstract class AbstractOperator implements OperatorInterface
     }
 
     /**
-     * @param CartInterface $cart
-     * @param ChangeInterface $change
+     * @param CartTransfer $cart
+     * @param ChangeTransfer $change
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    abstract protected function changeCart(CartInterface $cart, ChangeInterface $change);
+    abstract protected function changeCart(CartTransfer $cart, ChangeTransfer $change);
 
     /**
      * @return string
@@ -109,11 +109,11 @@ abstract class AbstractOperator implements OperatorInterface
     abstract protected function createSuccessMessage();
 
     /**
-     * @param ChangeInterface $change
+     * @param ChangeTransfer $change
      *
-     * @return ChangeInterface
+     * @return ChangeTransfer
      */
-    protected function expandChangedItems(ChangeInterface $change)
+    protected function expandChangedItems(ChangeTransfer $change)
     {
         foreach ($this->itemExpanderPlugins as $itemExpander) {
             $change = $itemExpander->expandItems($change);
@@ -131,11 +131,11 @@ abstract class AbstractOperator implements OperatorInterface
     }
 
     /**
-     * @param CartInterface $cart
+     * @param CartTransfer $cart
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    protected function getGroupedCartItems(CartInterface $cart)
+    protected function getGroupedCartItems(CartTransfer $cart)
     {
         $groupAbleItems = new GroupableContainerTransfer();
         $groupAbleItems->setItems($cart->getItems());

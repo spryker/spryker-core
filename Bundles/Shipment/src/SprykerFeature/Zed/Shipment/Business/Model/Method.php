@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Shipment\Business\Model;
 
-use Generated\Shared\Shipment\ShipmentMethodAvailabilityInterface;
+use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use Generated\Shared\Transfer\ShipmentTransfer;
 use SprykerFeature\Zed\Shipment\Communication\Plugin\ShipmentMethodAvailabilityPluginInterface;
@@ -55,11 +55,11 @@ class Method
     }
 
     /**
-     * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer
+     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
      *
      * @return ShipmentTransfer
      */
-    public function getAvailableMethods(ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
+    public function getAvailableMethods(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer)
     {
         $shipmentTransfer = new ShipmentTransfer();
         $methods = $this->queryContainer->queryActiveMethods()->find();
@@ -150,11 +150,11 @@ class Method
 
     /**
      * @param SpyShipmentMethod $method
-     * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer
+     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
      *
      * @return bool
      */
-    protected function isAvailable(SpyShipmentMethod $method, ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
+    protected function isAvailable(SpyShipmentMethod $method, ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer)
     {
         $availabilityPlugins = $this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS];
         $isAvailable = true;
@@ -170,11 +170,11 @@ class Method
 
     /**
      * @param SpyShipmentMethod $method
-     * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer
+     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
      *
      * @return int
      */
-    protected function getPrice(SpyShipmentMethod $method, ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
+    protected function getPrice(SpyShipmentMethod $method, ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer)
     {
         $price = $method->getPrice();
         $priceCalculationPlugins = $this->plugins[ShipmentDependencyProvider::PRICE_CALCULATION_PLUGINS];
@@ -190,11 +190,11 @@ class Method
 
     /**
      * @param SpyShipmentMethod $method
-     * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer
+     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
      *
      * @return int
      */
-    protected function getTaxRate(SpyShipmentMethod $method, ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
+    protected function getTaxRate(SpyShipmentMethod $method, ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer)
     {
         $taxSetEntity = $method->getTaxSet();
 
@@ -219,11 +219,11 @@ class Method
 
     /**
      * @param SpyShipmentMethod $method
-     * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer
+     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer
      *
      * @return string
      */
-    protected function getDeliveryTime(SpyShipmentMethod $method, ShipmentMethodAvailabilityInterface $shipmentMethodAvailabilityTransfer)
+    protected function getDeliveryTime(SpyShipmentMethod $method, ShipmentMethodAvailabilityTransfer $shipmentMethodAvailabilityTransfer)
     {
         $timeString = '';
 

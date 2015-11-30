@@ -97,36 +97,6 @@ class TransferGeneratorTest extends Test
     }
 
     /**
-     * @return void
-     */
-    public function testExecuteShouldGenerateExpectedTransferInterface()
-    {
-        $sourceDirectories = [
-            __DIR__ . '/Fixtures/',
-        ];
-
-        $normalizer = new DefinitionNormalizer();
-        $loader = new TransferDefinitionLoader($normalizer, $sourceDirectories);
-        $definitionBuilder = new TransferInterfaceDefinitionBuilder(
-            $loader,
-            new TransferDefinitionMerger(),
-            new InterfaceDefinition()
-        );
-
-        $messenger = $this->getMessenger();
-        $generator = new InterfaceGenerator($this->getTargetDirectory());
-
-        $transferGenerator = new TransferGenerator($messenger, $generator, $definitionBuilder);
-        $transferGenerator->execute();
-
-        $this->assertTrue(file_exists($this->getTargetDirectory() . 'Test/CatFaceInterface.php'));
-        $this->assertSame(
-            file_get_contents(__DIR__ . '/Fixtures/expected.interface'),
-            file_get_contents($this->getTargetDirectory() . 'Test/CatFaceInterface.php')
-        );
-    }
-
-    /**
      * @return string
      */
     protected function getTargetDirectory()

@@ -6,32 +6,32 @@
 
 namespace SprykerFeature\Zed\Cart\Business\StorageProvider;
 
-use Generated\Shared\Cart\ChangeInterface;
+use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException;
-use Generated\Shared\Cart\CartInterface;
-use Generated\Shared\Cart\ItemInterface;
+use Generated\Shared\Transfer\CartTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 
 class InMemoryProvider implements StorageProviderInterface
 {
 
     /**
-     * @param CartInterface $cart
-     * @param ChangeInterface $increasedItems
+     * @param CartTransfer $cart
+     * @param ChangeTransfer $increasedItems
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function increaseItems(CartInterface $cart, ChangeInterface $increasedItems)
+    public function increaseItems(CartTransfer $cart, ChangeTransfer $increasedItems)
     {
         return $this->addItems($cart, $increasedItems);
     }
 
     /**
-     * @param CartInterface $cart
-     * @param ChangeInterface $change
+     * @param CartTransfer $cart
+     * @param ChangeTransfer $change
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function addItems(CartInterface $cart, ChangeInterface $change)
+    public function addItems(CartTransfer $cart, ChangeTransfer $change)
     {
         $existingItems = $cart->getItems();
         foreach ($change->getItems() as $item) {
@@ -43,23 +43,23 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param CartInterface $cart
-     * @param ChangeInterface $decreasedItems
+     * @param CartTransfer $cart
+     * @param ChangeTransfer $decreasedItems
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function decreaseItems(CartInterface $cart, ChangeInterface $decreasedItems)
+    public function decreaseItems(CartTransfer $cart, ChangeTransfer $decreasedItems)
     {
         return $this->removeItems($cart, $decreasedItems);
     }
 
     /**
-     * @param CartInterface $cart
-     * @param ChangeInterface $change
+     * @param CartTransfer $cart
+     * @param ChangeTransfer $change
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function removeItems(CartInterface $cart, ChangeInterface $change)
+    public function removeItems(CartTransfer $cart, ChangeTransfer $change)
     {
         $existingItems = $cart->getItems();
         $cartIndex = $this->createCartIndex($existingItems);
@@ -78,7 +78,7 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param \ArrayObject|ItemInterface[] $cartItems
+     * @param \ArrayObject|ItemTransfer[] $cartItems
      *
      * @return array
      */
@@ -96,9 +96,9 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param ItemInterface[] $existingItems
+     * @param ItemTransfer[] $existingItems
      * @param int $index
-     * @param ItemInterface $item
+     * @param ItemTransfer $item
      */
     private function decreaseExistingItem($existingItems, $index, $item)
     {
@@ -114,9 +114,9 @@ class InMemoryProvider implements StorageProviderInterface
 
     /**
      * @param \ArrayObject $existingItems
-     * @param ItemInterface $changedItem
+     * @param ItemTransfer $changedItem
      */
-    protected function decreaseBySku(\ArrayObject $existingItems, ItemInterface $changedItem)
+    protected function decreaseBySku(\ArrayObject $existingItems, ItemTransfer $changedItem)
     {
         foreach ($existingItems as $key => $cartIndexItem) {
             if ($cartIndexItem->getSku() === $changedItem->getSku()) {
@@ -128,11 +128,11 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param ItemInterface $item
+     * @param ItemTransfer $item
      *
      * @return bool
      */
-    protected function isValidQuantity(ItemInterface $item)
+    protected function isValidQuantity(ItemTransfer $item)
     {
         if ($item->getQuantity() < 1) {
             throw new InvalidArgumentException(
@@ -148,23 +148,23 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param CartInterface $cart
-     * @param ChangeInterface $change
+     * @param CartTransfer $cart
+     * @param ChangeTransfer $change
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function addCouponCode(CartInterface $cart, ChangeInterface $change)
+    public function addCouponCode(CartTransfer $cart, ChangeTransfer $change)
     {
         $cart->addCouponCode($change->getCouponCode());
     }
 
     /**
-     * @param CartInterface $cart
-     * @param ChangeInterface $change
+     * @param CartTransfer $cart
+     * @param ChangeTransfer $change
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function removeCouponCode(CartInterface $cart, ChangeInterface $change)
+    public function removeCouponCode(CartTransfer $cart, ChangeTransfer $change)
     {
         $couponCodes = [];
         foreach ($cart->getCouponCodes() as $couponCode) {
@@ -177,11 +177,11 @@ class InMemoryProvider implements StorageProviderInterface
     }
 
     /**
-     * @param CartInterface $cart
+     * @param CartTransfer $cart
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function clearCouponCodes(CartInterface $cart)
+    public function clearCouponCodes(CartTransfer $cart)
     {
         $cart->setCouponCodes([]);
     }

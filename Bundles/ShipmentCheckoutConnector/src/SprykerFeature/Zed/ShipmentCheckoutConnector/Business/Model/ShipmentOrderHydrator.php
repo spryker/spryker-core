@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\ShipmentCheckoutConnector\Business\Model;
 
-use Generated\Shared\ShipmentCheckoutConnector\CheckoutRequestInterface;
-use Generated\Shared\ShipmentCheckoutConnector\OrderInterface;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ShipmentMethodTransfer;
 use SprykerFeature\Zed\ShipmentCheckoutConnector\Persistence\ShipmentCheckoutConnectorQueryContainerInterface;
 
@@ -25,10 +25,10 @@ class ShipmentOrderHydrator implements ShipmentOrderHydratorInterface
     }
 
     /**
-     * @param OrderInterface $order
-     * @param CheckoutRequestInterface $request
+     * @param OrderTransfer $order
+     * @param CheckoutRequestTransfer $request
      */
-    public function hydrateOrderTransfer(OrderInterface $order, CheckoutRequestInterface $request)
+    public function hydrateOrderTransfer(OrderTransfer $order, CheckoutRequestTransfer $request)
     {
         $idShipmentMethod = $request->getIdShipmentMethod();
 

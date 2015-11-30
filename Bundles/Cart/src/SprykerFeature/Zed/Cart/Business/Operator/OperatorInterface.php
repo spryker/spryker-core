@@ -6,19 +6,19 @@
 
 namespace SprykerFeature\Zed\Cart\Business\Operator;
 
-use Generated\Shared\Cart\CartInterface;
-use Generated\Shared\Cart\ChangeInterface;
+use Generated\Shared\Transfer\CartTransfer;
+use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 
 interface OperatorInterface
 {
 
     /**
-     * @param ChangeInterface $cartChange
+     * @param ChangeTransfer $cartChange
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function executeOperation(ChangeInterface $cartChange);
+    public function executeOperation(ChangeTransfer $cartChange);
 
     /**
      * @param ItemExpanderPluginInterface $itemExpander

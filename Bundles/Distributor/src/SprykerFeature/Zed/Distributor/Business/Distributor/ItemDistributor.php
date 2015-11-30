@@ -2,7 +2,6 @@
 
 namespace SprykerFeature\Zed\Distributor\Business\Distributor;
 
-use Generated\Shared\Distributor\QueueMessageInterface;
 use Generated\Shared\Transfer\QueueMessageTransfer;
 use SprykerFeature\Zed\Distributor\Business\Provider\ItemQueueProviderInterface;
 use SprykerFeature\Zed\Distributor\Business\Router\MessageRouterInterface;
@@ -120,7 +119,7 @@ class ItemDistributor implements ItemDistributorInterface
     }
 
     /**
-     * @return QueueMessageInterface
+     * @return QueueMessageTransfer
      */
     protected function getMessageTransfer()
     {

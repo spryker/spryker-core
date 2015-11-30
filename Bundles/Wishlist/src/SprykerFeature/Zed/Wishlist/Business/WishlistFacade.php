@@ -6,9 +6,9 @@
 
 namespace SprykerFeature\Zed\Wishlist\Business;
 
-use Generated\Shared\Customer\CustomerInterface;
-use Generated\Shared\Wishlist\WishlistChangeInterface;
-use Generated\Shared\Wishlist\WishlistInterface;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\WishlistChangeTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -18,51 +18,51 @@ class WishlistFacade extends AbstractFacade implements WishlistFacadeInterface
 {
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function addItem(WishlistChangeInterface $wishlistChange)
+    public function addItem(WishlistChangeTransfer $wishlistChange)
     {
         return $this->getDependencyContainer()->createAddOperator($wishlistChange)->executeOperation();
     }
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function removeItem(WishlistChangeInterface $wishlistChange)
+    public function removeItem(WishlistChangeTransfer $wishlistChange)
     {
         return $this->getDependencyContainer()->createRemoveOperator($wishlistChange)->executeOperation();
     }
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function decreaseQuantity(WishlistChangeInterface $wishlistChange)
+    public function decreaseQuantity(WishlistChangeTransfer $wishlistChange)
     {
         return $this->getDependencyContainer()->createDecreaseOperator($wishlistChange)->executeOperation();
     }
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function increaseQuantity(WishlistChangeInterface $wishlistChange)
+    public function increaseQuantity(WishlistChangeTransfer $wishlistChange)
     {
         return $this->getDependencyContainer()->createIncreaseOperator($wishlistChange)->executeOperation();
     }
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function getCustomerWishlist(CustomerInterface $customerTransfer)
+    public function getCustomerWishlist(CustomerTransfer $customerTransfer)
     {
         return $this->getDependencyContainer()->createCustomer($customerTransfer)->getWishlist();
     }

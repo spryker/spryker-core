@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\ItemGrouper\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use Generated\Shared\ItemGrouper\GroupableContainerInterface;
+use Generated\Shared\Transfer\GroupableContainerTransfer;
 
 /**
  * @method ItemGrouperDependencyContainer getDependencyContainer()
@@ -15,21 +15,21 @@ class ItemGrouperFacade extends AbstractFacade
 {
 
     /**
-     * @param GroupableContainerInterface $groupAbleItems
+     * @param GroupableContainerTransfer $groupAbleItems
      *
-     * @return GroupableContainerInterface
+     * @return GroupableContainerTransfer
      */
-    public function groupItemsByKey(GroupableContainerInterface $groupAbleItems)
+    public function groupItemsByKey(GroupableContainerTransfer $groupAbleItems)
     {
         return $this->getDependencyContainer()->createGrouper()->groupByKey($groupAbleItems);
     }
 
     /**
-     * @param GroupableContainerInterface $groupableItems
+     * @param GroupableContainerTransfer $groupableItems
      *
-     * @return GroupableContainerInterface
+     * @return GroupableContainerTransfer
      */
-    public function groupItemsByKeyForNewCollection(GroupableContainerInterface $groupableItems)
+    public function groupItemsByKeyForNewCollection(GroupableContainerTransfer $groupableItems)
     {
         return $this->getDependencyContainer()
             ->createGrouper($regroupAllItemCollection = true)

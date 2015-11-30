@@ -6,10 +6,10 @@
 
 namespace SprykerFeature\Zed\Newsletter\Communication\Controller;
 
-use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
-use Generated\Shared\Newsletter\NewsletterSubscriptionApprovalResultInterface;
-use Generated\Shared\Newsletter\NewsletterSubscriptionRequestInterface;
-use Generated\Shared\Newsletter\NewsletterSubscriptionResponseInterface;
+use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
+use Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer;
+use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
+use Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer;
 use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use SprykerFeature\Zed\Newsletter\Business\NewsletterFacade;
 
@@ -20,51 +20,51 @@ class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * @param NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest
+     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseInterface
+     * @return NewsletterSubscriptionResponseTransfer
      */
-    public function subscribeWithSingleOptInAction(NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest)
+    public function subscribeWithSingleOptInAction(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
         return $this->getFacade()->subscribeWithSingleOptIn($newsletterSubscriptionRequest);
     }
 
     /**
-     * @param NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest
+     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseInterface
+     * @return NewsletterSubscriptionResponseTransfer
      */
-    public function subscribeWithDoubleOptInAction(NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest)
+    public function subscribeWithDoubleOptInAction(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
         return $this->getFacade()->subscribeWithDoubleOptIn($newsletterSubscriptionRequest);
     }
 
     /**
-     * @param NewsletterSubscriberInterface $newsletterSubscriber
+     * @param NewsletterSubscriberTransfer $newsletterSubscriber
      *
-     * @return NewsletterSubscriptionApprovalResultInterface
+     * @return NewsletterSubscriptionApprovalResultTransfer
      */
-    public function approveDoubleOptInSubscriberAction(NewsletterSubscriberInterface $newsletterSubscriber)
+    public function approveDoubleOptInSubscriberAction(NewsletterSubscriberTransfer $newsletterSubscriber)
     {
         return $this->getFacade()->approveDoubleOptInSubscriber($newsletterSubscriber);
     }
 
     /**
-     * @param NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest
+     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseInterface
+     * @return NewsletterSubscriptionResponseTransfer
      */
-    public function unsubscribeAction(NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest)
+    public function unsubscribeAction(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
         return $this->getFacade()->unsubscribe($newsletterSubscriptionRequest);
     }
 
     /**
-     * @param NewsletterSubscriptionRequestInterface $newsletterUnsubscriptionRequest
+     * @param NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseInterface
+     * @return NewsletterSubscriptionResponseTransfer
      */
-    public function checkSubscriptionAction(NewsletterSubscriptionRequestInterface $newsletterUnsubscriptionRequest)
+    public function checkSubscriptionAction(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest)
     {
         return $this->getFacade()->checkSubscription($newsletterUnsubscriptionRequest);
     }

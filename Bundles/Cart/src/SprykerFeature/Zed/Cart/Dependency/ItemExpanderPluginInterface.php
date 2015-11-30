@@ -6,16 +6,16 @@
 
 namespace SprykerFeature\Zed\Cart\Dependency;
 
-use Generated\Shared\Cart\ChangeInterface;
+use Generated\Shared\Transfer\ChangeTransfer;
 
 interface ItemExpanderPluginInterface
 {
 
     /**
-     * @param ChangeInterface $change
+     * @param ChangeTransfer $change
      *
-     * @return ChangeInterface
+     * @return ChangeTransfer
      */
-    public function expandItems(ChangeInterface $change);
+    public function expandItems(ChangeTransfer $change);
 
 }

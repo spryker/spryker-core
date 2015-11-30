@@ -7,7 +7,7 @@
 namespace SprykerFeature\Client\Wishlist\Service\Storage;
 
 use Generated\Shared\Transfer\ConcreteProductTransfer;
-use Generated\Shared\Wishlist\WishlistInterface;
+use Generated\Shared\Transfer\WishlistTransfer;
 use SprykerFeature\Client\Product\Service\ProductClientInterface;
 use SprykerFeature\Client\Storage\Service\StorageClientInterface;
 
@@ -35,11 +35,11 @@ class WishlistStorage implements WishlistStorageInterface
     }
 
     /**
-     * @param WishlistInterface $wishlist
+     * @param WishlistTransfer $wishlist
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function expandProductDetails(WishlistInterface $wishlist)
+    public function expandProductDetails(WishlistTransfer $wishlist)
     {
         foreach ($wishlist->getItems() as $item) {
             $productData = $this

@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\Cart\Communication\Controller;
 
-use Generated\Shared\Cart\CartInterface;
-use Generated\Shared\Cart\ChangeInterface;
+use Generated\Shared\Transfer\CartTransfer;
+use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerFeature\Zed\Cart\Business\CartFacade;
 use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
@@ -18,81 +18,81 @@ class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * @param ChangeInterface $cartChange
+     * @param ChangeTransfer $cartChange
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function addItemAction(ChangeInterface $cartChange)
+    public function addItemAction(ChangeTransfer $cartChange)
     {
         return $this->getFacade()->addToCart($cartChange);
     }
 
     /**
-     * @param ChangeInterface $cartChange
+     * @param ChangeTransfer $cartChange
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function increaseItemQuantityAction(ChangeInterface $cartChange)
+    public function increaseItemQuantityAction(ChangeTransfer $cartChange)
     {
         return $this->getFacade()->increaseQuantity($cartChange);
     }
 
     /**
-     * @param ChangeInterface $cartChange
+     * @param ChangeTransfer $cartChange
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function decreaseItemQuantityAction(ChangeInterface $cartChange)
+    public function decreaseItemQuantityAction(ChangeTransfer $cartChange)
     {
         return $this->getFacade()->decreaseQuantity($cartChange);
     }
 
     /**
-     * @param ChangeInterface $cartChange
+     * @param ChangeTransfer $cartChange
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function removeItemAction(ChangeInterface $cartChange)
+    public function removeItemAction(ChangeTransfer $cartChange)
     {
         return $this->getFacade()->removeFromCart($cartChange);
     }
 
     /**
-     * @param CartInterface $cartTransfer
+     * @param CartTransfer $cartTransfer
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function recalculateAction(CartInterface $cartTransfer)
+    public function recalculateAction(CartTransfer $cartTransfer)
     {
         return $this->getFacade()->recalculate($cartTransfer);
     }
 
     /**
-     * @param ChangeInterface $cartChange
+     * @param ChangeTransfer $cartChange
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function addCouponCodeAction(ChangeInterface $cartChange)
+    public function addCouponCodeAction(ChangeTransfer $cartChange)
     {
         return $this->getFacade()->addCouponCode($cartChange);
     }
 
     /**
-     * @param ChangeInterface $cartChange
+     * @param ChangeTransfer $cartChange
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function removeCouponCodeAction(ChangeInterface $cartChange)
+    public function removeCouponCodeAction(ChangeTransfer $cartChange)
     {
         return $this->getFacade()->removeCouponCode($cartChange);
     }
 
     /**
-     * @param ChangeInterface $cartChange
+     * @param ChangeTransfer $cartChange
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function clearCouponCodesAction(ChangeInterface $cartChange)
+    public function clearCouponCodesAction(ChangeTransfer $cartChange)
     {
         return $this->getFacade()->clearCouponCodes($cartChange);
     }

@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\Cart\Communication\Plugin;
 
-use Generated\Shared\Cart\ItemInterface;
-use Generated\Shared\Cart\ChangeInterface;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 
@@ -11,11 +11,11 @@ class SkuGroupKeyPlugin extends AbstractPlugin implements ItemExpanderPluginInte
 {
 
     /**
-     * @param ChangeInterface $change
+     * @param ChangeTransfer $change
      *
-     * @return ChangeInterface
+     * @return ChangeTransfer
      */
-    public function expandItems(ChangeInterface $change)
+    public function expandItems(ChangeTransfer $change)
     {
         foreach ($change->getItems() as $cartItem) {
             $cartItem->setGroupKey($this->buildGroupKey($cartItem));
@@ -25,11 +25,11 @@ class SkuGroupKeyPlugin extends AbstractPlugin implements ItemExpanderPluginInte
     }
 
     /**
-     * @param ItemInterface $cartItem
+     * @param ItemTransfer $cartItem
      *
      * @return string
      */
-    protected function buildGroupKey(ItemInterface $cartItem)
+    protected function buildGroupKey(ItemTransfer $cartItem)
     {
         $groupKey = $cartItem->getGroupKey();
         if (empty($groupKey)) {

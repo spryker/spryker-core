@@ -5,14 +5,14 @@
 
 namespace SprykerFeature\Zed\Newsletter\Business\Subscription;
 
-use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
+use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 
 interface SubscriberOptInHandlerInterface
 {
 
     /**
-     * @param NewsletterSubscriberInterface $subscriberTransfer
+     * @param NewsletterSubscriberTransfer $subscriberTransfer
      */
-    public function optIn(NewsletterSubscriberInterface $subscriberTransfer);
+    public function optIn(NewsletterSubscriberTransfer $subscriberTransfer);
 
 }

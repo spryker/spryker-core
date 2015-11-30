@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\SequenceNumber\Business;
 
-use Generated\Shared\SequenceNumber\SequenceNumberSettingsInterface;
+use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\SequenceNumberBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\SequenceNumber\Business\Generator\RandomNumberGeneratorInterface;
@@ -39,11 +39,11 @@ class SequenceNumberDependencyContainer extends AbstractBusinessDependencyContai
     }
 
     /**
-     * @param SequenceNumberSettingsInterface $sequenceNumberSettings
+     * @param SequenceNumberSettingsTransfer $sequenceNumberSettings
      *
      * @return SequenceNumberInterface
      */
-    public function createSequenceNumber(SequenceNumberSettingsInterface $sequenceNumberSettings)
+    public function createSequenceNumber(SequenceNumberSettingsTransfer $sequenceNumberSettings)
     {
         $settings = $this->getConfig()->getDefaultSettings($sequenceNumberSettings);
 

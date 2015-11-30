@@ -26,7 +26,7 @@ class InstalledPackageFinderTest extends \PHPUnit_Framework_TestCase
         $finder = new InstalledPackageFinder($collection, $this->getProcessMockWithSuccessFullResponse(), '');
 
         $this->assertInstanceOf(
-            'Generated\Shared\Maintenance\InstalledPackagesInterface',
+            'Generated\Shared\Transfer\InstalledPackagesTransfer',
             $finder->findInstalledPackages()
         );
     }

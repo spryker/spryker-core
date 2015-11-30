@@ -6,8 +6,7 @@
 
 namespace SprykerFeature\Zed\Newsletter\Business\Subscription;
 
-use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
-use Generated\Shared\Newsletter\NewsletterSubscriptionApprovalResultInterface;
+use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer;
 use SprykerFeature\Shared\Newsletter\Messages\Messages;
 use SprykerFeature\Zed\Newsletter\Business\Exception\MissingNewsletterSubscriberException;
@@ -33,11 +32,11 @@ class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
     }
 
     /**
-     * @param NewsletterSubscriberInterface $subscriberTransfer
+     * @param NewsletterSubscriberTransfer $subscriberTransfer
      *
      * @throws MissingNewsletterSubscriberException
      */
-    public function optIn(NewsletterSubscriberInterface $subscriberTransfer)
+    public function optIn(NewsletterSubscriberTransfer $subscriberTransfer)
     {
         $subscriberEntity = $this->findSubscriberEntity($subscriberTransfer);
 
@@ -56,9 +55,9 @@ class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
     }
 
     /**
-     * @param NewsletterSubscriberInterface $subscriberTransfer
+     * @param NewsletterSubscriberTransfer $subscriberTransfer
      */
-    protected function triggerSubscriberOptInSenders(NewsletterSubscriberInterface $subscriberTransfer)
+    protected function triggerSubscriberOptInSenders(NewsletterSubscriberTransfer $subscriberTransfer)
     {
         foreach ($this->subscriberOptInSenders as $sender) {
             $sender->send($subscriberTransfer);
@@ -66,11 +65,11 @@ class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
     }
 
     /**
-     * @param NewsletterSubscriberInterface $newsletterSubscriber
+     * @param NewsletterSubscriberTransfer $newsletterSubscriber
      *
-     * @return NewsletterSubscriptionApprovalResultInterface
+     * @return NewsletterSubscriptionApprovalResultTransfer
      */
-    public function approveSubscriberByKey(NewsletterSubscriberInterface $newsletterSubscriber)
+    public function approveSubscriberByKey(NewsletterSubscriberTransfer $newsletterSubscriber)
     {
         $result = new NewsletterSubscriptionApprovalResultTransfer();
 

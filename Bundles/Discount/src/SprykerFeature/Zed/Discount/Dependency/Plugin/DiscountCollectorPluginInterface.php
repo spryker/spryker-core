@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\Discount\Dependency\Plugin;
 
-use Generated\Shared\Discount\DiscountCollectorInterface;
-use Generated\Shared\Discount\DiscountInterface;
+use Generated\Shared\Transfer\DiscountCollectorTransfer;
+use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 
@@ -15,16 +15,16 @@ interface DiscountCollectorPluginInterface
 {
 
     /**
-     * @param DiscountInterface $discount
+     * @param DiscountTransfer $discount
      * @param CalculableInterface $container
-     * @param DiscountCollectorInterface $discountCollectorTransfer
+     * @param DiscountCollectorTransfer $discountCollectorTransfer
      *
      * @return DiscountableInterface[]
      */
     public function collect(
-        DiscountInterface $discount,
+        DiscountTransfer $discount,
         CalculableInterface $container,
-        DiscountCollectorInterface $discountCollectorTransfer
+        DiscountCollectorTransfer $discountCollectorTransfer
     );
 
 }

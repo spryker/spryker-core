@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\Product\Business;
 
-use Generated\Shared\Product\AbstractProductInterface;
-use Generated\Shared\Product\ConcreteProductInterface;
+use Generated\Shared\Transfer\AbstractProductTransfer;
+use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
@@ -168,11 +168,11 @@ class ProductFacade extends AbstractFacade
     }
 
     /**
-     * @param AbstractProductInterface $abstractProductTransfer
+     * @param AbstractProductTransfer $abstractProductTransfer
      *
      * @return int
      */
-    public function createAbstractProduct(AbstractProductInterface $abstractProductTransfer)
+    public function createAbstractProduct(AbstractProductTransfer $abstractProductTransfer)
     {
         $productManager = $this->getDependencyContainer()->createProductManager();
 
@@ -192,12 +192,12 @@ class ProductFacade extends AbstractFacade
     }
 
     /**
-     * @param ConcreteProductInterface $concreteProductTransfer
+     * @param ConcreteProductTransfer $concreteProductTransfer
      * @param int $idAbstractProduct
      *
      * @return int
      */
-    public function createConcreteProduct(ConcreteProductInterface $concreteProductTransfer, $idAbstractProduct)
+    public function createConcreteProduct(ConcreteProductTransfer $concreteProductTransfer, $idAbstractProduct)
     {
         $productManager = $this->getDependencyContainer()->createProductManager();
 
@@ -267,7 +267,7 @@ class ProductFacade extends AbstractFacade
     /**
      * @param string $concreteSku
      *
-     * @return ConcreteProductInterface
+     * @return ConcreteProductTransfer
      */
     public function getConcreteProduct($concreteSku)
     {

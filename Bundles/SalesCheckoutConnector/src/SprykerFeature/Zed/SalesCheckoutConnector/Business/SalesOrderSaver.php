@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\SalesCheckoutConnector\Business;
 
-use Generated\Shared\Sales\OrderInterface;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use SprykerFeature\Zed\SalesCheckoutConnector\Dependency\Facade\SalesCheckoutConnectorToSalesInterface;
 
@@ -27,10 +27,10 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     }
 
     /**
-     * @param OrderInterface $order
+     * @param OrderTransfer $order
      * @param CheckoutResponseTransfer $checkoutResponse
      */
-    public function saveOrder(OrderInterface $order, CheckoutResponseTransfer $checkoutResponse)
+    public function saveOrder(OrderTransfer $order, CheckoutResponseTransfer $checkoutResponse)
     {
         $this->salesFacade->saveOrder($order);
     }

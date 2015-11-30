@@ -24,14 +24,6 @@ class TransferFacade extends AbstractFacade
     }
 
     /**
-     * @param LoggerInterface $messenger
-     */
-    public function generateTransferInterfaces(LoggerInterface $messenger)
-    {
-        $this->getDependencyContainer()->createTransferInterfaceGenerator($messenger)->execute();
-    }
-
-    /**
      * @return void
      */
     public function deleteGeneratedTransferObjects()

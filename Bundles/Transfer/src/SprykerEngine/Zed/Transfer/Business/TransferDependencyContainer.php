@@ -12,7 +12,6 @@ use SprykerEngine\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterfa
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer\ClassGenerator;
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer\TransferDefinitionBuilder;
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionLoader;
-use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferInterface\TransferInterfaceDefinitionBuilder;
 use SprykerEngine\Zed\Transfer\Business\Model\TransferCleaner;
 use SprykerEngine\Zed\Transfer\Business\Model\TransferGenerator;
 use SprykerEngine\Zed\Transfer\TransferConfig;
@@ -69,42 +68,6 @@ class TransferDependencyContainer extends AbstractBusinessDependencyContainer
         return $this->getFactory()->createModelGeneratorTransferDefinitionLoader(
             $this->getFactory()->createModelGeneratorDefinitionNormalizer(),
             $this->getConfig()->getSourceDirectories()
-        );
-    }
-
-    /**
-     * @param LoggerInterface $messenger
-     *
-     * @return TransferGenerator
-     */
-    public function createTransferInterfaceGenerator(LoggerInterface $messenger)
-    {
-        return $this->getFactory()->createModelTransferGenerator(
-            $messenger,
-            $this->createInterfaceGenerator(),
-            $this->createInterfaceDefinitionBuilder()
-        );
-    }
-
-    /**
-     * @return ClassGenerator
-     */
-    private function createInterfaceGenerator()
-    {
-        return $this->getFactory()->createModelGeneratorTransferInterfaceInterfaceGenerator(
-            $this->getConfig()->getGeneratedTargetDirectory()
-        );
-    }
-
-    /**
-     * @return TransferInterfaceDefinitionBuilder|DefinitionBuilderInterface
-     */
-    private function createInterfaceDefinitionBuilder()
-    {
-        return $this->getFactory()->createModelGeneratorTransferInterfaceTransferInterfaceDefinitionBuilder(
-            $this->createLoader(),
-            $this->getFactory()->createModelGeneratorTransferInterfaceTransferInterfaceDefinitionMerger(),
-            $this->getFactory()->createModelGeneratorTransferInterfaceInterfaceDefinition()
         );
     }
 

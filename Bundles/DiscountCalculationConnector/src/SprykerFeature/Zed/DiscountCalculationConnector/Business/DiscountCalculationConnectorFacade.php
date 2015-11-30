@@ -6,7 +6,7 @@
 namespace SprykerFeature\Zed\DiscountCalculationConnector\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use Generated\Shared\Calculation\TotalsInterface;
+use Generated\Shared\Transfer\TotalsTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 
 /**
@@ -16,12 +16,12 @@ class DiscountCalculationConnectorFacade extends AbstractFacade
 {
 
     /**
-     * @param TotalsInterface $totalsTransfer
+     * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $discountableContainer
      * @param \ArrayObject $discountableContainers
      */
     public function recalculateDiscountTotals(
-        TotalsInterface $totalsTransfer,
+        TotalsTransfer $totalsTransfer,
         CalculableInterface $discountableContainer,
         \ArrayObject $discountableContainers
     ) {
@@ -30,12 +30,12 @@ class DiscountCalculationConnectorFacade extends AbstractFacade
     }
 
     /**
-     * @param TotalsInterface $totalsTransfer
+     * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $container
      * @param \ArrayObject $items
      */
     public function recalculateGrandTotalWithDiscountsTotals(
-        TotalsInterface $totalsTransfer,
+        TotalsTransfer $totalsTransfer,
         CalculableInterface $container,
         \ArrayObject $items
     ) {

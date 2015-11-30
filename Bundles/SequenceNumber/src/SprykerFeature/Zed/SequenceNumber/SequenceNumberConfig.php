@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\SequenceNumber;
 
-use Generated\Shared\SequenceNumber\SequenceNumberSettingsInterface;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
@@ -14,11 +13,11 @@ class SequenceNumberConfig extends AbstractBundleConfig
 {
 
     /**
-     * @param SequenceNumberSettingsInterface|null $settings
+     * @param SequenceNumberSettingsTransfer|null $settings
      *
      * @return SequenceNumberSettingsTransfer
      */
-    public function getDefaultSettings(SequenceNumberSettingsInterface $settings = null)
+    public function getDefaultSettings(SequenceNumberSettingsTransfer $settings = null)
     {
         $defaultSettings = new SequenceNumberSettingsTransfer();
         $defaultSettings->setName($this->getSequenceName());

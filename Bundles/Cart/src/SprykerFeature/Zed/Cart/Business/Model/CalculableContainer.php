@@ -7,27 +7,27 @@
 namespace SprykerFeature\Zed\Cart\Business\Model;
 
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
-use Generated\Shared\Calculation\CalculableContainerInterface;
-use Generated\Shared\Cart\CartInterface;
+use Generated\Shared\Transfer\CalculableContainerTransfer;
+use Generated\Shared\Transfer\CartTransfer;
 
 class CalculableContainer implements CalculableInterface
 {
 
     /**
-     * @var CartInterface
+     * @var CartTransfer
      */
     private $cart;
 
     /**
-     * @param CartInterface $cart
+     * @param CartTransfer $cart
      */
-    public function __construct(CartInterface $cart)
+    public function __construct(CartTransfer $cart)
     {
         $this->cart = $cart;
     }
 
     /**
-     * @return CalculableContainerInterface
+     * @return CalculableContainerTransfer
      */
     public function getCalculableObject()
     {

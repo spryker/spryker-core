@@ -6,16 +6,16 @@
 
 namespace SprykerFeature\Zed\OmsCheckoutConnector\Business;
 
-use Generated\Shared\OmsCheckoutConnector\CheckoutRequestInterface;
-use Generated\Shared\OmsCheckoutConnector\OrderInterface;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 
 interface OmsOrderHydratorInterface
 {
 
     /**
-     * @param OrderInterface $order
-     * @param CheckoutRequestInterface $request
+     * @param OrderTransfer $order
+     * @param CheckoutRequestTransfer $request
      */
-    public function hydrateOrderTransfer(OrderInterface $order, CheckoutRequestInterface $request);
+    public function hydrateOrderTransfer(OrderTransfer $order, CheckoutRequestTransfer $request);
 
 }

@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Client\Cart\Service\Zed;
 
-use Generated\Shared\Cart\CartInterface;
-use Generated\Shared\Cart\ChangeInterface;
+use Generated\Shared\Transfer\CartTransfer;
+use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Client\ZedRequest\Service\ZedRequestClient;
 
@@ -28,81 +28,81 @@ class CartStub implements CartStubInterface
     }
 
     /**
-     * @param ChangeInterface|TransferInterface $changeTransfer
+     * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function addItem(ChangeInterface $changeTransfer)
+    public function addItem(ChangeTransfer $changeTransfer)
     {
         return $this->zedStub->call('/cart/gateway/add-item', $changeTransfer);
     }
 
     /**
-     * @param ChangeInterface|TransferInterface $changeTransfer
+     * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function removeItem(ChangeInterface $changeTransfer)
+    public function removeItem(ChangeTransfer $changeTransfer)
     {
         return $this->zedStub->call('/cart/gateway/remove-item', $changeTransfer);
     }
 
     /**
-     * @param ChangeInterface|TransferInterface $changeTransfer
+     * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function increaseItemQuantity(ChangeInterface $changeTransfer)
+    public function increaseItemQuantity(ChangeTransfer $changeTransfer)
     {
         return $this->zedStub->call('/cart/gateway/increase-item-quantity', $changeTransfer);
     }
 
     /**
-     * @param ChangeInterface|TransferInterface $changeTransfer
+     * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function decreaseItemQuantity(ChangeInterface $changeTransfer)
+    public function decreaseItemQuantity(ChangeTransfer $changeTransfer)
     {
         return $this->zedStub->call('/cart/gateway/decrease-item-quantity', $changeTransfer);
     }
 
     /**
-     * @param ChangeInterface|TransferInterface $changeTransfer
+     * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function addCoupon(ChangeInterface $changeTransfer)
+    public function addCoupon(ChangeTransfer $changeTransfer)
     {
         return $this->zedStub->call('/cart/gateway/add-coupon-code', $changeTransfer);
     }
 
     /**
-     * @param ChangeInterface|TransferInterface $changeTransfer
+     * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function removeCoupon(ChangeInterface $changeTransfer)
+    public function removeCoupon(ChangeTransfer $changeTransfer)
     {
         return $this->zedStub->call('/cart/gateway/remove-coupon-code', $changeTransfer);
     }
 
     /**
-     * @param ChangeInterface|TransferInterface $changeTransfer
+     * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function clearCoupons(ChangeInterface $changeTransfer)
+    public function clearCoupons(ChangeTransfer $changeTransfer)
     {
         return $this->zedStub->call('/cart/gateway/clear-coupon-code', $changeTransfer);
     }
 
     /**
-     * @param CartInterface|TransferInterface $cartTransfer
+     * @param CartTransfer|TransferInterface $cartTransfer
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function recalculate(CartInterface $cartTransfer)
+    public function recalculate(CartTransfer $cartTransfer)
     {
         return $this->zedStub->call('/cart/gateway/recalculate', $cartTransfer);
     }

@@ -8,14 +8,12 @@ namespace Generated\Shared\Transfer;
 
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
 use SprykerEngine\Shared\Transfer\Exception\RequiredTransferPropertyException;
-use Generated\Shared\Project\FooBarInterface as ProjectFooBarInterface;
-use Generated\Shared\Vendor\FooBarInterface as VendorFooBarInterface;
 
 /**
  * !!! THIS FILE IS AUTO-GENERATED, EVERY CHANGE WILL BE LOST WITH THE NEXT RUN OF TRANSFER GENERATOR
  * !!! DO NOT CHANGE ANYTHING IN THIS FILE
  */
-class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface, VendorFooBarInterface
+class FooBarTransfer extends AbstractTransfer
 {
 
     const NAME = 'name';
@@ -69,6 +67,8 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     }
 
     /**
+     * @bundle Test
+     *
      * @param string $name
      *
      * @return self
@@ -82,6 +82,8 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     }
 
     /**
+     * @bundle Test
+     *
      * @return string
      */
     public function getName()
@@ -90,6 +92,8 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     }
 
     /**
+     * @bundle Test
+     *
      * @throws RequiredTransferPropertyException
      *
      * @return self
@@ -102,6 +106,8 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     }
 
     /**
+     * @bundle Test
+     *
      * @param int $bla
      *
      * @return self
@@ -115,6 +121,8 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     }
 
     /**
+     * @bundle Test
+     *
      * @return int
      */
     public function getBla()
@@ -123,6 +131,8 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     }
 
     /**
+     * @bundle Test
+     *
      * @throws RequiredTransferPropertyException
      *
      * @return self
@@ -135,6 +145,8 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     }
 
     /**
+     * @bundle Test
+     *
      * @param \ArrayObject|FooBarTransfer[] $selfReference
      *
      * @return self
@@ -148,6 +160,8 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     }
 
     /**
+     * @bundle Test
+     *
      * @return FooBarTransfer[]
      */
     public function getSelfReference()
@@ -156,6 +170,8 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     }
 
     /**
+     * @bundle Test
+     *
      * @param FooBarTransfer $selfReference
      *
      * @return self
@@ -169,6 +185,8 @@ class FooBarTransfer extends AbstractTransfer implements ProjectFooBarInterface,
     }
 
     /**
+     * @bundle Test
+     *
      * @throws RequiredTransferPropertyException
      *
      * @return self

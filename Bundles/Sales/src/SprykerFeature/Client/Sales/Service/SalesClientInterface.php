@@ -6,18 +6,18 @@
 
 namespace SprykerFeature\Client\Sales\Service;
 
-use Generated\Shared\Sales\OrderListInterface;
+use Generated\Shared\Transfer\OrderListTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
 interface SalesClientInterface
 {
 
     /**
-     * @param OrderListInterface $orderListTransfer
+     * @param OrderListTransfer $orderListTransfer
      * 
-     * @return OrderListInterface
+     * @return OrderListTransfer
      */
-    public function getOrders(OrderListInterface $orderListTransfer);
+    public function getOrders(OrderListTransfer $orderListTransfer);
 
     /**
      * @param OrderTransfer $orderTransfer

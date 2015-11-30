@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business;
 
-use Generated\Shared\Payone\PayoneStandardParameterInterface;
+use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use SprykerFeature\Zed\Payone\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
@@ -34,7 +34,7 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**
-     * @var PayoneStandardParameterInterface
+     * @var PayoneStandardParameterTransfer
      */
     private $standardParameter;
 
@@ -177,7 +177,7 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return PayoneStandardParameterInterface
+     * @return PayoneStandardParameterTransfer
      */
     protected function createStandardParameter()
     {

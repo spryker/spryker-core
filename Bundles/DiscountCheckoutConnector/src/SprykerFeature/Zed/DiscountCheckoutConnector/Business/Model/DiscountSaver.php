@@ -6,9 +6,9 @@
 
 namespace SprykerFeature\Zed\DiscountCheckoutConnector\Business\Model;
 
-use Generated\Shared\DiscountCheckoutConnector\DiscountInterface;
-use Generated\Shared\DiscountCheckoutConnector\OrderInterface;
-use Generated\Shared\Sales\ItemInterface;
+use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Propel\Runtime\Exception\PropelException;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
@@ -48,10 +48,10 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      * @param CheckoutResponseTransfer $checkoutResponseTransfer
      */
-    public function saveDiscounts(OrderInterface $orderTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
+    public function saveDiscounts(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
         $this->saveOrderItemDiscounts($orderTransfer);
         $this->saveOrderExpenseDiscounts($orderTransfer);
@@ -59,9 +59,9 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      */
-    protected function saveOrderItemDiscounts(OrderInterface $orderTransfer)
+    protected function saveOrderItemDiscounts(OrderTransfer $orderTransfer)
     {
         $orderItemCollection = $orderTransfer->getItems();
         foreach ($orderItemCollection as $orderItemTransfer) {
@@ -81,13 +81,13 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @param ItemInterface $orderItemTransfer
+     * @param ItemTransfer $orderItemTransfer
      * @param int $idSalesOrder
      * @param int $idSalesOrderItem
      *
      * @throws PropelException
      */
-    protected function saveOrderItemOptionDiscounts(ItemInterface $orderItemTransfer, $idSalesOrder, $idSalesOrderItem)
+    protected function saveOrderItemOptionDiscounts(ItemTransfer $orderItemTransfer, $idSalesOrder, $idSalesOrderItem)
     {
         foreach ($orderItemTransfer->getProductOptions() as $productOptionTransfer) {
             foreach ($productOptionTransfer->getDiscounts() as $productOptionDiscountTransfer) {
@@ -101,11 +101,11 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @param DiscountInterface $discountTransfer
+     * @param DiscountTransfer $discountTransfer
      *
      * @return SpySalesDiscount
      */
-    protected function createSalesDiscountEntity(DiscountInterface $discountTransfer)
+    protected function createSalesDiscountEntity(DiscountTransfer $discountTransfer)
     {
         $salesDiscountEntity = $this->getSalesDiscountEntity();
         $salesDiscountEntity->fromArray($discountTransfer->toArray());
@@ -116,9 +116,9 @@ class DiscountSaver implements DiscountSaverInterface
 
     /**
      * @param SpySalesDiscount $salesDiscountEntity
-     * @param DiscountInterface $discountTransfer
+     * @param DiscountTransfer $discountTransfer
      */
-    protected function saveDiscount(SpySalesDiscount $salesDiscountEntity, DiscountInterface $discountTransfer)
+    protected function saveDiscount(SpySalesDiscount $salesDiscountEntity, DiscountTransfer $discountTransfer)
     {
         $this->persistSalesDiscount($salesDiscountEntity);
 
@@ -146,11 +146,11 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @param DiscountInterface $discountTransfer
+     * @param DiscountTransfer $discountTransfer
      *
      * @return bool
      */
-    private function hasUsedCodes(DiscountInterface $discountTransfer)
+    private function hasUsedCodes(DiscountTransfer $discountTransfer)
     {
         $usedCodes = $discountTransfer->getUsedCodes();
 
@@ -158,10 +158,10 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @param DiscountInterface $discountTransfer
+     * @param DiscountTransfer $discountTransfer
      * @param SpySalesDiscount $salesDiscountEntity
      */
-    protected function saveUsedCodes(DiscountInterface $discountTransfer, SpySalesDiscount $salesDiscountEntity)
+    protected function saveUsedCodes(DiscountTransfer $discountTransfer, SpySalesDiscount $salesDiscountEntity)
     {
         foreach ($discountTransfer->getUsedCodes() as $code) {
             $discountVoucherEntity = $this->getDiscountVoucherEntityByCode($code);
@@ -211,9 +211,9 @@ class DiscountSaver implements DiscountSaverInterface
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      */
-    protected function saveOrderExpenseDiscounts(OrderInterface $orderTransfer)
+    protected function saveOrderExpenseDiscounts(OrderTransfer $orderTransfer)
     {
         foreach ($orderTransfer->getExpenses() as $expenseTransfer) {
             foreach ($expenseTransfer->getDiscounts() as $discountTransfer) {

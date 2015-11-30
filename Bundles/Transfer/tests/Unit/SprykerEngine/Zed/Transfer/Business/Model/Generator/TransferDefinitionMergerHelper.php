@@ -12,13 +12,13 @@ class TransferDefinitionMergerHelper
     {
         return [
             'name' => 'Transfer',
-            'interface' => [
-                ['name' => 'Path\To\Interface'],
-            ],
             'property' => [
                 [
                     'name' => 'propertyA',
                     'type' => 'string',
+                    'bundles' => [
+                        'Bundle1',
+                    ],
                 ],
             ],
         ];
@@ -31,22 +31,20 @@ class TransferDefinitionMergerHelper
     {
         return [
             'name' => 'Transfer',
-            'interface' => [
-                [
-                    'name' => 'Path\To\Interface',
-                ],
-                [
-                    'name' => 'Path\To\AnotherInterface',
-                ],
-            ],
             'property' => [
                 [
                     'name' => 'propertyA',
                     'type' => 'string',
+                    'bundles' => [
+                        'Bundle2',
+                    ],
                 ],
                 [
                     'name' => 'propertyB',
                     'type' => 'int',
+                    'bundles' => [
+                        'Bundle2',
+                    ],
                 ],
             ],
         ];
@@ -59,22 +57,21 @@ class TransferDefinitionMergerHelper
     {
         return [
             'name' => 'Transfer',
-            'interface' => [
-                'Path\To\Interface' => [
-                    'name' => 'Path\To\Interface',
-                ],
-                'Path\To\AnotherInterface' => [
-                    'name' => 'Path\To\AnotherInterface',
-                ],
-            ],
             'property' => [
                 'propertyA' => [
                     'name' => 'propertyA',
                     'type' => 'string',
+                    'bundles' => [
+                        'Bundle1',
+                        'Bundle2',
+                    ],
                 ],
                 'propertyB' => [
                     'name' => 'propertyB',
                     'type' => 'int',
+                    'bundles' => [
+                        'Bundle2',
+                    ],
                 ],
             ],
         ];

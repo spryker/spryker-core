@@ -6,12 +6,11 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Payment;
 
-use Generated\Shared\Checkout\CheckoutResponseInterface;
-use Generated\Shared\Payone\PayoneCreditCardInterface;
-use Generated\Shared\Payone\PayoneRefundInterface;
-use Generated\Shared\Payone\PayoneStandardParameterInterface;
-use Generated\Shared\Payone\OrderInterface;
-use Generated\Shared\Refund\PaymentDataInterface;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\PayoneCreditCardTransfer;
+use Generated\Shared\Transfer\PayoneRefundTransfer;
+use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
 use Generated\Shared\Transfer\PaymentDetailTransfer;
@@ -59,7 +58,7 @@ class PaymentManager implements PaymentManagerInterface
     protected $queryContainer;
 
     /**
-     * @var PayoneStandardParameterInterface
+     * @var PayoneStandardParameterTransfer
      */
     protected $standardParameter;
 
@@ -81,7 +80,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param AdapterInterface $executionAdapter
      * @param PayoneQueryContainerInterface $queryContainer
-     * @param PayoneStandardParameterInterface $standardParameter
+     * @param PayoneStandardParameterTransfer $standardParameter
      * @param HashGenerator $hashGenerator
      * @param SequenceNumberProviderInterface $sequenceNumberProvider
      * @param ModeDetectorInterface $modeDetector
@@ -89,7 +88,7 @@ class PaymentManager implements PaymentManagerInterface
     public function __construct(
         AdapterInterface $executionAdapter,
         PayoneQueryContainerInterface $queryContainer,
-        PayoneStandardParameterInterface $standardParameter,
+        PayoneStandardParameterTransfer $standardParameter,
         HashGenerator $hashGenerator,
         SequenceNumberProviderInterface $sequenceNumberProvider,
         ModeDetectorInterface $modeDetector)
@@ -261,11 +260,11 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param PayoneCreditCardInterface $creditCardData
+     * @param PayoneCreditCardTransfer $creditCardData
      *
      * @return CreditCardCheckResponseContainer
      */
-    public function creditCardCheck(PayoneCreditCardInterface $creditCardData)
+    public function creditCardCheck(PayoneCreditCardTransfer $creditCardData)
     {
         /** @var CreditCardPseudo $paymentMethodMapper */
         $paymentMethodMapper = $this->getRegisteredPaymentMethodMapper($creditCardData->getPayment()->getPaymentMethod());
@@ -279,11 +278,11 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param PayoneRefundInterface $refundTransfer
+     * @param PayoneRefundTransfer $refundTransfer
      *
      * @return RefundResponseContainer
      */
-    public function refundPayment(PayoneRefundInterface $refundTransfer)
+    public function refundPayment(PayoneRefundTransfer $refundTransfer)
     {
         $payonePaymentTransfer = $refundTransfer->getPayment();
 
@@ -304,11 +303,11 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return PayonePaymentTransfer
      */
-    protected function getPayment(OrderInterface $orderTransfer)
+    protected function getPayment(OrderTransfer $orderTransfer)
     {
         $payment = $this->queryContainer->getPaymentByOrderId($orderTransfer->getIdSalesOrder())->findOne();
         $paymentDetail = $payment->getSpyPaymentPayoneDetail();
@@ -451,7 +450,7 @@ class PaymentManager implements PaymentManagerInterface
     /**
      * @param int $idOrder
      *
-     * @return PaymentDataInterface
+     * @return PaymentDataTransfer
      */
     public function getPaymentData($idOrder)
     {
@@ -516,11 +515,11 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isRefundPossible(OrderInterface $orderTransfer)
+    public function isRefundPossible(OrderTransfer $orderTransfer)
     {
         $paymentTransfer = $this->getPayment($orderTransfer);
 
@@ -534,11 +533,11 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isPaymentDataRequired(OrderInterface $orderTransfer)
+    public function isPaymentDataRequired(OrderTransfer $orderTransfer)
     {
         $paymentTransfer = $this->getPayment($orderTransfer);
 
@@ -557,12 +556,12 @@ class PaymentManager implements PaymentManagerInterface
     }
 
     /**
-     * @param OrderInterface $orderTransfer
-     * @param CheckoutResponseInterface $checkoutResponse
+     * @param OrderTransfer $orderTransfer
+     * @param CheckoutResponseTransfer $checkoutResponse
      *
-     * @return CheckoutResponseInterface
+     * @return CheckoutResponseTransfer
      */
-    public function postSaveHook(OrderInterface $orderTransfer, CheckoutResponseInterface $checkoutResponse)
+    public function postSaveHook(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         $apiLogsQuery = $this->queryContainer->getLastApiLogsByOrderId($orderTransfer->getIdSalesOrder());
         $apiLog = $apiLogsQuery->findOne();

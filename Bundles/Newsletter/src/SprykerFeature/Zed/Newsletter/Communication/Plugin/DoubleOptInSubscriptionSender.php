@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Newsletter\Communication\Plugin;
 
-use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
+use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\MailRecipientTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
@@ -22,11 +22,11 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
 {
 
     /**
-     * @param NewsletterSubscriberInterface $newsletterSubscriber
+     * @param NewsletterSubscriberTransfer $newsletterSubscriber
      *
      * @return bool
      */
-    public function send(NewsletterSubscriberInterface $newsletterSubscriber)
+    public function send(NewsletterSubscriberTransfer $newsletterSubscriber)
     {
         $config = $this->getDependencyContainer()->getConfig();
 

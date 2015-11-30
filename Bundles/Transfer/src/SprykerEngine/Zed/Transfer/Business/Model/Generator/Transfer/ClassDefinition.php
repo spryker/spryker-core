@@ -25,7 +25,7 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @var array
      */
-    private $interfaces = [];
+    private $bundles = [];
 
     /**
      * @var array
@@ -61,10 +61,6 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $this->setName($definition['name']);
 
-        if (isset($definition['interface'])) {
-            $this->addInterfaces($definition['interface']);
-        }
-
         if (isset($definition['property'])) {
             $properties = $this->normalizePropertyTypes($definition['property']);
             $this->addConstants($properties);
@@ -98,40 +94,29 @@ class ClassDefinition implements ClassDefinitionInterface
         return $this->name;
     }
 
-    /**
-     * @param array $interfaces
-     *
-     * @return self
-     */
-    private function addInterfaces(array $interfaces)
+    private function addBundles(array $bundles)
     {
-        foreach ($interfaces as $interface) {
-            $this->addInterface($interface);
+        foreach ($bundles as $bundle) {
+            $this->addBundle($bundle);
         }
-
-        return $this;
     }
 
     /**
-     * @param array $interface
+     * @param string $bundle
      */
-    private function addInterface(array $interface)
+    private function addBundle($bundle)
     {
-        if (!in_array($interface['name'], $this->interfaces)) {
-            $interfaceParts = explode('\\', $interface['name']);
-            $name = array_pop($interfaceParts);
-            $alias = $interface['bundle'] . $name;
-            $this->uses[] = $interface['name'] . ' as ' . $alias;
-            $this->interfaces[] = $alias;
+        if (!in_array($bundle, $this->bundles)) {
+            $this->bundles[] = $bundle;
         }
     }
 
     /**
      * @return array
      */
-    public function getInterfaces()
+    public function getBundles()
     {
-        return $this->interfaces;
+        return $this->bundles;
     }
 
     /**
@@ -185,6 +170,7 @@ class ClassDefinition implements ClassDefinitionInterface
         $propertyInfo = [
             'name' => $property['name'],
             'type' => $this->getPropertyType($property),
+            'bundles' => $property['bundles'],
         ];
 
         $this->properties[$property['name']] = $propertyInfo;
@@ -492,6 +478,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
             'return' => $this->getReturnType($property),
+            'bundles' => $property['bundles'],
         ];
         $this->methods[$methodName] = $method;
     }
@@ -508,6 +495,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
             'var' => $this->getSetVar($property),
+            'bundles' => $property['bundles'],
         ];
         $method = $this->addTypeHint($property, $method);
 
@@ -532,6 +520,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'propertyConst' => $propertyConstant,
             'parent' => $parent,
             'var' => $this->getAddVar($property),
+            'bundles' => $property['bundles'],
         ];
 
         $typeHint = $this->getAddTypeHint($property);
@@ -571,6 +560,7 @@ class ClassDefinition implements ClassDefinitionInterface
             'property' => $propertyName,
             'propertyConst' => $this->getPropertyConstantName($property),
             'isCollection' => $isCollection,
+            'bundles' => $property['bundles'],
         ];
         $this->methods[$methodName] = $method;
     }

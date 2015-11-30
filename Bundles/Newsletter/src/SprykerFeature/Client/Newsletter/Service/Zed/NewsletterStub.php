@@ -6,10 +6,10 @@
 
 namespace SprykerFeature\Client\Newsletter\Service\Zed;
 
-use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
-use Generated\Shared\Newsletter\NewsletterSubscriptionApprovalResultInterface;
-use Generated\Shared\Newsletter\NewsletterSubscriptionRequestInterface;
-use Generated\Shared\Newsletter\NewsletterSubscriptionResponseInterface;
+use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
+use Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer;
+use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
+use Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer;
 use SprykerFeature\Client\ZedRequest\Service\ZedRequestClient;
 
 class NewsletterStub implements NewsletterStubInterface
@@ -29,51 +29,51 @@ class NewsletterStub implements NewsletterStubInterface
     }
 
     /**
-     * @param NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest
+     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseInterface
+     * @return NewsletterSubscriptionResponseTransfer
      */
-    public function subscribeWithSingleOptIn(NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest)
+    public function subscribeWithSingleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
         return $this->zedStub->call('/newsletter/gateway/subscribe-with-single-opt-in', $newsletterSubscriptionRequest);
     }
 
     /**
-     * @param NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest
+     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseInterface
+     * @return NewsletterSubscriptionResponseTransfer
      */
-    public function subscribeWithDoubleOptIn(NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest)
+    public function subscribeWithDoubleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
         return $this->zedStub->call('/newsletter/gateway/subscribe-with-double-opt-in', $newsletterSubscriptionRequest);
     }
 
     /**
-     * @param NewsletterSubscriberInterface $newsletterSubscriber
+     * @param NewsletterSubscriberTransfer $newsletterSubscriber
      *
-     * @return NewsletterSubscriptionApprovalResultInterface
+     * @return NewsletterSubscriptionApprovalResultTransfer
      */
-    public function approveDoubleOptInSubscriber(NewsletterSubscriberInterface $newsletterSubscriber)
+    public function approveDoubleOptInSubscriber(NewsletterSubscriberTransfer $newsletterSubscriber)
     {
         return $this->zedStub->call('/newsletter/gateway/approve-double-opt-in-subscriber', $newsletterSubscriber);
     }
 
     /**
-     * @param NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest
+     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseInterface
+     * @return NewsletterSubscriptionResponseTransfer
      */
-    public function unsubscribe(NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest)
+    public function unsubscribe(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
         return $this->zedStub->call('/newsletter/gateway/unsubscribe', $newsletterSubscriptionRequest);
     }
 
     /**
-     * @param NewsletterSubscriptionRequestInterface $newsletterUnsubscriptionRequest
+     * @param NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseInterface
+     * @return NewsletterSubscriptionResponseTransfer
      */
-    public function checkSubscription(NewsletterSubscriptionRequestInterface $newsletterUnsubscriptionRequest)
+    public function checkSubscription(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest)
     {
         return $this->zedStub->call('/newsletter/gateway/check-subscription', $newsletterUnsubscriptionRequest);
     }

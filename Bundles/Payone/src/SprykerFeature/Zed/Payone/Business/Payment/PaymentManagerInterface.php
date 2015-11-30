@@ -6,11 +6,10 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Payment;
 
-use Generated\Shared\Checkout\CheckoutResponseInterface;
-use Generated\Shared\Payone\OrderInterface;
-use Generated\Shared\Payone\PayoneCreditCardInterface;
-use Generated\Shared\Payone\PayoneRefundInterface;
-use Generated\Shared\Refund\PaymentDataInterface;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PayoneCreditCardTransfer;
+use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\PayoneCreditCardCheckRequestDataTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -29,11 +28,11 @@ interface PaymentManagerInterface
     public function registerPaymentMethodMapper(PaymentMethodMapperInterface $paymentMethodMapper);
 
     /**
-     * @param PayoneRefundInterface $refundTransfer
+     * @param PayoneRefundTransfer $refundTransfer
      *
      * @return RefundResponseContainer
      */
-    public function refundPayment(PayoneRefundInterface $refundTransfer);
+    public function refundPayment(PayoneRefundTransfer $refundTransfer);
 
     /**
      * @param int $idPayment
@@ -64,11 +63,11 @@ interface PaymentManagerInterface
     public function capturePayment($idPayment);
 
     /**
-     * @param PayoneCreditCardInterface $creditCardData
+     * @param PayoneCreditCardTransfer $creditCardData
      *
      * @return CreditCardCheckResponseContainer
      */
-    public function creditCardCheck(PayoneCreditCardInterface $creditCardData);
+    public function creditCardCheck(PayoneCreditCardTransfer $creditCardData);
 
     /**
      * @param ObjectCollection $orders
@@ -85,31 +84,31 @@ interface PaymentManagerInterface
     public function getCreditCardCheckRequestData(PayoneCreditCardCheckRequestDataTransfer $creditCardCheckRequestDataTransfer);
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isRefundPossible(OrderInterface $orderTransfer);
+    public function isRefundPossible(OrderTransfer $orderTransfer);
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isPaymentDataRequired(OrderInterface $orderTransfer);
+    public function isPaymentDataRequired(OrderTransfer $orderTransfer);
 
     /**
-     * @param OrderInterface $orderTransfer
-     * @param CheckoutResponseInterface $checkoutResponse
+     * @param OrderTransfer $orderTransfer
+     * @param CheckoutResponseTransfer $checkoutResponse
      *
-     * @return CheckoutResponseInterface
+     * @return CheckoutResponseTransfer
      */
-    public function postSaveHook(OrderInterface $orderTransfer, CheckoutResponseInterface $checkoutResponse);
+    public function postSaveHook(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse);
 
     /**
      * @param int $idPayment
      *
-     * @return PaymentDataInterface
+     * @return PaymentDataTransfer
      */
     public function getPaymentData($idPayment);
 

@@ -6,8 +6,7 @@
 
 namespace SprykerFeature\Zed\Refund\Business;
 
-use Generated\Shared\Refund\RefundInterface;
-use Generated\Shared\Refund\OrderInterface;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\RefundTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Refund\Business\RefundDependencyContainer as SprykerRefundDependencyContainer;
@@ -23,11 +22,11 @@ class RefundFacade extends AbstractFacade
 {
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return int
      */
-    public function calculateRefundableAmount(OrderInterface $orderTransfer)
+    public function calculateRefundableAmount(OrderTransfer $orderTransfer)
     {
         return $this->getDependencyContainer()
             ->createRefundManager()
@@ -37,7 +36,7 @@ class RefundFacade extends AbstractFacade
     /**
      * @param int $idSalesOrder
      *
-     * @return RefundInterface[]
+     * @return RefundTransfer[]
      */
     public function getRefundsByIdSalesOrder($idSalesOrder)
     {
@@ -57,7 +56,7 @@ class RefundFacade extends AbstractFacade
     /**
      * @param int $idSalesOrder
      *
-     * @return OrderInterface
+     * @return OrderTransfer
      */
     public function getOrderByIdSalesOrder($idSalesOrder)
     {
@@ -67,11 +66,11 @@ class RefundFacade extends AbstractFacade
     }
 
     /**
-     * @param RefundInterface $refundTransfer
+     * @param RefundTransfer $refundTransfer
      *
-     * @return RefundInterface
+     * @return RefundTransfer
      */
-    public function saveRefund(RefundInterface $refundTransfer)
+    public function saveRefund(RefundTransfer $refundTransfer)
     {
         return $this->getDependencyContainer()
             ->createRefundModel()

@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\Product\Business\Product;
 
-use Generated\Shared\Product\AbstractProductInterface;
-use Generated\Shared\Product\ConcreteProductInterface;
+use Generated\Shared\Transfer\AbstractProductTransfer;
+use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Propel\Runtime\Exception\PropelException;
@@ -27,13 +27,13 @@ interface ProductManagerInterface
     public function hasAbstractProduct($sku);
 
     /**
-     * @param AbstractProductInterface $abstractProductTransfer
+     * @param AbstractProductTransfer $abstractProductTransfer
      *
      * @throws AbstractProductExistsException
      *
      * @return int
      */
-    public function createAbstractProduct(AbstractProductInterface $abstractProductTransfer);
+    public function createAbstractProduct(AbstractProductTransfer $abstractProductTransfer);
 
     /**
      * @param string $sku
@@ -45,14 +45,14 @@ interface ProductManagerInterface
     public function getAbstractProductIdBySku($sku);
 
     /**
-     * @param ConcreteProductInterface $concreteProductTransfer
+     * @param ConcreteProductTransfer $concreteProductTransfer
      * @param int $idAbstractProduct
      *
      * @throws ConcreteProductExistsException
      *
      * @return int
      */
-    public function createConcreteProduct(ConcreteProductInterface $concreteProductTransfer, $idAbstractProduct);
+    public function createConcreteProduct(ConcreteProductTransfer $concreteProductTransfer, $idAbstractProduct);
 
     /**
      * @param string $sku
@@ -157,7 +157,7 @@ interface ProductManagerInterface
     /**
      * @param string $concreteSku
      *
-     * @return ConcreteProductInterface
+     * @return ConcreteProductTransfer
      */
     public function getConcreteProduct($concreteSku);
 

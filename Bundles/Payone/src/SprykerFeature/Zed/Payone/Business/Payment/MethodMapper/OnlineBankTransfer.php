@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Payment\MethodMapper;
 
-use Generated\Shared\Payone\PayoneAuthorizationInterface;
+use Generated\Shared\Transfer\PayoneAuthorizationTransfer;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\AbstractAuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\OnlineBankTransferContainer;
@@ -164,11 +164,11 @@ class OnlineBankTransfer extends AbstractMapper
     }
 
     /**
-     * @param PayoneAuthorizationInterface $authorizationData
+     * @param PayoneAuthorizationTransfer $authorizationData
      *
      * @return PersonalContainer
      */
-    protected function createAuthorizationPersonalData(PayoneAuthorizationInterface $authorizationData)
+    protected function createAuthorizationPersonalData(PayoneAuthorizationTransfer $authorizationData)
     {
         $personalContainer = new PersonalContainer();
 

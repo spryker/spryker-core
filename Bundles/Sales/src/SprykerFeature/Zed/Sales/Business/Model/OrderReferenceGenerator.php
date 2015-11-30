@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Sales\Business\Model;
 
-use Generated\Shared\SequenceNumber\SequenceNumberSettingsInterface;
+use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\SequenceNumber\Business\SequenceNumberFacade;
 
@@ -16,16 +16,16 @@ class OrderReferenceGenerator implements OrderReferenceGeneratorInterface
     /** @var SequenceNumberFacade */
     protected $facadeSequenceNumber;
 
-    /** @var SequenceNumberSettingsInterface */
+    /** @var SequenceNumberSettingsTransfer */
     protected $sequenceNumberSettings;
 
     /**
      * @param SequenceNumberFacade $sequenceNumberFacade
-     * @param SequenceNumberSettingsInterface $sequenceNumberSettings
+     * @param SequenceNumberSettingsTransfer $sequenceNumberSettings
      */
     public function __construct(
         SequenceNumberFacade $sequenceNumberFacade,
-        SequenceNumberSettingsInterface $sequenceNumberSettings
+        SequenceNumberSettingsTransfer $sequenceNumberSettings
     ) {
         $this->facadeSequenceNumber = $sequenceNumberFacade;
         $this->sequenceNumberSettings = $sequenceNumberSettings;

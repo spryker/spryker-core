@@ -5,7 +5,7 @@
 
 namespace SprykerFeature\Zed\Wishlist\Business\Model;
 
-use Generated\Shared\Customer\CustomerInterface;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\WishlistTransfer;
 use SprykerFeature\Zed\Wishlist\Persistence\WishlistQueryContainerInterface;
@@ -19,17 +19,17 @@ class Customer
     protected $wishlistQueryContainer;
 
     /**
-     * @var CustomerInterface
+     * @var CustomerTransfer
      */
     protected $customerTransfer;
 
     /**
      * @param WishlistQueryContainerInterface $wishlistQueryContainer
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      */
     public function __construct(
         WishlistQueryContainerInterface $wishlistQueryContainer,
-        CustomerInterface $customerTransfer
+        CustomerTransfer $customerTransfer
     ) {
         $this->wishlistQueryContainer = $wishlistQueryContainer;
         $this->customerTransfer = $customerTransfer;

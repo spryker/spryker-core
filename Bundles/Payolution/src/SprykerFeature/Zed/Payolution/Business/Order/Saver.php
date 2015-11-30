@@ -5,9 +5,9 @@
  */
 namespace SprykerFeature\Zed\Payolution\Business\Order;
 
-use Generated\Shared\Payolution\ItemInterface;
-use Generated\Shared\Payolution\PayolutionPaymentInterface;
-use Generated\Shared\Payolution\OrderInterface;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\PayolutionPaymentTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionOrderItem;
 
@@ -15,9 +15,9 @@ class Saver implements SaverInterface
 {
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      */
-    public function saveOrderPayment(OrderInterface $orderTransfer)
+    public function saveOrderPayment(OrderTransfer $orderTransfer)
     {
         $paymentEntity = $this->savePaymentForOrder(
             $orderTransfer->getPayolutionPayment(),
@@ -31,12 +31,12 @@ class Saver implements SaverInterface
     }
 
     /**
-     * @param PayolutionPaymentInterface $paymentTransfer
+     * @param PayolutionPaymentTransfer $paymentTransfer
      * @param int $idSalesOrder
      *
      * @return SpyPaymentPayolution
      */
-    private function savePaymentForOrder(PayolutionPaymentInterface $paymentTransfer, $idSalesOrder)
+    private function savePaymentForOrder(PayolutionPaymentTransfer $paymentTransfer, $idSalesOrder)
     {
         $paymentEntity = new SpyPaymentPayolution();
         $paymentEntity->fromArray($paymentTransfer->toArray());
@@ -62,12 +62,12 @@ class Saver implements SaverInterface
     }
 
     /**
-     * @param ItemInterface[] $orderItemTransfers
+     * @param ItemTransfer[] $orderItemTransfers
      * @param int $idPayment
      */
     private function savePaymentForOrderItems($orderItemTransfers, $idPayment)
     {
-        /** @var ItemInterface $orderItemTransfer */
+        /** @var ItemTransfer $orderItemTransfer */
         foreach ($orderItemTransfers as $orderItemTransfer) {
             $paymentOrderItemEntity = new SpyPaymentPayolutionOrderItem();
             $paymentOrderItemEntity

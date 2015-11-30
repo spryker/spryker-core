@@ -6,9 +6,9 @@
 
 namespace SprykerFeature\Zed\Wishlist\Business\Storage;
 
-use Generated\Shared\Wishlist\ItemInterface;
-use Generated\Shared\Wishlist\WishlistChangeInterface;
-use Generated\Shared\Wishlist\WishlistInterface;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\WishlistChangeTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
 use SprykerFeature\Zed\Product\Business\ProductFacade;
 
 class InMemory implements StorageInterface
@@ -20,26 +20,26 @@ class InMemory implements StorageInterface
     protected $facadeProduct;
 
     /**
-     * @var WishlistInterface
+     * @var WishlistTransfer
      */
     protected $wishlist;
 
     /**
-     * @param WishlistInterface $wishlist
+     * @param WishlistTransfer $wishlist
      * @param ProductFacade $facadeProduct
      */
-    public function __construct(WishlistInterface $wishlist, ProductFacade $facadeProduct)
+    public function __construct(WishlistTransfer $wishlist, ProductFacade $facadeProduct)
     {
         $this->facadeProduct = $facadeProduct;
         $this->wishlist = $wishlist;
     }
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function addItems(WishlistChangeInterface $wishlistChange)
+    public function addItems(WishlistChangeTransfer $wishlistChange)
     {
         $wishlistIndex = $this->createIndex();
         foreach ($wishlistChange->getItems() as $wishlistItem) {
@@ -58,11 +58,11 @@ class InMemory implements StorageInterface
     }
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function removeItems(WishlistChangeInterface $wishlistChange)
+    public function removeItems(WishlistChangeTransfer $wishlistChange)
     {
         $wishlistIndex = $this->createIndex();
         foreach ($wishlistChange->getItems() as $key => $wishlistItem) {
@@ -77,30 +77,30 @@ class InMemory implements StorageInterface
     }
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function increaseItems(WishlistChangeInterface $wishlistChange)
+    public function increaseItems(WishlistChangeTransfer $wishlistChange)
     {
         return $this->addItems($wishlistChange);
     }
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function decreaseItems(WishlistChangeInterface $wishlistChange)
+    public function decreaseItems(WishlistChangeTransfer $wishlistChange)
     {
         return $this->removeItems($wishlistChange);
     }
 
     /**
      * @param array $wishlistIndex
-     * @param ItemInterface $itemToChange
+     * @param ItemTransfer $itemToChange
      */
-    protected function decreaseByProductIdentifier(array $wishlistIndex, ItemInterface $itemToChange)
+    protected function decreaseByProductIdentifier(array $wishlistIndex, ItemTransfer $itemToChange)
     {
         foreach ($this->wishlist->getItems() as $key => $item) {
             if ($item->getSku() === $itemToChange->getSku()) {
@@ -113,9 +113,9 @@ class InMemory implements StorageInterface
 
     /**
      * @param int $index
-     * @param ItemInterface $itemToChange
+     * @param ItemTransfer $itemToChange
      */
-    protected function decreaseItem($index, ItemInterface $itemToChange)
+    protected function decreaseItem($index, ItemTransfer $itemToChange)
     {
         $existingItems = $this->wishlist->getItems();
         $existingItem = $existingItems[$index];

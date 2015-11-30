@@ -6,13 +6,13 @@
 
 namespace SprykerFeature\Zed\Maintenance\Business\InstalledPackages;
 
-use Generated\Shared\Maintenance\InstalledPackagesInterface;
+use Generated\Shared\Transfer\InstalledPackagesTransfer;
 
 interface InstalledPackageFinderInterface
 {
 
     /**
-     * @return InstalledPackagesInterface
+     * @return InstalledPackagesTransfer
      */
     public function findInstalledPackages();
 

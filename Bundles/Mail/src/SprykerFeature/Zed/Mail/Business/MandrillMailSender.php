@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Mail\Business;
 
-use Generated\Shared\Mail\SendMailResponsesInterface;
 use Generated\Shared\Transfer\AttachmentTransfer;
 use Generated\Shared\Transfer\MailHeaderTransfer;
 use Generated\Shared\Transfer\MailTransfer;
@@ -45,7 +44,7 @@ class MandrillMailSender implements MailSenderInterface
     /**
      * @param MailTransfer $mailTransfer
      *
-     * @return SendMailResponsesInterface
+     * @return SendMailResponsesTransfer
      */
     public function sendMail(MailTransfer $mailTransfer)
     {
@@ -67,7 +66,7 @@ class MandrillMailSender implements MailSenderInterface
     /**
      * @param array $responses
      *
-     * @return SendMailResponsesInterface
+     * @return SendMailResponsesTransfer
      */
     protected function convertResponsesToTransfer($responses)
     {
@@ -90,11 +89,11 @@ class MandrillMailSender implements MailSenderInterface
     }
 
     /**
-     * @param SendMailResponsesInterface $responses
+     * @param SendMailResponsesTransfer $responses
      *
      * @return bool
      */
-    public function isMailSent(SendMailResponsesInterface $mailResponses)
+    public function isMailSent(SendMailResponsesTransfer $mailResponses)
     {
         foreach ($mailResponses->getResponses() as $response) {
             if ($response->getIsRejected() === true || $response->getIsInvalid() === true) {

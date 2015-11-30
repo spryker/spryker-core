@@ -5,10 +5,9 @@
 
 namespace SprykerFeature\Zed\Discount\Business;
 
-use Generated\Shared\Discount\DiscountCollectorInterface;
-use Generated\Shared\Discount\OrderInterface;
-use Generated\Shared\Discount\VoucherCreateInfoInterface;
-use Generated\Shared\Discount\VoucherInterface;
+use Generated\Shared\Transfer\DiscountCollectorTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Generated\Shared\Transfer\CartRuleTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\DecisionRuleTransfer;
@@ -99,21 +98,21 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     }
 
     /**
-     * @param VoucherInterface $voucherTransfer
+     * @param VoucherTransfer $voucherTransfer
      *
-     * @return VoucherCreateInfoInterface
+     * @return VoucherCreateInfoTransfer
      */
-    public function createVoucherCodes(VoucherInterface $voucherTransfer)
+    public function createVoucherCodes(VoucherTransfer $voucherTransfer)
     {
         return $this->getDependencyContainer()->createVoucherEngine()->createVoucherCodes($voucherTransfer);
     }
 
     /**
-     * @param VoucherInterface $voucherTransfer
+     * @param VoucherTransfer $voucherTransfer
      *
      * @return SpyDiscountVoucher
      */
-    public function createVoucherCode(VoucherInterface $voucherTransfer)
+    public function createVoucherCode(VoucherTransfer $voucherTransfer)
     {
         return $this->getDependencyContainer()->createVoucherEngine()->createVoucherCode($voucherTransfer);
     }
@@ -303,26 +302,26 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 
     /**
      * @param CalculableInterface $container
-     * @param DiscountCollectorInterface $discountCollectorTransfer
+     * @param DiscountCollectorTransfer $discountCollectorTransfer
      *
      * @return array
      */
     public function getDiscountableItems(
         CalculableInterface $container,
-        DiscountCollectorInterface $discountCollectorTransfer
+        DiscountCollectorTransfer $discountCollectorTransfer
     ) {
         return $this->getDependencyContainer()->createItemCollector()->collect($container, $discountCollectorTransfer);
     }
 
     /**
      * @param CalculableInterface $container
-     * @param DiscountCollectorInterface $discountCollectorTransfer
+     * @param DiscountCollectorTransfer $discountCollectorTransfer
      *
-     * @return OrderInterface[]
+     * @return OrderTransfer[]
      */
     public function getDiscountableItemExpenses(
         CalculableInterface $container,
-        DiscountCollectorInterface $discountCollectorTransfer
+        DiscountCollectorTransfer $discountCollectorTransfer
     ) {
         return $this->getDependencyContainer()->createItemExpenseCollector()
             ->collect($container, $discountCollectorTransfer);
@@ -330,13 +329,13 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 
     /**
      * @param CalculableInterface $container
-     * @param DiscountCollectorInterface $discountCollectorTransfer
+     * @param DiscountCollectorTransfer $discountCollectorTransfer
      *
-     * @return OrderInterface[]
+     * @return OrderTransfer[]
      */
     public function getDiscountableOrderExpenses(
         CalculableInterface $container,
-        DiscountCollectorInterface $discountCollectorTransfer
+        DiscountCollectorTransfer $discountCollectorTransfer
     ) {
         return $this->getDependencyContainer()->createOrderExpenseCollector()
             ->collect($container, $discountCollectorTransfer);
@@ -344,13 +343,13 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 
     /**
      * @param CalculableInterface $container
-     * @param DiscountCollectorInterface $discountCollectorTransfer
+     * @param DiscountCollectorTransfer $discountCollectorTransfer
      *
-     * @return OrderInterface[]
+     * @return OrderTransfer[]
      */
     public function getDiscountableItemProductOptions(
         CalculableInterface $container,
-        DiscountCollectorInterface $discountCollectorTransfer
+        DiscountCollectorTransfer $discountCollectorTransfer
     ) {
         return $this->getDependencyContainer()->createItemProductOptionCollector()
             ->collect($container, $discountCollectorTransfer);
@@ -358,13 +357,13 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
 
     /**
      * @param CalculableInterface $container
-     * @param DiscountCollectorInterface $discountCollectorTransfer
+     * @param DiscountCollectorTransfer $discountCollectorTransfer
      *
-     * @return OrderInterface[]
+     * @return OrderTransfer[]
      */
     public function getDiscountableItemsFromCollectorAggregate(
         CalculableInterface $container,
-        DiscountCollectorInterface $discountCollectorTransfer
+        DiscountCollectorTransfer $discountCollectorTransfer
     ) {
         return $this->getDependencyContainer()->createAggregateCollector()
             ->collect($container, $discountCollectorTransfer);

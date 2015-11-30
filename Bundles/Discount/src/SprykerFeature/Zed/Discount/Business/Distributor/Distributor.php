@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Distributor;
 
-use Generated\Shared\Discount\DiscountInterface;
+use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 
 class Distributor implements DistributorInterface
@@ -19,11 +19,11 @@ class Distributor implements DistributorInterface
 
     /**
      * @param DiscountableInterface[] $discountableObjects
-     * @param DiscountInterface $discountTransfer
+     * @param DiscountTransfer $discountTransfer
      *
      * @return void
      */
-    public function distribute(array $discountableObjects, DiscountInterface $discountTransfer)
+    public function distribute(array $discountableObjects, DiscountTransfer $discountTransfer)
     {
         $totalGrossAmount = $this->getTotalGrossAmountOfDiscountableObjects($discountableObjects);
         if ($totalGrossAmount <= 0) {

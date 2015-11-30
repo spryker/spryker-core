@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Checkout\Dependency\Plugin;
 
-use Generated\Shared\Checkout\CheckoutResponseInterface;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 
 interface CheckoutPostSaveHookInterface
@@ -14,8 +14,8 @@ interface CheckoutPostSaveHookInterface
 
     /**
      * @param OrderTransfer $orderTransfer
-     * @param CheckoutResponseInterface $checkoutResponse
+     * @param CheckoutResponseTransfer $checkoutResponse
      */
-    public function executeHook(OrderTransfer $orderTransfer, CheckoutResponseInterface $checkoutResponse);
+    public function executeHook(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse);
 
 }
