@@ -14,6 +14,15 @@ use SprykerFeature\Zed\Url\Business\Exception\UrlInvalidException;
 class Url
 {
 
+    const SCHEME = 'scheme';
+    const HOST = 'host';
+    const PORT = 'port';
+    const USER = 'user';
+    const PASS = 'pass';
+    const PATH = 'path';
+    const QUERY = 'query';
+    const FRAGMENT = 'fragment';
+
     protected $scheme;
     protected $host;
     protected $port;
@@ -35,19 +44,19 @@ class Url
     public static function parse($url)
     {
         static $defaults = [
-            'scheme' => null,
-            'host' => null,
-            'port' => null,
-            'user' => null,
-            'pass' => null,
-            'path' => null,
-            'query' => null,
-            'fragment' => null,
+            self::SCHEME => null,
+            self::HOST => null,
+            self::PORT => null,
+            self::USER => null,
+            self::PASS => null,
+            self::PATH => null,
+            self::QUERY => null,
+            self::FRAGMENT => null,
         ];
 
         $parts = parse_url($url);
         if ($parts === false) {
-            throw new UrlInvalidException('Was unable to parse malformed url: ' . $url);
+            throw new UrlInvalidException('Was unable to parse malformed URL: ' . $url);
         }
 
         $parts += $defaults;
@@ -67,8 +76,8 @@ class Url
     public static function generate($url, array $query = [], array $options = [])
     {
         $parts = [
-            'path' => $url,
-            'query' => $query,
+            self::PATH => $url,
+            self::QUERY => $query,
         ] + $options;
 
         return new static($parts);
@@ -101,8 +110,8 @@ class Url
      */
     public function fromArray(array $url = [])
     {
-        if (isset($url['query']) && !is_array($url['query'])) {
-            $url['query'] = self::parseQuery($url['query']);
+        if (isset($url[self::QUERY]) && !is_array($url[self::QUERY])) {
+            $url[self::QUERY] = self::parseQuery($url[self::QUERY]);
         }
 
         foreach ($url as $k => $v) {
@@ -118,57 +127,11 @@ class Url
     public function build()
     {
         $parts = $this->toArray();
-        $url = $scheme = '';
+        $url = $this->buildBaseUrl($parts);
 
-        if (isset($parts['scheme'])) {
-            $scheme = $parts['scheme'];
-            $url .= $scheme . ':';
-        }
-
-        if (isset($parts['host'])) {
-            $url .= '//';
-            if (isset($parts['user'])) {
-                $url .= $parts['user'];
-                if (isset($parts['pass'])) {
-                    $url .= ':' . $parts['pass'];
-                }
-                $url .=  '@';
-            }
-
-            $url .= $parts['host'];
-
-            // Only include the port if it is not the default port of the scheme
-            if (isset($parts['port'])
-                && !(($scheme === 'http' && $parts['port'] === 80) || ($scheme === 'https' && $parts['port'] === 443))
-            ) {
-                $url .= ':' . $parts['port'];
-            }
-        }
-
-        // Add the path component if present
-        if (isset($parts['path']) && strlen($parts['path']) !== 0) {
-            // Always ensure that the path begins with '/' if set and something is before the path
-            if ($url && $parts['path'][0] !== '/' && mb_substr($url, -1)  !== '/') {
-                $url .= '/';
-            }
-            $url .= $parts['path'];
-        } else {
-            $url .= '/';
-        }
-
-        // Add the query string if present
-        if (!empty($parts['query'])) {
-            $q = [];
-            foreach ($parts['query'] as $k => $v) {
-                $q[] = $this->encodeQuery($k) . '=' . $this->encodeQuery($v);
-            }
-            $url .= '?' . implode('&', $q);
-        }
-
-        // Ensure that # is only added to the url if fragment contains anything.
-        if (isset($parts['fragment'])) {
-            $url .= '#' . $parts['fragment'];
-        }
+        $url = $this->addPathComponent($url, $parts);
+        $url = $this->addQueryComponent($url, $parts);
+        $url = $this->addFragmentComponent($url, $parts);
 
         return $url;
     }
@@ -189,14 +152,14 @@ class Url
     public function toArray()
     {
         return [
-            'scheme' => $this->scheme,
-            'user' => $this->username,
-            'pass' => $this->password,
-            'host' => $this->host,
-            'port' => $this->port,
-            'path' => $this->path,
-            'query' => $this->query ?: [],
-            'fragment' => $this->fragment,
+            self::SCHEME => $this->scheme,
+            self::USER => $this->username,
+            self::PASS => $this->password,
+            self::HOST => $this->host,
+            self::PORT => $this->port,
+            self::PATH => $this->path,
+            self::QUERY => $this->query ?: [],
+            self::FRAGMENT => $this->fragment,
         ];
     }
 
@@ -383,6 +346,98 @@ class Url
     protected function encodeQuery($value)
     {
         return urlencode($value);
+    }
+
+    /**
+     * @param array $parts
+     *
+     * @return string
+     */
+    protected function buildBaseUrl(array $parts)
+    {
+        $url = $scheme = '';
+
+        if (isset($parts[self::SCHEME])) {
+            $scheme = $parts[self::SCHEME];
+            $url .= $scheme . ':';
+        }
+
+        if (isset($parts[self::HOST])) {
+            $url .= '//';
+            if (isset($parts[self::USER])) {
+                $url .= $parts[self::USER];
+                if (isset($parts[self::PASS])) {
+                    $url .= ':' . $parts[self::PASS];
+                }
+                $url .=  '@';
+            }
+
+            $url .= $parts[self::HOST];
+
+            // Only include the port if it is not the default port of the scheme
+            if (isset($parts[self::PORT])
+                && !(($scheme === 'http' && $parts[self::PORT] === 80) || ($scheme === 'https' && $parts[self::PORT] === 443))
+            ) {
+                $url .= ':' . $parts[self::PORT];
+            }
+        }
+
+        return $url;
+    }
+
+    /**
+     * @param string $url
+     * @param array $parts
+     *
+     * @return string
+     */
+    protected function addPathComponent($url, array $parts)
+    {
+        if (isset($parts[self::PATH]) && strlen($parts[self::PATH]) !== 0) {
+            // Always ensure that the path begins with '/' if set and something is before the path
+            if ($url && $parts[self::PATH][0] !== '/' && mb_substr($url, -1)  !== '/') {
+                $url .= '/';
+            }
+            $url .= $parts[self::PATH];
+        } else {
+            $url .= '/';
+        }
+
+        return $url;
+    }
+
+    /**
+     * @param string $url
+     * @param array $parts
+     *
+     * @return string
+     */
+    protected function addQueryComponent($url, array $parts)
+    {
+        if (!empty($parts[self::QUERY])) {
+            $q = [];
+            foreach ($parts[self::QUERY] as $k => $v) {
+                $q[] = $this->encodeQuery($k) . '=' . $this->encodeQuery($v);
+            }
+            $url .= '?' . implode('&', $q);
+        }
+
+        return $url;
+    }
+
+    /**
+     * @param string $url
+     * @param array $parts
+     *
+     * @return string
+     */
+    protected function addFragmentComponent($url, array $parts)
+    {
+        if (isset($parts[self::FRAGMENT])) {
+            $url .= '#' . $parts[self::FRAGMENT];
+        }
+
+        return $url;
     }
 
 }
