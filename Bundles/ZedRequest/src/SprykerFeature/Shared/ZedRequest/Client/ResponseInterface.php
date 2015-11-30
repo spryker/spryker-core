@@ -10,6 +10,13 @@ use SprykerEngine\Shared\Transfer\TransferInterface;
 
 interface ResponseInterface
 {
+    const INFO_MESSAGES = 'infoMessages';
+    const ERROR_MESSAGES = 'errorMessages';
+    const SUCCESS_MESSAGES = 'successMessages';
+    const SUCCESS = 'success';
+    const TRANSFER_CLASSNAME = 'transferClassName';
+    const TRANSFER = 'transfer';
+
 
     /**
      * @param array $values

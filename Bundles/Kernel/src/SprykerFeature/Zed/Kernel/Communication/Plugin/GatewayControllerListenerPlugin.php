@@ -145,30 +145,32 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
         $flashMessengerFacade = $this->createFlashMessengerFacade();
 
         if ($flashMessengerFacade === null) {
-            return null;
+            return;
         }
 
         $flashMessengerTransfer = $flashMessengerFacade->getStoredMessages();
-        if ($flashMessengerTransfer !== null) {
-            $response->addErrorMessages(
-                $this->createResponseMessages(
-                    $flashMessengerTransfer->getErrorMessages(),
-                    $response->getErrorMessages()
-                )
-            );
-            $response->addInfoMessages(
-                $this->createResponseMessages(
-                    $flashMessengerTransfer->getInfoMessages(),
-                    $response->getInfoMessages()
-                )
-            );
-            $response->addSuccessMessages(
-                $this->createResponseMessages(
-                    $flashMessengerTransfer->getSuccessMessages(),
-                    $response->getSuccessMessages()
-                )
-            );
+        if ($flashMessengerTransfer === null) {
+            return;
         }
+
+        $response->addErrorMessages(
+            $this->createResponseMessages(
+                $flashMessengerTransfer->getErrorMessages(),
+                $response->getErrorMessages()
+            )
+        );
+        $response->addInfoMessages(
+            $this->createResponseMessages(
+                $flashMessengerTransfer->getInfoMessages(),
+                $response->getInfoMessages()
+            )
+        );
+        $response->addSuccessMessages(
+            $this->createResponseMessages(
+                $flashMessengerTransfer->getSuccessMessages(),
+                $response->getSuccessMessages()
+            )
+        );
     }
 
     /**

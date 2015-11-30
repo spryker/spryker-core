@@ -87,7 +87,6 @@ abstract class AbstractServiceDependencyContainer implements DependencyContainer
     }
 
     /**
-     * @throws \ErrorException
      * @return SessionClient
      */
     protected function createSessionClient()
@@ -96,7 +95,6 @@ abstract class AbstractServiceDependencyContainer implements DependencyContainer
     }
 
     /**
-     * @throws \ErrorException
      * @return ZedRequestClient
      */
     protected function createZedRequestClient()
@@ -105,7 +103,6 @@ abstract class AbstractServiceDependencyContainer implements DependencyContainer
     }
 
     /**
-     * @throws \ErrorException
      * @return StorageClient
      */
     protected function createStorageClient()
@@ -114,7 +111,6 @@ abstract class AbstractServiceDependencyContainer implements DependencyContainer
     }
 
     /**
-     * @throws \ErrorException
      * @return SearchClient
      */
     protected function createSearchClient()
