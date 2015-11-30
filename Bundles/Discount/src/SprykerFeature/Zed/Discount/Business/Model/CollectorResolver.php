@@ -129,11 +129,7 @@ class CollectorResolver
      */
     protected function isCombinable(array $itemsToCombine, DiscountInterface $discountTransfer)
     {
-        if (empty($itemsToCombine) && $discountTransfer->getCollectorLogicalOperator() === self::OPERATOR_AND) {
-            return false;
-        }
-
-        return true;
+        return (!empty($itemsToCombine) || $discountTransfer->getCollectorLogicalOperator() !== self::OPERATOR_AND);
     }
 
 }
