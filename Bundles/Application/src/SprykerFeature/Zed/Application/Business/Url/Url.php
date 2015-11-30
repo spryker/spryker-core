@@ -70,6 +70,7 @@ class Url
             'path' => $url,
             'query' => $query,
         ] + $options;
+
         return new static($parts);
     }
 
@@ -98,8 +99,8 @@ class Url
      *
      * @return void
      */
-    public function fromArray(array $url = []) {
-        // Convert the query string into an array
+    public function fromArray(array $url = [])
+    {
         if (isset($url['query']) && !is_array($url['query'])) {
             $url['query'] = self::parseQuery($url['query']);
         }
