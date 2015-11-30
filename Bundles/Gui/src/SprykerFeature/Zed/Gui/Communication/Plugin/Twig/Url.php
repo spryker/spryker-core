@@ -26,7 +26,7 @@ class Url extends TwigFunction
     protected function getFunction()
     {
         //TODO: CD-524 URL class for query strings and absolute URLs
-        return function ($url, array $query = [], $full = false) {
+        return function ($url, array $query = [], array $options = []) {
             if ($query) {
                 $url .= '?' . http_build_query($query);
             }

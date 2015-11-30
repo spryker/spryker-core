@@ -3,7 +3,7 @@
  * (c) Spryker Systems GmbH copyright protected.
  */
 
-namespace SprykerFeature\Zed\Url\Business;
+namespace SprykerFeature\Zed\Application\Business\Url;
 
 use SprykerFeature\Zed\Library\Sanitize\Html;
 use SprykerFeature\Zed\Url\Business\Exception\UrlInvalidException;
@@ -34,8 +34,16 @@ class Url
      */
     public static function parse($url)
     {
-        static $defaults = ['scheme' => null, 'host' => null, 'path' => null, 'port' => null, 'query' => null,
-            'user' => null, 'pass' => null, 'fragment' => null, ];
+        static $defaults = [
+            'scheme' => null,
+            'host' => null,
+            'port' => null,
+            'user' => null,
+            'pass' => null,
+            'path' => null,
+            'query' => null,
+            'fragment' => null,
+        ];
 
         $parts = parse_url($url);
         if ($parts === false) {
@@ -54,16 +62,7 @@ class Url
      */
     public function __construct(array $url = [])
     {
-        //$scheme, $host, $username = null, $password = null, $port = null, $path = null, QueryString $query = null, $fragment = null
-
-        // Convert the query string into an array
-        if (isset($url['query']) && !is_array($url['query'])) {
-            $url['query'] = self::parseQuery($url['query']);
-        }
-
-        foreach ($url as $k => $v) {
-            $this->{$k} = $v;
-        }
+        $this->fromArray($url);
     }
 
     /**
@@ -74,6 +73,22 @@ class Url
     public function __toString()
     {
         return $this->build();
+    }
+
+    /**
+     * @param array $url
+     *
+     * @return void
+     */
+    public function fromArray(array $url = []) {
+        // Convert the query string into an array
+        if (isset($url['query']) && !is_array($url['query'])) {
+            $url['query'] = self::parseQuery($url['query']);
+        }
+
+        foreach ($url as $k => $v) {
+            $this->{$k} = $v;
+        }
     }
 
     /**

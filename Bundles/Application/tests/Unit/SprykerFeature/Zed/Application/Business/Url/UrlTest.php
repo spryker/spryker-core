@@ -4,10 +4,10 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Functional\SprykerFeature\Zed\Url;
+namespace Functional\SprykerFeature\Zed\Application\Business\Url;
 
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
-use SprykerFeature\Zed\Url\Business\Url;
+use SprykerFeature\Zed\Application\Business\Url\Url;
 
 /**
  * @group SprykerFeature
