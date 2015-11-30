@@ -12,7 +12,6 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContai
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerFeature\Zed\Category\CategoryDependencyProvider;
 use SprykerFeature\Zed\Category\Communication\Form\CategoryNodeForm;
-use SprykerFeature\Zed\Category\Communication\Grid\CategoryGrid;
 use SprykerFeature\Zed\Category\Communication\Table\CategoryAttributeTable;
 use SprykerFeature\Zed\Category\Communication\Table\RootNodeTable;
 use SprykerFeature\Zed\Category\Communication\Table\UrlTable;
@@ -47,21 +46,6 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
         }
 
         return $this->currentLocale;
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return CategoryGrid
-     */
-    public function createCategoryGrid(Request $request)
-    {
-        $locale = $this->getCurrentLocale();
-
-        return $this->getFactory()->createGridCategoryGrid(
-            $this->getQueryContainer()->queryCategory($locale->getIdLocale()),
-            $request
-        );
     }
 
     /**
@@ -111,21 +95,6 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
             ->queryUrlByIdCategoryNode($idCategoryNode);
 
         return $this->getFactory()->createTableUrlTable($urlQuery);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return CategoryGrid
-     */
-    public function createCategoryNodeGrid(Request $request)
-    {
-        $locale = $this->getCurrentLocale();
-
-        return $this->getFactory()->createGridCategoryNodeGrid(
-            $this->getQueryContainer()->queryNodeWithDirectParent($locale->getIdLocale()),
-            $request
-        );
     }
 
     /**

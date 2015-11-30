@@ -19,6 +19,8 @@ class CommentController extends AbstractController
 {
 
     /**
+     * @TODO check if we can remove this method
+     *
      * @param Request $request
      *
      * @return JsonResponse

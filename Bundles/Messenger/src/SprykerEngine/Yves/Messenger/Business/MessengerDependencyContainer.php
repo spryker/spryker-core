@@ -13,11 +13,12 @@ class MessengerDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**
-     * @return MessengerInterface
+     * @throws \Exception
+     * @return void
      */
     public function getMessenger()
     {
-        return $this->messenger = $this->getFactory()->createModelMessenger();
+        throw new \Exception('Messenger must be implemented');
     }
 
 }

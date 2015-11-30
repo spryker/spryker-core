@@ -26,14 +26,12 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**
+     * @Todo check if we can remove this method
+     *
      * @return mixed
      */
     public function getCommentForm()
     {
-        return $this->getFactory()->createFormCommentForm(
-            null,
-            $this->getQueryContainer()
-        );
     }
 
     /**
@@ -42,17 +40,6 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
     public function getOrderItemSplitForm()
     {
         return $this->getFactory()->createFormOrderItemSplitForm();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDemoCommentForm()
-    {
-        return $this->getFactory()->createFormDemoCommentForm(
-            null,
-            $this->getQueryContainer()
-        );
     }
 
     /**
@@ -77,39 +64,6 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
         $addressQuery = $this->getQueryContainer()->querySalesOrderAddressById($idOrderAddress);
 
         return $this->getFactory()->createFormAddressForm($addressQuery);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return CommentsGrid
-     */
-    public function getCommentsGridByOrderId(Request $request)
-    {
-        return $this->getFactory()->createGridCommentsGrid(
-            $this->getQueryContainer()->queryCommentsByOrderId($request->get('orderId'))
-        );
-    }
-
-    /**
-     * @return SalesGrid
-     */
-    public function getSalesGrid()
-    {
-        $salesQuery = $this->getQueryContainer()->querySalesOrder();
-
-        return $this->getFactory()->createGridSalesGrid($salesQuery);
-    }
-
-    /**
-     * @param int $idOrder
-     *
-     * @return OrderItemsGrid
-     */
-    public function getOrdersItemsGridByOrderId($idOrder)
-    {
-        return $this->getFactory()->createGridOrderItemsGrid(
-            $this->getQueryContainer()->querySalesOrderItemsByIdSalesOrder($idOrder));
     }
 
     /**
