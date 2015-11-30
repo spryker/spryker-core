@@ -2,7 +2,6 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
-use SprykerEngine\Shared\Transfer\TransferInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class DecisionRuleForm extends AbstractRuleForm

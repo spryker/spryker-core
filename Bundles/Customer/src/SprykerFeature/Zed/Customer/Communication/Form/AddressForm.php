@@ -71,8 +71,7 @@ class AddressForm extends AbstractForm
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $preferedCountry = $this->countryFacade
-            ->getPreferedCountryByName(self::PREFERED_COUNTRY_NAME)
-        ;
+            ->getPreferedCountryByName(self::PREFERED_COUNTRY_NAME);
 
         $builder
             ->add(AddressTransfer::ID_CUSTOMER_ADDRESS, 'hidden')
@@ -127,8 +126,7 @@ class AddressForm extends AbstractForm
                 'constraints' => [
                     $this->getConstraints()->createConstraintLength(['max' => 255]),
                 ],
-            ])
-        ;
+            ]);
     }
 
     /**
