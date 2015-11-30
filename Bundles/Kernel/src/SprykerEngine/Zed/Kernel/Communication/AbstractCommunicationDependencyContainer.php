@@ -92,8 +92,7 @@ abstract class AbstractCommunicationDependencyContainer extends BaseDependencyCo
     protected function createForm(FormTypeInterface $formTypeInterface, array $options = [])
     {
         $form = $this->getFormFactory()
-            ->create($formTypeInterface, $formTypeInterface->populateFormFields(), $options)
-        ;
+            ->create($formTypeInterface, $formTypeInterface->populateFormFields(), $options);
 
         return $form;
     }

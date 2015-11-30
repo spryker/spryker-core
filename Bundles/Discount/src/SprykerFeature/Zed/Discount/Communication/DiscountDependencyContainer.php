@@ -23,10 +23,8 @@ use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
 use Symfony\Component\Form\FormTypeInterface;
-use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolCategoryTable;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolTable;
-use SprykerFeature\Zed\Discount\Communication\Form\PoolCategoryForm;
 use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 

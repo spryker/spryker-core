@@ -83,30 +83,6 @@ class PoolController extends AbstractController
     }
 
     /**
-     * @param int $idPoolCategory
-     *
-     * @return array
-     */
-//    public function createCategoryAction($idPoolCategory = 0)
-//    {
-//        $form = $this->getDependencyContainer()->createPoolCategoryForm($idPoolCategory);
-//        $form->handleRequest();
-//
-//        if ($form->isValid()) {
-//            $facade = $this->getFacade();
-//
-//            $category = new VoucherPoolCategoryTransfer();
-//            $category->fromArray($form->getData());
-//
-//            $facade->createDiscountVoucherPoolCategory($category);
-//        }
-//
-//        return [
-//            'form' => $form->createView(),
-//        ];
-//    }
-
-    /**
      * @param Request $request
      *
      * @return array
@@ -119,8 +95,6 @@ class PoolController extends AbstractController
     }
 
     /**
-     * @param Request $request
-     *
      * @return array
      */
     public function categoriesAction()
@@ -192,49 +166,5 @@ class PoolController extends AbstractController
 
         return $this->jsonResponse($result);
     }
-
-    /**
-     * @param int $idPool
-     *
-     * @return VoucherCodesTransfer
-     *
-     * @todo remove me
-     *
-     * @deprecated
-     */
-//    protected function getVoucherCodesTransfer($idPool)
-//    {
-//        $discountVoucherPoolEntity = $this->getQueryContainer()->queryVoucherCodeByIdVoucherCode($idPool)->findOne();
-//
-//        $discountEntity = $this->getDiscountByIdVoucherPool($idPool);
-//
-//        $decisionRuleEntities = $discountEntity->getDecisionRules();
-//        $discountCollectorEntities = $discountEntity->getDiscountCollectors();
-//        $discountVoucherPool = $discountVoucherPoolEntity->toArray();
-//        $discountVoucherPool[CartRuleForm::FIELD_COLLECTOR_PLUGINS] = $discountCollectorEntities->toArray();
-//
-//        $voucherCodesTransfer = (new VoucherCodesTransfer())->fromArray($discountVoucherPool, true);
-//        $voucherCodesTransfer->setDecisionRules($decisionRuleEntities->toArray());
-//        $voucherCodesTransfer->setCalculatorPlugin($discountEntity->getCalculatorPlugin());
-//
-//        $voucherCodesTransfer->setIsPrivileged((bool) $discountEntity->getIsPrivileged());
-//        $voucherCodesTransfer->setValidFrom($discountEntity->getValidFrom());
-//        $voucherCodesTransfer->setValidTo($discountEntity->getValidTo());
-//
-//        return $voucherCodesTransfer;
-//    }
-
-    /**
-     * @param int $idVoucherPool
-     *
-     * @return SpyDiscount
-     */
-//    protected function getDiscountByIdVoucherPool($idVoucherPool)
-//    {
-//        return $this->getQueryContainer()
-//            ->queryDiscount()
-//            ->filterByFkDiscountVoucherPool($idVoucherPool)
-//            ->findOne();
-//    }
 
 }
