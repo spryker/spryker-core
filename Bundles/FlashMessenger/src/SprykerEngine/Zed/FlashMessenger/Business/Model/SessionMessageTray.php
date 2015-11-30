@@ -62,9 +62,9 @@ class SessionMessageTray implements MessageTrayInterface
 
         $sessionFlashBag = $this->session->getFlashBag();
 
-        $flashMessagesTransfer->setErrorMessages([$sessionFlashBag->get(MessageTray::FLASH_MESSAGES_ERROR)]);
-        $flashMessagesTransfer->setInfoMessages([$sessionFlashBag->get(MessageTray::FLASH_MESSAGES_INFO)]);
-        $flashMessagesTransfer->setSuccessMessages([$sessionFlashBag->get(MessageTray::FLASH_MESSAGES_SUCCESS)]);
+        $flashMessagesTransfer->setErrorMessages([$sessionFlashBag->get(MessageTrayInterface::FLASH_MESSAGES_ERROR)]);
+        $flashMessagesTransfer->setInfoMessages([$sessionFlashBag->get(MessageTrayInterface::FLASH_MESSAGES_INFO)]);
+        $flashMessagesTransfer->setSuccessMessages([$sessionFlashBag->get(MessageTrayInterface::FLASH_MESSAGES_SUCCESS)]);
 
         return $flashMessagesTransfer;
 

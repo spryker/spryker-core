@@ -27,12 +27,11 @@ class FlashMessengerDependencyContainer extends AbstractBusinessDependencyContai
     public function createMessageTray()
     {
         $messageTry = $this->getConfig()->getTray();
-
         if ($messageTry === FlashMessengerConfig::IN_MEMORY_TRAY) {
             return $this->createInMemoryMessageTray();
-        } else {
-            return $this->createSessionMessageTray();
         }
+
+        return $this->createSessionMessageTray();
     }
 
     /**
