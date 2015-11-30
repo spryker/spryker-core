@@ -67,9 +67,9 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @param string $name
-     *
      * @bundle Test
+     *
+     * @param string $name
      *
      * @return self
      */
@@ -92,9 +92,9 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @throws RequiredTransferPropertyException
-     *
      * @bundle Test
+     *
+     * @throws RequiredTransferPropertyException
      *
      * @return self
      */
@@ -106,9 +106,9 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @param int $bla
-     *
      * @bundle Test
+     *
+     * @param int $bla
      *
      * @return self
      */
@@ -131,9 +131,9 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @throws RequiredTransferPropertyException
-     *
      * @bundle Test
+     *
+     * @throws RequiredTransferPropertyException
      *
      * @return self
      */
@@ -145,9 +145,9 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @param \ArrayObject|FooBarTransfer[] $selfReference
-     *
      * @bundle Test
+     *
+     * @param \ArrayObject|FooBarTransfer[] $selfReference
      *
      * @return self
      */
@@ -170,9 +170,9 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @param FooBarTransfer $selfReference
-     *
      * @bundle Test
+     *
+     * @param FooBarTransfer $selfReference
      *
      * @return self
      */
@@ -185,9 +185,9 @@ class FooBarTransfer extends AbstractTransfer
     }
 
     /**
-     * @throws RequiredTransferPropertyException
-     *
      * @bundle Test
+     *
+     * @throws RequiredTransferPropertyException
      *
      * @return self
      */

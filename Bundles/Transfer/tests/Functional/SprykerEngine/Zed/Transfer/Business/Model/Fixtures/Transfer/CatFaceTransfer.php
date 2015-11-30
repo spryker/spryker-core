@@ -68,9 +68,9 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @param string $name
-     *
      * @bundle Test
+     *
+     * @param string $name
      *
      * @return self
      */
@@ -93,9 +93,9 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @throws RequiredTransferPropertyException
-     *
      * @bundle Test
+     *
+     * @throws RequiredTransferPropertyException
      *
      * @return self
      */
@@ -107,9 +107,9 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @param ItemTransfer $item
-     *
      * @bundle Test
+     *
+     * @param ItemTransfer $item
      *
      * @return self
      */
@@ -132,9 +132,9 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @throws RequiredTransferPropertyException
-     *
      * @bundle Test
+     *
+     * @throws RequiredTransferPropertyException
      *
      * @return self
      */
@@ -146,9 +146,9 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @param \ArrayObject|ItemTransfer[] $items
-     *
      * @bundle Test
+     *
+     * @param \ArrayObject|ItemTransfer[] $items
      *
      * @return self
      */
@@ -171,9 +171,9 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @param ItemTransfer $item
-     *
      * @bundle Test
+     *
+     * @param ItemTransfer $item
      *
      * @return self
      */
@@ -186,9 +186,9 @@ class CatFaceTransfer extends AbstractTransfer
     }
 
     /**
-     * @throws RequiredTransferPropertyException
-     *
      * @bundle Test
+     *
+     * @throws RequiredTransferPropertyException
      *
      * @return self
      */
