@@ -31,7 +31,7 @@ class CmsDependencyContainer extends AbstractServiceDependencyContainer
      */
     private function getStorage()
     {
-        return $this->getProvidedDependency(CmsDependencyProvider::KV_STORAGE);
+        return $this->getProvidedDependency(CmsDependencyProvider::KV_STORAGE_CLIENT);
     }
 
     /**

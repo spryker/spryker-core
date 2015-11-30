@@ -5,6 +5,7 @@
 
 namespace SprykerEngine\Zed\FlashMessenger\Business;
 
+use Generated\Shared\Transfer\FlashMessagesTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -40,5 +41,13 @@ class FlashMessengerFacade extends AbstractFacade
     public function addInfoMessage($message)
     {
         $this->getDependencyContainer()->createMessageTray()->addInfoMessage($message);
+    }
+
+    /**
+     * @return FlashMessagesTransfer
+     */
+    public function getStoredMessages()
+    {
+        return $this->getDependencyContainer()->createMessageTray()->getMessages();
     }
 }

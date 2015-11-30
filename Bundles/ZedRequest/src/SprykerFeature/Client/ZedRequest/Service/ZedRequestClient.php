@@ -8,6 +8,8 @@ namespace SprykerFeature\Client\ZedRequest\Service;
 
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
 use SprykerEngine\Shared\Transfer\TransferInterface;
+use SprykerFeature\Client\ZedRequest\Service\Client\ZedClient;
+use SprykerFeature\Shared\ZedRequest\Client\Message;
 
 /**
  * @method ZedRequestDependencyContainer getDependencyContainer()
@@ -16,11 +18,20 @@ class ZedRequestClient extends AbstractClient
 {
 
     /**
-     * @return Client\ZedClient
+     * @var ZedClient
+     */
+    private $zedClient;
+
+    /**
+     * @return ZedClient
      */
     private function getClient()
     {
-        return $this->getDependencyContainer()->createClient();
+        if ($this->zedClient === null) {
+            $this->zedClient = $this->getDependencyContainer()->createClient();
+        }
+
+        return $this->zedClient;
     }
 
     /**
@@ -34,6 +45,30 @@ class ZedRequestClient extends AbstractClient
     public function call($url, TransferInterface $object, $timeoutInSeconds = null, $isBackgroundRequest = false)
     {
         return $this->getClient()->call($url, $object, $timeoutInSeconds, $isBackgroundRequest);
+    }
+
+    /**
+     * @return Message[]
+     */
+    public function getLastResponseInfoMessages()
+    {
+        return $this->getClient()->getLastResponse()->getInfoMessages();
+    }
+
+    /**
+     * @return Message[]
+     */
+    public function getLastResponseErrorMessages()
+    {
+        return $this->getClient()->getLastResponse()->getErrorMessages();
+    }
+
+    /**
+     * @return Message[]
+     */
+    public function getLastResponseSuccessMessages()
+    {
+        return $this->getClient()->getLastResponse()->getSuccessMessages();
     }
 
 }

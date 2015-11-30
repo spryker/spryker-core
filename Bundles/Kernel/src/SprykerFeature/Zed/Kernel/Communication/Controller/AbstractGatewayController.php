@@ -9,31 +9,31 @@ namespace SprykerFeature\Zed\Kernel\Communication\Controller;
 use Silex\Application;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Shared\ZedRequest\Client\Message;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Shared\NewRelic\Api;
+use SprykerFeature\Shared\ZedRequest\Client\Message;
 
 abstract class AbstractGatewayController extends AbstractController
 {
-
-    const MESSAGE_KEY = 'message';
-
-    const DATA_KEY = 'data';
-
-    /**
-     * @var Message[]
-     */
-    protected $messages = [];
-
-    /**
-     * @var Message[]
-     */
-    protected $errorMessages = [];
-
     /**
      * @var bool
      */
     protected $success = true;
+
+    /**
+     * @var Message[]
+     */
+    private $errorMessages = [];
+
+    /**
+     * @var Message[]
+     */
+    private $infoMessages = [];
+
+    /**
+     * @var Message[]
+     */
+    private $successMessages = [];
 
     /**
      * @param Application $application
@@ -47,14 +47,6 @@ abstract class AbstractGatewayController extends AbstractController
         // @todo this can be a plugin which listen for kernel.controller events
         $newRelicApi = new Api();
         $newRelicApi->addCustomParameter('Call_from', 'Yves');
-    }
-
-    /**
-     * @return Message[]
-     */
-    public function getMessages()
-    {
-        return $this->messages;
     }
 
     /**
@@ -76,4 +68,75 @@ abstract class AbstractGatewayController extends AbstractController
 
         return $this;
     }
+
+    /**
+     * @param string $message
+     *
+     * @return self
+     */
+    protected function addInfoMessage($message)
+    {
+        $messageObject = new Message();
+        $messageObject->setMessage($message);
+
+        $this->infoMessages[] = $messageObject;
+
+        return $this;
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return self
+     */
+    protected function addErrorMessage($message)
+    {
+        $messageObject = new Message();
+        $messageObject->setMessage($message);
+
+        $this->errorMessages[] = $messageObject;
+
+        return $this;
+    }
+
+    /**
+     * @param string $message
+     *
+     * @return self
+     */
+    protected function addSuccessMessage($message)
+    {
+        $messageObject = new Message();
+        $messageObject->setMessage($message);
+
+        $this->successMessages[] = $messageObject;
+
+        return $this;
+    }
+
+    /**
+     * @return Message[]
+     */
+    public function getErrorMessages()
+    {
+        return $this->errorMessages;
+    }
+
+    /**
+     * @return Message[]
+     */
+    public function getInfoMessages()
+    {
+        return $this->infoMessages;
+    }
+
+    /**
+     * @return Message[]
+     */
+    public function getSuccessMessages()
+    {
+        return $this->successMessages;
+    }
+
+
 }

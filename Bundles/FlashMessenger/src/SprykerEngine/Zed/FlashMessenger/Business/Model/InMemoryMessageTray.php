@@ -6,7 +6,6 @@
 namespace SprykerEngine\Zed\FlashMessenger\Business\Model;
 
 use Generated\Shared\Transfer\FlashMessagesTransfer;
-use SprykerFeature\Shared\ZedRequest\Client\Message;
 
 class InMemoryMessageTray implements MessageTrayInterface
 {
@@ -16,31 +15,13 @@ class InMemoryMessageTray implements MessageTrayInterface
     protected static $messages;
 
     /**
-     * InMemoryMessageTray constructor.
-     */
-    public function __construct()
-    {
-        $this->init();
-    }
-
-    /**
-     * @reurn void
-     */
-    public function init()
-    {
-        if (self::$messages === null) {
-            self::$messages = new FlashMessagesTransfer();
-        }
-    }
-
-    /**
      * @param string $message
      *
      * @return void
      */
     public function addSuccessMessage($message)
     {
-        self::$messages->addSuccessMessage($this->createMessage($message));
+        self::getFlashMessagesTransfer()->addSuccessMessage($message);
     }
 
     /**
@@ -50,7 +31,7 @@ class InMemoryMessageTray implements MessageTrayInterface
      */
     public function addInfoMessage($message)
     {
-        self::$messages->addInfoMessage($this->createMessage($message));
+        self::getFlashMessagesTransfer()->addInfoMessage($message);
     }
 
     /**
@@ -60,22 +41,26 @@ class InMemoryMessageTray implements MessageTrayInterface
      */
     public function addErrorMessage($message)
     {
-        self::$messages->addErrorMessage($this->createMessage($message));
-    }
-
-    protected function createMessage($message)
-    {
-        $messageTransfer = new Message();
-        $messageTransfer->setMessage($message);
-
-        return $messageTransfer;
+        self::getFlashMessagesTransfer()->addErrorMessage($message);
     }
 
     /**
      * @return FlashMessagesTransfer
      */
-    public static function getMessages()
+    public function getMessages()
     {
+        return self::$messages;
+    }
+
+    /**
+     * @return FlashMessagesTransfer
+     */
+    protected static function getFlashMessagesTransfer()
+    {
+        if (self::$messages === null) {
+            self::$messages = new FlashMessagesTransfer();
+        }
+
         return self::$messages;
     }
 

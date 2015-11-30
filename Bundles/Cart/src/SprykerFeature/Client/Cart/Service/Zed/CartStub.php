@@ -9,24 +9,10 @@ namespace SprykerFeature\Client\Cart\Service\Zed;
 use Generated\Shared\Transfer\CartTransfer;
 use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerEngine\Shared\Transfer\TransferInterface;
-use SprykerFeature\Client\ZedRequest\Service\ZedRequestClient;
+use SprykerFeature\Client\ZedRequest\Service\Stub\BaseStub;
 
-class CartStub implements CartStubInterface
+class CartStub extends BaseStub implements CartStubInterface
 {
-
-    /**
-     * @var ZedRequestClient
-     */
-    protected $zedStub;
-
-    /**
-     * @param ZedRequestClient $zedStub
-     */
-    public function __construct(ZedRequestClient $zedStub)
-    {
-        $this->zedStub = $zedStub;
-    }
-
     /**
      * @param ChangeTransfer|TransferInterface $changeTransfer
      *
@@ -106,5 +92,6 @@ class CartStub implements CartStubInterface
     {
         return $this->zedStub->call('/cart/gateway/recalculate', $cartTransfer);
     }
+
 
 }

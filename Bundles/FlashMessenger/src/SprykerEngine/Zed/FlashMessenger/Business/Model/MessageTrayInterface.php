@@ -2,7 +2,9 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
-namespace SprykerEngine\Zed\FlashMessenger\Business\Model;;
+namespace SprykerEngine\Zed\FlashMessenger\Business\Model;
+
+use Generated\Shared\Transfer\FlashMessagesTransfer;
 
 interface MessageTrayInterface
 {
@@ -30,4 +32,10 @@ interface MessageTrayInterface
      * @return void
      */
     public function addErrorMessage($message);
+
+
+    /**
+     * @return FlashMessagesTransfer
+     */
+    public function getMessages();
 }

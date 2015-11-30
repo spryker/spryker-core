@@ -69,6 +69,32 @@ interface ResponseInterface
     public function addInfoMessages(array $messages);
 
     /**
+     * @return Message[]
+     */
+    public function getSuccessMessages();
+
+    /**
+     * @param string $messageString
+     *
+     * @return bool
+     */
+    public function hasSuccessMessage($messageString);
+
+    /**
+     * @param array $successMessages
+     *
+     * @return $this
+     */
+    public function addSuccessMessages(array $successMessages);
+
+    /**
+     * @param Message $successMessage
+     *
+     * @return $this
+     */
+    public function addSuccessMessage(Message $successMessage);
+
+    /**
      * @return bool
      */
     public function isSuccess();

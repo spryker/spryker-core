@@ -15,8 +15,9 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
      * @var array
      */
     protected $values = [
-        'messages' => [],
+        'infoMessages' => [],
         'errorMessages' => [],
+        'successMessages' => [],
         'success' => true,
         'transfer' => null,
         'transferClassName' => null,
@@ -43,6 +44,10 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
 
         foreach ($this->values['errorMessages'] as $key => $message) {
             $this->values['errorMessages'][$key] = new Message($message);
+        }
+
+        foreach ($this->values['successMessages'] as $key => $message) {
+            $this->values['successMessages'][$key] = new Message($message);
         }
     }
 
@@ -129,7 +134,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
      */
     public function addInfoMessage(Message $message)
     {
-        $this->values['messages'][] = $message;
+        $this->values['infoMessages'][] = $message;
 
         return $this;
     }
@@ -144,6 +149,57 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
         foreach ($messages as $message) {
             $this->addInfoMessage($message);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Message[]
+     */
+    public function getSuccessMessages()
+    {
+        return $this->values['successMessages'];
+    }
+
+    /**
+     * @param string $messageString
+     *
+     * @return bool
+     */
+    public function hasSuccessMessage($messageString)
+    {
+        $successMessages = $this->getSuccessMessages();
+        foreach ($successMessages as $sucessMessage) {
+            if ($sucessMessage->getMessage() === $messageString) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param array $successMessages
+     *
+     * @return $this
+     */
+    public function addSuccessMessages(array $successMessages)
+    {
+        foreach ($successMessages as $successMessage) {
+            $this->addSuccessMessage($successMessage);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Message $successMessage
+     *
+     * @return $this
+     */
+    public function addSuccessMessage(Message $successMessage)
+    {
+        $this->values['successMessages'][] = $successMessage;
 
         return $this;
     }

@@ -19,7 +19,7 @@ abstract class AbstractZedClient
     /**
      * @var ResponseInterface
      */
-    private $lastResponse = null;
+    private static $lastResponse = null;
 
     /**
      * @var TransferInterface[]|\Closure[]
@@ -73,8 +73,8 @@ abstract class AbstractZedClient
      */
     public function call($url, TransferInterface $object, $timeoutInSeconds = null, $isBackgroundRequest = false)
     {
-        $this->lastResponse = null;
-        $this->lastResponse = $this->httpClient->request(
+        self::$lastResponse = null;
+        self::$lastResponse = $this->httpClient->request(
             $url,
             $object,
             $this->prepareAndGetMetaTransfers(),
@@ -82,7 +82,7 @@ abstract class AbstractZedClient
             $isBackgroundRequest
         );
 
-        return $this->lastResponse->getTransfer();
+        return self::$lastResponse->getTransfer();
     }
 
     /**
@@ -92,27 +92,10 @@ abstract class AbstractZedClient
      */
     public function getLastResponse()
     {
-        if ($this->lastResponse === null) {
-            throw new \BadMethodCallException('No response available yet');
+        if (self::$lastResponse === null) {
+            throw new \BadMethodCallException('There is no response received from zed.');
         }
 
-        return $this->lastResponse;
+        return self::$lastResponse;
     }
-
-    /**
-     * @return array|Message[]
-     */
-    public function getLastResponseErrorMessages()
-    {
-        return $this->getLastResponse()->getErrorMessages();
-    }
-
-    /**
-     * @return array|Message[]
-     */
-    public function getLastResponseMessages()
-    {
-        return $this->getLastResponse()->getMessages();
-    }
-
 }

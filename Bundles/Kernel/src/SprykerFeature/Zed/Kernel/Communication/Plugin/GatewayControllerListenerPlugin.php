@@ -7,7 +7,9 @@
 namespace SprykerFeature\Zed\Kernel\Communication\Plugin;
 
 use SprykerEngine\Shared\Transfer\TransferInterface;
+use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerFeature\Shared\ZedRequest\Client\Message;
 use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
 use SprykerFeature\Zed\Kernel\Communication\GatewayControllerListenerInterface;
@@ -15,11 +17,26 @@ use SprykerFeature\Zed\ZedRequest\Business\Client\Request;
 use SprykerFeature\Zed\ZedRequest\Business\Client\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use SprykerEngine\Zed\FlashMessenger\FlashMessengerConfig;
-use SprykerEngine\Zed\FlashMessenger\Business\Model\InMemoryMessageTray;
+use SprykerEngine\Zed\Kernel\Locator;
+use SprykerEngine\Zed\Kernel\Communication\Factory;
 
 class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayControllerListenerInterface
 {
+    /**
+     * @var Locator
+     */
+    private $locator;
 
+    /**
+     * @param Factory $factory
+     * @param Locator $locator
+     */
+    public function __construct(Factory $factory, Locator $locator)
+    {
+        parent::__construct($factory, $locator);
+
+        $this->locator = $locator;
+    }
     /**
      * @param FilterControllerEvent $event
      *
@@ -97,7 +114,8 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
             $response->setTransfer($result);
         }
 
-        $this->setResponseMessages($response);
+        $this->setGatewayControllerMessages($controller, $response);
+        $this->setFlashMessengerMessages($response);
 
         $response->setSuccess($controller->getSuccess());
 
@@ -105,18 +123,69 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     }
 
     /**
+     * @param AbstractGatewayController $controller
      * @param Response $response
      *
      * @return void
      */
-    private function setResponseMessages(Response $response)
+    private function setGatewayControllerMessages(AbstractGatewayController $controller, Response $response)
     {
-        $flashMessengerTransfer = InMemoryMessageTray::getMessages();
+        $response->addSuccessMessages($controller->getSuccessMessages());
+        $response->addInfoMessages($controller->getInfoMessages());
+        $response->addErrorMessages($controller->getErrorMessages());
+    }
 
-        if ($flashMessengerTransfer !== null) {
-            $response->addErrorMessages($flashMessengerTransfer->getErrorMessages());
-            $response->addInfoMessages($flashMessengerTransfer->getInfoMessages());
+    /**
+     * @param Response $response
+     *
+     * @return void
+     */
+    private function setFlashMessengerMessages(Response $response)
+    {
+        $flashMessengerFacade = $this->createFlashMessengerFacade();
+
+        if ($flashMessengerFacade === null) {
+            return null;
         }
+
+        $flashMessengerTransfer = $flashMessengerFacade->getStoredMessages();
+        if ($flashMessengerTransfer !== null) {
+            $response->addErrorMessages(
+                $this->createResponseMessages(
+                    $flashMessengerTransfer->getErrorMessages(),
+                    $response->getErrorMessages()
+                )
+            );
+            $response->addInfoMessages(
+                $this->createResponseMessages(
+                    $flashMessengerTransfer->getInfoMessages(),
+                    $response->getInfoMessages()
+                )
+            );
+            $response->addSuccessMessages(
+                $this->createResponseMessages(
+                    $flashMessengerTransfer->getSuccessMessages(),
+                    $response->getSuccessMessages()
+                )
+            );
+        }
+    }
+
+    /**
+     * @param array|string[] $messages
+     * @param array|Message[] $storedMessages
+     *
+     * @return array|\SprykerFeature\Shared\ZedRequest\Client\Message[]
+     */
+    private function createResponseMessages(array $messages, array $storedMessages = [])
+    {
+        foreach ($messages as $message) {
+            $responseMessage = new Message();
+            $responseMessage->setMessage($message);
+            $storedMessages[] = $responseMessage;
+        }
+
+        return $storedMessages;
     }
 
     /**
@@ -137,6 +206,17 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
         throw new \LogicException('Only transfer classes are allowed in yves action as parameter');
     }
 
+    /**
+     * @return FlashMessengerFacade|null
+     */
+    private function createFlashMessengerFacade()
+    {
+        $flashMessenger = $this->locator->flashMessenger();
+        if ($flashMessenger !== null) {
+            return $flashMessenger->facade();
+        }
 
+        return null;
+    }
 
 }
