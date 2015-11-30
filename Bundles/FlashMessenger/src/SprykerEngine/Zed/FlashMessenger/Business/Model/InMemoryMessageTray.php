@@ -9,6 +9,7 @@ use Generated\Shared\Transfer\FlashMessagesTransfer;
 
 class InMemoryMessageTray implements MessageTrayInterface
 {
+
     /**
      * @var FlashMessagesTransfer
      */

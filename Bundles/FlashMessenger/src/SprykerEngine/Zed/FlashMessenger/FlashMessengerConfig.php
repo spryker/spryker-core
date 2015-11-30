@@ -9,6 +9,7 @@ use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 
 class FlashMessengerConfig extends AbstractBundleConfig
 {
+
     const SESSION_TRAY = 'SESSION_TRAY';
     const IN_MEMORY_TRAY = 'IN_MEMORY_TRAY';
 
@@ -34,4 +35,5 @@ class FlashMessengerConfig extends AbstractBundleConfig
     {
         return self::$messageTray;
     }
+
 }

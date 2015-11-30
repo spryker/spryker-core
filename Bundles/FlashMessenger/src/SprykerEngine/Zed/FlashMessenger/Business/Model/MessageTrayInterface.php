@@ -8,6 +8,7 @@ use Generated\Shared\Transfer\FlashMessagesTransfer;
 
 interface MessageTrayInterface
 {
+
     const FLASH_MESSAGES_SUCCESS = 'flash.messages.success';
     const FLASH_MESSAGES_ERROR= 'flash.messages.error';
     const FLASH_MESSAGES_INFO = 'flash.messages.info';
@@ -33,9 +34,9 @@ interface MessageTrayInterface
      */
     public function addErrorMessage($message);
 
-
     /**
      * @return FlashMessagesTransfer
      */
     public function getMessages();
+
 }

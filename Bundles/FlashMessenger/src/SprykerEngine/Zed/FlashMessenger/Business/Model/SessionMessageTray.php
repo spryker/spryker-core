@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class SessionMessageTray implements MessageTrayInterface
 {
+
     /**
      * @var SessionInterface
      */
@@ -67,7 +68,6 @@ class SessionMessageTray implements MessageTrayInterface
         $flashMessagesTransfer->setSuccessMessages([$sessionFlashBag->get(MessageTrayInterface::FLASH_MESSAGES_SUCCESS)]);
 
         return $flashMessagesTransfer;
-
     }
 
     /**
@@ -88,4 +88,5 @@ class SessionMessageTray implements MessageTrayInterface
     {
         return new FlashMessagesTransfer();
     }
+
 }

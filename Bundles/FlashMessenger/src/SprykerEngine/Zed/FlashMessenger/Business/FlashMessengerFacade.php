@@ -13,6 +13,7 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
  */
 class FlashMessengerFacade extends AbstractFacade
 {
+
     /**
      * @param string $message
      *
@@ -50,4 +51,5 @@ class FlashMessengerFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()->createMessageTray()->getMessages();
     }
+
 }
