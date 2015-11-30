@@ -3,7 +3,6 @@
 namespace SprykerFeature\Zed\Development\Business\Refactor\Propel;
 
 use SprykerFeature\Zed\Development\Business\Refactor\AbstractRefactor;
-use SprykerFeature\Zed\Development\Business\Refactor\Refactor;
 use Symfony\Component\Filesystem\Filesystem;
 
 class FixIndentationOfIdMethodParameter extends AbstractRefactor

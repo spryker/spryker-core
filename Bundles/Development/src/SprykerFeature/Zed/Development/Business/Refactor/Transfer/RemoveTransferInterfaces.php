@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Development\Business\Refactor\Transfer;
 
 use SprykerFeature\Zed\Development\Business\Refactor\AbstractRefactor;
-use SprykerFeature\Zed\Development\Business\Refactor\Refactor;
 use SprykerFeature\Zed\Development\Business\Refactor\RefactorException;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\SplFileInfo;

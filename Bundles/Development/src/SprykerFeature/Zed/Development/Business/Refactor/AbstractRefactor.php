@@ -14,14 +14,14 @@ abstract class AbstractRefactor implements RefactorInterface
 
     /**
      * @param array $directories
-     * @param string $name
+     * @param string|null $name
      * @param string|int $depth
      *
      * @throws RefactorException
      *
      * @return Finder|SplFileInfo[]
      */
-    final protected function getFiles(array $directories, $name = null, $depth = null)
+    protected function getFiles(array $directories, $name = null, $depth = null)
     {
         foreach ($directories as $key => $directory) {
             if (!glob($directory)) {
