@@ -41,7 +41,6 @@ class CartRuleForm extends AbstractRuleForm
         );
 
         $this->discountFacade = $discountFacade;
-
     }
 
     /**

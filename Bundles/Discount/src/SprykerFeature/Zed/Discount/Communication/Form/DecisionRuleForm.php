@@ -2,7 +2,6 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
-use SprykerEngine\Zed\Gui\Communication\Form\NullFormTransfer;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use Symfony\Component\Form\FormBuilderInterface;
 

@@ -12,7 +12,6 @@ use SprykerFeature\Zed\Discount\Business\Writer\DiscountCollectorWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountDecisionRuleWriter;
 use SprykerFeature\Zed\Discount\Business\Writer\DiscountWriter;
 use SprykerFeature\Zed\Discount\Communication\Form\CartRuleForm;
-use SprykerFeature\Zed\Discount\Communication\Form\CartRuleType;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 
