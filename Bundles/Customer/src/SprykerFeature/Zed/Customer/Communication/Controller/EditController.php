@@ -39,7 +39,7 @@ class EditController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isValid() === true) {
+        if ($form->isValid()) {
             /** @var CustomerTransfer $data */
             $data = $form->getData();
 
@@ -96,8 +96,7 @@ class EditController extends AbstractController
             return;
         }
 
-        $this->getFacade()
-            ->setDefaultBillingAddress($addressTransfer);
+        $this->getFacade()->setDefaultBillingAddress($addressTransfer);
     }
 
     /**
@@ -124,8 +123,7 @@ class EditController extends AbstractController
             return;
         }
 
-        $this->getFacade()
-            ->setDefaultShippingAddress($addressTransfer);
+        $this->getFacade()->setDefaultShippingAddress($addressTransfer);
     }
 
     /**

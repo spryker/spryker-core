@@ -80,21 +80,21 @@ class CustomerForm extends AbstractForm
 
         $builder
             ->add(CustomerTransfer::ID_CUSTOMER, 'hidden')
-            ->add(self::FIELD_EMAIL, self::FIELD_EMAIL, $emailParameters)
-            ->add(self::FIELD_SALUTATION, 'choice', [
+            ->add(CustomerTransfer::EMAIL, 'email', $emailParameters)
+            ->add(CustomerTransfer::SALUTATION, 'choice', [
                 'label' => 'Salutation',
                 'placeholder' => 'Select one',
                 'choices' => $this->getSalutationOptions(),
             ])
-            ->add(self::FIELD_FIRST_NAME, 'text', [
+            ->add(CustomerTransfer::FIRST_NAME, 'text', [
                 'label' => 'First Name',
                 'constraints' => $this->getTextConstraints(),
             ])
-            ->add(self::FIELD_LAST_NAME, 'text', [
+            ->add(CustomerTransfer::LAST_NAME, 'text', [
                 'label' => 'Last Name',
                 'constraints' => $this->getTextConstraints(),
             ])
-            ->add(self::FIELD_GENDER, 'choice', [
+            ->add(CustomerTransfer::GENDER, 'choice', [
                 'label' => 'Gender',
                 'placeholder' => 'Select one',
                 'choices' => $this->getGenderOptions(),
@@ -105,12 +105,12 @@ class CustomerForm extends AbstractForm
 
         if ($this->addOrUpdate === self::UPDATE) {
             $builder
-                ->add(self::FIELD_DEFAULT_BILLING_ADDRESS, 'choice', [
+                ->add(CustomerTransfer::DEFAULT_BILLING_ADDRESS, 'choice', [
                     'label' => 'Billing Address',
                     'placeholder' => 'Select one',
                     'choices' => $this->getAddressOptions(),
                 ])
-                ->add(self::FIELD_DEFAULT_SHIPPING_ADDRESS, 'choice', [
+                ->add(CustomerTransfer::DEFAULT_SHIPPING_ADDRESS, 'choice', [
                     'label' => 'Shipping Address',
                     'placeholder' => 'Select one',
                     'choices' => $this->getAddressOptions(),
@@ -118,7 +118,7 @@ class CustomerForm extends AbstractForm
             ;
         }
 
-        $builder->add(self::FIELD_SEND_PASSWORD_TOKEN, 'checkbox', [
+        $builder->add(CustomerTransfer::SEND_PASSWORD_TOKEN, 'checkbox', [
             'label' => 'Send password token through email',
         ]);
     }
