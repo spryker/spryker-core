@@ -102,7 +102,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                             ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $checkoutRequestTransfer
                                 ->getCart()
                                 ->getTotals()
-                                ->getGrandTotal(),
+                                ->getGrandTotal() / 100,
                         ],
                         [
                             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_VAT_ELEMENT,
