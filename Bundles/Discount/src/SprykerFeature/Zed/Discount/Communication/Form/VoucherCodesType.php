@@ -131,8 +131,7 @@ class VoucherCodesType extends AbstractRuleType
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
             ])
-            ->addModelTransformer(new DecisionRulesFormTransformer($this->config, $this->camelCaseToUnderscore))
-        ;
+            ->addModelTransformer(new DecisionRulesFormTransformer($this->config, $this->camelCaseToUnderscore));
     }
 
     /**

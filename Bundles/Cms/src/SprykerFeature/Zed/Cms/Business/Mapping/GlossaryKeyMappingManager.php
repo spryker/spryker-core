@@ -103,8 +103,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     public function getPagePlaceholderMapping($idPage, $placeholder)
     {
         $glossaryKeyMappingEntity = $this->cmsQueryContainer->queryGlossaryKeyMapping($idPage, $placeholder)
-            ->findOne()
-        ;
+            ->findOne();
 
         if (!$glossaryKeyMappingEntity) {
             throw new MissingGlossaryKeyMappingException(sprintf('Tried to translate a missing placeholder mapping: Placeholder %s on Page Id %s', $placeholder, $idPage));
@@ -217,8 +216,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     public function hasPagePlaceholderMapping($idPage, $placeholder)
     {
         $mappingCount = $this->cmsQueryContainer->queryGlossaryKeyMapping($idPage, $placeholder)
-            ->count()
-        ;
+            ->count();
 
         return $mappingCount > 0;
     }
@@ -233,8 +231,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     protected function getGlossaryKeyMappingById($idMapping)
     {
         $mappingEntity = $this->cmsQueryContainer->queryGlossaryKeyMappingById($idMapping)
-            ->findOne()
-        ;
+            ->findOne();
         if (!$mappingEntity) {
             throw new MissingGlossaryKeyMappingException(sprintf('Tried to retrieve a missing glossary key mapping with id %s', $idMapping));
         }
@@ -321,8 +318,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     public function deleteGlossaryKeysByIdPage($idPage)
     {
         $mappedGlossaries = $this->cmsQueryContainer->queryGlossaryKeyMappingsByPageId($idPage)
-            ->find()
-        ;
+            ->find();
 
         $pageTransfer = (new PageTransfer())->setIdCmsPage($idPage);
 

@@ -26,11 +26,9 @@ class NavigationCollectorCacheDecoratorTest extends \PHPUnit_Framework_TestCase
         );
         $navigationCacheMock->expects($this->once())
             ->method('isEnabled')
-            ->will($this->returnValue(false))
-        ;
+            ->will($this->returnValue(false));
         $navigationCacheMock->expects($this->never())
-            ->method('getNavigation')
-        ;
+            ->method('getNavigation');
 
         $navigationCollectorMock = $this->getMock(
             'SprykerFeature\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface',
@@ -38,8 +36,7 @@ class NavigationCollectorCacheDecoratorTest extends \PHPUnit_Framework_TestCase
         );
         $navigationCollectorMock->expects($this->once())
             ->method('getNavigation')
-            ->will($this->returnValue([]))
-        ;
+            ->will($this->returnValue([]));
 
         $navigationCollectorCacheDecorator = new NavigationCollectorCacheDecorator($navigationCollectorMock, $navigationCacheMock);
 
@@ -57,20 +54,17 @@ class NavigationCollectorCacheDecoratorTest extends \PHPUnit_Framework_TestCase
         );
         $navigationCacheMock->expects($this->once())
             ->method('isEnabled')
-            ->will($this->returnValue(true))
-        ;
+            ->will($this->returnValue(true));
         $navigationCacheMock->expects($this->once())
             ->method('getNavigation')
-            ->will($this->returnValue([]))
-        ;
+            ->will($this->returnValue([]));
 
         $navigationCollectorMock = $this->getMock(
             'SprykerFeature\Zed\Application\Business\Model\Navigation\Collector\NavigationCollectorInterface',
             ['getNavigation']
         );
         $navigationCollectorMock->expects($this->never())
-            ->method('getNavigation')
-        ;
+            ->method('getNavigation');
 
         $navigationCollectorCacheDecorator = new NavigationCollectorCacheDecorator($navigationCollectorMock, $navigationCacheMock);
 

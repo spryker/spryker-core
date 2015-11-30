@@ -64,8 +64,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     {
         return $this->getDependencyContainer()
             ->getDecisionRuleMinimumCartSubtotal()
-            ->isMinimumCartSubtotalReached($container, $decisionRule)
-        ;
+            ->isMinimumCartSubtotalReached($container, $decisionRule);
     }
 
     /**
@@ -164,8 +163,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     {
         return $this->getDependencyContainer()
             ->createVoucherPoolCategory()
-            ->getAvailableVoucherPoolCategories()
-        ;
+            ->getAvailableVoucherPoolCategories();
     }
 
     /**
@@ -207,8 +205,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     {
         return $this->getDependencyContainer()
             ->createCartRule()
-            ->getCurrentCartRulesDetailsByIdDiscount($idDiscount)
-        ;
+            ->getCurrentCartRulesDetailsByIdDiscount($idDiscount);
     }
 
     /**
@@ -269,8 +266,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     public function createDiscountVoucherPoolCategory(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
     {
         return $this->getDependencyContainer()->createDiscountVoucherPoolCategoryWriter()
-            ->create($discountVoucherPoolCategoryTransfer)
-        ;
+            ->create($discountVoucherPoolCategoryTransfer);
     }
 
     /**
@@ -281,8 +277,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     public function updateDiscountVoucherPoolCategory(VoucherPoolCategoryTransfer $discountVoucherPoolCategoryTransfer)
     {
         return $this->getDependencyContainer()->createDiscountVoucherPoolCategoryWriter()
-            ->update($discountVoucherPoolCategoryTransfer)
-        ;
+            ->update($discountVoucherPoolCategoryTransfer);
     }
 
     /**
@@ -293,8 +288,7 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     public function getOrCreateDiscountVoucherPoolCategoryByName($poolCategoryName)
     {
         return $this->getDependencyContainer()->createDiscountVoucherPoolCategoryWriter()
-            ->getOrCreateByName($poolCategoryName)
-        ;
+            ->getOrCreateByName($poolCategoryName);
     }
 
     /**

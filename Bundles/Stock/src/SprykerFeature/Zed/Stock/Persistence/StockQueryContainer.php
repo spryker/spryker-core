@@ -25,8 +25,7 @@ class StockQueryContainer extends AbstractQueryContainer
     {
         return SpyStockProductQuery::create()
             ->filterByIsNeverOutOfStock(true)
-            ->filterByFkProduct($idProduct)
-            ;
+            ->filterByFkProduct($idProduct);
     }
 
     /**
@@ -37,8 +36,7 @@ class StockQueryContainer extends AbstractQueryContainer
     public function queryStockByProducts($idProduct)
     {
         return SpyStockProductQuery::create()
-            ->filterByFkProduct($idProduct)
-            ;
+            ->filterByFkProduct($idProduct);
     }
 
     /**
@@ -51,8 +49,7 @@ class StockQueryContainer extends AbstractQueryContainer
     {
         return SpyStockProductQuery::create()
             ->filterByFkStock($idStock)
-            ->filterByFkProduct($idProduct)
-            ;
+            ->filterByFkProduct($idProduct);
     }
 
     /**
@@ -70,8 +67,7 @@ class StockQueryContainer extends AbstractQueryContainer
             ->endUse()
             ->useStockQuery()
             ->filterByName($type)
-            ->endUse()
-        ;
+            ->endUse();
 
         return $query;
     }
@@ -84,8 +80,7 @@ class StockQueryContainer extends AbstractQueryContainer
     public function queryStockByName($name)
     {
         return SpyStockQuery::create()
-            ->filterByName($name)
-            ;
+            ->filterByName($name);
     }
 
     /**
@@ -115,8 +110,7 @@ class StockQueryContainer extends AbstractQueryContainer
             ->withColumn(SpyStockTableMap::COL_ID_STOCK, 'id_stock')
             ->withColumn(SpyStockTableMap::COL_NAME, 'name')
             ->joinStock()
-            ->joinSpyProduct()
-        ;
+            ->joinSpyProduct();
 
         return $query;
     }
@@ -129,8 +123,7 @@ class StockQueryContainer extends AbstractQueryContainer
     public function queryStockProductByIdStockProduct($idStockProduct)
     {
         return SpyStockProductQuery::create()
-            ->filterByIdStockProduct($idStockProduct)
-            ;
+            ->filterByIdStockProduct($idStockProduct);
     }
 
 }

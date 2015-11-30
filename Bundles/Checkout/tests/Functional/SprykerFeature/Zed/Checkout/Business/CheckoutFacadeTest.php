@@ -147,8 +147,7 @@ class CheckoutFacadeTest extends Test
             ->setFirstName('Max')
             ->setLastName('Mustermann')
             ->setPassword('MyPass')
-            ->save()
-        ;
+            ->save();
 
         $checkoutRequest = $this->getBaseCheckoutTransfer();
 
@@ -169,11 +168,9 @@ class CheckoutFacadeTest extends Test
         $this->assertEquals(0, count($result->getErrors()));
 
         $orderItem1Query = SpySalesOrderItemQuery::create()
-            ->filterBySku('OSB1337')
-        ;
+            ->filterBySku('OSB1337');
         $orderItem2Query = SpySalesOrderItemQuery::create()
-            ->filterBySku('OSB1338')
-        ;
+            ->filterBySku('OSB1338');
 
         $this->assertEquals(1, $orderItem1Query->count());
         $this->assertEquals(1, $orderItem2Query->count());
@@ -185,36 +182,31 @@ class CheckoutFacadeTest extends Test
         $abstractProduct1 = new SpyAbstractProduct();
         $abstractProduct1
             ->setSku('AOSB1339')
-            ->setAttributes('{}')
-        ;
+            ->setAttributes('{}');
         $concreteProduct1 = new SpyProduct();
         $concreteProduct1
             ->setSku('OSB1339')
             ->setAttributes('{}')
             ->setSpyAbstractProduct($abstractProduct1)
-            ->save()
-        ;
+            ->save();
 
         $stock = new SpyStock();
         $stock
-            ->setName('Stock2')
-        ;
+            ->setName('Stock2');
 
         $stock1 = new SpyStockProduct();
         $stock1
             ->setQuantity(1)
             ->setStock($stock)
             ->setSpyProduct($concreteProduct1)
-            ->save()
-        ;
+            ->save();
 
         $item = new ItemTransfer();
         $item
             ->setSku('OSB1339')
             ->setQuantity(2)
             ->setPriceToPay(1000)
-            ->setGrossPrice(3000)
-        ;
+            ->setGrossPrice(3000);
 
         $checkoutRequest->getCart()->addItem($item);
 
@@ -232,12 +224,10 @@ class CheckoutFacadeTest extends Test
         $this->checkoutFacade->requestCheckout($checkoutRequest);
 
         $orderItem1Query = SpySalesOrderItemQuery::create()
-            ->filterBySku('OSB1337')
-        ;
+            ->filterBySku('OSB1337');
 
         $orderItem2Query = SpySalesOrderItemQuery::create()
-            ->filterBySku('OSB1338')
-        ;
+            ->filterBySku('OSB1338');
 
         $orderItem1 = $orderItem1Query->findOne();
         $orderItem2 = $orderItem2Query->findOne();
@@ -257,55 +247,47 @@ class CheckoutFacadeTest extends Test
         $country = new SpyCountry();
         $country
             ->setIso2Code('xi')
-            ->save()
-        ;
+            ->save();
 
         $abstractProduct1 = new SpyAbstractProduct();
         $abstractProduct1
             ->setSku('AOSB1337')
-            ->setAttributes('{}')
-        ;
+            ->setAttributes('{}');
         $concreteProduct1 = new SpyProduct();
         $concreteProduct1
             ->setSku('OSB1337')
             ->setAttributes('{}')
             ->setSpyAbstractProduct($abstractProduct1)
-            ->save()
-        ;
+            ->save();
 
         $abstractProduct2 = new SpyAbstractProduct();
         $abstractProduct2
             ->setSku('AOSB1338')
-            ->setAttributes('{}')
-        ;
+            ->setAttributes('{}');
         $concreteProduct2 = new SpyProduct();
         $concreteProduct2
             ->setSku('OSB1338')
             ->setSpyAbstractProduct($abstractProduct2)
             ->setAttributes('{}')
-            ->save()
-        ;
+            ->save();
 
         $stock = new SpyStock();
         $stock
-            ->setName('testStock')
-        ;
+            ->setName('testStock');
 
         $stock1 = new SpyStockProduct();
         $stock1
             ->setQuantity(1)
             ->setStock($stock)
             ->setSpyProduct($concreteProduct1)
-            ->save()
-        ;
+            ->save();
 
         $stock2 = new SpyStockProduct();
         $stock2
             ->setQuantity(1)
             ->setStock($stock)
             ->setSpyProduct($concreteProduct2)
-            ->save()
-        ;
+            ->save();
 
         $item1 = new ItemTransfer();
         $item1
@@ -314,8 +296,7 @@ class CheckoutFacadeTest extends Test
             ->setPriceToPay(1000)
             ->setGrossPrice(3000)
             ->setName('Product1')
-            ->setTaxSet(new TaxSetTransfer())
-        ;
+            ->setTaxSet(new TaxSetTransfer());
 
         $item2 = new ItemTransfer();
         $item2
@@ -324,8 +305,7 @@ class CheckoutFacadeTest extends Test
             ->setPriceToPay(2000)
             ->setGrossPrice(4000)
             ->setName('Product2')
-            ->setTaxSet(new TaxSetTransfer())
-        ;
+            ->setTaxSet(new TaxSetTransfer());
 
         $cart = new CartTransfer();
         $cart->addItem($item1);
@@ -335,8 +315,7 @@ class CheckoutFacadeTest extends Test
         $totals
             ->setGrandTotal(1000)
             ->setGrandTotalWithDiscounts(800)
-            ->setSubtotal(500)
-        ;
+            ->setSubtotal(500);
 
         $cart->setTotals($totals);
 
@@ -351,8 +330,7 @@ class CheckoutFacadeTest extends Test
             ->setAddress1('Straße')
             ->setAddress2('82')
             ->setZipCode('12345')
-            ->setCity('Entenhausen')
-        ;
+            ->setCity('Entenhausen');
         $shippingAddress
             ->setIso2Code('xi')
             ->setFirstName('Max')
@@ -361,8 +339,7 @@ class CheckoutFacadeTest extends Test
             ->setAddress1('Straße')
             ->setAddress2('84')
             ->setZipCode('12346')
-            ->setCity('Entenhausen2')
-        ;
+            ->setCity('Entenhausen2');
 
         $checkoutRequest = new CheckoutRequestTransfer();
         $checkoutRequest
@@ -372,8 +349,7 @@ class CheckoutFacadeTest extends Test
             ->setCart($cart)
             ->setBillingAddress($billingAddress)
             ->setShippingAddress($shippingAddress)
-            ->setPaymentMethod('creditcard')
-        ;
+            ->setPaymentMethod('creditcard');
 
         return $checkoutRequest;
     }

@@ -134,8 +134,7 @@ class CmsBlockForm extends AbstractForm
             ])
             ->addCheckbox(self::IS_ACTIVE, [
                 'label' => 'Active',
-            ])
-            ;
+            ]);
     }
 
     /**
@@ -194,8 +193,7 @@ class CmsBlockForm extends AbstractForm
             ->filterByType($formData['type'])
             ->filterByValue($formData['value'])
             ->find()
-            ->getData()
-            ;
+            ->getData();
     }
 
 }

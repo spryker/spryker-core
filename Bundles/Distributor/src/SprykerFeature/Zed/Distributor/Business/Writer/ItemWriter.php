@@ -34,8 +34,7 @@ class ItemWriter implements ItemWriterInterface
     {
         $item = $this->queryContainer
             ->queryItemByTypeAndId($itemType, $idItem)
-            ->findOne()
-        ;
+            ->findOne();
 
         $foreignKeyColumn = $this->getForeignKeyByType($itemType);
 

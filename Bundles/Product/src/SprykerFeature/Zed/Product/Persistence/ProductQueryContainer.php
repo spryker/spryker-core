@@ -143,8 +143,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
                 SpyAbstractProductTableMap::COL_SKU => 'label',
             ])
             ->withColumn(SpyAbstractProductTableMap::COL_SKU, 'value')
-            ->withColumn(SpyAbstractProductTableMap::COL_SKU, 'label')
-            ;
+            ->withColumn(SpyAbstractProductTableMap::COL_SKU, 'label');
     }
 
     /**
@@ -200,8 +199,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
         $query = SpyLocalizedAbstractProductAttributesQuery::create();
         $query
             ->filterByFkAbstractProduct($idAbstractProduct)
-            ->filterByFkLocale($fkCurrentLocale)
-        ;
+            ->filterByFkLocale($fkCurrentLocale);
 
         return $query;
     }
@@ -217,8 +215,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
         $query = SpyLocalizedProductAttributesQuery::create();
         $query
             ->filterByFkProduct($idConcreteProduct)
-            ->filterByFkLocale($fkCurrentLocale)
-        ;
+            ->filterByFkLocale($fkCurrentLocale);
 
         return $query;
     }

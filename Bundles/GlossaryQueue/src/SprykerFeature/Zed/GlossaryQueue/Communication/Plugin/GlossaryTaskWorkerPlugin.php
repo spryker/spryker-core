@@ -54,8 +54,7 @@ class GlossaryTaskWorkerPlugin extends AbstractPlugin implements
     {
         return $this->getDependencyContainer()
             ->getCurrentStore()
-            ->getCurrentCountry()
-        ;
+            ->getCurrentCountry();
     }
 
 }

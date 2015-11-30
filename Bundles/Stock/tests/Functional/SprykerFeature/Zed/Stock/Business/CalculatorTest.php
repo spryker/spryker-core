@@ -60,8 +60,7 @@ class CalculatorTest extends Test
     {
         $abstractProduct = SpyAbstractProductQuery::create()
             ->filterBySku('test')
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($abstractProduct === null) {
             $abstractProduct = new SpyAbstractProduct();
@@ -69,13 +68,11 @@ class CalculatorTest extends Test
         }
 
         $abstractProduct->setAttributes('{}')
-            ->save()
-        ;
+            ->save();
 
         $product = SpyProductQuery::create()
             ->filterBySku('test2')
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($product === null) {
             $product = new SpyProduct();
@@ -84,45 +81,38 @@ class CalculatorTest extends Test
 
         $product->setFkAbstractProduct($abstractProduct->getIdAbstractProduct())
             ->setAttributes('{}')
-            ->save()
-        ;
+            ->save();
 
         $this->productEntity = $product;
 
         $stockType1 = SpyStockQuery::create()
             ->filterByName('warehouse1')
-            ->findOneOrCreate()
-        ;
+            ->findOneOrCreate();
 
         $stockType1->setName('warehouse1')->save();
 
         $stockType2 = SpyStockQuery::create()
             ->filterByName('warehouse2')
-            ->findOneOrCreate()
-        ;
+            ->findOneOrCreate();
         $stockType2->setName('warehouse2')->save();
 
         $stockProduct1 = SpyStockProductQuery::create()
             ->filterByFkStock($stockType1->getIdStock())
             ->filterByFkProduct($this->productEntity->getIdProduct())
-            ->findOneOrCreate()
-        ;
+            ->findOneOrCreate();
         $stockProduct1->setFkStock($stockType1->getIdStock())
             ->setQuantity(10)
             ->setFkProduct($this->productEntity->getIdProduct())
-            ->save()
-        ;
+            ->save();
 
         $stockProduct2 = SpyStockProductQuery::create()
             ->filterByFkStock($stockType2->getIdStock())
             ->filterByFkProduct($this->productEntity->getIdProduct())
-            ->findOneOrCreate()
-        ;
+            ->findOneOrCreate();
         $stockProduct2->setFkStock($stockType2->getIdStock())
             ->setQuantity(20)
             ->setFkProduct($this->productEntity->getIdProduct())
-            ->save()
-        ;
+            ->save();
     }
 
 }

@@ -76,8 +76,7 @@ class VoucherEngine
     {
         $voucherPoolEntity = $this->queryContainer
             ->queryVoucherPool()
-            ->findPk($voucherTransfer->getFkDiscountVoucherPool())
-        ;
+            ->findPk($voucherTransfer->getFkDiscountVoucherPool());
 
         $nextVoucherBatchValue = $this->getNextBatchValueForVouchers($voucherTransfer);
 
@@ -186,8 +185,7 @@ class VoucherEngine
     {
         $voucherCodeEntity = $this->queryContainer
             ->queryDiscountVoucher()
-            ->findOneByCode($voucherCode)
-        ;
+            ->findOneByCode($voucherCode);
 
         return $voucherCodeEntity !== null;
     }
@@ -289,8 +287,7 @@ class VoucherEngine
             ->queryDiscountVoucher()
             ->filterByFkDiscountVoucherPool($voucherTransfer->getFkDiscountVoucherPool())
             ->orderByVoucherBatch(Criteria::DESC)
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($highestBatchValueOnVouchers === null) {
             return 1;

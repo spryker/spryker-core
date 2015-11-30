@@ -133,8 +133,7 @@ class WriterTest extends Test
             ->setPrice(100)
             ->setSkuProduct($sku)
             ->setSkuAbstractProduct($abstractSku)
-            ->setPriceTypeName($priceType)
-        ;
+            ->setPriceTypeName($priceType);
 
         return $transferPriceProduct;
     }
@@ -145,8 +144,7 @@ class WriterTest extends Test
         $transferPriceProduct
             ->setPrice(100)
             ->setSkuAbstractProduct($abstractSku)
-            ->setPriceTypeName($priceType)
-        ;
+            ->setPriceTypeName($priceType);
 
         return $transferPriceProduct;
     }
@@ -187,8 +185,7 @@ class WriterTest extends Test
 
         $abstractProduct = SpyAbstractProductQuery::create()
             ->filterBySku(self::DUMMY_SKU_ABSTRACT_PRODUCT)
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($abstractProduct === null) {
             $abstractProduct = new SpyAbstractProduct();
@@ -196,13 +193,11 @@ class WriterTest extends Test
 
         $abstractProduct->setSku(self::DUMMY_SKU_ABSTRACT_PRODUCT)
             ->setAttributes('{}')
-            ->save()
-        ;
+            ->save();
 
         $concreteProduct = SpyProductQuery::create()
             ->filterBySku(self::DUMMY_SKU_CONCRETE_PRODUCT)
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($concreteProduct === null) {
             $concreteProduct = new SpyProduct();
@@ -210,15 +205,13 @@ class WriterTest extends Test
         $concreteProduct->setSku(self::DUMMY_SKU_CONCRETE_PRODUCT)
             ->setAttributes('{}')
             ->setSpyAbstractProduct($abstractProduct)
-            ->save()
-        ;
+            ->save();
 
         $this->deletePriceEntitiesConcrete($concreteProduct);
         $concreteProduct->setSku(self::DUMMY_SKU_CONCRETE_PRODUCT)
             ->setAttributes('{}')
             ->setSpyAbstractProduct($abstractProduct)
-            ->save()
-        ;
+            ->save();
 
         $this->deletePriceEntitiesAbstract($abstractProduct);
     }

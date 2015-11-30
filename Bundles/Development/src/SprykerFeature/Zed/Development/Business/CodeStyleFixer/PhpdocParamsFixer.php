@@ -157,8 +157,7 @@ class PhpdocParamsFixer extends AbstractFixer
                     . ' * @'
                     . $item['tag']
                     . ' '
-                    . $item['hint']
-                ;
+                    . $item['hint'];
 
                 if (!empty($item['var'])) {
                     $line .=
@@ -168,8 +167,7 @@ class PhpdocParamsFixer extends AbstractFixer
                         !empty($item['desc'])
                             ? ' ' . $item['desc'] . "\n"
                             : "\n"
-                        )
-                    ;
+                        );
                 } elseif (!empty($item['desc'])) {
                     $line .= ' ' . $item['desc'] . "\n";
                 } else {

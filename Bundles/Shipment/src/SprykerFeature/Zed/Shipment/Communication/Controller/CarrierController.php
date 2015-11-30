@@ -25,8 +25,7 @@ class CarrierController extends AbstractController
     public function addAction()
     {
         $form = $this->getDependencyContainer()
-            ->createCarrierForm()
-        ;
+            ->createCarrierForm();
         $form->handleRequest();
 
         if ($form->isValid()) {
@@ -34,8 +33,7 @@ class CarrierController extends AbstractController
             $carrierTransfer = new ShipmentCarrierTransfer();
             $carrierTransfer->fromArray($data, true);
             $this->getFacade()
-                ->createCarrier($carrierTransfer)
-            ;
+                ->createCarrier($carrierTransfer);
 
             return $this->redirectResponse('/shipment/');
         }

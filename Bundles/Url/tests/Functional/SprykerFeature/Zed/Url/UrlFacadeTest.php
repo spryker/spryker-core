@@ -87,8 +87,7 @@ class UrlFacadeTest extends AbstractFunctionalTest
             ->setUrl('/YetSomeOtherPageUrl')
             ->setFkLocale($this->localeFacade->createLocale('QWERT')->getIdLocale())
             ->setResourceType('redirect')
-            ->setResourceId($redirect->getIdRedirect())
-        ;
+            ->setResourceId($redirect->getIdRedirect());
 
         $urlCountBeforeCreation = $urlQuery->count();
         $url = $this->urlFacade->saveUrl($url);
@@ -110,8 +109,7 @@ class UrlFacadeTest extends AbstractFunctionalTest
             ->setUrl('/SoManyPageUrls')
             ->setFkLocale($this->localeFacade->createLocale('WERTZ')->getIdLocale())
             ->setResourceType('redirect')
-            ->setResourceId($redirect1->getIdRedirect())
-        ;
+            ->setResourceId($redirect1->getIdRedirect());
 
         $url = $this->urlFacade->saveUrl($url);
 

@@ -144,8 +144,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
     {
         return $this->getMockBuilder('SprykerEngine\Zed\Kernel\Communication\Factory')
             ->disableOriginalConstructor()
-            ->getMock()
-        ;
+            ->getMock();
     }
 
     /**
@@ -155,8 +154,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
     {
         return $this->getMockBuilder('SprykerEngine\Zed\Kernel\Locator')
             ->disableOriginalConstructor()
-            ->getMock()
-        ;
+            ->getMock();
     }
 
     /**
@@ -166,8 +164,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
     {
         return $this->getMockBuilder('SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\Repeater')
             ->disableOriginalConstructor()
-            ->getMock()
-        ;
+            ->getMock();
     }
 
     /**

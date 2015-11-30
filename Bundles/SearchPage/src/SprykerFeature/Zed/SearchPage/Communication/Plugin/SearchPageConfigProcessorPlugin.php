@@ -35,8 +35,7 @@ class SearchPageConfigProcessorPlugin extends AbstractPlugin
     {
         return $this->getDependencyContainer()
             ->getSearchPageFacade()
-            ->processSearchPageConfig($resultSet, $locale)
-        ;
+            ->processSearchPageConfig($resultSet, $locale);
     }
 
 }

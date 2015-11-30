@@ -33,8 +33,7 @@ class TemplateReader implements TemplateReaderInterface
     public function getTemplateById($idTemplate)
     {
         $templateQuery = $this->searchPageQueryContainer
-            ->queryPageElementTemplateByPrimaryKey($idTemplate)
-        ;
+            ->queryPageElementTemplateByPrimaryKey($idTemplate);
 
         return $templateQuery->findOne();
     }
@@ -47,8 +46,7 @@ class TemplateReader implements TemplateReaderInterface
     public function hasTemplateByName($templateName)
     {
         $documentAttributeQuery = $this->searchPageQueryContainer
-            ->queryPageElementTemplateByName($templateName)
-        ;
+            ->queryPageElementTemplateByName($templateName);
 
         return $documentAttributeQuery->count() > 0;
     }

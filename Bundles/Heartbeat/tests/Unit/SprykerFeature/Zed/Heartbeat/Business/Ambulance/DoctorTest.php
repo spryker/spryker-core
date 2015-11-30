@@ -31,8 +31,7 @@ class DoctorTest extends \PHPUnit_Framework_TestCase
         $checkerMock = $this->getMock('SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface', ['doHealthCheck']);
         $checkerMock->expects($this->once())
             ->method('doHealthCheck')
-            ->will($this->returnValue((new HealthIndicatorReportTransfer())->setStatus(true)))
-        ;
+            ->will($this->returnValue((new HealthIndicatorReportTransfer())->setStatus(true)));
 
         $doctor = new Doctor([$checkerMock]);
 
@@ -44,8 +43,7 @@ class DoctorTest extends \PHPUnit_Framework_TestCase
         $checkerMock = $this->getMock('SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface', ['doHealthCheck']);
         $checkerMock->expects($this->once())
             ->method('doHealthCheck')
-            ->will($this->returnValue((new HealthIndicatorReportTransfer())->setStatus(false)))
-        ;
+            ->will($this->returnValue((new HealthIndicatorReportTransfer())->setStatus(false)));
 
         $doctor = new Doctor([$checkerMock]);
 
@@ -57,14 +55,12 @@ class DoctorTest extends \PHPUnit_Framework_TestCase
         $checkerMockTrue = $this->getMock('SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface', ['doHealthCheck']);
         $checkerMockTrue->expects($this->once())
             ->method('doHealthCheck')
-            ->will($this->returnValue((new HealthIndicatorReportTransfer())->setStatus(false)))
-        ;
+            ->will($this->returnValue((new HealthIndicatorReportTransfer())->setStatus(false)));
 
         $checkerMockFalse = $this->getMock('SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface', ['doHealthCheck']);
         $checkerMockFalse->expects($this->once())
             ->method('doHealthCheck')
-            ->will($this->returnValue(new HealthIndicatorReportTransfer()))
-        ;
+            ->will($this->returnValue(new HealthIndicatorReportTransfer()));
 
         $doctor = new Doctor([$checkerMockFalse, $checkerMockTrue]);
 

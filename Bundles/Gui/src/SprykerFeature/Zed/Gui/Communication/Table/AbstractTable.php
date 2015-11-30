@@ -128,8 +128,7 @@ abstract class AbstractTable
             $this->locator = Locator::getInstance();
             $this->request = $this->locator->application()
                 ->pluginPimple()
-                ->getApplication()['request']
-            ;
+                ->getApplication()['request'];
             $config = $this->newTableConfiguration();
             $config->setPageLength($this->getLimit());
             $config = $this->configure($config);
@@ -283,8 +282,7 @@ abstract class AbstractTable
         /** @var \Twig_Environment $twig */
         $twig = $this->locator->application()
             ->pluginPimple()
-            ->getApplication()['twig']
-        ;
+            ->getApplication()['twig'];
 
         if ($twig === null) {
             throw new \LogicException('Twig environment not set up.');
@@ -348,8 +346,7 @@ abstract class AbstractTable
         ];
 
         return $this->getTwig()
-            ->render('index.twig', $twigVars)
-        ;
+            ->render('index.twig', $twigVars);
     }
 
     /**
@@ -455,8 +452,7 @@ abstract class AbstractTable
         }
 
         $query->offset($offset)
-            ->limit($limit)
-        ;
+            ->limit($limit);
 
         $data = $query->find();
 

@@ -81,8 +81,7 @@ class Reader implements ReaderInterface
         $productId = $this->productFacade->getConcreteProductIdBySku($sku);
         $stockEntities = $this->queryContainer
             ->queryStockByProducts($productId)
-            ->find()
-        ;
+            ->find();
         if (count($stockEntities) < 1) {
             throw new InvalidArgumentException(self::MESSAGE_NO_RESULT);
         } else {
@@ -134,8 +133,7 @@ class Reader implements ReaderInterface
         $idProduct = $this->getConcreteProductIdBySku($sku);
         $stockProductEntity = $this->queryContainer
             ->queryStockProductByStockAndProduct($idStockType, $idProduct)
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($stockProductEntity) {
             throw new StockProductNotFoundException(
@@ -202,8 +200,7 @@ class Reader implements ReaderInterface
     {
         $stockProductEntity = $this->queryContainer
             ->queryStockProductByIdStockProduct($idStockProduct)
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($stockProductEntity === null) {
             throw new StockProductNotFoundException();

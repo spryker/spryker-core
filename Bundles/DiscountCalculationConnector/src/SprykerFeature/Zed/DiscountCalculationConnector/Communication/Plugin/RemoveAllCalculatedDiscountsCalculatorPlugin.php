@@ -24,8 +24,7 @@ class RemoveAllCalculatedDiscountsCalculatorPlugin extends AbstractPlugin implem
     {
         $this->getDependencyContainer()
             ->getDiscountCalculationFacade()
-            ->recalculateRemoveAllCalculatedDiscounts($calculableContainer)
-        ;
+            ->recalculateRemoveAllCalculatedDiscounts($calculableContainer);
     }
 
 }

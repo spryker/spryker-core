@@ -97,8 +97,7 @@ class CategoryFormEdit extends CategoryFormAdd
                 'attr' => [
                     'id' => 'product_category_preconfig',
                 ],
-            ])
-        ;
+            ]);
     }
 
     /**
@@ -122,8 +121,7 @@ class CategoryFormEdit extends CategoryFormAdd
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, self::PK_CATEGORY_NODE)
             ->withColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY, self::FK_NODE_CATEGORY)
             ->withColumn(SpyCategoryNodeTableMap::COL_IS_MAIN, self::CATEGORY_NODE_IS_MAIN)
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($categoryEntity) {
             $categoryEntity = $categoryEntity->toArray();
@@ -134,8 +132,7 @@ class CategoryFormEdit extends CategoryFormAdd
                     SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE . ' <> ?',
                     $categoryEntity[self::PK_CATEGORY_NODE]
                 )
-                ->find()
-            ;
+                ->find();
 
             $nodeIds = [];
             foreach ($nodeEntityList as $nodeEntity) {

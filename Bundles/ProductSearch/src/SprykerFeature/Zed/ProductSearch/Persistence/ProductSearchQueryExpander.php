@@ -52,8 +52,7 @@ class ProductSearchQueryExpander implements ProductSearchQueryExpanderInterface
 
         $this->productQueryContainer
             ->joinConcreteProducts($expandableQuery)
-            ->joinProductQueryWithLocalizedAttributes($expandableQuery, $locale)
-        ;
+            ->joinProductQueryWithLocalizedAttributes($expandableQuery, $locale);
 
         $expandableQuery->withColumn(SpyAbstractProductTableMap::COL_SKU, 'abstract_sku');
         $expandableQuery->withColumn(SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT, 'id_abstract_product');

@@ -34,8 +34,7 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
                     ->filterByIdTaxRate($idTaxRate)
                     ->endUse()
                 ->endUse()
-            ->endUse()
-            ;
+            ->endUse();
     }
 
     /**
@@ -56,8 +55,7 @@ class TaxProductConnectorQueryContainer extends AbstractQueryContainer implement
             ->filterByFkTaxSet($idTaxSet)
             ->select([
                 SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT,
-            ])
-            ;
+            ]);
     }
 
 }

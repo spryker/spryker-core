@@ -10,8 +10,7 @@ class TransferDefinitionMerger implements MergerInterface
 {
 
     const ERROR_MESSAGE_PROPERTIES_NOT_IDENTICALLY =
-        'Property \'%1$s\' defined more than once with different attributes! To fix this, search for \'property name="%1$s"\' in the code base and fix the wrong one.'
-    ;
+        'Property \'%1$s\' defined more than once with different attributes! To fix this, search for \'property name="%1$s"\' in the code base and fix the wrong one.';
 
     /**
      * @var array

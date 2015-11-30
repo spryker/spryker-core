@@ -64,14 +64,12 @@ class Touch implements TouchInterface
     {
         $entityList = $this->touchQueryContainer
             ->queryTouchListByItemType($itemType)
-            ->find()
-        ;
+            ->find();
 
         $items = [];
         foreach ($entityList as $entity) {
             $touchTransfer = (new TouchTransfer())
-                ->fromArray($entity->toArray())
-            ;
+                ->fromArray($entity->toArray());
 
             $items[$entity->getIdTouch()] = $touchTransfer;
         }

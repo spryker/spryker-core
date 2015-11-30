@@ -122,8 +122,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     public function createPoolCategoryForm($idPoolCategory)
     {
         $poolCategoryQuery = $this->getQueryContainer()
-            ->queryDiscountVoucherPoolCategory()
-        ;
+            ->queryDiscountVoucherPoolCategory();
 
         return $this->getFactory()->createFormPoolCategoryForm($poolCategoryQuery, $idPoolCategory);
     }
@@ -230,12 +229,10 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     public function createPoolForm($idPool=0)
     {
         $poolQuery = $this->getQueryContainer()
-            ->queryDiscountVoucherPool()
-        ;
+            ->queryDiscountVoucherPool();
 
         $discountQuery = $this->getQueryContainer()
-            ->queryDiscount()
-        ;
+            ->queryDiscount();
 
         $store = $this->getProvidedDependency(DiscountDependencyProvider::STORE_CONFIG);
 
@@ -395,8 +392,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     {
         $pool = $this->getQueryContainer()
             ->queryDiscountVoucherPool()
-            ->findOneByIdDiscountVoucherPool($idPool)
-        ;
+            ->findOneByIdDiscountVoucherPool($idPool);
 
         return (new VoucherPoolTransfer())->fromArray($pool->toArray(), true);
     }
@@ -411,8 +407,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
         $discount = $this->getQueryContainer()
             ->queryDiscount()
             ->filterByIdDiscount($idDiscount)
-            ->findOne()
-        ;
+            ->findOne();
 
         return (new DiscountTransfer())->fromArray($discount->toArray(), true);
     }
@@ -427,8 +422,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
         $discount = $this->getQueryContainer()
             ->queryDiscount()
             ->filterByFkDiscountVoucherPool($idDiscountVoucherPool)
-            ->findOne()
-        ;
+            ->findOne();
 
         return (new DiscountTransfer())->fromArray($discount->toArray(), true);
     }
@@ -441,8 +435,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     public function getGeneratedVouchersCountByIdPool($idPool)
     {
         return $this->getQueryForGeneratedVouchersByIdPool($idPool)
-            ->count()
-        ;
+            ->count();
     }
 
     /**
@@ -454,8 +447,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     {
         return $this->getQueryContainer()
             ->queryDiscountVoucher()
-            ->filterByFkDiscountVoucherPool($idPool)
-        ;
+            ->filterByFkDiscountVoucherPool($idPool);
     }
 
     /**

@@ -142,8 +142,7 @@ class PhpdocPipeFixer extends AbstractFixer
                     . ' * @'
                     . $item['tag']
                     . ' '
-                    . $item['hint']
-                ;
+                    . $item['hint'];
 
                 if (!empty($item['var'])) {
                     $line .=
@@ -153,8 +152,7 @@ class PhpdocPipeFixer extends AbstractFixer
                         !empty($item['desc'])
                             ? ' ' . $item['desc'] . "\n"
                             : "\n"
-                        )
-                    ;
+                        );
                 } elseif (!empty($item['desc'])) {
                     $line .= ' ' . $item['desc'] . "\n";
                 } else {

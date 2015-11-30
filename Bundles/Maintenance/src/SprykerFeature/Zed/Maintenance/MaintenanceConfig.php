@@ -20,8 +20,7 @@ class MaintenanceConfig extends AbstractBundleConfig
             . DIRECTORY_SEPARATOR . 'spryker'
             . DIRECTORY_SEPARATOR . 'spryker'
             . DIRECTORY_SEPARATOR . 'Bundles'
-            . DIRECTORY_SEPARATOR
-        ;
+            . DIRECTORY_SEPARATOR;
     }
 
     /**

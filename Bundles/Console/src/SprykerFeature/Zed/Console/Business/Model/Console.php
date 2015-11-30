@@ -177,8 +177,7 @@ class Console extends SymfonyCommand
         $newRelicApi
             ->markAsBackgroundJob()
             ->setNameOfTransaction($command)
-            ->addCustomParameter('host', System::getHostname())
-        ;
+            ->addCustomParameter('host', System::getHostname());
 
         foreach ($arguments as $key => $value) {
             $newRelicApi->addCustomParameter($key, $value);

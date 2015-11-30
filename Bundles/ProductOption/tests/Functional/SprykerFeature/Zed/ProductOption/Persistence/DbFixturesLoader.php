@@ -66,16 +66,14 @@ class DbFixturesLoader
         $abstractProductEntity = new SpyAbstractProduct();
         $abstractProductEntity->setSku('ABC123')
             ->setFkTaxSet($ids['idTaxSet'])
-            ->setAttributes('{}')
-        ;
+            ->setAttributes('{}');
         $abstractProductEntity->save();
         $ids['idAbstractProduct'] = $abstractProductEntity->getIdAbstractProduct();
 
         $productEntity = new SpyProduct();
         $productEntity->setSku('DEF456')
             ->setFkAbstractProduct($ids['idAbstractProduct'])
-            ->setAttributes('{}')
-        ;
+            ->setAttributes('{}');
         $productEntity->save();
         $ids['idConcreteProduct'] = $productEntity->getIdProduct();
 
@@ -115,8 +113,7 @@ class DbFixturesLoader
 
         $productOptionValueEntity = new SpyProductOptionValue();
         $productOptionValueEntity->setFkProductOptionType($ids['idTypeSize'])
-            ->setFkProductOptionValuePrice($ids['idPriceLarge'])
-        ;
+            ->setFkProductOptionValuePrice($ids['idPriceLarge']);
         $productOptionValueEntity->save();
         $ids['idValueLarge'] = $productOptionValueEntity->getIdProductOptionValue();
 
@@ -143,15 +140,13 @@ class DbFixturesLoader
         $productOptionTypeTranslationEntity = new SpyProductOptionTypeTranslation();
         $productOptionTypeTranslationEntity->setName('Size')
             ->setFkLocale($ids['idLocale'])
-            ->setFkProductOptionType($ids['idTypeSize'])
-        ;
+            ->setFkProductOptionType($ids['idTypeSize']);
         $productOptionTypeTranslationEntity->save();
 
         $productOptionTypeTranslationEntity = new SpyProductOptionTypeTranslation();
         $productOptionTypeTranslationEntity->setName('Color')
             ->setFkLocale($ids['idLocale'])
-            ->setFkProductOptionType($ids['idTypeColor'])
-        ;
+            ->setFkProductOptionType($ids['idTypeColor']);
         $productOptionTypeTranslationEntity->save();
 
         $data = [
@@ -169,8 +164,7 @@ class DbFixturesLoader
             $productOptionValueTranslationEntity = new SpyProductOptionValueTranslation();
             $productOptionValueTranslationEntity->setName($name)
                 ->setFkLocale($ids['idLocale'])
-                ->setFkProductOptionValue($fkProductOptionValue)
-            ;
+                ->setFkProductOptionValue($fkProductOptionValue);
             $productOptionValueTranslationEntity->save();
         }
 
@@ -178,8 +172,7 @@ class DbFixturesLoader
         $productOptionTypeUsageEntity->setIsOptional(0)
             ->setSequence(1)
             ->setFkProduct($ids['idConcreteProduct'])
-            ->setFkProductOptionType($ids['idTypeColor'])
-        ;
+            ->setFkProductOptionType($ids['idTypeColor']);
         $productOptionTypeUsageEntity->save();
         $ids['idUsageColor'] = $productOptionTypeUsageEntity->getIdProductOptionTypeUsage();
 
@@ -187,103 +180,90 @@ class DbFixturesLoader
         $productOptionTypeUsageEntity->setIsOptional(0)
             ->setSequence(1)
             ->setFkProduct($ids['idConcreteProduct'])
-            ->setFkProductOptionType($ids['idTypeSize'])
-        ;
+            ->setFkProductOptionType($ids['idTypeSize']);
         $productOptionTypeUsageEntity->save();
         $ids['idUsageSize'] = $productOptionTypeUsageEntity->getIdProductOptionTypeUsage();
 
         $productOptionValueUsageEntity = new SpyProductOptionValueUsage();
         $productOptionValueUsageEntity->setSequence(1)
             ->setFkProductOptionValue($ids['idValueBlue'])
-            ->setFkProductOptionTypeUsage($ids['idUsageColor'])
-        ;
+            ->setFkProductOptionTypeUsage($ids['idUsageColor']);
         $productOptionValueUsageEntity->save();
         $ids['idUsageBlue'] = $productOptionValueUsageEntity->getIdProductOptionValueUsage();
 
         $productOptionValueUsageEntity = new SpyProductOptionValueUsage();
         $productOptionValueUsageEntity->setSequence(2)
             ->setFkProductOptionValue($ids['idValueRed'])
-            ->setFkProductOptionTypeUsage($ids['idUsageColor'])
-        ;
+            ->setFkProductOptionTypeUsage($ids['idUsageColor']);
         $productOptionValueUsageEntity->save();
         $ids['idUsageRed'] = $productOptionValueUsageEntity->getIdProductOptionValueUsage();
 
         $productOptionValueUsageEntity = new SpyProductOptionValueUsage();
         $productOptionValueUsageEntity->setSequence(3)
             ->setFkProductOptionValue($ids['idValueYellow'])
-            ->setFkProductOptionTypeUsage($ids['idUsageColor'])
-        ;
+            ->setFkProductOptionTypeUsage($ids['idUsageColor']);
         $productOptionValueUsageEntity->save();
         $ids['idUsageYellow'] = $productOptionValueUsageEntity->getIdProductOptionValueUsage();
 
         $productOptionValueUsageEntity = new SpyProductOptionValueUsage();
         $productOptionValueUsageEntity->setSequence(4)
             ->setFkProductOptionValue($ids['idValueGreen'])
-            ->setFkProductOptionTypeUsage($ids['idUsageColor'])
-        ;
+            ->setFkProductOptionTypeUsage($ids['idUsageColor']);
         $productOptionValueUsageEntity->save();
         $ids['idUsageGreen'] = $productOptionValueUsageEntity->getIdProductOptionValueUsage();
 
         $productOptionValueUsageEntity = new SpyProductOptionValueUsage();
         $productOptionValueUsageEntity->setSequence(1)
             ->setFkProductOptionValue($ids['idValueLarge'])
-            ->setFkProductOptionTypeUsage($ids['idUsageSize'])
-        ;
+            ->setFkProductOptionTypeUsage($ids['idUsageSize']);
         $productOptionValueUsageEntity->save();
         $ids['idUsageLarge'] = $productOptionValueUsageEntity->getIdProductOptionValueUsage();
 
         $productOptionValueUsageEntity = new SpyProductOptionValueUsage();
         $productOptionValueUsageEntity->setSequence(2)
             ->setFkProductOptionValue($ids['idValueMedium'])
-            ->setFkProductOptionTypeUsage($ids['idUsageSize'])
-        ;
+            ->setFkProductOptionTypeUsage($ids['idUsageSize']);
         $productOptionValueUsageEntity->save();
         $ids['idUsageMedium'] = $productOptionValueUsageEntity->getIdProductOptionValueUsage();
 
         $productOptionValueUsageEntity = new SpyProductOptionValueUsage();
         $productOptionValueUsageEntity->setSequence(3)
             ->setFkProductOptionValue($ids['idValueSmall'])
-            ->setFkProductOptionTypeUsage($ids['idUsageSize'])
-        ;
+            ->setFkProductOptionTypeUsage($ids['idUsageSize']);
         $productOptionValueUsageEntity->save();
         $ids['idUsageSmall'] = $productOptionValueUsageEntity->getIdProductOptionValueUsage();
 
         $productOptionValueUsageEntity = new SpyProductOptionValueUsage();
         $productOptionValueUsageEntity->setSequence(4)
             ->setFkProductOptionValue($ids['idValueXSmall'])
-            ->setFkProductOptionTypeUsage($ids['idUsageSize'])
-        ;
+            ->setFkProductOptionTypeUsage($ids['idUsageSize']);
         $productOptionValueUsageEntity->save();
         $ids['idUsageXSmall'] = $productOptionValueUsageEntity->getIdProductOptionValueUsage();
 
         $productOptionTypeUsageExclusionEntity = new SpyProductOptionTypeUsageExclusion();
         $productOptionTypeUsageExclusionEntity->setFkProductOptionTypeUsageA($ids['idUsageColor'])
-            ->setFkProductOptionTypeUsageB($ids['idUsageSize'])
-        ;
+            ->setFkProductOptionTypeUsageB($ids['idUsageSize']);
         $productOptionTypeUsageExclusionEntity->save();
 
         $productOptionValueUsageConstraintEntity = new SpyProductOptionValueUsageConstraint();
         $productOptionValueUsageConstraintEntity
             ->setFkProductOptionValueUsageA($ids['idUsageBlue'])
             ->setFkProductOptionValueUsageB($ids['idUsageSmall'])
-            ->setOperator('NOT')
-        ;
+            ->setOperator('NOT');
         $productOptionValueUsageConstraintEntity->save();
 
         $productOptionValueUsageConstraintEntity = new SpyProductOptionValueUsageConstraint();
         $productOptionValueUsageConstraintEntity
             ->setFkProductOptionValueUsageA($ids['idUsageRed'])
             ->setFkProductOptionValueUsageB($ids['idUsageMedium'])
-            ->setOperator('ALWAYS')
-        ;
+            ->setOperator('ALWAYS');
         $productOptionValueUsageConstraintEntity->save();
 
         $productOptionValueUsageConstraintEntity = new SpyProductOptionValueUsageConstraint();
         $productOptionValueUsageConstraintEntity
             ->setFkProductOptionValueUsageA($ids['idUsageGreen'])
             ->setFkProductOptionValueUsageB($ids['idUsageSmall'])
-            ->setOperator('ALLOW')
-        ;
+            ->setOperator('ALLOW');
 
         $productOptionValueUsageConstraintEntity->save();
 
@@ -291,23 +271,20 @@ class DbFixturesLoader
         $productOptionValueUsageConstraintEntity
             ->setFkProductOptionValueUsageA($ids['idUsageGreen'])
             ->setFkProductOptionValueUsageB($ids['idUsageLarge'])
-            ->setOperator('ALLOW')
-        ;
+            ->setOperator('ALLOW');
         $productOptionValueUsageConstraintEntity->save();
 
         $productOptionConfigurationPresetEntity = new SpyProductOptionConfigurationPreset();
         $productOptionConfigurationPresetEntity->setIsDefault(true)
             ->setSequence(1)
-            ->setFkProduct($ids['idConcreteProduct'])
-        ;
+            ->setFkProduct($ids['idConcreteProduct']);
         $productOptionConfigurationPresetEntity->save();
         $ids['idConfigPresetA'] = $productOptionConfigurationPresetEntity->getIdProductOptionConfigurationPreset();
 
         $productOptionConfigurationPresetEntity = new SpyProductOptionConfigurationPreset();
         $productOptionConfigurationPresetEntity->setIsDefault(false)
             ->setSequence(2)
-            ->setFkProduct($ids['idConcreteProduct'])
-        ;
+            ->setFkProduct($ids['idConcreteProduct']);
         $productOptionConfigurationPresetEntity->save();
         $ids['idConfigPresetB'] = $productOptionConfigurationPresetEntity->getIdProductOptionConfigurationPreset();
 
@@ -322,8 +299,7 @@ class DbFixturesLoader
             $productOptionConfigurationPresetValueEntity = new SpyProductOptionConfigurationPresetValue();
             $productOptionConfigurationPresetValueEntity
                 ->setFkProductOptionConfigurationPreset($fkProductOptionConfigurationPreset)
-                ->setFkProductOptionValueUsage($fkProductOptionValueUsage)
-            ;
+                ->setFkProductOptionValueUsage($fkProductOptionValueUsage);
             $productOptionConfigurationPresetValueEntity->save();
         }
 

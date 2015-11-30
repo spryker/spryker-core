@@ -38,8 +38,7 @@ class DiscountSaverTest extends AbstractUnitTest
     {
         $discountSaver = $this->getDiscountSaverMock(['persistSalesDiscount']);
         $discountSaver->expects($this->once())
-            ->method('persistSalesDiscount')
-        ;
+            ->method('persistSalesDiscount');
 
         $orderTransfer = new OrderTransfer();
 
@@ -62,11 +61,9 @@ class DiscountSaverTest extends AbstractUnitTest
     {
         $discountSaver = $this->getDiscountSaverMock(['persistSalesDiscount', 'saveUsedCodes']);
         $discountSaver->expects($this->once())
-            ->method('persistSalesDiscount')
-        ;
+            ->method('persistSalesDiscount');
         $discountSaver->expects($this->never())
-            ->method('saveUsedCodes')
-        ;
+            ->method('saveUsedCodes');
 
         $orderTransfer = new OrderTransfer();
 
@@ -87,15 +84,12 @@ class DiscountSaverTest extends AbstractUnitTest
     {
         $discountSaver = $this->getDiscountSaverMock(['persistSalesDiscount', 'persistSalesDiscountCode', 'getDiscountVoucherEntityByCode']);
         $discountSaver->expects($this->once())
-            ->method('persistSalesDiscount')
-        ;
+            ->method('persistSalesDiscount');
         $discountSaver->expects($this->exactly(2))
-            ->method('persistSalesDiscountCode')
-        ;
+            ->method('persistSalesDiscountCode');
         $discountSaver->expects($this->exactly(2))
             ->method('getDiscountVoucherEntityByCode')
-            ->will($this->returnCallback([$this, 'getDiscountVoucherEntityByCode']))
-        ;
+            ->will($this->returnCallback([$this, 'getDiscountVoucherEntityByCode']));
 
         $discountTransfer = new DiscountTransfer();
         $discountTransfer->setUsedCodes([self::USED_CODE_1, self::USED_CODE_2]);
@@ -116,15 +110,12 @@ class DiscountSaverTest extends AbstractUnitTest
     {
         $discountSaver = $this->getDiscountSaverMock(['persistSalesDiscount', 'persistSalesDiscountCode', 'getDiscountVoucherEntityByCode']);
         $discountSaver->expects($this->once())
-            ->method('persistSalesDiscount')
-        ;
+            ->method('persistSalesDiscount');
         $discountSaver->expects($this->never())
-            ->method('persistSalesDiscountCode')
-        ;
+            ->method('persistSalesDiscountCode');
         $discountSaver->expects($this->once())
             ->method('getDiscountVoucherEntityByCode')
-            ->will($this->returnValue(false))
-        ;
+            ->will($this->returnValue(false));
 
         $discountTransfer = new DiscountTransfer();
         $discountTransfer->setUsedCodes([self::USED_CODE_1]);

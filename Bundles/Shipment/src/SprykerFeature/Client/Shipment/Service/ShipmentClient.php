@@ -25,8 +25,7 @@ class ShipmentClient extends AbstractClient implements ShipmentClientInterface
     {
         return $this->getDependencyContainer()
             ->createZedStub()
-            ->getAvailableMethods($shipmentMethodAvailability)
-            ;
+            ->getAvailableMethods($shipmentMethodAvailability);
     }
 
 }

@@ -29,8 +29,7 @@ class NewsletterFacade extends AbstractFacade
 
         $subscriptionResponse = $this->getDependencyContainer()
             ->createSubscriptionRequestHandler()
-            ->processNewsletterSubscriptions($newsletterSubscriptionRequest, $optInHandler)
-        ;
+            ->processNewsletterSubscriptions($newsletterSubscriptionRequest, $optInHandler);
 
         return $subscriptionResponse;
     }
@@ -46,8 +45,7 @@ class NewsletterFacade extends AbstractFacade
 
         $subscriptionResponse = $this->getDependencyContainer()
             ->createSubscriptionRequestHandler()
-            ->processNewsletterSubscriptions($newsletterSubscriptionRequest, $optInHandler)
-        ;
+            ->processNewsletterSubscriptions($newsletterSubscriptionRequest, $optInHandler);
 
         return $subscriptionResponse;
     }
@@ -61,8 +59,7 @@ class NewsletterFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createDoubleOptInHandler()
-            ->approveSubscriberByKey($newsletterSubscriber)
-        ;
+            ->approveSubscriberByKey($newsletterSubscriber);
     }
 
     /**
@@ -74,8 +71,7 @@ class NewsletterFacade extends AbstractFacade
     {
         $subscriptionResponse = $this->getDependencyContainer()
             ->createSubscriptionRequestHandler()
-            ->checkNewsletterSubscriptions($newsletterUnsubscriptionRequest)
-        ;
+            ->checkNewsletterSubscriptions($newsletterUnsubscriptionRequest);
 
         return $subscriptionResponse;
     }
@@ -89,8 +85,7 @@ class NewsletterFacade extends AbstractFacade
     {
         $subscriptionResponse = $this->getDependencyContainer()
             ->createSubscriptionRequestHandler()
-            ->processNewsletterUnsubscriptions($newsletterUnsubscriptionRequest)
-        ;
+            ->processNewsletterUnsubscriptions($newsletterUnsubscriptionRequest);
 
         return $subscriptionResponse;
     }
@@ -104,8 +99,7 @@ class NewsletterFacade extends AbstractFacade
     {
         $this->getDependencyContainer()
             ->createSubscriptionRequestHandler()
-            ->assignCustomerToExistingSubscriber($newsletterSubscriber)
-        ;
+            ->assignCustomerToExistingSubscriber($newsletterSubscriber);
     }
 
 }

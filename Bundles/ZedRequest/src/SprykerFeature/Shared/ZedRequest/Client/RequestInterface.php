@@ -19,7 +19,7 @@ interface RequestInterface
     /**
      * @param string $host
      *
-     * @return $this
+     * @return self
      */
     public function setHost($host);
 
@@ -34,7 +34,7 @@ interface RequestInterface
      * @param string $name
      * @param TransferInterface $transferObject
      *
-     * @return $this
+     * @return self
      */
     public function addMetaTransfer($name, TransferInterface $transferObject);
 
@@ -46,7 +46,7 @@ interface RequestInterface
     /**
      * @param string $password
      *
-     * @return $this
+     * @return self
      */
     public function setPassword($password);
 
@@ -58,7 +58,7 @@ interface RequestInterface
     /**
      * @param string $sessionId
      *
-     * @return $this
+     * @return self
      */
     public function setSessionId($sessionId);
 
@@ -70,7 +70,7 @@ interface RequestInterface
     /**
      * @param string $time
      *
-     * @return $this
+     * @return self
      */
     public function setTime($time);
 
@@ -82,7 +82,7 @@ interface RequestInterface
     /**
      * @param TransferInterface $transferObject
      *
-     * @return $this
+     * @return self
      */
     public function setTransfer(TransferInterface $transferObject);
 
@@ -94,7 +94,7 @@ interface RequestInterface
     /**
      * @param string $username
      *
-     * @return $this
+     * @return self
      */
     public function setUsername($username);
 

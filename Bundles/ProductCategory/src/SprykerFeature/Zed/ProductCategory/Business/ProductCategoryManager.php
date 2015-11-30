@@ -110,8 +110,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     public function hasProductCategoryMapping($sku, $categoryName, LocaleTransfer $locale)
     {
         $mappingQuery = $this->productCategoryQueryContainer
-            ->queryLocalizedProductCategoryMappingBySkuAndCategoryName($sku, $categoryName, $locale)
-        ;
+            ->queryLocalizedProductCategoryMappingBySkuAndCategoryName($sku, $categoryName, $locale);
 
         return $mappingQuery->count() > 0;
     }
@@ -138,8 +137,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         $mappingEntity = new SpyProductCategory();
         $mappingEntity
             ->setFkAbstractProduct($idAbstractProduct)
-            ->setFkCategory($idCategory)
-        ;
+            ->setFkCategory($idCategory);
 
         $mappingEntity->save();
 
@@ -180,8 +178,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
         return $this->productCategoryQueryContainer
             ->queryProductsByCategoryId($idCategory, $locale)
             ->orderByFkAbstractProduct()
-            ->find()
-        ;
+            ->find();
     }
 
     /**
@@ -193,8 +190,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     {
         return $this->productCategoryQueryContainer
             ->queryLocalizedProductCategoryMappingByIdProduct($abstractProductTransfer->getIdAbstractProduct())
-            ->find()
-        ;
+            ->find();
     }
 
     /**
@@ -206,8 +202,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     public function getProductCategoryMappingById($idCategory, $idAbstractProduct)
     {
         return $this->productCategoryQueryContainer
-            ->queryProductCategoryMappingByIds($idCategory, $idAbstractProduct)
-        ;
+            ->queryProductCategoryMappingByIds($idCategory, $idAbstractProduct);
     }
 
     /**
@@ -329,8 +324,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
         $children = $this->categoryQueryContainer
             ->queryFirstLevelChildren($sourceNodeTransfer->getIdCategoryNode())
-            ->find()
-        ;
+            ->find();
 
         foreach ($children as $child) {
             $childTransfer = (new NodeTransfer())->fromArray($child->toArray());
@@ -355,8 +349,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     {
         $extraParents = $this->categoryQueryContainer
             ->queryNotMainNodesByCategoryId($idCategory)
-            ->find()
-        ;
+            ->find();
 
         foreach ($extraParents as $parent) {
             $this->categoryFacade->deleteNode($parent->getIdCategoryNode(), $localeTransfer);
@@ -436,16 +429,14 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
 
         $categoryNodes = $this->categoryQueryContainer
             ->queryAllNodesByCategoryId($idCategory)
-            ->find()
-        ;
+            ->find();
 
         foreach ($categoryNodes as $node) {
             $this->cmsFacade->updateBlocksAssignedToDeletedCategoryNode($node->getIdCategoryNode()); //TODO: https://spryker.atlassian.net/browse/CD-540
 
             $children = $this->categoryQueryContainer
                 ->queryFirstLevelChildren($node->getIdCategoryNode())
-                ->find()
-            ;
+                ->find();
 
             foreach ($children as $child) {
                 $this->deleteCategoryRecursive($child->getFkCategory(), $localeTransfer);
@@ -474,8 +465,7 @@ class ProductCategoryManager implements ProductCategoryManagerInterface
     {
         $assignedProducts = $this->productCategoryQueryContainer
             ->queryProductCategoryMappingsByCategoryId($idCategory)
-            ->find()
-        ;
+            ->find();
 
         $productIdsToUnAssign = [];
         foreach ($assignedProducts as $mapping) {

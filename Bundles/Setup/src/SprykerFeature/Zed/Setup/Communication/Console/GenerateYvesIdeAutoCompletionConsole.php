@@ -54,8 +54,7 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
                 [
                     GeneratedInterfaceMethodTagBuilder::OPTION_METHOD_STRING_PATTERN => ' * @method \\Generated\Yves\Ide\{{bundle}} {{methodName}}()',
                 ]
-            ))
-        ;
+            ));
 
         $generator->create();
 
@@ -90,8 +89,7 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
         $generator = new IdeBundleAutoCompletionGenerator($options);
         $generator
             ->addMethodTagBuilder(new YvesPluginMethodTagBuilder())
-            ->addMethodTagBuilder(new ClientMethodTagBuilder())
-        ;
+            ->addMethodTagBuilder(new ClientMethodTagBuilder());
 
         $generator->create();
 

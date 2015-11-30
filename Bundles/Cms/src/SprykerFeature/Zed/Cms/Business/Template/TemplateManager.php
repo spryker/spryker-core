@@ -75,8 +75,7 @@ class TemplateManager implements TemplateManagerInterface
         $template
             ->setTemplateName($name)
             ->setTemplatePath($path)
-            ->save()
-        ;
+            ->save();
 
         return $this->convertTemplateEntityToTransfer($template);
     }
@@ -265,8 +264,7 @@ class TemplateManager implements TemplateManagerInterface
 
         $this->finder->in($templateFolder)
             ->name('*.twig')
-            ->depth('0')
-        ;
+            ->depth('0');
 
         foreach ($this->finder->files() as $file) {
             $fullFileName = $file->getRelativePathname();

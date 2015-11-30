@@ -38,8 +38,7 @@ class GlossaryDependencyContainer extends AbstractCommunicationDependencyContain
     {
         return $this->getLocator()
             ->glossary()
-            ->facade()
-        ;
+            ->facade();
     }
 
     /**
@@ -48,8 +47,7 @@ class GlossaryDependencyContainer extends AbstractCommunicationDependencyContain
     public function createEnabledLocales()
     {
         return $this->getLocaleFacade()
-            ->getAvailableLocales()
-        ;
+            ->getAvailableLocales();
     }
 
     /**
@@ -59,8 +57,7 @@ class GlossaryDependencyContainer extends AbstractCommunicationDependencyContain
     {
         return $this->getLocator()
             ->glossary()
-            ->queryContainer()
-        ;
+            ->queryContainer();
     }
 
     /**
@@ -71,16 +68,13 @@ class GlossaryDependencyContainer extends AbstractCommunicationDependencyContain
     public function createKeyForm($type, $idGlossaryKey)
     {
         $keyQuery = $this->getQueryContainer()
-            ->queryKeys()
-        ;
+            ->queryKeys();
 
         $subQuery = $this->getQueryContainer()
-            ->queryKeys()
-        ;
+            ->queryKeys();
 
         return $this->getFactory()
-            ->createFormKeyForm($keyQuery, $subQuery, $type, $idGlossaryKey)
-        ;
+            ->createFormKeyForm($keyQuery, $subQuery, $type, $idGlossaryKey);
     }
 
     /**
@@ -91,12 +85,10 @@ class GlossaryDependencyContainer extends AbstractCommunicationDependencyContain
     public function createKeyTable()
     {
         $keyQuery = $this->getQueryContainer()
-            ->queryKeys()
-        ;
+            ->queryKeys();
 
         return $this->getFactory()
-            ->createTableKeyTable($keyQuery)
-        ;
+            ->createTableKeyTable($keyQuery);
     }
 
     /**
@@ -107,16 +99,13 @@ class GlossaryDependencyContainer extends AbstractCommunicationDependencyContain
     public function createTranslationTable(array $locales)
     {
         $translationQuery = $this->getQueryContainer()
-            ->queryTranslations()
-        ;
+            ->queryTranslations();
 
         $subQuery = $this->getQueryContainer()
-            ->queryTranslations()
-        ;
+            ->queryTranslations();
 
         return $this->getFactory()
-            ->createTableTranslationTable($translationQuery, $subQuery, $locales)
-        ;
+            ->createTableTranslationTable($translationQuery, $subQuery, $locales);
     }
 
     /**
@@ -125,16 +114,13 @@ class GlossaryDependencyContainer extends AbstractCommunicationDependencyContain
     public function createTranslationForm(array $locales, $type)
     {
         $translationQuery = $this->getQueryContainer()
-            ->queryTranslations()
-        ;
+            ->queryTranslations();
 
         $glossaryKeyQuery = $this->getQueryContainer()
-            ->queryKeys()
-        ;
+            ->queryKeys();
 
         return $this->getFactory()
-            ->createFormTranslationForm($translationQuery, $glossaryKeyQuery, $locales, $type)
-        ;
+            ->createFormTranslationForm($translationQuery, $glossaryKeyQuery, $locales, $type);
     }
 
 }

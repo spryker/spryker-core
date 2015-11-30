@@ -37,8 +37,7 @@ class GridController extends AbstractController
     public function commentsAction(Request $request)
     {
         $grid = $this->getDependencyContainer()
-            ->getCommentsGridByOrderId($request)
-        ;
+            ->getCommentsGridByOrderId($request);
 
         $gridData = $grid->renderData();
 

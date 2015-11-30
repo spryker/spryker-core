@@ -24,8 +24,7 @@ class CustomerMailConnectorFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createRegistrationTokenSender()
-            ->send($email, $token)
-        ;
+            ->send($email, $token);
     }
 
     /**
@@ -38,8 +37,7 @@ class CustomerMailConnectorFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createPasswordRestoreTokenSender()
-            ->send($email, $token)
-        ;
+            ->send($email, $token);
     }
 
     /**
@@ -51,8 +49,7 @@ class CustomerMailConnectorFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createPasswordRestoredConfirmationSender()
-            ->send($email)
-        ;
+            ->send($email);
     }
 
 }

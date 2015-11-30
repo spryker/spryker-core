@@ -46,8 +46,7 @@ class NewRelicServiceProvider extends AbstractPlugin implements ServiceProviderI
             $this->getDependencyContainer()->createNewRelicApi()
                 ->setNameOfTransaction($transactionName)
                 ->addCustomParameter('request_uri', $requestUri)
-                ->addCustomParameter('host', $host)
-            ;
+                ->addCustomParameter('host', $host);
         });
     }
 

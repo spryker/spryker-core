@@ -39,8 +39,7 @@ class BuildSqlConsole extends Console
         $config = Config::get(SystemConfig::PROPEL);
         $command = 'vendor/bin/propel sql:build --config-dir '
             . $config['paths']['phpConfDir']
-            . ' --schema-dir ' . $config['paths']['schemaDir']
-        ;
+            . ' --schema-dir ' . $config['paths']['schemaDir'];
 
         $process = new Process($command, APPLICATION_ROOT_DIR);
 

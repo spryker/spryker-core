@@ -46,8 +46,7 @@ class CustomerForm extends AbstractForm
         $customerEntity = $this
             ->customerQueryContainer
             ->queryCustomerById($idCustomer)
-            ->findOne()
-        ;
+            ->findOne();
 
         return $customerEntity->toArray();
     }

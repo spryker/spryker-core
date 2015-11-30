@@ -32,8 +32,7 @@ class GlossaryQueryExpanderPlugin extends AbstractPlugin implements
     public function expandQuery(ModelCriteria $expandableQuery)
     {
         return $this->getFacade()
-            ->expandTranslationQueryToDistribute($expandableQuery)
-        ;
+            ->expandTranslationQueryToDistribute($expandableQuery);
     }
 
     /**

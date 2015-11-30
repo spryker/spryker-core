@@ -111,8 +111,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             ->where(
                 SpyCategoryNodeTableMap::COL_FK_CATEGORY . ' = ?',
                 $idCategory
-            )
-        ;
+            );
     }
 
     /**

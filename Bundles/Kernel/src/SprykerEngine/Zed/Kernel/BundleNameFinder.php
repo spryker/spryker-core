@@ -43,14 +43,12 @@ class BundleNameFinder extends AbstractBundle
         $vendorBundlePathPattern = rtrim($this->options[self::OPTION_KEY_VENDOR_PATH_PATTERN], DIRECTORY_SEPARATOR)
             . DIRECTORY_SEPARATOR
             . $this->options[self::OPTION_KEY_BUNDLE_PATH_PATTERN]
-            . $this->options[self::OPTION_KEY_APPLICATION]
-        ;
+            . $this->options[self::OPTION_KEY_APPLICATION];
 
         $projectBundlePathPattern = rtrim($this->options[self::OPTION_KEY_PROJECT_PATH_PATTERN])
             . DIRECTORY_SEPARATOR
             . $this->options[self::OPTION_KEY_BUNDLE_PROJECT_PATH_PATTERN]
-            . $this->options[self::OPTION_KEY_APPLICATION]
-        ;
+            . $this->options[self::OPTION_KEY_APPLICATION];
 
         $dirs = [
             $projectBundlePathPattern,

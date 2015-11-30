@@ -100,8 +100,7 @@ class CustomerFormType extends AbstractFormType
                     'label' => 'Shipping Address',
                     'placeholder' => 'Select one',
                     'choices' => $this->getAddressOptions(),
-                ])
-            ;
+                ]);
         }
 
         $builder->add(self::FIELD_SEND_PASSWORD_TOKEN, 'checkbox', [

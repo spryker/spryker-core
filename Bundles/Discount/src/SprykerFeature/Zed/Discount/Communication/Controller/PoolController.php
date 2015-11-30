@@ -197,8 +197,7 @@ class PoolController extends AbstractController
 
         $categories = $this->getQueryContainer()
             ->queryDiscountVoucherPoolCategory()
-            ->findByName('%' . $term . '%')
-        ;
+            ->findByName('%' . $term . '%');
 
         $result = [];
         if (count($categories) > 0) {

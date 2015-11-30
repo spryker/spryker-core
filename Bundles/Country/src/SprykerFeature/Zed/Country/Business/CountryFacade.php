@@ -42,8 +42,7 @@ class CountryFacade extends AbstractFacade
     {
         $countries = $this->getDependencyContainer()
             ->createCountryManager()
-            ->getCountryCollection()
-        ;
+            ->getCountryCollection();
 
         return $countries;
     }
@@ -57,8 +56,7 @@ class CountryFacade extends AbstractFacade
     {
         $countryTransfer = $this->getDependencyContainer()
             ->createCountryManager()
-            ->getPreferedCountryByName($countryName)
-        ;
+            ->getPreferedCountryByName($countryName);
 
         return $countryTransfer;
     }

@@ -84,39 +84,34 @@ class TaxChangeTouchPluginTest extends Test
         $rate1 = new SpyTaxRate();
         $rate1->setName('Rate1')
             ->setRate(10)
-            ->save()
-        ;
+            ->save();
         $this->taxRateIds[] = $rate1->getIdTaxRate();
 
         $rate2 = new SpyTaxRate();
         $rate2->setName('Rate2')
             ->setRate(5)
-            ->save()
-        ;
+            ->save();
         $this->taxRateIds[] = $rate2->getIdTaxRate();
 
         $taxSet = new SpyTaxSet();
         $taxSet->setName('Set1')
             ->addSpyTaxRate($rate1)
             ->addSpyTaxRate($rate2)
-            ->save()
-        ;
+            ->save();
         $this->taxSetId = $taxSet->getIdTaxSet();
 
         $product1 = new SpyAbstractProduct();
         $product1->setSku('Product1')
             ->setSpyTaxSet($taxSet)
             ->setAttributes('{}')
-            ->save()
-        ;
+            ->save();
         $this->abstractProductIds[] = $product1->getIdAbstractProduct();
 
         $product2 = new SpyAbstractProduct();
         $product2->setSku('Product2')
             ->setSpyTaxSet($taxSet)
             ->setAttributes('{}')
-            ->save()
-        ;
+            ->save();
         $this->abstractProductIds[] = $product2->getIdAbstractProduct();
     }
 

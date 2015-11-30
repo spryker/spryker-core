@@ -51,8 +51,7 @@ class GenerateZedIdeAutoCompletionConsole extends Console
 
         $generator = new IdeAutoCompletionGenerator($options, $this);
         $generator
-            ->addMethodTagBuilder(new GeneratedInterfaceMethodTagBuilder())
-        ;
+            ->addMethodTagBuilder(new GeneratedInterfaceMethodTagBuilder());
 
         $generator->create('');
 
@@ -83,8 +82,7 @@ class GenerateZedIdeAutoCompletionConsole extends Console
             ->addMethodTagBuilder(new QueryContainerMethodTagBuilder())
             ->addMethodTagBuilder(new ConsoleMethodTagBuilder())
             ->addMethodTagBuilder(new ClientMethodTagBuilder())
-            ->addMethodTagBuilder(new PluginMethodTagBuilder([PluginMethodTagBuilder::OPTION_KEY_APPLICATION => 'Zed']))
-        ;
+            ->addMethodTagBuilder(new PluginMethodTagBuilder([PluginMethodTagBuilder::OPTION_KEY_APPLICATION => 'Zed']));
 
         $generator->create('');
 
@@ -110,8 +108,7 @@ class GenerateZedIdeAutoCompletionConsole extends Console
         $generator = new IdeFactoryAutoCompletionGenerator($options);
         $generator
             ->addMethodTagBuilder($businessMethodTagGenerator)
-            ->addMethodTagBuilder($communicationMethodTagGenerator)
-        ;
+            ->addMethodTagBuilder($communicationMethodTagGenerator);
 
         $generator->create('');
 

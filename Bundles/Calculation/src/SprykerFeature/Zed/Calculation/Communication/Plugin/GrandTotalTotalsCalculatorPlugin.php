@@ -29,8 +29,7 @@ class GrandTotalTotalsCalculatorPlugin extends AbstractPlugin implements TotalsC
         $calculableItems
     ) {
         $this->getFacade()
-            ->recalculateGrandTotalTotals($totalsTransfer, $calculableContainer, $calculableItems)
-        ;
+            ->recalculateGrandTotalTotals($totalsTransfer, $calculableContainer, $calculableItems);
     }
 
 }

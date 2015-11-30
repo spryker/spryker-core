@@ -58,8 +58,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     {
         return $this->queryContainer
             ->queryClosureTableByNodeId($nodeId)
-            ->delete()
-        ;
+            ->delete();
     }
 
     /**
@@ -73,8 +72,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
     {
         $obsoleteEntities = $this->queryContainer
             ->queryClosureTableParentEntries($categoryNode->getIdCategoryNode())
-            ->find()
-        ;
+            ->find();
 
         foreach ($obsoleteEntities as $obsoleteEntity) {
             $obsoleteEntity->delete();
@@ -82,13 +80,11 @@ class ClosureTableWriter implements ClosureTableWriterInterface
 
         $nodeEntities = $this->queryContainer
             ->queryClosureTableFilterByIdNode($categoryNode->getIdCategoryNode())
-            ->find()
-        ;
+            ->find();
 
         $parentEntities = $this->queryContainer
             ->queryClosureTableFilterByIdNodeDescendant($categoryNode->getFkParentCategoryNode())
-            ->find()
-        ;
+            ->find();
 
         foreach ($nodeEntities as $nodeEntity) {
             foreach ($parentEntities as $parentEntity) {
@@ -167,8 +163,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
         $query = SpyCategoryNodeQuery::create();
         $query
             ->orderByFkParentCategoryNode()
-            ->orderByNodeOrder('DESC')
-        ;
+            ->orderByNodeOrder('DESC');
 
         $categoryNodes = $query->find();
 
@@ -211,8 +206,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
             ->orderByNodeOrder('DESC')
             ->where(SpyCategoryNodeTableMap::COL_FK_CATEGORY . ' = ' . SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE)
             ->_and()
-            ->where(SpyCategoryNodeTableMap::COL_IS_ROOT . ' = false')
-        ;
+            ->where(SpyCategoryNodeTableMap::COL_IS_ROOT . ' = false');
 
         $badNodes = $query->find();
         foreach ($badNodes as $entityToMoveToRoot) {
@@ -238,8 +232,7 @@ class ClosureTableWriter implements ClosureTableWriterInterface
                 ->orderByNodeOrder('DESC')
                 ->where(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE . ' = ?', $entityToMoveToRoot->getIdCategoryNode())
                 ->_and()
-                ->where(SpyCategoryNodeTableMap::COL_IS_ROOT . ' = false')
-            ;
+                ->where(SpyCategoryNodeTableMap::COL_IS_ROOT . ' = false');
 
             $badChildrenToRemove = $query->find();
             foreach ($badChildrenToRemove as $badChild) {

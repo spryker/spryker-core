@@ -51,8 +51,7 @@ class ItemTypeWriter implements ItemTypeWriterInterface
     {
         $itemType = $this->queryContainer
             ->queryTypeByKey($typeKey)
-            ->findOne()
-        ;
+            ->findOne();
 
         if (empty($itemType)) {
             throw new ItemTypeDoesNotExistException(

@@ -82,8 +82,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
 
             ->useLocaleQuery()
             ->filterByLocaleName($localeName)
-            ->endUse()
-        ;
+            ->endUse();
 
         return $query;
     }
@@ -107,8 +106,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
         $query = $this->queryTranslations();
         $query
             ->filterByFkGlossaryKey($idKey)
-            ->filterByFkLocale($idLocale)
-        ;
+            ->filterByFkLocale($idLocale);
 
         return $query;
     }
@@ -137,8 +135,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
         $query
             ->useLocaleQuery()
             ->filterByLocaleName($localeName)
-            ->endUse()
-        ;
+            ->endUse();
 
         return $query;
     }
@@ -166,8 +163,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     public function queryTranslationsByKeyId($fkGlossaryKeyId)
     {
         $query = $this->queryTranslations()
-            ->filterByFkGlossaryKey($fkGlossaryKeyId)
-        ;
+            ->filterByFkGlossaryKey($fkGlossaryKeyId);
 
         return $query;
     }
@@ -183,8 +179,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
         $query
             ->useGlossaryKeyQuery()
             ->filterByKey($keyName)
-            ->endUse()
-        ;
+            ->endUse();
 
         return $query;
     }
@@ -203,8 +198,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::TRANSLATION)
             ->withColumn(SpyGlossaryTranslationTableMap::COL_IS_ACTIVE, self::TRANSLATION_IS_ACTIVE)
             ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, self::GLOSSARY_KEY)
-            ->withColumn(SpyGlossaryKeyTableMap::COL_IS_ACTIVE, self::GLOSSARY_KEY_IS_ACTIVE)
-        ;
+            ->withColumn(SpyGlossaryKeyTableMap::COL_IS_ACTIVE, self::GLOSSARY_KEY_IS_ACTIVE);
 
         return $query;
     }
@@ -232,8 +226,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
                 ->addJoinCondition(
                     'translation_' . $idLocale . 'join',
                     'translation_' . $idLocale . '_.fk_locale = ' . $idLocale
-                )
-            ;
+                );
 
             $translationQuery->withColumn(
                 'translation_' . $idLocale . '_.value'
@@ -253,8 +246,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
     {
         $keyQuery = $this->queryAllPossibleTranslations($relevantLocales);
         $keyQuery
-            ->where(SpyGlossaryTranslationTableMap::COL_VALUE . '' . ModelCriteria::ISNULL)
-        ;
+            ->where(SpyGlossaryTranslationTableMap::COL_VALUE . '' . ModelCriteria::ISNULL);
 
         return $keyQuery;
     }
@@ -303,8 +295,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
             ->setTableMap(new TableMap())
             ->setLeftTableName('spy_glossary_key')
             ->setRightTableName('spy_locale')
-            ->addCondition('id_glossary_key', 'id_locale', ModelCriteria::NOT_EQUAL)
-        ;
+            ->addCondition('id_glossary_key', 'id_locale', ModelCriteria::NOT_EQUAL);
 
         $translationLeftJoin = new ModelJoin();
         $translationLeftJoin->setJoinType(Criteria::LEFT_JOIN);
@@ -312,15 +303,13 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
             ->setTableMap(new TableMap())
             ->setLeftTableName('spy_glossary_key')
             ->setRightTableName('spy_glossary_translation')
-            ->addCondition('id_glossary_key', 'fk_glossary_key')
-        ;
+            ->addCondition('id_glossary_key', 'fk_glossary_key');
 
         return $keyQuery
             ->addJoinObject($keyLocaleCrossJoin, 'spy_locale')
             ->addJoinObject($translationLeftJoin, 'spy_glossary_translation')
             ->addJoinCondition('spy_glossary_translation', 'spy_locale.id_locale = spy_glossary_translation.fk_locale')
-            ->addJoinCondition('spy_locale', 'spy_locale.locale_name  IN ('  . implode($quotedLocales, ', ') . ')')
-        ;
+            ->addJoinCondition('spy_locale', 'spy_locale.locale_name  IN ('  . implode($quotedLocales, ', ') . ')');
     }
 
     /**
@@ -333,8 +322,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
         $query
             ->distinct('key')
             ->withColumn(SpyGlossaryKeyTableMap::COL_ID_GLOSSARY_KEY, 'value')
-            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, 'label')
-        ;
+            ->withColumn(SpyGlossaryKeyTableMap::COL_KEY, 'label');
 
         return $query;
     }
@@ -349,8 +337,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
         $query
             ->distinct('locale_name')
             ->withColumn(SpyLocaleTableMap::COL_ID_LOCALE, 'value')
-            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, 'label')
-        ;
+            ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, 'label');
 
         return $query;
     }
@@ -366,8 +353,7 @@ class GlossaryQueryContainer extends AbstractQueryContainer implements GlossaryQ
         $keyQuery = $this->queryKeyById($idKey);
         $keyQuery = $this->joinKeyQueryWithRelevantLocalesAndTranslations($keyQuery, $relevantLocales);
         $keyQuery
-            ->where(SpyGlossaryTranslationTableMap::COL_VALUE . '' . ModelCriteria::ISNULL)
-        ;
+            ->where(SpyGlossaryTranslationTableMap::COL_VALUE . '' . ModelCriteria::ISNULL);
 
         return $keyQuery;
     }

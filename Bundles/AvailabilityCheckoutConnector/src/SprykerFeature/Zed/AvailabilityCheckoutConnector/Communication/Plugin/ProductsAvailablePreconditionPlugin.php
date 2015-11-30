@@ -45,13 +45,11 @@ class ProductsAvailablePreconditionPlugin extends AbstractPlugin implements Chec
                 $error = new CheckoutErrorTransfer();
                 $error
                     ->setErrorCode(CheckoutConfig::ERROR_CODE_PRODUCT_UNAVAILABLE)
-                    ->setMessage('product.unavailable')
-                ;
+                    ->setMessage('product.unavailable');
 
                 $checkoutResponse
                     ->addError($error)
-                    ->setIsSuccess(false)
-                ;
+                    ->setIsSuccess(false);
             }
         }
     }

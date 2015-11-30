@@ -35,21 +35,18 @@ class AddController extends AbstractController
         $idParentNode = $request->get(ProductCategoryConfig::PARAM_ID_PARENT_NODE);
 
         $form = $this->getDependencyContainer()
-            ->createCategoryFormAdd($idParentNode)
-        ;
+            ->createCategoryFormAdd($idParentNode);
         $form->handleRequest();
 
         if ($form->isValid()) {
             $localeTransfer = $this->getDependencyContainer()
-                ->createCurrentLocale()
-            ;
+                ->createCurrentLocale();
 
             $categoryTransfer = $this->createCategoryTransferFromData($form->getData());
             $categoryNodeTransfer = $this->createCategoryNodeTransferFromData($form->getData());
 
             $idCategory = $this->getFacade()
-                ->addCategory($categoryTransfer, $categoryNodeTransfer, $localeTransfer)
-            ;
+                ->addCategory($categoryTransfer, $categoryNodeTransfer, $localeTransfer);
 
             $this->addSuccessMessage('The category was added successfully.');
 
@@ -71,12 +68,10 @@ class AddController extends AbstractController
     {
         $idCategory = $request->get(ProductCategoryConfig::PARAM_ID_CATEGORY);
         $locale = $this->getDependencyContainer()
-            ->createCurrentLocale()
-        ;
+            ->createCurrentLocale();
 
         $productCategoryTable = $this->getDependencyContainer()
-            ->createProductCategoryTable($locale, $idCategory)
-        ;
+            ->createProductCategoryTable($locale, $idCategory);
 
         return $this->jsonResponse(
             $productCategoryTable->fetchData()
@@ -92,12 +87,10 @@ class AddController extends AbstractController
     {
         $idCategory = $request->get(ProductCategoryConfig::PARAM_ID_CATEGORY);
         $locale = $this->getDependencyContainer()
-            ->createCurrentLocale()
-        ;
+            ->createCurrentLocale();
 
         $productTable = $this->getDependencyContainer()
-            ->createProductTable($locale, $idCategory)
-        ;
+            ->createProductTable($locale, $idCategory);
 
         return $this->jsonResponse(
             $productTable->fetchData()

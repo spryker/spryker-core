@@ -33,8 +33,7 @@ class RedirectController extends AbstractController
     public function indexAction()
     {
         $redirectTable = $this->getDependencyContainer()
-            ->createCmsRedirectTable()
-        ;
+            ->createCmsRedirectTable();
 
         return [
             'redirects' => $redirectTable->render(),
@@ -47,8 +46,7 @@ class RedirectController extends AbstractController
     public function tableAction()
     {
         $table = $this->getDependencyContainer()
-            ->createCmsRedirectTable()
-        ;
+            ->createCmsRedirectTable();
 
         return $this->jsonResponse($table->fetchData());
     }
@@ -59,8 +57,7 @@ class RedirectController extends AbstractController
     public function addAction()
     {
         $form = $this->getDependencyContainer()
-            ->createCmsRedirectForm('add')
-        ;
+            ->createCmsRedirectForm('add');
 
         $form->handleRequest();
 
@@ -68,13 +65,11 @@ class RedirectController extends AbstractController
             $data = $form->getData();
 
             $redirectTransfer = $this->getUrlFacade()
-                ->createRedirectAndTouch($data[CmsRedirectForm::TO_URL], $data[CmsRedirectForm::STATUS])
-            ;
+                ->createRedirectAndTouch($data[CmsRedirectForm::TO_URL], $data[CmsRedirectForm::STATUS]);
 
             $this->getUrlFacade()
                 ->saveRedirectUrlAndTouch($data[CmsRedirectForm::FROM_URL], $this->getLocaleFacade()
-                    ->getCurrentLocale(), $redirectTransfer->getIdRedirect())
-            ;
+                    ->getCurrentLocale(), $redirectTransfer->getIdRedirect());
 
             return $this->redirectResponse(self::REDIRECT_ADDRESS);
         }
@@ -94,8 +89,7 @@ class RedirectController extends AbstractController
         $idUrl = $request->get(CmsRedirectTable::REQUEST_ID_URL);
 
         $form = $this->getDependencyContainer()
-            ->createCmsRedirectForm('update', $idUrl)
-        ;
+            ->createCmsRedirectForm('update', $idUrl);
 
         $form->handleRequest();
 
@@ -109,8 +103,7 @@ class RedirectController extends AbstractController
 
                 $redirect = $this->getQueryContainer()
                     ->queryRedirectById($url->getFkResourceRedirect())
-                    ->findOne()
-                ;
+                    ->findOne();
                 $redirectTransfer = $this->createRedirectTransfer($redirect, $data);
 
                 $this->getUrlFacade()->saveRedirectAndTouch($redirectTransfer);
@@ -130,8 +123,7 @@ class RedirectController extends AbstractController
     private function getUrlFacade()
     {
         return $this->getDependencyContainer()
-            ->getProvidedDependency(CmsDependencyProvider::FACADE_URL)
-            ;
+            ->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
     }
 
     /**
@@ -140,8 +132,7 @@ class RedirectController extends AbstractController
     private function getLocaleFacade()
     {
         return $this->getDependencyContainer()
-            ->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE)
-            ;
+            ->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE);
     }
 
     /**

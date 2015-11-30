@@ -25,8 +25,7 @@ class SalesClient extends AbstractClient implements SalesClientInterface
     {
         return $this->getDependencyContainer()
             ->createZedSalesStub()
-            ->getOrders($orderListTransfer)
-        ;
+            ->getOrders($orderListTransfer);
     }
 
     /**

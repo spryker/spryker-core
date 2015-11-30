@@ -78,8 +78,7 @@ class Writer implements WriterInterface
         $stockEntity = new SpyStock();
         $stockEntity
             ->setName($stockTypeTransfer->getName())
-            ->save()
-        ;
+            ->save();
         $this->insertActiveTouchRecordStockType($stockEntity);
         Propel::getConnection()->commit();
 
@@ -99,8 +98,7 @@ class Writer implements WriterInterface
         Propel::getConnection()->beginTransaction();
         $stockTypeEntity = $this->queryContainer
             ->queryStockByName($stockTypeTransfer->getName())
-            ->findOne()
-        ;
+            ->findOne();
         if ($stockTypeEntity === null) {
             throw new StockTypeNotFoundException();
         }
@@ -240,8 +238,7 @@ class Writer implements WriterInterface
             ->setFkStock($idStockType)
             ->setIsNeverOutOfStock($transferStockProduct->getIsNeverOutOfStock())
             ->setQuantity($transferStockProduct->getQuantity())
-            ->save()
-        ;
+            ->save();
         $this->insertActiveTouchRecordStockProduct($stockProduct);
 
         return $stockProduct->getPrimaryKey();

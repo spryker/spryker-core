@@ -50,8 +50,7 @@ abstract class AbstractActionButton extends TwigFunction
         return ' class="btn btn-sm btn-outline '
             . $this->getButtonClass()
             . $extraClasses
-            . '"'
-        ;
+            . '"';
     }
 
     /**

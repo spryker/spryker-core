@@ -87,8 +87,7 @@ class KeyManager implements KeyManagerInterface
     {
         $key = $this->queryContainer
             ->queryKey($keyName)
-            ->findOne()
-        ;
+            ->findOne();
 
         if (!$key) {
             throw new MissingKeyException('Tried to retrieve a missing glossary key');

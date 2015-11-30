@@ -85,8 +85,7 @@ class RefundForm extends AbstractForm
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
-            ])
-        ;
+            ]);
 
         if ($this->requiresPaymentData()) {
             $this
@@ -99,8 +98,7 @@ class RefundForm extends AbstractForm
                     'constraints' => [
                         $this->getConstraints()->createConstraintNotBlank(),
                     ],
-                ])
-            ;
+                ]);
         }
 
         return $this;

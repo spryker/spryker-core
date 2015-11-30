@@ -31,8 +31,7 @@ class GrandTotalWithDiscountsTotalsCalculatorPlugin extends AbstractPlugin imple
         $this
             ->getDependencyContainer()
             ->getDiscountCalculationFacade()
-            ->recalculateGrandTotalWithDiscountsTotals($totalsTransfer, $calculableContainer, $calculableItems)
-        ;
+            ->recalculateGrandTotalWithDiscountsTotals($totalsTransfer, $calculableContainer, $calculableItems);
     }
 
 }

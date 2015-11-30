@@ -124,8 +124,7 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
         $queryContainer = $this->getQueryContainer();
 
         return $this->getFactory()
-            ->createUtilTransitionLog($queryContainer, $logContext)
-        ;
+            ->createUtilTransitionLog($queryContainer, $logContext);
     }
 
     /**
@@ -166,8 +165,7 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
     public function createProcessProcess()
     {
         return $this->getFactory()
-            ->createProcessProcess($this->createUtilDrawer())
-        ;
+            ->createProcessProcess($this->createUtilDrawer());
     }
 
     /**
@@ -179,8 +177,7 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
             ->createUtilDrawer(
                 $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
                 $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS)
-            )
-        ; // @TODO do not inject the whole config, just inject what is needed
+            ); // @TODO do not inject the whole config, just inject what is needed
     }
 
     /**

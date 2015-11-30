@@ -51,8 +51,7 @@ class PreconditionChecker implements PreconditionCheckerInterface
 
             $response
                 ->setIsSuccess(false)
-                ->addError($error)
-            ;
+                ->addError($error);
         }
     }
 

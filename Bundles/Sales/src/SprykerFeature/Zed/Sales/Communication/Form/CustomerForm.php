@@ -50,8 +50,7 @@ class CustomerForm extends AbstractForm
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
-            ])
-        ;
+            ]);
     }
 
     /**

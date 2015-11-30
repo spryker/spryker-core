@@ -29,8 +29,7 @@ class Carrier
                 $carrierTransfer->getGlossaryKeyName()
             )
             ->setIsActive($carrierTransfer->getIsActive())
-            ->save()
-        ;
+            ->save();
 
         return $carrierEntity->getPrimaryKey();
     }

@@ -46,8 +46,7 @@ class Collection
                 ->setData([
                     OrderItemSplitForm::ID_ORDER_ITEM => $orderItem->getIdSalesOrderItem(),
                     OrderItemSplitForm::ID_ORDER => $orderItem->getFkSalesOrder(),
-                 ])
-               ;
+                 ]);
 
             $this->forms[$orderItem->getIdSalesOrderItem()] = $form->createView();
         }

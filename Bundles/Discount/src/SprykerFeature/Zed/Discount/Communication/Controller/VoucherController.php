@@ -131,16 +131,13 @@ class VoucherController extends AbstractController
         $batchValue = $request->query->get(self::BATCH_PARAMETER);
 
         $pool = $this->getDependencyContainer()
-            ->getVoucherPoolById($idPool)
-        ;
+            ->getVoucherPoolById($idPool);
 
         $discount = $this->getDependencyContainer()
-            ->getDiscountByIdDiscountVoucherPool($idPool)
-        ;
+            ->getDiscountByIdDiscountVoucherPool($idPool);
 
         $countVouchers = $this->getDependencyContainer()
-            ->getGeneratedVouchersCountByIdPool($pool->getIdDiscountVoucherPool())
-        ;
+            ->getGeneratedVouchersCountByIdPool($pool->getIdDiscountVoucherPool());
 
         $generatedCodesTable = $this->getGeneratedCodesTable($request);
 
@@ -230,16 +227,14 @@ class VoucherController extends AbstractController
     protected function generateCsvFromVouchers($idPool, $batchValue)
     {
         $generatedVouchersQuery = $this->getDependencyContainer()
-            ->getQueryForGeneratedVouchersByIdPool($idPool)
-        ;
+            ->getQueryForGeneratedVouchersByIdPool($idPool);
 
         if ($batchValue > 0) {
             $generatedVouchersQuery = $generatedVouchersQuery->filterByVoucherBatch($batchValue);
         }
 
         $generatedVouchers = $generatedVouchersQuery
-            ->find()
-        ;
+            ->find();
 
         $response = new StreamedResponse();
 

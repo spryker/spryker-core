@@ -90,8 +90,7 @@ class TranslationTable extends AbstractTable
         $locales = $this->subGlossaryQuery->filterBy($keyName, $fkGlossaryKey)
             ->leftJoinLocale()
             ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME)
-            ->find()
-        ;
+            ->find();
 
         $result = [];
 
@@ -121,8 +120,7 @@ class TranslationTable extends AbstractTable
     {
         $query = $this->glossaryQuery->leftJoinGlossaryKey()
             ->withColumn(SpyGlossaryKeyTableMap::COL_KEY)
-            ->groupByFkGlossaryKey()
-        ;
+            ->groupByFkGlossaryKey();
 
         $lines = $this->runQuery($query, $config);
 

@@ -39,8 +39,7 @@ class DiscountDecisionRuleWriter extends AbstractWriter
         $queryContainer = $this->getQueryContainer();
         $discountDecisionRuleEntity = $queryContainer
             ->queryDiscountDecisionRule()
-            ->findPk($discountDecisionRuleTransfer->getIdDiscountDecisionRule())
-        ;
+            ->findPk($discountDecisionRuleTransfer->getIdDiscountDecisionRule());
         $discountDecisionRuleEntity->fromArray($discountDecisionRuleTransfer->toArray());
         $discountDecisionRuleEntity->save();
 

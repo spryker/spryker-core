@@ -30,8 +30,7 @@ class NewsletterQueryContainer extends AbstractQueryContainer
             ->joinSpyNewsletterSubscriber()
             ->useSpyNewsletterSubscriberQuery()
                 ->filterByEmail($email)
-            ->endUse()
-        ;
+            ->endUse();
 
         return $subscriptionQuery;
     }
@@ -52,8 +51,7 @@ class NewsletterQueryContainer extends AbstractQueryContainer
             ->joinSpyNewsletterSubscriber()
             ->useSpyNewsletterSubscriberQuery()
                 ->filterBySubscriberKey($subscriberKey)
-            ->endUse()
-        ;
+            ->endUse();
 
         return $subscriptionQuery;
     }
@@ -74,8 +72,7 @@ class NewsletterQueryContainer extends AbstractQueryContainer
             ->joinSpyNewsletterSubscriber()
             ->useSpyNewsletterSubscriberQuery()
                 ->filterByFkCustomer($idCustomer)
-            ->endUse()
-        ;
+            ->endUse();
 
         return $subscriptionQuery;
     }

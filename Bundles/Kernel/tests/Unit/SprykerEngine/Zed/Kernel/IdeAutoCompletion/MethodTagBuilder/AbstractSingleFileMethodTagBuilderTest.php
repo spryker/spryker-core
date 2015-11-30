@@ -25,8 +25,7 @@ class AbstractSingleFileMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $expectedMethodTag =
-            ' * @method \VendorNamespace\Application\Bundle\Communication\BundleDependencyContainer singleFileMethod()'
-        ;
+            ' * @method \VendorNamespace\Application\Bundle\Communication\BundleDependencyContainer singleFileMethod()';
 
         $methodTags = $methodTagBuilder->buildMethodTags('Bundle');
         $this->assertContains($expectedMethodTag, $methodTags);
@@ -42,8 +41,7 @@ class AbstractSingleFileMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $expectedMethodTag =
-            ' * @method \ProjectNamespace\Application\Bundle\Persistence\BundleQueryContainer singleFileMethod()'
-        ;
+            ' * @method \ProjectNamespace\Application\Bundle\Persistence\BundleQueryContainer singleFileMethod()';
 
         $methodTags = $methodTagBuilder->buildMethodTags('Bundle');
         $this->assertContains($expectedMethodTag, $methodTags);
@@ -59,8 +57,7 @@ class AbstractSingleFileMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         ]);
 
         $expectedMethodTag =
-            ' * @method \ProjectNamespace\Application\Bundle\Business\BundleFacade singleFileMethod()'
-        ;
+            ' * @method \ProjectNamespace\Application\Bundle\Business\BundleFacade singleFileMethod()';
 
         $methodTags = $methodTagBuilder->buildMethodTags('Bundle');
         $this->assertContains($expectedMethodTag, $methodTags);

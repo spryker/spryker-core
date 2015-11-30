@@ -103,8 +103,7 @@ class CmsPageForm extends AbstractForm
             ])
             ->addCheckbox(self::IS_ACTIVE, [
                 'label' => 'Active',
-            ])
-            ;
+            ]);
     }
 
     /**

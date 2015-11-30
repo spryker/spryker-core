@@ -84,8 +84,7 @@ class VoucherPoolTable extends AbstractTable
             ->endUse()
             ->useVoucherPoolCategoryQuery()
             ->endUse()
-            ->groupByIdDiscountVoucherPool()
-        ;
+            ->groupByIdDiscountVoucherPool();
 
         $queryResults = $this->runQuery($query, $config, true);
 
@@ -133,8 +132,7 @@ class VoucherPoolTable extends AbstractTable
             . self::SPACE_SEPARATOR
             . $this->generateCreateButton('/discount/voucher/create-single', 'Add Single Code')
             . self::SPACE_SEPARATOR
-            . $this->generateCreateButton('/discount/voucher/create-multiple', 'Add Multiple Codes')
-        ;
+            . $this->generateCreateButton('/discount/voucher/create-multiple', 'Add Multiple Codes');
     }
 
     /**

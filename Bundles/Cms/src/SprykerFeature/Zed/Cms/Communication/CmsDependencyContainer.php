@@ -35,12 +35,10 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     public function createCmsPageTable()
     {
         $pageQuery = $this->getQueryContainer()
-            ->queryPageWithTemplatesAndUrls()
-        ;
+            ->queryPageWithTemplatesAndUrls();
 
         return $this->getFactory()
-            ->createTableCmsPageTable($pageQuery)
-        ;
+            ->createTableCmsPageTable($pageQuery);
     }
 
     /**
@@ -51,12 +49,10 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     public function createCmsBlockTable($idLocale)
     {
         $blockQuery = $this->getQueryContainer()
-            ->queryPageWithTemplatesAndBlocks($idLocale)
-        ;
+            ->queryPageWithTemplatesAndBlocks($idLocale);
 
         return $this->getFactory()
-            ->createTableCmsBlockTable($blockQuery)
-        ;
+            ->createTableCmsBlockTable($blockQuery);
     }
 
     /**
@@ -65,12 +61,10 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     public function createCmsRedirectTable()
     {
         $urlQuery = $this->getQueryContainer()
-            ->queryUrlsWithRedirect()
-        ;
+            ->queryUrlsWithRedirect();
 
         return $this->getFactory()
-            ->createTableCmsRedirectTable($urlQuery)
-        ;
+            ->createTableCmsRedirectTable($urlQuery);
     }
 
     /**
@@ -84,12 +78,10 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     public function createCmsGlossaryTable($idPage, $fkLocale, array $placeholders = null, array $searchArray = null)
     {
         $glossaryQuery = $this->getQueryContainer()
-            ->queryGlossaryKeyMappingsWithKeyByPageId($idPage, $fkLocale)
-        ;
+            ->queryGlossaryKeyMappingsWithKeyByPageId($idPage, $fkLocale);
 
         return $this->getFactory()
-            ->createTableCmsGlossaryTable($glossaryQuery, $idPage, $placeholders, $searchArray)
-        ;
+            ->createTableCmsGlossaryTable($glossaryQuery, $idPage, $placeholders, $searchArray);
     }
 
     /**
@@ -101,18 +93,15 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     public function createCmsPageForm($formType, $idPage = null)
     {
         $pageUrlByIdQuery = $this->getQueryContainer()
-            ->queryPageWithTemplatesAndUrlByIdPage($idPage)
-        ;
+            ->queryPageWithTemplatesAndUrlByIdPage($idPage);
 
         $templateQuery = $this->getQueryContainer()
-            ->queryTemplates()
-        ;
+            ->queryTemplates();
 
         $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
 
         return $this->getFactory()
-            ->createFormCmsPageForm($templateQuery, $pageUrlByIdQuery, $urlFacade, $formType, $idPage)
-        ;
+            ->createFormCmsPageForm($templateQuery, $pageUrlByIdQuery, $urlFacade, $formType, $idPage);
     }
 
     /**
@@ -124,16 +113,13 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     public function createCmsBlockForm($formType, $idCmsBlock = null)
     {
         $blockPageByIdQuery = $this->getQueryContainer()
-            ->queryPageWithTemplatesAndBlocksById($idCmsBlock)
-        ;
+            ->queryPageWithTemplatesAndBlocksById($idCmsBlock);
 
         $templateQuery = $this->getQueryContainer()
-            ->queryTemplates()
-        ;
+            ->queryTemplates();
 
         return $this->getFactory()
-            ->createFormCmsBlockForm($templateQuery, $blockPageByIdQuery, $formType, $idCmsBlock)
-        ;
+            ->createFormCmsBlockForm($templateQuery, $blockPageByIdQuery, $formType, $idCmsBlock);
     }
 
     /**
@@ -145,14 +131,12 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     public function createCmsRedirectForm($formType, $idUrl = null)
     {
         $queryUrlById = $this->getQueryContainer()
-            ->queryUrlByIdWithRedirect($idUrl)
-        ;
+            ->queryUrlByIdWithRedirect($idUrl);
 
         $urlFacade = $this->getProvidedDependency(CmsDependencyProvider::FACADE_URL);
 
         return $this->getFactory()
-            ->createFormCmsRedirectForm($queryUrlById, $urlFacade, $formType)
-        ;
+            ->createFormCmsRedirectForm($queryUrlById, $urlFacade, $formType);
     }
 
     /**
@@ -166,12 +150,10 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     public function createCmsGlossaryForm($idPage, $idMapping, $placeholder, $cmsFacade)
     {
         $glossaryMappingByIdQuery = $this->getQueryContainer()
-            ->queryGlossaryKeyMappingWithKeyById($idMapping)
-        ;
+            ->queryGlossaryKeyMappingWithKeyById($idMapping);
 
         return $this->getFactory()
-            ->createFormCmsGlossaryForm($glossaryMappingByIdQuery, $cmsFacade, $idPage, $idMapping, $placeholder)
-        ;
+            ->createFormCmsGlossaryForm($glossaryMappingByIdQuery, $cmsFacade, $idPage, $idMapping, $placeholder);
     }
 
     /**
@@ -182,8 +164,7 @@ class CmsDependencyContainer extends AbstractCommunicationDependencyContainer
     public function getTemplateRealPath($templateRelativePath)
     {
         return $this->getConfig()
-            ->getTemplateRealPath($templateRelativePath)
-        ;
+            ->getTemplateRealPath($templateRelativePath);
     }
 
     /**

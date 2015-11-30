@@ -43,8 +43,7 @@ class ResetPasswordRequestForm extends AbstractForm
                     'class' => 'btn btn-success btn-block btn-outline',
                     'title' => 'Login',
                 ],
-            ])
-        ;
+            ]);
     }
 
     /**

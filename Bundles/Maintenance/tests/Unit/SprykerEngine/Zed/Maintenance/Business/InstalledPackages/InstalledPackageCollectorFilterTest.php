@@ -27,22 +27,19 @@ class InstalledPackageCollectorFilterTest extends \PHPUnit_Framework_TestCase
         $package1 = new InstalledPackageTransfer();
         $package1->setName('foo')
             ->setVersion('0.0.1')
-            ->setLicense(['MIT', 'GPL'])
-        ;
+            ->setLicense(['MIT', 'GPL']);
         $collection->addPackage($package1);
 
         $package2 = new InstalledPackageTransfer();
         $package2->setName('foo')
             ->setVersion('0.0.1')
-            ->setLicense(['MIT', 'GPL'])
-        ;
+            ->setLicense(['MIT', 'GPL']);
         $collection->addPackage($package2);
 
         $finderMock = $this->getMock('SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageFinderInterface', ['findInstalledPackages']);
         $finderMock->expects($this->once())
             ->method('findInstalledPackages')
-            ->will($this->returnValue($collection))
-        ;
+            ->will($this->returnValue($collection));
 
         $finder = [
             $finderMock,

@@ -119,8 +119,7 @@ class Address
     {
         $entities = $this->queryContainer->queryAddresses()
             ->filterByFkCustomer($customerTransfer->getIdCustomer())
-            ->find()
-        ;
+            ->find();
 
         return $this->entityCollectionToTransferCollection($entities);
     }
@@ -157,8 +156,7 @@ class Address
         $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
 
         $entity = $this->queryContainer->queryAddressForCustomer($addressTransfer->getIdCustomerAddress(), $customer->getEmail())
-            ->findOne()
-        ;
+            ->findOne();
 
         if (!$entity) {
             throw new AddressNotFoundException();
@@ -184,8 +182,7 @@ class Address
         $customer = $this->getCustomerFromAddressTransfer($addressTransfer);
 
         $entity = $this->queryContainer->queryAddressForCustomer($addressTransfer->getIdCustomerAddress(), $customer->getEmail())
-            ->findOne()
-        ;
+            ->findOne();
 
         if (!$entity) {
             throw new AddressNotFoundException();
@@ -275,12 +272,10 @@ class Address
     {
         if ($addressTransfer->getEmail()) {
             $customer = $this->queryContainer->queryCustomerByEmail($addressTransfer->getEmail())
-                ->findOne()
-            ;
+                ->findOne();
         } elseif ($addressTransfer->getFkCustomer()) {
             $customer = $this->queryContainer->queryCustomerById($addressTransfer->getFkCustomer())
-                ->findOne()
-            ;
+                ->findOne();
         }
 
         if (!isset($customer) || $customer === null) {
@@ -301,12 +296,10 @@ class Address
     {
         if ($customerTransfer->getEmail()) {
             $customer = $this->queryContainer->queryCustomerByEmail($customerTransfer->getEmail())
-                ->findOne()
-            ;
+                ->findOne();
         } elseif ($customerTransfer->getIdCustomer()) {
             $customer = $this->queryContainer->queryCustomerById($customerTransfer->getIdCustomer())
-                ->findOne()
-            ;
+                ->findOne();
         }
 
         if (!isset($customer) || $customer === null) {
@@ -368,8 +361,7 @@ class Address
     private function getIsoCode()
     {
         $localeName = $this->localeFacade->getCurrentLocale()
-            ->getLocaleName()
-        ;
+            ->getLocaleName();
 
         return explode('_', $localeName)[1];
     }
@@ -392,8 +384,7 @@ class Address
                 $addressTransfer->getIdCustomerAddress(),
                 $customer->getEmail()
             )
-            ->findOne()
-        ;
+            ->findOne();
 
         if (!$entity) {
             throw new AddressNotFoundException();

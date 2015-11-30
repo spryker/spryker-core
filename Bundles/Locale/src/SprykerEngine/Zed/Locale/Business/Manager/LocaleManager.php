@@ -132,8 +132,7 @@ class LocaleManager
         $dto
             ->setIdLocale($locale->getPrimaryKey())
             ->setLocaleName($locale->getLocaleName())
-            ->setIsActive($locale->getIsActive())
-        ;
+            ->setIsActive($locale->getIsActive());
 
         return $dto;
     }

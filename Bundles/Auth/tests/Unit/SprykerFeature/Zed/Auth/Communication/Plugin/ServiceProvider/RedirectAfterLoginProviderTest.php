@@ -52,8 +52,7 @@ class RedirectAfterLoginProviderTest extends AbstractUnitTest
         $redirectAfterLoginProvider = $this->getRedirectAfterLoginProvider(['isAuthenticated']);
         $redirectAfterLoginProvider->expects($this->once())
             ->method('isAuthenticated')
-            ->willReturn(true)
-        ;
+            ->willReturn(true);
 
         $redirectAfterLoginProvider->onKernelRequest($event);
 
@@ -66,8 +65,7 @@ class RedirectAfterLoginProviderTest extends AbstractUnitTest
         $request = $this->getMock('Symfony\Component\HttpFoundation\Request', ['getRequestUri']);
         $request->expects($this->once())
             ->method('getRequestUri')
-            ->willReturn(RedirectAfterLoginProvider::LOGIN_URI)
-        ;
+            ->willReturn(RedirectAfterLoginProvider::LOGIN_URI);
         $request->setMethod(Request::METHOD_GET);
         $request->setSession(new Session());
         $event = new GetResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST);
@@ -75,8 +73,7 @@ class RedirectAfterLoginProviderTest extends AbstractUnitTest
         $redirectAfterLoginProvider = $this->getRedirectAfterLoginProvider(['isAuthenticated']);
         $redirectAfterLoginProvider->expects($this->once())
             ->method('isAuthenticated')
-            ->willReturn(false)
-        ;
+            ->willReturn(false);
 
         $redirectAfterLoginProvider->onKernelRequest($event);
 
@@ -89,8 +86,7 @@ class RedirectAfterLoginProviderTest extends AbstractUnitTest
         $request = $this->getMock('Symfony\Component\HttpFoundation\Request', ['getRequestUri']);
         $request->expects($this->once())
             ->method('getRequestUri')
-            ->willReturn('/_profiler')
-        ;
+            ->willReturn('/_profiler');
         $request->setMethod(Request::METHOD_GET);
         $request->setSession(new Session());
         $event = new GetResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST);
@@ -98,8 +94,7 @@ class RedirectAfterLoginProviderTest extends AbstractUnitTest
         $redirectAfterLoginProvider = $this->getRedirectAfterLoginProvider(['isAuthenticated']);
         $redirectAfterLoginProvider->expects($this->once())
             ->method('isAuthenticated')
-            ->willReturn(false)
-        ;
+            ->willReturn(false);
 
         $redirectAfterLoginProvider->onKernelRequest($event);
 
@@ -112,8 +107,7 @@ class RedirectAfterLoginProviderTest extends AbstractUnitTest
         $request = $this->getMock('Symfony\Component\HttpFoundation\Request', ['getRequestUri']);
         $request->expects($this->any())
             ->method('getRequestUri')
-            ->willReturn(self::VALID_REDIRECT_URL)
-        ;
+            ->willReturn(self::VALID_REDIRECT_URL);
         $request->setMethod(Request::METHOD_GET);
         $request->setSession(new Session());
         $event = new GetResponseEvent($kernel, $request, HttpKernelInterface::MASTER_REQUEST);
@@ -121,8 +115,7 @@ class RedirectAfterLoginProviderTest extends AbstractUnitTest
         $redirectAfterLoginProvider = $this->getRedirectAfterLoginProvider(['isAuthenticated']);
         $redirectAfterLoginProvider->expects($this->once())
             ->method('isAuthenticated')
-            ->willReturn(false)
-        ;
+            ->willReturn(false);
 
         $redirectAfterLoginProvider->onKernelRequest($event);
 
@@ -156,8 +149,7 @@ class RedirectAfterLoginProviderTest extends AbstractUnitTest
         $redirectAfterLoginProvider = $this->getRedirectAfterLoginProvider(['isAuthenticated']);
         $redirectAfterLoginProvider->expects($this->once())
             ->method('isAuthenticated')
-            ->willReturn(false)
-        ;
+            ->willReturn(false);
         $redirectAfterLoginProvider->onKernelResponse($event);
 
         $this->assertSame($response, $event->getResponse());
@@ -176,8 +168,7 @@ class RedirectAfterLoginProviderTest extends AbstractUnitTest
         $redirectAfterLoginProvider = $this->getRedirectAfterLoginProvider(['isAuthenticated']);
         $redirectAfterLoginProvider->expects($this->once())
             ->method('isAuthenticated')
-            ->willReturn(true)
-        ;
+            ->willReturn(true);
         $redirectAfterLoginProvider->onKernelResponse($event);
 
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\RedirectResponse', $event->getResponse());
@@ -196,8 +187,7 @@ class RedirectAfterLoginProviderTest extends AbstractUnitTest
         $redirectAfterLoginProvider = $this->getRedirectAfterLoginProvider(['isAuthenticated']);
         $redirectAfterLoginProvider->expects($this->once())
             ->method('isAuthenticated')
-            ->willReturn(true)
-        ;
+            ->willReturn(true);
         $redirectAfterLoginProvider->onKernelResponse($event);
 
         $this->assertFalse($request->getSession()->has(RedirectAfterLoginProvider::REQUEST_URI));

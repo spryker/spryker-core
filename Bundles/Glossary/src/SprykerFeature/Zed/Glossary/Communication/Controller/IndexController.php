@@ -25,12 +25,10 @@ class IndexController extends AbstractController
     public function indexAction()
     {
         $availableLocales = $this->getDependencyContainer()
-            ->createEnabledLocales()
-        ;
+            ->createEnabledLocales();
 
         $table = $this->getDependencyContainer()
-            ->createTranslationTable($availableLocales)
-        ;
+            ->createTranslationTable($availableLocales);
 
         return $this->viewResponse([
             'locales' => $availableLocales,
@@ -44,12 +42,10 @@ class IndexController extends AbstractController
     public function tableAction()
     {
         $availableLocales = $this->getDependencyContainer()
-            ->createEnabledLocales()
-        ;
+            ->createEnabledLocales();
 
         $table = $this->getDependencyContainer()
-            ->createTranslationTable($availableLocales)
-        ;
+            ->createTranslationTable($availableLocales);
 
         return $this->jsonResponse($table->fetchData());
     }

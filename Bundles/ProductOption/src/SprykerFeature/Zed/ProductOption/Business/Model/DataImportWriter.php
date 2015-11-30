@@ -65,8 +65,7 @@ class DataImportWriter implements DataImportWriterInterface
     {
         $productOptionTypeEntity = $this->queryContainer
             ->queryProductOptionTypeByImportKey($importKeyProductOptionType)
-            ->findOneOrCreate()
-        ;
+            ->findOneOrCreate();
 
         if ($productOptionTypeEntity->isNew()) {
             $productOptionTypeEntity->save();
@@ -76,8 +75,7 @@ class DataImportWriter implements DataImportWriterInterface
 
         $associatedAbstractProductIds = $this->queryContainer
             ->queryAssociatedAbstractProductIdsForProductOptionType($productOptionTypeEntity->getIdProductOptionType())
-            ->find()
-        ;
+            ->find();
 
         foreach ($associatedAbstractProductIds as $idAbstractProduct) {
             $this->touchAbstractProductById($idAbstractProduct);
@@ -235,19 +233,16 @@ class DataImportWriter implements DataImportWriterInterface
 
         $productOptionValueUsageEntity = $this->queryContainer
             ->queryProductOptionValueUsageByFKs($idProductOptionTypeUsage, $productOptionValue->getIdProductOptionValue())
-            ->findOneOrCreate()
-        ;
+            ->findOneOrCreate();
 
         $productOptionValueUsageEntity
             ->setSequence($sequence)
-            ->save()
-        ;
+            ->save();
 
         $idAbstractProduct = $this->queryContainer
             ->queryAbstractProductIdForProductOptionTypeUsage($idProductOptionTypeUsage)
             ->findOne()
-            ->getIdAbstractProduct()
-        ;
+            ->getIdAbstractProduct();
 
         $this->touchAbstractProductById($idAbstractProduct);
 
@@ -392,8 +387,7 @@ class DataImportWriter implements DataImportWriterInterface
     {
         $productOptionType = $this->queryContainer
             ->queryProductOptionTypeByImportKey($importKeyProductOptionType)
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($productOptionType === null) {
             throw new MissingProductOptionTypeException(
@@ -418,8 +412,7 @@ class DataImportWriter implements DataImportWriterInterface
     {
         $productOptionValue = $this->queryContainer
             ->queryProductOptionValueByImportKey($importKeyProductOptionValue)
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($productOptionValue === null) {
             throw new MissingProductOptionValueException(
@@ -499,8 +492,7 @@ class DataImportWriter implements DataImportWriterInterface
     {
         $productOptionTypeUsage = $this->queryContainer
             ->queryProductOptionTypeUsageByFKs($idProduct, $idProductOptionType)
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($productOptionTypeUsage === null) {
             throw new MissingProductOptionTypeUsageException('Tried to retrieve a product option type usage, but it does not exist.');

@@ -53,16 +53,14 @@ class PageElementForm extends AbstractForm
                     'type' => 'string',
                 ]),
                 new Constraints\NotBlank(),
-            ])
-        ;
+            ]);
         $this->addField(self::IS_ELEMENT_ACTIVE)
             ->setRefresh(false)
             ->setConstraints([
                 new Constraints\Type([
                     'type' => 'bool',
                 ]),
-            ])
-        ;
+            ]);
         $this->addField(self::FK_SEARCH_DOCUMENT_ATTRIBUTE)
             ->setAccepts($this->getDocumentAttributes())
             ->setRefresh(false)
@@ -77,8 +75,7 @@ class PageElementForm extends AbstractForm
             ])
             ->setValueHook(function ($value) {
                 return $value ? (int) $value : null;
-            })
-        ;
+            });
         $this->addField(self::FK_SEARCH_PAGE_ELEMENT_TEMPLATE)
             ->setAccepts($this->getTemplates())
             ->setRefresh(false)
@@ -94,8 +91,7 @@ class PageElementForm extends AbstractForm
             ])
             ->setValueHook(function ($value) {
                 return $value ? (int) $value : null;
-            })
-        ;
+            });
     }
 
     /**
@@ -106,8 +102,7 @@ class PageElementForm extends AbstractForm
         $attributes = $this->queryContainer
             ->queryDocumentAttributeNames()
             ->setFormatter(new PropelArraySetFormatter())
-            ->find()
-        ;
+            ->find();
 
         return $this->formatOptions($attributes, 'id', 'name');
     }
@@ -120,8 +115,7 @@ class PageElementForm extends AbstractForm
         $templates = $this->queryContainer
             ->queryPageElementTemplateNames()
             ->setFormatter(new PropelArraySetFormatter())
-            ->find()
-        ;
+            ->find();
 
         return $this->formatOptions($templates, 'id', 'name');
     }

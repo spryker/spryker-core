@@ -28,8 +28,7 @@ class DistributorQueryContainer extends AbstractQueryContainer implements
         $query = SpyDistributorItemTypeQuery::create()
             ->addSelectColumn(SpyDistributorItemTypeTableMap::COL_TYPE_KEY)
             ->setDistinct()
-            ->setFormatter(new PropelArraySetFormatter())
-        ;
+            ->setFormatter(new PropelArraySetFormatter());
 
         return $query;
     }
@@ -42,8 +41,7 @@ class DistributorQueryContainer extends AbstractQueryContainer implements
     public function queryTypeByKey($typeKey)
     {
         $query = SpyDistributorItemTypeQuery::create()
-            ->filterByTypeKey($typeKey)
-        ;
+            ->filterByTypeKey($typeKey);
 
         return $query;
     }
@@ -62,8 +60,7 @@ class DistributorQueryContainer extends AbstractQueryContainer implements
             ->filterByTouched(['min' => $timestamp])
             ->useSpyDistributorItemTypeQuery()
             ->filterByTypeKey($typeKey)
-            ->endUse()
-        ;
+            ->endUse();
     }
 
     /**
@@ -74,8 +71,7 @@ class DistributorQueryContainer extends AbstractQueryContainer implements
         $query = SpyDistributorReceiverQuery::create()
             ->addSelectColumn(SpyDistributorReceiverTableMap::COL_RECEIVER_KEY)
             ->setDistinct()
-            ->setFormatter(new PropelArraySetFormatter())
-        ;
+            ->setFormatter(new PropelArraySetFormatter());
 
         return $query;
     }
@@ -94,8 +90,7 @@ class DistributorQueryContainer extends AbstractQueryContainer implements
             ->addAnd($foreignKeyColumn, $idItem)
             ->useSpyDistributorItemTypeQuery()
             ->filterByTypeKey($itemType)
-            ->endUse()
-        ;
+            ->endUse();
 
         return $query;
     }

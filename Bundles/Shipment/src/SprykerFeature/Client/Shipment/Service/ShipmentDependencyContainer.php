@@ -24,8 +24,7 @@ class ShipmentDependencyContainer extends AbstractServiceDependencyContainer
     {
         $zedStub = $this->getProvidedDependency(ShipmentDependencyProvider::SERVICE_ZED);
         $cartStub = $this->getFactory()
-            ->createZedShipmentStub($zedStub)
-        ;
+            ->createZedShipmentStub($zedStub);
 
         return $cartStub;
     }

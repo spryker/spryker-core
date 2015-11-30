@@ -164,8 +164,7 @@ class TranslationForm extends AbstractForm
             ->withColumn(SpyLocaleTableMap::COL_LOCALE_NAME, self::LOCALE)
             ->withColumn(SpyGlossaryTranslationTableMap::COL_VALUE, self::FIELD_VALUE)
             ->find()
-            ->toArray(null, false, TableMap::TYPE_COLNAME)
-        ;
+            ->toArray(null, false, TableMap::TYPE_COLNAME);
     }
 
     /**

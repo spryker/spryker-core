@@ -71,8 +71,7 @@ class SalesFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->getProvidedDependency(SalesDependencyProvider::FACADE_OMS)
-            ->getManualEvents($idOrderItem)
-        ;
+            ->getManualEvents($idOrderItem);
     }
 
     /**
@@ -84,8 +83,7 @@ class SalesFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createOrderManager()
-            ->getOrderByIdSalesOrder($idSalesOrder)
-        ;
+            ->getOrderByIdSalesOrder($idSalesOrder);
     }
 
     /**
@@ -99,8 +97,7 @@ class SalesFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->getProvidedDependency(SalesDependencyProvider::FACADE_OMS)
-            ->getOrderItemById($idOrderItem)
-        ;
+            ->getOrderItemById($idOrderItem);
     }
 
     /**
@@ -134,8 +131,7 @@ class SalesFacade extends AbstractFacade
     {
         $this->getDependencyContainer()
             ->createOrderDetailsManager()
-            ->updateOrderItemsAndExpensesAfterRefund($idRefund, $orderItemsAndExpensesTransfer)
-        ;
+            ->updateOrderItemsAndExpensesAfterRefund($idRefund, $orderItemsAndExpensesTransfer);
     }
 
     /**
@@ -148,8 +144,7 @@ class SalesFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createOrderDetailsManager()
-            ->updateOrderCustomer($orderTransfer, $idOrder)
-        ;
+            ->updateOrderCustomer($orderTransfer, $idOrder);
     }
 
     /**
@@ -162,8 +157,7 @@ class SalesFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createOrderDetailsManager()
-            ->updateOrderAddress($addressesTransfer, $idAddress)
-        ;
+            ->updateOrderAddress($addressesTransfer, $idAddress);
     }
 
     /**
@@ -175,8 +169,7 @@ class SalesFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createOrderDetailsManager()
-            ->getPaymentLogs($idOrder)
-            ;
+            ->getPaymentLogs($idOrder);
     }
 
     /**
@@ -188,8 +181,7 @@ class SalesFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createOrderManager()
-            ->getOrders($orderListTransfer)
-            ;
+            ->getOrders($orderListTransfer);
     }
 
     /**
@@ -201,8 +193,7 @@ class SalesFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createOrderDetailsManager()
-            ->getOrderDetails($orderTransfer)
-        ;
+            ->getOrderDetails($orderTransfer);
     }
 
     /**
@@ -214,8 +205,7 @@ class SalesFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->getProvidedDependency(SalesDependencyProvider::FACADE_REFUND)
-            ->getRefundsByIdSalesOrder($idSalesOrder)
-        ;
+            ->getRefundsByIdSalesOrder($idSalesOrder);
     }
 
 }

@@ -125,8 +125,7 @@ class ProductTable extends AbstractTable
             ->getUrlByIdAbstractProductAndIdLocale(
                 $item[SpyAbstractProductTableMap::COL_ID_ABSTRACT_PRODUCT],
                 $this->localeTransfer->getIdLocale()
-            )
-        ;
+            );
 
         return $yvesProductUrl;
     }

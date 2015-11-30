@@ -83,8 +83,7 @@ class GlossaryDistributorTest extends AbstractFunctionalTest
             ->filterByFkItemType($idItemType)
             ->filterByFkGlossaryTranslation($idGlossaryTranslation)
             ->filterByTouched($oldTimestamp, Criteria::GREATER_THAN)
-            ->count()
-        ;
+            ->count();
 
         $this->assertEquals(1, $touchItemResult);
     }
@@ -109,8 +108,7 @@ class GlossaryDistributorTest extends AbstractFunctionalTest
         $resultLastDistribution = SpyDistributorItemTypeQuery::create()
             ->filterByTypeKey('glossary_translation')
             ->filterByLastDistribution($oldTimestamp, Criteria::GREATER_THAN)
-            ->count()
-        ;
+            ->count();
         $resultPublishedMessages = $this->queueFacade->getPublishedMessages();
 
         $this->assertEquals(1, $resultLastDistribution);
@@ -150,8 +148,7 @@ class GlossaryDistributorTest extends AbstractFunctionalTest
         $itemType
             ->setTypeKey($typeKey)
             ->setLastDistribution($timestamp)
-            ->save()
-        ;
+            ->save();
 
         return $itemType->getIdDistributorItemType();
     }
@@ -172,8 +169,7 @@ class GlossaryDistributorTest extends AbstractFunctionalTest
             ->setFkItemType($idItemType)
             ->setFkGlossaryTranslation($idGlossaryTranslation)
             ->setTouched($timestamp)
-            ->save()
-        ;
+            ->save();
 
         return $item->getIdDistributorItem();
     }
@@ -188,8 +184,7 @@ class GlossaryDistributorTest extends AbstractFunctionalTest
         $receiver = new SpyDistributorReceiver();
         $receiver
             ->setReceiverKey($receiverKey)
-            ->save()
-        ;
+            ->save();
     }
 
     /**

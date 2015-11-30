@@ -607,8 +607,7 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
                             'RcptVar2' => 'RcptValue2',
                         ]
                     )
-            )
-        ;
+            );
 
         $this->mandrillMock->messages
             ->expects($this->once())
@@ -760,8 +759,7 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
                             'RcptVar2' => 'RcptValue2',
                         ]
                     )
-            )
-        ;
+            );
 
         $this->mandrillMock->messages
             ->expects($this->once())
@@ -811,8 +809,7 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
                 (new AttachmentTransfer())
                     ->setDisplayName('ATestfile')
                     ->setFileName($textFilePath)
-            )
-        ;
+            );
 
         $this->mandrillMock->messages
             ->expects($this->once())
@@ -860,8 +857,7 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
                 (new AttachmentTransfer())
                     ->setDisplayName('logo')
                     ->setFileName($imageFilePath)
-            )
-        ;
+            );
 
         $this->mandrillMock->messages
             ->expects($this->once())
@@ -978,8 +974,7 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
     {
         $mailTransfer = new MailTransfer();
         $mailTransfer
-            ->setAsync(true)
-        ;
+            ->setAsync(true);
 
         $this->mandrillMock->messages
             ->expects($this->once())
@@ -1000,8 +995,7 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
     {
         $mailTransfer = new MailTransfer();
         $mailTransfer
-            ->setIpPool('AnIpPool')
-        ;
+            ->setIpPool('AnIpPool');
 
         $this->mandrillMock->messages
             ->expects($this->once())
@@ -1022,8 +1016,7 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
     {
         $mailTransfer = new MailTransfer();
         $mailTransfer
-            ->setSendAt('2014-10-11 10:00:00')
-        ;
+            ->setSendAt('2014-10-11 10:00:00');
 
         $this->mandrillMock->messages
             ->expects($this->once())

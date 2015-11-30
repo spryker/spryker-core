@@ -64,8 +64,7 @@ class ShipmentDependencyContainer extends AbstractCommunicationDependencyContain
                 $this->getConfig(),
                 $this->getProvidedDependency(ShipmentDependencyProvider::PLUGINS),
                 $idMethod
-            )
-            ;
+            );
     }
 
     /**

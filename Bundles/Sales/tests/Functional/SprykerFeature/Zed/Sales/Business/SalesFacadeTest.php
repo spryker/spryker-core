@@ -76,8 +76,7 @@ class SalesFacadeTest extends Test
             ->filterByFirstName('Max')
             ->filterByLastName('Mustermann')
             ->filterByZipCode('1337')
-            ->filterByCity('SpryHome')
-        ;
+            ->filterByCity('SpryHome');
 
         $orderTransfer = $this->getValidBaseOrderTransfer();
 
@@ -107,8 +106,7 @@ class SalesFacadeTest extends Test
             ->setFirstName('Max')
             ->setLastName('Mustermann')
             ->setZipCode('1337')
-            ->setCity('SpryHome')
-        ;
+            ->setCity('SpryHome');
 
         $shippingAddress = new AddressTransfer();
         $shippingAddress->setIso2Code('ix')
@@ -116,13 +114,11 @@ class SalesFacadeTest extends Test
             ->setFirstName('Max')
             ->setLastName('Mustermann')
             ->setZipCode('1337')
-            ->setCity('SpryHome')
-        ;
+            ->setCity('SpryHome');
 
         $totals = new TotalsTransfer();
         $totals->setGrandTotalWithDiscounts(1337)
-            ->setSubtotal(337)
-        ;
+            ->setSubtotal(337);
 
         $orderTransfer->setShippingAddress($shippingAddress)
             ->setBillingAddress($billingAddress)
@@ -130,8 +126,7 @@ class SalesFacadeTest extends Test
             ->setEmail('max@mustermann.de')
             ->setFirstName('Max')
             ->setLastName('Mustermann')
-            ->setProcess('process-test-1')
-        ;
+            ->setProcess('process-test-1');
 
         return $orderTransfer;
     }
@@ -142,8 +137,7 @@ class SalesFacadeTest extends Test
             ->filterByAddress1('address-1-2-test')
             ->filterByFirstName('Max')
             ->filterByLastName('Mustermann')
-            ->filterByCity('SpryHome')
-        ;
+            ->filterByCity('SpryHome');
 
         $orderTransfer = $this->getValidBaseOrderTransfer();
 
@@ -170,8 +164,7 @@ class SalesFacadeTest extends Test
         $orderTransfer = $this->salesFacade->saveOrder($orderTransfer);
 
         $orderQuery = SpySalesOrderQuery::create()
-            ->filterByPrimaryKey($orderTransfer->getIdSalesOrder())
-        ;
+            ->filterByPrimaryKey($orderTransfer->getIdSalesOrder());
 
         $orderEntity = $orderQuery->findOne();
         $this->assertNotNull($orderEntity);
@@ -187,8 +180,7 @@ class SalesFacadeTest extends Test
 
         $initialState = SpyOmsOrderItemStateQuery::create()
             ->filterByName(OmsConfig::INITIAL_STATUS)
-            ->findOneOrCreate()
-        ;
+            ->findOneOrCreate();
         $initialState->save();
         $this->assertNotNull($initialState->getIdOmsOrderItemState());
 
@@ -199,8 +191,7 @@ class SalesFacadeTest extends Test
             ->setGrossPrice(120)
             ->setPriceToPay(100)
             ->setQuantity(2)
-            ->setTaxSet($taxSetTransfer)
-        ;
+            ->setTaxSet($taxSetTransfer);
 
         $item2 = new ItemTransfer();
         $item2->setName('item-test-2')
@@ -208,19 +199,16 @@ class SalesFacadeTest extends Test
             ->setGrossPrice(130)
             ->setPriceToPay(110)
             ->setQuantity(3)
-            ->setTaxSet($taxSetTransfer)
-        ;
+            ->setTaxSet($taxSetTransfer);
 
         $orderTransfer->addItem($item1);
         $orderTransfer->addItem($item2);
 
         $item1Query = SpySalesOrderItemQuery::create()
-            ->filterByName('item-test-1')
-        ;
+            ->filterByName('item-test-1');
 
         $item2Query = SpySalesOrderItemQuery::create()
-            ->filterByName('item-test-2')
-        ;
+            ->filterByName('item-test-2');
 
         $orderTransfer = $this->salesFacade->saveOrder($orderTransfer);
 
@@ -255,8 +243,7 @@ class SalesFacadeTest extends Test
 
         $initialState = SpyOmsOrderItemStateQuery::create()
             ->filterByName(OmsConfig::INITIAL_STATUS)
-            ->findOneOrCreate()
-        ;
+            ->findOneOrCreate();
         $initialState->save();
         $this->assertNotNull($initialState->getIdOmsOrderItemState());
 
@@ -270,8 +257,7 @@ class SalesFacadeTest extends Test
             ->setLabelOptionValue('Red')
             ->setGrossPrice(1000)
             ->setPriceToPay(1000)
-            ->setTaxSet($taxSetTransfer)
-        ;
+            ->setTaxSet($taxSetTransfer);
 
         $item = new ItemTransfer();
         $item->setName('item-test-1')
@@ -280,16 +266,14 @@ class SalesFacadeTest extends Test
             ->setPriceToPay(100)
             ->setQuantity(2)
             ->addProductOption($productOption)
-            ->setTaxSet($taxSetTransfer)
-        ;
+            ->setTaxSet($taxSetTransfer);
 
         $orderTransfer->addItem($item);
 
         $this->salesFacade->saveOrder($orderTransfer);
 
         $itemQuery = SpySalesOrderItemQuery::create()
-            ->filterByName('item-test-1')
-        ;
+            ->filterByName('item-test-1');
 
         $itemEntity = $itemQuery->findOne();
         $this->assertNotNull($itemEntity);
@@ -320,16 +304,14 @@ class SalesFacadeTest extends Test
             ->setSku('sku1')
             ->setGrossPrice(120)
             ->setPriceToPay(100)
-            ->setTaxSet(new TaxSetTransfer())
-        ;
+            ->setTaxSet(new TaxSetTransfer());
 
         $orderTransfer->addItem($item1);
 
         $this->salesFacade->saveOrder($orderTransfer);
 
         $item1Entity = SpySalesOrderItemQuery::create()
-            ->findOneByName('item-test-1')
-        ;
+            ->findOneByName('item-test-1');
 
         $this->assertSame($process->getIdOmsOrderProcess(), $item1Entity->getFkOmsOrderProcess());
     }

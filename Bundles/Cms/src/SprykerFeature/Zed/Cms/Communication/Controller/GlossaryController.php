@@ -101,12 +101,10 @@ class GlossaryController extends AbstractController
         $idPage = $request->get(CmsPageTable::REQUEST_ID_PAGE);
         $mappingGlossary = $this->getQueryContainer()
             ->queryGlossaryKeyMappingById($idMapping)
-            ->findOne()
-        ;
+            ->findOne();
         $pageTransfer = (new PageTransfer())->setIdCmsPage($idPage);
         $this->getFacade()
-            ->deletePageKeyMapping($pageTransfer, $mappingGlossary->getPlaceholder())
-        ;
+            ->deletePageKeyMapping($pageTransfer, $mappingGlossary->getPlaceholder());
 
         $redirectUrl = self::REDIRECT_ADDRESS . '?' . CmsPageTable::REQUEST_ID_PAGE . '=' . $idPage;
 
@@ -170,16 +168,14 @@ class GlossaryController extends AbstractController
             $searchedItems = $this->getQueryContainer()
                 ->queryTranslationWithKeyByValue($value)
                 ->limit(self::SEARCH_LIMIT)
-                ->find()
-            ;
+                ->find();
 
             return $searchedItems;
         } elseif ($key !== null) {
             $searchedItems = $this->getQueryContainer()
                 ->queryKeyWithTranslationByKey($key)
                 ->limit(self::SEARCH_LIMIT)
-                ->find()
-            ;
+                ->find();
         }
 
         return $searchedItems;
@@ -196,14 +192,12 @@ class GlossaryController extends AbstractController
         $hasPageMapping = $this->getFacade()->hasPagePlaceholderMapping($data['fkPage'], $data['placeholder']);
         if ($hasPageMapping) {
             $pageKeyMappingFound = $this->getFacade()
-                ->getPagePlaceholderMapping($data['fkPage'], $data['placeholder'])
-            ;
+                ->getPagePlaceholderMapping($data['fkPage'], $data['placeholder']);
             $pageKeyMappingTransfer->setIdCmsGlossaryKeyMapping($pageKeyMappingFound->getIdCmsGlossaryKeyMapping());
         }
         $glossaryKey = $this->getQueryContainer()
             ->queryKey($this->glossaryKeyName)
-            ->findOne()
-        ;
+            ->findOne();
         $pageKeyMappingTransfer->setFkGlossaryKey($glossaryKey->getIdGlossaryKey());
 
         return $pageKeyMappingTransfer;
@@ -215,8 +209,7 @@ class GlossaryController extends AbstractController
     private function getLocaleFacade()
     {
         return $this->getDependencyContainer()
-            ->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE)
-            ;
+            ->getProvidedDependency(CmsDependencyProvider::FACADE_LOCALE);
     }
 
     /**
@@ -225,8 +218,7 @@ class GlossaryController extends AbstractController
     private function getGlossaryFacade()
     {
         return $this->getDependencyContainer()
-            ->getProvidedDependency(CmsDependencyProvider::FACADE_GLOSSARY)
-            ;
+            ->getProvidedDependency(CmsDependencyProvider::FACADE_GLOSSARY);
     }
 
     /**
@@ -237,12 +229,10 @@ class GlossaryController extends AbstractController
     {
         $keyTranslationTransfer = $this->createKeyTranslationTransfer($data, $localeTransfer);
         $this->getGlossaryFacade()
-            ->saveGlossaryKeyTranslations($keyTranslationTransfer)
-        ;
+            ->saveGlossaryKeyTranslations($keyTranslationTransfer);
         $pageKeyMappingTransfer = $this->createKeyMappingTransfer($data);
         $this->getFacade()
-            ->savePageKeyMappingAndTouch($pageKeyMappingTransfer)
-        ;
+            ->savePageKeyMappingAndTouch($pageKeyMappingTransfer);
     }
 
     /**
@@ -254,8 +244,7 @@ class GlossaryController extends AbstractController
     {
         $pageUrlArray = $pageUrl->toArray();
         $tempFile = $this->getDependencyContainer()
-            ->getTemplateRealPath($pageUrlArray[CmsQueryContainer::TEMPLATE_PATH])
-        ;
+            ->getTemplateRealPath($pageUrlArray[CmsQueryContainer::TEMPLATE_PATH]);
         $placeholders = $this->findTemplatePlaceholders($tempFile);
 
         return $placeholders;
@@ -270,8 +259,7 @@ class GlossaryController extends AbstractController
     private function extractGlossaryMapping($idPage, LocaleTransfer $localeTransfer)
     {
         $glossaryQuery = $this->getQueryContainer()
-            ->queryGlossaryKeyMappingsWithKeyByPageId($idPage, $localeTransfer->getIdLocale())
-        ;
+            ->queryGlossaryKeyMappingsWithKeyByPageId($idPage, $localeTransfer->getIdLocale());
         $glossaryMappingArray = [];
         foreach ($glossaryQuery->find()
                      ->getData() as $keyMapping) {
@@ -322,8 +310,7 @@ class GlossaryController extends AbstractController
             $idMapping = $glossaryMappingArray[$place];
         }
         $form = $this->getDependencyContainer()
-            ->createCmsGlossaryForm($idPage, $idMapping, $place, $this->getFacade())
-        ;
+            ->createCmsGlossaryForm($idPage, $idMapping, $place, $this->getFacade());
         $form->handleRequest();
 
         return $form;
@@ -341,8 +328,7 @@ class GlossaryController extends AbstractController
 
         if ($this->glossaryKeyName === null) {
             $this->glossaryKeyName = $this->getFacade()
-                ->generateGlossaryKeyName($data[CmsGlossaryForm::TEMPLATE_NAME], $data[CmsGlossaryForm::PLACEHOLDER])
-            ;
+                ->generateGlossaryKeyName($data[CmsGlossaryForm::TEMPLATE_NAME], $data[CmsGlossaryForm::PLACEHOLDER]);
         }
 
         $keyTranslationTransfer = new KeyTranslationTransfer();
@@ -366,8 +352,7 @@ class GlossaryController extends AbstractController
     {
         $cmsPage = $this->getQueryContainer()
             ->queryPageWithTemplatesAndUrlByIdPage($idPage)
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($cmsPage === null) {
             throw new MissingPageException(
@@ -385,14 +370,12 @@ class GlossaryController extends AbstractController
     {
         $blockEntity = $this->getQueryContainer()
             ->queryBlockByIdPage($idPage)
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($blockEntity !== null) {
             $blockTransfer = $this->createBlockTransfer($blockEntity);
             $this->getFacade()
-                ->touchBlockActive($blockTransfer)
-            ;
+                ->touchBlockActive($blockTransfer);
         }
     }
 

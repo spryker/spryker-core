@@ -38,8 +38,7 @@ class KeyController extends AbstractController
 
         $key = $this->getQueryContainer()
             ->queryKey($term)
-            ->findOne()
-        ;
+            ->findOne();
 
         $idGlossaryKey = false;
         if (!empty($key)) {
@@ -50,8 +49,7 @@ class KeyController extends AbstractController
         if ($idGlossaryKey) {
             $translations = $this->getQueryContainer()
                 ->queryTranslations()
-                ->findByFkGlossaryKey($idGlossaryKey)
-            ;
+                ->findByFkGlossaryKey($idGlossaryKey);
         }
 
         $result = [];
@@ -76,8 +74,7 @@ class KeyController extends AbstractController
         $term = $request->get(self::TERM);
 
         $keys = $this->getQueryContainer()
-            ->queryByKey($term)->find()
-        ;
+            ->queryByKey($term)->find();
 
         $result = [];
         if ($keys) {

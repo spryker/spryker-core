@@ -35,8 +35,7 @@ class CodeStyleFixerConsole extends Console
         $this
             ->setName(self::COMMAND_NAME)
             ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>')
-            ->setDescription('Fix code style for a specific bundle')
-        ;
+            ->setDescription('Fix code style for a specific bundle');
 
         $this->addArgument(self::ARGUMENT_BUNDLE, InputArgument::OPTIONAL, 'Name of bundle to fix code style');
         $this->addOption(self::OPTION_CLEAR, 'c', InputOption::VALUE_NONE, 'Force-clear the cache prior to running it');

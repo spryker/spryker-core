@@ -83,8 +83,7 @@ class CmsRedirectForm extends AbstractForm
                 'label' => 'To URL',
                 'constraints' => $this->getConstraints()->getMandatoryConstraints(),
             ])
-            ->addText(self::STATUS)
-            ;
+            ->addText(self::STATUS);
     }
 
     /**

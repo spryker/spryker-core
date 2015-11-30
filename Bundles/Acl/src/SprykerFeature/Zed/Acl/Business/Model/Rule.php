@@ -148,8 +148,7 @@ class Rule implements RuleInterface
     public function existsRoleRule($idAclRole, $bundle, $controller, $action, $type)
     {
         $query = $this->queryContainer
-            ->queryRuleByPathAndRole($idAclRole, $bundle, $controller, $action, $type)
-        ;
+            ->queryRuleByPathAndRole($idAclRole, $bundle, $controller, $action, $type);
 
         return ($query->count() > 0);
     }

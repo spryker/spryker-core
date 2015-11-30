@@ -35,8 +35,7 @@ class PropelSchemaFinder implements PropelSchemaFinderInterface
         $finder
             ->in($this->pathPatterns)
             ->name(self::FILE_NAME_PATTERN)
-            ->depth(0)
-        ;
+            ->depth(0);
 
         return $finder;
     }

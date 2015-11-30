@@ -34,8 +34,7 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
     public function createCurrentLocale()
     {
         return $this->getProvidedDependency(CategoryDependencyProvider::FACADE_LOCALE)
-            ->getCurrentLocale()
-        ;
+            ->getCurrentLocale();
     }
 
     /**
@@ -109,8 +108,7 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
             $idCategoryNode = $this->getQueryContainer()->queryRootNode()->findOne()->getIdCategoryNode();
         }
         $urlQuery = $this->getQueryContainer()
-            ->queryUrlByIdCategoryNode($idCategoryNode)
-        ;
+            ->queryUrlByIdCategoryNode($idCategoryNode);
 
         return $this->getFactory()->createTableUrlTable($urlQuery);
     }

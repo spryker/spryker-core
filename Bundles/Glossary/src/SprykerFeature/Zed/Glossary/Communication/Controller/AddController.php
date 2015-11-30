@@ -27,12 +27,10 @@ class AddController extends AbstractController
     public function indexAction()
     {
         $availableLocales = $this->getDependencyContainer()
-            ->createEnabledLocales()
-        ;
+            ->createEnabledLocales();
 
         $glossaryForm = $this->getDependencyContainer()
-            ->createTranslationForm($availableLocales, self::FORM_ADD_TYPE)
-        ;
+            ->createTranslationForm($availableLocales, self::FORM_ADD_TYPE);
 
         $glossaryForm->handleRequest();
 

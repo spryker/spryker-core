@@ -37,17 +37,14 @@ class CarrierForm extends AbstractForm
     {
         $this->addText(self::NAME_FIELD, [
                 'label' => 'Name',
-            ])
-        ;
+            ]);
         $this->addAutosuggest(self::NAME_GLOSSARY_FIELD, [
                 'label' => 'Name glossary key',
                 'url' => '/glossary/ajax/keys',
-            ])
-        ;
+            ]);
         $this->addCheckbox(self::IS_ACTIVE_FIELD, [
                 'label' => 'Enabled?',
-            ])
-        ;
+            ]);
 
         return $this;
     }

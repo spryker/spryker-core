@@ -203,8 +203,7 @@ class BlockManager implements BlockManagerInterface
     protected function getCmsBlockByIdPage($idCmsPage)
     {
         $blockEntity = $this->cmsQueryContainer->queryBlockByIdPage($idCmsPage)
-            ->findOne()
-        ;
+            ->findOne();
 
         return $blockEntity;
     }
@@ -217,8 +216,7 @@ class BlockManager implements BlockManagerInterface
     public function getCmsBlocksByIdCategoryNode($idCategoryNode)
     {
         $blockEntities = $this->cmsQueryContainer->queryBlockByIdCategoryNode($idCategoryNode)
-            ->find()
-        ;
+            ->find();
 
         $blockTransfers = [];
         foreach ($blockEntities as $block) {
@@ -267,8 +265,7 @@ class BlockManager implements BlockManagerInterface
     public function hasBlockCategoryNodeMapping($idCategoryNode)
     {
         $mappingCount = $this->cmsQueryContainer->queryBlockByIdCategoryNode($idCategoryNode)
-            ->count()
-        ;
+            ->count();
 
         return $mappingCount > 0;
     }

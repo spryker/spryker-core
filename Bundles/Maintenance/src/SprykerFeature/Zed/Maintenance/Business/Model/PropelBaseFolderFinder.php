@@ -35,8 +35,7 @@ class PropelBaseFolderFinder implements PropelBaseFolderFinderInterface
             ->exclude(self::TESTS)
             ->path('#' . preg_quote(self::NAME, '/') . '#')
             ->in($this->bundlePath)
-            ->sortByName()
-        ;
+            ->sortByName();
 
         $result = [];
         foreach ($iterator as $folder) {

@@ -71,8 +71,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
         $query = SpyUrlQuery::create();
         $query->innerJoinSpyRedirect()
             ->withColumn(SpyRedirectTableMap::COL_TO_URL, self::TO_URL)
-            ->withColumn(SpyRedirectTableMap::COL_STATUS, self::STATUS)
-        ;
+            ->withColumn(SpyRedirectTableMap::COL_STATUS, self::STATUS);
 
         return $query;
     }
@@ -107,8 +106,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
     {
         return $this->queryUrls()
             ->leftJoinSpyLocale(null, Criteria::LEFT_JOIN)
-            ->withColumn('locale_name')
-            ;
+            ->withColumn('locale_name');
     }
 
     /**
@@ -122,8 +120,7 @@ class UrlQueryContainer extends AbstractQueryContainer implements UrlQueryContai
         $query->leftJoinSpyRedirect()
             ->withColumn(SpyRedirectTableMap::COL_TO_URL, self::TO_URL)
             ->withColumn(SpyRedirectTableMap::COL_STATUS, self::STATUS)
-            ->filterByIdUrl($id)
-        ;
+            ->filterByIdUrl($id);
 
         return $query;
     }

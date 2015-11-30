@@ -29,8 +29,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $sessionMock = $this->getSessionMock();
         $sessionMock->expects($this->once())
             ->method('getCart')
-            ->will($this->returnValue($cartTransfer))
-        ;
+            ->will($this->returnValue($cartTransfer));
 
         $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
@@ -44,8 +43,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $sessionMock->expects($this->once())
             ->method('setItemCount')
             ->with(0)
-            ->will($this->returnValue($sessionMock))
-        ;
+            ->will($this->returnValue($sessionMock));
 
         $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
@@ -59,14 +57,12 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $sessionMock = $this->getSessionMock();
         $sessionMock->expects($this->once())
             ->method('setItemCount')
-            ->will($this->returnValue($sessionMock))
-        ;
+            ->will($this->returnValue($sessionMock));
 
         $sessionMock->expects($this->once())
             ->method('setCart')
             ->with($cartTransfer)
-            ->will($this->returnValue($sessionMock))
-        ;
+            ->will($this->returnValue($sessionMock));
 
         $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
@@ -79,8 +75,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $sessionMock = $this->getSessionMock();
         $sessionMock->expects($this->once())
             ->method('getItemCount')
-            ->will($this->returnValue(0))
-        ;
+            ->will($this->returnValue(0));
 
         $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
@@ -95,14 +90,12 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $sessionMock = $this->getSessionMock();
         $sessionMock->expects($this->once())
             ->method('getCart')
-            ->will($this->returnValue($cartTransfer))
-        ;
+            ->will($this->returnValue($cartTransfer));
 
         $stubMock = $this->getStubMock();
         $stubMock->expects($this->once())
             ->method('addItem')
-            ->will($this->returnValue($cartTransfer))
-        ;
+            ->will($this->returnValue($cartTransfer));
 
         $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock, $stubMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
@@ -122,14 +115,12 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $sessionMock = $this->getSessionMock();
         $sessionMock->expects($this->exactly(2))
             ->method('getCart')
-            ->will($this->returnValue($cartTransfer))
-        ;
+            ->will($this->returnValue($cartTransfer));
 
         $stubMock = $this->getStubMock();
         $stubMock->expects($this->once())
             ->method('removeItem')
-            ->will($this->returnValue($cartTransfer))
-        ;
+            ->will($this->returnValue($cartTransfer));
 
         $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock, $stubMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
@@ -151,18 +142,15 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $sessionMock = $this->getSessionMock();
         $sessionMock->expects($this->exactly(3))
             ->method('getCart')
-            ->will($this->returnValue($cartTransfer))
-        ;
+            ->will($this->returnValue($cartTransfer));
 
         $stubMock = $this->getStubMock();
         $stubMock->expects($this->once())
             ->method('decreaseItemQuantity')
-            ->will($this->returnValue($cartTransfer))
-        ;
+            ->will($this->returnValue($cartTransfer));
         $stubMock->expects($this->never())
             ->method('increaseItemQuantity')
-            ->will($this->returnValue($cartTransfer))
-        ;
+            ->will($this->returnValue($cartTransfer));
 
         $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock, $stubMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
@@ -188,18 +176,15 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $sessionMock = $this->getSessionMock();
         $sessionMock->expects($this->exactly(3))
             ->method('getCart')
-            ->will($this->returnValue($cartTransfer))
-        ;
+            ->will($this->returnValue($cartTransfer));
 
         $stubMock = $this->getStubMock();
         $stubMock->expects($this->once())
             ->method('decreaseItemQuantity')
-            ->will($this->returnValue($cartTransfer))
-        ;
+            ->will($this->returnValue($cartTransfer));
         $stubMock->expects($this->never())
             ->method('increaseItemQuantity')
-            ->will($this->returnValue($cartTransfer))
-        ;
+            ->will($this->returnValue($cartTransfer));
 
         $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock, $stubMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
@@ -224,18 +209,15 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $sessionMock = $this->getSessionMock();
         $sessionMock->expects($this->exactly(3))
             ->method('getCart')
-            ->will($this->returnValue($cartTransfer))
-        ;
+            ->will($this->returnValue($cartTransfer));
 
         $stubMock = $this->getStubMock();
         $stubMock->expects($this->never())
             ->method('decreaseItemQuantity')
-            ->will($this->returnValue($cartTransfer))
-        ;
+            ->will($this->returnValue($cartTransfer));
         $stubMock->expects($this->once())
             ->method('increaseItemQuantity')
-            ->will($this->returnValue($cartTransfer))
-        ;
+            ->will($this->returnValue($cartTransfer));
 
         $dependencyContainerMock = $this->getDependencyContainerMock($sessionMock, $stubMock);
         $cartClientMock = $this->getCartClientMock($dependencyContainerMock);
@@ -262,26 +244,22 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
     ) {
         $dependencyContainerMock = $this->getMock(
             'SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer',
-            ['createSession', 'createZedStub', 'createStorage'], [], '', false)
-        ;
+            ['createSession', 'createZedStub', 'createStorage'], [], '', false);
 
         if ($cartSession !== null) {
             $dependencyContainerMock->expects($this->any())
                 ->method('createSession')
-                ->will($this->returnValue($cartSession))
-            ;
+                ->will($this->returnValue($cartSession));
         }
         if ($cartStub !== null) {
             $dependencyContainerMock->expects($this->any())
                 ->method('createZedStub')
-                ->will($this->returnValue($cartStub))
-            ;
+                ->will($this->returnValue($cartStub));
         }
         if ($cartStorage !== null) {
             $dependencyContainerMock->expects($this->any())
                 ->method('createStorage')
-                ->will($this->returnValue($cartStorage))
-            ;
+                ->will($this->returnValue($cartStorage));
         }
 
         return $dependencyContainerMock;
@@ -296,8 +274,7 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
     {
         $cartClientMock = $this->getMock(
             'SprykerFeature\Client\Cart\Service\CartClient',
-            ['getDependencyContainer'], [], '', false)
-        ;
+            ['getDependencyContainer'], [], '', false);
 
         $cartClientMock->expects($this->any())
             ->method('getDependencyContainer')

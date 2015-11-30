@@ -37,8 +37,7 @@ class PoolCategoryForm extends AbstractForm
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
-            ])
-        ;
+            ]);
     }
 
     /**
@@ -48,8 +47,7 @@ class PoolCategoryForm extends AbstractForm
     {
         $name = ($this->poolCategory instanceof SpyDiscountVoucherPoolCategory)
             ? $this->poolCategory->getName()
-            : ''
-        ;
+            : '';
 
         return [
             self::COL_NAME => $name,

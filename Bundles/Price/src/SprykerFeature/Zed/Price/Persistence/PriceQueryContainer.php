@@ -55,8 +55,7 @@ class PriceQueryContainer extends AbstractQueryContainer
             ->filterByPriceType($priceType)
             ->useSpyAbstractProductQuery()
             ->filterBySku($sku)
-            ->endUse()
-            ;
+            ->endUse();
     }
 
     /**
@@ -73,8 +72,7 @@ class PriceQueryContainer extends AbstractQueryContainer
             ->filterByPriceType($priceType)
             ->useProductQuery()
             ->filterBySku($sku)
-            ->endUse()
-            ;
+            ->endUse();
     }
 
     /**
@@ -103,8 +101,7 @@ class PriceQueryContainer extends AbstractQueryContainer
             ->filterByPriceType($priceType)
             ->useSpyAbstractProductQuery()
             ->filterBySku($transferPriceProduct->getSkuProduct())
-            ->endUse()
-            ;
+            ->endUse();
     }
 
     /**
@@ -122,8 +119,7 @@ class PriceQueryContainer extends AbstractQueryContainer
             ->filterByPriceType($priceType)
             ->useProductQuery()
             ->filterBySku($transferPriceProduct->getSkuProduct())
-            ->endUse()
-            ;
+            ->endUse();
     }
 
     /**
@@ -134,8 +130,7 @@ class PriceQueryContainer extends AbstractQueryContainer
     public function queryPriceProductEntity($idPriceProduct)
     {
         return SpyPriceProductQuery::create()
-            ->filterByIdPriceProduct($idPriceProduct)
-            ;
+            ->filterByIdPriceProduct($idPriceProduct);
     }
 
     /**
@@ -149,8 +144,7 @@ class PriceQueryContainer extends AbstractQueryContainer
             ->joinSpyAbstractProduct()
             ->withColumn(SpyAbstractProductTableMap::COL_SKU, 'sku_product_abstract')
             ->joinPriceType()
-            ->withColumn(SpyPriceTypeTableMap::COL_NAME, 'price_type_name')
-            ;
+            ->withColumn(SpyPriceTypeTableMap::COL_NAME, 'price_type_name');
     }
 
     /**
@@ -175,8 +169,7 @@ class PriceQueryContainer extends AbstractQueryContainer
                 SpyPriceTypeTableMap::COL_NAME => 'label',
             ])
             ->withColumn(SpyPriceTypeTableMap::COL_NAME, 'value')
-            ->withColumn(SpyPriceTypeTableMap::COL_NAME, 'label')
-            ;
+            ->withColumn(SpyPriceTypeTableMap::COL_NAME, 'label');
     }
 
 }

@@ -40,8 +40,7 @@ class NavigationSchemaFinder implements NavigationSchemaFinderInterface
         $finder = new Finder();
         $finder
             ->in($this->pathPattern)
-            ->name($this->fileNamePattern)
-        ;
+            ->name($this->fileNamePattern);
 
         return $finder;
     }

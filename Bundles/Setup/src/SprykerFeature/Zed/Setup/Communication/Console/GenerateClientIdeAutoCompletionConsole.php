@@ -53,8 +53,7 @@ class GenerateClientIdeAutoCompletionConsole extends Console
                 [
                     GeneratedInterfaceMethodTagBuilder::OPTION_METHOD_STRING_PATTERN => ' * @method \\Generated\Client\Ide\{{bundle}} {{methodName}}()',
                 ]
-            ))
-        ;
+            ));
         $generator->create();
 
         $this->info('Generated Client IdeAutoCompletion file');
@@ -87,8 +86,7 @@ class GenerateClientIdeAutoCompletionConsole extends Console
 
         $generator = new IdeBundleAutoCompletionGenerator($options);
         $generator
-            ->addMethodTagBuilder(new ClientMethodTagBuilder())
-        ;
+            ->addMethodTagBuilder(new ClientMethodTagBuilder());
 
         $generator->create();
 

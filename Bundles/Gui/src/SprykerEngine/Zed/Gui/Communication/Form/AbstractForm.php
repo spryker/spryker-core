@@ -55,8 +55,7 @@ abstract class AbstractForm
 
         return $this->getApplication()[self::FORM_FACTORY]
             ->createBuilder($this->formType, $populatedData)
-            ->getForm()
-        ;
+            ->getForm();
     }
 
     /**

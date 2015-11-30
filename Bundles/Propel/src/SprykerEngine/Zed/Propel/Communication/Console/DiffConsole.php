@@ -41,8 +41,7 @@ class DiffConsole extends Console
         $config = Config::get(SystemConfig::PROPEL);
         $command = 'vendor/bin/propel diff --config-dir '
             . $config['paths']['phpConfDir']
-            . ' --schema-dir ' . $config['paths']['schemaDir']
-        ;
+            . ' --schema-dir ' . $config['paths']['schemaDir'];
 
         $process = new Process($command, APPLICATION_ROOT_DIR);
         $process->setTimeout(self::PROCESS_TIMEOUT);

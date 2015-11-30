@@ -25,8 +25,7 @@ class GatewayController extends AbstractGatewayController
     public function getAvailableMethodsAction(ShipmentMethodAvailabilityInterface $shipmentMethodAvailability)
     {
         return $this->getFacade()
-            ->getAvailableMethods($shipmentMethodAvailability)
-            ;
+            ->getAvailableMethods($shipmentMethodAvailability);
     }
 
 }

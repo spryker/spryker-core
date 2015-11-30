@@ -40,7 +40,7 @@ abstract class AbstractZedClient
      * @param string $name
      * @param mixed $metaTransfer
      *
-     * @return $this
+     * @return self
      */
     public function addMetaTransfer($name, $metaTransfer)
     {

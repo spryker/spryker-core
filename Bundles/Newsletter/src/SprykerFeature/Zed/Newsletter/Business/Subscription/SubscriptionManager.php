@@ -89,8 +89,7 @@ class SubscriptionManager implements SubscriptionManagerInterface
 
         $newsletterTypeEntity = $this->queryContainer
             ->queryNewsletterType()
-            ->findOneByName($newsletterType->getName())
-        ;
+            ->findOneByName($newsletterType->getName());
 
         if ($newsletterTypeEntity !== null) {
             return $newsletterTypeEntity->getIdNewsletterType();
@@ -110,8 +109,7 @@ class SubscriptionManager implements SubscriptionManagerInterface
         if ($newsletterSubscriber->getSubscriberKey() !== null) {
             $subscriptionEntity = $this->queryContainer
                 ->querySubscriptionBySubscriberKeyAndNewsletterTypeName($newsletterSubscriber->getSubscriberKey(), $newsletterType->getName())
-                ->findOne()
-            ;
+                ->findOne();
 
             return $subscriptionEntity;
         }
@@ -119,8 +117,7 @@ class SubscriptionManager implements SubscriptionManagerInterface
         if ($newsletterSubscriber->getFkCustomer() !== null) {
             $subscriptionEntity = $this->queryContainer
                 ->querySubscriptionByIdCustomerAndNewsletterTypeName($newsletterSubscriber->getFkCustomer(), $newsletterType->getName())
-                ->findOne()
-            ;
+                ->findOne();
 
             return $subscriptionEntity;
         }

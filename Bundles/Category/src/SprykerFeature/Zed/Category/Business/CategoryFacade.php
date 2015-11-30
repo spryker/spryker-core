@@ -28,8 +28,7 @@ class CategoryFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createCategoryTreeReader()
-            ->hasCategoryNode($categoryName, $locale)
-        ;
+            ->hasCategoryNode($categoryName, $locale);
     }
 
     /**
@@ -41,13 +40,11 @@ class CategoryFacade extends AbstractFacade
     {
         $nodeEntity = $this->getDependencyContainer()
             ->createCategoryTreeReader()
-            ->getNodeById($idNode)
-        ;
+            ->getNodeById($idNode);
 
         return $this->getDependencyContainer()
             ->createCategoryTransferGenerator()
-            ->convertCategoryNode($nodeEntity)
-        ;
+            ->convertCategoryNode($nodeEntity);
     }
 
     /**
@@ -60,8 +57,7 @@ class CategoryFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createCategoryTreeReader()
-            ->getCategoryNodeIdentifier($categoryName, $locale)
-        ;
+            ->getCategoryNodeIdentifier($categoryName, $locale);
     }
 
     /**
@@ -74,8 +70,7 @@ class CategoryFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createCategoryTreeReader()
-            ->getCategoryIdentifier($categoryName, $locale)
-        ;
+            ->getCategoryIdentifier($categoryName, $locale);
     }
 
     /**
@@ -87,13 +82,11 @@ class CategoryFacade extends AbstractFacade
     {
         $nodeEntities = $this->getDependencyContainer()
             ->createCategoryTreeReader()
-            ->getAllNodesByIdCategory($idCategory)
-        ;
+            ->getAllNodesByIdCategory($idCategory);
 
         return $this->getDependencyContainer()
             ->createCategoryTransferGenerator()
-            ->convertCategoryNodeCollection($nodeEntities)
-        ;
+            ->convertCategoryNodeCollection($nodeEntities);
     }
 
     /**
@@ -105,13 +98,11 @@ class CategoryFacade extends AbstractFacade
     {
         $nodeEntities = $this->getDependencyContainer()
             ->createCategoryTreeReader()
-            ->getMainNodesByIdCategory($idCategory)
-        ;
+            ->getMainNodesByIdCategory($idCategory);
 
         return $this->getDependencyContainer()
             ->createCategoryTransferGenerator()
-            ->convertCategoryNodeCollection($nodeEntities)
-        ;
+            ->convertCategoryNodeCollection($nodeEntities);
     }
 
     /**
@@ -123,13 +114,11 @@ class CategoryFacade extends AbstractFacade
     {
         $nodeEntities = $this->getDependencyContainer()
             ->createCategoryTreeReader()
-            ->getNotMainNodesByIdCategory($idCategory)
-        ;
+            ->getNotMainNodesByIdCategory($idCategory);
 
         return $this->getDependencyContainer()
             ->createCategoryTransferGenerator()
-            ->convertCategoryNodeCollection($nodeEntities)
-        ;
+            ->convertCategoryNodeCollection($nodeEntities);
     }
 
     /**
@@ -142,8 +131,7 @@ class CategoryFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createCategoryWriter()
-            ->create($category, $locale)
-        ;
+            ->create($category, $locale);
     }
 
     /**
@@ -156,8 +144,7 @@ class CategoryFacade extends AbstractFacade
     {
         $this->getDependencyContainer()
             ->createCategoryWriter()
-            ->update($category, $locale)
-        ;
+            ->update($category, $locale);
     }
 
     /**
@@ -170,8 +157,7 @@ class CategoryFacade extends AbstractFacade
     {
         $this->getDependencyContainer()
             ->createCategoryWriter()
-            ->addCategoryAttribute($category, $locale)
-        ;
+            ->addCategoryAttribute($category, $locale);
     }
 
     /**
@@ -183,8 +169,7 @@ class CategoryFacade extends AbstractFacade
     {
         $this->getDependencyContainer()
             ->createCategoryWriter()
-            ->delete($idCategory)
-        ;
+            ->delete($idCategory);
     }
 
     /**
@@ -198,8 +183,7 @@ class CategoryFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createCategoryTreeWriter()
-            ->createCategoryNode($categoryNode, $locale, $createUrlPath)
-        ;
+            ->createCategoryNode($categoryNode, $locale, $createUrlPath);
     }
 
     /**
@@ -212,8 +196,7 @@ class CategoryFacade extends AbstractFacade
     {
         $this->getDependencyContainer()
             ->createCategoryTreeWriter()
-            ->updateNode($categoryNode, $locale)
-        ;
+            ->updateNode($categoryNode, $locale);
     }
 
     /**
@@ -227,8 +210,7 @@ class CategoryFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createCategoryTreeWriter()
-            ->deleteNode($idNode, $locale, $deleteChildren)
-        ;
+            ->deleteNode($idNode, $locale, $deleteChildren);
     }
 
     /**
@@ -238,8 +220,7 @@ class CategoryFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createCategoryTreeRenderer()
-            ->render()
-        ;
+            ->render();
     }
 
     /**
@@ -249,13 +230,11 @@ class CategoryFacade extends AbstractFacade
     {
         $rootNodes = $this->getDependencyContainer()
             ->createCategoryTreeReader()
-            ->getRootNodes()
-        ;
+            ->getRootNodes();
 
         return $this->getDependencyContainer()
             ->createCategoryTransferGenerator()
-            ->convertCategoryNodeCollection($rootNodes)
-        ;
+            ->convertCategoryNodeCollection($rootNodes);
     }
 
     /**
@@ -268,8 +247,7 @@ class CategoryFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createCategoryTreeReader()
-            ->getTree($idCategory, $locale)
-        ;
+            ->getTree($idCategory, $locale);
     }
 
     /**
@@ -282,8 +260,7 @@ class CategoryFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createCategoryTreeReader()
-            ->getChildren($idNode, $locale)
-        ;
+            ->getChildren($idNode, $locale);
     }
 
     /**
@@ -297,8 +274,7 @@ class CategoryFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createCategoryTreeReader()
-            ->getParents($idNode, $locale, $excludeStartNode)
-        ;
+            ->getParents($idNode, $locale, $excludeStartNode);
     }
 
     /**
@@ -311,8 +287,7 @@ class CategoryFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createCategoryTreeReader()
-            ->getTreeNodeChildrenByIdCategoryAndLocale($idCategory, $locale)
-        ;
+            ->getTreeNodeChildrenByIdCategoryAndLocale($idCategory, $locale);
     }
 
     /**
@@ -322,8 +297,7 @@ class CategoryFacade extends AbstractFacade
     {
         $this->getDependencyContainer()
             ->createCategoryTreeWriter()
-            ->rebuildClosureTable()
-        ;
+            ->rebuildClosureTable();
     }
 
     /**
@@ -335,8 +309,7 @@ class CategoryFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->createUrlPathGenerator()
-            ->generate($pathTokens)
-        ;
+            ->generate($pathTokens);
     }
 
 }

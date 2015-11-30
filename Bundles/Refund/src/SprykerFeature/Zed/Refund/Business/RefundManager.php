@@ -81,8 +81,7 @@ class RefundManager
             ->querySalesOrderItem()
             ->filterByFkSalesOrder($idOrder)
             ->filterByFkRefund(null, Criteria::ISNULL)
-            ->find()
-        ;
+            ->find();
 
         return $orderItems;
     }
@@ -98,8 +97,7 @@ class RefundManager
             ->querySalesExpense()
             ->filterByFkSalesOrder($idOrder)
             ->filterByFkRefund(null, Criteria::ISNULL)
-            ->find()
-        ;
+            ->find();
 
         return $expenses;
     }
@@ -113,8 +111,7 @@ class RefundManager
     {
         return $this->refundQueryContainer
             ->queryRefundsByIdSalesOrder($idOrder)
-            ->find()
-        ;
+            ->find();
     }
 
 }

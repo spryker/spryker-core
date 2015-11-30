@@ -79,8 +79,7 @@ class TouchRecord implements TouchRecordInterface
         $touchEntity->setItemType($itemType)
             ->setItemEvent($itemEvent)
             ->setItemId($idItem)
-            ->setTouched(new DateTime())
-        ;
+            ->setTouched(new DateTime());
         $touchEntity->save();
     }
 
@@ -94,8 +93,7 @@ class TouchRecord implements TouchRecordInterface
     {
         $touchDeletedEntity = $this->touchQueryContainer
             ->queryUpdateTouchEntry($itemType, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($touchDeletedEntity === null) {
             return false;
@@ -103,8 +101,7 @@ class TouchRecord implements TouchRecordInterface
 
         $touchActiveEntity = $this->touchQueryContainer
             ->queryUpdateTouchEntry($itemType, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
-            ->findOne()
-        ;
+            ->findOne();
 
         if ($touchActiveEntity !== null) {
             $touchActiveEntity->delete();
@@ -120,15 +117,13 @@ class TouchRecord implements TouchRecordInterface
     protected function insertKeyChangeRecord($itemType, $idItem)
     {
         $touchOldEntity = $this->touchQueryContainer->queryUpdateTouchEntry($itemType, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
-            ->findOne()
-        ;
+            ->findOne();
         if ($touchOldEntity === null) {
             return;
         }
 
         $touchDeletedEntity = $this->touchQueryContainer->queryUpdateTouchEntry($itemType, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_DELETED)
-            ->findOne()
-        ;
+            ->findOne();
         if ($touchDeletedEntity === null) {
             $this->saveTouchEntity($itemType, $idItem, SpyTouchTableMap::COL_ITEM_EVENT_DELETED, $touchOldEntity);
         }
@@ -146,8 +141,7 @@ class TouchRecord implements TouchRecordInterface
             $type = $itemEvent;
         }
         $touchEntity = $this->touchQueryContainer->queryUpdateTouchEntry($itemType, $idItem, $type)
-            ->findOneOrCreate()
-        ;
+            ->findOneOrCreate();
         $this->saveTouchEntity($itemType, $idItem, $itemEvent, $touchEntity);
     }
 

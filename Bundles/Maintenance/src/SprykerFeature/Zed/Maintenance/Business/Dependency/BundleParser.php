@@ -81,8 +81,7 @@ class BundleParser
         $files = (new Finder())
             ->files()
             ->in($this->config->getBundleDirectory() . $bundle . '/src/*/Zed/')
-            ->exclude($this->config->getExcludedDirectoriesForDependencies())
-        ;
+            ->exclude($this->config->getExcludedDirectoriesForDependencies());
 
         return $files;
     }
@@ -163,8 +162,7 @@ class BundleParser
         $directories = (new Finder())
             ->directories()
             ->depth('== 0')
-            ->in($this->config->getBundleDirectory() . $bundleName . '/src')
-        ;
+            ->in($this->config->getBundleDirectory() . $bundleName . '/src');
 
         return $directories;
     }

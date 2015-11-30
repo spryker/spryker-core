@@ -29,8 +29,7 @@ class SearchPageConfigQueryExpander implements SearchPageConfigQueryExpanderInte
         $join
             ->setLeftTableName(SpyTouchTableMap::TABLE_NAME)
             ->setRightTableName(SpySearchPageElementTableMap::TABLE_NAME)
-            ->setJoinCondition(new BasicCriterion(new Criteria(), 'is_element_active', '1'))
-        ;
+            ->setJoinCondition(new BasicCriterion(new Criteria(), 'is_element_active', '1'));
         $expandableQuery->addJoinObject($join);
         $expandableQuery->addJoin(
             SpySearchPageElementTableMap::COL_FK_SEARCH_DOCUMENT_ATTRIBUTE,

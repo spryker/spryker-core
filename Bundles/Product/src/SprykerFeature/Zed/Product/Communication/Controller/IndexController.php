@@ -59,13 +59,11 @@ class IndexController extends AbstractController
 
         $abstractProduct = $this->getQueryContainer()
             ->querySkuFromAbstractProductById($idAbstractProduct)
-            ->findOne()
-        ;
+            ->findOne();
 
         $concreteProductCollection = $this->getQueryContainer()
             ->queryConcreteProductByAbstractProduct($abstractProduct)
-            ->find()
-        ;
+            ->find();
 
         $concreteProducts = $this->createConcreteProductsCollection($concreteProductCollection);
 
@@ -73,8 +71,7 @@ class IndexController extends AbstractController
 
         $attributesCollection = $this->getQueryContainer()
             ->queryAbstractProductAttributeCollection($abstractProduct->getIdAbstractProduct(), $currentLocale->getIdLocale())
-            ->findOne()
-        ;
+            ->findOne();
 
         $attributes = [
             'name' => $attributesCollection->getName(),
@@ -147,8 +144,7 @@ class IndexController extends AbstractController
                 ->getProductOptionsByIdProduct(
                     $concreteProduct->getIdProduct(),
                     $this->getCurrentLocale()->getIdLocale()
-                )
-            ;
+                );
 
             $concreteProducts[] = [
                 'sku' => $concreteProduct->getSku(),
@@ -172,8 +168,7 @@ class IndexController extends AbstractController
         $productCategoryEntityList = $this->getDependencyContainer()
             ->createProductCategoryQueryContainer()
             ->queryLocalizedProductCategoryMappingByIdProduct($abstractProduct->getIdAbstractProduct())
-            ->find()
-        ;
+            ->find();
 
         $categories = [];
         foreach ($productCategoryEntityList as $productCategoryEntity) {
@@ -195,8 +190,7 @@ class IndexController extends AbstractController
     {
         $currentLocale = $this->getDependencyContainer()
             ->createLocaleFacade()
-            ->getCurrentLocale()
-        ;
+            ->getCurrentLocale();
 
         return $currentLocale;
     }

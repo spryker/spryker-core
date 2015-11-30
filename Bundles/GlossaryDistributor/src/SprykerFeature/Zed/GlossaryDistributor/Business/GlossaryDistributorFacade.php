@@ -20,8 +20,7 @@ class GlossaryDistributorFacade extends AbstractFacade
     {
         return $this->getDependencyContainer()
             ->getGlossaryDistributorQueryContainer()
-            ->expandTranslationQueryToDistribute($expandQuery)
-            ;
+            ->expandTranslationQueryToDistribute($expandQuery);
     }
 
 }

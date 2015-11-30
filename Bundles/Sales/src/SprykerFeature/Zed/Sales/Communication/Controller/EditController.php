@@ -25,15 +25,13 @@ class EditController extends AbstractController
     {
         $idOrder = $request->get('id-sales-order');
         $form = $this->getDependencyContainer()
-            ->createCustomerForm($idOrder)
-        ;
+            ->createCustomerForm($idOrder);
         $form->handleRequest();
 
         if ($form->isValid()) {
             $orderTransfer = (new OrderTransfer())->fromArray($form->getData(), true);
             $this->getFacade()
-                ->updateOrderCustomer($orderTransfer, $idOrder)
-            ;
+                ->updateOrderCustomer($orderTransfer, $idOrder);
 
             return $this->redirectResponse(sprintf('/sales/details/?id-sales-order=%d', $idOrder));
         }
@@ -55,15 +53,13 @@ class EditController extends AbstractController
         $idOrderAddress = $request->get('id-address');
 
         $form = $this->getDependencyContainer()
-            ->createAddressForm($idOrderAddress)
-        ;
+            ->createAddressForm($idOrderAddress);
         $form->handleRequest();
 
         if ($form->isValid()) {
             $addressTransfer = (new AddressTransfer())->fromArray($form->getData(), true);
             $this->getFacade()
-                ->updateOrderAddress($addressTransfer, $idOrderAddress)
-            ;
+                ->updateOrderAddress($addressTransfer, $idOrderAddress);
 
             return $this->redirectResponse(sprintf('/sales/details/?id-sales-order=%d', $idOrder));
         }
