@@ -15,7 +15,7 @@ use SprykerFeature\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
 use Unit\SprykerFeature\Zed\Checkout\Business\Fixture\MockOrderHydrator;
 use Unit\SprykerFeature\Zed\Checkout\Business\Fixture\MockOrderSaver;
 use Unit\SprykerFeature\Zed\Checkout\Business\Fixture\MockPostHook;
-use Unit\SprykerFeature\Zed\Checkout\Business\Fixture\ResponseManipulatorPrecondition;
+use Unit\SprykerFeature\Zed\Checkout\Business\Fixture\ResponseManipulatorPreCondition;
 
 /**
  * @group SprykerFeature
@@ -28,8 +28,8 @@ class CheckoutWorkflowTest extends Test
 
     public function testWorkflowCallsAllPreconditions()
     {
-        $mock1 = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPreconditionInterface');
-        $mock2 = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPreconditionInterface');
+        $mock1 = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPreConditionInterface');
+        $mock2 = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPreConditionInterface');
         $omsMock = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Facade\\CheckoutToOmsInterface');
 
         $checkoutRequest = new CheckoutRequestTransfer();
@@ -131,7 +131,7 @@ class CheckoutWorkflowTest extends Test
             ->setIsExternalRedirect(true)
             ->setRedirectUrl('anUrl');
 
-        $mock1 = new ResponseManipulatorPrecondition($checkoutResponse);
+        $mock1 = new ResponseManipulatorPreCondition($checkoutResponse);
         $mock2 = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutSaveOrderInterface');
         $omsMock = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Facade\\CheckoutToOmsInterface');
 
@@ -157,7 +157,7 @@ class CheckoutWorkflowTest extends Test
             ->addError($error)
             ->setIsSuccess(false);
 
-        $mock1 = new ResponseManipulatorPrecondition($checkoutResponse);
+        $mock1 = new ResponseManipulatorPreCondition($checkoutResponse);
         $mock2 = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutSaveOrderInterface');
         $omsMock = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Facade\\CheckoutToOmsInterface');
 

@@ -39,10 +39,10 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
         );
 
         $paymentTransactionHandler->registerMethodMapper(
-            $this->getFactory()->createPaymentMethodinvoiceInvoice($this->getConfig())
+            $this->getFactory()->createPaymentMethodInvoiceInvoice($this->getConfig())
         );
         $paymentTransactionHandler->registerMethodMapper(
-            $this->getFactory()->createPaymentMethodinstallmentInstallment($this->getConfig())
+            $this->getFactory()->createPaymentMethodInstallmentInstallment($this->getConfig())
         );
 
         return $paymentTransactionHandler;
@@ -60,7 +60,7 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
         );
 
         $paymentCalculationHandler->registerMethodMapper(
-            $this->getFactory()->createPaymentMethodinstallmentInstallment($this->getConfig())
+            $this->getFactory()->createPaymentMethodInstallmentInstallment($this->getConfig())
         );
 
         return $paymentCalculationHandler;

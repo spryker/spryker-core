@@ -9,13 +9,13 @@ namespace SprykerFeature\Zed\CustomerCheckoutConnector\Business;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 
-interface PreconditionCheckerInterface
+interface PreConditionCheckerInterface
 {
 
     /**
      * @param CheckoutRequestTransfer $request
      * @param CheckoutResponseTransfer $response
      */
-    public function checkPreconditions(CheckoutRequestTransfer $request, CheckoutResponseTransfer $response);
+    public function checkPreConditions(CheckoutRequestTransfer $request, CheckoutResponseTransfer $response);
 
 }

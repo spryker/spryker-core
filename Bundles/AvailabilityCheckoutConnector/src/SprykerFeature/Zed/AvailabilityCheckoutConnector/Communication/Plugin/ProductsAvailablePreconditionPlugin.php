@@ -13,12 +13,12 @@ use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Shared\Checkout\CheckoutConfig;
 use SprykerFeature\Zed\AvailabilityCheckoutConnector\Communication\AvailabilityCheckoutConnectorDependencyContainer;
-use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreconditionInterface;
+use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
 
 /**
  * @method AvailabilityCheckoutConnectorDependencyContainer getDependencyContainer()
  */
-class ProductsAvailablePreconditionPlugin extends AbstractPlugin implements CheckoutPreconditionInterface
+class ProductsAvailablePreConditionPlugin extends AbstractPlugin implements CheckoutPreConditionInterface
 {
 
     /**

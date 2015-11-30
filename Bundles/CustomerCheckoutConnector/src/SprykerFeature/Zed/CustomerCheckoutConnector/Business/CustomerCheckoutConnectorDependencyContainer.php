@@ -39,7 +39,7 @@ class CustomerCheckoutConnectorDependencyContainer extends AbstractBusinessDepen
     }
 
     /**
-     * @return PreconditionCheckerInterface
+     * @return PreConditionCheckerInterface
      */
     public function createPreconditionChecker()
     {
