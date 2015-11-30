@@ -30,6 +30,8 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
     /**
      * @param OrderTransfer $orderTransfer
      * @param CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
      */
     public function saveOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
@@ -57,6 +59,8 @@ class CustomerOrderSaver implements CustomerOrderSaverInterface
 
     /**
      * @param CustomerTransfer $customer
+     *
+     * @return void
      */
     protected function persistAddresses(CustomerTransfer $customer)
     {

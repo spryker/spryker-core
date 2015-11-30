@@ -65,8 +65,8 @@ class CheckoutFacadeTest extends Test
 
         $container[CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS] = function (Container $container) {
             return [
-                $container->getLocator()->customerCheckoutConnector()->pluginCustomerPreconditionCheckerPlugin(),
-                $container->getLocator()->availabilityCheckoutConnector()->pluginProductsAvailablePreconditionPlugin(),
+                $container->getLocator()->customerCheckoutConnector()->pluginCustomerPreConditionCheckerPlugin(),
+                $container->getLocator()->availabilityCheckoutConnector()->pluginProductsAvailablePreConditionPlugin(),
             ];
         };
 
