@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Table;
 
+use SprykerFeature\Zed\Application\Business\Url\Url;
 use SprykerFeature\Zed\Discount\DiscountConfig;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountTableMap;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
@@ -123,7 +124,8 @@ class DiscountsTable extends AbstractTable
      */
     protected function getRowOptions(SpyDiscount $item)
     {
-        return '<a class="btn btn-xs btn-info" href="/discount/cart-rule/edit?' . self::PARAM_ID_DISCOUNT . '=' . $item->getIdDiscount() . '">Edit</a>';
+        $url = Url::generate('/discount/cart-rule/edit', [self::PARAM_ID_DISCOUNT => $item->getIdDiscount()]);
+        return '<a class="btn btn-xs btn-info" href="' . $url->buildEscaped() . '">Edit</a>';
     }
 
 }

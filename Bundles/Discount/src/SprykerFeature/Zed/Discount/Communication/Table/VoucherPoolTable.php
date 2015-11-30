@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Discount\Communication\Table;
 
 use Generated\Shared\Transfer\DiscountTransfer;
+use SprykerFeature\Zed\Application\Business\Url\Url;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
 use SprykerFeature\Zed\Discount\DiscountConfig;
 use Orm\Zed\Discount\Persistence\Map\SpyDiscountVoucherPoolCategoryTableMap;
@@ -20,7 +21,8 @@ class VoucherPoolTable extends AbstractTable
     const COL_VOUCHERS_COUNT = 'Vouchers';
     const COL_AMOUNT = 'amount';
 
-    const URL_DISCOUNT_POOL_EDIT = '/discount/pool/edit?%s=%d';
+    const URL_DISCOUNT_POOL_EDIT = '/discount/pool/edit';
+    const URL_DISCOUNT_VOUCHER_VIEW = '/discount/voucher/view';
     const PARAM_ID_POOL = 'id-pool';
     const CONTROLLER_TABLE_ACTION = 'poolTable';
 
@@ -108,13 +110,19 @@ class VoucherPoolTable extends AbstractTable
      *
      * @return string
      */
-    private function getEditUrl(SpyDiscountVoucherPool $discountVoucherPool)
+    protected function getEditUrl(SpyDiscountVoucherPool $discountVoucherPool)
     {
-        return sprintf(
-            self::URL_DISCOUNT_POOL_EDIT,
-            self::PARAM_ID_POOL,
-            $discountVoucherPool->getIdDiscountVoucherPool()
-        );
+        return Url::generate(self::URL_DISCOUNT_POOL_EDIT, [self::PARAM_ID_POOL => $discountVoucherPool->getIdDiscountVoucherPool()]);
+    }
+
+    /**
+     * @param SpyDiscountVoucherPool $discountVoucherPool
+     *
+     * @return string
+     */
+    protected function getViewUrl(SpyDiscountVoucherPool $discountVoucherPool)
+    {
+        return Url::generate(self::URL_DISCOUNT_VOUCHER_VIEW, [self::PARAM_ID_POOL => $discountVoucherPool->getIdDiscountVoucherPool()]);
     }
 
     /**
@@ -124,11 +132,9 @@ class VoucherPoolTable extends AbstractTable
      */
     protected function createRowOptions(SpyDiscountVoucherPool $discountVoucherPool)
     {
-        $editUrl = $this->getEditUrl($discountVoucherPool);
-
-        return $this->generateEditButton($editUrl, 'Edit Voucher')
+        return $this->generateEditButton($this->getEditUrl($discountVoucherPool), 'Edit Voucher')
             . self::SPACE_SEPARATOR
-            . $this->generateViewButton('/discount/voucher/view/?' . self::PARAM_ID_POOL . '=' . $discountVoucherPool->getIdDiscountVoucherPool(), 'View Codes')
+            . $this->generateViewButton($this->getViewUrl($discountVoucherPool), 'View Codes')
             . self::SPACE_SEPARATOR
             . $this->generateCreateButton('/discount/voucher/create-single', 'Add Single Code')
             . self::SPACE_SEPARATOR

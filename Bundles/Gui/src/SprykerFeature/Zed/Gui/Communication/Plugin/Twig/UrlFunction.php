@@ -6,10 +6,10 @@
 
 namespace SprykerFeature\Zed\Gui\Communication\Plugin\Twig;
 
-use SprykerFeature\Zed\Library\Sanitize\Html;
+use SprykerFeature\Zed\Application\Business\Url\Url;
 use SprykerFeature\Zed\Library\Twig\TwigFunction;
 
-class Url extends TwigFunction
+class UrlFunction extends TwigFunction
 {
 
     /**
@@ -25,12 +25,9 @@ class Url extends TwigFunction
      */
     protected function getFunction()
     {
-        //TODO: CD-524 URL class for query strings and absolute URLs
-        return function ($url, array $query = [], $full = false) {
-            if ($query) {
-                $url .= '?' . http_build_query($query);
-            }
-            $html = Html::escape($url);
+        return function ($url, array $query = [], array $options = []) {
+            $url = Url::generate($url, $query, $options);
+            $html = $url->buildEscaped();
 
             return $html;
         };

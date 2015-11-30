@@ -14,6 +14,8 @@ use Propel\Runtime\Propel;
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Zed\Application\Business\Url\Url;
+use SprykerFeature\Zed\Library\Sanitize\Html;
 use Symfony\Component\HttpFoundation\Request;
 
 abstract class AbstractTable
@@ -604,7 +606,7 @@ abstract class AbstractTable
     }
 
     /**
-     * @param string $url
+     * @param string|Url $url
      * @param string $title
      * @param array $defaultOptions
      * @param array $customOptions
@@ -617,6 +619,12 @@ abstract class AbstractTable
 
         $class = $this->getButtonClass($defaultOptions, $customOptions);
         $parameters = $this->getButtonParameters($buttonOptions);
+
+        if (is_string($url)) {
+            $url = Html::escape($url);
+        } else {
+            $url = $url->buildEscaped();
+        }
 
         $html = '<a href="' . $url . '" class="btn btn-xs btn-outline ' . $class . '"' . $parameters . '>';
 
