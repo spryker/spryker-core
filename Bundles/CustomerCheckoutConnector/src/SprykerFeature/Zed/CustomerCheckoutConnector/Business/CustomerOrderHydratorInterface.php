@@ -15,6 +15,8 @@ interface CustomerOrderHydratorInterface
     /**
      * @param OrderTransfer $orderTransfer
      * @param CheckoutRequestTransfer $request
+     *
+     * @return void
      */
     public function hydrateOrderTransfer(OrderTransfer $orderTransfer, CheckoutRequestTransfer $request);
 

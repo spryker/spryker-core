@@ -33,7 +33,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[self::CHECKOUT_PRE_CONDITIONS] = function (Container $container) {
-            return $this->getCheckoutPreconditions($container);
+            return $this->getCheckoutPreConditions($container);
         };
 
         $container[self::CHECKOUT_PRE_HYDRATOR] = function (Container $container) {
@@ -68,7 +68,7 @@ class CheckoutDependencyProvider extends AbstractBundleDependencyProvider
      *
      * @return CheckoutPreConditionInterface[]
      */
-    protected function getCheckoutPreconditions(Container $container)
+    protected function getCheckoutPreConditions(Container $container)
     {
         return [];
     }

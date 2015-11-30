@@ -41,9 +41,9 @@ class CustomerCheckoutConnectorDependencyContainer extends AbstractBusinessDepen
     /**
      * @return PreConditionCheckerInterface
      */
-    public function createPreconditionChecker()
+    public function createPreConditionChecker()
     {
-        return $this->getFactory()->createPreconditionChecker(
+        return $this->getFactory()->createPreConditionChecker(
             $this->getProvidedDependency(CustomerCheckoutConnectorDependencyProvider::FACADE_CUSTOMER)
         );
     }

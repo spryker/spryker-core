@@ -15,6 +15,8 @@ interface PreConditionCheckerInterface
     /**
      * @param CheckoutRequestTransfer $request
      * @param CheckoutResponseTransfer $response
+     *
+     * @return void
      */
     public function checkPreConditions(CheckoutRequestTransfer $request, CheckoutResponseTransfer $response);
 

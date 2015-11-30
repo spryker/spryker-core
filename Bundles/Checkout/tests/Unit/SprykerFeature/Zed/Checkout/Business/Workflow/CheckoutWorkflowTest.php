@@ -26,7 +26,7 @@ use Unit\SprykerFeature\Zed\Checkout\Business\Fixture\ResponseManipulatorPreCond
 class CheckoutWorkflowTest extends Test
 {
 
-    public function testWorkflowCallsAllPreconditions()
+    public function testWorkflowCallsAllPreConditions()
     {
         $mock1 = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPreConditionInterface');
         $mock2 = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPreConditionInterface');
@@ -148,7 +148,7 @@ class CheckoutWorkflowTest extends Test
         $checkoutWorkflow->requestCheckout($checkoutRequest);
     }
 
-    public function testHydratorIsNotCalledIfErrorInPrecondition()
+    public function testHydratorIsNotCalledIfErrorInPreCondition()
     {
         $checkoutResponse = new CheckoutResponseTransfer();
         $error = new CheckoutErrorTransfer();
