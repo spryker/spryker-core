@@ -121,10 +121,28 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
         $conversionMethod = $this->decideTransformRule($showInForm);
         $calculatorPlugins = $this->config->getAvailableCalculatorPlugins();
 
-        $selectedCalculatorPlugin = $calculatorPlugins[$formArray[self::CALCULATOR_PLUGIN]];
-        $formArray[self::AMOUNT] = $selectedCalculatorPlugin->$conversionMethod($formArray[self::AMOUNT]);
+        $formArray[self::AMOUNT] = $this->getAmount($formArray, $calculatorPlugins, $conversionMethod);
 
         return $formArray;
+    }
+
+    /**
+     * @param array $formArray
+     * @param array $calculatorPlugins
+     * @param string $conversionMethod
+     *
+     * @return int
+     */
+    protected function getAmount(array $formArray, array $calculatorPlugins, $conversionMethod)
+    {
+        if ($formArray[self::CALCULATOR_PLUGIN] !== null) {
+            $selectedCalculatorPlugin = $calculatorPlugins[$formArray[self::CALCULATOR_PLUGIN]];
+            if ($selectedCalculatorPlugin !== null) {
+                return $selectedCalculatorPlugin->$conversionMethod($formArray[self::AMOUNT]);
+            }
+        }
+
+        return 0;
     }
 
     /**

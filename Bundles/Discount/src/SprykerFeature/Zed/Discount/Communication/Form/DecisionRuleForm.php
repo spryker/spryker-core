@@ -29,7 +29,7 @@ class DecisionRuleForm extends AbstractRuleForm
     }
 
     /**
-     * @return TransferInterface
+     * @return array
      */
     public function populateFormFields()
     {
@@ -37,10 +37,11 @@ class DecisionRuleForm extends AbstractRuleForm
     }
 
     /**
-     * @return void
+     * @return null
      */
     protected function getDataClass()
     {
+        return null;
     }
 
     /**

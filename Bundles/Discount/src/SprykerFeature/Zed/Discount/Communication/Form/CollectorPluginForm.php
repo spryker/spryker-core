@@ -36,10 +36,11 @@ class CollectorPluginForm extends AbstractRuleForm
     }
 
     /**
-     * @return void
+     * @return null
      */
     protected function getDataClass()
     {
+        return null;
     }
 
     /**

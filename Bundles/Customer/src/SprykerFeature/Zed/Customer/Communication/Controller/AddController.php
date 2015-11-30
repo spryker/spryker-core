@@ -28,8 +28,7 @@ class AddController extends AbstractController
     public function indexAction(Request $request)
     {
         $form = $this->getDependencyContainer()
-            ->createCustomerForm(CustomerForm::ADD)
-        ;
+            ->createCustomerForm(CustomerForm::ADD);
 
         $form->handleRequest($request);
 

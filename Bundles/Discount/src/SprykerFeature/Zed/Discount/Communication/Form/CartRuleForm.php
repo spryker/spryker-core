@@ -76,10 +76,11 @@ class CartRuleForm extends AbstractRuleForm
     }
 
     /**
-     * @return void
+     * @return null
      */
     protected function getDataClass()
     {
+        return null;
     }
 
     /**

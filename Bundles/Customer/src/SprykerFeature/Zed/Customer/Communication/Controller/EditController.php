@@ -33,8 +33,7 @@ class EditController extends AbstractController
         $idCustomer = $request->get(CustomerForm::PARAM_ID_CUSTOMER);
 
         $form = $this->getDependencyContainer()
-            ->createCustomerForm(CustomerForm::UPDATE)
-        ;
+            ->createCustomerForm(CustomerForm::UPDATE);
 
         $form->handleRequest($request);
 
@@ -43,8 +42,7 @@ class EditController extends AbstractController
             $data = $form->getData();
 
             $this->getFacade()
-                ->updateCustomer($data)
-            ;
+                ->updateCustomer($data);
 
             $defaultBilling = !empty($data->getBillingAddress()) ? $data->getBillingAddress() : false;
             if (empty($defaultBilling)) {
