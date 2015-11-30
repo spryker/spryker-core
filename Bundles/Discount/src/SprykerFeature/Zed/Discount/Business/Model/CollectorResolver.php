@@ -32,7 +32,7 @@ class CollectorResolver
      * @param CalculableInterface $container
      * @param DiscountTransfer $discountTransfer
      *
-     * @return DiscountableInterface[]
+     * @return DiscountTransfer[]
      */
     public function collectItems(CalculableInterface $container, DiscountTransfer $discountTransfer)
     {
@@ -56,9 +56,9 @@ class CollectorResolver
     }
 
     /**
-     * @param DiscountableInterface[] $discountableObjects
+     * @param DiscountTransfer[] $discountableObjects
      *
-     * @return DiscountableInterface[]
+     * @return DiscountTransfer[]
      */
     protected function getUniqueDiscountableObjects(array $discountableObjects)
     {
@@ -71,10 +71,10 @@ class CollectorResolver
     }
 
     /**
-     * @param DiscountableInterface[] $collectedItems
-     * @param DiscountableInterface[] $itemsToCombine
+     * @param DiscountTransfer[] $collectedItems
+     * @param DiscountTransfer[] $itemsToCombine
      *
-     * @return DiscountableInterface[]
+     * @return DiscountTransfer[]
      */
     protected function combineWithAnd(array $collectedItems, array $itemsToCombine)
     {
@@ -104,12 +104,12 @@ class CollectorResolver
 
     /**
      * @param DiscountTransfer $discountTransfer
-     * @param DiscountableInterface[] $collectedItems
-     * @param DiscountableInterface[] $itemsToCombine
+     * @param DiscountTransfer[] $collectedItems
+     * @param DiscountTransfer[] $itemsToCombine
      *
-     * @return DiscountableInterface[]
+     * @return DiscountTransfer[]
      */
-    protected function combine(DiscountInterface $discountTransfer, array $collectedItems, array $itemsToCombine)
+    protected function combine(DiscountTransfer $discountTransfer, array $collectedItems, array $itemsToCombine)
     {
         if (empty($collectedItems)) {
             return $itemsToCombine;
@@ -123,12 +123,12 @@ class CollectorResolver
     }
 
     /**
-     * @param DiscountableInterface[] $itemsToCombine
-     * @param DiscountInterface $discountTransfer
+     * @param DiscountTransfer[] $itemsToCombine
+     * @param DiscountTransfer $discountTransfer
      *
      * @return bool
      */
-    protected function isCombinable(array $itemsToCombine, DiscountInterface $discountTransfer)
+    protected function isCombinable(array $itemsToCombine, DiscountTransfer $discountTransfer)
     {
         return (!empty($itemsToCombine) || $discountTransfer->getCollectorLogicalOperator() !== self::OPERATOR_AND);
     }
