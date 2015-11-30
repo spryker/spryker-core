@@ -36,7 +36,7 @@
 
         {% block widget_header_content %}
             {% if batchValue is not null %}
-            {{ viewActionButton('/discount/voucher/export?id-pool=' ~ idPool ~ '&batch=' ~ batchValue, 'Export Generated Codes' | trans) }}
+            {{ viewActionButton(url('/discount/voucher/export', {'id-pool': idPool, 'batch': batchValue}), 'Export Generated Codes' | trans) }}
             {% endif %}
         {% endblock %}
 
