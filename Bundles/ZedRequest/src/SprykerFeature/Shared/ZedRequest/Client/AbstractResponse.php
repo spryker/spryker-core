@@ -15,11 +15,12 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
      * @var array
      */
     protected $values = [
-        'messages' => [],
-        'errorMessages' => [],
-        'success' => true,
-        'transfer' => null,
-        'transferClassName' => null,
+        ResponseInterface::INFO_MESSAGES => [],
+        ResponseInterface::ERROR_MESSAGES => [],
+        ResponseInterface::SUCCESS_MESSAGES => [],
+        ResponseInterface::SUCCESS => true,
+        ResponseInterface::TRANSFER => null,
+        ResponseInterface::TRANSFER_CLASSNAME => null,
     ];
 
     /**
@@ -37,12 +38,16 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     {
         parent::fromArray($values);
 
-        foreach ($this->values['messages'] as $key => $message) {
-            $this->values['messages'][$key] = new Message($message);
+        foreach ($this->values[ResponseInterface::INFO_MESSAGES] as $key => $message) {
+            $this->values[ResponseInterface::INFO_MESSAGES][$key] = new Message($message);
         }
 
-        foreach ($this->values['errorMessages'] as $key => $message) {
-            $this->values['errorMessages'][$key] = new Message($message);
+        foreach ($this->values[ResponseInterface::ERROR_MESSAGES] as $key => $message) {
+            $this->values[ResponseInterface::ERROR_MESSAGES][$key] = new Message($message);
+        }
+
+        foreach ($this->values[ResponseInterface::SUCCESS_MESSAGES] as $key => $message) {
+            $this->values[ResponseInterface::SUCCESS_MESSAGES][$key] = new Message($message);
         }
     }
 
@@ -51,7 +56,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
      */
     public function getErrorMessages()
     {
-        return $this->values['errorMessages'];
+        return $this->values[ResponseInterface::ERROR_MESSAGES];
     }
 
     /**
@@ -92,7 +97,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
      */
     public function addErrorMessage(Message $errorMessage)
     {
-        $this->values['errorMessages'][] = $errorMessage;
+        $this->values[ResponseInterface::ERROR_MESSAGES][] = $errorMessage;
 
         return $this;
     }
@@ -100,9 +105,9 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     /**
      * @return Message[]
      */
-    public function getMessages()
+    public function getInfoMessages()
     {
-        return $this->values['messages'];
+        return $this->values[ResponseInterface::INFO_MESSAGES];
     }
 
     /**
@@ -110,9 +115,9 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
      *
      * @return bool
      */
-    public function hasMessage($messageString)
+    public function hasInfoMessage($messageString)
     {
-        $messages = $this->getMessages();
+        $messages = $this->getInfoMessages();
         foreach ($messages as $message) {
             if ($message->getMessage() === $messageString) {
                 return true;
@@ -127,9 +132,9 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
      *
      * @return self
      */
-    public function addMessage(Message $message)
+    public function addInfoMessage(Message $message)
     {
-        $this->values['messages'][] = $message;
+        $this->values[ResponseInterface::INFO_MESSAGES][] = $message;
 
         return $this;
     }
@@ -139,11 +144,62 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
      *
      * @return self
      */
-    public function addMessages(array $messages)
+    public function addInfoMessages(array $messages)
     {
         foreach ($messages as $message) {
-            $this->addMessage($message);
+            $this->addInfoMessage($message);
         }
+
+        return $this;
+    }
+
+    /**
+     * @return Message[]
+     */
+    public function getSuccessMessages()
+    {
+        return $this->values[ResponseInterface::SUCCESS_MESSAGES];
+    }
+
+    /**
+     * @param string $messageString
+     *
+     * @return bool
+     */
+    public function hasSuccessMessage($messageString)
+    {
+        $successMessages = $this->getSuccessMessages();
+        foreach ($successMessages as $sucessMessage) {
+            if ($sucessMessage->getMessage() === $messageString) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param array $successMessages
+     *
+     * @return $this
+     */
+    public function addSuccessMessages(array $successMessages)
+    {
+        foreach ($successMessages as $successMessage) {
+            $this->addSuccessMessage($successMessage);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param Message $successMessage
+     *
+     * @return $this
+     */
+    public function addSuccessMessage(Message $successMessage)
+    {
+        $this->values[ResponseInterface::SUCCESS_MESSAGES][] = $successMessage;
 
         return $this;
     }
@@ -153,7 +209,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
      */
     public function isSuccess()
     {
-        return $this->values['success'];
+        return $this->values[ResponseInterface::SUCCESS];
     }
 
     /**
@@ -163,7 +219,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
      */
     public function setSuccess($success)
     {
-        $this->values['success'] = $success;
+        $this->values[ResponseInterface::SUCCESS] = $success;
 
         return $this;
     }
@@ -173,11 +229,12 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
      */
     public function getTransfer()
     {
-        if (!empty($this->values['transferClassName']) && !empty($this->values['transfer'])) {
+        if (!empty($this->values[ResponseInterface::TRANSFER_CLASSNAME]) &&
+            !empty($this->values[ResponseInterface::TRANSFER])) {
             $transfer = $this->createTransferObject(
-                $this->values['transferClassName']
+                $this->values[ResponseInterface::TRANSFER_CLASSNAME]
             );
-            $transfer->fromArray($this->values['transfer'], true);
+            $transfer->fromArray($this->values[ResponseInterface::TRANSFER], true);
 
             return $transfer;
         }
@@ -204,8 +261,8 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
      */
     public function setTransfer(TransferInterface $transferObject)
     {
-        $this->values['transfer'] = $transferObject->toArray();
-        $this->values['transferClassName'] = get_class($transferObject);
+        $this->values[ResponseInterface::TRANSFER] = $transferObject->toArray();
+        $this->values[ResponseInterface::TRANSFER_CLASSNAME] = get_class($transferObject);
 
         return $this;
     }

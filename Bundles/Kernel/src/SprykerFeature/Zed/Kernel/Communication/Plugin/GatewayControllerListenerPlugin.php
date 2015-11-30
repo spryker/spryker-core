@@ -7,17 +7,36 @@
 namespace SprykerFeature\Zed\Kernel\Communication\Plugin;
 
 use SprykerEngine\Shared\Transfer\TransferInterface;
+use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
+use SprykerFeature\Shared\ZedRequest\Client\Message;
 use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
 use SprykerFeature\Zed\Kernel\Communication\GatewayControllerListenerInterface;
 use SprykerFeature\Zed\ZedRequest\Business\Client\Request;
 use SprykerFeature\Zed\ZedRequest\Business\Client\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use SprykerEngine\Zed\FlashMessenger\FlashMessengerConfig;
+use SprykerEngine\Zed\Kernel\Locator;
+use SprykerEngine\Zed\Kernel\Communication\Factory;
 
 class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayControllerListenerInterface
 {
+    /**
+     * @var Locator
+     */
+    private $locator;
 
+    /**
+     * @param Factory $factory
+     * @param Locator $locator
+     */
+    public function __construct(Factory $factory, Locator $locator)
+    {
+        parent::__construct($factory, $locator);
+
+        $this->locator = $locator;
+    }
     /**
      * @param FilterControllerEvent $event
      *
@@ -34,6 +53,9 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
         }
 
         $newController = function () use ($controller, $action) {
+
+            FlashMessengerConfig::setMessageTray(FlashMessengerConfig::IN_MEMORY_TRAY);
+
             $requestTransfer = $this->getRequestTransfer($controller, $action);
             $result = $controller->$action($requestTransfer->getTransfer(), $requestTransfer);
             $response = $this->getResponse($controller, $result);
@@ -92,11 +114,80 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
             $response->setTransfer($result);
         }
 
-        $response->addMessages($controller->getMessages());
-        $response->addErrorMessages($controller->getErrorMessages());
+        $this->setGatewayControllerMessages($controller, $response);
+        $this->setFlashMessengerMessages($response);
+
         $response->setSuccess($controller->getSuccess());
 
         return $response;
+    }
+
+    /**
+     * @param AbstractGatewayController $controller
+     * @param Response $response
+     *
+     * @return void
+     */
+    private function setGatewayControllerMessages(AbstractGatewayController $controller, Response $response)
+    {
+        $response->addSuccessMessages($controller->getSuccessMessages());
+        $response->addInfoMessages($controller->getInfoMessages());
+        $response->addErrorMessages($controller->getErrorMessages());
+    }
+
+    /**
+     * @param Response $response
+     *
+     * @return void
+     */
+    private function setFlashMessengerMessages(Response $response)
+    {
+        $flashMessengerFacade = $this->createFlashMessengerFacade();
+
+        if ($flashMessengerFacade === null) {
+            return;
+        }
+
+        $flashMessengerTransfer = $flashMessengerFacade->getStoredMessages();
+        if ($flashMessengerTransfer === null) {
+            return;
+        }
+
+        $response->addErrorMessages(
+            $this->createResponseMessages(
+                $flashMessengerTransfer->getErrorMessages(),
+                $response->getErrorMessages()
+            )
+        );
+        $response->addInfoMessages(
+            $this->createResponseMessages(
+                $flashMessengerTransfer->getInfoMessages(),
+                $response->getInfoMessages()
+            )
+        );
+        $response->addSuccessMessages(
+            $this->createResponseMessages(
+                $flashMessengerTransfer->getSuccessMessages(),
+                $response->getSuccessMessages()
+            )
+        );
+    }
+
+    /**
+     * @param \ArrayObject $messages
+     * @param array|Message[] $storedMessages
+     *
+     * @return array|Message[]
+     */
+    private function createResponseMessages(\ArrayObject $messages, array $storedMessages = [])
+    {
+        foreach ($messages as $message) {
+            $responseMessage = new Message();
+            $responseMessage->setMessage($message);
+            $storedMessages[] = $responseMessage;
+        }
+
+        return $storedMessages;
     }
 
     /**
@@ -115,6 +206,19 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
         }
 
         throw new \LogicException('Only transfer classes are allowed in yves action as parameter');
+    }
+
+    /**
+     * @return FlashMessengerFacade|null
+     */
+    private function createFlashMessengerFacade()
+    {
+        $flashMessenger = $this->locator->flashMessenger();
+        if ($flashMessenger !== null) {
+            return $flashMessenger->facade();
+        }
+
+        return null;
     }
 
 }

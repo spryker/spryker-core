@@ -9,7 +9,6 @@ namespace Unit\SprykerFeature\Client\ZedRequest\Service\Client;
 use SprykerFeature\Shared\ZedRequest\Client\Message;
 use SprykerFeature\Client\ZedRequest\Service\Client\Response;
 use SprykerEngine\Shared\Transfer\TransferInterface;
-use SprykerEngine\Zed\Kernel\Locator;
 use Unit\SprykerFeature\Client\ZedRequest\Service\Client\Fixture\TestTransfer;
 
 /**
@@ -31,7 +30,8 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
         $response->setSuccess(false);
         $response->addErrorMessages([new Message(['message' => 'error'])]);
-        $response->addMessages([new Message(['message' => 'test'])]);
+        $response->addInfoMessages([new Message(['message' => 'info'])]);
+        $response->addSuccessMessages([new Message(['message' => 'success'])]);
         $response->setTransfer($transfer);
 
         return $response;
@@ -51,8 +51,6 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testGetterAndSetters()
     {
-        $locator = Locator::getInstance();
-
         $transfer = new TestTransfer();
         $transfer->setFoo('foo');
 
@@ -60,7 +58,8 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
         $this->assertEquals(false, $response->isSuccess());
         $this->assertEquals([new Message(['message' => 'error'])], $response->getErrorMessages());
-        $this->assertEquals([new Message(['message' => 'test'])], $response->getMessages());
+        $this->assertEquals([new Message(['message' => 'info'])], $response->getInfoMessages());
+        $this->assertEquals([new Message(['message' => 'success'])], $response->getSuccessMessages());
         $this->assertEquals($transfer, $response->getTransfer());
         $this->assertNotSame($transfer, $response->getTransfer());
         $this->assertNotSame($response->getTransfer(), $response->getTransfer());
@@ -68,8 +67,6 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testToArrayAndFromArray()
     {
-        $locator = Locator::getInstance();
-
         $transfer = new TestTransfer();
         $transfer->setFoo('foo');
 
@@ -89,12 +86,12 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $response = new Response();
 
         $response->addErrorMessage(new Message(['message' => 'error']));
-        $response->addMessage(new Message(['message' => 'test']));
+        $response->addInfoMessage(new Message(['message' => 'test']));
 
         $this->assertEquals(true, $response->hasErrorMessage('error'));
         $this->assertEquals(false, $response->hasErrorMessage('test'));
-        $this->assertEquals(false, $response->hasMessage('error'));
-        $this->assertEquals(true, $response->hasMessage('test'));
+        $this->assertEquals(false, $response->hasInfoMessage('error'));
+        $this->assertEquals(true, $response->hasInfoMessage('test'));
     }
 
 }

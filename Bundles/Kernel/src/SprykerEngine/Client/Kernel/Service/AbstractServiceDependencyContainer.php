@@ -6,6 +6,11 @@ use Generated\Client\Ide\AutoCompletion;
 use SprykerEngine\Client\Kernel\Container;
 use SprykerEngine\Client\Kernel\DependencyContainer\DependencyContainerInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerEngine\Client\Kernel\AbstractDependencyProvider;
+use SprykerFeature\Client\Session\Service\SessionClient;
+use SprykerFeature\Client\ZedRequest\Service\ZedRequestClient;
+use SprykerFeature\Client\Storage\Service\StorageClient;
+use SprykerFeature\Client\Search\Service\SearchClient;
 
 abstract class AbstractServiceDependencyContainer implements DependencyContainerInterface
 {
@@ -79,6 +84,38 @@ abstract class AbstractServiceDependencyContainer implements DependencyContainer
         }
 
         return $this->container[$key];
+    }
+
+    /**
+     * @return SessionClient
+     */
+    protected function createSessionClient()
+    {
+        return $this->getProvidedDependency(AbstractDependencyProvider::CLIENT_SESSION);
+    }
+
+    /**
+     * @return ZedRequestClient
+     */
+    protected function createZedRequestClient()
+    {
+        return $this->getProvidedDependency(AbstractDependencyProvider::CLIENT_ZED_REQUEST);
+    }
+
+    /**
+     * @return StorageClient
+     */
+    protected function createStorageClient()
+    {
+        return $this->getProvidedDependency(AbstractDependencyProvider::CLIENT_KV_STORAGE);
+    }
+
+    /**
+     * @return SearchClient
+     */
+    protected function createSearchClient()
+    {
+        return $this->getProvidedDependency(AbstractDependencyProvider::CLIENT_SEARCH);
     }
 
 }

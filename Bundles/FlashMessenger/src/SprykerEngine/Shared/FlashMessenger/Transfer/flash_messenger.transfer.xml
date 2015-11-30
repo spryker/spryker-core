@@ -4,9 +4,9 @@
            xsi:schemaLocation="http://xsd.spryker.com ../../src/Spryker/TransferObjectDefinitionSchema.xsd">
 
     <transfer name="FlashMessages">
-        <property name="success_messages" type="array" singular="success_message" />
-        <property name="error_messages" type="array" singular="error_message" />
-        <property name="info_messages" type="array" singular="info_message" />
+        <property name="successMessages" type="array" singular="successMessage" />
+        <property name="errorMessages" type="array" singular="errorMessage" />
+        <property name="infoMessages" type="array" singular="infoMessage" />
     </transfer>
 
 </transfers>

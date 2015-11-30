@@ -10,6 +10,13 @@ use SprykerEngine\Shared\Transfer\TransferInterface;
 
 interface ResponseInterface
 {
+    const INFO_MESSAGES = 'infoMessages';
+    const ERROR_MESSAGES = 'errorMessages';
+    const SUCCESS_MESSAGES = 'successMessages';
+    const SUCCESS = 'success';
+    const TRANSFER_CLASSNAME = 'transferClassName';
+    const TRANSFER = 'transfer';
+
 
     /**
      * @param array $values
@@ -45,28 +52,54 @@ interface ResponseInterface
     /**
      * @return Message[]
      */
-    public function getMessages();
+    public function getInfoMessages();
 
     /**
      * @param string $messageString
      *
      * @return bool
      */
-    public function hasMessage($messageString);
+    public function hasInfoMessage($messageString);
 
     /**
      * @param Message $message
      *
      * @return self
      */
-    public function addMessage(Message $message);
+    public function addInfoMessage(Message $message);
 
     /**
      * @param array $messages
      *
      * @return self
      */
-    public function addMessages(array $messages);
+    public function addInfoMessages(array $messages);
+
+    /**
+     * @return Message[]
+     */
+    public function getSuccessMessages();
+
+    /**
+     * @param string $messageString
+     *
+     * @return bool
+     */
+    public function hasSuccessMessage($messageString);
+
+    /**
+     * @param array $successMessages
+     *
+     * @return $this
+     */
+    public function addSuccessMessages(array $successMessages);
+
+    /**
+     * @param Message $successMessage
+     *
+     * @return $this
+     */
+    public function addSuccessMessage(Message $successMessage);
 
     /**
      * @return bool

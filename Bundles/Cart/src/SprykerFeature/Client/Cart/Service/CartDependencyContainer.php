@@ -8,7 +8,6 @@ namespace SprykerFeature\Client\Cart\Service;
 
 use Generated\Client\Ide\FactoryAutoCompletion\CartService;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
-use SprykerFeature\Client\Cart\CartDependencyProvider;
 use SprykerFeature\Client\Cart\Service\Zed\CartStubInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
@@ -23,11 +22,7 @@ class CartDependencyContainer extends AbstractServiceDependencyContainer
      */
     public function createSession()
     {
-        $session = $this->getFactory()->createSessionCartSession(
-            $this->getProvidedDependency(CartDependencyProvider::SESSION)
-        );
-
-        return $session;
+        return $this->getFactory()->createSessionCartSession($this->createSessionClient());
     }
 
     /**
@@ -35,12 +30,7 @@ class CartDependencyContainer extends AbstractServiceDependencyContainer
      */
     public function createZedStub()
     {
-        $zedStub = $this->getProvidedDependency(CartDependencyProvider::SERVICE_ZED);
-        $cartStub = $this->getFactory()->createZedCartStub(
-            $zedStub
-        );
-
-        return $cartStub;
+        return $this->getFactory()->createZedCartStub($this->createZedRequestClient());
     }
 
 }

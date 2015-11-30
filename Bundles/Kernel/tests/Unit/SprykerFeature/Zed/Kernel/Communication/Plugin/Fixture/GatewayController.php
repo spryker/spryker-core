@@ -86,8 +86,9 @@ class GatewayController extends AbstractGatewayController
 
     public function transformMessageAction()
     {
-        $this->addMessage('message', ['key' => 'value']);
-        $this->addErrorMessage('error', ['errorKey' => 'errorValue']);
+        $this->addInfoMessage('info');
+        $this->addErrorMessage('error');
+        $this->addSuccessMessage('success');
         $this->setSuccess(false);
     }
 
