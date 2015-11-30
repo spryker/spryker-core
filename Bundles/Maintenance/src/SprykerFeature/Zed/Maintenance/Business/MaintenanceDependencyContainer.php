@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Maintenance\Business;
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\MaintenanceBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerFeature\Zed\Development\Business\CodeStyleFixer\BundleCodeStyleFixer;
 use SprykerFeature\Zed\Maintenance\Business\Dependency\BundleParser;
 use SprykerFeature\Zed\Maintenance\Business\Dependency\Graph;
 use SprykerFeature\Zed\Maintenance\Business\Dependency\Manager;
