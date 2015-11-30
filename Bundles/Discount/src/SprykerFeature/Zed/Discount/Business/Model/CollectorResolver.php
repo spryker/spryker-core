@@ -13,18 +13,19 @@ class CollectorResolver
 {
 
     const OPERATOR_OR = 'OR';
+    const OPERATOR_AND = 'AND';
 
     /**
      * @var DiscountConfigInterface
      */
-    protected $config;
+    protected $discountConfig;
 
     /**
-     * @param DiscountConfigInterface $config
+     * @param DiscountConfigInterface $discountConfig
      */
-    public function __construct(DiscountConfigInterface $config)
+    public function __construct(DiscountConfigInterface $discountConfig)
     {
-        $this->config = $config;
+        $this->discountConfig = $discountConfig;
     }
 
     /**
@@ -38,17 +39,17 @@ class CollectorResolver
         $collectedItems = [];
 
         foreach ($discountTransfer->getDiscountCollectors() as $discountCollectorTransfer) {
-            $collectorPlugin = $this->config->getCollectorPluginByName(
+            $collectorPlugin = $this->discountConfig->getCollectorPluginByName(
                 $discountCollectorTransfer->getCollectorPlugin()
             );
 
             $itemsToCombine = $collectorPlugin->collect($discountTransfer, $container, $discountCollectorTransfer);
 
-            if (!empty($collectedItems)) {
-                $collectedItems = $this->combine($discountTransfer, $collectedItems, $itemsToCombine);
-            } else {
-                $collectedItems = $itemsToCombine;
+            if (!$this->isCombinable($itemsToCombine, $discountTransfer)) {
+                return [];
             }
+
+            $collectedItems = $this->combine($discountTransfer, $collectedItems, $itemsToCombine);
         }
 
         return $this->getUniqueDiscountableObjects($collectedItems);
@@ -108,13 +109,28 @@ class CollectorResolver
      *
      * @return DiscountableInterface[]
      */
-    protected function combine(DiscountTransfer $discountTransfer, $collectedItems, $itemsToCombine)
+    protected function combine(DiscountInterface $discountTransfer, array $collectedItems, array $itemsToCombine)
     {
+        if (empty($collectedItems)) {
+            return $itemsToCombine;
+        }
+
         if ($discountTransfer->getCollectorLogicalOperator() === self::OPERATOR_OR) {
             return $this->combineWithOr($collectedItems, $itemsToCombine);
         } else {
             return $this->combineWithAnd($collectedItems, $itemsToCombine);
         }
+    }
+
+    /**
+     * @param DiscountableInterface[] $itemsToCombine
+     * @param DiscountInterface $discountTransfer
+     *
+     * @return bool
+     */
+    protected function isCombinable(array $itemsToCombine, DiscountInterface $discountTransfer)
+    {
+        return (!empty($itemsToCombine) || $discountTransfer->getCollectorLogicalOperator() !== self::OPERATOR_AND);
     }
 
 }
