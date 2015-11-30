@@ -6,9 +6,9 @@
 
 namespace SprykerFeature\Zed\Wishlist\Business\Operator;
 
-use Generated\Shared\Wishlist\ItemInterface;
-use Generated\Shared\Wishlist\WishlistChangeInterface;
-use Generated\Shared\Wishlist\WishlistInterface;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\WishlistChangeTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
 use SprykerFeature\Zed\Wishlist\Business\Storage\StorageInterface;
 use SprykerFeature\Zed\Wishlist\Dependency\PostSavePluginInterface;
 use SprykerFeature\Zed\Wishlist\Dependency\PreSavePluginInterface;
@@ -32,22 +32,22 @@ abstract class AbstractOperator
     protected $storage;
 
     /**
-     * @var WishlistChangeInterface
+     * @var WishlistChangeTransfer
      */
     private $wishlistChange;
 
     /**
      * @param StorageInterface $storage
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      */
-    public function __construct(StorageInterface $storage, WishlistChangeInterface $wishlistChange)
+    public function __construct(StorageInterface $storage, WishlistChangeTransfer $wishlistChange)
     {
         $this->storage = $storage;
         $this->wishlistChange = $wishlistChange;
     }
 
     /**
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
     public function executeOperation()
     {
@@ -59,7 +59,7 @@ abstract class AbstractOperator
     }
 
     /**
-     * @param ItemInterface[] $items
+     * @param ItemTransfer[] $items
      */
     protected function preSave(\ArrayObject $items)
     {
@@ -71,7 +71,7 @@ abstract class AbstractOperator
     }
 
     /**
-     * @param ItemInterface[] $items
+     * @param ItemTransfer[] $items
      */
     protected function postSave(\ArrayObject $items)
     {
@@ -99,9 +99,9 @@ abstract class AbstractOperator
     }
 
     /**
-     * @param WishlistChangeInterface $wishlistItem
+     * @param WishlistChangeTransfer $wishlistItem
      */
-    abstract protected function applyOperation(WishlistChangeInterface $wishlistItem);
+    abstract protected function applyOperation(WishlistChangeTransfer $wishlistItem);
 
     /**
      * @return string

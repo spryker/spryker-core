@@ -6,16 +6,16 @@
 
 namespace SprykerFeature\Zed\Newsletter\Business\Subscription;
 
-use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
+use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 
 interface SubscriberOptInSenderInterface
 {
 
     /**
-     * @param NewsletterSubscriberInterface $newsletterSubscriber
+     * @param NewsletterSubscriberTransfer $newsletterSubscriber
      *
      * @return bool
      */
-    public function send(NewsletterSubscriberInterface $newsletterSubscriber);
+    public function send(NewsletterSubscriberTransfer $newsletterSubscriber);
 
 }

@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Queue\Business\Worker;
 
-use Generated\Shared\Queue\QueueMessageInterface;
+use Generated\Shared\Transfer\QueueMessageTransfer;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use SprykerFeature\Zed\Queue\Business\Model\QueueConnectionInterface;
@@ -162,11 +162,11 @@ class TaskWorker implements LoggerAwareInterface, TaskWorkerInterface
     }
 
     /**
-     * @param QueueMessageInterface $queueMessage
+     * @param QueueMessageTransfer $queueMessage
      *
      * @return bool
      */
-    protected function processMessage(QueueMessageInterface $queueMessage)
+    protected function processMessage(QueueMessageTransfer $queueMessage)
     {
         try {
             $this->task->run($queueMessage);
@@ -198,12 +198,12 @@ class TaskWorker implements LoggerAwareInterface, TaskWorkerInterface
     }
 
     /**
-     * @param QueueMessageInterface $queueMessage
+     * @param QueueMessageTransfer $queueMessage
      * @param \Exception $exception
      *
      * @return bool
      */
-    protected function handleError(QueueMessageInterface $queueMessage, \Exception $exception)
+    protected function handleError(QueueMessageTransfer $queueMessage, \Exception $exception)
     {
         $this->logger->error(
             sprintf(

@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Payone\Communication\Plugin\Checkout;
 
-use Generated\Shared\Checkout\CheckoutResponseInterface;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPostSaveHookInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
@@ -22,11 +22,11 @@ class CheckoutPostSaveHookPlugin extends AbstractPlugin implements CheckoutPostS
 
     /**
      * @param OrderTransfer $orderTransfer
-     * @param CheckoutResponseInterface $checkoutResponse
+     * @param CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
-    public function executeHook(OrderTransfer $orderTransfer, CheckoutResponseInterface $checkoutResponse)
+    public function executeHook(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         $this->getFacade()->postSaveHook($orderTransfer, $checkoutResponse);
     }

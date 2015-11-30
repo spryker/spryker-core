@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule;
 
-use Generated\Shared\Discount\DiscountInterface;
+use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
@@ -19,13 +19,13 @@ class MinimumCartSubtotal extends AbstractDecisionRule implements DiscountDecisi
 {
 
     /**
-     * @param DiscountInterface $discountTransfer
+     * @param DiscountTransfer $discountTransfer
      * @param CalculableInterface $container
      *
      * @return ModelResult
      */
     public function check(
-        DiscountInterface $discountTransfer,
+        DiscountTransfer $discountTransfer,
         CalculableInterface $container
     ) {
         $decisionRuleEntity = $this->getContext()[self::KEY_ENTITY];

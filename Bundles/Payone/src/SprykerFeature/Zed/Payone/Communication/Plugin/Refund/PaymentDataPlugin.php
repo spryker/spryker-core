@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Payone\Communication\Plugin\Refund;
 
-use Generated\Shared\Refund\PaymentDataInterface;
 use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
@@ -22,7 +21,7 @@ class PaymentDataPlugin extends AbstractPlugin implements PaymentDataPluginInter
     /**
      * @param int $idOrder
      *
-     * @return PaymentDataInterface
+     * @return PaymentDataTransfer
      */
     public function getPaymentData($idOrder)
     {

@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Api\Converter;
 
-use Generated\Shared\Payolution\PayolutionTransactionResponseInterface;
-use Generated\Shared\Payolution\PayolutionCalculationResponseInterface;
+use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
+use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 
 interface ConverterInterface
 {
@@ -15,7 +15,7 @@ interface ConverterInterface
     /**
      * @param string $stringData
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
     public function toTransactionResponseTransfer($stringData);
 
@@ -29,7 +29,7 @@ interface ConverterInterface
     /**
      * @param string $stringData
      *
-     * @return PayolutionCalculationResponseInterface
+     * @return PayolutionCalculationResponseTransfer
      */
     public function toCalculationResponseTransfer($stringData);
 

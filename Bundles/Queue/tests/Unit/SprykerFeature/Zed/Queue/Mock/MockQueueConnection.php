@@ -6,7 +6,6 @@
 
 namespace Unit\SprykerFeature\Zed\Queue\Mock;
 
-use Generated\Shared\Queue\QueueMessageInterface;
 use Generated\Shared\Transfer\QueueMessageTransfer;
 use PhpAmqpLib\Message\AMQPMessage;
 use SprykerFeature\Zed\Queue\Business\Model\QueueConnectionInterface;
@@ -40,9 +39,9 @@ class MockQueueConnection implements QueueConnectionInterface
 
     /**
      * @param string $queueName
-     * @param QueueMessageInterface $queueMessage
+     * @param QueueMessageTransfer $queueMessage
      */
-    public function publish($queueName, QueueMessageInterface $queueMessage)
+    public function publish($queueName, QueueMessageTransfer $queueMessage)
     {
     }
 
@@ -64,7 +63,7 @@ class MockQueueConnection implements QueueConnectionInterface
     /**
      * @param AMQPMessage $amqpMessage
      *
-     * @return QueueMessageInterface
+     * @return QueueMessageTransfer
      */
     public function decodeMessage(AMQPMessage $amqpMessage)
     {

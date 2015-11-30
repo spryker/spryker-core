@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Cms\Business\Block;
 
-use Generated\Shared\Cms\CmsBlockInterface;
 use Generated\Shared\Transfer\CmsBlockTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
 use SprykerFeature\Shared\Cms\CmsConfig;
@@ -46,11 +45,11 @@ class BlockManager implements BlockManagerInterface
     }
 
     /**
-     * @param CmsBlockInterface $cmsBlockTransfer
+     * @param CmsBlockTransfer $cmsBlockTransfer
      *
      * @return CmsBlockTransfer
      */
-    public function saveBlock(CmsBlockInterface $cmsBlockTransfer)
+    public function saveBlock(CmsBlockTransfer $cmsBlockTransfer)
     {
         $this->checkPageExists($cmsBlockTransfer->getFkPage());
 
@@ -64,11 +63,11 @@ class BlockManager implements BlockManagerInterface
     }
 
     /**
-     * @param CmsBlockInterface $cmsBlockTransfer
+     * @param CmsBlockTransfer $cmsBlockTransfer
      *
      * @return CmsBlockTransfer
      */
-    public function saveBlockAndTouch(CmsBlockInterface $cmsBlockTransfer)
+    public function saveBlockAndTouch(CmsBlockTransfer $cmsBlockTransfer)
     {
         $blockEntity = $this->getCmsBlockByIdPage($cmsBlockTransfer->getFkPage());
         $oldBlockEntity = null;
@@ -124,35 +123,35 @@ class BlockManager implements BlockManagerInterface
     }
 
     /**
-     * @param CmsBlockInterface $cmsBlockTransfer
+     * @param CmsBlockTransfer $cmsBlockTransfer
      */
-    public function touchBlockActive(CmsBlockInterface $cmsBlockTransfer)
+    public function touchBlockActive(CmsBlockTransfer $cmsBlockTransfer)
     {
         $this->touchFacade->touchActive(CmsConfig::RESOURCE_TYPE_BLOCK, $cmsBlockTransfer->getIdCmsBlock());
     }
 
     /**
-     * @param CmsBlockInterface $cmsBlockTransfer
+     * @param CmsBlockTransfer $cmsBlockTransfer
      */
-    public function touchBlockActiveWithKeyChange(CmsBlockInterface $cmsBlockTransfer)
+    public function touchBlockActiveWithKeyChange(CmsBlockTransfer $cmsBlockTransfer)
     {
         $this->touchFacade->touchActive(CmsConfig::RESOURCE_TYPE_BLOCK, $cmsBlockTransfer->getIdCmsBlock(), true);
     }
 
     /**
-     * @param CmsBlockInterface $cmsBlockTransfer
+     * @param CmsBlockTransfer $cmsBlockTransfer
      */
-    public function touchBlockDelete(CmsBlockInterface $cmsBlockTransfer)
+    public function touchBlockDelete(CmsBlockTransfer $cmsBlockTransfer)
     {
         $this->touchFacade->touchDeleted(CmsConfig::RESOURCE_TYPE_BLOCK, $cmsBlockTransfer->getIdCmsBlock());
     }
 
     /**
-     * @param CmsBlockInterface $cmsBlockTransfer
+     * @param CmsBlockTransfer $cmsBlockTransfer
      *
      * @return SpyCmsBlock
      */
-    protected function createBlock(CmsBlockInterface $cmsBlockTransfer)
+    protected function createBlock(CmsBlockTransfer $cmsBlockTransfer)
     {
         $blockEntity = new SpyCmsBlock();
 
@@ -163,11 +162,11 @@ class BlockManager implements BlockManagerInterface
     }
 
     /**
-     * @param CmsBlockInterface $cmsBlockTransfer
+     * @param CmsBlockTransfer $cmsBlockTransfer
      *
      * @return SpyCmsBlock
      */
-    protected function updateBlock(CmsBlockInterface $cmsBlockTransfer)
+    protected function updateBlock(CmsBlockTransfer $cmsBlockTransfer)
     {
         $blockEntity = $this->getCmsBlockByIdPage($cmsBlockTransfer->getFkPage());
         $blockEntity->fromArray($cmsBlockTransfer->toArray());
@@ -227,10 +226,10 @@ class BlockManager implements BlockManagerInterface
     }
 
     /**
-     * @param CmsBlockInterface $cmsBlockTransfer
+     * @param CmsBlockTransfer $cmsBlockTransfer
      * @param SpyCmsBlock $blockEntity
      */
-    protected function touchKeyChangeNecessary(CmsBlockInterface $cmsBlockTransfer, SpyCmsBlock $blockEntity)
+    protected function touchKeyChangeNecessary(CmsBlockTransfer $cmsBlockTransfer, SpyCmsBlock $blockEntity)
     {
         $blockName = $this->getCmsBlockKey($blockEntity->getName(), $blockEntity->getType(), $blockEntity->getValue());
         $newBlockName = $this->getCmsBlockKey($cmsBlockTransfer->getName(), $cmsBlockTransfer->getType(), $cmsBlockTransfer->getValue());

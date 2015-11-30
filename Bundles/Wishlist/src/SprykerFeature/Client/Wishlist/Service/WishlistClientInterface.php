@@ -4,8 +4,8 @@
  */
 namespace SprykerFeature\Client\Wishlist\Service;
 
-use Generated\Shared\Wishlist\ItemInterface;
-use Generated\Shared\Wishlist\WishlistInterface;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
 
 /**
  * @method WishlistDependencyContainer getDependencyContainer()
@@ -14,40 +14,40 @@ interface WishlistClientInterface
 {
 
     /**
-     * @param ItemInterface $wishlistItem
+     * @param ItemTransfer $wishlistItem
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function addItem(ItemInterface $wishlistItem);
+    public function addItem(ItemTransfer $wishlistItem);
 
     /**
-     * @param ItemInterface $wishlistItem
+     * @param ItemTransfer $wishlistItem
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function increaseItemQuantity(ItemInterface $wishlistItem);
+    public function increaseItemQuantity(ItemTransfer $wishlistItem);
 
     /**
-     * @param ItemInterface $wishlistItem
+     * @param ItemTransfer $wishlistItem
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function decreaseItemQuantity(ItemInterface $wishlistItem);
+    public function decreaseItemQuantity(ItemTransfer $wishlistItem);
 
     /**
-     * @param ItemInterface $wishlistItem
+     * @param ItemTransfer $wishlistItem
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function removeItem(ItemInterface $wishlistItem);
+    public function removeItem(ItemTransfer $wishlistItem);
 
     /**
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
     public function getWishlist();
 
     /**
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
     public function synchronizeSession();
 

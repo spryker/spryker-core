@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Maintenance\Business;
 
-use Generated\Shared\Maintenance\InstalledPackagesInterface;
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\MaintenanceBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
@@ -57,11 +56,11 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @param InstalledPackagesInterface $collection
+     * @param InstalledPackagesTransfer $collection
      *
      * @return InstalledPackageFinder
      */
-    private function createComposerInstalledPackageFinder(InstalledPackagesInterface $collection)
+    private function createComposerInstalledPackageFinder(InstalledPackagesTransfer $collection)
     {
         return $this->getFactory()->createInstalledPackagesComposerInstalledPackageFinder(
             $collection,
@@ -70,11 +69,11 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @param InstalledPackagesInterface $collection
+     * @param InstalledPackagesTransfer $collection
      *
      * @return InstalledPackageFinder
      */
-    private function createNodePackageManagerInstalledPackageFinder(InstalledPackagesInterface $collection, $path)
+    private function createNodePackageManagerInstalledPackageFinder(InstalledPackagesTransfer $collection, $path)
     {
         return $this->getFactory()->createInstalledPackagesNodePackageManagerInstalledPackageFinder(
             $collection,
@@ -92,11 +91,11 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @param InstalledPackagesInterface $installedPackages
+     * @param InstalledPackagesTransfer $installedPackages
      *
      * @return MarkDownWriter
      */
-    public function createMarkDownWriter(InstalledPackagesInterface $installedPackages)
+    public function createMarkDownWriter(InstalledPackagesTransfer $installedPackages)
     {
         return $this->getFactory()->createInstalledPackagesMarkDownWriter(
             $installedPackages,

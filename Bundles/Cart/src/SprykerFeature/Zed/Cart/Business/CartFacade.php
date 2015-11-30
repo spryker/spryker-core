@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\Cart\Business;
 
-use Generated\Shared\Cart\CartInterface;
-use Generated\Shared\Cart\ChangeInterface;
+use Generated\Shared\Transfer\CartTransfer;
+use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerFeature\Zed\Cart\Business\Model\CalculableContainer;
 
@@ -18,11 +18,11 @@ class CartFacade extends AbstractFacade
 {
 
     /**
-     * @param ChangeInterface $cartChange
+     * @param ChangeTransfer $cartChange
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function addToCart(ChangeInterface $cartChange)
+    public function addToCart(ChangeTransfer $cartChange)
     {
         $addOperator = $this->getDependencyContainer()->createAddOperator();
 
@@ -30,11 +30,11 @@ class CartFacade extends AbstractFacade
     }
 
     /**
-     * @param ChangeInterface $cartChange
+     * @param ChangeTransfer $cartChange
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function increaseQuantity(ChangeInterface $cartChange)
+    public function increaseQuantity(ChangeTransfer $cartChange)
     {
         $increaseOperator = $this->getDependencyContainer()->createIncreaseOperator();
 
@@ -42,11 +42,11 @@ class CartFacade extends AbstractFacade
     }
 
     /**
-     * @param ChangeInterface $cartChange
+     * @param ChangeTransfer $cartChange
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function removeFromCart(ChangeInterface $cartChange)
+    public function removeFromCart(ChangeTransfer $cartChange)
     {
         $removeOperator = $this->getDependencyContainer()->createRemoveOperator();
 
@@ -54,11 +54,11 @@ class CartFacade extends AbstractFacade
     }
 
     /**
-     * @param ChangeInterface $cartChange
+     * @param ChangeTransfer $cartChange
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function decreaseQuantity(ChangeInterface $cartChange)
+    public function decreaseQuantity(ChangeTransfer $cartChange)
     {
         $decreaseOperator = $this->getDependencyContainer()->createDecreaseOperator();
 
@@ -68,11 +68,11 @@ class CartFacade extends AbstractFacade
     /**
      * @todo call calculator client from cart client.
      *
-     * @param CartInterface $cart
+     * @param CartTransfer $cart
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function recalculate(CartInterface $cart)
+    public function recalculate(CartTransfer $cart)
     {
         $calculator = $this->getDependencyContainer()->createCartCalculator();
         $calculableContainer = $calculator->recalculate(new CalculableContainer($cart));
@@ -81,11 +81,11 @@ class CartFacade extends AbstractFacade
     }
 
     /**
-     * @param ChangeInterface $cartChange
+     * @param ChangeTransfer $cartChange
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function addCouponCode(ChangeInterface $cartChange)
+    public function addCouponCode(ChangeTransfer $cartChange)
     {
         $addCouponCodeOperator = $this->getDependencyContainer()->createCouponCodeAddOperator();
 
@@ -93,11 +93,11 @@ class CartFacade extends AbstractFacade
     }
 
     /**
-     * @param ChangeInterface $cartChange
+     * @param ChangeTransfer $cartChange
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function removeCouponCode(ChangeInterface $cartChange)
+    public function removeCouponCode(ChangeTransfer $cartChange)
     {
         $removeCouponCodeOperator = $this->getDependencyContainer()->createCouponCodeRemoveOperator();
 
@@ -105,11 +105,11 @@ class CartFacade extends AbstractFacade
     }
 
     /**
-     * @param ChangeInterface $cartChange
+     * @param ChangeTransfer $cartChange
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function clearCouponCodes(ChangeInterface $cartChange)
+    public function clearCouponCodes(ChangeTransfer $cartChange)
     {
         $clearCouponCodesOperator = $this->getDependencyContainer()->createCouponCodeClearOperator();
 

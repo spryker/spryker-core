@@ -9,8 +9,8 @@ use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutOrderHydrationInterface;
-use Generated\Shared\ProductOption\ProductOptionInterface;
-use Generated\Shared\ProductOptionCartConnector\ItemInterface;
+use Generated\Shared\Transfer\ProductOptionTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 
 class GroupKeyProductOptionHydrationPlugin extends AbstractPlugin implements CheckoutOrderHydrationInterface
 {
@@ -27,11 +27,11 @@ class GroupKeyProductOptionHydrationPlugin extends AbstractPlugin implements Che
     }
 
     /**
-     * @param ItemInterface $item
+     * @param ItemTransfer $item
      *
      * @return string
      */
-    protected function buildGroupKey(ItemInterface $item)
+    protected function buildGroupKey(ItemTransfer $item)
     {
         $currentGroupKey = $item->getGroupKey();
         if (empty($item->getProductOptions())) {
@@ -49,7 +49,7 @@ class GroupKeyProductOptionHydrationPlugin extends AbstractPlugin implements Che
     }
 
     /**
-     * @param ProductOptionInterface[] $options
+     * @param ProductOptionTransfer[] $options
      *
      * @return array
      */
@@ -57,7 +57,7 @@ class GroupKeyProductOptionHydrationPlugin extends AbstractPlugin implements Che
     {
         usort(
             $options,
-            function (ProductOptionInterface $productOptionLeft, ProductOptionInterface $productOptionRight) {
+            function (ProductOptionTransfer $productOptionLeft, ProductOptionTransfer $productOptionRight) {
                 return ($productOptionLeft->getIdOptionValueUsage() < $productOptionRight->getIdOptionValueUsage()) ? -1 : 1;
             }
         );
@@ -66,7 +66,7 @@ class GroupKeyProductOptionHydrationPlugin extends AbstractPlugin implements Che
     }
 
     /**
-     * @param ProductOptionInterface[] $sortedProductOptions
+     * @param ProductOptionTransfer[] $sortedProductOptions
      *
      * @return string
      */

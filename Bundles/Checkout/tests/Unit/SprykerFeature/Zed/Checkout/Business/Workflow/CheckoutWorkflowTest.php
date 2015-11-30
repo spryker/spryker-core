@@ -7,7 +7,6 @@
 namespace Unit\SprykerFeature\Zed\Checkout\Business\Workflow;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Checkout\OrderInterface;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
@@ -173,7 +172,7 @@ class CheckoutWorkflowTest extends Test
 
     public function testWorkflowPassesHydratedOrderOnToSave()
     {
-        /** @var OrderInterface $orderTransfer */
+        /** @var OrderTransfer $orderTransfer */
         $orderTransfer = new OrderTransfer();
 
         $orderTransfer

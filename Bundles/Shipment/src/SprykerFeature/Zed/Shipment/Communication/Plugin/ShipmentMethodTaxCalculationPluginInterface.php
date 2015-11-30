@@ -6,17 +6,17 @@
 
 namespace SprykerFeature\Zed\Shipment\Communication\Plugin;
 
-use Generated\Shared\Shipment\ShipmentMethodAvailabilityInterface;
+use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 
 interface ShipmentMethodTaxCalculationPluginInterface
 {
 
     /**
-     * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailability
+     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability
      * @param int $defaultEffectiveTaxRate
      *
      * @return int $defaultEffectiveTaxRate
      */
-    public function getTaxRate(ShipmentMethodAvailabilityInterface $shipmentMethodAvailability, $defaultEffectiveTaxRate);
+    public function getTaxRate(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability, $defaultEffectiveTaxRate);
 
 }

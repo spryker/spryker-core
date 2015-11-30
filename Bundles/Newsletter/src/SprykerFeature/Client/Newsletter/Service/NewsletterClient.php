@@ -6,10 +6,10 @@
 
 namespace SprykerFeature\Client\Newsletter\Service;
 
-use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
-use Generated\Shared\Newsletter\NewsletterSubscriptionApprovalResultInterface;
-use Generated\Shared\Newsletter\NewsletterSubscriptionRequestInterface;
-use Generated\Shared\Newsletter\NewsletterSubscriptionResponseInterface;
+use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
+use Generated\Shared\Transfer\NewsletterSubscriptionApprovalResultTransfer;
+use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
+use Generated\Shared\Transfer\NewsletterSubscriptionResponseTransfer;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
 
 /**
@@ -19,55 +19,55 @@ class NewsletterClient extends AbstractClient implements NewsletterClientInterfa
 {
 
     /**
-     * @param NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest
+     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseInterface
+     * @return NewsletterSubscriptionResponseTransfer
      */
-    public function subscribeWithSingleOptIn(NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest)
+    public function subscribeWithSingleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
         return $this->getDependencyContainer()->createZedNewsletterStub()
             ->subscribeWithSingleOptIn($newsletterSubscriptionRequest);
     }
 
     /**
-     * @param NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest
+     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseInterface
+     * @return NewsletterSubscriptionResponseTransfer
      */
-    public function subscribeWithDoubleOptIn(NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest)
+    public function subscribeWithDoubleOptIn(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
         return $this->getDependencyContainer()->createZedNewsletterStub()
             ->subscribeWithDoubleOptIn($newsletterSubscriptionRequest);
     }
 
     /**
-     * @param NewsletterSubscriberInterface $newsletterSubscriber
+     * @param NewsletterSubscriberTransfer $newsletterSubscriber
      *
-     * @return NewsletterSubscriptionApprovalResultInterface
+     * @return NewsletterSubscriptionApprovalResultTransfer
      */
-    public function approveDoubleOptInSubscriber(NewsletterSubscriberInterface $newsletterSubscriber)
+    public function approveDoubleOptInSubscriber(NewsletterSubscriberTransfer $newsletterSubscriber)
     {
         return $this->getDependencyContainer()->createZedNewsletterStub()
             ->approveDoubleOptInSubscriber($newsletterSubscriber);
     }
 
     /**
-     * @param NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest
+     * @param NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseInterface
+     * @return NewsletterSubscriptionResponseTransfer
      */
-    public function unsubscribe(NewsletterSubscriptionRequestInterface $newsletterSubscriptionRequest)
+    public function unsubscribe(NewsletterSubscriptionRequestTransfer $newsletterSubscriptionRequest)
     {
         return $this->getDependencyContainer()->createZedNewsletterStub()
             ->unsubscribe($newsletterSubscriptionRequest);
     }
 
     /**
-     * @param NewsletterSubscriptionRequestInterface $newsletterUnsubscriptionRequest
+     * @param NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest
      *
-     * @return NewsletterSubscriptionResponseInterface
+     * @return NewsletterSubscriptionResponseTransfer
      */
-    public function checkSubscription(NewsletterSubscriptionRequestInterface $newsletterUnsubscriptionRequest)
+    public function checkSubscription(NewsletterSubscriptionRequestTransfer $newsletterUnsubscriptionRequest)
     {
         return $this->getDependencyContainer()->createZedNewsletterStub()
             ->checkSubscription($newsletterUnsubscriptionRequest);

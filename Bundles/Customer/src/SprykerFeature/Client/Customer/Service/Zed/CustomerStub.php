@@ -6,8 +6,6 @@
 
 namespace SprykerFeature\Client\Customer\Service\Zed;
 
-use Generated\Shared\Customer\AddressInterface;
-use Generated\Shared\Customer\CustomerInterface;
 use Generated\Shared\Transfer\AddressesTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerResponseTransfer;
@@ -32,183 +30,183 @@ class CustomerStub implements CustomerStubInterface
     }
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
      * @return CustomerResponseTransfer
      */
-    public function hasCustomerWithEmailAndPassword(CustomerInterface $customerTransfer)
+    public function hasCustomerWithEmailAndPassword(CustomerTransfer $customerTransfer)
     {
         return $this->zedStub->call('/customer/gateway/has-customer-with-email-and-password', $customerTransfer);
     }
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
      * @return CustomerResponseTransfer
      */
-    public function forgotPassword(CustomerInterface $customerTransfer)
+    public function forgotPassword(CustomerTransfer $customerTransfer)
     {
         return $this->zedStub->call('/customer/gateway/forgot-password', $customerTransfer);
     }
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
      * @return CustomerResponseTransfer
      */
-    public function restorePassword(CustomerInterface $customerTransfer)
+    public function restorePassword(CustomerTransfer $customerTransfer)
     {
         return $this->zedStub->call('/customer/gateway/restore-password', $customerTransfer);
     }
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
      * @return CustomerTransfer
      */
-    public function confirmRegistration(CustomerInterface $customerTransfer)
+    public function confirmRegistration(CustomerTransfer $customerTransfer)
     {
         return $this->zedStub->call('/customer/gateway/confirm-registration', $customerTransfer);
     }
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
      * @return CustomerResponseTransfer
      */
-    public function register(CustomerInterface $customerTransfer)
+    public function register(CustomerTransfer $customerTransfer)
     {
         return $this->zedStub->call('/customer/gateway/register', $customerTransfer);
     }
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerInterface
+     * @return CustomerTransfer
      */
-    public function get(CustomerInterface $customerTransfer)
+    public function get(CustomerTransfer $customerTransfer)
     {
         return $this->zedStub->call('/customer/gateway/customer', $customerTransfer);
     }
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
      * @return CustomerResponseTransfer
      */
-    public function update(CustomerInterface $customerTransfer)
+    public function update(CustomerTransfer $customerTransfer)
     {
         return $this->zedStub->call('/customer/gateway/update', $customerTransfer);
     }
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
      * @return CustomerResponseTransfer
      */
-    public function updatePassword(CustomerInterface $customerTransfer)
+    public function updatePassword(CustomerTransfer $customerTransfer)
     {
         return $this->zedStub->call('/customer/gateway/update-password', $customerTransfer);
     }
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      * 
      * @return Response
      */
-    public function delete(CustomerInterface $customerTransfer)
+    public function delete(CustomerTransfer $customerTransfer)
     {
         return $this->zedStub->call('/customer/gateway/delete', $customerTransfer);
     }
 
     /**
-     * @param AddressInterface $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
      * @return AddressTransfer
      */
-    public function createAddress(AddressInterface $addressTransfer)
+    public function createAddress(AddressTransfer $addressTransfer)
     {
         return $this->zedStub->call('/customer/gateway/new-address', $addressTransfer);
     }
 
     /**
-     * @param AddressInterface $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
      * @return AddressTransfer
      */
-    public function updateAddress(AddressInterface $addressTransfer)
+    public function updateAddress(AddressTransfer $addressTransfer)
     {
         return $this->zedStub->call('/customer/gateway/update-address', $addressTransfer);
     }
 
     /**
-     * @param AddressInterface $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
      * @return CustomerTransfer
      */
-    public function updateAddressAndCustomerDefaultAddresses(AddressInterface $addressTransfer)
+    public function updateAddressAndCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
         return $this->zedStub->call('/customer/gateway/update-address-and-customer-default-addresses', $addressTransfer);
     }
 
     /**
-     * @param AddressInterface $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
      * @return CustomerTransfer
      */
-    public function createAddressAndUpdateCustomerDefaultAddresses(AddressInterface $addressTransfer)
+    public function createAddressAndUpdateCustomerDefaultAddresses(AddressTransfer $addressTransfer)
     {
         return $this->zedStub->call('/customer/gateway/create-address-and-update-customer-default-addresses', $addressTransfer);
     }
 
     /**
-     * @param AddressInterface $addressTransfer
+     * @param AddressTransfer $addressTransfer
      *
      * @return AddressTransfer
      */
-    public function getAddress(AddressInterface $addressTransfer)
+    public function getAddress(AddressTransfer $addressTransfer)
     {
         return $this->zedStub->call('/customer/gateway/address', $addressTransfer);
     }
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
      * @return AddressesTransfer
      */
-    public function getAddresses(CustomerInterface $customerTransfer)
+    public function getAddresses(CustomerTransfer $customerTransfer)
     {
         return $this->zedStub->call('/customer/gateway/addresses', $customerTransfer);
     }
 
     /**
-     * @param AddressInterface $AddressTransfer
+     * @param AddressTransfer $AddressTransfer
      * 
      * @return AddressTransfer
      */
-    public function deleteAddress(AddressInterface $AddressTransfer)
+    public function deleteAddress(AddressTransfer $AddressTransfer)
     {
         return $this->zedStub->call('/customer/gateway/delete-address', $AddressTransfer);
     }
 
     /**
-     * @param AddressInterface $AddressInterface
+     * @param AddressTransfer $AddressTransfer
      *
      * @return AddressTransfer
      */
-    public function setDefaultBillingAddress(AddressInterface $AddressInterface)
+    public function setDefaultBillingAddress(AddressTransfer $AddressTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/default-billing-address', $AddressInterface);
+        return $this->zedStub->call('/customer/gateway/default-billing-address', $AddressTransfer);
     }
 
     /**
-     * @param AddressInterface $AddressInterface
+     * @param AddressTransfer $AddressTransfer
      *
      * @return AddressTransfer
      */
-    public function setDefaultShippingAddress(AddressInterface $AddressInterface)
+    public function setDefaultShippingAddress(AddressTransfer $AddressTransfer)
     {
-        return $this->zedStub->call('/customer/gateway/default-shipping-address', $AddressInterface);
+        return $this->zedStub->call('/customer/gateway/default-shipping-address', $AddressTransfer);
     }
 
 }

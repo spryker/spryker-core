@@ -6,27 +6,27 @@
 
 namespace SprykerFeature\Zed\Category\Business\Model;
 
-use Generated\Shared\Category\CategoryInterface;
+use Generated\Shared\Transfer\CategoryTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 
 interface CategoryWriterInterface
 {
 
     /**
-     * @param CategoryInterface $category
+     * @param CategoryTransfer $category
      * @param LocaleTransfer $locale
      *
      * @return int
      */
-    public function create(CategoryInterface $category, LocaleTransfer $locale);
+    public function create(CategoryTransfer $category, LocaleTransfer $locale);
 
     /**
-     * @param CategoryInterface $category
+     * @param CategoryTransfer $category
      * @param LocaleTransfer $locale
      *
      * @return void
      */
-    public function update(CategoryInterface $category, LocaleTransfer $locale);
+    public function update(CategoryTransfer $category, LocaleTransfer $locale);
 
     /**
      * @param int $idCategory
@@ -36,11 +36,11 @@ interface CategoryWriterInterface
     public function delete($idCategory);
 
     /**
-     * @param CategoryInterface $category
+     * @param CategoryTransfer $category
      * @param LocaleTransfer $locale
      *
      * @return void
      */
-    public function addCategoryAttribute(CategoryInterface $category, LocaleTransfer $locale);
+    public function addCategoryAttribute(CategoryTransfer $category, LocaleTransfer $locale);
 
 }

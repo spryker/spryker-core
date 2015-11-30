@@ -6,7 +6,7 @@
 
 namespace Unit\SprykerFeature\Zed\Queue\Mock;
 
-use Generated\Shared\Queue\QueueMessageInterface;
+use Generated\Shared\Transfer\QueueMessageTransfer;
 use SprykerFeature\Zed\Queue\Dependency\Plugin\TaskPluginInterface;
 
 class MockTaskPlugin implements TaskPluginInterface
@@ -49,9 +49,9 @@ class MockTaskPlugin implements TaskPluginInterface
     }
 
     /**
-     * @param QueueMessageInterface $queueMessage
+     * @param QueueMessageTransfer $queueMessage
      */
-    public function run(QueueMessageInterface $queueMessage)
+    public function run(QueueMessageTransfer $queueMessage)
     {
     }
 

@@ -6,32 +6,32 @@
 
 namespace SprykerFeature\Zed\Newsletter\Business\Subscription;
 
-use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
-use Generated\Shared\Newsletter\NewsletterTypeInterface;
+use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
+use Generated\Shared\Transfer\NewsletterTypeTransfer;
 
 interface SubscriptionManagerInterface
 {
 
     /**
-     * @param NewsletterSubscriberInterface $newsletterSubscriber
-     * @param NewsletterTypeInterface $newsletterType
+     * @param NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param NewsletterTypeTransfer $newsletterType
      */
-    public function subscribe(NewsletterSubscriberInterface $newsletterSubscriber, NewsletterTypeInterface $newsletterType);
+    public function subscribe(NewsletterSubscriberTransfer $newsletterSubscriber, NewsletterTypeTransfer $newsletterType);
 
     /**
-     * @param NewsletterSubscriberInterface $newsletterSubscriber
-     * @param NewsletterTypeInterface $newsletterType
+     * @param NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param NewsletterTypeTransfer $newsletterType
      *
      * @return bool
      */
-    public function isAlreadySubscribed(NewsletterSubscriberInterface $newsletterSubscriber, NewsletterTypeInterface $newsletterType);
+    public function isAlreadySubscribed(NewsletterSubscriberTransfer $newsletterSubscriber, NewsletterTypeTransfer $newsletterType);
 
     /**
-     * @param NewsletterSubscriberInterface $newsletterSubscriber
-     * @param NewsletterTypeInterface $newsletterType
+     * @param NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param NewsletterTypeTransfer $newsletterType
      *
      * @return bool
      */
-    public function unsubscribe(NewsletterSubscriberInterface $newsletterSubscriber, NewsletterTypeInterface $newsletterType);
+    public function unsubscribe(NewsletterSubscriberTransfer $newsletterSubscriber, NewsletterTypeTransfer $newsletterType);
 
 }

@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\ProductCartConnector\Business\Manager;
 
-use Generated\Shared\ProductCartConnector\ChangeInterface;
+use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerFeature\Zed\Product\Business\ProductFacade;
 
 class ProductManager implements ProductManagerInterface
@@ -26,11 +26,11 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param ChangeInterface $change
+     * @param ChangeTransfer $change
      *
-     * @return ChangeInterface
+     * @return ChangeTransfer
      */
-    public function expandItems(ChangeInterface $change)
+    public function expandItems(ChangeTransfer $change)
     {
         foreach ($change->getItems() as $cartItem) {
             $concreteProductTransfer = $this->productFacade->getConcreteProduct($cartItem->getSku());

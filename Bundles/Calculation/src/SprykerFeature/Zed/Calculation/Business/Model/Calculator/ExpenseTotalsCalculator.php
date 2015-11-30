@@ -6,11 +6,11 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Calculation\ExpenseInterface;
+use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ExpensesTransfer;
 use Generated\Shared\Transfer\ExpenseTotalItemTransfer;
 use Generated\Shared\Transfer\ExpenseTotalsTransfer;
-use Generated\Shared\Calculation\TotalsInterface;
+use Generated\Shared\Transfer\TotalsTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
@@ -20,12 +20,12 @@ class ExpenseTotalsCalculator implements
 {
 
     /**
-     * @param TotalsInterface $totalsTransfer
+     * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
      */
     public function recalculateTotals(
-        TotalsInterface $totalsTransfer,
+        TotalsTransfer $totalsTransfer,
         CalculableInterface $calculableContainer,
         $calculableItems
     ) {
@@ -109,10 +109,10 @@ class ExpenseTotalsCalculator implements
     }
 
     /**
-     * @param ExpenseInterface $expense
+     * @param ExpenseTransfer $expense
      * @param array $arrayOfExpenseTotalItems
      */
-    protected function transformExpenseToExpenseTotalItemInArray(ExpenseInterface $expense, array &$arrayOfExpenseTotalItems)
+    protected function transformExpenseToExpenseTotalItemInArray(ExpenseTransfer $expense, array &$arrayOfExpenseTotalItems)
     {
         if (!isset($arrayOfExpenseTotalItems[$expense->getType()])) {
             $item = new ExpenseTotalItemTransfer();

@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Queue\Business\Model;
 
-use Generated\Shared\Queue\QueueMessageInterface;
+use Generated\Shared\Transfer\QueueMessageTransfer;
 use PhpAmqpLib\Message\AMQPMessage;
 
 interface QueueConnectionInterface
@@ -27,9 +27,9 @@ interface QueueConnectionInterface
 
     /**
      * @param string $queueName
-     * @param QueueMessageInterface $queueMessage
+     * @param QueueMessageTransfer $queueMessage
      */
-    public function publish($queueName, QueueMessageInterface $queueMessage);
+    public function publish($queueName, QueueMessageTransfer $queueMessage);
 
     public function stopListen();
 
@@ -43,7 +43,7 @@ interface QueueConnectionInterface
     /**
      * @param AMQPMessage $amqpMessage
      *
-     * @return QueueMessageInterface
+     * @return QueueMessageTransfer
      */
     public function decodeMessage(AMQPMessage $amqpMessage);
 

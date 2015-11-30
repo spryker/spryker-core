@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Newsletter\Business\Subscription;
 
-use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use SprykerFeature\Zed\Newsletter\Persistence\NewsletterQueryContainer;
 use Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscriber;
@@ -37,7 +36,7 @@ class SubscriberManager implements SubscriberManagerInterface
     /**
      * @param string $email
      *
-     * @return NewsletterSubscriberInterface|null
+     * @return NewsletterSubscriberTransfer|null
      */
     public function loadSubscriberByEmail($email)
     {
@@ -53,11 +52,11 @@ class SubscriberManager implements SubscriberManagerInterface
     }
 
     /**
-     * @param NewsletterSubscriberInterface $newsletterSubscriberTransfer
+     * @param NewsletterSubscriberTransfer $newsletterSubscriberTransfer
      *
-     * @return NewsletterSubscriberInterface
+     * @return NewsletterSubscriberTransfer
      */
-    public function createSubscriberFromTransfer(NewsletterSubscriberInterface $newsletterSubscriberTransfer)
+    public function createSubscriberFromTransfer(NewsletterSubscriberTransfer $newsletterSubscriberTransfer)
     {
         $subscriberEntity = new SpyNewsletterSubscriber();
         $subscriberEntity->fromArray($newsletterSubscriberTransfer->toArray());
@@ -73,11 +72,11 @@ class SubscriberManager implements SubscriberManagerInterface
     }
 
     /**
-     * @param NewsletterSubscriberInterface $subscriber
+     * @param NewsletterSubscriberTransfer $subscriber
      *
      * @return void
      */
-    public function assignCustomerToExistingSubscriber(NewsletterSubscriberInterface $subscriber)
+    public function assignCustomerToExistingSubscriber(NewsletterSubscriberTransfer $subscriber)
     {
         if ($subscriber->getFkCustomer() === null) {
             return;

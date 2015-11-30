@@ -6,9 +6,9 @@
 
 namespace SprykerFeature\Zed\Wishlist\Communication\Controller;
 
-use Generated\Shared\Customer\CustomerInterface;
-use Generated\Shared\Wishlist\WishlistChangeInterface;
-use Generated\Shared\Wishlist\WishlistInterface;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\WishlistChangeTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
 use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use SprykerFeature\Zed\Wishlist\Business\WishlistFacadeInterface;
 
@@ -19,51 +19,51 @@ class GatewayController extends AbstractGatewayController
 {
 
     /**
-     * @param WishlistChangeInterface $changeTransfer
+     * @param WishlistChangeTransfer $changeTransfer
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function addItemAction(WishlistChangeInterface $changeTransfer)
+    public function addItemAction(WishlistChangeTransfer $changeTransfer)
     {
         return $this->getFacade()->addItem($changeTransfer);
     }
 
     /**
-     * @param WishlistChangeInterface $changeTransfer
+     * @param WishlistChangeTransfer $changeTransfer
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function removeItemAction(WishlistChangeInterface $changeTransfer)
+    public function removeItemAction(WishlistChangeTransfer $changeTransfer)
     {
         return $this->getFacade()->removeItem($changeTransfer);
     }
 
     /**
-     * @param WishlistChangeInterface $changeTransfer
+     * @param WishlistChangeTransfer $changeTransfer
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function decreaseQuantityAction(WishlistChangeInterface $changeTransfer)
+    public function decreaseQuantityAction(WishlistChangeTransfer $changeTransfer)
     {
         return $this->getFacade()->decreaseQuantity($changeTransfer);
     }
 
     /**
-     * @param WishlistChangeInterface $changeTransfer
+     * @param WishlistChangeTransfer $changeTransfer
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function increaseQuantityAction(WishlistChangeInterface $changeTransfer)
+    public function increaseQuantityAction(WishlistChangeTransfer $changeTransfer)
     {
         return $this->getFacade()->increaseQuantity($changeTransfer);
     }
 
     /**
-     * @param CustomerInterface $customer
+     * @param CustomerTransfer $customer
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function getCustomerWishlistAction(CustomerInterface $customer)
+    public function getCustomerWishlistAction(CustomerTransfer $customer)
     {
         return $this->getFacade()->getCustomerWishlist($customer);
     }

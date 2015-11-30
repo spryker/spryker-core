@@ -6,16 +6,16 @@
 
 namespace SprykerFeature\Zed\Customer\Business\ReferenceGenerator;
 
-use Generated\Shared\Customer\CustomerInterface;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerReferenceGeneratorInterface
 {
 
     /**
-     * @param CustomerInterface $orderTransfer
+     * @param CustomerTransfer $orderTransfer
      *
      * @return string
      */
-    public function generateCustomerReference(CustomerInterface $orderTransfer);
+    public function generateCustomerReference(CustomerTransfer $orderTransfer);
 
 }

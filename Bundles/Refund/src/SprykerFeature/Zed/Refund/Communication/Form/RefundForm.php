@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\Refund\Communication\Form;
 
-use Generated\Shared\Refund\RefundInterface;
-use Generated\Shared\Refund\OrderInterface;
+use Generated\Shared\Transfer\RefundTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Refund\Business\RefundFacade;
 use SprykerFeature\Zed\Refund\Dependency\Plugin\PaymentDataPluginInterface;
@@ -33,7 +33,7 @@ class RefundForm extends AbstractForm
     protected $refundFacade;
 
     /**
-     * @var OrderInterface
+     * @var OrderTransfer
      */
     protected $orderTransfer;
 
@@ -44,10 +44,10 @@ class RefundForm extends AbstractForm
 
     /**
      * @param RefundFacade $refundFacade
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      * @param PaymentDataPluginInterface $paymentDataPlugin
      */
-    public function __construct(RefundFacade $refundFacade, OrderInterface $orderTransfer, PaymentDataPluginInterface $paymentDataPlugin)
+    public function __construct(RefundFacade $refundFacade, OrderTransfer $orderTransfer, PaymentDataPluginInterface $paymentDataPlugin)
     {
         $this->refundFacade = $refundFacade;
         $this->orderTransfer = $orderTransfer;
@@ -159,7 +159,7 @@ class RefundForm extends AbstractForm
     /**
      * @param $idOrder
      *
-     * @return RefundInterface[]
+     * @return RefundTransfer[]
      */
     protected function getRefunds($idOrder)
     {

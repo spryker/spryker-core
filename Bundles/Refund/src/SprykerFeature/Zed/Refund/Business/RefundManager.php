@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Refund\Business;
 
-use Generated\Shared\Refund\OrderInterface;
+use Generated\Shared\Transfer\OrderTransfer;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Orm\Zed\Refund\Persistence\SpyRefund;
 use SprykerFeature\Zed\Refund\Persistence\RefundQueryContainerInterface;
@@ -38,11 +38,11 @@ class RefundManager
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return int
      */
-    public function calculateRefundableAmount(OrderInterface $orderTransfer)
+    public function calculateRefundableAmount(OrderTransfer $orderTransfer)
     {
         $sum = 0;
 

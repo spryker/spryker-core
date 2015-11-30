@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Customer;
 
-use Generated\Shared\SequenceNumber\SequenceNumberSettingsInterface;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerFeature\Shared\SequenceNumber\SequenceNumberConstants;
@@ -49,7 +48,7 @@ class CustomerConfig extends AbstractBundleConfig
     }
 
     /**
-     * @return SequenceNumberSettingsInterface
+     * @return SequenceNumberSettingsTransfer
      */
     public function getCustomerReferenceDefaults()
     {

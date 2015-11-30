@@ -6,14 +6,13 @@
 
 namespace SprykerFeature\Zed\Payone\Business;
 
-use Generated\Shared\Checkout\CheckoutResponseInterface;
-use Generated\Shared\Payone\PayoneCreditCardInterface;
-use Generated\Shared\Payone\PayonePaymentInterface;
-use Generated\Shared\Payone\PayoneRefundInterface;
-use Generated\Shared\Refund\PaymentDataInterface;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
+use Generated\Shared\Transfer\PayoneCreditCardTransfer;
+use Generated\Shared\Transfer\PayonePaymentTransfer;
+use Generated\Shared\Transfer\PayoneRefundTransfer;
 use Generated\Shared\Transfer\PaymentDataTransfer;
 use Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer;
-use Generated\Shared\Payone\OrderInterface;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\PayonePaymentLogTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
@@ -32,9 +31,9 @@ class PayoneFacade extends AbstractFacade
 {
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      */
-    public function saveOrder(OrderInterface $orderTransfer)
+    public function saveOrder(OrderTransfer $orderTransfer)
     {
         $this->getDependencyContainer()->createOrderManager()->saveOrder($orderTransfer);
     }
@@ -80,21 +79,21 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param PayoneRefundInterface $refundTransfer
+     * @param PayoneRefundTransfer $refundTransfer
      *
      * @return RefundResponseContainer
      */
-    public function refundPayment(PayoneRefundInterface $refundTransfer)
+    public function refundPayment(PayoneRefundTransfer $refundTransfer)
     {
         return $this->getDependencyContainer()->createPaymentManager()->refundPayment($refundTransfer);
     }
 
     /**
-     * @param PayoneCreditCardInterface $creditCardData
+     * @param PayoneCreditCardTransfer $creditCardData
      *
      * @return CreditCardCheckResponseContainer
      */
-    public function creditCardCheck(PayoneCreditCardInterface $creditCardData)
+    public function creditCardCheck(PayoneCreditCardTransfer $creditCardData)
     {
         return $this->getDependencyContainer()->createPaymentManager()->creditCardCheck($creditCardData);
     }
@@ -113,121 +112,121 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isAuthorizationApproved(OrderInterface $orderTransfer)
+    public function isAuthorizationApproved(OrderTransfer $orderTransfer)
     {
         return $this->getDependencyContainer()->createApiLogFinder()->isAuthorizationApproved($orderTransfer);
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isAuthorizationRedirect(OrderInterface $orderTransfer)
+    public function isAuthorizationRedirect(OrderTransfer $orderTransfer)
     {
         return $this->getDependencyContainer()->createApiLogFinder()->isAuthorizationRedirect($orderTransfer);
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isPreauthorizationApproved(OrderInterface $orderTransfer)
+    public function isPreauthorizationApproved(OrderTransfer $orderTransfer)
     {
         return $this->getDependencyContainer()->createApiLogFinder()->isPreauthorizationApproved($orderTransfer);
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isPreauthorizationRedirect(OrderInterface $orderTransfer)
+    public function isPreauthorizationRedirect(OrderTransfer $orderTransfer)
     {
         return $this->getDependencyContainer()->createApiLogFinder()->isPreauthorizationRedirect($orderTransfer);
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isAuthorizationError(OrderInterface $orderTransfer)
+    public function isAuthorizationError(OrderTransfer $orderTransfer)
     {
         return $this->getDependencyContainer()->createApiLogFinder()->isAuthorizationError($orderTransfer);
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isCaptureApproved(OrderInterface $orderTransfer)
+    public function isCaptureApproved(OrderTransfer $orderTransfer)
     {
         return $this->getDependencyContainer()->createApiLogFinder()->isCaptureApproved($orderTransfer);
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isCaptureError(OrderInterface $orderTransfer)
+    public function isCaptureError(OrderTransfer $orderTransfer)
     {
         return $this->getDependencyContainer()->createApiLogFinder()->isCaptureError($orderTransfer);
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isRefundApproved(OrderInterface $orderTransfer)
+    public function isRefundApproved(OrderTransfer $orderTransfer)
     {
         return $this->getDependencyContainer()->createApiLogFinder()->isRefundApproved($orderTransfer);
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isRefundError(OrderInterface $orderTransfer)
+    public function isRefundError(OrderTransfer $orderTransfer)
     {
         return $this->getDependencyContainer()->createApiLogFinder()->isRefundError($orderTransfer);
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isRefundPossible(OrderInterface $orderTransfer)
+    public function isRefundPossible(OrderTransfer $orderTransfer)
     {
         return $this->getDependencyContainer()->createPaymentManager()->isRefundPossible($orderTransfer);
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isPaymentDataRequired(OrderInterface $orderTransfer)
+    public function isPaymentDataRequired(OrderTransfer $orderTransfer)
     {
         return $this->getDependencyContainer()->createPaymentManager()->isPaymentDataRequired($orderTransfer);
     }
 
     /**
-     * @param PayonePaymentInterface $payment
+     * @param PayonePaymentTransfer $payment
      *
      * @return PayoneAuthorizationCheckResponseTransfer
      */
-    public function getAuthorizationResponse(PayonePaymentInterface $payment)
+    public function getAuthorizationResponse(PayonePaymentTransfer $payment)
     {
         return $this->getDependencyContainer()->createApiLogFinder()->getAuthorizationResponse($payment);
     }
@@ -324,12 +323,12 @@ class PayoneFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderInterface $orderTransfer
-     * @param CheckoutResponseInterface $checkoutResponse
+     * @param OrderTransfer $orderTransfer
+     * @param CheckoutResponseTransfer $checkoutResponse
      *
-     * @return CheckoutResponseInterface
+     * @return CheckoutResponseTransfer
      */
-    public function postSaveHook(OrderInterface $orderTransfer, CheckoutResponseInterface $checkoutResponse)
+    public function postSaveHook(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         return $this->getDependencyContainer()
             ->createPaymentManager()
@@ -349,7 +348,7 @@ class PayoneFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PaymentDataInterface
+     * @return PaymentDataTransfer
      */
     public function getPaymentData($idPayment)
     {

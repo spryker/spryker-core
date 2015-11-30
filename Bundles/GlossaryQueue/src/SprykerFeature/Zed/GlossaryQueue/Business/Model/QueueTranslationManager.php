@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\GlossaryQueue\Business\Model;
 
-use Generated\Shared\Queue\QueueMessageInterface;
+use Generated\Shared\Transfer\QueueMessageTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerFeature\Zed\GlossaryQueue\Dependency\Facade\GlossaryQueueToGlossaryInterface;
 
@@ -23,9 +23,9 @@ class QueueTranslationManager implements QueueTranslationManagerInterface
     }
 
     /**
-     * @param QueueMessageInterface $queueMessage
+     * @param QueueMessageTransfer $queueMessage
      */
-    public function processTranslationMessage(QueueMessageInterface $queueMessage)
+    public function processTranslationMessage(QueueMessageTransfer $queueMessage)
     {
         $translation = $queueMessage->getPayload();
 

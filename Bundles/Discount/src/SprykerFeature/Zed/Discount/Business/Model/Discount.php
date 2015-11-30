@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
-use Generated\Shared\Discount\DiscountInterface;
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
@@ -203,7 +202,7 @@ class Discount
     /**
      * @param SpyDiscount $discountEntity
      *
-     * @return DiscountInterface
+     * @return DiscountTransfer
      */
     protected function hydrateDiscountTransfer(SpyDiscount $discountEntity)
     {

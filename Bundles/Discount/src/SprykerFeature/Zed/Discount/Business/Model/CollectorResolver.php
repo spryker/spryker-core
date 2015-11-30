@@ -5,7 +5,7 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
-use Generated\Shared\Discount\DiscountInterface;
+use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\DiscountConfigInterface;
 
@@ -29,11 +29,11 @@ class CollectorResolver
 
     /**
      * @param CalculableInterface $container
-     * @param DiscountInterface $discountTransfer
+     * @param DiscountTransfer $discountTransfer
      *
      * @return DiscountableInterface[]
      */
-    public function collectItems(CalculableInterface $container, DiscountInterface $discountTransfer)
+    public function collectItems(CalculableInterface $container, DiscountTransfer $discountTransfer)
     {
         $collectedItems = [];
 
@@ -102,13 +102,13 @@ class CollectorResolver
     }
 
     /**
-     * @param DiscountInterface $discountTransfer
+     * @param DiscountTransfer $discountTransfer
      * @param DiscountableInterface[] $collectedItems
      * @param DiscountableInterface[] $itemsToCombine
      *
      * @return DiscountableInterface[]
      */
-    protected function combine(DiscountInterface $discountTransfer, $collectedItems, $itemsToCombine)
+    protected function combine(DiscountTransfer $discountTransfer, $collectedItems, $itemsToCombine)
     {
         if ($discountTransfer->getCollectorLogicalOperator() === self::OPERATOR_OR) {
             return $this->combineWithOr($collectedItems, $itemsToCombine);

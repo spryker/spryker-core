@@ -5,19 +5,19 @@
 
 namespace SprykerFeature\Zed\ProductOptionCartConnector\Business\Model;
 
-use Generated\Shared\Cart\ChangeInterface;
-use Generated\Shared\ProductOption\ProductOptionInterface;
-use Generated\Shared\ProductOptionCartConnector\ItemInterface;
+use Generated\Shared\Transfer\ChangeTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 
 class GroupKeyExpander
 {
 
     /**
-     * @param ChangeInterface $change
+     * @param ChangeTransfer $change
      *
-     * @return ChangeInterface
+     * @return ChangeTransfer
      */
-    public function expand(ChangeInterface $change)
+    public function expand(ChangeTransfer $change)
     {
         foreach ($change->getItems() as $item) {
             $item->setGroupKey($this->buildGroupKey($item));
@@ -27,11 +27,11 @@ class GroupKeyExpander
     }
 
     /**
-     * @param ItemInterface $cartItem
+     * @param ItemTransfer $cartItem
      *
      * @return string
      */
-    protected function buildGroupKey(ItemInterface $cartItem)
+    protected function buildGroupKey(ItemTransfer $cartItem)
     {
         $currentGroupKey = $cartItem->getGroupKey();
         if (empty($cartItem->getProductOptions())) {
@@ -57,7 +57,7 @@ class GroupKeyExpander
     {
         usort(
             $options,
-            function (ProductOptionInterface $productOptionLeft, ProductOptionInterface $productOptionRight) {
+            function (ProductOptionTransfer $productOptionLeft, ProductOptionTransfer $productOptionRight) {
                 return ($productOptionLeft->getIdOptionValueUsage() < $productOptionRight->getIdOptionValueUsage()) ? -1 : 1;
             }
         );
@@ -66,7 +66,7 @@ class GroupKeyExpander
     }
 
     /**
-     * @param ProductOptionInterface[] $sortedProductOptions
+     * @param ProductOptionTransfer[] $sortedProductOptions
      *
      * @return string
      */

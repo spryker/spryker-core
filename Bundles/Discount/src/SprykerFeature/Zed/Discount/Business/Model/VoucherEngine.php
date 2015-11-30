@@ -6,8 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
-use Generated\Shared\Discount\VoucherCreateInfoInterface;
-use Generated\Shared\Discount\VoucherInterface;
+use Generated\Shared\Transfer\VoucherTransfer;
 use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -68,11 +67,11 @@ class VoucherEngine
     }
 
     /**
-     * @param VoucherInterface $voucherTransfer
+     * @param VoucherTransfer $voucherTransfer
      *
-     * @return VoucherCreateInfoInterface
+     * @return VoucherCreateInfoTransfer
      */
-    public function createVoucherCodes(VoucherInterface $voucherTransfer)
+    public function createVoucherCodes(VoucherTransfer $voucherTransfer)
     {
         $voucherPoolEntity = $this->queryContainer
             ->queryVoucherPool()
@@ -92,7 +91,7 @@ class VoucherEngine
      * @param SpyDiscountVoucherPool $voucherPoolEntity
      * @param TransferInterface $voucherTransfer
      *
-     * @return VoucherCreateInfoInterface
+     * @return VoucherCreateInfoTransfer
      */
     protected function saveBatchVoucherCodes(SpyDiscountVoucherPool $voucherPoolEntity, TransferInterface $voucherTransfer)
     {
@@ -103,11 +102,11 @@ class VoucherEngine
     }
 
     /**
-     * @param VoucherCreateInfoInterface $voucherCreateInfoInterface
+     * @param VoucherCreateInfoTransfer $voucherCreateInfoInterface
      *
-     * @return VoucherCreateInfoInterface
+     * @return VoucherCreateInfoTransfer
      */
-    protected function acceptVoucherCodesTransation(VoucherCreateInfoInterface $voucherCreateInfoInterface)
+    protected function acceptVoucherCodesTransation(VoucherCreateInfoTransfer $voucherCreateInfoInterface)
     {
         if ($voucherCreateInfoInterface->getType() === self::MESSAGE_TYPE_SUCCESS) {
             $this->connection->commit();
@@ -122,12 +121,12 @@ class VoucherEngine
 
     /**
      * @param SpyDiscountVoucherPool $discountVoucherPool
-     * @param VoucherInterface $voucherTransfer
+     * @param VoucherTransfer $voucherTransfer
      * @param int $quantiy
      *
      * @return VoucherCreateInfoTransfer
      */
-    protected function generateAndSaveVoucherCodes(SpyDiscountVoucherPool $discountVoucherPool, VoucherInterface $voucherTransfer, $quantiy)
+    protected function generateAndSaveVoucherCodes(SpyDiscountVoucherPool $discountVoucherPool, VoucherTransfer $voucherTransfer, $quantiy)
     {
         $length = $voucherTransfer->getCodeLength();
         $codeCollisions = 0;
@@ -191,13 +190,13 @@ class VoucherEngine
     }
 
     /**
-     * @param VoucherInterface $voucherTransfer
+     * @param VoucherTransfer $voucherTransfer
      *
      * @throws \Propel\Runtime\Exception\PropelException
      *
      * @return SpyDiscountVoucher
      */
-    public function createVoucherCode(VoucherInterface $voucherTransfer)
+    public function createVoucherCode(VoucherTransfer $voucherTransfer)
     {
         $voucherEntity = new SpyDiscountVoucher();
         $voucherEntity->fromArray($voucherTransfer->toArray());
@@ -271,11 +270,11 @@ class VoucherEngine
     }
 
     /**
-     * @param VoucherInterface $voucherTransfer
+     * @param VoucherTransfer $voucherTransfer
      *
      * @return int
      */
-    protected function getNextBatchValueForVouchers(VoucherInterface $voucherTransfer)
+    protected function getNextBatchValueForVouchers(VoucherTransfer $voucherTransfer)
     {
         $nextVoucherBatchValue = 0;
 

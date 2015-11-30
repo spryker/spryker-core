@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule;
 
-use Generated\Shared\Discount\DiscountInterface;
+use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountDecisionRulePluginInterface;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
@@ -19,12 +19,12 @@ class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePlugin
 {
 
     /**
-     * @param DiscountInterface $discountTransfer
+     * @param DiscountTransfer $discountTransfer
      * @param CalculableInterface $container
      *
      * @return ModelResult
      */
-    public function check(DiscountInterface $discountTransfer, CalculableInterface $container)
+    public function check(DiscountTransfer $discountTransfer, CalculableInterface $container)
     {
         $voucherCodeValidationResults = new ModelResult();
 

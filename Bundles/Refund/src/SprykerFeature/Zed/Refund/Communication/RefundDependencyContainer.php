@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Refund\Communication;
 
-use Generated\Shared\Refund\OrderInterface;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\RefundCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Shared\Library\Context;
@@ -28,11 +28,11 @@ class RefundDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return RefundForm
      */
-    public function createRefundForm(OrderInterface $orderTransfer)
+    public function createRefundForm(OrderTransfer $orderTransfer)
     {
         $refundFacade = $this->getRefundFacade();
         $paymentDataPlugin = $this->getConfig()->getPaymentDataPlugin();

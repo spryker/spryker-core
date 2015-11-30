@@ -6,19 +6,18 @@
 
 namespace SprykerFeature\Zed\CartCheckoutConnector\Business;
 
-use Generated\Shared\CartCheckoutConnector\CheckoutRequestInterface;
-use Generated\Shared\CartCheckoutConnector\OrderInterface;
-use Generated\Shared\CartCheckoutConnector\ItemInterface;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 
 class CartOrderHydrator implements CartOrderHydratorInterface
 {
 
     /**
-     * @param OrderInterface $order
-     * @param CheckoutRequestInterface $request
+     * @param OrderTransfer $order
+     * @param CheckoutRequestTransfer $request
      */
-    public function hydrateOrderTransfer(OrderInterface $order, CheckoutRequestInterface $request)
+    public function hydrateOrderTransfer(OrderTransfer $order, CheckoutRequestTransfer $request)
     {
         $cart = $request->getCart();
 
@@ -62,7 +61,7 @@ class CartOrderHydrator implements CartOrderHydratorInterface
     }
 
     /**
-     * @return ItemInterface
+     * @return ItemTransfer
      */
     protected function getItemTransfer()
     {
@@ -70,11 +69,11 @@ class CartOrderHydrator implements CartOrderHydratorInterface
     }
 
     /**
-     * @param ItemInterface $cartItemTransfer
+     * @param ItemTransfer $cartItemTransfer
      *
-     * @return ItemInterface
+     * @return ItemTransfer
      */
-    protected function createItemTransfer(ItemInterface $cartItemTransfer)
+    protected function createItemTransfer(ItemTransfer $cartItemTransfer)
     {
         $orderItemTransfer = $this->getItemTransfer();
         $orderItemTransfer->fromArray($cartItemTransfer->toArray(), true);

@@ -6,8 +6,7 @@
 
 namespace SprykerFeature\Zed\Product\Business\Product;
 
-use Generated\Shared\Product\AbstractProductInterface;
-use Generated\Shared\Product\ConcreteProductInterface;
+use Generated\Shared\Transfer\AbstractProductTransfer;
 use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
@@ -101,14 +100,14 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param AbstractProductInterface $abstractProductTransfer
+     * @param AbstractProductTransfer $abstractProductTransfer
      *
      * @throws AbstractProductExistsException
      * @throws PropelException
      *
      * @return int
      */
-    public function createAbstractProduct(AbstractProductInterface $abstractProductTransfer)
+    public function createAbstractProduct(AbstractProductTransfer $abstractProductTransfer)
     {
         $sku = $abstractProductTransfer->getSku();
 
@@ -173,12 +172,12 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param AbstractProductInterface $abstractProductTransfer
+     * @param AbstractProductTransfer $abstractProductTransfer
      *
      * @throws AbstractProductAttributesExistException
      * @throws PropelException
      */
-    protected function createAbstractProductAttributes(AbstractProductInterface $abstractProductTransfer)
+    protected function createAbstractProductAttributes(AbstractProductTransfer $abstractProductTransfer)
     {
         $idAbstractProduct = $abstractProductTransfer->getIdAbstractProduct();
 
@@ -238,7 +237,7 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param ConcreteProductInterface $concreteProductTransfer
+     * @param ConcreteProductTransfer $concreteProductTransfer
      * @param int $idAbstractProduct
      *
      * @throws ConcreteProductExistsException
@@ -246,7 +245,7 @@ class ProductManager implements ProductManagerInterface
      *
      * @return int
      */
-    public function createConcreteProduct(ConcreteProductInterface $concreteProductTransfer, $idAbstractProduct)
+    public function createConcreteProduct(ConcreteProductTransfer $concreteProductTransfer, $idAbstractProduct)
     {
         $sku = $concreteProductTransfer->getSku();
 
@@ -324,12 +323,12 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param ConcreteProductInterface $concreteProductTransfer
+     * @param ConcreteProductTransfer $concreteProductTransfer
      *
      * @throws ConcreteProductAttributesExistException
      * @throws PropelException
      */
-    protected function createConcreteProductAttributes(ConcreteProductInterface $concreteProductTransfer)
+    protected function createConcreteProductAttributes(ConcreteProductTransfer $concreteProductTransfer)
     {
         $idConcreteProduct = $concreteProductTransfer->getIdConcreteProduct();
 
@@ -505,7 +504,7 @@ class ProductManager implements ProductManagerInterface
      *
      * @throws MissingProductException
      *
-     * @return ConcreteProductInterface
+     * @return ConcreteProductTransfer
      */
     public function getConcreteProduct($concreteSku)
     {
@@ -542,9 +541,9 @@ class ProductManager implements ProductManagerInterface
     }
 
     /**
-     * @param ConcreteProductInterface $concreteProductTransfer
+     * @param ConcreteProductTransfer $concreteProductTransfer
      */
-    private function addTaxesToProductTransfer(ConcreteProductInterface $concreteProductTransfer)
+    private function addTaxesToProductTransfer(ConcreteProductTransfer $concreteProductTransfer)
     {
         $taxSetEntity = $this->productQueryContainer
             ->queryTaxSetForAbstractProduct($concreteProductTransfer->getIdAbstractProduct())

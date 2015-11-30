@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Mail\Business;
 
-use Generated\Shared\Mail\SendMailResponsesInterface;
+use Generated\Shared\Transfer\SendMailResponsesTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
@@ -19,7 +19,7 @@ class MailFacade extends AbstractFacade
     /**
      * @param MailTransfer $mailTransfer
      *
-     * @return SendMailResponsesInterface
+     * @return SendMailResponsesTransfer
      */
     public function sendMail(MailTransfer $mailTransfer)
     {
@@ -27,11 +27,11 @@ class MailFacade extends AbstractFacade
     }
 
     /**
-     * @param SendMailResponsesInterface $mailResponses
+     * @param SendMailResponsesTransfer $mailResponses
      *
      * @return bool
      */
-    public function isMailSent(SendMailResponsesInterface $mailResponses)
+    public function isMailSent(SendMailResponsesTransfer $mailResponses)
     {
         return $this->getDependencyContainer()->getMailSender()->isMailSent($mailResponses);
     }

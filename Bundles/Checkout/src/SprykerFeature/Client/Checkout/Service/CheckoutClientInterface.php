@@ -6,17 +6,17 @@
 
 namespace SprykerFeature\Client\Checkout\Service;
 
-use Generated\Shared\Checkout\CheckoutRequestInterface;
-use Generated\Shared\Checkout\CheckoutResponseInterface;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\CheckoutResponseTransfer;
 
 interface CheckoutClientInterface
 {
 
     /**
-     * @param CheckoutRequestInterface $requestInterface
+     * @param CheckoutRequestTransfer $requestInterface
      *
-     * @return CheckoutResponseInterface
+     * @return CheckoutResponseTransfer
      */
-    public function requestCheckout(CheckoutRequestInterface $requestInterface);
+    public function requestCheckout(CheckoutRequestTransfer $requestInterface);
 
 }

@@ -4,9 +4,9 @@
  */
 namespace SprykerFeature\Zed\Wishlist\Business;
 
-use Generated\Shared\Customer\CustomerInterface;
-use Generated\Shared\Wishlist\WishlistChangeInterface;
-use Generated\Shared\Wishlist\WishlistInterface;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\WishlistChangeTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
 
 /**
  * @method WishlistDependencyContainer getDependencyContainer()
@@ -15,38 +15,38 @@ interface WishlistFacadeInterface
 {
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function addItem(WishlistChangeInterface $wishlistChange);
+    public function addItem(WishlistChangeTransfer $wishlistChange);
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function removeItem(WishlistChangeInterface $wishlistChange);
+    public function removeItem(WishlistChangeTransfer $wishlistChange);
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function decreaseQuantity(WishlistChangeInterface $wishlistChange);
+    public function decreaseQuantity(WishlistChangeTransfer $wishlistChange);
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function increaseQuantity(WishlistChangeInterface $wishlistChange);
+    public function increaseQuantity(WishlistChangeTransfer $wishlistChange);
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function getCustomerWishlist(CustomerInterface $customerTransfer);
+    public function getCustomerWishlist(CustomerTransfer $customerTransfer);
 
 }

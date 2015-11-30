@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\Newsletter\Business\Subscription;
 
-use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
-use Generated\Shared\Newsletter\NewsletterTypeInterface;
+use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
+use Generated\Shared\Transfer\NewsletterTypeTransfer;
 use SprykerFeature\Zed\Newsletter\Business\Exception\MissingNewsletterTypeException;
 use SprykerFeature\Zed\Newsletter\Persistence\NewsletterQueryContainer;
 use Orm\Zed\Newsletter\Persistence\SpyNewsletterSubscription;
@@ -29,10 +29,10 @@ class SubscriptionManager implements SubscriptionManagerInterface
     }
 
     /**
-     * @param NewsletterSubscriberInterface $newsletterSubscriber
-     * @param NewsletterTypeInterface $newsletterType
+     * @param NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param NewsletterTypeTransfer $newsletterType
      */
-    public function subscribe(NewsletterSubscriberInterface $newsletterSubscriber, NewsletterTypeInterface $newsletterType)
+    public function subscribe(NewsletterSubscriberTransfer $newsletterSubscriber, NewsletterTypeTransfer $newsletterType)
     {
         $subscriptionEntity = new SpyNewsletterSubscription();
         $subscriptionEntity->setFkNewsletterSubscriber($newsletterSubscriber->getIdNewsletterSubscriber());
@@ -41,12 +41,12 @@ class SubscriptionManager implements SubscriptionManagerInterface
     }
 
     /**
-     * @param NewsletterSubscriberInterface $newsletterSubscriber
-     * @param NewsletterTypeInterface $newsletterType
+     * @param NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param NewsletterTypeTransfer $newsletterType
      *
      * @return bool
      */
-    public function isAlreadySubscribed(NewsletterSubscriberInterface $newsletterSubscriber, NewsletterTypeInterface $newsletterType)
+    public function isAlreadySubscribed(NewsletterSubscriberTransfer $newsletterSubscriber, NewsletterTypeTransfer $newsletterType)
     {
         $subscriptionCount = $this->queryContainer
             ->querySubscriptionByEmailAndNewsletterTypeName($newsletterSubscriber->getEmail(), $newsletterType->getName())
@@ -56,12 +56,12 @@ class SubscriptionManager implements SubscriptionManagerInterface
     }
 
     /**
-     * @param NewsletterSubscriberInterface $newsletterSubscriber
-     * @param NewsletterTypeInterface $newsletterType
+     * @param NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param NewsletterTypeTransfer $newsletterType
      *
      * @return bool
      */
-    public function unsubscribe(NewsletterSubscriberInterface $newsletterSubscriber, NewsletterTypeInterface $newsletterType)
+    public function unsubscribe(NewsletterSubscriberTransfer $newsletterSubscriber, NewsletterTypeTransfer $newsletterType)
     {
         $subscriptionEntity = $this->getSubscription($newsletterSubscriber, $newsletterType);
 
@@ -75,13 +75,13 @@ class SubscriptionManager implements SubscriptionManagerInterface
     }
 
     /**
-     * @param NewsletterTypeInterface $newsletterType
+     * @param NewsletterTypeTransfer $newsletterType
      *
      * @throws MissingNewsletterTypeException
      *
      * @return int
      */
-    protected function getIdNewsletterType(NewsletterTypeInterface $newsletterType)
+    protected function getIdNewsletterType(NewsletterTypeTransfer $newsletterType)
     {
         if ($newsletterType->getIdNewsletterType() !== null) {
             return $newsletterType->getIdNewsletterType();
@@ -99,12 +99,12 @@ class SubscriptionManager implements SubscriptionManagerInterface
     }
 
     /**
-     * @param NewsletterSubscriberInterface $newsletterSubscriber
-     * @param NewsletterTypeInterface $newsletterType
+     * @param NewsletterSubscriberTransfer $newsletterSubscriber
+     * @param NewsletterTypeTransfer $newsletterType
      *
      * @return SpyNewsletterSubscription|null
      */
-    protected function getSubscription(NewsletterSubscriberInterface $newsletterSubscriber, NewsletterTypeInterface $newsletterType)
+    protected function getSubscription(NewsletterSubscriberTransfer $newsletterSubscriber, NewsletterTypeTransfer $newsletterType)
     {
         if ($newsletterSubscriber->getSubscriberKey() !== null) {
             $subscriptionEntity = $this->queryContainer

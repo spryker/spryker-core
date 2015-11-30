@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Shared\Heartbeat\Code;
 
-use Generated\Shared\Heartbeat\HealthReportInterface;
+use Generated\Shared\Transfer\HealthReportTransfer;
 use Generated\Shared\Transfer\HealthDetailTransfer;
 use Generated\Shared\Transfer\HealthIndicatorReportTransfer;
 
@@ -14,7 +14,7 @@ abstract class AbstractHealthIndicator implements HealthIndicatorInterface
 {
 
     /**
-     * @var HealthReportInterface
+     * @var HealthReportTransfer
      */
     private $healthIndicatorReport;
 

@@ -5,7 +5,7 @@
 
 namespace SprykerFeature\Zed\Newsletter\Business\Subscription;
 
-use Generated\Shared\Newsletter\NewsletterSubscriberInterface;
+use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 
 interface SubscriberManagerInterface
 {
@@ -13,22 +13,22 @@ interface SubscriberManagerInterface
     /**
      * @param string $email
      *
-     * @return NewsletterSubscriberInterface
+     * @return NewsletterSubscriberTransfer
      */
     public function loadSubscriberByEmail($email);
 
     /**
-     * @param NewsletterSubscriberInterface $newsletterSubscriberTransfer
+     * @param NewsletterSubscriberTransfer $newsletterSubscriberTransfer
      *
-     * @return NewsletterSubscriberInterface
+     * @return NewsletterSubscriberTransfer
      */
-    public function createSubscriberFromTransfer(NewsletterSubscriberInterface $newsletterSubscriberTransfer);
+    public function createSubscriberFromTransfer(NewsletterSubscriberTransfer $newsletterSubscriberTransfer);
 
     /**
-     * @param NewsletterSubscriberInterface $subscriber
+     * @param NewsletterSubscriberTransfer $subscriber
      *
      * @return void
      */
-    public function assignCustomerToExistingSubscriber(NewsletterSubscriberInterface $subscriber);
+    public function assignCustomerToExistingSubscriber(NewsletterSubscriberTransfer $subscriber);
 
 }

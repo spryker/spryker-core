@@ -6,25 +6,25 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Payment\Method\installment;
 
-use Generated\Shared\Payolution\CheckoutRequestInterface;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 
 interface InstallmentInterface
 {
 
     /**
-     * @param CheckoutRequestInterface $checkoutRequestTransfer
+     * @param CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return string
      */
-    public function buildCalculationRequest(CheckoutRequestInterface $checkoutRequestTransfer);
+    public function buildCalculationRequest(CheckoutRequestTransfer $checkoutRequestTransfer);
 
     /**
-     * @param CheckoutRequestInterface $checkoutRequestTransfer
+     * @param CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return array
      */
-    public function buildPreCheckRequest(CheckoutRequestInterface $checkoutRequestTransfer);
+    public function buildPreCheckRequest(CheckoutRequestTransfer $checkoutRequestTransfer);
 
     /**
      * @param SpyPaymentPayolution $paymentEntity

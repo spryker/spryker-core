@@ -6,10 +6,10 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Calculation\ExpenseInterface;
-use Generated\Shared\Calculation\TotalsInterface;
-use Generated\Shared\Calculation\ProductOptionInterface;
-use Generated\Shared\Sales\OrderItemsInterface;
+use Generated\Shared\Transfer\ExpenseTransfer;
+use Generated\Shared\Transfer\TotalsTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
+use Generated\Shared\Transfer\OrderItemsTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
@@ -19,12 +19,12 @@ class SubtotalTotalsCalculator implements
 {
 
     /**
-     * @param TotalsInterface $totalsTransfer
+     * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
      */
     public function recalculateTotals(
-        TotalsInterface $totalsTransfer,
+        TotalsTransfer $totalsTransfer,
         CalculableInterface $calculableContainer,
         $calculableItems
     ) {
@@ -41,7 +41,7 @@ class SubtotalTotalsCalculator implements
     {
         $subtotal = 0;
 
-        if ($calculableItems instanceof OrderItemsInterface) {
+        if ($calculableItems instanceof OrderItemsTransfer) {
             $calculableItems = $calculableItems->getOrderItems();
         }
 
@@ -57,7 +57,7 @@ class SubtotalTotalsCalculator implements
     }
 
     /**
-     * @param \ArrayObject|ProductOptionInterface[] $options
+     * @param \ArrayObject|ProductOptionTransfer[] $options
      *
      * @return int
      */
@@ -72,7 +72,7 @@ class SubtotalTotalsCalculator implements
     }
 
     /**
-     * @param \ArrayObject|ExpenseInterface[] $expenses
+     * @param \ArrayObject|ExpenseTransfer[] $expenses
      *
      * @return int
      */

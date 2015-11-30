@@ -6,18 +6,18 @@
 
 namespace SprykerFeature\Zed\ProductOptionCheckoutConnector\Business;
 
-use Generated\Shared\ProductOptionCheckoutConnector\CheckoutRequestInterface;
-use Generated\Shared\ProductOptionCheckoutConnector\OrderInterface;
-use Generated\Shared\ProductOptionCheckoutConnector\ItemInterface;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
 
 class ProductOptionOrderHydrator implements ProductOptionOrderHydratorInterface
 {
 
     /**
-     * @param OrderInterface $order
-     * @param CheckoutRequestInterface $request
+     * @param OrderTransfer $order
+     * @param CheckoutRequestTransfer $request
      */
-    public function hydrateOrderTransfer(OrderInterface $order, CheckoutRequestInterface $request)
+    public function hydrateOrderTransfer(OrderTransfer $order, CheckoutRequestTransfer $request)
     {
         $cart = $request->getCart();
 
@@ -25,8 +25,8 @@ class ProductOptionOrderHydrator implements ProductOptionOrderHydratorInterface
     }
 
     /**
-     * @param \ArrayObject|ItemInterface[] $cartItems
-     * @param \ArrayObject|ItemInterface[] $orderItems
+     * @param \ArrayObject|ItemTransfer[] $cartItems
+     * @param \ArrayObject|ItemTransfer[] $orderItems
      */
     private function transferProductOptionsFromCartToOrder(\ArrayObject $cartItems, \ArrayObject $orderItems)
     {
@@ -36,10 +36,10 @@ class ProductOptionOrderHydrator implements ProductOptionOrderHydratorInterface
     }
 
     /**
-     * @param ItemInterface $cartItem
-     * @param \ArrayObject|ItemInterface[] $orderItems
+     * @param ItemTransfer $cartItem
+     * @param \ArrayObject|ItemTransfer[] $orderItems
      */
-    private function transferItemOptions(ItemInterface $cartItem, \ArrayObject $orderItems)
+    private function transferItemOptions(ItemTransfer $cartItem, \ArrayObject $orderItems)
     {
         foreach ($orderItems as $orderItem) {
             if ($cartItem->getSku() !== $orderItem->getSku()) {

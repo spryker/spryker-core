@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Payment\Method\installment;
 
-use Generated\Shared\Payolution\CheckoutRequestInterface;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use SprykerFeature\Zed\Payolution\Business\Payment\Method\AbstractPaymentMethod;
 use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
@@ -47,11 +47,11 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
     }
 
     /**
-     * @param CheckoutRequestInterface $checkoutRequestTransfer
+     * @param CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return array
      */
-    public function buildCalculationRequest(CheckoutRequestInterface $checkoutRequestTransfer)
+    public function buildCalculationRequest(CheckoutRequestTransfer $checkoutRequestTransfer)
     {
         return [
             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_REQUEST_ELEMENT,
@@ -129,11 +129,11 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
     }
 
     /**
-     * @param CheckoutRequestInterface $checkoutRequestTransfer
+     * @param CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return array
      */
-    public function buildPreCheckRequest(CheckoutRequestInterface $checkoutRequestTransfer)
+    public function buildPreCheckRequest(CheckoutRequestTransfer $checkoutRequestTransfer)
     {
         $payolutionTransfer = $checkoutRequestTransfer->getPayolutionPayment();
         $addressTransfer = $payolutionTransfer->getAddress();

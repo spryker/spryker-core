@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Calculation\ItemInterface;
-use Generated\Shared\Calculation\ProductOptionInterface;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ProductOptionTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 
@@ -33,11 +33,11 @@ class ProductOptionPriceToPayCalculator implements CalculatorPluginInterface
     }
 
     /**
-     * @param ProductOptionInterface $option
+     * @param ProductOptionTransfer $option
      *
      * @return int
      */
-    protected function sumDiscounts(ProductOptionInterface $option)
+    protected function sumDiscounts(ProductOptionTransfer $option)
     {
         $discountAmount = 0;
         foreach ($option->getDiscounts() as $discount) {
@@ -50,7 +50,7 @@ class ProductOptionPriceToPayCalculator implements CalculatorPluginInterface
     /**
      * @param CalculableInterface $calculableContainer
      *
-     * @return ItemInterface[]
+     * @return ItemTransfer[]
      */
     protected function getItems(CalculableInterface $calculableContainer)
     {

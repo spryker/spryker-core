@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Plugin\Calculator;
 
-use Generated\Shared\Discount\DiscountInterface;
+use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
 
@@ -30,11 +30,11 @@ class Percentage extends AbstractCalculator
     }
 
     /**
-     * @param DiscountInterface $discountTransfer
+     * @param DiscountTransfer $discountTransfer
      *
      * @return string
      */
-    public function getFormattedAmount(DiscountInterface $discountTransfer)
+    public function getFormattedAmount(DiscountTransfer $discountTransfer)
     {
         return $discountTransfer->getAmount() . '%';
     }

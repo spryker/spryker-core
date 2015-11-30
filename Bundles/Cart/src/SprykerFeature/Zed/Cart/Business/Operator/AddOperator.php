@@ -6,20 +6,20 @@
 
 namespace SprykerFeature\Zed\Cart\Business\Operator;
 
-use Generated\Shared\Cart\ChangeInterface;
+use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerFeature\Shared\Cart\Messages\Messages;
-use Generated\Shared\Cart\CartInterface;
+use Generated\Shared\Transfer\CartTransfer;
 
 class AddOperator extends AbstractOperator
 {
 
     /**
-     * @param CartInterface $cart
-     * @param ChangeInterface $change
+     * @param CartTransfer $cart
+     * @param ChangeTransfer $change
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    protected function changeCart(CartInterface $cart, ChangeInterface $change)
+    protected function changeCart(CartTransfer $cart, ChangeTransfer $change)
     {
         $cart = $this->storageProvider->addItems($cart, $change);
 

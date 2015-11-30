@@ -2,13 +2,13 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model;
 
-use Generated\Shared\Calculation\CalculableContainerInterface;
+use Generated\Shared\Transfer\CalculableContainerTransfer;
 
 interface CalculableInterface
 {
 
     /**
-     * @return CalculableContainerInterface
+     * @return CalculableContainerTransfer
      */
     public function getCalculableObject();
 

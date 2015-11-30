@@ -5,7 +5,7 @@
 
 namespace SprykerFeature\Zed\ProductOptionCartConnector\Communication\Plugin;
 
-use Generated\Shared\Cart\ChangeInterface;
+use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\ProductOptionCartConnector\Business\ProductOptionCartConnectorFacade;
@@ -17,11 +17,11 @@ class CartItemProductOptionPlugin extends AbstractPlugin implements ItemExpander
 {
 
     /**
-     * @param ChangeInterface $change
+     * @param ChangeTransfer $change
      *
-     * @return ChangeInterface
+     * @return ChangeTransfer
      */
-    public function expandItems(ChangeInterface $change)
+    public function expandItems(ChangeTransfer $change)
     {
         $this->getFacade()->expandProductOptions($change);
 

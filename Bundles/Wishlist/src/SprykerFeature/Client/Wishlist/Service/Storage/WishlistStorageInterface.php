@@ -4,7 +4,7 @@
  */
 namespace SprykerFeature\Client\Wishlist\Service\Storage;
 
-use Generated\Shared\Wishlist\WishlistInterface;
+use Generated\Shared\Transfer\WishlistTransfer;
 
 interface WishlistStorageInterface
 {
@@ -12,6 +12,6 @@ interface WishlistStorageInterface
     /**
      * @return mixed
      */
-    public function expandProductDetails(WishlistInterface $wishlist);
+    public function expandProductDetails(WishlistTransfer $wishlist);
 
 }

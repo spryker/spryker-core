@@ -6,10 +6,10 @@
 
 namespace SprykerFeature\Zed\Payolution\Business;
 
-use Generated\Shared\Payolution\CheckoutRequestInterface;
-use Generated\Shared\Payolution\OrderInterface;
-use Generated\Shared\Payolution\PayolutionTransactionResponseInterface;
-use Generated\Shared\Payolution\PayolutionCalculationResponseInterface;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
+use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
@@ -19,9 +19,9 @@ class PayolutionFacade extends AbstractFacade
 {
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      */
-    public function saveOrderPayment(OrderInterface $orderTransfer)
+    public function saveOrderPayment(OrderTransfer $orderTransfer)
     {
         return $this
             ->getDependencyContainer()
@@ -30,11 +30,11 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param CheckoutRequestInterface $checkoutRequestTransfer
+     * @param CheckoutRequestTransfer $checkoutRequestTransfer
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
-    public function preCheckPayment(CheckoutRequestInterface $checkoutRequestTransfer)
+    public function preCheckPayment(CheckoutRequestTransfer $checkoutRequestTransfer)
     {
         $payolutionResponseTransfer = $this
             ->getDependencyContainer()
@@ -47,7 +47,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
     public function preAuthorizePayment($idPayment)
     {
@@ -60,7 +60,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
     public function reAuthorizePayment($idPayment)
     {
@@ -73,7 +73,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
     public function revertPayment($idPayment)
     {
@@ -86,7 +86,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
     public function capturePayment($idPayment)
     {
@@ -99,7 +99,7 @@ class PayolutionFacade extends AbstractFacade
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
     public function refundPayment($idPayment)
     {
@@ -110,11 +110,11 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param CheckoutRequestInterface $checkoutRequestTransfer
+     * @param CheckoutRequestTransfer $checkoutRequestTransfer
      *
-     * @return PayolutionCalculationResponseInterface
+     * @return PayolutionCalculationResponseTransfer
      */
-    public function calculateInstallmentPayments(CheckoutRequestInterface $checkoutRequestTransfer)
+    public function calculateInstallmentPayments(CheckoutRequestTransfer $checkoutRequestTransfer)
     {
         $payolutionResponseTransfer = $this
             ->getDependencyContainer()
@@ -125,11 +125,11 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isPreAuthorizationApproved(OrderInterface $orderTransfer)
+    public function isPreAuthorizationApproved(OrderTransfer $orderTransfer)
     {
         return $this
             ->getDependencyContainer()
@@ -138,11 +138,11 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isReAuthorizationApproved(OrderInterface $orderTransfer)
+    public function isReAuthorizationApproved(OrderTransfer $orderTransfer)
     {
         return $this
             ->getDependencyContainer()
@@ -151,11 +151,11 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isReversalApproved(OrderInterface $orderTransfer)
+    public function isReversalApproved(OrderTransfer $orderTransfer)
     {
         return $this
             ->getDependencyContainer()
@@ -164,11 +164,11 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isCaptureApproved(OrderInterface $orderTransfer)
+    public function isCaptureApproved(OrderTransfer $orderTransfer)
     {
         return $this
             ->getDependencyContainer()
@@ -177,11 +177,11 @@ class PayolutionFacade extends AbstractFacade
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isRefundApproved(OrderInterface $orderTransfer)
+    public function isRefundApproved(OrderTransfer $orderTransfer)
     {
         return $this
             ->getDependencyContainer()

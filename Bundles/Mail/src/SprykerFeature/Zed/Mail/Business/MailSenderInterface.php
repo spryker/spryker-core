@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Mail\Business;
 
-use Generated\Shared\Mail\SendMailResponsesInterface;
+use Generated\Shared\Transfer\SendMailResponsesTransfer;
 use Generated\Shared\Transfer\MailTransfer;
 
 interface MailSenderInterface
@@ -15,15 +15,15 @@ interface MailSenderInterface
     /**
      * @param MailTransfer $mailTransfer
      *
-     * @return SendMailResponsesInterface
+     * @return SendMailResponsesTransfer
      */
     public function sendMail(MailTransfer $mailTransfer);
 
     /**
-     * @param SendMailResponsesInterface $mailResponses
+     * @param SendMailResponsesTransfer $mailResponses
      *
      * @return bool
      */
-    public function isMailSent(SendMailResponsesInterface $mailResponses);
+    public function isMailSent(SendMailResponsesTransfer $mailResponses);
 
 }

@@ -6,16 +6,16 @@
 
 namespace SprykerFeature\Zed\Shipment\Communication\Plugin;
 
-use Generated\Shared\Shipment\ShipmentMethodAvailabilityInterface;
+use Generated\Shared\Transfer\ShipmentMethodAvailabilityTransfer;
 
 interface ShipmentMethodAvailabilityPluginInterface
 {
 
     /**
-     * @param ShipmentMethodAvailabilityInterface $shipmentMethodAvailability
+     * @param ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability
      *
      * @return bool
      */
-    public function isAvailable(ShipmentMethodAvailabilityInterface $shipmentMethodAvailability);
+    public function isAvailable(ShipmentMethodAvailabilityTransfer $shipmentMethodAvailability);
 
 }

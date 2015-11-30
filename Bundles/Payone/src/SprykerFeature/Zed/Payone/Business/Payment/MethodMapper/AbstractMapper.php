@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Payment\MethodMapper;
 
-use Generated\Shared\Payone\PayoneStandardParameterInterface;
+use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PersonalContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer;
@@ -18,7 +18,7 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
 {
 
     /**
-     * @var PayoneStandardParameterInterface
+     * @var PayoneStandardParameterTransfer
      */
     private $standardParameter;
 
@@ -38,17 +38,17 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     }
 
     /**
-     * @param PayoneStandardParameterInterface $standardParameterTransfer
+     * @param PayoneStandardParameterTransfer $standardParameterTransfer
      *
      * @return void
      */
-    public function setStandardParameter(PayoneStandardParameterInterface $standardParameterTransfer)
+    public function setStandardParameter(PayoneStandardParameterTransfer $standardParameterTransfer)
     {
         $this->standardParameter = $standardParameterTransfer;
     }
 
     /**
-     * @return PayoneStandardParameterInterface
+     * @return PayoneStandardParameterTransfer
      */
     protected function getStandardParameter()
     {

@@ -2,7 +2,6 @@
 
 namespace SprykerFeature\Zed\Refund\Business\Model;
 
-use Generated\Shared\Refund\RefundInterface;
 use Generated\Shared\Transfer\ExpenseTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
 use Generated\Shared\Transfer\OrderItemsAndExpensesTransfer;
@@ -53,9 +52,9 @@ class Refund
     /**
      * @param RefundTransfer $refundTransfer
      *
-     * @return RefundInterface
+     * @return RefundTransfer
      */
-    public function saveRefund(RefundInterface $refundTransfer)
+    public function saveRefund(RefundTransfer $refundTransfer)
     {
         $this->salesQueryContainer->getConnection()->beginTransaction();
 

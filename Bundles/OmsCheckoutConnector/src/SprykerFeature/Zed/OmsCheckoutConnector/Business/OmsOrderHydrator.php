@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\OmsCheckoutConnector\Business;
 
-use Generated\Shared\OmsCheckoutConnector\CheckoutRequestInterface;
-use Generated\Shared\OmsCheckoutConnector\OrderInterface;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\OmsCheckoutConnector\Business\Exception\NoStatemachineProcessException;
 
 class OmsOrderHydrator implements OmsOrderHydratorInterface
@@ -18,12 +18,12 @@ class OmsOrderHydrator implements OmsOrderHydratorInterface
     const PAYMENT_METHOD_VORKASSE = 'prepay';
 
     /**
-     * @param OrderInterface $order
-     * @param CheckoutRequestInterface $request
+     * @param OrderTransfer $order
+     * @param CheckoutRequestTransfer $request
      *
      * @throws NoStatemachineProcessException
      */
-    public function hydrateOrderTransfer(OrderInterface $order, CheckoutRequestInterface $request)
+    public function hydrateOrderTransfer(OrderTransfer $order, CheckoutRequestTransfer $request)
     {
         $paymentMethod = $request->getPaymentMethod();
 

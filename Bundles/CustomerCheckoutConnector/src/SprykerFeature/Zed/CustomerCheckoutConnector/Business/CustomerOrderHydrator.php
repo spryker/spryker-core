@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\CustomerCheckoutConnector\Business;
 
-use Generated\Shared\CustomerCheckoutConnector\CheckoutRequestInterface;
-use Generated\Shared\CustomerCheckoutConnector\OrderInterface;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
 use SprykerFeature\Zed\CustomerCheckoutConnector\Dependency\Facade\CustomerCheckoutConnectorToCustomerInterface;
@@ -29,10 +29,10 @@ class CustomerOrderHydrator implements CustomerOrderHydratorInterface
     }
 
     /**
-     * @param OrderInterface $orderTransfer
-     * @param CheckoutRequestInterface $request
+     * @param OrderTransfer $orderTransfer
+     * @param CheckoutRequestTransfer $request
      */
-    public function hydrateOrderTransfer(OrderInterface $orderTransfer, CheckoutRequestInterface $request)
+    public function hydrateOrderTransfer(OrderTransfer $orderTransfer, CheckoutRequestTransfer $request)
     {
         $customerTransfer = new CustomerTransfer();
         $customerTransfer->setEmail($request->getEmail());
@@ -73,14 +73,14 @@ class CustomerOrderHydrator implements CustomerOrderHydratorInterface
     }
 
     /**
-     * @param OrderInterface $orderTransfer
-     * @param CheckoutRequestInterface $request
+     * @param OrderTransfer $orderTransfer
+     * @param CheckoutRequestTransfer $request
      *
      * @return void
      */
     protected function setGuestProperties(
-        OrderInterface $orderTransfer,
-        CheckoutRequestInterface $request
+        OrderTransfer $orderTransfer,
+        CheckoutRequestTransfer $request
     ) {
         $orderTransfer->setEmail($request->getEmail());
         $orderTransfer->setFirstName($request->getBillingAddress()->getFirstName());

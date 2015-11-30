@@ -5,8 +5,8 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Collector;
 
-use Generated\Shared\Discount\DiscountCollectorInterface;
-use Generated\Shared\Discount\OrderInterface;
+use Generated\Shared\Transfer\DiscountCollectorTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 
 class Expense implements CollectorInterface
@@ -15,9 +15,9 @@ class Expense implements CollectorInterface
     /**
      * @param CalculableInterface $container
      *
-     * @return OrderInterface[]
+     * @return OrderTransfer[]
      */
-    public function collect(CalculableInterface $container, DiscountCollectorInterface $discountCollectorTransfer)
+    public function collect(CalculableInterface $container, DiscountCollectorTransfer $discountCollectorTransfer)
     {
         $discountableExpenses = [];
 

@@ -6,11 +6,11 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model\Calculator;
 
-use Generated\Shared\Calculation\TotalsInterface;
-use Generated\Shared\Calculation\OrderInterface;
-use Generated\Shared\Calculation\CartInterface;
-use Generated\Shared\Calculation\ItemInterface;
-use Generated\Shared\Calculation\TaxSetInterface;
+use Generated\Shared\Transfer\TotalsTransfer;
+use Generated\Shared\Transfer\OrderTransfer;
+use Generated\Shared\Transfer\CartTransfer;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TaxTotalTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Calculation\Business\Model\PriceCalculationHelperInterface;
@@ -25,7 +25,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     protected $priceCalculationHelper;
 
     /**
-     * @var TaxSetInterface[]
+     * @var TaxSetTransfer[]
      */
     private $calculatedTaxSets = [];
 
@@ -38,12 +38,12 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @param TotalsInterface $totalsTransfer
+     * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
-     * @param ItemInterface[]|ItemInterface[] $calculableItems
+     * @param ItemTransfer[]|ItemTransfer[] $calculableItems
      */
     public function recalculateTotals(
-        TotalsInterface $totalsTransfer,
+        TotalsTransfer $totalsTransfer,
         CalculableInterface $calculableContainer,
         $calculableItems
     ) {
@@ -53,7 +53,7 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
 
     /**
      * @param CalculableInterface $calculableContainer
-     * @param ItemInterface[]|ItemInterface[] $calculableItems
+     * @param ItemTransfer[]|ItemTransfer[] $calculableItems
      */
     public function calculateTaxAmountsForTaxableItems(CalculableInterface $calculableContainer, $calculableItems)
     {
@@ -61,13 +61,13 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
             $this->calculateTax($item);
         }
 
-        /** @var $order CartInterface|OrderInterface **/
+        /** @var $order CartTransfer|OrderTransfer **/
         $order = $calculableContainer->getCalculableObject();
         $this->calculateTaxForOrderExpenses($order->getExpenses());
     }
 
     /**
-     * @param ItemInterface|ItemInterface $taxableItem
+     * @param ItemTransfer|ItemTransfer $taxableItem
      */
     private function calculateTax($taxableItem)
     {
@@ -104,11 +104,11 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     }
 
     /**
-     * @param TotalsInterface $totalsTransfer
+     * @param TotalsTransfer $totalsTransfer
      */
-    public function calculateTaxTotals(TotalsInterface $totalsTransfer)
+    public function calculateTaxTotals(TotalsTransfer $totalsTransfer)
     {
-        /** @var $groupedTotals TaxSetInterface[] **/
+        /** @var $groupedTotals TaxSetTransfer[] **/
         $groupedTotals = [];
         foreach ($this->calculatedTaxSets as $taxSet) {
             if (!isset($groupedTotals[$taxSet->getIdTaxSet()])) {

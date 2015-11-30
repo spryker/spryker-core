@@ -6,8 +6,7 @@
 
 namespace SprykerFeature\Zed\Maintenance\Business\InstalledPackages;
 
-use Generated\Shared\Maintenance\InstalledPackageInterface;
-use Generated\Shared\Maintenance\InstalledPackagesInterface;
+use Generated\Shared\Transfer\InstalledPackageTransfer;
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
 
 class InstalledPackageCollectorFilter implements InstalledPackageCollectorInterface
@@ -27,7 +26,7 @@ class InstalledPackageCollectorFilter implements InstalledPackageCollectorInterf
     }
 
     /**
-     * @return InstalledPackagesInterface
+     * @return InstalledPackagesTransfer
      */
     public function getInstalledPackages()
     {
@@ -46,11 +45,11 @@ class InstalledPackageCollectorFilter implements InstalledPackageCollectorInterf
     }
 
     /**
-     * @param InstalledPackageInterface $package
+     * @param InstalledPackageTransfer $package
      *
      * @return string
      */
-    private function getPackageKey(InstalledPackageInterface $package)
+    private function getPackageKey(InstalledPackageTransfer $package)
     {
         return $package->getName() . $package->getVersion() . implode('', $package->getLicense());
     }

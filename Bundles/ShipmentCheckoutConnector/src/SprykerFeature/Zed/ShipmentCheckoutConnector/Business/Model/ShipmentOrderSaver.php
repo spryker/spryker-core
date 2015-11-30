@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\ShipmentCheckoutConnector\Business\Model;
 
-use Generated\Shared\ShipmentCheckoutConnector\OrderInterface;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Propel\Runtime\Propel;
 use SprykerFeature\Shared\Shipment\ShipmentConstants;
@@ -30,12 +30,12 @@ class ShipmentOrderSaver implements ShipmentOrderSaverInterface
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      * @param CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
-    public function saveShipmentForOrder(OrderInterface $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
+    public function saveShipmentForOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         Propel::getConnection()->beginTransaction();
         $salesOrderEntity = $this->queryContainer->querySalesOrderById($orderTransfer->getIdSalesOrder())->findOne();

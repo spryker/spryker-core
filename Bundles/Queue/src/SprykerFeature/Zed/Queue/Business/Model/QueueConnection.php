@@ -2,8 +2,8 @@
 
 namespace SprykerFeature\Zed\Queue\Business\Model;
 
-use Generated\Shared\Queue\AmqpParameterInterface;
-use Generated\Shared\Queue\QueueMessageInterface;
+use Generated\Shared\Transfer\AmqpParameterTransfer;
+use Generated\Shared\Transfer\QueueMessageTransfer;
 use PhpAmqpLib\Connection\AMQPConnection;
 use PhpAmqpLib\Channel\AMQPChannel;
 use PhpAmqpLib\Exception\AMQPTimeoutException;
@@ -42,9 +42,9 @@ class QueueConnection implements QueueConnectionInterface
     protected $queues = [];
 
     /**
-     * @param AmqpParameterInterface $amqpParameter
+     * @param AmqpParameterTransfer $amqpParameter
      */
-    public function __construct(AmqpParameterInterface $amqpParameter)
+    public function __construct(AmqpParameterTransfer $amqpParameter)
     {
         $connection = new AMQPConnection(
             $amqpParameter->getHost(),
@@ -118,9 +118,9 @@ class QueueConnection implements QueueConnectionInterface
 
     /**
      * @param string $queueName
-     * @param QueueMessageInterface $queueMessage
+     * @param QueueMessageTransfer $queueMessage
      */
-    public function publish($queueName, QueueMessageInterface $queueMessage)
+    public function publish($queueName, QueueMessageTransfer $queueMessage)
     {
         $this->declareQueue($queueName);
 
@@ -150,7 +150,7 @@ class QueueConnection implements QueueConnectionInterface
     /**
      * @param AMQPMessage $amqpMessage
      *
-     * @return QueueMessageInterface
+     * @return QueueMessageTransfer
      */
     public function decodeMessage(AMQPMessage $amqpMessage)
     {
@@ -158,11 +158,11 @@ class QueueConnection implements QueueConnectionInterface
     }
 
     /**
-     * @param QueueMessageInterface $queueMessage
+     * @param QueueMessageTransfer $queueMessage
      *
      * @return string
      */
-    protected function encodeMessage(QueueMessageInterface $queueMessage)
+    protected function encodeMessage(QueueMessageTransfer $queueMessage)
     {
         return serialize($queueMessage);
     }

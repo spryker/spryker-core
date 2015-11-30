@@ -6,12 +6,11 @@
 
 namespace SprykerFeature\Zed\Wishlist\Business\Storage;
 
-use Generated\Shared\Customer\CustomerInterface;
-use Generated\Shared\Product\ConcreteProductInterface;
+use Generated\Shared\Transfer\CustomerTransfer;
+use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\ItemTransfer;
-use Generated\Shared\Wishlist\ItemInterface;
-use Generated\Shared\Wishlist\WishlistChangeInterface;
-use Generated\Shared\Wishlist\WishlistInterface;
+use Generated\Shared\Transfer\WishlistChangeTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
 use SprykerFeature\Zed\Product\Business\ProductFacade;
 use Orm\Zed\Wishlist\Persistence\SpyWishlist;
 use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
@@ -27,7 +26,7 @@ class Propel implements StorageInterface
     protected $wishlistQueryContainer;
 
     /**
-     * @var CustomerInterface
+     * @var CustomerTransfer
      */
     protected $customerTransfer;
 
@@ -44,15 +43,15 @@ class Propel implements StorageInterface
     /**
      * @param WishlistQueryContainerInterface $wishlistQueryContainer
      * @param Customer $customer
-     * @param WishlistInterface $wishlistTransfer
-     * @param CustomerInterface $customerTransfer
+     * @param WishlistTransfer $wishlistTransfer
+     * @param CustomerTransfer $customerTransfer
      * @param ProductFacade $facadeProduct
      */
     public function __construct(
         WishlistQueryContainerInterface $wishlistQueryContainer,
         Customer $customer,
-        WishlistInterface $wishlistTransfer,
-        CustomerInterface $customerTransfer,
+        WishlistTransfer $wishlistTransfer,
+        CustomerTransfer $customerTransfer,
         ProductFacade $facadeProduct
     ) {
         $this->wishlistQueryContainer = $wishlistQueryContainer;
@@ -63,11 +62,11 @@ class Propel implements StorageInterface
     }
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistChangeInterface
+     * @return WishlistChangeTransfer
      */
-    public function addItems(WishlistChangeInterface $wishlistChange)
+    public function addItems(WishlistChangeTransfer $wishlistChange)
     {
         $idCustomer = $this->customerTransfer->getIdCustomer();
         $wishlistEntity = $this->getWishlistEntity($idCustomer);
@@ -98,11 +97,11 @@ class Propel implements StorageInterface
     }
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function removeItems(WishlistChangeInterface $wishlistChange)
+    public function removeItems(WishlistChangeTransfer $wishlistChange)
     {
         $idCustomer = $this->customerTransfer->getIdCustomer();
         $wishlistEntity = $this->getWishlistEntity($idCustomer);
@@ -130,36 +129,36 @@ class Propel implements StorageInterface
     }
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function increaseItems(WishlistChangeInterface $wishlistChange)
+    public function increaseItems(WishlistChangeTransfer $wishlistChange)
     {
         return $this->addItems($wishlistChange);
     }
 
     /**
-     * @param WishlistChangeInterface $wishlistChange
+     * @param WishlistChangeTransfer $wishlistChange
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function decreaseItems(WishlistChangeInterface $wishlistChange)
+    public function decreaseItems(WishlistChangeTransfer $wishlistChange)
     {
         return $this->removeItems($wishlistChange);
     }
 
     /**
-     * @param ItemInterface $wishlistItemTransfer
+     * @param ItemTransfer $wishlistItemTransfer
      * @param int $idWishlist
-     * @param ConcreteProductInterface $concreteProductTransfer
+     * @param ConcreteProductTransfer $concreteProductTransfer
      *
      * @return SpyWishlistItem
      */
     protected function createNewWishlistItem(
-        ItemInterface $wishlistItemTransfer,
+        ItemTransfer $wishlistItemTransfer,
         $idWishlist,
-        ConcreteProductInterface $concreteProductTransfer
+        ConcreteProductTransfer $concreteProductTransfer
     ) {
         $wishlistItemEntity = new SpyWishlistItem();
         $wishlistItemEntity->setGroupKey($wishlistItemTransfer->getGroupKey());
@@ -174,12 +173,12 @@ class Propel implements StorageInterface
     }
 
     /**
-     * @param ItemInterface $wishlistItemTransfer
+     * @param ItemTransfer $wishlistItemTransfer
      * @param int $idWishlist
      *
      * @return null|SpyWishlistItem
      */
-    protected function getWishlistItemEntity(ItemInterface $wishlistItemTransfer, $idWishlist)
+    protected function getWishlistItemEntity(ItemTransfer $wishlistItemTransfer, $idWishlist)
     {
         $wishlistItemEntity = null;
         if (!empty($wishlistItemTransfer->getGroupKey())) {

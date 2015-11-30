@@ -6,7 +6,6 @@
 
 namespace Unit\SprykerFeature\Zed\Checkout\Business\Fixture;
 
-use Generated\Shared\Checkout\CheckoutResponseInterface;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutSaveOrderInterface;
@@ -15,14 +14,14 @@ class MockOrderSaver implements CheckoutSaveOrderInterface
 {
 
     /**
-     * @var CheckoutResponseInterface
+     * @var CheckoutResponseTransfer
      */
     private $checkoutResponse;
 
     /**
-     * @param CheckoutResponseInterface $checkoutResponse
+     * @param CheckoutResponseTransfer $checkoutResponse
      */
-    public function __construct(CheckoutResponseInterface $checkoutResponse)
+    public function __construct(CheckoutResponseTransfer $checkoutResponse)
     {
         $this->checkoutResponse = $checkoutResponse;
     }

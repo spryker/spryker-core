@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
-use Generated\Shared\Discount\DiscountInterface;
+use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Distributor\DistributorInterface;
 use SprykerFeature\Zed\Discount\DiscountConfigInterface;
@@ -15,7 +15,7 @@ interface CalculatorInterface
 {
 
     /**
-     * @param DiscountInterface[] $discountCollection
+     * @param DiscountTransfer[] $discountCollection
      * @param CalculableInterface $container
      * @param DiscountConfigInterface $settings
      * @param DistributorInterface $discountDistributor

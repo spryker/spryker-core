@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Controller;
 
-use Generated\Shared\Discount\VoucherCreateInfoInterface;
+use Generated\Shared\Transfer\VoucherCreateInfoTransfer;
 use Generated\Shared\Transfer\VoucherTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
@@ -107,11 +107,11 @@ class VoucherController extends AbstractController
     }
 
     /**
-     * @param VoucherCreateInfoInterface $voucherCreateInfoInterface
+     * @param VoucherCreateInfoTransfer $voucherCreateInfoInterface
      *
      * @return self
      */
-    protected function addVoucherCreateMessage(VoucherCreateInfoInterface $voucherCreateInfoInterface)
+    protected function addVoucherCreateMessage(VoucherCreateInfoTransfer $voucherCreateInfoInterface)
     {
         if ($voucherCreateInfoInterface->getType() === self::MESSAGE_TYPE_SUCCESS) {
             return $this->addSuccessMessage($voucherCreateInfoInterface->getMessage());

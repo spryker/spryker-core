@@ -6,67 +6,67 @@
 
 namespace SprykerFeature\Client\Cart\Service\Zed;
 
-use Generated\Shared\Cart\CartInterface;
-use Generated\Shared\Cart\ChangeInterface;
+use Generated\Shared\Transfer\CartTransfer;
+use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 
 interface CartStubInterface
 {
 
     /**
-     * @param ChangeInterface|TransferInterface $changeTransfer
+     * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function addItem(ChangeInterface $changeTransfer);
+    public function addItem(ChangeTransfer $changeTransfer);
 
     /**
-     * @param ChangeInterface|TransferInterface $changeTransfer
+     * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function removeItem(ChangeInterface $changeTransfer);
+    public function removeItem(ChangeTransfer $changeTransfer);
 
     /**
-     * @param ChangeInterface|TransferInterface $changeTransfer
+     * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function increaseItemQuantity(ChangeInterface $changeTransfer);
+    public function increaseItemQuantity(ChangeTransfer $changeTransfer);
 
     /**
-     * @param ChangeInterface|TransferInterface $changeTransfer
+     * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function decreaseItemQuantity(ChangeInterface $changeTransfer);
+    public function decreaseItemQuantity(ChangeTransfer $changeTransfer);
 
     /**
-     * @param ChangeInterface|TransferInterface $changeTransfer
+     * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function addCoupon(ChangeInterface $changeTransfer);
+    public function addCoupon(ChangeTransfer $changeTransfer);
 
     /**
-     * @param ChangeInterface|TransferInterface $changeTransfer
+     * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function removeCoupon(ChangeInterface $changeTransfer);
+    public function removeCoupon(ChangeTransfer $changeTransfer);
 
     /**
-     * @param ChangeInterface|TransferInterface $changeTransfer
+     * @param ChangeTransfer|TransferInterface $changeTransfer
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function clearCoupons(ChangeInterface $changeTransfer);
+    public function clearCoupons(ChangeTransfer $changeTransfer);
 
     /**
-     * @param CartInterface|TransferInterface $cartTransfer
+     * @param CartTransfer|TransferInterface $cartTransfer
      *
-     * @return CartInterface
+     * @return CartTransfer
      */
-    public function recalculate(CartInterface $cartTransfer);
+    public function recalculate(CartTransfer $cartTransfer);
 
 }

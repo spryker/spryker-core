@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\PriceCartConnector\Communication\Plugin;
 
-use Generated\Shared\Cart\ChangeInterface;
+use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
@@ -36,11 +36,11 @@ class CartItemPricePlugin extends AbstractPlugin implements ItemExpanderPluginIn
     }
 
     /**
-     * @param ChangeInterface $change
+     * @param ChangeTransfer $change
      *
-     * @return ChangeInterface
+     * @return ChangeTransfer
      */
-    public function expandItems(ChangeInterface $change)
+    public function expandItems(ChangeTransfer $change)
     {
         return $this->priceManager->addGrossPriceToItems($change);
     }

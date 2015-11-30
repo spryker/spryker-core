@@ -6,9 +6,6 @@
 
 namespace SprykerFeature\Zed\Checkout\Business\Workflow;
 
-use Generated\Shared\Checkout\CheckoutRequestInterface;
-use Generated\Shared\Checkout\CheckoutResponseInterface;
-use Generated\Shared\Checkout\OrderInterface;
 use Generated\Shared\Transfer\CheckoutErrorTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\CheckoutResponseTransfer;
@@ -114,12 +111,12 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param CheckoutRequestInterface $checkoutRequest
-     * @param CheckoutResponseInterface $checkoutResponse
+     * @param CheckoutRequestTransfer $checkoutRequest
+     * @param CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
-    protected function preHydrate(CheckoutRequestInterface $checkoutRequest, CheckoutResponseInterface $checkoutResponse)
+    protected function preHydrate(CheckoutRequestTransfer $checkoutRequest, CheckoutResponseTransfer $checkoutResponse)
     {
         foreach ($this->preHydrationStack as $preHydrator) {
             $preHydrator->execute($checkoutRequest, $checkoutResponse);
@@ -127,12 +124,12 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param CheckoutRequestInterface $checkoutRequest
-     * @param CheckoutResponseInterface $checkoutResponse
+     * @param CheckoutRequestTransfer $checkoutRequest
+     * @param CheckoutResponseTransfer $checkoutResponse
      *
      * @return void
      */
-    protected function checkPreConditions(CheckoutRequestInterface $checkoutRequest, CheckoutResponseInterface $checkoutResponse)
+    protected function checkPreConditions(CheckoutRequestTransfer $checkoutRequest, CheckoutResponseTransfer $checkoutResponse)
     {
         try {
             foreach ($this->preConditionStack as $preCondition) {
@@ -148,11 +145,11 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param CheckoutResponseInterface $checkoutResponse
+     * @param CheckoutResponseTransfer $checkoutResponse
      *
      * @return bool
      */
-    protected function hasErrors(CheckoutResponseInterface $checkoutResponse)
+    protected function hasErrors(CheckoutResponseTransfer $checkoutResponse)
     {
         return count($checkoutResponse->getErrors()) > 0;
     }
@@ -161,7 +158,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
      * @param OrderTransfer $orderTransfer
      * @param CheckoutResponseTransfer $checkoutResponse
      *
-     * @return OrderInterface
+     * @return OrderTransfer
      */
     protected function doSaveOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
@@ -193,7 +190,7 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @return OrderInterface
+     * @return OrderTransfer
      */
     protected function getOrderTransfer()
     {
@@ -201,12 +198,12 @@ class CheckoutWorkflow implements CheckoutWorkflowInterface
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      * @param CheckoutRequestTransfer $checkoutRequest
      *
      * @return void
      */
-    protected function triggerStateMachine(OrderInterface $orderTransfer, CheckoutRequestTransfer $checkoutRequest)
+    protected function triggerStateMachine(OrderTransfer $orderTransfer, CheckoutRequestTransfer $checkoutRequest)
     {
         $itemIds = [];
 

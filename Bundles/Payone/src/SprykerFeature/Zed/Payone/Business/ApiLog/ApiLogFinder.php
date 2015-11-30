@@ -6,9 +6,9 @@
 
 namespace SprykerFeature\Zed\Payone\Business\ApiLog;
 
-use Generated\Shared\Payone\PayonePaymentInterface;
+use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Generated\Shared\Transfer\PayoneAuthorizationCheckResponseTransfer;
-use Generated\Shared\Payone\OrderInterface;
+use Generated\Shared\Transfer\OrderTransfer;
 use SprykerFeature\Zed\Payone\Persistence\PayoneQueryContainerInterface;
 use SprykerFeature\Shared\Payone\PayoneApiConstants;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
@@ -31,11 +31,11 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isPreauthorizationApproved(OrderInterface $orderTransfer)
+    public function isPreauthorizationApproved(OrderTransfer $orderTransfer)
     {
         return $this->hasApiLogStatus(
             $orderTransfer,
@@ -45,11 +45,11 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isPreauthorizationRedirect(OrderInterface $orderTransfer)
+    public function isPreauthorizationRedirect(OrderTransfer $orderTransfer)
     {
         return $this->hasApiLogStatus(
             $orderTransfer,
@@ -59,11 +59,11 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isPreauthorizationError(OrderInterface $orderTransfer)
+    public function isPreauthorizationError(OrderTransfer $orderTransfer)
     {
         return $this->hasApiLogStatus(
             $orderTransfer,
@@ -73,11 +73,11 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isAuthorizationApproved(OrderInterface $orderTransfer)
+    public function isAuthorizationApproved(OrderTransfer $orderTransfer)
     {
         return $this->hasApiLogStatus(
             $orderTransfer,
@@ -87,11 +87,11 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isAuthorizationRedirect(OrderInterface $orderTransfer)
+    public function isAuthorizationRedirect(OrderTransfer $orderTransfer)
     {
         return $this->hasApiLogStatus(
             $orderTransfer,
@@ -101,11 +101,11 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isAuthorizationError(OrderInterface $orderTransfer)
+    public function isAuthorizationError(OrderTransfer $orderTransfer)
     {
         return $this->hasApiLogStatus(
             $orderTransfer,
@@ -115,11 +115,11 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isCaptureApproved(OrderInterface $orderTransfer)
+    public function isCaptureApproved(OrderTransfer $orderTransfer)
     {
         return $this->hasApiLogStatus(
             $orderTransfer,
@@ -129,11 +129,11 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isCaptureError(OrderInterface $orderTransfer)
+    public function isCaptureError(OrderTransfer $orderTransfer)
     {
         return $this->hasApiLogStatus(
             $orderTransfer,
@@ -143,11 +143,11 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isRefundApproved(OrderInterface $orderTransfer)
+    public function isRefundApproved(OrderTransfer $orderTransfer)
     {
         return $this->hasApiLogStatus(
             $orderTransfer,
@@ -157,11 +157,11 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return bool
      */
-    public function isRefundError(OrderInterface $orderTransfer)
+    public function isRefundError(OrderTransfer $orderTransfer)
     {
         return $this->hasApiLogStatus(
             $orderTransfer,
@@ -171,13 +171,13 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      * @param string $request Relevant request
      * @param string $status Expected status
      *
      * @return bool
      */
-    protected function hasApiLogStatus(OrderInterface $orderTransfer, $request, $status)
+    protected function hasApiLogStatus(OrderTransfer $orderTransfer, $request, $status)
     {
         $idSalesOrder = $orderTransfer->getIdSalesOrder();
         $apiLog = $this->queryContainer->getApiLogsByOrderIdAndRequest($idSalesOrder, $request)->findOne();
@@ -190,11 +190,11 @@ class ApiLogFinder
     }
 
     /**
-     * @param PayonePaymentInterface $payonePaymentTransfer
+     * @param PayonePaymentTransfer $payonePaymentTransfer
      *
      * @return PayoneAuthorizationCheckResponseTransfer
      */
-    public function getAuthorizationResponse(PayonePaymentInterface $payonePaymentTransfer)
+    public function getAuthorizationResponse(PayonePaymentTransfer $payonePaymentTransfer)
     {
         $response = new PayoneAuthorizationCheckResponseTransfer();
 
@@ -270,11 +270,11 @@ class ApiLogFinder
     }
 
     /**
-     * @param OrderInterface $orderTransfer
+     * @param OrderTransfer $orderTransfer
      *
      * @return SpyPaymentPayone
      */
-    protected function findPaymentByOrder(OrderInterface $orderTransfer)
+    protected function findPaymentByOrder(OrderTransfer $orderTransfer)
     {
         return $this->queryContainer->getPaymentByOrderId($orderTransfer->getIdSalesOrder())->findOne();
     }

@@ -6,8 +6,8 @@
 
 namespace SprykerFeature\Zed\PriceCartConnector\Business\Manager;
 
-use Generated\Shared\PriceCartConnector\ItemInterface;
-use Generated\Shared\PriceCartConnector\ChangeInterface;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\ChangeTransfer;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
 use SprykerFeature\Zed\PriceCartConnector\Business\Exception\PriceMissingException;
 
@@ -35,13 +35,13 @@ class PriceManager implements PriceManagerInterface
     }
 
     /**
-     * @param ChangeInterface $change
+     * @param ChangeTransfer $change
      *
      * @throws PriceMissingException
      *
-     * @return ItemInterface[]
+     * @return ItemTransfer[]
      */
-    public function addGrossPriceToItems(ChangeInterface $change)
+    public function addGrossPriceToItems(ChangeTransfer $change)
     {
         foreach ($change->getItems() as $cartItem) {
             if (!$this->priceFacade->hasValidPrice($cartItem->getSku(), $this->grossPriceType)) {

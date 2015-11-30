@@ -15,8 +15,8 @@ use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLog;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
-use Generated\Shared\Payolution\PayolutionTransactionResponseInterface;
-use Generated\Shared\Payolution\CheckoutRequestInterface;
+use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
 
 class Transaction extends AbstractPaymentHandler implements TransactionInterface
 {
@@ -48,11 +48,11 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     }
 
     /**
-     * @param CheckoutRequestInterface $checkoutRequestTransfer
+     * @param CheckoutRequestTransfer $checkoutRequestTransfer
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
-    public function preCheckPayment(CheckoutRequestInterface $checkoutRequestTransfer)
+    public function preCheckPayment(CheckoutRequestTransfer $checkoutRequestTransfer)
     {
         $paymentTransfer = $checkoutRequestTransfer->getPayolutionPayment();
         $requestData = $this
@@ -65,7 +65,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
     public function preAuthorizePayment($idPayment)
     {
@@ -86,7 +86,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
     public function reAuthorizePayment($idPayment)
     {
@@ -103,7 +103,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
     public function revertPayment($idPayment)
     {
@@ -120,7 +120,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
     public function capturePayment($idPayment)
     {
@@ -137,7 +137,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     /**
      * @param int $idPayment
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
     public function refundPayment($idPayment)
     {
@@ -178,7 +178,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
      * @param array $requestData
      * @param SpyPaymentPayolution $paymentEntity
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
     protected function sendLoggedRequest(array $requestData, SpyPaymentPayolution $paymentEntity)
     {
@@ -192,7 +192,7 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     /**
      * @param array $transactionRequest
      *
-     * @return PayolutionTransactionResponseInterface
+     * @return PayolutionTransactionResponseTransfer
      */
     protected function sendRequest($transactionRequest)
     {
@@ -224,10 +224,10 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     }
 
     /**
-     * @param PayolutionTransactionResponseInterface $responseTransfer
+     * @param PayolutionTransactionResponseTransfer $responseTransfer
      * @param int $idPayment
      */
-    protected function logApiResponse(PayolutionTransactionResponseInterface $responseTransfer, $idPayment)
+    protected function logApiResponse(PayolutionTransactionResponseTransfer $responseTransfer, $idPayment)
     {
         $logEntity = new SpyPaymentPayolutionTransactionStatusLog();
         $logEntity->fromArray($responseTransfer->toArray());

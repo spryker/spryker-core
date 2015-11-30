@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\SequenceNumber\Business\Model;
 
-use Generated\Shared\SequenceNumber\SequenceNumberSettingsInterface;
+use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
 use SprykerFeature\Zed\SequenceNumber\Business\Exception\InvalidSequenceNumberException;
 use SprykerFeature\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
@@ -20,7 +20,7 @@ class SequenceNumber implements SequenceNumberInterface
     /** @var RandomNumberGenerator */
     protected $randomNumberGenerator;
 
-    /** @var SequenceNumberSettingsInterface */
+    /** @var SequenceNumberSettingsTransfer */
     protected $sequenceNumberSettings;
 
     /** @var ConnectionInterface */
@@ -28,10 +28,10 @@ class SequenceNumber implements SequenceNumberInterface
 
     /**
      * @param RandomNumberGeneratorInterface $randomNumberGenerator
-     * @param SequenceNumberSettingsInterface $sequenceNumberSettings
+     * @param SequenceNumberSettingsTransfer $sequenceNumberSettings
      * @param ConnectionInterface $connection
      */
-    public function __construct(RandomNumberGeneratorInterface $randomNumberGenerator, SequenceNumberSettingsInterface $sequenceNumberSettings, ConnectionInterface $connection)
+    public function __construct(RandomNumberGeneratorInterface $randomNumberGenerator, SequenceNumberSettingsTransfer $sequenceNumberSettings, ConnectionInterface $connection)
     {
         $this->randomNumberGenerator = $randomNumberGenerator;
         $this->sequenceNumberSettings = $sequenceNumberSettings;

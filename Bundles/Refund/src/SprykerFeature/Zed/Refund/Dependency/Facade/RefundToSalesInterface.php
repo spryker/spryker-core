@@ -2,7 +2,7 @@
 
 namespace SprykerFeature\Zed\Refund\Dependency\Facade;
 
-use Generated\Shared\Sales\ItemSplitResponseInterface;
+use Generated\Shared\Transfer\ItemSplitResponseTransfer;
 use Generated\Shared\Transfer\OrderItemsAndExpensesTransfer;
 
 interface RefundToSalesInterface
@@ -12,7 +12,7 @@ interface RefundToSalesInterface
      * @param int $idSalesOrderItem
      * @param int $quantity
      *
-     * @return ItemSplitResponseInterface
+     * @return ItemSplitResponseTransfer
      */
     public function splitSalesOrderItem($idSalesOrderItem, $quantity);
 

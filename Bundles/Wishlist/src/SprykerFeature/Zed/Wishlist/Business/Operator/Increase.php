@@ -5,8 +5,8 @@
 
 namespace SprykerFeature\Zed\Wishlist\Business\Operator;
 
-use Generated\Shared\Wishlist\WishlistChangeInterface;
-use Generated\Shared\Wishlist\WishlistInterface;
+use Generated\Shared\Transfer\WishlistChangeTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
 
 class Increase extends AbstractOperator
 {
@@ -14,11 +14,11 @@ class Increase extends AbstractOperator
     const OPERATION_NAME = 'INCREASE';
 
     /**
-     * @param WishlistChangeInterface $wishlistItem
+     * @param WishlistChangeTransfer $wishlistItem
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    protected function applyOperation(WishlistChangeInterface $wishlistItem)
+    protected function applyOperation(WishlistChangeTransfer $wishlistItem)
     {
         return $this->storage->increaseItems($wishlistItem);
     }

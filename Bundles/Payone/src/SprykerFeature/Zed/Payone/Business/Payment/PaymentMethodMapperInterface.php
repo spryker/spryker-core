@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Payment;
 
-use Generated\Shared\Payone\PayoneStandardParameterInterface;
+use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\AuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\PreAuthorizationContainer;
 use SprykerFeature\Zed\Payone\Business\Api\Request\Container\CaptureContainer;
@@ -29,11 +29,11 @@ interface PaymentMethodMapperInterface
     public function setSequenceNumberProvider(SequenceNumberProviderInterface $sequenceNumberProvider);
 
     /**
-     * @param PayoneStandardParameterInterface $standardParameter
+     * @param PayoneStandardParameterTransfer $standardParameter
      *
      * @return void
      */
-    public function setStandardParameter(PayoneStandardParameterInterface $standardParameter);
+    public function setStandardParameter(PayoneStandardParameterTransfer $standardParameter);
 
     /**
      * @param SpyPaymentPayone $paymentEntity

@@ -6,10 +6,10 @@
 
 namespace SprykerFeature\Client\Wishlist\Service;
 
-use Generated\Shared\Customer\CustomerInterface;
+use Generated\Shared\Transfer\CustomerTransfer;
 use Generated\Shared\Transfer\WishlistChangeTransfer;
-use Generated\Shared\Wishlist\ItemInterface;
-use Generated\Shared\Wishlist\WishlistInterface;
+use Generated\Shared\Transfer\ItemTransfer;
+use Generated\Shared\Transfer\WishlistTransfer;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
 
 /**
@@ -19,11 +19,11 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
 {
 
     /**
-     * @param ItemInterface $wishlistItem
+     * @param ItemTransfer $wishlistItem
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function addItem(ItemInterface $wishlistItem)
+    public function addItem(ItemTransfer $wishlistItem)
     {
         $wishlistChange = $this->createChangeTransfer($wishlistItem);
         $wishlist = $this->getZedStub()->addItem($wishlistChange);
@@ -33,11 +33,11 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * @param ItemInterface $wishlistItem
+     * @param ItemTransfer $wishlistItem
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function increaseItemQuantity(ItemInterface $wishlistItem)
+    public function increaseItemQuantity(ItemTransfer $wishlistItem)
     {
         $wishlistChange = $this->createChangeTransfer($wishlistItem);
         $wishlist = $this->getZedStub()->increaseQuantity($wishlistChange);
@@ -48,11 +48,11 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * @param ItemInterface $wishlistItem
+     * @param ItemTransfer $wishlistItem
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function decreaseItemQuantity(ItemInterface $wishlistItem)
+    public function decreaseItemQuantity(ItemTransfer $wishlistItem)
     {
         $wishlistChange = $this->createChangeTransfer($wishlistItem);
         $wishlist = $this->getZedStub()->descreaseQuantity($wishlistChange);
@@ -63,11 +63,11 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * @param ItemInterface $wishlistItem
+     * @param ItemTransfer $wishlistItem
      *
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
-    public function removeItem(ItemInterface $wishlistItem)
+    public function removeItem(ItemTransfer $wishlistItem)
     {
         $wishlistChange = $this->createChangeTransfer($wishlistItem);
         $wishlist = $this->getZedStub()->removeItem($wishlistChange);
@@ -77,7 +77,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
     public function getWishlist()
     {
@@ -88,7 +88,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * @return WishlistInterface
+     * @return WishlistTransfer
      */
     public function synchronizeSession()
     {
@@ -109,11 +109,11 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * @param ItemInterface $wishlistItemTransfer
+     * @param ItemTransfer $wishlistItemTransfer
      *
      * @return WishlistChangeTransfer
      */
-    protected function createChangeTransfer(ItemInterface $wishlistItemTransfer)
+    protected function createChangeTransfer(ItemTransfer $wishlistItemTransfer)
     {
         $wishlistTransfer = $this->getSession()->getWishlist();
 
@@ -130,7 +130,7 @@ class WishlistClient extends AbstractClient implements WishlistClientInterface
     }
 
     /**
-     * @return CustomerInterface
+     * @return CustomerTransfer
      */
     protected function getCustomerTransfer()
     {

@@ -7,7 +7,6 @@
 namespace Functional\SprykerFeature\Zed\Newsletter\Business;
 
 use Codeception\TestCase\Test;
-use Generated\Shared\Newsletter\NewsletterSubscriptionRequestInterface;
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 use Generated\Shared\Transfer\NewsletterTypeTransfer;
@@ -231,9 +230,9 @@ class NewsletterFacadeTest extends Test
     }
 
     /**
-     * @param NewsletterSubscriptionRequestInterface $request
+     * @param NewsletterSubscriptionRequestTransfer $request
      */
-    protected function addTestType1ToSubscriptionRequest(NewsletterSubscriptionRequestInterface $request)
+    protected function addTestType1ToSubscriptionRequest(NewsletterSubscriptionRequestTransfer $request)
     {
         $type1 = new NewsletterTypeTransfer();
         $type1->setName(self::TEST_TYPE1);
@@ -242,9 +241,9 @@ class NewsletterFacadeTest extends Test
     }
 
     /**
-     * @param NewsletterSubscriptionRequestInterface $request
+     * @param NewsletterSubscriptionRequestTransfer $request
      */
-    protected function addTestType2ToSubscriptionRequest(NewsletterSubscriptionRequestInterface $request)
+    protected function addTestType2ToSubscriptionRequest(NewsletterSubscriptionRequestTransfer $request)
     {
         $type2 = new NewsletterTypeTransfer();
         $type2->setName(self::TEST_TYPE2);

@@ -6,11 +6,10 @@
 
 namespace SprykerFeature\Zed\Calculation\Business\Model;
 
-use Generated\Shared\Calculation\OrderInterface;
+use Generated\Shared\Transfer\OrderTransfer;
 use Generated\Shared\Transfer\DiscountTotalsTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
 use Generated\Shared\Transfer\OrderItemsTransfer;
-use Generated\Shared\Calculation\TotalsInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\CalculatorPluginInterface;
 use SprykerFeature\Zed\Calculation\Dependency\Plugin\TotalsCalculatorPluginInterface;
 
@@ -46,11 +45,11 @@ class StackExecutor
      * @param CalculableInterface $calculableContainer
      * @param \ArrayObject $calculableItems
      *
-     * @return TotalsInterface
+     * @return TotalsTransfer
      */
     public function recalculateTotals(
         array $calculatorStack,
-        //OrderInterface $calculableContainer,
+        //OrderTransfer $calculableContainer,
         CalculableInterface $calculableContainer,
         \ArrayObject $calculableItems = null
     ) {

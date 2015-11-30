@@ -6,9 +6,9 @@
 
 namespace SprykerFeature\Zed\Payone\Business\Order;
 
-use Generated\Shared\Payone\OrderInterface as PayoneOrderInterface;
-use Generated\Shared\Payone\PaymentDetailInterface;
-use Generated\Shared\Payone\PayonePaymentInterface;
+use Generated\Shared\Transfer\OrderInterface as PayoneOrderTransfer;
+use Generated\Shared\Transfer\PaymentDetailTransfer;
+use Generated\Shared\Transfer\PayonePaymentTransfer;
 use Propel\Runtime\Propel;
 use SprykerFeature\Zed\Payone\PayoneConfig;
 use Orm\Zed\Payone\Persistence\SpyPaymentPayone;
@@ -50,11 +50,11 @@ class OrderManager implements OrderManagerInterface
     }
 
     /**
-     * @param PayonePaymentInterface $paymentTransfer
+     * @param PayonePaymentTransfer $paymentTransfer
      *
      * @return SpyPaymentPayone
      */
-    protected function savePayment(PayonePaymentInterface $paymentTransfer)
+    protected function savePayment(PayonePaymentTransfer $paymentTransfer)
     {
         $payment = new SpyPaymentPayone();
         $payment->fromArray(($paymentTransfer->toArray()));
@@ -71,11 +71,11 @@ class OrderManager implements OrderManagerInterface
 
     /**
      * @param SpyPaymentPayone $payment
-     * @param PaymentDetailInterface $paymentDetailTransfer
+     * @param PaymentDetailTransfer $paymentDetailTransfer
      *
      * @return void
      */
-    protected function savePaymentDetail(SpyPaymentPayone $payment, PaymentDetailInterface $paymentDetailTransfer)
+    protected function savePaymentDetail(SpyPaymentPayone $payment, PaymentDetailTransfer $paymentDetailTransfer)
     {
         $paymentDetailEntity = new SpyPaymentPayoneDetail();
         $paymentDetailEntity->setSpyPaymentPayone($payment);

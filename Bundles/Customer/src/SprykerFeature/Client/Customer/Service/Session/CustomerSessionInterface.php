@@ -5,7 +5,7 @@
  */
 namespace SprykerFeature\Client\Customer\Service\Session;
 
-use Generated\Shared\Customer\CustomerInterface;
+use Generated\Shared\Transfer\CustomerTransfer;
 
 interface CustomerSessionInterface
 {
@@ -21,15 +21,15 @@ interface CustomerSessionInterface
     public function hasCustomer();
 
     /**
-     * @return CustomerInterface
+     * @return CustomerTransfer
      */
     public function getCustomer();
 
     /**
-     * @param CustomerInterface $customerTransfer
+     * @param CustomerTransfer $customerTransfer
      *
-     * @return CustomerInterface
+     * @return CustomerTransfer
      */
-    public function setCustomer(CustomerInterface $customerTransfer);
+    public function setCustomer(CustomerTransfer $customerTransfer);
 
 }

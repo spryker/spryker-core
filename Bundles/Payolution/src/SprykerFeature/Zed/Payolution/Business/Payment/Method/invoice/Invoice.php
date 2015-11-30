@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Payolution\Business\Payment\Method\invoice;
 
-use Generated\Shared\Payolution\CheckoutRequestInterface;
+use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use SprykerFeature\Zed\Payolution\Business\Payment\Method\AbstractPaymentMethod;
 use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
@@ -47,11 +47,11 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
     }
 
     /**
-     * @param CheckoutRequestInterface $checkoutRequestTransfer
+     * @param CheckoutRequestTransfer $checkoutRequestTransfer
      *
      * @return array
      */
-    public function buildPreCheckRequest(CheckoutRequestInterface $checkoutRequestTransfer)
+    public function buildPreCheckRequest(CheckoutRequestTransfer $checkoutRequestTransfer)
     {
         $payolutionTransfer = $checkoutRequestTransfer->getPayolutionPayment();
         $addressTransfer = $payolutionTransfer->getAddress();

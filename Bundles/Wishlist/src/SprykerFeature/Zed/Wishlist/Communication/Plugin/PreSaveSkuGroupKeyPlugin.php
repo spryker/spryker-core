@@ -5,7 +5,7 @@
 
 namespace SprykerFeature\Zed\Wishlist\Communication\Plugin;
 
-use Generated\Shared\Wishlist\ItemInterface;
+use Generated\Shared\Transfer\ItemTransfer;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\Wishlist\Dependency\PreSavePluginInterface;
 
@@ -13,7 +13,7 @@ class PreSaveSkuGroupKeyPlugin extends AbstractPlugin implements PreSavePluginIn
 {
 
     /**
-     * @param ItemInterface[] $items
+     * @param ItemTransfer[] $items
      */
     public function trigger(\ArrayObject $items)
     {
@@ -23,11 +23,11 @@ class PreSaveSkuGroupKeyPlugin extends AbstractPlugin implements PreSavePluginIn
     }
 
     /**
-     * @param ItemInterface $cartItem
+     * @param ItemTransfer $cartItem
      *
      * @return string
      */
-    protected function buildGroupKey(ItemInterface $cartItem)
+    protected function buildGroupKey(ItemTransfer $cartItem)
     {
         $groupKey = $cartItem->getGroupKey();
         if (empty($groupKey)) {

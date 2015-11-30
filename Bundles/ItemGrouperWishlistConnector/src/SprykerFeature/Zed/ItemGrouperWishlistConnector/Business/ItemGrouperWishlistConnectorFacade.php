@@ -7,7 +7,7 @@
 namespace SprykerFeature\Zed\ItemGrouperWishlistConnector\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
-use Generated\Shared\ItemGrouper\GroupableContainerInterface;
+use Generated\Shared\Transfer\GroupableContainerTransfer;
 
 /**
  * @method ItemGrouperWishlistConnectorDependencyContainer getDependencyContainer()
@@ -16,11 +16,11 @@ class ItemGrouperWishlistConnectorFacade extends AbstractFacade
 {
 
     /**
-     * @param GroupableContainerInterface $items
+     * @param GroupableContainerTransfer $items
      *
-     * @return GroupableContainerInterface
+     * @return GroupableContainerTransfer
      */
-    public function groupOrderItems(GroupableContainerInterface $items)
+    public function groupOrderItems(GroupableContainerTransfer $items)
     {
         return $this->getDependencyContainer()->createItemGrouperFacade()->groupItemsByKey($items);
     }

@@ -2,7 +2,7 @@
 
 namespace Unit\SprykerFeature\Zed\Kernel\Communication\Plugin\Fixture;
 
-use Generated\Shared\Cart\CartInterface;
+use Generated\Shared\Transfer\CartTransfer;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 
@@ -36,7 +36,7 @@ class GatewayController extends AbstractGatewayController
      *
      * @return TransferInterface
      */
-    public function good2Action(CartInterface $foo)
+    public function good2Action(CartTransfer $foo)
     {
         return $foo;
     }

@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Sales\Business\Model\Split;
 
-use Generated\Shared\Sales\ItemSplitResponseInterface;
 use Generated\Shared\Transfer\ItemSplitResponseTransfer;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Propel;
@@ -61,7 +60,7 @@ class OrderItem implements ItemInterface
      *
      * @throws \Exception
      *
-     * @return ItemSplitResponseInterface
+     * @return ItemSplitResponseTransfer
      */
     public function split($idSalesOrderItem, $quantityToSplit)
     {

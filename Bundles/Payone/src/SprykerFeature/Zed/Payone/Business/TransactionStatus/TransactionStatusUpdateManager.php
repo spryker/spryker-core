@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Payone\Business\TransactionStatus;
 
-use Generated\Shared\Payone\PayoneStandardParameterInterface;
+use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
 use SprykerFeature\Shared\Payone\Dependency\TransactionStatusUpdateInterface;
 use SprykerFeature\Shared\Payone\PayoneTransactionStatusConstants;
 use SprykerFeature\Zed\Payone\Business\Api\TransactionStatus\TransactionStatusResponse;
@@ -25,7 +25,7 @@ class TransactionStatusUpdateManager
     protected $queryContainer;
 
     /**
-     * @var PayoneStandardParameterInterface
+     * @var PayoneStandardParameterTransfer
      */
     protected $standardParameter;
 
@@ -36,12 +36,12 @@ class TransactionStatusUpdateManager
 
     /**
      * @param PayoneQueryContainerInterface $queryContainer
-     * @param PayoneStandardParameterInterface $standardParameter
+     * @param PayoneStandardParameterTransfer $standardParameter
      * @param HashGenerator $hashGenerator
      */
     public function __construct(
         PayoneQueryContainerInterface $queryContainer,
-        PayoneStandardParameterInterface $standardParameter,
+        PayoneStandardParameterTransfer $standardParameter,
         HashGenerator $hashGenerator)
     {
         $this->queryContainer = $queryContainer;

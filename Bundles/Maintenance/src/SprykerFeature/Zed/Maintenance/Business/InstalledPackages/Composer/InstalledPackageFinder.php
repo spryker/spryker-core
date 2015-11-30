@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Maintenance\Business\InstalledPackages\Composer;
 
-use Generated\Shared\Maintenance\InstalledPackagesInterface;
+use Generated\Shared\Transfer\InstalledPackagesTransfer;
 use Generated\Shared\Transfer\InstalledPackageTransfer;
 use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageFinderInterface;
 
@@ -14,7 +14,7 @@ class InstalledPackageFinder implements InstalledPackageFinderInterface
 {
 
     /**
-     * @var InstalledPackagesInterface
+     * @var InstalledPackagesTransfer
      */
     private $collection;
 
@@ -24,17 +24,17 @@ class InstalledPackageFinder implements InstalledPackageFinderInterface
     private $pathToComposerLock;
 
     /**
-     * @param InstalledPackagesInterface $collection
+     * @param InstalledPackagesTransfer $collection
      * @param string $pathToComposerLock
      */
-    public function __construct(InstalledPackagesInterface $collection, $pathToComposerLock)
+    public function __construct(InstalledPackagesTransfer $collection, $pathToComposerLock)
     {
         $this->collection = $collection;
         $this->pathToComposerLock = $pathToComposerLock;
     }
 
     /**
-     * @return InstalledPackagesInterface
+     * @return InstalledPackagesTransfer
      */
     public function findInstalledPackages()
     {
