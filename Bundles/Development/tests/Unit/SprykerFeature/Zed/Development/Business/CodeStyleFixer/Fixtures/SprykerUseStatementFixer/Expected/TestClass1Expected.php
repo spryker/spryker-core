@@ -11,6 +11,7 @@ class TestClass1Input extends \Pyz\Zed\Foo\Bar\Baz
 
     public function replaceFunction()
     {
+        new Foo($x);
         new Baz($x);
     }
 
