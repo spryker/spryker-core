@@ -33,6 +33,12 @@ class ModelResult
     protected $errors = [];
 
     /**
+     * @var bool
+     */
+    protected $success = true;
+
+
+    /**
      * @deprecated
      *
      * @param ActiveRecordInterface $entity
@@ -49,7 +55,7 @@ class ModelResult
      */
     public function isSuccess()
     {
-        return count($this->getErrors()) < 1;
+        return $this->success;
     }
 
     /**
@@ -167,6 +173,7 @@ class ModelResult
      */
     public function addError($error)
     {
+        $this->success = false;
         $this->errors[] = $error;
 
         return $this;
@@ -184,4 +191,15 @@ class ModelResult
         }
     }
 
+    /**
+     * @param boolean $success
+     *
+     * @return self
+     */
+    public function setSuccess($success)
+    {
+        $this->success = $success;
+
+        return $this;
+    }
 }

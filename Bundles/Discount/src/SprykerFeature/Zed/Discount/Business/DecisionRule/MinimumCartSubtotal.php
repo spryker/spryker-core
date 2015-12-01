@@ -9,10 +9,8 @@ use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
 
-class MinimumCartSubtotal // @TODO Missing interface
+class MinimumCartSubtotal extends BaseDecisionRule
 {
-
-    const REASON_MINIMUM_CART_SUBTOTAL_NOT_REACHED = 'Minimum cart subtotal not reached';
 
     /**
      * @param CalculableInterface $order
@@ -28,7 +26,7 @@ class MinimumCartSubtotal // @TODO Missing interface
             return $result;
         }
 
-        return $result->addError(self::REASON_MINIMUM_CART_SUBTOTAL_NOT_REACHED);
+        return $result->setSuccess(false);
     }
 
 }

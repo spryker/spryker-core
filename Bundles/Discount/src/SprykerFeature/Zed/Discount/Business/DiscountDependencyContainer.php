@@ -10,6 +10,8 @@ use SprykerFeature\Zed\Discount\Business\Model\VoucherCode;
 use SprykerFeature\Zed\Discount\Business\Model\VoucherPoolCategory;
 use SprykerFeature\Zed\Discount\Business\Model\CartRule;
 use Generated\Zed\Ide\FactoryAutoCompletion\DiscountBusiness;
+use Propel\Runtime\Connection\ConnectionInterface;
+use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Calculator\Fixed;
 use SprykerFeature\Zed\Discount\Business\Calculator\Percentage;
@@ -41,6 +43,8 @@ use SprykerFeature\Zed\Discount\Business\Model\VoucherEngine;
 use SprykerFeature\Zed\Discount\Business\Model\CalculatorInterface;
 use SprykerFeature\Zed\Discount\Business\Collector\CollectorInterface;
 use SprykerFeature\Zed\Discount\Business\Model\DecisionRuleEngine;
+use SprykerEngine\Shared\Kernel\Store;
+use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 
 /**
  * @method DiscountBusiness getFactory()
@@ -56,7 +60,8 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     public function getDecisionRuleVoucher()
     {
         return new Voucher(
-            $this->getQueryContainer()
+            $this->getQueryContainer(),
+            $this->createGlossaryFacade()
         );
     }
 
@@ -65,7 +70,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getDecisionRuleMinimumCartSubtotal()
     {
-        return new MinimumCartSubtotal();
+        return new MinimumCartSubtotal($this->createGlossaryFacade());
     }
 
     /**
@@ -81,7 +86,8 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
             $this->createDecisionRule(),
             $this->getConfig(),
             $this->createCalculator(),
-            $this->createDistributor()
+            $this->createDistributor(),
+            $this->createFlashMessengerFacade()
         );
     }
 
@@ -94,7 +100,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
 
         return new CartRule(
             $this->getQueryContainer(),
-            $store,
+            $this->createStoreConfig(),
             $this->createDiscountDecisionRuleWriter(),
             $this->createDiscountWriter(),
             $this->createDiscountCollectorWriter()
@@ -229,7 +235,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createCalculator()
     {
-        return new Calculator($this->createCollectorResolver());
+        return new Calculator($this->createCollectorResolver(), $this->createGlossaryFacade());
     }
 
     /**
@@ -248,8 +254,8 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
         return new VoucherEngine(
             $this->getConfig(),
             $this->getQueryContainer(),
-            $this->getProvidedDependency(DiscountDependencyProvider::FLASH_MESSENGER),
-            $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_PROPEL_CONNECTION)
+            $this->createFlashMessengerFacade(),
+            $this->createPropelConnection()
         );
     }
 
@@ -313,6 +319,38 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     public function createCollectorResolver()
     {
         return new CollectorResolver($this->getConfig());
+    }
+
+    /**
+     * @return FlashMessengerFacade
+     */
+    protected function createFlashMessengerFacade()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_FLASH_MESSENGER);
+    }
+
+    /**
+     * @return ConnectionInterface
+     */
+    protected function createPropelConnection()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_PROPEL_CONNECTION);
+    }
+
+    /**
+     * @return Store
+     */
+    protected function createStoreConfig()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::STORE_CONFIG);
+    }
+
+    /**
+     * @return GlossaryFacade
+     */
+    protected function createGlossaryFacade()
+    {
+        return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_GLOSSARY);
     }
 
 }

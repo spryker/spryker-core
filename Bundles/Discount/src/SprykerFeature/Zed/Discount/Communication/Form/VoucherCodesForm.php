@@ -206,7 +206,7 @@ class VoucherCodesForm extends AbstractRuleForm
                 'choices' => $this->getAvailableCalculatorPlugins(),
                 'empty_data' => null,
                 'required' => false,
-                'placeholder' => 'Default',
+                'placeholder' => false,
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],

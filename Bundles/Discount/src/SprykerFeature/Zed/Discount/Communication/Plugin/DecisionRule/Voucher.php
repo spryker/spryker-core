@@ -29,7 +29,7 @@ class Voucher extends AbstractDecisionRule implements DiscountDecisionRulePlugin
         $voucherCodeValidationResults = new ModelResult();
 
         if (!$this->isVoucherCodesProvided($container)) {
-            $voucherCodeValidationResults->addError('Voucher codes not set.');
+            $voucherCodeValidationResults->setSuccess(false);
 
             return $voucherCodeValidationResults;
         }

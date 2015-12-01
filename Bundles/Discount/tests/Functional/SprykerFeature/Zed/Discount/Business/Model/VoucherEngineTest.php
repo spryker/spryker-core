@@ -297,9 +297,13 @@ class VoucherEngineTest extends Test
      */
     protected function getCalculator()
     {
-        $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
+        $locator = Locator::getInstance();
+        $settings = new DiscountConfig(Config::getInstance(), $locator);
         $collectorResolver = new CollectorResolver($settings);
-        $calculator = new Calculator($collectorResolver);
+
+        $flashMessengerFacade = $locator->flashMessenger()->facade();
+        $glossaryFacade = $locator->glossary()->facade();
+        $calculator = new Calculator($collectorResolver, $flashMessengerFacade, $glossaryFacade);
 
         return $calculator;
     }

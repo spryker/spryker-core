@@ -13,11 +13,10 @@ use SprykerEngine\Zed\Kernel\Container;
 class DiscountDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const STORE_CONFIG = 'store_config';
-
-    const FLASH_MESSENGER = 'flash_messanger';
-
-    const PLUGIN_PROPEL_CONNECTION = 'propel_connection_plugin';
+    const STORE_CONFIG = 'store config';
+    const FACADE_FLASH_MESSENGER = 'flash messenger facade';
+    const PLUGIN_PROPEL_CONNECTION = 'propel connection plugin';
+    const FACADE_GLOSSARY = 'glossary facade';
 
     /**
      * @param Container $container
@@ -29,9 +28,15 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         $container[self::STORE_CONFIG] = function (Container $container) {
             return Store::getInstance();
         };
-        $container[self::FLASH_MESSENGER] = function (Container $container) {
+
+        $container[self::FACADE_FLASH_MESSENGER] = function (Container $container) {
             return $container->getLocator()->flashMessenger()->facade();
         };
+
+        $container[self::FACADE_GLOSSARY] = function (Container $container) {
+            return $container->getLocator()->glossary()->facade();
+        };
+
         $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
             return $container->getLocator()->propel()->pluginConnection()->get();
         };
