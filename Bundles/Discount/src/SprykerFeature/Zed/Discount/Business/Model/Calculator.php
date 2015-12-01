@@ -13,7 +13,6 @@ use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Distributor\DistributorInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use SprykerFeature\Zed\Discount\DiscountConfigInterface;
-use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 
 class Calculator implements CalculatorInterface
 {

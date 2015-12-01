@@ -44,7 +44,6 @@ use SprykerFeature\Zed\Discount\Business\Model\CalculatorInterface;
 use SprykerFeature\Zed\Discount\Business\Collector\CollectorInterface;
 use SprykerFeature\Zed\Discount\Business\Model\DecisionRuleEngine;
 use SprykerEngine\Shared\Kernel\Store;
-use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 
 /**
  * @method DiscountBusiness getFactory()
@@ -341,4 +340,5 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::STORE_CONFIG);
     }
+
 }

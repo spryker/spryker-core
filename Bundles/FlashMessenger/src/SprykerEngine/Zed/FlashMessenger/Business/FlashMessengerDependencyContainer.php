@@ -67,5 +67,4 @@ class FlashMessengerDependencyContainer extends AbstractBusinessDependencyContai
         return $this->getProvidedDependency(FlashMessengerDependencyProvider::FACADE_GLOSSARY);
     }
 
-
 }

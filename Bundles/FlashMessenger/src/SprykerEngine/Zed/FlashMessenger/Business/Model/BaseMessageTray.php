@@ -9,6 +9,7 @@ use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 
 class BaseMessageTray
 {
+
     /**
      * @var GlossaryFacade
      */
@@ -34,6 +35,8 @@ class BaseMessageTray
         if ($this->glossaryFacade->hasKey($keyName)) {
             $translation = $this->glossaryFacade->translate($keyName, $data);
         }
+
         return $translation;
     }
+
 }

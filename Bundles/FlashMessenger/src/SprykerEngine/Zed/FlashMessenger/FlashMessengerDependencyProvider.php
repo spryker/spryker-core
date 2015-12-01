@@ -10,6 +10,7 @@ use SprykerEngine\Zed\Kernel\Container;
 
 class FlashMessengerDependencyProvider extends AbstractBundleDependencyProvider
 {
+
     const SESSION = 'session';
     const FACADE_GLOSSARY = 'glossary facade';
 
