@@ -151,6 +151,8 @@ abstract class AbstractForm implements FormTypeInterface
      * @param FormView $view The view
      * @param FormInterface $form The form
      * @param array $options The options
+     *
+     * @return void
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
@@ -172,6 +174,8 @@ abstract class AbstractForm implements FormTypeInterface
      * @param FormView $view The view
      * @param FormInterface $form The form
      * @param array $options The options
+     *
+     * @return void
      */
     public function finishView(FormView $view, FormInterface $form, array $options)
     {

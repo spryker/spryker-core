@@ -3,6 +3,7 @@
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
 use Generated\Shared\Transfer\VoucherCodesTransfer;
+use SprykerEngine\Shared\Transfer\AbstractTransfer;
 use SprykerFeature\Zed\Discount\Communication\Form\Transformers\DecisionRulesFormTransformer;
 use SprykerFeature\Zed\Discount\DiscountConfig;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainer;
@@ -110,6 +111,11 @@ class VoucherCodesForm extends AbstractRuleForm
         return null;
     }
 
+    /**
+     * @param int $idPool
+     *
+     * @return AbstractTransfer
+     */
     protected function getVoucherCodesTransfer($idPool)
     {
         $discountVoucherPoolEntity = $this->discountQueryContainer->queryVoucherCodeByIdVoucherCode($idPool)->findOne();
