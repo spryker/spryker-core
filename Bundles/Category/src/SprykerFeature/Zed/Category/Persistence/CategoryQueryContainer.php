@@ -390,7 +390,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             ->endUse()
             ->endUse()
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
-            ->withColumn(SpyCategoryAttributeTableMap::COL_URL_KEY, 'url_key')
+            ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY, 'url_key')
             ->orderBy(SpyCategoryClosureTableTableMap::COL_DEPTH, 'DESC');
 
         if ($excludeRoot) {
