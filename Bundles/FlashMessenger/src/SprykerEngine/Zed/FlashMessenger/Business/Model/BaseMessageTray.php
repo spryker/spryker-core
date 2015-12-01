@@ -3,13 +3,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Discount\Business\DecisionRule;
+namespace SprykerEngine\Zed\FlashMessenger\Business\Model;
 
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 
-class BaseDecisionRule
+class BaseMessageTray
 {
-
     /**
      * @var GlossaryFacade
      */
@@ -31,11 +30,10 @@ class BaseDecisionRule
      */
     protected function translate($keyName, array $data = [])
     {
-        if (!$this->glossaryFacade->hasKey($keyName)) {
-            return $keyName;
+        $translation = $keyName;
+        if ($this->glossaryFacade->hasKey($keyName)) {
+            $translation = $this->glossaryFacade->translate($keyName, $data);
         }
-
-        return $this->glossaryFacade->translate($keyName, $data);
+        return $translation;
     }
-
 }

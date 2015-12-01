@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Discount\Business\Model;
 
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Distributor\DistributorInterface;
@@ -240,7 +241,10 @@ class Discount
     protected function setValidationMessages(array $errors = [])
     {
         foreach ($errors as $errorMessage) {
-            $this->flashMessengerFacade->addErrorMessage($errorMessage);
+            $messageTransfer = new MessageTransfer();
+            $messageTransfer->setValue($errorMessage);
+
+            $this->flashMessengerFacade->addErrorMessage($messageTransfer);
         }
     }
 

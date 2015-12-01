@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Distributor\DistributorInterface;
@@ -39,23 +40,15 @@ class Calculator implements CalculatorInterface
     protected $flashMessengerFacade;
 
     /**
-     * @var GlossaryFacade
-     */
-    protected $glossaryFacade;
-
-    /**
      * @param CollectorResolver $collectorResolver
      * @param FlashMessengerFacade $flashMessengerFacade
-     * @param GlossaryFacade $glossaryFacade
      */
     public function __construct(
         CollectorResolver $collectorResolver,
-        FlashMessengerFacade  $flashMessengerFacade,
-        GlossaryFacade $glossaryFacade
+        FlashMessengerFacade  $flashMessengerFacade
     ) {
         $this->collectorResolver = $collectorResolver;
         $this->flashMessengerFacade = $flashMessengerFacade;
-        $this->glossaryFacade = $glossaryFacade;
     }
 
     /**
@@ -152,15 +145,11 @@ class Calculator implements CalculatorInterface
      */
     protected function setSuccessfulDiscountAddMessage($discountDisplayName)
     {
-        $message = self::DISCOUNT_SUCCESSFULLY_APPLIED_KEY;
-        if ($this->glossaryFacade->hasKey(self::DISCOUNT_SUCCESSFULLY_APPLIED_KEY)) {
-            $message = $this->glossaryFacade->translate(
-                self::DISCOUNT_SUCCESSFULLY_APPLIED_KEY,
-                ['display_name' => $discountDisplayName]
-            );
-        }
+        $messageTransfer = new MessageTransfer();
+        $messageTransfer->setValue(self::DISCOUNT_SUCCESSFULLY_APPLIED_KEY);
+        $messageTransfer->setParameters(['display_name' => $discountDisplayName]);
 
-        $this->flashMessengerFacade->addSuccessMessage($message);
+        $this->flashMessengerFacade->addSuccessMessage($messageTransfer);
     }
 
     /**

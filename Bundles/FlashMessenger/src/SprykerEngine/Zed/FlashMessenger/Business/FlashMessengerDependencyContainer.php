@@ -12,6 +12,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\FlashMessengerBusiness;
 use SprykerEngine\Zed\FlashMessenger\FlashMessengerDependencyProvider;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerEngine\Zed\FlashMessenger\FlashMessengerConfig;
+use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
@@ -39,7 +40,7 @@ class FlashMessengerDependencyContainer extends AbstractBusinessDependencyContai
      */
     public function createInMemoryMessageTray()
     {
-        return new InMemoryMessageTray();
+        return new InMemoryMessageTray($this->getGlossaryFacade());
     }
 
     /**
@@ -47,17 +48,24 @@ class FlashMessengerDependencyContainer extends AbstractBusinessDependencyContai
      */
     public function createSessionMessageTray()
     {
-        return new SessionMessageTray(
-            $this->createSession()
-        );
+        return new SessionMessageTray($this->createSession(), $this->getGlossaryFacade());
     }
 
     /**
      * @return SessionInterface
      */
-    public function createSession()
+    public function getSession()
     {
         return $this->getProvidedDependency(FlashMessengerDependencyProvider::SESSION);
     }
+
+    /**
+     * @return GlossaryFacade
+     */
+    public function getGlossaryFacade()
+    {
+        return $this->getProvidedDependency(FlashMessengerDependencyProvider::FACADE_GLOSSARY);
+    }
+
 
 }

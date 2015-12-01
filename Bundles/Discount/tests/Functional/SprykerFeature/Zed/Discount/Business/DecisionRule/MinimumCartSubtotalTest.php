@@ -99,10 +99,7 @@ class MinimumCartSubtotalTest extends Test
      */
     protected function createMinimumCartSubtotal()
     {
-        $locator = $this->getLocator();
-        $glossaryFacade = $locator->glossary()->facade();
-
-        return new MinimumCartSubtotal($glossaryFacade);
+        return new MinimumCartSubtotal();
     }
 
 }

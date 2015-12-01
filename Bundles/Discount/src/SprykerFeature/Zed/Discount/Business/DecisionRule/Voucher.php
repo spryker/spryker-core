@@ -9,9 +9,8 @@ namespace SprykerFeature\Zed\Discount\Business\DecisionRule;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
 use SprykerFeature\Zed\Discount\Persistence\DiscountQueryContainerInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
-use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 
-class Voucher extends BaseDecisionRule
+class Voucher
 {
 
     const REASON_VOUCHER_CODE_NOT_AVAILABLE = 'discount.voucher_code.not_valid';
@@ -27,11 +26,9 @@ class Voucher extends BaseDecisionRule
 
     /**
      * @param DiscountQueryContainerInterface $discountQueryContainer
-     * @param GlossaryFacade $glossaryFacade
      */
-    public function __construct(DiscountQueryContainerInterface $discountQueryContainer, GlossaryFacade $glossaryFacade)
+    public function __construct(DiscountQueryContainerInterface $discountQueryContainer)
     {
-        parent::__construct($glossaryFacade);
         $this->discountQueryContainer = $discountQueryContainer;
     }
 
@@ -59,29 +56,24 @@ class Voucher extends BaseDecisionRule
         $result = new ModelResult();
 
         if (!$discountVoucherEntity) {
-            return $result->addError($this->translate(self::REASON_VOUCHER_CODE_NOT_AVAILABLE));
+            return $result->addError(self::REASON_VOUCHER_CODE_NOT_AVAILABLE);
         }
 
         if (!$discountVoucherEntity->getIsActive()) {
-            $result->addError($this->translate(self::REASON_VOUCHER_CODE_NOT_ACTIVE));
+            $result->addError(self::REASON_VOUCHER_CODE_NOT_ACTIVE);
         }
 
         $voucherPoolEntity = $discountVoucherEntity->getVoucherPool();
         if (!$voucherPoolEntity) {
-            return $result->addError($this->translate(self::REASON_VOUCHER_CODE_POOL_MISSING));
+            return $result->addError(self::REASON_VOUCHER_CODE_POOL_MISSING);
         }
 
         if (!$voucherPoolEntity->getIsActive()) {
-            $result->addError($this->translate(self::REASON_VOUCHER_CODE_POOL_NOT_ACTIVE));
+            $result->addError(self::REASON_VOUCHER_CODE_POOL_NOT_ACTIVE);
         }
 
         if (!$this->isValidNumberOfUses($discountVoucherEntity)) {
-            $result->addError(
-                $this->translate(
-                    self::REASON_VOUCHER_CODE_LIMIT_REACHED,
-                    ['max_number_of_uses' => $discountVoucherEntity->getMaxNumberOfUses()]
-                )
-            );
+            $result->addError(self::REASON_VOUCHER_CODE_LIMIT_REACHED);
         }
 
         return $result;

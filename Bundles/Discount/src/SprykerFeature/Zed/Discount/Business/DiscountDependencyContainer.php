@@ -59,10 +59,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getDecisionRuleVoucher()
     {
-        return new Voucher(
-            $this->getQueryContainer(),
-            $this->getGlossaryFacade()
-        );
+        return new Voucher($this->getQueryContainer());
     }
 
     /**
@@ -70,7 +67,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getDecisionRuleMinimumCartSubtotal()
     {
-        return new MinimumCartSubtotal($this->createGlossaryFacade());
+        return new MinimumCartSubtotal();
     }
 
     /**
@@ -235,7 +232,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createCalculator()
     {
-        return new Calculator($this->createCollectorResolver(), $this->createGlossaryFacade());
+        return new Calculator($this->createCollectorResolver(), $this->getFlashMessengerFacade());
     }
 
     /**
@@ -344,13 +341,4 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::STORE_CONFIG);
     }
-
-    /**
-     * @return GlossaryFacade
-     */
-    protected function getGlossaryFacade()
-    {
-        return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_GLOSSARY);
-    }
-
 }

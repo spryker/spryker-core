@@ -16,7 +16,7 @@ use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
  * @method CalculationCheckoutConnectorConfig getConfig()
  * @method CalculationCheckoutConnectorFacade getFacade()
  */
-class CartAmountCorrectPrecondition implements CheckoutPreConditionInterface
+class CartAmountCorrectPreCondition implements CheckoutPreConditionInterface
 {
 
     /**

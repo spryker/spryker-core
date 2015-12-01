@@ -9,7 +9,7 @@ use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule;
 use SprykerEngine\Zed\Kernel\Business\ModelResult;
 
-class MinimumCartSubtotal extends BaseDecisionRule
+class MinimumCartSubtotal
 {
 
     /**
@@ -22,7 +22,8 @@ class MinimumCartSubtotal extends BaseDecisionRule
     {
         $result = new ModelResult();
 
-        if ($order->getCalculableObject()->getTotals()->getSubtotalWithoutItemExpenses() >= $decisionRule->getValue()) {
+        $totalsTransfer = $order->getCalculableObject()->getTotals();
+        if ($totalsTransfer && $totalsTransfer->getSubtotalWithoutItemExpenses() >= $decisionRule->getValue()) {
             return $result;
         }
 

@@ -302,8 +302,7 @@ class VoucherEngineTest extends Test
         $collectorResolver = new CollectorResolver($settings);
 
         $flashMessengerFacade = $locator->flashMessenger()->facade();
-        $glossaryFacade = $locator->glossary()->facade();
-        $calculator = new Calculator($collectorResolver, $flashMessengerFacade, $glossaryFacade);
+        $calculator = new Calculator($collectorResolver, $flashMessengerFacade);
 
         return $calculator;
     }

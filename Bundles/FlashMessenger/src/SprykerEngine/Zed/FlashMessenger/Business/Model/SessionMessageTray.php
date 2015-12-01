@@ -6,9 +6,11 @@
 namespace SprykerEngine\Zed\FlashMessenger\Business\Model;
 
 use Generated\Shared\Transfer\FlashMessagesTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
+use Pyz\Zed\Glossary\Business\GlossaryFacade;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-class SessionMessageTray implements MessageTrayInterface
+class SessionMessageTray extends BaseMessageTray implements MessageTrayInterface
 {
 
     /**
@@ -18,40 +20,60 @@ class SessionMessageTray implements MessageTrayInterface
 
     /**
      * @param SessionInterface $session
+     * @param GlossaryFacade $glossaryFacade
      */
-    public function __construct(SessionInterface $session)
+    public function __construct(SessionInterface $session, GlossaryFacade $glossaryFacade)
     {
+        parent::__construct($glossaryFacade);
         $this->session = $session;
     }
 
     /**
-     * @param string $message
+     * @param MessageTransfer $message
      *
      * @return void
      */
-    public function addSuccessMessage($message)
+    public function addSuccessMessage(MessageTransfer $message)
     {
-        $this->addToSession(MessageTrayInterface::FLASH_MESSAGES_SUCCESS, $message);
+        $this->addToSession(
+            MessageTrayInterface::FLASH_MESSAGES_SUCCESS,
+            $this->translate(
+                $message->getValue(),
+                $message->getParameters()
+            )
+        );
     }
 
     /**
-     * @param string $message
+     * @param MessageTransfer $message
      *
      * @return void
      */
-    public function addInfoMessage($message)
+    public function addInfoMessage(MessageTransfer $message)
     {
-        $this->addToSession(MessageTrayInterface::FLASH_MESSAGES_INFO, $message);
+        $this->addToSession(
+            MessageTrayInterface::FLASH_MESSAGES_INFO,
+            $this->translate(
+                $message->getValue(),
+                $message->getParameters()
+            )
+        );
     }
 
     /**
-     * @param string $message
+     * @param MessageTransfer $message
      *
      * @return void
      */
-    public function addErrorMessage($message)
+    public function addErrorMessage(MessageTransfer $message)
     {
-        $this->addToSession(MessageTrayInterface::FLASH_MESSAGES_ERROR, $message);
+        $this->addToSession(
+            MessageTrayInterface::FLASH_MESSAGES_ERROR,
+            $this->translate(
+                $message->getValue(),
+                $message->getParameters()
+            )
+        );
     }
 
     /**
