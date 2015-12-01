@@ -16,12 +16,13 @@ class TestClass1Input extends \Pyz\Zed\Foo\Bar\Baz
 
     public function replaceFunctionB()
     {
-        Baz::x();
+        new Foo($x);
     }
 
-    public function replaceFunctionC()
+    public function replaceNotYetFunction()
     {
-        new Foo($x);
+        //TODO: Baz::x();
+        \Pyz\Zed\Foo\Bar\Baz::x();
     }
 
     public function doNotReplaceFunction()

@@ -2,6 +2,7 @@
 
 namespace Unit\SprykerFeature\Zed\Development\Business\CodeStyleFixer\Fixtures\RemoveWrongWhitespaceFixer\Input;
 
+use Pyz\Zed\Foo\Bar\Baz;
 use X\Y;
 
 class TestClass1Input extends \Pyz\Zed\Foo\Bar\Baz
@@ -14,12 +15,13 @@ class TestClass1Input extends \Pyz\Zed\Foo\Bar\Baz
 
     public function replaceFunctionB()
     {
-        \Pyz\Zed\Foo\Bar\Baz::x();
+        new\SprykerEngine\Zed\Foo($x);
     }
 
-    public function replaceFunctionC()
+    public function replaceNotYetFunction()
     {
-        new\SprykerEngine\Zed\Foo($x);
+        //TODO: Baz::x();
+        \Pyz\Zed\Foo\Bar\Baz::x();
     }
 
     public function doNotReplaceFunction()

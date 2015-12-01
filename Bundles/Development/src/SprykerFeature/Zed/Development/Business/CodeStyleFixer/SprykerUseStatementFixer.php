@@ -27,29 +27,64 @@ class SprykerUseStatementFixer extends AbstractFixer
     /**
      * {@inheritdoc}
      */
+    public function getDescription()
+    {
+        return 'Spryker internal FQNS must be moved to use statements.';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPriority()
+    {
+        // Should be run before other UseFixer
+        return 10;
+    }
+
+    /**
+     * @return int
+     */
+    public function getLevel()
+    {
+        return FixerInterface::NONE_LEVEL;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function fix(\SplFileInfo $file, $content)
     {
         $tokens = Tokens::fromCode($content);
+
+        $namespaceDeclarations = $this->getNamespaceDeclarations($tokens);
+        if (empty($namespaceDeclarations)) {
+            return $tokens->generateCode();
+        }
 
         $this->fixUseForNew($tokens);
         $this->fixUseForStatic($tokens);
 
         $this->insertUseStatements();
 
-        $this->insertNewUseDeclarations($tokens);
+        $this->insertNewUseDeclarations($tokens, $namespaceDeclarations);
 
         return $tokens->generateCode();
     }
 
+    /**
+     * @param Tokens|Token[] $tokens
+     *
+     * @return void
+     */
     protected function fixUseForStatic(Tokens $tokens)
     {
         foreach ($tokens as $index => $token) {
             if (!$token->isGivenKind([T_DOUBLE_COLON])) {
                 continue;
             }
-        }
 
-        //TODO
+            //TODO
+        }
     }
 
     /**
@@ -103,19 +138,7 @@ class SprykerUseStatementFixer extends AbstractFixer
             if ($nextIndex === $index + 1) {
                 $tokens[$index]->setContent($tokens[$index]->getContent() . ' ');
             }
-
-            //file_put_contents('x.txt', var_export($token->toArray(), true), FILE_APPEND);
         }
-        //die();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getPriority()
-    {
-        // should be run before other UseFixer
-        return 10;
     }
 
     /**
@@ -129,47 +152,6 @@ class SprykerUseStatementFixer extends AbstractFixer
         }
 
         return true;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getDescription()
-    {
-        return 'Spryker internal FQNS must be moved to use statements.';
-    }
-
-    private function detectUseUsages($content, array $useDeclarations)
-    {
-        $usages = array();
-
-        foreach ($useDeclarations as $shortName => $useDeclaration) {
-            $usages[$shortName] = (bool) preg_match('/(?<![\$\\\\])\b'.preg_quote($shortName).'\b/i', $content);
-        }
-
-        return $usages;
-    }
-
-    private function generateCodeWithoutPartials(Tokens $tokens, array $partials)
-    {
-        $content = '';
-
-        foreach ($tokens as $index => $token) {
-            $allowToAppend = true;
-
-            foreach ($partials as $partial) {
-                if ($partial['start'] <= $index && $index <= $partial['end']) {
-                    $allowToAppend = false;
-                    break;
-                }
-            }
-
-            if ($allowToAppend) {
-                $content .= $token->getContent();
-            }
-        }
-
-        return $content;
     }
 
     protected function getNamespaceDeclarations(Tokens $tokens)
@@ -236,14 +218,18 @@ class SprykerUseStatementFixer extends AbstractFixer
         return $uses;
     }
 
-    protected function insertNewUseDeclarations(Tokens $tokens)
+    /**
+     * @param Tokens|Token[] $tokens
+     * @param array $namespaceDeclarations
+     *
+     * @return void
+     */
+    protected function insertNewUseDeclarations(Tokens $tokens, array $namespaceDeclarations)
     {
         $useDeclarationsIndexes = $tokens->getImportUseIndexes();
         $existingDeclarations = $this->getNamespaceUseDeclarations($tokens, $useDeclarationsIndexes);
 
         $newDeclarations = $this->useStatements;
-
-        $namespaceDeclarations = $this->getNamespaceDeclarations($tokens);
 
         if (empty($existingDeclarations)) {
             $useStatementStartIndex = $tokens->getNextMeaningfulToken($namespaceDeclarations[0]['end']);
@@ -275,7 +261,7 @@ class SprykerUseStatementFixer extends AbstractFixer
         $content = 'use ' . $useDeclaration['fullName'] . ';';
         $content .= PHP_EOL;
 
-        $tokens[$useStatementStartIndex]->setContent($content . $tokens[$useStatementStartIndex]->getContent());
+        $tokens[$useStatementStartIndex]->override([T_STRING, $content . $tokens[$useStatementStartIndex]->getContent(), $tokens[$useStatementStartIndex]->getLine()]);
 
         return;
 
