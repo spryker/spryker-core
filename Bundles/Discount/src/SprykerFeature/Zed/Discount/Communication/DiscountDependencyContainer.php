@@ -38,11 +38,20 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     /**
      * @param bool $allowMultiple
      *
-     * @return VoucherForm
+     * @return FormTypeInterface
      */
     public function createVoucherForm($allowMultiple=false)
     {
-        $poolQuery = $this->getQueryContainer()->queryDiscountVoucherPool();
+//        $voucherForm = $this->getFactory()
+//            ->createFormVoucherForm(
+//                $this->getQueryContainer(),
+//                $this->getConfig(),
+//                $allowMultiple
+//            );
+//
+//        return $this->createForm($voucherForm);
+
+        $poolQuery = $this->getQueryContainer();
 
         return $this->getFactory()->createFormVoucherForm($poolQuery, $this->getConfig(), $allowMultiple);
     }
@@ -52,7 +61,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function getDiscountFacade()
     {
-        return $this->getLocator()->discount()->facade();
+        return $this->getDiscountFacade();
     }
 
     /**
@@ -174,7 +183,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function getQueryContainer()
     {
-        return $this->getLocator()->discount()->queryContainer();
+        return $this->getQueryContainer();
     }
 
     /**
