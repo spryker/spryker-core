@@ -55,9 +55,7 @@ class ShipmentDependencyContainer extends AbstractCommunicationDependencyContain
 
         $taxSetQuery = $this->getTaxQueryContainer()->queryAllTaxSets();
 
-        return $this
-            ->getFactory()
-            ->createFormMethodForm(
+        return $this->getFactory()->createFormMethodForm(
                 $methodQuery,
                 $carrierQuery,
                 $taxSetQuery,
