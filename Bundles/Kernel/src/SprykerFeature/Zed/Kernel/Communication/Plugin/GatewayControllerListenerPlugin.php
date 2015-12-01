@@ -22,6 +22,7 @@ use SprykerEngine\Zed\Kernel\Communication\Factory;
 
 class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayControllerListenerInterface
 {
+
     /**
      * @var Locator
      */
@@ -37,6 +38,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
 
         $this->locator = $locator;
     }
+
     /**
      * @param FilterControllerEvent $event
      *

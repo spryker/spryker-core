@@ -15,6 +15,7 @@ use SprykerFeature\Shared\ZedRequest\Client\Message;
 
 abstract class AbstractGatewayController extends AbstractController
 {
+
     /**
      * @var bool
      */
@@ -137,6 +138,5 @@ abstract class AbstractGatewayController extends AbstractController
     {
         return $this->successMessages;
     }
-
 
 }

@@ -96,4 +96,5 @@ abstract class AbstractCommunicationDependencyContainer extends BaseDependencyCo
 
         return $form;
     }
+
 }

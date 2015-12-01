@@ -113,9 +113,9 @@ class VoucherPoolTable extends AbstractTable
     protected function getEditUrl(SpyDiscountVoucherPool $discountVoucherPool)
     {
         return Url::generate(
-            DiscountConfig::URL_DISCOUNT_POOL_EDIT, 
+            DiscountConfig::URL_DISCOUNT_POOL_EDIT,
             [
-                DiscountConfig::PARAM_ID_POOL => $discountVoucherPool->getIdDiscountVoucherPool()
+                DiscountConfig::PARAM_ID_POOL => $discountVoucherPool->getIdDiscountVoucherPool(),
             ]
         );
     }
@@ -128,9 +128,9 @@ class VoucherPoolTable extends AbstractTable
     protected function getViewUrl(SpyDiscountVoucherPool $discountVoucherPool)
     {
         return Url::generate(
-            self::URL_DISCOUNT_VOUCHER_VIEW, 
+            self::URL_DISCOUNT_VOUCHER_VIEW,
             [
-                self::PARAM_ID_POOL => $discountVoucherPool->getIdDiscountVoucherPool()
+                self::PARAM_ID_POOL => $discountVoucherPool->getIdDiscountVoucherPool(),
             ]
         );
     }
