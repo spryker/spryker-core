@@ -120,7 +120,7 @@ abstract class AbstractFactory implements FactoryInterface
     /**
      * @return string
      */
-    protected function getBundle()
+    public function getBundle()
     {
         return $this->bundle;
     }

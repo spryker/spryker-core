@@ -7,6 +7,7 @@
 namespace SprykerEngine\Yves\Application\Communication\Controller;
 
 use Generated\Yves\Ide\AutoCompletion;
+use SprykerEngine\Client\Kernel\Service\AbstractClient;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 use SprykerEngine\Yves\Application\Communication\Application;
@@ -53,6 +54,11 @@ abstract class AbstractController
      * @var FlashBagInterface
      */
     private $flashBag;
+
+    /**
+     * @var AbstractClient
+     */
+    private $client;
 
     /**
      * @param Application $app
@@ -334,6 +340,20 @@ abstract class AbstractController
     protected function getLocator()
     {
         return $this->locator;
+    }
+
+    /**
+     * @return AbstractClient
+     */
+    protected function getClient()
+    {
+        if ($this->client === null) {
+            $bundleName = lcfirst($this->factory->getBundle());
+
+            $this->client = $this->locator->$bundleName()->client();
+        }
+
+        return $this->client;
     }
 
     /**
