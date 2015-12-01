@@ -57,7 +57,8 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function getDiscountFacade()
     {
-        return $this->getDiscountFacade();
+        // @todo this shoud be replace by $this->getFacade() which currently doesn't exists
+        return $this->getLocator()->discount()->facade();
     }
 
     /**
