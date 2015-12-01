@@ -6,6 +6,7 @@
 
 namespace Functional\SprykerFeature\Zed\Cms\Business;
 
+use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\CmsTemplateTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
@@ -75,8 +76,8 @@ class CmsFacadeTest extends Test
         $this->urlFacade = new UrlFacade(new Factory('Url'), $this->locator);
 
         $this->localeFacade = new LocaleFacade(new Factory('Locale'), $this->locator);
-        $this->cmsQueryContainer = new CmsQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Cms'), $this->locator);
-        $this->glossaryQueryContainer = new GlossaryQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Glossary'), $this->locator);
+        $this->cmsQueryContainer = new CmsQueryContainer(new PersistenceFactory('Cms'), $this->locator);
+        $this->glossaryQueryContainer = new GlossaryQueryContainer(new PersistenceFactory('Glossary'), $this->locator);
 
         $this->buildGlossaryFacade();
     }

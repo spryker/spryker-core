@@ -340,7 +340,7 @@ class SprykerUseStatementFixer extends AbstractFixer
         $pieces = array_reverse($pieces);
         array_shift($pieces);
 
-        while (isset($this->newStatements[$alias])) {
+        while (isset($this->allStatements[$alias])) {
             $alias = $shortName;
 
             if (count($pieces) - 1 < $count) {
