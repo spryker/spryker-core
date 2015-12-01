@@ -37,7 +37,7 @@ class ExceptionHandlerDispatcher
     {
         $statusCode = $exception->getStatusCode();
 
-        if (array_key_exists($statusCode, $this->exceptionHandlers)) {
+        if (isset($this->exceptionHandlers[$statusCode])) {
             return $this->exceptionHandlers[$statusCode]->handleException($exception);
         }
 

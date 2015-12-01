@@ -159,7 +159,7 @@ class Method
         $availabilityPlugins = $this->plugins[ShipmentDependencyProvider::AVAILABILITY_PLUGINS];
         $isAvailable = true;
 
-        if (array_key_exists($method->getAvailabilityPlugin(), $availabilityPlugins)) {
+        if (isset($availabilityPlugins[$method->getAvailabilityPlugin()])) {
             /** @var ShipmentMethodAvailabilityPluginInterface $availabilityPlugin */
             $availabilityPlugin = $availabilityPlugins[$method->getAvailabilityPlugin()];
             $isAvailable = $availabilityPlugin->isAvailable($shipmentMethodAvailabilityTransfer);
@@ -179,7 +179,7 @@ class Method
         $price = $method->getPrice();
         $priceCalculationPlugins = $this->plugins[ShipmentDependencyProvider::PRICE_CALCULATION_PLUGINS];
 
-        if (array_key_exists($method->getPriceCalculationPlugin(), $priceCalculationPlugins)) {
+        if (isset($priceCalculationPlugins[$method->getPriceCalculationPlugin()])) {
             /** @var ShipmentMethodPriceCalculationPluginInterface $priceCalculationPlugin */
             $priceCalculationPlugin = $priceCalculationPlugins[$method->getPriceCalculationPlugin()];
             $price = $priceCalculationPlugin->getPrice($shipmentMethodAvailabilityTransfer);
@@ -208,7 +208,7 @@ class Method
         }
 
         $taxCalculationPlugins = $this->plugins[ShipmentDependencyProvider::TAX_CALCULATION_PLUGINS];
-        if (array_key_exists($method->getTaxCalculationPlugin(), $taxCalculationPlugins)) {
+        if (isset($taxCalculationPlugins[$method->getTaxCalculationPlugin()])) {
             /** @var ShipmentMethodTaxCalculationPluginInterface $taxCalculationPlugin */
             $taxCalculationPlugin = $taxCalculationPlugins[$method->getTaxCalculationPlugin()];
             $effectiveTaxRate = $taxCalculationPlugin->getTaxRate($shipmentMethodAvailabilityTransfer, $effectiveTaxRate);
@@ -228,7 +228,7 @@ class Method
         $timeString = '';
 
         $deliveryTimePlugins = $this->plugins[ShipmentDependencyProvider::DELIVERY_TIME_PLUGINS];
-        if (array_key_exists($method->getDeliveryTimePlugin(), $deliveryTimePlugins)) {
+        if (isset($deliveryTimePlugins[$method->getDeliveryTimePlugin()])) {
             /** @var ShipmentMethodDeliveryTimePluginInterface $deliveryTimePlugin */
             $deliveryTimePlugin = $deliveryTimePlugins[$method->getDeliveryTimePlugin()];
             $timeString = $deliveryTimePlugin->getTime($shipmentMethodAvailabilityTransfer);
