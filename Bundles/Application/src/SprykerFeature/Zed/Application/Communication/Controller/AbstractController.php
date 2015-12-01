@@ -224,31 +224,6 @@ abstract class AbstractController
     }
 
     /**
-     * @param string $type
-     * @param null $data
-     * @param array $options
-     *
-     * @return FormInterface
-     */
-    protected function createForm($type = 'form', $data = null, array $options = [])
-    {
-        /** @var FormFactory $formFactory */
-        $formFactory = $this->application['form.factory'];
-
-        return $formFactory->create($type, $data, $options);
-    }
-
-    /**
-     * Returns an instance of form factory
-     *
-     * @return FormFactory
-     */
-    protected function getFormFactory()
-    {
-        return $this->application['form.factory'];
-    }
-
-    /**
      */
     protected function clearBreadcrumbs()
     {

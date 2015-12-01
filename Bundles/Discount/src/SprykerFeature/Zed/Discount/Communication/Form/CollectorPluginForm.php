@@ -4,13 +4,13 @@ namespace SprykerFeature\Zed\Discount\Communication\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-class CollectorPluginType extends AbstractRuleType
+class CollectorPluginForm extends AbstractRuleForm
 {
 
+    const FIELD_ID_DISCOUNT_COLLECTOR = 'id_discount_collector';
     const FIELD_COLLECTOR_PLUGIN = 'collector_plugin';
     const FIELD_VALUE = 'value';
     const FIELD_REMOVE = 'remove';
-    const FIELD_ID_DISCOUNT_COLLECTOR = 'id_discount_collector';
 
     /**
      * @var array
@@ -25,6 +25,22 @@ class CollectorPluginType extends AbstractRuleType
     public function __construct(array $availableCollectorPlugins)
     {
         $this->availableCollectorPlugins = $availableCollectorPlugins;
+    }
+
+    /**
+     * @return array
+     */
+    public function populateFormFields()
+    {
+        return [];
+    }
+
+    /**
+     * @return null
+     */
+    protected function getDataClass()
+    {
+        return null;
     }
 
     /**

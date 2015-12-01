@@ -67,6 +67,10 @@ class CountryManager implements CountryManagerInterface
     {
         $country = $this->countryQueryContainer->queryCountries()->findOneByName($countryName);
 
+        if ($country === null) {
+            return new CountryTransfer();
+        }
+
         $countryTransfer = (new CountryTransfer())->fromArray($country->toArray(), true);
 
         return $countryTransfer;

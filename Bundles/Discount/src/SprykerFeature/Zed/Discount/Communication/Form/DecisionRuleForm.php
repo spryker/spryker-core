@@ -4,7 +4,7 @@ namespace SprykerFeature\Zed\Discount\Communication\Form;
 
 use Symfony\Component\Form\FormBuilderInterface;
 
-class DecisionRuleType extends AbstractRuleType
+class DecisionRuleForm extends AbstractRuleForm
 {
 
     const FIELD_DECISION_RULE_PLUGIN = 'decision_rule_plugin';
@@ -25,6 +25,22 @@ class DecisionRuleType extends AbstractRuleType
     public function __construct(array $availableDecisionRulePlugins)
     {
         $this->availableDecisionRulePlugins = $availableDecisionRulePlugins;
+    }
+
+    /**
+     * @return array
+     */
+    public function populateFormFields()
+    {
+        return [];
+    }
+
+    /**
+     * @return null
+     */
+    protected function getDataClass()
+    {
+        return null;
     }
 
     /**

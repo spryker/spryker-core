@@ -4,6 +4,7 @@ namespace SprykerEngine\Client\Kernel;
 
 abstract class AbstractDependencyProvider implements DependencyProviderInterface
 {
+
     const CLIENT_ZED_REQUEST = 'zed request client';
     const CLIENT_SESSION = 'session client';
     const CLIENT_KV_STORAGE = 'kv storage client';

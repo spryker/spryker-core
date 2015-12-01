@@ -54,9 +54,7 @@ class CartRuleController extends AbstractController
     {
         $elements = $request->request->getInt(self::PARAM_CURRENT_ELEMENTS_COUNT);
 
-        $formType = $this->getDependencyContainer()->createDecisionRuleFormType();
-
-        $form = $this->getDependencyContainer()->createCartRuleForm($formType);
+        $form = $this->getDependencyContainer()->createDecisionRuleForm();
         $form->handleRequest($request);
 
         return [
@@ -74,9 +72,7 @@ class CartRuleController extends AbstractController
     {
         $elements = $request->request->getInt(self::PARAM_CURRENT_ELEMENTS_COUNT);
 
-        $formType = $this->getDependencyContainer()->createCollectorPluginFormType();
-
-        $form = $this->getDependencyContainer()->createCartRuleForm($formType);
+        $form = $this->getDependencyContainer()->createCollectorPluginForm();
         $form->handleRequest($request);
 
         return [
@@ -92,9 +88,7 @@ class CartRuleController extends AbstractController
      */
     public function createAction(Request $request)
     {
-        $form = $this->getDependencyContainer()->createCartRuleForm(
-            $this->getDependencyContainer()->createCartRuleFormType()
-        );
+        $form = $this->getDependencyContainer()->createCartRuleForm();
         $form->handleRequest($request);
 
         if ($form->isValid()) {
@@ -118,12 +112,7 @@ class CartRuleController extends AbstractController
      */
     public function editAction(Request $request)
     {
-        $idDiscount = $request->query->getInt(self::PARAM_ID_DISCOUNT);
-
-        $form = $this->getDependencyContainer()->createCartRuleForm(
-            $this->getDependencyContainer()->createCartRuleFormType(),
-            $this->getFacade()->getCurrentCartRulesDetailsByIdDiscount($idDiscount)
-        );
+        $form = $this->getDependencyContainer()->createCartRuleForm();
         $form->handleRequest($request);
 
         if ($form->isValid()) {

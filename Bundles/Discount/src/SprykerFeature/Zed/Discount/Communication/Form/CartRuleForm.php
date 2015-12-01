@@ -2,9 +2,11 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
+use SprykerFeature\Zed\Discount\Business\DiscountFacade;
+use SprykerFeature\Zed\Discount\DiscountConfig;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class CartRuleType extends AbstractRuleType
+class CartRuleForm extends AbstractRuleForm
 {
 
     const FIELD_DISPLAY_NAME = 'display_name';
@@ -20,7 +22,66 @@ class CartRuleType extends AbstractRuleType
     const FIELD_DECISION_RULES = 'decision_rules';
     const FIELD_COLLECTOR_LOGICAL_OPERATOR = 'collector_logical_operator';
 
+    const VALID_FROM = 'valid_from';
+    const VALID_TO = 'valid_to';
+
     const DATE_NOW = 'now';
+
+    /**
+     * @var DiscountFacade
+     */
+    protected $discountFacade;
+
+    public function __construct(DiscountConfig $config, DiscountFacade $discountFacade)
+    {
+        parent::__construct(
+            $config->getAvailableCalculatorPlugins(),
+            $config->getAvailableCollectorPlugins(),
+            $config->getAvailableDecisionRulePlugins()
+        );
+
+        $this->discountFacade = $discountFacade;
+    }
+
+    /**
+     * @return array
+     */
+    public function populateFormFields()
+    {
+        $idDiscount = $this->getRequest()->query->getInt(DiscountConfig::PARAM_ID_DISCOUNT);
+
+        if ($idDiscount > 0) {
+            $cartRuleDefaultData = $this->discountFacade->getCurrentCartRulesDetailsByIdDiscount($idDiscount);
+
+            return $cartRuleDefaultData;
+        }
+
+        return [
+            self::VALID_FROM => new \DateTime('now'),
+            self::VALID_TO => new \DateTime('now'),
+            'decision_rules' => [
+                'rule_1' => [
+                    'value' => '',
+                    'rules' => '',
+                ],
+            ],
+            'collector_plugins' => [
+                'plugin_1' => [
+                    'collector_plugin' => '',
+                    'value' => '',
+                ],
+            ],
+            'group' => [],
+        ];
+    }
+
+    /**
+     * @return null
+     */
+    protected function getDataClass()
+    {
+        return null;
+    }
 
     /**
      * @param FormBuilderInterface $builder
@@ -49,7 +110,7 @@ class CartRuleType extends AbstractRuleType
                 'placeholder' => 'Default',
             ])
             ->add(self::FIELD_COLLECTOR_PLUGINS, 'collection', [
-                'type' => new CollectorPluginType($this->availableCollectorPlugins),
+                'type' => new CollectorPluginForm($this->availableCollectorPlugins),
                 'label' => null,
                 'allow_add' => true,
                 'allow_delete' => true,
@@ -69,7 +130,7 @@ class CartRuleType extends AbstractRuleType
                 'label' => 'Is Active',
             ])
             ->add(self::FIELD_DECISION_RULES, 'collection', [
-                'type' => new DecisionRuleType($this->availableDecisionRulePlugins),
+                'type' => new DecisionRuleForm($this->availableDecisionRulePlugins),
                 'label' => null,
                 'allow_add' => true,
                 'allow_delete' => true,

@@ -6,7 +6,8 @@
 
 namespace SprykerFeature\Zed\Discount\Communication\Form\Transformers;
 
-use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesType;
+use SprykerEngine\Shared\Transfer\TransferInterface;
+use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesForm;
 use SprykerFeature\Zed\Discount\DiscountConfig;
 use Symfony\Component\Form\DataTransformerInterface;
 use Zend\Filter\Word\CamelCaseToUnderscore;
@@ -47,7 +48,7 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
     }
 
     /**
-     * @param array $formArray
+     * @param TransferInterface $formArray
      *
      * @return array
      */
@@ -57,13 +58,13 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
         $formArray = $this->filterDecisionRules($formArray);
         $formArray = $this->filterCollectorPlugins($formArray);
 
-        foreach ($formArray[VoucherCodesType::FIELD_DECISION_RULES] as $index => $fieldValue) {
+        foreach ($formArray[VoucherCodesForm::FIELD_DECISION_RULES] as $index => $fieldValue) {
             $fixedValueSet = [];
             foreach ($fieldValue as $key => $value) {
                 $fixedValueSet[$this->camelCaseToSnakeCase($key)] = $value;
             }
 
-            $formArray[VoucherCodesType::FIELD_DECISION_RULES][$index] = $fixedValueSet;
+            $formArray[VoucherCodesForm::FIELD_DECISION_RULES][$index] = $fixedValueSet;
         }
 
         return $formArray;
@@ -120,10 +121,28 @@ class DecisionRulesFormTransformer implements DataTransformerInterface
         $conversionMethod = $this->decideTransformRule($showInForm);
         $calculatorPlugins = $this->config->getAvailableCalculatorPlugins();
 
-        $selectedCalculatorPlugin = $calculatorPlugins[$formArray[self::CALCULATOR_PLUGIN]];
-        $formArray[self::AMOUNT] = $selectedCalculatorPlugin->$conversionMethod($formArray[self::AMOUNT]);
+        $formArray[self::AMOUNT] = $this->getAmount($formArray, $calculatorPlugins, $conversionMethod);
 
         return $formArray;
+    }
+
+    /**
+     * @param array $formArray
+     * @param array $calculatorPlugins
+     * @param string $conversionMethod
+     *
+     * @return int
+     */
+    protected function getAmount(array $formArray, array $calculatorPlugins, $conversionMethod)
+    {
+        if ($formArray[self::CALCULATOR_PLUGIN] !== null) {
+            $selectedCalculatorPlugin = $calculatorPlugins[$formArray[self::CALCULATOR_PLUGIN]];
+            if ($selectedCalculatorPlugin !== null) {
+                return $selectedCalculatorPlugin->$conversionMethod($formArray[self::AMOUNT]);
+            }
+        }
+
+        return 0;
     }
 
     /**

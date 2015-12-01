@@ -125,6 +125,7 @@ class DiscountsTable extends AbstractTable
     protected function getRowOptions(SpyDiscount $item)
     {
         $url = Url::generate('/discount/cart-rule/edit', [self::PARAM_ID_DISCOUNT => $item->getIdDiscount()]);
+
         return '<a class="btn btn-xs btn-info" href="' . $url->buildEscaped() . '">Edit</a>';
     }
 
