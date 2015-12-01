@@ -7,12 +7,12 @@
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use Pyz\Zed\Glossary\Business\GlossaryFacade;
 use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Distributor\DistributorInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
 use SprykerFeature\Zed\Discount\DiscountConfigInterface;
+use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 
 class Calculator implements CalculatorInterface
 {
@@ -61,7 +61,7 @@ class Calculator implements CalculatorInterface
     /**
      * @param DiscountTransfer[] $discountCollection
      * @param CalculableInterface $container
-     * @param DiscountConfigInterface $settings
+     * @param DiscountConfigInterface $config
      * @param DistributorInterface $discountDistributor
      *
      * @return array
@@ -69,10 +69,10 @@ class Calculator implements CalculatorInterface
     public function calculate(
         array $discountCollection,
         CalculableInterface $container,
-        DiscountConfigInterface $settings,
+        DiscountConfigInterface $config,
         DistributorInterface $discountDistributor
     ) {
-        $calculatedDiscounts = $this->calculateDiscountAmount($discountCollection, $container, $settings);
+        $calculatedDiscounts = $this->calculateDiscountAmount($discountCollection, $container, $config);
         $calculatedDiscounts = $this->filterOutNonPrivilegedDiscounts($calculatedDiscounts);
         $this->distributeDiscountAmount($discountDistributor, $calculatedDiscounts);
 
@@ -82,14 +82,14 @@ class Calculator implements CalculatorInterface
     /**
      * @param DiscountTransfer[] $discountCollection
      * @param CalculableInterface $container
-     * @param DiscountConfigInterface $settings
+     * @param DiscountConfigInterface $config
      *
      * @return array
      */
     protected function calculateDiscountAmount(
         array $discountCollection,
         CalculableInterface $container,
-        DiscountConfigInterface $settings
+        DiscountConfigInterface $config
     ) {
         $calculatedDiscounts = [];
         foreach ($discountCollection as $discountTransfer) {
@@ -99,7 +99,7 @@ class Calculator implements CalculatorInterface
                 continue;
             }
 
-            $calculatorPlugin = $settings->getCalculatorPluginByName($discountTransfer->getCalculatorPlugin());
+            $calculatorPlugin = $config->getCalculatorPluginByName($discountTransfer->getCalculatorPlugin());
             $discountAmount = $calculatorPlugin->calculate($discountableObjects, $discountTransfer->getAmount());
             $discountTransfer->setAmount($discountAmount);
 
@@ -128,6 +128,8 @@ class Calculator implements CalculatorInterface
     /**
      * @param DistributorInterface $discountDistributor
      * @param array $calculatedDiscounts
+     *
+     * @return void
      */
     protected function distributeDiscountAmount(DistributorInterface $discountDistributor, array $calculatedDiscounts)
     {

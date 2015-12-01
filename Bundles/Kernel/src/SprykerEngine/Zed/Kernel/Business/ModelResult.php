@@ -37,7 +37,6 @@ class ModelResult
      */
     protected $success = true;
 
-
     /**
      * @deprecated
      *
@@ -192,7 +191,7 @@ class ModelResult
     }
 
     /**
-     * @param boolean $success
+     * @param bool $success
      *
      * @return self
      */
@@ -202,4 +201,5 @@ class ModelResult
 
         return $this;
     }
+
 }
