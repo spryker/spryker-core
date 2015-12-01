@@ -61,7 +61,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return new Voucher(
             $this->getQueryContainer(),
-            $this->createGlossaryFacade()
+            $this->getGlossaryFacade()
         );
     }
 
@@ -87,7 +87,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
             $this->getConfig(),
             $this->createCalculator(),
             $this->createDistributor(),
-            $this->createFlashMessengerFacade()
+            $this->getFlashMessengerFacade()
         );
     }
 
@@ -100,7 +100,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
 
         return new CartRule(
             $this->getQueryContainer(),
-            $this->createStoreConfig(),
+            $this->getStoreConfig(),
             $this->createDiscountDecisionRuleWriter(),
             $this->createDiscountWriter(),
             $this->createDiscountCollectorWriter()
@@ -254,8 +254,8 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
         return new VoucherEngine(
             $this->getConfig(),
             $this->getQueryContainer(),
-            $this->createFlashMessengerFacade(),
-            $this->createPropelConnection()
+            $this->getFlashMessengerFacade(),
+            $this->getPropelConnection()
         );
     }
 
@@ -324,7 +324,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return FlashMessengerFacade
      */
-    protected function createFlashMessengerFacade()
+    protected function getFlashMessengerFacade()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_FLASH_MESSENGER);
     }
@@ -332,7 +332,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return ConnectionInterface
      */
-    protected function createPropelConnection()
+    protected function getPropelConnection()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::PLUGIN_PROPEL_CONNECTION);
     }
@@ -340,7 +340,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return Store
      */
-    protected function createStoreConfig()
+    protected function getStoreConfig()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::STORE_CONFIG);
     }
@@ -348,7 +348,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return GlossaryFacade
      */
-    protected function createGlossaryFacade()
+    protected function getGlossaryFacade()
     {
         return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_GLOSSARY);
     }
