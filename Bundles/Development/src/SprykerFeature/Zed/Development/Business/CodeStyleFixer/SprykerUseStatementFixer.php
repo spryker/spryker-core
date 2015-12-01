@@ -14,6 +14,9 @@ use Symfony\CS\Tokenizer\Tokens;
 class SprykerUseStatementFixer extends AbstractFixer
 {
 
+    /**
+     * @var array
+     */
     protected static $namespaces = [
         'Pyz',
         'Orm',
@@ -22,10 +25,19 @@ class SprykerUseStatementFixer extends AbstractFixer
         'SprykerFeature',
     ];
 
+    /**
+     * @var array
+     */
     protected $existingStatements = [];
 
+    /**
+     * @var array
+     */
     protected $newStatements = [];
 
+    /**
+     * @var array
+     */
     protected $allStatements = [];
 
     /**
@@ -168,6 +180,11 @@ class SprykerUseStatementFixer extends AbstractFixer
         return true;
     }
 
+    /**
+     * @param Tokens|Token[] $tokens
+     *
+     * @return array
+     */
     protected function getNamespaceDeclarations(Tokens $tokens)
     {
         $namespaces = [];
@@ -189,6 +206,12 @@ class SprykerUseStatementFixer extends AbstractFixer
         return $namespaces;
     }
 
+    /**
+     * @param Tokens|Token[] $tokens
+     * @param array $useIndexes
+     *
+     * @return array
+     */
     protected function getNamespaceUseDeclarations(Tokens $tokens, array $useIndexes)
     {
         $uses = [];
@@ -305,7 +328,6 @@ class SprykerUseStatementFixer extends AbstractFixer
         // Find existing one
         foreach ($this->allStatements as $useStatement) {
             if ($useStatement['fullName'] === $fullName) {
-                //FIXME: does not yet work, only corrects the 2nd+ results
                 return $useStatement;
             }
         }
@@ -360,6 +382,11 @@ class SprykerUseStatementFixer extends AbstractFixer
         return $alias;
     }
 
+    /**
+     * @param Tokens|Token[] $tokens
+     *
+     * @return void
+     */
     protected function loadStatements($tokens)
     {
         $useDeclarationsIndexes = $tokens->getImportUseIndexes();
