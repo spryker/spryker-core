@@ -141,22 +141,22 @@ class Calculator implements CalculatorInterface
                 $discountTransfer
             );
 
-            $this->setSuccessfullDiscountAddMessage($discountTransfer->getDisplayName());
+            $this->setSuccessfulDiscountAddMessage($discountTransfer->getDisplayName());
         }
     }
 
     /**
-     * @param string $discountDiscplayName
+     * @param string $discountDisplayName
      *
      * @return void
      */
-    protected function setSuccessfullDiscountAddMessage($discountDiscplayName)
+    protected function setSuccessfulDiscountAddMessage($discountDisplayName)
     {
         $message = self::DISCOUNT_SUCCESSFULLY_APPLIED_KEY;
         if ($this->glossaryFacade->hasKey(self::DISCOUNT_SUCCESSFULLY_APPLIED_KEY)) {
             $message = $this->glossaryFacade->translate(
                 self::DISCOUNT_SUCCESSFULLY_APPLIED_KEY,
-                ['display_name' => $discountDiscplayName]
+                ['display_name' => $discountDisplayName]
             );
         }
 
