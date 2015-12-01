@@ -3,7 +3,6 @@
 namespace SprykerFeature\Zed\Discount\Communication\Form;
 
 use Generated\Shared\Transfer\DiscountTransfer;
-use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerEngine\Zed\Gui\Communication\Form\AbstractForm;
 use SprykerFeature\Zed\Discount\Communication\Form\Validators\MaximumCalculatedRangeValidator;
 use SprykerFeature\Zed\Discount\Dependency\Plugin\DiscountCalculatorPluginInterface;
@@ -54,87 +53,64 @@ class VoucherForm extends AbstractForm
 
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // @todo: Implement buildForm() method.
-    }
-
-    protected function getDataClass()
-    {
-        // @todo: Implement getDataClass() method.
-    }
-
-    public function getName()
-    {
-        // @todo: Implement getName() method.
-    }
-
-
-    /**
-     * Prepares form
-     *
-     * @return self
-     */
-    protected function buildFormFields()
-    {
         if ($this->isMultiple) {
-            $this
-                ->addText(self::FIELD_QUANTITY, [
-                    'label' => 'Quantity',
-                    'constraints' => [
-                        $this->getConstraints()->createConstraintNotBlank(),
-                        $this->getConstraints()->createConstraintGreaterThan(1),
-                    ],
-                ]);
+            $builder->add(self::FIELD_QUANTITY, 'text', [
+                'label' => 'Quantity',
+                'constraints' => [
+                    $this->getConstraints()->createConstraintNotBlank(),
+                    $this->getConstraints()->createConstraintGreaterThan(1),
+                ],
+            ]);
         }
 
         $maxAllowedCodeCharactersLength = $this->discountConfig->getAllowedCodeCharactersLength();
         $codeLengthValidator = new MaximumCalculatedRangeValidator($maxAllowedCodeCharactersLength);
 
-        $this
-            ->addText(self::FIELD_CUSTOM_CODE, [
-                'label' => 'Custom Code',
-                'attr' => [
-                    'data-toggle' => 'tooltip',
-                    'data-placement' => 'top',
-                    'title' => 'Add [code] template to position generated code',
-                    'help' => 'Please enter a string that will be used as custom code, the string code can be used to put the code in a certain position, e.g. "summer-code-special"',
-                ],
-            ])
-            ->add(self::FIELD_CODE_LENGTH, 'choice', [
-                'label' => 'Random Generated Code Length',
-                'choices' => $this->getCodeLengthChoices(),
-                'constraints' => [
-                    $this->getConstraints()->createConstraintCallback([
-                        'methods' => [
-                            function ($length, ExecutionContextInterface $context) use ($codeLengthValidator) {
-                                $formData = $context->getRoot()->getData();
+        $builder->add(self::FIELD_CUSTOM_CODE, 'text', [
+            'label' => 'Custom Code',
+            'attr' => [
+                'data-toggle' => 'tooltip',
+                'data-placement' => 'top',
+                'title' => 'Add [code] template to position generated code',
+                'help' => 'Please enter a string that will be used as custom code, the string code can be used to put the code in a certain position, e.g. "summer-code-special"',
+            ],
+        ])
+        ->add(self::FIELD_CODE_LENGTH, 'choice', [
+            'label' => 'Random Generated Code Length',
+            'choices' => $this->getCodeLengthChoices(),
+            'constraints' => [
+                $this->getConstraints()->createConstraintCallback([
+                    'methods' => [
+                        function ($length, ExecutionContextInterface $context) use ($codeLengthValidator) {
+                            $formData = $context->getRoot()->getData();
 
-                                if (empty($formData[self::FIELD_CUSTOM_CODE]) && $length < 1) {
-                                    $context->addViolation('Please add a custom code or select a length for code to be generated');
+                            if (empty($formData[self::FIELD_CUSTOM_CODE]) && $length < 1) {
+                                $context->addViolation('Please add a custom code or select a length for code to be generated');
 
-                                    return;
-                                }
+                                return;
+                            }
 
-                                if ($codeLengthValidator->getPossibleCodeCombinationsCount($length) < $formData[VoucherForm::FIELD_QUANTITY]) {
-                                    $context->addViolation('The quantity of required codes is to high regarding the code length');
+                            if ($codeLengthValidator->getPossibleCodeCombinationsCount($length) < $formData[VoucherForm::FIELD_QUANTITY]) {
+                                $context->addViolation('The quantity of required codes is to high regarding the code length');
 
-                                    return;
-                                }
-                            },
-                        ],
-                    ]),
-                ],
-            ])
-            ->addNumber(self::FIELD_MAX_NUMBER_OF_USES, [
-                'label' => 'Max number of uses (0 = Infinite usage)',
-            ])
-            ->addChoice(self::FIELD_DISCOUNT_VOUCHER_POOL, [
-                'label' => 'Voucher',
-                'placeholder' => 'Select one',
-                'choices' => $this->getPools(),
-                'constraints' => [
-                    $this->getConstraints()->createConstraintNotBlank(),
-                ],
-            ]);
+                                return;
+                            }
+                        },
+                    ],
+                ]),
+            ],
+        ])
+        ->add(self::FIELD_MAX_NUMBER_OF_USES, 'number', [
+            'label' => 'Max number of uses (0 = Infinite usage)',
+        ])
+        ->add(self::FIELD_DISCOUNT_VOUCHER_POOL, 'choice', [
+            'label' => 'Voucher',
+            'placeholder' => 'Select one',
+            'choices' => $this->getPools(),
+            'constraints' => [
+                $this->getConstraints()->createConstraintNotBlank(),
+            ],
+        ]);
     }
 
     /**
@@ -143,7 +119,7 @@ class VoucherForm extends AbstractForm
     protected function getPools()
     {
         $pools = [];
-        $poolResult = $this->discountQueryContainer->find();
+        $poolResult = $this->discountQueryContainer->queryVoucherPool()->find();
 
         if (!empty($poolResult)) {
             foreach ($poolResult as $discountVoucherPoolEntity) {
@@ -212,6 +188,22 @@ class VoucherForm extends AbstractForm
         }
 
         return $displayName;
+    }
+
+    /**
+     * @return null
+     */
+    protected function getDataClass()
+    {
+        return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName()
+    {
+        return 'voucher';
     }
 
 }

@@ -25,10 +25,10 @@ use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
 use Symfony\Component\Form\FormTypeInterface;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolCategoryTable;
 use SprykerFeature\Zed\Discount\Communication\Table\VoucherPoolTable;
-use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
 use Zend\Filter\Word\CamelCaseToUnderscore;
 
 /**
+ * @method DiscountQueryContainer getQueryContainer()
  * @method DiscountCommunication getFactory()
  * @method DiscountConfig getConfig()
  */
@@ -42,18 +42,14 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createVoucherForm($allowMultiple=false)
     {
-//        $voucherForm = $this->getFactory()
-//            ->createFormVoucherForm(
-//                $this->getQueryContainer(),
-//                $this->getConfig(),
-//                $allowMultiple
-//            );
-//
-//        return $this->createForm($voucherForm);
+        $voucherForm = $this->getFactory()
+            ->createFormVoucherForm(
+                $this->getQueryContainer(),
+                $this->getConfig(),
+                $allowMultiple
+            );
 
-        $poolQuery = $this->getQueryContainer();
-
-        return $this->getFactory()->createFormVoucherForm($poolQuery, $this->getConfig(), $allowMultiple);
+        return $this->createForm($voucherForm);
     }
 
     /**
@@ -176,14 +172,6 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
         );
 
         return $this->createForm($decisionRulesForm);
-    }
-
-    /**
-     * @return DiscountQueryContainer
-     */
-    public function getQueryContainer()
-    {
-        return $this->getQueryContainer();
     }
 
     /**

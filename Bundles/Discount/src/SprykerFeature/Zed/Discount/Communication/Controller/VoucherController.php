@@ -36,13 +36,14 @@ class VoucherController extends AbstractController
     /**
      * @return array|RedirectResponse
      */
-    public function createSingleAction()
+    public function createSingleAction(Request $request)
     {
         $form = $this->getDependencyContainer()->createVoucherForm();
-        $form->handleRequest();
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $formData = $form->getData();
+
             $this->setSessionTimestampForVoucherGenerator();
 
             $voucherTransfer = new VoucherTransfer();
@@ -73,10 +74,10 @@ class VoucherController extends AbstractController
     /**
      * @return array|RedirectResponse
      */
-    public function createMultipleAction()
+    public function createMultipleAction(Request $request)
     {
         $form = $this->getDependencyContainer()->createVoucherForm(true);
-        $form->handleRequest();
+        $form->handleRequest($request);
 
         if ($form->isValid()) {
             $formData = $form->getData();
