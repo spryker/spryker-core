@@ -61,10 +61,10 @@ class SprykerUseStatementFixer extends AbstractFixer
             return $tokens->generateCode();
         }
 
+        $this->useStatements = [];
+
         $this->fixUseForNew($tokens);
         $this->fixUseForStatic($tokens);
-
-        $this->insertUseStatements();
 
         $this->insertNewUseDeclarations($tokens, $namespaceDeclarations);
 
@@ -262,13 +262,6 @@ class SprykerUseStatementFixer extends AbstractFixer
         $content .= PHP_EOL;
 
         $tokens[$useStatementStartIndex]->override([T_STRING, $content . $tokens[$useStatementStartIndex]->getContent(), $tokens[$useStatementStartIndex]->getLine()]);
-
-        return;
-
-        if ($prevToken->isWhitespace() && $nextToken->isWhitespace()) {
-            $nextToken->override(array(T_WHITESPACE, $prevToken->getContent().$nextToken->getContent(), $prevToken->getLine()));
-            $prevToken->clear();
-        }
     }
 
     /**
@@ -297,16 +290,6 @@ class SprykerUseStatementFixer extends AbstractFixer
                'shortName' => $shortName,
            ];
        }
-    }
-
-    /**
-     * @return void
-     */
-    protected function insertUseStatements()
-    {
-        foreach ($this->useStatements as $useStatement) {
-
-        }
     }
 
 }
