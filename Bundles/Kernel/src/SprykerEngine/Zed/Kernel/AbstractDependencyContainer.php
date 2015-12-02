@@ -33,7 +33,7 @@ abstract class AbstractDependencyContainer
      * @param LocatorLocatorInterface $locator
      * @param AbstractBundleConfig $config
      */
-    public function __construct(FactoryInterface $factory = null, LocatorLocatorInterface $locator = null, AbstractBundleConfig $config = null)
+    public function __construct(FactoryInterface $factory, LocatorLocatorInterface $locator, AbstractBundleConfig $config)
     {
         $this->factory = $factory;
         $this->locator = $locator;
