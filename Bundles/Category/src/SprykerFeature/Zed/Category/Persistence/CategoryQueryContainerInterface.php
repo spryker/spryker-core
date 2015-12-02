@@ -47,11 +47,9 @@ interface CategoryQueryContainerInterface
     public function queryNodeByIdCategoryAndParentNode($idCategory, $idParentNode);
 
     /**
-     * @param int $idLocale
-     *
-     * @return SpyCategoryNodeQuery
+     * @return SpyCategoryAttributeQuery
      */
-    public function queryRootNodes($idLocale);
+    public function queryRootNodes();
 
     /**
      * @param int $idNode

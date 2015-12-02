@@ -60,8 +60,9 @@ class NodeUrlManager implements NodeUrlManagerInterface
         $categoryUrl = $this->generateUrlFromPathTokens($path);
         $idNode = $categoryNodeTransfer->getIdCategoryNode();
 
-        $url = $this->urlFacade->createUrl($categoryUrl, $localeTransfer, CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idNode);
-        $this->urlFacade->touchUrlActive($url->getIdUrl());
+        $urlTransfer = $this->urlFacade->createUrl($categoryUrl, $localeTransfer, CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idNode);
+        $this->updateTransferUrl($urlTransfer, $categoryUrl, $idNode, $localeTransfer->getIdLocale());
+        $this->urlFacade->saveUrlAndTouch($urlTransfer);
     }
 
     /**

@@ -115,11 +115,9 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     }
 
     /**
-     * @param int $idLocale
-     *
-     * @return SpyCategoryNodeQuery
+     * @return SpyCategoryAttributeQuery
      */
-    public function queryRootNodes($idLocale)
+    public function queryRootNodes()
     {
         return SpyCategoryAttributeQuery::create()
             ->joinLocale()
@@ -288,7 +286,8 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             ->endUse()
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE)
             ->withColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE)
-            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME);
+            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME)
+            ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY);
 
         if ($excludeStartNode) {
             $nodeQuery->filterByIdCategoryNode($idNode, Criteria::NOT_EQUAL);
@@ -324,6 +323,11 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         }
 
         $nodeQuery = SpyCategoryNodeQuery::create();
+
+        if ($excludeRootNode) {
+            $nodeQuery->filterByIsRoot(0);
+        }
+
         $nodeQuery
             ->useClosureTableQuery()
                 ->orderByFkCategoryNodeDescendant(Criteria::DESC)
@@ -337,15 +341,14 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
                 ->endUse()
             ->endUse();
 
-        if ($excludeRootNode) {
-            $nodeQuery->filterByIsRoot(0);
-        }
 
         $nodeQuery
-            ->addAsColumn('fk_category', SpyCategoryNodeTableMap::COL_FK_CATEGORY)
-            ->addAsColumn('id_category_node', SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE)
-            ->addAsColumn('fk_category_node_descendant', SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT)
-            ->addAsColumn('name', SpyCategoryAttributeTableMap::COL_NAME);
+            ->withColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY, 'fk_category')
+            ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, 'id_category_node')
+            ->withColumn(SpyCategoryClosureTableTableMap::COL_FK_CATEGORY_NODE_DESCENDANT, 'fk_category_node_descendant')
+            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
+            ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY, 'category_key')
+            ->withColumn(SpyCategoryAttributeTableMap::COL_FK_LOCALE, 'fk_locale');
 
         $nodeQuery->setFormatter(new PropelArraySetFormatter());
 
@@ -390,7 +393,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             ->endUse()
             ->endUse()
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
-            ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY, 'url_key')
+            ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY, 'category_key')
             ->orderBy(SpyCategoryClosureTableTableMap::COL_DEPTH, 'DESC');
 
         if ($excludeRoot) {
@@ -515,6 +518,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             )
             ->withColumn(SpyCategoryTableMap::COL_ID_CATEGORY, 'id_category')
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
+            ->withColumn(SpyCategoryTableMap::COL_CATEGORY_KEY, 'category_key')
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, 'id_category_node');
     }
 
@@ -822,11 +826,12 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
     public function queryNodeByCategoryName($categoryName, $idLocale)
     {
         $nodeQuery = SpyCategoryNodeQuery::create();
-        $nodeQuery->useCategoryQuery()
-            ->useAttributeQuery()
-            ->filterByName($categoryName)
-            ->filterByFkLocale($idLocale)
-            ->endUse()
+        $nodeQuery
+            ->useCategoryQuery()
+                ->useAttributeQuery()
+                    ->filterByName($categoryName)
+                    ->filterByFkLocale($idLocale)
+                ->endUse()
             ->endUse();
 
         return $nodeQuery;
