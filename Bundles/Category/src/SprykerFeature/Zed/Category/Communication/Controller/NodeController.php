@@ -78,9 +78,8 @@ class NodeController extends AbstractController
                 ->queryNodeById($idNode)
                 ->findOne();
 
-            /* @var NodeTransfer $nodeTransfer */
-            $nodeTransfer = (new NodeTransfer())
-                ->fromArray($nodeEntity->toArray());
+            $nodeTransfer = new NodeTransfer();
+            $nodeTransfer->fromArray($nodeEntity->toArray());
 
             $nodeTransfer->setNodeOrder($order);
 
