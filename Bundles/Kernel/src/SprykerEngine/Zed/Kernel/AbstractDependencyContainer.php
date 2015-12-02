@@ -19,24 +19,17 @@ abstract class AbstractDependencyContainer
     private $factory;
 
     /**
-     * @var AutoCompletion|LocatorLocatorInterface
-     */
-    private $locator;
-
-    /**
      * @var AbstractBundleConfig
      */
     private $config;
 
     /**
      * @param FactoryInterface $factory
-     * @param LocatorLocatorInterface $locator
      * @param AbstractBundleConfig $config
      */
-    public function __construct(FactoryInterface $factory, LocatorLocatorInterface $locator, AbstractBundleConfig $config)
+    public function __construct(FactoryInterface $factory = null, AbstractBundleConfig $config = null)
     {
         $this->factory = $factory;
-        $this->locator = $locator;
         $this->config = $config;
     }
 
@@ -57,7 +50,7 @@ abstract class AbstractDependencyContainer
      */
     protected function getLocator()
     {
-        return $this->locator;
+        return Locator::getInstance();
     }
 
     /**
