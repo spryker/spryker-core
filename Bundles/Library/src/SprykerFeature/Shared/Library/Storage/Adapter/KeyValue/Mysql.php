@@ -11,6 +11,7 @@ namespace SprykerFeature\Shared\Library\Storage\Adapter\KeyValue;
  *
  * @method \PDO getResource()
  */
+
 abstract class Mysql extends AbstractKeyValue
 {
 

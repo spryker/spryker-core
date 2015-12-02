@@ -6,6 +6,16 @@
 
 namespace SprykerFeature\Client\Catalog\Service;
 
+use SprykerFeature\Client\Catalog\Service\KeyBuilder\ProductResourceKeyBuilder;
+use SprykerFeature\Client\Catalog\Service\Model\Extractor\RangeExtractor;
+use SprykerFeature\Client\Catalog\Service\Model\Extractor\FacetExtractor;
+use SprykerFeature\Client\Catalog\Service\Model\Builder\FacetAggregationBuilder;
+use SprykerFeature\Client\Catalog\Service\Model\Builder\FilterBuilder;
+use SprykerFeature\Client\Catalog\Service\Model\Builder\NestedFilterBuilder;
+use SprykerFeature\Client\Catalog\Service\Model\FacetFilterHandler;
+use SprykerFeature\Client\Catalog\Service\Model\FulltextSearch;
+use SprykerFeature\Client\Catalog\Service\Model\FacetSearch;
+use SprykerFeature\Client\Catalog\Service\Model\Catalog as ModelCatalog;
 use Elastica\Index;
 use Generated\Client\Ide\FactoryAutoCompletion\Catalog;
 use SprykerFeature\Client\Catalog\CatalogDependencyProvider;
@@ -27,7 +37,7 @@ class CatalogDependencyContainer extends AbstractServiceDependencyContainer
      */
     public function createCatalogModel()
     {
-        return $this->getFactory()->createModelCatalog(
+        return new ModelCatalog(
             $this->getProductKeyBuilder(),
             $this->createStorage(),
             \SprykerEngine\Shared\Kernel\Store::getInstance()->getCurrentLocale()
@@ -54,7 +64,7 @@ class CatalogDependencyContainer extends AbstractServiceDependencyContainer
     {
         $facetConfig = $this->createFacetConfig();
 
-        return $this->getFactory()->createModelFacetSearch(
+        return new FacetSearch(
             $request,
             $facetConfig,
             $this->getSearchIndex(),
@@ -76,7 +86,7 @@ class CatalogDependencyContainer extends AbstractServiceDependencyContainer
     {
         $facetConfig = $this->createFacetConfig();
 
-        return $this->getFactory()->createModelFulltextSearch(
+        return new FulltextSearch(
             $request,
             $facetConfig,
             $this->getSearchIndex(),
@@ -93,7 +103,7 @@ class CatalogDependencyContainer extends AbstractServiceDependencyContainer
      */
     public function createFacetConfig()
     {
-        return $this->getFactory()->createModelFacetConfig();
+        return new FacetConfig();
     }
 
     /**
@@ -103,9 +113,9 @@ class CatalogDependencyContainer extends AbstractServiceDependencyContainer
      */
     protected function createFacetFilterHandler(FacetConfig $facetConfig)
     {
-        return $this->getFactory()->createModelFacetFilterHandler(
-            $this->getFactory()->createModelBuilderNestedFilterBuilder(
-                $this->getFactory()->createModelBuilderFilterBuilder()
+        return new FacetFilterHandler(
+            new NestedFilterBuilder(
+                new FilterBuilder()
             ),
             $facetConfig
         );
@@ -124,7 +134,7 @@ class CatalogDependencyContainer extends AbstractServiceDependencyContainer
      */
     protected function getFacetAggregationBuilder()
     {
-        return $this->getFactory()->createModelBuilderFacetAggregationBuilder();
+        return new FacetAggregationBuilder();
     }
 
     /**
@@ -132,7 +142,7 @@ class CatalogDependencyContainer extends AbstractServiceDependencyContainer
      */
     protected function getFacetExtractor()
     {
-        return $this->getFactory()->createModelExtractorFacetExtractor();
+        return new FacetExtractor();
     }
 
     /**
@@ -140,7 +150,7 @@ class CatalogDependencyContainer extends AbstractServiceDependencyContainer
      */
     protected function getRangeExtractor()
     {
-        return $this->getFactory()->createModelExtractorRangeExtractor();
+        return new RangeExtractor();
     }
 
     /**
@@ -148,7 +158,7 @@ class CatalogDependencyContainer extends AbstractServiceDependencyContainer
      */
     protected function getProductKeyBuilder()
     {
-        return $this->getFactory()->createKeyBuilderProductResourceKeyBuilder();
+        return new ProductResourceKeyBuilder();
     }
 
 }

@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Product\Business\Importer\Upload;
 /**
  * Class UploadedFileImporter
  */
+
 class UploadedFileImporter
 {
 

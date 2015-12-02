@@ -2,6 +2,9 @@
 
 namespace SprykerFeature\Zed\Queue\Business;
 
+use SprykerFeature\Zed\Queue\Business\Provider\TaskProvider;
+use SprykerFeature\Zed\Queue\Business\Worker\TaskWorker;
+use SprykerFeature\Zed\Queue\Business\Model\QueueConnection;
 use Generated\Zed\Ide\FactoryAutoCompletion\QueueBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Queue\Business\Model\QueueConnectionInterface;
@@ -30,7 +33,7 @@ class QueueDependencyContainer extends AbstractBusinessDependencyContainer
     public function createQueueConnection()
     {
         if (empty($this->queueConnection)) {
-            $this->queueConnection = $this->getFactory()->createModelQueueConnection(
+            $this->queueConnection = new QueueConnection(
                 $this->getConfig()->getAmqpParameter()
             );
         }
@@ -46,7 +49,7 @@ class QueueDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createTaskWorker($queueName, MessengerInterface $messenger)
     {
-        $taskWorker = $this->getFactory()->createWorkerTaskWorker(
+        $taskWorker = new TaskWorker(
             $this->createQueueConnection(),
             $this->createTaskProvider(),
             $queueName
@@ -63,7 +66,7 @@ class QueueDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createTaskProvider()
     {
-        $taskProvider = $this->getFactory()->createProviderTaskProvider(
+        $taskProvider = new TaskProvider(
             $this->getWorkerTasks()
         );
 

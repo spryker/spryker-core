@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Shared\Sales\Code;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\Locator;
 
@@ -79,7 +80,7 @@ abstract class AbstractItemGrouper
                 $index[$groupKey] = $newItem;
             }
         }
-        $transferItems = new \Generated\Shared\Transfer\ItemTransfer();
+        $transferItems = new ItemTransfer();
         $transferItems->fromArray($index);
 
         return $transferItems;

@@ -43,7 +43,7 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
         $config = $this->getConfig();
         $senderPlugins = $this->getProvidedDependency(CustomerDependencyProvider::SENDER_PLUGINS);
 
-        $customer = $this->getFactory()->createCustomerCustomer(
+        $customer = new Customer(
             $this->createQueryContainer(),
             $this->createCustomerReferenceGenerator(),
             $config
@@ -69,8 +69,7 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createAddress()
     {
-        return $this->getFactory()
-            ->createCustomerAddress($this->createQueryContainer(), $this->createCountryFacade(), $this->createLocaleFacade());
+        return new Address($this->createQueryContainer(), $this->createCountryFacade(), $this->createLocaleFacade());
     }
 
     /**
@@ -98,7 +97,7 @@ class CustomerDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createCustomerReferenceGenerator()
     {
-        return $this->getFactory()->createReferenceGeneratorCustomerReferenceGenerator(
+        return new CustomerReferenceGenerator(
             $this->createSequenceNumberFacade(),
             $this->getConfig()->getCustomerReferenceDefaults()
         );

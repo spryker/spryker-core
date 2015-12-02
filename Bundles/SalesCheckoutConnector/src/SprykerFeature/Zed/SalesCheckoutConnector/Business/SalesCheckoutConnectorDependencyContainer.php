@@ -21,7 +21,7 @@ class SalesCheckoutConnectorDependencyContainer extends AbstractBusinessDependen
      */
     public function getSalesOrderSaver()
     {
-        return $this->getFactory()->createSalesOrderSaver(
+        return new SalesOrderSaver(
             $this->getProvidedDependency(SalesCheckoutConnectorDependencyProvider::FACADE_SALES)
         );
     }

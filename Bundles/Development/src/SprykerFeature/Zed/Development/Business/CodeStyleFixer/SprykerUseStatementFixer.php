@@ -194,7 +194,7 @@ class SprykerUseStatementFixer extends AbstractFixer
                 continue;
             }
 
-            $declarationEndIndex = $tokens->getNextTokenOfKind($index, array(';', '{'));
+            $declarationEndIndex = $tokens->getNextTokenOfKind($index, [';', '{']);
 
             $namespaces[] = [
                 'end' => $declarationEndIndex,
@@ -217,7 +217,7 @@ class SprykerUseStatementFixer extends AbstractFixer
         $uses = [];
 
         foreach ($useIndexes as $index) {
-            $declarationEndIndex = $tokens->getNextTokenOfKind($index, array(';'));
+            $declarationEndIndex = $tokens->getNextTokenOfKind($index, [';']);
             $declarationContent = $tokens->generatePartialCode($index + 1, $declarationEndIndex - 1);
 
             // ignore multiple use statements like: `use BarB, BarC as C, BarD;`
@@ -324,7 +324,8 @@ class SprykerUseStatementFixer extends AbstractFixer
      *
      * @return array
      */
-    protected function addUseStatement($shortName, $fullName) {
+    protected function addUseStatement($shortName, $fullName)
+    {
         // Find existing one
         foreach ($this->allStatements as $useStatement) {
             if ($useStatement['fullName'] === $fullName) {

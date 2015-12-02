@@ -28,7 +28,7 @@ class RefundDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createRefundModel()
     {
-        return $this->getFactory()->createModelRefund(
+        return new Refund(
             $this->createSalesFacade(),
             $this->createOmsFacade(),
             $this->createSalesQueryContainer()
@@ -40,7 +40,7 @@ class RefundDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createRefundManager()
     {
-        return $this->getFactory()->createRefundManager(
+        return new RefundManager(
             $this->getQueryContainer(),
             $this->createSalesQueryContainer()
         );

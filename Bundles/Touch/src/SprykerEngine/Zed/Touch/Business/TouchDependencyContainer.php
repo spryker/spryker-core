@@ -6,6 +6,8 @@
 
 namespace SprykerEngine\Zed\Touch\Business;
 
+use SprykerEngine\Zed\Touch\Business\Model\Touch;
+use SprykerEngine\Zed\Touch\Business\Model\TouchRecord;
 use Generated\Zed\Ide\FactoryAutoCompletion\TouchBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerEngine\Zed\Touch\Business\Model\TouchInterface;
@@ -24,7 +26,7 @@ class TouchDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getTouchRecordModel()
     {
-        return $this->getFactory()->createModelTouchRecord(
+        return new TouchRecord(
             $this->getQueryContainer(),
             $this->getProvidedDependency(TouchDependencyProvider::PLUGIN_PROPEL_CONNECTION)
         );
@@ -35,7 +37,7 @@ class TouchDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getTouchModel()
     {
-        return $this->getFactory()->createModelTouch(
+        return new Touch(
             $this->getQueryContainer(),
             $this->getProvidedDependency(TouchDependencyProvider::PLUGIN_PROPEL_CONNECTION)
         );

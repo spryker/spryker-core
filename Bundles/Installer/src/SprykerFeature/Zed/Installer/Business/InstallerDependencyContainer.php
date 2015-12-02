@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Installer\Business;
 
+use SprykerFeature\Zed\Installer\Business\Model\GlossaryInstaller;
 use Generated\Zed\Ide\FactoryAutoCompletion\InstallerBusiness;
 use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
@@ -40,7 +41,7 @@ class InstallerDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getGlossaryInstaller()
     {
-        return $this->getFactory()->createModelGlossaryInstaller(
+        return new GlossaryInstaller(
             $this->getProvidedDependency(InstallerDependencyProvider::GLOSSARY_FACADE),
             $this->getConfig()->getGlossaryFilePaths()
         );

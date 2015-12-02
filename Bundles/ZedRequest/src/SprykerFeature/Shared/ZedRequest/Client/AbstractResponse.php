@@ -181,7 +181,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     /**
      * @param array $successMessages
      *
-     * @return $this
+     * @return self
      */
     public function addSuccessMessages(array $successMessages)
     {
@@ -195,7 +195,7 @@ abstract class AbstractResponse extends AbstractObject implements EmbeddedTransf
     /**
      * @param Message $successMessage
      *
-     * @return $this
+     * @return self
      */
     public function addSuccessMessage(Message $successMessage)
     {

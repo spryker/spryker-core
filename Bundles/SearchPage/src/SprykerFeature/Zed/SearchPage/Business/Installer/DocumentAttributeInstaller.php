@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\SearchPage\Business\Installer;
 
+use Generated\Shared\Transfer\SearchPageDocumentAttributeTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerFeature\Zed\SearchPage\Business\Writer\DocumentAttributeWriterInterface;
@@ -114,7 +115,7 @@ class DocumentAttributeInstaller extends AbstractInstaller
                 );
             }
 
-            $documentAttributeTransfer = new \Generated\Shared\Transfer\SearchPageDocumentAttributeTransfer();
+            $documentAttributeTransfer = new SearchPageDocumentAttributeTransfer();
             $documentAttributeTransfer->setAttributeName($attributeName);
             $documentAttributeTransfer->setAttributeType($attributeType);
 

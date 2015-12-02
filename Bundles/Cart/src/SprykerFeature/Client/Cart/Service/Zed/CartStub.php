@@ -13,6 +13,7 @@ use SprykerFeature\Client\ZedRequest\Service\Stub\BaseStub;
 
 class CartStub extends BaseStub implements CartStubInterface
 {
+
     /**
      * @param ChangeTransfer|TransferInterface $changeTransfer
      *
@@ -92,6 +93,5 @@ class CartStub extends BaseStub implements CartStubInterface
     {
         return $this->zedStub->call('/cart/gateway/recalculate', $cartTransfer);
     }
-
 
 }

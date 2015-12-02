@@ -9,6 +9,7 @@ namespace SprykerFeature\Shared\NewRelic;
  *
  * @link https://newrelic.com/docs/php/the-php-api
  */
+
 interface ApiInterface
 {
 

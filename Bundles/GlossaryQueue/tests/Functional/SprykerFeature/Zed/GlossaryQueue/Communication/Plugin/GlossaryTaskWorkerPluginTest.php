@@ -53,7 +53,7 @@ class GlossaryTaskWorkerPluginTest extends Test
         $this->generateTestLocales();
         $this->glossaryFacade = $this->createGlossaryFacade();
         $container = new Container();
-        $container = (new \SprykerFeature\Zed\Glossary\GlossaryDependencyProvider())
+        $container = (new GlossaryDependencyProvider())
             ->provideBusinessLayerDependencies($container);
         $this->glossaryFacade->setExternalDependencies($container);
 

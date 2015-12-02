@@ -13,7 +13,7 @@ class MessengerDependencyContainer extends AbstractServiceDependencyContainer
      */
     public function createMessenger()
     {
-        return $this->getFactory()->createMessenger();
+        return new Messenger();
     }
 
 }

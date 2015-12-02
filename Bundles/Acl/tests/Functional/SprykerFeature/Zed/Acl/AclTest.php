@@ -6,6 +6,7 @@
 
 namespace Functional\SprykerFeature\Zed\Acl;
 
+use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\RolesTransfer;
 use Generated\Shared\Transfer\RuleTransfer;
@@ -71,7 +72,7 @@ class AclTest extends Test
             $this->locator
         );
         $this->facade->setOwnQueryContainer(new AclQueryContainer(
-            new \SprykerEngine\Zed\Kernel\Persistence\Factory('Acl'), $this->locator
+            new PersistenceFactory('Acl'), $this->locator
         ));
         $this->facade->setExternalDependencies($container);
 
@@ -80,7 +81,7 @@ class AclTest extends Test
             $this->locator
         );
         $this->userFacade->setOwnQueryContainer(new UserQueryContainer(
-            new \SprykerEngine\Zed\Kernel\Persistence\Factory('User'), $this->locator
+            new PersistenceFactory('User'), $this->locator
         ));
         $this->userFacade->setExternalDependencies($container);
     }

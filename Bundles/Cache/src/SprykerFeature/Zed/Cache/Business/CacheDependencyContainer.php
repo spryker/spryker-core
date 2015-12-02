@@ -25,7 +25,7 @@ class CacheDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $config = $this->getConfig();
 
-        return $this->getFactory()->createModelCacheDelete($config);
+        return new CacheDelete($config);
     }
 
 }

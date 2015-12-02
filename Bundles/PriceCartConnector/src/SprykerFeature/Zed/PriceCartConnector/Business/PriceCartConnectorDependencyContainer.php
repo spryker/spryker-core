@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\PriceCartConnector\Business;
 
+use SprykerFeature\Zed\PriceCartConnector\Business\Manager\PriceManager;
 use Generated\Zed\Ide\FactoryAutoCompletion\PriceCartConnectorBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
@@ -31,7 +32,7 @@ class PriceCartConnectorDependencyContainer extends AbstractBusinessDependencyCo
             $grossPriceType = $bundleConfig->getGrossPriceType();
         }
 
-        return $this->getFactory()->createManagerPriceManager($this->getPriceFacade(), $grossPriceType);
+        return new PriceManager($this->getPriceFacade(), $grossPriceType);
     }
 
     /**

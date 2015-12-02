@@ -6,6 +6,9 @@
 
 namespace SprykerEngine\Zed\Transfer\Business;
 
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\DefinitionNormalizer;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition;
+use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger;
 use Generated\Zed\Ide\FactoryAutoCompletion\TransferBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerEngine\Zed\Transfer\Business\Model\Generator\DefinitionBuilderInterface;
@@ -31,7 +34,7 @@ class TransferDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createTransferGenerator(LoggerInterface $messenger)
     {
-        return $this->getFactory()->createModelTransferGenerator(
+        return new TransferGenerator(
             $messenger,
             $this->createClassGenerator(),
             $this->createTransferDefinitionBuilder()
@@ -43,7 +46,7 @@ class TransferDependencyContainer extends AbstractBusinessDependencyContainer
      */
     private function createClassGenerator()
     {
-        return $this->getFactory()->createModelGeneratorTransferClassGenerator(
+        return new ClassGenerator(
             $this->getConfig()->getClassTargetDirectory()
         );
     }
@@ -53,10 +56,10 @@ class TransferDependencyContainer extends AbstractBusinessDependencyContainer
      */
     private function createTransferDefinitionBuilder()
     {
-        return $this->getFactory()->createModelGeneratorTransferTransferDefinitionBuilder(
+        return new TransferDefinitionBuilder(
             $this->createLoader(),
-            $this->getFactory()->createModelGeneratorTransferDefinitionMerger(),
-            $this->getFactory()->createModelGeneratorTransferClassDefinition()
+            new TransferDefinitionMerger(),
+            new ClassDefinition()
         );
     }
 
@@ -65,8 +68,8 @@ class TransferDependencyContainer extends AbstractBusinessDependencyContainer
      */
     private function createLoader()
     {
-        return $this->getFactory()->createModelGeneratorTransferDefinitionLoader(
-            $this->getFactory()->createModelGeneratorDefinitionNormalizer(),
+        return new TransferDefinitionLoader(
+            new DefinitionNormalizer(),
             $this->getConfig()->getSourceDirectories()
         );
     }
@@ -76,7 +79,7 @@ class TransferDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createTransferCleaner()
     {
-        return $this->getFactory()->createModelTransferCleaner(
+        return new TransferCleaner(
             $this->getConfig()->getGeneratedTargetDirectory()
         );
     }

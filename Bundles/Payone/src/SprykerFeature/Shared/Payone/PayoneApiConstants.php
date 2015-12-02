@@ -88,7 +88,6 @@ interface PayoneApiConstants
 
     // Defined in TransactionStatusConstants
 
-
     // WALLET TYPE
 
     const E_WALLET_TYPE_PAYPAL = 'PPE';
@@ -164,7 +163,6 @@ interface PayoneApiConstants
     const FAILED_CAUSE_CREDITCARD_CHARGEBACK = 'cb';         // cb Credit card chargeback
     const FAILED_CAUSE_CREDITCARD_NOT_COLLECTABLE = 'ncc';   // ncc Credit card cannot be collected
 
-
     // INVOICING ITEM TYPE
 
     const INVOICING_ITEM_TYPE_GOODS = 'goods';
@@ -182,7 +180,6 @@ interface PayoneApiConstants
 
     const FINANCING_TYPE_BSV = 'BSV'; // BILLSAFE
     const FINANCING_TYPE_CFR = 'CFR'; // COMMERZ FINANZ
-
 
     // ECOMMERCE MODE
 
@@ -276,7 +273,6 @@ interface PayoneApiConstants
     const ADDRESS_CHECK_PERSONSTATUS_PNZ = 'PNZ'; //PNZ: cannot be delivered (any longer)
     const ADDRESS_CHECK_PERSONSTATUS_PPV = 'PPV'; //PPV: person deceased
     const ADDRESS_CHECK_PERSONSTATUS_PPF = 'PPF'; //PPF: postal address details incorrect
-
 
     // ADDRESS CHECK SCORE
 

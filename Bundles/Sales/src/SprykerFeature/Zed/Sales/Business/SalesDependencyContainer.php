@@ -6,6 +6,11 @@
 
 namespace SprykerFeature\Zed\Sales\Business;
 
+use SprykerFeature\Zed\Sales\Business\Model\OrderReferenceGenerator;
+use SprykerFeature\Zed\Sales\Business\Model\Split\Validation\Validator;
+use SprykerFeature\Zed\Sales\Business\Model\Split\Calculator;
+use SprykerFeature\Zed\Sales\Business\Model\Split\OrderItem;
+use SprykerFeature\Zed\Sales\Business\Model\OrderManager;
 use Generated\Zed\Ide\FactoryAutoCompletion\SalesBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Sales\Business\Model\CommentManager;
@@ -27,7 +32,7 @@ class SalesDependencyContainer extends AbstractBusinessDependencyContainer
 
     public function createOrderManager()
     {
-        return $this->getFactory()->createModelOrderManager(
+        return new OrderManager(
             $this->createSalesQueryContainer(),
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_COUNTRY),
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_OMS),
@@ -40,7 +45,7 @@ class SalesDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCommentsManager()
     {
-        return $this->getFactory()->createModelCommentManager(
+        return new CommentManager(
             $this->createSalesQueryContainer()
         );
     }
@@ -50,7 +55,7 @@ class SalesDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createOrderDetailsManager()
     {
-        return $this->getFactory()->createModelOrderDetailsManager(
+        return new OrderDetailsManager(
             $this->createSalesQueryContainer(),
             $this->getProvidedDependency(SalesDependencyProvider::FACADE_OMS),
             $this->getProvidedDependency(SalesDependencyProvider::PLUGINS_PAYMENT_LOGS)
@@ -70,10 +75,10 @@ class SalesDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createOrderItemSplitter()
     {
-        return $this->getFactory()->createModelSplitOrderItem(
+        return new OrderItem(
             $this->createSplitValidator(),
             $this->createSalesQueryContainer(),
-            $this->getFactory()->createModelSplitCalculator()
+            new Calculator()
         );
     }
 
@@ -82,7 +87,7 @@ class SalesDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createSplitValidator()
     {
-        return $this->getFactory()->createModelSplitValidationValidator();
+        return new Validator();
     }
 
     /**
@@ -92,7 +97,7 @@ class SalesDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $sequenceNumberSettings = $this->getConfig()->getOrderReferenceDefaults();
 
-        return $this->getFactory()->createModelOrderReferenceGenerator(
+        return new OrderReferenceGenerator(
             $this->createSequenceNumberFacade(),
             $sequenceNumberSettings
         );

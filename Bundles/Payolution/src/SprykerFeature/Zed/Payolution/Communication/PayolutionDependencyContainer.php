@@ -31,7 +31,7 @@ class PayolutionDependencyContainer extends AbstractCommunicationDependencyConta
     {
         $paymentPayolutionQuery = $this->getQueryContainer()->queryPayments();
 
-        return $this->getFactory()->createTablePayments($paymentPayolutionQuery);
+        return new Payments($paymentPayolutionQuery);
     }
 
     /**
@@ -43,7 +43,7 @@ class PayolutionDependencyContainer extends AbstractCommunicationDependencyConta
     {
         $requestLogQuery = $this->getQueryContainer()->queryTransactionRequestLogByPaymentId($idPayment);
 
-        return $this->getFactory()->createTableRequestLog($requestLogQuery, $idPayment);
+        return new RequestLog($requestLogQuery, $idPayment);
     }
 
     /**
@@ -55,7 +55,7 @@ class PayolutionDependencyContainer extends AbstractCommunicationDependencyConta
     {
         $statusLogQuery= $this->getQueryContainer()->queryTransactionStatusLogByPaymentId($idPayment);
 
-        return $this->getFactory()->createTableStatusLog($statusLogQuery, $idPayment);
+        return new StatusLog($statusLogQuery, $idPayment);
     }
 
     /**

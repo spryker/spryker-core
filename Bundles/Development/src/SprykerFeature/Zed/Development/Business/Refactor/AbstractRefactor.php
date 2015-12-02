@@ -167,5 +167,4 @@ abstract class AbstractRefactor implements RefactorInterface
         return false;
     }
 
-
 }

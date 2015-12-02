@@ -71,8 +71,7 @@ class GlossaryDependencyContainer extends AbstractCommunicationDependencyContain
         $subQuery = $this->getQueryContainer()
             ->queryTranslations();
 
-        return $this->getFactory()
-            ->createTableTranslationTable($translationQuery, $subQuery, $locales);
+        return new TranslationTable($translationQuery, $subQuery, $locales);
     }
 
     /**
@@ -89,8 +88,7 @@ class GlossaryDependencyContainer extends AbstractCommunicationDependencyContain
         $glossaryKeyQuery = $this->getQueryContainer()
             ->queryKeys();
 
-        return $this->getFactory()
-            ->createFormTranslationForm($translationQuery, $glossaryKeyQuery, $locales, $type);
+        return new TranslationForm($translationQuery, $glossaryKeyQuery, $locales, $type);
     }
 
 }

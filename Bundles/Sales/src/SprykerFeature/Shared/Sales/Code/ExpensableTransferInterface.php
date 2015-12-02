@@ -7,6 +7,7 @@
 namespace SprykerFeature\Shared\Sales\Code;
 
 //@deprecated is not used
+
 interface ExpensableTransferInterface
 {
 

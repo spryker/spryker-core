@@ -22,7 +22,7 @@ class OmsCheckoutConnectorDependencyContainer extends AbstractBusinessDependency
      */
     public function createOmsOrderHydrator()
     {
-        return $this->getFactory()->createOmsOrderHydrator();
+        return new OmsOrderHydrator();
     }
 
 }

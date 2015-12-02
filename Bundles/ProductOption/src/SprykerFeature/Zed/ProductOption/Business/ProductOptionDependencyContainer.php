@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\ProductOption\Business;
 
+use SprykerFeature\Zed\ProductOption\Business\Model\ProductOptionReader;
+use SprykerFeature\Zed\ProductOption\Business\Model\DataImportWriter;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\ProductOption\ProductOptionDependencyProvider;
 use SprykerFeature\Zed\ProductOption\ProductOptionConfig;
@@ -25,7 +27,7 @@ class ProductOptionDependencyContainer extends AbstractBusinessDependencyContain
      */
     public function getDataImportWriterModel()
     {
-        return $this->getFactory()->createModelDataImportWriter(
+        return new DataImportWriter(
             $this->getQueryContainer(),
             $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_PRODUCT),
             $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_LOCALE)
@@ -37,7 +39,7 @@ class ProductOptionDependencyContainer extends AbstractBusinessDependencyContain
      */
     public function getProductOptionReaderModel()
     {
-        return $this->getFactory()->createModelProductOptionReader(
+        return new ProductOptionReader(
             $this->getQueryContainer(),
             $this->getProvidedDependency(ProductOptionDependencyProvider::FACADE_LOCALE)
         );

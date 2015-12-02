@@ -9,6 +9,7 @@ namespace SprykerFeature\Shared\Library\Currency;
 /**
  * This class is the central math class for currency arithmetic operations
  */
+
 class CurrencyManager
 {
 

@@ -6,6 +6,13 @@
 
 namespace SprykerFeature\Zed\Product\Business;
 
+use SprykerFeature\Zed\Product\Business\Attribute\AttributeManager;
+use SprykerFeature\Zed\Product\Business\Model\ProductBatchResult;
+use SprykerFeature\Zed\Product\Business\Importer\Writer\Db\ConcreteProductWriter;
+use SprykerFeature\Zed\Product\Business\Importer\Writer\Db\AbstractProductWriter;
+use SprykerFeature\Zed\Product\Business\Importer\Writer\ProductWriter;
+use SprykerFeature\Zed\Product\Business\Importer\Builder\ProductBuilder;
+use SprykerFeature\Zed\Product\Business\Importer\Reader\File\CsvReader;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
@@ -48,7 +55,7 @@ class ProductDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createHttpFileImporter()
     {
-        return $this->getFactory()->createImporterUploadUploadedFileImporter(
+        return new UploadedFileImporter(
             $this->getConfig()->getDestinationDirectoryForUploads()
         );
     }
@@ -66,7 +73,7 @@ class ProductDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createProductImporter()
     {
-        $importer = $this->getFactory()->createImporterFileImporter(
+        $importer = new FileImporter(
             $this->createImportProductValidator(),
             $this->createCSVReader(),
             $this->createImportProductBuilder(),
@@ -82,7 +89,7 @@ class ProductDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createImportProductValidator()
     {
-        return $this->getFactory()->createImporterValidatorImportProductValidator();
+        return new ImportProductValidator();
     }
 
     /**
@@ -90,7 +97,7 @@ class ProductDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createCSVReader()
     {
-        return $this->getFactory()->createImporterReaderFileCsvReader();
+        return new CsvReader();
     }
 
     /**
@@ -98,7 +105,7 @@ class ProductDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createImportProductBuilder()
     {
-        return $this->getFactory()->createImporterBuilderProductBuilder();
+        return new ProductBuilder();
     }
 
     /**
@@ -106,7 +113,7 @@ class ProductDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createProductWriter()
     {
-        return $this->getFactory()->createImporterWriterProductWriter(
+        return new ProductWriter(
             $this->createAbstractProductWriter(),
             $this->createConcreteProductWriter()
         );
@@ -117,7 +124,7 @@ class ProductDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createAbstractProductWriter()
     {
-        return $this->getFactory()->createImporterWriterDbAbstractProductWriter(
+        return new AbstractProductWriter(
             $this->getCurrentLocale()
         );
     }
@@ -127,7 +134,7 @@ class ProductDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createConcreteProductWriter()
     {
-        return $this->getFactory()->createImporterWriterDbConcreteProductWriter(
+        return new ConcreteProductWriter(
             $this->getCurrentLocale()
         );
     }
@@ -137,7 +144,7 @@ class ProductDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createProductBatchResult()
     {
-        return $this->getFactory()->createModelProductBatchResult();
+        return new ProductBatchResult();
     }
 
     /**
@@ -147,7 +154,7 @@ class ProductDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createInstaller(MessengerInterface $messenger)
     {
-        $installer = $this->getFactory()->createInternalInstall(
+        $installer = new Install(
             $this->createAttributeManager()
         );
         $installer->setMessenger($messenger);
@@ -160,7 +167,7 @@ class ProductDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createAttributeManager()
     {
-        return $this->getFactory()->createAttributeAttributeManager(
+        return new AttributeManager(
             $this->getQueryContainer()
         );
     }
@@ -171,7 +178,7 @@ class ProductDependencyContainer extends AbstractBusinessDependencyContainer
     public function createProductManager()
     {
         if ($this->productManager === null) {
-            $this->productManager = $this->getFactory()->createProductProductManager(
+            $this->productManager = new ProductManager(
                 $this->getQueryContainer(),
                 $this->getTouchFacade(),
                 $this->getUrlFacade(),

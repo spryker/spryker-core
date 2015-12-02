@@ -98,4 +98,5 @@ abstract class AbstractZedClient
 
         return self::$lastResponse;
     }
+
 }

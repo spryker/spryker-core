@@ -22,7 +22,7 @@ class MailDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getMailSender()
     {
-        return $this->getFactory()->createMandrillMailSender(
+        return new MandrillMailSender(
             $this->getMandrill(),
             $this->getInclusionHandler()
         );
@@ -43,7 +43,7 @@ class MailDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function getInclusionHandler()
     {
-        return $this->getFactory()->createInclusionHandler();
+        return new InclusionHandler();
     }
 
     /**

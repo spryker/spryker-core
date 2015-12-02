@@ -6,6 +6,7 @@
 
 namespace Functional\SprykerFeature\Zed\Sales\Business;
 
+use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 use Codeception\TestCase\Test;
 use Functional\SprykerFeature\Zed\Sales\Business\Dependency\CountryFacade;
 use Functional\SprykerFeature\Zed\Sales\Business\Dependency\OmsFacade;
@@ -52,10 +53,10 @@ class SalesFacadeTest extends Test
         $locator = Locator::getInstance();
 
         $countryFacade = new CountryFacade(new Factory('Country'), $locator);
-        $countryFacade->setOwnQueryContainer(new CountryQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Country'), $locator));
+        $countryFacade->setOwnQueryContainer(new CountryQueryContainer(new PersistenceFactory('Country'), $locator));
 
         $omsFacade = new OmsFacade(new Factory('Oms'), $locator);
-        $omsFacade->setOwnQueryContainer(new OmsQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('Oms'), $locator));
+        $omsFacade->setOwnQueryContainer(new OmsQueryContainer(new PersistenceFactory('Oms'), $locator));
 
         $sequenceNumberFacade = new SequenceNumberFacade(new Factory('SequenceNumber'), $locator);
 
@@ -65,7 +66,7 @@ class SalesFacadeTest extends Test
         $container[SalesDependencyProvider::FACADE_SEQUENCE_NUMBER] = $sequenceNumberFacade;
 
         $this->salesFacade = new SalesFacade(new Factory('Sales'), $locator);
-        $this->salesFacade->setOwnQueryContainer(new SalesQueryContainer(new \SprykerEngine\Zed\Kernel\Persistence\Factory('sales'), $locator));
+        $this->salesFacade->setOwnQueryContainer(new SalesQueryContainer(new PersistenceFactory('sales'), $locator));
         $this->salesFacade->setExternalDependencies($container);
     }
 

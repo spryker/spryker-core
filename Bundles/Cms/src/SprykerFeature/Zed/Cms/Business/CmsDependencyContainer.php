@@ -6,6 +6,10 @@
 
 namespace SprykerFeature\Zed\Cms\Business;
 
+use SprykerFeature\Zed\Cms\Business\Mapping\GlossaryKeyMappingManager;
+use SprykerFeature\Zed\Cms\Business\Block\BlockManager;
+use SprykerFeature\Zed\Cms\Business\Template\TemplateManager;
+use SprykerFeature\Zed\Cms\Business\Page\PageManager;
 use Generated\Zed\Ide\FactoryAutoCompletion\CmsBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Cms\Business\Block\BlockManagerInterface;
@@ -38,7 +42,7 @@ class CmsDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getPageManager()
     {
-        return $this->getFactory()->createPagePageManager(
+        return new PageManager(
             $this->getCmsQueryContainer(),
             $this->getTemplateManager(),
             $this->getBlockManager(),
@@ -54,7 +58,7 @@ class CmsDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getTemplateManager()
     {
-        return $this->getFactory()->createTemplateTemplateManager(
+        return new TemplateManager(
             $this->getCmsQueryContainer(),
             $this->getLocator(),
             $this->getConfig(),
@@ -67,7 +71,7 @@ class CmsDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getBlockManager()
     {
-        return $this->getFactory()->createBlockBlockManager(
+        return new BlockManager(
             $this->getCmsQueryContainer(),
             $this->getTouchFacade(),
             $this->getProvidedDependency(CmsDependencyProvider::PLUGIN_PROPEL_CONNECTION)
@@ -79,7 +83,7 @@ class CmsDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getGlossaryKeyMappingManager()
     {
-        return $this->getFactory()->createMappingGlossaryKeyMappingManager(
+        return new GlossaryKeyMappingManager(
             $this->getGlossaryFacade(),
             $this->getCmsQueryContainer(),
             $this->getTemplateManager(),

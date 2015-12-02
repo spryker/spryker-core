@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Shipment\Communication;
 
+use SprykerFeature\Zed\Shipment\Communication\Form\MethodForm;
 use Generated\Zed\Ide\FactoryAutoCompletion\ShipmentCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Shipment\Communication\Form\CarrierForm;
@@ -28,7 +29,7 @@ class ShipmentDependencyContainer extends AbstractCommunicationDependencyContain
     {
         $methodQuery = $this->getQueryContainer()->queryMethods();
 
-        return $this->getFactory()->createTableMethodTable($methodQuery);
+        return new MethodTable($methodQuery);
     }
 
     /**
@@ -38,7 +39,7 @@ class ShipmentDependencyContainer extends AbstractCommunicationDependencyContain
     {
         $carrierQuery = $this->getQueryContainer()->queryCarriers();
 
-        return $this->getFactory()->createFormCarrierForm($carrierQuery);
+        return new CarrierForm($carrierQuery);
     }
 
     /**
@@ -55,7 +56,7 @@ class ShipmentDependencyContainer extends AbstractCommunicationDependencyContain
 
         $taxSetQuery = $this->getTaxQueryContainer()->queryAllTaxSets();
 
-        return $this->getFactory()->createFormMethodForm(
+        return new MethodForm(
                 $methodQuery,
                 $carrierQuery,
                 $taxSetQuery,

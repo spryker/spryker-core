@@ -5,6 +5,8 @@
 
 namespace SprykerFeature\Client\Glossary\Service;
 
+use SprykerFeature\Client\Glossary\Service\KeyBuilder\GlossaryKeyBuilder;
+use SprykerFeature\Client\Glossary\Service\Storage\GlossaryStorage;
 use Generated\Client\Ide\FactoryAutoCompletion\GlossaryService;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Glossary\GlossaryDependencyProvider;
@@ -24,7 +26,7 @@ class GlossaryDependencyContainer extends AbstractServiceDependencyContainer
      */
     public function createTranslator($locale)
     {
-        return $this->getFactory()->createStorageGlossaryStorage(
+        return new GlossaryStorage(
             $this->getStorage(),
             $this->getKeyBuilder(),
             $locale
@@ -44,7 +46,7 @@ class GlossaryDependencyContainer extends AbstractServiceDependencyContainer
      */
     private function getKeyBuilder()
     {
-        return $this->getFactory()->createKeyBuilderGlossaryKeyBuilder();
+        return new GlossaryKeyBuilder();
     }
 
 }

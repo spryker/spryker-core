@@ -6,6 +6,7 @@
 
 namespace Functional\SprykerFeature\Zed\SequenceNumber;
 
+use SprykerEngine\Zed\Kernel\Business\Factory as BusinessFactory;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Propel\Runtime\Propel;
@@ -35,7 +36,7 @@ class SequenceNumberTest extends Test
         parent::setUp();
 
         $locator = Locator::getInstance();
-        $this->factory = new \SprykerEngine\Zed\Kernel\Business\Factory('SequenceNumber');
+        $this->factory = new BusinessFactory('SequenceNumber');
         $this->sequenceNumberFacade = new SequenceNumberFacade($this->factory, $locator);
     }
 

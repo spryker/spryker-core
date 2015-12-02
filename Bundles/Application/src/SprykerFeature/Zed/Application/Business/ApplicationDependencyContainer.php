@@ -6,6 +6,15 @@
 
 namespace SprykerFeature\Zed\Application\Business;
 
+use SprykerFeature\Zed\Application\Business\Model\Navigation\Collector\Decorator\NavigationCollectorCacheDecorator;
+use SprykerFeature\Zed\Application\Business\Model\Navigation\Cache\NavigationCache;
+use SprykerFeature\Zed\Application\Business\Model\Navigation\Validator\MenuLevelValidator;
+use SprykerFeature\Zed\Application\Business\Model\Navigation\Validator\UrlUniqueValidator;
+use SprykerFeature\Zed\Application\Business\Model\Url\UrlBuilder;
+use SprykerFeature\Zed\Application\Business\Model\Navigation\Extractor\PathExtractor;
+use SprykerFeature\Zed\Application\Business\Model\Navigation\Collector\NavigationCollector;
+use SprykerFeature\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinder;
+use SprykerFeature\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatter;
 use Generated\Zed\Ide\FactoryAutoCompletion\ApplicationBusiness;
 use Psr\Log\LoggerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
@@ -51,7 +60,7 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCheckStepCodeCeption(LoggerInterface $logger = null)
     {
-        $checkStep = $this->getFactory()->createModelApplicationCheckStepCodeCeption();
+        $checkStep = new CodeCeption();
         $checkStep->setLogger($logger);
 
         return $checkStep;
@@ -64,7 +73,7 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCheckStepDeleteDatabase(LoggerInterface $logger = null)
     {
-        $checkStep = $this->getFactory()->createModelApplicationCheckStepDeleteDatabase();
+        $checkStep = new DeleteDatabase();
         $checkStep->setLogger($logger);
 
         return $checkStep;
@@ -77,7 +86,7 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCheckStepDeleteGeneratedDirectory(LoggerInterface $logger = null)
     {
-        $checkStep = $this->getFactory()->createModelApplicationCheckStepDeleteGeneratedDirectory();
+        $checkStep = new DeleteGeneratedDirectory();
         $checkStep->setLogger($logger);
 
         return $checkStep;
@@ -90,7 +99,7 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCheckStepInstallDemoData(LoggerInterface $logger = null)
     {
-        $checkStep = $this->getFactory()->createModelApplicationCheckStepInstallDemoData();
+        $checkStep = new InstallDemoData();
         $checkStep->setLogger($logger);
 
         return $checkStep;
@@ -103,7 +112,7 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCheckStepSetupInstall(LoggerInterface $logger = null)
     {
-        $checkStep = $this->getFactory()->createModelApplicationCheckStepSetupInstall();
+        $checkStep = new SetupInstall();
         $checkStep->setLogger($logger);
 
         return $checkStep;
@@ -116,7 +125,7 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCheckStepExportKeyValue(LoggerInterface $logger = null)
     {
-        $checkStep = $this->getFactory()->createModelApplicationCheckStepExportKeyValue();
+        $checkStep = new ExportKeyValue();
         $checkStep->setLogger($logger);
 
         return $checkStep;
@@ -129,7 +138,7 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCheckStepExportSearch(LoggerInterface $logger = null)
     {
-        $checkStep = $this->getFactory()->createModelApplicationCheckStepExportSearch();
+        $checkStep = new ExportSearch();
         $checkStep->setLogger($logger);
 
         return $checkStep;
@@ -140,7 +149,7 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createNavigationBuilder()
     {
-        return $this->getFactory()->createModelNavigationNavigationBuilder(
+        return new NavigationBuilder(
             $this->createCachedNavigationCollector(),
             $this->createMenuFormatter(),
             $this->createPathExtractor()
@@ -152,7 +161,7 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createNavigationCacheBuilder()
     {
-        return $this->getFactory()->createModelNavigationCacheNavigationCacheBuilder(
+        return new NavigationCacheBuilder(
             $this->createNavigationCollector(),
             $this->createNavigationCache()
         );
@@ -167,7 +176,7 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
         $urlUniqueValidator = $this->createUrlUniqueValidator();
         $menuLevelValidator = $this->createMenuLevelValidator();
 
-        return $this->getFactory()->createModelNavigationFormatterMenuFormatter(
+        return new MenuFormatter(
             $urlUniqueValidator,
             $menuLevelValidator,
             $urlBuilder
@@ -179,7 +188,7 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createNavigationSchemaFinder()
     {
-        return $this->getFactory()->createModelNavigationSchemaFinderNavigationSchemaFinder(
+        return new NavigationSchemaFinder(
             $this->getConfig()->getNavigationSchemaPathPattern(),
             $this->getConfig()->getNavigationSchemaFileNamePattern()
         );
@@ -190,7 +199,7 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createNavigationCollector()
     {
-        return $this->getFactory()->createModelNavigationCollectorNavigationCollector(
+        return new NavigationCollector(
             $this->createNavigationSchemaFinder(),
             $this->getConfig()->getRootNavigationSchema()
         );
@@ -201,7 +210,7 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createPathExtractor()
     {
-        return $this->getFactory()->createModelNavigationExtractorPathExtractor();
+        return new PathExtractor();
     }
 
     /**
@@ -209,7 +218,7 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createUrlBuilder()
     {
-        return $this->getFactory()->createModelUrlUrlBuilder();
+        return new UrlBuilder();
     }
 
     /**
@@ -217,7 +226,7 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createUrlUniqueValidator()
     {
-        return $this->getFactory()->createModelNavigationValidatorUrlUniqueValidator();
+        return new UrlUniqueValidator();
     }
 
     /**
@@ -227,7 +236,7 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $maxMenuCount = $this->getConfig()->getMaxMenuLevelCount();
 
-        return $this->getFactory()->createModelNavigationValidatorMenuLevelValidator($maxMenuCount);
+        return new MenuLevelValidator($maxMenuCount);
     }
 
     /**
@@ -235,7 +244,7 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     private function createNavigationCache()
     {
-        return $this->getFactory()->createModelNavigationCacheNavigationCache(
+        return new NavigationCache(
             $this->getConfig()->getCacheFile(),
             $this->getConfig()->isNavigationCacheEnabled()
         );
@@ -246,7 +255,7 @@ class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     private function createCachedNavigationCollector()
     {
-        return $this->getFactory()->createModelNavigationCollectorDecoratorNavigationCollectorCacheDecorator(
+        return new NavigationCollectorCacheDecorator(
             $this->createNavigationCollector(),
             $this->createNavigationCache()
         );

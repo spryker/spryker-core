@@ -29,7 +29,7 @@ class AuthDependencyContainer extends AbstractBusinessDependencyContainer
     public function createAuthModel()
     {
         //@todo refactor those messy dependencies.
-        return $this->getFactory()->createModelAuth(
+        return new Auth(
             $this->getLocator(),
             $this->getLocator()->session()->client(),
             $this->getLocator()->user()->facade(),
@@ -43,7 +43,7 @@ class AuthDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createStaticTokenClient()
     {
-        return $this->getFactory()->createClientStaticToken();
+        return new StaticToken();
     }
 
     /**
@@ -51,7 +51,7 @@ class AuthDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createPasswordReset()
     {
-        $passwordReset = $this->getFactory()->createModelPasswordReset(
+        $passwordReset = new PasswordReset(
             $this->getQueryContainer(),
             $this->getProvidedDependency(AuthDependencyProvider::FACADE_USER),
             $this->getConfig()

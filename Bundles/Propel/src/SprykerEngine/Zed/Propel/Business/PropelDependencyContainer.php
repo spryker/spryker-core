@@ -5,6 +5,13 @@
 
 namespace SprykerEngine\Zed\Propel\Business;
 
+use SprykerEngine\Zed\Propel\Business\Model\PostgresqlCompatibilityAdjuster;
+use SprykerEngine\Zed\Propel\Business\Model\DirectoryRemover;
+use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaMerger;
+use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaWriter;
+use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaFinder;
+use SprykerEngine\Zed\Propel\Business\Model\PropelGroupedSchemaFinder;
+use SprykerEngine\Zed\Propel\Business\Model\PropelSchema;
 use Generated\Zed\Ide\FactoryAutoCompletion\PropelBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerEngine\Zed\Propel\Business\Model\DirectoryRemoverInterface;
@@ -29,7 +36,7 @@ class PropelDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createModelSchema()
     {
-        return $this->getFactory()->createModelPropelSchema(
+        return new PropelSchema(
             $this->createGroupedSchemaFinder(),
             $this->createSchemaWriter(),
             $this->createSchemaMerger()
@@ -41,7 +48,7 @@ class PropelDependencyContainer extends AbstractBusinessDependencyContainer
      */
     private function createGroupedSchemaFinder()
     {
-        $schemaFinder = $this->getFactory()->createModelPropelGroupedSchemaFinder(
+        $schemaFinder = new PropelGroupedSchemaFinder(
             $this->createSchemaFinder()
         );
 
@@ -53,7 +60,7 @@ class PropelDependencyContainer extends AbstractBusinessDependencyContainer
      */
     private function createSchemaFinder()
     {
-        $schemaFinder = $this->getFactory()->createModelPropelSchemaFinder(
+        $schemaFinder = new PropelSchemaFinder(
             $this->getConfig()->getPropelSchemaPathPatterns()
         );
 
@@ -65,7 +72,7 @@ class PropelDependencyContainer extends AbstractBusinessDependencyContainer
      */
     private function createSchemaWriter()
     {
-        $schemaWriter = $this->getFactory()->createModelPropelSchemaWriter(
+        $schemaWriter = new PropelSchemaWriter(
             new Filesystem(),
             $this->getConfig()->getSchemaDirectory()
         );
@@ -78,7 +85,7 @@ class PropelDependencyContainer extends AbstractBusinessDependencyContainer
      */
     private function createSchemaMerger()
     {
-        return $this->getFactory()->createModelPropelSchemaMerger();
+        return new PropelSchemaMerger();
     }
 
     /**
@@ -86,7 +93,7 @@ class PropelDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createDirectoryRemover()
     {
-        return $this->getFactory()->createModelDirectoryRemover(
+        return new DirectoryRemover(
             $this->getConfig()->getSchemaDirectory()
         );
     }
@@ -96,7 +103,7 @@ class PropelDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createPostgresqlCompatibilityAdjuster()
     {
-        return $this->getFactory()->createModelPostgresqlCompatibilityAdjuster(
+        return new PostgresqlCompatibilityAdjuster(
             $this->createSchemaFinder()
         );
     }

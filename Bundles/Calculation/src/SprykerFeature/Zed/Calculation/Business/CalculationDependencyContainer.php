@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Calculation\Business;
 
+use SprykerFeature\Zed\Calculation\Business\Model\PriceCalculationHelper;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ItemTotalPriceCalculator;
 use SprykerFeature\Zed\Calculation\Business\Model\StackExecutor;
 use SprykerFeature\Zed\Calculation\Business\Model\Calculator\ExpensePriceToPayCalculator;
@@ -34,7 +35,7 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getStackExecutor()
     {
-        return $this->getFactory()->createModelStackExecutor();
+        return new StackExecutor();
     }
 
     /**
@@ -42,7 +43,7 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getExpensePriceToPayCalculator()
     {
-        return $this->getFactory()->createModelCalculatorExpensePriceToPayCalculator();
+        return new ExpensePriceToPayCalculator();
     }
 
     /**
@@ -50,7 +51,7 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getExpenseTotalsCalculator()
     {
-        return $this->getFactory()->createModelCalculatorExpenseTotalsCalculator();
+        return new ExpenseTotalsCalculator();
     }
 
     /**
@@ -58,11 +59,10 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getGrandTotalsCalculator()
     {
-        $subtotalTotalsCalculator = $this->getFactory()->createModelCalculatorSubtotalTotalsCalculator();
-        $expenseTotalsCalculator = $this->getFactory()->createModelCalculatorExpenseTotalsCalculator();
+        $subtotalTotalsCalculator = new SubtotalTotalsCalculator();
+        $expenseTotalsCalculator = new ExpenseTotalsCalculator();
 
-        $grandTotalsCalculator = $this->getFactory()
-            ->createModelCalculatorGrandTotalTotalsCalculator(
+        $grandTotalsCalculator = new GrandTotalTotalsCalculator(
                 $subtotalTotalsCalculator,
                 $expenseTotalsCalculator
             );
@@ -75,7 +75,7 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getItemPriceToPayCalculator()
     {
-        return $this->getFactory()->createModelCalculatorItemPriceToPayCalculator();
+        return new ItemPriceToPayCalculator();
     }
 
     /**
@@ -83,7 +83,7 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getOptionPriceToPayCalculator()
     {
-        return $this->getFactory()->createModelCalculatorProductOptionPriceToPayCalculator();
+        return new ProductOptionPriceToPayCalculator();
     }
 
     /**
@@ -91,7 +91,7 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getRemoveAllExpensesCalculator()
     {
-        return $this->getFactory()->createModelCalculatorRemoveAllExpensesCalculator();
+        return new RemoveAllExpensesCalculator();
     }
 
     /**
@@ -99,7 +99,7 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getRemoveTotalsCalculator()
     {
-        return $this->getFactory()->createModelCalculatorRemoveTotalsCalculator();
+        return new RemoveTotalsCalculator();
     }
 
     /**
@@ -107,7 +107,7 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getSubtotalTotalsCalculator()
     {
-        return $this->getFactory()->createModelCalculatorSubtotalTotalsCalculator();
+        return new SubtotalTotalsCalculator();
     }
 
     /**
@@ -115,7 +115,7 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getItemTotalCalculator()
     {
-        return $this->getFactory()->createModelCalculatorItemTotalPriceCalculator();
+        return new ItemTotalPriceCalculator();
     }
 
     /**
@@ -123,7 +123,7 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getSubtotalWithoutItemExpensesTotalsCalculator()
     {
-        return $this->getFactory()->createModelCalculatorSubtotalWithoutItemExpensesTotalsCalculator();
+        return new SubtotalWithoutItemExpensesTotalsCalculator();
     }
 
     /**
@@ -131,8 +131,8 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getTaxTotalsCalculator()
     {
-        return $this->getFactory()->createModelCalculatorTaxTotalsCalculator(
-            $this->getFactory()->createModelPriceCalculationHelper()
+        return new TaxTotalsCalculator(
+            new PriceCalculationHelper()
         );
     }
 

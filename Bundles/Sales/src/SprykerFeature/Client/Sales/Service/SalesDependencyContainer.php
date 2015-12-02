@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Client\Sales\Service;
 
+use SprykerFeature\Client\Sales\Service\Zed\SalesStub;
 use Generated\Client\Ide\FactoryAutoCompletion\SalesService;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Sales\Service\Zed\SalesStubInterface;
@@ -22,7 +23,7 @@ class SalesDependencyContainer extends AbstractServiceDependencyContainer
      */
     public function createZedSalesStub()
     {
-        return $this->getFactory()->createZedSalesStub(
+        return new SalesStub(
             $this->getProvidedDependency(SalesDependencyProvider::SERVICE_ZED)
         );
     }

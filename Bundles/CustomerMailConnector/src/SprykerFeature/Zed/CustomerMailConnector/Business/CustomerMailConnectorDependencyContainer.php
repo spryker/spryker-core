@@ -26,7 +26,7 @@ class CustomerMailConnectorDependencyContainer extends AbstractBusinessDependenc
      */
     public function createRegistrationTokenSender()
     {
-        return $this->getFactory()->createSenderRegistrationTokenSender(
+        return new RegistrationTokenSender(
             $this->getConfig(),
             $this->getProvidedDependency(CustomerMailConnectorDependencyProvider::FACADE_MAIL),
             $this->getProvidedDependency(CustomerMailConnectorDependencyProvider::FACADE_GLOSSARY)
@@ -38,7 +38,7 @@ class CustomerMailConnectorDependencyContainer extends AbstractBusinessDependenc
      */
     public function createPasswordRestoreTokenSender()
     {
-        return $this->getFactory()->createSenderPasswordRestoreTokenSender(
+        return new PasswordRestoreTokenSender(
             $this->getConfig(),
             $this->getProvidedDependency(CustomerMailConnectorDependencyProvider::FACADE_MAIL),
             $this->getProvidedDependency(CustomerMailConnectorDependencyProvider::FACADE_GLOSSARY)
@@ -50,7 +50,7 @@ class CustomerMailConnectorDependencyContainer extends AbstractBusinessDependenc
      */
     public function createPasswordRestoredConfirmationSender()
     {
-        return $this->getFactory()->createSenderPasswordRestoredConfirmationSender(
+        return new PasswordRestoredConfirmationSender(
             $this->getConfig(),
             $this->getProvidedDependency(CustomerMailConnectorDependencyProvider::FACADE_MAIL),
             $this->getProvidedDependency(CustomerMailConnectorDependencyProvider::FACADE_GLOSSARY)

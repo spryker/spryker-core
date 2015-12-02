@@ -39,7 +39,7 @@ class FlashMessengerDependencyContainer extends AbstractBusinessDependencyContai
      */
     public function createInMemoryMessageTray()
     {
-        return $this->getFactory()->createModelInMemoryMessageTray();
+        return new InMemoryMessageTray();
     }
 
     /**
@@ -47,7 +47,7 @@ class FlashMessengerDependencyContainer extends AbstractBusinessDependencyContai
      */
     public function createSessionMessageTray()
     {
-        return $this->getFactory()->createModelSessionMessageTray(
+        return new SessionMessageTray(
             $this->createSession()
         );
     }

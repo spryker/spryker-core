@@ -29,7 +29,7 @@ class PriceDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function getPriceForm(Request $request)
     {
-        return $this->getFactory()->createFormPriceForm(
+        return new PriceForm(
             $request,
             $this->getQueryContainer()
         );
@@ -42,7 +42,7 @@ class PriceDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function getPriceTypeForm(Request $request)
     {
-        return $this->getFactory()->createFormPriceTypeForm(
+        return new PriceTypeForm(
             $request,
             $this->getQueryContainer()
         );
@@ -55,7 +55,7 @@ class PriceDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function getPriceGrid(Request $request)
     {
-        return $this->getFactory()->createGridPriceGrid(
+        return new PriceGrid(
             $this->getQueryContainer()->queryPriceGrid(),
             $request
         );
@@ -68,7 +68,7 @@ class PriceDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function getPriceTypeGrid(Request $request)
     {
-        return $this->getFactory()->createGridPriceTypeGrid(
+        return new PriceTypeGrid(
             $this->getQueryContainer()->queryPriceTypeGrid(),
             $request
         );

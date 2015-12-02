@@ -21,7 +21,7 @@ class AuthDependencyContainer extends AbstractServiceDependencyContainer
      */
     public function createTokenService()
     {
-        return $this->getFactory()->createTokenTokenService();
+        return new TokenService();
     }
 
 }

@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\StorageHeartbeatConnector\Business;
 
+use SprykerFeature\Zed\StorageHeartbeatConnector\Business\Assistant\StorageHealthIndicator;
 use Generated\Zed\Ide\FactoryAutoCompletion\StorageHeartbeatConnectorBusiness;
 use Predis\Client;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
@@ -31,7 +32,7 @@ class StorageHeartbeatConnectorDependencyContainer extends AbstractBusinessDepen
         ];
         $client = new Client($config);
 
-        return $this->getFactory()->createAssistantStorageHealthIndicator($client);
+        return new StorageHealthIndicator($client);
     }
 
 }

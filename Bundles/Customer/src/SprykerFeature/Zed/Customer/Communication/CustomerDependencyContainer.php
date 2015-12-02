@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\Customer\Communication;
 
+use SprykerFeature\Zed\Customer\Communication\Form\AddressForm;
+use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
 use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Customer\CustomerDependencyProvider;
@@ -36,8 +38,7 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createCustomerTable()
     {
-        return $this->getFactory()
-            ->createTableCustomerTable($this->getQueryContainer());
+        return new CustomerTable($this->getQueryContainer());
     }
 
     /**
@@ -47,8 +48,7 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createCustomerAddressTable($idCustomer)
     {
-        return $this->getFactory()
-            ->createTableAddressTable($this->getQueryContainer(), $idCustomer);
+        return new AddressTable($this->getQueryContainer(), $idCustomer);
     }
 
     /**
@@ -60,8 +60,7 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createCustomerForm($formActionType)
     {
-        $customerForm = $this->getFactory()
-            ->createFormCustomerForm($this->getQueryContainer(), $formActionType);
+        $customerForm = new CustomerForm($this->getQueryContainer(), $formActionType);
 
         return $this->createForm($customerForm);
     }
@@ -71,8 +70,7 @@ class CustomerDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createAddressForm()
     {
-        $customerAddressForm = $this->getFactory()
-            ->createFormAddressForm(
+        $customerAddressForm = new AddressForm(
                 $this->getProvidedDependency(CustomerDependencyProvider::COUNTRY_FACADE),
                 $this->getQueryContainer()
             );

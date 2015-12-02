@@ -6,6 +6,18 @@
 
 namespace SprykerFeature\Zed\Oms\Business;
 
+use SprykerFeature\Zed\Oms\Business\Util\Drawer;
+use SprykerFeature\Zed\Oms\Business\Process\Process;
+use SprykerFeature\Zed\Oms\Business\Process\Transition;
+use SprykerFeature\Zed\Oms\Business\Process\State;
+use SprykerFeature\Zed\Oms\Business\Process\Event;
+use SprykerFeature\Zed\Oms\Business\OrderStateMachine\PersistenceManager;
+use SprykerFeature\Zed\Oms\Business\Util\TransitionLog;
+use SprykerFeature\Zed\Oms\Business\OrderStateMachine\Timeout;
+use SprykerFeature\Zed\Oms\Business\OrderStateMachine\Finder;
+use SprykerFeature\Zed\Oms\Business\OrderStateMachine\Dummy;
+use SprykerFeature\Zed\Oms\Business\OrderStateMachine\Builder;
+use SprykerFeature\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
 use Generated\Zed\Ide\FactoryAutoCompletion\OmsBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Oms\Business\OrderStateMachine\BuilderInterface;
@@ -41,7 +53,7 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createUtilReadOnlyArrayObject(array $array = [])
     {
-        return $this->getFactory()->createUtilReadOnlyArrayObject($array);
+        return new ReadOnlyArrayObject($array);
     }
 
     /**
@@ -51,7 +63,7 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createOrderStateMachineOrderStateMachine(array $logContext = [])
     {
-        return $this->getFactory()->createOrderStateMachineOrderStateMachine(
+        return new OrderStateMachine(
             $this->getQueryContainer(),
 
             $this->createOrderStateMachineBuilder(),
@@ -71,7 +83,7 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createOrderStateMachineBuilder($xmlFolder = null)
     {
-        return $this->getFactory()->createOrderStateMachineBuilder(
+        return new Builder(
             $this->createProcessEvent(),
             $this->createProcessState(),
             $this->createProcessTransition(),
@@ -85,7 +97,7 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createModelDummy()
     {
-        return $this->getFactory()->createOrderStateMachineDummy(
+        return new Dummy(
             $this->createOrderStateMachineBuilder()
         );
     }
@@ -97,7 +109,7 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $config = $this->getConfig();
 
-        return $this->getFactory()->createOrderStateMachineFinder(
+        return new Finder(
             $this->getQueryContainer(),
             $this->createOrderStateMachineBuilder(),
             $config->getActiveProcesses()
@@ -109,7 +121,7 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createOrderStateMachineTimeout()
     {
-        return $this->getFactory()->createOrderStateMachineTimeout(
+        return new Timeout(
             $this->getQueryContainer()
         );
     }
@@ -123,8 +135,7 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $queryContainer = $this->getQueryContainer();
 
-        return $this->getFactory()
-            ->createUtilTransitionLog($queryContainer, $logContext);
+        return new TransitionLog($queryContainer, $logContext);
     }
 
     /**
@@ -132,7 +143,7 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createOrderStateMachinePersistenceManager()
     {
-        return $this->getFactory()->createOrderStateMachinePersistenceManager();
+        return new PersistenceManager();
     }
 
     /**
@@ -140,7 +151,7 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createProcessEvent()
     {
-        return $this->getFactory()->createProcessEvent();
+        return new Event();
     }
 
     /**
@@ -148,7 +159,7 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createProcessState()
     {
-        return $this->getFactory()->createProcessState();
+        return new State();
     }
 
     /**
@@ -156,7 +167,7 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createProcessTransition()
     {
-        return $this->getFactory()->createProcessTransition();
+        return new Transition();
     }
 
     /**
@@ -164,8 +175,7 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createProcessProcess()
     {
-        return $this->getFactory()
-            ->createProcessProcess($this->createUtilDrawer());
+        return new Process($this->createUtilDrawer());
     }
 
     /**
@@ -173,8 +183,7 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createUtilDrawer()
     {
-        return $this->getFactory()
-            ->createUtilDrawer(
+        return new Drawer(
                 $this->getProvidedDependency(OmsDependencyProvider::COMMAND_PLUGINS),
                 $this->getProvidedDependency(OmsDependencyProvider::CONDITION_PLUGINS)
             ); // @TODO do not inject the whole config, just inject what is needed
@@ -185,7 +194,7 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createUtilOrderItemMatrix()
     {
-        return $this->getFactory()->createUtilOrderItemMatrix($this->getQueryContainer(), $this->getConfig());
+        return new OrderItemMatrix($this->getQueryContainer(), $this->getConfig());
     }
 
 }

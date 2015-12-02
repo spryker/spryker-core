@@ -6,6 +6,11 @@
 
 namespace SprykerFeature\Zed\Newsletter\Business;
 
+use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriberKeyGenerator;
+use SprykerFeature\Zed\Newsletter\Business\Subscription\DoubleOptInHandler;
+use SprykerFeature\Zed\Newsletter\Business\Subscription\SingleOptInHandler;
+use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriberManager;
+use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriptionManager;
 use Generated\Zed\Ide\FactoryAutoCompletion\NewsletterBusiness;
 use SprykerFeature\Zed\Newsletter\Business\Subscription\DoubleOptInHandlerInterface;
 use SprykerFeature\Zed\Newsletter\Business\Subscription\SubscriberKeyGeneratorInterface;
@@ -31,7 +36,7 @@ class NewsletterDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createSubscriptionRequestHandler()
     {
-        return $this->getFactory()->createSubscriptionSubscriptionRequestHandler(
+        return new SubscriptionRequestHandler(
             $this->createSubscriptionManager(),
             $this->createSubscriberManager(),
             $this->getQueryContainer()
@@ -43,7 +48,7 @@ class NewsletterDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createSubscriptionManager()
     {
-        return $this->getFactory()->createSubscriptionSubscriptionManager(
+        return new SubscriptionManager(
             $this->getQueryContainer()
         );
     }
@@ -53,7 +58,7 @@ class NewsletterDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createSubscriberManager()
     {
-        return $this->getFactory()->createSubscriptionSubscriberManager(
+        return new SubscriberManager(
             $this->getQueryContainer(),
             $this->createSubscriberKeyGenerator()
         );
@@ -64,7 +69,7 @@ class NewsletterDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createSingleOptInHandler()
     {
-        return $this->getFactory()->createSubscriptionSingleOptInHandler(
+        return new SingleOptInHandler(
             $this->getQueryContainer(),
             $this->createSubscriberKeyGenerator()
         );
@@ -75,7 +80,7 @@ class NewsletterDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createDoubleOptInHandler()
     {
-        $subscriberOptInHandler = $this->getFactory()->createSubscriptionDoubleOptInHandler(
+        $subscriberOptInHandler = new DoubleOptInHandler(
             $this->getQueryContainer(),
             $this->createSubscriberKeyGenerator()
         );
@@ -94,7 +99,7 @@ class NewsletterDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createSubscriberKeyGenerator()
     {
-        return $this->getFactory()->createSubscriptionSubscriberKeyGenerator();
+        return new SubscriberKeyGenerator();
     }
 
 }

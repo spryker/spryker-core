@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\ProductSearch\Business\Transformer;
 /**
  * Interface ProductAttributesTransformerInterface
  */
+
 interface ProductAttributesTransformerInterface
 {
 

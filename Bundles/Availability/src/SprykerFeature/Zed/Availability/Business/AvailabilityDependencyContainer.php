@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Availability\Business;
 
+use SprykerFeature\Zed\Availability\Business\Model\Sellable;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Availability\AvailabilityDependencyProvider;
 use SprykerFeature\Zed\Availability\Dependency\Facade\AvailabilityToOmsFacadeInterface;
@@ -23,7 +24,7 @@ class AvailabilityDependencyContainer extends AbstractBusinessDependencyContaine
      */
     public function getSellableModel()
     {
-        return $this->getFactory()->createModelSellable(
+        return new Sellable(
             $this->getOmsFacade(),
             $this->getStockFacade()
         );

@@ -2,6 +2,14 @@
 
 namespace SprykerFeature\Zed\Distributor\Business;
 
+use SprykerFeature\Zed\Distributor\Business\Builder\QueueNameBuilder;
+use SprykerFeature\Zed\Distributor\Business\Provider\ItemQueueProvider;
+use SprykerFeature\Zed\Distributor\Business\Router\MessageRouter;
+use SprykerFeature\Zed\Distributor\Business\Writer\ReceiverWriter;
+use SprykerFeature\Zed\Distributor\Business\Writer\ItemTypeWriter;
+use SprykerFeature\Zed\Distributor\Business\Marker\LastDistributionMarker;
+use SprykerFeature\Zed\Distributor\Business\Distributor\ItemDistributor;
+use SprykerFeature\Zed\Distributor\Business\Writer\ItemWriter;
 use Generated\Zed\Ide\FactoryAutoCompletion\DistributorBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Distributor\Business\Builder\QueueNameBuilderInterface;
@@ -35,7 +43,7 @@ class DistributorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createItemWriter()
     {
-        return $this->getFactory()->createWriterItemWriter(
+        return new ItemWriter(
             $this->getQueryContainer()
         );
     }
@@ -45,7 +53,7 @@ class DistributorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createDistributor()
     {
-        $queueDistributor = $this->getFactory()->createDistributorTypeDistributor(
+        $queueDistributor = new TypeDistributor(
             $this->getQueryContainer(),
             $this->createLatestDistributionMarker(),
             $this->createItemDistributor()
@@ -63,7 +71,7 @@ class DistributorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createItemTypeInstaller()
     {
-        return $this->getFactory()->createInternalItemTypeInstaller(
+        return new ItemTypeInstaller(
             $this->getConfig()->getItemTypes(),
             $this->createItemTypeWriter(),
             $this->getQueryContainer()
@@ -75,7 +83,7 @@ class DistributorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createReceiverInstaller()
     {
-        return $this->getFactory()->createInternalReceiverInstaller(
+        return new ReceiverInstaller(
             $this->getConfig()->getItemReceivers(),
             $this->createReceiverWriter(),
             $this->getQueryContainer()
@@ -87,7 +95,7 @@ class DistributorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createItemDistributor()
     {
-        $itemDistributor = $this->getFactory()->createDistributorItemDistributor(
+        $itemDistributor = new ItemDistributor(
             $this->createMessageRouter(),
             $this->createItemQueueProvider()
         );
@@ -114,7 +122,7 @@ class DistributorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createLatestDistributionMarker()
     {
-        return $this->getFactory()->createMarkerLastDistributionMarker(
+        return new LastDistributionMarker(
             $this->getQueryContainer(),
             $this->createItemTypeWriter()
         );
@@ -125,7 +133,7 @@ class DistributorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createItemTypeWriter()
     {
-        return $this->getFactory()->createWriterItemTypeWriter(
+        return new ItemTypeWriter(
             $this->getQueryContainer()
         );
     }
@@ -135,7 +143,7 @@ class DistributorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createReceiverWriter()
     {
-        return $this->getFactory()->createWriterReceiverWriter();
+        return new ReceiverWriter();
     }
 
     /**
@@ -143,7 +151,7 @@ class DistributorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createMessageRouter()
     {
-        return $this->getFactory()->createRouterMessageRouter(
+        return new MessageRouter(
             $this->getQueueFacade()
         );
     }
@@ -153,7 +161,7 @@ class DistributorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createItemQueueProvider()
     {
-        return $this->getFactory()->createProviderItemQueueProvider(
+        return new ItemQueueProvider(
             $this->getQueryContainer(),
             $this->createQueueNameBuilder()
         );
@@ -164,7 +172,7 @@ class DistributorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createQueueNameBuilder()
     {
-        return $this->getFactory()->createBuilderQueueNameBuilder();
+        return new QueueNameBuilder();
     }
 
     /**

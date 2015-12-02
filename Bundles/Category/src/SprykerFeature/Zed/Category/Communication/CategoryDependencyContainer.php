@@ -56,7 +56,7 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
         $categoryQueryContainer = $this->getQueryContainer();
         $locale = $this->getCurrentLocale();
 
-        return $this->getFactory()->createTableRootNodeTable($categoryQueryContainer, $locale->getIdLocale());
+        return new RootNodeTable($categoryQueryContainer, $locale->getIdLocale());
     }
 
     /**
@@ -77,7 +77,7 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
             $this->createCurrentLocale()->getIdLocale()
         );
 
-        return $this->getFactory()->createTableCategoryAttributeTable($categoryAttributesQuery);
+        return new CategoryAttributeTable($categoryAttributesQuery);
     }
 
     /**
@@ -94,7 +94,7 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
         $urlQuery = $this->getQueryContainer()
             ->queryUrlByIdCategoryNode($idCategoryNode);
 
-        return $this->getFactory()->createTableUrlTable($urlQuery);
+        return new UrlTable($urlQuery);
     }
 
     /**
@@ -106,7 +106,7 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
     {
         $locale = $this->getCurrentLocale();
 
-        return $this->getFactory()->createFormCategoryNodeForm(
+        return new CategoryNodeForm(
             $request,
             $this->getFactory(),
             $locale,

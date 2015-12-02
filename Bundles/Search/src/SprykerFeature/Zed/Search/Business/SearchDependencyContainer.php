@@ -28,7 +28,7 @@ class SearchDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createSearchInstaller(MessengerInterface $messenger)
     {
-        return $this->getFactory()->createModelSearchInstaller(
+        return new SearchInstaller(
             $this->getConfig()->getInstaller(),
             $messenger
         );
@@ -39,7 +39,7 @@ class SearchDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createSearch()
     {
-        return $this->getFactory()->createModelSearch(
+        return new Search(
             $this->getProvidedDependency(SearchDependencyProvider::CLIENT_SEARCH)
         );
     }

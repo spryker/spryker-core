@@ -26,7 +26,7 @@ class ProductCategoryDependencyContainer extends AbstractPersistenceDependencyCo
      */
     public function createProductCategoryPathQueryExpander(LocaleTransfer $locale)
     {
-        return $this->getFactory()->createQueryExpanderProductCategoryPathQueryExpander(
+        return new ProductCategoryPathQueryExpander(
             $this->getCategoryQueryContainer(),
             $locale
         );

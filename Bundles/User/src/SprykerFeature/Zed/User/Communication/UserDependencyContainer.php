@@ -28,7 +28,7 @@ class UserDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createResetPasswordForm()
     {
-        return $this->getFactory()->createFormResetPasswordForm();
+        return new ResetPasswordForm();
     }
 
     /**
@@ -36,7 +36,7 @@ class UserDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createUserTable()
     {
-        return $this->getFactory()->createTableUsersTable(
+        return new UsersTable(
             $this->getQueryContainer()
         );
     }
@@ -46,7 +46,7 @@ class UserDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createUserForm()
     {
-        return $this->getFactory()->createFormUserCreateForm();
+        return new UserCreateForm();
     }
 
     /**
@@ -56,7 +56,7 @@ class UserDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createUpdateUserForm($idUser)
     {
-        return $this->getFactory()->createFormUserUpdateForm($idUser);
+        return new UserUpdateForm($idUser);
     }
 
     /**

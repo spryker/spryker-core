@@ -26,7 +26,7 @@ class LocaleDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getLocaleManager()
     {
-        return $this->getFactory()->createManagerLocaleManager(
+        return new LocaleManager(
             $this->getQueryContainer(),
             $this->createTransferGenerator(),
             $this->getLocator()
@@ -56,7 +56,7 @@ class LocaleDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getInstaller(MessengerInterface $messenger)
     {
-        $installer = $this->getFactory()->createInternalInstallLocaleInstaller(
+        $installer = new LocaleInstaller(
             $this->getQueryContainer(),
             $this->getConfig()->getLocaleFile()
         );

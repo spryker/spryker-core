@@ -9,6 +9,7 @@ namespace SprykerFeature\Shared\Library\Storage\Adapter\KeyValue;
 /**
  * Class RedisRead
  */
+
 class RedisRead extends Redis implements ReadInterface
 {
 

@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\ItemGrouper\Business;
 
+use SprykerFeature\Zed\ItemGrouper\Business\Model\Group;
 use Generated\Zed\Ide\FactoryAutoCompletion\ItemGrouperBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\ItemGrouper\ItemGrouperConfig;
@@ -24,8 +25,7 @@ class ItemGrouperDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createGrouper($regroupAllItemCollection = false)
     {
-        return $this->getFactory()
-            ->createModelGroup($this->getConfig()->getGroupingThreshold(), $regroupAllItemCollection);
+        return new Group($this->getConfig()->getGroupingThreshold(), $regroupAllItemCollection);
     }
 
 }

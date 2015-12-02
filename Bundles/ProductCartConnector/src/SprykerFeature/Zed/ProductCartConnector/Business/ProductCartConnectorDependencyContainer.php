@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\ProductCartConnector\Business;
 
+use SprykerFeature\Zed\ProductCartConnector\Business\Manager\ProductManager;
 use SprykerFeature\Zed\ProductCartConnector\ProductCartConnectorDependencyProvider;
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductCartConnectorBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
@@ -25,7 +26,7 @@ class ProductCartConnectorDependencyContainer extends AbstractBusinessDependency
      */
     public function createProductManager()
     {
-        return $this->getFactory()->createManagerProductManager(
+        return new ProductManager(
             $this->getProvidedDependency(ProductCartConnectorDependencyProvider::FACADE_PRODUCT)
         );
     }

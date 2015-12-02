@@ -10,6 +10,7 @@ use SprykerFeature\Shared\ZedRequest\Client\Message;
 
 class BaseStub
 {
+
     /**
      * @var ZedRequestClient
      */
@@ -46,4 +47,5 @@ class BaseStub
     {
         return $this->zedStub->getLastResponseErrorMessages();
     }
+
 }

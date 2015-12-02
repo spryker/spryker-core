@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Acl\Communication;
 
+use SprykerFeature\Zed\Acl\Communication\Table\GroupTable;
 use Generated\Zed\Ide\FactoryAutoCompletion\AclCommunication;
 use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Acl\AclDependencyProvider;
@@ -42,7 +43,7 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createGroupTable()
     {
-        return $this->getFactory()->createTableGroupTable(
+        return new GroupTable(
             $this->getQueryContainer()->queryGroup()
         );
     }
@@ -73,7 +74,7 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createGroupUsersTable($idAclGroup)
     {
-        return $this->getFactory()->createTableGroupUsersTable(
+        return new GroupUsersTable(
             $this->getQueryContainer()->queryGroup(),
             $idAclGroup
         );
@@ -86,7 +87,7 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createGroupForm(Request $request)
     {
-        return $this->getFactory()->createFormGroupForm(
+        return new GroupForm(
             $this->getQueryContainer(),
             $request
         );
@@ -97,7 +98,7 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createRoleTable()
     {
-        return $this->getFactory()->createTableRoleTable($this->getQueryContainer());
+        return new RoleTable($this->getQueryContainer());
     }
 
     /**
@@ -105,7 +106,7 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createRoleForm()
     {
-        return $this->getFactory()->createFormRoleForm();
+        return new RoleForm();
     }
 
     /**
@@ -113,7 +114,7 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createRulesetForm()
     {
-        return $this->getFactory()->createFormRulesetForm();
+        return new RulesetForm();
     }
 
     /**
@@ -123,7 +124,7 @@ class AclDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createRulesetTable($idRole)
     {
-        return $this->getFactory()->createTableRulesetTable($this->getQueryContainer(), $idRole);
+        return new RulesetTable($this->getQueryContainer(), $idRole);
     }
 
 }

@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Client\Product\Service;
 
+use SprykerFeature\Client\Product\Service\KeyBuilder\ProductResourceKeyBuilder;
+use SprykerFeature\Client\Product\Service\Storage\ProductStorage;
 use Generated\Client\Ide\FactoryAutoCompletion\ProductService;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Product\ProductDependencyProvider;
@@ -27,7 +29,7 @@ class ProductDependencyContainer extends AbstractServiceDependencyContainer
      */
     public function createProductStorage($locale)
     {
-        return $this->getFactory()->createStorageProductStorage(
+        return new ProductStorage(
             $this->getStorage(),
             $this->getKeyBuilder(),
             $locale
@@ -47,7 +49,7 @@ class ProductDependencyContainer extends AbstractServiceDependencyContainer
      */
     private function getKeyBuilder()
     {
-        return $this->getFactory()->createKeyBuilderProductResourceKeyBuilder();
+        return new ProductResourceKeyBuilder();
     }
 
     /**

@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\PropelHeartbeatConnector\Business;
 
+use SprykerFeature\Zed\PropelHeartbeatConnector\Business\Assistant\PropelHealthIndicator;
 use Generated\Zed\Ide\FactoryAutoCompletion\PropelHeartbeatConnectorBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface;
@@ -21,7 +22,7 @@ class PropelHeartbeatConnectorDependencyContainer extends AbstractBusinessDepend
      */
     public function createHealthIndicator()
     {
-        return $this->getFactory()->createAssistantPropelHealthIndicator();
+        return new PropelHealthIndicator();
     }
 
 }

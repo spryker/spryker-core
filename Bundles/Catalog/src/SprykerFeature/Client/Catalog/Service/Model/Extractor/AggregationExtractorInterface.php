@@ -9,6 +9,7 @@ namespace SprykerFeature\Client\Catalog\Service\Model\Extractor;
 /**
  * Class AbstractAggregationExtractor
  */
+
 interface AggregationExtractorInterface
 {
 

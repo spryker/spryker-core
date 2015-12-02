@@ -6,6 +6,9 @@
 
 namespace SprykerFeature\Zed\Stock\Business;
 
+use SprykerFeature\Zed\Stock\Business\Model\Writer;
+use SprykerFeature\Zed\Stock\Business\Model\Reader;
+use SprykerFeature\Zed\Stock\Business\Model\Calculator;
 use Generated\Zed\Ide\FactoryAutoCompletion\StockBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Stock\Dependency\Facade\StockToProductInterface;
@@ -28,7 +31,7 @@ class StockDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getCalculatorModel()
     {
-        return $this->getFactory()->createModelCalculator(
+        return new Calculator(
             $this->getReaderModel()
         );
     }
@@ -38,7 +41,7 @@ class StockDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getReaderModel()
     {
-        return $this->getFactory()->createModelReader(
+        return new Reader(
             $this->getQueryContainer(),
             $this->getProductFacade()
         );
@@ -49,7 +52,7 @@ class StockDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getWriterModel()
     {
-        return $this->getFactory()->createModelWriter(
+        return new Writer(
             $this->getQueryContainer(),
             $this->getReaderModel(),
             $this->getTouchFacade(),

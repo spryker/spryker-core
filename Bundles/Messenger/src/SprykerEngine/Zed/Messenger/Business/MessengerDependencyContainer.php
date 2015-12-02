@@ -7,13 +7,13 @@
 namespace SprykerEngine\Zed\Messenger\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 
 class MessengerDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**
      * @throws \Exception
+     *
      * @return void
      */
     public function getMessenger()

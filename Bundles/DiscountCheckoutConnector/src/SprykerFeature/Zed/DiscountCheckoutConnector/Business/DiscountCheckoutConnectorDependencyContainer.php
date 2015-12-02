@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\DiscountCheckoutConnector\Business;
 
+use SprykerFeature\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaver;
+use SprykerFeature\Zed\DiscountCheckoutConnector\Business\Model\DiscountOrderHydrator;
 use Generated\Zed\Ide\FactoryAutoCompletion\DiscountCheckoutConnectorBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
@@ -24,7 +26,7 @@ class DiscountCheckoutConnectorDependencyContainer extends AbstractBusinessDepen
      */
     public function createOrderHydrator()
     {
-        return $this->getFactory()->createModelDiscountOrderHydrator();
+        return new DiscountOrderHydrator();
     }
 
     /**
@@ -32,7 +34,7 @@ class DiscountCheckoutConnectorDependencyContainer extends AbstractBusinessDepen
      */
     public function createDiscountSaver()
     {
-        return $this->getFactory()->createModelDiscountSaver(
+        return new DiscountSaver(
             $this->getProvidedDependency(DiscountCheckoutConnectorDependencyProvider::QUERY_CONTAINER_DISCOUNT),
             $this->createDiscountFacade()
         );

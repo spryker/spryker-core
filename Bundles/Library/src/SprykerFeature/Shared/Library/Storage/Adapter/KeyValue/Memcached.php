@@ -11,6 +11,7 @@ namespace SprykerFeature\Shared\Library\Storage\Adapter\KeyValue;
  *
  * @method \Memcached getResource()
  */
+
 abstract class Memcached extends AbstractKeyValue
 {
 
