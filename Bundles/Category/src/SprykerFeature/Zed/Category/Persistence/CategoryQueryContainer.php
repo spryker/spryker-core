@@ -341,7 +341,6 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
                 ->endUse()
             ->endUse();
 
-
         $nodeQuery
             ->withColumn(SpyCategoryNodeTableMap::COL_FK_CATEGORY, 'fk_category')
             ->withColumn(SpyCategoryNodeTableMap::COL_ID_CATEGORY_NODE, 'id_category_node')
