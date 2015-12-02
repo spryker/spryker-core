@@ -12,6 +12,7 @@ use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Locale\Business\Exception\LocaleExistsException;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
+use SprykerEngine\Zed\Locale\Business\TransferGeneratorInterface;
 use SprykerEngine\Zed\Locale\Persistence\LocaleQueryContainerInterface;
 use Orm\Zed\Locale\Persistence\SpyLocale;
 
@@ -24,13 +25,21 @@ class LocaleManager
     protected $localeQueryContainer;
 
     /**
+     * @var TransferGeneratorInterface
+     */
+    protected $transferGenerator;
+
+    /**
      * @var AutoCompletion
      */
     protected $locator;
 
-    public function __construct(LocaleQueryContainerInterface $localeQueryContainer, LocatorLocatorInterface $locator)
+    public function __construct(LocaleQueryContainerInterface $localeQueryContainer,
+        TransferGeneratorInterface $transferGenerator,
+        LocatorLocatorInterface $locator)
     {
         $this->localeQueryContainer = $localeQueryContainer;
+        $this->transferGenerator = $transferGenerator;
         $this->locator = $locator;
     }
 
@@ -54,7 +63,7 @@ class LocaleManager
             );
         }
 
-        return $this->convertEntityToDto($locale);
+        return $this->transferGenerator->convertLocale($locale);
     }
 
     /**
@@ -82,7 +91,7 @@ class LocaleManager
 
         $locale->save();
 
-        return $this->convertEntityToDto($locale);
+        return $this->transferGenerator->convertLocale($locale);
     }
 
     /**
@@ -118,23 +127,6 @@ class LocaleManager
         $locale->save();
 
         return true;
-    }
-
-    /**
-     * @param SpyLocale $locale
-     *
-     * @return LocaleTransfer
-     */
-    protected function convertEntityToDto($locale)
-    {
-        $dto = new LocaleTransfer();
-
-        $dto
-            ->setIdLocale($locale->getPrimaryKey())
-            ->setLocaleName($locale->getLocaleName())
-            ->setIsActive($locale->getIsActive());
-
-        return $dto;
     }
 
 }
