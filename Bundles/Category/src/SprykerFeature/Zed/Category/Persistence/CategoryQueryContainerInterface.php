@@ -47,11 +47,9 @@ interface CategoryQueryContainerInterface
     public function queryNodeByIdCategoryAndParentNode($idCategory, $idParentNode);
 
     /**
-     * @param int $idLocale
-     *
-     * @return SpyCategoryNodeQuery
+     * @return SpyCategoryAttributeQuery
      */
-    public function queryRootNodes($idLocale);
+    public function queryRootNodes();
 
     /**
      * @param int $idNode
@@ -100,11 +98,12 @@ interface CategoryQueryContainerInterface
 
     /**
      * @param int $idChildNode
+     * @param int $idLocale
      * @param bool $excludeRoot
      *
      * @return SpyCategoryClosureTableQuery
      */
-    public function getParentPath($idChildNode, $excludeRoot = true);
+    public function getParentPath($idChildNode, $idLocale, $excludeRoot = true);
 
     /**
      * @return SpyCategoryNodeQuery

@@ -33,7 +33,7 @@ class CategoryFormEdit extends CategoryFormAdd
      */
     protected function buildFormFields()
     {
-        $categoriesWithPath = $this->getCategoriesWithPaths();
+        $categoriesWithPath = $this->getCategoriesWithPaths($this->locale->getIdLocale());
 
         return $this->addText(self::NAME, [
                 'constraints' => [
@@ -111,6 +111,7 @@ class CategoryFormEdit extends CategoryFormAdd
         $categoryEntity = $this->categoryQueryContainer
             ->queryCategoryById($this->idCategory)
             ->innerJoinAttribute()
+            ->addAnd(SpyCategoryAttributeTableMap::COL_FK_LOCALE, $this->locale->getIdLocale())
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::NAME)
             ->withColumn(SpyCategoryAttributeTableMap::COL_META_TITLE, self::ATTRIBUTE_META_TITLE)
             ->withColumn(SpyCategoryAttributeTableMap::COL_META_DESCRIPTION, self::ATTRIBUTE_META_DESCRIPTION)

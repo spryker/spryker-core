@@ -74,8 +74,7 @@ class CategoryWriter implements CategoryWriterInterface
     public function delete($idCategory)
     {
         $this->deleteAttributes($idCategory);
-        $categoryEntity = $this->queryContainer
-            ->queryCategoryById($idCategory)
+        $categoryEntity = $this->queryContainer->queryCategoryById($idCategory)
             ->findOne();
 
         if ($categoryEntity) {
@@ -109,7 +108,9 @@ class CategoryWriter implements CategoryWriterInterface
      */
     protected function persistCategoryAttribute(CategoryTransfer $category, LocaleTransfer $locale)
     {
-        $categoryAttributeEntity = $this->queryContainer->queryAttributeByCategoryId($category->getIdCategory())->findOneOrCreate();
+        $categoryAttributeEntity = $this->queryContainer->queryAttributeByCategoryId($category->getIdCategory())
+            ->filterByFkLocale($locale->getIdLocale())
+            ->findOneOrCreate();
 
         $this->saveCategoryAttribute($category, $locale, $categoryAttributeEntity);
     }
@@ -134,7 +135,10 @@ class CategoryWriter implements CategoryWriterInterface
      */
     protected function deleteAttributes($idCategory)
     {
-        $attributeCollection = $this->queryContainer->queryAttributeByCategoryId($idCategory)->find();
+        $attributeCollection = $this->queryContainer
+            ->queryAttributeByCategoryId($idCategory)
+            ->find();
+
         foreach ($attributeCollection as $attributeEntity) {
             $attributeEntity->delete();
         }
@@ -160,9 +164,7 @@ class CategoryWriter implements CategoryWriterInterface
      */
     protected function getCategoryEntity($idCategory)
     {
-        return $this->queryContainer
-            ->queryCategoryById($idCategory)
-            ->findOne();
+        return $this->queryContainer->queryCategoryById($idCategory)->findOne();
     }
 
     /**
@@ -172,8 +174,9 @@ class CategoryWriter implements CategoryWriterInterface
      *
      * @return void
      */
-    protected function saveCategoryAttribute(CategoryTransfer $category, LocaleTransfer $locale, SpyCategoryAttribute $categoryAttributeEntity)
-    {
+    protected function saveCategoryAttribute(CategoryTransfer $category, LocaleTransfer $locale,
+        SpyCategoryAttribute $categoryAttributeEntity
+    ) {
         $categoryAttributeEntity->fromArray($category->toArray());
         $categoryAttributeEntity->setFkCategory($category->getIdCategory());
         $categoryAttributeEntity->setFkLocale($locale->getIdLocale());

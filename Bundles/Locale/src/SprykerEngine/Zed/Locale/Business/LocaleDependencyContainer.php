@@ -28,8 +28,17 @@ class LocaleDependencyContainer extends AbstractBusinessDependencyContainer
     {
         return $this->getFactory()->createManagerLocaleManager(
             $this->getQueryContainer(),
+            $this->createTransferGenerator(),
             $this->getLocator()
         );
+    }
+
+    /**
+     * @return TransferGeneratorInterface
+     */
+    protected function createTransferGenerator()
+    {
+        return $this->getFactory()->createTransferGenerator();
     }
 
     /**

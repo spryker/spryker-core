@@ -60,8 +60,9 @@ class NodeUrlManager implements NodeUrlManagerInterface
         $categoryUrl = $this->generateUrlFromPathTokens($path);
         $idNode = $categoryNodeTransfer->getIdCategoryNode();
 
-        $url = $this->urlFacade->createUrl($categoryUrl, $localeTransfer, CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idNode);
-        $this->urlFacade->touchUrlActive($url->getIdUrl());
+        $urlTransfer = $this->urlFacade->createUrl($categoryUrl, $localeTransfer, CategoryConfig::RESOURCE_TYPE_CATEGORY_NODE, $idNode);
+        $this->updateTransferUrl($urlTransfer, $categoryUrl, $idNode, $localeTransfer->getIdLocale());
+        $this->urlFacade->saveUrlAndTouch($urlTransfer);
     }
 
     /**
@@ -106,7 +107,7 @@ class NodeUrlManager implements NodeUrlManagerInterface
                 continue;
             }
 
-            $childUrl = $this->generateChildUrl($child->getFkCategoryNodeDescendant());
+            $childUrl = $this->generateChildUrl($child->getFkCategoryNodeDescendant(), $localeTransfer);
             $this->updateTransferUrl($urlTransfer, $childUrl, $child->getFkCategoryNodeDescendant(), $localeTransfer->getIdLocale());
             $this->urlFacade->saveUrlAndTouch($urlTransfer);
         }
@@ -115,8 +116,8 @@ class NodeUrlManager implements NodeUrlManagerInterface
     /**
      * @param UrlTransfer $urlTransfer
      * @param string $url
-     * @param int $idResource
-     * @param int $idLocale
+     * @param int|null $idResource
+     * @param int|null $idLocale
      *
      * @return void
      */
@@ -153,12 +154,13 @@ class NodeUrlManager implements NodeUrlManagerInterface
 
     /**
      * @param int $idChild
+     * @param LocaleTransfer $localeTransfer
      *
      * @return string
      */
-    protected function generateChildUrl($idChild)
+    protected function generateChildUrl($idChild, LocaleTransfer $localeTransfer)
     {
-        $parentList = $this->categoryTreeReader->getPathParents($idChild);
+        $parentList = $this->categoryTreeReader->getPathParents($idChild, $localeTransfer->getIdLocale());
         $pathTokens = [];
         foreach ($parentList as $parent) {
             /* @var SpyCategoryClosureTable $parent */

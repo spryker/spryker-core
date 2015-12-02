@@ -58,11 +58,12 @@ interface CategoryTreeReaderInterface
 
     /**
      * @param int $idChildNode
+     * @param int $idLocale
      * @param bool $excludeRoot
      *
      * @return array
      */
-    public function getPathParents($idChildNode, $excludeRoot = true);
+    public function getPathParents($idChildNode, $idLocale, $excludeRoot = true);
 
     /**
      * @param int $idNode

@@ -1,6 +1,6 @@
 'use strict';
 
-serializedList = {};
+window.serializedList = {};
 $(document).ready(function() {
     var sprykerAjax = new SprykerAjax();
     var triggeredFirstEvent = false;
@@ -32,7 +32,7 @@ $(document).ready(function() {
 
     var updateOutput = function(e) {
         var list = e.length ? e : $(e.target);
-        serializedList = window.JSON.stringify(list.nestable('serialize'));
+        window.serializedList = window.JSON.stringify(list.nestable('serialize'));
     };
 
     $('#nestable').nestable({

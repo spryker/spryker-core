@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\Product\Communication\Controller;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Product\Business\ProductFacade;
@@ -81,7 +82,7 @@ class IndexController extends AbstractController
             ),
         ];
 
-        $categories = $this->getProductCategories($abstractProduct);
+        $categories = $this->getProductCategories($abstractProduct, $currentLocale->getIdLocale());
 
         return $this->viewResponse([
             'abstractProduct' => $abstractProduct,
@@ -159,11 +160,12 @@ class IndexController extends AbstractController
     }
 
     /**
-     * @param $abstractProduct
+     * @param SpyAbstractProduct $abstractProduct
+     * @param int $idLocale
      *
      * @return array
      */
-    protected function getProductCategories(SpyAbstractProduct $abstractProduct)
+    protected function getProductCategories(SpyAbstractProduct $abstractProduct, $idLocale)
     {
         $productCategoryEntityList = $this->getDependencyContainer()
             ->createProductCategoryQueryContainer()
@@ -174,7 +176,10 @@ class IndexController extends AbstractController
         foreach ($productCategoryEntityList as $productCategoryEntity) {
             $categories[] = [
                 self::COL_ID_PRODUCT_CATEGORY => $productCategoryEntity->getIdProductCategory(),
-                self::COL_CATEGORY_NAME => $productCategoryEntity->getSpyCategory()->getAttributes()->getFirst()->getName(),
+                self::COL_CATEGORY_NAME => $productCategoryEntity->getSpyCategory()
+                    ->getLocalisedAttributes($idLocale)
+                    ->getFirst()
+                    ->getName(),
             ];
         }
 
@@ -184,15 +189,13 @@ class IndexController extends AbstractController
     /**
      * @throws \ErrorException
      *
-     * @return mixed
+     * @return LocaleTransfer
      */
     protected function getCurrentLocale()
     {
-        $currentLocale = $this->getDependencyContainer()
+        return $this->getDependencyContainer()
             ->createLocaleFacade()
             ->getCurrentLocale();
-
-        return $currentLocale;
     }
 
 }

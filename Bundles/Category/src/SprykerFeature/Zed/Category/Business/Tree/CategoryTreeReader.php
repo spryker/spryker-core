@@ -101,14 +101,15 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
 
     /**
      * @param int $idChildNode
+     * @param int $idLocale
      * @param bool $excludeRoot
      *
      * @return array
      */
-    public function getPathParents($idChildNode, $excludeRoot = true)
+    public function getPathParents($idChildNode, $idLocale, $excludeRoot = true)
     {
         return $this->queryContainer
-            ->getParentPath($idChildNode, $excludeRoot)
+            ->getParentPath($idChildNode, $idLocale, $excludeRoot)
             ->find();
     }
 
@@ -381,12 +382,18 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
         } else {
             $idParent = $node->getIdCategoryNode();
         }
+
         foreach ($children as $child) {
+            $text = $child->getCategory()
+                ->getLocalisedAttributes($localeTransfer->getIdLocale())
+                ->getFirst()
+                ->getName();
+
             $tree[] = [
                 self::ID => $child->getIdCategoryNode(),
                 self::ID_CATEGORY => $child->getFkCategory(),
                 self::ID_PARENT => $idParent,
-                self::TEXT => $child->getCategory()->getAttributes()->getFirst()->getName(),
+                self::TEXT => $text,
                 self::IS_MAIN => $child->getIsMain(),
                 self::IS_ACTIVE => $child->getCategory()->isActive(),
                 self::IS_IN_MENU => $child->getCategory()->getIsInMenu(),
@@ -425,6 +432,7 @@ class CategoryTreeReader implements CategoryTreeReaderInterface
     public function getTreeNodeChildrenByIdCategoryAndLocale($idCategory, LocaleTransfer $locale)
     {
         $categories = $this->getTreeNodeChildren($idCategory, $locale);
+
         $this->treeFormatter->setupCategories($categories);
 
         return $this->treeFormatter->getCategoryTree();
