@@ -17,7 +17,7 @@ class SprykerUseStatementFixer extends AbstractFixer
     /**
      * @var array
      */
-    protected static $namespaces = [
+    protected static $whiteListOfNamespaces = [
         'Pyz',
         'Orm',
         'Generated',
@@ -72,8 +72,8 @@ class SprykerUseStatementFixer extends AbstractFixer
     {
         $tokens = Tokens::fromCode($content);
 
-        $namespaceDeclarations = $this->getNamespaceDeclarations($tokens);
-        if (empty($namespaceDeclarations)) {
+        $namespaceStatements = $this->getNamespaceStatements($tokens);
+        if (empty($namespaceStatements)) {
             return $tokens->generateCode();
         }
 
@@ -82,7 +82,7 @@ class SprykerUseStatementFixer extends AbstractFixer
         $this->fixUseForNew($tokens);
         $this->fixUseForStatic($tokens);
 
-        $this->insertNewUseDeclarations($tokens, $namespaceDeclarations);
+        $this->insertNewUseStatements($tokens, $namespaceStatements);
 
         return $tokens->generateCode();
     }
@@ -185,7 +185,7 @@ class SprykerUseStatementFixer extends AbstractFixer
      *
      * @return array
      */
-    protected function getNamespaceDeclarations(Tokens $tokens)
+    protected function getNamespaceStatements(Tokens $tokens)
     {
         $namespaces = [];
 
@@ -194,11 +194,11 @@ class SprykerUseStatementFixer extends AbstractFixer
                 continue;
             }
 
-            $declarationEndIndex = $tokens->getNextTokenOfKind($index, [';', '{']);
+            $statementEndIndex = $tokens->getNextTokenOfKind($index, [';', '{']);
 
             $namespaces[] = [
-                'end' => $declarationEndIndex,
-                'name' => trim($tokens->generatePartialCode($index + 1, $declarationEndIndex - 1)),
+                'end' => $statementEndIndex,
+                'name' => trim($tokens->generatePartialCode($index + 1, $statementEndIndex - 1)),
                 'start' => $index,
             ];
         }
@@ -212,32 +212,32 @@ class SprykerUseStatementFixer extends AbstractFixer
      *
      * @return array
      */
-    protected function getNamespaceUseDeclarations(Tokens $tokens, array $useIndexes)
+    protected function getNamespaceUseStatements(Tokens $tokens, array $useIndexes)
     {
         $uses = [];
 
         foreach ($useIndexes as $index) {
-            $declarationEndIndex = $tokens->getNextTokenOfKind($index, [';']);
-            $declarationContent = $tokens->generatePartialCode($index + 1, $declarationEndIndex - 1);
+            $statementEndIndex = $tokens->getNextTokenOfKind($index, [';']);
+            $statementContent = $tokens->generatePartialCode($index + 1, $statementEndIndex - 1);
 
             // ignore multiple use statements like: `use BarB, BarC as C, BarD;`
             // that should be split into few separate statements
-            if (strpos($declarationContent, ',') !== false) {
+            if (strpos($statementContent, ',') !== false) {
                 continue;
             }
 
-            $declarationParts = preg_split('/\s+as\s+/i', $declarationContent);
+            $statementParts = preg_split('/\s+as\s+/i', $statementContent);
 
-            if (count($declarationParts) === 1) {
-                $fullName = $declarationContent;
-                $declarationParts = explode('\\', $fullName);
-                $shortName = end($declarationParts);
+            if (count($statementParts) === 1) {
+                $fullName = $statementContent;
+                $statementParts = explode('\\', $fullName);
+                $shortName = end($statementParts);
                 $aliased = null;
             } else {
-                $fullName = $declarationParts[0];
-                $shortName = $declarationParts[1];
-                $declarationParts = explode('\\', $fullName);
-                $aliased = $shortName !== end($declarationParts);
+                $fullName = $statementParts[0];
+                $shortName = $statementParts[1];
+                $statementParts = explode('\\', $fullName);
+                $aliased = $shortName !== end($statementParts);
             }
 
             $shortName = trim($shortName);
@@ -246,7 +246,7 @@ class SprykerUseStatementFixer extends AbstractFixer
 
             $uses[$key] = [
                 'aliased' => $aliased,
-                'end' => $declarationEndIndex,
+                'end' => $statementEndIndex,
                 'fullName' => $fullName,
                 'shortName' => $shortName,
                 'start' => $index,
@@ -258,48 +258,48 @@ class SprykerUseStatementFixer extends AbstractFixer
 
     /**
      * @param Tokens|Token[] $tokens
-     * @param array $namespaceDeclarations
+     * @param array $namespaceStatements
      *
      * @return void
      */
-    protected function insertNewUseDeclarations(Tokens $tokens, array $namespaceDeclarations)
+    protected function insertNewUseStatements(Tokens $tokens, array $namespaceStatements)
     {
-        $newDeclarations = $this->newStatements;
-        $existingDeclarations = $this->existingStatements;
+        $newStatements = $this->newStatements;
+        $existingStatements = $this->existingStatements;
 
-        if (empty($existingDeclarations)) {
-            $useStatementStartIndex = $tokens->getNextMeaningfulToken($namespaceDeclarations[0]['end']);
+        if (empty($existingStatements)) {
+            $useStatementStartIndex = $tokens->getNextMeaningfulToken($namespaceStatements[0]['end']);
             $tokens[$useStatementStartIndex]->setContent(PHP_EOL . $tokens[$useStatementStartIndex]->getContent());
         } else {
             $useStatementStartIndex = null;
-            foreach ($existingDeclarations as $existingDeclaration) {
-                $useStatementStartIndex = $existingDeclaration['start'];
+            foreach ($existingStatements as $existingStatement) {
+                $useStatementStartIndex = $existingStatement['start'];
                 break;
             }
         }
 
-        foreach ($newDeclarations as $alias => $useDeclaration) {
-            if (!isset($existingDeclarations[$alias])) {
-                $this->insertUseStatement($tokens, $useDeclaration, $useStatementStartIndex);
+        foreach ($newStatements as $alias => $useStatement) {
+            if (!isset($existingStatements[$alias])) {
+                $this->insertUseStatement($tokens, $useStatement, $useStatementStartIndex);
             }
         }
     }
 
     /**
      * @param Tokens|Token[] $tokens
-     * @param array $useDeclaration
+     * @param array $useStatement
      * @param int $useStatementStartIndex
      *
      * @return void
      */
-    protected function insertUseStatement(Tokens $tokens, array $useDeclaration, $useStatementStartIndex)
+    protected function insertUseStatement(Tokens $tokens, array $useStatement, $useStatementStartIndex)
     {
         $alias = '';
-        if (!empty($useDeclaration['aliased'])) {
-            $alias = ' as ' . $useDeclaration['aliased'];
+        if (!empty($useStatement['aliased'])) {
+            $alias = ' as ' . $useStatement['aliased'];
         }
 
-        $content = 'use ' . $useDeclaration['fullName'] . $alias . ';';
+        $content = 'use ' . $useStatement['fullName'] . $alias . ';';
         $content .= PHP_EOL;
 
         $tokens[$useStatementStartIndex]->override([T_STRING, $content . $tokens[$useStatementStartIndex]->getContent(), $tokens[$useStatementStartIndex]->getLine()]);
@@ -315,7 +315,7 @@ class SprykerUseStatementFixer extends AbstractFixer
         $firstSeparator = mb_strpos($extractedUseStatement, '\\');
         $namespace = mb_substr($extractedUseStatement, 0, $firstSeparator);
 
-        return in_array($namespace, self::$namespaces);
+        return in_array($namespace, self::$whiteListOfNamespaces);
     }
 
     /**
@@ -339,9 +339,9 @@ class SprykerUseStatementFixer extends AbstractFixer
         }
 
         $result = [
-           'aliased' => $alias === $shortName ? null : $alias,
-           'fullName' => $fullName,
-           'shortName' => $shortName,
+            'aliased' => $alias === $shortName ? null : $alias,
+            'fullName' => $fullName,
+            'shortName' => $shortName,
         ];
         $this->allStatements[$alias] = $result;
         $this->newStatements[$alias] = $result;
@@ -390,10 +390,10 @@ class SprykerUseStatementFixer extends AbstractFixer
      */
     protected function loadStatements($tokens)
     {
-        $useDeclarationsIndexes = $tokens->getImportUseIndexes();
-        $existingDeclarations = $this->getNamespaceUseDeclarations($tokens, $useDeclarationsIndexes);
-        $this->existingStatements = $existingDeclarations;
-        $this->allStatements = $existingDeclarations;
+        $useStatementsIndexes = $tokens->getImportUseIndexes();
+        $existingStatements = $this->getNamespaceUseStatements($tokens, $useStatementsIndexes);
+        $this->existingStatements = $existingStatements;
+        $this->allStatements = $existingStatements;
         $this->newStatements = [];
     }
 
