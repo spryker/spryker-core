@@ -8,7 +8,7 @@ namespace SprykerEngine\Zed\Kernel\Business;
 
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Zed\Kernel\Business\DependencyContainer\DependencyContainerInterface;
-use SprykerEngine\Zed\Kernel\ClassResolver;
+use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -29,7 +29,6 @@ abstract class AbstractFacade implements FacadeInterface
      */
     public function __construct(FactoryInterface $factory, Locator $locator)
     {
-
 //        if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
 //            $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator);
 //        }
@@ -78,9 +77,9 @@ abstract class AbstractFacade implements FacadeInterface
      */
     private function findDependencyContainer()
     {
-        $classResolver = new ClassResolver();
+        $classResolver = new DependencyContainerResolver();
 
-        return $classResolver->resolve('DependencyContainer', $this);
+        return $classResolver->resolve($this);
     }
 
     /**

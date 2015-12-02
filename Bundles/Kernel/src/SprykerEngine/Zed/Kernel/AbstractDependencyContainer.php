@@ -9,6 +9,7 @@ namespace SprykerEngine\Zed\Kernel;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerEngine\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
 
 abstract class AbstractDependencyContainer
 {
@@ -25,12 +26,12 @@ abstract class AbstractDependencyContainer
 
     /**
      * @param FactoryInterface $factory
+     * @param LocatorLocatorInterface $locator
      * @param AbstractBundleConfig $config
      */
-    public function __construct(FactoryInterface $factory = null, AbstractBundleConfig $config = null)
+    public function __construct(FactoryInterface $factory = null, LocatorLocatorInterface $locator = null, AbstractBundleConfig $config = null)
     {
         $this->factory = $factory;
-        $this->config = $config;
     }
 
     /**
@@ -56,9 +57,24 @@ abstract class AbstractDependencyContainer
     /**
      * @return AbstractBundleConfig
      */
-    public function getConfig()
+    protected function getConfig()
     {
+        if (is_null($this->config)) {
+            $this->config = $this->findBundleConfig();
+        }
+
         return $this->config;
+    }
+
+    /**
+     * @throws \Exception
+     * @return mixed
+     */
+    private function findBundleConfig()
+    {
+        $resolver = new BundleConfigResolver();
+
+        return $resolver->resolve($this);
     }
 
 }
