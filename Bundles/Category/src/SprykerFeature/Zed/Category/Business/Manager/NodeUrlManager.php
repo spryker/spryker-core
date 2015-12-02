@@ -116,8 +116,8 @@ class NodeUrlManager implements NodeUrlManagerInterface
     /**
      * @param UrlTransfer $urlTransfer
      * @param string $url
-     * @param int $idResource
-     * @param int $idLocale
+     * @param int|null $idResource
+     * @param int|null $idLocale
      *
      * @return void
      */
