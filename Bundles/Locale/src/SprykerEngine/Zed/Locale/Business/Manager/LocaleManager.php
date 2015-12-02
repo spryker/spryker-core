@@ -36,8 +36,8 @@ class LocaleManager
 
     public function __construct(LocaleQueryContainerInterface $localeQueryContainer,
         TransferGeneratorInterface $transferGenerator,
-        LocatorLocatorInterface $locator)
-    {
+        LocatorLocatorInterface $locator
+    ) {
         $this->localeQueryContainer = $localeQueryContainer;
         $this->transferGenerator = $transferGenerator;
         $this->locator = $locator;
