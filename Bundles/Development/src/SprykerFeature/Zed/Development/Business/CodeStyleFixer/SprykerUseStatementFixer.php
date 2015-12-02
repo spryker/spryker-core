@@ -41,7 +41,7 @@ class SprykerUseStatementFixer extends AbstractFixer
     protected $allStatements = [];
 
     /**
-     * {@inheritdoc}
+     * @return string
      */
     public function getDescription()
     {
@@ -49,7 +49,7 @@ class SprykerUseStatementFixer extends AbstractFixer
     }
 
     /**
-     * {@inheritdoc}
+     * @return int
      */
     public function getPriority()
     {
@@ -66,7 +66,10 @@ class SprykerUseStatementFixer extends AbstractFixer
     }
 
     /**
-     * {@inheritdoc}
+     * @param \SplFileInfo $file
+     * @param string $content
+     *
+     * @return string
      */
     public function fix(\SplFileInfo $file, $content)
     {
@@ -78,29 +81,10 @@ class SprykerUseStatementFixer extends AbstractFixer
         }
 
         $this->loadStatements($tokens);
-
         $this->fixUseForNew($tokens);
-        $this->fixUseForStatic($tokens);
-
         $this->insertNewUseStatements($tokens, $namespaceStatements);
 
         return $tokens->generateCode();
-    }
-
-    /**
-     * @param Tokens|Token[] $tokens
-     *
-     * @return void
-     */
-    protected function fixUseForStatic(Tokens $tokens)
-    {
-        foreach ($tokens as $index => $token) {
-            if (!$token->isGivenKind([T_DOUBLE_COLON])) {
-                continue;
-            }
-
-            //TODO
-        }
     }
 
     /**
@@ -168,11 +152,26 @@ class SprykerUseStatementFixer extends AbstractFixer
     }
 
     /**
-     * {@inheritdoc}
+     * @param \SplFileInfo $file
+     *
+     * @return bool
      */
     public function supports(\SplFileInfo $file)
     {
-        // Possible Blacklist
+        if ($this->isBlacklisted($file)) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
+     * @param \SplFileInfo $file
+     *
+     * @return bool
+     */
+    protected function isBlacklisted(\SplFileInfo $file)
+    {
         if (strpos($file, DIRECTORY_SEPARATOR . 'Fixtures' . DIRECTORY_SEPARATOR) !== false) {
             return false;
         }
@@ -220,9 +219,7 @@ class SprykerUseStatementFixer extends AbstractFixer
             $statementEndIndex = $tokens->getNextTokenOfKind($index, [';']);
             $statementContent = $tokens->generatePartialCode($index + 1, $statementEndIndex - 1);
 
-            // ignore multiple use statements like: `use BarB, BarC as C, BarD;`
-            // that should be split into few separate statements
-            if (strpos($statementContent, ',') !== false) {
+            if ($this->isMultipleUseStatement($statementContent)) {
                 continue;
             }
 
@@ -254,6 +251,22 @@ class SprykerUseStatementFixer extends AbstractFixer
         }
 
         return $uses;
+    }
+
+    /**
+     * @TODO Add fixer for multiple use statements in one line like: `use BarB, BarC as C, BarD;`
+     *
+     * @param string $statementContent
+     *
+     * @return bool
+     */
+    protected function isMultipleUseStatement($statementContent)
+    {
+        if (strpos($statementContent, ',') !== false) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
