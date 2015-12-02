@@ -326,7 +326,6 @@ class SprykerUseStatementFixer extends AbstractFixer
      */
     protected function addUseStatement($shortName, $fullName)
     {
-        // Find existing one
         foreach ($this->allStatements as $useStatement) {
             if ($useStatement['fullName'] === $fullName) {
                 return $useStatement;
@@ -350,8 +349,8 @@ class SprykerUseStatementFixer extends AbstractFixer
     }
 
     /**
-     * @param $shortName
-     * @param $fullName
+     * @param string $shortName
+     * @param string $fullName
      *
      * @return string|null
      */
