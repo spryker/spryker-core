@@ -98,11 +98,12 @@ interface CategoryQueryContainerInterface
 
     /**
      * @param int $idChildNode
+     * @param int $idLocale
      * @param bool $excludeRoot
      *
      * @return SpyCategoryClosureTableQuery
      */
-    public function getParentPath($idChildNode, $excludeRoot = true);
+    public function getParentPath($idChildNode, $idLocale, $excludeRoot = true);
 
     /**
      * @return SpyCategoryNodeQuery

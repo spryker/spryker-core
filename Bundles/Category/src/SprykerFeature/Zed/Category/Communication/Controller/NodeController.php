@@ -45,7 +45,10 @@ class NodeController extends AbstractController
         foreach ($nodeList as $nodeEntity) {
             $items[] = [
                 'id' => $nodeEntity->getIdCategoryNode(),
-                'text' => $nodeEntity->getCategory()->getAttributes()->getFirst()->getName(),
+                'text' => $nodeEntity->getCategory()
+                    ->getLocalisedAttributes($locale->getIdLocale())
+                    ->getFirst()
+                    ->getName(),
             ];
         }
 
@@ -75,6 +78,7 @@ class NodeController extends AbstractController
                 ->queryNodeById($idNode)
                 ->findOne();
 
+            /* @var NodeTransfer $nodeTransfer */
             $nodeTransfer = (new NodeTransfer())
                 ->fromArray($nodeEntity->toArray());
 

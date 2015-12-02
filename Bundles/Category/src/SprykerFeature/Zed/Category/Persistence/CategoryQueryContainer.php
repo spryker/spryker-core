@@ -376,11 +376,12 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
 
     /**
      * @param int $idChildNode
+     * @param int $idLocale
      * @param bool $excludeRoot
      *
      * @return SpyCategoryClosureTableQuery
      */
-    public function getParentPath($idChildNode, $excludeRoot = true)
+    public function getParentPath($idChildNode, $idLocale, $excludeRoot = true)
     {
         $query = new SpyCategoryClosureTableQuery();
         $query->filterByFkCategoryNodeDescendant($idChildNode)
@@ -389,6 +390,7 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
             ->innerJoinCategory()
             ->useCategoryQuery()
             ->innerJoinAttribute()
+                ->addAnd(SpyCategoryAttributeTableMap::COL_FK_LOCALE, $idLocale)
             ->endUse()
             ->endUse()
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, 'name')
@@ -875,13 +877,14 @@ class CategoryQueryContainer extends AbstractQueryContainer implements CategoryQ
         return SpyCategoryNodeQuery::create()
             ->filterByFkParentCategoryNode($idParentNode)
             ->useCategoryQuery()
-            ->innerJoinAttribute()
-            ->addAnd(
-                SpyCategoryAttributeTableMap::COL_FK_LOCALE,
-                $idLocale,
-                Criteria::EQUAL
-            )
+                ->innerJoinAttribute()
+                ->addAnd(
+                    SpyCategoryAttributeTableMap::COL_FK_LOCALE,
+                    $idLocale,
+                    Criteria::EQUAL
+                )
             ->endUse()
+            ->withColumn(SpyCategoryAttributeTableMap::COL_NAME)
             ->orderBy(SpyCategoryNodeTableMap::COL_NODE_ORDER, Criteria::DESC);
     }
 

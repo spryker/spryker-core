@@ -89,7 +89,7 @@ class CategoryFormAdd extends AbstractForm
             ])
             ->addSelect2ComboBox(self::FK_PARENT_CATEGORY_NODE, [
                 'label' => 'Parent',
-                'choices' => $this->getCategoriesWithPaths(),
+                'choices' => $this->getCategoriesWithPaths($this->locale->getIdLocale()),
                 'constraints' => [
                     $this->getConstraints()->createConstraintNotBlank(),
                 ],
@@ -98,9 +98,11 @@ class CategoryFormAdd extends AbstractForm
     }
 
     /**
+     * @param int $idLocale
+     *
      * @return array
      */
-    protected function getCategoriesWithPaths()
+    protected function getCategoriesWithPaths($idLocale)
     {
         $categoryEntityList = $this->categoryQueryContainer
             ->queryCategory($this->locale->getIdLocale())
@@ -116,7 +118,10 @@ class CategoryFormAdd extends AbstractForm
                     $path = $pathCache[$nodeEntity->getFkParentCategoryNode()];
                 }
 
-                $categories[$path][$nodeEntity->getIdCategoryNode()] = $categoryEntity->getAttributes()->getFirst()->getName();
+                $categories[$path][$nodeEntity->getIdCategoryNode()] = $categoryEntity
+                    ->getLocalisedAttributes($idLocale)
+                    ->getFirst()
+                    ->getName();
             }
         }
 
@@ -207,6 +212,7 @@ class CategoryFormAdd extends AbstractForm
         $categoryEntity = $this->categoryQueryContainer
             ->queryCategoryById($this->idCategory)
             ->innerJoinAttribute()
+            ->addAnd(SpyCategoryAttributeTableMap::COL_FK_LOCALE, $this->locale->getIdLocale())
             ->withColumn(SpyCategoryAttributeTableMap::COL_NAME, self::NAME)
             ->innerJoinNode()
             ->withColumn(SpyCategoryNodeTableMap::COL_FK_PARENT_CATEGORY_NODE, self::FK_PARENT_CATEGORY_NODE)
