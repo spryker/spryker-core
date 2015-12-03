@@ -14,26 +14,6 @@ abstract class AbstractBundleConfig
 {
 
     /**
-     * @var Config
-     */
-    private $config;
-
-    /**
-     * @var AutoCompletion|LocatorLocatorInterface
-     */
-    private $locator;
-
-    /**
-     * @param Config $config
-     * @param LocatorLocatorInterface $locator
-     */
-    public function __construct(Config $config, LocatorLocatorInterface $locator)
-    {
-        $this->config = $config;
-        $this->locator = $locator;
-    }
-
-    /**
      * @param string $key
      *
      * @throws \Exception
@@ -42,7 +22,15 @@ abstract class AbstractBundleConfig
      */
     protected function get($key)
     {
-        return $this->config->get($key);
+        return $this->getConfig()->get($key);
+    }
+
+    /**
+     * @return Config
+     */
+    protected function getConfig()
+    {
+        return Config::getInstance();
     }
 
     /**
@@ -52,7 +40,7 @@ abstract class AbstractBundleConfig
      */
     protected function getLocator()
     {
-        return $this->locator;
+        return Locator::getInstance();
     }
 
 }

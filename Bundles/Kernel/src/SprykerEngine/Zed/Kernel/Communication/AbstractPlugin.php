@@ -9,8 +9,8 @@ namespace SprykerEngine\Zed\Kernel\Communication;
 use Psr\Log\AbstractLogger;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
 use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 abstract class AbstractPlugin extends AbstractLogger implements MessengerInterface
@@ -39,15 +39,9 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     private $queryContainer;
 
     /**
-     * @param Factory $factory
-     * @param Locator $locator
+     * @var Container
      */
-    public function __construct(Factory $factory, Locator $locator)
-    {
-        if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
-            $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator);
-        }
-    }
+    private $container;
 
     /**
      * @param MessengerInterface $messenger
@@ -82,31 +76,28 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     /**
      * @param Container $container
      *
-     * @return void
+     * @return self
      */
     public function setExternalDependencies(Container $container)
     {
-        $dependencyContainer = $this->getDependencyContainer();
-        if (isset($dependencyContainer)) {
-            $this->getDependencyContainer()->setContainer($container);
-        }
+        $this->container = $container;
+
+        return $this;
     }
 
     /**
-     * TODO move to constructor
-     *
      * @param AbstractFacade $facade
      *
-     * @return void
+     * @return self
      */
     public function setOwnFacade(AbstractFacade $facade)
     {
         $this->facade = $facade;
+
+        return $this;
     }
 
     /**
-     * For autocompletion use typehint in class docblock like this: "@method MyFacade getFacade()"
-     *
      * @return AbstractFacade
      */
     protected function getFacade()
@@ -131,7 +122,31 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
      */
     protected function getDependencyContainer()
     {
+        if ($this->dependencyContainer === null) {
+            $this->dependencyContainer = $this->findDependencyContainer();
+        }
+
+        if ($this->getQueryContainer() !== null) {
+            $this->dependencyContainer->setQueryContainer($this->getQueryContainer());
+        }
+
+        if ($this->container !== null) {
+            $this->dependencyContainer->setContainer($this->container);
+        }
+
         return $this->dependencyContainer;
+    }
+
+    /**
+     * @throws \Exception
+     *
+     * @return mixed
+     */
+    private function findDependencyContainer()
+    {
+        $classResolver = new DependencyContainerResolver();
+
+        return $classResolver->resolve($this);
     }
 
     /**

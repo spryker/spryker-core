@@ -34,13 +34,6 @@ class Factory extends AbstractFactory
     {
         $arguments = func_get_args();
 
-        if (in_array($class, $this->baseClasses)) {
-            $bundleConfigLocator = new BundleConfigLocator();
-            $bundleConfig = $bundleConfigLocator->locate($this->getBundle(), $arguments[2]);
-            $class = $this->getBundle() . $class;
-            $arguments[] = $bundleConfig;
-        }
-
         array_shift($arguments);
 
         if ($this->isMagicCall) {

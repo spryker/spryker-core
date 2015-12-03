@@ -52,7 +52,7 @@ class FacadeLocator extends AbstractLocator
     {
         $factory = $this->getFactory($bundle);
 
-        $facade = $factory->create($bundle . self::FACADE_SUFFIX, $factory, $locator);
+        $facade = $factory->create($bundle . self::FACADE_SUFFIX);
 
         try {
             $bundleProviderLocator = new BundleDependencyProviderLocator(); // TODO Make singleton because of performance

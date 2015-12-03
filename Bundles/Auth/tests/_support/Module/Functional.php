@@ -22,8 +22,8 @@ class Functional extends Module
     {
         parent::__construct($config);
 
-        $propelServiceProvider = new PropelServiceProvider();
-        $propelServiceProvider->boot(new Application());
+//        $propelServiceProvider = new PropelServiceProvider();
+//        $propelServiceProvider->boot(new Application());
     }
 
     /**

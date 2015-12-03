@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Oms\Business;
 
+use SprykerFeature\Zed\Oms\Business\Process\ProcessSelector;
 use SprykerFeature\Zed\Oms\Business\Util\Drawer;
 use SprykerFeature\Zed\Oms\Business\Process\Process;
 use SprykerFeature\Zed\Oms\Business\Process\Transition;
@@ -195,6 +196,14 @@ class OmsDependencyContainer extends AbstractBusinessDependencyContainer
     public function createUtilOrderItemMatrix()
     {
         return new OrderItemMatrix($this->getQueryContainer(), $this->getConfig());
+    }
+
+    /**
+     * @return ProcessSelector
+     */
+    public function createProcessSelector()
+    {
+        return new ProcessSelector($this->getConfig());
     }
 
 }

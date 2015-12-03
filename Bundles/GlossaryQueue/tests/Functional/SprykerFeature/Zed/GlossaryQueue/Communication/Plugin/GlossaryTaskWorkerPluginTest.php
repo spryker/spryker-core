@@ -6,6 +6,7 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\QueueMessageTransfer;
 use Generated\Zed\Ide\AutoCompletion;
+use SprykerFeature\Zed\Glossary\Business\GlossaryDependencyContainer;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Glossary\GlossaryDependencyProvider;
 use SprykerEngine\Zed\Kernel\Communication\Factory as CommunicationFactory;
@@ -55,14 +56,17 @@ class GlossaryTaskWorkerPluginTest extends Test
 
         $this->generateTestLocales();
         $this->glossaryFacade = $this->createGlossaryFacade();
+
         $container = new Container();
         $container = (new GlossaryDependencyProvider())
             ->provideBusinessLayerDependencies($container);
+
         $this->glossaryFacade->setExternalDependencies($container);
+        $this->glossaryFacade->setDependencyContainer(new GlossaryDependencyContainer());
 
         $glossaryQueueFacade = $this->createGlossaryQueueFacade();
 
-        $this->taskPlugin = new GlossaryTaskWorkerPlugin(new CommunicationFactory('GlossaryQueue'), $this->getLocator());
+        $this->taskPlugin = new GlossaryTaskWorkerPlugin();
         $this->taskPlugin->setOwnFacade($glossaryQueueFacade);
     }
 
@@ -80,7 +84,7 @@ class GlossaryTaskWorkerPluginTest extends Test
      */
     private function getLocaleFacade()
     {
-        return $this->getLocator()->locale()->facade();
+        return new LocaleFacade();
     }
 
     /**

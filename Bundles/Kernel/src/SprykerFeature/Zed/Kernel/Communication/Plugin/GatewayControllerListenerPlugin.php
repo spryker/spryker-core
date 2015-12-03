@@ -28,15 +28,9 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      */
     private $locator;
 
-    /**
-     * @param Factory $factory
-     * @param Locator $locator
-     */
-    public function __construct(Factory $factory, Locator $locator)
+    public function __construct()
     {
-        parent::__construct($factory, $locator);
-
-        $this->locator = $locator;
+        $this->locator = Locator::getInstance();
     }
 
     /**

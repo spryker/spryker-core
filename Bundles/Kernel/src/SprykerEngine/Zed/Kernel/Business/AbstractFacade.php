@@ -6,11 +6,9 @@
 
 namespace SprykerEngine\Zed\Kernel\Business;
 
-use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerEngine\Zed\Kernel\Business\DependencyContainer\DependencyContainerInterface;
 use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
 use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 abstract class AbstractFacade implements FacadeInterface
@@ -24,28 +22,14 @@ abstract class AbstractFacade implements FacadeInterface
     private $dependencyContainer;
 
     /**
-     * @param FactoryInterface $factory
-     * @param Locator $locator
+     * @var AbstractQueryContainer
      */
-    public function __construct(FactoryInterface $factory, Locator $locator)
-    {
-//        if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
-//            $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator);
-//        }
-    }
+    private $queryContainer;
 
     /**
-     * @param Container $container
-     *
-     * @return void
+     * @var Container
      */
-    public function setExternalDependencies(Container $container)
-    {
-        $dependencyContainer = $this->getDependencyContainer();
-        if (isset($dependencyContainer)) {
-            $this->getDependencyContainer()->setContainer($container);
-        }
-    }
+    private $container;
 
     /**
      * @param AbstractBusinessDependencyContainer $businessDependencyContainer
@@ -60,12 +44,60 @@ abstract class AbstractFacade implements FacadeInterface
     }
 
     /**
+     * @param AbstractQueryContainer $queryContainer
+     *
+     * @return self
+     */
+    public function setOwnQueryContainer(AbstractQueryContainer $queryContainer)
+    {
+        $this->queryContainer = $queryContainer;
+
+        return $this;
+    }
+
+    /**
+     * @return AbstractQueryContainer
+     */
+    protected function getQueryContainer()
+    {
+        return $this->queryContainer;
+    }
+
+    /**
+     * @param Container $container
+     *
+     * @return self
+     */
+    public function setExternalDependencies(Container $container)
+    {
+        $this->container = $container;
+
+        return $this;
+    }
+
+    /**
+     * @return Container
+     */
+    protected function getContainer()
+    {
+        return $this->container;
+    }
+
+    /**
      * @return DependencyContainerInterface
      */
     protected function getDependencyContainer()
     {
-        if (is_null($this->dependencyContainer)) {
+        if ($this->dependencyContainer === null) {
             $this->dependencyContainer = $this->findDependencyContainer();
+        }
+
+        if ($this->getQueryContainer() !== null) {
+            $this->dependencyContainer->setQueryContainer($this->getQueryContainer());
+        }
+
+        if ($this->getContainer() !== null) {
+            $this->dependencyContainer->setContainer($this->getContainer());
         }
 
         return $this->dependencyContainer;
@@ -73,6 +105,7 @@ abstract class AbstractFacade implements FacadeInterface
 
     /**
      * @throws \Exception
+     *
      * @return mixed
      */
     private function findDependencyContainer()
@@ -80,21 +113,6 @@ abstract class AbstractFacade implements FacadeInterface
         $classResolver = new DependencyContainerResolver();
 
         return $classResolver->resolve($this);
-    }
-
-    /**
-     * TODO move to constructor
-     *
-     * @param AbstractQueryContainer $queryContainer
-     *
-     * @return void
-     */
-    public function setOwnQueryContainer(AbstractQueryContainer $queryContainer)
-    {
-        $dependencyContainer = $this->getDependencyContainer();
-        if (isset($dependencyContainer)) {
-            $this->getDependencyContainer()->setQueryContainer($queryContainer);
-        }
     }
 
 }

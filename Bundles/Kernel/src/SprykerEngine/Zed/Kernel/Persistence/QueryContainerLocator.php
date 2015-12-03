@@ -53,7 +53,7 @@ class QueryContainerLocator extends AbstractLocator
     {
         $factory = $this->getFactory($bundle);
 
-        $queryContainer = $factory->create($bundle . 'QueryContainer', $factory, $locator);
+        $queryContainer = $factory->create($bundle . 'QueryContainer');
 
         try {
             // TODO Make singleton because of performance
@@ -65,7 +65,6 @@ class QueryContainerLocator extends AbstractLocator
                 return $locator->propel()->pluginConnection()->get();
             };
             $bundleBuilder->providePersistenceLayerDependencies($container);
-            $queryContainer->setContainer($container);
             $queryContainer->setExternalDependencies($container);
         } catch (ClassNotFoundException $e) {
             // TODO remove try-catch when all bundles have a DependencyProvider

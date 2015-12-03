@@ -5,6 +5,9 @@
  */
 namespace SprykerEngine\Zed\Kernel\ClassResolver;
 
+use SprykerEngine\Shared\Config;
+use SprykerFeature\Shared\System\SystemConfig;
+
 class ClassInfo
 {
 
@@ -40,9 +43,26 @@ class ClassInfo
      */
     public function setClass($callerClass)
     {
-        $callerClass = get_class($callerClass);
-        $callerClassParts = explode('\\', $callerClass);
+        if (method_exists($callerClass, 'getClassName')) {
+            $callerClassNameFoo = $callerClass->getClassName();
+            $foo = 'bar';
+        } else {
+        }
+        $callerClassName = get_class($callerClass);
+        if (!$callerClassName) {
+            $foo = 'bar';
+        }
+        $callerClassParts = explode('\\', $callerClassName);
 
+        if (!is_array($callerClassParts)) {
+            $foo = 'bar';
+        }
+
+        $callerClassParts = $this->removeTestNamespace($callerClassParts);
+
+        if (!is_array($callerClassParts) || empty($callerClassParts)) {
+            $foo = 'bar';
+        }
         $this->namespace = $this->getNamespaceFromCallerClass($callerClassParts);
         $this->application = $this->getApplicationFromCallerClass($callerClassParts);
         $this->bundle = $this->getBundleFromCallerClass($callerClassParts);
@@ -121,6 +141,30 @@ class ClassInfo
     public function getLayer()
     {
         return $this->layer;
+    }
+
+    /**
+     * @TODO find a better way to get around this. Problem is that when we extend classes and use this class to
+     * extract the needed elements, we will get namespaces like Unit, Functional, ClientUnit etc
+     *
+     * @param array $callerClassParts
+     *
+     * @throws \Exception
+     * @return array
+     */
+    private function removeTestNamespace(array $callerClassParts)
+    {
+        $config = Config::getInstance();
+        $projectNamespaces = $config->get(SystemConfig::PROJECT_NAMESPACES);
+        $coreNamespaces = $config->get(SystemConfig::CORE_NAMESPACES);
+
+        $namespaces = array_merge($projectNamespaces, $coreNamespaces);
+
+        if (!in_array($callerClassParts[self::KEY_NAMESPACE], $namespaces)) {
+            array_shift($callerClassParts);
+        }
+
+        return $callerClassParts;
     }
 
 

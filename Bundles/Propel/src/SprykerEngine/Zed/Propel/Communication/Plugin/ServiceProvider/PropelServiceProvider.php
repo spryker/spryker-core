@@ -27,16 +27,6 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
     const BUNDLE = 'Propel';
 
     /**
-     * ServiceProvider is created with new in many places e.g. tests
-     * To setup the Plugin, we have to have a factory and the locator.
-     * To prevent doing this in all places, we add them here.
-     */
-    public function __construct()
-    {
-        parent::__construct(new Factory(self::BUNDLE), Locator::getInstance());
-    }
-
-    /**
      * @param Application $app
      *
      * @return void

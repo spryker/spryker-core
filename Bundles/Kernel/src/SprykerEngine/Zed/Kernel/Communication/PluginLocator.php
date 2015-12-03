@@ -53,8 +53,7 @@ class PluginLocator extends AbstractLocator
             'Zed',
             $bundle,
             'Plugin' . $className,
-            'Communication',
-            [$factory, $locator]
+            'Communication'
         );
 
         // @todo REFACTOR -  move to constructor when all controllers are upgraded

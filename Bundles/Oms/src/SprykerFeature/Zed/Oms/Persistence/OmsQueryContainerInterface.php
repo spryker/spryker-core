@@ -23,13 +23,6 @@ interface OmsQueryContainerInterface
 {
 
     /**
-     * @method OmsPersistence getFactory()
-     *
-     * @return void
-     */
-    public function getFactory();
-
-    /**
      * @param array $states
      * @param string $processName
      *

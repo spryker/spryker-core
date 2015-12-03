@@ -146,7 +146,7 @@ trait InternalClassBuilderForTests
         $factory = new PersistenceFactory($bundle);
         /** @var AbstractQueryContainer $queryContainer */
         $queryContainer = new $queryContainerClassName($factory, $this->getLocator());
-        $queryContainer->setContainer($this->getContainer($namespace, $bundle));
+        $queryContainer->setExternalDependencies($this->getContainer($namespace, $bundle));
 
         return $queryContainer;
     }

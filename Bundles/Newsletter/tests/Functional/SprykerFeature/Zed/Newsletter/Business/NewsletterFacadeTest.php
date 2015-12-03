@@ -235,7 +235,6 @@ class NewsletterFacadeTest extends Test
         $this->newsletterFacade = new NewsletterFacade(new Factory('Newsletter'), $locator);
         $queryContainer = new NewsletterQueryContainer(new PersistenceFactory('Newsletter'), $locator);
         $queryContainer->setExternalDependencies($container);
-        $queryContainer->setContainer($container);
         $this->newsletterFacade->setOwnQueryContainer($queryContainer);
         $this->newsletterFacade->setExternalDependencies($container);
     }

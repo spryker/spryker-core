@@ -55,11 +55,25 @@ abstract class AbstractDependencyContainer
     }
 
     /**
+     * @param AbstractBundleConfig $config
+     *
+     * @return self
+     */
+    public function setConfig(AbstractBundleConfig $config)
+    {
+        $this->config = $config;
+
+        return $this;
+    }
+
+    /**
+     * @TODO this method should not be public
+     *
      * @return AbstractBundleConfig
      */
-    protected function getConfig()
+    public function getConfig()
     {
-        if (is_null($this->config)) {
+        if ($this->config === null) {
             $this->config = $this->findBundleConfig();
         }
 
@@ -68,6 +82,7 @@ abstract class AbstractDependencyContainer
 
     /**
      * @throws \Exception
+     *
      * @return mixed
      */
     private function findBundleConfig()
@@ -75,6 +90,14 @@ abstract class AbstractDependencyContainer
         $resolver = new BundleConfigResolver();
 
         return $resolver->resolve($this);
+    }
+
+    /**
+     * @return string
+     */
+    public function getClassName()
+    {
+        return static::class;
     }
 
 }

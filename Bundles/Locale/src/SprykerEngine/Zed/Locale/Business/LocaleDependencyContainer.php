@@ -38,7 +38,7 @@ class LocaleDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createTransferGenerator()
     {
-        return $this->getFactory()->createTransferGenerator();
+        return new TransferGenerator();
     }
 
     /**
