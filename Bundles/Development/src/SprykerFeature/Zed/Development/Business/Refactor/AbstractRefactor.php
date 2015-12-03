@@ -25,7 +25,7 @@ abstract class AbstractRefactor implements RefactorInterface
      *
      * @return Finder|SplFileInfo[]
      */
-    final protected function getFiles(array $directories, $name = null, $depth = null)
+    protected function getFiles(array $directories, $name = null, $depth = null)
     {
         foreach ($directories as $key => $directory) {
             if (!glob($directory)) {
