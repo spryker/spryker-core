@@ -139,7 +139,7 @@ class GlossaryTest extends AbstractFunctionalTest
      */
     public function testCreateTranslationInsertsSomething()
     {
-        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface');
+        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface @see spryker/spryker#796');
         $translationQuery = $this->glossaryQueryContainer->queryTranslations();
         $this->glossaryFacade->createKey('AKey');
         $locale = $this->localeFacade->createLocale('Local');
@@ -156,7 +156,7 @@ class GlossaryTest extends AbstractFunctionalTest
      */
     public function testCreateAndTouchTranslationInsertsSomethingAndTouchesIt()
     {
-        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface');
+        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface @see spryker/spryker#796');
         $translationQuery = $this->glossaryQueryContainer->queryTranslations();
         $touchQuery = $this->touchQueryContainer->queryTouchListByItemType('translation');
         $this->glossaryFacade->createKey('AKey2');
@@ -177,7 +177,7 @@ class GlossaryTest extends AbstractFunctionalTest
      */
     public function testUpdateTranslationUpdatesSomething()
     {
-        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface');
+        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface @see spryker/spryker#796');
         $locale = $this->localeFacade->createLocale('Local');
 
         $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByNames('AnotherKey', $locale->getLocaleName());
@@ -196,7 +196,7 @@ class GlossaryTest extends AbstractFunctionalTest
      */
     public function testUpdateAndTouchTranslationUpdatesSomethingAndTouchesIt()
     {
-        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface');
+        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface @see spryker/spryker#796');
         $locale = $this->localeFacade->createLocale('Locaz');
         $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByNames('AnotherKey2', $locale->getLocaleName());
         $touchQuery = $this->touchQueryContainer->queryTouchListByItemType('translation');
@@ -218,7 +218,7 @@ class GlossaryTest extends AbstractFunctionalTest
      */
     public function testDeleteTranslationDeletesSoftly()
     {
-        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface');
+        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface @see spryker/spryker#796');
         $locale = $this->localeFacade->createLocale('yx_qw');
         $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByNames('KeyWithTranslation', $locale->getLocaleName());
         $this->glossaryFacade->createKey('KeyWithTranslation');
@@ -235,7 +235,7 @@ class GlossaryTest extends AbstractFunctionalTest
      */
     public function testSaveTranslationDoesACreate()
     {
-        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface');
+        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface @see spryker/spryker#796');
         $keyId = $this->glossaryFacade->createKey('SomeNonExistentKey');
         $locale = $this->localeFacade->createLocale('ab_xy');
         $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByIds($keyId, $locale->getIdLocale());
@@ -259,7 +259,7 @@ class GlossaryTest extends AbstractFunctionalTest
      */
     public function testSaveTranslationDoesAnUpdate()
     {
-        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface');
+        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface @see spryker/spryker#796');
         $keyId = $this->glossaryFacade->createKey('SomeNonExistentKey2');
         $locale = $this->localeFacade->createLocale('ab_yz');
         $transferTranslation = $this->glossaryFacade->createTranslation(
@@ -284,7 +284,7 @@ class GlossaryTest extends AbstractFunctionalTest
      */
     public function testSaveAndTouchTranslationDoesATouchForCreation()
     {
-        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface');
+        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface @see spryker/spryker#796');
         $keyId = $this->glossaryFacade->createKey('SomeNonExistentKey3');
         $localeId = $this->localeFacade->createLocale('ab_ef')->getIdLocale();
         $specificTranslationQuery = $this->glossaryQueryContainer->queryTranslationByIds($keyId, $localeId);
@@ -313,7 +313,7 @@ class GlossaryTest extends AbstractFunctionalTest
      */
     public function testSaveAndTouchTranslationDoesATouchForUpdate()
     {
-        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface');
+        $this->markTestSkipped('CreateLocale method missing in GlossaryToLocaleInterface @see spryker/spryker#796');
         $keyId = $this->glossaryFacade->createKey('SomeNonExistentKey4');
         $locale = $this->localeFacade->createLocale('ab_fg');
         $transferTranslation = $this->glossaryFacade->createTranslation('SomeNonExistentKey4', $locale, 'some Value', true);
@@ -338,7 +338,7 @@ class GlossaryTest extends AbstractFunctionalTest
      */
     public function testCreatingTranslationForCurrentLocaleInsertsSomething()
     {
-        $this->markTestSkipped('[ErrorException] Container does not exist in Pyz\Zed\Glossary\Business\GlossaryDependencyContainer');
+        $this->markTestSkipped('[ErrorException] Container does not exist in Pyz\Zed\Glossary\Business\GlossaryDependencyContainer @see spryker/spryker#796');
         $translationQuery = $this->glossaryQueryContainer->queryTranslations();
         $this->glossaryFacade->createKey('SomeNonExistingKey5');
 

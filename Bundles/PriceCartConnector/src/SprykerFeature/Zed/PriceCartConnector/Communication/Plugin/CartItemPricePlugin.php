@@ -24,7 +24,7 @@ class CartItemPricePlugin extends AbstractPlugin implements ItemExpanderPluginIn
      * @var PriceManagerInterface
      */
     private $priceManager;
-    
+
     public function __construct()
     {
         $this->priceManager = $this->getDependencyContainer()->createFacade();
