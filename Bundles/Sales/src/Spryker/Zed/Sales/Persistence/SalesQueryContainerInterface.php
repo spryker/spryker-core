@@ -7,8 +7,9 @@
 namespace Spryker\Zed\Sales\Persistence;
 
 use Propel\Runtime\ActiveQuery\Criteria;
+use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
-interface SalesQueryContainerInterface
+interface SalesQueryContainerInterface extends QueryContainerInterface
 {
 
     /**

@@ -7,8 +7,9 @@ namespace Spryker\Zed\Category\Persistence;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryAttributeTableMap;
 use Orm\Zed\Category\Persistence\Map\SpyCategoryNodeTableMap;
+use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
-interface CategoryQueryContainerInterface
+interface CategoryQueryContainerInterface extends QueryContainerInterface
 {
 
     /**

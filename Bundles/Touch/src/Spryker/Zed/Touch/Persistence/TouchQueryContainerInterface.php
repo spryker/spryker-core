@@ -6,7 +6,9 @@
 
 namespace Spryker\Zed\Touch\Persistence;
 
-interface TouchQueryContainerInterface
+use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+
+interface TouchQueryContainerInterface extends QueryContainerInterface
 {
 
     /**

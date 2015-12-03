@@ -6,7 +6,9 @@
 
 namespace Spryker\Zed\Locale\Persistence;
 
-interface LocaleQueryContainerInterface
+use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+
+interface LocaleQueryContainerInterface extends QueryContainerInterface
 {
 
     /**

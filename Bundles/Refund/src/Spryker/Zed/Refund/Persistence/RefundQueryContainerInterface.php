@@ -7,8 +7,9 @@
 namespace Spryker\Zed\Refund\Persistence;
 
 use Orm\Zed\Refund\Persistence\SpyRefundQuery;
+use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
-interface RefundQueryContainerInterface
+interface RefundQueryContainerInterface extends QueryContainerInterface
 {
 
     /**

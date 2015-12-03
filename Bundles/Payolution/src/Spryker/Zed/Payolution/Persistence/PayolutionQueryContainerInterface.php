@@ -6,7 +6,9 @@
 
 namespace Spryker\Zed\Payolution\Persistence;
 
-interface PayolutionQueryContainerInterface
+use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+
+interface PayolutionQueryContainerInterface extends QueryContainerInterface
 {
 
     /**

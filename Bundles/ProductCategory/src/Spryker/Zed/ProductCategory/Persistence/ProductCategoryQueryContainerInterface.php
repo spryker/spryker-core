@@ -8,8 +8,9 @@ namespace Spryker\Zed\ProductCategory\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use SprykerEngine\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
 
-interface ProductCategoryQueryContainerInterface
+interface ProductCategoryQueryContainerInterface extends QueryContainerInterface
 {
 
     /**

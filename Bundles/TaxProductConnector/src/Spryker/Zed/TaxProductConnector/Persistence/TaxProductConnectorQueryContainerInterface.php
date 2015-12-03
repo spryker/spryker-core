@@ -6,7 +6,9 @@
 
 namespace Spryker\Zed\TaxProductConnector\Persistence;
 
-interface TaxProductConnectorQueryContainerInterface
+use Spryker\Zed\Kernel\Persistence\QueryContainer\QueryContainerInterface;
+
+interface TaxProductConnectorQueryContainerInterface extends QueryContainerInterface
 {
 
     /**
