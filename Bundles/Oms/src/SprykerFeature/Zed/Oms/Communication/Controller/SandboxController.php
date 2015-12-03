@@ -91,6 +91,8 @@ class SandboxController extends AbstractController
      * Create test order with 4 items
      *
      * @throws PropelException
+     *
+     * @return void
      */
     protected function createOrderItem()
     {
@@ -141,6 +143,8 @@ class SandboxController extends AbstractController
      * @param SpyOmsOrderProcess $process
      * @param float $price
      * @param string $sku
+     *
+     * @return void
      */
     protected function addOrderItem(
         SpySalesOrder $order,
@@ -265,6 +269,8 @@ class SandboxController extends AbstractController
     /**
      * @param SpySalesOrder $order
      * @param float $total
+     *
+     * @return void
      */
     protected function updateTestOrderTotalPrice(SpySalesOrder $order, $total)
     {

@@ -74,6 +74,8 @@ class IndexController extends AbstractController
 
     /**
      * @param Request $request
+     *
+     * @return void
      */
     public function drawItemAction(Request $request)
     {

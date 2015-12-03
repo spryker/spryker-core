@@ -15,6 +15,8 @@ class ReadOnlyArrayObject extends \ArrayObject
      * @param mixed $value
      *
      * @throws LogicException
+     *
+     * @return void
      */
     public function append($value)
     {
@@ -25,6 +27,8 @@ class ReadOnlyArrayObject extends \ArrayObject
      * @param mixed $input
      *
      * @throws LogicException
+     *
+     * @return void
      */
     public function exchangeArray($input)
     {
@@ -36,6 +40,8 @@ class ReadOnlyArrayObject extends \ArrayObject
      * @param mixed $newval
      *
      * @throws LogicException
+     *
+     * @return void
      */
     public function offsetSet($index, $newval)
     {
@@ -46,6 +52,8 @@ class ReadOnlyArrayObject extends \ArrayObject
      * @param mixed $index
      *
      * @throws LogicException
+     *
+     * @return void
      */
     public function offsetUnset($index)
     {

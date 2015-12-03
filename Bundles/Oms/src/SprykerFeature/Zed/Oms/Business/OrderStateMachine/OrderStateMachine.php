@@ -545,6 +545,8 @@ class OrderStateMachine implements OrderStateMachineInterface
     /**
      * @param SpySalesOrderItem $orderItem
      * @param string $stateName
+     *
+     * @return void
      */
     protected function setState($orderItem, $stateName)
     {

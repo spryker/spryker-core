@@ -11,6 +11,8 @@ interface StateInterface
 
     /**
      * @param TransitionInterface[] $incomingTransitions
+     *
+     * @return void
      */
     public function setIncomingTransitions(array $incomingTransitions);
 
