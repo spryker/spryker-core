@@ -126,6 +126,8 @@ class SalesFacade extends AbstractFacade
     /**
      * @param int $idRefund
      * @param OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer
+     *
+     * @return void
      */
     public function updateOrderItemsAndExpensesAfterRefund($idRefund, OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer)
     {

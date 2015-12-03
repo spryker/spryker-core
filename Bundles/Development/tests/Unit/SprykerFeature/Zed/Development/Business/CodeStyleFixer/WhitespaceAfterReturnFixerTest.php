@@ -21,6 +21,9 @@ class WhitespaceAfterReturnFixerTest extends \PHPUnit_Framework_TestCase
      */
     protected $fixer;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();

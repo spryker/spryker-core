@@ -125,6 +125,8 @@ class OrderManager
      * @param $orderProcess
      *
      * @throws PropelException
+     *
+     * @return void
      */
     protected function saveOrderItems(OrderTransfer $orderTransfer, $orderEntity, $orderProcess)
     {
@@ -180,6 +182,8 @@ class OrderManager
 
     /**
      * @param ItemTransfer $item
+     *
+     * @return void
      */
     protected function saveProductOptions(ItemTransfer $item)
     {

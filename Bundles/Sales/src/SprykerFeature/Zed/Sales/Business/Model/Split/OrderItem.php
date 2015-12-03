@@ -108,6 +108,8 @@ class OrderItem implements ItemInterface
 
     /**
      * @param ConnectionInterface $databaseConnection
+     *
+     * @return void
      */
     public function setDatabaseConnection(ConnectionInterface $databaseConnection)
     {
@@ -172,6 +174,8 @@ class OrderItem implements ItemInterface
     /**
      * @param SpySalesOrderItem $salesOrderItem
      * @param int $quantity
+     *
+     * @return void
      */
     protected function updateParentQuantity(SpySalesOrderItem $salesOrderItem, $quantity)
     {

@@ -71,7 +71,7 @@ class PhpdocReturnVoidFixer extends AbstractFixer
             $docBlockIndex = $this->getDocBlockToFunction($tokens, $index);
             if (!$tokens[$docBlockIndex]->isGivenKind([T_DOC_COMMENT])) {
                 // Try to not fix for now, as it seems to create indentation issues with the following method
-                continue;
+                //continue;
 
                 $docBlockTemplate = <<<TXT
 /**
@@ -79,7 +79,7 @@ class PhpdocReturnVoidFixer extends AbstractFixer
      */
 
 TXT;
-                $docBlockTemplate = $tokens[$docBlockIndex]->getContent() . $docBlockTemplate . '    ';
+                $docBlockTemplate = $docBlockTemplate . '    ' . $tokens[$docBlockIndex]->getContent();
 
                 $tokens[$docBlockIndex]->setContent($docBlockTemplate);
                 continue;
@@ -123,6 +123,7 @@ TXT;
      *
      * @param Tokens|Token[] $tokens
      * @param int $index
+     *
      * @return string|null
      */
     protected function detectReturnType(Tokens $tokens, $index)
@@ -158,6 +159,7 @@ TXT;
      * @param Tokens|Token[] $tokens
      * @param int $index
      * @param int|null $braceCounter
+     *
      * @return int
      */
     protected function detectMethodEnd(Tokens $tokens, $index, $braceCounter = null)
@@ -193,6 +195,7 @@ TXT;
     /**
      * @param Tokens|Token[] $tokens
      * @param int $index
+     *
      * @return int
      */
     protected function getDocBlockToFunction(Tokens $tokens, $index)
@@ -209,8 +212,8 @@ TXT;
         $endIndex = $i;
         $startIndex = $tokens->getPrevMeaningfulToken($i);
 
-        $docBlockIndex = $endIndex - 1;
-        for ($i = $startIndex + 1; $i < $endIndex; ++$i) {
+        $docBlockIndex = $endIndex;
+        for ($i = $endIndex - 1; $i > $startIndex; --$i) {
             if ($tokens[$i]->isGivenKind([T_DOC_COMMENT])) {
                 $docBlockIndex = $i;
                 break;
