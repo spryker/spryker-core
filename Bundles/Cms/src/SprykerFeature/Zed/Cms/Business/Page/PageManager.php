@@ -154,6 +154,8 @@ class PageManager implements PageManagerInterface
      * @param int $idTemplate
      *
      * @throws MissingTemplateException
+     *
+     * @return void
      */
     protected function checkTemplateExists($idTemplate)
     {
@@ -166,6 +168,8 @@ class PageManager implements PageManagerInterface
      * @param int $idPage
      *
      * @throws MissingPageException
+     *
+     * @return void
      */
     protected function checkPageExists($idPage)
     {
@@ -209,6 +213,8 @@ class PageManager implements PageManagerInterface
      * @param PageTransfer $page
      *
      * @var SpyCmsGlossaryKeyMapping[]
+     *
+     * @return void
      */
     public function touchPageActive(PageTransfer $page)
     {

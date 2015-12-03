@@ -64,6 +64,9 @@ class CmsFacadeTest extends Test
      */
     protected $locator;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -84,6 +87,8 @@ class CmsFacadeTest extends Test
 
     /**
      * @group Cms
+     *
+     * @return void
      */
     public function testCreateTemplateInsertsAndReturnsSomething()
     {
@@ -100,6 +105,8 @@ class CmsFacadeTest extends Test
 
     /**
      * @group Cms
+     *
+     * @return void
      */
     public function testSavePageInsertsAndReturnsSomethingOnCreate()
     {
@@ -123,6 +130,8 @@ class CmsFacadeTest extends Test
 
     /**
      * @group Cms
+     *
+     * @return void
      */
     public function testSavePageWithNewTemplateMustSaveFkTemplateInPage()
     {
@@ -150,6 +159,8 @@ class CmsFacadeTest extends Test
 
     /**
      * @group Cms
+     *
+     * @return void
      */
     public function testSaveTemplateInsertsAndReturnsSomethingOnCreate()
     {
@@ -170,6 +181,8 @@ class CmsFacadeTest extends Test
 
     /**
      * @group Cms
+     *
+     * @return void
      */
     public function testSaveTemplateUpdatesSomething()
     {
@@ -192,6 +205,8 @@ class CmsFacadeTest extends Test
 
     /**
      * @group Cms
+     *
+     * @return void
      */
     public function testSavePageKeyMappingInsertsAndReturnsSomethingOnCreate()
     {
@@ -222,6 +237,8 @@ class CmsFacadeTest extends Test
 
     /**
      * @group Cms
+     *
+     * @return void
      */
     public function testSavePageKeyMappingUpdatesSomething()
     {
@@ -256,6 +273,8 @@ class CmsFacadeTest extends Test
 
     /**
      * @group Cms
+     *
+     * @return void
      */
     public function testAddPlaceholderTextInsertsAndReturnsSomething()
     {
@@ -286,6 +305,8 @@ class CmsFacadeTest extends Test
 
     /**
      * @group Cms
+     *
+     * @return void
      */
     public function testTranslatePlaceholder()
     {
@@ -302,6 +323,9 @@ class CmsFacadeTest extends Test
         $this->assertEquals('A Placeholder Translation', $translation);
     }
 
+    /**
+     * @return void
+     */
     protected function buildGlossaryFacade()
     {
         $this->glossaryFacade = new GlossaryFacade(new Factory('Glossary'), $this->locator);

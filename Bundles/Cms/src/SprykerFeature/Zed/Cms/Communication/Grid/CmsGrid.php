@@ -12,11 +12,17 @@ use SprykerFeature\Zed\Gui\Communication\Table\TableConfiguration;
 class CmsGrid extends AbstractTable
 {
 
+    /**
+     * @return void
+     */
     protected function configure(TableConfiguration $config)
     {
         // @todo: Implement configure() method.
     }
 
+    /**
+     * @return void
+     */
     protected function prepareData(TableConfiguration $config)
     {
         // @todo: Implement prepareData() method.

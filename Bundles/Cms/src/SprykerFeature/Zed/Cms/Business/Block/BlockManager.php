@@ -89,6 +89,8 @@ class BlockManager implements BlockManagerInterface
 
     /**
      * @param int $idCategoryNode
+     *
+     * @return void
      */
     public function updateBlocksAssignedToDeletedCategoryNode($idCategoryNode)
     {
@@ -124,6 +126,8 @@ class BlockManager implements BlockManagerInterface
 
     /**
      * @param CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return void
      */
     public function touchBlockActive(CmsBlockTransfer $cmsBlockTransfer)
     {
@@ -132,6 +136,8 @@ class BlockManager implements BlockManagerInterface
 
     /**
      * @param CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return void
      */
     public function touchBlockActiveWithKeyChange(CmsBlockTransfer $cmsBlockTransfer)
     {
@@ -140,6 +146,8 @@ class BlockManager implements BlockManagerInterface
 
     /**
      * @param CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return void
      */
     public function touchBlockDelete(CmsBlockTransfer $cmsBlockTransfer)
     {
@@ -184,6 +192,8 @@ class BlockManager implements BlockManagerInterface
      * @param int $idPage
      *
      * @throws MissingPageException
+     *
+     * @return void
      */
     protected function checkPageExists($idPage)
     {
@@ -228,6 +238,8 @@ class BlockManager implements BlockManagerInterface
     /**
      * @param CmsBlockTransfer $cmsBlockTransfer
      * @param SpyCmsBlock $blockEntity
+     *
+     * @return void
      */
     protected function touchKeyChangeNecessary(CmsBlockTransfer $cmsBlockTransfer, SpyCmsBlock $blockEntity)
     {

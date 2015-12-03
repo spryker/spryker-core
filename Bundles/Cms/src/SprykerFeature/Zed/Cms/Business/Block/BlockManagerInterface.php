@@ -28,6 +28,8 @@ interface BlockManagerInterface
 
     /**
      * @param int $idCategoryNode
+     *
+     * @return void
      */
     public function updateBlocksAssignedToDeletedCategoryNode($idCategoryNode);
 
@@ -40,16 +42,22 @@ interface BlockManagerInterface
 
     /**
      * @param CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return void
      */
     public function touchBlockActive(CmsBlockTransfer $cmsBlockTransfer);
 
     /**
      * @param CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return void
      */
     public function touchBlockActiveWithKeyChange(CmsBlockTransfer $cmsBlockTransfer);
 
     /**
      * @param CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return void
      */
     public function touchBlockDelete(CmsBlockTransfer $cmsBlockTransfer);
 
