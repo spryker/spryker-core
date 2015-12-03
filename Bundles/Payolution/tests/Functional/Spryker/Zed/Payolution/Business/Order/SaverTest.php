@@ -148,7 +148,7 @@ class SaverTest extends Test
      */
     private function createOrderEntity()
     {
-        $country = SpyCountryQuery::create()->findOneByIso2Code('de');
+        $country = SpyCountryQuery::create()->findOneByIso2Code('DE');
 
         $billingAddress = (new SpySalesOrderAddress())
             ->setFkCountry($country->getIdCountry())
