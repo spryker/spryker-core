@@ -70,18 +70,7 @@ class PhpdocReturnVoidFixer extends AbstractFixer
 
             $docBlockIndex = $this->getDocBlockToFunction($tokens, $index);
             if (!$tokens[$docBlockIndex]->isGivenKind([T_DOC_COMMENT])) {
-                // Try to not fix for now, as it seems to create indentation issues with the following method
-                //continue;
-
-                $docBlockTemplate = <<<TXT
-/**
-     * @return $returnType
-     */
-
-TXT;
-                $docBlockTemplate = $docBlockTemplate . '    ' . $tokens[$docBlockIndex]->getContent();
-
-                $tokens[$docBlockIndex]->setContent($docBlockTemplate);
+                $this->addNewDocBlock($tokens, $docBlockIndex, $returnType);
                 continue;
             }
 
@@ -160,12 +149,10 @@ TXT;
      * @param int $index
      * @param int|null $braceCounter
      *
-     * @return int
+     * @return int|null
      */
     protected function detectMethodEnd(Tokens $tokens, $index, $braceCounter = null)
     {
-        // Does not work :(
-        //$methodEndIndex = $tokens->findBlockEnd(Tokens::BLOCK_TYPE_PARENTHESIS_BRACE, $methodStartIndex);
         $nextIndex = $index;
 
         while (true) {
@@ -193,6 +180,8 @@ TXT;
     }
 
     /**
+     * If no docblock can be found we use the beginning of the line.
+     *
      * @param Tokens|Token[] $tokens
      * @param int $index
      *
@@ -200,9 +189,6 @@ TXT;
      */
     protected function getDocBlockToFunction(Tokens $tokens, $index)
     {
-        //Does not work this way
-        //$docBlockIndex = $tokens->getPrevTokenOfKind($index, [T_DOC_COMMENT]);
-
         // Find beginning of line
         $i = $index;
         while ($tokens[$i]->getLine() === $tokens[$index]->getLine()) {
@@ -221,6 +207,26 @@ TXT;
         }
 
         return $docBlockIndex;
+    }
+
+    /**
+     * @param Tokens|Token[] $tokens
+     * @param int $docBlockIndex
+     * @param string $returnType
+     *
+     * @return void
+     */
+    protected function addNewDocBlock($tokens, $docBlockIndex, $returnType)
+    {
+        $docBlockTemplate = <<<TXT
+/**
+     * @return $returnType
+     */
+
+TXT;
+        $docBlockTemplate = $docBlockTemplate . '    ' . $tokens[$docBlockIndex]->getContent();
+
+        $tokens[$docBlockIndex]->setContent($docBlockTemplate);
     }
 
 }
