@@ -28,7 +28,7 @@ class ProductCategoryDependencyContainer extends AbstractBusinessDependencyConta
      */
     public function createProductCategoryManager()
     {
-        return $this->getFactory()->createProductCategoryManager(
+        return new ProductCategoryManager(
             $this->createCategoryQueryContainer(),
             $this->createProductCategoryQueryContainer(),
             $this->createProductFacade(),
@@ -103,7 +103,7 @@ class ProductCategoryDependencyContainer extends AbstractBusinessDependencyConta
      */
     public function createProductCategoryTransferGenerator()
     {
-        return $this->getFactory()->createTransferGenerator();
+        return new TransferGenerator();
     }
 
 }

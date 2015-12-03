@@ -6,6 +6,9 @@
 
 namespace SprykerFeature\Zed\Price\Business;
 
+use SprykerFeature\Zed\Price\Business\Model\BulkWriter;
+use SprykerFeature\Zed\Price\Business\Model\Writer;
+use SprykerFeature\Zed\Price\Business\Model\Reader;
 use Generated\Zed\Ide\FactoryAutoCompletion\PriceBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Price\Business\Model\BulkWriterInterface;
@@ -45,7 +48,7 @@ class PriceDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getReaderModel()
     {
-        return $this->getFactory()->createModelReader(
+        return new Reader(
             $this->getQueryContainer(),
             $this->getProductFacade(),
             $this->getConfig()
@@ -57,7 +60,7 @@ class PriceDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getWriterModel()
     {
-        return $this->getFactory()->createModelWriter(
+        return new Writer(
             $this->getLocator(),
             $this->getQueryContainer(),
             $this->getReaderModel(),
@@ -71,7 +74,7 @@ class PriceDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getBulkWriterModel()
     {
-        return $this->getFactory()->createModelBulkWriter(
+        return new BulkWriter(
             $this->getLocator(),
             $this->getQueryContainer(),
             $this->getReaderModel(),
@@ -119,7 +122,7 @@ class PriceDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getInstaller(MessengerInterface $messenger)
     {
-        $installer = $this->getFactory()->createInternalInstall(
+        $installer = new Install(
             $this->getLocator()->price()->facade(),
             $this->getConfig()
         );

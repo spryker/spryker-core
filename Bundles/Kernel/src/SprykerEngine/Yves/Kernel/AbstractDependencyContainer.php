@@ -34,6 +34,8 @@ abstract class AbstractDependencyContainer implements DependencyContainerInterfa
     }
 
     /**
+     * @deprecated Will be removed soon, please use new instead
+     *
      * @return Factory
      */
     protected function getFactory()
@@ -42,6 +44,8 @@ abstract class AbstractDependencyContainer implements DependencyContainerInterfa
     }
 
     /**
+     * @deprecated Will be removed soon. Use DependencyProvider instead
+     *
      * @return AutoCompletion|LocatorLocatorInterface
      */
     protected function getLocator()

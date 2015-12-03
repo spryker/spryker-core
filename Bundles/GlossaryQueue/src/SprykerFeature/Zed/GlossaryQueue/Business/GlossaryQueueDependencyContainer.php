@@ -2,6 +2,7 @@
 
 namespace SprykerFeature\Zed\GlossaryQueue\Business;
 
+use SprykerFeature\Zed\GlossaryQueue\Business\Model\QueueTranslationManager;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use Generated\Zed\Ide\FactoryAutoCompletion\GlossaryQueueBusiness;
 use SprykerFeature\Zed\GlossaryQueue\Business\Model\QueueTranslationManagerInterface;
@@ -19,7 +20,7 @@ class GlossaryQueueDependencyContainer extends AbstractBusinessDependencyContain
      */
     public function createQueueTranslationManager()
     {
-        return $this->getFactory()->createModelQueueTranslationManager(
+        return new QueueTranslationManager(
             $this->getGlossaryFacade()
         );
     }

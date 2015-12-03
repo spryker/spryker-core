@@ -9,9 +9,9 @@ namespace SprykerFeature\Zed\Auth\Communication;
 use Generated\Zed\Ide\FactoryAutoCompletion\AuthCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Auth\Communication\Form\LoginForm;
+use SprykerFeature\Zed\Auth\Communication\Form\ResetPasswordForm;
 use SprykerFeature\Zed\Auth\Communication\Form\ResetPasswordRequestForm;
 use SprykerFeature\Zed\User\Business\UserFacade;
-use SprykerFeature\Zed\User\Communication\Form\ResetPasswordForm;
 use SprykerFeature\Zed\Auth\AuthDependencyProvider;
 use SprykerFeature\Zed\Auth\AuthConfig;
 
@@ -27,7 +27,7 @@ class AuthDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createLoginForm()
     {
-        return $this->getFactory()->createFormLoginForm();
+        return new LoginForm();
     }
 
     /**
@@ -35,7 +35,7 @@ class AuthDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createResetPasswordRequestForm()
     {
-        return $this->getFactory()->createFormResetPasswordRequestForm();
+        return new ResetPasswordRequestForm();
     }
 
     /**
@@ -43,7 +43,7 @@ class AuthDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createResetPasswordForm()
     {
-        return $this->getFactory()->createFormResetPasswordForm();
+        return new ResetPasswordForm();
     }
 
     /**

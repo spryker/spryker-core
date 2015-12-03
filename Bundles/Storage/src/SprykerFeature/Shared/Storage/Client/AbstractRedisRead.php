@@ -9,6 +9,7 @@ namespace SprykerFeature\Shared\Storage\Client;
 /**
  * Class RedisRead
  */
+
 abstract class AbstractRedisRead extends AbstractRedis implements ReadInterface
 {
 

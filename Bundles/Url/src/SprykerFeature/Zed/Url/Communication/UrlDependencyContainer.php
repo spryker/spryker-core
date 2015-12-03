@@ -25,7 +25,7 @@ class UrlDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function createUrlGrid()
     {
-        return $this->getFactory()->createGridUrlGrid();
+        return new UrlGrid();
     }
 
     /**
@@ -33,7 +33,7 @@ class UrlDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function getUrlForm()
     {
-        return $this->getFactory()->createFormUrlForm();
+        return new UrlForm();
     }
 
     /**
@@ -41,7 +41,7 @@ class UrlDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function getUrlKeyTranslationGrid()
     {
-        return $this->getFactory()->createGridTranslationGrid();
+        return new TranslationGrid();
     }
 
 }

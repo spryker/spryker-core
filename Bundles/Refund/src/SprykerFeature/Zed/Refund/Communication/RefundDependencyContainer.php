@@ -37,7 +37,7 @@ class RefundDependencyContainer extends AbstractCommunicationDependencyContainer
         $refundFacade = $this->getRefundFacade();
         $paymentDataPlugin = $this->getConfig()->getPaymentDataPlugin();
 
-        return $this->getFactory()->createFormRefundForm($refundFacade, $orderTransfer, $paymentDataPlugin);
+        return new RefundForm($refundFacade, $orderTransfer, $paymentDataPlugin);
     }
 
     /**
@@ -47,7 +47,7 @@ class RefundDependencyContainer extends AbstractCommunicationDependencyContainer
     {
         $refundQuery = $this->getQueryContainer()->queryRefund();
 
-        return $this->getFactory()->createTableRefundTable(
+        return new RefundTable(
             $refundQuery,
             $this->getRefundFacade(),
             new DateFormatter(Context::getInstance())

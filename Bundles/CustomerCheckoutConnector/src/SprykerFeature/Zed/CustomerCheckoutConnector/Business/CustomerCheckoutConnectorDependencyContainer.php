@@ -23,7 +23,7 @@ class CustomerCheckoutConnectorDependencyContainer extends AbstractBusinessDepen
      */
     public function createCustomerOrderHydrator()
     {
-        return $this->getFactory()->createCustomerOrderHydrator(
+        return new CustomerOrderHydrator(
             $this->getProvidedDependency(CustomerCheckoutConnectorDependencyProvider::FACADE_CUSTOMER)
         );
     }
@@ -33,7 +33,7 @@ class CustomerCheckoutConnectorDependencyContainer extends AbstractBusinessDepen
      */
     public function createCustomerOrderSaver()
     {
-        return $this->getFactory()->createCustomerOrderSaver(
+        return new CustomerOrderSaver(
             $this->getProvidedDependency(CustomerCheckoutConnectorDependencyProvider::FACADE_CUSTOMER)
         );
     }
@@ -43,7 +43,7 @@ class CustomerCheckoutConnectorDependencyContainer extends AbstractBusinessDepen
      */
     public function createPreConditionChecker()
     {
-        return $this->getFactory()->createPreConditionChecker(
+        return new PreConditionChecker(
             $this->getProvidedDependency(CustomerCheckoutConnectorDependencyProvider::FACADE_CUSTOMER)
         );
     }

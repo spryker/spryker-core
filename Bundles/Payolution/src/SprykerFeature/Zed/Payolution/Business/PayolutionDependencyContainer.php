@@ -6,6 +6,14 @@
 
 namespace SprykerFeature\Zed\Payolution\Business;
 
+use SprykerFeature\Zed\Payolution\Business\Log\TransactionStatusLog;
+use SprykerFeature\Zed\Payolution\Business\Api\Converter\Converter;
+use SprykerFeature\Zed\Payolution\Business\Order\Saver;
+use SprykerFeature\Zed\Payolution\Business\Api\Adapter\Http\Guzzle;
+use SprykerFeature\Zed\Payolution\Business\Payment\Handler\Calculation\Calculation;
+use SprykerFeature\Zed\Payolution\Business\Payment\Method\Installment\Installment;
+use SprykerFeature\Zed\Payolution\Business\Payment\Method\Invoice\Invoice;
+use SprykerFeature\Zed\Payolution\Business\Payment\Handler\Transaction\Transaction;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payolution\Business\Api\Converter\ConverterInterface;
@@ -31,7 +39,7 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createPaymentTransactionHandler()
     {
-        $paymentTransactionHandler = $this->getFactory()->createPaymentHandlerTransactionTransaction(
+        $paymentTransactionHandler = new Transaction(
             $this->createAdapter($this->getConfig()->getTransactionGatewayUrl(), ApiConstants::TRANSACTION_REQUEST_CONTENT_TYPE),
             $this->createConverter(),
             $this->getQueryContainer(),
@@ -39,10 +47,10 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
         );
 
         $paymentTransactionHandler->registerMethodMapper(
-            $this->getFactory()->createPaymentMethodInvoiceInvoice($this->getConfig())
+            new Invoice($this->getConfig())
         );
         $paymentTransactionHandler->registerMethodMapper(
-            $this->getFactory()->createPaymentMethodInstallmentInstallment($this->getConfig())
+            new Installment($this->getConfig())
         );
 
         return $paymentTransactionHandler;
@@ -53,14 +61,14 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createPaymentCalculationHandler()
     {
-        $paymentCalculationHandler = $this->getFactory()->createPaymentHandlerCalculationCalculation(
+        $paymentCalculationHandler = new Calculation(
             $this->createAdapter($this->getConfig()->getCalculationGatewayUrl(), ApiConstants::CALCULATION_REQUEST_CONTENT_TYPE),
             $this->createConverter(),
             $this->getConfig()
         );
 
         $paymentCalculationHandler->registerMethodMapper(
-            $this->getFactory()->createPaymentMethodInstallmentInstallment($this->getConfig())
+            new Installment($this->getConfig())
         );
 
         return $paymentCalculationHandler;
@@ -74,7 +82,7 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createAdapter($gatewayUrl, $contentType)
     {
-        return $this->getFactory()->createApiAdapterHttpGuzzle($gatewayUrl, $contentType);
+        return new Guzzle($gatewayUrl, $contentType);
     }
 
     /**
@@ -82,7 +90,7 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createOrderSaver()
     {
-        return $this->getFactory()->createOrderSaver();
+        return new Saver();
     }
 
     /**
@@ -90,7 +98,7 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createConverter()
     {
-        return $this->getFactory()->createApiConverterConverter();
+        return new Converter();
     }
 
     /**
@@ -98,7 +106,7 @@ class PayolutionDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createTransactionStatusLog()
     {
-        return $this->getFactory()->createLogTransactionStatusLog($this->getQueryContainer());
+        return new TransactionStatusLog($this->getQueryContainer());
     }
 
 }

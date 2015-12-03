@@ -39,7 +39,6 @@ class RemoveTransferInterfaces extends AbstractRefactor
         $filesystem = new Filesystem();
 
         foreach ($phpFiles as $phpFile) {
-
             $content = $phpFile->getContents();
 
             // Search for transfer interface usages
@@ -108,4 +107,5 @@ class RemoveTransferInterfaces extends AbstractRefactor
             ));
         }
     }
+
 }

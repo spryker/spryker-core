@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Client\Newsletter\Service;
 
+use SprykerFeature\Client\Newsletter\Service\Zed\NewsletterStub;
 use Generated\Client\Ide\FactoryAutoCompletion\NewsletterService;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Newsletter\Service\Zed\NewsletterStubInterface;
@@ -22,7 +23,7 @@ class NewsletterDependencyContainer extends AbstractServiceDependencyContainer
      */
     public function createZedNewsletterStub()
     {
-        return $this->getFactory()->createZedNewsletterStub(
+        return new NewsletterStub(
             $this->getProvidedDependency(NewsletterDependencyProvider::SERVICE_ZED)
         );
     }

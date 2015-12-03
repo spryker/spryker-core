@@ -6,6 +6,7 @@
 
 namespace Unit\SprykerFeature\Zed\Discount\Business\Calculator;
 
+use Generated\Shared\Transfer\ItemTransfer;
 use SprykerFeature\Zed\Discount\Business\Calculator\Fixed;
 
 /**
@@ -63,7 +64,7 @@ class FixedTest extends \PHPUnit_Framework_TestCase
         $items = [];
 
         foreach ($grossPrices as $grossPrice) {
-            $item = new \Generated\Shared\Transfer\ItemTransfer();
+            $item = new ItemTransfer();
             $item->setGrossPrice($grossPrice);
             $items[] = $item;
         }

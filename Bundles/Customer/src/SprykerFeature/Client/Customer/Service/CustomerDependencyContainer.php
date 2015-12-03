@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Client\Customer\Service;
 
+use SprykerFeature\Client\Customer\Service\Session\CustomerSession;
+use SprykerFeature\Client\Customer\Service\Zed\CustomerStub;
 use Generated\Client\Ide\FactoryAutoCompletion\CustomerService;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Customer\CustomerDependencyProvider;
@@ -23,7 +25,7 @@ class CustomerDependencyContainer extends AbstractServiceDependencyContainer
      */
     public function createZedCustomerStub()
     {
-        return $this->getFactory()->createZedCustomerStub(
+        return new CustomerStub(
             $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_ZED)
         );
     }
@@ -33,7 +35,7 @@ class CustomerDependencyContainer extends AbstractServiceDependencyContainer
      */
     public function createSessionCustomerSession()
     {
-        return $this->getFactory()->createSessionCustomerSession(
+        return new CustomerSession(
             $this->getProvidedDependency(CustomerDependencyProvider::SERVICE_SESSION)
         );
     }

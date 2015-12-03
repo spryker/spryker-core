@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Stock\Communication\Controller;
 
+use Generated\Shared\Transfer\StockProductTransfer;
 use Generated\Shared\Transfer\TypeTransfer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Zed\Stock\Communication\StockDependencyContainer;
@@ -54,7 +55,7 @@ class FormController extends AbstractController
         $form = $this->getDependencyContainer()->getStockProductForm($request);
 
         if ($form->isValid()) {
-            $stockProduct = new \Generated\Shared\Transfer\StockProductTransfer();
+            $stockProduct = new StockProductTransfer();
             $stockProduct->fromArray($form->getRequestData());
 
             if ($stockProduct->getIdStockProduct() === null) {

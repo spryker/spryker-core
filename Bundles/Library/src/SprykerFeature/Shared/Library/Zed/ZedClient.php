@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Shared\Library\Zed;
 
+use SprykerFeature\Shared\Library\Communication\Response as CommunicationResponse;
 use Guzzle\Http\Client;
 use Guzzle\Http\Message\EntityEnclosingRequest;
 use Guzzle\Http\Message\Response;
@@ -240,7 +241,7 @@ class ZedClient
             throw new InvalidZedResponseException('no valid JSON', $response);
         }
 
-        $responseTransfer = new \SprykerFeature\Shared\Library\Communication\Response();
+        $responseTransfer = new CommunicationResponse();
         $responseTransfer->fromArray($data);
 
         return $responseTransfer;

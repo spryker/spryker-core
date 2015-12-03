@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Search\Communication;
 
+use SprykerFeature\Zed\Search\Communication\Table\SearchTable;
 use Generated\Zed\Ide\FactoryAutoCompletion\SearchCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Client\Search\Service\SearchClient;
@@ -28,7 +29,7 @@ class SearchDependencyContainer extends AbstractCommunicationDependencyContainer
     {
         $searchClient = $this->createSearchClient();
 
-        return $this->getFactory()->createTableSearchTable($searchClient);
+        return new SearchTable($searchClient);
     }
 
     /**

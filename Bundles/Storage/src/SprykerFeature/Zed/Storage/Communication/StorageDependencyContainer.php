@@ -26,7 +26,7 @@ class StorageDependencyContainer extends AbstractCommunicationDependencyContaine
     {
         $storageClient = $this->createStorageClient();
 
-        return $this->getFactory()->createTableStorageTable($storageClient);
+        return new StorageTable($storageClient);
     }
 
     /**

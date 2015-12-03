@@ -23,7 +23,7 @@ class CollectorDependencyContainer extends AbstractServiceDependencyContainer
      */
     public function createUrlMatcher()
     {
-        return $this->getFactory()->createMatcherUrlMatcher(
+        return new UrlMatcher(
             $this->createUrlKeyBuilder(),
             $this->createKeyValueReader()
         );
@@ -34,7 +34,7 @@ class CollectorDependencyContainer extends AbstractServiceDependencyContainer
      */
     protected function createUrlKeyBuilder()
     {
-        $urlKeyBuilder = $this->getFactory()->createKeyBuilderUrlKeyBuilder();
+        $urlKeyBuilder = new UrlKeyBuilder();
 
         return $urlKeyBuilder;
     }

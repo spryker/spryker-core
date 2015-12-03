@@ -6,6 +6,7 @@
 
 namespace Functional\SprykerFeature\Zed\Checkout\Business;
 
+use SprykerEngine\Zed\Kernel\Communication\Factory as CommunicationFactory;
 use Codeception\TestCase\Test;
 use Functional\SprykerFeature\Zed\Checkout\Dependency\MockOmsOrderHydrator;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -51,7 +52,7 @@ class CheckoutFacadeTest extends Test
      */
     protected function getCommunicationFactory($bundleName)
     {
-        return new \SprykerEngine\Zed\Kernel\Communication\Factory($bundleName);
+        return new CommunicationFactory($bundleName);
     }
 
     protected function setUp()

@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Product\Business\Validator;
 /**
  * Interface DataValidatorInterface
  */
+
 interface DataValidatorInterface
 {
 

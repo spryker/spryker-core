@@ -9,6 +9,7 @@ namespace Unit\SprykerFeature\Zed\FileSystem\Business\Manager;
  * @group Business
  * @group Manager
  */
+
 class FileSystemManagerTest extends \PHPUnit_Framework_TestCase
 {
 

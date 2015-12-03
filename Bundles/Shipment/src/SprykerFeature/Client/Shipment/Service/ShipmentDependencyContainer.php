@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Client\Shipment\Service;
 
+use SprykerFeature\Client\Shipment\Service\Zed\ShipmentStub;
 use Generated\Client\Ide\FactoryAutoCompletion\ShipmentService;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Shipment\Service\Zed\ShipmentStubInterface;
@@ -23,8 +24,7 @@ class ShipmentDependencyContainer extends AbstractServiceDependencyContainer
     public function createZedStub()
     {
         $zedStub = $this->getProvidedDependency(ShipmentDependencyProvider::SERVICE_ZED);
-        $cartStub = $this->getFactory()
-            ->createZedShipmentStub($zedStub);
+        $cartStub = new ShipmentStub($zedStub);
 
         return $cartStub;
     }

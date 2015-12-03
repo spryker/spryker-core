@@ -9,6 +9,7 @@ namespace SprykerEngine\Shared\Kernel\Factory;
 /**
  * Interface FactoryInterface
  */
+
 interface FactoryInterface
 {
 

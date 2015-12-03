@@ -5,6 +5,7 @@
 
 namespace SprykerFeature\Zed\Oms\Communication;
 
+use SprykerFeature\Zed\Oms\Communication\Table\TransitionLogTable;
 use Generated\Zed\Ide\FactoryAutoCompletion\OmsCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
@@ -23,7 +24,7 @@ class OmsDependencyContainer extends AbstractCommunicationDependencyContainer
     {
         $queryContainer = $this->getQueryContainer();
 
-        return $this->getFactory()->createTableTransitionLogTable($queryContainer);
+        return new TransitionLogTable($queryContainer);
     }
 
 }

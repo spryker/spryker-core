@@ -24,7 +24,7 @@ class ZedRequestDependencyContainer extends AbstractServiceDependencyContainer
      */
     public function createClient()
     {
-        return $this->getFactory()->createClientZedClient(
+        return new ZedClient(
             $this->createHttpClient()
         );
     }
@@ -36,7 +36,7 @@ class ZedRequestDependencyContainer extends AbstractServiceDependencyContainer
      */
     protected function createHttpClient()
     {
-        $httpClient = $this->getFactory()->createClientHttpClient(
+        $httpClient = new HttpClient(
             $this->getFactory(),
             $this->getProvidedDependency(ZedRequestDependencyProvider::CLIENT_AUTH),
             $this->getConfig()->getZedRequestBaseUrl(),
@@ -51,7 +51,7 @@ class ZedRequestDependencyContainer extends AbstractServiceDependencyContainer
      */
     protected function getConfig()
     {
-        return $this->getFactory()->createZedRequestConfig(Config::getInstance());
+        return new ZedRequestConfig(Config::getInstance());
     }
 
 }

@@ -30,7 +30,7 @@ class SearchDependencyContainer extends AbstractServiceDependencyContainer
      */
     protected function createProviderIndexClientProvider()
     {
-        return $this->getFactory()->createProviderIndexClientProvider($this->getFactory(), $this->getLocator());
+        return new IndexClientProvider($this->getFactory(), $this->getLocator());
     }
 
 }

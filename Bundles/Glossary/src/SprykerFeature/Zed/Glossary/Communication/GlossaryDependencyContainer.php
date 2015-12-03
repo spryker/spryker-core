@@ -9,12 +9,10 @@ use Generated\Zed\Ide\FactoryAutoCompletion\GlossaryCommunication;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Glossary\Communication\Form\TranslationForm;
-use SprykerFeature\Zed\Glossary\Communication\Table\KeyTable;
 use SprykerFeature\Zed\Glossary\Communication\Table\TranslationTable;
 use SprykerFeature\Zed\Glossary\Dependency\Facade\GlossaryToLocaleInterface;
 use SprykerFeature\Zed\Glossary\GlossaryDependencyProvider;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
 
 /**
  * @method GlossaryCommunication getFactory()
@@ -61,37 +59,6 @@ class GlossaryDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
-     * @param string $type
-     *
-     * @return KeyForm
-     */
-    public function createKeyForm($type, $idGlossaryKey)
-    {
-        $keyQuery = $this->getQueryContainer()
-            ->queryKeys();
-
-        $subQuery = $this->getQueryContainer()
-            ->queryKeys();
-
-        return $this->getFactory()
-            ->createFormKeyForm($keyQuery, $subQuery, $type, $idGlossaryKey);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return KeyTable
-     */
-    public function createKeyTable()
-    {
-        $keyQuery = $this->getQueryContainer()
-            ->queryKeys();
-
-        return $this->getFactory()
-            ->createTableKeyTable($keyQuery);
-    }
-
-    /**
      * @param array $locales
      *
      * @return TranslationTable
@@ -104,11 +71,13 @@ class GlossaryDependencyContainer extends AbstractCommunicationDependencyContain
         $subQuery = $this->getQueryContainer()
             ->queryTranslations();
 
-        return $this->getFactory()
-            ->createTableTranslationTable($translationQuery, $subQuery, $locales);
+        return new TranslationTable($translationQuery, $subQuery, $locales);
     }
 
     /**
+     * @param array $locales
+     * @param string $type
+     *
      * @return TranslationForm
      */
     public function createTranslationForm(array $locales, $type)
@@ -119,8 +88,7 @@ class GlossaryDependencyContainer extends AbstractCommunicationDependencyContain
         $glossaryKeyQuery = $this->getQueryContainer()
             ->queryKeys();
 
-        return $this->getFactory()
-            ->createFormTranslationForm($translationQuery, $glossaryKeyQuery, $locales, $type);
+        return new TranslationForm($translationQuery, $glossaryKeyQuery, $locales, $type);
     }
 
 }

@@ -23,7 +23,7 @@ class HeartbeatDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createDoctor()
     {
-        return $this->getFactory()->createAmbulanceDoctor(
+        return new Doctor(
             $this->getConfig()->getHealthIndicator()
         );
     }

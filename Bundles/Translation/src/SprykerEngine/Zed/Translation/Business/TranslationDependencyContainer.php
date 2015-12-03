@@ -24,13 +24,13 @@ class TranslationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createTranslator($locale)
     {
-        $translationFileFinder = $this->getFactory()->createTranslationFileFinder(
+        $translationFileFinder = new TranslationFileFinder(
             $this->getConfig()->getPathPatterns()
         );
 
-        $translationFileLoaderFactory = $this->getFactory()->createTranslationFileLoaderFactory();
+        $translationFileLoaderFactory = new TranslationFileLoaderFactory();
 
-        $translator = $this->getFactory()->createTranslator(
+        $translator = new Translator(
             $locale,
             $translationFileFinder,
             $translationFileLoaderFactory

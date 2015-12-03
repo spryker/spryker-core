@@ -13,7 +13,7 @@ class MessengerDependencyContainer extends AbstractCommunicationDependencyContai
      */
     public function createTwigMessengerExtension()
     {
-        $twigMessengerExtension = $this->getFactory()->createPluginTwigMessengerExtension();
+        $twigMessengerExtension = new TwigMessengerExtension();
 
         $twigMessengerExtension->setMessenger(
             $this->getLocator()->messenger()->facade()

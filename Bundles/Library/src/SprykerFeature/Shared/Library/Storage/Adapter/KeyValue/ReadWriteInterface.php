@@ -9,6 +9,7 @@ namespace SprykerFeature\Shared\Library\Storage\Adapter\KeyValue;
 /**
  * Interface ReadWriteInterface
  */
+
 interface ReadWriteInterface extends ReadInterface
 {
 

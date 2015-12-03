@@ -6,6 +6,10 @@
 
 namespace SprykerFeature\Zed\Category\Business;
 
+use SprykerFeature\Zed\Category\Business\Generator\UrlPathGenerator;
+use SprykerFeature\Zed\Category\Business\Tree\ClosureTableWriter;
+use SprykerFeature\Zed\Category\Business\Tree\NodeWriter;
+use SprykerFeature\Zed\Category\Business\Model\CategoryWriter;
 use Generated\Zed\Ide\FactoryAutoCompletion\CategoryBusiness;
 use SprykerFeature\Zed\Category\Business\Manager\NodeUrlManager;
 use SprykerFeature\Zed\Category\Business\Generator\UrlPathGeneratorInterface;
@@ -35,7 +39,7 @@ class CategoryDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCategoryTreeWriter()
     {
-        return $this->getFactory()->createTreeCategoryTreeWriter(
+        return new CategoryTreeWriter(
             $this->createNodeWriter(),
             $this->createClosureTableWriter(),
             $this->createCategoryTreeReader(),
@@ -52,7 +56,7 @@ class CategoryDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCategoryTreeStructure(array $category)
     {
-        return $this->getFactory()->createTreeFormatterCategoryTreeFormatter($category);
+        return new CategoryTreeFormatter($category);
     }
 
     /**
@@ -60,7 +64,7 @@ class CategoryDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCategoryTreeReader()
     {
-        return $this->getFactory()->createTreeCategoryTreeReader(
+        return new CategoryTreeReader(
             $this->getQueryContainer(),
             $this->createCategoryTreeFormatter()
         );
@@ -73,7 +77,7 @@ class CategoryDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $locale = $this->createLocaleFacade()->getCurrentLocale();
 
-        return $this->getFactory()->createRendererCategoryTreeRenderer(
+        return new CategoryTreeRenderer(
             $this->getQueryContainer(),
             $locale
         );
@@ -84,7 +88,7 @@ class CategoryDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCategoryWriter()
     {
-        return $this->getFactory()->createModelCategoryWriter(
+        return new CategoryWriter(
             $this->getQueryContainer()
         );
     }
@@ -94,7 +98,7 @@ class CategoryDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createNodeWriter()
     {
-        return $this->getFactory()->createTreeNodeWriter(
+        return new NodeWriter(
             $this->getQueryContainer()
         );
     }
@@ -104,7 +108,7 @@ class CategoryDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createClosureTableWriter()
     {
-        return $this->getFactory()->createTreeClosureTableWriter(
+        return new ClosureTableWriter(
             $this->getQueryContainer()
         );
     }
@@ -114,7 +118,7 @@ class CategoryDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createNodeUrlManager()
     {
-        return $this->getFactory()->createManagerNodeUrlManager(
+        return new NodeUrlManager(
             $this->createCategoryTreeReader(),
             $this->createUrlPathGenerator(),
             $this->createUrlFacade()
@@ -126,7 +130,7 @@ class CategoryDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createUrlPathGenerator()
     {
-        return $this->getFactory()->createGeneratorUrlPathGenerator();
+        return new UrlPathGenerator();
     }
 
     /**
@@ -158,7 +162,7 @@ class CategoryDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createCategoryTreeFormatter()
     {
-        return $this->getFactory()->createTreeFormatterCategoryTreeFormatter();
+        return new CategoryTreeFormatter();
     }
 
     /**
@@ -166,7 +170,7 @@ class CategoryDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCategoryTransferGenerator()
     {
-        return $this->getFactory()->createTransferGenerator();
+        return new TransferGenerator();
     }
 
 }

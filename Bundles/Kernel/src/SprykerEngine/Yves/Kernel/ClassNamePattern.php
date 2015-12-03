@@ -9,6 +9,7 @@ namespace SprykerEngine\Yves\Kernel;
 /**
  * Class ClassNamePattern
  */
+
 class ClassNamePattern
 {
 

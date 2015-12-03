@@ -6,6 +6,9 @@
 
 namespace SprykerFeature\Zed\Discount\Business;
 
+use SprykerFeature\Zed\Discount\Business\Model\VoucherCode;
+use SprykerFeature\Zed\Discount\Business\Model\VoucherPoolCategory;
+use SprykerFeature\Zed\Discount\Business\Model\CartRule;
 use Generated\Zed\Ide\FactoryAutoCompletion\DiscountBusiness;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Calculator\Fixed;
@@ -52,7 +55,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getDecisionRuleVoucher()
     {
-        return $this->getFactory()->createDecisionRuleVoucher(
+        return new Voucher(
             $this->getQueryContainer()
         );
     }
@@ -62,7 +65,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getDecisionRuleMinimumCartSubtotal()
     {
-        return $this->getFactory()->createDecisionRuleMinimumCartSubtotal();
+        return new MinimumCartSubtotal();
     }
 
     /**
@@ -72,7 +75,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createDiscount(CalculableInterface $container)
     {
-        return $this->getFactory()->createModelDiscount(
+        return new Discount(
             $container,
             $this->getQueryContainer(),
             $this->createDecisionRule(),
@@ -89,7 +92,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $store = $this->getProvidedDependency(DiscountDependencyProvider::STORE_CONFIG);
 
-        return $this->getFactory()->createModelCartRule(
+        return new CartRule(
             $this->getQueryContainer(),
             $store,
             $this->createDiscountDecisionRuleWriter(),
@@ -103,7 +106,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createDiscountCollectorWriter()
     {
-        return $this->getFactory()->createWriterDiscountCollectorWriter($this->getQueryContainer());
+        return new DiscountCollectorWriter($this->getQueryContainer());
     }
 
     /**
@@ -127,7 +130,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCalculatorPercentage()
     {
-        return $this->getFactory()->createCalculatorPercentage();
+        return new Percentage();
     }
 
     /**
@@ -135,7 +138,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCalculatorFixed()
     {
-        return $this->getFactory()->createCalculatorFixed();
+        return new Fixed();
     }
 
     /**
@@ -143,7 +146,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createDiscountWriter()
     {
-        return $this->getFactory()->createWriterDiscountWriter(
+        return new DiscountWriter(
             $this->getQueryContainer()
         );
     }
@@ -153,7 +156,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createVoucherPoolCategory()
     {
-        return $this->getFactory()->createModelVoucherPoolCategory(
+        return new VoucherPoolCategory(
             $this->getQueryContainer()
         );
     }
@@ -163,7 +166,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createVoucherCodesWriter()
     {
-        return $this->getFactory()->createWriterVoucherCodesWriter(
+        return new VoucherCodesWriter(
             $this->getQueryContainer(),
             $this->createDiscountWriter(),
             $this->createDiscountVoucherPoolWriter(),
@@ -178,7 +181,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createDiscountDecisionRuleWriter()
     {
-        return $this->getFactory()->createWriterDiscountDecisionRuleWriter(
+        return new DiscountDecisionRuleWriter(
             $this->getQueryContainer()
         );
     }
@@ -188,7 +191,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createDiscountVoucherWriter()
     {
-        return $this->getFactory()->createWriterDiscountVoucherWriter(
+        return new DiscountVoucherWriter(
             $this->getQueryContainer()
         );
     }
@@ -198,7 +201,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createDiscountVoucherPoolWriter()
     {
-        return $this->getFactory()->createWriterDiscountVoucherPoolWriter(
+        return new DiscountVoucherPoolWriter(
             $this->getQueryContainer()
         );
     }
@@ -208,7 +211,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createDiscountVoucherPoolCategoryWriter()
     {
-        return $this->getFactory()->createWriterDiscountVoucherPoolCategoryWriter(
+        return new DiscountVoucherPoolCategoryWriter(
             $this->getQueryContainer()
         );
     }
@@ -218,7 +221,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createDecisionRule()
     {
-        return $this->getFactory()->createModelDecisionRuleEngine();
+        return new DecisionRuleEngine();
     }
 
     /**
@@ -226,7 +229,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createCalculator()
     {
-        return $this->getFactory()->createModelCalculator($this->createCollectorResolver());
+        return new Calculator($this->createCollectorResolver());
     }
 
     /**
@@ -234,7 +237,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createDistributor()
     {
-        return $this->getFactory()->createDistributorDistributor();
+        return new Distributor();
     }
 
     /**
@@ -242,7 +245,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createVoucherEngine()
     {
-        return $this->getFactory()->createModelVoucherEngine(
+        return new VoucherEngine(
             $this->getConfig(),
             $this->getQueryContainer(),
             $this->getProvidedDependency(DiscountDependencyProvider::FLASH_MESSENGER),
@@ -255,7 +258,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createItemCollector()
     {
-        return $this->getFactory()->createCollectorItem();
+        return new Item();
     }
 
     /**
@@ -263,7 +266,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createItemExpenseCollector()
     {
-        return $this->getFactory()->createCollectorItemExpense();
+        return new ItemExpense();
     }
 
     /**
@@ -271,7 +274,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createOrderExpenseCollector()
     {
-        return $this->getFactory()->createCollectorExpense();
+        return new Expense();
     }
 
     /**
@@ -279,7 +282,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createItemProductOptionCollector()
     {
-        return $this->getFactory()->createCollectorItemProductOption();
+        return new ItemProductOption();
     }
 
     /**
@@ -287,8 +290,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createAggregateCollector()
     {
-        return $this->getFactory()
-            ->createCollectorAggregate([
+        return new Aggregate([
                 $this->createItemCollector(),
                 $this->createItemProductOptionCollector(),
                 $this->createItemExpenseCollector(),
@@ -302,7 +304,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createVoucherCode()
     {
-        return $this->getFactory()->createModelVoucherCode($this->getQueryContainer());
+        return new VoucherCode($this->getQueryContainer());
     }
 
     /**
@@ -310,7 +312,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCollectorResolver()
     {
-        return $this->getFactory()->createModelCollectorResolver($this->getConfig());
+        return new CollectorResolver($this->getConfig());
     }
 
 }

@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\User\Business;
 
+use SprykerFeature\Zed\User\Business\Model\User;
 use Generated\Zed\Ide\FactoryAutoCompletion\UserBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\User\Business\Model\Installer;
@@ -25,7 +26,7 @@ class UserDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getUserModel()
     {
-        return $this->getFactory()->createModelUser(
+        return new User(
             $this->getQueryContainer(),
             $this->getLocator()->session()->client(),
             $this->getConfig()
@@ -45,7 +46,7 @@ class UserDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getInstallerModel()
     {
-        return $this->getFactory()->createModelInstaller(
+        return new Installer(
             $this->getQueryContainer(),
             $this->getUserModel(),
             $this->getConfig()

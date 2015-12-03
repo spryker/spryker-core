@@ -6,6 +6,11 @@
 
 namespace Functional\SprykerFeature\Zed\Discount\Business;
 
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
+use Orm\Zed\Discount\Persistence\SpyDiscount;
+use Generated\Shared\Transfer\DecisionRuleTransfer;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery;
+use Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\ExpenseTransfer;
@@ -230,7 +235,7 @@ class DiscountFacadeTest extends Test
 
     public function testShouldCreateOneVoucherCode()
     {
-        $voucherPoolEntity = (new \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool())
+        $voucherPoolEntity = (new SpyDiscountVoucherPool())
             ->setName(self::VOUCHER_POOL_NAME);
         $voucherPoolEntity->save();
 
@@ -240,7 +245,7 @@ class DiscountFacadeTest extends Test
 
         $this->discountFacade->createVoucherCode($voucherCreateTransfer);
 
-        $voucherEntity = (new \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery())
+        $voucherEntity = (new SpyDiscountVoucherQuery())
             ->findOneByCode(self::TEST_VOUCHER_CODE);
 
         $this->assertNotNull($voucherEntity);
@@ -250,7 +255,7 @@ class DiscountFacadeTest extends Test
 
     public function testShouldCreateMultipleVouchersForOneVoucherPoolWithTemplate()
     {
-        $voucherPoolEntity = (new \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool())
+        $voucherPoolEntity = (new SpyDiscountVoucherPool())
             ->setName(self::VOUCHER_POOL_NAME);
         $voucherPoolEntity->save();
 
@@ -261,12 +266,12 @@ class DiscountFacadeTest extends Test
         $voucherTransfer->setCodeLength(10);
         $this->discountFacade->createVoucherCodes($voucherTransfer);
 
-        $voucherEntities = (new \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery())
+        $voucherEntities = (new SpyDiscountVoucherQuery())
             ->filterByFkDiscountVoucherPool($voucherPoolEntity->getPrimaryKey())->find();
 
         $this->assertEquals(self::AMOUNT_OF_VOUCHERS_TO_CREATE_10, $voucherEntities->count());
 
-        (new \Orm\Zed\Discount\Persistence\SpyDiscountVoucherQuery())->deleteAll();
+        (new SpyDiscountVoucherQuery())->deleteAll();
         $voucherPoolEntity->delete();
     }
 
@@ -282,7 +287,7 @@ class DiscountFacadeTest extends Test
 
     public function testSaveDiscountDecisionRule()
     {
-        $discountDecisionRuleTransfer = new \Generated\Shared\Transfer\DecisionRuleTransfer();
+        $discountDecisionRuleTransfer = new DecisionRuleTransfer();
         $discountDecisionRuleTransfer->setName(self::DECISION_RULE_NAME);
         $discountDecisionRuleTransfer->setDecisionRulePlugin(self::DECISION_RULE_PLUGIN);
         $discountDecisionRuleTransfer->setValue(self::DECISION_RULE_VALUE_500);
@@ -293,7 +298,7 @@ class DiscountFacadeTest extends Test
 
     public function testSaveDiscountVoucher()
     {
-        $discountVoucherTransfer = new \Generated\Shared\Transfer\VoucherTransfer();
+        $discountVoucherTransfer = new VoucherTransfer();
         $discountVoucherTransfer->setCode(self::DISCOUNT_VOUCHER_CODE);
         $result = $this->discountFacade->createDiscountVoucher($discountVoucherTransfer);
 
@@ -436,7 +441,7 @@ class DiscountFacadeTest extends Test
      */
     protected function initializeDiscount($displayName, $type, $amount, $isActive, $collectorPlugin)
     {
-        $discount = new \Orm\Zed\Discount\Persistence\SpyDiscount();
+        $discount = new SpyDiscount();
         $discount->setDisplayName($displayName);
         $discount->setAmount($amount);
         $discount->setIsActive($isActive);
@@ -465,13 +470,13 @@ class DiscountFacadeTest extends Test
         $maxNumberOfUses = null,
         $numberOfUses = null
     ) {
-        $voucherPool = new \Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool();
+        $voucherPool = new SpyDiscountVoucherPool();
         $voucherPool->setIsActive($voucherPoolIsActive);
         $voucherPool->setName(self::VOUCHER_POOL_NAME);
         $voucherPool->save();
 
         if ($createVoucher) {
-            $voucher = new \Orm\Zed\Discount\Persistence\SpyDiscountVoucher();
+            $voucher = new SpyDiscountVoucher();
             $voucher->setCode($code);
             $voucher->setMaxNumberOfUses($maxNumberOfUses);
             $voucher->setNumberOfUses($numberOfUses);

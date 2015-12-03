@@ -37,7 +37,7 @@ class StockDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function getStockForm(Request $request)
     {
-        return $this->getFactory()->createFormStockForm(
+        return new StockForm(
             $request
         );
     }
@@ -49,7 +49,7 @@ class StockDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function getStockProductForm(Request $request)
     {
-        return $this->getFactory()->createFormStockProductForm(
+        return new StockProductForm(
             $request,
             $this->getQueryContainer()
         );
@@ -62,7 +62,7 @@ class StockDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function getStockGrid(Request $request)
     {
-        return $this->getFactory()->createGridStockGrid(
+        return new StockGrid(
             $this->getQueryContainer()->queryAllStockTypes(),
             $request
         );
@@ -75,7 +75,7 @@ class StockDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function getStockProductGrid(Request $request)
     {
-        return $this->getFactory()->createGridStockProductGrid(
+        return new StockProductGrid(
             $this->getQueryContainer()->queryAllStockProductsJoinedStockJoinedProduct(),
             $request
         );

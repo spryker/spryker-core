@@ -45,7 +45,7 @@ class ProductDependencyContainer extends AbstractCommunicationDependencyContaine
         $locale = $this->createLocaleFacade()->getCurrentLocale();
         $localeTransfer = (new LocaleTransfer())->fromArray($locale->toArray());
 
-        return $this->getFactory()->createTableProductTable(
+        return new ProductTable(
             $productQuery,
             $this->createUrlFacade(),
             $localeTransfer,

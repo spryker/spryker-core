@@ -10,6 +10,7 @@ $finder = Symfony\CS\Finder\DefaultFinder::create()
     ->exclude('Presentation')
     ->exclude('CodeStyleFixer/Fixtures')
     ->notName('*.twig')
+    ->notName('*.yml')
 ;
 
 return Symfony\CS\Config\Config::create()
@@ -44,6 +45,7 @@ return Symfony\CS\Config\Config::create()
             'phpdoc_var_without_name',
             'psr0',
             'remove_leading_slash_use',
+            '-ordered_use',
             'remove_lines_between_uses',
             'return',
             'self_accessor',
@@ -78,4 +80,5 @@ return Symfony\CS\Config\Config::create()
     ->addCustomFixer(new \SprykerFeature\Zed\Development\Business\CodeStyleFixer\PhpdocParamsFixer())
     ->addCustomFixer(new \SprykerFeature\Zed\Development\Business\CodeStyleFixer\PhpdocReturnSelfFixer())
     ->addCustomFixer(new \SprykerFeature\Zed\Development\Business\CodeStyleFixer\NoWhitespaceBeforeSemicolonFixer())
+    ->addCustomFixer(new \SprykerFeature\Zed\Development\Business\CodeStyleFixer\SprykerUseStatementFixer())
     ->addCustomFixer(new \SprykerFeature\Zed\Development\Business\CodeStyleFixer\WhitespaceAfterReturnFixer());

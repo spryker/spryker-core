@@ -43,7 +43,7 @@ class SearchPageDependencyContainer extends AbstractCommunicationDependencyConta
      */
     public function createPageElementForm(Request $request)
     {
-        return $this->getFactory()->createFormPageElementForm(
+        return new PageElementForm(
             $request,
             $this->getSearchPageQueryContainer()
         );
@@ -56,7 +56,7 @@ class SearchPageDependencyContainer extends AbstractCommunicationDependencyConta
      */
     public function createPageElementGrid(Request $request)
     {
-        return $this->getFactory()->createGridPageElementGrid(
+        return new PageElementGrid(
             $this->getSearchPageQueryContainer()->queryPageElementGrid(),
             $request
         );

@@ -12,7 +12,6 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContai
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerFeature\Zed\Category\CategoryDependencyProvider;
 use SprykerFeature\Zed\Category\Communication\Form\CategoryNodeForm;
-use SprykerFeature\Zed\Category\Communication\Grid\CategoryGrid;
 use SprykerFeature\Zed\Category\Communication\Table\CategoryAttributeTable;
 use SprykerFeature\Zed\Category\Communication\Table\RootNodeTable;
 use SprykerFeature\Zed\Category\Communication\Table\UrlTable;
@@ -50,21 +49,6 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
-     * @param Request $request
-     *
-     * @return CategoryGrid
-     */
-    public function createCategoryGrid(Request $request)
-    {
-        $locale = $this->getCurrentLocale();
-
-        return $this->getFactory()->createGridCategoryGrid(
-            $this->getQueryContainer()->queryCategory($locale->getIdLocale()),
-            $request
-        );
-    }
-
-    /**
      * @return RootNodeTable
      */
     public function createRootNodeTable()
@@ -72,7 +56,7 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
         $categoryQueryContainer = $this->getQueryContainer();
         $locale = $this->getCurrentLocale();
 
-        return $this->getFactory()->createTableRootNodeTable($categoryQueryContainer, $locale->getIdLocale());
+        return new RootNodeTable($categoryQueryContainer, $locale->getIdLocale());
     }
 
     /**
@@ -93,7 +77,7 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
             $this->createCurrentLocale()->getIdLocale()
         );
 
-        return $this->getFactory()->createTableCategoryAttributeTable($categoryAttributesQuery);
+        return new CategoryAttributeTable($categoryAttributesQuery);
     }
 
     /**
@@ -110,22 +94,7 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
         $urlQuery = $this->getQueryContainer()
             ->queryUrlByIdCategoryNode($idCategoryNode);
 
-        return $this->getFactory()->createTableUrlTable($urlQuery);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return CategoryGrid
-     */
-    public function createCategoryNodeGrid(Request $request)
-    {
-        $locale = $this->getCurrentLocale();
-
-        return $this->getFactory()->createGridCategoryNodeGrid(
-            $this->getQueryContainer()->queryNodeWithDirectParent($locale->getIdLocale()),
-            $request
-        );
+        return new UrlTable($urlQuery);
     }
 
     /**
@@ -137,7 +106,7 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
     {
         $locale = $this->getCurrentLocale();
 
-        return $this->getFactory()->createFormCategoryNodeForm(
+        return new CategoryNodeForm(
             $request,
             $this->getFactory(),
             $locale,

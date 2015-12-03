@@ -11,6 +11,7 @@ namespace SprykerEngine\Zed\Kernel\Communication\Controller;
  *
  * @deprecated this class will be removed
  */
+
 class ControllerExtender
 {
 

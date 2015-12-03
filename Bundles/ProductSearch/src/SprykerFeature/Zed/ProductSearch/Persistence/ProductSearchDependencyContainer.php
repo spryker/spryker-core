@@ -17,7 +17,7 @@ class ProductSearchDependencyContainer extends AbstractPersistenceDependencyCont
      */
     public function createProductSearchQueryExpander()
     {
-        return $this->getFactory()->createProductSearchQueryExpander(
+        return new ProductSearchQueryExpander(
             $this->createProductQueryContainer()
         );
     }

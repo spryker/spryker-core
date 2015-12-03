@@ -5,6 +5,7 @@
 
 namespace SprykerFeature\Zed\ProductOptionCartConnector\Business;
 
+use SprykerFeature\Zed\ProductOptionCartConnector\Business\Manager\ProductOptionManager;
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductOptionCartConnectorBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\ProductOptionCartConnector\Business\Model\GroupKeyExpander;
@@ -25,7 +26,7 @@ class ProductOptionCartConnectorDependencyContainer extends AbstractBusinessDepe
      */
     public function createProductOptionManager()
     {
-        return $this->getFactory()->createManagerProductOptionManager(
+        return new ProductOptionManager(
             $this->getProvidedDependency(ProductOptionCartConnectorDependencyProvider::FACADE_PRODUCT_OPTION)
         );
     }
@@ -35,7 +36,7 @@ class ProductOptionCartConnectorDependencyContainer extends AbstractBusinessDepe
      */
     public function createGroupKeyExpander()
     {
-        return $this->getFactory()->createModelGroupKeyExpander();
+        return new GroupKeyExpander();
     }
 
 }

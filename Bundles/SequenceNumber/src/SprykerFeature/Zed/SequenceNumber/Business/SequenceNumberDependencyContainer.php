@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\SequenceNumber\Business;
 
+use SprykerFeature\Zed\SequenceNumber\Business\Model\SequenceNumber;
+use SprykerFeature\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\SequenceNumberBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
@@ -31,8 +33,7 @@ class SequenceNumberDependencyContainer extends AbstractBusinessDependencyContai
      */
     public function createRandomNumberGenerator($min = 1, $max = 1)
     {
-        return $this->getFactory()
-            ->createGeneratorRandomNumberGenerator(
+        return new RandomNumberGenerator(
                 $min,
                 $max
             );
@@ -49,8 +50,7 @@ class SequenceNumberDependencyContainer extends AbstractBusinessDependencyContai
 
         $generator = $this->createRandomNumberGenerator($settings->getIncrementMinimum(), $settings->getIncrementMaximum());
 
-        return $this->getFactory()
-            ->createModelSequenceNumber(
+        return new SequenceNumber(
                 $generator,
                 $settings,
                 Propel::getConnection()

@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Country\Business;
 
+use SprykerFeature\Zed\Country\Business\Cldr\JsonFileCldrDataProvider;
 use Generated\Zed\Ide\FactoryAutoCompletion\CountryBusiness;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
@@ -29,7 +30,7 @@ class CountryDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createInstaller(MessengerInterface $messenger)
     {
-        $installer = $this->getFactory()->createInternalInstall(
+        $installer = new Install(
             $this->createCountryManager(),
             $this->createRegionManager(),
             $this->createCldrDataProvider(
@@ -54,7 +55,7 @@ class CountryDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCountryManager()
     {
-        return $this->getFactory()->createCountryManager(
+        return new CountryManager(
             $this->getQueryContainer()
         );
     }
@@ -64,7 +65,7 @@ class CountryDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createRegionManager()
     {
-        return $this->getFactory()->createRegionManager(
+        return new RegionManager(
             $this->getQueryContainer()
         );
     }
@@ -76,7 +77,7 @@ class CountryDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createCldrDataProvider($filePath)
     {
-        return $this->getFactory()->createCldrJsonFileCldrDataProvider(
+        return new JsonFileCldrDataProvider(
             $filePath
         );
     }

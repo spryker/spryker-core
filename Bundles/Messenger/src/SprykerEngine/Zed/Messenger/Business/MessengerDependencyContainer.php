@@ -7,17 +7,18 @@
 namespace SprykerEngine\Zed\Messenger\Business;
 
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use SprykerEngine\Shared\Messenger\Business\Model\MessengerInterface;
 
 class MessengerDependencyContainer extends AbstractBusinessDependencyContainer
 {
 
     /**
-     * @return MessengerInterface
+     * @throws \Exception
+     *
+     * @return void
      */
     public function getMessenger()
     {
-        return $this->getFactory()->createModelMessenger();
+        throw new \Exception('Messenger must be implemented');
     }
 
 }

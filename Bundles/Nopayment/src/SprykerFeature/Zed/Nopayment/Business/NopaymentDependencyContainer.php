@@ -28,8 +28,7 @@ class NopaymentDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $queryContainer = $this->locateQueryContainer();
 
-        return $this->getFactory()
-            ->createNopaymentPaid(
+        return new Paid(
                 $queryContainer,
                 $this->getLocator()
             );

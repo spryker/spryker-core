@@ -23,7 +23,7 @@ class DevelopmentDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createBundleCodeStyleFixer()
     {
-        return $this->getFactory()->createCodeStyleFixerBundleCodeStyleFixer(
+        return new BundleCodeStyleFixer(
             $this->getConfig()->getPathToRoot(),
             $this->getConfig()->getBundleDirectory()
         );

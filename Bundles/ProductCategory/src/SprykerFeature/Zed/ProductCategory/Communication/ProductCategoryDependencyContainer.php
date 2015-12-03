@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\ProductCategory\Communication;
 
+use SprykerFeature\Zed\ProductCategory\Communication\Form\CategoryFormDelete;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductCategoryCommunication;
 use Propel\Runtime\Connection\ConnectionInterface;
@@ -113,7 +114,7 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
      */
     public function createCategoryFormAdd($idParentNode)
     {
-        return $this->getFactory()->createFormCategoryFormAdd(
+        return new CategoryFormAdd(
             $this->createCategoryQueryContainer(),
             $this->createProductCategoryQueryContainer(),
             $this->createCurrentLocale(),
@@ -129,7 +130,7 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
      */
     public function createCategoryFormEdit($idCategory)
     {
-        return $this->getFactory()->createFormCategoryFormEdit(
+        return new CategoryFormEdit(
             $this->createCategoryQueryContainer(),
             $this->createProductCategoryQueryContainer(),
             $this->createCurrentLocale(),
@@ -145,7 +146,7 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
      */
     public function createCategoryFormDelete($idCategory)
     {
-        return $this->getFactory()->createFormCategoryFormDelete(
+        return new CategoryFormDelete(
             $this->createCategoryQueryContainer(),
             $this->createProductCategoryQueryContainer(),
             $this->createCurrentLocale(),
@@ -164,7 +165,7 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
     {
         $productCategoryQueryContainer = $this->createProductCategoryQueryContainer();
 
-        return $this->getFactory()->createTableProductCategoryTable($productCategoryQueryContainer, $locale, $idCategory);
+        return new ProductCategoryTable($productCategoryQueryContainer, $locale, $idCategory);
     }
 
     /**
@@ -177,7 +178,7 @@ class ProductCategoryDependencyContainer extends AbstractCommunicationDependency
     {
         $productCategoryQueryContainer = $this->createProductCategoryQueryContainer();
 
-        return $this->getFactory()->createTableProductTable($productCategoryQueryContainer, $locale, $idCategory);
+        return new ProductTable($productCategoryQueryContainer, $locale, $idCategory);
     }
 
     /**

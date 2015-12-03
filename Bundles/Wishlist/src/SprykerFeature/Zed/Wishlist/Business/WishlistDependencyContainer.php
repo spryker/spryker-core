@@ -37,7 +37,7 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
     public function createAddOperator(WishlistChangeTransfer $wishlistChange)
     {
         $storage = $this->createStorage($wishlistChange);
-        $operator = $this->getFactory()->createOperatorAdd($storage, $wishlistChange);
+        $operator = new Add($storage, $wishlistChange);
         $this->provideOperatorPlugins($operator);
 
         return $operator;
@@ -51,7 +51,7 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
     public function createIncreaseOperator(WishlistChangeTransfer $wishlistChange)
     {
         $storage = $this->createStorage($wishlistChange);
-        $operator = $this->getFactory()->createOperatorIncrease($storage, $wishlistChange);
+        $operator = new Increase($storage, $wishlistChange);
         $this->provideOperatorPlugins($operator);
 
         return $operator;
@@ -65,7 +65,7 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
     public function createDecreaseOperator(WishlistChangeTransfer $wishlistChange)
     {
         $storage = $this->createStorage($wishlistChange);
-        $operator = $this->getFactory()->createOperatorDecrease($storage, $wishlistChange);
+        $operator = new Decrease($storage, $wishlistChange);
         $this->provideOperatorPlugins($operator);
 
         return $operator;
@@ -79,7 +79,7 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
     public function createRemoveOperator(WishlistChangeTransfer $wishlistChange)
     {
         $storage = $this->createStorage($wishlistChange);
-        $operator = $this->getFactory()->createOperatorRemove($storage, $wishlistChange);
+        $operator = new Remove($storage, $wishlistChange);
         $this->provideOperatorPlugins($operator);
 
         return $operator;
@@ -115,7 +115,7 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createPropelStorage(WishlistChangeTransfer $wishlistChange)
     {
-        return $this->getFactory()->createStoragePropel(
+        return new Propel(
             $this->getQueryContainer(),
             $this->createCustomer($wishlistChange->getCustomer()),
             $wishlistChange->getWishlist(),
@@ -131,7 +131,7 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createInMemoryStrorage(WishlistChangeTransfer $wishlistChange)
     {
-        return $this->getFactory()->createStorageInMemory(
+        return new InMemory(
             $wishlistChange->getWishlist(),
             $this->getProvidedDependency(WishlistDependencyProvider::FACADE_PRODUCT)
         );
@@ -144,7 +144,7 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCustomer(CustomerTransfer $customerTransfer)
     {
-        return $this->getFactory()->createModelCustomer($this->getQueryContainer(), $customerTransfer);
+        return new Customer($this->getQueryContainer(), $customerTransfer);
     }
 
 }

@@ -6,6 +6,14 @@
 
 namespace SprykerFeature\Zed\Cart\Business;
 
+use SprykerFeature\Zed\Cart\Business\StorageProvider\InMemoryProvider;
+use SprykerFeature\Zed\Cart\Business\Operator\CouponCodeClearOperator;
+use SprykerFeature\Zed\Cart\Business\Operator\CouponCodeRemoveOperator;
+use SprykerFeature\Zed\Cart\Business\Operator\CouponCodeAddOperator;
+use SprykerFeature\Zed\Cart\Business\Operator\DecreaseOperator;
+use SprykerFeature\Zed\Cart\Business\Operator\RemoveOperator;
+use SprykerFeature\Zed\Cart\Business\Operator\IncreaseOperator;
+use SprykerFeature\Zed\Cart\Business\Operator\AddOperator;
 use Generated\Zed\Ide\FactoryAutoCompletion\CartBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
@@ -28,7 +36,7 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
     public function createAddOperator()
     {
         return $this->configureCartOperator(
-            $this->getFactory()->createOperatorAddOperator(
+            new AddOperator(
                 $this->createStorageProvider(),
                 $this->createCartCalculator(),
                 $this->getItemGrouper()
@@ -43,7 +51,7 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
     public function createIncreaseOperator()
     {
         return $this->configureCartOperator(
-            $this->getFactory()->createOperatorIncreaseOperator(
+            new IncreaseOperator(
                 $this->createStorageProvider(),
                 $this->createCartCalculator(),
                 $this->getItemGrouper()
@@ -58,7 +66,7 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
     public function createRemoveOperator()
     {
         return $this->configureCartOperator(
-            $this->getFactory()->createOperatorRemoveOperator(
+            new RemoveOperator(
                 $this->createStorageProvider(),
                 $this->createCartCalculator(),
                 $this->getItemGrouper()
@@ -73,7 +81,7 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
     public function createDecreaseOperator()
     {
         return $this->configureCartOperator(
-            $this->getFactory()->createOperatorDecreaseOperator(
+            new DecreaseOperator(
                 $this->createStorageProvider(),
                 $this->createCartCalculator(),
                 $this->getItemGrouper()
@@ -88,7 +96,7 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
     public function createCouponCodeAddOperator()
     {
         return $this->configureCartOperator(
-            $this->getFactory()->createOperatorCouponCodeAddOperator(
+            new CouponCodeAddOperator(
                 $this->createStorageProvider(),
                 $this->createCartCalculator(),
                 $this->getItemGrouper()
@@ -103,7 +111,7 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
     public function createCouponCodeRemoveOperator()
     {
         return $this->configureCartOperator(
-            $this->getFactory()->createOperatorCouponCodeRemoveOperator(
+            new CouponCodeRemoveOperator(
                 $this->createStorageProvider(),
                 $this->createCartCalculator(),
                 $this->getItemGrouper()
@@ -118,7 +126,7 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
     public function createCouponCodeClearOperator()
     {
         return $this->configureCartOperator(
-            $this->getFactory()->createOperatorCouponCodeClearOperator(
+            new CouponCodeClearOperator(
                 $this->createStorageProvider(),
                 $this->createCartCalculator(),
                 $this->getItemGrouper()
@@ -132,7 +140,7 @@ class CartDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createStorageProvider()
     {
-        return $this->getFactory()->createStorageProviderInMemoryProvider();
+        return new InMemoryProvider();
     }
 
     /**

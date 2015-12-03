@@ -41,6 +41,8 @@ abstract class AbstractDependencyContainer
     }
 
     /**
+     * @deprecated Will be removed soon, please use new instead
+     *
      * @return FactoryInterface
      */
     protected function getFactory()
@@ -49,7 +51,7 @@ abstract class AbstractDependencyContainer
     }
 
     /**
-     * @deprecated
+     * @deprecated Will be removed soon. Use DependencyProvider instead
      *
      * @return AutoCompletion|LocatorLocatorInterface
      */

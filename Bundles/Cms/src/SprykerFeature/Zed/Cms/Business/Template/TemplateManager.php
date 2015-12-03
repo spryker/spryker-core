@@ -128,7 +128,7 @@ class TemplateManager implements TemplateManagerInterface
      */
     protected function convertTemplateEntityToTransfer(SpyCmsTemplate $template)
     {
-        $transferTemplate = new \Generated\Shared\Transfer\CmsTemplateTransfer();
+        $transferTemplate = new CmsTemplateTransfer();
         $transferTemplate->fromArray($template->toArray());
 
         return $transferTemplate;

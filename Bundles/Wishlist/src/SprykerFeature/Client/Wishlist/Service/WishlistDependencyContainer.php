@@ -6,6 +6,9 @@
 
 namespace SprykerFeature\Client\Wishlist\Service;
 
+use SprykerFeature\Client\Wishlist\Service\Storage\WishlistStorage;
+use SprykerFeature\Client\Wishlist\Service\Zed\WishlistStub;
+use SprykerFeature\Client\Wishlist\Service\Session\WishlistSession;
 use Generated\Client\Ide\FactoryAutoCompletion\WishlistService;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Customer\Service\CustomerClientInterface;
@@ -25,7 +28,7 @@ class WishlistDependencyContainer extends AbstractServiceDependencyContainer
      */
     public function createSession()
     {
-        $session = $this->getFactory()->createSessionWishlistSession(
+        $session = new WishlistSession(
             $this->getProvidedDependency(WishlistDependencyProvider::SESSION)
         );
 
@@ -38,7 +41,7 @@ class WishlistDependencyContainer extends AbstractServiceDependencyContainer
     public function createZedStub()
     {
         $zedStub = $this->getProvidedDependency(WishlistDependencyProvider::SERVICE_ZED);
-        $cartStub = $this->getFactory()->createZedWishlistStub($zedStub);
+        $cartStub = new WishlistStub($zedStub);
 
         return $cartStub;
     }
@@ -48,7 +51,7 @@ class WishlistDependencyContainer extends AbstractServiceDependencyContainer
      */
     public function createStorage()
     {
-        return $this->getFactory()->createStorageWishlistStorage(
+        return new WishlistStorage(
             $this->getProvidedDependency(WishlistDependencyProvider::STORAGE),
             $this->getProvidedDependency(WishlistDependencyProvider::CLIENT_PRODUCT)
         );

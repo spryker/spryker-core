@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\Discount\Communication;
 
+use SprykerFeature\Zed\Discount\Communication\Form\CartRuleForm;
+use SprykerFeature\Zed\Discount\Communication\Form\VoucherForm;
 use Generated\Shared\Transfer\DataTablesTransfer;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Zed\Discount\Communication\Form\CollectorPluginForm;
@@ -42,8 +44,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createVoucherForm($allowMultiple=false)
     {
-        $voucherForm = $this->getFactory()
-            ->createFormVoucherForm(
+        $voucherForm = new VoucherForm(
                 $this->getQueryContainer(),
                 $this->getConfig(),
                 $allowMultiple
@@ -68,7 +69,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     {
         $poolCategoriesQuery = $this->getQueryContainer()->queryDiscountVoucherPoolCategory();
 
-        return $this->getFactory()->createTableVoucherPoolCategoryTable($poolCategoriesQuery);
+        return new VoucherPoolCategoryTable($poolCategoriesQuery);
     }
 
     /**
@@ -78,7 +79,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     {
         $discountQuery = $this->getQueryContainer()->queryDiscount();
 
-        return $this->getFactory()->createTableDiscountsTable($discountQuery);
+        return new DiscountsTable($discountQuery);
     }
 
     /**
@@ -89,7 +90,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createDiscountVoucherCodesTable(DataTablesTransfer $dataTablesTransfer, $idPool, $batchValue)
     {
-        return $this->getFactory()->createTableDiscountVoucherCodesTable(
+        return new DiscountVoucherCodesTable(
             $dataTablesTransfer,
             $this->getQueryContainer(),
             $idPool,
@@ -104,7 +105,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     {
         $poolQuery = $this->getQueryContainer()->queryDiscountVoucherPool();
 
-        return $this->getFactory()->createTableVoucherPoolTable($poolQuery, $this->getConfig());
+        return new VoucherPoolTable($poolQuery, $this->getConfig());
     }
 
     /**
@@ -112,8 +113,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createCartRuleForm()
     {
-        $cartRuleForm = $this->getFactory()
-            ->createFormCartRuleForm(
+        $cartRuleForm = new CartRuleForm(
                 $this->getConfig(),
                 $this->getDiscountFacade()
             );
@@ -138,7 +138,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createVoucherCodesForm()
     {
-        $voucherCodesForm = $this->getFactory()->createFormVoucherCodesForm(
+        $voucherCodesForm = new VoucherCodesForm(
             $this->getConfig(),
             $this->createCamelCaseToUnderscoreFilter(),
             $this->getQueryContainer()
@@ -168,7 +168,7 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
      */
     public function createDecisionRuleForm()
     {
-        $decisionRulesForm = $this->getFactory()->createFormDecisionRuleForm(
+        $decisionRulesForm = new DecisionRuleForm(
             $this->getConfig()->getAvailableDecisionRulePlugins()
         );
 

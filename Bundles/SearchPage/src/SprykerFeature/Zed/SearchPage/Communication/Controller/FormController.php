@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\SearchPage\Communication\Controller;
 
+use Generated\Shared\Transfer\SearchPagePageElementTransfer;
 use SprykerFeature\Zed\SearchPage\Communication\SearchPageDependencyContainer;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -31,7 +32,7 @@ class FormController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $pageElementTransfer = new \Generated\Shared\Transfer\SearchPagePageElementTransfer();
+            $pageElementTransfer = new SearchPagePageElementTransfer();
 
             $pageElementTransfer->fromArray($form->getRequestData());
 
@@ -56,7 +57,7 @@ class FormController extends AbstractController
         $form->init();
 
         if ($form->isValid()) {
-            $pageElementTransfer = new \Generated\Shared\Transfer\SearchPagePageElementTransfer();
+            $pageElementTransfer = new SearchPagePageElementTransfer();
             $pageElementTransfer->fromArray($form->getRequestData());
 
             $this->getDependencyContainer()->getSearchPageFacade()->updatePageElement($pageElementTransfer);

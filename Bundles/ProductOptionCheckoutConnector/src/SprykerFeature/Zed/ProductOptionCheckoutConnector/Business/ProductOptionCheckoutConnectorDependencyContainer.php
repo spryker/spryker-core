@@ -19,7 +19,7 @@ class ProductOptionCheckoutConnectorDependencyContainer extends AbstractBusiness
 
     public function createProductOptionOrderHydrator()
     {
-        return $this->getFactory()->createProductOptionOrderHydrator();
+        return new ProductOptionOrderHydrator();
     }
 
 }

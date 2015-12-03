@@ -6,6 +6,14 @@
 
 namespace SprykerFeature\Zed\Collector\Business;
 
+use SprykerFeature\Zed\Collector\Business\Exporter\Writer\Search\ElasticsearchUpdateWriter;
+use SprykerFeature\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdater as KeyValueTouchUpdater;
+use SprykerFeature\Zed\Collector\Business\Exporter\Writer\Search\TouchUpdater;
+use SprykerFeature\Zed\Collector\Business\Model\BatchResult;
+use SprykerFeature\Zed\Collector\Business\Model\FailedResult;
+use SprykerFeature\Zed\Collector\Business\Exporter\ExportMarker;
+use SprykerFeature\Zed\Collector\Business\Exporter\Writer\KeyValue\RedisWriter;
+use SprykerFeature\Zed\Collector\Business\Exporter\KeyValueCollector;
 use Generated\Zed\Ide\FactoryAutoCompletion\CollectorBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainer;
@@ -41,7 +49,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createYvesKeyValueExporter()
     {
-        return $this->getFactory()->createExporterCollector(
+        return new Collector(
             $this->createTouchQueryContainer(),
             $this->createKeyValueExporter()
         );
@@ -60,7 +68,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createKeyValueExporter()
     {
-        $keyValueExporter = $this->getFactory()->createExporterKeyValueCollector(
+        $keyValueExporter = new KeyValueCollector(
             $this->createTouchQueryContainer(),
             $this->createKeyValueWriter(),
             $this->createKeyValueMarker(),
@@ -81,7 +89,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createKeyValueWriter()
     {
-        return $this->getFactory()->createExporterWriterKeyValueRedisWriter(
+        return new RedisWriter(
             StorageInstanceBuilder::getStorageReadWriteInstance()
         );
     }
@@ -91,7 +99,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createKeyValueMarker()
     {
-        return $this->getFactory()->createExporterExportMarker(
+        return new ExportMarker(
             $this->createKeyValueWriter(),
             $this->createRedisReader(),
             $this->createKvMarkerKeyBuilder()
@@ -103,7 +111,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createRedisReader()
     {
-        return $this->getFactory()->createExporterReaderKeyValueRedisReader(
+        return new RedisReader(
             StorageInstanceBuilder::getStorageReadWriteInstance()
         );
     }
@@ -113,7 +121,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createKvMarkerKeyBuilder()
     {
-        return $this->getFactory()->createExporterKeyBuilderKvMarkerKeyBuilder();
+        return new KvMarkerKeyBuilder();
     }
 
     /**
@@ -121,7 +129,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createFailedResultModel()
     {
-        return $this->getFactory()->createModelFailedResult();
+        return new FailedResult();
     }
 
     /**
@@ -129,7 +137,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createBatchResultModel()
     {
-        return $this->getFactory()->createModelBatchResult();
+        return new BatchResult();
     }
 
     /**
@@ -137,7 +145,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createExporterWriterSearchTouchUpdater()
     {
-        return $this->getFactory()->createExporterWriterSearchTouchUpdater();
+        return new TouchUpdater();
     }
 
     /**
@@ -145,7 +153,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createExporterWriterKeyValueTouchUpdater()
     {
-        return $this->getFactory()->createExporterWriterKeyValueTouchUpdater();
+        return new KeyValueTouchUpdater();
     }
 
     /**
@@ -156,7 +164,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
         $config = $this->getConfig();
         $searchWriter = $this->createSearchWriter();
 
-        return $this->getFactory()->createExporterCollector(
+        return new Collector(
             $this->createTouchQueryContainer(),
             $this->createElasticsearchExporter(
                 $searchWriter,
@@ -170,7 +178,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getYvesSearchUpdateExporter()
     {
-        return $this->getFactory()->createExporterCollector(
+        return new Collector(
             $this->createTouchQueryContainer(),
             $this->createElasticsearchExporter(
                 $this->createSearchUpdateWriter(),
@@ -187,7 +195,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createElasticsearchExporter(WriterInterface $searchWriter, CollectorConfig $config)
     {
-        $searchExporter = $this->getFactory()->createExporterSearchCollector(
+        $searchExporter = new SearchCollector(
             $this->createTouchQueryContainer(),
             $searchWriter,
             $this->createSearchMarker(),
@@ -208,7 +216,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createSearchWriter()
     {
-        $elasticSearchWriter = $this->getFactory()->createExporterWriterSearchElasticsearchWriter(
+        $elasticSearchWriter = new ElasticsearchWriter(
             StorageInstanceBuilder::getElasticsearchInstance(),
             $this->getConfig()->getSearchIndexName(),
             $this->getConfig()->getSearchDocumentType()
@@ -224,7 +232,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $settings = $this->getConfig();
 
-        $elasticsearchUpdateWriter = $this->getFactory()->createExporterWriterSearchElasticsearchUpdateWriter(
+        $elasticsearchUpdateWriter = new ElasticsearchUpdateWriter(
             StorageInstanceBuilder::getElasticsearchInstance(),
             $settings->getSearchIndexName(),
             $settings->getSearchDocumentType()
@@ -238,7 +246,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createSearchMarker()
     {
-        return $this->getFactory()->createExporterExportMarker(
+        return new ExportMarker(
             $this->createSearchMarkerWriter(),
             $this->createSearchMarkerReader(),
             $this->createSearchMarkerKeyBuilder()
@@ -250,7 +258,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createSearchMarkerWriter()
     {
-        $elasticSearchWriter = $this->getFactory()->createExporterWriterSearchElasticsearchMarkerWriter(
+        $elasticSearchWriter = new ElasticsearchMarkerWriter(
             StorageInstanceBuilder::getElasticsearchInstance(),
             $this->getConfig()->getSearchIndexName(),
             $this->getConfig()->getSearchDocumentType()
@@ -264,7 +272,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createSearchMarkerReader()
     {
-        return $this->getFactory()->createExporterReaderSearchElasticsearchMarkerReader(
+        return new ElasticsearchMarkerReader(
             StorageInstanceBuilder::getElasticsearchInstance(),
             $this->getConfig()->getSearchIndexName(),
             $this->getConfig()->getSearchDocumentType()
@@ -276,7 +284,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createSearchMarkerKeyBuilder()
     {
-        return $this->getFactory()->createExporterKeyBuilderSearchMarkerKeyBuilder();
+        return new SearchMarkerKeyBuilder();
     }
 
     /**
@@ -286,7 +294,7 @@ class CollectorDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createInstaller(MessengerInterface $messenger)
     {
-        $installer = $this->getFactory()->createInternalInstallElasticsearch(
+        $installer = new InstallElasticsearch(
             StorageInstanceBuilder::getElasticsearchInstance(),
             $this->getConfig()->getSearchIndexName()
         );

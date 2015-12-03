@@ -23,7 +23,7 @@ class StorageDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createStorage()
     {
-        return $this->getFactory()->createModelStorage(
+        return new Storage(
             $this->createStorageClient()
         );
     }

@@ -6,6 +6,12 @@
 
 namespace SprykerFeature\Zed\ProductSearch\Business;
 
+use SprykerFeature\Zed\ProductSearch\Business\Builder\ProductResourceKeyBuilder;
+use SprykerFeature\Zed\ProductSearch\Business\Operation\OperationManager;
+use SprykerFeature\Zed\ProductSearch\Business\Locator\OperationLocator;
+use SprykerFeature\Zed\ProductSearch\Business\Operation\DefaultOperation;
+use SprykerFeature\Zed\ProductSearch\Business\Processor\ProductSearchProcessor;
+use SprykerFeature\Zed\ProductSearch\Business\Transformer\ProductAttributesTransformer;
 use Generated\Zed\Ide\FactoryAutoCompletion\ProductSearchBusiness;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Shared\Library\Storage\StorageInstanceBuilder;
@@ -36,7 +42,7 @@ class ProductSearchDependencyContainer extends AbstractBusinessDependencyContain
      */
     public function getProductAttributesTransformer()
     {
-        return $this->getFactory()->createTransformerProductAttributesTransformer(
+        return new ProductAttributesTransformer(
             $this->createProductSearchQueryContainer(),
             $this->createOperationLocator(),
             $this->createDefaultOperation()
@@ -48,7 +54,7 @@ class ProductSearchDependencyContainer extends AbstractBusinessDependencyContain
      */
     public function getProductSearchProcessor()
     {
-        return $this->getFactory()->createProcessorProductSearchProcessor(
+        return new ProductSearchProcessor(
             $this->createKeyBuilder(),
             $this->getStoreName()
         );
@@ -63,7 +69,7 @@ class ProductSearchDependencyContainer extends AbstractBusinessDependencyContain
     {
         $collectorFacade = $this->getLocator()->collector()->facade();
 
-        $installer = $this->getFactory()->createInternalInstallProductSearch(
+        $installer = new InstallProductSearch(
             StorageInstanceBuilder::getElasticsearchInstance(),
             $collectorFacade->getSearchIndexName(),
             $collectorFacade->getSearchDocumentType()
@@ -78,7 +84,7 @@ class ProductSearchDependencyContainer extends AbstractBusinessDependencyContain
      */
     protected function createDefaultOperation()
     {
-        return $this->getFactory()->createOperationDefaultOperation();
+        return new DefaultOperation();
     }
 
     /**
@@ -86,7 +92,7 @@ class ProductSearchDependencyContainer extends AbstractBusinessDependencyContain
      */
     protected function createOperationLocator()
     {
-        $locator = $this->getFactory()->createLocatorOperationLocator();
+        $locator = new OperationLocator();
         $config = $this->getConfig();
 
         foreach ($config->getPossibleOperations() as $operation) {
@@ -101,7 +107,7 @@ class ProductSearchDependencyContainer extends AbstractBusinessDependencyContain
      */
     protected function createOperationManager()
     {
-        return $this->getFactory()->createOperationOperationManager(
+        return new OperationManager(
             $this->createProductSearchQueryContainer(),
             $this->getLocator()
         );
@@ -144,7 +150,7 @@ class ProductSearchDependencyContainer extends AbstractBusinessDependencyContain
      */
     public function createKeyBuilder()
     {
-        return $this->getFactory()->createBuilderProductResourceKeyBuilder();
+        return new ProductResourceKeyBuilder();
     }
 
     /**

@@ -33,7 +33,7 @@ class SearchPageDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createPageElementWriter()
     {
-        return $this->getFactory()->createWriterPageElementWriter(
+        return new PageElementWriter(
             $this->createPageElementReader(),
             $this->createTouchFacade()
         );
@@ -46,7 +46,7 @@ class SearchPageDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createDocumentAttributeInstaller(MessengerInterface $messenger)
     {
-        $attributeInstaller = $this->getFactory()->createInstallerDocumentAttributeInstaller(
+        $attributeInstaller = new DocumentAttributeInstaller(
             $this->createDocumentAttributeWriter(),
             $this->createDocumentAttributeReader(),
             $this->getLocator()
@@ -62,7 +62,7 @@ class SearchPageDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createTemplateInstaller(MessengerInterface $messenger)
     {
-        $templateInstaller = $this->getFactory()->createInstallerTemplateInstaller(
+        $templateInstaller = new TemplateInstaller(
             $this->createTemplateWriter(),
             $this->createTemplateReader(),
             $this->getLocator()
@@ -76,7 +76,7 @@ class SearchPageDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createSearchPageConfigProcessor()
     {
-        return $this->getFactory()->createProcessorSearchPageConfigProcessor(
+        return new SearchPageConfigProcessor(
             $this->getSearchPageConfigKeyBuilder()
         );
     }
@@ -86,7 +86,7 @@ class SearchPageDependencyContainer extends AbstractBusinessDependencyContainer
      */
     private function createPageElementReader()
     {
-        return $this->getFactory()->createReaderPageElementReader(
+        return new PageElementReader(
             $this->getQueryContainer()
         );
     }
@@ -96,7 +96,7 @@ class SearchPageDependencyContainer extends AbstractBusinessDependencyContainer
      */
     private function createDocumentAttributeWriter()
     {
-        return $this->getFactory()->createWriterDocumentAttributeWriter(
+        return new DocumentAttributeWriter(
             $this->createDocumentAttributeReader()
         );
     }
@@ -106,7 +106,7 @@ class SearchPageDependencyContainer extends AbstractBusinessDependencyContainer
      */
     private function createDocumentAttributeReader()
     {
-        return $this->getFactory()->createReaderDocumentAttributeReader(
+        return new DocumentAttributeReader(
             $this->getQueryContainer()
         );
     }
@@ -116,7 +116,7 @@ class SearchPageDependencyContainer extends AbstractBusinessDependencyContainer
      */
     private function createTemplateWriter()
     {
-        return $this->getFactory()->createWriterTemplateWriter(
+        return new TemplateWriter(
             $this->createTemplateReader()
         );
     }
@@ -126,7 +126,7 @@ class SearchPageDependencyContainer extends AbstractBusinessDependencyContainer
      */
     private function createTemplateReader()
     {
-        return $this->getFactory()->createReaderTemplateReader(
+        return new TemplateReader(
             $this->getQueryContainer()
         );
     }
@@ -152,7 +152,7 @@ class SearchPageDependencyContainer extends AbstractBusinessDependencyContainer
      */
     private function getSearchPageConfigKeyBuilder()
     {
-        return $this->getFactory()->createKeyBuilderSearchPageConfigKeyBuilder();
+        return new SearchPageConfigKeyBuilder();
     }
 
 }

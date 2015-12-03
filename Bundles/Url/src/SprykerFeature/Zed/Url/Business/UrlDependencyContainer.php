@@ -23,7 +23,7 @@ class UrlDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getUrlManager()
     {
-        return $this->getFactory()->createUrlManager(
+        return new UrlManager(
             $this->getQueryContainer(),
             $this->getProvidedDependency(UrlDependencyProvider::FACADE_LOCALE),
             $this->getProvidedDependency(UrlDependencyProvider::FACADE_TOUCH),
@@ -36,7 +36,7 @@ class UrlDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getRedirectManager()
     {
-        return $this->getFactory()->createRedirectManager(
+        return new RedirectManager(
             $this->getQueryContainer(),
             $this->getUrlManager(),
             $this->getProvidedDependency(UrlDependencyProvider::FACADE_TOUCH),

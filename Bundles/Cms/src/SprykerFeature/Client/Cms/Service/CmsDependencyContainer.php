@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Client\Cms\Service;
 
+use SprykerFeature\Client\Cms\Service\KeyBuilder\CmsBlockKeyBuilder;
+use SprykerFeature\Client\Cms\Service\Storage\CmsBlockStorage;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Cms\CmsDependencyProvider;
 use SprykerFeature\Client\Cms\Service\Storage\CmsBlockStorageInterface;
@@ -20,7 +22,7 @@ class CmsDependencyContainer extends AbstractServiceDependencyContainer
      */
     public function createCmsBlockFinder()
     {
-        return $this->getFactory()->createStorageCmsBlockStorage(
+        return new CmsBlockStorage(
             $this->getStorage(),
             $this->getKeyBuilder()
         );
@@ -39,7 +41,7 @@ class CmsDependencyContainer extends AbstractServiceDependencyContainer
      */
     private function getKeyBuilder()
     {
-        return $this->getFactory()->createKeyBuilderCmsBlockKeyBuilder();
+        return new CmsBlockKeyBuilder();
     }
 
 }

@@ -9,6 +9,7 @@ namespace SprykerFeature\Shared\Library\Storage;
 /**
  * Class AdapterInterface
  */
+
 interface AdapterInterface
 {
 

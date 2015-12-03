@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Sales\Communication;
 
+use SprykerFeature\Zed\Sales\Communication\Form\OrderItemSplitForm;
 use Generated\Zed\Ide\FactoryAutoCompletion\SalesCommunication;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
@@ -13,7 +14,6 @@ use SprykerFeature\Zed\Oms\Business\OmsFacade;
 use SprykerFeature\Zed\Sales\Communication\Form\OrderItemSplitForm\Collection;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;
 use SprykerFeature\Zed\Sales\SalesDependencyProvider;
-use Symfony\Component\HttpFoundation\Request;
 use SprykerFeature\Zed\Sales\Communication\Table\OrdersTable;
 use SprykerFeature\Zed\Sales\Communication\Form\CustomerForm;
 use SprykerFeature\Zed\Sales\Communication\Form\AddressForm;
@@ -26,14 +26,12 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
     /**
+     * @Todo check if we can remove this method
+     *
      * @return mixed
      */
     public function getCommentForm()
     {
-        return $this->getFactory()->createFormCommentForm(
-            null,
-            $this->getQueryContainer()
-        );
     }
 
     /**
@@ -41,18 +39,7 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function getOrderItemSplitForm()
     {
-        return $this->getFactory()->createFormOrderItemSplitForm();
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getDemoCommentForm()
-    {
-        return $this->getFactory()->createFormDemoCommentForm(
-            null,
-            $this->getQueryContainer()
-        );
+        return new OrderItemSplitForm();
     }
 
     /**
@@ -64,7 +51,7 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
     {
         $customerQuery = $this->getQueryContainer()->querySalesOrderById($idSalesOrder);
 
-        return $this->getFactory()->createFormCustomerForm($customerQuery);
+        return new CustomerForm($customerQuery);
     }
 
     /**
@@ -76,40 +63,7 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
     {
         $addressQuery = $this->getQueryContainer()->querySalesOrderAddressById($idOrderAddress);
 
-        return $this->getFactory()->createFormAddressForm($addressQuery);
-    }
-
-    /**
-     * @param Request $request
-     *
-     * @return CommentsGrid
-     */
-    public function getCommentsGridByOrderId(Request $request)
-    {
-        return $this->getFactory()->createGridCommentsGrid(
-            $this->getQueryContainer()->queryCommentsByOrderId($request->get('orderId'))
-        );
-    }
-
-    /**
-     * @return SalesGrid
-     */
-    public function getSalesGrid()
-    {
-        $salesQuery = $this->getQueryContainer()->querySalesOrder();
-
-        return $this->getFactory()->createGridSalesGrid($salesQuery);
-    }
-
-    /**
-     * @param int $idOrder
-     *
-     * @return OrderItemsGrid
-     */
-    public function getOrdersItemsGridByOrderId($idOrder)
-    {
-        return $this->getFactory()->createGridOrderItemsGrid(
-            $this->getQueryContainer()->querySalesOrderItemsByIdSalesOrder($idOrder));
+        return new AddressForm($addressQuery);
     }
 
     /**
@@ -119,7 +73,7 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
      */
     public function getOrderItemSplitFormCollection(ObjectCollection $orderItems)
     {
-        return $this->getFactory()->createFormOrderItemSplitFormCollection($orderItems);
+        return new Collection($orderItems);
     }
 
     /**
@@ -130,7 +84,7 @@ class SalesDependencyContainer extends AbstractCommunicationDependencyContainer
         $orderQuery = $this->getQueryContainer()->querySalesOrder();
         $orderItemQuery = $this->getQueryContainer()->querySalesOrderItem();
 
-        return $this->getFactory()->createTableOrdersTable($orderQuery, $orderItemQuery);
+        return new OrdersTable($orderQuery, $orderItemQuery);
     }
 
     /**

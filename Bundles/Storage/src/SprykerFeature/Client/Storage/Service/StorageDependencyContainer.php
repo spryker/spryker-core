@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Client\Storage\Service;
 
+use SprykerFeature\Client\Storage\Service\Redis\Service;
 use Generated\Client\Ide\FactoryAutoCompletion\StorageService;
 use Predis\Client;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
@@ -23,7 +24,7 @@ class StorageDependencyContainer extends AbstractServiceDependencyContainer
      */
     public function createService()
     {
-        return $this->getFactory()->createRedisService(
+        return new Service(
             $this->createClient()
         );
     }

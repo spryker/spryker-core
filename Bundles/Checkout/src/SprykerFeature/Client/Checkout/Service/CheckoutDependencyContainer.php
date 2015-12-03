@@ -6,9 +6,10 @@
 
 namespace SprykerFeature\Client\Checkout\Service;
 
+use SprykerFeature\Client\Checkout\CheckoutDependencyProvider;
+use SprykerFeature\Client\Checkout\Service\Zed\CheckoutStub;
 use Generated\Client\Ide\FactoryAutoCompletion\CheckoutService;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
-use SprykerFeature\Client\Cart\CartDependencyProvider;
 use SprykerFeature\Client\Checkout\Service\Zed\CheckoutStubInterface;
 
 /**
@@ -22,8 +23,8 @@ class CheckoutDependencyContainer extends AbstractServiceDependencyContainer
      */
     public function createZedStub()
     {
-        $zedStub = $this->getProvidedDependency(CartDependencyProvider::SERVICE_ZED);
-        $checkoutStub = $this->getFactory()->createZedCheckoutStub(
+        $zedStub = $this->getProvidedDependency(CheckoutDependencyProvider::SERVICE_ZED);
+        $checkoutStub = new CheckoutStub(
             $zedStub
         );
 

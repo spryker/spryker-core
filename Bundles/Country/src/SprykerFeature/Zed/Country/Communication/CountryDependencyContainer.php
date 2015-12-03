@@ -35,7 +35,7 @@ class CountryDependencyContainer extends AbstractCommunicationDependencyContaine
     {
         $countryQuery = $this->getQueryContainer()->queryCountries();
 
-        return $this->getFactory()->createTableCountryTable($countryQuery);
+        return new CountryTable($countryQuery);
     }
 
     /**
@@ -46,7 +46,7 @@ class CountryDependencyContainer extends AbstractCommunicationDependencyContaine
         $countryQuery = $this->getQueryContainer()->queryCountries();
         $userQuery = $this->getUserQueryContainer()->queryUsers();
 
-        return $this->getFactory()->createFormCountryForm($countryQuery, $userQuery);
+        return new CountryForm($countryQuery, $userQuery);
     }
 
     /**

@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\SearchHeartbeatConnector\Business;
 
+use SprykerFeature\Zed\SearchHeartbeatConnector\Business\Assistant\SearchHealthIndicator;
 use Elastica\Client;
 use Generated\Zed\Ide\FactoryAutoCompletion\SearchHeartbeatConnectorBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
@@ -30,7 +31,7 @@ class SearchHeartbeatConnectorDependencyContainer extends AbstractBusinessDepend
             'host' => Config::get(SystemConfig::ELASTICA_PARAMETER__HOST),
         ]);
 
-        return $this->getFactory()->createAssistantSearchHealthIndicator($client);
+        return new SearchHealthIndicator($client);
     }
 
 }

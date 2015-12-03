@@ -6,6 +6,8 @@
 
 namespace SprykerFeature\Zed\Acl\Business;
 
+use SprykerFeature\Zed\Acl\Business\Model\Role;
+use SprykerFeature\Zed\Acl\Business\Model\Group;
 use Generated\Zed\Ide\FactoryAutoCompletion\AclBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Acl\AclConfig;
@@ -30,7 +32,7 @@ class AclDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createGroupModel()
     {
-        return $this->getFactory()->createModelGroup(
+        return new Group(
             $this->getQueryContainer()
         );
     }
@@ -40,7 +42,7 @@ class AclDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createRoleModel()
     {
-        return $this->getFactory()->createModelRole(
+        return new Role(
             $this->createGroupModel(),
             $this->getQueryContainer()
         );
@@ -51,7 +53,7 @@ class AclDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createRuleModel()
     {
-        return $this->getFactory()->createModelRule(
+        return new Rule(
             $this->createGroupModel(),
             $this->getQueryContainer(),
             $this->getProvidedDependency(AclDependencyProvider::FACADE_USER),
@@ -65,7 +67,7 @@ class AclDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createRuleValidatorHelper()
     {
-        return $this->getFactory()->createModelRuleValidator();
+        return new RuleValidator();
     }
 
     /**
@@ -73,7 +75,7 @@ class AclDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createInstallerModel()
     {
-        return $this->getFactory()->createModelInstaller(
+        return new Installer(
             $this->createGroupModel(),
             $this->createRoleModel(),
             $this->createRuleModel(),

@@ -6,6 +6,17 @@
 
 namespace SprykerFeature\Zed\Payone\Business;
 
+use SprykerFeature\Zed\Payone\Business\Payment\MethodMapper\Prepayment;
+use SprykerFeature\Zed\Payone\Business\Payment\MethodMapper\EWallet;
+use SprykerFeature\Zed\Payone\Business\Payment\MethodMapper\OnlineBankTransfer;
+use SprykerFeature\Zed\Payone\Business\Payment\MethodMapper\Invoice;
+use SprykerFeature\Zed\Payone\Business\Payment\MethodMapper\CreditCardPseudo;
+use SprykerFeature\Zed\Payone\Business\Mode\ModeDetector;
+use SprykerFeature\Zed\Payone\Business\Key\HashProvider;
+use SprykerFeature\Zed\Payone\Business\SequenceNumber\SequenceNumberProvider;
+use SprykerFeature\Zed\Payone\Business\Api\Adapter\Http\Guzzle;
+use SprykerFeature\Zed\Payone\Business\Order\OrderManager;
+use SprykerFeature\Zed\Payone\Business\Payment\PaymentManager;
 use Generated\Shared\Transfer\PayoneStandardParameterTransfer;
 use Generated\Shared\Transfer\PayoneTransactionStatusUpdateTransfer;
 use SprykerFeature\Zed\Payone\Business\Api\Adapter\AdapterInterface;
@@ -43,8 +54,7 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createPaymentManager()
     {
-        $paymentManager = $this->getFactory()
-            ->createPaymentPaymentManager(
+        $paymentManager = new PaymentManager(
                 $this->createExecutionAdapter(),
                 $this->createQueryContainer(),
                 $this->createStandardParameter(),
@@ -65,7 +75,7 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createOrderManager()
     {
-        return $this->getFactory()->createOrderOrderManager($this->getConfig());
+        return new OrderManager($this->getConfig());
     }
 
     /**
@@ -73,8 +83,7 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createTransactionStatusManager()
     {
-        return $this->getFactory()
-            ->createTransactionStatusTransactionStatusUpdateManager(
+        return new TransactionStatusUpdateManager(
                 $this->createQueryContainer(),
                 $this->createStandardParameter(),
                 $this->createKeyHashGenerator()
@@ -86,7 +95,7 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createApiLogFinder()
     {
-        return $this->getFactory()->createApiLogApiLogFinder(
+        return new ApiLogFinder(
             $this->createQueryContainer()
         );
     }
@@ -104,8 +113,7 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createExecutionAdapter()
     {
-        return $this->getFactory()
-            ->createApiAdapterHttpGuzzle(
+        return new Guzzle(
                 $this->createStandardParameter()->getPaymentGatewayUrl()
             );
     }
@@ -117,8 +125,7 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $defaultEmptySequenceNumber = $this->getConfig()->getEmptySequenceNumber();
 
-        return $this->getFactory()
-            ->createSequenceNumberSequenceNumberProvider(
+        return new SequenceNumberProvider(
                 $this->createQueryContainer(),
                 $defaultEmptySequenceNumber
             );
@@ -129,7 +136,7 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createKeyHashProvider()
     {
-        return $this->getFactory()->createKeyHashProvider();
+        return new HashProvider();
     }
 
     /**
@@ -137,7 +144,7 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createKeyHashGenerator()
     {
-        return $this->getFactory()->createKeyHashGenerator($this->getFactory()->createKeyHashProvider());
+        return new HashGenerator(new HashProvider());
     }
 
     /**
@@ -145,7 +152,7 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createModeDetector()
     {
-        return $this->getFactory()->createModeModeDetector($this->getConfig());
+        return new ModeDetector($this->getConfig());
     }
 
     /**
@@ -168,11 +175,11 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
         $storeConfig = $this->getProvidedDependency(PayoneDependencyProvider::STORE_CONFIG);
 
         return [
-            PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO => $this->getFactory()->createPaymentMethodMapperCreditCardPseudo($storeConfig),
-            PayoneApiConstants::PAYMENT_METHOD_INVOICE => $this->getFactory()->createPaymentMethodMapperInvoice($storeConfig),
-            PayoneApiConstants::PAYMENT_METHOD_ONLINE_BANK_TRANSFER => $this->getFactory()->createPaymentMethodMapperOnlineBankTransfer($storeConfig),
-            PayoneApiConstants::PAYMENT_METHOD_E_WALLET => $this->getFactory()->createPaymentMethodMapperEWallet($storeConfig),
-            PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT => $this->getFactory()->createPaymentMethodMapperPrepayment($storeConfig),
+            PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO => new CreditCardPseudo($storeConfig),
+            PayoneApiConstants::PAYMENT_METHOD_INVOICE => new Invoice($storeConfig),
+            PayoneApiConstants::PAYMENT_METHOD_ONLINE_BANK_TRANSFER => new OnlineBankTransfer($storeConfig),
+            PayoneApiConstants::PAYMENT_METHOD_E_WALLET => new EWallet($storeConfig),
+            PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT => new Prepayment($storeConfig),
         ];
     }
 
