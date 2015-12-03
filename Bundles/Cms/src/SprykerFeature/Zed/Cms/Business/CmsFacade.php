@@ -234,6 +234,8 @@ class CmsFacade extends AbstractFacade
 
     /**
      * @param PageTransfer $pageTransfer
+     *
+     * @return void
      */
     public function touchPageActive(PageTransfer $pageTransfer)
     {
@@ -243,6 +245,8 @@ class CmsFacade extends AbstractFacade
 
     /**
      * @param CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return void
      */
     public function touchBlockActive(CmsBlockTransfer $cmsBlockTransfer)
     {
@@ -252,6 +256,8 @@ class CmsFacade extends AbstractFacade
 
     /**
      * @param CmsBlockTransfer $cmsBlockTransfer
+     *
+     * @return void
      */
     public function touchBlockDelete(CmsBlockTransfer $cmsBlockTransfer)
     {
@@ -324,6 +330,8 @@ class CmsFacade extends AbstractFacade
 
     /**
      * @param int $idCategoryNode
+     *
+     * @return void
      */
     public function updateBlocksAssignedToDeletedCategoryNode($idCategoryNode)
     {

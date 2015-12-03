@@ -57,6 +57,8 @@ interface CmsToGlossaryInterface
 
     /**
      * @param int $idKey
+     *
+     * @return void
      */
     public function touchCurrentTranslationForKeyId($idKey);
 

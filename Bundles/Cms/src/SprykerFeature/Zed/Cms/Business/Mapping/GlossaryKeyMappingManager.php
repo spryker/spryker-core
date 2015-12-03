@@ -199,6 +199,8 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      * @param string $placeholder
      *
      * @throws MappingAmbiguousException
+     *
+     * @return void
      */
     protected function checkPagePlaceholderNotAmbiguous($idPage, $placeholder)
     {

@@ -49,6 +49,8 @@ interface PageManagerInterface
 
     /**
      * @param PageTransfer $page
+     *
+     * @return void
      */
     public function touchPageActive(PageTransfer $page);
 

@@ -24,6 +24,8 @@ interface OmsQueryContainerInterface
 
     /**
      * @method OmsPersistence getFactory()
+     *
+     * @return void
      */
     public function getFactory();
 

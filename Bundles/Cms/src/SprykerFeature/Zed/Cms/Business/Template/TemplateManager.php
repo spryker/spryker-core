@@ -84,6 +84,8 @@ class TemplateManager implements TemplateManagerInterface
      * @param string $path
      *
      * @throws TemplateExistsException
+     *
+     * @return void
      */
     protected function checkTemplatePathDoesNotExist($path)
     {

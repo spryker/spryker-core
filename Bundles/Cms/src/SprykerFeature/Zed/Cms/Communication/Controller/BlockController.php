@@ -133,6 +133,8 @@ class BlockController extends AbstractController
     /**
      * @param array $data
      * @param PageTransfer $pageTransfer
+     *
+     * @return void
      */
     protected function updatePageAndBlock(array $data, PageTransfer $pageTransfer)
     {

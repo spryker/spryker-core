@@ -224,6 +224,8 @@ class GlossaryController extends AbstractController
     /**
      * @param array $data
      * @param LocaleTransfer $localeTransfer
+     *
+     * @return void
      */
     private function saveGlossaryKeyPageMapping(array $data, LocaleTransfer $localeTransfer)
     {
@@ -365,6 +367,8 @@ class GlossaryController extends AbstractController
 
     /**
      * @param int $idPage
+     *
+     * @return void
      */
     protected function touchNecessaryBlock($idPage)
     {
