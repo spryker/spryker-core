@@ -17,7 +17,7 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
 {
 
     const DEFAULT_VOUCHER_CODE_LENGTH = 6;
-    const URL_DISCOUNT_POOL_EDIT = '/discount/pool/edit?%s=%d';
+    const URL_DISCOUNT_POOL_EDIT = '/discount/pool/edit';
 
     const PARAM_ID_POOL = 'id-pool';
     const PARAM_ID_DISCOUNT = 'id-discount';
