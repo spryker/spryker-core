@@ -72,13 +72,15 @@ abstract class AbstractGatewayController extends AbstractController
 
     /**
      * @param string $message
+     * @param array $data
      *
      * @return self
      */
-    protected function addInfoMessage($message)
+    protected function addInfoMessage($message, array $data = [])
     {
         $messageObject = new Message();
         $messageObject->setMessage($message);
+        $messageObject->setData($data);
 
         $this->infoMessages[] = $messageObject;
 
@@ -87,13 +89,15 @@ abstract class AbstractGatewayController extends AbstractController
 
     /**
      * @param string $message
+     * @param array $data
      *
      * @return self
      */
-    protected function addErrorMessage($message)
+    protected function addErrorMessage($message, array $data = [])
     {
         $messageObject = new Message();
         $messageObject->setMessage($message);
+        $messageObject->setData($data);
 
         $this->errorMessages[] = $messageObject;
 
@@ -102,13 +106,15 @@ abstract class AbstractGatewayController extends AbstractController
 
     /**
      * @param string $message
+     * @param array $data
      *
      * @return self
      */
-    protected function addSuccessMessage($message)
+    protected function addSuccessMessage($message, array $data = [])
     {
         $messageObject = new Message();
         $messageObject->setMessage($message);
+        $messageObject->setData($data);
 
         $this->successMessages[] = $messageObject;
 

@@ -13,11 +13,11 @@ use Orm\Zed\Discount\Persistence\SpyDiscountVoucher;
 class Voucher
 {
 
-    const REASON_VOUCHER_CODE_NOT_AVAILABLE = 'Voucher code is not valid.';
-    const REASON_VOUCHER_CODE_NOT_ACTIVE = 'Voucher code is not active.';
-    const REASON_VOUCHER_CODE_POOL_MISSING = 'Voucher code pool is not set.';
-    const REASON_VOUCHER_CODE_POOL_NOT_ACTIVE = 'Voucher code pool is not active.';
-    const REASON_VOUCHER_CODE_LIMIT_REACHED = 'Voucher max number of "%d" uses limit is reached.';
+    const REASON_VOUCHER_CODE_NOT_AVAILABLE = 'discount.voucher_code.not_valid';
+    const REASON_VOUCHER_CODE_NOT_ACTIVE = 'discount.voucher_code.not_active';
+    const REASON_VOUCHER_CODE_POOL_MISSING = 'discount.voucher_code.pool_not_set';
+    const REASON_VOUCHER_CODE_POOL_NOT_ACTIVE = 'discount.voucher_code.pool_not_active';
+    const REASON_VOUCHER_CODE_LIMIT_REACHED = 'discount.voucher_code.usage_limit.reached';
 
     /**
      * @var DiscountQueryContainerInterface
@@ -73,9 +73,7 @@ class Voucher
         }
 
         if (!$this->isValidNumberOfUses($discountVoucherEntity)) {
-            $result->addError(
-                sprintf(self::REASON_VOUCHER_CODE_LIMIT_REACHED, $discountVoucherEntity->getMaxNumberOfUses())
-            );
+            $result->addError(self::REASON_VOUCHER_CODE_LIMIT_REACHED);
         }
 
         return $result;

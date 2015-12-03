@@ -29,7 +29,9 @@ class DecisionRuleEngine implements DecisionRuleInterface
         $errors = [];
         $result = new ModelResult();
         foreach ($decisionRulePlugins as $plugin) {
-            $errors = array_merge($errors, $plugin->check($discountTransfer, $discountableContainer)->getErrors());
+            $decisionRuleResult = $plugin->check($discountTransfer, $discountableContainer);
+            $result->setSuccess($decisionRuleResult->isSuccess());
+            $errors = array_merge($errors, $decisionRuleResult->getErrors());
         }
 
         $result->addErrors($errors);

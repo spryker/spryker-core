@@ -7,6 +7,8 @@
 namespace SprykerFeature\Zed\Discount\Business\Model;
 
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
+use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Distributor\DistributorInterface;
 use Orm\Zed\Discount\Persistence\SpyDiscount;
@@ -19,6 +21,7 @@ class Calculator implements CalculatorInterface
     const KEY_DISCOUNT_AMOUNT = 'amount';
     const KEY_DISCOUNT_REASON = 'reason';
     const KEY_DISCOUNTABLE_OBJECTS = 'discountableObjects';
+    const DISCOUNT_SUCCESSFULLY_APPLIED_KEY = 'discount.successfully.applied';
 
     /**
      * @var array
@@ -31,17 +34,26 @@ class Calculator implements CalculatorInterface
     protected $collectorResolver;
 
     /**
-     * @param CollectorResolver $collectorResolver
+     * @var FlashMessengerFacade
      */
-    public function __construct(CollectorResolver $collectorResolver)
-    {
+    protected $flashMessengerFacade;
+
+    /**
+     * @param CollectorResolver $collectorResolver
+     * @param FlashMessengerFacade $flashMessengerFacade
+     */
+    public function __construct(
+        CollectorResolver $collectorResolver,
+        FlashMessengerFacade  $flashMessengerFacade
+    ) {
         $this->collectorResolver = $collectorResolver;
+        $this->flashMessengerFacade = $flashMessengerFacade;
     }
 
     /**
      * @param DiscountTransfer[] $discountCollection
      * @param CalculableInterface $container
-     * @param DiscountConfigInterface $settings
+     * @param DiscountConfigInterface $config
      * @param DistributorInterface $discountDistributor
      *
      * @return array
@@ -49,11 +61,29 @@ class Calculator implements CalculatorInterface
     public function calculate(
         array $discountCollection,
         CalculableInterface $container,
-        DiscountConfigInterface $settings,
+        DiscountConfigInterface $config,
         DistributorInterface $discountDistributor
     ) {
-        $calculatedDiscounts = [];
+        $calculatedDiscounts = $this->calculateDiscountAmount($discountCollection, $container, $config);
+        $calculatedDiscounts = $this->filterOutNonPrivilegedDiscounts($calculatedDiscounts);
+        $this->distributeDiscountAmount($discountDistributor, $calculatedDiscounts);
 
+        return $calculatedDiscounts;
+    }
+
+    /**
+     * @param DiscountTransfer[] $discountCollection
+     * @param CalculableInterface $container
+     * @param DiscountConfigInterface $config
+     *
+     * @return array
+     */
+    protected function calculateDiscountAmount(
+        array $discountCollection,
+        CalculableInterface $container,
+        DiscountConfigInterface $config
+    ) {
+        $calculatedDiscounts = [];
         foreach ($discountCollection as $discountTransfer) {
             $discountableObjects = $this->collectorResolver->collectItems($container, $discountTransfer);
 
@@ -61,7 +91,7 @@ class Calculator implements CalculatorInterface
                 continue;
             }
 
-            $calculatorPlugin = $settings->getCalculatorPluginByName($discountTransfer->getCalculatorPlugin());
+            $calculatorPlugin = $config->getCalculatorPluginByName($discountTransfer->getCalculatorPlugin());
             $discountAmount = $calculatorPlugin->calculate($discountableObjects, $discountTransfer->getAmount());
             $discountTransfer->setAmount($discountAmount);
 
@@ -69,15 +99,6 @@ class Calculator implements CalculatorInterface
                 self::KEY_DISCOUNTABLE_OBJECTS => $discountableObjects,
                 self::KEY_DISCOUNT_TRANSFER => $discountTransfer,
             ];
-        }
-
-        $calculatedDiscounts = $this->filterOutNonPrivilegedDiscounts($calculatedDiscounts);
-
-        foreach ($calculatedDiscounts as $discountTransfer) {
-            $discountDistributor->distribute(
-                $discountTransfer[self::KEY_DISCOUNTABLE_OBJECTS],
-                $discountTransfer[self::KEY_DISCOUNT_TRANSFER]
-            );
         }
 
         return $calculatedDiscounts;
@@ -94,6 +115,40 @@ class Calculator implements CalculatorInterface
         $calculatedDiscounts = $this->filterOutUnprivileged($calculatedDiscounts);
 
         return $calculatedDiscounts;
+    }
+
+    /**
+     * @param DistributorInterface $discountDistributor
+     * @param array $calculatedDiscounts
+     *
+     * @return void
+     */
+    protected function distributeDiscountAmount(DistributorInterface $discountDistributor, array $calculatedDiscounts)
+    {
+        foreach ($calculatedDiscounts as $calculatedDiscount) {
+            /* @var $discountTransfer DiscountTransfer */
+            $discountTransfer = $calculatedDiscount[self::KEY_DISCOUNT_TRANSFER];
+            $discountDistributor->distribute(
+                $calculatedDiscount[self::KEY_DISCOUNTABLE_OBJECTS],
+                $discountTransfer
+            );
+
+            $this->setSuccessfulDiscountAddMessage($discountTransfer->getDisplayName());
+        }
+    }
+
+    /**
+     * @param string $discountDisplayName
+     *
+     * @return void
+     */
+    protected function setSuccessfulDiscountAddMessage($discountDisplayName)
+    {
+        $messageTransfer = new MessageTransfer();
+        $messageTransfer->setValue(self::DISCOUNT_SUCCESSFULLY_APPLIED_KEY);
+        $messageTransfer->setParameters(['display_name' => $discountDisplayName]);
+
+        $this->flashMessengerFacade->addSuccessMessage($messageTransfer);
     }
 
     /**

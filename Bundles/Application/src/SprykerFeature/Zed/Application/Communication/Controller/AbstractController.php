@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Application\Communication\Controller;
 
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Silex\Application;
 use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
@@ -183,26 +184,23 @@ abstract class AbstractController
 
     /**
      * @param string $message
-     *
-     * @throws \ErrorException
+     * @param array $data
      *
      * @return self
      */
-    protected function addSuccessMessage($message)
+    protected function addSuccessMessage($message, array $data = [])
     {
-        $this->flashMessengerFacade->addSuccessMessage($message);
+        $this->flashMessengerFacade->addSuccessMessage($this->createMessageTransfer($message, $data));
     }
 
     /**
      * @param string $message
      *
-     * @throws \Exception
-     *
      * @return self
      */
-    protected function addInfoMessage($message)
+    protected function addInfoMessage($message, array $data = [])
     {
-        $this->flashMessengerFacade->addInfoMessage($message);
+        $this->flashMessengerFacade->addInfoMessage($this->createMessageTransfer($message, $data));
 
         return $this;
     }
@@ -210,15 +208,28 @@ abstract class AbstractController
     /**
      * @param string $message
      *
-     * @throws \ErrorException
-     *
      * @return self
      */
-    protected function addErrorMessage($message)
+    protected function addErrorMessage($message, array $data = [])
     {
-        $this->flashMessengerFacade->addErrorMessage($message);
+        $this->flashMessengerFacade->addErrorMessage($this->createMessageTransfer($message, $data));
 
         return $this;
+    }
+
+    /**
+     * @param string $message
+     * @param array $data
+     *
+     * @return MessageTransfer
+     */
+    private function createMessageTransfer($message, array $data = [])
+    {
+        $messageTransfer = new MessageTransfer();
+        $messageTransfer->setValue($message);
+        $messageTransfer->setParameters($data);
+
+        return $messageTransfer;
     }
 
     /**

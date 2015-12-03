@@ -5,6 +5,7 @@
 namespace SprykerEngine\Zed\FlashMessenger\Business\Model;
 
 use Generated\Shared\Transfer\FlashMessagesTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 
 interface MessageTrayInterface
 {
@@ -14,25 +15,25 @@ interface MessageTrayInterface
     const FLASH_MESSAGES_INFO = 'flash.messages.info';
 
     /**
-     * @param string $message
+     * @param MessageTransfer $message
      *
      * @return void
      */
-    public function addSuccessMessage($message);
+    public function addSuccessMessage(MessageTransfer $message);
 
     /**
-     * @param string $message
+     * @param MessageTransfer $message
      *
      * @return void
      */
-    public function addInfoMessage($message);
+    public function addInfoMessage(MessageTransfer $message);
 
     /**
-     * @param string $message
+     * @param MessageTransfer $message
      *
      * @return void
      */
-    public function addErrorMessage($message);
+    public function addErrorMessage(MessageTransfer $message);
 
     /**
      * @return FlashMessagesTransfer

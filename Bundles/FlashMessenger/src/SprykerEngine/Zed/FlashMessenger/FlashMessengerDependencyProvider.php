@@ -11,7 +11,8 @@ use SprykerEngine\Zed\Kernel\Container;
 class FlashMessengerDependencyProvider extends AbstractBundleDependencyProvider
 {
 
-    const SESSION = 'SESSION';
+    const SESSION = 'session';
+    const FACADE_GLOSSARY = 'glossary facade';
 
     /**
      * @param Container $container
@@ -22,6 +23,10 @@ class FlashMessengerDependencyProvider extends AbstractBundleDependencyProvider
     {
         $container[self::SESSION] = function (Container $container) {
             return $container->getLocator()->application()->pluginPimple()->getApplication()['request']->getSession();
+        };
+
+        $container[self::FACADE_GLOSSARY] = function (Container $container) {
+            return $container->getLocator()->glossary()->facade();
         };
 
         return $container;

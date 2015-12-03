@@ -7,6 +7,7 @@ namespace SprykerFeature\Zed\Glossary\Business\Translation;
 
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
@@ -50,9 +51,9 @@ class TranslationManager implements TranslationManagerInterface
     protected $localeFacade;
 
     /**
-     * @var FlashMessagesFacade
+     * @var FlashMessengerFacade
      */
-    protected $flashMessagesFacade;
+    protected $flashMessengerFacade;
 
     /**
      * @param GlossaryQueryContainerInterface $glossaryQueryContainer
@@ -71,7 +72,7 @@ class TranslationManager implements TranslationManagerInterface
         $this->touchFacade = $touchFacade;
         $this->keyManager = $keyManager;
         $this->localeFacade = $localeFacade;
-        $this->flashMessagesFacade = $flashMessengerFacade;
+        $this->flashMessengerFacade = $flashMessengerFacade;
     }
 
     /**
@@ -108,7 +109,10 @@ class TranslationManager implements TranslationManagerInterface
 
             return true;
         } catch (MissingKeyException $error) {
-            $this->flashMessages->addErrorMessage($error->getMessage());
+            $messageTransfer = new MessageTransfer();
+            $messageTransfer->setValue($error->getMessage());
+
+            $this->flashMessengerFacade->addErrorMessage($messageTransfer);
 
             return false;
         }

@@ -8,6 +8,8 @@ namespace SprykerFeature\Zed\Discount\Business\Model;
 
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
+use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Distributor\DistributorInterface;
 use SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule\AbstractDecisionRule;
@@ -67,12 +69,18 @@ class Discount
     protected $distributor;
 
     /**
+     * @var FlashMessengerFacade
+     */
+    protected $flashMessengerFacade;
+
+    /**
      * @param CalculableInterface $discountContainer
      * @param DiscountQueryContainer $queryContainer
      * @param DecisionRuleInterface $decisionRule
      * @param DiscountConfig $discountSettings
      * @param CalculatorInterface $calculator
      * @param DistributorInterface $distributor
+     * @param FlashMessengerFacade $flashMessengerFacade
      */
     public function __construct(
         CalculableInterface $discountContainer,
@@ -80,7 +88,8 @@ class Discount
         DecisionRuleInterface $decisionRule,
         DiscountConfig $discountSettings,
         CalculatorInterface $calculator,
-        DistributorInterface $distributor
+        DistributorInterface $distributor,
+        FlashMessengerFacade $flashMessengerFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->decisionRule = $decisionRule;
@@ -88,6 +97,7 @@ class Discount
         $this->discountSettings = $discountSettings;
         $this->calculator = $calculator;
         $this->distributor = $distributor;
+        $this->flashMessengerFacade = $flashMessengerFacade;
     }
 
     /**
@@ -97,6 +107,7 @@ class Discount
     {
         $result = $this->retrieveDiscountsToBeCalculated();
         $discountsToBeCalculated = $result[self::KEY_DISCOUNTS];
+        $this->setValidationMessages($result[self::KEY_ERRORS]);
 
         $this->calculator->calculate(
             $discountsToBeCalculated,
@@ -220,6 +231,21 @@ class Discount
         }
 
         return $discountTransfer;
+    }
+
+    /**
+     * @param array|string[] $errors
+     *
+     * @return void
+     */
+    protected function setValidationMessages(array $errors = [])
+    {
+        foreach ($errors as $errorMessage) {
+            $messageTransfer = new MessageTransfer();
+            $messageTransfer->setValue($errorMessage);
+
+            $this->flashMessengerFacade->addErrorMessage($messageTransfer);
+        }
     }
 
 }

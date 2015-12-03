@@ -6,8 +6,9 @@
 namespace SprykerEngine\Zed\FlashMessenger\Business\Model;
 
 use Generated\Shared\Transfer\FlashMessagesTransfer;
+use Generated\Shared\Transfer\MessageTransfer;
 
-class InMemoryMessageTray implements MessageTrayInterface
+class InMemoryMessageTray extends BaseMessageTray implements MessageTrayInterface
 {
 
     /**
@@ -16,33 +17,48 @@ class InMemoryMessageTray implements MessageTrayInterface
     protected static $messages;
 
     /**
-     * @param string $message
+     * @param MessageTransfer $message
      *
      * @return void
      */
-    public function addSuccessMessage($message)
+    public function addSuccessMessage(MessageTransfer $message)
     {
-        self::getFlashMessagesTransfer()->addSuccessMessage($message);
+        self::getFlashMessagesTransfer()->addSuccessMessage(
+            $this->translate(
+                $message->getValue(),
+                $message->getParameters()
+            )
+        );
     }
 
     /**
-     * @param string $message
+     * @param MessageTransfer $message
      *
      * @return void
      */
-    public function addInfoMessage($message)
+    public function addInfoMessage(MessageTransfer $message)
     {
-        self::getFlashMessagesTransfer()->addInfoMessage($message);
+        self::getFlashMessagesTransfer()->addInfoMessage(
+            $this->translate(
+                $message->getValue(),
+                $message->getParameters()
+            )
+        );
     }
 
     /**
-     * @param string $message
+     * @param MessageTransfer $message
      *
      * @return void
      */
-    public function addErrorMessage($message)
+    public function addErrorMessage(MessageTransfer $message)
     {
-        self::getFlashMessagesTransfer()->addErrorMessage($message);
+        self::getFlashMessagesTransfer()->addErrorMessage(
+             $this->translate(
+               $message->getValue(),
+               $message->getParameters()
+            )
+        );
     }
 
     /**

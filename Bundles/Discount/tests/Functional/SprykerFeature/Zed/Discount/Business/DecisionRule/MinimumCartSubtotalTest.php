@@ -37,7 +37,7 @@ class MinimumCartSubtotalTest extends Test
 
         $decisionRuleEntity = $this->getDecisionRuleEntity(self::MINIMUM_CART_SUBTOTAL_TEST_500);
 
-        $decisionRule = new MinimumCartSubtotal();
+        $decisionRule = $this->createMinimumCartSubtotal();
         $result = $decisionRule->isMinimumCartSubtotalReached($order, $decisionRuleEntity);
 
         $this->assertTrue($result->isSuccess());
@@ -52,7 +52,7 @@ class MinimumCartSubtotalTest extends Test
 
         $decisionRuleEntity = $this->getDecisionRuleEntity(self::MINIMUM_CART_SUBTOTAL_TEST_500);
 
-        $decisionRule = new MinimumCartSubtotal();
+        $decisionRule = $this->createMinimumCartSubtotal();
         $result = $decisionRule->isMinimumCartSubtotalReached($order, $decisionRuleEntity);
 
         $this->assertFalse($result->isSuccess());
@@ -67,7 +67,7 @@ class MinimumCartSubtotalTest extends Test
 
         $decisionRuleEntity = $this->getDecisionRuleEntity(self::MINIMUM_CART_SUBTOTAL_TEST_500);
 
-        $decisionRule = new MinimumCartSubtotal();
+        $decisionRule = $this->createMinimumCartSubtotal();
         $result = $decisionRule->isMinimumCartSubtotalReached($order, $decisionRuleEntity);
 
         $this->assertTrue($result->isSuccess());
@@ -92,6 +92,14 @@ class MinimumCartSubtotalTest extends Test
     protected function getLocator()
     {
         return Locator::getInstance();
+    }
+
+    /**
+     * @return MinimumCartSubtotal
+     */
+    protected function createMinimumCartSubtotal()
+    {
+        return new MinimumCartSubtotal();
     }
 
 }

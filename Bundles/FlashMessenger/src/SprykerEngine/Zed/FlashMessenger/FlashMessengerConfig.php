@@ -33,6 +33,10 @@ class FlashMessengerConfig extends AbstractBundleConfig
      */
     public static function getTray()
     {
+        if (PHP_SAPI === 'cli') {
+            return self::IN_MEMORY_TRAY;
+        }
+
         return self::$messageTray;
     }
 

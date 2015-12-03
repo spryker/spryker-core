@@ -107,7 +107,7 @@ class CartRuleForm extends AbstractRuleForm
                 'choices' => $this->getAvailableCalculatorPlugins(),
                 'empty_data' => null,
                 'required' => false,
-                'placeholder' => 'Default',
+                'placeholder' => false,
             ])
             ->add(self::FIELD_COLLECTOR_PLUGINS, 'collection', [
                 'type' => new CollectorPluginForm($this->availableCollectorPlugins),
