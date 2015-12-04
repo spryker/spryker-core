@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Cms\Business\Page;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Generated\Zed\Ide\AutoCompletion;
@@ -240,6 +241,23 @@ class PageManager implements PageManagerInterface
         $this->checkPageExists($page->getIdCmsPage());
 
         return $this->urlFacade->createUrlForCurrentLocale($url, CmsConfig::RESOURCE_TYPE_PAGE, $page->getIdCmsPage());
+    }
+
+
+    /**
+     * @param PageTransfer $page
+     * @param string $url
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @throws UrlExistsException
+     *
+     * @return UrlTransfer
+     */
+    public function createPageUrlWithLocale(PageTransfer $page, $url, LocaleTransfer $localeTransfer)
+    {
+        $this->checkPageExists($page->getIdCmsPage());
+
+        return $this->urlFacade->createUrl($url,$localeTransfer, CmsConfig::RESOURCE_TYPE_PAGE, $page->getIdCmsPage());
     }
 
     /**
