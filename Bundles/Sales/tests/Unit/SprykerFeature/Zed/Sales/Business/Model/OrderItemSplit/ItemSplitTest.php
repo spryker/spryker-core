@@ -35,6 +35,9 @@ class ItemSplitTest extends \PHPUnit_Framework_TestCase
         'fk_sales_order_item',
     ];
 
+    /**
+     * @return void
+     */
     public function testIsOrderItemDataCopied()
     {
         $spySalesOrderItem = $this->createOrderItem();

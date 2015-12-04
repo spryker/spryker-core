@@ -47,6 +47,9 @@ class SalesFacadeTest extends Test
      */
     protected $salesFacade;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -70,6 +73,9 @@ class SalesFacadeTest extends Test
         $this->salesFacade->setExternalDependencies($container);
     }
 
+    /**
+     * @return void
+     */
     public function testSaveOrderCreatesBillingAddressAndAssignsItToOrder()
     {
         $salesOrderAddressQuery = SpySalesOrderAddressQuery::create()
@@ -132,6 +138,9 @@ class SalesFacadeTest extends Test
         return $orderTransfer;
     }
 
+    /**
+     * @return void
+     */
     public function testSaveOrderCreatesShippingAddressAndAssignsItToOrder()
     {
         $salesOrderAddressQuery = SpySalesOrderAddressQuery::create()
@@ -151,6 +160,9 @@ class SalesFacadeTest extends Test
             ->getIdSalesOrderAddress());
     }
 
+    /**
+     * @return void
+     */
     public function testSaveOrderAssignsSavedOrderId()
     {
         $orderTransfer = $this->getValidBaseOrderTransfer();
@@ -159,6 +171,9 @@ class SalesFacadeTest extends Test
         $this->assertNotNull($orderTransfer->getIdSalesOrder());
     }
 
+    /**
+     * @return void
+     */
     public function testSaveOrderCreatesOrderAndSavesFields()
     {
         $orderTransfer = $this->getValidBaseOrderTransfer();
@@ -175,6 +190,9 @@ class SalesFacadeTest extends Test
         $this->assertSame('Mustermann', $orderEntity->getLastName());
     }
 
+    /**
+     * @return void
+     */
     public function testSaveOrderCreatesAndFillsOrderItems()
     {
         $orderTransfer = $this->getValidBaseOrderTransfer();
@@ -238,6 +256,9 @@ class SalesFacadeTest extends Test
         $this->assertSame($item2->getQuantity(), $item2Entity->getQuantity());
     }
 
+    /**
+     * @return void
+     */
     public function testSaveOrderCreatesAndFillsOrderItemOption()
     {
         $orderTransfer = $this->getValidBaseOrderTransfer();
@@ -290,6 +311,9 @@ class SalesFacadeTest extends Test
         $this->assertEquals(20, $optionEntity->getTaxPercentage());
     }
 
+    /**
+     * @return void
+     */
     public function testSaveOrderAttachesProcessToItem()
     {
         $orderTransfer = $this->getValidBaseOrderTransfer();
@@ -317,6 +341,9 @@ class SalesFacadeTest extends Test
         $this->assertSame($process->getIdOmsOrderProcess(), $item1Entity->getFkOmsOrderProcess());
     }
 
+    /**
+     * @return void
+     */
     public function testSaveOrderGeneratesOrderReference()
     {
         $orderTransfer = $this->getValidBaseOrderTransfer();

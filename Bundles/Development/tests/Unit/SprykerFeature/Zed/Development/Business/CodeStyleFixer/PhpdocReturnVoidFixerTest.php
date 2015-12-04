@@ -2,7 +2,7 @@
 
 namespace Unit\SprykerFeature\Zed\Development\Business\CodeStyleFixer;
 
-use SprykerFeature\Zed\Development\Business\CodeStyleFixer\RemoveFunctionAliasFixer;
+use SprykerFeature\Zed\Development\Business\CodeStyleFixer\PhpdocReturnVoidFixer;
 
 /**
  * @group SprykerFeature
@@ -10,13 +10,13 @@ use SprykerFeature\Zed\Development\Business\CodeStyleFixer\RemoveFunctionAliasFi
  * @group Development
  * @group CodeStyleFixer
  */
-class RemoveFunctionAliasFixerTest extends \PHPUnit_Framework_TestCase
+class PhpdocReturnVoidFixerTest extends \PHPUnit_Framework_TestCase
 {
 
-    const FIXER_NAME = 'RemoveFunctionAliasFixer';
+    const FIXER_NAME = 'PhpdocReturnVoidFixer';
 
     /**
-     * @var RemoveFunctionAliasFixer
+     * @var PhpdocReturnVoidFixer
      */
     protected $fixer;
 
@@ -26,7 +26,7 @@ class RemoveFunctionAliasFixerTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         parent::setUp();
-        $this->fixer = new RemoveFunctionAliasFixer();
+        $this->fixer = new PhpdocReturnVoidFixer();
     }
 
     /**

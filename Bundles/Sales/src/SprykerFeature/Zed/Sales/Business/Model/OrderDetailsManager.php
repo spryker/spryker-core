@@ -191,6 +191,8 @@ class OrderDetailsManager
     /**
      * @param SpySalesOrder $orderEntity
      * @param OrderTransfer $orderTransfer
+     *
+     * @return void
      */
     protected function addOrderItemsToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
@@ -222,6 +224,8 @@ class OrderDetailsManager
     /**
      * @param SpySalesOrder $orderEntity
      * @param OrderTransfer $orderTransfer
+     *
+     * @return void
      */
     protected function addBillingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
@@ -234,6 +238,8 @@ class OrderDetailsManager
     /**
      * @param SpySalesOrder $orderEntity
      * @param OrderTransfer $orderTransfer
+     *
+     * @return void
      */
     protected function addShippingAddressToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
@@ -246,6 +252,8 @@ class OrderDetailsManager
     /**
      * @param SpySalesOrder $orderEntity
      * @param OrderTransfer $orderTransfer
+     *
+     * @return void
      */
     protected function addShipmentMethodToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
@@ -257,6 +265,8 @@ class OrderDetailsManager
     /**
      * @param SpySalesOrder $orderEntity
      * @param OrderTransfer $orderTransfer
+     *
+     * @return void
      */
     protected function addExpensesToOrderTransfer(SpySalesOrder $orderEntity, OrderTransfer $orderTransfer)
     {
@@ -272,6 +282,8 @@ class OrderDetailsManager
     /**
      * @param int $idRefund
      * @param OrderItemsAndExpensesTransfer $orderItemsAndExpensesTransfer
+     *
+     * @return void
      */
     public function updateOrderItemsAndExpensesAfterRefund($idRefund, $orderItemsAndExpensesTransfer)
     {

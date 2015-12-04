@@ -20,6 +20,9 @@ class EmptyEnclosingLinesFixerTest extends \PHPUnit_Framework_TestCase
      */
     protected $fixer;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -31,6 +34,8 @@ class EmptyEnclosingLinesFixerTest extends \PHPUnit_Framework_TestCase
      *
      * @param string $expected
      * @param string $input
+     *
+     * @return void
      */
     public function testFix($expected, $input = null)
     {

@@ -12,6 +12,9 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItem;
 class CalculatorTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testCalculateAmountLeft()
     {
         $calculator = new Calculator();
