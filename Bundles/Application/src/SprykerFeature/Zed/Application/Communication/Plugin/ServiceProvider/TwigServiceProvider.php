@@ -16,7 +16,7 @@ use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Gui\Communication\Form\Type\Extension\NoValidateTypeExtension;
 use SprykerFeature\Zed\Library\Twig\Loader\Filesystem;
 use Silex\Application;
-use SprykerEngine\Yves\Application\Communication\Application as SprykerApplication;
+use SprykerEngine\Yves\Application\Application as SprykerApplication;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\GetResponseForControllerResultEvent;
 use Symfony\Component\HttpKernel\KernelEvents;

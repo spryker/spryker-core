@@ -6,10 +6,6 @@
 
 namespace SprykerEngine\Yves\Kernel\DependencyContainer;
 
-/**
- * Interface DependencyContainerInterface
- */
-
 interface DependencyContainerInterface
 {
 }
