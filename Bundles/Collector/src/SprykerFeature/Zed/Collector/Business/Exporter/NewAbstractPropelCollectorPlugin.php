@@ -130,27 +130,13 @@ abstract class NewAbstractPropelCollectorPlugin
         $deleteQuery = $this->touchQueryContainer->queryTouchDeleteOnlyByItemType($itemType);
         $touchEntities = $deleteQuery->find();
 
-        $keysToDelete = [];
-        $this->touchQueryContainer->getConnection()->beginTransaction();
-        try {
-            foreach ($touchEntities as $touchEntity) {
-                $keyEntity = $touchUpdater->getKeyById($touchEntity->getIdTouch(), $locale);
-                if (!empty($keyEntity)) {
-                    $key = $keyEntity->getKey();
-                    $keyEntity->delete();
-                    $keysToDelete[] = $key;
-                }
+        foreach ($touchEntities as $touchEntity) {
+            $keyEntity = $touchUpdater->getKeyById($touchEntity->getIdTouch(), $locale);
+            if (!empty($keyEntity)) {
+                $key = $keyEntity->getKey();
+                $dataWriter->delete($key);
+                $keyEntity->delete();
             }
-        } catch (\Exception $e) {
-            $this->touchQueryContainer->getConnection()->rollBack();
-            $keysToDelete = [];
-            throw $e;
-        }
-
-        $this->touchQueryContainer->getConnection()->commit();
-
-        if (!empty($keysToDelete)) {
-            $dataWriter->delete($keysToDelete);
         }
     }
 
@@ -187,6 +173,26 @@ abstract class NewAbstractPropelCollectorPlugin
         WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater
     ) {
         $touchQuerySql = $this->createQuery($baseQuery, $locale);
+
+        $idRoot = 1;
+        $idLocale = 46;
+        $touchEvent = 0;
+        $touchItemType = 'categorynode';
+        $touchedWhen = '2015-12-03 19:26:53';
+
+        $sql = sprintf($touchQuerySql, $idRoot, self::TOUCH_EXPORTER_ID, $idLocale, $idLocale, $touchEvent, $touchedWhen, $touchItemType);
+
+        $conn = $this->touchQueryContainer->getConnection();
+        $st = $conn->prepare($sql);
+
+        $st->execute([
+
+        ]);
+
+        $results = $st->fetchAll(\PDO::FETCH_ASSOC);
+
+        dump($results);
+        die;
 
         $batchCollection = $this->getBatchIterator($touchQuerySql);
 
