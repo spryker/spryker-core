@@ -296,7 +296,7 @@ class OrderDetailsManager
             $orderItemEntity->setFkRefund($idRefund);
             $orderItemEntity->save();
         }
-        foreach ($orderItemsAndExpensesTransfer->getExpenses()  as $expense) {
+        foreach ($orderItemsAndExpensesTransfer->getExpenses() as $expense) {
             $expenseEntity = $this->queryContainer
                 ->querySalesExpense()
                 ->filterByIdSalesExpense($expense->getIdExpense())

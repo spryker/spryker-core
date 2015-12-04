@@ -44,7 +44,7 @@ class AbstractSpySalesOrderItem extends BaseSpySalesOrderItem
      * @param ConnectionInterface|null $con
      *
      * @throws \Propel\Runtime\Exception\PropelException
-     * 
+     *
      * @return void
      */
     public function postSave(ConnectionInterface $con = null)

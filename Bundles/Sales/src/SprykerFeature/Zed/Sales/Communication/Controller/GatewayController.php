@@ -19,7 +19,7 @@ class GatewayController extends AbstractGatewayController
 
     /**
      * @param OrderListTransfer $orderListTransfer
-     * 
+     *
      * @return OrderListTransfer
      */
     public function getOrdersAction(OrderListTransfer $orderListTransfer)

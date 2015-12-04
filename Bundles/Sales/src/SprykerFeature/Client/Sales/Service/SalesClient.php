@@ -18,7 +18,7 @@ class SalesClient extends AbstractClient implements SalesClientInterface
 
     /**
      * @param OrderListTransfer $orderListTransfer
-     * 
+     *
      * @return OrderListTransfer
      */
     public function getOrders(OrderListTransfer $orderListTransfer)
