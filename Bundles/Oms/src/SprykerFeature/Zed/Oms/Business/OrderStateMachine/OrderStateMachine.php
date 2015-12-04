@@ -231,7 +231,7 @@ class OrderStateMachine implements OrderStateMachineInterface
 
     /**
      * @param ProcessInterface $process
-     * 
+     *
      * @return int
      */
     protected function checkConditionsForProcess(ProcessInterface $process)

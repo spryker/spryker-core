@@ -16,6 +16,7 @@ class CustomerForm extends AbstractForm
     const SUBMIT = 'submit';
 
     protected $orderQuery;
+
     protected $idOrder;
 
     /**

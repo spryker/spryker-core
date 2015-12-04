@@ -28,7 +28,7 @@ class SalesStub implements SalesStubInterface
 
     /**
      * @param OrderListTransfer $orderListTransfer
-     * 
+     *
      * @return OrderListTransfer
      */
     public function getOrders(OrderListTransfer $orderListTransfer)
