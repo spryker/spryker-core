@@ -17,6 +17,7 @@ class PersistenceManager implements PersistenceManagerInterface
 {
 
     protected static $stateEntityBuffer = [];
+
     protected static $processEntityBuffer = [];
 
     /**
