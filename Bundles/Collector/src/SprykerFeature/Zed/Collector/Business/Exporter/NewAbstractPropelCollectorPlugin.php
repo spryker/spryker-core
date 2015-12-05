@@ -43,14 +43,9 @@ abstract class NewAbstractPropelCollectorPlugin
     protected $criteriaBuilder;
 
     /**
-     * @var LocaleTransfer
+     * @var NewAbstractPropelCollectorQuery
      */
-    protected $criteriaLocale;
-
-    /**
-     * @return void
-     */
-    abstract protected function collectCriteria();
+    protected $queryBuilder;
 
     /**
      * @param array $collectItemData
@@ -114,12 +109,20 @@ abstract class NewAbstractPropelCollectorPlugin
     }
 
     /**
+     * @param NewAbstractPropelCollectorQuery $queryBuilder
+     */
+    public function setQueryBuilder(NewAbstractPropelCollectorQuery $queryBuilder)
+    {
+        $this->queryBuilder = $queryBuilder;
+    }
+
+    /**
      * @return BatchIteratorInterface
      */
     protected function generateBatchIterator()
     {
         return new PdoBatchIterator(
-            $this->criteriaBuilder,
+            clone $this->criteriaBuilder,
             $this->touchQueryContainer->getConnection(),
             $this->chunkSize
         );
@@ -223,7 +226,7 @@ abstract class NewAbstractPropelCollectorPlugin
     protected function runInsertion(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $batchResult,
         WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater
     ) {
-        $this->processCollector($baseQuery, $locale);
+        $this->prepareCollector($baseQuery, $locale);
 
         $batchCollection = $this->generateBatchIterator();
         foreach ($batchCollection as $batch) {
@@ -249,14 +252,15 @@ abstract class NewAbstractPropelCollectorPlugin
      *
      * @return void
      */
-    protected function processCollector(SpyTouchQuery $baseQuery, LocaleTransfer $locale)
+    protected function prepareCollector(SpyTouchQuery $baseQuery, LocaleTransfer $locale)
     {
         $baseParameters = $this->getBaseQueryParameters($baseQuery);
-
         $this->criteriaBuilder->setExtraParameterCollection($baseParameters);
-        $this->criteriaLocale = $locale;
 
-        $this->collectCriteria();
+        $this->queryBuilder
+            ->setCriteriaBuilder($this->criteriaBuilder)
+            ->setLocale($locale)
+            ->prepareQuery();
     }
 
     /**
@@ -302,6 +306,12 @@ abstract class NewAbstractPropelCollectorPlugin
         if (!($this->criteriaBuilder instanceof BuilderInterface)) {
             throw new DependencyException(sprintf(
                 'criteriaBuilder does not implement CriteriaBuilder\BuilderInterface in %s', get_class($this))
+            );
+        }
+
+        if (!($this->queryBuilder instanceof NewAbstractPropelCollectorQuery)) {
+            throw new DependencyException(sprintf(
+                'queryBuilder does not implement NewAbstractPropelCollectorQuery in %s', get_class($this))
             );
         }
     }
