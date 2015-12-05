@@ -50,7 +50,7 @@ class Collector
 
         if (isset($output)) {
             $output->writeln('');
-            $output->writeln('<fg=yellow>Collectors executed:</fg=yellow>');
+            $output->writeln(sprintf('<fg=yellow>%d collectors executed:</fg=yellow>', count($types)));
             $output->writeln('');
         }
 
