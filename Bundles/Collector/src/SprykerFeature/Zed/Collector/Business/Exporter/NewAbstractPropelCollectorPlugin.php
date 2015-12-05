@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Collector\Business\Exporter;
 
+use Everon\Component\CriteriaBuilder\BuilderInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
@@ -33,10 +34,13 @@ abstract class NewAbstractPropelCollectorPlugin
     protected $touchQueryContainer;
 
     /**
+     * @var BuilderInterface
+     */
+    protected $criteriaBuilder;
+
+    /**
      * @param SpyTouchQuery $baseQuery
      * @param LocaleTransfer $locale
-     *
-     * @return string
      */
     abstract protected function createQuery(SpyTouchQuery $baseQuery, LocaleTransfer $locale);
 
@@ -61,13 +65,27 @@ abstract class NewAbstractPropelCollectorPlugin
     }
 
     /**
-     * @param string $baseQuerySql
-     *
+     * @param BuilderInterface $criteriaBuilder
+     */
+    public function setCriteriaBuilder(BuilderInterface $criteriaBuilder)
+    {
+        $this->criteriaBuilder = $criteriaBuilder;
+    }
+
+    /**
+     * @return BuilderInterface
+     */
+    public function getCriteriaBuilder()
+    {
+        return $this->criteriaBuilder;
+    }
+
+    /**
      * @return BatchIteratorInterface
      */
-    protected function getBatchIterator($baseQuerySql)
+    protected function generateBatchIterator()
     {
-        return new RawBatchIterator($baseQuerySql, $this->chunkSize);
+        return new PdoBatchIterator($this->criteriaBuilder, $this->touchQueryContainer->getConnection(), $this->chunkSize);
     }
 
     /**
@@ -172,29 +190,11 @@ abstract class NewAbstractPropelCollectorPlugin
     protected function runInsertion(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $batchResult,
         WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater
     ) {
-        $touchQuerySql = $this->createQuery($baseQuery, $locale);
+        $baseParameters = $this->getBaseQueryParameters($baseQuery);
+        $this->getCriteriaBuilder()->setExtraParameterCollection($baseParameters);
+        $this->createQuery($baseQuery, $locale);
 
-        $idRoot = 1;
-        $idLocale = 46;
-        $touchEvent = 0;
-        $touchItemType = 'categorynode';
-        $touchedWhen = '2015-12-03 19:26:53';
-
-        $sql = sprintf($touchQuerySql, $idRoot, self::TOUCH_EXPORTER_ID, $idLocale, $idLocale, $touchEvent, $touchedWhen, $touchItemType);
-
-        $conn = $this->touchQueryContainer->getConnection();
-        $st = $conn->prepare($sql);
-
-        $st->execute([
-
-        ]);
-
-        $results = $st->fetchAll(\PDO::FETCH_ASSOC);
-
-        dump($results);
-        die;
-
-        $batchCollection = $this->getBatchIterator($touchQuerySql);
+        $batchCollection = $this->generateBatchIterator();
 
         $totalCount = $batchResult->getTotalCount();
         foreach ($batchCollection as $batch) {
@@ -239,6 +239,27 @@ abstract class NewAbstractPropelCollectorPlugin
     public function postRun(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result,
         WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater
     ) {
+    }
+
+    /**
+     * @param SpyTouchQuery $baseQuery
+     *
+     * @return array
+     */
+    protected function getBaseQueryParameters(SpyTouchQuery $baseQuery)
+    {
+        $result = [];
+        $baseParameters = $baseQuery->getParams();
+        foreach ($baseParameters as $parameter) {
+            $key = sprintf('%s.%s', $parameter['table'], $parameter['column']);
+            $value = $parameter['value'];
+            if ($value instanceof \DateTime) {
+                $value = $value->format(\DateTime::ATOM);
+            }
+            $result[$key] = $value;
+        }
+
+        return $result;
     }
 
 }
