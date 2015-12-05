@@ -103,21 +103,18 @@ abstract class AbstractCollector implements ExporterInterface
         $result = clone $this->batchResultPrototype;
         $result->setProcessedLocale($locale);
 
-        if (!array_key_exists($type, $this->collectorPlugins)) {
-            $result->setProcessedCount(0);
-            $result->setIsFailed(false);
-            $result->setTotalCount(0);
-            $result->setDeletedCount(0);
+        if (!$this->isCollectorRegistered($type)) {
+            $this->resetResult($result);
 
             return $result;
         }
-
-        $collector = $this->collectorPlugins[$type];
 
         $lastRunDatetime = $this->marker->getLastExportMarkByTypeAndLocale($type, $locale);
 
         $baseQuery = $this->queryContainer->createBasicExportableQuery($type, $locale, $lastRunDatetime);
         $baseQuery->setFormatter($this->getFormatter());
+
+        $collector = $this->collectorPlugins[$type];
         $collector->run($baseQuery, $locale, $result, $this->writer, $this->touchUpdater);
 
         return $this->finishExport($result, $type, $timestamp);
@@ -155,6 +152,29 @@ abstract class AbstractCollector implements ExporterInterface
         $timestamp = (new \DateTime())->format(self::DATE_TIME_FORMAT);
 
         return $timestamp;
+    }
+
+    /**
+     * @param string $type
+     *
+     * @return bool
+     */
+    protected function isCollectorRegistered($type)
+    {
+        return array_key_exists($type, $this->collectorPlugins);
+    }
+
+    /**
+     * @param BatchResultInterface $result
+     *
+     * @return void
+     */
+    protected function resetResult(BatchResultInterface $result)
+    {
+        $result->setProcessedCount(0);
+        $result->setIsFailed(false);
+        $result->setTotalCount(0);
+        $result->setDeletedCount(0);
     }
 
 }
