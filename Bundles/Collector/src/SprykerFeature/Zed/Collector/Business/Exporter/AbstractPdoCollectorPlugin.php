@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Collector\Business\Exporter;
 
-use Everon\Component\CriteriaBuilder\BuilderInterface;
+use Everon\Component\CriteriaBuilder\CriteriaBuilderInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
@@ -19,7 +19,7 @@ use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
 use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
 use SprykerFeature\Zed\Distributor\Business\Distributor\BatchIteratorInterface;
 
-abstract class NewAbstractPropelCollectorPlugin
+abstract class AbstractPdoCollectorPlugin
 {
 
     use KeyBuilderTrait;
@@ -38,12 +38,12 @@ abstract class NewAbstractPropelCollectorPlugin
     protected $touchQueryContainer;
 
     /**
-     * @var BuilderInterface
+     * @var CriteriaBuilderInterface
      */
     protected $criteriaBuilder;
 
     /**
-     * @var NewAbstractPropelCollectorQuery
+     * @var AbstractPdoCollectorQuery
      */
     protected $queryBuilder;
 
@@ -101,17 +101,17 @@ abstract class NewAbstractPropelCollectorPlugin
     }
 
     /**
-     * @param BuilderInterface $criteriaBuilder
+     * @param CriteriaBuilderInterface $criteriaBuilder
      */
-    public function setCriteriaBuilder(BuilderInterface $criteriaBuilder)
+    public function setCriteriaBuilder(CriteriaBuilderInterface $criteriaBuilder)
     {
         $this->criteriaBuilder = $criteriaBuilder;
     }
 
     /**
-     * @param NewAbstractPropelCollectorQuery $queryBuilder
+     * @param AbstractPdoCollectorQuery $queryBuilder
      */
-    public function setQueryBuilder(NewAbstractPropelCollectorQuery $queryBuilder)
+    public function setQueryBuilder(AbstractPdoCollectorQuery $queryBuilder)
     {
         $this->queryBuilder = $queryBuilder;
     }
@@ -303,15 +303,15 @@ abstract class NewAbstractPropelCollectorPlugin
             );
         }
 
-        if (!($this->criteriaBuilder instanceof BuilderInterface)) {
+        if (!($this->criteriaBuilder instanceof CriteriaBuilderInterface)) {
             throw new DependencyException(sprintf(
-                'criteriaBuilder does not implement CriteriaBuilder\BuilderInterface in %s', get_class($this))
+                'criteriaBuilder does not implement CriteriaBuilder\CriteriaBuilderInterface in %s', get_class($this))
             );
         }
 
-        if (!($this->queryBuilder instanceof NewAbstractPropelCollectorQuery)) {
+        if (!($this->queryBuilder instanceof AbstractPdoCollectorQuery)) {
             throw new DependencyException(sprintf(
-                'queryBuilder does not implement NewAbstractPropelCollectorQuery in %s', get_class($this))
+                'queryBuilder does not implement AbstractPdoCollectorQuery in %s', get_class($this))
             );
         }
     }

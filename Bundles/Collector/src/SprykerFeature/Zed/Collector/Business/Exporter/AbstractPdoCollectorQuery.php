@@ -6,15 +6,15 @@
 
 namespace SprykerFeature\Zed\Collector\Business\Exporter;
 
-use Everon\Component\CriteriaBuilder\BuilderInterface;
+use Everon\Component\CriteriaBuilder\CriteriaBuilderInterface;
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
 
-abstract class NewAbstractPropelCollectorQuery
+abstract class AbstractPdoCollectorQuery
 {
 
-    const COLLECTOR_TOUCH_ID = NewAbstractPropelCollectorPlugin::COLLECTOR_TOUCH_ID;
-    const COLLECTOR_RESOURCE_ID = NewAbstractPropelCollectorPlugin::COLLECTOR_RESOURCE_ID;
+    const COLLECTOR_TOUCH_ID = AbstractPdoCollectorPlugin::COLLECTOR_TOUCH_ID;
+    const COLLECTOR_RESOURCE_ID = AbstractPdoCollectorPlugin::COLLECTOR_RESOURCE_ID;
 
     /**
      * @var TouchQueryContainerInterface
@@ -22,7 +22,7 @@ abstract class NewAbstractPropelCollectorQuery
     protected $touchQueryContainer;
 
     /**
-     * @var BuilderInterface
+     * @var CriteriaBuilderInterface
      */
     protected $criteriaBuilder;
 
@@ -37,7 +37,7 @@ abstract class NewAbstractPropelCollectorQuery
     abstract public function prepareQuery();
 
     /**
-     * @return BuilderInterface
+     * @return CriteriaBuilderInterface
      */
     public function getCriteriaBuilder()
     {
@@ -45,11 +45,11 @@ abstract class NewAbstractPropelCollectorQuery
     }
 
     /**
-     * @param BuilderInterface $criteriaBuilder
+     * @param CriteriaBuilderInterface $criteriaBuilder
      *
      * @return self
      */
-    public function setCriteriaBuilder(BuilderInterface $criteriaBuilder)
+    public function setCriteriaBuilder(CriteriaBuilderInterface $criteriaBuilder)
     {
         $this->criteriaBuilder = $criteriaBuilder;
 

@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Zed\Collector\Business\Exporter;
 
-use Everon\Component\CriteriaBuilder\BuilderInterface;
+use Everon\Component\CriteriaBuilder\CriteriaBuilderInterface;
 use Propel\Runtime\Connection\ConnectionInterface;
 use SprykerFeature\Zed\Collector\Business\Model\CountableIteratorInterface;
 
@@ -24,7 +24,7 @@ class PdoBatchIterator implements CountableIteratorInterface
     protected $chunkSize = 100;
 
     /**
-     * @var BuilderInterface
+     * @var CriteriaBuilderInterface
      */
     protected $criteriaBuilder;
 
@@ -49,10 +49,10 @@ class PdoBatchIterator implements CountableIteratorInterface
     protected $currentDataSet = [];
 
     /**
-     * @param BuilderInterface $criteriaBuilder
+     * @param CriteriaBuilderInterface $criteriaBuilder
      * @param int $chunkSize
      */
-    public function __construct(BuilderInterface $criteriaBuilder, ConnectionInterface $connection, $chunkSize = 100)
+    public function __construct(CriteriaBuilderInterface $criteriaBuilder, ConnectionInterface $connection, $chunkSize = 100)
     {
         $this->criteriaBuilder = $criteriaBuilder;
         $this->connection = $connection;

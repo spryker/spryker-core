@@ -91,6 +91,14 @@ abstract class AbstractCollector implements ExporterInterface
     }
 
     /**
+     * @return CollectorPluginInterface[]
+     */
+    public function getCollectorPlugins()
+    {
+        return $this->collectorPlugins;
+    }
+
+    /**
      * @param string $type
      * @param \Generated\Shared\Transfer\LocaleTransfer $locale
      *

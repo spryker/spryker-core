@@ -19,4 +19,9 @@ interface ExporterInterface
      */
     public function exportByType($type, LocaleTransfer $locale);
 
+    /**
+     * @return \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface[]
+     */
+    public function getCollectorPlugins();
+
 }

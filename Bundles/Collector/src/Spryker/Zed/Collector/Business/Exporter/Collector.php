@@ -44,22 +44,36 @@ class Collector
      */
     public function exportForLocale(LocaleTransfer $locale, OutputInterface $output = null)
     {
-        $types = $this->queryContainer->queryExportTypes()->find();
-
         $results = [];
+
+        $types = array_keys($this->exporter->getCollectorPlugins());
+        $availableTypes = $this->queryContainer->queryExportTypes()->find();
 
         if (isset($output)) {
             $output->writeln('');
-            $output->writeln(sprintf('<fg=yellow>%d collectors executed:</fg=yellow>', count($types)));
+            $output->writeln(
+                sprintf('<fg=yellow>%d/%d collector(s) executed:</fg=yellow>',
+                    count($types),
+                    count($availableTypes)
+                )
+            );
             $output->writeln('');
         }
 
-        foreach ($types as $type) {
-            $startTime = microtime(true);
-
+        foreach ($availableTypes as $type) {
             if (isset($output)) {
                 $output->write('<fg=yellow> * </fg=yellow><fg=green>' . $type . '</fg=green><fg=yellow> ');
             }
+
+            if (!in_array($type, $types)) {
+                if (isset($output)) {
+                    $output->write('<fg=white> N/A </fg=white>');
+                    $output->writeln('');
+                }
+                continue;
+            }
+
+            $startTime = microtime(true);
 
             $result = $this->exporter->exportByType($type, $locale);
 
