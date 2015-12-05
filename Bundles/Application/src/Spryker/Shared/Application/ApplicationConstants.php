@@ -97,6 +97,13 @@ interface ApplicationConstants
     const ZED_DB_HOST = 'ZED_DB_HOST';
     const ZED_DB_PORT = 'ZED_DB_PORT';
 
+    const ZED_DB_ENGINE_MYSQL = 'mysql';
+    const ZED_DB_ENGINE_PGSQL = 'pgsql';
+    const ZED_DB_SUPPORTED_ENGINES = [
+        self::ZED_DB_ENGINE_MYSQL => 'MySql',
+        self::ZED_DB_ENGINE_PGSQL => 'PostgreSql',
+    ];
+
     /**
      * RabbitMQ
      */
