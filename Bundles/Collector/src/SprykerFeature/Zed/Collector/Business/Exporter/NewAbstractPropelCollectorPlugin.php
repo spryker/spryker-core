@@ -11,6 +11,7 @@ use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchQuery;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
+use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderTrait;
 use SprykerFeature\Zed\Collector\Business\Exporter\Exception\DependencyException;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
@@ -21,7 +22,10 @@ use SprykerFeature\Zed\Distributor\Business\Distributor\BatchIteratorInterface;
 abstract class NewAbstractPropelCollectorPlugin
 {
 
-    const TOUCH_EXPORTER_ID = 'exporter_touch_id';
+    use KeyBuilderTrait;
+
+    const COLLECTOR_TOUCH_ID = 'collector_touch_id';
+    const COLLECTOR_RESOURCE_ID = 'collector_resource_id';
 
     /**
      * @var int
@@ -39,22 +43,59 @@ abstract class NewAbstractPropelCollectorPlugin
     protected $criteriaBuilder;
 
     /**
-     * @param SpyTouchQuery $baseQuery
-     * @param LocaleTransfer $locale
+     * @var LocaleTransfer
      */
-    abstract protected function createQuery(SpyTouchQuery $baseQuery, LocaleTransfer $locale);
+    protected $criteriaLocale;
 
     /**
-     * @param array $resultSet
-     * @param LocaleTransfer $locale
-     * @param TouchUpdaterSet $touchUpdaterSet
+     * @return void
      */
-    abstract protected function processData($resultSet, LocaleTransfer $locale, TouchUpdaterSet $touchUpdaterSet);
+    abstract protected function collectCriteria();
+
+    /**
+     * @param array $collectItemData
+     *
+     * @return array
+     */
+    abstract protected function collectItem(array $collectItemData);
 
     /**
      * @return string
      */
-    abstract protected function getTouchItemType();
+    abstract protected function collectResourceType();
+
+    /**
+     * @param array $collectedSet
+     * @param LocaleTransfer $locale
+     * @param TouchUpdaterSet $touchUpdaterSet
+     *
+     * @return array
+     */
+    protected function collectData($collectedSet, LocaleTransfer $locale, TouchUpdaterSet $touchUpdaterSet)
+    {
+        $setToExport = [];
+
+        foreach ($collectedSet as $index => $collectedItemData) {
+            $categoryKey = $this->generateKey($collectedItemData[static::COLLECTOR_RESOURCE_ID], $locale->getLocaleName());
+            $setToExport[$categoryKey] = $this->processCollectedItem($categoryKey, $collectedItemData, $touchUpdaterSet);
+        }
+
+        return $setToExport;
+    }
+
+    /**
+     * @param string $categoryKey
+     * @param array $collectItemData
+     * @param TouchUpdaterSet $touchUpdaterSet
+     *
+     * @return array
+     */
+    protected function processCollectedItem($categoryKey, array $collectItemData, TouchUpdaterSet $touchUpdaterSet)
+    {
+        $touchUpdaterSet->add($categoryKey, $collectItemData[static::COLLECTOR_TOUCH_ID]);
+
+        return $this->collectItem($collectItemData);
+    }
 
     /**
      * @param TouchQueryContainerInterface $touchQueryContainer
@@ -73,19 +114,15 @@ abstract class NewAbstractPropelCollectorPlugin
     }
 
     /**
-     * @return BuilderInterface
-     */
-    public function getCriteriaBuilder()
-    {
-        return $this->criteriaBuilder;
-    }
-
-    /**
      * @return BatchIteratorInterface
      */
     protected function generateBatchIterator()
     {
-        return new PdoBatchIterator($this->criteriaBuilder, $this->touchQueryContainer->getConnection(), $this->chunkSize);
+        return new PdoBatchIterator(
+            $this->criteriaBuilder,
+            $this->touchQueryContainer->getConnection(),
+            $this->chunkSize
+        );
     }
 
     /**
@@ -168,13 +205,9 @@ abstract class NewAbstractPropelCollectorPlugin
     public function run(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result,
         WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater
     ) {
-        $itemType = $baseQuery->get(SpyTouchTableMap::COL_ITEM_TYPE);
+        $this->validateDependencies();
 
-        if (!($this->touchQueryContainer instanceof TouchQueryContainerInterface)) {
-            throw new DependencyException(sprintf(
-                'touchQueryContainer does not implement TouchQueryContainerInterface in %s', get_class($this))
-            );
-        }
+        $itemType = $baseQuery->get(SpyTouchTableMap::COL_ITEM_TYPE);
 
         $this->runDeletion($locale, $result, $dataWriter, $touchUpdater, $itemType);
         $this->runInsertion($baseQuery, $locale, $result, $dataWriter, $touchUpdater);
@@ -190,27 +223,40 @@ abstract class NewAbstractPropelCollectorPlugin
     protected function runInsertion(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $batchResult,
         WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater
     ) {
-        $baseParameters = $this->getBaseQueryParameters($baseQuery);
-        $this->getCriteriaBuilder()->setExtraParameterCollection($baseParameters);
-        $this->createQuery($baseQuery, $locale);
+        $this->processCollector($baseQuery, $locale);
 
         $batchCollection = $this->generateBatchIterator();
-
-        $totalCount = $batchResult->getTotalCount();
         foreach ($batchCollection as $batch) {
             $touchUpdaterSet = new TouchUpdaterSet();
-            $collectedData = $this->processData($batch, $locale, $touchUpdaterSet);
+            $collectedData = $this->collectData($batch, $locale, $touchUpdaterSet);
             $collectedDataCount = count($collectedData);
 
             $touchUpdater->updateMulti($touchUpdaterSet, $locale->getIdLocale());
 
-            $dataWriter->write($collectedData, $this->getTouchItemType());
+            $dataWriter->write($collectedData, $this->collectResourceType());
 
             $batchResult->increaseProcessedCount($collectedDataCount);
-            $totalCount += $collectedDataCount;
-        }
 
-        $batchResult->setTotalCount($totalCount);
+            $batchResult->setTotalCount(
+                $batchResult->getTotalCount() + $collectedDataCount
+            );
+        }
+    }
+
+    /**
+     * @param SpyTouchQuery $baseQuery
+     * @param LocaleTransfer $locale
+     *
+     * @return void
+     */
+    protected function processCollector(SpyTouchQuery $baseQuery, LocaleTransfer $locale)
+    {
+        $baseParameters = $this->getBaseQueryParameters($baseQuery);
+
+        $this->criteriaBuilder->setExtraParameterCollection($baseParameters);
+        $this->criteriaLocale = $locale;
+
+        $this->collectCriteria();
     }
 
     /**
@@ -239,6 +285,25 @@ abstract class NewAbstractPropelCollectorPlugin
     public function postRun(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result,
         WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater
     ) {
+        $this->validateDependencies();
+    }
+
+    /**
+     * @return void
+     */
+    protected function validateDependencies()
+    {
+        if (!($this->touchQueryContainer instanceof TouchQueryContainerInterface)) {
+            throw new DependencyException(sprintf(
+                'touchQueryContainer does not implement TouchQueryContainerInterface in %s', get_class($this))
+            );
+        }
+
+        if (!($this->criteriaBuilder instanceof BuilderInterface)) {
+            throw new DependencyException(sprintf(
+                'criteriaBuilder does not implement CriteriaBuilder\BuilderInterface in %s', get_class($this))
+            );
+        }
     }
 
     /**
@@ -260,6 +325,24 @@ abstract class NewAbstractPropelCollectorPlugin
         }
 
         return $result;
+    }
+
+    /**
+     * @param string $identifier
+     *
+     * @return string
+     */
+    protected function buildKey($identifier)
+    {
+        return $this->collectResourceType() . '.' . $identifier;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBundleName()
+    {
+        return 'resource';
     }
 
 }

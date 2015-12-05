@@ -24,7 +24,7 @@ abstract class AbstractCollectorConsole extends Console
 
         foreach ($results as $type => $result) {
             $summary .= sprintf(
-                '<fg=yellow>Export Details for </fg=yellow><fg=green>%s</fg=green>' . PHP_EOL .
+                '<fg=yellow>Export details for </fg=yellow><fg=green>%s</fg=green><fg=yellow>:</fg=yellow>' . PHP_EOL .
                 '<fg=white>Total: %d</fg=white>' . PHP_EOL .
                 '<fg=white>Processed: %d</fg=white>' . PHP_EOL .
                 '<fg=white>Succeeded: %s</fg=white>' . PHP_EOL .
