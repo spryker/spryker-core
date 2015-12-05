@@ -48,11 +48,17 @@ class Collector
 
         $results = [];
 
+        if (isset($output)) {
+            $output->writeln('');
+            $output->writeln('<fg=yellow>Collectors executed:</fg=yellow>');
+            $output->writeln('');
+        }
+
         foreach ($types as $type) {
             $startTime = microtime(true);
 
             if (isset($output)) {
-                $output->writeln('Started export for type: ' . $type);
+                $output->write('<fg=yellow> * </fg=yellow><fg=green>' . $type . '</fg=green><fg=yellow> ');
             }
 
             $result = $this->exporter->exportByType($type, $locale);
@@ -60,10 +66,20 @@ class Collector
             $this->handleResult($result);
 
             if (isset($output)) {
-                $output->writeln('Finished export for type: ' . $type . ' after ' . number_format(microtime(true) - $startTime, 4) . ' s');
+                if ($result instanceof BatchResultInterface) {
+                    $output->write(sprintf(
+                        '[%s]',
+                        $result->getProcessedCount()
+                    ));
+                }
+                $output->write(' ' . number_format(microtime(true) - $startTime, 4) . 's</fg=yellow>');
+                $output->writeln('');
             }
 
             if ($result instanceof BatchResultInterface) {
+                if ($this->nothingWasProcessed($result)) {
+                    continue;
+                }
                 $results[$type] = $result;
             }
         }
@@ -74,7 +90,15 @@ class Collector
     /**
      * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $result
      *
-     * @return void
+     * @return bool
+     */
+    protected function nothingWasProcessed(BatchResultInterface $result)
+    {
+        return $result->getProcessedCount() === 0;
+    }
+
+    /**
+     * @param BatchResultInterface $result
      */
     protected function handleResult(BatchResultInterface $result)
     {
