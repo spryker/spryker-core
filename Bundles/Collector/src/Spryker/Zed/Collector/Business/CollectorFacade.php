@@ -35,11 +35,11 @@ class CollectorFacade extends AbstractFacade
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResult[]
      */
-    public function exportSearchForLocale(LocaleTransfer $locale)
+    public function exportSearchForLocale(LocaleTransfer $locale, OutputInterface $output = null)
     {
         $exporter = $this->getFactory()->createYvesSearchExporter();
 
-        return $exporter->exportForLocale($locale);
+        return $exporter->exportForLocale($locale, $output);
     }
 
     /**
@@ -47,11 +47,11 @@ class CollectorFacade extends AbstractFacade
      *
      * @return \Spryker\Zed\Collector\Business\Model\BatchResult[]
      */
-    public function updateSearchForLocale(LocaleTransfer $locale)
+    public function updateSearchForLocale(LocaleTransfer $locale, OutputInterface $output = null)
     {
         $exporter = $this->getFactory()->createYvesSearchUpdateExporter();
 
-        return $exporter->exportForLocale($locale);
+        return $exporter->exportForLocale($locale, $output);
     }
 
     /**

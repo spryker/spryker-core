@@ -67,8 +67,7 @@ class Collector
 
             if (!in_array($type, $types)) {
                 if (isset($output)) {
-                    $output->write('<fg=white> N/A </fg=white>');
-                    $output->writeln('');
+                    $output->writeln('<fg=white> N/A </fg=white>');
                 }
                 continue;
             }
