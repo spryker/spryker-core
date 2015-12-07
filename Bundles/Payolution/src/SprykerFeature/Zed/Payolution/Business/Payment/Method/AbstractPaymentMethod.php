@@ -165,6 +165,11 @@ abstract class AbstractPaymentMethod
         ));
     }
 
+    /**
+     * @param int $amount
+     *
+     * @return float
+     */
     protected function convertCentsToDecimal($amount)
     {
         return CurrencyManager::getInstance()->convertCentToDecimal($amount);
