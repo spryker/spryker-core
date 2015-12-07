@@ -30,7 +30,7 @@ abstract class AbstractPdoCollectorPlugin
     /**
      * @var int
      */
-    private $chunkSize = 100;
+    protected $chunkSize = 1000;
 
     /**
      * @var TouchQueryContainerInterface
@@ -247,15 +247,15 @@ abstract class AbstractPdoCollectorPlugin
     }
 
     /**
-     * @param SpyTouchQuery $baseQuery
+     * @param SpyTouchQuery $touchQuery
      * @param LocaleTransfer $locale
      *
      * @return void
      */
-    protected function prepareCollector(SpyTouchQuery $baseQuery, LocaleTransfer $locale)
+    protected function prepareCollector(SpyTouchQuery $touchQuery, LocaleTransfer $locale)
     {
-        $baseParameters = $this->getBaseQueryParameters($baseQuery);
-        $this->criteriaBuilder->setExtraParameterCollection($baseParameters);
+        $touchParameters = $this->getTouchQueryParameters($touchQuery);
+        $this->criteriaBuilder->setExtraParameterCollection($touchParameters);
 
         $this->queryBuilder
             ->setCriteriaBuilder($this->criteriaBuilder)
@@ -321,7 +321,7 @@ abstract class AbstractPdoCollectorPlugin
      *
      * @return array
      */
-    protected function getBaseQueryParameters(SpyTouchQuery $baseQuery)
+    protected function getTouchQueryParameters(SpyTouchQuery $baseQuery)
     {
         $result = [];
         $baseParameters = $baseQuery->getParams();

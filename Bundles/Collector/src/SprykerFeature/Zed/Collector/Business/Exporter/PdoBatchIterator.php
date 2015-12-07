@@ -21,7 +21,7 @@ class PdoBatchIterator implements CountableIteratorInterface
     /**
      * @var int
      */
-    protected $chunkSize = 100;
+    protected $chunkSize = 1000;
 
     /**
      * @var CriteriaBuilderInterface
@@ -52,7 +52,7 @@ class PdoBatchIterator implements CountableIteratorInterface
      * @param CriteriaBuilderInterface $criteriaBuilder
      * @param int $chunkSize
      */
-    public function __construct(CriteriaBuilderInterface $criteriaBuilder, ConnectionInterface $connection, $chunkSize = 100)
+    public function __construct(CriteriaBuilderInterface $criteriaBuilder, ConnectionInterface $connection, $chunkSize = 1000)
     {
         $this->criteriaBuilder = $criteriaBuilder;
         $this->connection = $connection;
@@ -126,7 +126,7 @@ class PdoBatchIterator implements CountableIteratorInterface
         $this->criteriaBuilder->setOffset(null);
         $sqlPart = $this->criteriaBuilder->toSqlPart();
 
-        $countSql = 'SELECT COUNT(*) cnt FROM (' . $sqlPart->getSql() . ') as v';
+        $countSql = 'SELECT COUNT(*) cnt FROM (' . $sqlPart->getSql() . ') AS v';
         $st = $this->connection->prepare($countSql);
         $st->execute($sqlPart->getParameters());
 
