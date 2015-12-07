@@ -132,12 +132,12 @@ class CodeStyleFixer
 
     /**
      * @param string $path
-     * @param string $from
+     * @param string $rootPath
      * @param array $options
      *
      * @return void
      */
-    protected function runFixerCommand($path, $from, array $options)
+    protected function runFixerCommand($path, $rootPath, array $options)
     {
         $options = '';
         if (!empty($options[self::OPTION_VERBOSE])) {
@@ -150,7 +150,7 @@ class CodeStyleFixer
 
         $command = $this->applicationRoot . 'vendor/bin/php-cs-fixer fix' . $path . $options;
 
-        $process = new Process($command, $from, null, null, 4800);
+        $process = new Process($command, $rootPath, null, null, 4800);
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });
