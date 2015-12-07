@@ -7,7 +7,7 @@
 namespace SprykerFeature\Client\Payolution\Service;
 
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
-use SprykerFeature\Client\Payolution\PayolutionDependencyProvider;
+use SprykerFeature\Client\Payolution\Service\Zed\PayolutionStub;
 use SprykerFeature\Client\Payolution\Service\Zed\PayolutionStubInterface;
 use Generated\Client\Ide\FactoryAutoCompletion\PayolutionService;
 
@@ -20,12 +20,9 @@ class PayolutionDependencyContainer extends AbstractServiceDependencyContainer
     /**
      * @return PayolutionStubInterface
      */
-    public function createZedStub()
+    public function createPayolutionStub()
     {
-        $zedStub = $this->getProvidedDependency(PayolutionDependencyProvider::SERVICE_ZED);
-        $payolutionStub = $this->getFactory()->createZedPayolutionStub($zedStub);
-
-        return $payolutionStub;
+        return new PayolutionStub($this->createZedRequestClient());
     }
 
 }

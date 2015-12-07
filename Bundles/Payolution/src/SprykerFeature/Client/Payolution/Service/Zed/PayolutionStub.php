@@ -16,14 +16,14 @@ class PayolutionStub implements PayolutionStubInterface
     /**
      * @var ZedRequestClient
      */
-    protected $zedStub;
+    protected $zedRequestClient;
 
     /**
-     * @param ZedRequestClient $zedStub
+     * @param ZedRequestClient $zedRequestClient
      */
-    public function __construct(ZedRequestClient $zedStub)
+    public function __construct(ZedRequestClient $zedRequestClient)
     {
-        $this->zedStub = $zedStub;
+        $this->zedRequestClient = $zedRequestClient;
     }
 
     /**
@@ -33,7 +33,7 @@ class PayolutionStub implements PayolutionStubInterface
      */
     public function calculateInstallmentPayments(CheckoutRequestTransfer $checkoutRequestTransfer)
     {
-        return $this->zedStub->call('/payolution/gateway/calculate-installment-payments', $checkoutRequestTransfer);
+        return $this->zedRequestClient->call('/payolution/gateway/calculate-installment-payments', $checkoutRequestTransfer);
     }
 
 }

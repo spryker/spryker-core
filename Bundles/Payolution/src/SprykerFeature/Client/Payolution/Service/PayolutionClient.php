@@ -25,7 +25,7 @@ class PayolutionClient extends AbstractClient implements PayolutionClientInterfa
     {
         return $this
             ->getDependencyContainer()
-            ->createZedStub()
+            ->createPayolutionStub()
             ->calculateInstallmentPayments($checkoutRequestTransfer);
     }
 

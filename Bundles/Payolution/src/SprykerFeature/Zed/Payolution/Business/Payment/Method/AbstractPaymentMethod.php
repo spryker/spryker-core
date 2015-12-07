@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Payolution\Business\Payment\Method;
 
 use Generated\Shared\Transfer\AddressTransfer;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
+use SprykerFeature\Shared\Library\Currency\CurrencyManager;
 use SprykerFeature\Zed\Payolution\Business\Exception\GenderNotDefinedException;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
@@ -162,6 +163,11 @@ abstract class AbstractPaymentMethod
             $addressTransfer->getAddress2(),
             $addressTransfer->getAddress3()
         ));
+    }
+
+    protected function convertCentsToDecimal($amount)
+    {
+        return CurrencyManager::getInstance()->convertCentToDecimal($amount);
     }
 
 }
