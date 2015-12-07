@@ -18,11 +18,17 @@ class StockProductGrid extends AbstractTable
     const QUANTITY = 'quantity';
     const IS_NEVER_OUT_OF_STOCK = 'is_never_out_of_stock';
 
+    /**
+     * @return void
+     */
     protected function configure(TableConfiguration $config)
     {
         // @todo: Implement configure() method.
     }
 
+    /**
+     * @return void
+     */
     protected function prepareData(TableConfiguration $config)
     {
         // @todo: Implement prepareData() method.

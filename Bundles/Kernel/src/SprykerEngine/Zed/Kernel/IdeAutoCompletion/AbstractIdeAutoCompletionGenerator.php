@@ -58,6 +58,8 @@ abstract class AbstractIdeAutoCompletionGenerator
 
     /**
      * @param OptionsResolver $resolver
+     *
+     * @return void
      */
     protected function configureOptions(OptionsResolver $resolver)
     {
@@ -80,9 +82,14 @@ abstract class AbstractIdeAutoCompletionGenerator
 
     /**
      * @param null $output
+     *
+     * @return void
      */
     abstract public function create($output = null);
 
+    /**
+     * @return void
+     */
     protected function makeDirIfNotExists()
     {
         if (!is_dir($this->options[self::OPTION_KEY_LOCATION_DIR])) {
@@ -149,6 +156,8 @@ abstract class AbstractIdeAutoCompletionGenerator
 
     /**
      * @param string $fileContent
+     *
+     * @return void
      */
     protected function saveFileContent($fileContent)
     {

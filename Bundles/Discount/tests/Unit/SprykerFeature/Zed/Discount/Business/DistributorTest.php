@@ -48,6 +48,9 @@ class DistributorTest extends Test
      */
     protected $locator;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -56,6 +59,9 @@ class DistributorTest extends Test
         $this->discountFacade = $this->locator->discount()->facade();
     }
 
+    /**
+     * @return void
+     */
     public function testDistributeAmountLimitTheDiscountAmountToTheObjectGrossPrice()
     {
         $items = $this->getItems(
@@ -76,6 +82,9 @@ class DistributorTest extends Test
         $this->assertEquals($items[2]->getGrossPrice(), current($items[2]->getDiscounts())->getAmount());
     }
 
+    /**
+     * @return void
+     */
     public function testDistributeShouldDistributeAmountEquallyToEqualExpensiveObjects()
     {
         $items = $this->getItems(
@@ -96,6 +105,9 @@ class DistributorTest extends Test
         $this->assertEquals(self::DISCOUNT_AMOUNT_300 / 3, current($items[2]->getDiscounts())->getAmount());
     }
 
+    /**
+     * @return void
+     */
     public function testDistributeShouldDistributeAmountWithRoundingErrorCorrection()
     {
         $items = $this->getItems(
@@ -116,6 +128,9 @@ class DistributorTest extends Test
         $this->assertEquals(self::DISCOUNT_AMOUNT_13333, current($items[2]->getDiscounts())->getAmount());
     }
 
+    /**
+     * @return void
+     */
     public function testDistributeShouldDistributeDiscountAmountInRelationToObjectGrossPrice()
     {
         $items = $this->getItems(
@@ -136,6 +151,9 @@ class DistributorTest extends Test
         $this->assertEquals(self::DISCOUNT_AMOUNT_400, current($items[2]->getDiscounts())->getAmount());
     }
 
+    /**
+     * @return void
+     */
     public function testDistributionForNegativeDiscountAmountShouldNotDistributeAnyDiscounts()
     {
         $items = $this->getItems(
@@ -156,6 +174,9 @@ class DistributorTest extends Test
         $this->assertEquals(0, $items[2]->getDiscounts()->count());
     }
 
+    /**
+     * @return void
+     */
     public function testDistributeShouldNotDistributeDiscountsForObjectsWithZeroGrossPrices()
     {
         $items = $this->getItems(

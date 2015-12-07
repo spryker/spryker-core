@@ -34,6 +34,8 @@ class ProductBatchResult implements ProductBatchResultInterface
 
     /**
      * @param int $failed
+     *
+     * @return void
      */
     public function setFailedCount($failed)
     {
@@ -42,6 +44,8 @@ class ProductBatchResult implements ProductBatchResultInterface
 
     /**
      * @param int $incrementCount
+     *
+     * @return void
      */
     public function increaseFailed($incrementCount = 1)
     {
@@ -70,6 +74,8 @@ class ProductBatchResult implements ProductBatchResultInterface
 
     /**
      * @param int $total
+     *
+     * @return void
      */
     public function setTotalCount($total)
     {
@@ -86,6 +92,8 @@ class ProductBatchResult implements ProductBatchResultInterface
 
     /**
      * @param bool $failed
+     *
+     * @return void
      */
     public function setIsFailed($failed = true)
     {

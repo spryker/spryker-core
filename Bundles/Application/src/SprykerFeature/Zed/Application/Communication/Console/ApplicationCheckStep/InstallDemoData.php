@@ -14,6 +14,9 @@ use SprykerFeature\Zed\Application\Business\ApplicationFacade;
 class InstallDemoData extends AbstractApplicationCheckStep
 {
 
+    /**
+     * @return void
+     */
     public function run()
     {
         $this->getFacade()->runCheckStepInstallDemoData($this->logger);

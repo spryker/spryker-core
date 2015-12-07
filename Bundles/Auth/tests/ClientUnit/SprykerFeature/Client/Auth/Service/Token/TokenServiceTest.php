@@ -18,6 +18,9 @@ use SprykerFeature\Client\Auth\Service\Token\TokenService;
 class TokenServiceTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testGenerateTokenMustReturnString()
     {
         $tokenService = new TokenService();
@@ -26,6 +29,9 @@ class TokenServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('string', $token);
     }
 
+    /**
+     * @return void
+     */
     public function testCheckTokenMustReturnTrueIfTokenIsValid()
     {
         $tokenService = new TokenService();
@@ -36,6 +42,9 @@ class TokenServiceTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($isValid);
     }
 
+    /**
+     * @return void
+     */
     public function testCheckTokenMustReturnFalseIfTokenIsInValid()
     {
         $tokenService = new TokenService();

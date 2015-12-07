@@ -40,6 +40,8 @@ class BankAccountCheckResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $bankaccount
+     *
+     * @return void
      */
     public function setBankAccount($bankaccount)
     {
@@ -56,6 +58,8 @@ class BankAccountCheckResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $bankbranchcode
+     *
+     * @return void
      */
     public function setBankBranchCode($bankbranchcode)
     {
@@ -72,6 +76,8 @@ class BankAccountCheckResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $bankcheckdigit
+     *
+     * @return void
      */
     public function setBankCheckDigit($bankcheckdigit)
     {
@@ -88,6 +94,8 @@ class BankAccountCheckResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $bankcode
+     *
+     * @return void
      */
     public function setBankCode($bankcode)
     {
@@ -104,6 +112,8 @@ class BankAccountCheckResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $bankcountry
+     *
+     * @return void
      */
     public function setBankCountry($bankcountry)
     {
@@ -120,6 +130,8 @@ class BankAccountCheckResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $bic
+     *
+     * @return void
      */
     public function setBic($bic)
     {
@@ -136,6 +148,8 @@ class BankAccountCheckResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $iban
+     *
+     * @return void
      */
     public function setIban($iban)
     {

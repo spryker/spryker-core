@@ -19,6 +19,8 @@ class Pimple extends AbstractPlugin
 
     /**
      * @param Application $application
+     *
+     * @return void
      */
     public static function setApplication(Application $application)
     {

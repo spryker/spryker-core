@@ -15,6 +15,9 @@ use Symfony\Component\HttpFoundation\Request;
 class ProductController extends AbstractController
 {
 
+    /**
+     * @return void
+     */
     public function indexAction(Request $request)
     {
     }

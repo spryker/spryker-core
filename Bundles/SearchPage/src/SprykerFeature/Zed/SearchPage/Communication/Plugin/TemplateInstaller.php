@@ -15,6 +15,9 @@ use SprykerFeature\Zed\SearchPage\Communication\SearchPageDependencyContainer;
 class TemplateInstaller extends AbstractInstallerPlugin
 {
 
+    /**
+     * @return void
+     */
     public function install()
     {
         $this->getDependencyContainer()

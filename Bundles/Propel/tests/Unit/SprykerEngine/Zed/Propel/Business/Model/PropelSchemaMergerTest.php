@@ -26,6 +26,9 @@ class PropelSchemaMergerTest extends \PHPUnit_Framework_TestCase
         return __DIR__ . DIRECTORY_SEPARATOR . 'Fixtures' . DIRECTORY_SEPARATOR . 'PropelSchemaMerger';
     }
 
+    /**
+     * @return void
+     */
     public function testMergeTwoSchemaFilesMustReturnStringWithMergedContent()
     {
         $projectFile = new SplFileInfo(

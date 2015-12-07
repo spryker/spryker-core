@@ -62,6 +62,8 @@ class BatchIterator implements CountableIteratorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
     public function next()
     {
@@ -91,6 +93,8 @@ class BatchIterator implements CountableIteratorInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
     public function rewind()
     {

@@ -14,6 +14,9 @@ use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLog;
 class PayolutionFacadePreAuthorizeTest extends AbstractFacadeTest
 {
 
+    /**
+     * @return void
+     */
     public function testPreAuthorizePaymentWithSuccessResponse()
     {
         $adapterMock = new PreAuthorizationAdapterMock();
@@ -46,6 +49,9 @@ class PayolutionFacadePreAuthorizeTest extends AbstractFacadeTest
         $this->assertNotNull($statusLog->getProcessingConnectordetailPaymentreference());
     }
 
+    /**
+     * @return void
+     */
     public function testPreAuthorizationWithFailureResponse()
     {
         $adapterMock = (new PreAuthorizationAdapterMock())->expectFailure();

@@ -14,6 +14,9 @@ use Unit\SprykerFeature\Client\ZedRequest\Service\Client\Fixture\CommunicationOb
 class AbstractObjectTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testConstructorWithoutParameters()
     {
         $object = new CommunicationObject();
@@ -21,6 +24,9 @@ class AbstractObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([], $object->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testConstructorWithParameters()
     {
         $data = ['test1' => 1];
@@ -30,6 +36,9 @@ class AbstractObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($data, $object->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testFromArray()
     {
         $data = ['test1' => 1, 'test2' => 'hund'];
@@ -40,6 +49,9 @@ class AbstractObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($data, $object->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testInvalidData()
     {
         $data = ['test6' => 4, 'test5' => 'data'];
@@ -50,6 +62,9 @@ class AbstractObjectTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([], $object->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testInvalidAndValidData()
     {
         $data = ['test6' => 4, 'test5' => 'data', 'test2' => 3];

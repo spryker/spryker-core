@@ -40,6 +40,9 @@ class CalculatorTest extends Test
      */
     private $productEntity;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -49,6 +52,9 @@ class CalculatorTest extends Test
         $this->stockQueryContainer = new StockQueryContainer(new Factory('Stock'), $locator);
     }
 
+    /**
+     * @return void
+     */
     public function testCalculateStock()
     {
         $this->setTestData();
@@ -57,6 +63,9 @@ class CalculatorTest extends Test
         $this->assertEquals(30, $stock);
     }
 
+    /**
+     * @return void
+     */
     protected function setTestData()
     {
         $abstractProduct = SpyAbstractProductQuery::create()

@@ -28,10 +28,15 @@ abstract class AbstractHealthIndicator implements HealthIndicatorInterface
         return $this->getHealthIndicatorReport();
     }
 
+    /**
+     * @return void
+     */
     abstract protected function healthCheck();
 
     /**
      * @param string $message
+     *
+     * @return void
      */
     protected function addDysfunction($message)
     {

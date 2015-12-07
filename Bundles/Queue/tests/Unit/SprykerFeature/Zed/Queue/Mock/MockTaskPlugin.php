@@ -50,6 +50,8 @@ class MockTaskPlugin implements TaskPluginInterface
 
     /**
      * @param QueueMessageTransfer $queueMessage
+     *
+     * @return void
      */
     public function run(QueueMessageTransfer $queueMessage)
     {

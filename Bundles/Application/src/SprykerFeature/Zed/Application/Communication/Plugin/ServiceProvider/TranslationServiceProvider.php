@@ -17,6 +17,8 @@ class TranslationServiceProvider extends SilexTranslationServiceProvider impleme
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function register(Application $app)
     {
@@ -25,6 +27,8 @@ class TranslationServiceProvider extends SilexTranslationServiceProvider impleme
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function boot(Application $app)
     {

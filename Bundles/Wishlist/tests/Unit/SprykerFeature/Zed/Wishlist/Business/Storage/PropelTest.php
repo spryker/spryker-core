@@ -18,6 +18,9 @@ use Orm\Zed\Wishlist\Persistence\SpyWishlistItem;
 class PropelTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testAddItemToExisting()
     {
         $wishlist = new WishlistTransfer();
@@ -52,6 +55,9 @@ class PropelTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, $spyWishlistItem->getQuantity());
     }
 
+    /**
+     * @return void
+     */
     public function testAddNewItem()
     {
         $wishlist = new WishlistTransfer();
@@ -84,6 +90,9 @@ class PropelTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $spyWishlistItem->getQuantity());
     }
 
+    /**
+     * @return void
+     */
     public function testReduceQuantity()
     {
         $wishlist = new WishlistTransfer();
@@ -118,6 +127,9 @@ class PropelTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, $spyWishlistItem->getQuantity());
     }
 
+    /**
+     * @return void
+     */
     public function testRemoveItem()
     {
         $wishlist = new WishlistTransfer();
@@ -260,11 +272,17 @@ trait WishlistSpyTrait
     protected $delete = true;
     protected $save = true;
 
+    /**
+     * @return void
+     */
     public function save(ConnectionInterface $con = null)
     {
         $this->save = true;
     }
 
+    /**
+     * @return void
+     */
     public function delete(ConnectionInterface $con = null)
     {
         $this->delete = true;

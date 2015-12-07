@@ -17,6 +17,8 @@ class TransferFacade extends AbstractFacade
 
     /**
      * @param LoggerInterface $messenger
+     *
+     * @return void
      */
     public function generateTransferObjects(LoggerInterface $messenger)
     {

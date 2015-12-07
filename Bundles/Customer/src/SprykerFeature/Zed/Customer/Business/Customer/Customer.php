@@ -91,6 +91,8 @@ class Customer
 
     /**
      * @param PasswordRestoredConfirmationSenderPluginInterface $sender
+     *
+     * @return void
      */
     public function addPasswordRestoredConfirmationSender(PasswordRestoredConfirmationSenderPluginInterface $sender)
     {
@@ -99,6 +101,8 @@ class Customer
 
     /**
      * @param PasswordRestoreTokenSenderPluginInterface $sender
+     *
+     * @return void
      */
     public function addPasswordRestoreTokenSender(PasswordRestoreTokenSenderPluginInterface $sender)
     {
@@ -107,6 +111,8 @@ class Customer
 
     /**
      * @param RegistrationTokenSenderPluginInterface $sender
+     *
+     * @return void
      */
     public function addRegistrationTokenSender(RegistrationTokenSenderPluginInterface $sender)
     {
@@ -180,6 +186,8 @@ class Customer
 
     /**
      * @param CustomerTransfer $customerTransfer
+     *
+     * @return void
      */
     protected function sendPasswordRestoreToken(CustomerTransfer $customerTransfer)
     {
@@ -212,6 +220,8 @@ class Customer
 
     /**
      * @param CustomerTransfer $customerTransfer
+     *
+     * @return void
      */
     protected function sendPasswordRestoreConfirmation(CustomerTransfer $customerTransfer)
     {

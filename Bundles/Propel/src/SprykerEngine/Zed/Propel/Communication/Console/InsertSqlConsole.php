@@ -16,6 +16,9 @@ class InsertSqlConsole extends Console
 
     const COMMAND_NAME = 'propel:sql:insert';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);

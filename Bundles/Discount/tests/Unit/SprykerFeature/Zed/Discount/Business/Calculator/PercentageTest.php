@@ -23,6 +23,9 @@ class PercentageTest extends \PHPUnit_Framework_TestCase
     const DISCOUNT_PERCENTAGE_100 = 100;
     const DISCOUNT_PERCENTAGE_200 = 200;
 
+    /**
+     * @return void
+     */
     public function testCalculatePercentageShouldNotGrantDiscountsHigherThanHundredPercent()
     {
         $items = $this->getItems(
@@ -39,6 +42,9 @@ class PercentageTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(self::ITEM_GROSS_PRICE_1000 * 3, $discountAmount);
     }
 
+    /**
+     * @return void
+     */
     public function testCalculatePercentageShouldNotGrantDiscountsLessThanZeroPercent()
     {
         $items = $this->getItems(
@@ -55,6 +61,9 @@ class PercentageTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, $discountAmount);
     }
 
+    /**
+     * @return void
+     */
     public function testCalculatePercentageShouldThrowAnExceptionForNonNumericValues()
     {
         $items = $this->getItems(
@@ -70,6 +79,9 @@ class PercentageTest extends \PHPUnit_Framework_TestCase
         $discountAmount = $calculator->calculate($items, 'string');
     }
 
+    /**
+     * @return void
+     */
     public function testCalculatePercentageShouldNotGiveNegativeDiscountAmounts()
     {
         $items = $this->getItems(

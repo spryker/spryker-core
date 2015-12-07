@@ -9,6 +9,9 @@ namespace SprykerFeature\Zed\Application\Communication\Controller;
 class IndexController extends AbstractController
 {
 
+    /**
+     * @return void
+     */
     public function indexAction()
     {
     }

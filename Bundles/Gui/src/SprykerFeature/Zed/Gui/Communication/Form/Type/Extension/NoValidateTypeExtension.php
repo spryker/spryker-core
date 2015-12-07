@@ -11,6 +11,8 @@ class NoValidateTypeExtension extends AbstractTypeExtension
 
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {

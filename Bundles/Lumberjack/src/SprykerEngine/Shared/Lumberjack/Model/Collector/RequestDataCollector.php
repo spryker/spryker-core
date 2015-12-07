@@ -115,6 +115,9 @@ class RequestDataCollector extends AbstractDataCollector
         );
     }
 
+    /**
+     * @return void
+     */
     protected function setDefaultOptions()
     {
         if (!isset($this->options[self::OPTION_PARAM_BLACKLIST])) {

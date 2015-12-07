@@ -23,6 +23,9 @@ class AuthFacadeTest extends Test
      */
     protected $authFacade;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -32,6 +35,9 @@ class AuthFacadeTest extends Test
         $this->authFacade = $locator->auth()->facade();
     }
 
+    /**
+     * @return void
+     */
     public function testResetRequestCheckIfStatusIsActiveAndTokenIsSet()
     {
         $userEntity = $this->createTestUser();
@@ -48,12 +54,18 @@ class AuthFacadeTest extends Test
         $this->assertTrue($resetStatus);
     }
 
+    /**
+     * @return void
+     */
     public function testRequestPasswordEmailNotExistingShouldThrowException()
     {
         $this->setExpectedException('SprykerFeature\Zed\User\Business\Exception\UserNotFoundException');
         $this->authFacade->requestPasswordReset('username1@example.com');
     }
 
+    /**
+     * @return void
+     */
     public function testPasswordResetWhenTokenIsValidStateShouldBeChangedToUsed()
     {
         $userEntity = $this->createTestUser();
@@ -73,6 +85,9 @@ class AuthFacadeTest extends Test
         $this->assertEquals($passwordEntity->getStatus(), SpyResetPasswordTableMap::COL_STATUS_USED);
     }
 
+    /**
+     * @return void
+     */
     public function testValidateTokenExpirityShouldStateSetToExpired()
     {
         $userEntity = $this->createTestUser();
@@ -95,6 +110,9 @@ class AuthFacadeTest extends Test
         $this->assertFalse($resetStatus);
     }
 
+    /**
+     * @return void
+     */
     public function testValidatePasswordWhenTokenProvidedNotSavedToDatabase()
     {
         $resetStatus = $this->authFacade->isValidPasswordResetToken('NERAMANES');

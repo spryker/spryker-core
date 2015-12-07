@@ -36,6 +36,9 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
      */
     protected $expected;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         $this->factory = new Factory('Category');
@@ -45,6 +48,8 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @todo find better names for test methods
+     *
+     * @return void
      */
     public function testOutputTreeStructureFromOrderedCategoriesArray()
     {
@@ -59,6 +64,8 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @todo find better names for test methods
+     *
+     * @return void
      */
     public function testOutputTreeStructureFromOrderedCategoriesArrayWhereParentWasChangedForAnItem()
     {
@@ -73,6 +80,8 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @todo find better names for test methods
+     *
+     * @return void
      */
     public function testOuputTreeStructureFromRandomOrderCategoryArray()
     {
@@ -87,6 +96,8 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @todo find better names for test methods
+     *
+     * @return void
      */
     public function testOutputStructureWithCategoryArrayItemThatParentDoesNotExist()
     {

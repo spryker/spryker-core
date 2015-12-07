@@ -18,6 +18,8 @@ class MaximCalculatedRangeValidatorTest extends Test
      * @param $codeLength
      * @param $charactersAllowedNumber
      * @param $numberOfPossibilities
+     *
+     * @return void
      */
     public function testResults($codeLength, $charactersAllowedNumber, $numberOfPossibilities)
     {

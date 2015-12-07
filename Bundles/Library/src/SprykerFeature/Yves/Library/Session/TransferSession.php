@@ -28,6 +28,8 @@ class TransferSession
     /**
      * @param string $name
      * @param TransferInterface $transferObject
+     *
+     * @return void
      */
     public function set($name, TransferInterface $transferObject)
     {

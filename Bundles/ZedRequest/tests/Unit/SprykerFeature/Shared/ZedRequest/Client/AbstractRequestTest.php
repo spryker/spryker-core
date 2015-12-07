@@ -18,6 +18,9 @@ use Unit\SprykerFeature\Shared\ZedRequest\Client\Fixture\AbstractRequest;
 class AbstractRequestTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testGetTransferMustReturnNullIfNoTransferClassNameProvided()
     {
         $data = [];
@@ -26,6 +29,9 @@ class AbstractRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($abstractRequest->getTransfer());
     }
 
+    /**
+     * @return void
+     */
     public function testGetTransferMustReturnTransferIfTransferClassNameAndDataProvided()
     {
         $data = [
@@ -37,6 +43,9 @@ class AbstractRequestTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('SprykerEngine\Shared\Transfer\AbstractTransfer', $abstractRequest->getTransfer());
     }
 
+    /**
+     * @return void
+     */
     public function testGetTransferMustReturnTransferIfTransferClassNameProvidedButNoDataGiven()
     {
         $data = [

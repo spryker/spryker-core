@@ -47,6 +47,8 @@ class CurrencyManager
     /**
      * @param CurrencyInterface $currency
      * @static
+     *
+     * @return void
      */
     public static function setDefaultCurrency(CurrencyInterface $currency)
     {
@@ -56,6 +58,8 @@ class CurrencyManager
     /**
      * @param string $isoCode
      * @static
+     *
+     * @return void
      */
     public static function setDefaultCurrencyIso($isoCode)
     {

@@ -15,6 +15,9 @@ use SprykerEngine\Zed\Kernel\BundleNameFinder;
 class BundleNameFinderTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testBundleNameFinderShouldFindBundleNames()
     {
         $bundleNameFinder = new BundleNameFinder();

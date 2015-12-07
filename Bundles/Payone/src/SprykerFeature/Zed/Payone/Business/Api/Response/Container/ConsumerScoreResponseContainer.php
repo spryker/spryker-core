@@ -64,6 +64,8 @@ class ConsumerScoreResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $city
+     *
+     * @return void
      */
     public function setCity($city)
     {
@@ -80,6 +82,8 @@ class ConsumerScoreResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $divergence
+     *
+     * @return void
      */
     public function setDivergence($divergence)
     {
@@ -96,6 +100,8 @@ class ConsumerScoreResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $firstname
+     *
+     * @return void
      */
     public function setFirstname($firstname)
     {
@@ -112,6 +118,8 @@ class ConsumerScoreResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $lastname
+     *
+     * @return void
      */
     public function setLastname($lastname)
     {
@@ -128,6 +136,8 @@ class ConsumerScoreResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $personstatus
+     *
+     * @return void
      */
     public function setPersonstatus($personstatus)
     {
@@ -144,6 +154,8 @@ class ConsumerScoreResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $score
+     *
+     * @return void
      */
     public function setScore($score)
     {
@@ -160,6 +172,8 @@ class ConsumerScoreResponseContainer extends AbstractResponseContainer
 
     /**
      * @param int $scorevalue
+     *
+     * @return void
      */
     public function setScorevalue($scorevalue)
     {
@@ -176,6 +190,8 @@ class ConsumerScoreResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $secscore
+     *
+     * @return void
      */
     public function setSecscore($secscore)
     {
@@ -192,6 +208,8 @@ class ConsumerScoreResponseContainer extends AbstractResponseContainer
 
     /**
      * @param int $secstatus
+     *
+     * @return void
      */
     public function setSecstatus($secstatus)
     {
@@ -208,6 +226,8 @@ class ConsumerScoreResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $street
+     *
+     * @return void
      */
     public function setStreet($street)
     {
@@ -224,6 +244,8 @@ class ConsumerScoreResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $streetname
+     *
+     * @return void
      */
     public function setStreetname($streetname)
     {
@@ -240,6 +262,8 @@ class ConsumerScoreResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $streetnumber
+     *
+     * @return void
      */
     public function setStreetnumber($streetnumber)
     {
@@ -256,6 +280,8 @@ class ConsumerScoreResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $zip
+     *
+     * @return void
      */
     public function setZip($zip)
     {

@@ -192,6 +192,8 @@ abstract class AbstractSearch
 
     /**
      * @param int $itemsPerPage
+     *
+     * @return void
      */
     public function setItemsPerPage($itemsPerPage)
     {
@@ -230,6 +232,8 @@ abstract class AbstractSearch
 
     /**
      * @param Query $query
+     *
+     * @return void
      */
     protected function addFacetAggregationToQuery(Query $query)
     {
@@ -245,6 +249,8 @@ abstract class AbstractSearch
     /**
      * @param Query $query
      * @param Request $request
+     *
+     * @return void
      */
     protected function addFacetFiltersToQuery(Query $query, Request $request)
     {
@@ -253,6 +259,8 @@ abstract class AbstractSearch
 
     /**
      * @param Query $query
+     *
+     * @return void
      */
     protected function addPaginationToQuery(Query $query)
     {

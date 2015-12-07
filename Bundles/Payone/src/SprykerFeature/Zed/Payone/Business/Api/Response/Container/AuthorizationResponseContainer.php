@@ -100,6 +100,8 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearing_bankaccount
+     *
+     * @return void
      */
     public function setClearingBankaccount($clearing_bankaccount)
     {
@@ -116,6 +118,8 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearing_bankaccountholder
+     *
+     * @return void
      */
     public function setClearingBankaccountholder($clearing_bankaccountholder)
     {
@@ -132,6 +136,8 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearing_bankbic
+     *
+     * @return void
      */
     public function setClearingBankbic($clearing_bankbic)
     {
@@ -148,6 +154,8 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearing_bankcity
+     *
+     * @return void
      */
     public function setClearingBankcity($clearing_bankcity)
     {
@@ -164,6 +172,8 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearing_bankcode
+     *
+     * @return void
      */
     public function setClearingBankcode($clearing_bankcode)
     {
@@ -180,6 +190,8 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearing_bankcountry
+     *
+     * @return void
      */
     public function setClearingBankcountry($clearing_bankcountry)
     {
@@ -196,6 +208,8 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearing_bankiban
+     *
+     * @return void
      */
     public function setClearingBankiban($clearing_bankiban)
     {
@@ -212,6 +226,8 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearing_bankname
+     *
+     * @return void
      */
     public function setClearingBankname($clearing_bankname)
     {
@@ -228,6 +244,8 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $protect_result_avs
+     *
+     * @return void
      */
     public function setProtectResultAvs($protect_result_avs)
     {
@@ -244,6 +262,8 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
 
     /**
      * @param int $txid
+     *
+     * @return void
      */
     public function setTxid($txid)
     {
@@ -260,6 +280,8 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
 
     /**
      * @param int $userid
+     *
+     * @return void
      */
     public function setUserid($userid)
     {
@@ -276,6 +298,8 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $redirecturl
+     *
+     * @return void
      */
     public function setRedirecturl($redirecturl)
     {
@@ -292,6 +316,8 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $creditorCity
+     *
+     * @return void
      */
     public function setCreditorCity($creditorCity)
     {
@@ -308,6 +334,8 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $creditorCountry
+     *
+     * @return void
      */
     public function setCreditorCountry($creditorCountry)
     {
@@ -324,6 +352,8 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $creditorEmail
+     *
+     * @return void
      */
     public function setCreditorEmail($creditorEmail)
     {
@@ -340,6 +370,8 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $creditorIdentifier
+     *
+     * @return void
      */
     public function setCreditorIdentifier($creditorIdentifier)
     {
@@ -356,6 +388,8 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $creditorName
+     *
+     * @return void
      */
     public function setCreditorName($creditorName)
     {
@@ -372,6 +406,8 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $creditorStreet
+     *
+     * @return void
      */
     public function setCreditorStreet($creditorStreet)
     {
@@ -388,6 +424,8 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $creditorZip
+     *
+     * @return void
      */
     public function setCreditorZip($creditorZip)
     {
@@ -404,6 +442,8 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $mandateIdentification
+     *
+     * @return void
      */
     public function setMandateIdentification($mandateIdentification)
     {
@@ -420,6 +460,8 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearingAmount
+     *
+     * @return void
      */
     public function setClearingAmount($clearingAmount)
     {
@@ -436,6 +478,8 @@ class AuthorizationResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearingDate
+     *
+     * @return void
      */
     public function setClearingDate($clearingDate)
     {

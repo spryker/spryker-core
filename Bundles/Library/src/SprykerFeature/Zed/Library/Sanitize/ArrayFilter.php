@@ -31,6 +31,8 @@ class ArrayFilter implements \Iterator, \Countable, \ArrayAccess
 
     /**
      * @param string|FilterSetInterface $filterSet
+     *
+     * @return void
      */
     protected function initFilters($filterSet)
     {
@@ -100,6 +102,8 @@ class ArrayFilter implements \Iterator, \Countable, \ArrayAccess
      * Move forward to next element
      *
      * @link http://php.net/manual/en/iterator.next.php
+     *
+     * @return void
      */
     public function next()
     {
@@ -138,6 +142,8 @@ class ArrayFilter implements \Iterator, \Countable, \ArrayAccess
      * Rewind the Iterator to the first element
      *
      * @link http://php.net/manual/en/iterator.rewind.php
+     *
+     * @return void
      */
     public function rewind()
     {
@@ -193,6 +199,8 @@ class ArrayFilter implements \Iterator, \Countable, \ArrayAccess
      * @param mixed $value <p>
      *   The value to set.
      *   </p>
+     *
+     * @return void
      */
     public function offsetSet($offset, $value)
     {
@@ -210,6 +218,8 @@ class ArrayFilter implements \Iterator, \Countable, \ArrayAccess
      * @param mixed $offset <p>
      *   The offset to unset.
      *   </p>
+     *
+     * @return void
      */
     public function offsetUnset($offset)
     {

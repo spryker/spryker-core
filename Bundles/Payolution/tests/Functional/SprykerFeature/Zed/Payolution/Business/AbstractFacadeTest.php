@@ -53,6 +53,9 @@ class AbstractFacadeTest extends Test
      */
     private $statusLogQuery;
 
+    /**
+     * @return void
+     */
     protected function _before()
     {
         parent::_before();
@@ -63,6 +66,9 @@ class AbstractFacadeTest extends Test
         $this->statusLogQuery = new SpyPaymentPayolutionTransactionStatusLogQuery();
     }
 
+    /**
+     * @return void
+     */
     protected function setUpSalesOrderTestData()
     {
         $country = SpyCountryQuery::create()->findOneByIso2Code('de');
@@ -97,6 +103,9 @@ class AbstractFacadeTest extends Test
         $this->orderEntity->save();
     }
 
+    /**
+     * @return void
+     */
     private function setUpPaymentTestData()
     {
         $this->paymentEntity = (new SpyPaymentPayolution())
@@ -191,6 +200,8 @@ class AbstractFacadeTest extends Test
     /**
      * @param SpyPaymentPayolutionTransactionStatusLog $statusLog
      * @param PayolutionTransactionResponseTransfer $response
+     *
+     * @return void
      */
     protected function matchStatusLogWithResponse(
         SpyPaymentPayolutionTransactionStatusLog $statusLog,

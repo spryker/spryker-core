@@ -15,6 +15,9 @@ class GenerateIdeAutoCompletionConsole extends Console
 
     const COMMAND_NAME = 'setup:generate-ide-auto-completion';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);

@@ -19,6 +19,8 @@ class ItemPriceToPayCalculatorPlugin extends AbstractPlugin implements Calculato
 
     /**
      * @param CalculableInterface $calculableContainer
+     *
+     * @return void
      */
     public function recalculate(CalculableInterface $calculableContainer)
     {

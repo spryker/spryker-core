@@ -18,6 +18,9 @@ use SprykerEngine\Yves\Kernel\Communication\BundleControllerAction;
 class BundleControllerActionTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testGetBundleShouldReturnBundleName()
     {
         $bundleControllerLocator = new BundleControllerAction('foo', 'bar', 'baz');
@@ -25,6 +28,9 @@ class BundleControllerActionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('foo', $bundleControllerLocator->getBundle());
     }
 
+    /**
+     * @return void
+     */
     public function testGetControllerShouldReturnControllerName()
     {
         $bundleControllerLocator = new BundleControllerAction('foo', 'bar', 'baz');
@@ -32,6 +38,9 @@ class BundleControllerActionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('bar', $bundleControllerLocator->getController());
     }
 
+    /**
+     * @return void
+     */
     public function testGetActionShouldReturnActionName()
     {
         $bundleControllerLocator = new BundleControllerAction('foo', 'bar', 'baz');

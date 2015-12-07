@@ -20,6 +20,9 @@ class GlossaryInstallConsole extends Console
     const COMMAND_NAME = 'setup:install-glossary';
     const DESCRIPTION = 'Install Glossary';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME)

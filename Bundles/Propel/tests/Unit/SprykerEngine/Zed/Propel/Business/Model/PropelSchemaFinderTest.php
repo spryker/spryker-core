@@ -17,6 +17,9 @@ use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaFinder;
 class PropelSchemaFinderTest extends AbstractPropelSchemaTest
 {
 
+    /**
+     * @return void
+     */
     public function testGetSchemasShouldReturnIterateableFileCollection()
     {
         $schemaFinder = new PropelSchemaFinder(

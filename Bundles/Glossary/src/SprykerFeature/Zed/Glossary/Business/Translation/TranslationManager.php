@@ -182,6 +182,8 @@ class TranslationManager implements TranslationManagerInterface
      * @param int $idLocale
      *
      * @throws TranslationExistsException
+     *
+     * @return void
      */
     protected function checkTranslationDoesNotExist($idKey, $idLocale)
     {
@@ -237,6 +239,8 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param int $idItem
+     *
+     * @return void
      */
     protected function insertActiveTouchRecord($idItem)
     {
@@ -311,6 +315,8 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param int $idItem
+     *
+     * @return void
      */
     protected function insertDeletedTouchRecord($idItem)
     {
@@ -632,6 +638,8 @@ class TranslationManager implements TranslationManagerInterface
 
     /**
      * @param int $idKey
+     *
+     * @return void
      */
     public function touchCurrentTranslationForKeyId($idKey)
     {

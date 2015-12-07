@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\Request;
 class HookController extends AbstractController
 {
 
+    /**
+     * @return void
+     */
     public function rejectAction(Request $request)
     {
         //TODO

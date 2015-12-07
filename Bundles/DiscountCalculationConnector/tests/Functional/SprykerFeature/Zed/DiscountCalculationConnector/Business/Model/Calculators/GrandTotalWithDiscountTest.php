@@ -42,12 +42,18 @@ class GrandTotalWithDiscountTest extends Test
      */
     protected $locator;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
         $this->locator = Locator::getInstance();
     }
 
+    /**
+     * @return void
+     */
     public function testGrandTotalShouldBeZeroForAnEmptyOrder()
     {
         $order = $this->getOrderWithFixtureData();
@@ -59,6 +65,9 @@ class GrandTotalWithDiscountTest extends Test
         $this->assertEquals(0, $totalsTransfer->getGrandTotalWithDiscounts());
     }
 
+    /**
+     * @return void
+     */
     public function testGrandTotalShouldBeModeThanZeroForAnOrderWithOneItem()
     {
         $order = $this->getOrderWithFixtureData();
@@ -76,6 +85,9 @@ class GrandTotalWithDiscountTest extends Test
         $this->assertEquals(self::ITEM_GROSS_PRICE, $totalsTransfer->getGrandTotalWithDiscounts());
     }
 
+    /**
+     * @return void
+     */
     public function testGrandTotalShouldReturnTwiceTheItemGrossPriceForAnOrderWithTwoItems()
     {
         $order = $this->getOrderWithFixtureData();
@@ -93,6 +105,9 @@ class GrandTotalWithDiscountTest extends Test
         $this->assertEquals(2 * self::ITEM_GROSS_PRICE, $totalsTransfer->getGrandTotalWithDiscounts());
     }
 
+    /**
+     * @return void
+     */
     public function testGrandTotalShouldReturnTheItemGrossPriceAndShippingCostsForAnOrderWithTwoItemsAndExpenseOnItem()
     {
         $order = $this->getOrderWithFixtureData();
@@ -118,6 +133,9 @@ class GrandTotalWithDiscountTest extends Test
         $this->assertEquals(2 * self::ITEM_GROSS_PRICE + self::ORDER_SHIPPING_COSTS, $totalsTransfer->getGrandTotalWithDiscounts());
     }
 
+    /**
+     * @return void
+     */
     public function testGrandTotalShouldReturnTheItemGrossPriceMinusTheItemCouponDiscountForAnOrderWithOneItemAndACouponDiscount()
     {
         $order = $this->getOrderWithFixtureData();
@@ -143,6 +161,9 @@ class GrandTotalWithDiscountTest extends Test
         );
     }
 
+    /**
+     * @return void
+     */
     public function testGrandTotalShouldReturnTheItemGrossPriceMinusTheItemSalesurleDiscountForAnOrderWithTwoItemsAndADiscountAndACouponDiscount()
     {
         $order = $this->getOrderWithFixtureData();

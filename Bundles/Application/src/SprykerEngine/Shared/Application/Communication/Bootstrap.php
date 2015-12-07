@@ -84,6 +84,8 @@ class Bootstrap
 
     /**
      * @param Application $application
+     *
+     * @return void
      */
     protected function addProvidersToApp(Application $application)
     {
@@ -110,6 +112,8 @@ class Bootstrap
 
     /**
      * @param Application $application
+     *
+     * @return void
      */
     protected function beforeBoot(Application $application)
     {
@@ -132,6 +136,8 @@ class Bootstrap
 
     /**
      * @param Application $application
+     *
+     * @return void
      */
     protected function afterBoot(Application $application)
     {
@@ -199,6 +205,8 @@ class Bootstrap
 
     /**
      * @param \Pimple $application
+     *
+     * @return void
      */
     protected function optimizeApp(\Pimple $application)
     {
@@ -295,6 +303,8 @@ class Bootstrap
 
     /**
      * @param \Pimple $application
+     *
+     * @return void
      */
     private function addVariablesToTwig(\Pimple $application)
     {
@@ -307,6 +317,8 @@ class Bootstrap
 
     /**
      * @param \Pimple $application
+     *
+     * @return void
      */
     private function addTwigExtensions(\Pimple $application)
     {

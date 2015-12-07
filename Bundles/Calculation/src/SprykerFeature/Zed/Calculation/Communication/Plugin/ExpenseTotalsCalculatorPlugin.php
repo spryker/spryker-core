@@ -22,6 +22,8 @@ class ExpenseTotalsCalculatorPlugin extends AbstractPlugin implements TotalsCalc
      * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
+     *
+     * @return void
      */
     public function recalculateTotals(
         TotalsTransfer $totalsTransfer,

@@ -52,6 +52,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         return new ArrayContainsKeyEqualToConstraint($key, $value);
     }
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -65,6 +68,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender = new MandrillMailSender($this->mandrillMock, $this->inclusionHandler);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailIsCalledWithRightTemplate()
     {
         $mailTransfer = new MailTransfer();
@@ -85,6 +91,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailDataContainsCorrectTemplateNameAndContent()
     {
         $templateContent = [
@@ -115,6 +124,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsSubject()
     {
         $mailTransfer = new MailTransfer();
@@ -136,6 +148,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsFromName()
     {
         $mailTransfer = new MailTransfer();
@@ -157,6 +172,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsFromEmail()
     {
         $mailTransfer = new MailTransfer();
@@ -178,6 +196,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsRecipient()
     {
         $mailTransfer = new MailTransfer();
@@ -213,6 +234,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsHeader()
     {
         $mailTransfer = new MailTransfer();
@@ -243,6 +267,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsImportant()
     {
         $mailTransfer = new MailTransfer();
@@ -263,6 +290,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsTrackOpens()
     {
         $mailTransfer = new MailTransfer();
@@ -284,6 +314,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsTrackClicks()
     {
         $mailTransfer = new MailTransfer();
@@ -304,6 +337,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsAutoText()
     {
         $mailTransfer = new MailTransfer();
@@ -325,6 +361,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsAutoHtml()
     {
         $mailTransfer = new MailTransfer();
@@ -346,6 +385,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsInlineCss()
     {
         $mailTransfer = new MailTransfer();
@@ -367,6 +409,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsStripQs()
     {
         $mailTransfer = new MailTransfer();
@@ -388,6 +433,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsPreserveRecipients()
     {
         $mailTransfer = new MailTransfer();
@@ -409,6 +457,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsViewContentLink()
     {
         $mailTransfer = new MailTransfer();
@@ -430,6 +481,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsBccAddress()
     {
         $mailTransfer = new MailTransfer();
@@ -451,6 +505,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsTrackingDomain()
     {
         $mailTransfer = new MailTransfer();
@@ -472,6 +529,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsSigningDomain()
     {
         $mailTransfer = new MailTransfer();
@@ -493,6 +553,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsReturnPathDomain()
     {
         $mailTransfer = new MailTransfer();
@@ -514,6 +577,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsMerge()
     {
         $mailTransfer = new MailTransfer();
@@ -535,6 +601,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsMergeLanguage()
     {
         $mailTransfer = new MailTransfer();
@@ -556,6 +625,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsGlobalMergeVars()
     {
         $mailTransfer = new MailTransfer();
@@ -594,6 +666,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsRecipientMergeVars()
     {
         $mailTransfer = new MailTransfer();
@@ -641,6 +716,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsTags()
     {
         $mailTransfer = new MailTransfer();
@@ -662,6 +740,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsSubaccount()
     {
         $mailTransfer = new MailTransfer();
@@ -683,6 +764,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsGoogleAnalyticsDomains()
     {
         $mailTransfer = new MailTransfer();
@@ -704,6 +788,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsGoogleAnalyticsCampaign()
     {
         $mailTransfer = new MailTransfer();
@@ -725,6 +812,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsMetadata()
     {
         $mailTransfer = new MailTransfer();
@@ -746,6 +836,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsRecipientMetadata()
     {
         $mailTransfer = new MailTransfer();
@@ -787,6 +880,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsAttachments()
     {
         $textFilePath = __DIR__ . '/testfile.txt';
@@ -835,6 +931,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailContainsImages()
     {
         $imageFilePath = __DIR__ . '/spryker-logo.png';
@@ -883,6 +982,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailWithMoreThanOneMail()
     {
         $mockResult = new SendMailResponsesTransfer();
@@ -910,6 +1012,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($mockResult, $result);
     }
 
+    /**
+     * @return void
+     */
     public function testIsMailSentReturnsTrueWhenIsSent()
     {
         $mockResponses = new SendMailResponsesTransfer();
@@ -925,6 +1030,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result);
     }
 
+    /**
+     * @return void
+     */
     public function testIsMailSentReturnsTrueWhenMailIsQueued()
     {
         $mockResponses = new SendMailResponsesTransfer();
@@ -940,6 +1048,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result);
     }
 
+    /**
+     * @return void
+     */
     public function testIsMailSentReturnsFalseWhenMailIsRejected()
     {
         $mockResponses = new SendMailResponsesTransfer();
@@ -955,6 +1066,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($result);
     }
 
+    /**
+     * @return void
+     */
     public function testIsMailSentReturnsFalseWhenMailIsInvalid()
     {
         $mockResponses = new SendMailResponsesTransfer();
@@ -970,6 +1084,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($result);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailIsCalledWithRightAsync()
     {
         $mailTransfer = new MailTransfer();
@@ -991,6 +1108,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailIsCalledWithRightIpPool()
     {
         $mailTransfer = new MailTransfer();
@@ -1012,6 +1132,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailIsCalledWithRightIpSendAt()
     {
         $mailTransfer = new MailTransfer();
@@ -1033,6 +1156,9 @@ class MailSenderTest extends \PHPUnit_Framework_TestCase
         $this->mailSender->sendMail($mailTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSendMailIsCallableWithoutSendAt()
     {
         $mailTransfer = new MailTransfer();

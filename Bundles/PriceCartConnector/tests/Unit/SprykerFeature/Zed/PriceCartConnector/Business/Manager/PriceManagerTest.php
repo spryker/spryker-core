@@ -22,6 +22,9 @@ use Unit\SprykerFeature\Zed\PriceCartConnector\Business\Fixture\PriceFacadeStub;
 class PriceManagerTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testAddPriceToItems()
     {
         $priceFacadeStub = $this->createPriceFacadeStub();
@@ -46,6 +49,8 @@ class PriceManagerTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \SprykerFeature\Zed\PriceCartConnector\Business\Exception\PriceMissingException
      * @expectedExceptionMessage Cart item 123 can not be priced
+     *
+     * @return void
      */
     public function testIsNotPriceAbleWithInvalidPrice()
     {

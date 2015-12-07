@@ -76,6 +76,8 @@ class Service implements ServiceInterface
 
     /**
      * set read write stats array
+     *
+     * @return void
      */
     public function resetAccessStats()
     {
@@ -103,6 +105,8 @@ class Service implements ServiceInterface
 
     /**
      * @param string $key
+     *
+     * @return void
      */
     protected function addReadAccessStats($key)
     {
@@ -114,6 +118,8 @@ class Service implements ServiceInterface
 
     /**
      * @param array $keys
+     *
+     * @return void
      */
     protected function addMultiReadAccessStats(array $keys)
     {
@@ -125,6 +131,8 @@ class Service implements ServiceInterface
 
     /**
      * @param string $key
+     *
+     * @return void
      */
     protected function addWriteAccessStats($key)
     {
@@ -136,6 +144,8 @@ class Service implements ServiceInterface
 
     /**
      * @param array $items
+     *
+     * @return void
      */
     protected function addMultiWriteAccessStats(array $items)
     {
@@ -147,6 +157,8 @@ class Service implements ServiceInterface
 
     /**
      * @param string $key
+     *
+     * @return void
      */
     protected function addDeleteAccessStats($key)
     {
@@ -158,6 +170,8 @@ class Service implements ServiceInterface
 
     /**
      * @param array $keys
+     *
+     * @return void
      */
     protected function addMultiDeleteAccessStats(array $keys)
     {
@@ -337,6 +351,8 @@ class Service implements ServiceInterface
 
     /**
      * @param array $keys
+     *
+     * @return void
      */
     public function deleteMulti(array $keys)
     {

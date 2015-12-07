@@ -117,6 +117,8 @@ class TransferDefinitionLoader
      * @param array $definition
      * @param string $bundle
      * @param string $containingBundle
+     *
+     * @return void
      */
     private function addDefinition(array $definition, $bundle, $containingBundle)
     {

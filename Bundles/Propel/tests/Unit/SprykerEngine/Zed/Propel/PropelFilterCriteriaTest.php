@@ -11,6 +11,9 @@ use SprykerEngine\Zed\Propel\PropelFilterCriteria;
 class PropelFilterCriteriaTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testToCriteriaShouldReturnEmptyCriteriaWhenNothingWasSet()
     {
         $filterTransfer = new FilterTransfer();
@@ -24,6 +27,9 @@ class PropelFilterCriteriaTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals([], $propelCriteria->getOrderByColumns());
     }
 
+    /**
+     * @return void
+     */
     public function testToCriteriaShouldReturnCriteriaWithParameters()
     {
         $filterTransfer = new FilterTransfer();

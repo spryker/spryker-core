@@ -43,6 +43,9 @@ class GlossaryFacadeTest extends Test
      */
     private $locales = [];
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -50,6 +53,9 @@ class GlossaryFacadeTest extends Test
         $this->getAvailableLocales();
     }
 
+    /**
+     * @return void
+     */
     private function getAvailableLocales()
     {
         $this->locales = $this->getLocaleFacade()->getAvailableLocales();
@@ -94,6 +100,9 @@ class GlossaryFacadeTest extends Test
         return $locale;
     }
 
+    /**
+     * @return void
+     */
     public function testAddTranslation()
     {
         $facade = $this->getGlossaryFacade();
@@ -112,6 +121,9 @@ class GlossaryFacadeTest extends Test
         $this->assertTrue($action);
     }
 
+    /**
+     * @return void
+     */
     public function testUpdateTranslation()
     {
         $facade = $this->getGlossaryFacade();

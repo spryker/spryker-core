@@ -31,6 +31,8 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
      * @param mixed $level
      * @param string $message
      * @param array $context
+     *
+     * @return void
      */
     public function log($level, $message, array $context = [])
     {
@@ -41,6 +43,8 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
 
     /**
      * @param AbstractCommunicationDependencyContainer $dependencyContainer
+     *
+     * @return void
      */
     public function setDependencyContainer(AbstractCommunicationDependencyContainer $dependencyContainer)
     {
@@ -49,6 +53,8 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
 
     /**
      * @param Container $container
+     *
+     * @return void
      */
     public function setExternalDependencies(Container $container)
     {
@@ -68,6 +74,8 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
 
     /**
      * @param AbstractFacade $facade
+     *
+     * @return void
      */
     public function setFacade(AbstractFacade $facade)
     {

@@ -15,6 +15,8 @@ class SingleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
      * @param NewsletterSubscriberTransfer $subscriberTransfer
      *
      * @throws MissingNewsletterSubscriberException
+     *
+     * @return void
      */
     public function optIn(NewsletterSubscriberTransfer $subscriberTransfer)
     {

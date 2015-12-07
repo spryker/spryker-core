@@ -226,6 +226,8 @@ class Transaction extends AbstractPaymentHandler implements TransactionInterface
     /**
      * @param PayolutionTransactionResponseTransfer $responseTransfer
      * @param int $idPayment
+     *
+     * @return void
      */
     protected function logApiResponse(PayolutionTransactionResponseTransfer $responseTransfer, $idPayment)
     {

@@ -14,6 +14,9 @@ use SprykerFeature\Zed\Wishlist\Business\Storage\InMemory;
 class InMemoryTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testAddItemToExisting()
     {
         $wishlistTransfer = new WishlistTransfer();
@@ -41,6 +44,9 @@ class InMemoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(2, $wishlistItem->getQuantity());
     }
 
+    /**
+     * @return void
+     */
     public function testAddNewItem()
     {
         $productFacadeMock = $this->createProductFacadeConcreteProductMock();
@@ -61,6 +67,9 @@ class InMemoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $wishlistItem->getQuantity());
     }
 
+    /**
+     * @return void
+     */
     public function testReduceExistingItem()
     {
         $productFacadeMock = $this->createProductFacadeConcreteProductMock();
@@ -85,6 +94,9 @@ class InMemoryTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(9, $wishlistItem->getQuantity());
     }
 
+    /**
+     * @return void
+     */
     public function testReduceIfLastExisting()
     {
         $productFacadeMock = $this->createProductFacadeConcreteProductMock();
@@ -107,6 +119,9 @@ class InMemoryTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(0, $wishlist->getItems());
     }
 
+    /**
+     * @return void
+     */
     public function testRemoveItem()
     {
         $productFacadeMock = $this->createProductFacadeConcreteProductMock();
@@ -129,6 +144,9 @@ class InMemoryTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(0, $wishlist->getItems());
     }
 
+    /**
+     * @return void
+     */
     public function testIncreaseItem()
     {
         $productFacadeMock = $this->createProductFacadeConcreteProductMock();

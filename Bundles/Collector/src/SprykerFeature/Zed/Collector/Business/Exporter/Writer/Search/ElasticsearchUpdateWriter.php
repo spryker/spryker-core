@@ -56,6 +56,9 @@ class ElasticsearchUpdateWriter implements WriterInterface
         return $response->isOk();
     }
 
+    /**
+     * @return void
+     */
     public function delete(array $dataSet)
     {
     }

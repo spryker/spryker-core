@@ -30,12 +30,18 @@ class StorageHealthIndicator extends AbstractHealthIndicator implements HealthIn
         $this->client = $client;
     }
 
+    /**
+     * @return void
+     */
     public function healthCheck()
     {
         $this->checkWriteToStorage();
         $this->checkReadFromStorage();
     }
 
+    /**
+     * @return void
+     */
     private function checkWriteToStorage()
     {
         try {
@@ -46,6 +52,9 @@ class StorageHealthIndicator extends AbstractHealthIndicator implements HealthIn
         }
     }
 
+    /**
+     * @return void
+     */
     private function checkReadFromStorage()
     {
         try {

@@ -15,6 +15,9 @@ use SprykerFeature\Zed\Setup\Communication\SetupDependencyContainer;
 class SetupDependencyContainerTest extends AbstractUnitTest
 {
 
+    /**
+     * @return void
+     */
     public function testCreateSetupInstallCommandNamesMustReturnArray()
     {
         $dependencyContainer = $this->getDependencyContainer();

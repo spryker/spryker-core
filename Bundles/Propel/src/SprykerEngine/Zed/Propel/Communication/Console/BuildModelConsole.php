@@ -18,6 +18,9 @@ class BuildModelConsole extends Console
 
     const COMMAND_NAME = 'propel:model:build';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);

@@ -22,6 +22,8 @@ class UpdateStockPlugin extends AbstractPlugin
      * @param string $sku
      * @param string $stockType
      * @param int $incrementBy
+     *
+     * @return void
      */
     public function incrementStockProduct($sku, $stockType, $incrementBy = 1)
     {
@@ -32,6 +34,8 @@ class UpdateStockPlugin extends AbstractPlugin
      * @param string $sku
      * @param string $stockType
      * @param int $decrementBy
+     *
+     * @return void
      */
     public function decrementStockProduct($sku, $stockType, $decrementBy = 1)
     {

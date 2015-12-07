@@ -36,6 +36,9 @@ class CustomerFacadeTest extends Test
     /** @var CustomerFacade */
     protected $customerFacade;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -111,6 +114,9 @@ class CustomerFacadeTest extends Test
         return $customerTransfer;
     }
 
+    /**
+     * @return void
+     */
     public function testGetCustomer()
     {
         $customerTransfer = $this->createTestCustomerTransfer();
@@ -120,17 +126,26 @@ class CustomerFacadeTest extends Test
         $this->assertNotNull($customerTransfer->getIdCustomer());
     }
 
+    /**
+     * @return void
+     */
     public function testHasEmailReturnsFalseWithoutCustomer()
     {
         $this->assertFalse($this->customerFacade->hasEmail(self::TESTER_EMAIL));
     }
 
+    /**
+     * @return void
+     */
     public function testHasEmailReturnsTrueWithCustomer()
     {
         $this->createTestCustomer();
         $this->assertTrue($this->customerFacade->hasEmail(self::TESTER_EMAIL));
     }
 
+    /**
+     * @return void
+     */
     public function testRegisterCustomer()
     {
         $customerTransfer = $this->createTestCustomerTransfer();
@@ -138,6 +153,9 @@ class CustomerFacadeTest extends Test
         $this->assertNotNull($customerResponseTransfer->getCustomerTransfer()->getRegistrationKey());
     }
 
+    /**
+     * @return void
+     */
     public function testRegisterCustomerWithAlreadyExistingEmail()
     {
         $customerTransfer = $this->createTestCustomerTransfer();
@@ -149,6 +167,9 @@ class CustomerFacadeTest extends Test
         $this->assertFalse($customerResponseTransfer->getIsSuccess());
     }
 
+    /**
+     * @return void
+     */
     public function testConfirmRegistration()
     {
         $customerTransfer = $this->createTestCustomerTransfer();
@@ -157,6 +178,9 @@ class CustomerFacadeTest extends Test
         $this->assertNotNull($customerTransfer->getRegistered());
     }
 
+    /**
+     * @return void
+     */
     public function testForgotPassword()
     {
         $customerTransfer = $this->createTestCustomerTransfer();
@@ -166,6 +190,9 @@ class CustomerFacadeTest extends Test
         $this->assertTrue($customerResponseTransfer->getIsSuccess());
     }
 
+    /**
+     * @return void
+     */
     public function testRestorePassword()
     {
         $customerTransfer = $this->createTestCustomerTransfer();
@@ -177,6 +204,9 @@ class CustomerFacadeTest extends Test
         $this->assertTrue($customerResponseTransfer->getIsSuccess());
     }
 
+    /**
+     * @return void
+     */
     public function testUpdateCustomer()
     {
         $customerTransfer = $this->createTestCustomer();
@@ -188,6 +218,9 @@ class CustomerFacadeTest extends Test
         $this->assertEquals(self::TESTER_NAME, $customerTransfer->getLastName());
     }
 
+    /**
+     * @return void
+     */
     public function testDeleteCustomer()
     {
         $customerTransfer = $this->createTestCustomer();
@@ -195,6 +228,9 @@ class CustomerFacadeTest extends Test
         $this->assertTrue($isSuccess);
     }
 
+    /**
+     * @return void
+     */
     public function testNewAddress()
     {
         $customerTransfer = $this->createTestCustomer();
@@ -206,6 +242,9 @@ class CustomerFacadeTest extends Test
         $this->assertNotNull($addressTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testUpdateAddress()
     {
         $customerTransfer = $this->createTestCustomer();
@@ -228,6 +267,9 @@ class CustomerFacadeTest extends Test
         $this->assertEquals(self::TESTER_CITY, $addressTransfer->getCity());
     }
 
+    /**
+     * @return void
+     */
     public function testSetDefaultShippingAddress()
     {
         $customerTransfer = $this->createTestCustomer();
@@ -247,6 +289,9 @@ class CustomerFacadeTest extends Test
         $this->assertTrue($isSuccess);
     }
 
+    /**
+     * @return void
+     */
     public function testSetDefaultBillingAddress()
     {
         $customerTransfer = $this->createTestCustomer();
@@ -266,6 +311,9 @@ class CustomerFacadeTest extends Test
         $this->assertTrue($isSuccess);
     }
 
+    /**
+     * @return void
+     */
     public function testGetDefaultShippingAddress()
     {
         $customerTransfer = $this->createTestCustomer();
@@ -274,6 +322,9 @@ class CustomerFacadeTest extends Test
         $this->assertNotNull($addressTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testGetDefaultBillingAddress()
     {
         $customerTransfer = $this->createTestCustomer();
@@ -282,6 +333,9 @@ class CustomerFacadeTest extends Test
         $this->assertNotNull($addressTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testRenderAddress()
     {
         $customerTransfer = $this->createTestCustomer();
@@ -291,6 +345,9 @@ class CustomerFacadeTest extends Test
         $this->assertNotNull($renderedAddress);
     }
 
+    /**
+     * @return void
+     */
     public function testDeleteAddress()
     {
         $customerTransfer = $this->createTestCustomer();

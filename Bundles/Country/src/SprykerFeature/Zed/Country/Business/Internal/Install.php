@@ -92,6 +92,7 @@ class Install extends AbstractInstaller
     }
 
     /**
+     * @return void
      */
     public function install()
     {
@@ -100,6 +101,9 @@ class Install extends AbstractInstaller
         $this->installRegions();
     }
 
+    /**
+     * @return void
+     */
     protected function init()
     {
         $this->cldrData = $this->cldrDataProvider->getCldrData();
@@ -108,6 +112,9 @@ class Install extends AbstractInstaller
         $this->postalCodes = $this->postalCodeDataProvider->getCldrData();
     }
 
+    /**
+     * @return void
+     */
     protected function installCldrData()
     {
         foreach ($this->getCountryList() as $iso2 => $countryData) {
@@ -198,6 +205,9 @@ class Install extends AbstractInstaller
         return $countries;
     }
 
+    /**
+     * @return void
+     */
     protected function installRegions()
     {
         foreach ($this->getCountriesToInstallRegionsFor() as $regionInstaller) {

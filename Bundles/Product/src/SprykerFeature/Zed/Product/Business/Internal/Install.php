@@ -45,6 +45,7 @@ class Install extends AbstractInstaller
     }
 
     /**
+     * @return void
      */
     public function install()
     {
@@ -53,6 +54,8 @@ class Install extends AbstractInstaller
 
     /**
      * @throws PropelException
+     *
+     * @return void
      */
     protected function createBaseTypes()
     {

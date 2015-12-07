@@ -25,6 +25,9 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
 
     const COMMAND_NAME = 'setup:generate-yves-ide-auto-completion';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
@@ -44,6 +47,9 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
         $this->generateYvesFactoryInterface();
     }
 
+    /**
+     * @return void
+     */
     protected function generateYvesInterface()
     {
         $options = $this->getYvesDefaultOptions();
@@ -81,6 +87,9 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
         return $options;
     }
 
+    /**
+     * @return void
+     */
     protected function generateYvesBundleInterface()
     {
         $options = $this->getYvesDefaultOptions();
@@ -96,6 +105,9 @@ class GenerateYvesIdeAutoCompletionConsole extends Console
         $this->info('Generated Yves IdeBundleAutoCompletion file');
     }
 
+    /**
+     * @return void
+     */
     protected function generateYvesFactoryInterface()
     {
         $methodTagGenerator = new ConstructableMethodTagBuilder([

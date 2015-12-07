@@ -15,6 +15,9 @@ use Unit\SprykerEngine\Client\Kernel\Service\Fixtures\KernelClient;
 class AbstractClientTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testAbstractStubMustBeConstructable()
     {
         $abstractStub = new KernelClient(new KernelFactory('Kernel'), Locator::getInstance());

@@ -30,6 +30,9 @@ abstract class AbstractEventJournal implements EventJournalInterface
         $this->addConfiguredWriters();
     }
 
+    /**
+     * @return void
+     */
     protected function addConfiguredCollectors()
     {
         $collectors = Config::get(LumberjackConfig::COLLECTORS);
@@ -40,6 +43,9 @@ abstract class AbstractEventJournal implements EventJournalInterface
         }
     }
 
+    /**
+     * @return void
+     */
     protected function addConfiguredWriters()
     {
         $writers = Config::get(LumberjackConfig::WRITERS);
@@ -52,6 +58,8 @@ abstract class AbstractEventJournal implements EventJournalInterface
 
     /**
      * @param DataCollectorInterface $dataCollector
+     *
+     * @return void
      */
     public function addOrReplaceDataCollector(DataCollectorInterface $dataCollector)
     {
@@ -60,6 +68,8 @@ abstract class AbstractEventJournal implements EventJournalInterface
 
     /**
      * @param EventInterface $event
+     *
+     * @return void
      */
     public function applyCollectors(EventInterface $event)
     {
@@ -70,6 +80,8 @@ abstract class AbstractEventJournal implements EventJournalInterface
 
     /**
      * @param EventInterface $event
+     *
+     * @return void
      */
     public function saveEvent(EventInterface $event)
     {
@@ -79,6 +91,8 @@ abstract class AbstractEventJournal implements EventJournalInterface
 
     /**
      * @param WriterInterface $writer
+     *
+     * @return void
      */
     public function addOrReplaceEventWriter(WriterInterface $writer)
     {
@@ -87,6 +101,8 @@ abstract class AbstractEventJournal implements EventJournalInterface
 
     /**
      * @param EventInterface $event
+     *
+     * @return void
      */
     protected function writeEvent(EventInterface $event)
     {

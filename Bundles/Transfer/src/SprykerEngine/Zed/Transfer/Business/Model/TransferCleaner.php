@@ -24,6 +24,9 @@ class TransferCleaner
         $this->directory = $directory;
     }
 
+    /**
+     * @return void
+     */
     public function cleanDirectory()
     {
         $fileSystem = new Filesystem();

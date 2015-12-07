@@ -31,6 +31,8 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function register(Application $app)
     {
@@ -92,6 +94,8 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
      * Handles string responses.
      *
      * @param GetResponseForControllerResultEvent $event The event to handle
+     *
+     * @return void
      */
     public function onKernelView(GetResponseForControllerResultEvent $event)
     {
@@ -107,6 +111,8 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function boot(Application $app)
     {
@@ -139,6 +145,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
     }
 
     /**
+     * @return void
      */
     protected function provideFormTypeExtension()
     {
@@ -150,6 +157,7 @@ class TwigServiceProvider extends AbstractPlugin implements ServiceProviderInter
     }
 
     /**
+     * @return void
      */
     protected function provideFormTypeTemplates()
     {

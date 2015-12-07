@@ -59,6 +59,8 @@ class QueueConnection implements QueueConnectionInterface
 
     /**
      * @param int $fetchSize
+     *
+     * @return void
      */
     public function setFetchSize($fetchSize)
     {
@@ -68,6 +70,8 @@ class QueueConnection implements QueueConnectionInterface
 
     /**
      * @param int $timeout Timeout in seconds
+     *
+     * @return void
      */
     public function setTimeout($timeout)
     {
@@ -78,6 +82,8 @@ class QueueConnection implements QueueConnectionInterface
      * @param string $queueName
      * @param callable $callback
      * @param string $workerName
+     *
+     * @return void
      */
     public function listen(
         $queueName,
@@ -119,6 +125,8 @@ class QueueConnection implements QueueConnectionInterface
     /**
      * @param string $queueName
      * @param QueueMessageTransfer $queueMessage
+     *
+     * @return void
      */
     public function publish($queueName, QueueMessageTransfer $queueMessage)
     {
@@ -129,11 +137,17 @@ class QueueConnection implements QueueConnectionInterface
         $this->channel->basic_publish($amqpMessage, '', $queueName);
     }
 
+    /**
+     * @return void
+     */
     public function stopListen()
     {
         $this->interrupted = true;
     }
 
+    /**
+     * @return void
+     */
     public function purge()
     {
         $this->channel->queue_purge();
@@ -141,6 +155,8 @@ class QueueConnection implements QueueConnectionInterface
 
     /**
      * @param AMQPMessage $message
+     *
+     * @return void
      */
     public function acknowledge(AMQPMessage $message)
     {
@@ -169,6 +185,8 @@ class QueueConnection implements QueueConnectionInterface
 
     /**
      * @param string $queueName
+     *
+     * @return void
      */
     protected function declareQueue($queueName)
     {

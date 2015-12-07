@@ -22,6 +22,9 @@ class TaskWorkerTest extends Test
      */
     protected $taskWorker;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -35,6 +38,9 @@ class TaskWorkerTest extends Test
         );
     }
 
+    /**
+     * @return void
+     */
     public function testTaskWorker()
     {
         $this->taskWorker->work();

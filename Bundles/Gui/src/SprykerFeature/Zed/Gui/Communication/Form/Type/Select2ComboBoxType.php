@@ -18,6 +18,8 @@ class Select2ComboBoxType extends AbstractType
      * @param FormView $view
      * @param FormInterface $form
      * @param array $options
+     *
+     * @return void
      */
     public function buildView(FormView $view, FormInterface $form, array $options)
     {
@@ -26,6 +28,8 @@ class Select2ComboBoxType extends AbstractType
 
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {

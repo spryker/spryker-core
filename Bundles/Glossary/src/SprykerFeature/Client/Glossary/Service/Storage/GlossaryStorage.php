@@ -64,6 +64,8 @@ class GlossaryStorage implements GlossaryStorageInterface
 
     /**
      * @param string $keyName
+     *
+     * @return void
      */
     private function loadTranslation($keyName)
     {

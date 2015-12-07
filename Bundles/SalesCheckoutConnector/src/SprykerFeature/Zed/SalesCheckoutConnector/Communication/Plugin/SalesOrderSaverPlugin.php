@@ -21,6 +21,8 @@ class SalesOrderSaverPlugin extends AbstractPlugin implements CheckoutSaveOrderI
     /**
      * @param OrderTransfer $orderTransfer
      * @param CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
      */
     public function saveOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {

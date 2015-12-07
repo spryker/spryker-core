@@ -18,21 +18,33 @@ use SprykerEngine\Zed\Kernel\Locator;
 class TransferLocatorMatcherTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testMatchShouldReturnTrueIfMethodStartsWithTransfer()
     {
         $this->assertTrue((new TransferLocatorMatcher())->match('transferFoo'));
     }
 
+    /**
+     * @return void
+     */
     public function testMatchShouldReturnFalseIfMethodNotStartsWithTransfer()
     {
         $this->assertFalse((new TransferLocatorMatcher())->match('locatorFoo'));
     }
 
+    /**
+     * @return void
+     */
     public function testMatchShouldReturnFalseIfMethodNotStartsWithTransferButTransferInString()
     {
         $this->assertFalse((new TransferLocatorMatcher())->match('locatorTransfer'));
     }
 
+    /**
+     * @return void
+     */
     public function testFilterShouldReturnClassName()
     {
         $this->assertSame('Foo', (new TransferLocatorMatcher())->filter('transferFoo'));

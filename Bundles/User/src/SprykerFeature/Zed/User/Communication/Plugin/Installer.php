@@ -18,6 +18,8 @@ class Installer extends AbstractPlugin implements InstallerInterface
 
     /**
      * Main Installer Method
+     *
+     * @return void
      */
     public function install()
     {

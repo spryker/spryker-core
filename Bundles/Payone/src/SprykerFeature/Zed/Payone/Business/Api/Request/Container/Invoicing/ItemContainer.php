@@ -88,6 +88,8 @@ class ItemContainer extends AbstractContainer
 
     /**
      * @param string $de
+     *
+     * @return void
      */
     public function setDe($de)
     {
@@ -104,6 +106,8 @@ class ItemContainer extends AbstractContainer
 
     /**
      * @param string $ed
+     *
+     * @return void
      */
     public function setEd($ed)
     {
@@ -120,6 +124,8 @@ class ItemContainer extends AbstractContainer
 
     /**
      * @param string $id
+     *
+     * @return void
      */
     public function setId($id)
     {
@@ -136,6 +142,8 @@ class ItemContainer extends AbstractContainer
 
     /**
      * @param int $no
+     *
+     * @return void
      */
     public function setNo($no)
     {
@@ -152,6 +160,8 @@ class ItemContainer extends AbstractContainer
 
     /**
      * @param int $pr
+     *
+     * @return void
      */
     public function setPr($pr)
     {
@@ -168,6 +178,8 @@ class ItemContainer extends AbstractContainer
 
     /**
      * @param string $sd
+     *
+     * @return void
      */
     public function setSd($sd)
     {
@@ -184,6 +196,8 @@ class ItemContainer extends AbstractContainer
 
     /**
      * @param int $va
+     *
+     * @return void
      */
     public function setVa($va)
     {
@@ -200,6 +214,8 @@ class ItemContainer extends AbstractContainer
 
     /**
      * @param string $it
+     *
+     * @return void
      */
     public function setIt($it)
     {

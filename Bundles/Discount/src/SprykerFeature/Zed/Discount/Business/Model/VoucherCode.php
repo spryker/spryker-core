@@ -80,6 +80,8 @@ class VoucherCode implements VoucherCodeInterface
 
     /**
      * @param SpyDiscountVoucher $discountVoucherEntity
+     *
+     * @return void
      */
     protected function incrementNumberOfUses(SpyDiscountVoucher $discountVoucherEntity)
     {
@@ -89,6 +91,8 @@ class VoucherCode implements VoucherCodeInterface
 
     /**
      * @param SpyDiscountVoucher $discountVoucherEntity
+     *
+     * @return void
      */
     protected function decrementNumberOfUses(SpyDiscountVoucher $discountVoucherEntity)
     {
@@ -114,6 +118,8 @@ class VoucherCode implements VoucherCodeInterface
 
     /**
      * @param SpyDiscountVoucher $discountVoucherEntity
+     *
+     * @return void
      */
     protected function saveDiscountVoucherEntity(SpyDiscountVoucher $discountVoucherEntity)
     {

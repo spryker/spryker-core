@@ -17,6 +17,9 @@ abstract class AbstractAutoCompletion extends \PHPUnit_Framework_TestCase
         $this->baseDir = __DIR__ . '/Fixtures/';
     }
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         $testDirectory = $this->baseDir . 'test';
@@ -25,11 +28,17 @@ abstract class AbstractAutoCompletion extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @return void
+     */
     public function tearDown()
     {
         $this->cleanUpTestDir();
     }
 
+    /**
+     * @return void
+     */
     protected function cleanUpTestDir()
     {
         if ($this->baseDir . 'test/') {

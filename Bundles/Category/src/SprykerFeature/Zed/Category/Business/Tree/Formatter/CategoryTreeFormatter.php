@@ -78,6 +78,8 @@ class CategoryTreeFormatter
 
     /**
      * @param array $category
+     *
+     * @return void
      */
     protected function findCategoryChildren(array $category)
     {

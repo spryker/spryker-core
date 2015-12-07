@@ -153,6 +153,8 @@ class Reader implements ReaderInterface
      * @param int $idProduct
      *
      * @throws StockProductAlreadyExistsException
+     *
+     * @return void
      */
     public function checkStockDoesNotExist($idStockType, $idProduct)
     {

@@ -29,6 +29,8 @@ class ItemWriter implements ItemWriterInterface
      *
      * @throws ItemTypeDoesNotExistException
      * @throws PropelException
+     *
+     * @return void
      */
     public function touchItem($itemType, $idItem)
     {
@@ -63,6 +65,8 @@ class ItemWriter implements ItemWriterInterface
      *
      * @throws PropelException
      * @throws ItemTypeDoesNotExistException
+     *
+     * @return void
      */
     protected function createItem($itemType, $idItem, $foreignKeyColumn)
     {

@@ -19,6 +19,8 @@ class CountryFacade extends AbstractFacade
 
     /**
      * @param LoggerInterface $messenger
+     *
+     * @return void
      */
     public function install(LoggerInterface $messenger)
     {

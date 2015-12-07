@@ -20,6 +20,9 @@ class JenkinsDisableConsole extends Console
     const COMMAND_NAME = 'setup:jenkins:disable';
     const DESCRIPTION = 'Disable jenkins';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);

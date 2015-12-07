@@ -23,6 +23,8 @@ class ExpenseTotalsCalculator implements
      * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
+     *
+     * @return void
      */
     public function recalculateTotals(
         TotalsTransfer $totalsTransfer,
@@ -111,6 +113,8 @@ class ExpenseTotalsCalculator implements
     /**
      * @param ExpenseTransfer $expense
      * @param array $arrayOfExpenseTotalItems
+     *
+     * @return void
      */
     protected function transformExpenseToExpenseTotalItemInArray(ExpenseTransfer $expense, array &$arrayOfExpenseTotalItems)
     {

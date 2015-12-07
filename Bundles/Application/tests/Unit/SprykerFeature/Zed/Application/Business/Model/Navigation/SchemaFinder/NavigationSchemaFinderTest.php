@@ -19,11 +19,17 @@ use Symfony\Component\Filesystem\Filesystem;
 class NavigationSchemaFinderTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         mkdir($this->getFixtureDirectory());
     }
 
+    /**
+     * @return void
+     */
     public function tearDown()
     {
         $fileSystem = new Filesystem();
@@ -38,6 +44,9 @@ class NavigationSchemaFinderTest extends \PHPUnit_Framework_TestCase
         return __DIR__ . DIRECTORY_SEPARATOR . 'Fixtures';
     }
 
+    /**
+     * @return void
+     */
     public function testGetSchemasShouldReturnIterateableFileCollection()
     {
         $schemaFinder = new NavigationSchemaFinder(

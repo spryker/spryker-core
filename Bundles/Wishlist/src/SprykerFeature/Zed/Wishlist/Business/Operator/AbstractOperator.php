@@ -60,6 +60,8 @@ abstract class AbstractOperator
 
     /**
      * @param ItemTransfer[] $items
+     *
+     * @return void
      */
     protected function preSave(\ArrayObject $items)
     {
@@ -72,6 +74,8 @@ abstract class AbstractOperator
 
     /**
      * @param ItemTransfer[] $items
+     *
+     * @return void
      */
     protected function postSave(\ArrayObject $items)
     {
@@ -84,6 +88,8 @@ abstract class AbstractOperator
 
     /**
      * @param PreSavePluginInterface[] $preSavePlugins
+     *
+     * @return void
      */
     public function setPreSavePlugins(array $preSavePlugins)
     {
@@ -92,6 +98,8 @@ abstract class AbstractOperator
 
     /**
      * @param PostSavePluginInterface[] $postSavePlugins
+     *
+     * @return void
      */
     public function setPostSavePlugins(array $postSavePlugins)
     {

@@ -20,6 +20,9 @@ class DiffConsole extends Console
 
     const PROCESS_TIMEOUT = 300;
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);

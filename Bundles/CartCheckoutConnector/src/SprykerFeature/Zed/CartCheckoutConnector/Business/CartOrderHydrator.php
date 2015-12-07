@@ -16,6 +16,8 @@ class CartOrderHydrator implements CartOrderHydratorInterface
     /**
      * @param OrderTransfer $order
      * @param CheckoutRequestTransfer $request
+     *
+     * @return void
      */
     public function hydrateOrderTransfer(OrderTransfer $order, CheckoutRequestTransfer $request)
     {

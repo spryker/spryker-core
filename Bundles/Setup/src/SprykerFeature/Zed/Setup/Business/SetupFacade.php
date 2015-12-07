@@ -41,6 +41,9 @@ class SetupFacade extends AbstractFacade
         return $this->getDependencyContainer()->createModelCronjobs()->disableJenkins();
     }
 
+    /**
+     * @return void
+     */
     public function removeGeneratedDirectory()
     {
         $this->getDependencyContainer()->createModelGeneratedDirectoryRemover()->execute();

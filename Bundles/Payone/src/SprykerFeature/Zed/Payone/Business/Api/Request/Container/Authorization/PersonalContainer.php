@@ -111,6 +111,8 @@ class PersonalContainer extends AbstractContainer
 
     /**
      * @param string $addressaddition
+     *
+     * @return void
      */
     public function setAddressAddition($addressaddition)
     {
@@ -127,6 +129,8 @@ class PersonalContainer extends AbstractContainer
 
     /**
      * @param string $birthday
+     *
+     * @return void
      */
     public function setBirthday($birthday)
     {
@@ -143,6 +147,8 @@ class PersonalContainer extends AbstractContainer
 
     /**
      * @param string $city
+     *
+     * @return void
      */
     public function setCity($city)
     {
@@ -159,6 +165,8 @@ class PersonalContainer extends AbstractContainer
 
     /**
      * @param string $company
+     *
+     * @return void
      */
     public function setCompany($company)
     {
@@ -175,6 +183,8 @@ class PersonalContainer extends AbstractContainer
 
     /**
      * @param string $country
+     *
+     * @return void
      */
     public function setCountry($country)
     {
@@ -191,6 +201,8 @@ class PersonalContainer extends AbstractContainer
 
     /**
      * @param string $customerid
+     *
+     * @return void
      */
     public function setCustomerId($customerid)
     {
@@ -207,6 +219,8 @@ class PersonalContainer extends AbstractContainer
 
     /**
      * @param string $email
+     *
+     * @return void
      */
     public function setEmail($email)
     {
@@ -223,6 +237,8 @@ class PersonalContainer extends AbstractContainer
 
     /**
      * @param string $firstname
+     *
+     * @return void
      */
     public function setFirstName($firstname)
     {
@@ -239,6 +255,8 @@ class PersonalContainer extends AbstractContainer
 
     /**
      * @param string $ip
+     *
+     * @return void
      */
     public function setIp($ip)
     {
@@ -255,6 +273,8 @@ class PersonalContainer extends AbstractContainer
 
     /**
      * @param string $language
+     *
+     * @return void
      */
     public function setLanguage($language)
     {
@@ -271,6 +291,8 @@ class PersonalContainer extends AbstractContainer
 
     /**
      * @param string $lastname
+     *
+     * @return void
      */
     public function setLastName($lastname)
     {
@@ -287,6 +309,8 @@ class PersonalContainer extends AbstractContainer
 
     /**
      * @param string $salutation
+     *
+     * @return void
      */
     public function setSalutation($salutation)
     {
@@ -303,6 +327,8 @@ class PersonalContainer extends AbstractContainer
 
     /**
      * @param string $state
+     *
+     * @return void
      */
     public function setState($state)
     {
@@ -319,6 +345,8 @@ class PersonalContainer extends AbstractContainer
 
     /**
      * @param string $street
+     *
+     * @return void
      */
     public function setStreet($street)
     {
@@ -335,6 +363,8 @@ class PersonalContainer extends AbstractContainer
 
     /**
      * @param string $telephonenumber
+     *
+     * @return void
      */
     public function setTelephoneNumber($telephonenumber)
     {
@@ -351,6 +381,8 @@ class PersonalContainer extends AbstractContainer
 
     /**
      * @param string $title
+     *
+     * @return void
      */
     public function setTitle($title)
     {
@@ -367,6 +399,8 @@ class PersonalContainer extends AbstractContainer
 
     /**
      * @param string $userid
+     *
+     * @return void
      */
     public function setUserId($userid)
     {
@@ -383,6 +417,8 @@ class PersonalContainer extends AbstractContainer
 
     /**
      * @param string $vatid
+     *
+     * @return void
      */
     public function setVatId($vatid)
     {
@@ -399,6 +435,8 @@ class PersonalContainer extends AbstractContainer
 
     /**
      * @param string $gender
+     *
+     * @return void
      */
     public function setGender($gender)
     {
@@ -415,6 +453,8 @@ class PersonalContainer extends AbstractContainer
 
     /**
      * @param string $personalid
+     *
+     * @return void
      */
     public function setPersonalid($personalid)
     {
@@ -431,6 +471,8 @@ class PersonalContainer extends AbstractContainer
 
     /**
      * @param string $zip
+     *
+     * @return void
      */
     public function setZip($zip)
     {

@@ -88,6 +88,9 @@ class TransferServer
         return self::$instance;
     }
 
+    /**
+     * @return void
+     */
     public function activateRepeating()
     {
         $this->repeatIsActive = true;

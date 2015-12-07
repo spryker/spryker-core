@@ -35,6 +35,8 @@ class ProductsAvailablePreConditionPlugin extends AbstractPlugin implements Chec
     /**
      * @param CheckoutRequestTransfer $checkoutRequest
      * @param CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
      */
     public function checkCondition(CheckoutRequestTransfer $checkoutRequest, CheckoutResponseTransfer $checkoutResponse)
     {

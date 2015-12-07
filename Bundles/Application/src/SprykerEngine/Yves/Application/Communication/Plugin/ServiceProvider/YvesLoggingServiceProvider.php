@@ -45,6 +45,8 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
      * It should not get services.
      *
      * @param Application $app An Application instance
+     *
+     * @return void
      */
     public function register(Application $app)
     {
@@ -56,6 +58,8 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
      * This method is called after all services are registered
      * and should be used for "dynamic" configuration (whenever
      * a service must be requested).
+     *
+     * @return void
      */
     public function boot(Application $app)
     {
@@ -65,6 +69,8 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
      * Handles controller requests
      *
      * @param FilterControllerEvent $event The event to handle
+     *
+     * @return void
      */
     public function onKernelController(FilterControllerEvent $event)
     {
@@ -74,6 +80,8 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
 
     /**
      * @param Request $request
+     *
+     * @return void
      */
     protected function logRequest(Request $request)
     {
@@ -91,6 +99,8 @@ class YvesLoggingServiceProvider implements ServiceProviderInterface
 
     /**
      * @param Request $request
+     *
+     * @return void
      */
     protected function setNewRelicTransactionName(Request $request)
     {

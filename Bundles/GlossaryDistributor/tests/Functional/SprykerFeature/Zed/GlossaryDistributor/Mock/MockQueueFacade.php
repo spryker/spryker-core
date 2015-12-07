@@ -16,6 +16,8 @@ class MockQueueFacade implements DistributorToQueueInterface
     /**
      * @param string $queueName
      * @param QueueMessageTransfer $queueMessage
+     *
+     * @return void
      */
     public function publishMessage($queueName, QueueMessageTransfer $queueMessage)
     {

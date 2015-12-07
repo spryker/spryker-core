@@ -18,6 +18,9 @@ use SprykerEngine\Yves\Kernel\Communication\Controller\RouteNameResolver;
 class RouteNameResolverTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testResolveShouldReturnResolvedRouteName()
     {
         $resolver = new RouteNameResolver('foo/bar/baz');

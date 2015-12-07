@@ -17,6 +17,8 @@ class UrlGeneratorServiceProvider implements ServiceProviderInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
     public function register(Application $app)
     {
@@ -29,6 +31,8 @@ class UrlGeneratorServiceProvider implements ServiceProviderInterface
 
     /**
      * @codeCoverageIgnore
+     *
+     * @return void
      */
     public function boot(Application $app)
     {

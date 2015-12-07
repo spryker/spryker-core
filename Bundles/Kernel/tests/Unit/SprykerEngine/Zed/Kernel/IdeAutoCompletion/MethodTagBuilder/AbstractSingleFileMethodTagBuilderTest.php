@@ -15,6 +15,9 @@ use Unit\SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\Fixtures\Si
 class AbstractSingleFileMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testBuildMethodTagsShouldReturnMethodTagWithVendorFileIfProjectDoesNotOverrideIt()
     {
         $methodTagBuilder = new SingleFileMethodTagBuilder([
@@ -31,6 +34,9 @@ class AbstractSingleFileMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($expectedMethodTag, $methodTags);
     }
 
+    /**
+     * @return void
+     */
     public function testBuildMethodTagsShouldReturnMethodTagWithProjectFileIfProjectOverrideIt()
     {
         $methodTagBuilder = new SingleFileMethodTagBuilder([
@@ -47,6 +53,9 @@ class AbstractSingleFileMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($expectedMethodTag, $methodTags);
     }
 
+    /**
+     * @return void
+     */
     public function testBuildMethodTagsShouldReturnMethodTagWithProjectFileIfFileOnlyInProject()
     {
         $methodTagBuilder = new SingleFileMethodTagBuilder([
@@ -63,6 +72,9 @@ class AbstractSingleFileMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($expectedMethodTag, $methodTags);
     }
 
+    /**
+     * @return void
+     */
     public function testBuildMethodTagsShouldReturnUnchangedArrayIfNoFileCanBeFound()
     {
         $methodTagBuilder = new SingleFileMethodTagBuilder([

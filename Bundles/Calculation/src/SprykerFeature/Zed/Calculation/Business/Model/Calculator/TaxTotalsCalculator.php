@@ -41,6 +41,8 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
      * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param ItemTransfer[]|ItemTransfer[] $calculableItems
+     *
+     * @return void
      */
     public function recalculateTotals(
         TotalsTransfer $totalsTransfer,
@@ -54,6 +56,8 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
     /**
      * @param CalculableInterface $calculableContainer
      * @param ItemTransfer[]|ItemTransfer[] $calculableItems
+     *
+     * @return void
      */
     public function calculateTaxAmountsForTaxableItems(CalculableInterface $calculableContainer, $calculableItems)
     {
@@ -68,6 +72,8 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
 
     /**
      * @param ItemTransfer|ItemTransfer $taxableItem
+     *
+     * @return void
      */
     private function calculateTax($taxableItem)
     {
@@ -95,6 +101,8 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
 
     /**
      * @param \ArrayObject $expenses
+     *
+     * @return void
      */
     public function calculateTaxForOrderExpenses(\ArrayObject $expenses)
     {
@@ -105,6 +113,8 @@ class TaxTotalsCalculator implements TotalsCalculatorPluginInterface
 
     /**
      * @param TotalsTransfer $totalsTransfer
+     *
+     * @return void
      */
     public function calculateTaxTotals(TotalsTransfer $totalsTransfer)
     {

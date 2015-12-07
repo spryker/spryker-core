@@ -13,6 +13,8 @@ class IdeBundleAutoCompletionGenerator extends AbstractIdeAutoCompletionGenerato
 
     /**
      * @param OptionsResolver $resolver
+     *
+     * @return void
      */
     protected function configureOptions(OptionsResolver $resolver)
     {
@@ -25,6 +27,8 @@ class IdeBundleAutoCompletionGenerator extends AbstractIdeAutoCompletionGenerato
 
     /**
      * @param null $output
+     *
+     * @return void
      */
     public function create($output = null)
     {

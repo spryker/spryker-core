@@ -41,6 +41,9 @@ class LocaleFacadeTest extends Test
      */
     protected $localeNames = [];
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -52,6 +55,9 @@ class LocaleFacadeTest extends Test
         $this->localeNames = $this->localeFacade->getAvailableLocales();
     }
 
+    /**
+     * @return void
+     */
     public function testAvailableLocalesToBeArrayType()
     {
         $this->assertInternalType('array', $this->localeNames);
@@ -59,6 +65,8 @@ class LocaleFacadeTest extends Test
 
     /**
      * @group TranslationGrid
+     *
+     * @return void
      */
     public function testAvailableLocalesAreTheSameAsConfiguredOnes()
     {
@@ -70,6 +78,8 @@ class LocaleFacadeTest extends Test
 
     /**
      * @group TranslationGrid
+     *
+     * @return void
      */
     public function testAvailableLocalesHasDifferentIdsThanConfiguredOnes()
     {

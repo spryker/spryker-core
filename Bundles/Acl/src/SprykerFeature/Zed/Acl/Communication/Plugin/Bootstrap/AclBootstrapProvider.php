@@ -22,6 +22,8 @@ class AclBootstrapProvider extends AbstractPlugin implements ServiceProviderInte
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function register(Application $app)
     {

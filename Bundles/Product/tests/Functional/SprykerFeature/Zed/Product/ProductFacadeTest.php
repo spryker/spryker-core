@@ -63,6 +63,9 @@ class ProductFacadeTest extends Test
      */
     protected $locator;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -76,6 +79,8 @@ class ProductFacadeTest extends Test
 
     /**
      * @group Product
+     *
+     * @return void
      */
     public function testCreateAttributeTypeCreatesAndReturnsId()
     {
@@ -90,6 +95,8 @@ class ProductFacadeTest extends Test
 
     /**
      * @group Product
+     *
+     * @return void
      */
     public function testCreateAttributeCreatesAndReturnsId()
     {
@@ -105,6 +112,8 @@ class ProductFacadeTest extends Test
 
     /**
      * @group Product
+     *
+     * @return void
      */
     public function testHasAttributeTypeReturnsRightValue()
     {
@@ -115,6 +124,8 @@ class ProductFacadeTest extends Test
 
     /**
      * @group Product
+     *
+     * @return void
      */
     public function testHasAttributeReturnsRightValue()
     {
@@ -128,6 +139,8 @@ class ProductFacadeTest extends Test
 
     /**
      * @group Product
+     *
+     * @return void
      */
     public function testCreateAbstractProductCreatesAndReturnsId()
     {
@@ -148,6 +161,8 @@ class ProductFacadeTest extends Test
 
     /**
      * @group Product
+     *
+     * @return void
      */
     public function testGetEffectiveTaxRateReturnsInteger()
     {
@@ -177,6 +192,8 @@ class ProductFacadeTest extends Test
 
     /**
      * @group Product
+     *
+     * @return void
      */
     public function testHasAbstractProductReturnsRightValue()
     {
@@ -194,6 +211,8 @@ class ProductFacadeTest extends Test
 
     /**
      * @group Product
+     *
+     * @return void
      */
     public function testCreateConcreteProductCreatesAndReturnsId()
     {
@@ -220,6 +239,8 @@ class ProductFacadeTest extends Test
 
     /**
      * @group Product
+     *
+     * @return void
      */
     public function testHasConcreteProductReturnsRightValue()
     {
@@ -244,6 +265,8 @@ class ProductFacadeTest extends Test
 
     /**
      * @group Product
+     *
+     * @return void
      */
     public function testCreateProductUrlCreatesAndReturnsCorrectUrl()
     {
@@ -268,6 +291,8 @@ class ProductFacadeTest extends Test
 
     /**
      * @group Product
+     *
+     * @return void
      */
     public function testGetAbstractSkuFromConcreteProduct()
     {
@@ -294,6 +319,8 @@ class ProductFacadeTest extends Test
 
     /**
      * @group Product
+     *
+     * @return void
      */
     public function testGetConcreteProduct()
     {

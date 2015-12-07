@@ -147,6 +147,8 @@ class Refund
      * @param int $idRefund
      * @param \ArrayObject $orderItemsArray
      * @param \ArrayObject $expensesArray
+     *
+     * @return void
      */
     protected function updateOrderItemsAndExpensesAfterRefund($idRefund, $orderItemsArray, $expensesArray)
     {

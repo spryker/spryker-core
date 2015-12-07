@@ -107,6 +107,8 @@ class AttributeManager implements AttributeManagerInterface
      * @param string $attributeName
      *
      * @throws AttributeExistsException
+     *
+     * @return void
      */
     protected function checkAttributeDoesNotExist($attributeName)
     {
@@ -148,6 +150,8 @@ class AttributeManager implements AttributeManagerInterface
      * @param string $name
      *
      * @throws AttributeTypeExistsException
+     *
+     * @return void
      */
     private function checkAttributeTypeDoesNotExist($name)
     {

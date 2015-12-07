@@ -436,6 +436,8 @@ class GraphViz
      * @param string $group ID of group to nest cluster into
      *
      * @see    addSubgraph()
+     *
+     * @return void
      */
     public function addCluster($id, $title, $attributes = [], $group = 'default')
     {
@@ -451,6 +453,8 @@ class GraphViz
      * @param array $title Title.
      * @param array $attributes Attributes of the cluster.
      * @param string $group ID of group to nest subgraph into
+     *
+     * @return void
      */
     public function addSubgraph($id, $title, $attributes = [], $group = 'default')
     {
@@ -465,6 +469,8 @@ class GraphViz
      * @param string $name Name of the node.
      * @param array $attributes Attributes of the node.
      * @param string $group Group of the node.
+     *
+     * @return void
      */
     public function addNode($name, $attributes = [], $group = 'default')
     {
@@ -483,6 +489,8 @@ class GraphViz
      *
      * @param string $name Name of the node to be removed.
      * @param string $group Group of the node.
+     *
+     * @return void
      */
     public function removeNode($name, $group = 'default')
     {
@@ -558,6 +566,8 @@ class GraphViz
      * @param array $edge Start and End node of the edge to be removed.
      * @param int $id specific edge ID (only usefull when multiple edges
      *   exist between the same 2 nodes)
+     *
+     * @return void
      */
     public function removeEdge($edge, $id = null)
     {
@@ -585,6 +595,8 @@ class GraphViz
      * Adds attributes to the graph.
      *
      * @param array $attributes Attributes to be added to the graph.
+     *
+     * @return void
      */
     public function addAttributes($attributes)
     {
@@ -597,6 +609,8 @@ class GraphViz
      * Sets attributes of the graph.
      *
      * @param array $attributes Attributes to be set for the graph.
+     *
+     * @return void
      */
     public function setAttributes($attributes)
     {
@@ -681,6 +695,8 @@ class GraphViz
      *       to TRUE or FALSE (i.e. NULL, empty string, 0 will not work)
      *
      * @param bool $directed Directed (TRUE) or undirected (FALSE) graph.
+     *
+     * @return void
      */
     public function setDirected($directed)
     {

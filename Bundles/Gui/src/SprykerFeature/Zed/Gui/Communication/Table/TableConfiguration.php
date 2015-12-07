@@ -64,6 +64,8 @@ class TableConfiguration
      *
      * @param array $header Provide php names for table columns
      *   if you are goin to user Propel Query as data population
+     *
+     * @return void
      */
     public function setHeader(array $header)
     {
@@ -82,6 +84,8 @@ class TableConfiguration
 
     /**
      * @param array $footer
+     *
+     * @return void
      */
     public function setFooter(array $footer)
     {
@@ -113,6 +117,8 @@ class TableConfiguration
 
     /**
      * @param array $sortable
+     *
+     * @return void
      */
     public function setSortable(array $sortable)
     {
@@ -129,6 +135,8 @@ class TableConfiguration
 
     /**
      * @param array $searchable
+     *
+     * @return void
      */
     public function setSearchable(array $searchable)
     {
@@ -145,6 +153,8 @@ class TableConfiguration
 
     /**
      * @param $length
+     *
+     * @return void
      */
     public function setPageLength($length)
     {
@@ -161,6 +171,8 @@ class TableConfiguration
 
     /**
      * @param string $url
+     *
+     * @return void
      */
     public function setUrl($url)
     {
@@ -169,6 +181,8 @@ class TableConfiguration
 
     /**
      * @param int $columnIndex
+     *
+     * @return void
      */
     public function setDefaultSortColumnIndex($columnIndex)
     {
@@ -185,6 +199,8 @@ class TableConfiguration
 
     /**
      * @param string $direction
+     *
+     * @return void
      */
     public function setDefaultSortDirection($direction)
     {

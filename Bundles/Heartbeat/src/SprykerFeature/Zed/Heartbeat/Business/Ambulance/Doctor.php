@@ -45,6 +45,8 @@ class Doctor
 
     /**
      * @param HealthIndicatorInterface $healthIndicator
+     *
+     * @return void
      */
     private function check(HealthIndicatorInterface $healthIndicator)
     {

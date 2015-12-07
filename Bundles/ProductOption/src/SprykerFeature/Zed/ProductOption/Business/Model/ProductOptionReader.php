@@ -150,6 +150,8 @@ class ProductOptionReader implements ProductOptionReaderInterface
     /**
      * @param ProductOptionTransfer $productOptionTransfer
      * @param SpyTaxSet $taxSetEntity
+     *
+     * @return void
      */
     private function addTaxesToProductOptionTransfer(ProductOptionTransfer $productOptionTransfer, SpyTaxSet $taxSetEntity)
     {

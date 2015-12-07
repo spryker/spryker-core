@@ -20,6 +20,9 @@ use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 class InvoiceTest extends Test
 {
 
+    /**
+     * @return void
+     */
     public function testMapToPreCheck()
     {
         $checkoutRequestTransfer = $this->getCheckoutRequestTransfer();
@@ -76,6 +79,9 @@ class InvoiceTest extends Test
         return $checkoutRequestTransfer;
     }
 
+    /**
+     * @return void
+     */
     public function testMapToPreAuthorization()
     {
         $methodMapper = new Invoice($this->getBundleConfigMock());
@@ -87,6 +93,9 @@ class InvoiceTest extends Test
         $this->assertSame(ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION, $requestData['PAYMENT.CODE']);
     }
 
+    /**
+     * @return void
+     */
     public function testMapToReAuthorization()
     {
         $uniqueId = uniqid('test_');
@@ -99,6 +108,9 @@ class InvoiceTest extends Test
         $this->assertSame($uniqueId, $requestData['IDENTIFICATION.REFERENCEID']);
     }
 
+    /**
+     * @return void
+     */
     public function testMapToReversal()
     {
         $uniqueId = uniqid('test_');
@@ -111,6 +123,9 @@ class InvoiceTest extends Test
         $this->assertSame($uniqueId, $requestData['IDENTIFICATION.REFERENCEID']);
     }
 
+    /**
+     * @return void
+     */
     public function testMapToCapture()
     {
         $uniqueId = uniqid('test_');
@@ -123,6 +138,9 @@ class InvoiceTest extends Test
         $this->assertSame($uniqueId, $requestData['IDENTIFICATION.REFERENCEID']);
     }
 
+    /**
+     * @return void
+     */
     public function testMapToRefund()
     {
         $uniqueId = uniqid('test_');

@@ -227,6 +227,8 @@ class EditController extends AbstractController
 
     /**
      * @param int $idUser
+     *
+     * @return void
      */
     protected function deleteAclGroups($idUser)
     {

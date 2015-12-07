@@ -63,6 +63,8 @@ class Console extends SymfonyCommand
 
     /**
      * @param Container $container
+     *
+     * @return void
      */
     public function setExternalDependencies(Container $container)
     {
@@ -74,6 +76,8 @@ class Console extends SymfonyCommand
 
     /**
      * @param AbstractCommunicationDependencyContainer $dependencyContainer
+     *
+     * @return void
      */
     public function setDependencyContainer(AbstractCommunicationDependencyContainer $dependencyContainer)
     {
@@ -90,6 +94,8 @@ class Console extends SymfonyCommand
 
     /**
      * @param AbstractFacade $facade
+     *
+     * @return void
      */
     public function setFacade(AbstractFacade $facade)
     {
@@ -127,6 +133,8 @@ class Console extends SymfonyCommand
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
+     * @return void
      */
     protected function initialize(InputInterface $input, OutputInterface $output)
     {
@@ -140,6 +148,8 @@ class Console extends SymfonyCommand
     /**
      * @param string $command
      * @param array $arguments
+     *
+     * @return void
      */
     protected function runDependingCommand($command, array $arguments = [])
     {

@@ -19,11 +19,17 @@ class PageElementGrid extends AbstractTable
     const ATTRIBUTE_TYPE = 'attribute_type';
     const ATTRIBUTE_NAME = 'attribute_name';
 
+    /**
+     * @return void
+     */
     protected function configure(TableConfiguration $config)
     {
         // @todo: Implement configure() method.
     }
 
+    /**
+     * @return void
+     */
     protected function prepareData(TableConfiguration $config)
     {
         // @todo: Implement prepareData() method.

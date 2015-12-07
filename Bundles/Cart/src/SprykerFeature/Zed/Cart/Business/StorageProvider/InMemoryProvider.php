@@ -99,6 +99,8 @@ class InMemoryProvider implements StorageProviderInterface
      * @param ItemTransfer[] $existingItems
      * @param int $index
      * @param ItemTransfer $item
+     *
+     * @return void
      */
     private function decreaseExistingItem($existingItems, $index, $item)
     {
@@ -115,6 +117,8 @@ class InMemoryProvider implements StorageProviderInterface
     /**
      * @param \ArrayObject $existingItems
      * @param ItemTransfer $changedItem
+     *
+     * @return void
      */
     protected function decreaseBySku(\ArrayObject $existingItems, ItemTransfer $changedItem)
     {

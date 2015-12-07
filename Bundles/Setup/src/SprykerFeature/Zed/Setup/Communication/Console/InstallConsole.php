@@ -20,6 +20,9 @@ class InstallConsole extends Console
     const COMMAND_NAME = 'setup:install';
     const DESCRIPTION = 'Setup the application';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);

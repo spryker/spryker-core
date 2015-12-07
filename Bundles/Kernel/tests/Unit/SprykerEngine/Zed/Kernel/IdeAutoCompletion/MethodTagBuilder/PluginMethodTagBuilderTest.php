@@ -16,6 +16,9 @@ use SprykerFeature\Shared\Library\Autoloader;
 class PluginMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testBuildMethodTagsShouldReturnVendorMethodTagIfProjectDoesNotOverrideIt()
     {
         $options = [
@@ -33,6 +36,9 @@ class PluginMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($expectedMethodTag, $methodTags);
     }
 
+    /**
+     * @return void
+     */
     public function testBuildMethodTagsShouldReturnProjectMethodTagIfProjectOverrideIt()
     {
         $options = [
@@ -48,6 +54,9 @@ class PluginMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($expectedMethodTag, $methodTags);
     }
 
+    /**
+     * @return void
+     */
     public function testBuildMethodTagsShouldNotReturnMethodTagForNotInstantiableClass()
     {
         Autoloader::allowNamespace('ProjectNamespace');

@@ -38,6 +38,8 @@ abstract class AbstractPropelCollectorPlugin
      * @param BatchResultInterface $result
      * @param WriterInterface $dataWriter
      * @param TouchUpdaterInterface $touchUpdater
+     *
+     * @return void
      */
     public function run(SpyTouchQuery $baseQuery,
         LocaleTransfer $locale,
@@ -57,6 +59,8 @@ abstract class AbstractPropelCollectorPlugin
 
     /**
      * @param TouchQueryContainerInterface $touchQueryContainer
+     *
+     * @return void
      */
     public function setTouchQueryContainer(TouchQueryContainerInterface $touchQueryContainer)
     {
@@ -86,6 +90,8 @@ abstract class AbstractPropelCollectorPlugin
      * @param WriterInterface $dataWriter
      * @param TouchUpdaterInterface $touchUpdater
      * @param LocaleTransfer $locale
+     *
+     * @return void
      */
     public function delete($itemType, WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater, LocaleTransfer $locale)
     {
@@ -108,6 +114,8 @@ abstract class AbstractPropelCollectorPlugin
      * @param BatchResultInterface $result
      * @param WriterInterface $dataWriter
      * @param TouchUpdaterInterface $touchUpdater
+     *
+     * @return void
      */
     public function postRun(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result, WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater)
     {
@@ -153,6 +161,8 @@ abstract class AbstractPropelCollectorPlugin
 
     /**
      * @param int $chunkSize
+     *
+     * @return void
      */
     public function setChunkSize($chunkSize)
     {
@@ -165,6 +175,8 @@ abstract class AbstractPropelCollectorPlugin
      * @param WriterInterface $dataWriter
      * @param TouchUpdaterInterface $touchUpdater
      * @param string $itemType
+     *
+     * @return void
      */
     protected function runDeletion(LocaleTransfer $locale, BatchResultInterface $batchResult, WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater, $itemType)
     {
@@ -180,6 +192,8 @@ abstract class AbstractPropelCollectorPlugin
      * @param BatchResultInterface $batchResult
      * @param WriterInterface $dataWriter
      * @param TouchUpdaterInterface $touchUpdater
+     *
+     * @return void
      */
     protected function runInsertion(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $batchResult, WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater)
     {

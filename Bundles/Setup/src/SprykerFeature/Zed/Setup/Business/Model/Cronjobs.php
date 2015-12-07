@@ -88,6 +88,8 @@ class Cronjobs
      * @param array $roles
      *
      * @throws \ErrorException
+     *
+     * @return void
      */
     protected function checkRoles(array $roles)
     {

@@ -136,6 +136,8 @@ class CountryManager implements CountryManagerInterface
      * @param string $iso2code
      *
      * @throws CountryExistsException
+     *
+     * @return void
      */
     protected function checkCountryDoesNotExist($iso2code)
     {

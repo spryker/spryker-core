@@ -39,6 +39,9 @@ class TranslationGridTest extends Test
      */
     private $locales = [];
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -50,6 +53,9 @@ class TranslationGridTest extends Test
         $this->request = Request::createFromGlobals();
     }
 
+    /**
+     * @return void
+     */
     private function generateTestLocales()
     {
         $locale = $this->getLocaleFacade()->createLocale('xx_XX');

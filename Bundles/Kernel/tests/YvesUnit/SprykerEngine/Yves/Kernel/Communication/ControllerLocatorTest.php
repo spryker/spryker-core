@@ -21,6 +21,9 @@ use SprykerEngine\Yves\Kernel\Locator;
 class ControllerLocatorTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testCanLocateShouldReturnFalseWhenControllerCanNotBeLocated()
     {
         $bundleControllerAction = new BundleControllerAction('Kernel', 'Foo', 'index');
@@ -29,6 +32,9 @@ class ControllerLocatorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($locator->canLocate());
     }
 
+    /**
+     * @return void
+     */
     public function testLocateShouldThrowExceptionWhenControllerCanNotBeLocated()
     {
         $this->setExpectedException('\Exception');

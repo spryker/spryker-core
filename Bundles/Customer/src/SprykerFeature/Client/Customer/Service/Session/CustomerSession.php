@@ -27,6 +27,9 @@ class CustomerSession implements CustomerSessionInterface
         $this->sessionClient = $sessionClient;
     }
 
+    /**
+     * @return void
+     */
     public function logout()
     {
         $this->sessionClient->remove(self::SESSION_KEY);

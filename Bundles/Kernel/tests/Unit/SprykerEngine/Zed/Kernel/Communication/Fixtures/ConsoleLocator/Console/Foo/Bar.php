@@ -13,6 +13,9 @@ class Bar extends Console
 
     const COMMAND_NAME = 'Bar';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);

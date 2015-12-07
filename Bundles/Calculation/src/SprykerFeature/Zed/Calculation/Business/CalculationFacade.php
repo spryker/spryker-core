@@ -64,6 +64,8 @@ class CalculationFacade extends AbstractFacade
     /**
      * @param CalculableInterface $calculableContainer
      * @param CalculableInterface $calculableContainer
+     *
+     * @return void
      */
     public function recalculateExpensePriceToPay(CalculableInterface $calculableContainer)
     {
@@ -75,6 +77,8 @@ class CalculationFacade extends AbstractFacade
      * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
+     *
+     * @return void
      */
     public function recalculateExpenseTotals(
         TotalsTransfer $totalsTransfer,
@@ -89,6 +93,8 @@ class CalculationFacade extends AbstractFacade
      * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
+     *
+     * @return void
      */
     public function recalculateGrandTotalTotals(
         TotalsTransfer $totalsTransfer,
@@ -101,6 +107,8 @@ class CalculationFacade extends AbstractFacade
 
     /**
      * @param CalculableInterface $calculableContainer
+     *
+     * @return void
      */
     public function recalculateItemPriceToPay(CalculableInterface $calculableContainer)
     {
@@ -110,6 +118,8 @@ class CalculationFacade extends AbstractFacade
 
     /**
      * @param CalculableInterface $calculableContainer
+     *
+     * @return void
      */
     public function recalculateOptionPriceToPay(CalculableInterface $calculableContainer)
     {
@@ -119,6 +129,8 @@ class CalculationFacade extends AbstractFacade
 
     /**
      * @param CalculableInterface $calculableContainer
+     *
+     * @return void
      */
     public function recalculateRemoveAllExpenses(CalculableInterface $calculableContainer)
     {
@@ -128,6 +140,8 @@ class CalculationFacade extends AbstractFacade
 
     /**
      * @param CalculableInterface $calculableContainer
+     *
+     * @return void
      */
     public function recalculateRemoveTotals(CalculableInterface $calculableContainer)
     {
@@ -137,6 +151,8 @@ class CalculationFacade extends AbstractFacade
 
     /**
      * @param CalculableInterface $calculableContainer
+     *
+     * @return void
      */
     public function calculateItemTotalPrice(CalculableInterface $calculableContainer)
     {
@@ -148,6 +164,8 @@ class CalculationFacade extends AbstractFacade
      * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
+     *
+     * @return void
      */
     public function recalculateSubtotalTotals(
         TotalsTransfer $totalsTransfer,
@@ -162,6 +180,8 @@ class CalculationFacade extends AbstractFacade
      * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
+     *
+     * @return void
      */
     public function recalculateSubtotalWithoutItemExpensesTotals(
         TotalsTransfer $totalsTransfer,
@@ -176,6 +196,8 @@ class CalculationFacade extends AbstractFacade
      * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
+     *
+     * @return void
      */
     public function recalculateTaxTotals(
         TotalsTransfer $totalsTransfer,

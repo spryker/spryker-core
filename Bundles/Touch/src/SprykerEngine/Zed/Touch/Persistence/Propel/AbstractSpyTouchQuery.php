@@ -48,6 +48,8 @@ abstract class AbstractSpyTouchQuery extends BaseSpyTouchQuery
      * @param string $key
      * @param string $value
      * @param int $lifetime
+     *
+     * @return void
      */
     public function cacheStore($key, $value, $lifetime = 3600)
     {

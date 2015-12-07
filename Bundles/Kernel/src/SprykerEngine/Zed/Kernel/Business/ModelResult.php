@@ -147,6 +147,8 @@ class ModelResult
      * @deprecated
      *
      * @param array $entityModifiedColumns
+     *
+     * @return void
      */
     public function setEntityModifiedColumns($entityModifiedColumns)
     {
@@ -182,6 +184,8 @@ class ModelResult
      * @deprecated
      *
      * @param array $errors
+     *
+     * @return void
      */
     public function addErrors(array $errors)
     {

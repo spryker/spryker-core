@@ -19,6 +19,8 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function register(Application $app)
     {
@@ -28,6 +30,8 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
      * @param Application $app
      *
      * @throws \Exception
+     *
+     * @return void
      */
     public function boot(Application $app)
     {

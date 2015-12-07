@@ -24,6 +24,9 @@ class DirectoryRemoverTest extends \PHPUnit_Framework_TestCase
      */
     protected $fixtureDirectory;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         $this->fixtureDirectory = __DIR__ . '/Fixtures';
@@ -35,12 +38,18 @@ class DirectoryRemoverTest extends \PHPUnit_Framework_TestCase
         $this->assertFileExists($filename);
     }
 
+    /**
+     * @return void
+     */
     public function tearDown()
     {
         $filesystem = new Filesystem();
         $filesystem->remove($this->fixtureDirectory);
     }
 
+    /**
+     * @return void
+     */
     public function testAfterExecutionGeneratedDirectoryMustBeRemoved()
     {
         $directoryRemover = new DirectoryRemover($this->fixtureDirectory);

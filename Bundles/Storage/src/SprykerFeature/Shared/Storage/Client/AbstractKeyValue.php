@@ -35,6 +35,8 @@ abstract class AbstractKeyValue implements AdapterInterface
 
     /**
      * set read write stats array
+     *
+     * @return void
      */
     public function resetAccessStats()
     {
@@ -62,6 +64,8 @@ abstract class AbstractKeyValue implements AdapterInterface
 
     /**
      * @param string $key
+     *
+     * @return void
      */
     protected function addReadAccessStats($key)
     {
@@ -73,6 +77,8 @@ abstract class AbstractKeyValue implements AdapterInterface
 
     /**
      * @param array $keys
+     *
+     * @return void
      */
     protected function addMultiReadAccessStats(array $keys)
     {
@@ -84,6 +90,8 @@ abstract class AbstractKeyValue implements AdapterInterface
 
     /**
      * @param string $key
+     *
+     * @return void
      */
     protected function addWriteAccessStats($key)
     {
@@ -95,6 +103,8 @@ abstract class AbstractKeyValue implements AdapterInterface
 
     /**
      * @param array $items
+     *
+     * @return void
      */
     protected function addMultiWriteAccessStats(array $items)
     {
@@ -106,6 +116,8 @@ abstract class AbstractKeyValue implements AdapterInterface
 
     /**
      * @param string $key
+     *
+     * @return void
      */
     protected function addDeleteAccessStats($key)
     {
@@ -117,6 +129,8 @@ abstract class AbstractKeyValue implements AdapterInterface
 
     /**
      * @param array $keys
+     *
+     * @return void
      */
     protected function addMultiDeleteAccessStats(array $keys)
     {

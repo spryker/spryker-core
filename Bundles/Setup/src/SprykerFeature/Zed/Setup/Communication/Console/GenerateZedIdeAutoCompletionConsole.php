@@ -25,6 +25,9 @@ class GenerateZedIdeAutoCompletionConsole extends Console
 
     const COMMAND_NAME = 'setup:generate-zed-ide-auto-completion';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
@@ -45,6 +48,9 @@ class GenerateZedIdeAutoCompletionConsole extends Console
         $this->generateZedFactoryInterface();
     }
 
+    /**
+     * @return void
+     */
     protected function generateZedInterface()
     {
         $options = $this->getZedDefaultOptions();
@@ -71,6 +77,9 @@ class GenerateZedIdeAutoCompletionConsole extends Console
         return $options;
     }
 
+    /**
+     * @return void
+     */
     protected function generateZedBundleInterface()
     {
         $options = $this->getZedDefaultOptions();
@@ -89,6 +98,9 @@ class GenerateZedIdeAutoCompletionConsole extends Console
         $this->info('Generate Zed IdeBundleAutoCompletion file');
     }
 
+    /**
+     * @return void
+     */
     protected function generateZedFactoryInterface()
     {
         $businessMethodTagGenerator = new ConstructableMethodTagBuilder([

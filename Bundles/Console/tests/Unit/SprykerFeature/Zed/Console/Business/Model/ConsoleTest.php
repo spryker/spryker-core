@@ -14,6 +14,9 @@ use Unit\SprykerFeature\Zed\Console\Business\Model\Fixtures\ConsoleMock;
 class ConsoleTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testGetDependencyContainerShouldReturnNullIfNotSet()
     {
         $console = $this->getConsole();
@@ -21,6 +24,9 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($console->getDependencyContainer());
     }
 
+    /**
+     * @return void
+     */
     public function testGetDependencyContainerShouldReturnInstanceIfSet()
     {
         $console = $this->getConsole();
@@ -31,6 +37,9 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @return void
+     */
     public function testGetFacadeShouldReturnNullIfNotSet()
     {
         $console = $this->getConsole();
@@ -38,6 +47,9 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($console->getFacade());
     }
 
+    /**
+     * @return void
+     */
     public function testGetFacadeShouldReturnInstanceIfSet()
     {
         $console = $this->getConsole();
@@ -46,6 +58,9 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('SprykerEngine\Zed\Kernel\Business\AbstractFacade', $console->getFacade());
     }
 
+    /**
+     * @return void
+     */
     public function testGetQueryContainerShouldReturnNullIfNotSet()
     {
         $console = $this->getConsole();
@@ -53,6 +68,9 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
         $this->assertNull($console->getQueryContainer());
     }
 
+    /**
+     * @return void
+     */
     public function testGetQueryContainerShouldReturnInstanceIfSet()
     {
         $console = $this->getConsole();

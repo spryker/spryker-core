@@ -11,29 +11,47 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 class CodeController extends AbstractController
 {
 
+    /**
+     * @return void
+     */
     public function checkTreeAction()
     {
     }
 
+    /**
+     * @return void
+     */
     protected function createFileList()
     {
     }
 
+    /**
+     * @return void
+     */
     public function facadeApiAction()
     {
         // TODO remove later
     }
 
+    /**
+     * @return void
+     */
     public function zedApiAction()
     {
         // TODO remove later
     }
 
+    /**
+     * @return void
+     */
     public function libraryApiAction()
     {
         // TODO remove later
     }
 
+    /**
+     * @return void
+     */
     public function gitLogAction()
     {
         // TODO remove later

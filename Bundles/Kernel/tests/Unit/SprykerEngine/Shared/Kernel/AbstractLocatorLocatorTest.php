@@ -15,6 +15,9 @@ use Unit\SprykerEngine\Shared\Kernel\Fixtures\LocatorLocator;
 class AbstractLocatorLocatorTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testMagicMethodCallShouldReturnBundleProxy()
     {
         $locator = LocatorLocator::getInstance();

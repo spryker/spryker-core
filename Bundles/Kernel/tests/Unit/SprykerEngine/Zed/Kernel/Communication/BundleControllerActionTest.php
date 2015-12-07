@@ -20,6 +20,9 @@ class BundleControllerActionTest extends \PHPUnit_Framework_TestCase
     const CONTROLLER = 'bar';
     const ACTION = 'baz';
 
+    /**
+     * @return void
+     */
     public function testGetBundleShouldReturnBundleNameFromRequest()
     {
         $request = $this->getRequestTestObject();
@@ -42,6 +45,9 @@ class BundleControllerActionTest extends \PHPUnit_Framework_TestCase
         return $request;
     }
 
+    /**
+     * @return void
+     */
     public function testGetControllerShouldReturnControllerNameFromRequest()
     {
         $request = $this->getRequestTestObject();
@@ -50,6 +56,9 @@ class BundleControllerActionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(ucfirst(self::CONTROLLER), $bundleControllerAction->getController());
     }
 
+    /**
+     * @return void
+     */
     public function testGetActionShouldReturnActionNameFromRequest()
     {
         $request = $this->getRequestTestObject();

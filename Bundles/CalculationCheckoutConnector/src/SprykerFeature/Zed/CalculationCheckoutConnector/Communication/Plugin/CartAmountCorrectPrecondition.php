@@ -16,12 +16,14 @@ use SprykerFeature\Zed\Checkout\Dependency\Plugin\CheckoutPreConditionInterface;
  * @method CalculationCheckoutConnectorConfig getConfig()
  * @method CalculationCheckoutConnectorFacade getFacade()
  */
-class CartAmountCorrectPreCondition implements CheckoutPreConditionInterface
+class CartAmountCorrectPrecondition implements CheckoutPreConditionInterface
 {
 
     /**
      * @param CheckoutRequestTransfer $checkoutRequest
      * @param CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
      */
     public function checkCondition(CheckoutRequestTransfer $checkoutRequest, CheckoutResponseTransfer $checkoutResponse)
     {

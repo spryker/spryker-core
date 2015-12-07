@@ -33,6 +33,9 @@ class DataProcessorTest extends AbstractFunctionalTest
      */
     protected $locator;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -40,6 +43,9 @@ class DataProcessorTest extends AbstractFunctionalTest
         $this->facade = $this->getFacade();
     }
 
+    /**
+     * @return void
+     */
     public function testFetchProductOptionDataForConcreteProduct()
     {
         $ids = DbFixturesLoader::loadFixtures();

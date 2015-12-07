@@ -14,6 +14,9 @@ use SprykerFeature\Zed\Payone\Business\Key\HashProvider;
 class KeyHashProviderTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testKeyHash()
     {
         $key = 'abcd1efgh2ijklm3nopq4';

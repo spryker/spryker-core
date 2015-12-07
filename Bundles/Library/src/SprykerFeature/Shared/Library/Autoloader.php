@@ -57,6 +57,8 @@ class Autoloader
      * @param string $vendorDirectory
      * @param null $application
      * @param bool $disableApplicationCheck
+     *
+     * @return void
      */
     public static function register($rootDirectory, $vendorDirectory, $application = null, $disableApplicationCheck = false)
     {
@@ -189,6 +191,8 @@ class Autoloader
 
     /**
      * @param string $namespace
+     *
+     * @return void
      */
     public static function allowNamespace($namespace)
     {
@@ -203,6 +207,8 @@ class Autoloader
      * @param array $resourceParts
      *
      * @throws \Exception
+     *
+     * @return void
      */
     protected function checkApplication($resourceParts)
     {

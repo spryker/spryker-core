@@ -24,6 +24,8 @@ class QueueTranslationManager implements QueueTranslationManagerInterface
 
     /**
      * @param QueueMessageTransfer $queueMessage
+     *
+     * @return void
      */
     public function processTranslationMessage(QueueMessageTransfer $queueMessage)
     {

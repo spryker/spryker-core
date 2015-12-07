@@ -79,6 +79,9 @@ class DiscountFacadeTest extends Test
      */
     protected $locator;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -88,6 +91,9 @@ class DiscountFacadeTest extends Test
         $this->discountFacade = $this->locator->discount()->facade();
     }
 
+    /**
+     * @return void
+     */
     public function testIsVoucherUsable()
     {
         $voucherPool = $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_1);
@@ -95,6 +101,9 @@ class DiscountFacadeTest extends Test
         $this->assertTrue($result->isSuccess());
     }
 
+    /**
+     * @return void
+     */
     public function testIsVoucherUsableForInactivePool()
     {
         $voucherPool = $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_2, true, false);
@@ -102,6 +111,9 @@ class DiscountFacadeTest extends Test
         $this->assertFalse($result->isSuccess());
     }
 
+    /**
+     * @return void
+     */
     public function testIsVoucherUsableForInactiveVoucher()
     {
         $voucherPool = $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_3, false, true);
@@ -109,6 +121,9 @@ class DiscountFacadeTest extends Test
         $this->assertFalse($result->isSuccess());
     }
 
+    /**
+     * @return void
+     */
     public function testIsVoucherUsableForInactiveVoucherAndInactivePool()
     {
         $voucherPool = $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_4, false, false);
@@ -116,6 +131,9 @@ class DiscountFacadeTest extends Test
         $this->assertFalse($result->isSuccess());
     }
 
+    /**
+     * @return void
+     */
     public function testIsVoucherUsableForNonExistingVoucher()
     {
         $voucherPool = $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_5, true, true, false);
@@ -123,12 +141,18 @@ class DiscountFacadeTest extends Test
         $this->assertFalse($result->isSuccess());
     }
 
+    /**
+     * @return void
+     */
     public function testCalculateDiscounts()
     {
         $order = $this->getOrderWithFixtureData();
         $this->discountFacade->calculateDiscounts($order);
     }
 
+    /**
+     * @return void
+     */
     public function testCalculateDiscountsWithOneActiveDiscountAndPercentageDiscount()
     {
         $voucherPool = $this->initializeDatabaseWithTestVoucher(self::VOUCHER_CODE_TEST_6);
@@ -150,6 +174,9 @@ class DiscountFacadeTest extends Test
         $this->assertGreaterThan(0, count($result));
     }
 
+    /**
+     * @return void
+     */
     public function testIsMinimumCartSubtotalReachedWithPercentageDiscount()
     {
         $discount = $this->initializeDiscount(
@@ -183,6 +210,9 @@ class DiscountFacadeTest extends Test
         $this->assertFalse($result->isSuccess());
     }
 
+    /**
+     * @return void
+     */
     public function testCalculatePercentage()
     {
         $items = $this->getItems(
@@ -198,6 +228,9 @@ class DiscountFacadeTest extends Test
         $this->assertEquals((self::ITEM_GROSS_PRICE * 3) / 2, $discountAmount);
     }
 
+    /**
+     * @return void
+     */
     public function testCalculateFixed()
     {
         $items = $this->getItems(
@@ -213,6 +246,9 @@ class DiscountFacadeTest extends Test
         $this->assertEquals(self::DISCOUNT_AMOUNT_FIXED_100, $discountAmount);
     }
 
+    /**
+     * @return void
+     */
     public function testDistributeAmountLimitTheDiscountAmountToTheObjectGrossPrice()
     {
         $items = $this->getItems(
@@ -233,6 +269,9 @@ class DiscountFacadeTest extends Test
         $this->assertEquals($items[2]->getGrossPrice(), current($items[2]->getDiscounts())->getAmount());
     }
 
+    /**
+     * @return void
+     */
     public function testShouldCreateOneVoucherCode()
     {
         $voucherPoolEntity = (new SpyDiscountVoucherPool())
@@ -253,6 +292,9 @@ class DiscountFacadeTest extends Test
         $voucherPoolEntity->delete();
     }
 
+    /**
+     * @return void
+     */
     public function testShouldCreateMultipleVouchersForOneVoucherPoolWithTemplate()
     {
         $voucherPoolEntity = (new SpyDiscountVoucherPool())
@@ -275,6 +317,9 @@ class DiscountFacadeTest extends Test
         $voucherPoolEntity->delete();
     }
 
+    /**
+     * @return void
+     */
     public function testSaveDiscount()
     {
         $discountTransfer = new DiscountTransfer();
@@ -285,6 +330,9 @@ class DiscountFacadeTest extends Test
         $this->assertInstanceOf('Orm\Zed\Discount\Persistence\SpyDiscount', $result);
     }
 
+    /**
+     * @return void
+     */
     public function testSaveDiscountDecisionRule()
     {
         $discountDecisionRuleTransfer = new DecisionRuleTransfer();
@@ -296,6 +344,9 @@ class DiscountFacadeTest extends Test
         $this->assertInstanceOf('Orm\Zed\Discount\Persistence\SpyDiscountDecisionRule', $result);
     }
 
+    /**
+     * @return void
+     */
     public function testSaveDiscountVoucher()
     {
         $discountVoucherTransfer = new VoucherTransfer();
@@ -305,6 +356,9 @@ class DiscountFacadeTest extends Test
         $this->assertInstanceOf('Orm\Zed\Discount\Persistence\SpyDiscountVoucher', $result);
     }
 
+    /**
+     * @return void
+     */
     public function testSaveDiscountVoucherPool()
     {
         $discountVoucherPoolTransfer = new VoucherPoolTransfer();
@@ -314,6 +368,9 @@ class DiscountFacadeTest extends Test
         $this->assertInstanceOf('Orm\Zed\Discount\Persistence\SpyDiscountVoucherPool', $result);
     }
 
+    /**
+     * @return void
+     */
     public function testSaveDiscountVoucherPoolCategory()
     {
         $discountVoucherPoolCategoryTransfer = new VoucherPoolCategoryTransfer();
@@ -323,6 +380,9 @@ class DiscountFacadeTest extends Test
         $this->assertInstanceOf('Orm\Zed\Discount\Persistence\SpyDiscountVoucherPoolCategory', $result);
     }
 
+    /**
+     * @return void
+     */
     public function testGetDecisionRulePluginNames()
     {
         $decisionRulePluginNames = $this->discountFacade->getDecisionRulePluginNames();
@@ -330,6 +390,9 @@ class DiscountFacadeTest extends Test
         $this->assertGreaterThanOrEqual(0, count($decisionRulePluginNames));
     }
 
+    /**
+     * @return void
+     */
     public function testGetDiscountableItems()
     {
         $order = $this->getOrderWithFixtureData();
@@ -342,6 +405,9 @@ class DiscountFacadeTest extends Test
         $this->assertEquals(1, count($result));
     }
 
+    /**
+     * @return void
+     */
     public function testGetDiscountableItemExpenses()
     {
         $order = $this->getOrderWithFixtureData();
@@ -359,6 +425,9 @@ class DiscountFacadeTest extends Test
         $this->assertEquals(1, count($result));
     }
 
+    /**
+     * @return void
+     */
     public function testGetDiscountableOrderExpenses()
     {
         $order = $this->getOrderWithFixtureData();
@@ -382,6 +451,9 @@ class DiscountFacadeTest extends Test
         $this->assertEquals(1, count($result));
     }
 
+    /**
+     * @return void
+     */
     public function testUseVoucherCodesWhenCounterPresentShouldIncreaseNumberOfUses()
     {
         $voucherPoolEntity = $this->initializeDatabaseWithTestVoucher(
@@ -398,6 +470,9 @@ class DiscountFacadeTest extends Test
         $this->assertEquals(1, $discountVoucherEntity->getNumberOfUses());
     }
 
+    /**
+     * @return void
+     */
     public function testReleaseUsedCodesWhenCounterPresentShouldDecreaseNumberOfUses()
     {
         $voucherPoolEntity = $this->initializeDatabaseWithTestVoucher(
@@ -414,6 +489,9 @@ class DiscountFacadeTest extends Test
         $this->assertEquals(0, $discountVoucherEntity->getNumberOfUses());
     }
 
+    /**
+     * @return void
+     */
     public function testValidateVoucherWhenVoucherUsedLimitThenItShouldFail()
     {
         $this->initializeDatabaseWithTestVoucher(

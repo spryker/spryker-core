@@ -22,6 +22,9 @@ class FixedTest extends \PHPUnit_Framework_TestCase
     const DISCOUNT_AMOUNT_FIXED_100 = 100;
     const DISCOUNT_AMOUNT_FIXED_MINUS_100 = -100;
 
+    /**
+     * @return void
+     */
     public function testCalculateFixedShouldReturnTheGivenAmount()
     {
         $items = $this->getItems(
@@ -38,6 +41,9 @@ class FixedTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(self::DISCOUNT_AMOUNT_FIXED_100, $discountAmount);
     }
 
+    /**
+     * @return void
+     */
     public function testCalculateFixedShouldReturnNullForGivenNegativeAmounts()
     {
         $items = $this->getItems(

@@ -14,6 +14,8 @@ class Log
      * @param string $fileName
      * @param bool|true $showInfo
      * @param string $dir
+     *
+     * @return void
      */
     public static function log($expression, $fileName, $showInfo = true, $dir = 'logs')
     {
@@ -31,6 +33,8 @@ class Log
      * @param string $fileName
      * @param bool $showInfo
      * @param string $dir
+     *
+     * @return void
      */
     public static function logRaw($expression, $fileName, $showInfo = true, $dir = 'logs')
     {
@@ -57,6 +61,8 @@ class Log
      *
      * @param $expression
      * @param string $fileName
+     *
+     * @return void
      */
     public static function setFlashInFile($expression, $fileName)
     {

@@ -58,6 +58,8 @@ class LastDistributionMarker implements LastDistributionMarkerInterface
     /**
      * @param string $type
      * @param string $timestamp
+     *
+     * @return void
      */
     public function setLastDistributionTimestampByType($type, $timestamp)
     {

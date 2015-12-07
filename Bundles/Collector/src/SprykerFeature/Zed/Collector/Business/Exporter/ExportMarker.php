@@ -67,6 +67,8 @@ class ExportMarker implements MarkerInterface
      * @param string $exportType
      * @param LocaleTransfer $locale
      * @param string $timestamp
+     *
+     * @return void
      */
     public function setLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $locale, $timestamp)
     {

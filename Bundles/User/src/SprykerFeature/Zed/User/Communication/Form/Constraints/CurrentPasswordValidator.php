@@ -16,6 +16,8 @@ class CurrentPasswordValidator extends ConstraintValidator
     /**
      * @param mixed $value
      * @param Constraint|CurrentPassword $constraint
+     *
+     * @return void
      */
     public function validate($value, Constraint $constraint)
     {

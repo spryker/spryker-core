@@ -49,6 +49,8 @@ class TaskProvider implements TaskProviderInterface
      * @param TaskPluginInterface $task
      *
      * @throws TaskAlreadyDefinedForQueueException
+     *
+     * @return void
      */
     protected function addTask(TaskPluginInterface $task)
     {

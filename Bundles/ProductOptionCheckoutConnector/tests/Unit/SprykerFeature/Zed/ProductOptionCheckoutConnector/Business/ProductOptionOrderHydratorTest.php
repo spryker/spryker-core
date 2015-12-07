@@ -26,6 +26,9 @@ class ProductOptionOrderHydratorTest extends \PHPUnit_Framework_TestCase
 
     const LABEL_OPTION_TYPE = 'label option type';
 
+    /**
+     * @return void
+     */
     public function testHydratorTransfersProductOptionsFromCartItemToOrderItem()
     {
         $hydrator = $this->getHydrator();

@@ -40,6 +40,8 @@ class CreditCardContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param int $cardcvc2
+     *
+     * @return void
      */
     public function setCardCvc2($cardcvc2)
     {
@@ -56,6 +58,8 @@ class CreditCardContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param int $cardexpiredate
+     *
+     * @return void
      */
     public function setCardExpireDate($cardexpiredate)
     {
@@ -72,6 +76,8 @@ class CreditCardContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param string $cardholder
+     *
+     * @return void
      */
     public function setCardHolder($cardholder)
     {
@@ -88,6 +94,8 @@ class CreditCardContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param int $cardissuenumber
+     *
+     * @return void
      */
     public function setCardIssueNumber($cardissuenumber)
     {
@@ -104,6 +112,8 @@ class CreditCardContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param string $cardpan
+     *
+     * @return void
      */
     public function setCardPan($cardpan)
     {
@@ -120,6 +130,8 @@ class CreditCardContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param string $cardtype
+     *
+     * @return void
      */
     public function setCardType($cardtype)
     {
@@ -136,6 +148,8 @@ class CreditCardContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param string $pseudocardpan
+     *
+     * @return void
      */
     public function setPseudoCardPan($pseudocardpan)
     {

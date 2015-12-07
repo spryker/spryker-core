@@ -28,6 +28,8 @@ class RequestServiceProviderTest extends AbstractUnitTest
      * @param string $expectedBundle
      * @param string $expectedController
      * @param string $expectedAction
+     *
+     * @return void
      */
     public function testBeforeMustParseRequestDataAndSetModuleControllerAndActionInRequest(
         $givenUrl,

@@ -30,6 +30,7 @@ abstract class AbstractInstaller extends AbstractLogger implements MessengerInte
     }
 
     /**
+     * @return void
      */
     abstract public function install();
 
@@ -39,6 +40,8 @@ abstract class AbstractInstaller extends AbstractLogger implements MessengerInte
      * @param mixed $level
      * @param string $message
      * @param array $context
+     *
+     * @return void
      */
     public function log($level, $message, array $context = [])
     {

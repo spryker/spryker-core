@@ -60,6 +60,8 @@ class PdoStatementIterator implements \Iterator, \Countable
      * Move forward to next element
      *
      * @link http://php.net/manual/en/iterator.next.php
+     *
+     * @return void
      */
     public function next()
     {
@@ -104,6 +106,8 @@ class PdoStatementIterator implements \Iterator, \Countable
      * Rewind the Iterator to the first element
      *
      * @link http://php.net/manual/en/iterator.rewind.php
+     *
+     * @return void
      */
     public function rewind()
     {

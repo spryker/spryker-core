@@ -46,6 +46,8 @@ class CaptureContainer extends AbstractRequestContainer
 
     /**
      * @param int $amount
+     *
+     * @return void
      */
     public function setAmount($amount)
     {
@@ -62,6 +64,8 @@ class CaptureContainer extends AbstractRequestContainer
 
     /**
      * @param string $currency
+     *
+     * @return void
      */
     public function setCurrency($currency)
     {
@@ -78,6 +82,8 @@ class CaptureContainer extends AbstractRequestContainer
 
     /**
      * @param int $sequencenumber
+     *
+     * @return void
      */
     public function setSequenceNumber($sequencenumber)
     {
@@ -94,6 +100,8 @@ class CaptureContainer extends AbstractRequestContainer
 
     /**
      * @param string $txid
+     *
+     * @return void
      */
     public function setTxid($txid)
     {
@@ -110,6 +118,8 @@ class CaptureContainer extends AbstractRequestContainer
 
     /**
      * @param Capture\BusinessContainer $business
+     *
+     * @return void
      */
     public function setBusiness(BusinessContainer $business)
     {
@@ -126,6 +136,8 @@ class CaptureContainer extends AbstractRequestContainer
 
     /**
      * @param Invoicing\TransactionContainer $invoicing
+     *
+     * @return void
      */
     public function setInvoicing(TransactionContainer $invoicing)
     {

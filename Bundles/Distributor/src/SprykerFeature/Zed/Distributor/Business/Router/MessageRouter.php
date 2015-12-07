@@ -24,6 +24,8 @@ class MessageRouter implements MessageRouterInterface
     /**
      * @param QueueMessageTransfer $message
      * @param array $queueList
+     *
+     * @return void
      */
     public function routeMessage(QueueMessageTransfer $message, array $queueList)
     {

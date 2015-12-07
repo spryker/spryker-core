@@ -94,6 +94,9 @@ class ClassDefinition implements ClassDefinitionInterface
         return $this->name;
     }
 
+    /**
+     * @return void
+     */
     private function addBundles(array $bundles)
     {
         foreach ($bundles as $bundle) {
@@ -103,6 +106,8 @@ class ClassDefinition implements ClassDefinitionInterface
 
     /**
      * @param string $bundle
+     *
+     * @return void
      */
     private function addBundle($bundle)
     {
@@ -129,6 +134,8 @@ class ClassDefinition implements ClassDefinitionInterface
 
     /**
      * @param array $properties
+     *
+     * @return void
      */
     private function addConstants(array $properties)
     {
@@ -139,6 +146,8 @@ class ClassDefinition implements ClassDefinitionInterface
 
     /**
      * @param array $property
+     *
+     * @return void
      */
     private function addConstant(array $property)
     {
@@ -153,6 +162,8 @@ class ClassDefinition implements ClassDefinitionInterface
 
     /**
      * @param array $properties
+     *
+     * @return void
      */
     private function addProperties(array $properties)
     {
@@ -163,6 +174,8 @@ class ClassDefinition implements ClassDefinitionInterface
 
     /**
      * @param array $property
+     *
+     * @return void
      */
     private function addProperty(array $property)
     {
@@ -180,6 +193,8 @@ class ClassDefinition implements ClassDefinitionInterface
 
     /**
      * @param array $property
+     *
+     * @return void
      */
     private function addUseForType(array $property)
     {
@@ -298,6 +313,8 @@ class ClassDefinition implements ClassDefinitionInterface
 
     /**
      * @param array $properties
+     *
+     * @return void
      */
     private function addMethods(array $properties)
     {
@@ -308,6 +325,8 @@ class ClassDefinition implements ClassDefinitionInterface
 
     /**
      * @param array $property
+     *
+     * @return void
      */
     private function addPropertyMethods(array $property)
     {
@@ -322,6 +341,8 @@ class ClassDefinition implements ClassDefinitionInterface
 
     /**
      * @param array $property
+     *
+     * @return void
      */
     private function addPropertyConstructorIfCollection(array $property)
     {
@@ -356,6 +377,8 @@ class ClassDefinition implements ClassDefinitionInterface
 
     /**
      * @param array $property
+     *
+     * @return void
      */
     private function buildCollectionMethods(array $property)
     {
@@ -365,6 +388,8 @@ class ClassDefinition implements ClassDefinitionInterface
 
     /**
      * @param array $property
+     *
+     * @return void
      */
     private function buildGetterAndSetter(array $property)
     {
@@ -468,6 +493,8 @@ class ClassDefinition implements ClassDefinitionInterface
 
     /**
      * @param array $property
+     *
+     * @return void
      */
     private function buildGetMethod(array $property)
     {
@@ -485,6 +512,8 @@ class ClassDefinition implements ClassDefinitionInterface
 
     /**
      * @param $property
+     *
+     * @return void
      */
     private function buildSetMethod($property)
     {
@@ -504,6 +533,8 @@ class ClassDefinition implements ClassDefinitionInterface
 
     /**
      * @param $property
+     *
+     * @return void
      */
     private function buildAddMethod($property)
     {
@@ -550,6 +581,8 @@ class ClassDefinition implements ClassDefinitionInterface
     /**
      * @param array $property
      * @param bool $isCollection
+     *
+     * @return void
      */
     private function buildRequireMethod(array $property, $isCollection)
     {

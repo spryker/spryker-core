@@ -14,6 +14,9 @@ use SprykerFeature\Zed\Application\Business\ApplicationFacade;
 class DeleteDatabase extends AbstractApplicationCheckStep
 {
 
+    /**
+     * @return void
+     */
     public function run()
     {
         $this->getFacade()->runCheckStepDeleteDatabase($this->logger);

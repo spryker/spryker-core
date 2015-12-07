@@ -34,11 +34,17 @@ class PriceFacadeStub extends PriceFacade
         return $this->validities[$sku];
     }
 
+    /**
+     * @return void
+     */
     public function addPriceStub($sku, $price)
     {
         $this->prices[$sku] = $price;
     }
 
+    /**
+     * @return void
+     */
     public function addValidityStub($sku, $validity = true)
     {
         $this->validities[$sku] = $validity;

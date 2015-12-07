@@ -9,6 +9,9 @@ namespace SprykerFeature\Shared\Library\Application;
 class TestEnvironment
 {
 
+    /**
+     * @return void
+     */
     public static function initialize()
     {
         if (PHP_SAPI === 'cli') {
@@ -20,6 +23,9 @@ class TestEnvironment
         }
     }
 
+    /**
+     * @return void
+     */
     public static function forceSystemUnderTest()
     {
         if (defined('SYSTEM_UNDER_TEST') && SYSTEM_UNDER_TEST === 1) {

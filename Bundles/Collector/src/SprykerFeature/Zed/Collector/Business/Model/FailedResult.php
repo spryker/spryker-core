@@ -49,6 +49,8 @@ class FailedResult implements FailedResultInterface
 
     /**
      * @param int $itemId
+     *
+     * @return void
      */
     public function setFirstId($itemId)
     {
@@ -65,6 +67,8 @@ class FailedResult implements FailedResultInterface
 
     /**
      * @param string $itemType
+     *
+     * @return void
      */
     public function setItemType($itemType)
     {
@@ -81,6 +85,8 @@ class FailedResult implements FailedResultInterface
 
     /**
      * @param string $reason
+     *
+     * @return void
      */
     public function setReason($reason)
     {
@@ -97,6 +103,8 @@ class FailedResult implements FailedResultInterface
 
     /**
      * @param int $lastId
+     *
+     * @return void
      */
     public function setLastId($lastId)
     {
@@ -105,6 +113,8 @@ class FailedResult implements FailedResultInterface
 
     /**
      * @param int $count
+     *
+     * @return void
      */
     public function setFailedCount($count)
     {

@@ -10,6 +10,9 @@ use Symfony\Component\Filesystem\Filesystem;
 abstract class AbstractPropelSchemaTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -19,6 +22,9 @@ abstract class AbstractPropelSchemaTest extends \PHPUnit_Framework_TestCase
         touch($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'spy_bar.schema.xml');
     }
 
+    /**
+     * @return void
+     */
     public function tearDown()
     {
         $filesystem = new Filesystem();

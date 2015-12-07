@@ -158,6 +158,8 @@ class ProductManager implements ProductManagerInterface
      * @param string $sku
      *
      * @throws AbstractProductExistsException
+     *
+     * @return void
      */
     protected function checkAbstractProductDoesNotExist($sku)
     {
@@ -176,6 +178,8 @@ class ProductManager implements ProductManagerInterface
      *
      * @throws AbstractProductAttributesExistException
      * @throws PropelException
+     *
+     * @return void
      */
     protected function createAbstractProductAttributes(AbstractProductTransfer $abstractProductTransfer)
     {
@@ -206,6 +210,8 @@ class ProductManager implements ProductManagerInterface
      * @deprecated Use hasAbstractProductAttributes() instead.
      *
      * @throws AbstractProductAttributesExistException
+     *
+     * @return void
      */
     protected function checkAbstractProductAttributesDoNotExist($idAbstractProduct, $locale)
     {
@@ -272,6 +278,8 @@ class ProductManager implements ProductManagerInterface
      * @param string $sku
      *
      * @throws ConcreteProductExistsException
+     *
+     * @return void
      */
     protected function checkConcreteProductDoesNotExist($sku)
     {
@@ -327,6 +335,8 @@ class ProductManager implements ProductManagerInterface
      *
      * @throws ConcreteProductAttributesExistException
      * @throws PropelException
+     *
+     * @return void
      */
     protected function createConcreteProductAttributes(ConcreteProductTransfer $concreteProductTransfer)
     {
@@ -353,6 +363,8 @@ class ProductManager implements ProductManagerInterface
      * @param LocaleTransfer $locale
      *
      * @throws ConcreteProductAttributesExistException
+     *
+     * @return void
      */
     protected function checkConcreteProductAttributesDoNotExist($idConcreteProduct, LocaleTransfer $locale)
     {
@@ -385,6 +397,8 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param int $idAbstractProduct
+     *
+     * @return void
      */
     public function touchProductActive($idAbstractProduct)
     {
@@ -542,6 +556,8 @@ class ProductManager implements ProductManagerInterface
 
     /**
      * @param ConcreteProductTransfer $concreteProductTransfer
+     *
+     * @return void
      */
     private function addTaxesToProductTransfer(ConcreteProductTransfer $concreteProductTransfer)
     {

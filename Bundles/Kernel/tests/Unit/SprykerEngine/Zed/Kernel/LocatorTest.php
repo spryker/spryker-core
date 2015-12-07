@@ -17,6 +17,9 @@ use SprykerEngine\Zed\Kernel\Locator;
 class LocatorTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testCallShouldReturnBundleProxy()
     {
         $locator = Locator::getInstance();
@@ -24,6 +27,9 @@ class LocatorTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('SprykerEngine\Shared\Kernel\BundleProxy', $locator->foo());
     }
 
+    /**
+     * @return void
+     */
     public function testGetInstanceWithLocatorAsArgumentShouldReturnLocator()
     {
         $locator = Locator::getInstance([

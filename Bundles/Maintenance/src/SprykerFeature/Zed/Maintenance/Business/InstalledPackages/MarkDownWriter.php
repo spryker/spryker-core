@@ -33,6 +33,9 @@ class MarkDownWriter implements MarkDownWriterInterface
         $this->path = $path;
     }
 
+    /**
+     * @return void
+     */
     public function write()
     {
         $markDownLines = [];

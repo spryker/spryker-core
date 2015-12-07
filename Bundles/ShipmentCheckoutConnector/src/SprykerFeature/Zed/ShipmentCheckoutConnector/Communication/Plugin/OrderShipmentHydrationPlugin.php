@@ -21,6 +21,8 @@ class OrderShipmentHydrationPlugin extends AbstractPlugin implements CheckoutOrd
     /**
      * @param OrderTransfer $orderTransfer
      * @param CheckoutRequestTransfer $checkoutRequest
+     *
+     * @return void
      */
     public function hydrateOrder(OrderTransfer $orderTransfer, CheckoutRequestTransfer $checkoutRequest)
     {

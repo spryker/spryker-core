@@ -20,11 +20,17 @@ class UrlGrid extends AbstractTable
     const FK_RESOURCE_CATEGORYNODE = 'fk_resource_categoryname';
     const FK_RESOURCE_PAGE = 'fk_resource_page';
 
+    /**
+     * @return void
+     */
     protected function configure(TableConfiguration $config)
     {
         // @todo: Implement configure() method.
     }
 
+    /**
+     * @return void
+     */
     protected function prepareData(TableConfiguration $config)
     {
         // @todo: Implement prepareData() method.

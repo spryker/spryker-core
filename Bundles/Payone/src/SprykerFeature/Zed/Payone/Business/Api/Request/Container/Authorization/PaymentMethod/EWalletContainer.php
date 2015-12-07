@@ -22,6 +22,8 @@ class EWalletContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param string $wallettype
+     *
+     * @return void
      */
     public function setWalletType($wallettype)
     {
@@ -38,6 +40,8 @@ class EWalletContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param RedirectContainer $redirect
+     *
+     * @return void
      */
     public function setRedirect(RedirectContainer $redirect)
     {

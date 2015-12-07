@@ -40,6 +40,8 @@ class FulltextSearch extends AbstractSearch
     /**
      * @param Request $request
      * @param Query $searchQuery
+     *
+     * @return void
      */
     protected function addFulltextSearchToQuery(Request $request, Query $searchQuery)
     {

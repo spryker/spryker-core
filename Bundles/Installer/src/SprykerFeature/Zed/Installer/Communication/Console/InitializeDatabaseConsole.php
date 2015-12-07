@@ -22,6 +22,9 @@ class InitializeDatabaseConsole extends Console
     const EXIT_CODE_ERROR = 1;
     const EXIT_CODE_SUCCESS = 0;
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME)

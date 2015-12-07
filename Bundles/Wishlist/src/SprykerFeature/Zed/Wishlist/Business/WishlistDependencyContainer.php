@@ -87,6 +87,8 @@ class WishlistDependencyContainer extends AbstractBusinessDependencyContainer
 
     /**
      * @param AbstractOperator $operator
+     *
+     * @return void
      */
     protected function provideOperatorPlugins(AbstractOperator $operator)
     {

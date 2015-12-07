@@ -46,6 +46,8 @@ class Locator implements LocatorLocatorInterface
 
     /**
      * @param array $locator
+     *
+     * @return void
      */
     private function setLocator(array $locator = null)
     {
@@ -56,6 +58,9 @@ class Locator implements LocatorLocatorInterface
     {
     }
 
+    /**
+     * @return void
+     */
     final private function __clone()
     {
     }

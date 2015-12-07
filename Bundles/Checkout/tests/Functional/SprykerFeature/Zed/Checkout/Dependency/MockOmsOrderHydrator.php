@@ -16,6 +16,8 @@ class MockOmsOrderHydrator implements CheckoutOrderHydrationInterface
     /**
      * @param OrderTransfer $orderTransfer
      * @param CheckoutRequestTransfer $checkoutRequest
+     *
+     * @return void
      */
     public function hydrateOrder(OrderTransfer $orderTransfer, CheckoutRequestTransfer $checkoutRequest)
     {

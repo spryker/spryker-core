@@ -20,6 +20,9 @@ use Symfony\Component\Process\Process;
 class InstalledPackageFinderTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testFindInstalledPackagesShouldReturnCollectionWithInstalledPackage()
     {
         $collection = new InstalledPackagesTransfer();
@@ -31,6 +34,9 @@ class InstalledPackageFinderTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @return void
+     */
     public function testFindInstalledPackagesShouldThrowExceptionIfProcessWasNotSuccessful()
     {
         $this->setExpectedException('\RuntimeException');

@@ -14,6 +14,8 @@ class Filesystem extends \Twig_Loader_Filesystem
     /**
      * @param array $paths
      * @param string $namespace
+     *
+     * @return void
      */
     public function setPaths($paths, $namespace = self::MAIN_NAMESPACE)
     {
@@ -26,6 +28,8 @@ class Filesystem extends \Twig_Loader_Filesystem
     /**
      * @param string $path
      * @param string $namespace
+     *
+     * @return void
      */
     public function addPath($path, $namespace = self::MAIN_NAMESPACE)
     {
@@ -37,6 +41,8 @@ class Filesystem extends \Twig_Loader_Filesystem
     /**
      * @param string $path
      * @param string $namespace
+     *
+     * @return void
      */
     public function prependPath($path, $namespace = self::MAIN_NAMESPACE)
     {

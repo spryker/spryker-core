@@ -74,6 +74,8 @@ class AuthConfig extends AbstractBundleConfig
      * @param string $bundle
      * @param string $controller
      * @param string $action
+     *
+     * @return void
      */
     public function addIgnorable($bundle, $controller, $action)
     {

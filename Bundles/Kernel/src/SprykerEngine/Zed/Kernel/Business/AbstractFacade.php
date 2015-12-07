@@ -37,6 +37,8 @@ abstract class AbstractFacade implements FacadeInterface
 
     /**
      * @param Container $container
+     *
+     * @return void
      */
     public function setExternalDependencies(Container $container)
     {
@@ -58,6 +60,8 @@ abstract class AbstractFacade implements FacadeInterface
      * TODO move to constructor
      *
      * @param AbstractQueryContainer $queryContainer
+     *
+     * @return void
      */
     public function setOwnQueryContainer(AbstractQueryContainer $queryContainer)
     {

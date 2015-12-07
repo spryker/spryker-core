@@ -65,6 +65,8 @@ class BatchIterator implements \Iterator, \Countable, BatchIteratorInterface
      * Move forward to next element
      *
      * @link http://php.net/manual/en/iterator.next.php
+     *
+     * @return void
      */
     public function next()
     {
@@ -108,6 +110,8 @@ class BatchIterator implements \Iterator, \Countable, BatchIteratorInterface
      * Rewind the Iterator to the first element
      *
      * @link http://php.net/manual/en/iterator.rewind.php
+     *
+     * @return void
      */
     public function rewind()
     {

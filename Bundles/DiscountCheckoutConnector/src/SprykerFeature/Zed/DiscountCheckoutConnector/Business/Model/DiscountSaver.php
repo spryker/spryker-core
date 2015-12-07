@@ -50,6 +50,8 @@ class DiscountSaver implements DiscountSaverInterface
     /**
      * @param OrderTransfer $orderTransfer
      * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
      */
     public function saveDiscounts(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {
@@ -60,6 +62,8 @@ class DiscountSaver implements DiscountSaverInterface
 
     /**
      * @param OrderTransfer $orderTransfer
+     *
+     * @return void
      */
     protected function saveOrderItemDiscounts(OrderTransfer $orderTransfer)
     {
@@ -86,6 +90,8 @@ class DiscountSaver implements DiscountSaverInterface
      * @param int $idSalesOrderItem
      *
      * @throws PropelException
+     *
+     * @return void
      */
     protected function saveOrderItemOptionDiscounts(ItemTransfer $orderItemTransfer, $idSalesOrder, $idSalesOrderItem)
     {
@@ -117,6 +123,8 @@ class DiscountSaver implements DiscountSaverInterface
     /**
      * @param SpySalesDiscount $salesDiscountEntity
      * @param DiscountTransfer $discountTransfer
+     *
+     * @return void
      */
     protected function saveDiscount(SpySalesDiscount $salesDiscountEntity, DiscountTransfer $discountTransfer)
     {
@@ -139,6 +147,8 @@ class DiscountSaver implements DiscountSaverInterface
      * @param SpySalesDiscount $salesDiscountEntity
      *
      * @throws PropelException
+     *
+     * @return void
      */
     protected function persistSalesDiscount(SpySalesDiscount $salesDiscountEntity)
     {
@@ -160,6 +170,8 @@ class DiscountSaver implements DiscountSaverInterface
     /**
      * @param DiscountTransfer $discountTransfer
      * @param SpySalesDiscount $salesDiscountEntity
+     *
+     * @return void
      */
     protected function saveUsedCodes(DiscountTransfer $discountTransfer, SpySalesDiscount $salesDiscountEntity)
     {
@@ -186,6 +198,8 @@ class DiscountSaver implements DiscountSaverInterface
      * @param SpySalesDiscountCode $salesDiscountCodeEntity
      *
      * @throws PropelException
+     *
+     * @return void
      */
     protected function persistSalesDiscountCode(SpySalesDiscountCode $salesDiscountCodeEntity)
     {
@@ -212,6 +226,8 @@ class DiscountSaver implements DiscountSaverInterface
 
     /**
      * @param OrderTransfer $orderTransfer
+     *
+     * @return void
      */
     protected function saveOrderExpenseDiscounts(OrderTransfer $orderTransfer)
     {

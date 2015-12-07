@@ -51,6 +51,9 @@ class VoucherForm extends AbstractForm
         $this->isMultiple = $isMultiple;
     }
 
+    /**
+     * @return void
+     */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         if ($this->isMultiple) {

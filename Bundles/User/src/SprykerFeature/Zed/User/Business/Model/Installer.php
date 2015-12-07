@@ -44,12 +44,17 @@ class Installer implements InstallerInterface
 
     /**
      * Main Installer Method
+     *
+     * @return void
      */
     public function install()
     {
         $this->addUsers($this->settings->getInstallerUsers());
     }
 
+    /**
+     * @return void
+     */
     protected function addUsers(array $usersArray)
     {
         foreach ($usersArray as $user) {

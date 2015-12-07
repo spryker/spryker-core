@@ -42,6 +42,9 @@ class TransferDependencyContainerTest extends \PHPUnit_Framework_TestCase
         return $this->getMock('SprykerEngine\Shared\Kernel\Messenger\MessengerInterface');
     }
 
+    /**
+     * @return void
+     */
     public function testCreateTransferGeneratorShouldReturnFullyConfiguredInstance()
     {
         $transferGenerator = $this->getDependencyContainer()->createTransferGenerator(
@@ -51,6 +54,9 @@ class TransferDependencyContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('SprykerEngine\Zed\Transfer\Business\Model\TransferGenerator', $transferGenerator);
     }
 
+    /**
+     * @return void
+     */
     public function testCreateTransferCleanerShouldReturnFullyConfiguredInstance()
     {
         $transferCleaner = $this->getDependencyContainer()->createTransferCleaner();

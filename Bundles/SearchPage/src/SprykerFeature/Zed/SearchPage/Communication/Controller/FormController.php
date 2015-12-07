@@ -67,6 +67,9 @@ class FormController extends AbstractController
         return $this->jsonResponse($form->renderData());
     }
 
+    /**
+     * @return void
+     */
     public function deletePageElementAction(Request $request)
     {
     }

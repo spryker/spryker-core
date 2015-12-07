@@ -38,6 +38,9 @@ class PropelSchema implements PropelSchemaInterface
         $this->merger = $merger;
     }
 
+    /**
+     * @return void
+     */
     public function copy()
     {
         $schemaFiles = $this->finder->getGroupedSchemaFiles();

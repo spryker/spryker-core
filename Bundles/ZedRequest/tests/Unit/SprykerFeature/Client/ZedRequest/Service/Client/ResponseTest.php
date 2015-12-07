@@ -37,18 +37,27 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         return $response;
     }
 
+    /**
+     * @return void
+     */
     public function testDefaultSuccessIsTrue()
     {
         $response = new Response();
         $this->assertEquals(true, $response->isSuccess());
     }
 
+    /**
+     * @return void
+     */
     public function testDefaultTransferIsNull()
     {
         $response = new Response();
         $this->assertEquals(null, $response->getTransfer());
     }
 
+    /**
+     * @return void
+     */
     public function testGetterAndSetters()
     {
         $transfer = new TestTransfer();
@@ -65,6 +74,9 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertNotSame($response->getTransfer(), $response->getTransfer());
     }
 
+    /**
+     * @return void
+     */
     public function testToArrayAndFromArray()
     {
         $transfer = new TestTransfer();
@@ -81,6 +93,9 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
         $this->assertNotSame($response, $newResponse);
     }
 
+    /**
+     * @return void
+     */
     public function testHasMethods()
     {
         $response = new Response();

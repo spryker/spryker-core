@@ -44,6 +44,8 @@ class PrepaymentContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param string $clearingBankAccountHolder
+     *
+     * @return void
      */
     public function setClearingBankAccountHolder($clearingBankAccountHolder)
     {
@@ -60,6 +62,8 @@ class PrepaymentContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param string $clearingBankCountry
+     *
+     * @return void
      */
     public function setClearingBankCountry($clearingBankCountry)
     {
@@ -76,6 +80,8 @@ class PrepaymentContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param string $clearingBankAccount
+     *
+     * @return void
      */
     public function setClearingBankAccount($clearingBankAccount)
     {
@@ -92,6 +98,8 @@ class PrepaymentContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param string $clearingBankCode
+     *
+     * @return void
      */
     public function setClearingBankCode($clearingBankCode)
     {
@@ -108,6 +116,8 @@ class PrepaymentContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param string $clearingBankIban
+     *
+     * @return void
      */
     public function setClearingBankIban($clearingBankIban)
     {
@@ -124,6 +134,8 @@ class PrepaymentContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param string $clearingBankBic
+     *
+     * @return void
      */
     public function setClearingBankBic($clearingBankBic)
     {
@@ -140,6 +152,8 @@ class PrepaymentContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param string $clearingBankCity
+     *
+     * @return void
      */
     public function setClearingBankCity($clearingBankCity)
     {
@@ -156,6 +170,8 @@ class PrepaymentContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param string $clearingBankName
+     *
+     * @return void
      */
     public function setClearingBankName($clearingBankName)
     {

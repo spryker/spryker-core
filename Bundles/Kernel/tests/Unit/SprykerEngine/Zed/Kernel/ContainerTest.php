@@ -17,6 +17,9 @@ use SprykerEngine\Zed\Kernel\Container;
 class ContainerTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testGetLocatorShouldReturnInstanceOFLocator()
     {
         $container = new Container();

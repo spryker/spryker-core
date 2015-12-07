@@ -17,6 +17,8 @@ abstract class Memcached extends AbstractKeyValue
 
     /**
      * @throws \MemcachedException
+     *
+     * @return void
      */
     public function connect()
     {

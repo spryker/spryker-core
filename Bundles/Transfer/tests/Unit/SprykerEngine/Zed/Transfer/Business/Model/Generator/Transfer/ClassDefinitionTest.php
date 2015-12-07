@@ -18,6 +18,9 @@ use SprykerEngine\Zed\Transfer\Business\Model\Generator\Transfer\ClassDefinition
 class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testGetNameShouldReturnNormalizedTransferName()
     {
         $transferDefinition = [
@@ -29,6 +32,9 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('NameTransfer', $classDefinition->getName());
     }
 
+    /**
+     * @return void
+     */
     public function testIfOnePropertyIsSetGetPropertiesShouldReturnArrayWithOneProperty()
     {
         $property = $this->getProperty('property1', 'string');
@@ -72,6 +78,9 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         return $property;
     }
 
+    /**
+     * @return void
+     */
     public function testIfMoreThenOnePropertyIsSetGetPropertiesShouldReturnArrayWithAllProperties()
     {
         $transferDefinition = [
@@ -97,6 +106,9 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedProperty, $givenProperty);
     }
 
+    /**
+     * @return void
+     */
     public function testIfPropertyTypeIsArrayWithNameShouldBeMarkedAsArray()
     {
         $transferDefinition = [
@@ -113,6 +125,9 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedProperty, $givenProperty);
     }
 
+    /**
+     * @return void
+     */
     public function testIfPropertyNameIsCapitalizedNameShouldBeNormalized()
     {
         $transferDefinition = [
@@ -129,6 +144,9 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedProperty, $givenProperty);
     }
 
+    /**
+     * @return void
+     */
     public function testIfPropertyTypeIsCollectionConstructorDefinitionMustContainArrayWithThisEntry()
     {
         $transferDefinition = [
@@ -144,6 +162,9 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('\\ArrayObject', $constructorDefinition['property1']);
     }
 
+    /**
+     * @return void
+     */
     public function testIfMoreThanOnePropertyTypeHasSameCollectionTypeUseShouldContainOnlyOneOfThisEntries()
     {
         $transferDefinition = [
@@ -161,6 +182,9 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $uses);
     }
 
+    /**
+     * @return void
+     */
     public function testIfPropertyTypeIsAReferenceToItselfItMustNotAddAUseForIt()
     {
         $transferDefinition = [
@@ -177,6 +201,9 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(0, $uses);
     }
 
+    /**
+     * @return void
+     */
     public function testIfPropertyTypeIsCollectionTheReturnTypeShouldBeAnArrayObject()
     {
         $transferDefinition = [
@@ -193,6 +220,9 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedProperty, $givenProperty);
     }
 
+    /**
+     * @return void
+     */
     public function testSimplePropertyShouldHaveOnlyGetterAndSetter()
     {
         $transferDefinition = [
@@ -211,6 +241,9 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $expectedGetter = $this->getMethod('getProperty1', 'property1', 'string', 'string');
     }
 
+    /**
+     * @return void
+     */
     public function testSimpleStringPropertyShouldHaveOnlySetterWithoutTypeHint()
     {
         $transferDefinition = [
@@ -226,6 +259,9 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $expectedSetter = $this->getMethod('setProperty1', 'property1', 'string');
     }
 
+    /**
+     * @return void
+     */
     public function testCollectionPropertyShouldHaveOnlySetterWithTypeAsTypeHint()
     {
         $transferDefinition = [
@@ -241,6 +277,9 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $expectedSetter = $this->getMethod('setProperty1', 'property1', 'Type', null, 'Type');
     }
 
+    /**
+     * @return void
+     */
     public function testCollectionPropertyShouldHaveGetSetAndAdd()
     {
         $bundles = ['Bundle1'];
@@ -267,6 +306,9 @@ class ClassDefinitionTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $given);
     }
 
+    /**
+     * @return void
+     */
     public function testCollectionPropertyWithSingularDefinitionShouldHaveAddWithDefinedName()
     {
         $property = $this->getProperty('properties', 'Type[]', 'property');

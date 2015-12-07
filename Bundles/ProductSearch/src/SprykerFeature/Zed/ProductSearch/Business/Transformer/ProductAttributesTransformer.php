@@ -152,6 +152,9 @@ class ProductAttributesTransformer implements ProductAttributesTransformerInterf
         return (!empty($this->fieldOperations));
     }
 
+    /**
+     * @return void
+     */
     protected function initFieldToOperationMapping()
     {
         foreach ($this->getFieldOperations() as $fieldOperation) {

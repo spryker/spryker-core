@@ -15,6 +15,9 @@ use Symfony\Component\Filesystem\Filesystem;
 class PropelSchemaTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function tearDown()
     {
         $filesystem = new Filesystem();
@@ -37,6 +40,9 @@ class PropelSchemaTest extends \PHPUnit_Framework_TestCase
         return $this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'Target';
     }
 
+    /**
+     * @return void
+     */
     public function testCopyShouldCopyFileFromSourceToTargetDirectoryWithoutMergingIfOnlyOneFileBySchemaNameExist()
     {
         $finder = new PropelSchemaFinder([$this->getFixtureDirectory()]);
@@ -51,6 +57,9 @@ class PropelSchemaTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(file_exists($this->getFixtureTargetDirectory() . DIRECTORY_SEPARATOR . 'foo_foo.schema.xml'));
     }
 
+    /**
+     * @return void
+     */
     public function testCopyShouldMergeAndCopyFileFromSourceToTargetDirectoryIfMoreThenOneFileBySchemaNameExist()
     {
         $finder = new PropelSchemaFinder([

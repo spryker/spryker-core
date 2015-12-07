@@ -11,6 +11,9 @@ use SprykerFeature\Zed\Payolution\Business\Api\Converter\Converter;
 class ConverterTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testFromArray()
     {
         $exporter = new Converter();

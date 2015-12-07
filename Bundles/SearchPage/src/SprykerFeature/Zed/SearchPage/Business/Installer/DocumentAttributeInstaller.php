@@ -53,6 +53,7 @@ class DocumentAttributeInstaller extends AbstractInstaller
     }
 
     /**
+     * @return void
      */
     public function install()
     {
@@ -95,6 +96,8 @@ class DocumentAttributeInstaller extends AbstractInstaller
      * @param array $documentAttributes
      *
      * @throws DocumentAttributeAlreadyExistsException
+     *
+     * @return void
      */
     private function installDocumentAttributes(array $documentAttributes)
     {

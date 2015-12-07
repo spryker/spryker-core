@@ -50,6 +50,9 @@ class TransferFacadeTest extends \PHPUnit_Framework_TestCase
         return $this->getMock('SprykerEngine\Shared\Kernel\Messenger\MessengerInterface');
     }
 
+    /**
+     * @return void
+     */
     public function testDeleteGeneratedTransferObjectsShouldDeleteAllGeneratedTransferObjects()
     {
         $this->getFacade()->deleteGeneratedTransferObjects();
@@ -59,6 +62,8 @@ class TransferFacadeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @depends testDeleteGeneratedTransferObjectsShouldDeleteAllGeneratedTransferObjects
+     *
+     * @return void
      */
     public function testGenerateTransferObjectsShouldGenerateTransferObjects()
     {

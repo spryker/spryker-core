@@ -99,6 +99,8 @@ class InMemory implements StorageInterface
     /**
      * @param array $wishlistIndex
      * @param ItemTransfer $itemToChange
+     *
+     * @return void
      */
     protected function decreaseByProductIdentifier(array $wishlistIndex, ItemTransfer $itemToChange)
     {
@@ -114,6 +116,8 @@ class InMemory implements StorageInterface
     /**
      * @param int $index
      * @param ItemTransfer $itemToChange
+     *
+     * @return void
      */
     protected function decreaseItem($index, ItemTransfer $itemToChange)
     {

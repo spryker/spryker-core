@@ -52,6 +52,9 @@ class AclTest extends Test
      */
     private $locator;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -146,6 +149,9 @@ class AclTest extends Test
         return $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
     }
 
+    /**
+     * @return void
+     */
     public function testAddGroup()
     {
         $data = $this->mockGroupData();
@@ -157,6 +163,9 @@ class AclTest extends Test
         $this->assertEquals($data['name'], $transfer->getName());
     }
 
+    /**
+     * @return void
+     */
     public function testUpdateGroup()
     {
         $groupData = $this->mockGroupData();
@@ -174,6 +183,9 @@ class AclTest extends Test
         $this->assertEquals($groupData2['name'], $dto2->getName());
     }
 
+    /**
+     * @return void
+     */
     public function testGetGroupById()
     {
         $groupData = $this->mockGroupData();
@@ -191,6 +203,9 @@ class AclTest extends Test
         $this->assertEquals($groupData['name'], $groupDto->getName());
     }
 
+    /**
+     * @return void
+     */
     public function testRemoveGroup()
     {
         $groupData = $this->mockGroupData();
@@ -206,6 +221,9 @@ class AclTest extends Test
         }
     }
 
+    /**
+     * @return void
+     */
     public function testAddRole()
     {
         $roleData = $this->mockRoleData();
@@ -218,6 +236,9 @@ class AclTest extends Test
         $this->assertEquals($roleData['name'], $roleDto->getName());
     }
 
+    /**
+     * @return void
+     */
     public function testRemoveRole()
     {
         $roleData = $this->mockRoleData();
@@ -235,6 +256,9 @@ class AclTest extends Test
         }
     }
 
+    /**
+     * @return void
+     */
     public function testAddRoleAndIsPresentInGroup()
     {
         $groupData = $this->mockGroupData();
@@ -247,6 +271,9 @@ class AclTest extends Test
         $this->assertEquals($roleData['name'], $transferRole->getName());
     }
 
+    /**
+     * @return void
+     */
     public function testAddRuleAndAddToRole()
     {
         $groupData = $this->mockGroupData();
@@ -273,6 +300,9 @@ class AclTest extends Test
         }
     }
 
+    /**
+     * @return void
+     */
     public function testGetRulesFromRoles()
     {
         $groupData = $this->mockGroupData();
@@ -298,6 +328,9 @@ class AclTest extends Test
         }
     }
 
+    /**
+     * @return void
+     */
     public function testGetRulesFromGroup()
     {
         $groupData = $this->mockGroupData();
@@ -323,6 +356,9 @@ class AclTest extends Test
         }
     }
 
+    /**
+     * @return void
+     */
     public function testRemoveRule()
     {
         $groupData = $this->mockGroupData();
@@ -349,6 +385,9 @@ class AclTest extends Test
         }
     }
 
+    /**
+     * @return void
+     */
     public function testAddUserToGroup()
     {
         $groupData = $this->mockGroupData();
@@ -360,6 +399,9 @@ class AclTest extends Test
         $this->assertEquals($added, 1);
     }
 
+    /**
+     * @return void
+     */
     public function testGetUserGroup()
     {
         $groupData = $this->mockGroupData();
@@ -382,6 +424,9 @@ class AclTest extends Test
         $this->assertEquals($groupData['name'], $groupDto->getName());
     }
 
+    /**
+     * @return void
+     */
     public function testCheckPermissionSimple()
     {
         $groupData = $this->mockGroupData();
@@ -414,6 +459,9 @@ class AclTest extends Test
         }
     }
 
+    /**
+     * @return void
+     */
     public function testCheckPermissionSimpleHasNoAccess()
     {
         $groupData = $this->mockGroupData();
@@ -442,6 +490,9 @@ class AclTest extends Test
         }
     }
 
+    /**
+     * @return void
+     */
     public function testCheckPermissionWildcards()
     {
         $groupData = $this->mockGroupData();
@@ -476,6 +527,9 @@ class AclTest extends Test
         }
     }
 
+    /**
+     * @return void
+     */
     public function testPermissionsWithSystemUser()
     {
         $systemUsers = $this->userFacade->getSystemUsers();
@@ -493,6 +547,9 @@ class AclTest extends Test
         }
     }
 
+    /**
+     * @return void
+     */
     public function testPermissionsWithSystemUserShouldNotAllow()
     {
         $systemUsers = $this->userFacade->getSystemUsers();

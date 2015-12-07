@@ -144,6 +144,9 @@ class IndexController extends AbstractController
         return $redis->connect();
     }
 
+    /**
+     * @return void
+     */
     public function redisAddAction()
     {
         $redis = $this->getClient();

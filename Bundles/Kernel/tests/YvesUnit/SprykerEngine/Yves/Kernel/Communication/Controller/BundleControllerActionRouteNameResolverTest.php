@@ -19,6 +19,9 @@ use SprykerEngine\Yves\Kernel\Communication\Controller\BundleControllerActionRou
 class BundleControllerActionRouteNameResolverTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testResolveShouldReturnResolvedRouteName()
     {
         $bundleControllerAction = new BundleControllerAction('Foo', 'Bar', 'baz');

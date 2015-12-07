@@ -20,7 +20,7 @@ class DeleteAllCachesConsole extends Console
     const DESCRIPTION = 'Deletes all cache files from /data/{Store}/cache for all stores';
 
     /**
-     *
+     * @return void
      */
     protected function configure()
     {

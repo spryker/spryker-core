@@ -12,6 +12,7 @@ class ExportSearch extends AbstractApplicationCheckStep
 {
 
     /**
+     * @return void
      */
     public function run()
     {

@@ -13,21 +13,33 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 class PropelFacade extends AbstractFacade
 {
 
+    /**
+     * @return void
+     */
     public function cleanPropelSchemaDirectory()
     {
         $this->getDependencyContainer()->createDirectoryRemover()->execute();
     }
 
+    /**
+     * @return void
+     */
     public function copySchemaFilesToTargetDirectory()
     {
         $this->getDependencyContainer()->createModelSchema()->copy();
     }
 
+    /**
+     * @return void
+     */
     public function adjustPropelSchemaFilesForPostgresql()
     {
         $this->getDependencyContainer()->createPostgresqlCompatibilityAdjuster()->adjustSchemaFiles();
     }
 
+    /**
+     * @return void
+     */
     public function adjustPostgresqlFunctions()
     {
         $this->getDependencyContainer()->createPostgresqlCompatibilityAdjuster()->addMissingFunctions();

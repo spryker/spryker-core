@@ -19,6 +19,8 @@ class CodeExistsValidator extends ConstraintValidator
      * @param Constraint|CodeExists $constraint The constraint for the validation
      *
      * @api
+     *
+     * @return void
      */
     public function validate($value, Constraint $constraint)
     {
@@ -39,6 +41,8 @@ class CodeExistsValidator extends ConstraintValidator
     /**
      * @param string $value
      * @param Constraint|CodeExists $constraint
+     *
+     * @return void
      */
     protected function addValidation($value, Constraint $constraint)
     {

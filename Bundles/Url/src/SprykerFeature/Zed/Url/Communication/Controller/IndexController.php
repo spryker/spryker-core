@@ -19,6 +19,8 @@ class IndexController extends AbstractController
 
     /**
      * indexAction
+     *
+     * @return void
      */
     public function indexAction()
     {

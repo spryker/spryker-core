@@ -18,6 +18,9 @@ use SprykerEngine\Client\Kernel\Container;
 class AbstractDependencyProviderTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testCallProvideServiceLayerDependenciesMustReturnContainer()
     {
         $container = new Container();

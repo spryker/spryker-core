@@ -64,6 +64,9 @@ class ProductCategoryFacadeTest extends AbstractFunctionalTest
      */
     protected $locator;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -88,6 +91,8 @@ class ProductCategoryFacadeTest extends AbstractFunctionalTest
 
     /**
      * @group ProductCategory
+     *
+     * @return void
      */
     public function testCreateAttributeTypeCreatesAndReturnsId()
     {

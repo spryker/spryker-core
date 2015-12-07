@@ -144,6 +144,8 @@ class UrlFacade extends AbstractFacade
 
     /**
      * @param int $idUrl
+     *
+     * @return void
      */
     public function touchUrlActive($idUrl)
     {
@@ -152,6 +154,8 @@ class UrlFacade extends AbstractFacade
 
     /**
      * @param int $idUrl
+     *
+     * @return void
      */
     public function touchUrlDeleted($idUrl)
     {
@@ -235,6 +239,8 @@ class UrlFacade extends AbstractFacade
 
     /**
      * @param RedirectTransfer $redirect
+     *
+     * @return void
      */
     public function touchRedirectActive(RedirectTransfer $redirect)
     {

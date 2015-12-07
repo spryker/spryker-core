@@ -32,11 +32,17 @@ class InstallElasticsearch extends AbstractInstaller
         $this->indexName = $indexName;
     }
 
+    /**
+     * @return void
+     */
     public function install()
     {
         $this->createIndex();
     }
 
+    /**
+     * @return void
+     */
     protected function createIndex()
     {
         $index = $this->client->getIndex($this->indexName);

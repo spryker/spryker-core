@@ -20,6 +20,9 @@ class RemoveGeneratedDirectoryConsole extends Console
     const COMMAND_NAME = 'setup:remove-generated-directory';
     const DESCRIPTION = 'Remove the directory where generated files are stored';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);

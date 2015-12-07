@@ -126,6 +126,8 @@ class TaskWorker implements LoggerAwareInterface, TaskWorkerInterface
     /**
      * @param int $timeout
      * @param int $fetchSize
+     *
+     * @return void
      */
     public function work($timeout = 10, $fetchSize = 10)
     {

@@ -12,6 +12,9 @@ use SprykerFeature\Zed\Library\Setup;
 class ReleaseExpiredLocksController extends AbstractController
 {
 
+    /**
+     * @return void
+     */
     public function indexAction()
     {
         $releasedLocksCount = $this->facadeMisc->releaseExpiredLocks();

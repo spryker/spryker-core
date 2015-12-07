@@ -18,6 +18,8 @@ class GroupKeyProductOptionHydrationPlugin extends AbstractPlugin implements Che
     /**
      * @param OrderTransfer $orderTransfer
      * @param CheckoutRequestTransfer $checkoutRequest
+     *
+     * @return void
      */
     public function hydrateOrder(OrderTransfer $orderTransfer, CheckoutRequestTransfer $checkoutRequest)
     {

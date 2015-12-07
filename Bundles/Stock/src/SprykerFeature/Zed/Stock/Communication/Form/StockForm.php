@@ -12,11 +12,17 @@ use Symfony\Component\Validator\Constraints as Assert;
 class StockForm extends AbstractForm
 {
 
+    /**
+     * @return void
+     */
     protected function buildFormFields()
     {
         // @todo: Implement buildFormFields() method.
     }
 
+    /**
+     * @return void
+     */
     protected function populateFormFields()
     {
         // @todo: Implement populateFormFields() method.

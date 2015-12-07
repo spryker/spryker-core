@@ -52,6 +52,9 @@ class GlossaryDistributorTest extends AbstractFunctionalTest
      */
     private $queueFacade;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -62,6 +65,9 @@ class GlossaryDistributorTest extends AbstractFunctionalTest
         $this->localeFacade = $this->getLocator()->locale()->facade();
     }
 
+    /**
+     * @return void
+     */
     public function testTouchTranslationItem()
     {
         $localeTransfer = $this->localeFacade->createLocale('xx_XX');
@@ -88,6 +94,9 @@ class GlossaryDistributorTest extends AbstractFunctionalTest
         $this->assertEquals(1, $touchItemResult);
     }
 
+    /**
+     * @return void
+     */
     public function testDistributeTranslationItems()
     {
         $localeTransfer = $this->localeFacade->createLocale('xx_XX');
@@ -178,6 +187,8 @@ class GlossaryDistributorTest extends AbstractFunctionalTest
      * @param $receiverKey
      *
      * @throws PropelException
+     *
+     * @return void
      */
     private function createReceiver($receiverKey)
     {

@@ -68,6 +68,8 @@ class GatewayController extends AbstractGatewayController
 
     /**
      * @param CustomerTransfer $customerTransfer
+     *
+     * @return void
      */
     public function deleteAction(CustomerTransfer $customerTransfer)
     {

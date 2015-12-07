@@ -30,6 +30,9 @@ class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
 
     const SESSION_DATA = 'sessionData';
 
+    /**
+     * @return void
+     */
     public function tearDown()
     {
         $filesystem = new Filesystem();
@@ -52,6 +55,9 @@ class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
         return $this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'Sessions';
     }
 
+    /**
+     * @return void
+     */
     public function testCallOpenMustCreateDirectoryIfNotExists()
     {
         $this->assertFalse(is_dir($this->getSavePath()));
@@ -62,6 +68,9 @@ class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue(is_dir($this->getSavePath()));
     }
 
+    /**
+     * @return void
+     */
     public function testCallOpenMustReturnTrue()
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
@@ -70,6 +79,9 @@ class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result);
     }
 
+    /**
+     * @return void
+     */
     public function testCallCloseMustReturnTrue()
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
@@ -78,6 +90,9 @@ class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result);
     }
 
+    /**
+     * @return void
+     */
     public function testCallWriteMustReturnFalseIfNoDataPassed()
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
@@ -87,6 +102,9 @@ class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($result);
     }
 
+    /**
+     * @return void
+     */
     public function testCallWriteMustReturnTrueWhenDataCanBeWrittenToFile()
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
@@ -96,6 +114,9 @@ class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result);
     }
 
+    /**
+     * @return void
+     */
     public function testCallReadMustReturnContentOfSessionForGivenSessionId()
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
@@ -107,6 +128,9 @@ class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(self::SESSION_DATA, $result);
     }
 
+    /**
+     * @return void
+     */
     public function testCallDestroyMustReturnFalseIfNoFileExistsForSessionId()
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
@@ -117,6 +141,9 @@ class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($result);
     }
 
+    /**
+     * @return void
+     */
     public function testCallDestroyMustReturnTrueIfFileExistsForSessionId()
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());
@@ -128,6 +155,9 @@ class SessionHandlerFileTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($result);
     }
 
+    /**
+     * @return void
+     */
     public function testCallGcMustDeleteFilesWhichAreOlderThenMaxLifetime()
     {
         $sessionHandlerFile = new SessionHandlerFile($this->getSavePath(), self::LIFETIME, $this->createNewRelicApiMock());

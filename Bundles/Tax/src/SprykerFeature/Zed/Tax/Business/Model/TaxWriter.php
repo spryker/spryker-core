@@ -237,6 +237,8 @@ class TaxWriter implements TaxWriterInterface
      * @param int $id
      *
      * @throws PropelException
+     *
+     * @return void
      */
     public function deleteTaxRate($id)
     {
@@ -251,6 +253,8 @@ class TaxWriter implements TaxWriterInterface
      * @param int $id
      *
      * @throws PropelException
+     *
+     * @return void
      */
     public function deleteTaxSet($id)
     {

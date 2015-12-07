@@ -206,6 +206,8 @@ class ProductFacade extends AbstractFacade
 
     /**
      * @param int $idAbstractProduct
+     *
+     * @return void
      */
     public function touchProductActive($idAbstractProduct)
     {
@@ -248,6 +250,8 @@ class ProductFacade extends AbstractFacade
 
     /**
      * @param MessengerInterface $messenger
+     *
+     * @return void
      */
     public function install(MessengerInterface $messenger = null)
     {

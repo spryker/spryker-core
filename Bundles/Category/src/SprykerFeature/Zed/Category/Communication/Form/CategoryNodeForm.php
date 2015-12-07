@@ -25,11 +25,17 @@ class CategoryNodeForm extends AbstractForm
     const CATEGORY_NAME = 'category_name';
     const PARENT_CATEGORY_NAME = 'parent_category_name';
 
+    /**
+     * @return void
+     */
     protected function buildFormFields()
     {
         // @todo: Implement buildFormFields() method.
     }
 
+    /**
+     * @return void
+     */
     protected function populateFormFields()
     {
         // @todo: Implement populateFormFields() method.
@@ -82,6 +88,9 @@ class CategoryNodeForm extends AbstractForm
         return [];
     }
 
+    /**
+     * @return void
+     */
     public function addFormFields()
     {
         $this->addField(self::ID_CATEGORY_NODE);

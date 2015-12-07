@@ -18,6 +18,8 @@ class BeforeBootExtension implements BeforeBootExtensionInterface
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function beforeBoot(Application $app)
     {

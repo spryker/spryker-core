@@ -62,6 +62,8 @@ class Application extends \Silex\Application
      *
      * @param RouterInterface $router The router
      * @param int $priority The priority of the router
+     *
+     * @return void
      */
     public function addRouter(RouterInterface $router, $priority = 0)
     {

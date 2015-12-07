@@ -23,6 +23,9 @@ class DirectoryRemover implements DirectoryRemoverInterface
         $this->directoryToRemove = $directoryToRemove;
     }
 
+    /**
+     * @return void
+     */
     public function execute()
     {
         $filesystem = new Filesystem();

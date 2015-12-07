@@ -22,6 +22,8 @@ class NotGatewayController
     /**
      * @param TransferInterface $foo
      * @param int $bar
+     *
+     * @return void
      */
     public function bazAction(TransferInterface $foo, $bar = 0)
     {

@@ -60,6 +60,8 @@ class SystemUnderTestBootstrap
      *
      * @throws \ErrorException
      * @throws \Exception
+     *
+     * @return void
      */
     public function bootstrap($application = self::APPLICATION_ZED)
     {
@@ -90,6 +92,8 @@ class SystemUnderTestBootstrap
      * @param $application
      *
      * @throws \Exception
+     *
+     * @return void
      */
     protected function validateApplication($application)
     {
@@ -98,6 +102,9 @@ class SystemUnderTestBootstrap
         }
     }
 
+    /**
+     * @return void
+     */
     protected function bootstrapZed()
     {
         $application = new ZedBootstrap();
@@ -111,6 +118,8 @@ class SystemUnderTestBootstrap
 
     /**
      * @TODO do we need to bootstrap Yves in a test case?
+     *
+     * @return void
      */
     protected function bootstrapYves()
     {
@@ -124,6 +133,8 @@ class SystemUnderTestBootstrap
 
     /**
      * @param $locator
+     *
+     * @return void
      */
     private function resetLocator(LocatorLocatorInterface $locator)
     {

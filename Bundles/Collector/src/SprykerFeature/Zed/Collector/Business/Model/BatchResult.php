@@ -66,6 +66,8 @@ class BatchResult implements BatchResultInterface
 
     /**
      * @param int $fetchedCount
+     *
+     * @return void
      */
     public function setFetchedCount($fetchedCount)
     {
@@ -82,6 +84,8 @@ class BatchResult implements BatchResultInterface
 
     /**
      * @param int $processedCount
+     *
+     * @return void
      */
     public function setProcessedCount($processedCount)
     {
@@ -98,6 +102,8 @@ class BatchResult implements BatchResultInterface
 
     /**
      * @param int $totalCount
+     *
+     * @return void
      */
     public function setTotalCount($totalCount)
     {
@@ -106,6 +112,8 @@ class BatchResult implements BatchResultInterface
 
     /**
      * @param FailedResultInterface $failed
+     *
+     * @return void
      */
     public function addFailedResult(FailedResultInterface $failed)
     {
@@ -131,6 +139,8 @@ class BatchResult implements BatchResultInterface
 
     /**
      * @param int $increment
+     *
+     * @return void
      */
     public function increaseProcessed($increment = 1)
     {
@@ -147,6 +157,8 @@ class BatchResult implements BatchResultInterface
 
     /**
      * @param bool $failed
+     *
+     * @return void
      */
     public function setIsFailed($failed = true)
     {
@@ -163,6 +175,8 @@ class BatchResult implements BatchResultInterface
 
     /**
      * @param LocaleTransfer $processedLocale
+     *
+     * @return void
      */
     public function setProcessedLocale(LocaleTransfer $processedLocale)
     {
@@ -171,6 +185,8 @@ class BatchResult implements BatchResultInterface
 
     /**
      * @param int $amount
+     *
+     * @return void
      */
     public function increaseProcessedCount($amount)
     {
@@ -187,6 +203,8 @@ class BatchResult implements BatchResultInterface
 
     /**
      * @param int $deletedCount
+     *
+     * @return void
      */
     public function setDeletedCount($deletedCount)
     {
@@ -195,6 +213,8 @@ class BatchResult implements BatchResultInterface
 
     /**
      * @param int $amount
+     *
+     * @return void
      */
     public function increaseDeletedCount($amount)
     {

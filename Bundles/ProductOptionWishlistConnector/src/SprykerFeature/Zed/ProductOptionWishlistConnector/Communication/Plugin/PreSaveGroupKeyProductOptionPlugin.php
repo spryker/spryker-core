@@ -15,6 +15,8 @@ class PreSaveGroupKeyProductOptionPlugin extends AbstractPlugin implements PreSa
 
     /**
      * @param \ArrayObject $items
+     *
+     * @return void
      */
     public function trigger(\ArrayObject $items)
     {

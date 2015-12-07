@@ -21,6 +21,9 @@ class CollectorResolverTest extends Test
     const COLLECTOR_1 = 'COLLECTOR_1';
     const COLLECTOR_2 = 'COLLECTOR_2';
 
+    /**
+     * @return void
+     */
     public function testWhenANDConditionUsedWithCollectorsProvidingDifferentItemsThenNoItemsReturned()
     {
         $calculableContainer = $this->createCalculableContainer();
@@ -43,6 +46,9 @@ class CollectorResolverTest extends Test
         $this->assertCount(0, $collectedItems);
     }
 
+    /**
+     * @return void
+     */
     public function testWhenANDConditionUsedWithCollectorsProvidingSameItemsThenMatchedItemReturned()
     {
         $calculableContainer = $this->createCalculableContainer();
@@ -64,6 +70,9 @@ class CollectorResolverTest extends Test
         $this->assertCount(1, $collectedItems);
     }
 
+    /**
+     * @return void
+     */
     public function testWhenORConditionUsedWithDifferentItemsThenItShouldReturnAllCollectorItems()
     {
         $calculableContainer = $this->createCalculableContainer();
@@ -86,6 +95,9 @@ class CollectorResolverTest extends Test
         $this->assertCount(2, $collectedItems);
     }
 
+    /**
+     * @return void
+     */
     public function testWhenFirstCollectorEmptyAndANDConditionUsedShouldBeNoItemsCollected()
     {
         $calculableContainer = $this->createCalculableContainer();

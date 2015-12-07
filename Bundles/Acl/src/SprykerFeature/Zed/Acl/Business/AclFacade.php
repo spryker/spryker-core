@@ -23,6 +23,8 @@ class AclFacade extends AbstractFacade
 
     /**
      * Main Installer Method
+     *
+     * @return void
      */
     public function install()
     {
@@ -232,6 +234,8 @@ class AclFacade extends AbstractFacade
     /**
      * @param int $idUser
      * @param int $idGroup
+     *
+     * @return void
      */
     public function removeUserFromGroup($idUser, $idGroup)
     {
@@ -367,6 +371,8 @@ class AclFacade extends AbstractFacade
     /**
      * @param GroupTransfer $groupTransfer
      * @param RolesTransfer $rolesTransfer
+     *
+     * @return void
      */
     public function addRolesToGroup(GroupTransfer $groupTransfer, RolesTransfer $rolesTransfer)
     {

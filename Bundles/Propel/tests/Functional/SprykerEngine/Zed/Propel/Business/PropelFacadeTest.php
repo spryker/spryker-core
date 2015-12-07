@@ -47,6 +47,9 @@ class PropelFacadeTest extends \PHPUnit_Framework_TestCase
         return new PropelConfig(Config::getInstance(), $this->getLocator());
     }
 
+    /**
+     * @return void
+     */
     public function testCleanPropelSchemaDirectoryShouldRemoveSchemaDirectoryAndAllFilesInIt()
     {
         $this->assertTrue(is_dir($this->getConfig()->getSchemaDirectory()));
@@ -54,6 +57,9 @@ class PropelFacadeTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse(is_dir($this->getConfig()->getSchemaDirectory()));
     }
 
+    /**
+     * @return void
+     */
     public function testCopySchemaFilesToTargetDirectoryShouldCollectAllSchemaFilesMergeAndCopyThemToSpecifiedDirectory()
     {
         $this->assertFalse(is_dir($this->getConfig()->getSchemaDirectory()));

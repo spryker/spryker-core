@@ -24,6 +24,9 @@ class SkuGroupKeyPluginTest extends \PHPUnit_Framework_TestCase
 
     const SKU = 'sku';
 
+    /**
+     * @return void
+     */
     public function testExpandItemMustSetGroupKeyToSkuOfGivenProductWhenNoGroupKeyIsSet()
     {
         $itemTransfer = new ItemTransfer();
@@ -38,6 +41,9 @@ class SkuGroupKeyPluginTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(self::SKU, $changeTransfer->getItems()[0]->getGroupKey());
     }
 
+    /**
+     * @return void
+     */
     public function testExpandItemMustNotChangeGroupKeyWhenGroupKeyIsSet()
     {
         $itemTransfer = new ItemTransfer();

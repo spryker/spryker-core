@@ -18,11 +18,17 @@ class PriceGrid extends AbstractTable
     const SKU = 'sku_product';
     const IS_ACTIVE = 'is_active';
 
+    /**
+     * @return void
+     */
     protected function configure(TableConfiguration $config)
     {
         // @todo: Implement configure() method.
     }
 
+    /**
+     * @return void
+     */
     protected function prepareData(TableConfiguration $config)
     {
         // @todo: Implement prepareData() method.

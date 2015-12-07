@@ -50,6 +50,8 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
 
     /**
      * @param Container $container
+     *
+     * @return void
      */
     public function setContainer(Container $container)
     {
@@ -58,6 +60,8 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
 
     /**
      * @param Container $container
+     *
+     * @return void
      */
     public function setExternalDependencies(Container $container)
     {

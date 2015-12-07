@@ -191,6 +191,8 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
 
     /**
      * @param string $property
+     *
+     * @return void
      */
     protected function addModifiedProperty($property)
     {
@@ -267,6 +269,8 @@ abstract class AbstractTransfer extends \ArrayObject implements TransferInterfac
      * @param bool $ignoreMissingProperty
      *
      * @throws \InvalidArgumentException
+     *
+     * @return void
      */
     private function callSetMethod($property, $value, $ignoreMissingProperty)
     {

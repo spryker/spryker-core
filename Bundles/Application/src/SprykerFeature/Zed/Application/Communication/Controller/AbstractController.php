@@ -75,6 +75,8 @@ abstract class AbstractController
 
     /**
      * @param Container $container
+     *
+     * @return void
      */
     public function setExternalDependencies(Container $container)
     {
@@ -96,6 +98,8 @@ abstract class AbstractController
      * TODO move to constructor
      *
      * @param AbstractFacade $facade
+     *
+     * @return void
      */
     public function setOwnFacade(AbstractFacade $facade)
     {
@@ -106,6 +110,8 @@ abstract class AbstractController
      * TODO move to constructor
      *
      * @param AbstractQueryContainer $queryContainer
+     *
+     * @return void
      */
     public function setOwnQueryContainer(AbstractQueryContainer $queryContainer)
     {
@@ -233,6 +239,7 @@ abstract class AbstractController
     }
 
     /**
+     * @return void
      */
     protected function clearBreadcrumbs()
     {
@@ -265,6 +272,8 @@ abstract class AbstractController
     /**
      * @param string $label
      * @param string $uri
+     *
+     * @return void
      */
     protected function addBreadcrumb($label, $uri)
     {
@@ -286,6 +295,8 @@ abstract class AbstractController
 
     /**
      * @param string $uri
+     *
+     * @return void
      */
     protected function setMenuHighlight($uri)
     {

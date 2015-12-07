@@ -38,6 +38,8 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function register(Application $app)
     {
@@ -45,6 +47,8 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function boot(Application $app)
     {
@@ -111,6 +115,8 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
      * @param StandardServiceContainer $serviceContainer
      *
      * @throws \ErrorException
+     *
+     * @return void
      */
     private function addLogger(StandardServiceContainer $serviceContainer)
     {

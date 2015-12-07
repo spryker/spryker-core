@@ -82,6 +82,8 @@ class StockFacade extends AbstractFacade implements AvailabilityToStockFacadeInt
      * @param string $sku
      * @param int $decrementBy
      * @param string $stockType
+     *
+     * @return void
      */
     public function decrementStockProduct($sku, $stockType, $decrementBy = 1)
     {
@@ -92,6 +94,8 @@ class StockFacade extends AbstractFacade implements AvailabilityToStockFacadeInt
      * @param string $sku
      * @param int $incrementBy
      * @param string $stockType
+     *
+     * @return void
      */
     public function incrementStockProduct($sku, $stockType, $incrementBy = 1)
     {

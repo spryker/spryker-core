@@ -24,6 +24,8 @@ class FinancingContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param string $financingtype
+     *
+     * @return void
      */
     public function setFinancingType($financingtype)
     {
@@ -40,6 +42,8 @@ class FinancingContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\RedirectContainer $redirect
+     *
+     * @return void
      */
     public function setRedirect(RedirectContainer $redirect)
     {

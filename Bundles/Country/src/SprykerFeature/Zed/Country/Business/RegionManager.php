@@ -53,6 +53,8 @@ class RegionManager implements RegionManagerInterface
      * @param string $isoCode
      *
      * @throws RegionExistsException
+     *
+     * @return void
      */
     protected function checkRegionDoesNotExist($isoCode)
     {

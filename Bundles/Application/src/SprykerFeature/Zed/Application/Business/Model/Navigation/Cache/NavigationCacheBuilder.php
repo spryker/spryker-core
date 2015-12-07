@@ -31,6 +31,9 @@ class NavigationCacheBuilder
         $this->navigationCache = $navigationCache;
     }
 
+    /**
+     * @return void
+     */
     public function writeNavigationCache()
     {
         $navigation = $this->navigationCollector->getNavigation();

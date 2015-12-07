@@ -19,6 +19,8 @@ class DiscountCalculationConnectorFacade extends AbstractFacade
      * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $discountableContainer
      * @param \ArrayObject $discountableContainers
+     *
+     * @return void
      */
     public function recalculateDiscountTotals(
         TotalsTransfer $totalsTransfer,
@@ -33,6 +35,8 @@ class DiscountCalculationConnectorFacade extends AbstractFacade
      * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $container
      * @param \ArrayObject $items
+     *
+     * @return void
      */
     public function recalculateGrandTotalWithDiscountsTotals(
         TotalsTransfer $totalsTransfer,
@@ -45,6 +49,8 @@ class DiscountCalculationConnectorFacade extends AbstractFacade
 
     /**
      * @param CalculableInterface $container
+     *
+     * @return void
      */
     public function recalculateRemoveAllCalculatedDiscounts(CalculableInterface $container)
     {

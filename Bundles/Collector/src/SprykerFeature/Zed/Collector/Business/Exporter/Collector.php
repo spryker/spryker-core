@@ -73,6 +73,8 @@ class Collector
 
     /**
      * @param BatchResultInterface $result
+     *
+     * @return void
      */
     protected function handleResult(BatchResultInterface $result)
     {

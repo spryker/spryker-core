@@ -41,6 +41,9 @@ class InstalledPackageCollector implements InstalledPackageCollectorInterface
         return $this->installedPackageCollection;
     }
 
+    /**
+     * @return void
+     */
     private function executeFinder()
     {
         foreach ($this->installedPackageFinder as $finder) {

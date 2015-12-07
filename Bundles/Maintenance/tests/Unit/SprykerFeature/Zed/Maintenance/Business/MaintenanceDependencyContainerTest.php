@@ -34,6 +34,9 @@ class MaintenanceDependencyContainerTest extends \PHPUnit_Framework_TestCase
         return new MaintenanceDependencyContainer($factory, Locator::getInstance(), $config);
     }
 
+    /**
+     * @return void
+     */
     public function testCreatePackageCollectorShouldReturnFullConfiguredInstance()
     {
         $this->assertInstanceOf(
@@ -42,6 +45,9 @@ class MaintenanceDependencyContainerTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @return void
+     */
     public function testCreateMarkDownWriterShouldReturnFullConfiguredInstance()
     {
         $this->assertInstanceOf(

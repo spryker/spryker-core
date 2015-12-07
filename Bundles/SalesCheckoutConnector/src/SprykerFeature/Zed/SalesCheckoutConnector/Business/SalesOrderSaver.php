@@ -29,6 +29,8 @@ class SalesOrderSaver implements SalesOrderSaverInterface
     /**
      * @param OrderTransfer $order
      * @param CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
      */
     public function saveOrder(OrderTransfer $order, CheckoutResponseTransfer $checkoutResponse)
     {

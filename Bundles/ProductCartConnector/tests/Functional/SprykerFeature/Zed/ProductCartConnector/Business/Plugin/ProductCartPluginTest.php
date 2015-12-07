@@ -57,6 +57,9 @@ class ProductCartPluginTest extends AbstractFunctionalTest
      */
     private $locator;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -67,6 +70,9 @@ class ProductCartPluginTest extends AbstractFunctionalTest
         $this->productCartConnectorFacade = $this->getFacade();
     }
 
+    /**
+     * @return void
+     */
     public function testPluginExpandsCartItemWithExpectedProductData()
     {
         $localeName = Store::getInstance()->getCurrentLocale();

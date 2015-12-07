@@ -18,6 +18,8 @@ class Simulator extends AbstractHttpAdapter
 
     /**
      * @param array $rawResponse
+     *
+     * @return void
      */
     public function setRawResponseAsArray(array $rawResponse)
     {
@@ -26,6 +28,8 @@ class Simulator extends AbstractHttpAdapter
 
     /**
      * @param string $rawResponse
+     *
+     * @return void
      */
     public function setRawResponseAsString($rawResponse)
     {

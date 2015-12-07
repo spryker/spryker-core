@@ -35,6 +35,9 @@ class TransferGenerator
         $this->definitionBuilder = $definitionBuilder;
     }
 
+    /**
+     * @return void
+     */
     public function execute()
     {
         $definitions = $this->definitionBuilder->getDefinitions();

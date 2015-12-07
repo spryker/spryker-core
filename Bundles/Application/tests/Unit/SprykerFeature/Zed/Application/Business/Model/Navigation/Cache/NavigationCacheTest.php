@@ -18,6 +18,9 @@ use SprykerFeature\Zed\Application\Business\Model\Navigation\Cache\NavigationCac
 class NavigationCacheTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function tearDown()
     {
         parent::tearDown();
@@ -36,6 +39,9 @@ class NavigationCacheTest extends \PHPUnit_Framework_TestCase
         return __DIR__ . 'navigation.cache';
     }
 
+    /**
+     * @return void
+     */
     public function testIsNavigationCacheEnabledMustReturnFalseIfItIsNotEnabled()
     {
         $isEnabled = false;
@@ -44,6 +50,9 @@ class NavigationCacheTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($navigationCache->isEnabled());
     }
 
+    /**
+     * @return void
+     */
     public function testIsNavigationCacheEnabledMustReturnFalseIfItIsEnabledButCacheFileDoesNotExist()
     {
         $isEnabled = true;
@@ -52,6 +61,9 @@ class NavigationCacheTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($navigationCache->isEnabled());
     }
 
+    /**
+     * @return void
+     */
     public function testIsNavigationCacheEnabledMustReturnFalseIfItNotEnabledButCacheFileExist()
     {
         $isEnabled = false;
@@ -60,6 +72,9 @@ class NavigationCacheTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($navigationCache->isEnabled());
     }
 
+    /**
+     * @return void
+     */
     public function testIsNavigationCacheEnabledMustReturnTrueIfEnabledAndCacheFileExist()
     {
         $isEnabled = true;
@@ -68,6 +83,9 @@ class NavigationCacheTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($navigationCache->isEnabled());
     }
 
+    /**
+     * @return void
+     */
     public function testSetMustSerializeGivenNavigationDataIntoFile()
     {
         $cacheFile = $this->getCacheFile();
@@ -82,6 +100,9 @@ class NavigationCacheTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($navigationCache->isEnabled());
     }
 
+    /**
+     * @return void
+     */
     public function testGetMustReturnUnSerializedNavigationDataFromFile()
     {
         $cacheFile = $this->getCacheFile();

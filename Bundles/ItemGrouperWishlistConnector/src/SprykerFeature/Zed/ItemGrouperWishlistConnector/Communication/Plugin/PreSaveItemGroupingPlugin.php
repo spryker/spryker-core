@@ -20,6 +20,8 @@ class PreSaveItemGroupingPlugin extends AbstractPlugin implements PreSavePluginI
 
     /**
      * @param ItemTransfer[] $itemsCollection
+     *
+     * @return void
      */
     public function trigger(\ArrayObject $itemsCollection)
     {

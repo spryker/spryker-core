@@ -16,6 +16,8 @@ class RoutingServiceProvider extends AbstractPlugin implements ServiceProviderIn
 
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
     public function register(Application $app)
     {
@@ -34,6 +36,8 @@ class RoutingServiceProvider extends AbstractPlugin implements ServiceProviderIn
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function boot(Application $app)
     {

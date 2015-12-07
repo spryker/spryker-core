@@ -110,6 +110,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearing_bankaccount
+     *
+     * @return void
      */
     public function setClearingBankaccount($clearing_bankaccount)
     {
@@ -126,6 +128,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearing_bankaccountholder
+     *
+     * @return void
      */
     public function setClearingBankaccountholder($clearing_bankaccountholder)
     {
@@ -142,6 +146,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearing_bankbic
+     *
+     * @return void
      */
     public function setClearingBankbic($clearing_bankbic)
     {
@@ -158,6 +164,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearing_bankcity
+     *
+     * @return void
      */
     public function setClearingBankcity($clearing_bankcity)
     {
@@ -174,6 +182,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearing_bankcode
+     *
+     * @return void
      */
     public function setClearingBankcode($clearing_bankcode)
     {
@@ -190,6 +200,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearing_bankcountry
+     *
+     * @return void
      */
     public function setClearingBankcountry($clearing_bankcountry)
     {
@@ -206,6 +218,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearing_bankiban
+     *
+     * @return void
      */
     public function setClearingBankiban($clearing_bankiban)
     {
@@ -222,6 +236,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearing_bankname
+     *
+     * @return void
      */
     public function setClearingBankname($clearing_bankname)
     {
@@ -238,6 +254,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $settleaccount
+     *
+     * @return void
      */
     public function setSettleaccount($settleaccount)
     {
@@ -254,6 +272,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param int $txid
+     *
+     * @return void
      */
     public function setTxid($txid)
     {
@@ -270,6 +290,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearing_duedate
+     *
+     * @return void
      */
     public function setClearingDuedate($clearing_duedate)
     {
@@ -286,6 +308,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearing_instructionnote
+     *
+     * @return void
      */
     public function setClearingInstructionnote($clearing_instructionnote)
     {
@@ -302,6 +326,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearing_legalnote
+     *
+     * @return void
      */
     public function setClearingLegalnote($clearing_legalnote)
     {
@@ -318,6 +344,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearing_reference
+     *
+     * @return void
      */
     public function setClearingReference($clearing_reference)
     {
@@ -334,6 +362,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $creditorCity
+     *
+     * @return void
      */
     public function setCreditorCity($creditorCity)
     {
@@ -350,6 +380,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $creditorCountry
+     *
+     * @return void
      */
     public function setCreditorCountry($creditorCountry)
     {
@@ -366,6 +398,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $creditorEmail
+     *
+     * @return void
      */
     public function setCreditorEmail($creditorEmail)
     {
@@ -382,6 +416,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $creditorIdentifier
+     *
+     * @return void
      */
     public function setCreditorIdentifier($creditorIdentifier)
     {
@@ -398,6 +434,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $creditorName
+     *
+     * @return void
      */
     public function setCreditorName($creditorName)
     {
@@ -414,6 +452,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $creditorStreet
+     *
+     * @return void
      */
     public function setCreditorStreet($creditorStreet)
     {
@@ -430,6 +470,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $creditorZip
+     *
+     * @return void
      */
     public function setCreditorZip($creditorZip)
     {
@@ -446,6 +488,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $mandateIdentification
+     *
+     * @return void
      */
     public function setMandateIdentification($mandateIdentification)
     {
@@ -462,6 +506,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearingAmount
+     *
+     * @return void
      */
     public function setClearingAmount($clearingAmount)
     {
@@ -478,6 +524,8 @@ class CaptureResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $clearingDate
+     *
+     * @return void
      */
     public function setClearingDate($clearingDate)
     {

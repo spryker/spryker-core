@@ -227,6 +227,8 @@ class Propel implements StorageInterface
 
     /**
      * @param SpyWishlistItem $wishlistItemEntity
+     *
+     * @return void
      */
     protected function deleteWishlistItem(SpyWishlistItem $wishlistItemEntity)
     {
@@ -236,6 +238,8 @@ class Propel implements StorageInterface
     /**
      * @param SpyWishlistItem $wishlistItemEntity
      * @param ItemTransfer $wishlistItemTransfer
+     *
+     * @return void
      */
     protected function updateWishlistItem(SpyWishlistItem $wishlistItemEntity, ItemTransfer $wishlistItemTransfer)
     {

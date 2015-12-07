@@ -12,6 +12,9 @@ use Symfony\Component\Process\Process;
 class Environment
 {
 
+    /**
+     * @return void
+     */
     public static function initialize()
     {
         defined('APPLICATION_ROOT_DIR')
@@ -34,6 +37,9 @@ class Environment
         SprykerEnvironment::initialize(APPLICATION, true);
     }
 
+    /**
+     * @return void
+     */
     private static function buildClassMapIfNotPresent()
     {
         if (!file_exists(APPLICATION_ROOT_DIR . DIRECTORY_SEPARATOR . '.class_map')) {

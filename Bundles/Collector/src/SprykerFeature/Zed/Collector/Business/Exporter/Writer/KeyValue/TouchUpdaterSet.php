@@ -34,6 +34,8 @@ class TouchUpdaterSet
 
     /**
      * @param array $data
+     *
+     * @return void
      */
     public function setData($data)
     {
@@ -44,6 +46,8 @@ class TouchUpdaterSet
      * @param $key
      * @param $idTouch
      * @param null $data
+     *
+     * @return void
      */
     public function add($key, $idTouch, $data = null)
     {

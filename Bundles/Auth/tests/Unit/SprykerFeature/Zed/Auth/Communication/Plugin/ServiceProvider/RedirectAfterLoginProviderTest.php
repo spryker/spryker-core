@@ -27,6 +27,9 @@ class RedirectAfterLoginProviderTest extends AbstractUnitTest
 
     const VALID_REDIRECT_URL = '/valid-redirect-url';
 
+    /**
+     * @return void
+     */
     public function testOnKernelRequestMustNotStoreRequestUriIfRequestIsNotGetRequest()
     {
         $kernel = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');
@@ -41,6 +44,9 @@ class RedirectAfterLoginProviderTest extends AbstractUnitTest
         $this->assertFalse($request->getSession()->has(RedirectAfterLoginProvider::REQUEST_URI));
     }
 
+    /**
+     * @return void
+     */
     public function testOnKernelRequestMustNotStoreRequestUriIfUserIsAuthenticated()
     {
         $kernel = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');
@@ -59,6 +65,9 @@ class RedirectAfterLoginProviderTest extends AbstractUnitTest
         $this->assertFalse($request->getSession()->has(RedirectAfterLoginProvider::REQUEST_URI));
     }
 
+    /**
+     * @return void
+     */
     public function testOnKernelRequestMustNotStoreRequestUriIfRequestUriIsLoginUri()
     {
         $kernel = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');
@@ -80,6 +89,9 @@ class RedirectAfterLoginProviderTest extends AbstractUnitTest
         $this->assertFalse($request->getSession()->has(RedirectAfterLoginProvider::REQUEST_URI));
     }
 
+    /**
+     * @return void
+     */
     public function testOnKernelRequestMustNotStoreRequestUriIfRequestUriIsProfilerUri()
     {
         $kernel = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');
@@ -101,6 +113,9 @@ class RedirectAfterLoginProviderTest extends AbstractUnitTest
         $this->assertFalse($request->getSession()->has(RedirectAfterLoginProvider::REQUEST_URI));
     }
 
+    /**
+     * @return void
+     */
     public function testOnKernelRequestMustStoreRequestUriIfCanRedirectAfterLogin()
     {
         $kernel = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');
@@ -122,6 +137,9 @@ class RedirectAfterLoginProviderTest extends AbstractUnitTest
         $this->assertSame(self::VALID_REDIRECT_URL, $request->getSession()->get(RedirectAfterLoginProvider::REQUEST_URI));
     }
 
+    /**
+     * @return void
+     */
     public function testOnKernelResponseShouldNotChangeResponseIfRedirectUriNotSetInSession()
     {
         $kernel = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');
@@ -136,6 +154,9 @@ class RedirectAfterLoginProviderTest extends AbstractUnitTest
         $this->assertSame($response, $event->getResponse());
     }
 
+    /**
+     * @return void
+     */
     public function testOnKernelResponseShouldNotChangeResponseIfUserNotAuthenticated()
     {
         $kernel = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');
@@ -155,6 +176,9 @@ class RedirectAfterLoginProviderTest extends AbstractUnitTest
         $this->assertSame($response, $event->getResponse());
     }
 
+    /**
+     * @return void
+     */
     public function testOnKernelResponseMustSetRedirectResponseIfRedirectUriSetInSessionAndUserIsAuthenticated()
     {
         $kernel = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');
@@ -174,6 +198,9 @@ class RedirectAfterLoginProviderTest extends AbstractUnitTest
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\RedirectResponse', $event->getResponse());
     }
 
+    /**
+     * @return void
+     */
     public function testOnKernelResponseMustUnsetRedirectUriInSessionIfRedirectUriSetInSessionAndUserIsAuthenticated()
     {
         $kernel = $this->getMock('Symfony\Component\HttpKernel\HttpKernelInterface');

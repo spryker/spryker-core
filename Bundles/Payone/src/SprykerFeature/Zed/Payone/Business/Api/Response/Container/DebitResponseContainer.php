@@ -20,6 +20,8 @@ class DebitResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $settleaccount
+     *
+     * @return void
      */
     public function setSettleaccount($settleaccount)
     {
@@ -36,6 +38,8 @@ class DebitResponseContainer extends AbstractResponseContainer
 
     /**
      * @param int $txid
+     *
+     * @return void
      */
     public function setTxid($txid)
     {

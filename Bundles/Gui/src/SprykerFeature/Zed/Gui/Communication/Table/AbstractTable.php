@@ -114,6 +114,8 @@ abstract class AbstractTable
 
     /**
      * @param DataTablesTransfer $dataTablesTransfer
+     *
+     * @return void
      */
     public function setDataTablesTransfer($dataTablesTransfer)
     {
@@ -140,6 +142,9 @@ abstract class AbstractTable
         return $this;
     }
 
+    /**
+     * @return void
+     */
     public function disableSearch()
     {
         $this->tableClass .= self::TABLE_CLASS_NO_SEARCH_SUFFIX;
@@ -173,6 +178,8 @@ abstract class AbstractTable
 
     /**
      * @param TableConfiguration $config
+     *
+     * @return void
      */
     public function setConfiguration(TableConfiguration $config)
     {
@@ -181,6 +188,8 @@ abstract class AbstractTable
 
     /**
      * @param array $data
+     *
+     * @return void
      */
     public function loadData(array $data)
     {
@@ -220,6 +229,8 @@ abstract class AbstractTable
 
     /**
      * @param array $data
+     *
+     * @return void
      */
     public function setData(array $data)
     {
@@ -268,6 +279,8 @@ abstract class AbstractTable
 
     /**
      * @param null $tableIdentifier
+     *
+     * @return void
      */
     public function setTableIdentifier($tableIdentifier)
     {
@@ -523,6 +536,8 @@ abstract class AbstractTable
 
     /**
      * @param int $total
+     *
+     * @return void
      */
     protected function setTotal($total)
     {
@@ -531,6 +546,8 @@ abstract class AbstractTable
 
     /**
      * @param bool $filtered
+     *
+     * @return void
      */
     protected function setFiltered($filtered)
     {

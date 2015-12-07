@@ -21,6 +21,9 @@ use Symfony\Component\Filesystem\Filesystem;
 class MarkDownWriterTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -28,6 +31,9 @@ class MarkDownWriterTest extends \PHPUnit_Framework_TestCase
         mkdir($this->getFixtureDirectory());
     }
 
+    /**
+     * @return void
+     */
     public function tearDown()
     {
         parent::tearDown();
@@ -42,6 +48,9 @@ class MarkDownWriterTest extends \PHPUnit_Framework_TestCase
         return __DIR__ . DIRECTORY_SEPARATOR . 'Fixtures';
     }
 
+    /**
+     * @return void
+     */
     public function testCallWriteShouldCreateMarkDownFile()
     {
         $collection = new InstalledPackagesTransfer();
@@ -60,6 +69,9 @@ class MarkDownWriterTest extends \PHPUnit_Framework_TestCase
         $this->assertFileExists($this->getFixtureDirectory() . DIRECTORY_SEPARATOR . 'Foss.md');
     }
 
+    /**
+     * @return void
+     */
     private function cleanUpFixtureDirectory()
     {
         $filesystem = new Filesystem();

@@ -21,6 +21,8 @@ class SessionClient extends AbstractClient implements SessionClientInterface
 
     /**
      * @param SessionInterface $container
+     *
+     * @return void
      */
     public function setContainer(SessionInterface $container)
     {

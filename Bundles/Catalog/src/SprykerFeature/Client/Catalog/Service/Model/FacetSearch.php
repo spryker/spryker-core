@@ -86,6 +86,8 @@ class FacetSearch extends AbstractSearch
 
     /**
      * @param Query $query
+     *
+     * @return void
      */
     protected function addCategoryFilterToQuery(Query $query)
     {

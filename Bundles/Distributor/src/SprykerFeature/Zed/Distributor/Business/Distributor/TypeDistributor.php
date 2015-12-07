@@ -50,6 +50,8 @@ class TypeDistributor
     /**
      * @param MessengerInterface $messenger
      * @param array $itemTypes
+     *
+     * @return void
      */
     public function distributeData(MessengerInterface $messenger = null, $itemTypes = [])
     {
@@ -81,6 +83,8 @@ class TypeDistributor
 
     /**
      * @param DistributorQueryExpanderPluginInterface $queryExpander
+     *
+     * @return void
      */
     public function addQueryExpander(DistributorQueryExpanderPluginInterface $queryExpander)
     {

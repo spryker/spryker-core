@@ -32,6 +32,9 @@ class TouchTest extends AbstractFunctionalTest
      */
     protected $touchQueryContainer;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -40,6 +43,9 @@ class TouchTest extends AbstractFunctionalTest
         $this->touchQueryContainer = new TouchQueryContainer(new Factory('Touch'), $locator);
     }
 
+    /**
+     * @return void
+     */
     public function testTouchActiveInsertsSomething()
     {
         $touchEntityQuery = $this->touchQueryContainer->queryTouchListByItemType('ProductTranslationWhatever');
@@ -51,6 +57,9 @@ class TouchTest extends AbstractFunctionalTest
         $this->assertTrue($touchCountAfterTouch > $touchCountBeforeTouch);
     }
 
+    /**
+     * @return void
+     */
     public function testTouchInactiveInsertsSomething()
     {
         $touchEntityQuery = $this->touchQueryContainer->queryTouchListByItemType('ProductTranslationWhatever');
@@ -62,6 +71,9 @@ class TouchTest extends AbstractFunctionalTest
         $this->assertTrue($touchCountAfterTouch > $touchCountBeforeTouch);
     }
 
+    /**
+     * @return void
+     */
     public function testTouchDeletedInsertsSomething()
     {
         $touchEntityQuery = $this->touchQueryContainer->queryTouchListByItemType('ProductTranslationWhatever');

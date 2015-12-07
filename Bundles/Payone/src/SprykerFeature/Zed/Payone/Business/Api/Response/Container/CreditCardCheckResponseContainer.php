@@ -20,6 +20,8 @@ class CreditCardCheckResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $truncatedcardpan
+     *
+     * @return void
      */
     public function setTruncatedcardpan($truncatedcardpan)
     {
@@ -36,6 +38,8 @@ class CreditCardCheckResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $pseudocardpan
+     *
+     * @return void
      */
     public function setPseudocardpan($pseudocardpan)
     {

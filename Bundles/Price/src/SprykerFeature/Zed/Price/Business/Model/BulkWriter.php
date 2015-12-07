@@ -44,6 +44,8 @@ class BulkWriter extends Writer implements BulkWriterInterface
      * @param PriceProductTransfer $priceProductTransfer
      *
      * @throws \Exception
+     *
+     * @return void
      */
     public function setPriceForProduct(PriceProductTransfer $priceProductTransfer)
     {
@@ -63,12 +65,17 @@ class BulkWriter extends Writer implements BulkWriterInterface
     /**
      * @param string $itemType
      * @param int $itemId
+     *
+     * @return void
      */
     protected function addRecordToTouch($itemType, $itemId)
     {
         $this->recordsToTouch[$itemType][] = $itemId;
     }
 
+    /**
+     * @return void
+     */
     public function flush()
     {
         foreach ($this->recordsToTouch as $itemType => $itemIds) {

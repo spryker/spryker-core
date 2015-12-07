@@ -19,6 +19,9 @@ use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCo
 class InstalledPackageCollectorTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testGetInstalledPackagesShouldReturnInstalledPackageCollection()
     {
         $collection = new InstalledPackagesTransfer();

@@ -60,6 +60,8 @@ class Group
 
     /**
      * @param ItemTransfer $item
+     *
+     * @return void
      */
     protected function fillIndex($item)
     {
@@ -88,6 +90,8 @@ class Group
 
     /**
      * @param ItemTransfer $item
+     *
+     * @return void
      */
     protected function setQuantity($item)
     {

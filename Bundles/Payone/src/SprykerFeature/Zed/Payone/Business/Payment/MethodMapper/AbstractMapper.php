@@ -106,6 +106,8 @@ abstract class AbstractMapper implements PaymentMethodMapperInterface
     /**
      * @param PersonalContainer $personalContainer
      * @param SpySalesOrderAddress $billingAddressEntity
+     *
+     * @return void
      */
     protected function mapBillingAddressToPersonalContainer(PersonalContainer $personalContainer, SpySalesOrderAddress $billingAddressEntity)
     {

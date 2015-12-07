@@ -69,6 +69,9 @@ class AbstractProductWriter implements AbstractProductWriterInterface
         return true;
     }
 
+    /**
+     * @return void
+     */
     protected function createProductStatement()
     {
         $connection = Propel::getConnection();
@@ -85,6 +88,9 @@ class AbstractProductWriter implements AbstractProductWriterInterface
         );
     }
 
+    /**
+     * @return void
+     */
     protected function createAttributeStatement()
     {
         $connection = Propel::getConnection();

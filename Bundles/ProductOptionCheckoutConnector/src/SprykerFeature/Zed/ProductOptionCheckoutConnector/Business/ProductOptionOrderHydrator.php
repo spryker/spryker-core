@@ -16,6 +16,8 @@ class ProductOptionOrderHydrator implements ProductOptionOrderHydratorInterface
     /**
      * @param OrderTransfer $order
      * @param CheckoutRequestTransfer $request
+     *
+     * @return void
      */
     public function hydrateOrderTransfer(OrderTransfer $order, CheckoutRequestTransfer $request)
     {
@@ -27,6 +29,8 @@ class ProductOptionOrderHydrator implements ProductOptionOrderHydratorInterface
     /**
      * @param \ArrayObject|ItemTransfer[] $cartItems
      * @param \ArrayObject|ItemTransfer[] $orderItems
+     *
+     * @return void
      */
     private function transferProductOptionsFromCartToOrder(\ArrayObject $cartItems, \ArrayObject $orderItems)
     {
@@ -38,6 +42,8 @@ class ProductOptionOrderHydrator implements ProductOptionOrderHydratorInterface
     /**
      * @param ItemTransfer $cartItem
      * @param \ArrayObject|ItemTransfer[] $orderItems
+     *
+     * @return void
      */
     private function transferItemOptions(ItemTransfer $cartItem, \ArrayObject $orderItems)
     {

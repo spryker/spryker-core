@@ -30,6 +30,8 @@ class ThreeDSecureContainer extends AbstractContainer
 
     /**
      * @param string $cavv
+     *
+     * @return void
      */
     public function setCavv($cavv)
     {
@@ -46,6 +48,8 @@ class ThreeDSecureContainer extends AbstractContainer
 
     /**
      * @param string $eci
+     *
+     * @return void
      */
     public function setEci($eci)
     {
@@ -62,6 +66,8 @@ class ThreeDSecureContainer extends AbstractContainer
 
     /**
      * @param string $xid
+     *
+     * @return void
      */
     public function setXid($xid)
     {
@@ -78,6 +84,8 @@ class ThreeDSecureContainer extends AbstractContainer
 
     /**
      * @param RedirectContainer $redirect
+     *
+     * @return void
      */
     public function setRedirect(RedirectContainer $redirect)
     {
