@@ -89,6 +89,7 @@ class CodeStyleSniffer
             }
 
             $bundle = $this->normalizeBundleName($bundle);
+
             return $this->getPathToBundle($bundle);
         }
 
