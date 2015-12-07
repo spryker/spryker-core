@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Development\Communication\Console;
 
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use SprykerFeature\Zed\Development\Business\DevelopmentFacade;
-use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
