@@ -355,7 +355,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     protected function createGlossaryTranslation($keyName, $value, LocaleTransfer $localeTransfer = null)
     {
         if ($localeTransfer !== null) {
-            $this->glossaryFacade->createTranslation($keyName, $localeTransfer, $value);
+            $this->glossaryFacade->createAndTouchTranslation($keyName, $localeTransfer, $value);
         } else {
             $this->glossaryFacade->createTranslationForCurrentLocale($keyName, $value);
         }

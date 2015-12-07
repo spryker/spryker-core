@@ -56,6 +56,20 @@ interface CmsToGlossaryInterface
 
     /**
      * @param string $keyName
+     * @param LocaleTransfer $locale
+     * @param string $value
+     * @param bool $isActive
+     *
+     * @throws MissingKeyException
+     * @throws MissingLocaleException
+     * @throws TranslationExistsException
+     *
+     * @return TranslationTransfer
+     */
+    public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
+
+    /**
+     * @param string $keyName
      *
      * @throws KeyExistsException
      *
