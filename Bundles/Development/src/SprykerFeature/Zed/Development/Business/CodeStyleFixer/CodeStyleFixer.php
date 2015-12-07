@@ -21,6 +21,8 @@ class CodeStyleFixer
 
     const OPTION_CLEAR = 'clear';
 
+    const BUNDLE_ALL = 'all';
+
     /**
      * @var string
      */
@@ -53,6 +55,13 @@ class CodeStyleFixer
     {
         if (!$bundle) {
             $this->runFixerCommand($this->applicationRoot, $this->applicationRoot, $options);
+
+            return;
+        }
+
+        if ($bundle === self::BUNDLE_ALL) {
+            $this->copyPhpCsFixerConfigToBundle($this->pathToBundles, $options[self::OPTION_CLEAR]);
+            $this->runFixerCommand($this->pathToBundles, $this->applicationRoot, $options);
 
             return;
         }
