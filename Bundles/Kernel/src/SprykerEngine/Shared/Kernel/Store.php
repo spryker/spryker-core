@@ -16,6 +16,7 @@ class Store
 {
 
     const APPLICATION_ZED = 'ZED';
+
     /**
      * @var Store
      */

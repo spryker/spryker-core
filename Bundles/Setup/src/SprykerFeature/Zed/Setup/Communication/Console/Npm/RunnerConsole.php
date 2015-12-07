@@ -15,7 +15,7 @@ use Symfony\Component\Process\Process;
 class RunnerConsole extends Console
 {
 
-    const COMMAND_NAME = 'code:npm';
+    const COMMAND_NAME = 'application:npm';
 
     const NPM_COMMAND_TPL = 'npm run %s';
 

@@ -9,6 +9,7 @@ namespace SprykerFeature\Zed\Development\Business;
 use Generated\Zed\Ide\FactoryAutoCompletion\DevelopmentBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Development\Business\CodeStyleFixer\BundleCodeStyleFixer;
+use SprykerFeature\Zed\Development\Business\CodeStyleSniffer\BundleCodeStyleSniffer;
 use SprykerFeature\Zed\Development\DevelopmentConfig;
 
 /**
@@ -24,6 +25,17 @@ class DevelopmentDependencyContainer extends AbstractBusinessDependencyContainer
     public function createBundleCodeStyleFixer()
     {
         return new BundleCodeStyleFixer(
+            $this->getConfig()->getPathToRoot(),
+            $this->getConfig()->getBundleDirectory()
+        );
+    }
+
+    /**
+     * @return BundleCodeStyleSniffer
+     */
+    public function createBundleCodeStyleSniffer()
+    {
+        return new BundleCodeStyleSniffer(
             $this->getConfig()->getPathToRoot(),
             $this->getConfig()->getBundleDirectory()
         );
