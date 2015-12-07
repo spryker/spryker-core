@@ -7,7 +7,9 @@
 namespace SprykerEngine\Zed\Kernel\Communication;
 
 use Psr\Log\AbstractLogger;
+use SprykerEngine\Shared\Kernel\Locator\LocatorInterface;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
+use SprykerEngine\Zed\Kernel\BundleDependencyProviderLocator;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -37,17 +39,6 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
      * @var AbstractQueryContainer
      */
     private $queryContainer;
-
-    /**
-     * @param Factory $factory
-     * @param Locator $locator
-     */
-    public function __construct(Factory $factory, Locator $locator)
-    {
-        if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
-            $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator);
-        }
-    }
 
     /**
      * @param MessengerInterface $messenger
@@ -80,20 +71,7 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     }
 
     /**
-     * @param Container $container
-     *
-     * @return void
-     */
-    public function setExternalDependencies(Container $container)
-    {
-        $dependencyContainer = $this->getDependencyContainer();
-        if (isset($dependencyContainer)) {
-            $this->getDependencyContainer()->setContainer($container);
-        }
-    }
-
-    /**
-     * TODO move to constructor
+     * TODO remove method
      *
      * @param AbstractFacade $facade
      *
@@ -101,7 +79,7 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
      */
     public function setOwnFacade(AbstractFacade $facade)
     {
-        $this->facade = $facade;
+//        $this->facade = $facade;
     }
 
     /**
@@ -111,19 +89,27 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
      */
     protected function getFacade()
     {
+        if ($this->facade === null) {
+            $bundle = $this->getBundleName();
+
+            $this->facade = $this->getLocator()->$bundle()->facade();
+        }
+
         return $this->facade;
     }
 
     /**
+     * TODO: remove method
+     *
      * @param AbstractCommunicationDependencyContainer $dependencyContainer
      *
      * @return self
      */
     public function setDependencyContainer(AbstractCommunicationDependencyContainer $dependencyContainer)
     {
-        $this->dependencyContainer = $dependencyContainer;
-
-        return $this;
+//        $this->dependencyContainer = $dependencyContainer;
+//
+//        return $this;
     }
 
     /**
@@ -131,19 +117,34 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
      */
     protected function getDependencyContainer()
     {
+        if ($this->dependencyContainer === null) {
+            $factory = new Factory($this->getBundleName());
+
+            $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $this->getLocator());
+
+            $bundleConfigLocator = new BundleDependencyProviderLocator();
+            $container = new Container();
+            $bundleBuilder = $bundleConfigLocator->locate($this->getBundleName(), $this->getLocator());
+            $bundleBuilder->provideCommunicationLayerDependencies($container);
+
+            $this->dependencyContainer->setContainer($container);
+        }
+
         return $this->dependencyContainer;
     }
 
     /**
+     * TODO: remove method
+     *
      * @param AbstractQueryContainer $queryContainer
      *
      * @return self
      */
     public function setQueryContainer(AbstractQueryContainer $queryContainer)
     {
-        $this->queryContainer = $queryContainer;
-
-        return $this;
+//        $this->queryContainer = $queryContainer;
+//
+//        return $this;
     }
 
     /**
@@ -151,7 +152,33 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
      */
     protected function getQueryContainer()
     {
+        if ($this->queryContainer === null) {
+            $bundle = $this->getBundleName();
+            $this->queryContainer = $this->getLocator()->$bundle()->queryContainer();
+        }
+
         return $this->queryContainer;
+    }
+
+    /**
+     * @return string
+     */
+    private function getBundleName()
+    {
+        $className = get_class($this);
+        $expl = explode('\\', $className);
+        $bundle = $expl[2];
+        $bundle = lcfirst($bundle);
+
+        return $bundle;
+    }
+
+    /**
+     * @return LocatorInterface
+     */
+    private function getLocator()
+    {
+        return Locator::getInstance();
     }
 
 }
