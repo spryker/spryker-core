@@ -62,7 +62,7 @@ class QueryContainerLocator extends AbstractLocator
             $container = new Container();
             $container[self::PROPEL_CONNECTION] = function () use ($locator) {
                 /* @var $locator AutoCompletion */
-                return $locator->propel()->pluginConnection()->get();
+                return (new \SprykerEngine\Zed\Propel\Communication\Plugin\Connection())->get();
             };
             $bundleBuilder->providePersistenceLayerDependencies($container);
             $queryContainer->setContainer($container);

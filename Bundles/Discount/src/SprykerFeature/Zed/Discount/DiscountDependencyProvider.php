@@ -33,7 +33,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
-            return $container->getLocator()->propel()->pluginConnection()->get();
+            return (new \SprykerEngine\Zed\Propel\Communication\Plugin\Connection())->get();
         };
 
         return $container;

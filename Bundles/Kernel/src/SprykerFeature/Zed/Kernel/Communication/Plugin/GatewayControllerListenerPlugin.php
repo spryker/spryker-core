@@ -7,37 +7,22 @@
 namespace SprykerFeature\Zed\Kernel\Communication\Plugin;
 
 use SprykerEngine\Shared\Transfer\TransferInterface;
-use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Shared\ZedRequest\Client\Message;
 use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
 use SprykerFeature\Zed\Kernel\Communication\GatewayControllerListenerInterface;
+use SprykerFeature\Zed\Kernel\Communication\GatewayDependencyContainer;
 use SprykerFeature\Zed\ZedRequest\Business\Client\Request;
 use SprykerFeature\Zed\ZedRequest\Business\Client\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use SprykerEngine\Zed\FlashMessenger\FlashMessengerConfig;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Kernel\Communication\Factory;
 
+/**
+ * @method GatewayDependencyContainer getDependencyContainer()
+ */
 class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayControllerListenerInterface
 {
-
-    /**
-     * @var Locator
-     */
-    private $locator;
-
-    /**
-     * @param Factory $factory
-     * @param Locator $locator
-     */
-    public function __construct(Factory $factory, Locator $locator)
-    {
-        parent::__construct($factory, $locator);
-
-        $this->locator = $locator;
-    }
 
     /**
      * @param FilterControllerEvent $event
@@ -144,7 +129,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      */
     private function setFlashMessengerMessages(Response $response)
     {
-        $flashMessengerFacade = $this->createFlashMessengerFacade();
+        $flashMessengerFacade = $this->getDependencyContainer()->createFlashMessengerFacade();;
 
         if ($flashMessengerFacade === null) {
             return;
@@ -208,19 +193,6 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
         }
 
         throw new \LogicException('Only transfer classes are allowed in yves action as parameter');
-    }
-
-    /**
-     * @return FlashMessengerFacade|null
-     */
-    private function createFlashMessengerFacade()
-    {
-        $flashMessenger = $this->locator->flashMessenger();
-        if ($flashMessenger !== null) {
-            return $flashMessenger->facade();
-        }
-
-        return null;
     }
 
 }

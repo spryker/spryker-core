@@ -73,7 +73,7 @@ abstract class AbstractForm implements FormTypeInterface
     public function getConstraints()
     {
         if ($this->constraintsPlugin === null) {
-            $this->constraintsPlugin = $this->getLocator()->gui()->pluginConstraintsPlugin();
+            $this->constraintsPlugin = new \SprykerFeature\Zed\Gui\Communication\Plugin\ConstraintsPlugin();
         }
 
         return $this->constraintsPlugin;
@@ -105,9 +105,7 @@ abstract class AbstractForm implements FormTypeInterface
     protected function getRequest()
     {
         if ($this->request === null) {
-            $this->request = $this->getLocator()
-                ->application()
-                ->pluginPimple()
+            $this->request = (new \SprykerFeature\Zed\Application\Communication\Plugin\Pimple())
                 ->getApplication()['request'];
         }
 

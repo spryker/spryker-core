@@ -71,8 +71,8 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->productCategory()->queryContainer();
         };
 
-        $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
-            return $container->getLocator()->propel()->pluginConnection()->get();
+        $container[self::PLUGIN_PROPEL_CONNECTION] = function () {
+            return (new \SprykerEngine\Zed\Propel\Communication\Plugin\Connection())->get();
         };
 
         return $container;
@@ -117,8 +117,8 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->productCategory()->queryContainer();
         };
 
-        $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
-            return $container->getLocator()->propel()->pluginConnection()->get();
+        $container[self::PLUGIN_PROPEL_CONNECTION] = function () {
+            return (new \SprykerEngine\Zed\Propel\Communication\Plugin\Connection())->get();
         };
 
         return $container;

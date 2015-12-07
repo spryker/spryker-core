@@ -88,7 +88,7 @@ abstract class AbstractForm
     public function getConstraints()
     {
         if ($this->constraintsPlugin === null) {
-            $this->constraintsPlugin = $this->getLocator()->gui()->pluginConstraintsPlugin();
+            $this->constraintsPlugin = new \SprykerFeature\Zed\Gui\Communication\Plugin\ConstraintsPlugin();
         }
 
         return $this->constraintsPlugin;
@@ -101,9 +101,7 @@ abstract class AbstractForm
      */
     protected function injectDependencies()
     {
-        $app = $this->getLocator()
-            ->application()
-            ->pluginPimple()
+        $app = (new \SprykerFeature\Zed\Application\Communication\Plugin\Pimple())
             ->getApplication();
 
         $this->request = $app['request'];

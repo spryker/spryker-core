@@ -32,23 +32,23 @@ class ServiceProviderExtension extends LocatorAwareExtension implements ServiceP
         $providers = [
             new SessionServiceProvider(),
             $this->getSessionServiceProvider(),
-            $this->getLocator()->propel()->pluginServiceProviderPropelServiceProvider(),
-            $this->getLocator()->auth()->pluginServiceProviderRedirectAfterLoginProvider(),
-            $this->getLocator()->auth()->pluginBootstrapAuthBootstrapProvider(),
-            $this->getLocator()->application()->pluginServiceProviderRequestServiceProvider(),
-            $this->getLocator()->application()->pluginServiceProviderSslServiceProvider(),
+            new \SprykerEngine\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider(),
+            new \SprykerFeature\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider(),
+            new \SprykerFeature\Zed\Auth\Communication\Plugin\Bootstrap\AuthBootstrapProvider(),
+            new \SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider(),
+            new \SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\SslServiceProvider(),
             new ServiceControllerServiceProvider(),
-            $this->getLocator()->application()->pluginServiceProviderRoutingServiceProvider(),
-            $this->getLocator()->acl()->pluginBootstrapAclBootstrapProvider(),
+            new \SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\RoutingServiceProvider(),
+            new \SprykerFeature\Zed\Acl\Communication\Plugin\Bootstrap\AclBootstrapProvider(),
             new ValidatorServiceProvider(),
             new FormServiceProvider(),
             new TwigServiceProvider(),
-            $this->getLocator()->application()->pluginServiceProviderTwigServiceProvider(),
-            $this->getLocator()->application()->pluginServiceProviderEnvironmentInformationServiceProvider(),
-            $this->getLocator()->translation()->pluginTranslationServiceProvider(),
+            new \SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\TwigServiceProvider(),
+            new \SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\EnvironmentInformationServiceProvider(),
+            new \SprykerEngine\Zed\Translation\Communication\Plugin\TranslationServiceProvider(),
             $this->getGatewayServiceProvider(),
-            $this->getLocator()->application()->pluginServiceProviderUrlGeneratorServiceProvider(),
-            $this->getLocator()->application()->pluginServiceProviderNewRelicServiceProvider(),
+            new \SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\UrlGeneratorServiceProvider(),
+            new \SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\NewRelicServiceProvider(),
             new HttpFragmentServiceProvider(),
         ];
 
@@ -64,9 +64,8 @@ class ServiceProviderExtension extends LocatorAwareExtension implements ServiceP
      */
     protected function getGatewayServiceProvider()
     {
-        $locator = $this->getLocator();
-        $controllerListener = $locator->kernel()->pluginGatewayControllerListenerPlugin();
-        $serviceProvider = $locator->kernel()->pluginGatewayServiceProviderPlugin();
+        $controllerListener = new \SprykerFeature\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin();
+        $serviceProvider = new \SprykerFeature\Zed\Kernel\Communication\Plugin\GatewayServiceProviderPlugin();
         $serviceProvider->setControllerListener($controllerListener);
 
         return $serviceProvider;
@@ -77,7 +76,7 @@ class ServiceProviderExtension extends LocatorAwareExtension implements ServiceP
      */
     protected function getSessionServiceProvider()
     {
-        $sessionServiceProvider = $this->getLocator()->session()->pluginServiceProviderSessionServiceProvider();
+        $sessionServiceProvider = new \SprykerFeature\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvider();
         $sessionServiceProvider->setClient(
             $this->getLocator()->session()->client()
         );

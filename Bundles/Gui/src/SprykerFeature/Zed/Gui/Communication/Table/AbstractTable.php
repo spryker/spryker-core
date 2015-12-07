@@ -130,8 +130,7 @@ abstract class AbstractTable
         if (!$this->initialized) {
             $this->initialized = true;
             $this->locator = Locator::getInstance();
-            $this->request = $this->locator->application()
-                ->pluginPimple()
+            $this->request = (new \SprykerFeature\Zed\Application\Communication\Plugin\Pimple())
                 ->getApplication()['request'];
             $config = $this->newTableConfiguration();
             $config->setPageLength($this->getLimit());
@@ -295,8 +294,7 @@ abstract class AbstractTable
     private function getTwig()
     {
         /** @var \Twig_Environment $twig */
-        $twig = $this->locator->application()
-            ->pluginPimple()
+        $twig = (new \SprykerFeature\Zed\Application\Communication\Plugin\Pimple())
             ->getApplication()['twig'];
 
         if ($twig === null) {

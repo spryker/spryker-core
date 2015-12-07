@@ -132,7 +132,7 @@ class ControllerLocator implements ControllerLocatorInterface
     protected function addDefaultDependencies(Container $container)
     {
         $container[AbstractCommunicationDependencyContainer::FORM_FACTORY] = function (Container $container) {
-            return $container->getLocator()->application()->pluginPimple()
+            return (new \SprykerFeature\Zed\Application\Communication\Plugin\Pimple())
                 ->getApplication()[AbstractCommunicationDependencyContainer::FORM_FACTORY];
         };
 

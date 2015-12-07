@@ -31,7 +31,7 @@ class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::PLUGIN_VALIDATOR] = function (Container $container) {
-            return $container->getLocator()->application()->pluginPimple()->getApplication()['validator'];
+            return (new \SprykerFeature\Zed\Application\Communication\Plugin\Pimple())->getApplication()['validator'];
         };
 
         return $container;

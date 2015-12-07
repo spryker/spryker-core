@@ -53,8 +53,8 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
     public function getAvailableDecisionRulePlugins()
     {
         return [
-            self::PLUGIN_DECISION_RULE_VOUCHER => $this->getLocator()->discount()->pluginDecisionRuleVoucher(),
-            self::PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL => $this->getLocator()->discount()->pluginDecisionRuleMinimumCartSubtotal(),
+            self::PLUGIN_DECISION_RULE_VOUCHER => new \SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule\Voucher(),
+            self::PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL => new \SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule\MinimumCartSubtotal(),
         ];
     }
 
@@ -64,8 +64,8 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
     public function getAvailableCalculatorPlugins()
     {
         return [
-            self::PLUGIN_CALCULATOR_PERCENTAGE => $this->getLocator()->discount()->pluginCalculatorPercentage(),
-            self::PLUGIN_CALCULATOR_FIXED => $this->getLocator()->discount()->pluginCalculatorFixed(),
+            self::PLUGIN_CALCULATOR_PERCENTAGE => new \SprykerFeature\Zed\Discount\Communication\Plugin\Calculator\Percentage(),
+            self::PLUGIN_CALCULATOR_FIXED => new \SprykerFeature\Zed\Discount\Communication\Plugin\Calculator\Fixed(),
         ];
     }
 
@@ -75,11 +75,11 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
     public function getAvailableCollectorPlugins()
     {
         return [
-            self::PLUGIN_COLLECTOR_ITEM => $this->getLocator()->discount()->pluginCollectorItem(),
-            self::PLUGIN_COLLECTOR_ORDER_EXPENSE => $this->getLocator()->discount()->pluginCollectorOrderExpense(),
-            self::PLUGIN_COLLECTOR_ITEM_EXPENSE => $this->getLocator()->discount()->pluginCollectorItemExpense(),
-            self::PLUGIN_COLLECTOR_ITEM_PRODUCT_OPTION => $this->getLocator()->discount()->pluginCollectorItemProductOption(),
-            self::PLUGIN_COLLECTOR_AGGREGATE => $this->getLocator()->discount()->pluginCollectorAggregate(),
+            self::PLUGIN_COLLECTOR_ITEM => new \SprykerFeature\Zed\Discount\Communication\Plugin\Collector\Item(),
+            self::PLUGIN_COLLECTOR_ORDER_EXPENSE => new \SprykerFeature\Zed\Discount\Communication\Plugin\Collector\OrderExpense(),
+            self::PLUGIN_COLLECTOR_ITEM_EXPENSE => new \SprykerFeature\Zed\Discount\Communication\Plugin\Collector\ItemExpense(),
+            self::PLUGIN_COLLECTOR_ITEM_PRODUCT_OPTION => new \SprykerFeature\Zed\Discount\Communication\Plugin\Collector\ItemProductOption(),
+            self::PLUGIN_COLLECTOR_AGGREGATE => new \SprykerFeature\Zed\Discount\Communication\Plugin\Collector\Aggregate(),
         ];
     }
 

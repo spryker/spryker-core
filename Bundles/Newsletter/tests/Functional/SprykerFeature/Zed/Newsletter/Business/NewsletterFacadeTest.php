@@ -15,6 +15,7 @@ use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainerLocator;
+use SprykerEngine\Zed\Propel\Communication\Plugin\Connection;
 use SprykerFeature\Zed\Newsletter\Business\NewsletterFacade;
 use SprykerFeature\Zed\Newsletter\NewsletterDependencyProvider;
 use SprykerFeature\Zed\Newsletter\Persistence\NewsletterQueryContainer;
@@ -225,7 +226,7 @@ class NewsletterFacadeTest extends Test
         $locator = Locator::getInstance();
         $container = new Container();
 
-        $container[QueryContainerLocator::PROPEL_CONNECTION] = $locator->propel()->pluginConnection()->get();
+        $container[QueryContainerLocator::PROPEL_CONNECTION] = (new Connection())->get();
 
         $dependencyProvider = new NewsletterDependencyProvider();
         $dependencyProvider->provideBusinessLayerDependencies($container);

@@ -44,9 +44,7 @@ class GlobalTemplateVariablesExtension extends LocatorAwareExtension implements 
     {
         $request = Request::createFromGlobals();
 
-        return $this->getLocator()
-            ->application()
-            ->pluginNavigation()
+        return (new \SprykerFeature\Zed\Application\Communication\Plugin\Navigation())
             ->buildNavigation($request->getPathInfo());
     }
 

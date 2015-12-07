@@ -80,7 +80,7 @@ class TransferServer
         $locator = Locator::getInstance();
 
         if ($repeater === null) {
-            $repeater = $locator->application()->pluginTransferObjectRepeater();
+            $repeater = new \SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\Repeater();
         }
 
         self::$instance = new static($locator, $repeater);

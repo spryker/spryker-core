@@ -24,16 +24,6 @@ abstract class AbstractPlugin
     private $dependencyContainer;
 
     /**
-     * @var Factory
-     */
-    private $factory;
-
-    /**
-     * @var AutoCompletion
-     */
-    private $locator;
-
-    /**
      * @var AbstractClient
      */
     private $client;
@@ -58,8 +48,8 @@ abstract class AbstractPlugin
     protected function getClient()
     {
         if ($this->client === null) {
-            $bundleName = lcfirst($this->factory->getBundle());
-            $this->client = $this->locator->$bundleName()->client();
+            $bundleName = lcfirst($this->getBundleName());
+            $this->client = $this->getLocator()->$bundleName()->client();
         }
 
         return $this->client;

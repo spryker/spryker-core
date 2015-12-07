@@ -9,9 +9,6 @@ namespace Unit\SprykerEngine\Zed\Kernel\Communication;
 use SprykerEngine\Zed\Kernel\AbstractUnitTest;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerEngine\Zed\Kernel\Communication\Factory;
-use SprykerEngine\Zed\Kernel\Communication\PluginLocator;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugin;
 
@@ -127,21 +124,7 @@ class AbstractPluginTest extends AbstractUnitTest
      */
     private function getPlugin()
     {
-        $plugin = new FooPlugin(new Factory('Kernel'), Locator::getInstance());
-
-        return $plugin;
-    }
-
-    /**
-     * @return FooPlugin
-     */
-    private function locatePlugin()
-    {
-        $locator = new PluginLocator(
-            '\\Unit\\SprykerEngine\\Zed\\{{bundle}}{{store}}\\Communication\\Fixtures\\AbstractPlugin\\Factory'
-        );
-
-        $plugin = $locator->locate('Kernel', Locator::getInstance(), 'FooPlugin');
+        $plugin = new FooPlugin();
 
         return $plugin;
     }

@@ -13,8 +13,6 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerEngine\Zed\Kernel\Communication\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Propel\Communication\PropelDependencyContainer;
 use SprykerFeature\Shared\System\SystemConfig;
 
@@ -25,16 +23,6 @@ class PropelServiceProvider extends AbstractPlugin implements ServiceProviderInt
 {
 
     const BUNDLE = 'Propel';
-
-    /**
-     * ServiceProvider is created with new in many places e.g. tests
-     * To setup the Plugin, we have to have a factory and the locator.
-     * To prevent doing this in all places, we add them here.
-     */
-    public function __construct()
-    {
-        parent::__construct(new Factory(self::BUNDLE), Locator::getInstance());
-    }
 
     /**
      * @param Application $app

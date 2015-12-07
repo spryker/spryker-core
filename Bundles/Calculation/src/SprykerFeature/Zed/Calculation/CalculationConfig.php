@@ -19,18 +19,18 @@ class CalculationConfig extends AbstractBundleConfig
     public function getCalculatorStack()
     {
         return [
-            $this->getLocator()->calculation()->pluginRemoveTotalsCalculatorPlugin(),
-            $this->getLocator()->calculation()->pluginRemoveAllExpensesCalculatorPlugin(),
-            $this->getLocator()->calculation()->pluginExpenseTotalsCalculatorPlugin(),
-            $this->getLocator()->calculation()->pluginSubtotalTotalsCalculatorPlugin(),
-            $this->getLocator()->calculation()->pluginSubtotalWithoutItemExpensesTotalsCalculatorPlugin(),
-            $this->getLocator()->calculation()->pluginGrandTotalTotalsCalculatorPlugin(),
-            $this->getLocator()->calculation()->pluginExpensePriceToPayCalculatorPlugin(),
-            $this->getLocator()->calculation()->pluginItemPriceToPayCalculatorPlugin(),
-            $this->getLocator()->calculation()->pluginProductOptionPriceToPayCalculatorPlugin(),
-            $this->getLocator()->calculation()->pluginGrandTotalTotalsCalculatorPlugin(),
-            $this->getLocator()->calculation()->pluginTaxTotalsCalculatorPlugin(),
-            $this->getLocator()->calculation()->pluginItemTotalPriceCalculatorPlugin(),
+            new \SprykerFeature\Zed\Calculation\Communication\Plugin\RemoveTotalsCalculatorPlugin(),
+            new \SprykerFeature\Zed\Calculation\Communication\Plugin\RemoveAllExpensesCalculatorPlugin(),
+            new \SprykerFeature\Zed\Calculation\Communication\Plugin\ExpenseTotalsCalculatorPlugin(),
+            new \SprykerFeature\Zed\Calculation\Communication\Plugin\SubtotalTotalsCalculatorPlugin(),
+            new \SprykerFeature\Zed\Calculation\Communication\Plugin\SubtotalWithoutItemExpensesTotalsCalculatorPlugin(),
+            new \SprykerFeature\Zed\Calculation\Communication\Plugin\GrandTotalTotalsCalculatorPlugin(),
+            new \SprykerFeature\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin(),
+            new \SprykerFeature\Zed\Calculation\Communication\Plugin\ItemPriceToPayCalculatorPlugin(),
+            new \SprykerFeature\Zed\Calculation\Communication\Plugin\ProductOptionPriceToPayCalculatorPlugin(),
+            new \SprykerFeature\Zed\Calculation\Communication\Plugin\GrandTotalTotalsCalculatorPlugin(),
+            new \SprykerFeature\Zed\Calculation\Communication\Plugin\TaxTotalsCalculatorPlugin(),
+            new \SprykerFeature\Zed\Calculation\Communication\Plugin\ItemTotalPriceCalculatorPlugin(),
         ];
     }
 

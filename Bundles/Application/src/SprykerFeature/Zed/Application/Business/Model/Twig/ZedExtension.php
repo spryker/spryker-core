@@ -37,23 +37,22 @@ class ZedExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        $locator = $this->getLocator();
         $functions = [
-            $locator->gui()->pluginTwigButton(),
-            $locator->gui()->pluginTwigConfirmDialog(),
-            $locator->gui()->pluginTwigFormatPrice(),
-            $locator->gui()->pluginTwigGrid(),
-            $locator->gui()->pluginTwigGridConfirmDialog(),
-            $locator->gui()->pluginTwigListGroup(),
-            $locator->gui()->pluginTwigModal(),
-            $locator->gui()->pluginTwigPanel(),
-            $locator->gui()->pluginTwigWidget(),
-            $locator->gui()->pluginTwigStaticPath(),
-            $locator->gui()->pluginTwigInspiniaBackActionButton(),
-            $locator->gui()->pluginTwigInspiniaCreateActionButton(),
-            $locator->gui()->pluginTwigInspiniaViewActionButton(),
-            $locator->gui()->pluginTwigInspiniaEditActionButton(),
-            $locator->gui()->pluginTwigUrlFunction(),
+            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Button(),
+            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\ConfirmDialog(),
+            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\FormatPrice(),
+            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Grid(),
+            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\GridConfirmDialog(),
+            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\ListGroup(),
+            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Modal(),
+            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Panel(),
+            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Widget(),
+            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\StaticPath(),
+            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia\BackActionButton(),
+            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia\CreateActionButton(),
+            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia\ViewActionButton(),
+            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia\EditActionButton(),
+            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\UrlFunction(),
         ];
 
         return $functions;

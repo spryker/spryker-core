@@ -21,8 +21,8 @@ class SetupDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::PLUGIN_TRANSFER_OBJECT_REPEATER] = function (Container $container) {
-            return $container->getLocator()->application()->pluginTransferObjectRepeater();
+        $container[self::PLUGIN_TRANSFER_OBJECT_REPEATER] = function () {
+            return new \SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\Repeater();
         };
 
         return $container;

@@ -19,17 +19,23 @@ use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\Checkout\CheckoutConfig;
+use SprykerFeature\Zed\AvailabilityCheckoutConnector\Communication\Plugin\ProductsAvailablePreConditionPlugin;
+use SprykerFeature\Zed\CartCheckoutConnector\Communication\Plugin\OrderCartHydrationPlugin;
 use SprykerFeature\Zed\Checkout\Business\CheckoutFacade;
 use SprykerFeature\Zed\Checkout\CheckoutDependencyProvider;
 use Orm\Zed\Country\Persistence\SpyCountry;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
 use Orm\Zed\Customer\Persistence\SpyCustomerQuery;
+use SprykerFeature\Zed\CustomerCheckoutConnector\Communication\Plugin\CustomerPreConditionCheckerPlugin;
+use SprykerFeature\Zed\CustomerCheckoutConnector\Communication\Plugin\OrderCustomerHydrationPlugin;
+use SprykerFeature\Zed\CustomerCheckoutConnector\Communication\Plugin\OrderCustomerSavePlugin;
 use SprykerFeature\Zed\Oms\OmsConfig;
 use Orm\Zed\Product\Persistence\SpyAbstractProduct;
 use Orm\Zed\Product\Persistence\SpyProduct;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Stock\Persistence\SpyStock;
 use Orm\Zed\Stock\Persistence\SpyStockProduct;
+use SprykerFeature\Zed\SalesCheckoutConnector\Communication\Plugin\SalesOrderSaverPlugin;
 
 /**
  * @group SprykerFeature
@@ -69,15 +75,15 @@ class CheckoutFacadeTest extends Test
 
         $container[CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS] = function (Container $container) {
             return [
-                $container->getLocator()->customerCheckoutConnector()->pluginCustomerPreConditionCheckerPlugin(),
-                $container->getLocator()->availabilityCheckoutConnector()->pluginProductsAvailablePreConditionPlugin(),
+                new CustomerPreConditionCheckerPlugin(),
+                new ProductsAvailablePreConditionPlugin(),
             ];
         };
 
         $container[CheckoutDependencyProvider::CHECKOUT_ORDER_HYDRATORS] = function (Container $container) {
             return [
-                $container->getLocator()->customerCheckoutConnector()->pluginOrderCustomerHydrationPlugin(),
-                $container->getLocator()->cartCheckoutConnector()->pluginOrderCartHydrationPlugin(),
+                new OrderCustomerHydrationPlugin(),
+                new OrderCartHydrationPlugin(),
                 new MockOmsOrderHydrator(),
             ];
         };
@@ -88,8 +94,8 @@ class CheckoutFacadeTest extends Test
 
         $container[CheckoutDependencyProvider::CHECKOUT_ORDER_SAVERS] = function (Container $container) {
             return [
-                $container->getLocator()->salesCheckoutConnector()->pluginSalesOrderSaverPlugin(),
-                $container->getLocator()->customerCheckoutConnector()->pluginOrderCustomerSavePlugin(),
+                new SalesOrderSaverPlugin(),
+                new OrderCustomerSavePlugin(),
             ];
         };
 

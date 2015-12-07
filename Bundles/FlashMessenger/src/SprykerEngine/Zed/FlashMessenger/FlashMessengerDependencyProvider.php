@@ -22,7 +22,7 @@ class FlashMessengerDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[self::SESSION] = function (Container $container) {
-            return $container->getLocator()->application()->pluginPimple()->getApplication()['request']->getSession();
+            return (new \SprykerFeature\Zed\Application\Communication\Plugin\Pimple())->getApplication()['request']->getSession();
         };
 
         $container[self::FACADE_GLOSSARY] = function (Container $container) {

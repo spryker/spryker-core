@@ -19,7 +19,7 @@ class SearchConfig extends AbstractBundleConfig
     public function getInstaller()
     {
         return [
-            $this->getLocator()->productSearch()->pluginInstaller(),
+            new \SprykerFeature\Zed\ProductSearch\Communication\Plugin\Installer(),
         ];
     }
 
