@@ -368,7 +368,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return void
      */
-    protected function createGlossaryTranslation($value, LocaleTransfer $localeTransfer, $keyName)
+    protected function createGlossaryTranslation($value, LocaleTransfer $localeTransfer = null, $keyName)
     {
         if ($localeTransfer !== null) {
             $this->glossaryFacade->createTranslation($keyName, $localeTransfer, $value);
@@ -403,7 +403,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      *
      * @return PageKeyMappingTransfer
      */
-    protected function createGlossaryPageKeyMapping(PageTransfer $page, $placeholder, $value, LocaleTransfer $localeTransfer, $keyName)
+    protected function createGlossaryPageKeyMapping(PageTransfer $page, $placeholder, $value, LocaleTransfer $localeTransfer = null, $keyName)
     {
         $idKey = $this->getOrCreateGlossaryKey($keyName);
         $this->createGlossaryTranslation($value, $localeTransfer, $keyName);
