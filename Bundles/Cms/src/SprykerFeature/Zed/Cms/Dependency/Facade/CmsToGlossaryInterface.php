@@ -84,4 +84,11 @@ interface CmsToGlossaryInterface
      */
     public function touchCurrentTranslationForKeyId($idKey);
 
+    /**
+     * @param string $keyName
+     *
+     * @return int
+     */
+    public function getOrCreateKey($keyName);
+
 }

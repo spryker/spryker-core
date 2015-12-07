@@ -301,4 +301,16 @@ class GlossaryFacade extends AbstractFacade
         $translationManager->touchCurrentTranslationForKeyId($idKey);
     }
 
+    /**
+     * @param string $keyName
+     *
+     * @return int
+     */
+    public function getOrCreateKey($keyName)
+    {
+        $keyManager = $this->getDependencyContainer()->createKeyManager();
+
+        return $keyManager->getOrCreateKey($keyName);
+    }
+
 }

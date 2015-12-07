@@ -57,4 +57,12 @@ interface KeyManagerInterface
      */
     public function deleteKey($keyName);
 
+    /**
+     * @param string $keyName
+     *
+     * @throws MissingKeyException
+     * @return int
+     */
+    public function getOrCreateKey($keyName);
+
 }

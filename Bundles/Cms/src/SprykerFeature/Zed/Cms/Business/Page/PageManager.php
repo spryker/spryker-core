@@ -243,7 +243,6 @@ class PageManager implements PageManagerInterface
         return $this->urlFacade->createUrlForCurrentLocale($url, CmsConfig::RESOURCE_TYPE_PAGE, $page->getIdCmsPage());
     }
 
-
     /**
      * @param PageTransfer $page
      * @param string $url
@@ -257,7 +256,7 @@ class PageManager implements PageManagerInterface
     {
         $this->checkPageExists($page->getIdCmsPage());
 
-        return $this->urlFacade->createUrl($url,$localeTransfer, CmsConfig::RESOURCE_TYPE_PAGE, $page->getIdCmsPage());
+        return $this->urlFacade->createUrl($url, $localeTransfer, CmsConfig::RESOURCE_TYPE_PAGE, $page->getIdCmsPage());
     }
 
     /**

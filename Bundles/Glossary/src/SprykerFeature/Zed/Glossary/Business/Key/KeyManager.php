@@ -150,4 +150,19 @@ class KeyManager implements KeyManagerInterface
         }
     }
 
+    /**
+     * @param string $keyName
+     *
+     * @throws MissingKeyException
+     * @return int
+     */
+    public function getOrCreateKey($keyName)
+    {
+        if ($this->hasKey($keyName)) {
+            return $this->getKey($keyName)->getPrimaryKey();
+        }
+
+        return $this->createKey($keyName);
+    }
+
 }
