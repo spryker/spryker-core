@@ -148,16 +148,16 @@ class CodeStyleFixer
      */
     protected function runFixerCommand($path, $rootPath, array $options)
     {
-        $options = '';
+        $arguments = '';
         if (!empty($options[self::OPTION_VERBOSE])) {
-            $options = ' -vvv';
+            $arguments = ' -vvv';
         }
 
         if ($path) {
             $path = ' ' . rtrim($path, DIRECTORY_SEPARATOR);
         }
 
-        $command = $this->applicationRoot . 'vendor/bin/php-cs-fixer fix' . $path . $options;
+        $command = $this->applicationRoot . 'vendor/bin/php-cs-fixer fix' . $path . $arguments;
 
         $process = new Process($command, $rootPath, null, null, 4800);
         $process->run(function ($type, $buffer) {
