@@ -38,20 +38,6 @@ abstract class AbstractPlugin
      */
     private $client;
 
-//    /**
-//     * @param Factory $factory
-//     * @param LocatorLocatorInterface $locator
-//     */
-//    public function __construct(Factory $factory, LocatorLocatorInterface $locator)
-//    {
-//        $this->factory = $factory;
-//        $this->locator = $locator;
-//
-//        if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
-//            $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator);
-//        }
-//    }
-
     /**
      * @return DependencyContainerInterface
      */
@@ -87,7 +73,6 @@ abstract class AbstractPlugin
         $className = get_class($this);
         $expl = explode('\\', $className);
         $bundle = $expl[2];
-        $bundle = lcfirst($bundle);
 
         return $bundle;
     }

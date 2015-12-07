@@ -7,7 +7,7 @@
 namespace SprykerEngine\Zed\Kernel\Communication;
 
 use Psr\Log\AbstractLogger;
-use SprykerEngine\Shared\Kernel\Locator\LocatorInterface;
+use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\BundleDependencyProviderLocator;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
@@ -90,7 +90,7 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     protected function getFacade()
     {
         if ($this->facade === null) {
-            $bundle = $this->getBundleName();
+            $bundle = lcfirst($this->getBundleName());
 
             $this->facade = $this->getLocator()->$bundle()->facade();
         }
@@ -153,7 +153,7 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     protected function getQueryContainer()
     {
         if ($this->queryContainer === null) {
-            $bundle = $this->getBundleName();
+            $bundle = lcfirst($this->getBundleName());
             $this->queryContainer = $this->getLocator()->$bundle()->queryContainer();
         }
 
@@ -168,13 +168,12 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
         $className = get_class($this);
         $expl = explode('\\', $className);
         $bundle = $expl[2];
-        $bundle = lcfirst($bundle);
 
         return $bundle;
     }
 
     /**
-     * @return LocatorInterface
+     * @return LocatorLocatorInterface
      */
     private function getLocator()
     {
