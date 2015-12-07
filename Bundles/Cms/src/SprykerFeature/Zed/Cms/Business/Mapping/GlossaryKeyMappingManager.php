@@ -255,26 +255,12 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     {
         $template = $this->templateManager->getTemplateById($page->getFkTemplate());
 
-        $keyName = $this->generateGlossaryKeyName($template->getTemplateName(), $placeholder . '-' . $page->getIdCmsPage(), $autoGlossaryKeyIncrement);
+        $uniquePlaceholder = $placeholder . '-' . $page->getIdCmsPage();
+        $keyName = $this->generateGlossaryKeyName($template->getTemplateName(), $uniquePlaceholder, $autoGlossaryKeyIncrement);
 
         $this->connection->beginTransaction();
 
-        if($this->glossaryFacade->hasKey($keyName)) {
-            $idKey = $this->glossaryFacade->getKeyIdentifier($keyName);
-        } else {
-            $idKey = $this->glossaryFacade->createKey($keyName);
-        }
-
-        if ($localeTransfer !== null) {
-            $this->glossaryFacade->createTranslation($keyName, $localeTransfer, $value);
-        } else {
-            $this->glossaryFacade->createTranslationForCurrentLocale($keyName, $value);
-        }
-
-        $pageKeyMapping = new PageKeyMappingTransfer();
-        $pageKeyMapping->setFkGlossaryKey($idKey);
-        $pageKeyMapping->setPlaceholder($placeholder);
-        $pageKeyMapping->setFkPage($page->getIdCmsPage());
+        $pageKeyMapping = $this->createGlossaryPageKeyMapping($page, $placeholder, $value, $localeTransfer, $keyName);
 
         if($this->hasPagePlaceholderMapping($page->getIdCmsPage(), $placeholder) === false) {
             $pageKeyMapping = $this->savePageKeyMapping($pageKeyMapping);
@@ -357,6 +343,73 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
         $mappingTransfer->fromArray($mappingEntity->toArray(), true);
 
         return $mappingTransfer;
+    }
+
+    /**
+     * @param string $keyName
+     *
+     * @return int
+     */
+    protected function getOrCreateGlossaryKey($keyName)
+    {
+        if ($this->glossaryFacade->hasKey($keyName)) {
+            $idKey = $this->glossaryFacade->getKeyIdentifier($keyName);
+        } else {
+            $idKey = $this->glossaryFacade->createKey($keyName);
+        }
+
+        return $idKey;
+    }
+
+    /**
+     * @param string $value
+     * @param LocaleTransfer $localeTransfer
+     * @param string $keyName
+     *
+     * @return void
+     */
+    protected function createGlossaryTranslation($value, LocaleTransfer $localeTransfer, $keyName)
+    {
+        if ($localeTransfer !== null) {
+            $this->glossaryFacade->createTranslation($keyName, $localeTransfer, $value);
+        } else {
+            $this->glossaryFacade->createTranslationForCurrentLocale($keyName, $value);
+        }
+    }
+
+    /**
+     * @param PageTransfer $page
+     * @param string $placeholder
+     * @param int $idKey
+     *
+     * @return PageKeyMappingTransfer
+     */
+    protected function createPageKeyMappingTransfer(PageTransfer $page, $placeholder, $idKey)
+    {
+        $pageKeyMapping = new PageKeyMappingTransfer();
+        $pageKeyMapping->setFkGlossaryKey($idKey);
+        $pageKeyMapping->setPlaceholder($placeholder);
+        $pageKeyMapping->setFkPage($page->getIdCmsPage());
+
+        return $pageKeyMapping;
+    }
+
+    /**
+     * @param PageTransfer $page
+     * @param string $placeholder
+     * @param string $value
+     * @param LocaleTransfer $localeTransfer
+     * @param string $keyName
+     *
+     * @return PageKeyMappingTransfer
+     */
+    protected function createGlossaryPageKeyMapping(PageTransfer $page, $placeholder, $value, LocaleTransfer $localeTransfer, $keyName)
+    {
+        $idKey = $this->getOrCreateGlossaryKey($keyName);
+        $this->createGlossaryTranslation($value, $localeTransfer, $keyName);
+        $pageKeyMapping = $this->createPageKeyMappingTransfer($page, $placeholder, $idKey);
+
+        return $pageKeyMapping;
     }
 
 }
