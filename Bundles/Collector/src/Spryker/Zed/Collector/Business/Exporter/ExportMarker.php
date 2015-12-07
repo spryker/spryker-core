@@ -17,28 +17,25 @@ class ExportMarker implements MarkerInterface
     /**
      * @var \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface
      */
-    private $writer;
+    protected $writer;
 
     /**
      * @var \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface
      */
-    private $reader;
+    protected $reader;
 
     /**
      * @var \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface
      */
-    private $keyBuilder;
+    protected $keyBuilder;
 
     /**
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $writer
      * @param \Spryker\Zed\Collector\Business\Exporter\Reader\ReaderInterface $reader
      * @param \Spryker\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface $keyBuilder
      */
-    public function __construct(
-        WriterInterface $writer,
-        ReaderInterface $reader,
-        KeyBuilderInterface $keyBuilder
-    ) {
+    public function __construct(WriterInterface $writer, ReaderInterface $reader, KeyBuilderInterface $keyBuilder)
+    {
         $this->writer = $writer;
         $this->reader = $reader;
         $this->keyBuilder = $keyBuilder;
@@ -52,15 +49,14 @@ class ExportMarker implements MarkerInterface
      */
     public function getLastExportMarkByTypeAndLocale($exportType, LocaleTransfer $locale)
     {
-        $lastTimeStamp = $this->reader->read($this->keyBuilder->generateKey($exportType, $locale->getLocaleName()), $exportType);
+        $lastTimeStamp = $this->reader
+            ->read($this->keyBuilder->generateKey($exportType, $locale->getLocaleName()), $exportType);
 
-        if ($lastTimeStamp) {
-            $lastDateTime = \DateTime::createFromFormat('Y-m-d H:i:s', $lastTimeStamp);
-        } else {
-            $lastDateTime = \DateTime::createFromFormat('Y-m-d H:i:s', '2000-01-01 00:00:00');
+        if (!$lastTimeStamp) {
+            $lastTimeStamp = '2000-01-01 00:00:00';
         }
 
-        return $lastDateTime;
+        return \DateTime::createFromFormat('Y-m-d H:i:s', $lastTimeStamp);
     }
 
     /**
