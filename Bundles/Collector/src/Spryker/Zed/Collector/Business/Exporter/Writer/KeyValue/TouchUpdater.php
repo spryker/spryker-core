@@ -25,7 +25,7 @@ class TouchUpdater implements TouchUpdaterInterface
         //TODO: make one raw query for whole set
         foreach ($touchUpdaterSet->getData() as $key => $touchData) {
             $query = SpyTouchStorageQuery::create();
-            $query->filterByFkTouch($touchData[self::TOUCH_EXPORTER_ID]);
+            $query->filterByFkTouch($touchData[self::COLLECTOR_TOUCH_ID]);
             $query->filterByFkLocale($idLocale);
             $entity = $query->findOneOrCreate();
             $entity->setKey($key);

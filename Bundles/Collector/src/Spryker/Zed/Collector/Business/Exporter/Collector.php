@@ -29,10 +29,8 @@ class Collector
      * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainer $queryContainer
      * @param \Spryker\Zed\Collector\Business\Exporter\ExporterInterface $exporter
      */
-    public function __construct(
-        TouchQueryContainer $queryContainer,
-        ExporterInterface $exporter
-    ) {
+    public function __construct(TouchQueryContainer $queryContainer, ExporterInterface $exporter)
+    {
         $this->queryContainer = $queryContainer;
         $this->exporter = $exporter;
     }

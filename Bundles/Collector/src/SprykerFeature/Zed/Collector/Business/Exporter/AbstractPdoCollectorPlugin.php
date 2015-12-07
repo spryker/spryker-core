@@ -48,6 +48,11 @@ abstract class AbstractPdoCollectorPlugin
     protected $queryBuilder;
 
     /**
+     * @var UpdaterInterface
+     */
+    protected $exportUpdater;
+
+    /**
      * @param array $collectItemData
      *
      * @return array
@@ -117,6 +122,14 @@ abstract class AbstractPdoCollectorPlugin
     }
 
     /**
+     * @param UpdaterInterface $exportUpdater
+     */
+    public function setExportUpdater(UpdaterInterface $exportUpdater)
+    {
+        $this->exportUpdater = $exportUpdater;
+    }
+
+    /**
      * @return BatchIteratorInterface
      */
     protected function generateBatchIterator()
@@ -176,7 +189,7 @@ abstract class AbstractPdoCollectorPlugin
 
         $batchCollection = $this->generateBatchIterator();
         foreach ($batchCollection as $batch) {
-            $touchUpdaterSet = new TouchUpdaterSet();
+            $touchUpdaterSet = new TouchUpdaterSet(self::COLLECTOR_TOUCH_ID);
             $collectedData = $this->collectData($batch, $locale, $touchUpdaterSet);
             $collectedDataCount = count($collectedData);
 
@@ -201,7 +214,8 @@ abstract class AbstractPdoCollectorPlugin
     protected function prepareCollector(SpyTouchQuery $touchQuery, LocaleTransfer $locale)
     {
         $touchParameters = $this->getTouchQueryParameters($touchQuery);
-        $this->criteriaBuilder->setExtraParameterCollection($touchParameters);
+        $this->criteriaBuilder
+            ->setExtraParameterCollection($touchParameters);
 
         $this->queryBuilder
             ->setCriteriaBuilder($this->criteriaBuilder)
@@ -312,6 +326,12 @@ abstract class AbstractPdoCollectorPlugin
         if (!($this->queryBuilder instanceof AbstractPdoCollectorQuery)) {
             throw new DependencyException(sprintf(
                 'queryBuilder does not implement AbstractPdoCollectorQuery in %s', get_class($this))
+            );
+        }
+
+        if (!($this->exportUpdater instanceof UpdaterInterface)) {
+            throw new DependencyException(sprintf(
+                'exportUpdater does not implement UpdaterInterface in %s', get_class($this))
             );
         }
     }

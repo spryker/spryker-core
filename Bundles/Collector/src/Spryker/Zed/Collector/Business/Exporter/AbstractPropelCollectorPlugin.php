@@ -20,7 +20,8 @@ use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
 abstract class AbstractPropelCollectorPlugin
 {
 
-    const TOUCH_EXPORTER_ID = 'exporter_touch_id';
+    const COLLECTOR_TOUCH_ID = 'collector_touch_id';
+    const COLLECTOR_RESOURCE_ID = 'collector_resource_id';
 
     /**
      * @var int
@@ -203,7 +204,7 @@ abstract class AbstractPropelCollectorPlugin
 
         $totalCount = $batchResult->getTotalCount();
         foreach ($batchCollection as $batch) {
-            $touchUpdaterSet = new TouchUpdaterSet();
+            $touchUpdaterSet = new TouchUpdaterSet(self::COLLECTOR_TOUCH_ID);
             $collectedData = $this->processData($batch, $locale, $touchUpdaterSet);
             $collectedDataCount = count($collectedData);
 

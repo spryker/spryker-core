@@ -7,12 +7,13 @@
 namespace Spryker\Zed\Collector\Business\Exporter\Writer;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use SprykerFeature\Zed\Collector\Business\Exporter\AbstractPropelCollectorPlugin;
 use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet;
 
 interface TouchUpdaterInterface
 {
 
-    const TOUCH_EXPORTER_ID = 'exporter_touch_id';
+    const COLLECTOR_TOUCH_ID = AbstractPropelCollectorPlugin::COLLECTOR_TOUCH_ID;
 
     /**
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet $touchUpdaterSet
