@@ -114,7 +114,7 @@ class BundleCodeStyleSniffer
     {
         $pathToFiles = rtrim($path, DIRECTORY_SEPARATOR);
 
-        $config = ' --standard=' . $this->getPathToBundle('Development') . 'src/SprykerFeature/Zed/Development/Business/CodeStyleSniffer/ruleset.xml';
+        $config = ' --standard=' . __DIR__ . '/ruleset.xml';
         if ($options[self::OPTION_VERBOSE]) {
             $config .= ' -v';
         }

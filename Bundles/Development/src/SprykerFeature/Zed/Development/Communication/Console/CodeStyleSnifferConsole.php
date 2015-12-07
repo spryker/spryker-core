@@ -54,15 +54,15 @@ class CodeStyleSnifferConsole extends Console
     public function execute(InputInterface $input, OutputInterface $output)
     {
         $bundle = $this->input->getOption(self::OPTION_BUNDLE);
-        if (!$bundle) {
-            $this->info('Check code style in project level');
-        } else {
+
+        $message = 'Check code style in project level';
+        if ($bundle) {
             $message = 'Check code style in all bundles';
             if ($bundle !== self::OPTION_BUNDLE_ALL) {
                 $message = 'Check code style in ' . $bundle . ' bundle';
             }
-            $this->info($message);
         }
+        $this->info($message);
 
         $this->getFacade()->checkCodeStyle($bundle, $this->input->getOptions());
     }
