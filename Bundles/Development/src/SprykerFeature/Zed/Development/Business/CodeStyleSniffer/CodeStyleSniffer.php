@@ -6,11 +6,10 @@
 
 namespace SprykerFeature\Zed\Development\Business\CodeStyleSniffer;
 
-use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
-class BundleCodeStyleSniffer
+class CodeStyleSniffer
 {
 
     const XML_RULESET = 'ruleset.xml';
@@ -82,7 +81,8 @@ class BundleCodeStyleSniffer
      *
      * @return string
      */
-    protected function resolvePath($bundle) {
+    protected function resolvePath($bundle)
+    {
         if ($bundle) {
             if ($bundle === self::BUNDLE_ALL) {
                 return $this->pathToBundles;
@@ -124,6 +124,7 @@ class BundleCodeStyleSniffer
 
         if (!empty($options[self::OPTION_DRY_RUN])) {
             echo $command;
+
             return;
         }
 
