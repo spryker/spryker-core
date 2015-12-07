@@ -33,7 +33,7 @@ class DevelopmentFacade extends AbstractFacade
      */
     public function checkCodeStyle($bundle = null, array $options = [])
     {
-        $this->getDependencyContainer()->createCodeStyleSniffer()->checkBundleCodeStyle($bundle, $options);
+        $this->getDependencyContainer()->createCodeStyleSniffer()->checkCodeStyle($bundle, $options);
     }
 
 }
