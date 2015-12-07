@@ -54,6 +54,9 @@ class CodeStyleFixer
     public function fixCodeStyle($bundle, array $options = [])
     {
         if (!$bundle) {
+            if ($options[self::OPTION_CLEAR]) {
+                $this->clearCacheFile($this->applicationRoot);
+            }
             $this->runFixerCommand($this->applicationRoot, $this->applicationRoot, $options);
 
             return;
@@ -133,6 +136,16 @@ class CodeStyleFixer
             $to
         );
 
+        $this->clearCacheFile($path);
+    }
+
+    /**
+     * @param $path
+     *
+     * @return void
+     */
+    protected function clearCacheFile($path)
+    {
         $cacheFile = $path . self::PHP_CS_CACHE_CONFIG_FILE_NAME;
         if (file_exists($cacheFile)) {
             unlink($cacheFile);
@@ -153,6 +166,9 @@ class CodeStyleFixer
             $arguments = ' -vvv';
         }
 
+        if ($path === $this->applicationRoot) {
+            $path = '';
+        }
         if ($path) {
             $path = ' ' . rtrim($path, DIRECTORY_SEPARATOR);
         }
