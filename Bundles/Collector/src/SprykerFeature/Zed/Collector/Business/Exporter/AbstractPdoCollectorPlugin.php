@@ -122,7 +122,7 @@ abstract class AbstractPdoCollectorPlugin
     protected function generateBatchIterator()
     {
         return new PdoBatchIterator(
-            clone $this->criteriaBuilder,
+            $this->criteriaBuilder,
             $this->touchQueryContainer->getConnection(),
             $this->chunkSize
         );
@@ -142,60 +142,6 @@ abstract class AbstractPdoCollectorPlugin
     public function setChunkSize($chunkSize)
     {
         $this->chunkSize = $chunkSize;
-    }
-
-    /**
-     * @param $itemType
-     *
-     * @throws \Exception
-     *
-     * @return int
-     */
-    protected function flushDeletedTouchStorageAndSearchKeys($itemType)
-    {
-        $deleteQuery = $this->touchQueryContainer->queryTouchDeleteStorageAndSearch($itemType);
-        $entityCollection = $deleteQuery->find();
-        $deletedCount = count($entityCollection);
-
-        $this->touchQueryContainer->getConnection()->beginTransaction();
-        try {
-            foreach ($entityCollection as $entity) {
-                $entity->delete();
-            }
-        } catch (\Exception $e) {
-            $this->touchQueryContainer->getConnection()->rollBack();
-            throw $e;
-        }
-
-        $this->touchQueryContainer->getConnection()->commit();
-
-        return $deletedCount;
-    }
-
-    /**
-     * @param string $itemType
-     * @param WriterInterface $dataWriter
-     * @param TouchUpdaterInterface $touchUpdater
-     * @param LocaleTransfer $locale
-     *
-     * @throws \Exception
-     *
-     * @return void
-     */
-    protected function delete($itemType, WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater,
-        LocaleTransfer $locale
-    ) {
-        $deleteQuery = $this->touchQueryContainer->queryTouchDeleteOnlyByItemType($itemType);
-        $touchEntities = $deleteQuery->find();
-
-        foreach ($touchEntities as $touchEntity) {
-            $keyEntity = $touchUpdater->getKeyById($touchEntity->getIdTouch(), $locale);
-            if (!empty($keyEntity)) {
-                $key = $keyEntity->getKey();
-                $dataWriter->delete($key);
-                $keyEntity->delete();
-            }
-        }
     }
 
     /**
@@ -264,6 +210,19 @@ abstract class AbstractPdoCollectorPlugin
     }
 
     /**
+     * @param SpyTouchQuery $baseQuery
+     * @param LocaleTransfer $locale
+     * @param BatchResultInterface $result
+     * @param WriterInterface $dataWriter
+     * @param TouchUpdaterInterface $touchUpdater
+     */
+    public function postRun(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result,
+        WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater
+    ) {
+        $this->validateDependencies();
+    }
+
+    /**
      * @param LocaleTransfer $locale
      * @param BatchResultInterface $batchResult
      * @param WriterInterface $dataWriter
@@ -280,16 +239,57 @@ abstract class AbstractPdoCollectorPlugin
     }
 
     /**
-     * @param SpyTouchQuery $baseQuery
-     * @param LocaleTransfer $locale
-     * @param BatchResultInterface $result
+     * @param $itemType
+     *
+     * @throws \Exception
+     *
+     * @return int
+     */
+    protected function flushDeletedTouchStorageAndSearchKeys($itemType)
+    {
+        $deleteQuery = $this->touchQueryContainer->queryTouchDeleteStorageAndSearch($itemType);
+        $entityCollection = $deleteQuery->find();
+        $deletedCount = count($entityCollection);
+
+        $this->touchQueryContainer->getConnection()->beginTransaction();
+        try {
+            foreach ($entityCollection as $entity) {
+                $entity->delete();
+            }
+        } catch (\Exception $e) {
+            $this->touchQueryContainer->getConnection()->rollBack();
+            throw $e;
+        }
+
+        $this->touchQueryContainer->getConnection()->commit();
+
+        return $deletedCount;
+    }
+
+    /**
+     * @param string $itemType
      * @param WriterInterface $dataWriter
      * @param TouchUpdaterInterface $touchUpdater
+     * @param LocaleTransfer $locale
+     *
+     * @throws \Exception
+     *
+     * @return void
      */
-    public function postRun(SpyTouchQuery $baseQuery, LocaleTransfer $locale, BatchResultInterface $result,
-        WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater
+    protected function delete($itemType, WriterInterface $dataWriter, TouchUpdaterInterface $touchUpdater,
+        LocaleTransfer $locale
     ) {
-        $this->validateDependencies();
+        $deleteQuery = $this->touchQueryContainer->queryTouchDeleteOnlyByItemType($itemType);
+        $touchEntities = $deleteQuery->find();
+
+        foreach ($touchEntities as $touchEntity) {
+            $keyEntity = $touchUpdater->getKeyById($touchEntity->getIdTouch(), $locale);
+            if (!empty($keyEntity)) {
+                $key = $keyEntity->getKey();
+                $dataWriter->delete($key);
+                $keyEntity->delete();
+            }
+        }
     }
 
     /**
