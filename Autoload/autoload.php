@@ -2,9 +2,8 @@
 
 use SprykerFeature\Shared\Library\Autoloader;
 
-if (is_dir($vendor = __DIR__ . '/../Bundles')) {
-    require_once($vendor . '/Library/src/SprykerFeature/Shared/Library/Autoloader.php');
-} else {
+$vendor = __DIR__ . '/../Bundles';
+if (!is_dir($vendor)) {
     echo(
         'You must set up the project dependencies, run the following commands:' . PHP_EOL .
         'curl -s http://getcomposer.org/installer | php' . PHP_EOL .
@@ -12,6 +11,8 @@ if (is_dir($vendor = __DIR__ . '/../Bundles')) {
     );
     exit(1);
 }
+
+require_once $vendor . '/Library/src/SprykerFeature/Shared/Library/Autoloader.php';
 
 $bundleParent = realpath($vendor . '/..');
 $vendor = realpath($bundleParent . '/../..');

@@ -173,10 +173,10 @@ class SprykerUseStatementFixer extends AbstractFixer
     protected function isBlacklisted(\SplFileInfo $file)
     {
         if (strpos($file, DIRECTORY_SEPARATOR . 'Fixtures' . DIRECTORY_SEPARATOR) !== false) {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     /**
