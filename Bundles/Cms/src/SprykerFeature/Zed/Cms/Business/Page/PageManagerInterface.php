@@ -7,6 +7,7 @@
 namespace SprykerFeature\Zed\Cms\Business\Page;
 
 use Generated\Shared\Transfer\CmsBlockTransfer;
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use SprykerFeature\Zed\Cms\Business\Exception\MissingPageException;
@@ -63,6 +64,17 @@ interface PageManagerInterface
      * @return UrlTransfer
      */
     public function createPageUrl(PageTransfer $page, $url);
+
+    /**
+     * @param PageTransfer $page
+     * @param string $url
+     * @param LocaleTransfer $localeTransfer
+     *
+     * @throws UrlExistsException
+     *
+     * @return UrlTransfer
+     */
+    public function createPageUrlWithLocale(PageTransfer $page, $url, LocaleTransfer $localeTransfer);
 
     /**
      * @param PageTransfer $page

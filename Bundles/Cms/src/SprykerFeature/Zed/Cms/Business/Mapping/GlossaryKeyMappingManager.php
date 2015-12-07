@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Cms\Business\Mapping;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Generated\Zed\Ide\AutoCompletion;
@@ -245,26 +246,25 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
      * @param PageTransfer $page
      * @param string $placeholder
      * @param string $value
+     * @param LocaleTransfer|null $localeTransfer
+     * @param bool $autoGlossaryKeyIncrement
      *
      * @return PageKeyMappingTransfer
      */
-    public function addPlaceholderText(PageTransfer $page, $placeholder, $value)
+    public function addPlaceholderText(PageTransfer $page, $placeholder, $value, LocaleTransfer $localeTransfer = null, $autoGlossaryKeyIncrement = true)
     {
         $template = $this->templateManager->getTemplateById($page->getFkTemplate());
 
-        $keyName = $this->generateGlossaryKeyName($template->getTemplateName(), $placeholder);
+        $uniquePlaceholder = $placeholder . '-' . $page->getIdCmsPage();
+        $keyName = $this->generateGlossaryKeyName($template->getTemplateName(), $uniquePlaceholder, $autoGlossaryKeyIncrement);
 
         $this->connection->beginTransaction();
 
-        $idKey = $this->glossaryFacade->createKey($keyName);
-        $this->glossaryFacade->createTranslationForCurrentLocale($keyName, $value);
+        $pageKeyMapping = $this->createGlossaryPageKeyMapping($page, $placeholder, $keyName, $value, $localeTransfer);
 
-        $pageKeyMapping = new PageKeyMappingTransfer();
-        $pageKeyMapping->setFkGlossaryKey($idKey);
-        $pageKeyMapping->setPlaceholder($placeholder);
-        $pageKeyMapping->setFkPage($page->getIdCmsPage());
-
-        $pageKeyMapping = $this->savePageKeyMapping($pageKeyMapping);
+        if (!$this->hasPagePlaceholderMapping($page->getIdCmsPage(), $placeholder)) {
+            $pageKeyMapping = $this->savePageKeyMapping($pageKeyMapping);
+        }
 
         $this->connection->commit();
 
@@ -274,10 +274,11 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
     /**
      * @param string $templateName
      * @param string $placeholder
+     * @param bool $autoIncrement
      *
      * @return string
      */
-    public function generateGlossaryKeyName($templateName, $placeholder)
+    public function generateGlossaryKeyName($templateName, $placeholder, $autoIncrement = true)
     {
         $keyName = self::GENERATED_GLOSSARY_KEY_PREFIX . '.';
         $keyName .= str_replace([' ', '.'], '-', $templateName) . '.';
@@ -287,7 +288,7 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
 
         $candidate = $keyName . $index;
 
-        while ($this->glossaryFacade->hasKey($candidate)) {
+        while ($this->glossaryFacade->hasKey($candidate) && $autoIncrement === true) {
             $candidate = $keyName . ++$index;
         }
 
@@ -342,6 +343,57 @@ class GlossaryKeyMappingManager implements GlossaryKeyMappingManagerInterface
         $mappingTransfer->fromArray($mappingEntity->toArray(), true);
 
         return $mappingTransfer;
+    }
+
+    /**
+     * @param string $keyName
+     * @param string $value
+     * @param LocaleTransfer|null $localeTransfer
+     *
+     * @return void
+     */
+    protected function createGlossaryTranslation($keyName, $value, LocaleTransfer $localeTransfer = null)
+    {
+        if ($localeTransfer !== null) {
+            $this->glossaryFacade->createAndTouchTranslation($keyName, $localeTransfer, $value);
+        } else {
+            $this->glossaryFacade->createTranslationForCurrentLocale($keyName, $value);
+        }
+    }
+
+    /**
+     * @param PageTransfer $page
+     * @param string $placeholder
+     * @param int $idKey
+     *
+     * @return PageKeyMappingTransfer
+     */
+    protected function createPageKeyMappingTransfer(PageTransfer $page, $placeholder, $idKey)
+    {
+        $pageKeyMapping = new PageKeyMappingTransfer();
+        $pageKeyMapping->setFkGlossaryKey($idKey);
+        $pageKeyMapping->setPlaceholder($placeholder);
+        $pageKeyMapping->setFkPage($page->getIdCmsPage());
+
+        return $pageKeyMapping;
+    }
+
+    /**
+     * @param PageTransfer $page
+     * @param string $placeholder
+     * @param string $keyName
+     * @param string $value
+     * @param LocaleTransfer|null $localeTransfer
+     *
+     * @return PageKeyMappingTransfer
+     */
+    protected function createGlossaryPageKeyMapping(PageTransfer $page, $placeholder,  $keyName, $value, LocaleTransfer $localeTransfer = null)
+    {
+        $idKey = $this->glossaryFacade->getOrCreateKey($keyName);
+        $this->createGlossaryTranslation($keyName, $value, $localeTransfer);
+        $pageKeyMapping = $this->createPageKeyMappingTransfer($page, $placeholder, $idKey);
+
+        return $pageKeyMapping;
     }
 
 }

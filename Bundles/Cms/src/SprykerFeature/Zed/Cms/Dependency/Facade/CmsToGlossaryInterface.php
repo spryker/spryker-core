@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Cms\Dependency\Facade;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Zed\Glossary\Business\Exception\KeyExistsException;
@@ -41,6 +42,34 @@ interface CmsToGlossaryInterface
 
     /**
      * @param string $keyName
+     * @param LocaleTransfer $locale
+     * @param string $value
+     * @param bool $isActive
+     *
+     * @throws MissingKeyException
+     * @throws MissingLocaleException
+     * @throws TranslationExistsException
+     *
+     * @return TranslationTransfer
+     */
+    public function createTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
+
+    /**
+     * @param string $keyName
+     * @param LocaleTransfer $locale
+     * @param string $value
+     * @param bool $isActive
+     *
+     * @throws MissingKeyException
+     * @throws MissingLocaleException
+     * @throws TranslationExistsException
+     *
+     * @return TranslationTransfer
+     */
+    public function createAndTouchTranslation($keyName, LocaleTransfer $locale, $value, $isActive = true);
+
+    /**
+     * @param string $keyName
      *
      * @throws KeyExistsException
      *
@@ -56,10 +85,24 @@ interface CmsToGlossaryInterface
     public function hasKey($keyName);
 
     /**
+     * @param string $keyName
+     *
+     * @return int
+     */
+    public function getKeyIdentifier($keyName);
+
+    /**
      * @param int $idKey
      *
      * @return void
      */
     public function touchCurrentTranslationForKeyId($idKey);
+
+    /**
+     * @param string $keyName
+     *
+     * @return int
+     */
+    public function getOrCreateKey($keyName);
 
 }

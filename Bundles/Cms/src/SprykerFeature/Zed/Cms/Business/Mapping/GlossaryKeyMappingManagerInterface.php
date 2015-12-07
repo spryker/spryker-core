@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Cms\Business\Mapping;
 
+use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\PageKeyMappingTransfer;
 use Generated\Shared\Transfer\PageTransfer;
 use Propel\Runtime\Exception\PropelException;
@@ -51,10 +52,12 @@ interface GlossaryKeyMappingManagerInterface
      * @param PageTransfer $page
      * @param string $placeholder
      * @param string $value
+     * @param LocaleTransfer $localeTransfer
+     * @param bool $autoGlossaryKeyIncrement
      *
      * @return PageKeyMappingTransfer
      */
-    public function addPlaceholderText(PageTransfer $page, $placeholder, $value);
+    public function addPlaceholderText(PageTransfer $page, $placeholder, $value, LocaleTransfer $localeTransfer = null, $autoGlossaryKeyIncrement = true);
 
     /**
      * @param PageTransfer $page
@@ -96,9 +99,10 @@ interface GlossaryKeyMappingManagerInterface
     /**
      * @param string $templateName
      * @param string $placeholder
+     * @param bool $autoIncrement
      *
      * @return string
      */
-    public function generateGlossaryKeyName($templateName, $placeholder);
+    public function generateGlossaryKeyName($templateName, $placeholder, $autoIncrement = true);
 
 }
