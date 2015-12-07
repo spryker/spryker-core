@@ -17,6 +17,10 @@ class CodeStyleFixer
 
     const PHP_CS_CACHE_CONFIG_FILE_NAME = '.php_cs.cache';
 
+    const OPTION_VERBOSE = 'verbose';
+
+    const OPTION_CLEAR = 'clear';
+
     /**
      * @var string
      */
@@ -60,7 +64,7 @@ class CodeStyleFixer
             throw new \ErrorException('This bundle does not exist');
         }
 
-        $this->copyPhpCsFixerConfigToBundle($path, $options['clear']);
+        $this->copyPhpCsFixerConfigToBundle($path, $options[self::OPTION_CLEAR]);
         $pathToCore = $this->getPathToCore();
         $this->runFixerCommand($path, $pathToCore, $options);
     }
@@ -136,7 +140,7 @@ class CodeStyleFixer
     protected function runFixerCommand($path, $from, array $options)
     {
         $options = '';
-        if (!empty($options['verbose'])) {
+        if (!empty($options[self::OPTION_VERBOSE])) {
             $options = ' -vvv';
         }
 
