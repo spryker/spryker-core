@@ -10,7 +10,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
-class BundleCodeStyleFixer
+class CodeStyleFixer
 {
 
     const PHP_CS_CONFIG_FILE_NAME = '.php_cs';
@@ -39,17 +39,16 @@ class BundleCodeStyleFixer
 
     /**
      * @param string|null $bundle
-     * @param bool $clear
+     * @param array $options
      *
      * @throws \ErrorException
      *
      * @return void
      */
-    public function fixBundleCodeStyle($bundle, $clear = false)
+    public function fixCodeStyle($bundle, array $options = [])
     {
         if (!$bundle) {
-            $this->copyPhpCsFixerConfigToBundle($this->pathToBundles, $clear);
-            $this->runFixerCommand($this->pathToBundles);
+            $this->runFixerCommand($this->applicationRoot, $this->applicationRoot, $options);
 
             return;
         }
@@ -61,8 +60,9 @@ class BundleCodeStyleFixer
             throw new \ErrorException('This bundle does not exist');
         }
 
-        $this->copyPhpCsFixerConfigToBundle($path, $clear);
-        $this->runFixerCommand($path);
+        $this->copyPhpCsFixerConfigToBundle($path, $options['clear']);
+        $pathToCore = $this->getPathToCore();
+        $this->runFixerCommand($path, $pathToCore, $options);
     }
 
     /**
@@ -128,16 +128,25 @@ class BundleCodeStyleFixer
 
     /**
      * @param string $path
+     * @param string $from
+     * @param array $options
      *
      * @return void
      */
-    protected function runFixerCommand($path)
+    protected function runFixerCommand($path, $from, array $options)
     {
-        $pathToFiles = rtrim($path, DIRECTORY_SEPARATOR);
-        $command = $this->applicationRoot . 'vendor/bin/php-cs-fixer fix ' . $pathToFiles . ' -vvv';
+        $options = '';
+        if (!empty($options['verbose'])) {
+            $options = ' -vvv';
+        }
 
-        $pathToCore = $this->getPathToCore();
-        $process = new Process($command, $pathToCore, null, null, 4800);
+        if ($path) {
+            $path = ' ' . rtrim($path, DIRECTORY_SEPARATOR);
+        }
+
+        $command = $this->applicationRoot . 'vendor/bin/php-cs-fixer fix' . $path . $options;
+
+        $process = new Process($command, $from, null, null, 4800);
         $process->run(function ($type, $buffer) {
             echo $buffer;
         });

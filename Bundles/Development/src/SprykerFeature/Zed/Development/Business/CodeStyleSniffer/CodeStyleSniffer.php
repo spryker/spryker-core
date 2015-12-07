@@ -10,7 +10,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Process\Process;
 use Zend\Filter\Word\UnderscoreToCamelCase;
 
-class BundleCodeStyleSniffer
+class CodeStyleSniffer
 {
 
     const XML_RULESET = 'ruleset.xml';

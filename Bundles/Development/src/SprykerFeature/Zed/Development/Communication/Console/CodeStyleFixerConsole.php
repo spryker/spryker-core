@@ -21,9 +21,11 @@ class CodeStyleFixerConsole extends Console
 
     const COMMAND_NAME = 'code:fix';
 
-    const ARGUMENT_BUNDLE = 'bundle';
+    const OPTION_BUNDLE = 'bundle';
 
     const OPTION_CLEAR = 'clear';
+
+    const OPTION_BUNDLE_ALL = 'all';
 
     /**
      * @return void
@@ -37,7 +39,7 @@ class CodeStyleFixerConsole extends Console
             ->setHelp('<info>' . self::COMMAND_NAME . ' -h</info>')
             ->setDescription('Fix code style for a specific bundle');
 
-        $this->addArgument(self::ARGUMENT_BUNDLE, InputArgument::OPTIONAL, 'Name of bundle to fix code style');
+        $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle to fix code style for (or "all").');
         $this->addOption(self::OPTION_CLEAR, 'c', InputOption::VALUE_NONE, 'Force-clear the cache prior to running it');
     }
 
@@ -51,15 +53,18 @@ class CodeStyleFixerConsole extends Console
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $bundle = $this->input->getArgument(self::ARGUMENT_BUNDLE);
-        if (!$bundle) {
-            $this->info('Fix code style in all bundles');
-        } else {
-            $this->info('Fix code style in ' . $this->input->getArgument(self::ARGUMENT_BUNDLE) . ' bundle');
-        }
+        $bundle = $this->input->getOption(self::OPTION_BUNDLE);
+        $message = 'Fix code style in project level';
 
-        $clear = $this->input->getOption(self::OPTION_CLEAR);
-        $this->getFacade()->fixCodeStyle($bundle, $clear);
+        if ($bundle) {
+            $message = 'Fix code style in all bundles';
+            if ($bundle !== self::OPTION_BUNDLE_ALL) {
+                $message = 'Check code style in ' . $bundle . ' bundle';
+            }
+        }
+        $this->info($message);
+
+        $this->getFacade()->fixCodeStyle($bundle, $this->input->getOptions());
     }
 
 }

@@ -16,13 +16,13 @@ class DevelopmentFacade extends AbstractFacade
 
     /**
      * @param string|null $bundle
-     * @param bool $clear
+     * @param array $options
      *
      * @return void
      */
-    public function fixCodeStyle($bundle = null, $clear = false)
+    public function fixCodeStyle($bundle = null, array $options = [])
     {
-        $this->getDependencyContainer()->createBundleCodeStyleFixer()->fixBundleCodeStyle($bundle, $clear);
+        $this->getDependencyContainer()->createCodeStyleFixer()->fixCodeStyle($bundle, $options);
     }
 
     /**
@@ -33,7 +33,7 @@ class DevelopmentFacade extends AbstractFacade
      */
     public function checkCodeStyle($bundle = null, array $options = [])
     {
-        $this->getDependencyContainer()->createBundleCodeStyleSniffer()->checkBundleCodeStyle($bundle, $options);
+        $this->getDependencyContainer()->createCodeStyleSniffer()->checkBundleCodeStyle($bundle, $options);
     }
 
 }

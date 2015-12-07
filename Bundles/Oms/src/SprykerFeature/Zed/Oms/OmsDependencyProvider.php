@@ -63,6 +63,9 @@ class OmsDependencyProvider extends AbstractBundleDependencyProvider
         ];
     }
 
+    /**
+     * @return void
+     */
     public function providePersistenceLayerDependencies(Container $container)
     {
         $container[self::QUERY_CONTAINER_SALES] = function (Container $container) {
