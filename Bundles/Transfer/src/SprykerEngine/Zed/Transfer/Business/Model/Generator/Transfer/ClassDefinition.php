@@ -509,7 +509,7 @@ class ClassDefinition implements ClassDefinitionInterface
     {
         $parent = $this->getPropertyName($property);
         $propertyConstant = $this->getPropertyConstantName($property);
-        if (array_key_exists('singular', $property)) {
+        if (isset($property['singular'])) {
             $property['name'] = $property['singular'];
         }
         $propertyName = $this->getPropertyName($property);

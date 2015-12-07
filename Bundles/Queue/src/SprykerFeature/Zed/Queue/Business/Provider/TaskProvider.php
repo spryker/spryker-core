@@ -33,7 +33,7 @@ class TaskProvider implements TaskProviderInterface
      */
     public function getTaskByQueueName($queueName)
     {
-        if (!array_key_exists($queueName, $this->tasks)) {
+        if (!isset($this->tasks[$queueName])) {
             throw new NoTaskConfiguredForGivenQueueException(
                 sprintf(
                     'No Task configured for given queue "%s"',
@@ -52,7 +52,7 @@ class TaskProvider implements TaskProviderInterface
      */
     protected function addTask(TaskPluginInterface $task)
     {
-        if (array_key_exists($task->getQueueName(), $this->tasks)) {
+        if (isset($this->tasks[$task->getQueueName()])) {
             $definedTask = $this->tasks[$task->getQueueName()];
             throw new TaskAlreadyDefinedForQueueException(
                 sprintf(
