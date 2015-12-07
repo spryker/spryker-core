@@ -61,6 +61,7 @@ interface KeyManagerInterface
      * @param string $keyName
      *
      * @throws MissingKeyException
+     *
      * @return int
      */
     public function getOrCreateKey($keyName);
