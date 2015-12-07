@@ -121,6 +121,9 @@ class PhpdocReturnVoidFixer extends AbstractFixer
 
         $methodStartIndex = $tokens->getNextMeaningfulToken($index);
         $methodStartIndex = $tokens->getNextTokenOfKind($methodStartIndex, ['{']);
+        if ($methodStartIndex === null) {
+            return null;
+        }
 
         $methodEndIndex = $this->detectMethodEnd($tokens, $methodStartIndex, 1);
 

@@ -54,4 +54,11 @@ class TestClass1Input
         $foo = $foo * 2;
     }
 
+    /**
+     * @return void
+     */
+    public function alreadyVoid() {
+        $foo = $foo * 2;
+    }
+
 }
