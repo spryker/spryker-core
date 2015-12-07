@@ -32,6 +32,9 @@ class SearchInstaller implements SearchInstallerInterface
         $this->messenger = $messenger;
     }
 
+    /**
+     * @return void
+     */
     public function install()
     {
         foreach ($this->installer as $installer) {

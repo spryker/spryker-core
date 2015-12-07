@@ -15,6 +15,8 @@ class UrlGeneratorServiceProvider extends AbstractPlugin implements ServiceProvi
 
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
     public function register(Application $app)
     {
@@ -27,6 +29,8 @@ class UrlGeneratorServiceProvider extends AbstractPlugin implements ServiceProvi
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function boot(Application $app)
     {

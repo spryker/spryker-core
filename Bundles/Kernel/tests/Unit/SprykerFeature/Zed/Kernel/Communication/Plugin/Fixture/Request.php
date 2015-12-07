@@ -42,6 +42,8 @@ class Request extends \SprykerFeature\Shared\Library\Communication\Request
 
     /**
      * @param $transfer
+     *
+     * @return void
      */
     public function setFixtureTransfer($transfer)
     {

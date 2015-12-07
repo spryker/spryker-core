@@ -88,6 +88,8 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
 
     /**
      * @param int $aid
+     *
+     * @return void
      */
     public function setAid($aid)
     {
@@ -104,6 +106,8 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
 
     /**
      * @param int $amount
+     *
+     * @return void
      */
     public function setAmount($amount)
     {
@@ -120,6 +124,8 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
 
     /**
      * @param string $clearingtype
+     *
+     * @return void
      */
     public function setClearingType($clearingType)
     {
@@ -136,6 +142,8 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
 
     /**
      * @param string $currency
+     *
+     * @return void
      */
     public function setCurrency($currency)
     {
@@ -152,6 +160,8 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
 
     /**
      * @param string $narrative_text
+     *
+     * @return void
      */
     public function setNarrativeText($narrative_text)
     {
@@ -168,6 +178,8 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
 
     /**
      * @param string $param
+     *
+     * @return void
      */
     public function setParam($param)
     {
@@ -184,6 +196,8 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
 
     /**
      * @param string $reference
+     *
+     * @return void
      */
     public function setReference($reference)
     {
@@ -200,6 +214,8 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
 
     /**
      * @param PersonalContainer $personalData
+     *
+     * @return void
      */
     public function setPersonalData(PersonalContainer $personalData)
     {
@@ -216,6 +232,8 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
 
     /**
      * @param ShippingContainer $delivery
+     *
+     * @return void
      */
     public function setShippingData(ShippingContainer $delivery)
     {
@@ -232,6 +250,8 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
 
     /**
      * @param PaymentMethod\AbstractPaymentMethodContainer $paymentMethod
+     *
+     * @return void
      */
     public function setPaymentMethod(AbstractPaymentMethodContainer $paymentMethod)
     {
@@ -248,6 +268,8 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
 
     /**
      * @param ThreeDSecureContainer $secure
+     *
+     * @return void
      */
     public function set3dsecure(ThreeDSecureContainer $secure)
     {
@@ -264,6 +286,8 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
 
     /**
      * @param \SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer $invoicing
+     *
+     * @return void
      */
     public function setInvoicing(TransactionContainer $invoicing)
     {
@@ -288,6 +312,8 @@ abstract class AbstractAuthorizationContainer extends AbstractRequestContainer i
 
     /**
      * @param string $onlinebanktransfertype
+     *
+     * @return void
      */
     public function setOnlinebanktransfertype($onlinebanktransfertype)
     {

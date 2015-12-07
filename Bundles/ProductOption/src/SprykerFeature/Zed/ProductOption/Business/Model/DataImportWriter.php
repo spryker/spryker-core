@@ -87,6 +87,8 @@ class DataImportWriter implements DataImportWriterInterface
     /**
      * @param SpyProductOptionType $productOptionTypeEntity
      * @param array $localizedNames
+     *
+     * @return void
      */
     protected function createOrUpdateOptionTypeTranslations(SpyProductOptionType $productOptionTypeEntity, array $localizedNames)
     {
@@ -162,6 +164,8 @@ class DataImportWriter implements DataImportWriterInterface
     /**
      * @param SpyProductOptionValue $productOptionValueEntity
      * @param array $localizedNames
+     *
+     * @return void
      */
     protected function createOrUpdateOptionValueTranslations(SpyProductOptionValue $productOptionValueEntity, array $localizedNames)
     {
@@ -256,6 +260,8 @@ class DataImportWriter implements DataImportWriterInterface
      *
      * @throws MissingProductOptionTypeException
      * @throws MissingProductOptionTypeUsageException
+     *
+     * @return void
      */
     public function importProductOptionTypeUsageExclusion($sku, $importKeyProductOptionTypeA, $importKeyProductOptionTypeB)
     {
@@ -289,6 +295,8 @@ class DataImportWriter implements DataImportWriterInterface
      * @throws MissingProductOptionValueUsageException
      * @throws MissingProductOptionValueException
      * @throws MissingProductOptionValueUsageException
+     *
+     * @return void
      */
     public function importProductOptionValueUsageConstraint($sku, $idProductOptionValueUsageSource, $importKeyProductOptionValueTarget, $operator)
     {
@@ -354,6 +362,9 @@ class DataImportWriter implements DataImportWriterInterface
         return $presetConfig->getIdProductOptionConfigurationPreset();
     }
 
+    /**
+     * @return void
+     */
     public function flushBuffer()
     {
         // not implemented
@@ -361,6 +372,8 @@ class DataImportWriter implements DataImportWriterInterface
 
     /**
      * @param int $idAbstractProduct
+     *
+     * @return void
      */
     protected function touchAbstractProductById($idAbstractProduct)
     {
@@ -369,6 +382,8 @@ class DataImportWriter implements DataImportWriterInterface
 
     /**
      * @param string $concreteSku
+     *
+     * @return void
      */
     protected function touchAbstractProductByConcreteSku($concreteSku)
     {
@@ -440,6 +455,8 @@ class DataImportWriter implements DataImportWriterInterface
      * @param int $idProductOptionTypeUsage
      *
      * @throws MissingProductOptionTypeUsageException
+     *
+     * @return void
      */
     protected function checkHasProductOptionTypeUsage($idProductOptionTypeUsage)
     {
@@ -467,6 +484,8 @@ class DataImportWriter implements DataImportWriterInterface
      * @param int $idProductOptionValueUsage
      *
      * @throws MissingProductOptionValueUsageException
+     *
+     * @return void
      */
     protected function checkHasProductOptionValue($idProductOptionValueUsage)
     {

@@ -74,6 +74,8 @@ class ConcreteProductWriter implements ConcreteProductWriterInterface
 
     /**
      * create the product insert statement
+     *
+     * @return void
      */
     protected function createProductStatement()
     {
@@ -103,6 +105,8 @@ class ConcreteProductWriter implements ConcreteProductWriterInterface
 
     /**
      * Creates the attribute statement
+     *
+     * @return void
      */
     protected function createAttributesStatement()
     {

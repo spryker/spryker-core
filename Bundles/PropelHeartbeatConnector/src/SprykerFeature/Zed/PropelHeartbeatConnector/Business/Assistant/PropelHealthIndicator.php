@@ -16,11 +16,17 @@ class PropelHealthIndicator extends AbstractHealthIndicator implements HealthInd
 
     const HEALTH_MESSAGE_UNABLE_TO_WRITE_TO_DATABASE = 'Unable to write to database';
 
+    /**
+     * @return void
+     */
     public function healthCheck()
     {
         $this->checkWriteToDatabase();
     }
 
+    /**
+     * @return void
+     */
     private function checkWriteToDatabase()
     {
         try {

@@ -15,6 +15,8 @@ class ExpensePriceToPayCalculator implements CalculatorPluginInterface
 
     /**
      * @param CalculableInterface $calculableContainer
+     *
+     * @return void
      */
     public function recalculate(CalculableInterface $calculableContainer)
     {

@@ -19,6 +19,9 @@ class AbstractFactoryTest extends \PHPUnit_Framework_TestCase
 
     const BUNDLE_NAME = 'Kernel';
 
+    /**
+     * @return void
+     */
     public function testExistsShouldReturnFalseIfClassCanNotCreated()
     {
         $factory = new Factory(self::BUNDLE_NAME);

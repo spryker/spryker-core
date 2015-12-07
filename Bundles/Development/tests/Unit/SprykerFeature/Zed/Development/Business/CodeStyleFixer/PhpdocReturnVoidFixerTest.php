@@ -55,6 +55,10 @@ class PhpdocReturnVoidFixerTest extends \PHPUnit_Framework_TestCase
                 file_get_contents($fixturePath . 'Expected/TestClass1Expected.php'),
                 file_get_contents($fixturePath . 'Input/TestClass1Input.php'),
             ],
+            [
+                file_get_contents($fixturePath . 'Expected/TestClass2Expected.php'),
+                file_get_contents($fixturePath . 'Input/TestClass2Input.php'),
+            ],
         ];
     }
 

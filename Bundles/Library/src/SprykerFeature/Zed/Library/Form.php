@@ -65,6 +65,9 @@ class Form extends \Zend_Form
         return $this->request;
     }
 
+    /**
+     * @return void
+     */
     public function populateWithDataSource()
     {
         if ($this->dataSource) {

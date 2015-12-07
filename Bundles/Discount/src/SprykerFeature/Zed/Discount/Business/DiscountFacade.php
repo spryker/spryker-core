@@ -91,6 +91,8 @@ class DiscountFacade extends AbstractFacade implements DiscountFacadeInterface
     /**
      * @param DiscountableInterface[] $discountableObjects
      * @param DiscountTransfer $discountTransfer
+     *
+     * @return void
      */
     public function distributeAmount(array $discountableObjects, DiscountTransfer $discountTransfer)
     {

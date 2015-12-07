@@ -20,6 +20,9 @@ class DemoDataInstallConsole extends Console
     const COMMAND_NAME = 'setup:install-demo-data';
     const DESCRIPTION = 'Install demo data';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME)
@@ -29,6 +32,8 @@ class DemoDataInstallConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
+     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

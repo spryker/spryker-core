@@ -31,6 +31,8 @@ class PropelSchemaMerger implements PropelSchemaMergerInterface
      * @param SplFileInfo[] $schemaFiles
      *
      * @throws SchemaMergeException
+     *
+     * @return void
      */
     private function checkConsistency(array $schemaFiles)
     {

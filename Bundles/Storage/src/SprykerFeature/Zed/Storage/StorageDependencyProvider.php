@@ -42,6 +42,8 @@ class StorageDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @param Container $container
+     *
+     * @return void
      */
     protected function addStorageClient(Container $container)
     {
@@ -52,6 +54,8 @@ class StorageDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @param $container
+     *
+     * @return void
      */
     protected function addCollectorFacade($container)
     {

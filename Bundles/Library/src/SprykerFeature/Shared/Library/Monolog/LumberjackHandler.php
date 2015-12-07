@@ -17,6 +17,8 @@ class LumberjackHandler extends AbstractHandler
 
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
     public function handle(array $record)
     {

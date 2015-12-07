@@ -17,11 +17,17 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 class ShipmentCheckoutConnectorFacade extends AbstractFacade
 {
 
+    /**
+     * @return void
+     */
     public function hydrateOrderTransfer(OrderTransfer $order, CheckoutRequestTransfer $request)
     {
         $this->getDependencyContainer()->createShipmentOrderHydrator()->hydrateOrderTransfer($order, $request);
     }
 
+    /**
+     * @return void
+     */
     public function saveShipmentForOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {
         $this->getDependencyContainer()->createShipmentOrderSaver()->saveShipmentForOrder($orderTransfer, $checkoutResponse);

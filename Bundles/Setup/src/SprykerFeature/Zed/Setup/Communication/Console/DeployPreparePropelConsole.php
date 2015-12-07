@@ -20,6 +20,9 @@ class DeployPreparePropelConsole extends Console
     const COMMAND_NAME = 'setup:deploy:prepare_propel';
     const DESCRIPTION = 'Prepares propel configuration on appserver';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
@@ -44,6 +47,8 @@ class DeployPreparePropelConsole extends Console
     /**
      * @param string $command
      * @param array $arguments
+     *
+     * @return void
      */
     protected function runDependingCommand($command, array $arguments = [])
     {

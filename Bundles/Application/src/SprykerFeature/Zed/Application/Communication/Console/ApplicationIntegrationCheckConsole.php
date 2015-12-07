@@ -25,6 +25,9 @@ class ApplicationIntegrationCheckConsole extends Console
     const COMMAND_NAME = 'application:integration-check';
     const DESCRIPTION = 'Execute steps to check application';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
@@ -66,6 +69,8 @@ class ApplicationIntegrationCheckConsole extends Console
 
     /**
      * @param AbstractApplicationCheckStep[] $steps
+     *
+     * @return void
      */
     private function checkApplication(array $steps)
     {

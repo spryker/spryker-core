@@ -21,6 +21,8 @@ class AbstractRequest
 
     /**
      * @param array $data
+     *
+     * @return void
      */
     public function init(array $data = [])
     {

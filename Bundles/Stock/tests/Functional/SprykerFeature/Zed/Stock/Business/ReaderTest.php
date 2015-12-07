@@ -34,6 +34,9 @@ class ReaderTest extends Test
      */
     private $stockQueryContainer;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -43,6 +46,9 @@ class ReaderTest extends Test
         $this->stockQueryContainer = new StockQueryContainer(new Factory('Stock'), $locator);
     }
 
+    /**
+     * @return void
+     */
     public function testIsNeverOutOfStock()
     {
         $this->setTestData();
@@ -54,6 +60,9 @@ class ReaderTest extends Test
         $this->assertTrue($isneverOutOfStock);
     }
 
+    /**
+     * @return void
+     */
     protected function setTestData()
     {
         $abstractProduct = SpyAbstractProductQuery::create()

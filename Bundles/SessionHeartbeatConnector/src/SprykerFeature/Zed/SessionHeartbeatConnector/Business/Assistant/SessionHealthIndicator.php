@@ -16,12 +16,18 @@ class SessionHealthIndicator extends AbstractHealthIndicator implements HealthIn
     const HEALTH_MESSAGE_UNABLE_TO_READ_SESSION = 'Unable to read session';
     const KEY_HEARTBEAT = 'heartbeat';
 
+    /**
+     * @return void
+     */
     public function healthCheck()
     {
         $this->checkWriteSession();
         $this->checkReadSession();
     }
 
+    /**
+     * @return void
+     */
     private function checkWriteSession()
     {
         try {
@@ -32,6 +38,9 @@ class SessionHealthIndicator extends AbstractHealthIndicator implements HealthIn
         }
     }
 
+    /**
+     * @return void
+     */
     private function checkReadSession()
     {
         try {

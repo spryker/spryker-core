@@ -47,6 +47,8 @@ abstract class AbstractMultiFileMethodTagBuilder implements MethodTagBuilderInte
 
     /**
      * @param OptionsResolver $resolver
+     *
+     * @return void
      */
     protected function configureOptions(OptionsResolver $resolver)
     {

@@ -30,6 +30,8 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function register(Application $app)
     {
@@ -37,6 +39,8 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function boot(Application $app)
     {
@@ -46,6 +50,8 @@ class RedirectAfterLoginProvider extends AbstractPlugin implements ServiceProvid
 
     /**
      * @param GetResponseEvent $event
+     *
+     * @return void
      */
     public function onKernelRequest(GetResponseEvent $event)
     {

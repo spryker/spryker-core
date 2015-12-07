@@ -13,6 +13,9 @@ use SprykerFeature\Zed\ItemGrouper\Business\Model\Group;
 class GroupTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testIsGroupedBySku()
     {
         $this->markTestSkipped('Test is broken');
@@ -32,6 +35,9 @@ class GroupTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(1, $secondItem->getQuantity());
     }
 
+    /**
+     * @return void
+     */
     public function testIsThresholdValidatorApplied()
     {
         $this->markTestSkipped('Test is broken');

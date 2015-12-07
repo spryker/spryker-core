@@ -103,6 +103,8 @@ class PaymentManager implements PaymentManagerInterface
 
     /**
      * @param PaymentMethodMapperInterface $paymentMethodMapper
+     *
+     * @return void
      */
     public function registerPaymentMethodMapper(PaymentMethodMapperInterface $paymentMethodMapper)
     {
@@ -327,6 +329,8 @@ class PaymentManager implements PaymentManagerInterface
      * @param AuthorizationResponseContainer $responseContainer
      *
      * @throws PropelException
+     *
+     * @return void
      */
     protected function updatePaymentAfterAuthorization(SpyPaymentPayone $paymentEntity, AuthorizationResponseContainer $responseContainer)
     {
@@ -373,6 +377,8 @@ class PaymentManager implements PaymentManagerInterface
      * @param AuthorizationResponseContainer $responseContainer
      *
      * @throws PropelException
+     *
+     * @return void
      */
     protected function updateApiLogAfterAuthorization(SpyPaymentPayoneApiLog $apiLogEntity, AuthorizationResponseContainer $responseContainer)
     {
@@ -391,6 +397,8 @@ class PaymentManager implements PaymentManagerInterface
      * @param CaptureResponseContainer $responseContainer
      *
      * @throws PropelException
+     *
+     * @return void
      */
     protected function updateApiLogAfterCapture(SpyPaymentPayoneApiLog $apiLogEntity, CaptureResponseContainer $responseContainer)
     {
@@ -407,6 +415,8 @@ class PaymentManager implements PaymentManagerInterface
      * @param DebitResponseContainer $responseContainer
      *
      * @throws PropelException
+     *
+     * @return void
      */
     protected function updateApiLogAfterDebit(SpyPaymentPayoneApiLog $apiLogEntity, DebitResponseContainer $responseContainer)
     {
@@ -423,6 +433,8 @@ class PaymentManager implements PaymentManagerInterface
      * @param RefundResponseContainer $responseContainer
      *
      * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return void
      */
     protected function updateApiLogAfterRefund(SpyPaymentPayoneApiLog $apiLogEntity, RefundResponseContainer $responseContainer)
     {
@@ -436,6 +448,8 @@ class PaymentManager implements PaymentManagerInterface
 
     /**
      * @param AbstractRequestContainer $container
+     *
+     * @return void
      */
     protected function setStandardParameter(AbstractRequestContainer $container)
     {

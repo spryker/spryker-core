@@ -16,6 +16,9 @@ use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 class ProductOptionCheckoutConnectorFacade extends AbstractFacade
 {
 
+    /**
+     * @return void
+     */
     public function hydrateOrderTransfer(OrderTransfer $order, CheckoutRequestTransfer $request)
     {
         $this->getDependencyContainer()->createProductOptionOrderHydrator()->hydrateOrderTransfer($order, $request);

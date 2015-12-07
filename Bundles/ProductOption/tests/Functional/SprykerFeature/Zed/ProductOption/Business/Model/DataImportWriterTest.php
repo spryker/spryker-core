@@ -45,6 +45,9 @@ class DataImportWriterTest extends AbstractFunctionalTest
      */
     protected $locator;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -52,6 +55,9 @@ class DataImportWriterTest extends AbstractFunctionalTest
         $this->facade = $this->getFacade();
     }
 
+    /**
+     * @return void
+     */
     public function testImportProductOptionType()
     {
         $this->facade->importProductOptionType('SHADE', ['en_GB' => 'Shade']);
@@ -65,6 +71,9 @@ class DataImportWriterTest extends AbstractFunctionalTest
         $this->assertEquals('Shade', $result[0]->getSpyProductOptionTypeTranslations()[0]->getName());
     }
 
+    /**
+     * @return void
+     */
     public function testImportProductOptionValue()
     {
         $optionType = (new SpyProductOptionType())->setImportKey('SHADE');
@@ -88,6 +97,9 @@ class DataImportWriterTest extends AbstractFunctionalTest
         $this->assertEquals('Violet', $optionValues[0]->getSpyProductOptionValueTranslations()[0]->getName());
     }
 
+    /**
+     * @return void
+     */
     public function testTouchUpdatedWhenUpdatingProductOptionType()
     {
         $product = $this->createConcreteProduct();
@@ -100,6 +112,9 @@ class DataImportWriterTest extends AbstractFunctionalTest
         $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
     }
 
+    /**
+     * @return void
+     */
     public function testTouchUpdatedWhenUpdatingProductOptionValue()
     {
         $product = $this->createConcreteProduct();
@@ -117,6 +132,9 @@ class DataImportWriterTest extends AbstractFunctionalTest
         $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
     }
 
+    /**
+     * @return void
+     */
     public function testImportProductOptionTypeUsage()
     {
         $product = $this->createConcreteProduct();
@@ -138,6 +156,9 @@ class DataImportWriterTest extends AbstractFunctionalTest
         $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
     }
 
+    /**
+     * @return void
+     */
     public function testImportProductOptionValueUsage()
     {
         $product = $this->createConcreteProduct();
@@ -158,6 +179,9 @@ class DataImportWriterTest extends AbstractFunctionalTest
         $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
     }
 
+    /**
+     * @return void
+     */
     public function testImportProductOptionTypeUsageExclusion()
     {
         $product = $this->createConcreteProduct();
@@ -181,6 +205,9 @@ class DataImportWriterTest extends AbstractFunctionalTest
         $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
     }
 
+    /**
+     * @return void
+     */
     public function testImportProductOptionValueUsageConstraint()
     {
         $product = $this->createConcreteProduct();
@@ -208,6 +235,9 @@ class DataImportWriterTest extends AbstractFunctionalTest
         $this->performAssertionOnTouchTable($product->getFkAbstractProduct());
     }
 
+    /**
+     * @return void
+     */
     public function testImportProductOptionPresetConfiguration()
     {
         $product = $this->createConcreteProduct();
@@ -302,6 +332,8 @@ class DataImportWriterTest extends AbstractFunctionalTest
 
     /**
      * @param int $idAbstractProduct
+     *
+     * @return void
      */
     private function performAssertionOnTouchTable($idAbstractProduct)
     {

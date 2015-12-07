@@ -58,6 +58,8 @@ class Percentage implements CalculatorInterface
      * @param float $number
      *
      * @throws \InvalidArgumentException
+     *
+     * @return void
      */
     protected function ensureIsValidNumber($number)
     {

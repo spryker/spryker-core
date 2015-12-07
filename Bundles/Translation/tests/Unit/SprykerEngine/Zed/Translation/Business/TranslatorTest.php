@@ -20,6 +20,9 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
      */
     protected $translator;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         $this->translator = new Translator(
@@ -36,6 +39,9 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @return void
+     */
     public function testTrans()
     {
         // normal
@@ -57,6 +63,9 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @return void
+     */
     public function testTransChoice()
     {
         $this->assertEquals(
@@ -70,6 +79,9 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @return void
+     */
     public function testTransShouldReturnString()
     {
         $this->assertInternalType(
@@ -78,6 +90,9 @@ class TranslatorTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @return void
+     */
     public function testTransChoiceShouldReturnString()
     {
         $this->assertInternalType(

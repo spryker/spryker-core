@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
 class RouteNameResolverTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testRouteNameResolverShouldReturnRouteNameExtractedFromRequest()
     {
         $request = new Request([], [], ['module' => 'foo', 'controller' => 'bar', 'action' => 'baz']);

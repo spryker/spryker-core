@@ -40,6 +40,7 @@ class ItemTypeInstaller extends AbstractInstaller
     }
 
     /**
+     * @return void
      */
     public function install()
     {

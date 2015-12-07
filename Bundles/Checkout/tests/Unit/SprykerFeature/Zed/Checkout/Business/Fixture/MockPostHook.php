@@ -29,6 +29,8 @@ class MockPostHook implements CheckoutPostSaveHookInterface
     /**
      * @param OrderTransfer $orderTransfer
      * @param CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
      */
     public function executeHook(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {

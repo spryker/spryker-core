@@ -558,6 +558,8 @@ class Address
      * @param AddressTransfer $addressTransfer
      * @param SpyCustomer $customerEntity
      * @param SpyCustomerAddress $entity
+     *
+     * @return void
      */
     protected function updateCustomerDefaultAddresses(AddressTransfer $addressTransfer, SpyCustomer $customerEntity, SpyCustomerAddress $entity)
     {

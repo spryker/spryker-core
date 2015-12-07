@@ -41,6 +41,9 @@ class AuthTest extends Test
      */
     private $locator;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -81,6 +84,9 @@ class AuthTest extends Test
         return $this->userFacade->addUser($data['firstName'], $data['lastName'], $data['username'], $data['password']);
     }
 
+    /**
+     * @return void
+     */
     public function testUserToken()
     {
         $userData = $this->mockUserData();
@@ -104,6 +110,9 @@ class AuthTest extends Test
         $this->assertTrue($isValid);
     }
 
+    /**
+     * @return void
+     */
     public function testIgnorablePath()
     {
         $ignorable = $this->authFacade->isIgnorable('auth', 'login', 'index');
@@ -113,6 +122,9 @@ class AuthTest extends Test
         $this->assertTrue($ignorable);
     }
 
+    /**
+     * @return void
+     */
     public function testDoLogin()
     {
         $userData = $this->mockUserData();
@@ -125,6 +137,9 @@ class AuthTest extends Test
         $this->assertTrue($login);
     }
 
+    /**
+     * @return void
+     */
     public function testLoginNotAllowed()
     {
         $userData = $this->mockUserData();
@@ -149,6 +164,9 @@ class AuthTest extends Test
         $this->assertEquals(false, $login);
     }
 
+    /**
+     * @return void
+     */
     public function testDoLoginWithToken()
     {
         $settings = new AuthConfig(Config::getInstance(), $this->locator);
@@ -163,6 +181,9 @@ class AuthTest extends Test
         }
     }
 
+    /**
+     * @return void
+     */
     public function testDenyLoginWithWrongToken()
     {
         $token = new StaticToken();
@@ -173,6 +194,9 @@ class AuthTest extends Test
         $this->assertTrue(!$isAllowed);
     }
 
+    /**
+     * @return void
+     */
     public function testCheckDoLoginAndCurrentUserIsTheSame()
     {
         $userData = $this->mockUserData();
@@ -193,6 +217,9 @@ class AuthTest extends Test
         $this->assertEquals($userDto->getLastName(), $currentUserDto->getLastName());
     }
 
+    /**
+     * @return void
+     */
     public function testIsAuthorizedWithYvesCredentialsFromConfigMustReturnTrue()
     {
         $token = new StaticToken();

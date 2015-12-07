@@ -74,6 +74,8 @@ class Config
 
     /**
      * @param null $environment
+     *
+     * @return void
      */
     public static function init($environment = null)
     {

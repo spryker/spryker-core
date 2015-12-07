@@ -27,6 +27,9 @@ class LocaleTest extends Test
      */
     protected $localeQueryContainer;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -37,6 +40,8 @@ class LocaleTest extends Test
 
     /**
      * @group Locale
+     *
+     * @return void
      */
     public function testCreateLocaleInsertsSomething()
     {
@@ -50,6 +55,8 @@ class LocaleTest extends Test
 
     /**
      * @group Locale
+     *
+     * @return void
      */
     public function testDeleteLocaleDeletesSoftly()
     {

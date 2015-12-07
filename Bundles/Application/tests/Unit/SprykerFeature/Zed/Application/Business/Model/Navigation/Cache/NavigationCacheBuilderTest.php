@@ -18,6 +18,9 @@ use SprykerFeature\Zed\Application\Business\Model\Navigation\Cache\NavigationCac
 class NavigationCacheBuilderTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testWriteNavigationCacheMustReadNavigationFromCollectorAndPassItToTheCache()
     {
         $navigationCacheMock = $this->getMock(

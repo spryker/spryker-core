@@ -51,6 +51,8 @@ class ShippingContainer extends AbstractContainer
 
     /**
      * @param string $shipping_city
+     *
+     * @return void
      */
     public function setShippingCity($shipping_city)
     {
@@ -67,6 +69,8 @@ class ShippingContainer extends AbstractContainer
 
     /**
      * @param string $shipping_company
+     *
+     * @return void
      */
     public function setShippingCompany($shipping_company)
     {
@@ -83,6 +87,8 @@ class ShippingContainer extends AbstractContainer
 
     /**
      * @param string $shipping_country
+     *
+     * @return void
      */
     public function setShippingCountry($shipping_country)
     {
@@ -99,6 +105,8 @@ class ShippingContainer extends AbstractContainer
 
     /**
      * @param string $shipping_firstname
+     *
+     * @return void
      */
     public function setShippingFirstName($shipping_firstname)
     {
@@ -115,6 +123,8 @@ class ShippingContainer extends AbstractContainer
 
     /**
      * @param string $shipping_lastname
+     *
+     * @return void
      */
     public function setShippingLastName($shipping_lastname)
     {
@@ -131,6 +141,8 @@ class ShippingContainer extends AbstractContainer
 
     /**
      * @param string $shipping_state
+     *
+     * @return void
      */
     public function setShippingState($shipping_state)
     {
@@ -147,6 +159,8 @@ class ShippingContainer extends AbstractContainer
 
     /**
      * @param string $shipping_street
+     *
+     * @return void
      */
     public function setShippingStreet($shipping_street)
     {
@@ -163,6 +177,8 @@ class ShippingContainer extends AbstractContainer
 
     /**
      * @param string $shipping_zip
+     *
+     * @return void
      */
     public function setShippingZip($shipping_zip)
     {

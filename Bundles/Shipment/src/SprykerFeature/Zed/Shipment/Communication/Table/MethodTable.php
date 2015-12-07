@@ -99,6 +99,8 @@ class MethodTable extends AbstractTable
 
     /**
      * @param TableConfiguration $config
+     *
+     * @return void
      */
     protected function configureHeader(TableConfiguration $config)
     {
@@ -119,6 +121,8 @@ class MethodTable extends AbstractTable
 
     /**
      * @param TableConfiguration $config
+     *
+     * @return void
      */
     protected function configureSortable(TableConfiguration $config)
     {
@@ -129,6 +133,8 @@ class MethodTable extends AbstractTable
 
     /**
      * @param TableConfiguration $config
+     *
+     * @return void
      */
     protected function configureSearchable(TableConfiguration $config)
     {
@@ -142,6 +148,8 @@ class MethodTable extends AbstractTable
 
     /**
      * @param TableConfiguration $config
+     *
+     * @return void
      */
     protected function configureUrl(TableConfiguration $config)
     {

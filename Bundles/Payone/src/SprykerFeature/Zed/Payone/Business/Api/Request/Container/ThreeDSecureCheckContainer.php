@@ -63,6 +63,8 @@ class ThreeDSecureCheckContainer extends AbstractRequestContainer
 
     /**
      * @param int $aid
+     *
+     * @return void
      */
     public function setAid($aid)
     {
@@ -79,6 +81,8 @@ class ThreeDSecureCheckContainer extends AbstractRequestContainer
 
     /**
      * @param int $amount
+     *
+     * @return void
      */
     public function setAmount($amount)
     {
@@ -95,6 +99,8 @@ class ThreeDSecureCheckContainer extends AbstractRequestContainer
 
     /**
      * @param int $cardcvc2
+     *
+     * @return void
      */
     public function setCardCvc2($cardcvc2)
     {
@@ -111,6 +117,8 @@ class ThreeDSecureCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $cardexpiredate
+     *
+     * @return void
      */
     public function setCardExpireDate($cardexpiredate)
     {
@@ -127,6 +135,8 @@ class ThreeDSecureCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $cardpan
+     *
+     * @return void
      */
     public function setCardPan($cardpan)
     {
@@ -143,6 +153,8 @@ class ThreeDSecureCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $cardtype
+     *
+     * @return void
      */
     public function setCardType($cardtype)
     {
@@ -159,6 +171,8 @@ class ThreeDSecureCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $clearingtype
+     *
+     * @return void
      */
     public function setClearingType($clearingtype)
     {
@@ -175,6 +189,8 @@ class ThreeDSecureCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $currency
+     *
+     * @return void
      */
     public function setCurrency($currency)
     {
@@ -191,6 +207,8 @@ class ThreeDSecureCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $exiturl
+     *
+     * @return void
      */
     public function setExitUrl($exiturl)
     {
@@ -207,6 +225,8 @@ class ThreeDSecureCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $language
+     *
+     * @return void
      */
     public function setLanguage($language)
     {
@@ -223,6 +243,8 @@ class ThreeDSecureCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $storecarddata
+     *
+     * @return void
      */
     public function setStoreCardData($storecarddata)
     {

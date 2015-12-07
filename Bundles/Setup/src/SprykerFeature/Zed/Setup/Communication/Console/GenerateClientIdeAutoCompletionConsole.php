@@ -24,6 +24,9 @@ class GenerateClientIdeAutoCompletionConsole extends Console
 
     const COMMAND_NAME = 'setup:generate-client-ide-auto-completion';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
@@ -43,6 +46,9 @@ class GenerateClientIdeAutoCompletionConsole extends Console
         $this->generateClientFactoryInterface();
     }
 
+    /**
+     * @return void
+     */
     protected function generateClientInterface()
     {
         $options = $this->getClientDefaultOptions();
@@ -79,6 +85,9 @@ class GenerateClientIdeAutoCompletionConsole extends Console
         return $options;
     }
 
+    /**
+     * @return void
+     */
     protected function generateClientBundleInterface()
     {
         $options = $this->getClientDefaultOptions();
@@ -93,6 +102,9 @@ class GenerateClientIdeAutoCompletionConsole extends Console
         $this->info('Generated Client IdeBundleAutoCompletion file');
     }
 
+    /**
+     * @return void
+     */
     protected function generateClientFactoryInterface()
     {
         $methodTagGenerator = new ConstructableMethodTagBuilder([

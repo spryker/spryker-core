@@ -21,6 +21,9 @@ class PropelSchemaWriterTest extends AbstractPropelSchemaTest
     const TEST_FILE_NAME = 'test_file';
     const TEST_CONTENT = 'some test content';
 
+    /**
+     * @return void
+     */
     public function testWriteMustWriteContentToFile()
     {
         $writer = new PropelSchemaWriter(new Filesystem(), $this->getFixtureDirectory());

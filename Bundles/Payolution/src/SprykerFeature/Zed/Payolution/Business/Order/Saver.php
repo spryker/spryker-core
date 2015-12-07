@@ -16,6 +16,8 @@ class Saver implements SaverInterface
 
     /**
      * @param OrderTransfer $orderTransfer
+     *
+     * @return void
      */
     public function saveOrderPayment(OrderTransfer $orderTransfer)
     {
@@ -64,6 +66,8 @@ class Saver implements SaverInterface
     /**
      * @param ItemTransfer[] $orderItemTransfers
      * @param int $idPayment
+     *
+     * @return void
      */
     private function savePaymentForOrderItems($orderItemTransfers, $idPayment)
     {

@@ -42,6 +42,8 @@ abstract class AbstractResponseContainer
 
     /**
      * @param array $data
+     *
+     * @return void
      */
     public function init(array $data = [])
     {
@@ -88,6 +90,8 @@ abstract class AbstractResponseContainer
 
     /**
      * @param string $status
+     *
+     * @return void
      */
     public function setStatus($status)
     {
@@ -104,6 +108,8 @@ abstract class AbstractResponseContainer
 
     /**
      * @param string $customermessage
+     *
+     * @return void
      */
     public function setCustomermessage($customermessage)
     {
@@ -120,6 +126,8 @@ abstract class AbstractResponseContainer
 
     /**
      * @param string $errorcode
+     *
+     * @return void
      */
     public function setErrorcode($errorcode)
     {
@@ -148,6 +156,8 @@ abstract class AbstractResponseContainer
 
     /**
      * @param string $errormessage
+     *
+     * @return void
      */
     public function setErrormessage($errormessage)
     {
@@ -216,6 +226,8 @@ abstract class AbstractResponseContainer
 
     /**
      * @param string $rawResponse
+     *
+     * @return void
      */
     public function setRawResponse($rawResponse)
     {

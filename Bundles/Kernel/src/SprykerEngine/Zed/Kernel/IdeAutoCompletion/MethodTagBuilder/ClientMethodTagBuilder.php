@@ -18,6 +18,8 @@ class ClientMethodTagBuilder extends AbstractSingleFileMethodTagBuilder
 
     /**
      * @param OptionsResolver $resolver
+     *
+     * @return void
      */
     protected function configureOptions(OptionsResolver $resolver)
     {

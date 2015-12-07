@@ -25,6 +25,8 @@ class MaintenanceFacade extends AbstractFacade
 
     /**
      * @param InstalledPackagesTransfer $installedPackages
+     *
+     * @return void
      */
     public function writeInstalledPackagesToMarkDownFile(InstalledPackagesTransfer $installedPackages)
     {

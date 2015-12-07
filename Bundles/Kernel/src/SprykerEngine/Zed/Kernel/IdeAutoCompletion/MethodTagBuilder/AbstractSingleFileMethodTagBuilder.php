@@ -44,6 +44,8 @@ abstract class AbstractSingleFileMethodTagBuilder implements MethodTagBuilderInt
 
     /**
      * @param OptionsResolver $resolver
+     *
+     * @return void
      */
     protected function configureOptions(OptionsResolver $resolver)
     {

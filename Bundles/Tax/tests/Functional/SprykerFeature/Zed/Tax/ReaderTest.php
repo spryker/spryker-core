@@ -40,6 +40,9 @@ class ReaderTest extends Test
      */
     protected $locator;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -48,6 +51,9 @@ class ReaderTest extends Test
         $this->taxFacade = new TaxFacade(new Factory('Tax'), $this->locator);
     }
 
+    /**
+     * @return void
+     */
     public function testGetTaxRates()
     {
         $this->loadFixtures();
@@ -55,6 +61,9 @@ class ReaderTest extends Test
         $this->assertTrue(count($taxRateCollectionTransfer->getTaxRates()) > 0);
     }
 
+    /**
+     * @return void
+     */
     public function testGetTaxRate()
     {
         $persistedTaxSet = $this->loadFixtures();
@@ -63,6 +72,9 @@ class ReaderTest extends Test
         $this->assertEquals(self::DUMMY_TAX_RATE1_PERCENTAGE, $result->getRate());
     }
 
+    /**
+     * @return void
+     */
     public function testTaxRateExists()
     {
         $persistedTaxSet = $this->loadFixtures();
@@ -70,6 +82,9 @@ class ReaderTest extends Test
         $this->assertTrue($result);
     }
 
+    /**
+     * @return void
+     */
     public function testGetTaxSets()
     {
         $this->loadFixtures();
@@ -77,6 +92,9 @@ class ReaderTest extends Test
         $this->assertNotEmpty($taxSetCollectionTransfer->getTaxSets());
     }
 
+    /**
+     * @return void
+     */
     public function testGetTaxSet()
     {
         $persistedTaxSet = $this->loadFixtures();
@@ -84,6 +102,9 @@ class ReaderTest extends Test
         $this->assertEquals(self::DUMMY_TAX_SET_NAME, $result->getName());
     }
 
+    /**
+     * @return void
+     */
     public function testTaxSetExists()
     {
         $persistedTaxSet = $this->loadFixtures();
@@ -91,12 +112,18 @@ class ReaderTest extends Test
         $this->assertTrue($result);
     }
 
+    /**
+     * @return void
+     */
     public function testExceptionRaisedIfAttemptingToFetchNonExistentTaxRate()
     {
         $this->setExpectedException('SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException');
         $this->taxFacade->getTaxSet(self::NON_EXISTENT_ID);
     }
 
+    /**
+     * @return void
+     */
     public function testExceptionRaisedIfAttemptingToFetchNonExistentTaxSet()
     {
         $this->setExpectedException('SprykerFeature\Zed\Tax\Business\Model\Exception\ResourceNotFoundException');

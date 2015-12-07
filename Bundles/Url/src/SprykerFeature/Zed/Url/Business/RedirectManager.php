@@ -218,6 +218,8 @@ class RedirectManager implements RedirectManagerInterface
 
     /**
      * @param RedirectTransfer $redirect
+     *
+     * @return void
      */
     public function touchRedirectActive(RedirectTransfer $redirect)
     {
@@ -262,6 +264,8 @@ class RedirectManager implements RedirectManagerInterface
      * @param int $idRedirect
      *
      * @throws MissingRedirectException
+     *
+     * @return void
      */
     protected function checkRedirectExists($idRedirect)
     {

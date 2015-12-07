@@ -48,6 +48,8 @@ abstract class AbstractRouter implements RouterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
     public function setContext(RequestContext $context)
     {

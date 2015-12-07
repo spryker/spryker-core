@@ -17,6 +17,9 @@ use SprykerFeature\Zed\ProductSearch\Communication\ProductSearchDependencyContai
 class Installer extends AbstractInstallerPlugin
 {
 
+    /**
+     * @return void
+     */
     public function install()
     {
         $this->getFacade()->install($this->messenger);

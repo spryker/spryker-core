@@ -35,6 +35,7 @@ class LocaleInstaller extends AbstractInstaller
     }
 
     /**
+     * @return void
      */
     public function install()
     {
@@ -43,6 +44,8 @@ class LocaleInstaller extends AbstractInstaller
 
     /**
      * @throws PropelException
+     *
+     * @return void
      */
     protected function installLocales()
     {

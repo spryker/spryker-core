@@ -22,6 +22,8 @@ class TaxTotalsCalculatorPlugin extends AbstractPlugin implements TotalsCalculat
      * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
+     *
+     * @return void
      */
     public function recalculateTotals(
         TotalsTransfer $totalsTransfer,

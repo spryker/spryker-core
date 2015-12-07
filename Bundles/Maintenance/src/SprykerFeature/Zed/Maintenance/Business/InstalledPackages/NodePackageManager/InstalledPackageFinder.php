@@ -71,6 +71,8 @@ class InstalledPackageFinder implements InstalledPackageFinderInterface
 
     /**
      * @param array $packages
+     *
+     * @return void
      */
     private function addInstalledPackages(array $packages)
     {

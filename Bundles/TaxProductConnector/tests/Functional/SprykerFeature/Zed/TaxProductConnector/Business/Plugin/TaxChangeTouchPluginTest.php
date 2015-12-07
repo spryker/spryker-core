@@ -39,6 +39,9 @@ class TaxChangeTouchPluginTest extends Test
      */
     protected $locator;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -50,6 +53,9 @@ class TaxChangeTouchPluginTest extends Test
         );
     }
 
+    /**
+     * @return void
+     */
     public function testTouchUpdatedOnTaxRateChange()
     {
         $this->loadFixtures();
@@ -57,6 +63,9 @@ class TaxChangeTouchPluginTest extends Test
         $this->performAssertion();
     }
 
+    /**
+     * @return void
+     */
     public function testTouchUpdatedOnTaxSetChange()
     {
         $this->loadFixtures();
@@ -64,6 +73,9 @@ class TaxChangeTouchPluginTest extends Test
         $this->performAssertion();
     }
 
+    /**
+     * @return void
+     */
     private function performAssertion()
     {
         $query = SpyTouchQuery::create()
@@ -79,6 +91,9 @@ class TaxChangeTouchPluginTest extends Test
         }
     }
 
+    /**
+     * @return void
+     */
     private function loadFixtures()
     {
         $rate1 = new SpyTaxRate();

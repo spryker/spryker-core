@@ -22,6 +22,8 @@ class CookieServiceProvider implements ServiceProviderInterface
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function register(Application $app)
     {
@@ -35,6 +37,8 @@ class CookieServiceProvider implements ServiceProviderInterface
      * Handles transparent Cookie insertion
      *
      * @param FilterResponseEvent $event The event to handle
+     *
+     * @return void
      */
     public function onKernelResponse(FilterResponseEvent $event)
     {
@@ -47,6 +51,8 @@ class CookieServiceProvider implements ServiceProviderInterface
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function boot(Application $app)
     {

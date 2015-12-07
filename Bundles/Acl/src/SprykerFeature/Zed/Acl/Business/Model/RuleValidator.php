@@ -83,6 +83,8 @@ class RuleValidator implements RuleValidatorInterface
 
     /**
      * @param RuleTransfer $rule
+     *
+     * @return void
      */
     public function addRule(RuleTransfer $rule)
     {

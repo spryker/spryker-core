@@ -21,6 +21,8 @@ class CustomerPreConditionCheckerPlugin extends AbstractPlugin implements Checko
     /**
      * @param CheckoutRequestTransfer $checkoutRequest
      * @param CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
      */
     public function checkCondition(CheckoutRequestTransfer $checkoutRequest, CheckoutResponseTransfer $checkoutResponse)
     {

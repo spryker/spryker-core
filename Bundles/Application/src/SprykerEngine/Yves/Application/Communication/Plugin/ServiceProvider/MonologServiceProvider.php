@@ -20,6 +20,9 @@ use Silex\ServiceProviderInterface;
 class MonologServiceProvider implements ServiceProviderInterface
 {
 
+    /**
+     * @return void
+     */
     public function register(Application $app)
     {
         $app['logger'] = function () use ($app) {
@@ -62,6 +65,8 @@ class MonologServiceProvider implements ServiceProviderInterface
     /**
      * @param Application $app
      * @codeCoverageIgnore
+     *
+     * @return void
      */
     public function boot(Application $app)
     {

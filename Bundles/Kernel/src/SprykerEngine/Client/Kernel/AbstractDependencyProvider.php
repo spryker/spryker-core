@@ -27,6 +27,8 @@ abstract class AbstractDependencyProvider implements DependencyProviderInterface
 
     /**
      * @param Container $container
+     *
+     * @return void
      */
     protected function addSessionClient(Container $container)
     {
@@ -37,6 +39,8 @@ abstract class AbstractDependencyProvider implements DependencyProviderInterface
 
     /**
      * @param Container $container
+     *
+     * @return void
      */
     protected function addZedClient(Container $container)
     {
@@ -47,6 +51,8 @@ abstract class AbstractDependencyProvider implements DependencyProviderInterface
 
     /**
      * @param Container $container
+     *
+     * @return void
      */
     protected function addStorageClient(Container $container)
     {
@@ -57,6 +63,8 @@ abstract class AbstractDependencyProvider implements DependencyProviderInterface
 
     /**
      * @param Container $container
+     *
+     * @return void
      */
     protected function addSearchClient(Container $container)
     {

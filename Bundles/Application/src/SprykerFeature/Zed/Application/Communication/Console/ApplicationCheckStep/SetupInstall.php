@@ -14,6 +14,9 @@ use SprykerFeature\Zed\Application\Business\ApplicationFacade;
 class SetupInstall extends AbstractApplicationCheckStep
 {
 
+    /**
+     * @return void
+     */
     public function run()
     {
         $this->getFacade()->runCheckStepSetupInstall($this->logger);

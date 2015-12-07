@@ -19,6 +19,8 @@ class CalculationCheckoutConnectorFacade extends AbstractFacade
     /**
      * @param CheckoutRequestTransfer $request
      * @param CheckoutResponseTransfer $response
+     *
+     * @return void
      */
     public function checkCartAmountCorrect(CheckoutRequestTransfer $request, CheckoutResponseTransfer $response)
     {

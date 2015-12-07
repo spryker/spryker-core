@@ -14,6 +14,9 @@ use Generated\Shared\Transfer\ChangeTransfer;
 class GroupKeyExpanderTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testKeyGroupByProvidedOptions()
     {
         $changeTransfer = $this->createCartChangeTransfer(
@@ -32,6 +35,9 @@ class GroupKeyExpanderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('1-2', $cartItem->getGroupKey());
     }
 
+    /**
+     * @return void
+     */
     public function testWithExistingGroupKey()
     {
         $changeTransfer = $this->createCartChangeTransfer(
@@ -52,6 +58,9 @@ class GroupKeyExpanderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('SKU-1-2', $cartItem->getGroupKey());
     }
 
+    /**
+     * @return void
+     */
     public function testWithDifferentOptionsOrder()
     {
         $changeTransfer = $this->createCartChangeTransfer(

@@ -58,6 +58,8 @@ class PriceFacade extends AbstractFacade
 
     /**
      * @param MessengerInterface $messenger
+     *
+     * @return void
      */
     public function install(MessengerInterface $messenger)
     {
@@ -77,6 +79,8 @@ class PriceFacade extends AbstractFacade
 
     /**
      * @param PriceProductTransfer $transferPriceProduct
+     *
+     * @return void
      */
     public function createPriceForProduct(PriceProductTransfer $transferPriceProduct)
     {

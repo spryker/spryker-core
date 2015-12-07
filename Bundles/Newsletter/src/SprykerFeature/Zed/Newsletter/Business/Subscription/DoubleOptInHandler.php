@@ -35,6 +35,8 @@ class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
      * @param NewsletterSubscriberTransfer $subscriberTransfer
      *
      * @throws MissingNewsletterSubscriberException
+     *
+     * @return void
      */
     public function optIn(NewsletterSubscriberTransfer $subscriberTransfer)
     {
@@ -56,6 +58,8 @@ class DoubleOptInHandler extends AbstractOptInHandler implements SubscriberOptIn
 
     /**
      * @param NewsletterSubscriberTransfer $subscriberTransfer
+     *
+     * @return void
      */
     protected function triggerSubscriberOptInSenders(NewsletterSubscriberTransfer $subscriberTransfer)
     {

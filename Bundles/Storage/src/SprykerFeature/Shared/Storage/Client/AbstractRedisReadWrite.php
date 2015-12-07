@@ -87,6 +87,8 @@ abstract class AbstractRedisReadWrite extends AbstractRedisRead implements ReadW
 
     /**
      * @param array $keys
+     *
+     * @return void
      */
     public function deleteMulti(array $keys)
     {

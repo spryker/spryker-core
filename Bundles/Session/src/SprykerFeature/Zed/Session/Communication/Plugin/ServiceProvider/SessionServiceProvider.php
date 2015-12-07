@@ -25,6 +25,8 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
 
     /**
      * @param SessionClientInterface $client
+     *
+     * @return void
      */
     public function setClient(SessionClientInterface $client)
     {
@@ -33,6 +35,8 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function register(Application $app)
     {
@@ -48,6 +52,8 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function boot(Application $app)
     {

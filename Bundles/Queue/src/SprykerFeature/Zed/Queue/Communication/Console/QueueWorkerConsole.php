@@ -21,6 +21,9 @@ class QueueWorkerConsole extends Console
     const TIMEOUT = 'timeout';
     const FETCH_SIZE = 'fetch-size';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
@@ -35,6 +38,8 @@ class QueueWorkerConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
+     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

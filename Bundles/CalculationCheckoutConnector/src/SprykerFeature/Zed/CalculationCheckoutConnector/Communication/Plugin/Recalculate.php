@@ -24,6 +24,8 @@ class Recalculate extends AbstractPlugin implements CheckoutPreHydrationInterfac
     /**
      * @param CheckoutRequestTransfer $checkoutRequest
      * @param CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
      */
     public function execute(CheckoutRequestTransfer $checkoutRequest, CheckoutResponseTransfer $checkoutResponse)
     {

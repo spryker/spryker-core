@@ -55,6 +55,9 @@ class CheckoutFacadeTest extends Test
         return new CommunicationFactory($bundleName);
     }
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -107,6 +110,8 @@ class CheckoutFacadeTest extends Test
     /**
      * @todo move this code to customer checkout connector, registration can only happen if we have
      * already installed customer bundle
+     *
+     * @return void
      */
     public function testRegistrationIsTriggeredOnNewNonGuestCustomer()
     {
@@ -124,6 +129,8 @@ class CheckoutFacadeTest extends Test
     /**
      * @todo move this code to customer checkout connector, registration can only happen if we have
      * already installed customer bundle
+     *
+     * @return void
      */
     public function testRegistrationDoesNotCreateACustomerIfGuest()
     {
@@ -139,6 +146,9 @@ class CheckoutFacadeTest extends Test
         $this->assertEquals(0, $customerQuery->count());
     }
 
+    /**
+     * @return void
+     */
     public function testCheckoutResponseContainsErrorIfCustomerAlreadyRegistered()
     {
         $customer = new SpyCustomer();
@@ -159,6 +169,9 @@ class CheckoutFacadeTest extends Test
         $this->assertEquals(CheckoutConfig::ERROR_CODE_CUSTOMER_ALREADY_REGISTERED, $result->getErrors()[0]->getErrorCode());
     }
 
+    /**
+     * @return void
+     */
     public function testCheckoutCreatesOrderItems()
     {
         $checkoutRequest = $this->getBaseCheckoutTransfer();
@@ -177,6 +190,9 @@ class CheckoutFacadeTest extends Test
         $this->assertEquals(1, $orderItem2Query->count());
     }
 
+    /**
+     * @return void
+     */
     public function testCheckoutResponseContainsErrorIfStockNotSufficient()
     {
         $checkoutRequest = $this->getBaseCheckoutTransfer();
@@ -218,6 +234,9 @@ class CheckoutFacadeTest extends Test
         $this->assertEquals(CheckoutConfig::ERROR_CODE_PRODUCT_UNAVAILABLE, $result->getErrors()[0]->getErrorCode());
     }
 
+    /**
+     * @return void
+     */
     public function testCheckoutTriggersStateMachine()
     {
         $checkoutRequest = $this->getBaseCheckoutTransfer();

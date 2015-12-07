@@ -23,6 +23,9 @@ use SprykerFeature\Client\Cart\Service\Zed\CartStubInterface;
 class CartClientTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testGetCartMustReturnInstanceOfCartTransfer()
     {
         $cartTransfer = new CartTransfer();
@@ -37,6 +40,9 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($cartTransfer, $cartClientMock->getCart());
     }
 
+    /**
+     * @return void
+     */
     public function testClearCartMustSetItemCountInSessionToZero()
     {
         $sessionMock = $this->getSessionMock();
@@ -51,6 +57,9 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $cartClientMock->clearCart();
     }
 
+    /**
+     * @return void
+     */
     public function testClearCartMustSetCartTransferInSessionToAnEmptyInstance()
     {
         $cartTransfer = new CartTransfer();
@@ -70,6 +79,9 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $cartClientMock->clearCart();
     }
 
+    /**
+     * @return void
+     */
     public function testGetItemCountMustReturnItemCountFromSession()
     {
         $sessionMock = $this->getSessionMock();
@@ -83,6 +95,9 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(0, $cartClientMock->getItemCount());
     }
 
+    /**
+     * @return void
+     */
     public function testAddItemMustOnlyExceptTransferInterfaceAsArgument()
     {
         $itemTransfer = new ItemTransfer();
@@ -105,6 +120,9 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Generated\Shared\Transfer\CartTransfer', $cartTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testRemoveItemMustOnlyExceptItemTransferAsArgument()
     {
         $itemTransfer = new ItemTransfer();
@@ -130,6 +148,9 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Generated\Shared\Transfer\CartTransfer', $cartTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testChangeItemQuantityMustOnlyExceptItemTransferAsArgument()
     {
         $itemTransfer = new ItemTransfer();
@@ -164,6 +185,9 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Generated\Shared\Transfer\CartTransfer', $cartTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testChangeItemQuantityMustCallDecreaseItemQuantityWhenPassedItemQuantityIsLowerThenInCartGivenItem()
     {
         $itemTransfer = new ItemTransfer();
@@ -197,6 +221,9 @@ class CartClientTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Generated\Shared\Transfer\CartTransfer', $cartTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testChangeItemQuantityMustCallIncreaseItemQuantityWhenPassedItemQuantityIsLowerThenInCartGivenItem()
     {
         $itemTransfer = new ItemTransfer();

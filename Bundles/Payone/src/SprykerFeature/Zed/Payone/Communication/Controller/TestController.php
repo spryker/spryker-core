@@ -34,6 +34,9 @@ class TestController extends AbstractController
     const TEST_VISA_PAN = '4111111111111111';
     const TEST_PSEUDO_PAN = '4100000145859436';
 
+    /**
+     * @return void
+     */
     public function vorPreAuthAction()
     {
         $order = $this->getOrder();
@@ -50,6 +53,9 @@ class TestController extends AbstractController
         die;
     }
 
+    /**
+     * @return void
+     */
     public function vorAuthAction()
     {
         $order = $this->getOrder();
@@ -66,6 +72,9 @@ class TestController extends AbstractController
         die;
     }
 
+    /**
+     * @return void
+     */
     public function vorCaptureAction()
     {
         $order = $this->getOrder();
@@ -84,6 +93,9 @@ class TestController extends AbstractController
         die;
     }
 
+    /**
+     * @return void
+     */
     public function vorDebitAction()
     {
         $payment = new PayonePaymentTransfer();
@@ -100,6 +112,9 @@ class TestController extends AbstractController
         die;
     }
 
+    /**
+     * @return void
+     */
     public function vorRefundAction()
     {
         $payment = new PayonePaymentTransfer();
@@ -116,6 +131,9 @@ class TestController extends AbstractController
         die;
     }
 
+    /**
+     * @return void
+     */
     public function ccClientCheckAction()
     {
         $payment = new PayonePaymentTransfer();
@@ -135,6 +153,9 @@ class TestController extends AbstractController
         die;
     }
 
+    /**
+     * @return void
+     */
     public function ccPreAuthAction()
     {
         $order = $this->getOrder();
@@ -156,6 +177,9 @@ class TestController extends AbstractController
         die;
     }
 
+    /**
+     * @return void
+     */
     public function ccCheckAuthAction()
     {
         $payment = new PayonePaymentTransfer();
@@ -169,6 +193,9 @@ class TestController extends AbstractController
         die;
     }
 
+    /**
+     * @return void
+     */
     public function ccAuthAction()
     {
         $order = $this->getOrder();
@@ -190,6 +217,9 @@ class TestController extends AbstractController
         die;
     }
 
+    /**
+     * @return void
+     */
     public function ccCaptureAction()
     {
         $order = $this->getOrder();
@@ -209,6 +239,9 @@ class TestController extends AbstractController
         die;
     }
 
+    /**
+     * @return void
+     */
     public function ccDebitAction()
     {
         $payment = new PayonePaymentTransfer();
@@ -225,6 +258,9 @@ class TestController extends AbstractController
         die;
     }
 
+    /**
+     * @return void
+     */
     public function ccRefundAction()
     {
         $payment = new PayonePaymentTransfer();
@@ -245,6 +281,9 @@ class TestController extends AbstractController
         die;
     }
 
+    /**
+     * @return void
+     */
     public function ppCheckAuthAction()
     {
         $payment = new PayonePaymentTransfer();
@@ -258,6 +297,9 @@ class TestController extends AbstractController
         die;
     }
 
+    /**
+     * @return void
+     */
     public function ppPreAuthAction()
     {
         $order = $this->getOrder();
@@ -276,6 +318,9 @@ class TestController extends AbstractController
         die;
     }
 
+    /**
+     * @return void
+     */
     public function ppAuthAction()
     {
         $order = $this->getOrder();
@@ -294,6 +339,9 @@ class TestController extends AbstractController
         die;
     }
 
+    /**
+     * @return void
+     */
     public function ppCaptureAction()
     {
         $order = $this->getOrder();
@@ -312,6 +360,9 @@ class TestController extends AbstractController
         die;
     }
 
+    /**
+     * @return void
+     */
     public function ppRefundAction()
     {
         $order = $this->getOrder();
@@ -330,6 +381,9 @@ class TestController extends AbstractController
         die;
     }
 
+    /**
+     * @return void
+     */
     public function giropayPreAuthAction()
     {
         $order = $this->getOrder();
@@ -372,6 +426,9 @@ class TestController extends AbstractController
         return $order;
     }
 
+    /**
+     * @return void
+     */
     public function transactionUpdateAction()
     {
         $order = $this->getOrder();
@@ -403,6 +460,9 @@ class TestController extends AbstractController
         die;
     }
 
+    /**
+     * @return void
+     */
     public function getPaymentStatus()
     {
         $order = $this->getOrder();

@@ -72,6 +72,9 @@ class GoogleGraph
         return $form;
     }
 
+    /**
+     * @return void
+     */
     public function setChf($chf)
     {
         $this->chf = $chf;
@@ -81,6 +84,8 @@ class GoogleGraph
      * The chart title.
      *
      * @param $chl
+     *
+     * @return void
      */
     public function setChtt($chtt)
     {
@@ -91,12 +96,17 @@ class GoogleGraph
      * The slice labels.
      *
      * @param $chl
+     *
+     * @return void
      */
     public function setChl($chl)
     {
         $this->chl = $chl;
     }
 
+    /**
+     * @return void
+     */
     public function setChof($chof)
     {
         $this->chof = $chof;
@@ -106,6 +116,8 @@ class GoogleGraph
      * Chart type
      *
      * @param $cht
+     *
+     * @return void
      */
     public function setCht($cht)
     {
@@ -116,12 +128,17 @@ class GoogleGraph
      * The chart data.
      *
      * @param $chd
+     *
+     * @return void
      */
     public function setChd($chd)
     {
         $this->chd = $chd;
     }
 
+    /**
+     * @return void
+     */
     public function setChs($chs)
     {
         $this->chs = $chs;
@@ -131,6 +148,8 @@ class GoogleGraph
      * Chart Label Data (various types)
      *
      * @param $chld
+     *
+     * @return void
      */
     public function setChld($chld)
     {
@@ -143,6 +162,8 @@ class GoogleGraph
      * @link https://developers.google.com/chart/image/docs/chart_params#gcharts_legend
      *
      * @param $chdl
+     *
+     * @return void
      */
     public function setChdl($chdl)
     {
@@ -155,6 +176,8 @@ class GoogleGraph
      * @link https://developers.google.com/chart/image/docs/chart_params#gcharts_legend
      *
      * @param $chdlp
+     *
+     * @return void
      */
     public function setChdlp($chdlp)
     {
@@ -167,6 +190,8 @@ class GoogleGraph
      * @link https://developers.google.com/chart/image/docs/chart_params#gcharts_legend
      *
      * @param $chdls
+     *
+     * @return void
      */
     public function setChdls($chdls)
     {
@@ -177,52 +202,81 @@ class GoogleGraph
      * Custom Axis Labels
      *
      * @param $chxl
+     *
+     * @return void
      */
     public function setChxl($chxl)
     {
         $this->chxl = $chxl;
     }
 
+    /**
+     * @return void
+     */
     public function setChxt($chxt)
     {
         $this->chxt = $chxt;
     }
 
+    /**
+     * @return void
+     */
     public function setChxr($chxr)
     {
         $this->chxr = $chxr;
     }
 
+    /**
+     * @return void
+     */
     public function setChds($chds)
     {
         $this->chds = $chds;
     }
 
+    /**
+     * @return void
+     */
     public function setChco($chco)
     {
         $this->chco = $chco;
     }
 
+    /**
+     * @return void
+     */
     public function setChls($chls)
     {
         $this->chls = $chls;
     }
 
+    /**
+     * @return void
+     */
     public function setChg($chg)
     {
         $this->chg = $chg;
     }
 
+    /**
+     * @return void
+     */
     public function setChm($chm)
     {
         $this->chm = $chm;
     }
 
+    /**
+     * @return void
+     */
     public function setChxp($chxp)
     {
         $this->chxp = $chxp;
     }
 
+    /**
+     * @return void
+     */
     public function setChbh($chbh)
     {
         $this->chbh = $chbh;

@@ -124,6 +124,8 @@ abstract class AbstractOperator implements OperatorInterface
 
     /**
      * @param ItemExpanderPluginInterface $itemExpander
+     *
+     * @return void
      */
     public function addItemExpanderPlugin(ItemExpanderPluginInterface $itemExpander)
     {

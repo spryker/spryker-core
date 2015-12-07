@@ -21,6 +21,9 @@ class JenkinsGenerateConsole extends Console
     const COMMAND_NAME = 'setup:jenkins:generate';
     const DESCRIPTION = 'Generate jenkins jobs configuration';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);

@@ -81,6 +81,8 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
 
     /**
      * @param Container $container
+     *
+     * @return void
      */
     public function setExternalDependencies(Container $container)
     {
@@ -94,6 +96,8 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
      * TODO move to constructor
      *
      * @param AbstractFacade $facade
+     *
+     * @return void
      */
     public function setOwnFacade(AbstractFacade $facade)
     {

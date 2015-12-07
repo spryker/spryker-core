@@ -21,6 +21,9 @@ use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCo
 class InstalledPackageCollectorFilterTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testGetInstalledPackagesShouldReturnInstalledPackageCollectionWithoutDuplicates()
     {
         $collection = new InstalledPackagesTransfer();

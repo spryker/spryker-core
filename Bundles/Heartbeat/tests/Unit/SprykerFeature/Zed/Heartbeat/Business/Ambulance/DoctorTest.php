@@ -19,6 +19,9 @@ use SprykerFeature\Zed\Heartbeat\Business\Ambulance\Doctor;
 class DoctorTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testIsPatientAliveMustReturnTrueIfNoHealthIndicatorIsApplied()
     {
         $doctor = new Doctor([]);
@@ -26,6 +29,9 @@ class DoctorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($doctor->doHealthCheck()->isPatientAlive());
     }
 
+    /**
+     * @return void
+     */
     public function testIsPatientAliveMustReturnTrueIfAllHealthIndicatorReturnTrue()
     {
         $checkerMock = $this->getMock('SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface', ['doHealthCheck']);
@@ -38,6 +44,9 @@ class DoctorTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($doctor->doHealthCheck()->isPatientAlive());
     }
 
+    /**
+     * @return void
+     */
     public function testIsPatientAliveMustReturnFalseIfAllHealthIndicatorReturnFalse()
     {
         $checkerMock = $this->getMock('SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface', ['doHealthCheck']);
@@ -50,6 +59,9 @@ class DoctorTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($doctor->doHealthCheck()->isPatientAlive());
     }
 
+    /**
+     * @return void
+     */
     public function testIsPatientAliveMustReturnFalseIfNotAllHealthIndicatorReturnTrue()
     {
         $checkerMockTrue = $this->getMock('SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface', ['doHealthCheck']);

@@ -75,6 +75,8 @@ class AddressCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $addresschecktype
+     *
+     * @return void
      */
     public function setAddressCheckType($addresschecktype)
     {
@@ -91,6 +93,8 @@ class AddressCheckContainer extends AbstractRequestContainer
 
     /**
      * @param int $aid
+     *
+     * @return void
      */
     public function setAid($aid)
     {
@@ -107,6 +111,8 @@ class AddressCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $city
+     *
+     * @return void
      */
     public function setCity($city)
     {
@@ -123,6 +129,8 @@ class AddressCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $company
+     *
+     * @return void
      */
     public function setCompany($company)
     {
@@ -139,6 +147,8 @@ class AddressCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $country
+     *
+     * @return void
      */
     public function setCountry($country)
     {
@@ -155,6 +165,8 @@ class AddressCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $firstname
+     *
+     * @return void
      */
     public function setFirstName($firstname)
     {
@@ -171,6 +183,8 @@ class AddressCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $language
+     *
+     * @return void
      */
     public function setLanguage($language)
     {
@@ -187,6 +201,8 @@ class AddressCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $lastname
+     *
+     * @return void
      */
     public function setLastName($lastname)
     {
@@ -203,6 +219,8 @@ class AddressCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $state
+     *
+     * @return void
      */
     public function setState($state)
     {
@@ -219,6 +237,8 @@ class AddressCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $street
+     *
+     * @return void
      */
     public function setStreet($street)
     {
@@ -235,6 +255,8 @@ class AddressCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $streetname
+     *
+     * @return void
      */
     public function setStreetName($streetname)
     {
@@ -251,6 +273,8 @@ class AddressCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $streetnumber
+     *
+     * @return void
      */
     public function setStreetNumber($streetnumber)
     {
@@ -267,6 +291,8 @@ class AddressCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $telephonenumber
+     *
+     * @return void
      */
     public function setTelephoneNumber($telephonenumber)
     {
@@ -283,6 +309,8 @@ class AddressCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $zip
+     *
+     * @return void
      */
     public function setZip($zip)
     {

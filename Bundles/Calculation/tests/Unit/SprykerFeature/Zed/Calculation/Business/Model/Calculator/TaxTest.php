@@ -42,6 +42,9 @@ class TaxTest extends \PHPUnit_Framework_TestCase
     const KEY_PERCENTAGE = 'percentage';
     const KEY_AMOUNT = 'amount';
 
+    /**
+     * @return void
+     */
     public function testTaxCalculatedForOrderWithOrderItemAndSingleTaxSet()
     {
         $orderTransfer = $this->getOrderTransfer();
@@ -76,6 +79,9 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(30, $taxSets[0]->getEffectiveRate());
     }
 
+    /**
+     * @return void
+     */
     public function testTaxCalculatedForOrderWithMultipleOrderItemsAndMultipleTaxSets()
     {
         $taxRate10 = (new TaxRateTransfer())
@@ -134,6 +140,9 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(30, $groupedTaxSets[0]->getEffectiveRate());
     }
 
+    /**
+     * @return void
+     */
     public function testCalculateTaxOnExpenses()
     {
         $caslculableContainer = $this->getOrderTransfer();
@@ -186,6 +195,9 @@ class TaxTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(30, $groupedTaxSets[0]->getEffectiveRate());
     }
 
+    /**
+     * @return void
+     */
     public function testCalculateTaxOnProductOption()
     {
         $caslculableContainer = $this->getOrderTransfer();

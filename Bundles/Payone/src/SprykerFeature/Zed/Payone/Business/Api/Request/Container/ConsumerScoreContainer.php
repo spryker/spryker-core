@@ -79,6 +79,8 @@ class ConsumerScoreContainer extends AbstractRequestContainer
 
     /**
      * @param string $addresschecktype
+     *
+     * @return void
      */
     public function setAddressCheckType($addresschecktype)
     {
@@ -95,6 +97,8 @@ class ConsumerScoreContainer extends AbstractRequestContainer
 
     /**
      * @param int $aid
+     *
+     * @return void
      */
     public function setAid($aid)
     {
@@ -111,6 +115,8 @@ class ConsumerScoreContainer extends AbstractRequestContainer
 
     /**
      * @param string $birthday
+     *
+     * @return void
      */
     public function setBirthday($birthday)
     {
@@ -127,6 +133,8 @@ class ConsumerScoreContainer extends AbstractRequestContainer
 
     /**
      * @param string $city
+     *
+     * @return void
      */
     public function setCity($city)
     {
@@ -143,6 +151,8 @@ class ConsumerScoreContainer extends AbstractRequestContainer
 
     /**
      * @param string $company
+     *
+     * @return void
      */
     public function setCompany($company)
     {
@@ -159,6 +169,8 @@ class ConsumerScoreContainer extends AbstractRequestContainer
 
     /**
      * @param string $consumerscoretype
+     *
+     * @return void
      */
     public function setConsumerScoreType($consumerscoretype)
     {
@@ -175,6 +187,8 @@ class ConsumerScoreContainer extends AbstractRequestContainer
 
     /**
      * @param string $country
+     *
+     * @return void
      */
     public function setCountry($country)
     {
@@ -191,6 +205,8 @@ class ConsumerScoreContainer extends AbstractRequestContainer
 
     /**
      * @param string $firstname
+     *
+     * @return void
      */
     public function setFirstName($firstname)
     {
@@ -207,6 +223,8 @@ class ConsumerScoreContainer extends AbstractRequestContainer
 
     /**
      * @param string $language
+     *
+     * @return void
      */
     public function setLanguage($language)
     {
@@ -223,6 +241,8 @@ class ConsumerScoreContainer extends AbstractRequestContainer
 
     /**
      * @param string $lastname
+     *
+     * @return void
      */
     public function setLastName($lastname)
     {
@@ -239,6 +259,8 @@ class ConsumerScoreContainer extends AbstractRequestContainer
 
     /**
      * @param string $street
+     *
+     * @return void
      */
     public function setStreet($street)
     {
@@ -255,6 +277,8 @@ class ConsumerScoreContainer extends AbstractRequestContainer
 
     /**
      * @param string $streetname
+     *
+     * @return void
      */
     public function setStreetName($streetname)
     {
@@ -271,6 +295,8 @@ class ConsumerScoreContainer extends AbstractRequestContainer
 
     /**
      * @param string $streetnumber
+     *
+     * @return void
      */
     public function setStreetNumber($streetnumber)
     {
@@ -287,6 +313,8 @@ class ConsumerScoreContainer extends AbstractRequestContainer
 
     /**
      * @param string $telephonenumber
+     *
+     * @return void
      */
     public function setTelephoneNumber($telephonenumber)
     {
@@ -303,6 +331,8 @@ class ConsumerScoreContainer extends AbstractRequestContainer
 
     /**
      * @param string $zip
+     *
+     * @return void
      */
     public function setZip($zip)
     {

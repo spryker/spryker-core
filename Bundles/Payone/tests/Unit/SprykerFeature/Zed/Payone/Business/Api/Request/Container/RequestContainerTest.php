@@ -57,6 +57,9 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
     protected $clearingType = 'pre';
     protected $narrativeText = 'some-text';
 
+    /**
+     * @return void
+     */
     public function testRefundContainer()
     {
         $container = new RefundContainer();
@@ -75,12 +78,18 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer', $container->getInvoicing());
     }
 
+    /**
+     * @return void
+     */
     public function testEmptyRefundContainer()
     {
         $container = new RefundContainer();
         $this->assertCount(1, $container->toArray()); // request set in container
     }
 
+    /**
+     * @return void
+     */
     public function testDebitContainer()
     {
         $container = new DebitContainer();
@@ -101,12 +110,18 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer', $container->getInvoicing());
     }
 
+    /**
+     * @return void
+     */
     public function testEmptyDebitContainer()
     {
         $container = new DebitContainer();
         $this->assertCount(1, $container->toArray()); // request set in container
     }
 
+    /**
+     * @return void
+     */
     public function testCaptureContainer()
     {
         $container = new CaptureContainer();
@@ -126,12 +141,18 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Invoicing\TransactionContainer', $container->getInvoicing());
     }
 
+    /**
+     * @return void
+     */
     public function testEmptyCaptureContainer()
     {
         $container = new CaptureContainer();
         $this->assertCount(1, $container->toArray()); // request set in container
     }
 
+    /**
+     * @return void
+     */
     public function testAuthorizationContainer()
     {
         $container = new AuthorizationContainer();
@@ -164,12 +185,18 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer', $container->getPaymentMethod());
     }
 
+    /**
+     * @return void
+     */
     public function testEmptyAuthorizationContainer()
     {
         $container = new AuthorizationContainer();
         $this->assertCount(1, $container->toArray()); // request set in container
     }
 
+    /**
+     * @return void
+     */
     public function testPreAuthorizationContainer()
     {
         $container = new PreAuthorizationContainer();
@@ -200,12 +227,18 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('SprykerFeature\Zed\Payone\Business\Api\Request\Container\Authorization\PaymentMethod\AbstractPaymentMethodContainer', $container->getPaymentMethod());
     }
 
+    /**
+     * @return void
+     */
     public function testEmptyPreAuthorizationContainer()
     {
         $container = new PreAuthorizationContainer();
         $this->assertCount(1, $container->toArray()); // request set in container
     }
 
+    /**
+     * @return void
+     */
     public function testBankAccountCheckContainer()
     {
         $container = new BankAccountCheckContainer();
@@ -240,12 +273,18 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertStandardParams($container);
     }
 
+    /**
+     * @return void
+     */
     public function testEmptyBankAccountCheckContainer()
     {
         $container = new BankAccountCheckContainer();
         $this->assertCount(1, $container->toArray()); // request set in container
     }
 
+    /**
+     * @return void
+     */
     public function testGetInvoiceContainer()
     {
         $container = new GetInvoiceContainer();
@@ -259,12 +298,18 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertStandardParams($container);
     }
 
+    /**
+     * @return void
+     */
     public function testEmptyGetInvoiceContainer()
     {
         $container = new GetInvoiceContainer();
         $this->assertCount(1, $container->toArray()); // request set in container
     }
 
+    /**
+     * @return void
+     */
     public function testPersonalContainer()
     {
         $container = new PersonalContainer();
@@ -330,6 +375,9 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(19, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testPrepaymentContainer()
     {
         $container = new PrepaymentContainer();
@@ -361,6 +409,9 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('name', $container->getClearingBankName());
     }
 
+    /**
+     * @return void
+     */
     public function testEWalletContainer()
     {
         $container = new EWalletContainer();
@@ -376,6 +427,9 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testOnlineBankTransferContainer()
     {
         $container = new OnlineBankTransferContainer();
@@ -409,6 +463,9 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(7, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testCashOnDeliveryContainer()
     {
         $container = new CashOnDeliveryContainer();
@@ -421,6 +478,9 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testDirectDebitContainer()
     {
         $container = new DirectDebitContainer();
@@ -451,6 +511,9 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(7, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testFinancingContainer()
     {
         $container = new FinancingContainer();
@@ -466,12 +529,18 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testEmptyFinancingContainer()
     {
         $container = new FinancingContainer();
         $this->assertCount(0, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function test3DSecureContainer()
     {
         $container = new ThreeDSecureContainer();
@@ -489,12 +558,18 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(3, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testEmpty3DSecureContainer()
     {
         $container = new ThreeDSecureContainer();
         $this->assertCount(0, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testRedirectContainer()
     {
         $container = new RedirectContainer();
@@ -512,12 +587,18 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(3, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testEmptyRedirectContainer()
     {
         $container = new RedirectContainer();
         $this->assertCount(0, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testInvoicingTransactionContainer()
     {
         $container = new TransactionContainer();
@@ -544,12 +625,18 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(6, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testEmptyInvoicingTransactionContainer()
     {
         $container = new TransactionContainer();
         $this->assertCount(1, $container->toArray()); // 1 empty array
     }
 
+    /**
+     * @return void
+     */
     public function testInvoicingItemContainer()
     {
         $container = new ItemContainer();
@@ -582,12 +669,18 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(8, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testEmptyInvoicingItemContainer()
     {
         $container = new ItemContainer();
         $this->assertCount(0, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testAuthorizationBusinessContainer()
     {
         $container = new AuthorizationBusinessContainer();
@@ -605,12 +698,18 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(3, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testEmptyAuthorizationBusinessContainer()
     {
         $container = new AuthorizationBusinessContainer();
         $this->assertCount(0, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testCaptureBusinessContainer()
     {
         $container = new CaptureBusinessContainer();
@@ -631,12 +730,18 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(4, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testEmptyCaptureBusinessContainer()
     {
         $container = new CaptureBusinessContainer();
         $this->assertCount(0, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testDebitBusinessContainer()
     {
         $container = new DebitBusinessContainer();
@@ -657,12 +762,18 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(4, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testEmptyDebitBusinessContainer()
     {
         $container = new DebitBusinessContainer();
         $this->assertCount(0, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testAuthorizationShippingContainer()
     {
         $container = new ShippingContainer();
@@ -695,12 +806,18 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(8, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testEmptyAuthorizationShippingContainer()
     {
         $container = new ShippingContainer();
         $this->assertCount(0, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testDebitBankAccountContainer()
     {
         $container = new DebitBankAccountContainer();
@@ -736,12 +853,18 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(9, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testEmptyDebitBankAccountContainer()
     {
         $container = new DebitBankAccountContainer();
         $this->assertCount(0, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testRefundBankAccountContainer()
     {
         $container = new RefundBankAccountContainer();
@@ -771,6 +894,9 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(7, $container->toArray());
     }
 
+    /**
+     * @return void
+     */
     public function testEmptyRefundBankAccountContainer()
     {
         $container = new RefundBankAccountContainer();
@@ -779,6 +905,8 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param AbstractRequestContainer $container
+     *
+     * @return void
      */
     protected function setStandardParams(AbstractRequestContainer $container)
     {
@@ -795,6 +923,8 @@ class RequestContainerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param AbstractRequestContainer $container
+     *
+     * @return void
      */
     protected function assertStandardParams(AbstractRequestContainer $container)
     {

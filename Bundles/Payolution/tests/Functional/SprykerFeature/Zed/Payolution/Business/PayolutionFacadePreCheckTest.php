@@ -19,6 +19,9 @@ use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
 class PayolutionFacadePreCheckTest extends AbstractFacadeTest
 {
 
+    /**
+     * @return void
+     */
     public function testPreCheckPaymentWithSuccessResponse()
     {
         $adapterMock = new PreCheckAdapterMock();
@@ -35,6 +38,9 @@ class PayolutionFacadePreCheckTest extends AbstractFacadeTest
         $this->assertSame($expectedResponse->getProcessingStatusCode(), $response->getProcessingStatusCode());
     }
 
+    /**
+     * @return void
+     */
     public function testPreCheckPaymentWithFailureResponse()
     {
         $adapterMock = (new PreCheckAdapterMock())->expectFailure();

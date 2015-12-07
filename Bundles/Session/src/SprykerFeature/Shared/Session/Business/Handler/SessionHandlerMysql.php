@@ -187,6 +187,9 @@ class SessionHandlerMysql implements \SessionHandlerInterface
         return true;
     }
 
+    /**
+     * @return void
+     */
     protected function initDb()
     {
         $query = "CREATE TABLE IF NOT EXISTS `session` (

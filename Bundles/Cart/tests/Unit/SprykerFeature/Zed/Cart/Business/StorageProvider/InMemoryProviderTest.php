@@ -27,6 +27,9 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
      */
     private $provider;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -35,6 +38,9 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
 
     //@todo test with more then 1 item
 
+    /**
+     * @return void
+     */
     public function testAddExistingItem()
     {
         $cart = $this->createCartWithItem($itemId = '123', $existingQuantity = 1);
@@ -57,6 +63,9 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @return void
+     */
     public function testAddNewItem()
     {
         $cart = $this->createCartWithItem($itemId = '123', $existingQuantity = 1);
@@ -89,6 +98,9 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($existingQuantity, $existingItem->getQuantity());
     }
 
+    /**
+     * @return void
+     */
     public function testRemoveExistingItem()
     {
         $cart = $this->createCartWithItem($itemId = '123', $existingQuantity = 1);
@@ -100,6 +112,9 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(0, $changedCart->getItems());
     }
 
+    /**
+     * @return void
+     */
     public function testRemoveNotExistingItem()
     {
         $cart = $this->createCartWithItem($itemId = '123', $existingQuantity = 1);
@@ -116,6 +131,9 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($existingQuantity, $item->getQuantity());
     }
 
+    /**
+     * @return void
+     */
     public function testReduceWithMoreThenExists()
     {
         $cart = $this->createCartWithItem($itemId = '123', $existingQuantity = 1);
@@ -130,6 +148,8 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException
      * @expectedExceptionMessage Could not change cart item "123" with "-3" as value.
+     *
+     * @return void
      */
     public function testIncreaseWithNegativeValue()
     {
@@ -145,6 +165,8 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException
      * @expectedExceptionMessage Could not change cart item "123" with "0" as value.
+     *
+     * @return void
      */
     public function testIncreaseWithZeroValue()
     {
@@ -160,6 +182,8 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException
      * @expectedExceptionMessage Could not change cart item "123" with "-3" as value.
+     *
+     * @return void
      */
     public function testDecreaseWithNegativeValue()
     {
@@ -175,6 +199,8 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \SprykerFeature\Zed\Cart\Business\Exception\InvalidArgumentException
      * @expectedExceptionMessage Could not change cart item "123" with "0" as value.
+     *
+     * @return void
      */
     public function testDecreaseWithZeroValue()
     {
@@ -187,6 +213,9 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $this->provider->removeItems($cart, $change);
     }
 
+    /**
+     * @return void
+     */
     public function testAddCouponCodeMustCopyCouponCopeFromChangeTransferToCartTransfer()
     {
         $changeTransfer = new ChangeTransfer();
@@ -200,6 +229,9 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(self::COUPON_CODE_1, $cartTransfer->getCouponCodes()[0]);
     }
 
+    /**
+     * @return void
+     */
     public function testRemoveCouponCodeMustRemoveCouponCodeFromCartTransfer()
     {
         $changeTransfer = new ChangeTransfer();
@@ -215,6 +247,9 @@ class InMemoryProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(self::COUPON_CODE_2, $cartTransfer->getCouponCodes()[0]);
     }
 
+    /**
+     * @return void
+     */
     public function testClearCouponCodeMustRemoveAllCouponCodesFromCartTransfer()
     {
         $cartTransfer = new CartTransfer();

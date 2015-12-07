@@ -21,6 +21,9 @@ class CollectorStorageExportConsole extends AbstractCollectorConsole
     const COMMAND_NAME = 'collector:storage:export';
     const COMMAND_DESCRIPTION = 'Collector export storage';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);

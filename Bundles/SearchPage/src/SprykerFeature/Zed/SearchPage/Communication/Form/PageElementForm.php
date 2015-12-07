@@ -23,11 +23,17 @@ class PageElementForm extends AbstractForm
     const FK_SEARCH_PAGE_ELEMENT_TEMPLATE = 'fk_search_page_element_template';
     const ELEMENT_KEY = 'element_key';
 
+    /**
+     * @return void
+     */
     protected function buildFormFields()
     {
         // @todo: Implement buildFormFields() method.
     }
 
+    /**
+     * @return void
+     */
     protected function populateFormFields()
     {
         // @todo: Implement populateFormFields() method.
@@ -43,6 +49,9 @@ class PageElementForm extends AbstractForm
         ];
     }
 
+    /**
+     * @return void
+     */
     public function addFormFields()
     {
         $this->addField(self::ID_SEARCH_PAGE_ELEMENT);

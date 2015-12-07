@@ -18,6 +18,9 @@ use SprykerEngine\Zed\Transfer\Business\Model\Generator\TransferDefinitionMerger
 class TransferDefinitionMergerTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testMergeShouldReturnMergedTransferDefinition()
     {
         $helper = new TransferDefinitionMergerHelper();
@@ -33,6 +36,9 @@ class TransferDefinitionMergerTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $merger->merge($transferDefinitions));
     }
 
+    /**
+     * @return void
+     */
     public function testMergeShouldThrowExceptionIfTwoPropertiesWithSameNameDefineDifferentAttributes()
     {
         $helper = new TransferDefinitionMergerHelper();

@@ -16,6 +16,9 @@ use Unit\SprykerEngine\Shared\Transfer\Fixtures\AbstractTransfer;
 class AbstractTransferTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testFromArrayShouldReturnInstanceWithSetDefaultTypes()
     {
         $data = [
@@ -34,6 +37,9 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $this->assertInternalType('array', $transfer->getArray());
     }
 
+    /**
+     * @return void
+     */
     public function testFromArrayShouldReturnInstanceWithSetTransferObject()
     {
         $data = [
@@ -51,6 +57,9 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $this->assertCount(1, $transfer->getTransferCollection());
     }
 
+    /**
+     * @return void
+     */
     public function testFromArrayShouldWorkForGivenTransferAndInnerTransfers()
     {
         $data = [
@@ -68,6 +77,9 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('SprykerEngine\Shared\Transfer\TransferInterface', $transfer->getTransfer());
     }
 
+    /**
+     * @return void
+     */
     public function testFromArrayWithIgnoreMissingPropertyFalseShouldThrowExceptionIfPropertyIsInArrayButNotInObject()
     {
         $this->setExpectedException('\InvalidArgumentException');
@@ -79,6 +91,9 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $transfer->fromArray($data);
     }
 
+    /**
+     * @return void
+     */
     public function testFromArrayWithIgnoreMissingPropertyTrueShouldNotThrowExceptionIfPropertyIsInArrayButNotInObject()
     {
         $data = [
@@ -89,6 +104,9 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $transfer->fromArray($data, true);
     }
 
+    /**
+     * @return void
+     */
     public function testFromArrayWithNestedTransferCollectionShouldReturnValidDataFromEmbeddedTransferObjects()
     {
         $data = [
@@ -122,6 +140,9 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('level3', $transfer->getTransferCollection()[1]->getTransferCollection()[0]->getString());
     }
 
+    /**
+     * @return void
+     */
     public function testToArrayShouldReturnArrayWithAllPropertyNamesAsKeysAndNullValuesWhenNoPropertyWasSet()
     {
         $transfer = new AbstractTransfer();
@@ -138,6 +159,9 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $given);
     }
 
+    /**
+     * @return void
+     */
     public function testToArrayShouldReturnArrayWithAllPropertyNamesAsKeysAndFilledValues()
     {
         $transfer = new AbstractTransfer();
@@ -157,6 +181,9 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $given);
     }
 
+    /**
+     * @return void
+     */
     public function testToArrayWithRecursiveTrueShouldReturnArrayWithAllPropertyNamesAsKeysAndFilledValuesAndRecursiveFilledInnerObjects()
     {
         $transfer = new AbstractTransfer();
@@ -189,6 +216,9 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $given);
     }
 
+    /**
+     * @return void
+     */
     public function testToArrayWithRecursiveFalseShouldReturnArrayWithAllPropertyNamesAsKeysAndWithoutRecursiveFilledInnerObjects()
     {
         $transfer = new AbstractTransfer();
@@ -214,6 +244,9 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $given);
     }
 
+    /**
+     * @return void
+     */
     public function testModifiedToArrayShouldReturnArrayOnlyWithModifiedProperty()
     {
         $transfer = new AbstractTransfer();
@@ -229,6 +262,9 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $given);
     }
 
+    /**
+     * @return void
+     */
     public function testModifiedToArrayWithRecursiveTrueShouldReturnArrayWithAllPropertyNamesAsKeysAndFilledValuesAndRecursiveFilledInnerObjectsWhichWhereModified()
     {
         $transfer = new AbstractTransfer();
@@ -256,6 +292,9 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $given);
     }
 
+    /**
+     * @return void
+     */
     public function testSerializeAndUnSerializeShouldReturnUnSerializedInstance()
     {
         $transfer = new AbstractTransfer();
@@ -278,6 +317,9 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expected, $given);
     }
 
+    /**
+     * @return void
+     */
     public function testCloneShouldReturnFullClonedObject()
     {
         $transfer = new AbstractTransfer();
@@ -290,6 +332,9 @@ class AbstractTransferTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($transfer, $clonedTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testFromArrayShouldWorkWithCyclicReferences()
     {
         $transfer = new AbstractTransfer();

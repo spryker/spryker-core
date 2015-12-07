@@ -31,6 +31,9 @@ class UserTest extends Test
      */
     private $locator;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -83,6 +86,9 @@ class UserTest extends Test
         return $dto;
     }
 
+    /**
+     * @return void
+     */
     public function testAddUser()
     {
         $data = $this->mockUserData();
@@ -97,6 +103,9 @@ class UserTest extends Test
         $this->assertNotEquals($data['password'], $user->getPassword());
     }
 
+    /**
+     * @return void
+     */
     public function testAfterCallToRemoveUserGetUserByIdMustThrowAnExcetpion()
     {
         $data = $this->mockUserData();
@@ -110,6 +119,9 @@ class UserTest extends Test
         $this->userFacade->getUserById($user->getIdUser());
     }
 
+    /**
+     * @return void
+     */
     public function testUpdateUserWithSamePassword()
     {
         $data = $this->mockUserData();
@@ -134,6 +146,9 @@ class UserTest extends Test
         $this->assertTrue($this->userFacade->isValidPassword($data['password'], $finalUser->getPassword()));
     }
 
+    /**
+     * @return void
+     */
     public function testUpdateUserWithNewPassword()
     {
         $data = $this->mockUserData();
@@ -158,6 +173,9 @@ class UserTest extends Test
         $this->assertTrue($this->userFacade->isValidPassword($data2['password'], $finalUser->getPassword()));
     }
 
+    /**
+     * @return void
+     */
     public function testGetUserByUsername()
     {
         $data = $this->mockUserData();
@@ -173,6 +191,9 @@ class UserTest extends Test
         $this->assertEquals($user->getPassword(), $mock->getPassword());
     }
 
+    /**
+     * @return void
+     */
     public function testGetUserById()
     {
         $data = $this->mockUserData();
@@ -188,6 +209,9 @@ class UserTest extends Test
         $this->assertEquals($user->getPassword(), $mock->getPassword());
     }
 
+    /**
+     * @return void
+     */
     public function testIsValidPassword()
     {
         $data = $this->mockUserData();

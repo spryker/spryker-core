@@ -41,6 +41,8 @@ class ProductOptionManager implements ProductOptionManagerInterface
 
     /**
      * @param ItemTransfer $cartItem
+     *
+     * @return void
      */
     public function expandProductOptionTransfers(ItemTransfer $cartItem)
     {

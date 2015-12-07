@@ -141,6 +141,8 @@ class PasswordReset
     /**
      * @param string $email
      * @param string $passwordResetToken
+     *
+     * @return void
      */
     protected function sendResetRequest($email, $passwordResetToken)
     {
@@ -151,6 +153,8 @@ class PasswordReset
 
     /**
      * @param AuthPasswordResetSenderInterface $userPasswordResetNotificationSender
+     *
+     * @return void
      */
     public function setUserPasswordResetNotificationSender(
         AuthPasswordResetSenderInterface $userPasswordResetNotificationSender

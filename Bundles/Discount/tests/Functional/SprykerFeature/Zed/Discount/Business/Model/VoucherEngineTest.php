@@ -30,11 +30,17 @@ class VoucherEngineTest extends Test
 
     const ITEM_GROSS_PRICE_500 = 500;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
     }
 
+    /**
+     * @return void
+     */
     public function testCalculationWithoutAnyDiscountShouldNotReturnMatchingDiscounts()
     {
         $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
@@ -47,6 +53,9 @@ class VoucherEngineTest extends Test
         $this->assertEquals(0, count($result));
     }
 
+    /**
+     * @return void
+     */
     public function testOneDiscountShouldNotBeFilteredOut()
     {
         $discount = $this->initializeDiscount(
@@ -68,6 +77,9 @@ class VoucherEngineTest extends Test
         $this->assertEquals(1, count($result));
     }
 
+    /**
+     * @return void
+     */
     public function testTwoDiscountsShouldNotBeFilteredOut()
     {
         $discount1 = $this->initializeDiscount(
@@ -96,6 +108,9 @@ class VoucherEngineTest extends Test
         $this->assertEquals(2, count($result));
     }
 
+    /**
+     * @return void
+     */
     public function testFilterOutLowestUnprivilegedDiscountIfThereAreMoreThanOne()
     {
         $discount1 = $this->initializeDiscount(
@@ -135,6 +150,9 @@ class VoucherEngineTest extends Test
         $this->assertEquals(2, count($result));
     }
 
+    /**
+     * @return void
+     */
     public function testFilterOutLowestUnprivilegedDiscountIfThereAreMoreThanTwo()
     {
         $discount1 = $this->initializeDiscount(
@@ -181,6 +199,9 @@ class VoucherEngineTest extends Test
         $this->assertEquals(2, count($result));
     }
 
+    /**
+     * @return void
+     */
     public function testFilterOutLowestUnprivilegedDiscountIfThereAreMoreThanTwoAndTwoPrivilegedOnes()
     {
         $discount1 = $this->initializeDiscount(

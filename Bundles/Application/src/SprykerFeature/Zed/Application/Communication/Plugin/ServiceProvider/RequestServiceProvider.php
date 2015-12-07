@@ -24,6 +24,8 @@ class RequestServiceProvider extends AbstractPlugin implements ServiceProviderIn
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function register(Application $app)
     {
@@ -31,6 +33,8 @@ class RequestServiceProvider extends AbstractPlugin implements ServiceProviderIn
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function boot(Application $app)
     {
@@ -45,6 +49,8 @@ class RequestServiceProvider extends AbstractPlugin implements ServiceProviderIn
 
     /**
      * @param Request $request
+     *
+     * @return void
      */
     protected function parseCliRequestData(Request $request)
     {
@@ -73,6 +79,8 @@ class RequestServiceProvider extends AbstractPlugin implements ServiceProviderIn
 
     /**
      * @param Request $request
+     *
+     * @return void
      */
     protected function parseRequestData(Request $request)
     {

@@ -34,6 +34,9 @@ class DiscountSaverTest extends AbstractUnitTest
     const USED_CODE_1 = 'used code 1';
     const USED_CODE_2 = 'used code 2';
 
+    /**
+     * @return void
+     */
     public function testSaveDiscountMustSaveSalesItemsDiscount()
     {
         $discountSaver = $this->getDiscountSaverMock(['persistSalesDiscount']);
@@ -57,6 +60,9 @@ class DiscountSaverTest extends AbstractUnitTest
         $discountSaver->saveDiscounts($orderTransfer, $checkoutResponseTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSaveDiscountMustNotSaveSalesDiscountCodeIfUsedCodesCanNotBeFound()
     {
         $discountSaver = $this->getDiscountSaverMock(['persistSalesDiscount', 'saveUsedCodes']);
@@ -80,6 +86,9 @@ class DiscountSaverTest extends AbstractUnitTest
         $discountSaver->saveDiscounts($orderTransfer, $checkoutResponseTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSaveDiscountMustSaveSalesDiscountCodesIfUsedCodesPresent()
     {
         $discountSaver = $this->getDiscountSaverMock(['persistSalesDiscount', 'persistSalesDiscountCode', 'getDiscountVoucherEntityByCode']);
@@ -106,6 +115,9 @@ class DiscountSaverTest extends AbstractUnitTest
         $discountSaver->saveDiscounts($orderTransfer, $checkoutResponseTransfer);
     }
 
+    /**
+     * @return void
+     */
     public function testSaveDiscountMustNotSaveSalesDiscountCodesIfUsedCodeCanNotBeFound()
     {
         $discountSaver = $this->getDiscountSaverMock(['persistSalesDiscount', 'persistSalesDiscountCode', 'getDiscountVoucherEntityByCode']);

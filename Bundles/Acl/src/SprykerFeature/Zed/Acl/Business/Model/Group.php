@@ -219,6 +219,8 @@ class Group implements GroupInterface
 
     /**
      * @param int $idAclGroup
+     *
+     * @return void
      */
     public function removeRolesFromGroup($idAclGroup)
     {
@@ -257,6 +259,8 @@ class Group implements GroupInterface
      *
      * @throws UserAndGroupNotFoundException
      * @throws PropelException
+     *
+     * @return void
      */
     public function removeUser($idGroup, $idUser)
     {
@@ -390,6 +394,8 @@ class Group implements GroupInterface
      * @param GroupTransfer $group
      *
      * @throws GroupNameExistsException
+     *
+     * @return void
      */
     public function assertGroupHasName(GroupTransfer $group)
     {
@@ -402,6 +408,8 @@ class Group implements GroupInterface
      * @param GroupTransfer $group
      *
      * @throws GroupNotFoundException
+     *
+     * @return void
      */
     public function assertGroupExists(GroupTransfer $group)
     {

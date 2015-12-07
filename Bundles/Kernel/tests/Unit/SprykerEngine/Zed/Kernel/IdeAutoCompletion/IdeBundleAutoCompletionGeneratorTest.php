@@ -18,6 +18,9 @@ use Unit\SprykerEngine\Zed\Kernel\IdeAutoCompletion\Fixtures\MethodTagBuilder;
 class IdeBundleAutoCompletionGeneratorTest extends AbstractAutoCompletion
 {
 
+    /**
+     * @return void
+     */
     public function testFileShouldBeGenerated()
     {
         $this->cleanUpTestDir();
@@ -28,6 +31,9 @@ class IdeBundleAutoCompletionGeneratorTest extends AbstractAutoCompletion
         $this->assertFileExists($this->getFilePath());
     }
 
+    /**
+     * @return void
+     */
     public function testAddMethodTagBuilderShouldReturnGenerator()
     {
         $generator = new IdeBundleAutoCompletionGenerator($this->getOptions());
@@ -46,6 +52,9 @@ class IdeBundleAutoCompletionGeneratorTest extends AbstractAutoCompletion
         return $this->baseDir . 'test/' . $interfaceName . '.php';
     }
 
+    /**
+     * @return void
+     */
     public function testFileShouldContainANamespace()
     {
         $generated = $this->getGeneratedFileContent();
@@ -56,6 +65,9 @@ class IdeBundleAutoCompletionGeneratorTest extends AbstractAutoCompletion
         $this->assertContains($expectedNamespace, $generated);
     }
 
+    /**
+     * @return void
+     */
     public function testFileShouldContainInterfaceForEachFoundBundle()
     {
         $generatedFile = $this->getGeneratedFileContent();

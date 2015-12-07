@@ -138,6 +138,8 @@ class File extends AbstractWriter
 
     /**
      * @param resource $handle
+     *
+     * @return void
      */
     protected function unlock($handle)
     {

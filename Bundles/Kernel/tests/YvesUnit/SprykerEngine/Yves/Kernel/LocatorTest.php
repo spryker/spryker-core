@@ -17,6 +17,9 @@ use SprykerEngine\Yves\Kernel\Locator;
 class LocatorTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testCallShouldReturnBundleProxy()
     {
         $locator = Locator::getInstance();

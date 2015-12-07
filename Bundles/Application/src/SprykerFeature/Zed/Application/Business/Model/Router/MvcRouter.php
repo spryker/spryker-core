@@ -41,6 +41,8 @@ class MvcRouter implements RouterInterface
 
     /**
      * @param RequestContext $context
+     *
+     * @return void
      */
     public function setContext(RequestContext $context)
     {
@@ -67,6 +69,8 @@ class MvcRouter implements RouterInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
     public function generate($name, $parameters = [], $referenceType = self::ABSOLUTE_PATH)
     {

@@ -30,21 +30,33 @@ class TransferConfigTest extends \PHPUnit_Framework_TestCase
         return Locator::getInstance();
     }
 
+    /**
+     * @return void
+     */
     public function testGetClassTargetDirectoryShouldReturnString()
     {
         $this->assertTrue(is_string($this->getConfig()->getClassTargetDirectory()));
     }
 
+    /**
+     * @return void
+     */
     public function testGetGeneratedTargetDirectoryShouldReturnString()
     {
         $this->assertTrue(is_string($this->getConfig()->getGeneratedTargetDirectory()));
     }
 
+    /**
+     * @return void
+     */
     public function testGetSourceDirectoriesShouldReturnArray()
     {
         $this->assertTrue(is_array($this->getConfig()->getSourceDirectories()));
     }
 
+    /**
+     * @return void
+     */
     public function testGetSourceDirectoriesShouldReturnArrayWithTwoEntriesIfProjectAndVendorTransferExist()
     {
         $directory = APPLICATION_SOURCE_DIR . '/Foo/Shared/Bar/Transfer/';
@@ -56,6 +68,9 @@ class TransferConfigTest extends \PHPUnit_Framework_TestCase
         $this->cleanTestDirectories();
     }
 
+    /**
+     * @return void
+     */
     public function cleanTestDirectories()
     {
         $filesystem = new Filesystem();

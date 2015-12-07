@@ -14,6 +14,9 @@ use SprykerFeature\Zed\Application\Business\ApplicationFacade;
 class DeleteGeneratedDirectory extends AbstractApplicationCheckStep
 {
 
+    /**
+     * @return void
+     */
     public function run()
     {
         $this->getFacade()->runCheckStepDeleteGeneratedDirectory($this->logger);

@@ -34,6 +34,9 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderItemBundleItem;
 class SaverTest extends Test
 {
 
+    /**
+     * @return void
+     */
     public function testSaveOrderPaymentCreatesPersistentPaymentData()
     {
         $orderTransfer = $this->getOrderTransfer();
@@ -50,6 +53,9 @@ class SaverTest extends Test
         $this->assertCount(1, $paymentOrderItemEntities);
     }
 
+    /**
+     * @return void
+     */
     public function testSaveOrderPaymentHasAddressData()
     {
         $orderTransfer = $this->getOrderTransfer();

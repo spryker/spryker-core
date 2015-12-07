@@ -219,6 +219,8 @@ class ExportProcessor implements ExportProcessorInterface
      * @param string $operator
      * @param array $valueIds
      * @param array $constraints
+     *
+     * @return void
      */
     protected function processConstraintValues($operator, array $valueIds, array &$constraints)
     {

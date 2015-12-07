@@ -268,6 +268,8 @@ class Rule implements RuleInterface
      * @param UserTransfer $userTransfer
      *
      * @throws UserNotFoundException
+     *
+     * @return void
      */
     public function registerSystemUserRules(UserTransfer $userTransfer)
     {

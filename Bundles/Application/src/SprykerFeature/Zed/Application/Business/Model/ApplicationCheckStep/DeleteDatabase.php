@@ -26,6 +26,9 @@ class DeleteDatabase extends AbstractApplicationCheckStep
         }
     }
 
+    /**
+     * @return void
+     */
     private function deletePostgresDatabaseIfNotExists()
     {
         // @todo make it work without sudo
@@ -38,6 +41,9 @@ class DeleteDatabase extends AbstractApplicationCheckStep
         }
     }
 
+    /**
+     * @return void
+     */
     private function deleteMysqlDatabaseIfNotExists()
     {
         $con = new \PDO(

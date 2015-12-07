@@ -34,6 +34,9 @@ class WriterTest extends Test
      */
     private $stockQueryContainer;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -43,6 +46,9 @@ class WriterTest extends Test
         $this->stockQueryContainer = new StockQueryContainer(new Factory('Stock'), $locator);
     }
 
+    /**
+     * @return void
+     */
     public function testDecrementStock()
     {
         $this->setData();
@@ -62,6 +68,9 @@ class WriterTest extends Test
         $this->assertEquals($oldQuantity - 1, $newQuantity);
     }
 
+    /**
+     * @return void
+     */
     public function testIncrementStock()
     {
         $this->setData();
@@ -79,6 +88,9 @@ class WriterTest extends Test
         $this->assertEquals($oldQuantity + 1, $newQuantity);
     }
 
+    /**
+     * @return void
+     */
     protected function setData()
     {
         $abstractProduct = SpyAbstractProductQuery::create()

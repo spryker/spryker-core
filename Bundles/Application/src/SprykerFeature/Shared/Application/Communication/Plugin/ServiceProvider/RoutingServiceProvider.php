@@ -15,6 +15,8 @@ class RoutingServiceProvider implements ServiceProviderInterface
 
     /**
      * {@inheritdoc}
+     *
+     * @return void
      */
     public function register(Application $app)
     {
@@ -33,6 +35,8 @@ class RoutingServiceProvider implements ServiceProviderInterface
 
     /**
      * @codeCoverageIgnore
+     *
+     * @return void
      */
     public function boot(Application $app)
     {

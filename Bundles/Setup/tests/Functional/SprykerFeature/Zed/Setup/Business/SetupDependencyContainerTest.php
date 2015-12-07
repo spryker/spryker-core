@@ -33,6 +33,9 @@ class SetupDependencyContainerTest extends \PHPUnit_Framework_TestCase
         return new SetupDependencyContainer($factory, Locator::getInstance(), $config);
     }
 
+    /**
+     * @return void
+     */
     public function testCreateModelCronjobsShouldReturnFullyConfiguredInstance()
     {
         $instance = $this->getDependencyContainer()->createModelCronjobs();
@@ -40,6 +43,9 @@ class SetupDependencyContainerTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('SprykerFeature\Zed\Setup\Business\Model\Cronjobs', $instance);
     }
 
+    /**
+     * @return void
+     */
     public function testCreateModelGeneratedDirectoryRemoverShouldReturnFullyConfiguredInstance()
     {
         $instance = $this->getDependencyContainer()->createModelGeneratedDirectoryRemover();

@@ -71,6 +71,9 @@ class TransitionLog implements TransitionLogInterface
      *
      * @return void
      */
+    /**
+     * @return void
+     */
     public function init(array $salesOrderItems)
     {
         $this->logEntities = [];

@@ -39,6 +39,9 @@ class ApplicationFacadeTest extends \PHPUnit_Framework_TestCase
         return Locator::getInstance();
     }
 
+    /**
+     * @return void
+     */
     public function testBuildNavigationShouldReturnArrayWithMenuAsKey()
     {
         $navigation = $this->getFacade()->buildNavigation('');

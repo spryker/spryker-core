@@ -25,6 +25,8 @@ class Setup
      * @static
      *
      * @param array $directories
+     *
+     * @return void
      */
     public static function checkDirectories(array $directories)
     {
@@ -44,6 +46,8 @@ class Setup
      * creates the given directories unless they exist
      *
      * @param array $directories
+     *
+     * @return void
      */
     public static function setupDirectories(array $directories)
     {
@@ -72,6 +76,9 @@ class Setup
         return '<h1>Enviroment failed</h1><ul><li>' . implode('</li><li>', self::$errorMessages) . '</li></ul>';
     }
 
+    /**
+     * @return void
+     */
     public static function renderAndExit($str, $background = 'black', $color = 'white')
     {
         if (is_array($str)) {

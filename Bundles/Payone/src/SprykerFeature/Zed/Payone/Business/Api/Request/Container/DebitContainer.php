@@ -59,6 +59,8 @@ class DebitContainer extends AbstractRequestContainer
 
     /**
      * @param int $amount
+     *
+     * @return void
      */
     public function setAmount($amount)
     {
@@ -75,6 +77,8 @@ class DebitContainer extends AbstractRequestContainer
 
     /**
      * @param Debit\BusinessContainer $business
+     *
+     * @return void
      */
     public function setBusiness(BusinessContainer $business)
     {
@@ -91,6 +95,8 @@ class DebitContainer extends AbstractRequestContainer
 
     /**
      * @param string $clearingtype
+     *
+     * @return void
      */
     public function setClearingType($clearingtype)
     {
@@ -107,6 +113,8 @@ class DebitContainer extends AbstractRequestContainer
 
     /**
      * @param string $currency
+     *
+     * @return void
      */
     public function setCurrency($currency)
     {
@@ -123,6 +131,8 @@ class DebitContainer extends AbstractRequestContainer
 
     /**
      * @param Invoicing\TransactionContainer $invoicing
+     *
+     * @return void
      */
     public function setInvoicing(TransactionContainer $invoicing)
     {
@@ -139,6 +149,8 @@ class DebitContainer extends AbstractRequestContainer
 
     /**
      * @param Debit\PaymentMethod\AbstractPaymentMethodContainer $paymentMethod
+     *
+     * @return void
      */
     public function setPaymentMethod(AbstractPaymentMethodContainer $paymentMethod)
     {
@@ -155,6 +167,8 @@ class DebitContainer extends AbstractRequestContainer
 
     /**
      * @param int $sequencenumber
+     *
+     * @return void
      */
     public function setSequenceNumber($sequencenumber)
     {
@@ -171,6 +185,8 @@ class DebitContainer extends AbstractRequestContainer
 
     /**
      * @param string $txid
+     *
+     * @return void
      */
     public function setTxid($txid)
     {
@@ -187,6 +203,8 @@ class DebitContainer extends AbstractRequestContainer
 
     /**
      * @param string $use_customerdata
+     *
+     * @return void
      */
     public function setUseCustomerData($use_customerdata)
     {

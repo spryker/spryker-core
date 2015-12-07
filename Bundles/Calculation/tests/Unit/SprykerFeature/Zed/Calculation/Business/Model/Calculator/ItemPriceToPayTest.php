@@ -26,6 +26,9 @@ class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
     const ITEM_SALESRULE_DISCOUNT_AMOUNT = 100;
     const ITEM_COUPON_DISCOUNT_AMOUNT = 50;
 
+    /**
+     * @return void
+     */
     public function testPriceToPayShouldReturnItemGrossPriceForAnOrderWithOneItem()
     {
         $order = $this->getOrderWithFixtureData();
@@ -42,6 +45,9 @@ class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @return void
+     */
     public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountForAnOrderWithOneItemWithCouponDiscountAmmount()
     {
         $order = $this->getOrderWithFixtureData();
@@ -63,6 +69,9 @@ class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @return void
+     */
     public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountMinusDiscountAmountForAnOrderWithOneItemAndBothDiscounts()
     {
         $order = $this->getOrderWithFixtureData();
@@ -91,6 +100,9 @@ class ItemPriceToPayTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @return void
+     */
     public function testPriceToPayShouldReturnItemGrossPriceMinusCouponDiscountAmountMinusDiscountAmountForAnOrderWithTwoItemsAndBothDiscounts()
     {
         $order = $this->getOrderWithFixtureData();

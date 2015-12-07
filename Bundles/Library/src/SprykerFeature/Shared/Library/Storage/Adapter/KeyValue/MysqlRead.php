@@ -104,6 +104,8 @@ class MysqlRead extends Mysql implements ReadInterface
      * @param array $keys
      *
      * @throws \Exception
+     *
+     * @return void
      */
     protected function runGetMulti(array $keys)
     {

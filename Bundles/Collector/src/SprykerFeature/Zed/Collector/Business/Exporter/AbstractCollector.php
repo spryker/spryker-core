@@ -83,6 +83,8 @@ abstract class AbstractCollector implements ExporterInterface
     /**
      * @param string $touchItemType
      * @param CollectorPluginInterface $plugin
+     *
+     * @return void
      */
     public function addCollectorPlugin($touchItemType, CollectorPluginInterface $plugin)
     {

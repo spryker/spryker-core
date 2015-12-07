@@ -32,6 +32,9 @@ class Cloud
         }
     }
 
+    /**
+     * @return void
+     */
     public static function init()
     {
         static::$cloudConfigEnabled = Config::get(SystemConfig::CLOUD_ENABLED);

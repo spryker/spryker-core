@@ -79,6 +79,9 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
      */
     private $productOptionQueryContainer;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -97,6 +100,9 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
         $this->buildProductOptionFacade();
     }
 
+    /**
+     * @return void
+     */
     public function testGetProductOption()
     {
         /** @var $productOptionTransfer ProductOptionTransfer */
@@ -118,6 +124,9 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
         $this->assertEquals('10', $taxRateTransfer->getRate());
     }
 
+    /**
+     * @return void
+     */
     public function testQueryTypeUsagesForConcreteProduct()
     {
         $result = $this->facade
@@ -131,6 +140,8 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
      * When here an error occurs like "Failed asserting that 1559 matches expected 1557."
      * this test must be changed so that the sorting of the result doesn't matter or we have
      * to change the different behavoiur of mysql and postgres
+     *
+     * @return void
      */
     public function testQueryValueUsagesForTypeUsage()
     {
@@ -144,6 +155,9 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
         $this->assertNull($result[1]['price']);
     }
 
+    /**
+     * @return void
+     */
     public function testQueryTypeExclusionsForTypeUsage()
     {
         $result = $this->facade
@@ -153,6 +167,9 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
         $this->assertEquals($this->ids['idUsageSize'], $result[0]);
     }
 
+    /**
+     * @return void
+     */
     public function testQueryValueConstraintsForValueUsage()
     {
         $this->markTestSkipped('Ordering of result always different');
@@ -183,6 +200,9 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
         $this->assertEquals($this->ids['idUsageRed'], $result[0]['valueUsageId']);
     }
 
+    /**
+     * @return void
+     */
     public function testQueryValueConstraintsForValueUsageByOperator()
     {
         $this->markTestSkipped('Ordering of result always different');
@@ -199,6 +219,9 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
         $this->assertEmpty($result);
     }
 
+    /**
+     * @return void
+     */
     public function testQueryConfigPresetsForConcreteProduct()
     {
         $result = $this->facade
@@ -208,6 +231,9 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
         $this->assertEquals(1, $result[0]['isDefault']);
     }
 
+    /**
+     * @return void
+     */
     public function testQueryValueUsagesForConfigPreset()
     {
         $result = $this->facade
@@ -218,6 +244,9 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
         $this->assertEquals($this->ids['idUsageMedium'], $result[1]);
     }
 
+    /**
+     * @return void
+     */
     public function testQueryEffectiveTaxRateForTypeUsage()
     {
         $result = $this->facade
@@ -231,6 +260,9 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
         $this->assertNull($result);
     }
 
+    /**
+     * @return void
+     */
     protected function buildProductOptionFacade()
     {
         $container = new Container();

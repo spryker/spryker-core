@@ -41,6 +41,9 @@ class WriterTest extends Test
      */
     protected $locator;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -50,6 +53,9 @@ class WriterTest extends Test
         $this->setTestData();
     }
 
+    /**
+     * @return void
+     */
     public function testCreatePriceType()
     {
         $priceTypeEntity = $this->priceFacade->createPriceType(self::DUMMY_PRICE_TYPE_1);
@@ -58,6 +64,9 @@ class WriterTest extends Test
         $this->assertNotEmpty($priceTypeQuery);
     }
 
+    /**
+     * @return void
+     */
     public function testCreatePriceForAbstractProduct()
     {
         $abstractProduct = SpyAbstractProductQuery::create()->filterBySku(self::DUMMY_SKU_ABSTRACT_PRODUCT)->findOne();
@@ -77,6 +86,9 @@ class WriterTest extends Test
         $this->assertEquals(1, count($request));
     }
 
+    /**
+     * @return void
+     */
     public function testCreatePriceForConcreteProduct()
     {
         $concreteProduct = SpyProductQuery::create()->filterBySku(self::DUMMY_SKU_CONCRETE_PRODUCT)->findOne();
@@ -96,6 +108,9 @@ class WriterTest extends Test
         $this->assertEquals(1, count($request));
     }
 
+    /**
+     * @return void
+     */
     public function testSetPriceForExistingAbstractProductShouldChangePrice()
     {
         $abstractProduct = SpyAbstractProductQuery::create()->filterBySku(self::DUMMY_SKU_ABSTRACT_PRODUCT)->findOne();
@@ -165,16 +180,25 @@ class WriterTest extends Test
             ->find();
     }
 
+    /**
+     * @return void
+     */
     protected function deletePriceEntitiesAbstract($requestProduct)
     {
         SpyPriceProductQuery::create()->filterBySpyAbstractProduct($requestProduct)->delete();
     }
 
+    /**
+     * @return void
+     */
     protected function deletePriceEntitiesConcrete($requestProduct)
     {
         SpyPriceProductQuery::create()->filterByProduct($requestProduct)->delete();
     }
 
+    /**
+     * @return void
+     */
     protected function setTestData()
     {
         $priceType1 = SpyPriceTypeQuery::create()->filterByName(self::DUMMY_PRICE_TYPE_1)->findOneOrCreate();

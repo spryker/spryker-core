@@ -39,6 +39,9 @@ class CountryFacadeTest extends AbstractFunctionalTest
      */
     protected $countryQueryContainer;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -55,6 +58,9 @@ class CountryFacadeTest extends AbstractFunctionalTest
         return $this->getMock('SprykerEngine\\Shared\\Kernel\\Messenger\\MessengerInterface');
     }
 
+    /**
+     * @return void
+     */
     public function testInitdbInstallation()
     {
         $this->markTestSkipped('This test was using a mechanism to truncate tables, this is wrong in tests');
@@ -70,6 +76,9 @@ class CountryFacadeTest extends AbstractFunctionalTest
         $this->assertTrue($countryCountAfter > $countryCountBefore);
     }
 
+    /**
+     * @return void
+     */
     public function testGetIdByIso2CodeReturnsRightValue()
     {
         $country = new SpyCountry();

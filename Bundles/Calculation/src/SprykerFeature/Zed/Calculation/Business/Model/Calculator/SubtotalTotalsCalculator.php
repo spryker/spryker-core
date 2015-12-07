@@ -22,6 +22,8 @@ class SubtotalTotalsCalculator implements
      * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $calculableContainer
      * @param $calculableItems
+     *
+     * @return void
      */
     public function recalculateTotals(
         TotalsTransfer $totalsTransfer,

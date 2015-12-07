@@ -14,6 +14,9 @@ use SprykerFeature\Shared\ZedRequest\Client\Message;
 class MessageTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testGetterAndSetters()
     {
         $message = new Message();

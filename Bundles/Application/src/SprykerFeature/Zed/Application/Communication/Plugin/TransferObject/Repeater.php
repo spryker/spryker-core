@@ -39,6 +39,8 @@ class Repeater extends AbstractPlugin
     /**
      * @param RequestInterface $transferObject
      * @param HttpRequest $httpRequest
+     *
+     * @return void
      */
     public function setRepeatData(RequestInterface $transferObject, HttpRequest $httpRequest)
     {

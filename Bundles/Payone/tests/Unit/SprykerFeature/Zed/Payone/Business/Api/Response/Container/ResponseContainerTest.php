@@ -18,6 +18,9 @@ use SprykerFeature\Zed\Payone\Business\Api\Response\Container\RefundResponseCont
 class ResponseContainerTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testAuthorizationResponseContainer()
     {
         $params = array_merge($this->getStandardResponseParams(), $this->getAuthorizationResponseParams());
@@ -68,6 +71,9 @@ class ResponseContainerTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+    /**
+     * @return void
+     */
     public function testCaptureResponseContainer()
     {
         $params = array_merge($this->getStandardResponseParams(), $this->getCaptureResponseParams());
@@ -138,6 +144,9 @@ class ResponseContainerTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+    /**
+     * @return void
+     */
     public function testDebitResponseContainer()
     {
         $params = array_merge($this->getStandardResponseParams(), $this->getDebitResponseParams());
@@ -161,6 +170,9 @@ class ResponseContainerTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
+    /**
+     * @return void
+     */
     public function testRefundResponseContainer()
     {
         $params = array_merge($this->getStandardResponseParams(), $this->getRefundResponseParams());
@@ -202,6 +214,8 @@ class ResponseContainerTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param AbstractResponseContainer $container
+     *
+     * @return void
      */
     protected function assertStandardParams(AbstractResponseContainer $container)
     {

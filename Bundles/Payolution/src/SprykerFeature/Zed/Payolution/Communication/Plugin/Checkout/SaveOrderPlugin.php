@@ -21,6 +21,8 @@ class SaveOrderPlugin extends BaseAbstractPlugin implements CheckoutSaveOrderInt
     /**
      * @param OrderTransfer $orderTransfer
      * @param CheckoutResponseTransfer $checkoutResponse
+     *
+     * @return void
      */
     public function saveOrder(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponse)
     {

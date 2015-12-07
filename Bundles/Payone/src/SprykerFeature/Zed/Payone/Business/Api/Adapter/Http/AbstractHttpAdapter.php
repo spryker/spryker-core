@@ -42,6 +42,8 @@ abstract class AbstractHttpAdapter implements AdapterInterface
 
     /**
      * @param int $timeout
+     *
+     * @return void
      */
     public function setTimeout($timeout)
     {
@@ -148,6 +150,8 @@ abstract class AbstractHttpAdapter implements AdapterInterface
 
     /**
      * @param array $params
+     *
+     * @return void
      */
     public function setParams(array $params)
     {
@@ -172,6 +176,8 @@ abstract class AbstractHttpAdapter implements AdapterInterface
 
     /**
      * @param string $rawResponse
+     *
+     * @return void
      */
     protected function setRawResponse($rawResponse)
     {

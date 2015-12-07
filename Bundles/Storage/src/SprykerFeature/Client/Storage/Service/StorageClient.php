@@ -25,6 +25,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     /**
      * @param string $key
      * @param mixed $value
+     *
+     * @return void
      */
     public function set($key, $value)
     {
@@ -33,6 +35,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
 
     /**
      * @param array $items
+     *
+     * @return void
      */
     public function setMulti(array $items)
     {
@@ -41,6 +45,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
 
     /**
      * @param string $key
+     *
+     * @return void
      */
     public function delete($key)
     {
@@ -49,6 +55,8 @@ class StorageClient extends AbstractClient implements StorageClientInterface
 
     /**
      * @param array $keys
+     *
+     * @return void
      */
     public function deleteMulti(array $keys)
     {
@@ -100,6 +108,7 @@ class StorageClient extends AbstractClient implements StorageClientInterface
     }
 
     /**
+     * @return void
      */
     public function resetAccessStats()
     {

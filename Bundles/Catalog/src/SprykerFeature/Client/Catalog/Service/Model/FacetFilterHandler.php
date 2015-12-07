@@ -40,6 +40,8 @@ class FacetFilterHandler implements FacetFilterHandlerInterface
     /**
      * @param Query $query
      * @param Request $request
+     *
+     * @return void
      */
     public function addFacetFiltersToQuery(Query $query, Request $request)
     {

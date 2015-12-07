@@ -43,12 +43,18 @@ class GrandTotalTest extends Test
      */
     protected $locator;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
         $this->locator = Locator::getInstance();
     }
 
+    /**
+     * @return void
+     */
     public function testGrandTotalShouldBeZeroForAnEmptyOrder()
     {
         $order = $this->getOrderWithFixtureData();
@@ -59,6 +65,9 @@ class GrandTotalTest extends Test
         $this->assertEquals(0, $totalsTransfer->getGrandTotalWithDiscounts());
     }
 
+    /**
+     * @return void
+     */
     public function testGrandTotalWithoutDiscountsShouldNotBeReducedByTheDiscounts()
     {
         $order = $this->getOrderWithFixtureData();
@@ -80,6 +89,9 @@ class GrandTotalTest extends Test
         $this->assertEquals(self::ITEM_GROSS_PRICE, $totalsTransfer->getGrandTotal());
     }
 
+    /**
+     * @return void
+     */
     public function testGrandTotalWithoutDiscountsShouldBeByTheDiscountAmountReducedComparedToTheGrandTotal()
     {
         $order = $this->getOrderWithFixtureData();

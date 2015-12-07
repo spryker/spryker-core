@@ -34,6 +34,9 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
 
     const TAX_SET_NAME = 'tax set name';
 
+    /**
+     * @return void
+     */
     public function testExpandItemsMustAddProductIdToAllCartItems()
     {
         $changeTransfer = $this->getChangeTransfer();
@@ -48,6 +51,9 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($concreteProductTransfer->getIdConcreteProduct(), $changedItemTransfer->getId());
     }
 
+    /**
+     * @return void
+     */
     public function testExpandItemsMustAddAbstractSkuToAllCartItems()
     {
         $changeTransfer = $this->getChangeTransfer();
@@ -62,6 +68,9 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($concreteProductTransfer->getAbstractProductSku(), $changedItemTransfer->getAbstractSku());
     }
 
+    /**
+     * @return void
+     */
     public function testExpandItemsMustAddAbstractIdToAllCartItems()
     {
         $changeTransfer = $this->getChangeTransfer();
@@ -76,6 +85,9 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($concreteProductTransfer->getIdAbstractProduct(), $changedItemTransfer->getIdAbstractProduct());
     }
 
+    /**
+     * @return void
+     */
     public function testExpandItemsMustAddProductNameToCartItems()
     {
         $changeTransfer = $this->getChangeTransfer();
@@ -90,6 +102,9 @@ class ProductManagerTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($concreteProductTransfer->getName(), $changedItemTransfer->getName());
     }
 
+    /**
+     * @return void
+     */
     public function testExpandItemsMustAddTaxSetToAllCartItemsIfPRoductHasTaxSet()
     {
         $changeTransfer = $this->getChangeTransfer();

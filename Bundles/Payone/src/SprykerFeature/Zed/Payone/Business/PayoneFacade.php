@@ -32,6 +32,8 @@ class PayoneFacade extends AbstractFacade
 
     /**
      * @param OrderTransfer $orderTransfer
+     *
+     * @return void
      */
     public function saveOrder(OrderTransfer $orderTransfer)
     {
@@ -358,6 +360,8 @@ class PayoneFacade extends AbstractFacade
     /**
      * @param PaymentDataTransfer $paymentData
      * @param int $idOrder
+     *
+     * @return void
      */
     public function updatePaymentDetail(PaymentDataTransfer $paymentData, $idOrder)
     {

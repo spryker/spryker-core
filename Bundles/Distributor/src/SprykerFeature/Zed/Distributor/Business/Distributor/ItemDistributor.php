@@ -42,6 +42,8 @@ class ItemDistributor implements ItemDistributorInterface
     /**
      * @param string $itemType
      * @param BatchIteratorInterface $batchIterator
+     *
+     * @return void
      */
     public function distributeByType($itemType, BatchIteratorInterface $batchIterator)
     {
@@ -52,6 +54,8 @@ class ItemDistributor implements ItemDistributorInterface
 
     /**
      * @param ItemProcessorPluginInterface $processor
+     *
+     * @return void
      */
     public function addItemProcessor(ItemProcessorPluginInterface $processor)
     {
@@ -61,6 +65,8 @@ class ItemDistributor implements ItemDistributorInterface
     /**
      * @param string $type
      * @param array $itemBatch
+     *
+     * @return void
      */
     protected function distributeItemBatch($type, array $itemBatch)
     {

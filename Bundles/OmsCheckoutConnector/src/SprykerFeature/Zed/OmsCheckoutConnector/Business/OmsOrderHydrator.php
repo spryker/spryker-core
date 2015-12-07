@@ -22,6 +22,8 @@ class OmsOrderHydrator implements OmsOrderHydratorInterface
      * @param CheckoutRequestTransfer $request
      *
      * @throws NoStatemachineProcessException
+     *
+     * @return void
      */
     public function hydrateOrderTransfer(OrderTransfer $order, CheckoutRequestTransfer $request)
     {

@@ -15,6 +15,9 @@ use SprykerFeature\Zed\Country\Communication\CountryDependencyContainer;
 class Installer extends AbstractInstallerPlugin
 {
 
+    /**
+     * @return void
+     */
     public function install()
     {
         $this->getDependencyContainer()->getInstallerFacade()->install($this->messenger);

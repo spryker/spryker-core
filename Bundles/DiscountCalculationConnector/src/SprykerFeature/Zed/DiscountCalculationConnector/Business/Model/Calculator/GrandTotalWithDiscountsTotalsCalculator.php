@@ -41,6 +41,8 @@ class GrandTotalWithDiscountsTotalsCalculator implements TotalsCalculatorPluginI
      * @param TotalsTransfer $totalsTransfer
      * @param CalculableInterface $container
      * @param $items
+     *
+     * @return void
      */
     public function recalculateTotals(
         TotalsTransfer $totalsTransfer,

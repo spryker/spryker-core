@@ -23,6 +23,8 @@ class AuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInt
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function register(Application $app)
     {
@@ -30,6 +32,8 @@ class AuthBootstrapProvider extends AbstractPlugin implements ServiceProviderInt
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function boot(Application $app)
     {

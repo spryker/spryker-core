@@ -15,6 +15,9 @@ use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ConstructableMet
 class ConstructableMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testBuildMethodTagsShouldReturnVendorMethodTagIfProjectDoesNotOverrideIt()
     {
         $options = [
@@ -40,6 +43,9 @@ class ConstructableMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($expectedMethodTag, $methodTags);
     }
 
+    /**
+     * @return void
+     */
     public function testBuildMethodTagsShouldReturnProjectMethodTagIfProjectOverrideIt()
     {
         $options = [
@@ -60,6 +66,9 @@ class ConstructableMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($expectedMethodTag, $methodTags);
     }
 
+    /**
+     * @return void
+     */
     public function testMethodTagsForYvesShouldContainCommunicationIfClassNamePartLevelIsSet()
     {
         $options = [
@@ -79,6 +88,9 @@ class ConstructableMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($expectedMethodTag, $methodTags);
     }
 
+    /**
+     * @return void
+     */
     public function testBuildMethodTagsShouldReturnMethodNameWithParamsIfClassConstructorHasParams()
     {
         $options = [
@@ -97,6 +109,9 @@ class ConstructableMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($expectedMethodTag, $methodTags);
     }
 
+    /**
+     * @return void
+     */
     public function testBuildMethodTagsShouldNotReturnMethodTagIfNotInstantiable()
     {
         $options = [

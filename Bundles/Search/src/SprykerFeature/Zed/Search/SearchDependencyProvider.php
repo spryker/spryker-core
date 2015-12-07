@@ -42,6 +42,8 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @param Container $container
+     *
+     * @return void
      */
     protected function addSearchClient(Container $container)
     {
@@ -52,6 +54,8 @@ class SearchDependencyProvider extends AbstractBundleDependencyProvider
 
     /**
      * @param $container
+     *
+     * @return void
      */
     protected function addCollectorFacade($container)
     {

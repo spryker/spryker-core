@@ -11,6 +11,8 @@ class IdeAutoCompletionGenerator extends AbstractIdeAutoCompletionGenerator
 
     /**
      * @param null $output
+     *
+     * @return void
      */
     public function create($output = null)
     {

@@ -15,6 +15,8 @@ class MockQueueConnection implements QueueConnectionInterface
 
     /**
      * @param int $fetchSize
+     *
+     * @return void
      */
     public function setFetchSize($fetchSize)
     {
@@ -22,6 +24,8 @@ class MockQueueConnection implements QueueConnectionInterface
 
     /**
      * @param int $timeout Timeout in seconds
+     *
+     * @return void
      */
     public function setTimeout($timeout)
     {
@@ -31,6 +35,8 @@ class MockQueueConnection implements QueueConnectionInterface
      * @param string $queueName
      * @param callable $callback
      * @param string $workerName
+     *
+     * @return void
      */
     public function listen($queueName, callable $callback, $workerName)
     {
@@ -40,21 +46,31 @@ class MockQueueConnection implements QueueConnectionInterface
     /**
      * @param string $queueName
      * @param QueueMessageTransfer $queueMessage
+     *
+     * @return void
      */
     public function publish($queueName, QueueMessageTransfer $queueMessage)
     {
     }
 
+    /**
+     * @return void
+     */
     public function stopListen()
     {
     }
 
+    /**
+     * @return void
+     */
     public function purge()
     {
     }
 
     /**
      * @param AMQPMessage $message
+     *
+     * @return void
      */
     public function acknowledge(AMQPMessage $message)
     {

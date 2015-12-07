@@ -15,6 +15,9 @@ use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\TransferMethodTa
 class TransferMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testBuildMethodTagsShouldReturnVendorMethodTagIfProjectDoesNotOverrideIt()
     {
         $options = [
@@ -33,6 +36,9 @@ class TransferMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($expectedMethodTag, $methodTags);
     }
 
+    /**
+     * @return void
+     */
     public function testBuildMethodTagsShouldReturnProjectMethodTagIfProjectOverrideIt()
     {
         $options = [

@@ -20,6 +20,8 @@ class TranslationServiceProvider extends AbstractPlugin implements TranslationSe
      * It should not get services.
      *
      * @param Application $app
+     *
+     * @return void
      */
     public function register(Application $app)
     {
@@ -36,6 +38,8 @@ class TranslationServiceProvider extends AbstractPlugin implements TranslationSe
      * a service must be requested).
      *
      * @param Application $app
+     *
+     * @return void
      */
     public function boot(Application $app)
     {

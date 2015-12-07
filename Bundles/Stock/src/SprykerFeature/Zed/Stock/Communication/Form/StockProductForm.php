@@ -25,16 +25,25 @@ class StockProductForm extends AbstractForm
      */
     protected $queryContainer;
 
+    /**
+     * @return void
+     */
     protected function buildFormFields()
     {
         // @todo: Implement buildFormFields() method.
     }
 
+    /**
+     * @return void
+     */
     protected function populateFormFields()
     {
         // @todo: Implement populateFormFields() method.
     }
 
+    /**
+     * @return void
+     */
     public function addFormFields()
     {
         $this->addField(self::ID_STOCK_PRODUCT)

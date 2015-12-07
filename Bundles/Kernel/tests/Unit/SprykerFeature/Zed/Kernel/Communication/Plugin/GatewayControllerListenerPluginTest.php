@@ -28,12 +28,18 @@ use Unit\SprykerFeature\Zed\Kernel\Communication\Plugin\Fixture\TransferServer;
 class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     protected function tearDown()
     {
         parent::tearDown();
         $this->resetTransferServer();
     }
 
+    /**
+     * @return void
+     */
     public function testWhenControllerIsGatewayControllerPluginMustReturnInstanceOfClosure()
     {
         $eventMock = new FilterControllerEvent();
@@ -52,6 +58,9 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('\Closure', $controllerCallable);
     }
 
+    /**
+     * @return void
+     */
     public function testWhenControllerIsNotAGatewayControllerPluginMustReturnPassedCallable()
     {
         $action = 'badAction';
@@ -70,6 +79,9 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
         $this->assertNotInstanceOf('\Closure', $controllerCallable);
     }
 
+    /**
+     * @return void
+     */
     public function testIfTwoTransferParameterGivenPluginMustThrowException()
     {
         $this->setExpectedException('\LogicException', 'Only one transfer object can be received in yves-action');
@@ -79,6 +91,9 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
         call_user_func($controllerCallable);
     }
 
+    /**
+     * @return void
+     */
     public function testIfTooManyTransferParameterGivenPluginMustThrowException()
     {
         $this->setExpectedException('\LogicException', 'Only one transfer object can be received in yves-action');
@@ -88,6 +103,9 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
         call_user_func($controllerCallable);
     }
 
+    /**
+     * @return void
+     */
     public function testIfPassedParameterIsNotAClassPluginMustThrowException()
     {
         $this->setExpectedException('\LogicException', 'You need to specify a class for the parameter in the yves-action.');
@@ -97,6 +115,9 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
         call_user_func($controllerCallable);
     }
 
+    /**
+     * @return void
+     */
     public function testWhenObjectIsNotTransferClassPluginMustThrowException()
     {
         $this->setExpectedException('\LogicException', 'Only transfer classes are allowed in yves action as parameter');
@@ -106,6 +127,9 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
         call_user_func($controllerCallable);
     }
 
+    /**
+     * @return void
+     */
     public function testWhenControllerIsGAtewayControllerAndOnlyOneTransferObjectIsGivenActionMustReturnRepsonse()
     {
         $transfer = $this->getTransferMock();
@@ -115,6 +139,9 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Symfony\\Component\\HttpFoundation\\JsonResponse', $response);
     }
 
+    /**
+     * @return void
+     */
     public function testTransformMessagesFromController()
     {
         $action = 'transformMessageAction';
@@ -168,6 +195,8 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param TransferInterface $transferObject
+     *
+     * @return void
      */
     private function initTransferServer($transferObject)
     {
@@ -179,6 +208,9 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
         TransferServer::getInstance()->setFixtureRequest($request);
     }
 
+    /**
+     * @return void
+     */
     private function resetTransferServer()
     {
         $fixtureServer = TransferServer::getInstance();
@@ -190,6 +222,8 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @param $oldTransferServer
+     *
+     * @return void
      */
     private function resetSingleton($oldTransferServer)
     {

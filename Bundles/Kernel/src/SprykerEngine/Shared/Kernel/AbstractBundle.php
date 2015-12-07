@@ -33,6 +33,8 @@ class AbstractBundle
 
     /**
      * @param OptionsResolver $resolver
+     *
+     * @return void
      */
     private function configureOptions(OptionsResolver $resolver)
     {

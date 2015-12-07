@@ -19,6 +19,8 @@ class CreditCardCheck extends AbstractCall
 
     /**
      * @void
+     *
+     * @return void
      */
     public function setDoStoreCardData()
     {
@@ -27,6 +29,8 @@ class CreditCardCheck extends AbstractCall
 
     /**
      * @void
+     *
+     * @return void
      */
     public function setDoNotStoreCardData()
     {

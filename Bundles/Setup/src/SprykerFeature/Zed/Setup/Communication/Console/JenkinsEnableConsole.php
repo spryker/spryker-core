@@ -20,6 +20,9 @@ class JenkinsEnableConsole extends Console
     const COMMAND_NAME = 'setup:jenkins:enable';
     const DESCRIPTION = 'Enable jenkins';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);

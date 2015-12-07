@@ -13,6 +13,8 @@ class GlossaryQueueFacade extends AbstractFacade
 
     /**
      * @param QueueMessageTransfer $queueMessage
+     *
+     * @return void
      */
     public function processTranslationMessage(QueueMessageTransfer $queueMessage)
     {

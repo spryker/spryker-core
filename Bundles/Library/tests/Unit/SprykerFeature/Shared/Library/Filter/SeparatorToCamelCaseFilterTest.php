@@ -34,6 +34,8 @@ class SeparatorToCamelCaseFilterTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
+     *
+     * @return void
      */
     public function testWithDifferentSeparator($expected, $separator, $string, $upperCase)
     {

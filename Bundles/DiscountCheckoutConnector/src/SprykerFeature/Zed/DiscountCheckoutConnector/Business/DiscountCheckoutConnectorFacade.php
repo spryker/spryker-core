@@ -20,6 +20,8 @@ class DiscountCheckoutConnectorFacade extends AbstractFacade
     /**
      * @param $orderTransfer
      * @param $checkoutRequest
+     *
+     * @return void
      */
     public function hydrateOrder(OrderTransfer $orderTransfer, CheckoutRequestTransfer $checkoutRequest)
     {
@@ -29,6 +31,8 @@ class DiscountCheckoutConnectorFacade extends AbstractFacade
     /**
      * @param OrderTransfer $orderTransfer
      * @param CheckoutResponseTransfer $checkoutResponseTransfer
+     *
+     * @return void
      */
     public function saveDiscounts(OrderTransfer $orderTransfer, CheckoutResponseTransfer $checkoutResponseTransfer)
     {

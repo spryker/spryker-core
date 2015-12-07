@@ -15,6 +15,8 @@ class QueueFacade extends AbstractFacade
     /**
      * @param string $queueName
      * @param QueueMessageTransfer $queueMessage
+     *
+     * @return void
      */
     public function publishMessage($queueName, QueueMessageTransfer $queueMessage)
     {
@@ -28,6 +30,8 @@ class QueueFacade extends AbstractFacade
      * @param MessengerInterface $messenger
      * @param int $timeout
      * @param int $fetchSize
+     *
+     * @return void
      */
     public function startWorker(
         $queueName,

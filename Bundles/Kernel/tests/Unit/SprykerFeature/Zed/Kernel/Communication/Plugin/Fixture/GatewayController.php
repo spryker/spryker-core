@@ -84,6 +84,9 @@ class GatewayController extends AbstractGatewayController
         return $foo;
     }
 
+    /**
+     * @return void
+     */
     public function transformMessageAction()
     {
         $this->addInfoMessage('info');

@@ -33,6 +33,9 @@ class ProductOptionCartConnectorFacadeTest extends AbstractFunctionalTest
      */
     protected $ids = [];
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -41,6 +44,9 @@ class ProductOptionCartConnectorFacadeTest extends AbstractFunctionalTest
         $this->ids = DbFixturesLoader::loadFixtures();
     }
 
+    /**
+     * @return void
+     */
     public function testExpandProductOption()
     {
         $productOptionTransfer = (new ProductOptionTransfer())

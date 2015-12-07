@@ -10,6 +10,9 @@ use Unit\SprykerFeature\Zed\Kernel\Communication\Fixtures\FixtureGatewayControll
 class AbstractGatewayControllerTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testGatewayControllerMustBeConstructable()
     {
         $application = new Application();

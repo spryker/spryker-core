@@ -145,6 +145,8 @@ class FileImporter implements FileImporterInterface
 
     /**
      * @param int $line
+     *
+     * @return void
      */
     protected function logInvalidProduct($line)
     {
@@ -153,6 +155,8 @@ class FileImporter implements FileImporterInterface
 
     /**
      * @param int $line
+     *
+     * @return void
      */
     protected function logNotImportableProduct($line)
     {

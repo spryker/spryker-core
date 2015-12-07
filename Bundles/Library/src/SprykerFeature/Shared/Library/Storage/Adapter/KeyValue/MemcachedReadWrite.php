@@ -65,6 +65,8 @@ class MemcachedReadWrite extends MemcachedRead implements ReadWriteInterface
 
     /**
      * @param array $keys
+     *
+     * @return void
      */
     public function deleteMulti(array $keys)
     {

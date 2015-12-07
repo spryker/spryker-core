@@ -16,6 +16,8 @@ class GetInvoiceResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $response
+     *
+     * @return void
      */
     public function setResponse($response)
     {

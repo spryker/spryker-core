@@ -24,6 +24,8 @@ abstract class AbstractSpyStockProduct extends BaseSpyStockProduct
      * @param int $amount
      *
      * @throws PropelException
+     *
+     * @return void
      */
     public function decrement($amount = 1)
     {
@@ -35,6 +37,8 @@ abstract class AbstractSpyStockProduct extends BaseSpyStockProduct
      * @param int $amount
      *
      * @throws PropelException
+     *
+     * @return void
      */
     public function increment($amount = 1)
     {

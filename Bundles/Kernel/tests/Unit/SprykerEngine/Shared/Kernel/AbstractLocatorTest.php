@@ -17,6 +17,9 @@ use Unit\SprykerEngine\Shared\Kernel\Fixtures\MissingPropertyLocator;
 class AbstractLocatorTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testCreateInstanceWithoutAFactoryClassNamePatternPropertyShouldThrowException()
     {
         $this->setExpectedException('SprykerEngine\Shared\Kernel\Locator\LocatorException');
@@ -24,6 +27,9 @@ class AbstractLocatorTest extends \PHPUnit_Framework_TestCase
         $locator = new MissingPropertyLocator();
     }
 
+    /**
+     * @return void
+     */
     public function testCreateInstance()
     {
         $locator = new Locator('foo');

@@ -211,6 +211,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param int $accessid
+     *
+     * @return void
      */
     public function setAccessid($accessid)
     {
@@ -227,6 +229,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param int $aid
+     *
+     * @return void
      */
     public function setAid($aid)
     {
@@ -243,6 +247,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $balance
+     *
+     * @return void
      */
     public function setBalance($balance)
     {
@@ -259,6 +265,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $clearingtype
+     *
+     * @return void
      */
     public function setClearingtype($clearingtype)
     {
@@ -275,6 +283,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $currency
+     *
+     * @return void
      */
     public function setCurrency($currency)
     {
@@ -291,6 +301,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param int $customerid
+     *
+     * @return void
      */
     public function setCustomerid($customerid)
     {
@@ -307,6 +319,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $failedcause
+     *
+     * @return void
      */
     public function setFailedcause($failedcause)
     {
@@ -323,6 +337,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $invoice_date
+     *
+     * @return void
      */
     public function setInvoiceDate($invoice_date)
     {
@@ -339,6 +355,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $invoice_deliverydate
+     *
+     * @return void
      */
     public function setInvoiceDeliverydate($invoice_deliverydate)
     {
@@ -355,6 +373,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $invoice_deliveryenddate
+     *
+     * @return void
      */
     public function setInvoiceDeliveryenddate($invoice_deliveryenddate)
     {
@@ -371,6 +391,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $invoice_grossamount
+     *
+     * @return void
      */
     public function setInvoiceGrossamount($invoice_grossamount)
     {
@@ -387,6 +409,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $invoiceid
+     *
+     * @return void
      */
     public function setInvoiceid($invoiceid)
     {
@@ -403,6 +427,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $key
+     *
+     * @return void
      */
     public function setKey($key)
     {
@@ -419,6 +445,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $mode
+     *
+     * @return void
      */
     public function setMode($mode)
     {
@@ -435,6 +463,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $param
+     *
+     * @return void
      */
     public function setParam($param)
     {
@@ -451,6 +481,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param int $portalid
+     *
+     * @return void
      */
     public function setPortalid($portalid)
     {
@@ -467,6 +499,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param int $productid
+     *
+     * @return void
      */
     public function setProductid($productid)
     {
@@ -483,6 +517,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $receivable
+     *
+     * @return void
      */
     public function setReceivable($receivable)
     {
@@ -499,6 +535,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $reference
+     *
+     * @return void
      */
     public function setReference($reference)
     {
@@ -515,6 +553,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $reminderlevel
+     *
+     * @return void
      */
     public function setReminderlevel($reminderlevel)
     {
@@ -531,6 +571,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $sequencenumber
+     *
+     * @return void
      */
     public function setSequencenumber($sequencenumber)
     {
@@ -547,6 +589,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $txaction
+     *
+     * @return void
      */
     public function setTxaction($txaction)
     {
@@ -563,6 +607,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param int $txid
+     *
+     * @return void
      */
     public function setTxid($txid)
     {
@@ -579,6 +625,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param int $txtime
+     *
+     * @return void
      */
     public function setTxtime($txtime)
     {
@@ -595,6 +643,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param int $userid
+     *
+     * @return void
      */
     public function setUserid($userid)
     {
@@ -611,6 +661,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $clearing_bankaccount
+     *
+     * @return void
      */
     public function setClearingBankaccount($clearing_bankaccount)
     {
@@ -627,6 +679,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $clearing_bankaccountholder
+     *
+     * @return void
      */
     public function setClearingBankaccountholder($clearing_bankaccountholder)
     {
@@ -643,6 +697,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $clearing_bankbic
+     *
+     * @return void
      */
     public function setClearingBankbic($clearing_bankbic)
     {
@@ -659,6 +715,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $clearing_bankcity
+     *
+     * @return void
      */
     public function setClearingBankcity($clearing_bankcity)
     {
@@ -675,6 +733,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $clearing_bankcode
+     *
+     * @return void
      */
     public function setClearingBankcode($clearing_bankcode)
     {
@@ -691,6 +751,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $clearing_bankcountry
+     *
+     * @return void
      */
     public function setClearingBankcountry($clearing_bankcountry)
     {
@@ -707,6 +769,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $clearing_bankiban
+     *
+     * @return void
      */
     public function setClearingBankiban($clearing_bankiban)
     {
@@ -723,6 +787,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $clearing_bankname
+     *
+     * @return void
      */
     public function setClearingBankname($clearing_bankname)
     {
@@ -739,6 +805,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $iban
+     *
+     * @return void
      */
     public function setIban($iban)
     {
@@ -755,6 +823,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $bic
+     *
+     * @return void
      */
     public function setBic($bic)
     {
@@ -771,6 +841,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $mandateIdentification
+     *
+     * @return void
      */
     public function setMandateIdentification($mandateIdentification)
     {
@@ -787,6 +859,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $clearing_duedate
+     *
+     * @return void
      */
     public function setClearingDuedate($clearing_duedate)
     {
@@ -803,6 +877,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $clearingAmount
+     *
+     * @return void
      */
     public function setClearingAmount($clearingAmount)
     {
@@ -819,6 +895,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $creditorIdentifier
+     *
+     * @return void
      */
     public function setCreditorIdentifier($creditorIdentifier)
     {
@@ -835,6 +913,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $clearingDate
+     *
+     * @return void
      */
     public function setClearingDate($clearingDate)
     {
@@ -851,6 +931,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $clearing_instructionnote
+     *
+     * @return void
      */
     public function setClearingInstructionnote($clearing_instructionnote)
     {
@@ -867,6 +949,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $clearing_legalnote
+     *
+     * @return void
      */
     public function setClearingLegalnote($clearing_legalnote)
     {
@@ -883,6 +967,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $clearing_reference
+     *
+     * @return void
      */
     public function setClearingReference($clearing_reference)
     {
@@ -907,6 +993,8 @@ class TransactionStatusRequest extends AbstractRequest implements TransactionSta
 
     /**
      * @param string $price
+     *
+     * @return void
      */
     public function setPrice($price)
     {

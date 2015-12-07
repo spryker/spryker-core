@@ -18,6 +18,8 @@ class OperationLocator implements OperationLocatorInterface
 
     /**
      * @param OperationInterface $operation
+     *
+     * @return void
      */
     public function addOperation(OperationInterface $operation)
     {

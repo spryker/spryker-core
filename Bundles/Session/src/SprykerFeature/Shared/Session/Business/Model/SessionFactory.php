@@ -95,6 +95,8 @@ abstract class SessionFactory
 
     /**
      * @param $handler
+     *
+     * @return void
      */
     protected function setSessionSaveHandler($handler)
     {

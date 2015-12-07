@@ -45,6 +45,9 @@ class IdeAutoCompletionGeneratorTest extends AbstractAutoCompletion
         return $this->generatedFileContent;
     }
 
+    /**
+     * @return void
+     */
     public function testDirectoryShouldBeCreatedIfNotExists()
     {
         $this->generatedFileContent = null;
@@ -60,6 +63,9 @@ class IdeAutoCompletionGeneratorTest extends AbstractAutoCompletion
         $this->generatedFileContent = null;
     }
 
+    /**
+     * @return void
+     */
     public function testFileShouldBeGenerated()
     {
         $this->getGeneratedFileContent();
@@ -67,6 +73,9 @@ class IdeAutoCompletionGeneratorTest extends AbstractAutoCompletion
         $this->assertFileExists($this->pathToFile);
     }
 
+    /**
+     * @return void
+     */
     public function testFileShouldContainNamespace()
     {
         $generatedFile = $this->getGeneratedFileContent();
@@ -75,6 +84,9 @@ class IdeAutoCompletionGeneratorTest extends AbstractAutoCompletion
         $this->assertContains('namespace ' . $namespace . ';', $generatedFile);
     }
 
+    /**
+     * @return void
+     */
     public function testAddMethodTagBuilderShouldReturnGenerator()
     {
         $generator = new IdeAutoCompletionGenerator($this->getOptions());
@@ -83,6 +95,9 @@ class IdeAutoCompletionGeneratorTest extends AbstractAutoCompletion
         $this->assertInstanceOf('SprykerEngine\Zed\Kernel\IdeAutoCompletion\IdeAutoCompletionGenerator', $generator);
     }
 
+    /**
+     * @return void
+     */
     public function testGetNameShouldReturnNameOfGenerator()
     {
         $this->assertSame(

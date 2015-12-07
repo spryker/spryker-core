@@ -31,6 +31,8 @@ class CurrencyManagerTest extends \PHPUnit_Framework_TestCase
      * @param $currencyIsoCode
      *
      * @dataProvider dataProvider
+     *
+     * @return void
      */
     public function testFormat($given, $expected, $includeSymbol, $currencyIsoCode)
     {

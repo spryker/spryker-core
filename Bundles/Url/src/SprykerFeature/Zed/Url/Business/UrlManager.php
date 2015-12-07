@@ -350,6 +350,8 @@ class UrlManager implements UrlManagerInterface
     /**
      * @param UrlTransfer $urlTransfer
      * @param SpyUrl $urlEntity
+     *
+     * @return void
      */
     protected function syncUrlEntityWithTransfer(UrlTransfer $urlTransfer, SpyUrl $urlEntity)
     {

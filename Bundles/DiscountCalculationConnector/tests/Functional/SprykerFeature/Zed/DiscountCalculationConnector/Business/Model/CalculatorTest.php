@@ -43,6 +43,9 @@ class CalculatorTest extends AbstractFunctionalTest
      */
     protected $locator;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -64,6 +67,9 @@ class CalculatorTest extends AbstractFunctionalTest
         return $stack;
     }
 
+    /**
+     * @return void
+     */
     public function testCanRecalculateAnEmptyOrder()
     {
         $order = $this->getOrderWithFixtureData();
@@ -73,6 +79,9 @@ class CalculatorTest extends AbstractFunctionalTest
         $this->assertEmpty($order->getCalculableObject()->getTotals()->getGrandTotalWithDiscounts());
     }
 
+    /**
+     * @return void
+     */
     public function testCanRecalculateAnExampleOrderWithOneItemAndExpenseOnOrder()
     {
         $order = $this->getOrderWithFixtureData();
@@ -130,6 +139,9 @@ class CalculatorTest extends AbstractFunctionalTest
         }
     }
 
+    /**
+     * @return void
+     */
     public function testCanRecalculateAnExampleOrderWithTwoItemsAndExpenseOnItems()
     {
         $order = $this->getOrderWithFixtureData();

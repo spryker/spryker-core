@@ -40,6 +40,8 @@ class AddressCheckResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $city
+     *
+     * @return void
      */
     public function setCity($city)
     {
@@ -56,6 +58,8 @@ class AddressCheckResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $personstatus
+     *
+     * @return void
      */
     public function setPersonstatus($personstatus)
     {
@@ -72,6 +76,8 @@ class AddressCheckResponseContainer extends AbstractResponseContainer
 
     /**
      * @param int $secstatus
+     *
+     * @return void
      */
     public function setSecstatus($secstatus)
     {
@@ -88,6 +94,8 @@ class AddressCheckResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $street
+     *
+     * @return void
      */
     public function setStreet($street)
     {
@@ -104,6 +112,8 @@ class AddressCheckResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $streetname
+     *
+     * @return void
      */
     public function setStreetname($streetname)
     {
@@ -120,6 +130,8 @@ class AddressCheckResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $streetnumber
+     *
+     * @return void
      */
     public function setStreetnumber($streetnumber)
     {
@@ -136,6 +148,8 @@ class AddressCheckResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $zip
+     *
+     * @return void
      */
     public function setZip($zip)
     {

@@ -33,6 +33,9 @@ class CustomerCheckoutConnectorFacadeTest extends Test
      */
     protected $customerCheckoutConnectorFacade;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -52,6 +55,9 @@ class CustomerCheckoutConnectorFacadeTest extends Test
         $this->customerCheckoutConnectorFacade->setExternalDependencies($container);
     }
 
+    /**
+     * @return void
+     */
     public function testHydrateOrderSavesExistingCustomerInfoInOrderTransfer()
     {
         $orderTransfer = new OrderTransfer();
@@ -79,6 +85,9 @@ class CustomerCheckoutConnectorFacadeTest extends Test
         $this->assertSame($customerEntity->getLastName(), $orderTransfer->getCustomer()->getLastName());
     }
 
+    /**
+     * @return void
+     */
     public function testHydrateOrderSavesEmailAndGuestInOrder()
     {
         $orderTransfer = new OrderTransfer();
@@ -98,6 +107,9 @@ class CustomerCheckoutConnectorFacadeTest extends Test
         $this->assertSame($checkoutRequest->getIsGuest(), $orderTransfer->getCustomer()->getIsGuest());
     }
 
+    /**
+     * @return void
+     */
     public function testHydrateOrderConvertsAddressesCorrectly()
     {
         $orderTransfer = new OrderTransfer();

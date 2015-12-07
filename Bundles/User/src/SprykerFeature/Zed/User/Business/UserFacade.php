@@ -16,6 +16,9 @@ use Generated\Shared\Transfer\CollectionTransfer;
 class UserFacade extends AbstractFacade
 {
 
+    /**
+     * @return void
+     */
     public function install()
     {
         $this->getDependencyContainer()

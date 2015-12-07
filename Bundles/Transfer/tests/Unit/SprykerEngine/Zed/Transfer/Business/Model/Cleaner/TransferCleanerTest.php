@@ -18,6 +18,9 @@ use SprykerEngine\Zed\Transfer\Business\Model\TransferCleaner;
 class TransferCleanerTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         $testDirectory = $this->getTestDirectory();
@@ -36,6 +39,9 @@ class TransferCleanerTest extends \PHPUnit_Framework_TestCase
         return __DIR__ . '/Fixtures/';
     }
 
+    /**
+     * @return void
+     */
     public function tearDown()
     {
         $testFile1 = $this->getTestDirectory() . 'file';
@@ -44,6 +50,9 @@ class TransferCleanerTest extends \PHPUnit_Framework_TestCase
         }
     }
 
+    /**
+     * @return void
+     */
     public function testExecuteShouldDeleteAllFilesInADirectory()
     {
         $this->assertTrue(file_exists($this->getTestDirectory() . 'file'));

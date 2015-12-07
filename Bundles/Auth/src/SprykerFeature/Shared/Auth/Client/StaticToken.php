@@ -16,6 +16,8 @@ abstract class StaticToken
 
     /**
      * @param string $token
+     *
+     * @return void
      */
     public function setRawToken($token)
     {

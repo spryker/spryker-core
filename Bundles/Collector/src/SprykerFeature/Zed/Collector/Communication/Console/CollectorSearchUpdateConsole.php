@@ -21,6 +21,9 @@ class CollectorSearchUpdateConsole extends AbstractCollectorConsole
     const COMMAND_NAME = 'collector:search:update';
     const COMMAND_DESCRIPTION = 'Collect update search';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);

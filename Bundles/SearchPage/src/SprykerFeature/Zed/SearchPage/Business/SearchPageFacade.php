@@ -68,6 +68,8 @@ class SearchPageFacade extends AbstractFacade
 
     /**
      * @param MessengerInterface $messenger
+     *
+     * @return void
      */
     public function installDocumentAttributes(MessengerInterface $messenger)
     {
@@ -78,6 +80,8 @@ class SearchPageFacade extends AbstractFacade
 
     /**
      * @param MessengerInterface $messenger
+     *
+     * @return void
      */
     public function installTemplates(MessengerInterface $messenger)
     {

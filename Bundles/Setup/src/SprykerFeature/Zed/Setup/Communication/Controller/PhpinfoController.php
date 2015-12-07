@@ -14,6 +14,8 @@ class PhpinfoController extends AbstractController
 
     /**
      * @param Request $request
+     *
+     * @return void
      */
     public function indexAction(Request $request)
     {

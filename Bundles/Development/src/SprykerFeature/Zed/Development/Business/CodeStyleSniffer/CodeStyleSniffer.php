@@ -48,7 +48,7 @@ class CodeStyleSniffer
      *
      * @return void
      */
-    public function checkBundleCodeStyle($bundle, array $options = [])
+    public function checkCodeStyle($bundle, array $options = [])
     {
         $path = $this->resolvePath($bundle);
 
@@ -88,6 +88,7 @@ class CodeStyleSniffer
                 return $this->pathToBundles;
             }
 
+            $bundle = $this->normalizeBundleName($bundle);
             return $this->getPathToBundle($bundle);
         }
 

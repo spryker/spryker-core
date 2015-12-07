@@ -40,6 +40,8 @@ class ThreeDSecureCheckResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $acsurl
+     *
+     * @return void
      */
     public function setAcsurl($acsurl)
     {
@@ -56,6 +58,8 @@ class ThreeDSecureCheckResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $md
+     *
+     * @return void
      */
     public function setMd($md)
     {
@@ -72,6 +76,8 @@ class ThreeDSecureCheckResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $pareq
+     *
+     * @return void
      */
     public function setPareq($pareq)
     {
@@ -88,6 +94,8 @@ class ThreeDSecureCheckResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $pseudocardpan
+     *
+     * @return void
      */
     public function setPseudocardpan($pseudocardpan)
     {
@@ -104,6 +112,8 @@ class ThreeDSecureCheckResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $termurl
+     *
+     * @return void
      */
     public function setTermurl($termurl)
     {
@@ -120,6 +130,8 @@ class ThreeDSecureCheckResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $truncatedcardpan
+     *
+     * @return void
      */
     public function setTruncatedcardpan($truncatedcardpan)
     {
@@ -136,6 +148,8 @@ class ThreeDSecureCheckResponseContainer extends AbstractResponseContainer
 
     /**
      * @param string $xid
+     *
+     * @return void
      */
     public function setXid($xid)
     {

@@ -17,6 +17,8 @@ class TouchUpdater implements TouchUpdaterInterface
     /**
      * @param TouchUpdaterSet $touchUpdaterSet
      * @param $idLocale
+     *
+     * @return void
      */
     public function updateMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale)
     {

@@ -16,6 +16,8 @@ class TransferMethodTagBuilder extends AbstractMultiFileMethodTagBuilder
 
     /**
      * @param OptionsResolver $resolver
+     *
+     * @return void
      */
     protected function configureOptions(OptionsResolver $resolver)
     {

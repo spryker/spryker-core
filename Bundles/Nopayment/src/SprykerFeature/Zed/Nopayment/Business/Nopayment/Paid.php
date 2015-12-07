@@ -33,6 +33,8 @@ class Paid
      * @param SpySalesOrderItem $orderItem
      *
      * @throws PropelException
+     *
+     * @return void
      */
     protected function setOrderItemAsPaid(SpySalesOrderItem $orderItem)
     {

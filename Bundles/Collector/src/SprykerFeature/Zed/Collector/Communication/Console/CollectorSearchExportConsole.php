@@ -21,6 +21,9 @@ class CollectorSearchExportConsole extends AbstractCollectorConsole
     const COMMAND_NAME = 'collector:search:export';
     const COMMAND_DESCRIPTION = 'Collector export search';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);

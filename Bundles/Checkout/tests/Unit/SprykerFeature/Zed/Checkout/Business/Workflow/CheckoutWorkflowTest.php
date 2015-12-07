@@ -26,6 +26,9 @@ use Unit\SprykerFeature\Zed\Checkout\Business\Fixture\ResponseManipulatorPreCond
 class CheckoutWorkflowTest extends Test
 {
 
+    /**
+     * @return void
+     */
     public function testWorkflowCallsAllPreConditions()
     {
         $mock1 = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPreConditionInterface');
@@ -50,6 +53,9 @@ class CheckoutWorkflowTest extends Test
         $checkoutWorkflow->requestCheckout($checkoutRequest);
     }
 
+    /**
+     * @return void
+     */
     public function testWorkflowCallsAllHydrators()
     {
         $mock1 = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutOrderHydrationInterface');
@@ -74,6 +80,9 @@ class CheckoutWorkflowTest extends Test
         $checkoutWorkflow->requestCheckout($checkoutRequest);
     }
 
+    /**
+     * @return void
+     */
     public function testWorkflowCallsAllOrderSavers()
     {
         $mock1 = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutSaveOrderInterface');
@@ -99,6 +108,9 @@ class CheckoutWorkflowTest extends Test
         $checkoutWorkflow->requestCheckout($checkoutRequest);
     }
 
+    /**
+     * @return void
+     */
     public function testWorkflowCallsAllPostHooks()
     {
         $mock1 = $this->getMock('SprykerFeature\\Zed\\Checkout\\Dependency\\Plugin\\CheckoutPostSaveHookInterface');
@@ -124,6 +136,9 @@ class CheckoutWorkflowTest extends Test
         $checkoutWorkflow->requestCheckout($checkoutRequest);
     }
 
+    /**
+     * @return void
+     */
     public function testWorkflowPassesResponseOn()
     {
         $checkoutResponse = new CheckoutResponseTransfer();
@@ -148,6 +163,9 @@ class CheckoutWorkflowTest extends Test
         $checkoutWorkflow->requestCheckout($checkoutRequest);
     }
 
+    /**
+     * @return void
+     */
     public function testHydratorIsNotCalledIfErrorInPreCondition()
     {
         $checkoutResponse = new CheckoutResponseTransfer();
@@ -170,6 +188,9 @@ class CheckoutWorkflowTest extends Test
         $this->assertEquals($checkoutResponse, $result);
     }
 
+    /**
+     * @return void
+     */
     public function testWorkflowPassesHydratedOrderOnToSave()
     {
         /** @var OrderTransfer $orderTransfer */
@@ -194,6 +215,9 @@ class CheckoutWorkflowTest extends Test
         $checkoutWorkflow->requestCheckout($checkoutRequest);
     }
 
+    /**
+     * @return void
+     */
     public function testPosthookNotCalledAndResponseReturnedOnSaveError()
     {
         $checkoutResponse = new CheckoutResponseTransfer();
@@ -216,6 +240,9 @@ class CheckoutWorkflowTest extends Test
         $this->assertEquals($checkoutResponse, $result);
     }
 
+    /**
+     * @return void
+     */
     public function testPostHookResultIsReturned()
     {
         $checkoutResponse = new CheckoutResponseTransfer();

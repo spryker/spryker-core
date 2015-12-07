@@ -41,6 +41,8 @@ class YvesBootstrap extends Bootstrap
 
     /**
      * @param SharedApplication $application
+     *
+     * @return void
      */
     protected function addProvidersToApp(SharedApplication $application)
     {

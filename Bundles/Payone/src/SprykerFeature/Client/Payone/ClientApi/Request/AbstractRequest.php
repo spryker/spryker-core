@@ -68,6 +68,8 @@ abstract class AbstractRequest extends AbstractContainer
 
     /**
      * @param string $encoding
+     *
+     * @return void
      */
     public function setEncoding($encoding)
     {
@@ -84,6 +86,8 @@ abstract class AbstractRequest extends AbstractContainer
 
     /**
      * @param string $key
+     *
+     * @return void
      */
     public function setKey($key)
     {
@@ -100,6 +104,8 @@ abstract class AbstractRequest extends AbstractContainer
 
     /**
      * @param int $mid
+     *
+     * @return void
      */
     public function setMid($mid)
     {
@@ -116,6 +122,8 @@ abstract class AbstractRequest extends AbstractContainer
 
     /**
      * @param int $aid
+     *
+     * @return void
      */
     public function setAid($aid)
     {
@@ -132,6 +140,8 @@ abstract class AbstractRequest extends AbstractContainer
 
     /**
      * @param string $mode
+     *
+     * @return void
      */
     public function setMode($mode)
     {
@@ -148,6 +158,8 @@ abstract class AbstractRequest extends AbstractContainer
 
     /**
      * @param int $portalid
+     *
+     * @return void
      */
     public function setPortalid($portalid)
     {
@@ -164,6 +176,8 @@ abstract class AbstractRequest extends AbstractContainer
 
     /**
      * @param string $request
+     *
+     * @return void
      */
     public function setRequest($request)
     {
@@ -180,6 +194,8 @@ abstract class AbstractRequest extends AbstractContainer
 
     /**
      * @param string $responseType
+     *
+     * @return void
      */
     public function setResponsetype($responseType)
     {
@@ -198,6 +214,8 @@ abstract class AbstractRequest extends AbstractContainer
      * set the system-Name
      *
      * @param string $integrator_name
+     *
+     * @return void
      */
     public function setIntegratorName($integrator_name)
     {
@@ -216,6 +234,8 @@ abstract class AbstractRequest extends AbstractContainer
      * set the system-version
      *
      * @param string $integrator_version
+     *
+     * @return void
      */
     public function setIntegratorVersion($integrator_version)
     {
@@ -234,6 +254,8 @@ abstract class AbstractRequest extends AbstractContainer
      * set the name of the solution-partner (company)
      *
      * @param string $solution_name
+     *
+     * @return void
      */
     public function setSolutionName($solution_name)
     {
@@ -252,6 +274,8 @@ abstract class AbstractRequest extends AbstractContainer
      * set the version of the solution-partner's app / extension / plugin / etc..
      *
      * @param string $solution_version
+     *
+     * @return void
      */
     public function setSolutionVersion($solution_version)
     {
@@ -268,6 +292,8 @@ abstract class AbstractRequest extends AbstractContainer
 
     /**
      * @param string $hash
+     *
+     * @return void
      */
     public function setHash($hash)
     {
@@ -284,6 +310,8 @@ abstract class AbstractRequest extends AbstractContainer
 
     /**
      * @param string $language
+     *
+     * @return void
      */
     public function setLanguage($language)
     {

@@ -33,6 +33,9 @@ class SellableTest extends AbstractFunctionalTest
      */
     private $availabilityFacade;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -41,6 +44,9 @@ class SellableTest extends AbstractFunctionalTest
         $this->availabilityFacade = $this->getFacade('SprykerFeature', 'Availability');
     }
 
+    /**
+     * @return void
+     */
     public function testIsProductSellable()
     {
         $this->setTestData();
@@ -53,6 +59,9 @@ class SellableTest extends AbstractFunctionalTest
         $this->assertTrue($isSellable);
     }
 
+    /**
+     * @return void
+     */
     public function testCalculateRealStock()
     {
         $this->setTestData();
@@ -64,6 +73,9 @@ class SellableTest extends AbstractFunctionalTest
         $this->assertTrue($isSellable);
     }
 
+    /**
+     * @return void
+     */
     public function testProductIsNotSellableIfStockNotSufficient()
     {
         $this->setTestData();
@@ -93,6 +105,9 @@ class SellableTest extends AbstractFunctionalTest
         $this->assertFalse($this->availabilityFacade->isProductSellable('P1337', 6));
     }
 
+    /**
+     * @return void
+     */
     protected function setTestData()
     {
         $abstractProduct = SpyAbstractProductQuery::create()

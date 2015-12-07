@@ -220,6 +220,9 @@ class ProductOptionFacade extends AbstractFacade
         return $this->getDependencyContainer()->getProductOptionReaderModel()->getEffectiveTaxRateForTypeUsage($idTypeUsage);
     }
 
+    /**
+     * @return void
+     */
     public function flushBuffer()
     {
         $this->getDependencyContainer()->getDataImportWriterModel()->flushBuffer();

@@ -94,6 +94,8 @@ class LocaleFacade extends AbstractFacade
 
     /**
      * @param string $localeName
+     *
+     * @return void
      */
     public function deleteLocale($localeName)
     {
@@ -103,6 +105,8 @@ class LocaleFacade extends AbstractFacade
 
     /**
      * @param MessengerInterface $messenger
+     *
+     * @return void
      */
     public function install(MessengerInterface $messenger)
     {

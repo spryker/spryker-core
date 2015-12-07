@@ -28,6 +28,9 @@ class CalculatorTest extends Test
 
     const ITEM_GROSS_PRICE_500 = 500;
 
+    /**
+     * @return void
+     */
     public function testCalculationWithoutAnyDiscountShouldNotReturnMatchingDiscounts()
     {
         $settings = new DiscountConfig(Config::getInstance(), Locator::getInstance());
@@ -40,6 +43,9 @@ class CalculatorTest extends Test
         $this->assertEquals(0, count($result));
     }
 
+    /**
+     * @return void
+     */
     public function testOneDiscountShouldNotBeFilteredOut()
     {
         $discountCollection = [];
@@ -67,6 +73,9 @@ class CalculatorTest extends Test
         $this->assertEquals(1, count($result));
     }
 
+    /**
+     * @return void
+     */
     public function testTwoDiscountsShouldNotBeFilteredOut()
     {
         $discountCollection = [];
@@ -101,6 +110,9 @@ class CalculatorTest extends Test
         $this->assertEquals(2, count($result));
     }
 
+    /**
+     * @return void
+     */
     public function testFilterOutLowestUnprivilegedDiscountIfThereAreMoreThanOne()
     {
         $discountCollection = [];
@@ -142,6 +154,9 @@ class CalculatorTest extends Test
         $this->assertEquals(2, count($result));
     }
 
+    /**
+     * @return void
+     */
     public function testFilterOutLowestUnprivilegedDiscountIfThereAreMoreThanTwo()
     {
         $discountCollection = [];
@@ -191,6 +206,9 @@ class CalculatorTest extends Test
         $this->assertEquals(2, count($result));
     }
 
+    /**
+     * @return void
+     */
     public function testFilterOutLowestUnprivilegedDiscountIfThereAreMoreThanTwoAndTwoPrivilegedOnes()
     {
         $discountCollection = [];

@@ -91,6 +91,8 @@ abstract class AbstractForm implements FormTypeInterface
 
     /**
      * @param Request $request
+     *
+     * @return void
      */
     public function setRequest($request)
     {

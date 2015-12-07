@@ -119,6 +119,9 @@ class PageElementWriter implements PageElementWriterInterface
         return true;
     }
 
+    /**
+     * @return void
+     */
     protected function touchSearchPageConfig()
     {
         $this->touchFacade->touchActive(self::RESOURCE_TYPE_SEARCH_PAGE_CONFIG, self::SEARCH_PAGE_CONFIG_ITEM_ID);

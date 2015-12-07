@@ -25,6 +25,8 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
 
     /**
      * @param GatewayControllerListenerInterface $controllerListener
+     *
+     * @return void
      */
     public function setControllerListener(GatewayControllerListenerInterface $controllerListener)
     {
@@ -33,6 +35,8 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function register(Application $app)
     {
@@ -49,6 +53,8 @@ class GatewayServiceProviderPlugin extends AbstractPlugin implements ServiceProv
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function boot(Application $app)
     {

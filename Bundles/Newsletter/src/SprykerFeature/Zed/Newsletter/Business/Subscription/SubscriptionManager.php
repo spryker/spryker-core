@@ -31,6 +31,8 @@ class SubscriptionManager implements SubscriptionManagerInterface
     /**
      * @param NewsletterSubscriberTransfer $newsletterSubscriber
      * @param NewsletterTypeTransfer $newsletterType
+     *
+     * @return void
      */
     public function subscribe(NewsletterSubscriberTransfer $newsletterSubscriber, NewsletterTypeTransfer $newsletterType)
     {

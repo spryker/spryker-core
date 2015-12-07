@@ -36,6 +36,8 @@ abstract class AbstractClient
 
     /**
      * @param Container $container
+     *
+     * @return void
      */
     public function setExternalDependencies(Container $container)
     {

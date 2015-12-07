@@ -41,6 +41,8 @@ class GlossaryTaskWorkerPlugin extends AbstractPlugin implements
 
     /**
      * @param QueueMessageTransfer $queueMessage
+     *
+     * @return void
      */
     public function run(QueueMessageTransfer $queueMessage)
     {

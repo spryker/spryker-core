@@ -18,6 +18,9 @@ use SprykerFeature\Zed\Application\Business\Model\Navigation\Collector\Decorator
 class NavigationCollectorCacheDecoratorTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testIfCacheIsNotEnabledGetNavigationMustReturnNavigationFromCollector()
     {
         $navigationCacheMock = $this->getMock(
@@ -46,6 +49,9 @@ class NavigationCollectorCacheDecoratorTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @return void
+     */
     public function testIfCacheIsEnabledGetNavigationMustReturnNavigationFromCache()
     {
         $navigationCacheMock = $this->getMock(

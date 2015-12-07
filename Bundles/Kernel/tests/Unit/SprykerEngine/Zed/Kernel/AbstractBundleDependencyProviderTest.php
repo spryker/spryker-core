@@ -18,6 +18,9 @@ use SprykerEngine\Zed\Kernel\Container;
 class AbstractBundleDependencyProviderTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testCallProvidePersistenceLayerDependenciesMustReturnContainer()
     {
         $container = new Container();
@@ -28,6 +31,9 @@ class AbstractBundleDependencyProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, $container);
     }
 
+    /**
+     * @return void
+     */
     public function testCallProvideCommunicationLayerDependenciesMustReturnContainer()
     {
         $container = new Container();
@@ -38,6 +44,9 @@ class AbstractBundleDependencyProviderTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, $container);
     }
 
+    /**
+     * @return void
+     */
     public function testCallProvideBusinessLayerDependenciesMustReturnContainer()
     {
         $container = new Container();

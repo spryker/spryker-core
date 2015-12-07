@@ -16,6 +16,9 @@ use Orm\Zed\Payolution\Persistence\Base\SpyPaymentPayolutionTransactionStatusLog
 class PayolutionFacadeRefundTest extends AbstractFacadeTest
 {
 
+    /**
+     * @return void
+     */
     public function testRefundPaymentWithSuccessResponse()
     {
         $idPayment = $this->getPaymentEntity()->getIdPaymentPayolution();
@@ -61,6 +64,9 @@ class PayolutionFacadeRefundTest extends AbstractFacadeTest
         $this->assertNotNull($statusLog->getProcessingConnectordetailPaymentreference());
     }
 
+    /**
+     * @return void
+     */
     public function testRefundPaymentWithFailureResponse()
     {
         $idPayment = $this->getPaymentEntity()->getIdPaymentPayolution();

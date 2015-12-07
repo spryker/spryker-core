@@ -52,6 +52,8 @@ class PayolutionFacadeGatewayTest extends Test
 
     /**
      * Test the saveOrderPayment() method of PayolutionFacade
+     *
+     * @return void
      */
     public function testSaveOrderPayment()
     {
@@ -96,6 +98,9 @@ class PayolutionFacadeGatewayTest extends Test
         $this->assertEquals('127.0.0.1', $paymentEntity->getClientIp());
     }
 
+    /**
+     * @return void
+     */
     public function testPreCheckPayment()
     {
         if ($this->enableTests === false) {
@@ -140,6 +145,9 @@ class PayolutionFacadeGatewayTest extends Test
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
     }
 
+    /**
+     * @return void
+     */
     public function testPreAuthorizePayment()
     {
         if ($this->enableTests === false) {
@@ -155,6 +163,9 @@ class PayolutionFacadeGatewayTest extends Test
         $this->assertInstanceOf('Generated\Shared\Transfer\PayolutionResponseTransfer', $response);
     }
 
+    /**
+     * @return void
+     */
     public function testReAuthorizePayment()
     {
         if ($this->enableTests === false) {
@@ -198,6 +209,9 @@ class PayolutionFacadeGatewayTest extends Test
         // @todo CD-408 Test $responseTransfer fields
     }
 
+    /**
+     * @return void
+     */
     public function testRevertPayment()
     {
         if ($this->enableTests === false) {
@@ -229,6 +243,9 @@ class PayolutionFacadeGatewayTest extends Test
         );
     }
 
+    /**
+     * @return void
+     */
     public function testRefundPayment()
     {
         if ($this->enableTests === false) {
@@ -260,6 +277,8 @@ class PayolutionFacadeGatewayTest extends Test
 
     /**
      * @throws PropelException
+     *
+     * @return void
      */
     private function setBaseTestData()
     {
@@ -297,6 +316,8 @@ class PayolutionFacadeGatewayTest extends Test
 
     /**
      * @throws PropelException
+     *
+     * @return void
      */
     private function setPaymentTestData()
     {

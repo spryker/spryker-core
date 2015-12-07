@@ -46,6 +46,8 @@ abstract class AbstractCall
 
     /**
      * @param AbstractRequest $container
+     *
+     * @return void
      */
     protected function applyStandardParameter(AbstractRequest $container)
     {

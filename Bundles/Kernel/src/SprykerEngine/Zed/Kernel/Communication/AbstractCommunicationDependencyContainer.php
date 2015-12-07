@@ -33,6 +33,8 @@ abstract class AbstractCommunicationDependencyContainer extends BaseDependencyCo
 
     /**
      * @param Container $container
+     *
+     * @return void
      */
     public function setContainer(Container $container)
     {
@@ -69,6 +71,8 @@ abstract class AbstractCommunicationDependencyContainer extends BaseDependencyCo
 
     /**
      * @param AbstractQueryContainer $queryContainer
+     *
+     * @return void
      */
     public function setQueryContainer($queryContainer)
     {

@@ -41,6 +41,7 @@ class ReceiverInstaller extends AbstractInstaller
     }
 
     /**
+     * @return void
      */
     public function install()
     {

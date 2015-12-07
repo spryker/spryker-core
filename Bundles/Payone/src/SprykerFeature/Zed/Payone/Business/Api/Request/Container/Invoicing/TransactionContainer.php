@@ -62,6 +62,8 @@ class TransactionContainer extends AbstractContainer
 
     /**
      * @param ItemContainer $item
+     *
+     * @return void
      */
     public function addItem(ItemContainer $item)
     {
@@ -70,6 +72,8 @@ class TransactionContainer extends AbstractContainer
 
     /**
      * @param ItemContainer[] $items
+     *
+     * @return void
      */
     public function setItems($items)
     {
@@ -86,6 +90,8 @@ class TransactionContainer extends AbstractContainer
 
     /**
      * @param string $invoice_deliverydate
+     *
+     * @return void
      */
     public function setInvoiceDeliverydate($invoice_deliverydate)
     {
@@ -102,6 +108,8 @@ class TransactionContainer extends AbstractContainer
 
     /**
      * @param string $invoice_deliveryenddate
+     *
+     * @return void
      */
     public function setInvoiceDeliveryenddate($invoice_deliveryenddate)
     {
@@ -118,6 +126,8 @@ class TransactionContainer extends AbstractContainer
 
     /**
      * @param string $invoice_deliverymode
+     *
+     * @return void
      */
     public function setInvoiceDeliverymode($invoice_deliverymode)
     {
@@ -134,6 +144,8 @@ class TransactionContainer extends AbstractContainer
 
     /**
      * @param string $invoiceappendix
+     *
+     * @return void
      */
     public function setInvoiceappendix($invoiceappendix)
     {
@@ -150,6 +162,8 @@ class TransactionContainer extends AbstractContainer
 
     /**
      * @param string $invoiceid
+     *
+     * @return void
      */
     public function setInvoiceid($invoiceid)
     {

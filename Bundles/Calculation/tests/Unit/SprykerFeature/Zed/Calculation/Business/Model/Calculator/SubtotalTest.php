@@ -24,6 +24,9 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
 
     const ITEM_GROSS_PRICE = 10000;
 
+    /**
+     * @return void
+     */
     public function testSubtotalShouldBeZeroForAnEmptyOrder()
     {
         $order = $this->getOrderWithFixtureData();
@@ -35,6 +38,9 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(0, $totalsTransfer->getSubtotal());
     }
 
+    /**
+     * @return void
+     */
     public function testSubtotalShouldBeMoreThanZeroForAnOrderWithOneItem()
     {
         $order = $this->getOrderWithFixtureData();
@@ -50,6 +56,9 @@ class SubtotalTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(self::ITEM_GROSS_PRICE, $totalsTransfer->getSubtotal());
     }
 
+    /**
+     * @return void
+     */
     public function testSubtotalShouldReturnTwiceTheItemGrossPriceForAnOrderWithTwoItems()
     {
         $order = $this->getOrderWithFixtureData();

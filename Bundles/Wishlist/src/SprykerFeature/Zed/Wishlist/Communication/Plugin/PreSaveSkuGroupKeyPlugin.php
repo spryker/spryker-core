@@ -14,6 +14,8 @@ class PreSaveSkuGroupKeyPlugin extends AbstractPlugin implements PreSavePluginIn
 
     /**
      * @param ItemTransfer[] $items
+     *
+     * @return void
      */
     public function trigger(\ArrayObject $items)
     {

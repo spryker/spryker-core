@@ -24,6 +24,8 @@ abstract class AbstractDecisionRule extends AbstractDiscountPlugin
 
     /**
      * @param array $context
+     *
+     * @return void
      */
     public function setContext(array $context)
     {

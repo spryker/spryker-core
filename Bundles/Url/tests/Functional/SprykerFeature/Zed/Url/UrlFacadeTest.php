@@ -52,6 +52,9 @@ class UrlFacadeTest extends AbstractFunctionalTest
      */
     protected $locator;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -62,6 +65,9 @@ class UrlFacadeTest extends AbstractFunctionalTest
         $this->touchQueryContainer = new TouchQueryContainer(new Factory('Touch'), $this->locator);
     }
 
+    /**
+     * @return void
+     */
     public function testCreateUrlInsertsAndReturnsSomething()
     {
         $urlQuery = $this->urlQueryContainer->queryUrls();
@@ -77,6 +83,9 @@ class UrlFacadeTest extends AbstractFunctionalTest
         $this->assertNotNull($newUrl->getIdUrl());
     }
 
+    /**
+     * @return void
+     */
     public function testSaveUrlInsertsAndReturnsSomethingOnCreate()
     {
         $urlQuery = $this->urlQueryContainer->queryUrls();
@@ -98,6 +107,9 @@ class UrlFacadeTest extends AbstractFunctionalTest
         $this->assertNotNull($url->getIdUrl());
     }
 
+    /**
+     * @return void
+     */
     public function testSaveUrlUpdatesSomething()
     {
         $url = new UrlTransfer();
@@ -121,6 +133,9 @@ class UrlFacadeTest extends AbstractFunctionalTest
         $this->assertEquals($redirect2->getIdRedirect(), $urlQuery->findOne()->getResourceId());
     }
 
+    /**
+     * @return void
+     */
     public function testHasUrlId()
     {
         $locale = $this->localeFacade->createLocale('UNIXA');
@@ -131,6 +146,9 @@ class UrlFacadeTest extends AbstractFunctionalTest
         $this->assertTrue($this->urlFacade->hasUrlId($idPageUrl));
     }
 
+    /**
+     * @return void
+     */
     public function testGetUrlByPath()
     {
         $locale = $this->localeFacade->createLocale('DFGHE');
@@ -145,6 +163,9 @@ class UrlFacadeTest extends AbstractFunctionalTest
         $this->assertEquals($locale->getIdLocale(), $url->getFkLocale());
     }
 
+    /**
+     * @return void
+     */
     public function testGetUrlById()
     {
         $locale = $this->localeFacade->createLocale('DFGHX');
@@ -159,6 +180,9 @@ class UrlFacadeTest extends AbstractFunctionalTest
         $this->assertEquals($locale->getIdLocale(), $url->getFkLocale());
     }
 
+    /**
+     * @return void
+     */
     public function testTouchUrlActive()
     {
         $locale = $this->localeFacade->createLocale('ABCDE');
@@ -177,6 +201,9 @@ class UrlFacadeTest extends AbstractFunctionalTest
         $this->assertEquals(1, $touchQuery->count());
     }
 
+    /**
+     * @return void
+     */
     public function testCreateRedirectInsertsAndReturnsSomething()
     {
         $redirectQuery = $this->urlQueryContainer->queryRedirects();
@@ -190,6 +217,9 @@ class UrlFacadeTest extends AbstractFunctionalTest
         $this->assertNotNull($newRedirect->getIdRedirect());
     }
 
+    /**
+     * @return void
+     */
     public function testSaveRedirectInsertsAndReturnsSomethingOnCreate()
     {
         $redirect = new RedirectTransfer();
@@ -207,6 +237,9 @@ class UrlFacadeTest extends AbstractFunctionalTest
         $this->assertNotNull($redirect->getIdRedirect());
     }
 
+    /**
+     * @return void
+     */
     public function testSaveRedirectUpdatesSomething()
     {
         $redirect = new RedirectTransfer();

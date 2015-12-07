@@ -19,6 +19,8 @@ class ExpensePriceToPayCalculatorPlugin extends AbstractPlugin implements Calcul
 
     /**
      * @param CalculableInterface $calculableContainer
+     *
+     * @return void
      */
     public function recalculate(CalculableInterface $calculableContainer)
     {

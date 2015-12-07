@@ -15,6 +15,9 @@ use SprykerEngine\Zed\Kernel\IdeAutoCompletion\MethodTagBuilder\ConsoleMethodTag
 class ConsoleMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function testBuildMethodTagsShouldReturnVendorMethodTagIfProjectDoesNotOverrideIt()
     {
         $options = [
@@ -32,6 +35,9 @@ class ConsoleMethodTagBuilderTest extends \PHPUnit_Framework_TestCase
         $this->assertContains($expectedMethodTag, $methodTags);
     }
 
+    /**
+     * @return void
+     */
     public function testBuildMethodTagsShouldReturnProjectMethodTagIfProjectOverrideIt()
     {
         $options = [

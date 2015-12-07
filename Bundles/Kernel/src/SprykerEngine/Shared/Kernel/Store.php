@@ -116,6 +116,9 @@ class Store
         $this->publish();
     }
 
+    /**
+     * @return void
+     */
     protected function publish()
     {
         header('X-Store: ' . $this->getStoreName());
@@ -152,6 +155,8 @@ class Store
      * @param string $currentStoreName
      *
      * @throws \Exception
+     *
+     * @return void
      */
     public function initializeSetup($currentStoreName)
     {
@@ -275,6 +280,8 @@ class Store
 
     /**
      * @param string $currentLocale
+     *
+     * @return void
      */
     public function setCurrentLocale($currentLocale)
     {
@@ -307,6 +314,8 @@ class Store
 
     /**
      * @param string $currentCountry
+     *
+     * @return void
      */
     public function setCurrentCountry($currentCountry)
     {

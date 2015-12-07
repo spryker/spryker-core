@@ -18,6 +18,9 @@ class CreateDatabaseConsole extends Console
 
     const COMMAND_NAME = 'propel:database:create';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
@@ -29,6 +32,8 @@ class CreateDatabaseConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
+     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
@@ -45,6 +50,8 @@ class CreateDatabaseConsole extends Console
      * @throws \Exception
      *
      * @todo no sudo, vagrant user is missing for pgsql
+     *
+     * @return void
      */
     private function createPostgresDatabaseIfNotExists()
     {
@@ -82,6 +89,8 @@ class CreateDatabaseConsole extends Console
 
     /**
      * @throws \Exception
+     *
+     * @return void
      */
     private function createMysqlDatabaseIfNotExists()
     {

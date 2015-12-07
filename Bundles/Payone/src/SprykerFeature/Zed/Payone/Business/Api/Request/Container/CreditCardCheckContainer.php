@@ -58,6 +58,8 @@ class CreditCardCheckContainer extends AbstractRequestContainer
 
     /**
      * @param int $aid
+     *
+     * @return void
      */
     public function setAid($aid)
     {
@@ -74,6 +76,8 @@ class CreditCardCheckContainer extends AbstractRequestContainer
 
     /**
      * @param int $cardcvc2
+     *
+     * @return void
      */
     public function setCardCvc2($cardcvc2)
     {
@@ -90,6 +94,8 @@ class CreditCardCheckContainer extends AbstractRequestContainer
 
     /**
      * @param int $cardexpiredate
+     *
+     * @return void
      */
     public function setCardExpireDate($cardexpiredate)
     {
@@ -106,6 +112,8 @@ class CreditCardCheckContainer extends AbstractRequestContainer
 
     /**
      * @param int $cardissuenumber
+     *
+     * @return void
      */
     public function setCardIssueNumber($cardissuenumber)
     {
@@ -122,6 +130,8 @@ class CreditCardCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $cardpan
+     *
+     * @return void
      */
     public function setCardPan($cardpan)
     {
@@ -138,6 +148,8 @@ class CreditCardCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $cardtype
+     *
+     * @return void
      */
     public function setCardType($cardtype)
     {
@@ -154,6 +166,8 @@ class CreditCardCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $language
+     *
+     * @return void
      */
     public function setLanguage($language)
     {
@@ -170,6 +184,8 @@ class CreditCardCheckContainer extends AbstractRequestContainer
 
     /**
      * @param string $storecarddata
+     *
+     * @return void
      */
     public function setStoreCardData($storecarddata)
     {

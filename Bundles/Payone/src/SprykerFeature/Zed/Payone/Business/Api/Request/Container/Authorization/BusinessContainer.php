@@ -32,6 +32,8 @@ class BusinessContainer extends AbstractContainer
 
     /**
      * @param string $booking_date
+     *
+     * @return void
      */
     public function setBookingDate($booking_date)
     {
@@ -48,6 +50,8 @@ class BusinessContainer extends AbstractContainer
 
     /**
      * @param string $document_date
+     *
+     * @return void
      */
     public function setDocumentDate($document_date)
     {
@@ -64,6 +68,8 @@ class BusinessContainer extends AbstractContainer
 
     /**
      * @param string $due_time
+     *
+     * @return void
      */
     public function setDueTime($due_time)
     {

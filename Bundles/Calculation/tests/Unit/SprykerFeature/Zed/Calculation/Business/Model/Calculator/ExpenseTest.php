@@ -32,6 +32,9 @@ class ExpenseTest extends AbstractUnitTest
     const SALES_DISCOUNT_100 = 100;
     const SALES_DISCOUNT_50 = 50;
 
+    /**
+     * @return void
+     */
     public function testExpensePriceToPayShouldBeTheSameAsTheGrossPriceForNoExpenseDiscounts()
     {
         $order = $this->getOrderWithFixtureData();
@@ -55,6 +58,9 @@ class ExpenseTest extends AbstractUnitTest
         }
     }
 
+    /**
+     * @return void
+     */
     public function testExpensePriceToPayShouldBeZeroIfExpenseDiscountAmountIsExpenseGrossPrice()
     {
         $order = $this->getOrderWithFixtureData();
@@ -81,6 +87,9 @@ class ExpenseTest extends AbstractUnitTest
         }
     }
 
+    /**
+     * @return void
+     */
     public function testExpensePriceToPayShouldBeHalfOfTheExpenseGrossPriceForTwoDiscountsWithAQuaterOfTheGrossPriceEach()
     {
         $order = $this->getOrderWithFixtureData();

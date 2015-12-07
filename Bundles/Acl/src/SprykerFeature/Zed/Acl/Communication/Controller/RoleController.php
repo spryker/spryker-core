@@ -193,6 +193,8 @@ class RoleController extends AbstractController
     /**
      * @param RoleForm $roleForm
      * @param RoleTransfer $roleTransfer
+     *
+     * @return void
      */
     protected function handleRoleForm(RoleForm $roleForm, RoleTransfer $roleTransfer)
     {

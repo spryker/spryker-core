@@ -49,6 +49,8 @@ class AclConfig extends AbstractBundleConfig
      * @param string $controller
      * @param string $action
      * @param string $type
+     *
+     * @return void
      */
     public function setRules($bundle, $controller, $action, $type)
     {

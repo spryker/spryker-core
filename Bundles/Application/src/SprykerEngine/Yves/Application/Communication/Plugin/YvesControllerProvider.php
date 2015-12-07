@@ -183,11 +183,15 @@ abstract class YvesControllerProvider implements ControllerProviderInterface
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     abstract protected function defineControllers(Application $app);
 
     /**
      * @param Controller $controller
+     *
+     * @return void
      */
     private function addJsonParsing(Controller $controller)
     {

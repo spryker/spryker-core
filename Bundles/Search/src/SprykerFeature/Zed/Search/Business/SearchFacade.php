@@ -19,6 +19,8 @@ class SearchFacade extends AbstractFacade
 
     /**
      * @param MessengerInterface $messenger
+     *
+     * @return void
      */
     public function install(MessengerInterface $messenger)
     {

@@ -23,6 +23,8 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
      * @param BatchResultInterface $result
      * @param WriterInterface $dataWriter
      * @param TouchUpdaterInterface $touchUpdater
+     *
+     * @return void
      */
     abstract public function run(
         SpyTouchQuery $baseQuery,
@@ -38,6 +40,8 @@ abstract class AbstractCollectorPlugin extends AbstractPlugin implements Collect
      * @param BatchResultInterface $result
      * @param WriterInterface $dataWriter
      * @param TouchUpdaterInterface $touchUpdater
+     *
+     * @return void
      */
     public function postRun(
         SpyTouchQuery $baseQuery,

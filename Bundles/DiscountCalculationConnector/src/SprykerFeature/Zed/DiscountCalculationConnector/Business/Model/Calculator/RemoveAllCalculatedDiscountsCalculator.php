@@ -13,6 +13,8 @@ class RemoveAllCalculatedDiscountsCalculator
 
     /**
      * @param CalculableInterface $calculableContainer
+     *
+     * @return void
      */
     public function recalculate(CalculableInterface $calculableContainer)
     {

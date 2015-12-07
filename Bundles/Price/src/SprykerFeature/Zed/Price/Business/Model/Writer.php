@@ -118,6 +118,8 @@ class Writer implements WriterInterface
      * @param PriceProductTransfer $priceProductTransfer
      *
      * @throws ProductPriceChangeException
+     *
+     * @return void
      */
     public function setPriceForProduct(PriceProductTransfer $priceProductTransfer)
     {
@@ -143,6 +145,8 @@ class Writer implements WriterInterface
 
     /**
      * @param PriceProductTransfer $transferPriceProduct
+     *
+     * @return void
      */
     protected function loadAbstractProductIdForPriceProductTransfer(PriceProductTransfer $transferPriceProduct)
     {
@@ -155,6 +159,8 @@ class Writer implements WriterInterface
 
     /**
      * @param PriceProductTransfer $transferPriceProduct
+     *
+     * @return void
      */
     protected function loadConcreteProductIdForPriceProductTransfer(PriceProductTransfer $transferPriceProduct)
     {
@@ -195,6 +201,8 @@ class Writer implements WriterInterface
     /**
      * @param string $itemType
      * @param int $itemId
+     *
+     * @return void
      */
     protected function insertTouchRecord($itemType, $itemId)
     {

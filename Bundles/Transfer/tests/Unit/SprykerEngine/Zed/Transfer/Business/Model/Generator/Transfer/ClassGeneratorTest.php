@@ -20,16 +20,25 @@ use Symfony\Component\Filesystem\Filesystem;
 class ClassGeneratorTest extends \PHPUnit_Framework_TestCase
 {
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         $this->removeTargetDirectory();
     }
 
+    /**
+     * @return void
+     */
     public function tearDown()
     {
         $this->removeTargetDirectory();
     }
 
+    /**
+     * @return void
+     */
     private function removeTargetDirectory()
     {
         $filesystem = new Filesystem();
@@ -44,6 +53,9 @@ class ClassGeneratorTest extends \PHPUnit_Framework_TestCase
         return __DIR__ . '/Fixtures/';
     }
 
+    /**
+     * @return void
+     */
     public function testGenerateShouldCreateTargetDirectoryIfNotExist()
     {
         $transferGenerator = new ClassGenerator($this->getFixtureDirectory());

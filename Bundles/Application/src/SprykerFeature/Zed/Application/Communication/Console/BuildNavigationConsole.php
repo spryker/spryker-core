@@ -20,6 +20,9 @@ class BuildNavigationConsole extends Console
     const COMMAND_NAME = 'application:build-navigation-cache';
     const DESCRIPTION = 'Build the navigation tree';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
@@ -31,6 +34,8 @@ class BuildNavigationConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
+     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

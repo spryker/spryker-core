@@ -31,6 +31,9 @@ class SequenceNumberTest extends Test
      */
     protected $sequenceNumberFacade;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -40,6 +43,9 @@ class SequenceNumberTest extends Test
         $this->sequenceNumberFacade = new SequenceNumberFacade($this->factory, $locator);
     }
 
+    /**
+     * @return void
+     */
     public function testGetDefaultSettingsMergedWithCustomSettings()
     {
         $customSettings = new SequenceNumberSettingsTransfer();
@@ -53,6 +59,9 @@ class SequenceNumberTest extends Test
         $this->assertSame(1, $sequenceNumberSettings->getMinimumNumber());
     }
 
+    /**
+     * @return void
+     */
     public function testGenerate()
     {
         $config = $this->generateConfig();
@@ -73,6 +82,9 @@ class SequenceNumberTest extends Test
         $this->assertSame('101', $number);
     }
 
+    /**
+     * @return void
+     */
     public function testGenerateWithPrefix()
     {
         $config = $this->generateConfig();
@@ -83,6 +95,9 @@ class SequenceNumberTest extends Test
         $this->assertSame('DE1', $sequenceNumber);
     }
 
+    /**
+     * @return void
+     */
     public function testGenerateOnSequenceNumber()
     {
         $generator = $this->generateGenerator();

@@ -26,6 +26,8 @@ abstract class AbstractBusinessDependencyContainer extends BaseDependencyContain
 
     /**
      * @param Container $container
+     *
+     * @return void
      */
     public function setContainer(Container $container)
     {
@@ -62,6 +64,8 @@ abstract class AbstractBusinessDependencyContainer extends BaseDependencyContain
 
     /**
      * @param AbstractQueryContainer $queryContainer
+     *
+     * @return void
      */
     public function setQueryContainer(AbstractQueryContainer $queryContainer)
     {

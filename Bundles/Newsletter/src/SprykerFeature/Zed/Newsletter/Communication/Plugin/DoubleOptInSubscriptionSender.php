@@ -53,6 +53,8 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
     /**
      * @param MailTransfer $mailTransfer
      * @param NewsletterConfig $config
+     *
+     * @return void
      */
     protected function setMailTransferSubject(MailTransfer $mailTransfer, NewsletterConfig $config)
     {
@@ -87,6 +89,8 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
     /**
      * @param MailTransfer $mailTransfer
      * @param string $email
+     *
+     * @return void
      */
     protected function addMailRecipient(MailTransfer $mailTransfer, $email)
     {
@@ -106,6 +110,8 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
     /**
      * @param MailTransfer $mailTransfer
      * @param array $globalMergeVars
+     *
+     * @return void
      */
     protected function setMailMergeData(MailTransfer $mailTransfer, array $globalMergeVars = [])
     {
@@ -125,6 +131,8 @@ class DoubleOptInSubscriptionSender extends AbstractPlugin implements Subscriber
     /**
      * @param MailTransfer $mailTransfer
      * @param NewsletterConfig $config
+     *
+     * @return void
      */
     protected function setMailTransferFrom(MailTransfer $mailTransfer, NewsletterConfig $config)
     {

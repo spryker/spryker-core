@@ -15,6 +15,8 @@ class DiscountOrderHydrator implements DiscountOrderHydratorInterface
     /**
      * @param OrderTransfer $orderTransfer
      * @param CheckoutRequestTransfer $request
+     *
+     * @return void
      */
     public function hydrateOrder(OrderTransfer $orderTransfer, CheckoutRequestTransfer $request)
     {

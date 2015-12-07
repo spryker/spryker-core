@@ -51,6 +51,8 @@ class KeyManager implements KeyManagerInterface
      * @param string $keyName
      *
      * @throws MissingKeyException
+     *
+     * @return void
      */
     protected function checkKeyDoesExist($keyName)
     {
@@ -137,6 +139,8 @@ class KeyManager implements KeyManagerInterface
      * @param string $keyName
      *
      * @throws KeyExistsException
+     *
+     * @return void
      */
     protected function checkKeyDoesNotExist($keyName)
     {

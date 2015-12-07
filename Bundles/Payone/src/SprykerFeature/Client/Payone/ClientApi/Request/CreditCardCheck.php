@@ -30,6 +30,8 @@ class CreditCardCheck extends AbstractRequest
 
     /**
      * @param string $storecarddata
+     *
+     * @return void
      */
     public function setStorecarddata($storecarddata)
     {
@@ -46,6 +48,8 @@ class CreditCardCheck extends AbstractRequest
 
     /**
      * @param string $errorurl
+     *
+     * @return void
      */
     public function setErrorurl($errorurl)
     {
@@ -62,6 +66,8 @@ class CreditCardCheck extends AbstractRequest
 
     /**
      * @param string $successurl
+     *
+     * @return void
      */
     public function setSuccessurl($successurl)
     {

@@ -26,6 +26,8 @@ class ApplicationFacade extends AbstractFacade
 
     /**
      * @param LoggerInterface $logger
+     *
+     * @return void
      */
     public function runCheckStepCodeCeption(LoggerInterface $logger = null)
     {
@@ -34,6 +36,8 @@ class ApplicationFacade extends AbstractFacade
 
     /**
      * @param LoggerInterface $logger
+     *
+     * @return void
      */
     public function runCheckStepDeleteDatabase(LoggerInterface $logger = null)
     {
@@ -42,6 +46,8 @@ class ApplicationFacade extends AbstractFacade
 
     /**
      * @param LoggerInterface $logger
+     *
+     * @return void
      */
     public function runCheckStepDeleteGeneratedDirectory(LoggerInterface $logger = null)
     {
@@ -50,6 +56,8 @@ class ApplicationFacade extends AbstractFacade
 
     /**
      * @param LoggerInterface $logger
+     *
+     * @return void
      */
     public function runCheckStepExportKeyValue(LoggerInterface $logger = null)
     {
@@ -58,6 +66,8 @@ class ApplicationFacade extends AbstractFacade
 
     /**
      * @param LoggerInterface $logger
+     *
+     * @return void
      */
     public function runCheckStepExportSearch(LoggerInterface $logger = null)
     {
@@ -66,6 +76,8 @@ class ApplicationFacade extends AbstractFacade
 
     /**
      * @param LoggerInterface $logger
+     *
+     * @return void
      */
     public function runCheckStepInstallDemoData(LoggerInterface $logger = null)
     {
@@ -74,6 +86,8 @@ class ApplicationFacade extends AbstractFacade
 
     /**
      * @param LoggerInterface $logger
+     *
+     * @return void
      */
     public function runCheckStepSetupInstall(LoggerInterface $logger = null)
     {
@@ -90,6 +104,9 @@ class ApplicationFacade extends AbstractFacade
         return $this->getDependencyContainer()->createNavigationBuilder()->build($pathInfo);
     }
 
+    /**
+     * @return void
+     */
     public function writeNavigationCache()
     {
         $this->getDependencyContainer()->createNavigationCacheBuilder()->writeNavigationCache();

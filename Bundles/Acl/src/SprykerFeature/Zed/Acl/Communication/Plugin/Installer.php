@@ -16,6 +16,9 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 class Installer extends AbstractPlugin implements InstallerInterface
 {
 
+    /**
+     * @return void
+     */
     public function install()
     {
         $this->getFacade()->install();

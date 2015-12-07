@@ -16,6 +16,9 @@ class TranslationTest extends Test
 
     protected $translationFacade;
 
+    /**
+     * @return void
+     */
     protected function setUp()
     {
         parent::setUp();
@@ -28,6 +31,9 @@ class TranslationTest extends Test
         );
     }
 
+    /**
+     * @return void
+     */
     public function testGetTranslator()
     {
         $translator = $this->translationFacade->getTranslator('de');

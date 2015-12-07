@@ -38,6 +38,8 @@ class SolrLocal extends Solr implements LocalInterface
 
     /**
      * @param $coreName
+     *
+     * @return void
      */
     public function reloadCore($coreName)
     {
@@ -50,6 +52,8 @@ class SolrLocal extends Solr implements LocalInterface
     /**
      * @param $coreName
      * @param $coreDir
+     *
+     * @return void
      */
     public function createCore($coreName, $coreDir)
     {
@@ -62,6 +66,8 @@ class SolrLocal extends Solr implements LocalInterface
 
     /**
      * @param $coreName
+     *
+     * @return void
      */
     public function unloadCore($coreName)
     {

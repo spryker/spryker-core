@@ -25,6 +25,8 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
+     *
+     * @return void
      */
     public function testEmptyFilterChainShouldNotChangeString($string)
     {
@@ -34,6 +36,8 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
+     *
+     * @return void
      */
     public function testFilterChainAcceptsAndRunsFilterInterface($string)
     {
@@ -45,6 +49,8 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
+     *
+     * @return void
      */
     public function testFilterChainAcceptsAndRunsCallable($string)
     {
@@ -56,6 +62,8 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider dataProvider
+     *
+     * @return void
      */
     public function testFilterChainAcceptsAndRunsCallableAndFilterInterface($string)
     {
@@ -72,6 +80,8 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
      * @dataProvider dataProvider
      * @expectedException \LogicException
      * @expectedExceptionMessage The filter is neither a FilterInterface nor a callable.
+     *
+     * @return void
      */
     public function testFilterChainNotAcceptsString($string)
     {
@@ -84,6 +94,8 @@ class FilterChainTest extends \PHPUnit_Framework_TestCase
      * @dataProvider dataProvider
      * @expectedException \LogicException
      * @expectedExceptionMessage The filter is neither a FilterInterface nor a callable.
+     *
+     * @return void
      */
     public function testFilterChainNotAcceptsObjects($string)
     {

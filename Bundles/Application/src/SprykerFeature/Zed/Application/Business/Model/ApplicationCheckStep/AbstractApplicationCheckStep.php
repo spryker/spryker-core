@@ -17,6 +17,7 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
     use LoggerAwareTrait;
 
     /**
+     * @return void
      */
     abstract public function run();
 
@@ -26,6 +27,8 @@ abstract class AbstractApplicationCheckStep extends AbstractLogger implements Lo
      * @param mixed $level
      * @param string $message
      * @param array $context
+     *
+     * @return void
      */
     public function log($level, $message, array $context = [])
     {

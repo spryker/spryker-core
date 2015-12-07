@@ -46,6 +46,8 @@ class OnlineBankTransferContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param string $bankaccount
+     *
+     * @return void
      */
     public function setBankAccount($bankaccount)
     {
@@ -62,6 +64,8 @@ class OnlineBankTransferContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param string $bankcode
+     *
+     * @return void
      */
     public function setBankCode($bankcode)
     {
@@ -78,6 +82,8 @@ class OnlineBankTransferContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param string $bankcountry
+     *
+     * @return void
      */
     public function setBankCountry($bankcountry)
     {
@@ -94,6 +100,8 @@ class OnlineBankTransferContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param string $bankgrouptype
+     *
+     * @return void
      */
     public function setBankGroupType($bankgrouptype)
     {
@@ -110,6 +118,8 @@ class OnlineBankTransferContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param string $onlinebanktransfertype
+     *
+     * @return void
      */
     public function setOnlineBankTransferType($onlinebanktransfertype)
     {
@@ -126,6 +136,8 @@ class OnlineBankTransferContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param RedirectContainer $redirect
+     *
+     * @return void
      */
     public function setRedirect(RedirectContainer $redirect)
     {
@@ -142,6 +154,8 @@ class OnlineBankTransferContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param string $iban
+     *
+     * @return void
      */
     public function setIban($iban)
     {
@@ -158,6 +172,8 @@ class OnlineBankTransferContainer extends AbstractPaymentMethodContainer
 
     /**
      * @param string $bic
+     *
+     * @return void
      */
     public function setBic($bic)
     {

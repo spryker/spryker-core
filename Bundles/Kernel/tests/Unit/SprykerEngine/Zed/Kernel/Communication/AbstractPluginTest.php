@@ -25,6 +25,9 @@ use Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\F
 class AbstractPluginTest extends AbstractUnitTest
 {
 
+    /**
+     * @return void
+     */
     public function testGetDependencyContainerShouldReturnNullIfNotSet()
     {
         $plugin = $this->getPlugin();
@@ -33,6 +36,9 @@ class AbstractPluginTest extends AbstractUnitTest
         $this->assertNull($dependencyContainer);
     }
 
+    /**
+     * @return void
+     */
     public function testGetDependencyContainerShouldReturnInstanceIfSet()
     {
         $plugin = $this->getPlugin();
@@ -45,6 +51,9 @@ class AbstractPluginTest extends AbstractUnitTest
         );
     }
 
+    /**
+     * @return void
+     */
     public function testGetFacadeShouldReturnNullIfNotSet()
     {
         $plugin = $this->getPlugin();
@@ -53,6 +62,9 @@ class AbstractPluginTest extends AbstractUnitTest
         $this->assertNull($facade);
     }
 
+    /**
+     * @return void
+     */
     public function testGetFacadeShouldReturnInstanceIfSet()
     {
         $plugin = $this->getPlugin();
@@ -62,6 +74,9 @@ class AbstractPluginTest extends AbstractUnitTest
         $this->assertInstanceOf('SprykerEngine\Zed\Kernel\Business\AbstractFacade', $facade);
     }
 
+    /**
+     * @return void
+     */
     public function testGetQueryContainerShouldReturnNullIfNoQueryContainerIsSet()
     {
         $plugin = $this->getPlugin();
@@ -70,6 +85,9 @@ class AbstractPluginTest extends AbstractUnitTest
         $this->assertNull($queryContainer);
     }
 
+    /**
+     * @return void
+     */
     public function testGetQueryContainerShouldReturnInstanceIfQueryContainerIsSet()
     {
         $plugin = $this->getPlugin();

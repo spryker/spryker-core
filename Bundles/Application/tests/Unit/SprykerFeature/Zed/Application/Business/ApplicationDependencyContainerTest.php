@@ -33,6 +33,9 @@ class ApplicationDependencyContainerTest extends \PHPUnit_Framework_TestCase
         return new ApplicationDependencyContainer($factory, Locator::getInstance(), $config);
     }
 
+    /**
+     * @return void
+     */
     public function testCreateNavigationBuilderShouldReturnFullyConfiguredInstance()
     {
         $instance = $this->getDependencyContainer()->createNavigationBuilder();

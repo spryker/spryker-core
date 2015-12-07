@@ -54,6 +54,9 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         return $request;
     }
 
+    /**
+     * @return void
+     */
     public function testDefaultTransferIsNull()
     {
         $response = new Request();
@@ -61,6 +64,9 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals(null, $response->getMetaTransfer('asd'));
     }
 
+    /**
+     * @return void
+     */
     public function testGetterAndSetters()
     {
         $locator = Locator::getInstance();
@@ -78,6 +84,9 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals('username', $request->getUsername());
     }
 
+    /**
+     * @return void
+     */
     public function testMetaTransfersAreStoredCorrectly()
     {
         $locator = Locator::getInstance();
@@ -98,6 +107,9 @@ class RequestTest extends \PHPUnit_Framework_TestCase
         $this->assertNotSame($metaTransfer2, $request->getMetaTransfer('meta2'));
     }
 
+    /**
+     * @return void
+     */
     public function testToArrayAndFromArray()
     {
         $locator = Locator::getInstance();

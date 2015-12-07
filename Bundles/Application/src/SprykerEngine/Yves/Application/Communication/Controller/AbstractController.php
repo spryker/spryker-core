@@ -172,6 +172,8 @@ abstract class AbstractController
 
     /**
      * @param $transferResponse
+     *
+     * @return void
      */
     protected function addMessagesFromZedResponse($transferResponse)
     {
@@ -223,6 +225,8 @@ abstract class AbstractController
     /**
      * @param string $key
      * @param string $value
+     *
+     * @return void
      */
     protected function addToFlashBag($key, $value)
     {

@@ -20,6 +20,9 @@ class DistributorConsole extends Console
     const COMMAND_DESCRIPTION = 'distribute items';
     const TYPE = 'type';
 
+    /**
+     * @return void
+     */
     protected function configure()
     {
         $this->setName(self::COMMAND_NAME);
@@ -32,6 +35,8 @@ class DistributorConsole extends Console
     /**
      * @param InputInterface $input
      * @param OutputInterface $output
+     *
+     * @return void
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {

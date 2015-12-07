@@ -21,6 +21,9 @@ use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
 class PayolutionFacadeCaptureTest extends AbstractFacadeTest
 {
 
+    /**
+     * @return void
+     */
     public function testCapturePaymentWithSuccessResponse()
     {
         $idPayment = $this->getPaymentEntity()->getIdPaymentPayolution();
@@ -62,6 +65,9 @@ class PayolutionFacadeCaptureTest extends AbstractFacadeTest
         $this->assertNotNull($statusLog->getProcessingConnectordetailPaymentreference());
     }
 
+    /**
+     * @return void
+     */
     public function testCapturePaymentWithFailureResponse()
     {
         $idPayment = $this->getPaymentEntity()->getIdPaymentPayolution();

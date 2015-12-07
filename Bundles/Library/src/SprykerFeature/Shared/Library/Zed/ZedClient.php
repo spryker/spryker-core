@@ -71,6 +71,8 @@ class ZedClient
 
     /**
      * @param int $timeoutInSeconds
+     *
+     * @return void
      */
     public static function setDefaultTimeout($timeoutInSeconds)
     {
@@ -251,6 +253,8 @@ class ZedClient
      * @param string $pathInfo
      * @param Request $requestTransfer
      * @param string $rawBody
+     *
+     * @return void
      */
     protected function logRequest($pathInfo, Request $requestTransfer, $rawBody)
     {
@@ -261,6 +265,8 @@ class ZedClient
      * @param string $pathInfo
      * @param \SprykerFeature\Shared\Library\Communication\Response $responseTransfer
      * @param string $rawBody
+     *
+     * @return void
      */
     protected function logResponse($pathInfo, \SprykerFeature\Shared\Library\Communication\Response $responseTransfer, $rawBody)
     {
@@ -272,6 +278,8 @@ class ZedClient
      * @param string $subType
      * @param ObjectInterface $transfer
      * @param string $rawBody
+     *
+     * @return void
      */
     protected function doLog($pathInfo, $subType, ObjectInterface $transfer, $rawBody)
     {
@@ -305,6 +313,8 @@ class ZedClient
 
     /**
      * @param EntityEnclosingRequest $request
+     *
+     * @return void
      */
     protected function forwardDebugSession(EntityEnclosingRequest $request)
     {

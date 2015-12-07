@@ -34,11 +34,17 @@ class Install extends AbstractInstaller
         $this->config = $config;
     }
 
+    /**
+     * @return void
+     */
     public function install()
     {
         $this->createPriceType();
     }
 
+    /**
+     * @return void
+     */
     protected function createPriceType()
     {
         $this->priceFacade->createPriceType($this->config->getPriceTypeDefaultName());

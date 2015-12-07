@@ -78,6 +78,8 @@ abstract class Solr implements AdapterInterface
 
     /**
      * @param string $endpoint
+     *
+     * @return void
      */
     public function setEndpoint($endpoint)
     {

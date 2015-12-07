@@ -46,6 +46,9 @@ class GlossaryTaskWorkerPluginTest extends Test
      */
     private $locales = [];
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -63,6 +66,9 @@ class GlossaryTaskWorkerPluginTest extends Test
         $this->taskPlugin->setOwnFacade($glossaryQueueFacade);
     }
 
+    /**
+     * @return void
+     */
     private function generateTestLocales()
     {
         $locale = $this->getLocaleFacade()->createLocale('xx_XX');
@@ -127,6 +133,9 @@ class GlossaryTaskWorkerPluginTest extends Test
         return Locator::getInstance();
     }
 
+    /**
+     * @return void
+     */
     public function testPluginShouldCreateKeyAndTranslation()
     {
         $queueMessage = $this->getQueueMessage()->setPayload(
@@ -153,6 +162,9 @@ class GlossaryTaskWorkerPluginTest extends Test
         $this->assertEquals(1, $translationResult);
     }
 
+    /**
+     * @return void
+     */
     public function testShouldUpdateTranslation()
     {
         $idGlossaryKey = $this->glossaryFacade->createKey('test.key2');

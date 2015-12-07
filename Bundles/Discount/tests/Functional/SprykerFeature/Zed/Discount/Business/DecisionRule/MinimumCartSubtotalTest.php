@@ -28,6 +28,9 @@ class MinimumCartSubtotalTest extends Test
     const CART_SUBTOTAL_500 = 500;
     const CART_SUBTOTAL_1000 = 1000;
 
+    /**
+     * @return void
+     */
     public function testShouldReturnTrueForAnOrderWithAHighEnoughSubtotal()
     {
         $order = new CalculableContainer(new OrderTransfer());
@@ -43,6 +46,9 @@ class MinimumCartSubtotalTest extends Test
         $this->assertTrue($result->isSuccess());
     }
 
+    /**
+     * @return void
+     */
     public function testShouldReturnFalseForAnOrderWithATooLowSubtotal()
     {
         $order = new CalculableContainer(new OrderTransfer());
@@ -58,6 +64,9 @@ class MinimumCartSubtotalTest extends Test
         $this->assertFalse($result->isSuccess());
     }
 
+    /**
+     * @return void
+     */
     public function testShouldReturnTrueForAnOrderWithAExactlyMatchingSubtotal()
     {
         $order = new CalculableContainer(new OrderTransfer());

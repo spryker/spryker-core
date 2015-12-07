@@ -64,6 +64,8 @@ class Installer implements InstallerInterface
 
     /**
      * Main Installation Method
+     *
+     * @return void
      */
     public function install()
     {
@@ -73,6 +75,9 @@ class Installer implements InstallerInterface
         $this->addUserGroupRelations();
     }
 
+    /**
+     * @return void
+     */
     private function addGroups()
     {
         foreach ($this->config->getInstallerGroups() as $group) {
@@ -82,6 +87,8 @@ class Installer implements InstallerInterface
 
     /**
      * @param string $name
+     *
+     * @return void
      */
     private function addGroup($name)
     {
@@ -90,6 +97,9 @@ class Installer implements InstallerInterface
         }
     }
 
+    /**
+     * @return void
+     */
     private function addRoles()
     {
         foreach ($this->config->getInstallerRoles() as $role) {
@@ -103,6 +113,8 @@ class Installer implements InstallerInterface
      * @param array $role
      *
      * @throws GroupNotFoundException
+     *
+     * @return void
      */
     private function addRole(array $role)
     {
@@ -117,6 +129,8 @@ class Installer implements InstallerInterface
 
     /**
      * @throws RoleNotFoundException
+     *
+     * @return void
      */
     private function addRules()
     {
@@ -138,6 +152,8 @@ class Installer implements InstallerInterface
     /**
      * @throws GroupNotFoundException
      * @throws UserNotFoundException
+     *
+     * @return void
      */
     private function addUserGroupRelations()
     {

@@ -12,6 +12,7 @@ class ExportKeyValue extends AbstractApplicationCheckStep
 {
 
     /**
+     * @return void
      */
     public function run()
     {

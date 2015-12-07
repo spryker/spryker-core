@@ -40,6 +40,9 @@ class ReaderTest extends Test
      */
     protected $locator;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -49,6 +52,9 @@ class ReaderTest extends Test
         $this->setTestData();
     }
 
+    /**
+     * @return void
+     */
     public function testGetAllTypesValues()
     {
         $priceType = SpyPriceTypeQuery::create()->filterByName(self::DUMMY_PRICE_TYPE_2)->findOneOrCreate();
@@ -71,46 +77,70 @@ class ReaderTest extends Test
         $this->assertTrue($isTypeInResult_2);
     }
 
+    /**
+     * @return void
+     */
     public function testHasValidPriceTrue()
     {
         $hasValidPrice = $this->priceFacade->hasValidPrice(self::DUMMY_SKU_ABSTRACT_PRODUCT, self::DUMMY_PRICE_TYPE_1);
         $this->assertTrue($hasValidPrice);
     }
 
+    /**
+     * @return void
+     */
     public function testHasValidPriceFalse()
     {
         $hasValidPrice = $this->priceFacade->hasValidPrice(self::DUMMY_SKU_CONCRETE_PRODUCT, self::DUMMY_PRICE_TYPE_2);
         $this->assertTrue($hasValidPrice);
     }
 
+    /**
+     * @return void
+     */
     public function testGetPriceForAbstractProduct()
     {
         $price = $this->priceFacade->getPriceBySku(self::DUMMY_SKU_ABSTRACT_PRODUCT, self::DUMMY_PRICE_TYPE_1);
         $this->assertEquals(100, $price);
     }
 
+    /**
+     * @return void
+     */
     public function testGetPrice()
     {
         $price = $this->priceFacade->getPriceBySku(self::DUMMY_SKU_ABSTRACT_PRODUCT, self::DUMMY_PRICE_TYPE_1);
         $this->assertEquals(100, $price);
     }
 
+    /**
+     * @return void
+     */
     public function testGetPriceForConcreteProduct()
     {
         $price = $this->priceFacade->getPriceBySku(self::DUMMY_SKU_CONCRETE_PRODUCT, self::DUMMY_PRICE_TYPE_2);
         $this->assertEquals(999, $price);
     }
 
+    /**
+     * @return void
+     */
     protected function deletePriceEntitiesAbstract($requestProduct)
     {
         SpyPriceProductQuery::create()->filterBySpyAbstractProduct($requestProduct)->delete();
     }
 
+    /**
+     * @return void
+     */
     protected function deletePriceEntitiesConcrete($requestProduct)
     {
         SpyPriceProductQuery::create()->filterByProduct($requestProduct)->delete();
     }
 
+    /**
+     * @return void
+     */
     protected function insertPriceEntity($requestProduct, $requestPriceType)
     {
         (new SpyPriceProduct())
@@ -120,6 +150,9 @@ class ReaderTest extends Test
             ->save();
     }
 
+    /**
+     * @return void
+     */
     protected function setTestData()
     {
         $priceType1 = SpyPriceTypeQuery::create()->filterByName(self::DUMMY_PRICE_TYPE_1)->findOneOrCreate();

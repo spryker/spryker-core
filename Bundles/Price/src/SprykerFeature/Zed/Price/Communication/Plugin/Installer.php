@@ -17,6 +17,9 @@ use SprykerFeature\Zed\Price\Communication\PriceDependencyContainer;
 class Installer extends AbstractInstallerPlugin
 {
 
+    /**
+     * @return void
+     */
     public function install()
     {
         $this->getFacade()->install($this->messenger);

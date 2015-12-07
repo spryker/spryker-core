@@ -73,6 +73,8 @@ class TouchRecord implements TouchRecordInterface
      * @param int $idItem
      * @param string $itemEvent
      * @param SpyTouch $touchEntity
+     *
+     * @return void
      */
     protected function saveTouchEntity($itemType, $idItem, $itemEvent, SpyTouch $touchEntity)
     {
@@ -113,6 +115,8 @@ class TouchRecord implements TouchRecordInterface
     /**
      * @param string $itemType
      * @param string $idItem
+     *
+     * @return void
      */
     protected function insertKeyChangeRecord($itemType, $idItem)
     {
@@ -134,6 +138,8 @@ class TouchRecord implements TouchRecordInterface
      * @param string $itemEvent
      * @param string $idItem
      * @param string $type;
+     *
+     * @return void
      */
     protected function insertTouchRecord($itemType, $itemEvent, $idItem, $type = null)
     {

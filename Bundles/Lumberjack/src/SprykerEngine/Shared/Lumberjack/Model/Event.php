@@ -29,6 +29,8 @@ class Event implements EventInterface
      * @param array|string $data
      *
      * @throws DataInvalidException
+     *
+     * @return void
      */
     public function addField($name, $data)
     {
@@ -64,6 +66,8 @@ class Event implements EventInterface
      * @param array $fields
      *
      * @throws DataInvalidException
+     *
+     * @return void
      */
     public function addFields(array $fields)
     {

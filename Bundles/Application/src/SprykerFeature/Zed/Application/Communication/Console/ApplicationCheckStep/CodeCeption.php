@@ -14,6 +14,9 @@ use SprykerFeature\Zed\Application\Business\ApplicationFacade;
 class CodeCeption extends AbstractApplicationCheckStep
 {
 
+    /**
+     * @return void
+     */
     public function run()
     {
         $this->getFacade()->runCheckStepCodeCeption($this->logger);

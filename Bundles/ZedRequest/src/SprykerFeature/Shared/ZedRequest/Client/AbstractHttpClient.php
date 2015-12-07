@@ -98,6 +98,8 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * @param int $timeoutInSeconds
+     *
+     * @return void
      */
     public static function setDefaultTimeout($timeoutInSeconds)
     {
@@ -293,6 +295,8 @@ abstract class AbstractHttpClient implements HttpClientInterface
      * @param string $pathInfo
      * @param RequestInterface $requestTransfer
      * @param string $rawBody
+     *
+     * @return void
      */
     protected function logRequest($pathInfo, RequestInterface $requestTransfer, $rawBody)
     {
@@ -303,6 +307,8 @@ abstract class AbstractHttpClient implements HttpClientInterface
      * @param string $pathInfo
      * @param ZedResponse $responseTransfer
      * @param string $rawBody
+     *
+     * @return void
      */
     protected function logResponse($pathInfo, ZedResponse $responseTransfer, $rawBody)
     {
@@ -314,6 +320,8 @@ abstract class AbstractHttpClient implements HttpClientInterface
      * @param string $subType
      * @param ObjectInterface $transfer
      * @param string $rawBody
+     *
+     * @return void
      */
     protected function doLog($pathInfo, $subType, ObjectInterface $transfer, $rawBody)
     {
@@ -346,6 +354,8 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * @param EntityEnclosingRequest $request
+     *
+     * @return void
      */
     protected function forwardDebugSession(EntityEnclosingRequest $request)
     {

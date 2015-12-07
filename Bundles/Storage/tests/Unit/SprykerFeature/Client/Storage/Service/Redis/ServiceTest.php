@@ -28,6 +28,9 @@ class ServiceTest extends Test
      */
     protected $clientMock;
 
+    /**
+     * @return void
+     */
     protected function _before()
     {
         $this->clientMock = $this->getMock(
@@ -51,6 +54,9 @@ class ServiceTest extends Test
         );
     }
 
+    /**
+     * @return void
+     */
     public function testGetAllKeysTriggersRightCommand()
     {
         $this->clientMock->expects($this->once())->method('keys')->with($this->equalTo('kv:*'));
@@ -58,6 +64,9 @@ class ServiceTest extends Test
         $this->redisService->getAllKeys();
     }
 
+    /**
+     * @return void
+     */
     public function testGetKeysPassesPatternCorrectly()
     {
         $this->clientMock->expects($this->once())->method('keys')->with($this->equalTo('kv:aPattern*'));

@@ -50,6 +50,9 @@ class CartFacadeTest extends AbstractFunctionalTest
      */
     private $priceFacade;
 
+    /**
+     * @return void
+     */
     public function setUp()
     {
         parent::setUp();
@@ -98,6 +101,9 @@ class CartFacadeTest extends AbstractFunctionalTest
         return $this->getMock('SprykerEngine\Zed\Kernel\Business\Factory', ['create'], ['Cart']);
     }
 
+    /**
+     * @return void
+     */
     public function testAddToCart()
     {
         $cart = new CartTransfer();
@@ -131,6 +137,9 @@ class CartFacadeTest extends AbstractFunctionalTest
         }
     }
 
+    /**
+     * @return void
+     */
     public function testIncreaseCartQuantity()
     {
         $cart = new CartTransfer();
@@ -161,6 +170,9 @@ class CartFacadeTest extends AbstractFunctionalTest
         $this->assertEquals(1, $changedItem->getQuantity());
     }
 
+    /**
+     * @return void
+     */
     public function testRemoveFromCart()
     {
         $cart = new CartTransfer();
@@ -185,6 +197,9 @@ class CartFacadeTest extends AbstractFunctionalTest
         $this->assertCount(0, $changedCart->getItems());
     }
 
+    /**
+     * @return void
+     */
     public function testDecreaseCartItem()
     {
         $cart = new CartTransfer();
@@ -210,6 +225,9 @@ class CartFacadeTest extends AbstractFunctionalTest
         $this->assertEquals(2, $changedItem->getQuantity());
     }
 
+    /**
+     * @return void
+     */
     protected function setTestData()
     {
         $defaultPriceType = SpyPriceTypeQuery::create()->filterByName(self::PRICE_TYPE_DEFAULT)->findOneOrCreate();

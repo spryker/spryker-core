@@ -59,6 +59,8 @@ class TransactionStatusResponse
 
     /**
      * @param string $errorMessage
+     *
+     * @return void
      */
     public function setErrorMessage($errorMessage)
     {

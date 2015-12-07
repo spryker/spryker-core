@@ -16,6 +16,8 @@ class EnvironmentInformationServiceProvider extends AbstractPlugin implements Se
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function register(Application $app)
     {
@@ -23,6 +25,8 @@ class EnvironmentInformationServiceProvider extends AbstractPlugin implements Se
 
     /**
      * @param Application $app
+     *
+     * @return void
      */
     public function boot(Application $app)
     {

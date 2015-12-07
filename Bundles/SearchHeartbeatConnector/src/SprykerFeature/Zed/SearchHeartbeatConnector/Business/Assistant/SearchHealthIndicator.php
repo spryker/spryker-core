@@ -28,11 +28,17 @@ class SearchHealthIndicator extends AbstractHealthIndicator implements HealthInd
         $this->client = $client;
     }
 
+    /**
+     * @return void
+     */
     public function healthCheck()
     {
         $this->checkConnectToSearch();
     }
 
+    /**
+     * @return void
+     */
     private function checkConnectToSearch()
     {
         try {

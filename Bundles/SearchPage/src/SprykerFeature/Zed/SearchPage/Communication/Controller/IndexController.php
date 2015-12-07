@@ -11,6 +11,9 @@ use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 class IndexController extends AbstractController
 {
 
+    /**
+     * @return void
+     */
     public function indexAction()
     {
     }

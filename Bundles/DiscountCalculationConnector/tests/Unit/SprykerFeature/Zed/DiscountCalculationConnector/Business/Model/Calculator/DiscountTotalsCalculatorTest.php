@@ -30,6 +30,9 @@ class DiscountTotalsCalculatorTest extends Test
     const SALES_DISCOUNT_50 = 50;
     const ITEM_GROSS_PRICE_1000 = 1000;
 
+    /**
+     * @return void
+     */
     public function testRecalculateTotalsMustSetDiscountWithZeroAmountIfNoDiscountWasApplied()
     {
         $calculableContainer = $this->getCalculableContainer();
@@ -44,6 +47,9 @@ class DiscountTotalsCalculatorTest extends Test
         $this->assertEquals(0, $totalsTransfer->getDiscount()->getTotalAmount());
     }
 
+    /**
+     * @return void
+     */
     public function testRecalculateTotalsMustNotSetDiscountItemsToDiscountIfNoDiscountWasApplied()
     {
         $calculableContainer = $this->getCalculableContainer();
@@ -58,6 +64,9 @@ class DiscountTotalsCalculatorTest extends Test
         $this->assertCount(0, $totalsTransfer->getDiscount()->getDiscountItems());
     }
 
+    /**
+     * @return void
+     */
     public function testDiscountShouldBeItemDiscountForOnlyDiscountedItems()
     {
         $calculableContainer = $this->getCalculableContainer();
@@ -83,6 +92,9 @@ class DiscountTotalsCalculatorTest extends Test
         $this->assertEquals(self::SALES_DISCOUNT_100, $totalsTransfer->getDiscount()->getDiscountItems()[0]->getAmount());
     }
 
+    /**
+     * @return void
+     */
     public function testDiscountShouldBeItemDiscountAndExpenseDiscountForDiscountedItemsAndExpenses()
     {
         $calculableContainer = $this->getCalculableContainer();

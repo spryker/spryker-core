@@ -35,6 +35,9 @@ class JenkinsController extends AbstractController
         self::ROLE_EMPTY,
     ];
 
+    /**
+     * @return void
+     */
     public function init()
     {
     }
@@ -167,6 +170,9 @@ $command</command>";
         }
     }
 
+    /**
+     * @return void
+     */
     public function generateAction()
     {
         require implode(
@@ -252,6 +258,9 @@ $command</command>";
         }
     }
 
+    /**
+     * @return void
+     */
     public function reloadAction()
     {
         $url = 'reload';
@@ -259,6 +268,9 @@ $command</command>";
         echo "Jenkins reloaded (response: $code)\n";
     }
 
+    /**
+     * @return void
+     */
     public function disableAction()
     {
         $url = 'quietDown';
@@ -266,6 +278,9 @@ $command</command>";
         echo "Jenkins disabled (response: $code)\n";
     }
 
+    /**
+     * @return void
+     */
     public function enableAction()
     {
         $url = 'cancelQuietDown';

@@ -51,6 +51,7 @@ class TemplateInstaller extends AbstractInstaller
     }
 
     /**
+     * @return void
      */
     public function install()
     {
@@ -78,6 +79,8 @@ class TemplateInstaller extends AbstractInstaller
      * @param array $templates
      *
      * @throws TemplateAlreadyExistsException
+     *
+     * @return void
      */
     private function installTemplates(array $templates)
     {
