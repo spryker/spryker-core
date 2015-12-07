@@ -3,6 +3,9 @@
     <description>Spryker Coding Standard</description>
 
     <exclude-pattern>\.git</exclude-pattern>
+    <exclude-pattern>*/Generated/*</exclude-pattern>
+    <exclude-pattern>*/tests/_support/*</exclude-pattern>
+    <exclude-pattern>*/tests/_helper/*</exclude-pattern>
     <exclude-pattern>*/Fixtures/*</exclude-pattern>
 
     <rule ref="Squiz.Arrays.ArrayBracketSpacing"/>

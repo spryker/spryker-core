@@ -25,4 +25,15 @@ class DevelopmentFacade extends AbstractFacade
         $this->getDependencyContainer()->createBundleCodeStyleFixer()->fixBundleCodeStyle($bundle, $clear);
     }
 
+    /**
+     * @param string|null $bundle
+     * @param array $options
+     *
+     * @return void
+     */
+    public function checkCodeStyle($bundle = null, array $options = [])
+    {
+        $this->getDependencyContainer()->createBundleCodeStyleSniffer()->checkBundleCodeStyle($bundle, $options);
+    }
+
 }

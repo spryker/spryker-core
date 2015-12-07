@@ -66,7 +66,7 @@ class BundleCodeStyleFixer
     }
 
     /**
-     * @param $bundle
+     * @param string $bundle
      *
      * @return string
      */
@@ -78,7 +78,7 @@ class BundleCodeStyleFixer
     }
 
     /**
-     * @param $bundle
+     * @param string $bundle
      *
      * @return string
      */

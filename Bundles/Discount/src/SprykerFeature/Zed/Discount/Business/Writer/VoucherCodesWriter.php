@@ -36,6 +36,7 @@ class VoucherCodesWriter extends AbstractWriter
      * @var DiscountDecisionRuleWriter
      */
     protected $discountDecisionRuleWriter;
+
     /**
      * @var DiscountCollectorWriter
      */
