@@ -10,11 +10,11 @@ use SprykerEngine\Shared\Kernel\ClassMapFactory;
 use SprykerFeature\Zed\Development\Business\Refactor\AbstractRefactor;
 use SprykerFeature\Zed\Development\Business\Refactor\RefactorException;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Finder\Finder;
 use Symfony\Component\Finder\SplFileInfo;
 
 class RefactorPluginInstantiation extends AbstractRefactor
 {
+
     const CLASS_PART_APPLICATION = 1;
 
     /**
@@ -47,7 +47,6 @@ class RefactorPluginInstantiation extends AbstractRefactor
 
         $filesystem = new Filesystem();
 
-        $count = 0;
         foreach ($phpFiles as $file) {
             $replaced = 0;
             $content = $file->getContents();
@@ -57,7 +56,6 @@ class RefactorPluginInstantiation extends AbstractRefactor
                 foreach ($matches as $match) {
                     $this->replacePluginLocatorUsage($file, $content, $match[1], $match[2], isset($match[3]));
 
-                    $count++;
                     $replaced++;
                 }
             }
@@ -79,14 +77,18 @@ class RefactorPluginInstantiation extends AbstractRefactor
      */
     protected function replacePluginLocatorUsage(SplFileInfo $file, &$content, $bundle, $suffix, $useParenthesis)
     {
-        $key = $this->generateClassMapKey($file, $bundle, $suffix);
+        $key = $this->generateClassMapKey($file, $bundle, null, $suffix);
 
         if (!array_key_exists($key, $this->map)) {
-            throw new RefactorException(sprintf(
-                'Class not found in class map with key "%s" used in file %s',
-                $key,
-                $file->getRealPath()
-            ));
+            $key = $this->generateClassMapKey($file, $bundle, 'Communication', $suffix);
+
+            if (!array_key_exists($key, $this->map)) {
+                throw new RefactorException(sprintf(
+                    'Class not found in class map with key "%s" used in file %s',
+                    $key,
+                    $file->getRealPath()
+                ));
+            }
         }
 
         $replacement = 'new ' . $this->map[$key] . '()';
@@ -101,15 +103,16 @@ class RefactorPluginInstantiation extends AbstractRefactor
     /**
      * @param SplFileInfo $file
      * @param string $bundle
+     * @param string $layer
      * @param string $suffix
      *
      * @return string
      */
-    protected function generateClassMapKey(SplFileInfo $file, $bundle, $suffix)
+    protected function generateClassMapKey(SplFileInfo $file, $bundle, $layer, $suffix)
     {
         $applicationName = $this->getApplicationName($file);
 
-        $key = $applicationName . '|' . ucfirst($bundle) . '|' . 'Communication' . '|' . ucfirst($suffix);
+        $key = $applicationName . '|' . ucfirst($bundle) . '|' . $layer . '|' . ucfirst($suffix);
 
         return $key;
     }
