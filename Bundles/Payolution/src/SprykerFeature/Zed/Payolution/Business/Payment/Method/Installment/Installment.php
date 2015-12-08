@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Payolution\Business\Payment\Method\Installment;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
-use SprykerFeature\Shared\Library\Currency\CurrencyManager;
 use SprykerFeature\Zed\Payolution\Business\Payment\Method\AbstractPaymentMethod;
 use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
@@ -100,8 +99,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                         ],
                         [
                             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_AMOUNT_ELEMENT,
-                            ApiConstants::CALCULATION_XML_ELEMENT_VALUE =>
-                                $this->convertCentsToDecimal(
+                            ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $this->convertCentsToDecimal(
                                     $checkoutRequestTransfer
                                         ->getCart()
                                         ->getTotals()

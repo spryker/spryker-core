@@ -10,5 +10,4 @@ use SprykerEngine\Client\Kernel\AbstractDependencyProvider;
 
 class PayolutionDependencyProvider extends AbstractDependencyProvider
 {
-
 }
