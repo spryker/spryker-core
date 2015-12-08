@@ -6,10 +6,8 @@
 
 namespace SprykerEngine\Yves\Kernel\Communication;
 
-use Generated\Yves\Ide\AutoCompletion;
 use SprykerEngine\Client\Kernel\Service\AbstractClient;
 use SprykerEngine\Shared\Kernel\Locator\LocatorInterface;
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Yves\Kernel\DependencyContainer\DependencyContainerInterface;
 use SprykerEngine\Yves\Kernel\Locator;
 
@@ -17,6 +15,8 @@ abstract class AbstractPlugin
 {
 
     const DEPENDENCY_CONTAINER = 'DependencyContainer';
+
+    const CLASS_PART_BUNDLE = 2;
 
     /**
      * @var DependencyContainerInterface
@@ -58,11 +58,11 @@ abstract class AbstractPlugin
     /**
      * @return string
      */
-    private function getBundleName()
+    protected function getBundleName()
     {
         $className = get_class($this);
-        $expl = explode('\\', $className);
-        $bundle = $expl[2];
+        $classParts = explode('\\', $className);
+        $bundle = $classParts[self::CLASS_PART_BUNDLE];
 
         return $bundle;
     }

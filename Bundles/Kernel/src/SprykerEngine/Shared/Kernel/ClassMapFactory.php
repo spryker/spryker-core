@@ -65,7 +65,13 @@ class ClassMapFactory
         if (!array_key_exists($key, $this->map)) {
             $key = $this->createKey($application, $bundle, $suffix, $layer);
             if (!array_key_exists($key, $this->map)) {
-                throw new ClassNotFoundException('Class "' . $suffix . '" does not exist');
+                throw new ClassNotFoundException(sprintf(
+                    'Couldn\'t find class "%s\\%s\\%s\\%s" when trying to create with class map factory.',
+                    $application,
+                    $bundle,
+                    $layer,
+                    $suffix
+                ));
             }
         }
         $className = $this->map[$key];

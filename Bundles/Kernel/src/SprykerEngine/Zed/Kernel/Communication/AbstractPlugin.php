@@ -6,24 +6,19 @@
 
 namespace SprykerEngine\Zed\Kernel\Communication;
 
-use Psr\Log\AbstractLogger;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\BundleDependencyProviderLocator;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 
-abstract class AbstractPlugin extends AbstractLogger implements MessengerInterface
+abstract class AbstractPlugin
 {
 
     const DEPENDENCY_CONTAINER = 'DependencyContainer';
 
-    /**
-     * @var MessengerInterface
-     */
-    protected $messenger;
+    const CLASS_PART_BUNDLE = 2;
 
     /**
      * @var AbstractFacade
@@ -41,50 +36,6 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     private $queryContainer;
 
     /**
-     * @param MessengerInterface $messenger
-     *
-     * @return self
-     */
-    public function setMessenger(MessengerInterface $messenger)
-    {
-        $this->messenger = $messenger;
-
-        return $this;
-    }
-
-    /**
-     * Logs with an arbitrary level.
-     *
-     * @param mixed $level
-     * @param string $message
-     * @param array $context
-     *
-     * @return self
-     */
-    public function log($level, $message, array $context = [])
-    {
-        if ($this->messenger) {
-            $this->messenger->log($level, $message, $context);
-        }
-
-        return $this;
-    }
-
-    /**
-     * TODO remove method
-     *
-     * @param AbstractFacade $facade
-     *
-     * @return void
-     */
-    public function setOwnFacade(AbstractFacade $facade)
-    {
-//        $this->facade = $facade;
-    }
-
-    /**
-     * For autocompletion use typehint in class docblock like this: "@method MyFacade getFacade()"
-     *
      * @return AbstractFacade
      */
     protected function getFacade()
@@ -96,20 +47,6 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
         }
 
         return $this->facade;
-    }
-
-    /**
-     * TODO: remove method
-     *
-     * @param AbstractCommunicationDependencyContainer $dependencyContainer
-     *
-     * @return self
-     */
-    public function setDependencyContainer(AbstractCommunicationDependencyContainer $dependencyContainer)
-    {
-//        $this->dependencyContainer = $dependencyContainer;
-//
-//        return $this;
     }
 
     /**
@@ -134,20 +71,6 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     }
 
     /**
-     * TODO: remove method
-     *
-     * @param AbstractQueryContainer $queryContainer
-     *
-     * @return self
-     */
-    public function setQueryContainer(AbstractQueryContainer $queryContainer)
-    {
-//        $this->queryContainer = $queryContainer;
-//
-//        return $this;
-    }
-
-    /**
      * @return AbstractQueryContainer
      */
     protected function getQueryContainer()
@@ -163,11 +86,11 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     /**
      * @return string
      */
-    private function getBundleName()
+    protected function getBundleName()
     {
         $className = get_class($this);
-        $expl = explode('\\', $className);
-        $bundle = $expl[2];
+        $classParts = explode('\\', $className);
+        $bundle = $classParts[self::CLASS_PART_BUNDLE];
 
         return $bundle;
     }
