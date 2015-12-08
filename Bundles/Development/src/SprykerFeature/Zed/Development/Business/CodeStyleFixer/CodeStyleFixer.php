@@ -139,7 +139,7 @@ class CodeStyleFixer
     }
 
     /**
-     * @param $path
+     * @param string $path
      *
      * @return void
      */
