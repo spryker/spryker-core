@@ -389,7 +389,7 @@ class SprykerUseStatementFixer extends AbstractFixer
 
             $prefix = '';
             for ($i = 0; $i <= $count; ++$i) {
-                $prefix .= $pieces[$count];
+                $prefix .= $pieces[$i];
             }
 
             $alias = $prefix . $alias;
