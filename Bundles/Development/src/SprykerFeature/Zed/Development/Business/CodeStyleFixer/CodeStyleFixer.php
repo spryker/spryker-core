@@ -54,6 +54,9 @@ class CodeStyleFixer
     public function fixCodeStyle($bundle, array $options = [])
     {
         if (!$bundle) {
+            if ($options[self::OPTION_CLEAR]) {
+                $this->clearCacheFile($this->applicationRoot);
+            }
             $this->runFixerCommand($this->applicationRoot, $this->applicationRoot, $options);
 
             return;
@@ -61,21 +64,20 @@ class CodeStyleFixer
 
         if ($bundle === self::BUNDLE_ALL) {
             $this->copyPhpCsFixerConfigToBundle($this->pathToBundles, $options[self::OPTION_CLEAR]);
-            $this->runFixerCommand($this->pathToBundles, $this->applicationRoot, $options);
+            $this->runFixerCommand($this->pathToBundles, $this->getPathToCore(), $options);
 
             return;
         }
 
         $bundle = $this->normalizeBundleName($bundle);
-        $path = $this->getPathToBundle($bundle);
+        $pathToBundle = $this->getPathToBundle($bundle);
 
-        if (!is_dir($path)) {
+        if (!is_dir($pathToBundle)) {
             throw new \ErrorException('This bundle does not exist');
         }
 
-        $this->copyPhpCsFixerConfigToBundle($path, $options[self::OPTION_CLEAR]);
-        $pathToCore = $this->getPathToCore();
-        $this->runFixerCommand($path, $pathToCore, $options);
+        $this->copyPhpCsFixerConfigToBundle($pathToBundle, $options[self::OPTION_CLEAR]);
+        $this->runFixerCommand($pathToBundle, $this->getPathToCore(), $options);
     }
 
     /**
@@ -133,6 +135,16 @@ class CodeStyleFixer
             $to
         );
 
+        $this->clearCacheFile($path);
+    }
+
+    /**
+     * @param string $path
+     *
+     * @return void
+     */
+    protected function clearCacheFile($path)
+    {
         $cacheFile = $path . self::PHP_CS_CACHE_CONFIG_FILE_NAME;
         if (file_exists($cacheFile)) {
             unlink($cacheFile);
@@ -149,15 +161,21 @@ class CodeStyleFixer
     protected function runFixerCommand($path, $rootPath, array $options)
     {
         $arguments = '';
-        if (!empty($options[self::OPTION_VERBOSE])) {
+        if ($options[self::OPTION_VERBOSE]) {
             $arguments = ' -vvv';
         }
 
+        if ($path === $this->applicationRoot) {
+            $path = '';
+        }
         if ($path) {
             $path = ' ' . rtrim($path, DIRECTORY_SEPARATOR);
         }
 
         $command = $this->applicationRoot . 'vendor/bin/php-cs-fixer fix' . $path . $arguments;
+        if ($options[self::OPTION_VERBOSE]) {
+            echo $command . PHP_EOL;
+        }
 
         $process = new Process($command, $rootPath, null, null, 4800);
         $process->run(function ($type, $buffer) {

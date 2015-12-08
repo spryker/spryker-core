@@ -6,6 +6,7 @@
 
 namespace Unit\SprykerFeature\Zed\Payone\Business\Mode;
 
+use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Payone\Business\Mode\ModeDetector;
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
@@ -24,7 +25,7 @@ class ModeDetectorTest extends \PHPUnit_Framework_TestCase
      */
     public function testModeDetection()
     {
-        $modeDetector = new ModeDetector(new PayoneConfig(\SprykerEngine\Shared\Config::getInstance(), Locator::getInstance()));
+        $modeDetector = new ModeDetector(new PayoneConfig(Config::getInstance(), Locator::getInstance()));
         $detectedMode = $modeDetector->getMode();
 
         $this->assertEquals(ModeDetectorInterface::MODE_TEST, $detectedMode);

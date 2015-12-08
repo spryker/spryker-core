@@ -4,6 +4,8 @@ namespace Unit\SprykerFeature\Zed\Development\Business\CodeStyleFixer\Fixtures\R
 
 use Pyz\Zed\Foo\Bar\Baz;
 use X\Y;
+use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageFinder as InstalledPackagesInstalledPackageFinder;
+use Foo\InstalledPackageFinder;
 
 class TestClass1Input extends \Pyz\Zed\Foo\Bar\Baz
 {
@@ -17,6 +19,17 @@ class TestClass1Input extends \Pyz\Zed\Foo\Bar\Baz
     public function replaceFunctionB()
     {
         new\SprykerEngine\Zed\Foo($x);
+    }
+
+    protected function replaceFunctionC(\Foo\PackagesTransfer $collection, $path)
+    {
+        $x = new InstalledPackageFinder();
+        $y = new InstalledPackagesInstalledPackageFinder();
+
+        return new \SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageFinder(
+            $collection,
+            $path
+        );
     }
 
     public function replaceNotYetFunction()

@@ -7,7 +7,7 @@ namespace SprykerEngine\Zed\FlashMessenger\Business\Model;
 
 use Generated\Shared\Transfer\FlashMessagesTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use Pyz\Zed\Glossary\Business\GlossaryFacade;
+use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 class SessionMessageTray extends BaseMessageTray implements MessageTrayInterface

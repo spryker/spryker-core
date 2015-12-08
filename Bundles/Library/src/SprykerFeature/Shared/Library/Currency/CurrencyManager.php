@@ -5,6 +5,7 @@
  */
 
 namespace SprykerFeature\Shared\Library\Currency;
+use SprykerEngine\Shared\Kernel\Store;
 
 /**
  * This class is the central math class for currency arithmetic operations
@@ -73,7 +74,7 @@ class CurrencyManager
     public static function getDefaultCurrency()
     {
         if (!self::$currency) {
-            self::$currency = self::loadCurrencyClass(\SprykerEngine\Shared\Kernel\Store::getInstance()->getCurrencyIsoCode());
+            self::$currency = self::loadCurrencyClass(Store::getInstance()->getCurrencyIsoCode());
         }
 
         return self::$currency;

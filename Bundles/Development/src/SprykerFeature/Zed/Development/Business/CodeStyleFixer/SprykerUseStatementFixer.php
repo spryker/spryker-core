@@ -125,11 +125,12 @@ class SprykerUseStatementFixer extends AbstractFixer
                 continue;
             }
 
-            $name = '';
+            $className = '';
             for ($i = $lastSeparatorIndex + 1; $i <= $lastIndex; ++$i) {
-                $name .= $tokens[$i]->getContent();
+                $className .= $tokens[$i]->getContent();
             }
-            $addedUseStatement = $this->addUseStatement($name, $extractedUseStatement);
+
+            $addedUseStatement = $this->addUseStatement($className, $extractedUseStatement);
             if (!$addedUseStatement) {
                 return;
             }
@@ -138,8 +139,8 @@ class SprykerUseStatementFixer extends AbstractFixer
                 $tokens[$i]->clear();
             }
 
-            if ($addedUseStatement['aliased'] !== null) {
-                $tokens[$lastSeparatorIndex + 1]->setContent($addedUseStatement['aliased']);
+            if ($addedUseStatement['alias'] !== null) {
+                $tokens[$lastSeparatorIndex + 1]->setContent($addedUseStatement['alias']);
                 for ($i = $lastSeparatorIndex + 2; $i <= $lastIndex; ++$i) {
                     $tokens[$i]->clear();
                 }
@@ -229,22 +230,22 @@ class SprykerUseStatementFixer extends AbstractFixer
                 $fullName = $statementContent;
                 $statementParts = explode('\\', $fullName);
                 $shortName = end($statementParts);
-                $aliased = null;
+                $alias = null;
             } else {
                 $fullName = $statementParts[0];
-                $shortName = $statementParts[1];
+                $alias = $statementParts[1];
                 $statementParts = explode('\\', $fullName);
-                $aliased = $shortName !== end($statementParts);
+                $shortName = end($statementParts);
             }
 
             $shortName = trim($shortName);
             $fullName = trim($fullName);
-            $key = $aliased ?: $shortName;
+            $key = $alias ?: $shortName;
 
             $uses[$key] = [
-                'aliased' => $aliased,
+                'alias' => $alias,
                 'end' => $statementEndIndex,
-                'fullName' => $fullName,
+                'fullName' => ltrim($fullName, '\\'),
                 'shortName' => $shortName,
                 'start' => $index,
             ];
@@ -280,6 +281,10 @@ class SprykerUseStatementFixer extends AbstractFixer
         $newStatements = $this->newStatements;
         $existingStatements = $this->existingStatements;
 
+        if  (empty($newStatements)) {
+            return;
+        }
+
         if (empty($existingStatements)) {
             $useStatementStartIndex = $tokens->getNextMeaningfulToken($namespaceStatements[0]['end']);
             $tokens[$useStatementStartIndex]->setContent(PHP_EOL . $tokens[$useStatementStartIndex]->getContent());
@@ -308,8 +313,8 @@ class SprykerUseStatementFixer extends AbstractFixer
     protected function insertUseStatement(Tokens $tokens, array $useStatement, $useStatementStartIndex)
     {
         $alias = '';
-        if (!empty($useStatement['aliased'])) {
-            $alias = ' as ' . $useStatement['aliased'];
+        if (!empty($useStatement['alias'])) {
+            $alias = ' as ' . $useStatement['alias'];
         }
 
         $content = 'use ' . $useStatement['fullName'] . $alias . ';';
@@ -351,7 +356,7 @@ class SprykerUseStatementFixer extends AbstractFixer
         }
 
         $result = [
-            'aliased' => $alias === $shortName ? null : $alias,
+            'alias' => $alias === $shortName ? null : $alias,
             'fullName' => $fullName,
             'shortName' => $shortName,
         ];
