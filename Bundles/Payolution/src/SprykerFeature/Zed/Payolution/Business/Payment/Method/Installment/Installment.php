@@ -99,10 +99,12 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                         ],
                         [
                             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_AMOUNT_ELEMENT,
-                            ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $checkoutRequestTransfer
-                                ->getCart()
-                                ->getTotals()
-                                ->getGrandTotal(),
+                            ApiConstants::CALCULATION_XML_ELEMENT_VALUE => $this->convertCentsToDecimal(
+                                    $checkoutRequestTransfer
+                                        ->getCart()
+                                        ->getTotals()
+                                        ->getGrandTotal()
+                            ),
                         ],
                         [
                             ApiConstants::CALCULATION_XML_ELEMENT_NAME => ApiConstants::CALCULATION_XML_VAT_ELEMENT,
@@ -163,7 +165,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                 ApiConstants::CONTACT_IP => $payolutionTransfer->getClientIp(),
                 ApiConstants::CRITERION_PRE_CHECK => 'TRUE',
                 ApiConstants::CRITERION_CUSTOMER_LANGUAGE => $payolutionTransfer->getLanguageIso2Code(),
-                ApiConstants::CRITERION_INSTALLMENT_AMOUNT => $payolutionTransfer->getInstallmentAmount(),
+                ApiConstants::CRITERION_INSTALLMENT_AMOUNT => $this->convertCentsToDecimal($payolutionTransfer->getInstallmentAmount()),
                 ApiConstants::CRITERION_DURATION => $payolutionTransfer->getInstallmentDuration(),
                 ApiConstants::CRITERION_ACCOUNT_HOLDER => $payolutionTransfer->getBankAccountHolder(),
                 ApiConstants::CRITERION_ACCOUNT_BIC => $payolutionTransfer->getBankAccountBic(),
@@ -203,7 +205,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                 ApiConstants::CONTACT_IP => $paymentEntity->getClientIp(),
                 ApiConstants::IDENTIFICATION_SHOPPERID => $paymentEntity->getSpySalesOrder()->getFkCustomer(),
                 ApiConstants::CRITERION_CUSTOMER_LANGUAGE => $paymentEntity->getLanguageIso2Code(),
-                ApiConstants::CRITERION_INSTALLMENT_AMOUNT => $paymentEntity->getInstallmentAmount(),
+                ApiConstants::CRITERION_INSTALLMENT_AMOUNT => $this->convertCentsToDecimal($paymentEntity->getInstallmentAmount()),
                 ApiConstants::CRITERION_DURATION => $paymentEntity->getInstallmentDuration(),
                 ApiConstants::CRITERION_ACCOUNT_HOLDER => $paymentEntity->getBankAccountHolder(),
                 ApiConstants::CRITERION_ACCOUNT_BIC => $paymentEntity->getBankAccountBic(),

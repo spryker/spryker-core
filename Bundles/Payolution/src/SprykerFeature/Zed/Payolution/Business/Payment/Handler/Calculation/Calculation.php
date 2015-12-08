@@ -8,6 +8,7 @@ namespace SprykerFeature\Zed\Payolution\Business\Payment\Handler\Calculation;
 
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
+use SprykerFeature\Shared\Payolution\PayolutionApiConstants;
 use SprykerFeature\Zed\Payolution\Business\Payment\Handler\AbstractPaymentHandler;
 
 class Calculation extends AbstractPaymentHandler implements CalculationInterface
@@ -20,9 +21,8 @@ class Calculation extends AbstractPaymentHandler implements CalculationInterface
      */
     public function calculateInstallmentPayments(CheckoutRequestTransfer $checkoutRequestTransfer)
     {
-        $paymentTransfer = $checkoutRequestTransfer->getPayolutionPayment();
         $requestData = $this
-            ->getMethodMapper($paymentTransfer->getAccountBrand())
+            ->getMethodMapper(PayolutionApiConstants::BRAND_INSTALLMENT)
             ->buildCalculationRequest($checkoutRequestTransfer);
 
         return $this->sendRequest($requestData);

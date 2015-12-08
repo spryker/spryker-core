@@ -18,6 +18,7 @@
         <property name="bankAccountIban" type="string"/>
         <property name="installmentAmount" type="int"/>
         <property name="installmentDuration" type="int"/>
+        <property name="installmentPaymentDetailIndex" type="int"/>
     </transfer>
 
     <transfer name="PayolutionTransactionResponse">

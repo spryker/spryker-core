@@ -10,6 +10,7 @@ use Generated\Shared\Transfer\PayolutionCalculationInstallmentTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationPaymentDetailTransfer;
 use Generated\Shared\Transfer\PayolutionCalculationResponseTransfer;
 use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
+use SprykerFeature\Shared\Library\Currency\CurrencyManager;
 use SprykerFeature\Zed\Payolution\Business\Payment\Method\ApiConstants;
 use DOMDocument;
 use DOMElement;
@@ -218,12 +219,12 @@ class Converter implements ConverterInterface
     protected function arrayToCalculationPaymentDetailTransfer(array $data)
     {
         $paymentDetailTransfer = (new PayolutionCalculationPaymentDetailTransfer())
-            ->setOriginalAmount($data['OriginalAmount'] * 100)
-            ->setTotalAmount($data['TotalAmount'] * 100)
-            ->setMinimumInstallmentFee($data['MinimumInstallmentFee'] * 100)
+            ->setOriginalAmount($this->centsToDecimal($data['OriginalAmount']))
+            ->setTotalAmount($this->centsToDecimal($data['TotalAmount']))
+            ->setMinimumInstallmentFee($this->centsToDecimal($data['MinimumInstallmentFee']))
             ->setDuration($data['Duration'])
-            ->setInterestRate($data['InterestRate'] * 100)
-            ->setEffectiveInterestRate($data['EffectiveInterestRate'] * 100)
+            ->setInterestRate($this->centsToDecimal($data['InterestRate']))
+            ->setEffectiveInterestRate($this->centsToDecimal($data['EffectiveInterestRate']))
             ->setUsage($data['Usage'])
             ->setCurrency($data['Currency'])
             ->setStandardCreditInformationUrl($data['StandardCreditInformationUrl']);
@@ -245,9 +246,19 @@ class Converter implements ConverterInterface
      */
     protected function arrayToCalculationInstallmentTransfer(array $data)
     {
-        $data['Amount'] = $data['Amount'] * 100;
+        $data['Amount'] = $this->centsToDecimal($data['Amount']);
 
         return (new PayolutionCalculationInstallmentTransfer())->fromArray($data);
+    }
+
+    /**
+     * @param float $amount
+     *
+     * @return int
+     */
+    protected function centsToDecimal($amount)
+    {
+        return CurrencyManager::getInstance()->convertDecimalToCent($amount);
     }
 
 }
