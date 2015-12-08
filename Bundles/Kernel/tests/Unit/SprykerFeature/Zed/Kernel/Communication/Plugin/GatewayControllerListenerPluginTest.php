@@ -45,7 +45,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
         $action = 'goodAction';
         $eventMock->setController([$controller, $action]);
 
-        $controllerListenerPlugin = $this->createControllerListenerPluginMock();
+        $controllerListenerPlugin = new GatewayControllerListenerPlugin();
         $controllerListenerPlugin->onKernelController($eventMock);
 
         $controllerCallable = $eventMock->getController();
@@ -63,7 +63,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
         $controller = new NotGatewayController();
         $eventMock->setController([$controller, $action]);
 
-        $controllerListenerPlugin = $this->createControllerListenerPluginMock();
+        $controllerListenerPlugin = new GatewayControllerListenerPlugin();
         $controllerListenerPlugin->onKernelController($eventMock);
 
         $controllerCallable = $eventMock->getController();
@@ -156,17 +156,6 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject
-     */
-    protected function createControllerListenerPluginMock()
-    {
-        $controllerListenerPlugin = $this->getMock(GatewayControllerListenerPlugin::class, ['setFlashMessengerMessages']);
-        $controllerListenerPlugin->method('setFlashMessengerMessages')->willReturn(null);
-
-        return $controllerListenerPlugin;
-    }
-
-    /**
      * @return \PHPUnit_Framework_MockObject_MockObject|Repeater
      */
     private function createRepeaterMock()
@@ -228,7 +217,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
         $controller = new GatewayController();
         $eventMock->setController([$controller, $action]);
 
-        $controllerListenerPlugin = $this->createControllerListenerPluginMock();
+        $controllerListenerPlugin = new GatewayControllerListenerPlugin();
 
         if (!$transfer) {
             $transfer = $this->getTransferMock();

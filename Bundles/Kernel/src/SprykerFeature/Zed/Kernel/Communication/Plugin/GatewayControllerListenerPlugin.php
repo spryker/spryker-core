@@ -12,14 +12,14 @@ use SprykerFeature\Shared\ZedRequest\Client\Message;
 use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
 use SprykerFeature\Zed\Kernel\Communication\GatewayControllerListenerInterface;
-use SprykerFeature\Zed\Kernel\Communication\GatewayDependencyContainer;
+use SprykerFeature\Zed\Kernel\Communication\KernelDependencyContainer;
 use SprykerFeature\Zed\ZedRequest\Business\Client\Request;
 use SprykerFeature\Zed\ZedRequest\Business\Client\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use SprykerEngine\Zed\FlashMessenger\FlashMessengerConfig;
 
 /**
- * @method GatewayDependencyContainer getDependencyContainer()
+ * @method KernelDependencyContainer getDependencyContainer()
  */
 class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayControllerListenerInterface
 {

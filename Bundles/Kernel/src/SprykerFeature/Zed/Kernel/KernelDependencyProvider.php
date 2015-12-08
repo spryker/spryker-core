@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Kernel;
 use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
 use SprykerEngine\Zed\Kernel\Container;
 
-class GatewayDependencyProvider extends AbstractBundleDependencyProvider
+class KernelDependencyProvider extends AbstractBundleDependencyProvider
 {
 
     const FACADE_FLASH_MESSENGER = 'flash messenger facade';
