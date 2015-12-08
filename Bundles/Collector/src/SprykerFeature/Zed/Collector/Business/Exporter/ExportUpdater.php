@@ -14,6 +14,11 @@ class ExportUpdater implements UpdaterInterface
 {
 
     /**
+     * @var array
+     */
+    protected $collectedData;
+
+    /**
      * @var WriterInterface
      */
     protected $writer;
@@ -63,6 +68,16 @@ class ExportUpdater implements UpdaterInterface
         $data = array_merge($exportedData, $dataToAppend);
 
         $this->writer->write([$key => $data], '');
+    }
+
+    /**
+     * @param array $data
+     *
+     * @return void
+     */
+    public function collect(array $data)
+    {
+        $this->collectedData = $data;
     }
 
 }

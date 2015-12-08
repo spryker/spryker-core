@@ -130,18 +130,6 @@ abstract class AbstractPdoCollectorPlugin
     }
 
     /**
-     * @return BatchIteratorInterface
-     */
-    protected function generateBatchIterator()
-    {
-        return new PdoBatchIterator(
-            $this->criteriaBuilder,
-            $this->touchQueryContainer->getConnection(),
-            $this->chunkSize
-        );
-    }
-
-    /**
      * @return int
      */
     public function getChunkSize()
@@ -155,6 +143,18 @@ abstract class AbstractPdoCollectorPlugin
     public function setChunkSize($chunkSize)
     {
         $this->chunkSize = $chunkSize;
+    }
+
+    /**
+     * @return BatchIteratorInterface
+     */
+    protected function generateBatchIterator()
+    {
+        return new PdoBatchIterator(
+            $this->criteriaBuilder,
+            $this->touchQueryContainer->getConnection(),
+            $this->chunkSize
+        );
     }
 
     /**
@@ -189,6 +189,8 @@ abstract class AbstractPdoCollectorPlugin
 
         $batchCollection = $this->generateBatchIterator();
         foreach ($batchCollection as $batch) {
+            $this->exportUpdater->collect($batch);
+
             $touchUpdaterSet = new TouchUpdaterSet(self::COLLECTOR_TOUCH_ID);
             $collectedData = $this->collectData($batch, $locale, $touchUpdaterSet);
             $collectedDataCount = count($collectedData);
