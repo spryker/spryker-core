@@ -81,10 +81,8 @@ class ControllerLocator implements ControllerLocatorInterface
      */
     public function locate(\Pimple $application, LocatorLocatorInterface $locator)
     {
-        $factory = new Factory($this->bundle);
-
         $resolvedController = ClassMapFactory::getInstance()->create(
-            'Zed', $this->bundle, 'Controller' . $this->controller . 'Controller', 'Communication', [$application, $factory, $locator]
+            'Zed', $this->bundle, 'Controller' . $this->controller . 'Controller', 'Communication', [$application]
         );
 
         // @todo REFACTOR -  move to constructor when all controllers are upgraded

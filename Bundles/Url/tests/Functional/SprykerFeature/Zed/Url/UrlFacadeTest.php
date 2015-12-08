@@ -11,7 +11,6 @@ use Generated\Shared\Transfer\UrlTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Kernel\Persistence\Factory;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainer;
 use SprykerFeature\Zed\Url\Business\UrlFacade;
@@ -58,11 +57,12 @@ class UrlFacadeTest extends AbstractFunctionalTest
     protected function setUp()
     {
         parent::setUp();
+
         $this->locator = Locator::getInstance();
-        $this->urlFacade = $this->getFacade();
-        $this->localeFacade = $this->getFacade('SprykerEngine', 'Locale');
-        $this->urlQueryContainer = new UrlQueryContainer(new Factory('Url'), $this->locator);
-        $this->touchQueryContainer = new TouchQueryContainer(new Factory('Touch'), $this->locator);
+        $this->urlFacade = new UrlFacade();
+        $this->localeFacade = new LocaleFacade();
+        $this->urlQueryContainer = new UrlQueryContainer();
+        $this->touchQueryContainer = new TouchQueryContainer();
     }
 
     /**

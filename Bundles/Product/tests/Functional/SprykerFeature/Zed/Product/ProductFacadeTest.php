@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\ConcreteProductTransfer;
 use Generated\Shared\Transfer\LocalizedAttributesTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 use SprykerFeature\Zed\Product\Business\ProductFacade;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainer;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;

@@ -28,7 +28,7 @@ class Locator extends AbstractLocator
     protected $application = 'baz';
 
     /**
-     * @param $bundle
+     * @param string $bundle
      * @param LocatorLocatorInterface $locator
      * @param null|string $className
      *

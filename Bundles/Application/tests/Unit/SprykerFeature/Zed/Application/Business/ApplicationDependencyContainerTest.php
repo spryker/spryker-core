@@ -6,10 +6,6 @@
 
 namespace Functional\SprykerEngine\Zed\Transfer\Business\Model;
 
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Zed\Application\ApplicationConfig;
 use SprykerFeature\Zed\Application\Business\ApplicationDependencyContainer;
 
 /**
@@ -27,10 +23,7 @@ class ApplicationDependencyContainerTest extends \PHPUnit_Framework_TestCase
      */
     private function getDependencyContainer()
     {
-        $factory = new Factory('Application');
-        $config = new ApplicationConfig(Config::getInstance(), Locator::getInstance());
-
-        return new ApplicationDependencyContainer($factory, Locator::getInstance(), $config);
+        return new ApplicationDependencyContainer();
     }
 
     /**

@@ -15,7 +15,6 @@ use SprykerFeature\Shared\Auth\AuthConfig as AuthSharedConfig;
 use SprykerFeature\Zed\Auth\Business\AuthFacade;
 use SprykerFeature\Zed\User\Business\UserFacade;
 use SprykerFeature\Zed\Auth\Business\Client\StaticToken;
-use SprykerEngine\Zed\Kernel\Business\Factory;
 use Generated\Shared\Transfer\UserTransfer;
 
 /**
@@ -50,15 +49,9 @@ class AuthTest extends Test
 
         $this->locator = Locator::getInstance();
 
-        $this->userFacade = new UserFacade(
-            new Factory('User'),
-            $this->locator
-        );
+        $this->userFacade = new UserFacade();
 
-        $this->authFacade = new AuthFacade(
-            new Factory('Auth'),
-            $this->locator
-        );
+        $this->authFacade = new AuthFacade();
     }
 
     /**

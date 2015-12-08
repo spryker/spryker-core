@@ -6,9 +6,6 @@
 
 namespace Functional\SprykerEngine\Zed\Application\Business\Model;
 
-use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Application\Business\ApplicationFacade;
 
 /**
@@ -26,17 +23,7 @@ class ApplicationFacadeTest extends \PHPUnit_Framework_TestCase
      */
     private function getFacade()
     {
-        $factory = new Factory('Application');
-
-        return new ApplicationFacade($factory, $this->getLocator());
-    }
-
-    /**
-     * @return Locator|AutoCompletion
-     */
-    private function getLocator()
-    {
-        return Locator::getInstance();
+        return new ApplicationFacade();
     }
 
     /**

@@ -7,6 +7,7 @@
 namespace SprykerEngine\Zed\Kernel\Business;
 
 use SprykerEngine\Zed\Kernel\Business\DependencyContainer\DependencyContainerInterface;
+use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException;
 use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -104,9 +105,9 @@ abstract class AbstractFacade implements FacadeInterface
     }
 
     /**
-     * @throws \Exception
+     * @throws DependencyContainerNotFoundException
      *
-     * @return mixed
+     * @return AbstractBusinessDependencyContainer
      */
     private function findDependencyContainer()
     {

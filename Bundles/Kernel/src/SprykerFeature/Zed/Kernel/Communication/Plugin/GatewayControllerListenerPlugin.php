@@ -18,7 +18,6 @@ use SprykerFeature\Zed\ZedRequest\Business\Client\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use SprykerEngine\Zed\FlashMessenger\FlashMessengerConfig;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Kernel\Communication\Factory;
 
 class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayControllerListenerInterface
 {

@@ -11,11 +11,12 @@ use Functional\SprykerFeature\Zed\CustomerCheckoutConnector\Dependency\CustomerF
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
-use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\Customer\Business\CustomerDependencyContainer;
 use SprykerFeature\Zed\Customer\CustomerDependencyProvider;
 use Orm\Zed\Customer\Persistence\SpyCustomer;
+use SprykerFeature\Zed\CustomerCheckoutConnector\Business\CustomerCheckoutConnectorDependencyContainer;
 use SprykerFeature\Zed\CustomerCheckoutConnector\Business\CustomerCheckoutConnectorFacade;
 use SprykerFeature\Zed\CustomerCheckoutConnector\CustomerCheckoutConnectorDependencyProvider;
 
@@ -40,14 +41,16 @@ class CustomerCheckoutConnectorFacadeTest extends Test
     {
         parent::setUp();
 
-        $locator = Locator::getInstance();
-        $this->customerCheckoutConnectorFacade = new CustomerCheckoutConnectorFacade(new Factory('CustomerCheckoutConnector'), $locator);
+        $this->customerCheckoutConnectorFacade = new CustomerCheckoutConnectorFacade();
+        $this->customerCheckoutConnectorFacade->setDependencyContainer(new CustomerCheckoutConnectorDependencyContainer());
 
         $container = new Container();
         $customerDependencyProvider = new CustomerDependencyProvider();
         $customerDependencyProvider->provideBusinessLayerDependencies($container);
-        $customerFacade = new CustomerFacade(new Factory('Customer'), $locator);
+
+        $customerFacade = new CustomerFacade();
         $customerFacade->setExternalDependencies($container);
+        $customerFacade->setDependencyContainer(new CustomerDependencyContainer());
 
         $container = new Container();
         $container[CustomerCheckoutConnectorDependencyProvider::FACADE_CUSTOMER] = $customerFacade;

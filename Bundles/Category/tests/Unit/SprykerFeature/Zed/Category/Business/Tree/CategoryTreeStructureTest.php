@@ -6,8 +6,7 @@
 
 namespace Unit\SprykerFeature\Zed\Category\Business\Tree;
 
-use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerFeature\Zed\Category\Business\Tree\CategoryTreeFormatter;
+use SprykerFeature\Zed\Category\Business\Tree\Formatter\CategoryTreeFormatter;
 use Unit\SprykerFeature\Zed\Category\Business\Tree\Fixtures\Expected\CategoryStructureExpected;
 use Unit\SprykerFeature\Zed\Category\Business\Tree\Fixtures\Input\CategoryStructureInput;
 
@@ -20,11 +19,6 @@ use Unit\SprykerFeature\Zed\Category\Business\Tree\Fixtures\Input\CategoryStruct
  */
 class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
 {
-
-    /**
-     * @var Factory
-     */
-    protected $factory;
 
     /**
      * @var CategoryStructureInput
@@ -41,7 +35,6 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
      */
     public function setUp()
     {
-        $this->factory = new Factory('Category');
         $this->input = new CategoryStructureInput();
         $this->expected = new CategoryStructureExpected();
     }
@@ -55,8 +48,7 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
     {
         $categories = $this->input->getOrderedCategoriesArray();
 
-        $treeStructure = $this->factory
-            ->createTreeFormatterCategoryTreeFormatter($categories)
+        $treeStructure = (new CategoryTreeFormatter($categories))
             ->getCategoryTree();
 
         $this->assertSame($this->expected->getOrderedCategoriesArray(), $treeStructure);
@@ -71,8 +63,7 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
     {
         $categories = $this->input->getSecondOrderedCategoriesArray();
 
-        $treeStructure = $this->factory
-            ->createTreeFormatterCategoryTreeFormatter($categories)
+        $treeStructure = (new CategoryTreeFormatter($categories))
             ->getCategoryTree();
 
         $this->assertSame($this->expected->getSecondOrderedCategoriesArray(), $treeStructure);
@@ -87,8 +78,7 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
     {
         $categories = $this->input->getCategoryStructureWithChildrenBeforeParent();
 
-        $treeStructure = $this->factory
-            ->createTreeFormatterCategoryTreeFormatter($categories)
+        $treeStructure = (new CategoryTreeFormatter($categories))
             ->getCategoryTree();
 
         $this->assertSame($this->expected->getCategoryStructureWithChildrenBeforeParent(), $treeStructure);
@@ -103,8 +93,7 @@ class CategoryTreeStructureTest extends \PHPUnit_Framework_TestCase
     {
         $categories = $this->input->getCategoryStructureWithNonexistantParent();
 
-        $treeStructure = $this->factory
-            ->createTreeFormatterCategoryTreeFormatter($categories)
+        $treeStructure = (new CategoryTreeFormatter($categories))
             ->getCategoryTree();
 
         $this->assertSame($this->expected->getCategoryStructureWithNonexistantParent(), $treeStructure);

@@ -10,6 +10,7 @@ use Psr\Log\LoggerInterface;
 use Silex\Application;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
 use SprykerEngine\Zed\Kernel\Container;
@@ -52,6 +53,11 @@ class Console extends SymfonyCommand
     private $facade;
 
     /**
+     * @var Container
+     */
+    private $container;
+
+    /**
      * @var AbstractQueryContainer
      */
     private $queryContainer;
@@ -64,24 +70,33 @@ class Console extends SymfonyCommand
     /**
      * @param Container $container
      *
-     * @return void
+     * @return self
      */
     public function setExternalDependencies(Container $container)
     {
-        $dependencyContainer = $this->getDependencyContainer();
-        if (isset($dependencyContainer)) {
-            $this->getDependencyContainer()->setContainer($container);
-        }
+        $this->container = $container;
+
+        return $this;
+    }
+
+    /**
+     * @return Container
+     */
+    protected function getContainer()
+    {
+        return $this->container;
     }
 
     /**
      * @param AbstractCommunicationDependencyContainer $dependencyContainer
      *
-     * @return void
+     * @return self
      */
     public function setDependencyContainer(AbstractCommunicationDependencyContainer $dependencyContainer)
     {
         $this->dependencyContainer = $dependencyContainer;
+
+        return $this;
     }
 
     /**
@@ -89,8 +104,33 @@ class Console extends SymfonyCommand
      */
     protected function getDependencyContainer()
     {
+        if ($this->dependencyContainer === null) {
+            $this->dependencyContainer = $this->findDependencyContainer();
+        }
+
+        if ($this->getQueryContainer() !== null) {
+            $this->dependencyContainer->setQueryContainer($this->getQueryContainer());
+        }
+
+        if ($this->getContainer() !== null) {
+            $this->dependencyContainer->setContainer($this->getContainer());
+        }
+
         return $this->dependencyContainer;
     }
+
+    /**
+     * @throws \SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException
+     *
+     * @return AbstractCommunicationDependencyContainer
+     */
+    private function findDependencyContainer()
+    {
+        $classResolver = new DependencyContainerResolver();
+
+        return $classResolver->resolve($this);
+    }
+
 
     /**
      * @param AbstractFacade $facade

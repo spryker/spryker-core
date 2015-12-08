@@ -40,7 +40,7 @@ class ProductOptionCartConnectorFacadeTest extends AbstractFunctionalTest
     {
         parent::setUp();
 
-        $this->facade = $this->getFacade();
+        $this->facade = new ProductOptionCartConnectorFacade();
         $this->ids = DbFixturesLoader::loadFixtures();
     }
 

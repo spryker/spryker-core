@@ -68,7 +68,7 @@ class ProductQueryContainer extends AbstractQueryContainer implements ProductQue
 
         $query->filterBySku($concreteSku)
             ->useSpyLocalizedProductAttributesQuery()
-                ->filterByFkLocale($idLocale)
+//                ->filterByFkLocale($idLocale)
             ->endUse()
             ->useSpyAbstractProductQuery()
             ->endUse();

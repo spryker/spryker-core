@@ -7,8 +7,6 @@
 namespace Functional\SprykerFeature\Zed\Price;
 
 use Codeception\TestCase\Test;
-use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
 use Generated\Zed\Ide\AutoCompletion;
 use Orm\Zed\Price\Persistence\SpyPriceProduct;
@@ -47,8 +45,7 @@ class ReaderTest extends Test
     {
         parent::setUp();
 
-        $this->locator = Locator::getInstance();
-        $this->priceFacade = new PriceFacade(new Factory('Price'), $this->locator);
+        $this->priceFacade = new PriceFacade();
         $this->setTestData();
     }
 
@@ -59,6 +56,7 @@ class ReaderTest extends Test
     {
         $priceType = SpyPriceTypeQuery::create()->filterByName(self::DUMMY_PRICE_TYPE_2)->findOneOrCreate();
         $priceType->setName(self::DUMMY_PRICE_TYPE_2)->save();
+
         $priceType = SpyPriceTypeQuery::create()->filterByName(self::DUMMY_PRICE_TYPE_1)->findOneOrCreate();
         $priceType->setName(self::DUMMY_PRICE_TYPE_1)->save();
 

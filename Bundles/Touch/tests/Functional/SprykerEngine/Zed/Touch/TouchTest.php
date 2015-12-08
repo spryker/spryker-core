@@ -6,7 +6,6 @@
 
 namespace Functional\SprykerEngine\Zed\Touch;
 
-use SprykerEngine\Zed\Kernel\Persistence\Factory;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Touch\Business\TouchFacade;
@@ -38,9 +37,8 @@ class TouchTest extends AbstractFunctionalTest
     protected function setUp()
     {
         parent::setUp();
-        $locator = Locator::getInstance();
-        $this->touchFacade = $this->getFacade('SprykerEngine', 'Touch');
-        $this->touchQueryContainer = new TouchQueryContainer(new Factory('Touch'), $locator);
+        $this->touchFacade = new TouchFacade();
+        $this->touchQueryContainer = new TouchQueryContainer();
     }
 
     /**

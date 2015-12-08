@@ -67,7 +67,7 @@ class ProductCartPluginTest extends AbstractFunctionalTest
         $this->locator = Locator::getInstance();
 
         $this->localeFacade = $this->locator->locale()->facade();
-        $this->productCartConnectorFacade = $this->getFacade();
+        $this->productCartConnectorFacade = new ProductCartConnectorFacade();
     }
 
     /**

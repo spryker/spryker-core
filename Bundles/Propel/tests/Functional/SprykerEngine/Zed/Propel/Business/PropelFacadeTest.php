@@ -6,10 +6,7 @@
 namespace Functional\SprykerEngine\Zed\Propel\Business;
 
 use SprykerEngine\Zed\Propel\Business\PropelFacade;
-use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Propel\PropelConfig;
-use SprykerEngine\Shared\Config;
 
 /**
  * @group SprykerEngine
@@ -26,17 +23,7 @@ class PropelFacadeTest extends \PHPUnit_Framework_TestCase
      */
     private function getFacade()
     {
-        $factory = new Factory('Propel');
-
-        return new PropelFacade($factory, $this->getLocator());
-    }
-
-    /**
-     * @return Locator
-     */
-    private function getLocator()
-    {
-        return Locator::getInstance();
+        return new PropelFacade();
     }
 
     /**
@@ -44,7 +31,7 @@ class PropelFacadeTest extends \PHPUnit_Framework_TestCase
      */
     private function getConfig()
     {
-        return new PropelConfig(Config::getInstance(), $this->getLocator());
+        return new PropelConfig();
     }
 
     /**

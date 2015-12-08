@@ -9,9 +9,7 @@ namespace Functional\SprykerFeature\Zed\User;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\UserTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\User\Business\UserFacade;
-use SprykerEngine\Zed\Kernel\Business\Factory;
 
 /**
  * @group SprykerFeature
@@ -38,12 +36,7 @@ class UserTest extends Test
     {
         parent::setUp();
 
-        $this->locator = Locator::getInstance();
-
-        $this->userFacade = new UserFacade(
-            new Factory('User'),
-            $this->locator
-        );
+        $this->userFacade = new UserFacade();
     }
 
     /**

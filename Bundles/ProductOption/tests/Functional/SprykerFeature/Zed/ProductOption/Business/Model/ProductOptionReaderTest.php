@@ -11,13 +11,14 @@ use Functional\SprykerFeature\Zed\ProductOption\Mock\ProductFacade;
 use Functional\SprykerFeature\Zed\ProductOption\Mock\ProductOptionQueryContainer;
 use Functional\SprykerFeature\Zed\ProductOption\Mock\ProductQueryContainer;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use Generated\Shared\Transfer\ProductOptionTransfer;
-use SprykerEngine\Zed\Kernel\Business\Factory as BusinessFactory;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerEngine\Zed\Locale\Business\LocaleDependencyContainer;
+use SprykerFeature\Zed\Product\Business\ProductDependencyContainer;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
+use SprykerFeature\Zed\ProductOption\Business\ProductOptionDependencyContainer;
 use SprykerFeature\Zed\ProductOption\Business\ProductOptionFacade;
 use SprykerFeature\Zed\ProductOption\Dependency\Facade\ProductOptionToLocaleInterface;
 use SprykerFeature\Zed\ProductOption\Dependency\Facade\ProductOptionToProductInterface;
@@ -87,15 +88,18 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
         parent::setUp();
 
         $this->ids = DbFixturesLoader::loadFixtures();
+
         $this->facade = $this->getFacade();
-        $this->locator = Locator::getInstance();
-        $this->localeFacade = new LocaleFacade(new BusinessFactory('Locale'), $this->locator);
-        $this->productFacade = new ProductFacade(new BusinessFactory('Product'), $this->locator);
-        $this->productQueryContainer = new ProductQueryContainer(new PersistenceFactory('Product'), $this->locator);
-        $this->productOptionQueryContainer = new ProductOptionQueryContainer(
-            new PersistenceFactory('ProductOption'),
-            $this->locator
-        );
+        $this->facade->setDependencyContainer(new ProductOptionDependencyContainer());
+
+        $this->localeFacade = new LocaleFacade();
+        $this->localeFacade->setDependencyContainer(new LocaleDependencyContainer());
+
+        $this->productFacade = new ProductFacade();
+        $this->productFacade->setDependencyContainer(new ProductDependencyContainer());
+
+        $this->productQueryContainer = new ProductQueryContainer();
+        $this->productOptionQueryContainer = new ProductOptionQueryContainer();
 
         $this->buildProductOptionFacade();
     }

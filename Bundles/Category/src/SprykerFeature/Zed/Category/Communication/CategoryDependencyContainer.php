@@ -113,12 +113,7 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
     {
         $locale = $this->getCurrentLocale();
 
-        return new CategoryNodeForm(
-            $request,
-            $this->getFactory(),
-            $locale,
-            $this->getQueryContainer()
-        );
+        return new CategoryNodeForm($locale);
     }
 
     /**

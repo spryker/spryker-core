@@ -13,8 +13,6 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
-use SprykerEngine\Zed\Kernel\Communication\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Propel\Communication\PropelDependencyContainer;
 use SprykerFeature\Shared\System\SystemConfig;
 

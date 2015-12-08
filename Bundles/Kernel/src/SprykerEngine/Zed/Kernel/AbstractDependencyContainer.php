@@ -15,24 +15,10 @@ abstract class AbstractDependencyContainer
 {
 
     /**
-     * @var Factory
-     */
-    private $factory;
-
-    /**
      * @var AbstractBundleConfig
      */
     private $config;
 
-    /**
-     * @param FactoryInterface $factory
-     * @param LocatorLocatorInterface $locator
-     * @param AbstractBundleConfig $config
-     */
-    public function __construct(FactoryInterface $factory = null, LocatorLocatorInterface $locator = null, AbstractBundleConfig $config = null)
-    {
-        $this->factory = $factory;
-    }
 
     /**
      * @deprecated Will be removed soon, please use new instead

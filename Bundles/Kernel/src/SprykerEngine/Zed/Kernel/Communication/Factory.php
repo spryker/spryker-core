@@ -7,9 +7,11 @@
 namespace SprykerEngine\Zed\Kernel\Communication;
 
 use SprykerEngine\Shared\Kernel\AbstractFactory;
-use SprykerEngine\Zed\Kernel\BundleConfigLocator;
 use SprykerEngine\Shared\Kernel\ClassMapFactory;
 
+/**
+ * @deprecated Use "new" for instance creation, do not use Factory anymore. This will be removed soon
+ */
 class Factory extends AbstractFactory
 {
 

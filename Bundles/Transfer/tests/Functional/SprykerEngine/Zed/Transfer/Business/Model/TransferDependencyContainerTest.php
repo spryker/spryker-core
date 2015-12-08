@@ -6,12 +6,8 @@
 
 namespace Functional\SprykerEngine\Zed\Transfer\Business\Model;
 
-use SprykerEngine\Shared\Config;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
-use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Transfer\Business\TransferDependencyContainer;
-use SprykerEngine\Zed\Transfer\TransferConfig;
 
 /**
  * @group SprykerEngine
@@ -28,10 +24,7 @@ class TransferDependencyContainerTest extends \PHPUnit_Framework_TestCase
      */
     private function getDependencyContainer()
     {
-        $factory = new Factory('Transfer');
-        $config = new TransferConfig(Config::getInstance(), Locator::getInstance());
-
-        return new TransferDependencyContainer($factory, Locator::getInstance(), $config);
+        return new TransferDependencyContainer();
     }
 
     /**

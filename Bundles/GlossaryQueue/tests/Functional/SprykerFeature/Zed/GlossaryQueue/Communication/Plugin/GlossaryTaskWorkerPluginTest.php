@@ -9,9 +9,6 @@ use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Zed\Glossary\Business\GlossaryDependencyContainer;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Glossary\GlossaryDependencyProvider;
-use SprykerEngine\Zed\Kernel\Communication\Factory as CommunicationFactory;
-use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
@@ -97,7 +94,7 @@ class GlossaryTaskWorkerPluginTest extends Test
             return $this->glossaryFacade;
         };
 
-        $glossaryQueueFacade = new GlossaryQueueFacade(new Factory('GlossaryQueue'), $this->getLocator());
+        $glossaryQueueFacade = new GlossaryQueueFacade();
         $glossaryQueueFacade->setExternalDependencies($container);
 
         return $glossaryQueueFacade;
@@ -117,13 +114,10 @@ class GlossaryTaskWorkerPluginTest extends Test
             return $container->getLocator()->locale()->facade();
         };
 
-        $glossaryFacade = new MockGlossaryFacade(new Factory('Glossary'), $this->getLocator());
+        $glossaryFacade = new MockGlossaryFacade();
         $glossaryFacade->setExternalDependencies($container);
         $glossaryFacade->setOwnQueryContainer(
-            new GlossaryQueryContainer(
-                new PersistenceFactory('Glossary'),
-                $this->getLocator()
-            )
+            new GlossaryQueryContainer()
         );
 
         return $glossaryFacade;

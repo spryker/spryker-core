@@ -6,12 +6,10 @@
 
 namespace Functional\SprykerFeature\Zed\Newsletter\Business;
 
-use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\NewsletterSubscriberTransfer;
 use Generated\Shared\Transfer\NewsletterSubscriptionRequestTransfer;
 use Generated\Shared\Transfer\NewsletterTypeTransfer;
-use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\QueryContainerLocator;
@@ -232,8 +230,8 @@ class NewsletterFacadeTest extends Test
         $dependencyProvider->provideCommunicationLayerDependencies($container);
         $dependencyProvider->providePersistenceLayerDependencies($container);
 
-        $this->newsletterFacade = new NewsletterFacade(new Factory('Newsletter'), $locator);
-        $queryContainer = new NewsletterQueryContainer(new PersistenceFactory('Newsletter'), $locator);
+        $this->newsletterFacade = new NewsletterFacade();
+        $queryContainer = new NewsletterQueryContainer();
         $queryContainer->setExternalDependencies($container);
         $this->newsletterFacade->setOwnQueryContainer($queryContainer);
         $this->newsletterFacade->setExternalDependencies($container);

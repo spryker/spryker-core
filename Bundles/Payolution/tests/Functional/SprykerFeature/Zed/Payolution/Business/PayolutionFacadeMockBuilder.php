@@ -6,10 +6,6 @@
 
 namespace Functional\SprykerFeature\Zed\Payolution\Business;
 
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 use SprykerFeature\Zed\Payolution\Business\Api\Adapter\AdapterInterface;
 use SprykerFeature\Zed\Payolution\Business\PayolutionDependencyContainer;
 use SprykerFeature\Zed\Payolution\Business\PayolutionFacade;

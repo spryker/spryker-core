@@ -8,8 +8,6 @@ namespace Functional\SprykerFeature\Zed\Price;
 
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\PriceProductTransfer;
-use SprykerEngine\Zed\Kernel\Business\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
 use Generated\Zed\Ide\AutoCompletion;
 use Orm\Zed\Price\Persistence\SpyPriceProductQuery;
@@ -48,8 +46,8 @@ class WriterTest extends Test
     {
         parent::setUp();
 
-        $this->locator = Locator::getInstance();
-        $this->priceFacade = new PriceFacade(new Factory('Price'), $this->locator);
+        $this->priceFacade = new PriceFacade();
+
         $this->setTestData();
     }
 

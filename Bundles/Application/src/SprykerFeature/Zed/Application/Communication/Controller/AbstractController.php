@@ -11,8 +11,10 @@ use Generated\Zed\Ide\AutoCompletion;
 use Silex\Application;
 use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException;
+use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerEngine\Zed\Kernel\Communication\Factory;
+use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
@@ -32,11 +34,6 @@ abstract class AbstractController
     private $application;
 
     /**
-     * @var AutoCompletion
-     */
-    private $locator;
-
-    /**
      * @var AbstractCommunicationDependencyContainer
      */
     private $dependencyContainer;
@@ -52,75 +49,86 @@ abstract class AbstractController
     private $queryContainer;
 
     /**
+     * @var Container
+     */
+    private $container;
+
+    /**
      * @var FlashMessengerFacade
      */
     private $flashMessengerFacade;
 
     /**
      * @param Application $application
-     * @param Factory $factory
-     * @param Locator $locator
      */
-    public function __construct(Application $application, Factory $factory, Locator $locator)
+    public function __construct(Application $application)
     {
         $this->application = $application;
-        $this->locator = $locator;
-
-        $this->flashMessengerFacade = $this->locator->flashMessenger()->facade();
-
-        if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
-            $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator);
-        }
+        $this->flashMessengerFacade = $this->getLocator()->flashMessenger()->facade();
     }
 
     /**
      * @param Container $container
      *
-     * @return void
+     * @return self
      */
     public function setExternalDependencies(Container $container)
     {
-        $dependencyContainer = $this->getDependencyContainer();
-        if (isset($dependencyContainer)) {
-            $this->getDependencyContainer()->setContainer($container);
-        }
+        $this->container = $container;
+
+        return $this;
     }
 
     /**
-     * @return AbstractCommunicationDependencyContainer
+     * @return Container
      */
-    public function getDependencyContainer()
+    protected function getContainer()
     {
+        return $this->container;
+    }
+
+    /**
+     * @return DependencyContainerInterface
+     */
+    protected function getDependencyContainer()
+    {
+        if ($this->dependencyContainer === null) {
+            $this->dependencyContainer = $this->findDependencyContainer();
+        }
+
+        if ($this->getQueryContainer() !== null) {
+            $this->dependencyContainer->setQueryContainer($this->getQueryContainer());
+        }
+
+        if ($this->getContainer() !== null) {
+            $this->dependencyContainer->setContainer($this->getContainer());
+        }
+
         return $this->dependencyContainer;
     }
 
     /**
-     * TODO move to constructor
+     * @throws DependencyContainerNotFoundException
      *
+     * @return AbstractCommunicationDependencyContainer
+     */
+    private function findDependencyContainer()
+    {
+        $classResolver = new DependencyContainerResolver();
+
+        return $classResolver->resolve($this);
+    }
+
+    /**
      * @param AbstractFacade $facade
      *
-     * @return void
+     * @return self
      */
     public function setOwnFacade(AbstractFacade $facade)
     {
         $this->facade = $facade;
-    }
 
-    /**
-     * TODO move to constructor
-     *
-     * @param AbstractQueryContainer $queryContainer
-     *
-     * @return void
-     */
-    public function setOwnQueryContainer(AbstractQueryContainer $queryContainer)
-    {
-        $this->queryContainer = $queryContainer;
-
-        $dependencyContainer = $this->getDependencyContainer();
-        if (isset($dependencyContainer)) {
-            $this->getDependencyContainer()->setQueryContainer($queryContainer);
-        }
+        return $this;
     }
 
     /**
@@ -129,6 +137,18 @@ abstract class AbstractController
     protected function getFacade()
     {
         return $this->facade;
+    }
+
+    /**
+     * @param AbstractQueryContainer $queryContainer
+     *
+     * @return self
+     */
+    public function setOwnQueryContainer(AbstractQueryContainer $queryContainer)
+    {
+        $this->queryContainer = $queryContainer;
+
+        return $this;
     }
 
     /**
@@ -301,6 +321,14 @@ abstract class AbstractController
     protected function setMenuHighlight($uri)
     {
         $this->getTwig()->addGlobal('menu_highlight', $uri);
+    }
+
+    /**
+     * @return AutoCompletion
+     */
+    private function getLocator()
+    {
+        return Locator::getInstance();
     }
 
 }

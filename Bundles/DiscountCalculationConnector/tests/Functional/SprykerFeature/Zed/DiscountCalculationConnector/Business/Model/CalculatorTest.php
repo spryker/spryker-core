@@ -23,7 +23,6 @@ use Generated\Shared\Transfer\ExpenseTransfer;
 use SprykerFeature\Zed\Calculation\Business\Model\StackExecutor;
 use SprykerFeature\Zed\DiscountCalculationConnector\Communication\Plugin\DiscountCalculatorPlugin;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Kernel\Communication\Factory;
 use SprykerFeature\Zed\Sales\Business\Model\CalculableContainer;
 
 /**
@@ -56,7 +55,7 @@ class CalculatorTest extends AbstractFunctionalTest
     {
         $stack = [
             $this->getPluginByClassName('SprykerFeature\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin'),
-            new DiscountCalculatorPlugin(new Factory('DiscountCalculationConnector'), $this->getLocator()),
+            new DiscountCalculatorPlugin(),
             $this->getPluginByClassName('SprykerFeature\Zed\Calculation\Communication\Plugin\ExpenseTotalsCalculatorPlugin'),
             $this->getPluginByClassName('SprykerFeature\Zed\Calculation\Communication\Plugin\GrandTotalTotalsCalculatorPlugin'),
             $this->getPluginByClassName('SprykerFeature\Zed\Calculation\Communication\Plugin\ExpensePriceToPayCalculatorPlugin'),

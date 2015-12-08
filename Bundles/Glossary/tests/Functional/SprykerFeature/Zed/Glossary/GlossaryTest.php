@@ -8,10 +8,8 @@ namespace Functional\SprykerFeature\Zed\Glossary;
 
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
-use SprykerEngine\Zed\Kernel\Business\Factory as BusinessFactory;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Generated\Shared\Transfer\TranslationTransfer;
 use SprykerEngine\Zed\Touch\TouchDependencyProvider;

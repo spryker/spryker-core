@@ -41,7 +41,7 @@ class SellableTest extends AbstractFunctionalTest
         parent::setUp();
 
         $locator = Locator::getInstance();
-        $this->availabilityFacade = $this->getFacade('SprykerFeature', 'Availability');
+        $this->availabilityFacade = new AvailabilityFacade();
     }
 
     /**

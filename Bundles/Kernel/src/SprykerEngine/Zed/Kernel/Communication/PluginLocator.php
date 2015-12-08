@@ -47,8 +47,6 @@ class PluginLocator extends AbstractLocator
      */
     public function locate($bundle, LocatorLocatorInterface $locator, $className = null)
     {
-        $factory = $this->getFactory($bundle);
-
         $plugin = ClassMapFactory::getInstance()->create(
             'Zed',
             $bundle,

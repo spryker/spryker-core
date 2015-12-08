@@ -7,8 +7,6 @@
 namespace SprykerFeature\Zed\Kernel\Communication\Controller;
 
 use Silex\Application;
-use SprykerEngine\Zed\Kernel\Communication\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 use SprykerFeature\Shared\NewRelic\Api;
 use SprykerFeature\Shared\ZedRequest\Client\Message;
@@ -38,12 +36,10 @@ abstract class AbstractGatewayController extends AbstractController
 
     /**
      * @param Application $application
-     * @param Factory $factory
-     * @param Locator $locator
      */
-    public function __construct(Application $application, Factory $factory, Locator $locator)
+    public function __construct(Application $application)
     {
-        parent::__construct($application, $factory, $locator);
+        parent::__construct($application);
 
         // @todo this can be a plugin which listen for kernel.controller events
         $newRelicApi = new Api();

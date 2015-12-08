@@ -17,16 +17,6 @@ class ConsoleTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testGetDependencyContainerShouldReturnNullIfNotSet()
-    {
-        $console = $this->getConsole();
-
-        $this->assertNull($console->getDependencyContainer());
-    }
-
-    /**
-     * @return void
-     */
     public function testGetDependencyContainerShouldReturnInstanceIfSet()
     {
         $console = $this->getConsole();

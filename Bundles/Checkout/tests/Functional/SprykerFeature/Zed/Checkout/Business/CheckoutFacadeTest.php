@@ -6,7 +6,6 @@
 
 namespace Functional\SprykerFeature\Zed\Checkout\Business;
 
-use SprykerEngine\Zed\Kernel\Communication\Factory as CommunicationFactory;
 use Codeception\TestCase\Test;
 use Functional\SprykerFeature\Zed\Checkout\Dependency\MockOmsOrderHydrator;
 use Generated\Shared\Transfer\ItemTransfer;
@@ -15,9 +14,7 @@ use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\TaxSetTransfer;
 use Generated\Shared\Transfer\TotalsTransfer;
-use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Shared\Checkout\CheckoutConfig;
 use SprykerFeature\Zed\Checkout\Business\CheckoutFacade;
 use SprykerFeature\Zed\Checkout\CheckoutDependencyProvider;
@@ -46,25 +43,13 @@ class CheckoutFacadeTest extends Test
     protected $checkoutFacade;
 
     /**
-     * @param string $bundleName
-     *
-     * @return \SprykerEngine\Zed\Kernel\Communication\Factory
-     */
-    protected function getCommunicationFactory($bundleName)
-    {
-        return new CommunicationFactory($bundleName);
-    }
-
-    /**
      * @return void
      */
     protected function setUp()
     {
         parent::setUp();
-        $locator = Locator::getInstance();
 
-        $this->checkoutFacade = new CheckoutFacade(new Factory('Checkout'), $locator);
-
+        $this->checkoutFacade = new CheckoutFacade();
         $container = new Container();
 
         $container[CheckoutDependencyProvider::CHECKOUT_PRE_CONDITIONS] = function (Container $container) {
@@ -93,7 +78,7 @@ class CheckoutFacadeTest extends Test
             ];
         };
 
-        $container[CheckoutDependencyProvider::CHECKOUT_POST_HOOKS] = function (Container $container) use ($locator) {
+        $container[CheckoutDependencyProvider::CHECKOUT_POST_HOOKS] = function (Container $container) {
             return [];
         };
 

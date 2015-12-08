@@ -6,15 +6,12 @@
 
 namespace Functional\SprykerFeature\Zed\SequenceNumber;
 
-use SprykerEngine\Zed\Kernel\Business\Factory as BusinessFactory;
 use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\SequenceNumberSettingsTransfer;
 use Propel\Runtime\Propel;
-use SprykerEngine\Shared\Config;
-use SprykerEngine\Zed\Kernel\Locator;
+use SprykerFeature\Zed\SequenceNumber\Business\Generator\RandomNumberGenerator;
 use SprykerFeature\Zed\SequenceNumber\Business\Model\SequenceNumber;
 use SprykerFeature\Zed\SequenceNumber\Business\SequenceNumberFacade;
-use SprykerEngine\Zed\Kernel\Persistence\Factory;
 use SprykerFeature\Zed\SequenceNumber\SequenceNumberConfig;
 
 /**
@@ -22,9 +19,6 @@ use SprykerFeature\Zed\SequenceNumber\SequenceNumberConfig;
  */
 class SequenceNumberTest extends Test
 {
-
-    /** @var Factory */
-    protected $factory;
 
     /**
      * @var SequenceNumberFacade
@@ -38,9 +32,7 @@ class SequenceNumberTest extends Test
     {
         parent::setUp();
 
-        $locator = Locator::getInstance();
-        $this->factory = new BusinessFactory('SequenceNumber');
-        $this->sequenceNumberFacade = new SequenceNumberFacade($this->factory, $locator);
+        $this->sequenceNumberFacade = new SequenceNumberFacade();
     }
 
     /**
@@ -107,8 +99,7 @@ class SequenceNumberTest extends Test
         $sequenceNumberSettings->setMinimumNumber(10);
         $sequenceNumberSettings->setPadding(3);
 
-        /** @var SequenceNumber $sequenceNumber */
-        $sequenceNumber = $this->factory->createModelSequenceNumber(
+        $sequenceNumber = new SequenceNumber(
             $generator,
             $sequenceNumberSettings,
             Propel::getConnection()
@@ -117,14 +108,12 @@ class SequenceNumberTest extends Test
         $number = $sequenceNumber->generate();
         $this->assertSame('010', $number);
 
-        // Make sure other sequences don't interfere
         $config = $this->generateConfig();
         $sequenceNumberSettings = $config->getDefaultSettings();
         $sequenceNumberSettings->setName('Other');
         $sequenceNumberSettings->setMinimumNumber(2);
 
-        /** @var SequenceNumber $sequenceNumberOther */
-        $sequenceNumberOther = $this->factory->createModelSequenceNumber(
+        $sequenceNumberOther = new SequenceNumber(
             $generator,
             $sequenceNumberSettings,
             Propel::getConnection()
@@ -142,15 +131,20 @@ class SequenceNumberTest extends Test
      */
     protected function generateConfig()
     {
-        $locator = Locator::getInstance();
-        $config = new SequenceNumberConfig(new Config(), $locator);
+        $config = new SequenceNumberConfig();
 
         return $config;
     }
 
+    /**
+     * @param int $min
+     * @param int $max
+     *
+     * @return RandomNumberGenerator
+     */
     protected function generateGenerator($min = 1, $max = 1)
     {
-        return $this->factory->createGeneratorRandomNumberGenerator(
+        return new RandomNumberGenerator(
             $min,
             $max
         );

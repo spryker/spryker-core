@@ -7,12 +7,9 @@
 namespace SprykerFeature\Zed\Category\Communication\Form;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Zed\Ide\FactoryAutoCompletion\CategoryCommunication;
-use SprykerEngine\Shared\Kernel\Factory\FactoryInterface;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 use SprykerFeature\Zed\Gui\Communication\Form\AbstractForm;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Validator\Constraints;
 
 class CategoryNodeForm extends AbstractForm
@@ -42,11 +39,6 @@ class CategoryNodeForm extends AbstractForm
     }
 
     /**
-     * @var FactoryInterface|CategoryCommunication
-     */
-    protected $factory;
-
-    /**
      * @var LocaleTransfer
      */
     protected $locale;
@@ -57,19 +49,10 @@ class CategoryNodeForm extends AbstractForm
     protected $queryContainer;
 
     /**
-     * @param Request $request
-     * @param FactoryInterface $factory
      * @param LocaleTransfer $locale
-     * @param CategoryQueryContainer $queryContainer
      */
-    public function __construct(
-        Request $request,
-        FactoryInterface $factory,
-        LocaleTransfer $locale,
-        CategoryQueryContainer $queryContainer = null
-    ) {
-        parent::__construct($request, $queryContainer);
-        $this->factory = $factory;
+    public function __construct(LocaleTransfer $locale)
+    {
         $this->locale = $locale;
     }
 
@@ -81,6 +64,7 @@ class CategoryNodeForm extends AbstractForm
         $nodeEntity = $this->queryContainer
             ->queryNodeById($this->getCategoryIdNode())
             ->findOne();
+
         if ($nodeEntity !== null) {
             return $nodeEntity->toArray();
         }
