@@ -45,10 +45,10 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     public function createVoucherForm($allowMultiple=false)
     {
         $voucherForm = new VoucherForm(
-                $this->getQueryContainer(),
-                $this->getConfig(),
-                $allowMultiple
-            );
+            $this->getQueryContainer(),
+            $this->getConfig(),
+            $allowMultiple
+        );
 
         return $this->createForm($voucherForm);
     }
@@ -114,9 +114,9 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     public function createCartRuleForm()
     {
         $cartRuleForm = new CartRuleForm(
-                $this->getConfig(),
-                $this->getDiscountFacade()
-            );
+            $this->getConfig(),
+            $this->getDiscountFacade()
+        );
 
         return $this->createForm($cartRuleForm);
     }

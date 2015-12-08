@@ -99,6 +99,13 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
 
     /**
      * @param Request $request
+     */
+    public function createCategoryNodeGrid(Request $request)
+    {
+    }
+
+    /**
+     * @param Request $request
      *
      * @return CategoryNodeForm
      */
