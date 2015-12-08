@@ -17,7 +17,6 @@ use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
 use SprykerFeature\Zed\User\UserDependencyProvider;
 
 /**
- * @method UserCommunication getFactory()
  * @method UserQueryContainer getQueryContainer()
  */
 class UserDependencyContainer extends AbstractCommunicationDependencyContainer

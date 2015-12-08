@@ -10,9 +10,6 @@ use SprykerFeature\Zed\SearchPage\Persistence\QueryExpander\SearchPageConfigQuer
 use Generated\Zed\Ide\FactoryAutoCompletion\SearchPagePersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 
-/**
- * @method SearchPagePersistence getFactory()
- */
 class SearchPageDependencyContainer extends AbstractPersistenceDependencyContainer
 {
 

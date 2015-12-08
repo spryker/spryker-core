@@ -15,7 +15,6 @@ use SprykerFeature\Zed\Glossary\GlossaryDependencyProvider;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 
 /**
- * @method GlossaryCommunication getFactory()
  * @method GlossaryQueryContainerInterface getQueryContainer()
  */
 class GlossaryDependencyContainer extends AbstractCommunicationDependencyContainer

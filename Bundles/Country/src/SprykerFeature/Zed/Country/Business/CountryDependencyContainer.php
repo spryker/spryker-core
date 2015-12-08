@@ -16,7 +16,6 @@ use SprykerFeature\Zed\Country\CountryConfig;
 use SprykerFeature\Zed\Country\Persistence\CountryQueryContainer;
 
 /**
- * @method CountryBusiness getFactory()
  * @method CountryConfig getConfig()
  * @method CountryQueryContainer getQueryContainer()
  */

@@ -16,7 +16,6 @@ use SprykerFeature\Zed\Shipment\ShipmentDependencyProvider;
 use SprykerFeature\Zed\Tax\Persistence\TaxQueryContainerInterface;
 
 /**
- * @method ShipmentCommunication getFactory()
  * @method ShipmentQueryContainer getQueryContainer()
  */
 class ShipmentDependencyContainer extends AbstractCommunicationDependencyContainer

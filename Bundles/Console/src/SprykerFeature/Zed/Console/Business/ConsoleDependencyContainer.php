@@ -12,7 +12,6 @@ use SprykerFeature\Zed\Console\ConsoleConfig;
 use Symfony\Component\Console\Command\Command;
 
 /**
- * @method ConsoleBusiness getFactory()
  * @method ConsoleConfig getConfig()
  */
 class ConsoleDependencyContainer extends AbstractBusinessDependencyContainer

@@ -38,7 +38,6 @@ use SprykerFeature\Zed\Collector\CollectorDependencyProvider;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 
 /**
- * @method CollectorBusiness getFactory()
  * @method CollectorConfig getConfig()
  */
 class CollectorDependencyContainer extends AbstractBusinessDependencyContainer

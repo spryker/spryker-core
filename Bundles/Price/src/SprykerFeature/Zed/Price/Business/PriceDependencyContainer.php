@@ -22,7 +22,6 @@ use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerFeature\Zed\Price\PriceConfig;
 
 /**
- * @method PriceBusiness getFactory()
  * @method PriceConfig getConfig()
  */
 class PriceDependencyContainer extends AbstractBusinessDependencyContainer

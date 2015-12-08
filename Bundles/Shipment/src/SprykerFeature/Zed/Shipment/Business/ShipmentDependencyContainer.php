@@ -14,7 +14,6 @@ use SprykerFeature\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use SprykerFeature\Zed\Shipment\ShipmentDependencyProvider;
 
 /**
- * @method ShipmentBusiness getFactory()
  * @method ShipmentQueryContainerInterface getQueryContainer()
  */
 class ShipmentDependencyContainer extends AbstractBusinessDependencyContainer

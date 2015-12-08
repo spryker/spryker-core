@@ -16,7 +16,6 @@ use SprykerFeature\Zed\ProductOption\Business\Model\DataImportWriterInterface;
 use SprykerFeature\Zed\ProductOption\Business\Model\ProductOptionReaderInterface;
 
 /**
- * @method ProductOptionBusiness getFactory()
  * @method ProductOptionConfig getConfig()
  */
 class ProductOptionDependencyContainer extends AbstractBusinessDependencyContainer

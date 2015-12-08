@@ -14,9 +14,6 @@ use SprykerFeature\Client\Customer\CustomerDependencyProvider;
 use SprykerFeature\Client\Customer\Service\Session\CustomerSessionInterface;
 use SprykerFeature\Client\Customer\Service\Zed\CustomerStubInterface;
 
-/**
- * @method CustomerService getFactory()
- */
 class CustomerDependencyContainer extends AbstractServiceDependencyContainer
 {
 

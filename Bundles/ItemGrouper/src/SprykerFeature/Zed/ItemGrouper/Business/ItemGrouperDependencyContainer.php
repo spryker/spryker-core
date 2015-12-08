@@ -12,7 +12,6 @@ use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\ItemGrouper\ItemGrouperConfig;
 
 /**
- * @method ItemGrouperBusiness getFactory()
  * @method ItemGrouperConfig getConfig()
  */
 class ItemGrouperDependencyContainer extends AbstractBusinessDependencyContainer

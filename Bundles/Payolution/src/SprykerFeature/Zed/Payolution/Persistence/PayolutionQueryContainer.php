@@ -13,9 +13,6 @@ use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuer
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionStatusLogQuery;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionQuery;
 
-/**
- * @method PayolutionPersistence getFactory()
- */
 class PayolutionQueryContainer extends AbstractQueryContainer implements PayolutionQueryContainerInterface
 {
 

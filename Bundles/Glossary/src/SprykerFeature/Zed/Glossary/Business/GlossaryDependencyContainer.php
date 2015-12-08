@@ -18,7 +18,6 @@ use SprykerFeature\Zed\Glossary\GlossaryConfig;
 use SprykerFeature\Zed\Glossary\Persistence\GlossaryQueryContainerInterface;
 
 /**
- * @method GlossaryBusiness getFactory()
  * @method GlossaryConfig getConfig()
  * @method GlossaryQueryContainerInterface getQueryContainer()
  */

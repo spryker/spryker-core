@@ -12,7 +12,6 @@ use SprykerFeature\Zed\Heartbeat\Business\Ambulance\Doctor;
 use SprykerFeature\Zed\Heartbeat\HeartbeatConfig;
 
 /**
- * @method HeartbeatBusiness getFactory()
  * @method HeartbeatConfig getConfig()
  */
 class HeartbeatDependencyContainer extends AbstractBusinessDependencyContainer

@@ -11,7 +11,6 @@ use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use Symfony\Component\Console\Command\Command;
 
 /**
- * @method GitBusiness getFactory()
  * @method GitConfig getConfig()
  */
 class GitDependencyContainer extends AbstractBusinessDependencyContainer

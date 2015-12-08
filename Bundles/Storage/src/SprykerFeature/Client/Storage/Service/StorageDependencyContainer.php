@@ -13,9 +13,6 @@ use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\System\SystemConfig;
 
-/**
- * @method StorageService getFactory()
- */
 class StorageDependencyContainer extends AbstractServiceDependencyContainer
 {
 

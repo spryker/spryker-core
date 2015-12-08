@@ -29,7 +29,6 @@ use Orm\Zed\User\Persistence\SpyUserQuery;
 
 /**
  * @method AclDependencyContainer getDependencyContainer()
- * @method AclPersistence getFactory()
  */
 class AclQueryContainer extends AbstractQueryContainer
 {

@@ -17,9 +17,6 @@ use SprykerFeature\Zed\ProductCategory\Dependency\Facade\ProductCategoryToTouchI
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 use SprykerFeature\Zed\ProductCategory\ProductCategoryDependencyProvider;
 
-/**
- * @method ProductCategoryBusiness getFactory()
- */
 class ProductCategoryDependencyContainer extends AbstractBusinessDependencyContainer
 {
 

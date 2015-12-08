@@ -13,9 +13,6 @@ use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;
 use SprykerFeature\Zed\Shipment\Persistence\ShipmentQueryContainerInterface;
 use SprykerFeature\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorDependencyProvider;
 
-/**
- * @method ShipmentPersistence getFactory()
- */
 class ShipmentCheckoutConnectorQueryContainer extends AbstractQueryContainer implements ShipmentCheckoutConnectorQueryContainerInterface
 {
 

@@ -25,7 +25,6 @@ use SprykerEngine\Zed\Propel\PropelConfig;
 use Symfony\Component\Filesystem\Filesystem;
 
 /**
- * @method PropelBusiness getFactory()
  * @method PropelConfig getConfig()
  */
 class PropelDependencyContainer extends AbstractBusinessDependencyContainer

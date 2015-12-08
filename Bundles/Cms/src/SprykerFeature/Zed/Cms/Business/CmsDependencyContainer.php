@@ -23,9 +23,6 @@ use sprykerfeature\Zed\Cms\Dependency\Facade\CmsToUrlInterface;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainerInterface;
 use Symfony\Component\Finder\Finder;
 
-/**
- * @method CmsBusiness getFactory()
- */
 class CmsDependencyContainer extends AbstractBusinessDependencyContainer
 {
 

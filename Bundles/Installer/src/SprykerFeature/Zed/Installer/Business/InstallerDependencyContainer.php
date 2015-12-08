@@ -14,7 +14,6 @@ use SprykerFeature\Zed\Installer\InstallerConfig;
 use SprykerFeature\Zed\Installer\InstallerDependencyProvider;
 
 /**
- * @method InstallerBusiness getFactory()
  * @method InstallerConfig getConfig()
  */
 class InstallerDependencyContainer extends AbstractBusinessDependencyContainer

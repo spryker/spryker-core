@@ -12,7 +12,6 @@ use SprykerFeature\Zed\CustomerCheckoutConnector\CustomerCheckoutConnectorConfig
 use SprykerFeature\Zed\CustomerCheckoutConnector\CustomerCheckoutConnectorDependencyProvider;
 
 /**
- * @method CustomerCheckoutConnectorBusiness getFactory()
  * @method CustomerCheckoutConnectorConfig getConfig()
  */
 class CustomerCheckoutConnectorDependencyContainer extends AbstractBusinessDependencyContainer

@@ -26,7 +26,6 @@ use SprykerFeature\Zed\ProductCategory\Business\ProductCategoryFacade;
 use SprykerFeature\Zed\ProductCategory\Persistence\ProductCategoryQueryContainerInterface;
 
 /**
- * @method ProductCategoryCommunication getFactory()
  * @method ProductCategoryQueryContainer getQueryContainer()
  */
 class ProductCategoryDependencyContainer extends AbstractCommunicationDependencyContainer

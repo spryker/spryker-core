@@ -23,7 +23,6 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * @method AclCommunication getFactory()
  * @method AclQueryContainer getQueryContainer()
  * @method AclConfig getConfig()
  */

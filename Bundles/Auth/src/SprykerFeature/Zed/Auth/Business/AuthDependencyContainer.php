@@ -16,7 +16,6 @@ use SprykerFeature\Zed\Auth\AuthDependencyProvider;
 use SprykerFeature\Zed\Auth\Persistence\AuthQueryContainer;
 
 /**
- * @method AuthBusiness getFactory()
  * @method AuthConfig getConfig()
  * @method AuthQueryContainer getQueryContainer()
  */

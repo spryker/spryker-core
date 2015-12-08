@@ -23,7 +23,6 @@ use SprykerFeature\Zed\Wishlist\Business\Operator\Decrease;
 use SprykerFeature\Zed\Wishlist\WishlistDependencyProvider;
 
 /**
- * @method WishlistBusiness getFactory()
  * @method WishlistQueryContainer getQueryContainer()
  */
 class WishlistDependencyContainer extends AbstractBusinessDependencyContainer

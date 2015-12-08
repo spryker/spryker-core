@@ -13,9 +13,6 @@ use SprykerFeature\Client\Glossary\GlossaryDependencyProvider;
 use SprykerFeature\Client\Storage\Service\StorageClientInterface;
 use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
-/**
- * @method GlossaryService getFactory()
- */
 class GlossaryDependencyContainer extends AbstractServiceDependencyContainer
 {
 

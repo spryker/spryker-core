@@ -15,9 +15,6 @@ use SprykerFeature\Client\CategoryExporter\Service\Model\Navigation;
 use SprykerFeature\Shared\CategoryExporter\Code\KeyBuilder\NavigationKeyBuilder;
 use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 
-/**
- * @method CategoryExporter getFactory()
- */
 class CategoryExporterDependencyContainer extends AbstractServiceDependencyContainer
 {
 

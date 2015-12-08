@@ -31,7 +31,6 @@ use Zend\Filter\Word\CamelCaseToUnderscore;
 
 /**
  * @method DiscountQueryContainer getQueryContainer()
- * @method DiscountCommunication getFactory()
  * @method DiscountConfig getConfig()
  */
 class DiscountDependencyContainer extends AbstractCommunicationDependencyContainer

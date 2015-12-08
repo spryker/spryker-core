@@ -23,7 +23,6 @@ use SprykerFeature\Zed\Cms\Communication\Table\CmsRedirectTable;
 use SprykerFeature\Zed\Cms\Persistence\CmsQueryContainer;
 
 /**
- * @method CmsCommunication getFactory()
  * @method CmsQueryContainer getQueryContainer()
  * @method CmsConfig getConfig()
  */

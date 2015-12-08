@@ -13,9 +13,6 @@ use SprykerFeature\Client\ZedRequest\Service\Client\HttpClient;
 use SprykerFeature\Client\ZedRequest\Service\Client\ZedClient;
 use SprykerFeature\Client\ZedRequest\ZedRequestDependencyProvider;
 
-/**
- * @method ZedRequestService getFactory()
- */
 class ZedRequestDependencyContainer extends AbstractServiceDependencyContainer
 {
 

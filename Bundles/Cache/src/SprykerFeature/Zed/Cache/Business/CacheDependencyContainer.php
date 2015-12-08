@@ -12,7 +12,6 @@ use SprykerFeature\Zed\Cache\Business\Model\CacheDelete;
 use SprykerFeature\Zed\Cache\CacheConfig;
 
 /**
- * @method CacheBusiness getFactory()
  * @method CacheConfig getConfig()
  */
 class CacheDependencyContainer extends AbstractBusinessDependencyContainer

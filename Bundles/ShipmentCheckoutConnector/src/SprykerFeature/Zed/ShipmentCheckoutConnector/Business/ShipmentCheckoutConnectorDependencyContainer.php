@@ -15,7 +15,6 @@ use SprykerFeature\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentOrderSav
 use SprykerFeature\Zed\ShipmentCheckoutConnector\ShipmentCheckoutConnectorConfig;
 
 /**
- * @method ShipmentCheckoutConnectorBusiness getFactory()
  * @method ShipmentCheckoutConnectorConfig getConfig()
  */
 class ShipmentCheckoutConnectorDependencyContainer extends AbstractBusinessDependencyContainer

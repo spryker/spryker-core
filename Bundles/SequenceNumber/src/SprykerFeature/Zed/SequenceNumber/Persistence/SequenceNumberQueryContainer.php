@@ -10,9 +10,6 @@ use Generated\Zed\Ide\FactoryAutoCompletion\SequenceNumberPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery;
 
-/**
- * @method SequenceNumberPersistence getFactory()
- */
 class SequenceNumberQueryContainer extends AbstractQueryContainer implements SequenceNumberQueryContainerInterface
 {
 

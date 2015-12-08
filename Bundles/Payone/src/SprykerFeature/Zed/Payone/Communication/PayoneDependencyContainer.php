@@ -16,7 +16,6 @@ use SprykerFeature\Zed\Refund\Business\RefundFacade;
 
 /**
  * @method PayoneConfig getConfig()
- * @method PayoneCommunication getFactory()
  * @method PayoneQueryContainerInterface getQueryContainer()
  */
 class PayoneDependencyContainer extends AbstractCommunicationDependencyContainer

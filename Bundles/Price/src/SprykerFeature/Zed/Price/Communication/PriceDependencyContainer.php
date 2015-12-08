@@ -16,9 +16,6 @@ use SprykerFeature\Zed\Price\Persistence\PriceQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 
-/**
- * @method PriceCommunication getFactory()
- */
 class PriceDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 

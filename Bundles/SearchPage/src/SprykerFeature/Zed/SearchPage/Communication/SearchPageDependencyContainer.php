@@ -14,9 +14,6 @@ use SprykerFeature\Zed\SearchPage\Communication\Grid\PageElementGrid;
 use SprykerFeature\Zed\SearchPage\Persistence\SearchPageQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
 
-/**
- * @method SearchPageCommunication getFactory()
- */
 class SearchPageDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 

@@ -12,7 +12,6 @@ use SprykerFeature\Zed\Url\Persistence\UrlQueryContainerInterface;
 use SprykerFeature\Zed\Url\UrlDependencyProvider;
 
 /**
- * @method UrlBusiness getFactory()
  * @method UrlQueryContainerInterface getQueryContainer()
  */
 class UrlDependencyContainer extends AbstractBusinessDependencyContainer

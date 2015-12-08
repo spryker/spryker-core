@@ -15,7 +15,6 @@ use SprykerFeature\Zed\ProductOptionCartConnector\ProductOptionCartConnectorConf
 
 /**
  * @method ProductOptionCartConnectorDependencyContainer getDependencyContainer()
- * @method ProductOptionCartConnectorBusiness getFactory()
  * @method ProductOptionCartConnectorConfig getConfig()
  */
 class ProductOptionCartConnectorDependencyContainer extends AbstractBusinessDependencyContainer

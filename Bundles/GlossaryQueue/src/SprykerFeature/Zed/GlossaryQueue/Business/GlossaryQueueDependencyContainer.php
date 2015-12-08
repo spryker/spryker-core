@@ -9,9 +9,6 @@ use SprykerFeature\Zed\GlossaryQueue\Business\Model\QueueTranslationManagerInter
 use SprykerFeature\Zed\GlossaryQueue\Dependency\Facade\GlossaryQueueToGlossaryInterface;
 use SprykerFeature\Zed\GlossaryQueue\GlossaryQueueDependencyProvider;
 
-/**
- * @method GlossaryQueueBusiness getFactory()
- */
 class GlossaryQueueDependencyContainer extends AbstractBusinessDependencyContainer
 {
 

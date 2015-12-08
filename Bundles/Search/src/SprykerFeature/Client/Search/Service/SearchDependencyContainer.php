@@ -11,9 +11,6 @@ use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Search\Service\Provider\IndexClientProvider;
 use SprykerFeature\Client\ZedRequest\Service\Client\ZedClient;
 
-/**
- * @method SearchService getFactory()
- */
 class SearchDependencyContainer extends AbstractServiceDependencyContainer
 {
 

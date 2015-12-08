@@ -13,7 +13,6 @@ use SprykerFeature\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
 use SprykerFeature\Zed\Development\DevelopmentConfig;
 
 /**
- * @method DevelopmentBusiness getFactory()
  * @method DevelopmentConfig getConfig()
  */
 class DevelopmentDependencyContainer extends AbstractBusinessDependencyContainer

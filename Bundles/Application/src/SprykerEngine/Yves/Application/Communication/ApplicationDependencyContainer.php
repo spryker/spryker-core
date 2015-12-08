@@ -12,9 +12,6 @@ use SprykerEngine\Yves\Application\Communication\Plugin\ServiceProvider\Exceptio
 use SprykerEngine\Yves\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @method ApplicationCommunication getFactory()
- */
 class ApplicationDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 

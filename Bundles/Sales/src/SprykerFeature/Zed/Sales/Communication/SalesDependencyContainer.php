@@ -19,7 +19,6 @@ use SprykerFeature\Zed\Sales\Communication\Form\CustomerForm;
 use SprykerFeature\Zed\Sales\Communication\Form\AddressForm;
 
 /**
- * @method SalesCommunication getFactory()
  * @method SalesQueryContainerInterface getQueryContainer()
  */
 class SalesDependencyContainer extends AbstractCommunicationDependencyContainer

@@ -21,7 +21,6 @@ use SprykerEngine\Zed\Transfer\TransferConfig;
 use Psr\Log\LoggerInterface;
 
 /**
- * @method TransferBusiness getFactory()
  * @method TransferConfig getConfig()
  */
 class TransferDependencyContainer extends AbstractBusinessDependencyContainer

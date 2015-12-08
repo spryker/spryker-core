@@ -27,7 +27,6 @@ use SprykerFeature\Zed\Payolution\PayolutionConfig;
 use Generated\Zed\Ide\FactoryAutoCompletion\PayolutionBusiness;
 
 /**
- * @method PayolutionBusiness getFactory()
  * @method PayolutionQueryContainerInterface getQueryContainer()
  * @method PayolutionConfig getConfig()
  */

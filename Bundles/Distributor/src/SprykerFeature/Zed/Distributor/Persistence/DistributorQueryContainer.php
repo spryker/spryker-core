@@ -13,9 +13,6 @@ use Orm\Zed\Distributor\Persistence\SpyDistributorItemTypeQuery;
 use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
 use Orm\Zed\Distributor\Persistence\SpyDistributorReceiverQuery;
 
-/**
- * @method DistributorPersistence getFactory()
- */
 class DistributorQueryContainer extends AbstractQueryContainer implements
     DistributorQueryContainerInterface
 {

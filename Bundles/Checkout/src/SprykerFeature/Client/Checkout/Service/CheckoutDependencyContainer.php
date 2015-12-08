@@ -12,9 +12,6 @@ use Generated\Client\Ide\FactoryAutoCompletion\CheckoutService;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Checkout\Service\Zed\CheckoutStubInterface;
 
-/**
- * @method CheckoutService getFactory()
- */
 class CheckoutDependencyContainer extends AbstractServiceDependencyContainer
 {
 

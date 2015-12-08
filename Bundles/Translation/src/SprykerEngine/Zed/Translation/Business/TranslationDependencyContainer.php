@@ -11,7 +11,6 @@ use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerEngine\Zed\Translation\TranslationConfig;
 
 /**
- * @method TranslationBusiness getFactory()
  * @method TranslationConfig getConfig()
  */
 class TranslationDependencyContainer extends AbstractBusinessDependencyContainer

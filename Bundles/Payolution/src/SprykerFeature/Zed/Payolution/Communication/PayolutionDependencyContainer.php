@@ -17,7 +17,6 @@ use SprykerFeature\Zed\Payolution\PayolutionDependencyProvider;
 use SprykerFeature\Zed\Mail\Business\MailFacade;
 
 /**
- * @method PayolutionCommunication getFactory()
  * @method PayolutionQueryContainerInterface getQueryContainer()
  * @method PayolutionConfig getConfig()
  */

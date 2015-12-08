@@ -28,7 +28,6 @@ use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 
 /**
- * @method CategoryBusiness getFactory()
  * @method CategoryQueryContainer getQueryContainer()
  */
 class CategoryDependencyContainer extends AbstractBusinessDependencyContainer

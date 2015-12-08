@@ -13,9 +13,6 @@ use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Cart\Service\Zed\CartStubInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
-/**
- * @method CartService getFactory()
- */
 class CartDependencyContainer extends AbstractServiceDependencyContainer
 {
 

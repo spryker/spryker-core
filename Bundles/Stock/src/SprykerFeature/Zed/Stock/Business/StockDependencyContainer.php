@@ -20,7 +20,6 @@ use SprykerFeature\Zed\Stock\Dependency\Facade\StockToTouchInterface;
 use SprykerFeature\Zed\Stock\StockConfig;
 
 /**
- * @method StockBusiness getFactory()
  * @method StockConfig getConfig()
  */
 class StockDependencyContainer extends AbstractBusinessDependencyContainer

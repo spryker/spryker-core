@@ -24,7 +24,6 @@ use SprykerFeature\Zed\Sales\SalesConfig;
 use SprykerFeature\Zed\SequenceNumber\Business\SequenceNumberFacade;
 
 /**
- * @method SalesBusiness getFactory()
  * @method SalesConfig getConfig()
  */
 class SalesDependencyContainer extends AbstractBusinessDependencyContainer

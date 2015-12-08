@@ -14,7 +14,6 @@ use Generated\Zed\Ide\FactoryAutoCompletion\ShipmentBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method ShipmentBusiness getFactory()
  * @method ShipmentDependencyContainer getDependencyContainer()
  */
 class ShipmentFacade extends AbstractFacade

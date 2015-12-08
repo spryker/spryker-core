@@ -11,9 +11,6 @@ use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\ItemGrouper\Business\ItemGrouperFacade;
 use SprykerFeature\Zed\ItemGrouperWishlistConnector\ItemGrouperWishlistConnectorDependencyProvider;
 
-/**
- * @method ItemGrouperWishlistConnectorBusiness getFactory()
- */
 class ItemGrouperWishlistConnectorDependencyContainer extends AbstractBusinessDependencyContainer
 {
 

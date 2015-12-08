@@ -38,7 +38,6 @@ use SprykerFeature\Zed\Product\ProductDependencyProvider;
 use SprykerFeature\Zed\Product\Business\Product\ProductManager;
 
 /**
- * @method ProductBusiness getFactory()
  * @method ProductConfig getConfig()
  * @method ProductQueryContainerInterface getQueryContainer()
  */

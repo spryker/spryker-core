@@ -16,7 +16,6 @@ use SprykerFeature\Zed\Queue\QueueConfig;
 use SprykerFeature\Zed\Queue\QueueDependencyProvider;
 
 /**
- * @method QueueBusiness getFactory()
  * @method QueueConfig getConfig()
  */
 class QueueDependencyContainer extends AbstractBusinessDependencyContainer

@@ -24,7 +24,6 @@ use SprykerFeature\Zed\Calculation\CalculationConfig;
 use Generated\Zed\Ide\FactoryAutoCompletion\CalculationBusiness;
 
 /**
- * @method CalculationBusiness getFactory()
  * @method CalculationConfig getConfig()
  */
 class CalculationDependencyContainer extends AbstractBusinessDependencyContainer

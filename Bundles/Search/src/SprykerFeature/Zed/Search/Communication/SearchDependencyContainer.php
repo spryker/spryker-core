@@ -16,7 +16,6 @@ use SprykerFeature\Zed\Search\SearchDependencyProvider;
 use SprykerFeature\Zed\Storage\Communication\Table\StorageTable;
 
 /**
- * @method SearchCommunication getFactory()
  * @method SearchConfig getConfig()
  */
 class SearchDependencyContainer extends AbstractCommunicationDependencyContainer

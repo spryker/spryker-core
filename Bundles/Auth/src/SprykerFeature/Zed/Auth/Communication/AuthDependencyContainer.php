@@ -16,7 +16,6 @@ use SprykerFeature\Zed\Auth\AuthDependencyProvider;
 use SprykerFeature\Zed\Auth\AuthConfig;
 
 /**
- * @method AuthCommunication getFactory()
  * @method AuthConfig getConfig()
  */
 class AuthDependencyContainer extends AbstractCommunicationDependencyContainer

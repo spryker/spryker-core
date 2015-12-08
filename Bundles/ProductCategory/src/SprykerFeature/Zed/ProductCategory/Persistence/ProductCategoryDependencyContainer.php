@@ -13,9 +13,6 @@ use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;
 use SprykerFeature\Zed\ProductCategory\Persistence\QueryExpander\ProductCategoryPathQueryExpander;
 
-/**
- * @method ProductCategoryPersistence getFactory()
- */
 class ProductCategoryDependencyContainer extends AbstractPersistenceDependencyContainer
 {
 

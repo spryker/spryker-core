@@ -22,7 +22,6 @@ use SprykerFeature\Zed\Maintenance\MaintenanceConfig;
 use Symfony\Component\Process\Process;
 
 /**
- * @method MaintenanceBusiness getFactory()
  * @method MaintenanceConfig getConfig()
  */
 class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer

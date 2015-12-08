@@ -46,7 +46,6 @@ use SprykerFeature\Zed\Discount\Business\Model\DecisionRuleEngine;
 use SprykerEngine\Shared\Kernel\Store;
 
 /**
- * @method DiscountBusiness getFactory()
  * @method DiscountConfig getConfig()
  * @method DiscountQueryContainer getQueryContainer()
  */

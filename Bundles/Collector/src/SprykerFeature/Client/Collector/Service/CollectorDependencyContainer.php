@@ -12,9 +12,6 @@ use SprykerFeature\Client\Collector\Service\KeyBuilder\UrlKeyBuilder;
 use SprykerFeature\Client\Collector\Service\Matcher\UrlMatcher;
 use SprykerFeature\Client\Storage\Service\StorageClient;
 
-/**
- * @method CollectorService getFactory()
- */
 class CollectorDependencyContainer extends AbstractServiceDependencyContainer
 {
 

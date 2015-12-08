@@ -15,7 +15,6 @@ use SprykerFeature\Zed\Search\SearchConfig;
 use SprykerFeature\Zed\Search\SearchDependencyProvider;
 
 /**
- * @method SearchBusiness getFactory()
  * @method SearchConfig getConfig()
  */
 class SearchDependencyContainer extends AbstractBusinessDependencyContainer

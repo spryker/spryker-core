@@ -15,7 +15,6 @@ use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
 use SprykerFeature\Zed\User\UserConfig;
 
 /**
- * @method UserBusiness getFactory()
  * @method UserConfig getConfig()
  */
 class UserDependencyContainer extends AbstractBusinessDependencyContainer

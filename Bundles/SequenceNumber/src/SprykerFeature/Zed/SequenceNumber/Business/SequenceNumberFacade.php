@@ -11,7 +11,6 @@ use Generated\Zed\Ide\FactoryAutoCompletion\SequenceNumberBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 
 /**
- * @method SequenceNumberBusiness getFactory()
  * @method SequenceNumberDependencyContainer getDependencyContainer()
  */
 class SequenceNumberFacade extends AbstractFacade

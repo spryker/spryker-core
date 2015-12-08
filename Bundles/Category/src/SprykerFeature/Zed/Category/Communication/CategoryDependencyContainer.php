@@ -19,7 +19,6 @@ use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
- * @method CategoryCommunication getFactory()
  * @method CategoryQueryContainer getQueryContainer()
  */
 class CategoryDependencyContainer extends AbstractCommunicationDependencyContainer

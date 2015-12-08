@@ -22,9 +22,6 @@ use SprykerFeature\Zed\SearchPage\Business\Writer\PageElementWriter;
 use SprykerFeature\Zed\SearchPage\Dependency\Facade\SearchPageToTouchInterface;
 use SprykerFeature\Zed\SearchPage\Persistence\SearchPageQueryContainer;
 
-/**
- * @method SearchPageBusiness getFactory()
- */
 class SearchPageDependencyContainer extends AbstractBusinessDependencyContainer
 {
 

@@ -12,9 +12,6 @@ use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\ProductOptionExporter\Business\Model\ExportProcessorInterface;
 use SprykerFeature\Zed\ProductOptionExporter\ProductOptionExporterDependencyProvider;
 
-/**
- * @method ProductOptionExporterBusiness getFactory()
- */
 class ProductOptionExporterDependencyContainer extends AbstractBusinessDependencyContainer
 {
 

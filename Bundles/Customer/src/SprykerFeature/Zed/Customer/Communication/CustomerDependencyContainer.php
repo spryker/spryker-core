@@ -17,7 +17,6 @@ use SprykerFeature\Zed\Customer\Communication\Table\CustomerTable;
 use Symfony\Component\Form\FormInterface;
 
 /**
- * @method CustomerCommunication getFactory()
  * @method CustomerQueryContainerInterface getQueryContainer()
  */
 class CustomerDependencyContainer extends AbstractCommunicationDependencyContainer

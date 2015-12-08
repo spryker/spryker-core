@@ -32,7 +32,6 @@ use SprykerFeature\Zed\Distributor\DistributorDependencyProvider;
 
 /**
  * @method DistributorConfig getConfig()
- * @method DistributorBusiness getFactory()
  * @method DistributorQueryContainerInterface getQueryContainer()
  */
 class DistributorDependencyContainer extends AbstractBusinessDependencyContainer

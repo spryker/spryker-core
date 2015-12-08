@@ -17,7 +17,6 @@ use SprykerFeature\Zed\Setup\SetupDependencyProvider;
 
 /**
  * @method SetupConfig getConfig()
- * @method SetupBusiness getFactory()
  */
 class SetupDependencyContainer extends AbstractBusinessDependencyContainer
 {

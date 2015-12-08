@@ -31,7 +31,6 @@ use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerFeature\Zed\ProductSearch\ProductSearchConfig;
 
 /**
- * @method ProductSearchBusiness getFactory()
  * @method ProductSearchConfig getConfig()
  */
 class ProductSearchDependencyContainer extends AbstractBusinessDependencyContainer

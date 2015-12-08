@@ -39,7 +39,6 @@ use SprykerFeature\Zed\Application\Business\Model\Navigation\Validator\UrlUnique
 use SprykerFeature\Zed\Application\Business\Model\Url\UrlBuilderInterface;
 
 /**
- * @method ApplicationBusiness getFactory()
  * @method ApplicationConfig getConfig()
  */
 class ApplicationDependencyContainer extends AbstractBusinessDependencyContainer

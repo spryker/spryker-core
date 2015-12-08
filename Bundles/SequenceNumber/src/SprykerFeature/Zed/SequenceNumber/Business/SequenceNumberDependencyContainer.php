@@ -19,7 +19,6 @@ use Propel\Runtime\Propel;
 
 /**
  * @method SequenceNumberConfig getConfig()
- * @method SequenceNumberBusiness getFactory()
  * @method SequenceNumberQueryContainerInterface getQueryContainer()
  */
 class SequenceNumberDependencyContainer extends AbstractBusinessDependencyContainer

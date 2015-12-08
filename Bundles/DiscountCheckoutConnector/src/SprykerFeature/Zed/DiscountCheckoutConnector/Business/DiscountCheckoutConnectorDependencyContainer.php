@@ -15,9 +15,6 @@ use SprykerFeature\Zed\DiscountCheckoutConnector\Business\Model\DiscountOrderHyd
 use SprykerFeature\Zed\DiscountCheckoutConnector\Business\Model\DiscountSaverInterface;
 use SprykerFeature\Zed\DiscountCheckoutConnector\DiscountCheckoutConnectorDependencyProvider;
 
-/**
- * @method DiscountCheckoutConnectorBusiness getFactory()
- */
 class DiscountCheckoutConnectorDependencyContainer extends AbstractBusinessDependencyContainer
 {
 

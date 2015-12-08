@@ -11,9 +11,6 @@ use Generated\Zed\Ide\FactoryAutoCompletion\SessionHeartbeatConnectorBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface;
 
-/**
- * @method SessionHeartbeatConnectorBusiness getFactory()
- */
 class SessionHeartbeatConnectorDependencyContainer extends AbstractBusinessDependencyContainer
 {
 

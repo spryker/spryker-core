@@ -14,9 +14,6 @@ use SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\System\SystemConfig;
 
-/**
- * @method StorageHeartbeatConnectorBusiness getFactory()
- */
 class StorageHeartbeatConnectorDependencyContainer extends AbstractBusinessDependencyContainer
 {
 

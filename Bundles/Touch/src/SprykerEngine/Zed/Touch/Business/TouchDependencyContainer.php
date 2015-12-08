@@ -15,9 +15,6 @@ use SprykerEngine\Zed\Touch\Business\Model\TouchRecordInterface;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use SprykerEngine\Zed\Touch\TouchDependencyProvider;
 
-/**
- * @method TouchBusiness getFactory()
- */
 class TouchDependencyContainer extends AbstractBusinessDependencyContainer
 {
 

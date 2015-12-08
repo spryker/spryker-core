@@ -14,7 +14,6 @@ use SprykerFeature\Zed\PriceCartConnector\PriceCartConnectorConfig;
 
 /**
  * @method PriceCartConnectorDependencyContainer getDependencyContainer()
- * @method PriceCartConnectorBusiness getFactory()
  * @method PriceCartConnectorConfig getConfig()
  */
 class PriceCartConnectorDependencyContainer extends AbstractBusinessDependencyContainer

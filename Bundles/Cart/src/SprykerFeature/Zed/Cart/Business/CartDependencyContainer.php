@@ -24,7 +24,6 @@ use SprykerFeature\Zed\Cart\CartDependencyProvider;
 use SprykerFeature\Zed\ItemGrouper\Business\ItemGrouperFacade;
 
 /**
- * @method CartBusiness getFactory()
  * @method CartConfig getConfig()
  */
 class CartDependencyContainer extends AbstractBusinessDependencyContainer

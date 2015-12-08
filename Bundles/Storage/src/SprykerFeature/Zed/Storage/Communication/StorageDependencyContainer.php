@@ -13,9 +13,6 @@ use SprykerFeature\Zed\Collector\Business\CollectorFacade;
 use SprykerFeature\Zed\Storage\Communication\Table\StorageTable;
 use SprykerFeature\Zed\Storage\StorageDependencyProvider;
 
-/**
- * @method StorageCommunication getFactory()
- */
 class StorageDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 

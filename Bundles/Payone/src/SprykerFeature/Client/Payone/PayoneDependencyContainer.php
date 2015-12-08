@@ -13,9 +13,6 @@ use SprykerFeature\Client\Payone\ClientApi\HashGeneratorInterface;
 use SprykerFeature\Shared\Payone\Dependency\HashInterface;
 use SprykerFeature\Shared\Payone\Dependency\ModeDetectorInterface;
 
-/**
- * @method Payone getFactory()
- */
 class PayoneDependencyContainer extends AbstractServiceDependencyContainer
 {
 

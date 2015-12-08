@@ -11,9 +11,6 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContai
 use SprykerFeature\Zed\Nopayment\Persistence\NopaymentQueryContainer;
 use SprykerFeature\Zed\Nopayment\Business\NopaymentFacade;
 
-/**
-* @method NopaymentCommunication getFactory()
-*/
 class NopaymentDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 

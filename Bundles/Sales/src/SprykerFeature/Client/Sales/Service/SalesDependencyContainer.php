@@ -12,9 +12,6 @@ use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Sales\Service\Zed\SalesStubInterface;
 use SprykerFeature\Client\Sales\SalesDependencyProvider;
 
-/**
- * @method SalesService getFactory()
- */
 class SalesDependencyContainer extends AbstractServiceDependencyContainer
 {
 

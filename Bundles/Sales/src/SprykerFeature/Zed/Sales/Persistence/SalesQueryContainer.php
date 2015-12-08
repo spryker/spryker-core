@@ -15,9 +15,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrderCommentQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderItemQuery;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 
-/**
- * @method SalesPersistence getFactory()
- */
 class SalesQueryContainer extends AbstractQueryContainer implements SalesQueryContainerInterface
 {
 

@@ -11,7 +11,6 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContai
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 /**
- * @method OmsCommunication getFactory()
  * @method OmsQueryContainerInterface getQueryContainer()
  */
 class OmsDependencyContainer extends AbstractCommunicationDependencyContainer

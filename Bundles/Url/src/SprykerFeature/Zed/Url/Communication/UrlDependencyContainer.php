@@ -14,7 +14,6 @@ use SprykerFeature\Zed\Url\Communication\Grid\UrlGrid;
 use SprykerFeature\Zed\Url\Persistence\UrlQueryContainerInterface;
 
 /**
- * @method UrlCommunication getFactory()
  * @method UrlQueryContainerInterface getQueryContainer()
  */
 class UrlDependencyContainer extends AbstractCommunicationDependencyContainer

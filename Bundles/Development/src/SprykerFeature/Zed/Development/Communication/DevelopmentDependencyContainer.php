@@ -11,7 +11,6 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContai
 use SprykerFeature\Zed\Development\DevelopmentConfig;
 
 /**
- * @method DevelopmentCommunication getFactory()
  * @method DevelopmentConfig getConfig()
  */
 class DevelopmentDependencyContainer extends AbstractCommunicationDependencyContainer

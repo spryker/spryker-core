@@ -32,9 +32,6 @@ use Orm\Zed\ProductOption\Persistence\SpyProductOptionValueUsageQuery;
 use Orm\Zed\Tax\Persistence\Map\SpyTaxRateTableMap;
 use Orm\Zed\Tax\Persistence\SpyTaxSetQuery;
 
-/**
- * @method ProductOptionPersistence getFactory()
- */
 class ProductOptionQueryContainer extends AbstractQueryContainer implements ProductOptionQueryContainerInterface
 {
 

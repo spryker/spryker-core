@@ -24,7 +24,6 @@ use SprykerFeature\Zed\Newsletter\Persistence\NewsletterQueryContainer;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 
 /**
- * @method NewsletterBusiness getFactory()
  * @method NewsletterConfig getConfig()
  * @method NewsletterQueryContainer getQueryContainer()
  */

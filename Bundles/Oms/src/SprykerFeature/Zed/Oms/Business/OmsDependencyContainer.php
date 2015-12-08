@@ -40,7 +40,6 @@ use SprykerFeature\Zed\Oms\OmsDependencyProvider;
 use SprykerFeature\Zed\Oms\Persistence\OmsQueryContainerInterface;
 
 /**
- * @method OmsBusiness getFactory()
  * @method OmsConfig getConfig()
  * @method OmsQueryContainerInterface getQueryContainer()
  */

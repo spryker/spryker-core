@@ -20,7 +20,6 @@ use SprykerFeature\Zed\Acl\Business\Model\Rule;
 use SprykerFeature\Zed\Acl\Persistence\AclQueryContainer;
 
 /**
- * @method AclBusiness getFactory()
  * @method AclConfig getConfig()
  * @method AclQueryContainer getQueryContainer()
  */

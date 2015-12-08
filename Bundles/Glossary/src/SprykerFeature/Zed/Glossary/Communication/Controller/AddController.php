@@ -12,7 +12,6 @@ use SprykerFeature\Zed\Glossary\Communication\GlossaryDependencyContainer;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 
 /**
- * @method GlossaryCommunication getFactory()
  * @method GlossaryDependencyContainer getDependencyContainer()
  * @method GlossaryFacade getFacade()
  */

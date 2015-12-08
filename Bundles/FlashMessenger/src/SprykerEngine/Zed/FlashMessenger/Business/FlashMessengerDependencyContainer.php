@@ -16,7 +16,6 @@ use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 /**
- * @method FlashMessengerBusiness getFactory()
  * @method FlashMessengerConfig getConfig()
  */
 class FlashMessengerDependencyContainer extends AbstractBusinessDependencyContainer

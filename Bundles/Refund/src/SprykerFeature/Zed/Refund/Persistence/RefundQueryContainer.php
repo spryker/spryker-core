@@ -10,9 +10,6 @@ use Generated\Zed\Ide\FactoryAutoCompletion\RefundPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Refund\Persistence\SpyRefundQuery;
 
-/**
- * @method RefundPersistence getFactory()
- */
 class RefundQueryContainer extends AbstractQueryContainer implements RefundQueryContainerInterface
 {
 

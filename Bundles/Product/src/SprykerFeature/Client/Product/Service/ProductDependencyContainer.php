@@ -16,9 +16,6 @@ use SprykerFeature\Client\Storage\Service\StorageClientInterface;
 use SprykerFeature\Shared\Collector\Code\KeyBuilder\KeyBuilderInterface;
 use SprykerEngine\Client\Locale\Service\LocaleClient;
 
-/**
- * @method ProductService getFactory()
- */
 class ProductDependencyContainer extends AbstractServiceDependencyContainer
 {
 

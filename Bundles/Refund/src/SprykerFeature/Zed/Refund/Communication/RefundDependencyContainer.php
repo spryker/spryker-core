@@ -20,7 +20,6 @@ use SprykerFeature\Zed\Refund\RefundDependencyProvider;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainer;
 
 /**
- * @method RefundCommunication getFactory()
  * @method RefundQueryContainer getQueryContainer()
  * @method RefundConfig getConfig()
  */

@@ -14,9 +14,6 @@ use SprykerFeature\Zed\Country\CountryDependencyProvider;
 use SprykerFeature\Zed\Country\Communication\Table\CountryTable;
 use SprykerFeature\Zed\User\Persistence\UserQueryContainer;
 
-/**
- * @method CountryCommunication getFactory()
- */
 class CountryDependencyContainer extends AbstractCommunicationDependencyContainer
 {
 
