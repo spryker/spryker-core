@@ -24,6 +24,13 @@ interface CustomerClientInterface
     /**
      * @param CustomerTransfer $customerTransfer
      *
+     * @return CustomerTransfer|null
+     */
+    public function findCustomerWithEmailAndPassword(CustomerTransfer $customerTransfer);
+
+    /**
+     * @param CustomerTransfer $customerTransfer
+     *
      * @return CustomerResponseTransfer
      */
     public function registerCustomer(CustomerTransfer $customerTransfer);

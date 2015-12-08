@@ -40,6 +40,20 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
 
     /**
      * @param CustomerTransfer $customerTransfer
+     *
+     * @return CustomerTransfer|null
+     */
+    public function findCustomerWithEmailAndPassword(CustomerTransfer $customerTransfer)
+    {
+        $customerResponseTransfer = $this->getDependencyContainer()
+            ->createZedCustomerStub()
+            ->hasCustomerWithEmailAndPassword($customerTransfer);
+
+        return $customerResponseTransfer->getCustomerTransfer();
+    }
+
+    /**
+     * @param CustomerTransfer $customerTransfer
      * 
      * @return CustomerResponseTransfer
      */
@@ -169,10 +183,13 @@ class CustomerClient extends AbstractClient implements CustomerClientInterface
      */
     public function login(CustomerTransfer $customerTransfer)
     {
-        $customerTransfer = $this->getCustomerByEmail($customerTransfer);
-        $this->getDependencyContainer()
-            ->createSessionCustomerSession()
-            ->setCustomer($customerTransfer);
+        $customerTransfer = $this->findCustomerWithEmailAndPassword($customerTransfer);
+
+        if ($customerTransfer !== null) {
+            $this->getDependencyContainer()
+                ->createSessionCustomerSession()
+                ->setCustomer($customerTransfer);
+        }
 
         return $customerTransfer;
     }
