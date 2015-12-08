@@ -31,4 +31,36 @@ class HeartbeatFacade extends AbstractFacade
         return $this->getDependencyContainer()->createDoctor()->doHealthCheck()->getReport();
     }
 
+    /**
+     * @return HealthIndicatorReportTransfer
+     */
+    public function doPropelHealthCheck()
+    {
+        return $this->getDependencyContainer()->createPropelHealthIndicator()->doHealthCheck();
+    }
+
+    /**
+     * @return HealthIndicatorReportTransfer
+     */
+    public function doSearchHealthCheck()
+    {
+        return $this->getDependencyContainer()->createSearchHealthIndicator()->doHealthCheck();
+    }
+
+    /**
+     * @return HealthIndicatorReportTransfer
+     */
+    public function doSessionHealthCheck()
+    {
+        return $this->getDependencyContainer()->createSessionHealthIndicator()->doHealthCheck();
+    }
+
+    /**
+     * @return HealthIndicatorReportTransfer
+     */
+    public function doStorageHealthCheck()
+    {
+        return $this->getDependencyContainer()->createStorageHealthIndicator()->doHealthCheck();
+    }
+
 }
