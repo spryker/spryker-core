@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\SprykerFeature\Zed\Development\Business\CodeStyleFixer\Fixtures\RemoveWrongWhitespaceFixer\Input;
+namespace Unit\SprykerFeature\Zed\Development\Business\CodeStyleFixer\Fixtures\SprykerUseStatementFixer\Input;
 
 class TestClass2Input extends \Pyz\Zed\Foo\Bar\Baz
 {

@@ -60,6 +60,10 @@ class SprykerUseStatementFixerTest extends \PHPUnit_Framework_TestCase
                 file_get_contents($fixturePath . 'Expected/TestClass2Expected.php'),
                 file_get_contents($fixturePath . 'Input/TestClass2Input.php'),
             ],
+            [
+                file_get_contents($fixturePath . 'Expected/TestClass3Expected.php'),
+                file_get_contents($fixturePath . 'Input/TestClass3Input.php'),
+            ],
         ];
     }
 

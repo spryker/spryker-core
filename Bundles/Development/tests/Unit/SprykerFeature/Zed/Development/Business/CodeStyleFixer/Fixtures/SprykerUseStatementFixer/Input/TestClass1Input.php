@@ -1,6 +1,6 @@
 <?php
 
-namespace Unit\SprykerFeature\Zed\Development\Business\CodeStyleFixer\Fixtures\RemoveWrongWhitespaceFixer\Input;
+namespace Unit\SprykerFeature\Zed\Development\Business\CodeStyleFixer\Fixtures\SprykerUseStatementFixer\Input;
 
 use Pyz\Zed\Foo\Bar\Baz;
 use X\Y;
