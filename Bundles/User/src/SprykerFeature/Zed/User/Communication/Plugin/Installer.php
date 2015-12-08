@@ -6,14 +6,14 @@
 
 namespace SprykerFeature\Zed\User\Communication\Plugin;
 
+use SprykerFeature\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
 use SprykerFeature\Zed\User\Business\UserFacade;
 use SprykerFeature\Zed\Installer\Business\Model\InstallerInterface;
-use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * @method UserFacade getFacade()
  */
-class Installer extends AbstractPlugin implements InstallerInterface
+class Installer extends AbstractInstallerPlugin implements InstallerInterface
 {
 
     /**
