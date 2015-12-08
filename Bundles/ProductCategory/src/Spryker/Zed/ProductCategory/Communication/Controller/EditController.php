@@ -75,6 +75,7 @@ class EditController extends AddController
 
                 $this->updateCategoryNodeChild($currentCategoryTransfer, $locale, $data);
             }
+
             $this->updateProductOrder($currentCategoryTransfer, (array) json_decode($data['product_order'], true));
 
             $parentIdList[] = $currentCategoryNodeTransfer->getFkParentCategoryNode();
