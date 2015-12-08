@@ -93,7 +93,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      *
      * @return Response
      */
-    private function getResponse(AbstractGatewayController $controller, $result)
+    protected function getResponse(AbstractGatewayController $controller, $result)
     {
         $response = new Response();
 
@@ -115,7 +115,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      *
      * @return void
      */
-    private function setGatewayControllerMessages(AbstractGatewayController $controller, Response $response)
+    protected function setGatewayControllerMessages(AbstractGatewayController $controller, Response $response)
     {
         $response->addSuccessMessages($controller->getSuccessMessages());
         $response->addInfoMessages($controller->getInfoMessages());
@@ -127,9 +127,9 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      *
      * @return void
      */
-    private function setFlashMessengerMessages(Response $response)
+    protected function setFlashMessengerMessages(Response $response)
     {
-        $flashMessengerFacade = $this->getDependencyContainer()->createFlashMessengerFacade();;
+        $flashMessengerFacade = $this->getDependencyContainer()->createFlashMessengerFacade();
 
         if ($flashMessengerFacade === null) {
             return;
@@ -166,7 +166,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      *
      * @return array|Message[]
      */
-    private function createResponseMessages(\ArrayObject $messages, array $storedMessages = [])
+    protected function createResponseMessages(\ArrayObject $messages, array $storedMessages = [])
     {
         foreach ($messages as $message) {
             $responseMessage = new Message();
@@ -182,7 +182,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      *
      * @return bool
      */
-    private function validateClassIsTransferObject(\ReflectionClass $class)
+    protected function validateClassIsTransferObject(\ReflectionClass $class)
     {
         if (substr($class->getName(), 0, 16) === 'Generated\Shared') {
             return true;

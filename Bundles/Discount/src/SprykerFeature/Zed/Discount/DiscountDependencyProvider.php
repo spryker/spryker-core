@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Discount;
 
+use SprykerEngine\Zed\Propel\Communication\Plugin\Connection;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
 use SprykerEngine\Zed\Kernel\Container;
@@ -33,7 +34,7 @@ class DiscountDependencyProvider extends AbstractBundleDependencyProvider
         };
 
         $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
-            return (new \SprykerEngine\Zed\Propel\Communication\Plugin\Connection())->get();
+            return (new Connection())->get();
         };
 
         return $container;

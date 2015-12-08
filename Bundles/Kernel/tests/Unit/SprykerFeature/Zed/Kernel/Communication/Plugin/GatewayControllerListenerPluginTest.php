@@ -7,8 +7,6 @@
 namespace Unit\SprykerFeature\Zed\Kernel\Communication\Plugin;
 
 use SprykerEngine\Shared\Transfer\TransferInterface;
-use SprykerEngine\Zed\Kernel\Communication\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\Repeater;
 use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
 use SprykerFeature\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin;
@@ -47,10 +45,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
         $action = 'goodAction';
         $eventMock->setController([$controller, $action]);
 
-        $controllerListenerPlugin = new GatewayControllerListenerPlugin(
-            $this->createFactoryMock(),
-            $this->createLocatorMock()
-        );
+        $controllerListenerPlugin = $this->createControllerListenerPluginMock();
         $controllerListenerPlugin->onKernelController($eventMock);
 
         $controllerCallable = $eventMock->getController();
@@ -68,10 +63,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
         $controller = new NotGatewayController();
         $eventMock->setController([$controller, $action]);
 
-        $controllerListenerPlugin = new GatewayControllerListenerPlugin(
-            $this->createFactoryMock(),
-            $this->createLocatorMock()
-        );
+        $controllerListenerPlugin = $this->createControllerListenerPluginMock();
         $controllerListenerPlugin->onKernelController($eventMock);
 
         $controllerCallable = $eventMock->getController();
@@ -164,23 +156,14 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Factory
+     * @return \PHPUnit_Framework_MockObject_MockObject
      */
-    private function createFactoryMock()
+    protected function createControllerListenerPluginMock()
     {
-        return $this->getMockBuilder('SprykerEngine\Zed\Kernel\Communication\Factory')
-            ->disableOriginalConstructor()
-            ->getMock();
-    }
+        $controllerListenerPlugin = $this->getMock(GatewayControllerListenerPlugin::class, ['setFlashMessengerMessages']);
+        $controllerListenerPlugin->method('setFlashMessengerMessages')->willReturn(null);
 
-    /**
-     * @return \PHPUnit_Framework_MockObject_MockObject|Locator
-     */
-    private function createLocatorMock()
-    {
-        return $this->getMockBuilder('SprykerEngine\Zed\Kernel\Locator')
-            ->disableOriginalConstructor()
-            ->getMock();
+        return $controllerListenerPlugin;
     }
 
     /**
@@ -245,10 +228,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
         $controller = new GatewayController();
         $eventMock->setController([$controller, $action]);
 
-        $controllerListenerPlugin = new GatewayControllerListenerPlugin(
-            $this->createFactoryMock(),
-            $this->createLocatorMock()
-        );
+        $controllerListenerPlugin = $this->createControllerListenerPluginMock();
 
         if (!$transfer) {
             $transfer = $this->getTransferMock();

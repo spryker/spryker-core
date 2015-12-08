@@ -5,6 +5,7 @@
 
 namespace SprykerEngine\Zed\FlashMessenger;
 
+use SprykerFeature\Zed\Application\Communication\Plugin\Pimple;
 use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
 use SprykerEngine\Zed\Kernel\Container;
 
@@ -22,7 +23,7 @@ class FlashMessengerDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[self::SESSION] = function (Container $container) {
-            return (new \SprykerFeature\Zed\Application\Communication\Plugin\Pimple())->getApplication()['request']->getSession();
+            return (new Pimple())->getApplication()['request']->getSession();
         };
 
         $container[self::FACADE_GLOSSARY] = function (Container $container) {

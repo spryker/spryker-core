@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Cms;
 
+use SprykerEngine\Zed\Propel\Communication\Plugin\Connection;
 use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
 use SprykerEngine\Zed\Kernel\Container;
 
@@ -51,7 +52,7 @@ class CmsDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
-            return (new \SprykerEngine\Zed\Propel\Communication\Plugin\Connection())->get();
+            return (new Connection())->get();
         };
 
         return $container;

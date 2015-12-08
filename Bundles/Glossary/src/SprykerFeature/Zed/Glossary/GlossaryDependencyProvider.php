@@ -5,6 +5,7 @@
 
 namespace SprykerFeature\Zed\Glossary;
 
+use SprykerFeature\Zed\Application\Communication\Plugin\Pimple;
 use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
 use SprykerEngine\Zed\Kernel\Container;
 
@@ -30,8 +31,8 @@ class GlossaryDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->locale()->facade();
         };
 
-        $container[self::PLUGIN_VALIDATOR] = function (Container $container) {
-            return (new \SprykerFeature\Zed\Application\Communication\Plugin\Pimple())->getApplication()['validator'];
+        $container[self::PLUGIN_VALIDATOR] = function () {
+            return (new Pimple())->getApplication()['validator'];
         };
 
         return $container;

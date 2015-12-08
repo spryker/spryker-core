@@ -6,6 +6,21 @@
 
 namespace SprykerFeature\Zed\Application\Business\Model\Twig;
 
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia\EditActionButton;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia\ViewActionButton;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia\CreateActionButton;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia\BackActionButton;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\StaticPath;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Widget;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Panel;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Modal;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\ListGroup;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\GridConfirmDialog;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Grid;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\FormatPrice;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\ConfirmDialog;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Button;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Locator;
 
@@ -38,21 +53,21 @@ class ZedExtension extends \Twig_Extension
     public function getFunctions()
     {
         $functions = [
-            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Button(),
-            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\ConfirmDialog(),
-            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\FormatPrice(),
-            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Grid(),
-            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\GridConfirmDialog(),
-            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\ListGroup(),
-            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Modal(),
-            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Panel(),
-            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Widget(),
-            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\StaticPath(),
-            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia\BackActionButton(),
-            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia\CreateActionButton(),
-            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia\ViewActionButton(),
-            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia\EditActionButton(),
-            new \SprykerFeature\Zed\Gui\Communication\Plugin\Twig\UrlFunction(),
+            new Button(),
+            new ConfirmDialog(),
+            new FormatPrice(),
+            new Grid(),
+            new GridConfirmDialog(),
+            new ListGroup(),
+            new Modal(),
+            new Panel(),
+            new Widget(),
+            new StaticPath(),
+            new BackActionButton(),
+            new CreateActionButton(),
+            new ViewActionButton(),
+            new EditActionButton(),
+            new UrlFunction(),
         ];
 
         return $functions;

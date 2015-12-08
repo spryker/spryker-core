@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Setup;
 
+use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\Repeater;
 use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
 use SprykerEngine\Zed\Kernel\Container;
 
@@ -22,7 +23,7 @@ class SetupDependencyProvider extends AbstractBundleDependencyProvider
     public function provideBusinessLayerDependencies(Container $container)
     {
         $container[self::PLUGIN_TRANSFER_OBJECT_REPEATER] = function () {
-            return new \SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\Repeater();
+            return new Repeater();
         };
 
         return $container;

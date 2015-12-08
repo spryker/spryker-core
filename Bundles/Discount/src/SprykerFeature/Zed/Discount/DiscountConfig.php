@@ -6,6 +6,15 @@
 
 namespace SprykerFeature\Zed\Discount;
 
+use SprykerFeature\Zed\Discount\Communication\Plugin\Collector\Aggregate;
+use SprykerFeature\Zed\Discount\Communication\Plugin\Collector\ItemProductOption;
+use SprykerFeature\Zed\Discount\Communication\Plugin\Collector\ItemExpense;
+use SprykerFeature\Zed\Discount\Communication\Plugin\Collector\OrderExpense;
+use SprykerFeature\Zed\Discount\Communication\Plugin\Collector\Item;
+use SprykerFeature\Zed\Discount\Communication\Plugin\Calculator\Fixed;
+use SprykerFeature\Zed\Discount\Communication\Plugin\Calculator\Percentage;
+use SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule\MinimumCartSubtotal;
+use SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule\Voucher;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerFeature\Zed\Discount\Business\Collector\CollectorInterface;
 use SprykerFeature\Zed\Discount\Business\Model\CalculatorInterface;
@@ -53,8 +62,8 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
     public function getAvailableDecisionRulePlugins()
     {
         return [
-            self::PLUGIN_DECISION_RULE_VOUCHER => new \SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule\Voucher(),
-            self::PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL => new \SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule\MinimumCartSubtotal(),
+            self::PLUGIN_DECISION_RULE_VOUCHER => new Voucher(),
+            self::PLUGIN_DECISION_RULE_MINIMUM_CART_SUB_TOTAL => new MinimumCartSubtotal(),
         ];
     }
 
@@ -64,8 +73,8 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
     public function getAvailableCalculatorPlugins()
     {
         return [
-            self::PLUGIN_CALCULATOR_PERCENTAGE => new \SprykerFeature\Zed\Discount\Communication\Plugin\Calculator\Percentage(),
-            self::PLUGIN_CALCULATOR_FIXED => new \SprykerFeature\Zed\Discount\Communication\Plugin\Calculator\Fixed(),
+            self::PLUGIN_CALCULATOR_PERCENTAGE => new Percentage(),
+            self::PLUGIN_CALCULATOR_FIXED => new Fixed(),
         ];
     }
 
@@ -75,11 +84,11 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
     public function getAvailableCollectorPlugins()
     {
         return [
-            self::PLUGIN_COLLECTOR_ITEM => new \SprykerFeature\Zed\Discount\Communication\Plugin\Collector\Item(),
-            self::PLUGIN_COLLECTOR_ORDER_EXPENSE => new \SprykerFeature\Zed\Discount\Communication\Plugin\Collector\OrderExpense(),
-            self::PLUGIN_COLLECTOR_ITEM_EXPENSE => new \SprykerFeature\Zed\Discount\Communication\Plugin\Collector\ItemExpense(),
-            self::PLUGIN_COLLECTOR_ITEM_PRODUCT_OPTION => new \SprykerFeature\Zed\Discount\Communication\Plugin\Collector\ItemProductOption(),
-            self::PLUGIN_COLLECTOR_AGGREGATE => new \SprykerFeature\Zed\Discount\Communication\Plugin\Collector\Aggregate(),
+            self::PLUGIN_COLLECTOR_ITEM => new Item(),
+            self::PLUGIN_COLLECTOR_ORDER_EXPENSE => new OrderExpense(),
+            self::PLUGIN_COLLECTOR_ITEM_EXPENSE => new ItemExpense(),
+            self::PLUGIN_COLLECTOR_ITEM_PRODUCT_OPTION => new ItemProductOption(),
+            self::PLUGIN_COLLECTOR_AGGREGATE => new Aggregate(),
         ];
     }
 

@@ -6,6 +6,7 @@
 
 namespace SprykerEngine\Zed\Application\Communication\Bootstrap\Extension;
 
+use SprykerFeature\Zed\Application\Communication\Plugin\Navigation;
 use SprykerEngine\Shared\Application\Communication\Bootstrap\Extension\GlobalTemplateVariableExtensionInterface;
 use SprykerEngine\Shared\Application\Communication\Application;
 use SprykerEngine\Shared\Kernel\Store;
@@ -44,7 +45,7 @@ class GlobalTemplateVariablesExtension extends LocatorAwareExtension implements 
     {
         $request = Request::createFromGlobals();
 
-        return (new \SprykerFeature\Zed\Application\Communication\Plugin\Navigation())
+        return (new Navigation())
             ->buildNavigation($request->getPathInfo());
     }
 

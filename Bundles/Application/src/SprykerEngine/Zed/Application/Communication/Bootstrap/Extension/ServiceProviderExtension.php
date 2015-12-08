@@ -6,6 +6,20 @@
 
 namespace SprykerEngine\Zed\Application\Communication\Bootstrap\Extension;
 
+use SprykerFeature\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvider as ServiceProviderSessionServiceProvider;
+use SprykerFeature\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin;
+use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\NewRelicServiceProvider;
+use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\UrlGeneratorServiceProvider;
+use SprykerEngine\Zed\Translation\Communication\Plugin\TranslationServiceProvider;
+use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\EnvironmentInformationServiceProvider;
+use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\TwigServiceProvider as ServiceProviderTwigServiceProvider;
+use SprykerFeature\Zed\Acl\Communication\Plugin\Bootstrap\AclBootstrapProvider;
+use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\RoutingServiceProvider;
+use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\SslServiceProvider;
+use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider;
+use SprykerFeature\Zed\Auth\Communication\Plugin\Bootstrap\AuthBootstrapProvider;
+use SprykerFeature\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider;
+use SprykerEngine\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\HttpFragmentServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
@@ -32,23 +46,23 @@ class ServiceProviderExtension extends LocatorAwareExtension implements ServiceP
         $providers = [
             new SessionServiceProvider(),
             $this->getSessionServiceProvider(),
-            new \SprykerEngine\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider(),
-            new \SprykerFeature\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider(),
-            new \SprykerFeature\Zed\Auth\Communication\Plugin\Bootstrap\AuthBootstrapProvider(),
-            new \SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider(),
-            new \SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\SslServiceProvider(),
+            new PropelServiceProvider(),
+            new RedirectAfterLoginProvider(),
+            new AuthBootstrapProvider(),
+            new RequestServiceProvider(),
+            new SslServiceProvider(),
             new ServiceControllerServiceProvider(),
-            new \SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\RoutingServiceProvider(),
-            new \SprykerFeature\Zed\Acl\Communication\Plugin\Bootstrap\AclBootstrapProvider(),
+            new RoutingServiceProvider(),
+            new AclBootstrapProvider(),
             new ValidatorServiceProvider(),
             new FormServiceProvider(),
             new TwigServiceProvider(),
-            new \SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\TwigServiceProvider(),
-            new \SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\EnvironmentInformationServiceProvider(),
-            new \SprykerEngine\Zed\Translation\Communication\Plugin\TranslationServiceProvider(),
+            new ServiceProviderTwigServiceProvider(),
+            new EnvironmentInformationServiceProvider(),
+            new TranslationServiceProvider(),
             $this->getGatewayServiceProvider(),
-            new \SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\UrlGeneratorServiceProvider(),
-            new \SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\NewRelicServiceProvider(),
+            new UrlGeneratorServiceProvider(),
+            new NewRelicServiceProvider(),
             new HttpFragmentServiceProvider(),
         ];
 
@@ -64,8 +78,8 @@ class ServiceProviderExtension extends LocatorAwareExtension implements ServiceP
      */
     protected function getGatewayServiceProvider()
     {
-        $controllerListener = new \SprykerFeature\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin();
-        $serviceProvider = new \SprykerFeature\Zed\Kernel\Communication\Plugin\GatewayServiceProviderPlugin();
+        $controllerListener = new GatewayControllerListenerPlugin();
+        $serviceProvider = new GatewayServiceProviderPlugin();
         $serviceProvider->setControllerListener($controllerListener);
 
         return $serviceProvider;
@@ -76,7 +90,7 @@ class ServiceProviderExtension extends LocatorAwareExtension implements ServiceP
      */
     protected function getSessionServiceProvider()
     {
-        $sessionServiceProvider = new \SprykerFeature\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvider();
+        $sessionServiceProvider = new ServiceProviderSessionServiceProvider();
         $sessionServiceProvider->setClient(
             $this->getLocator()->session()->client()
         );

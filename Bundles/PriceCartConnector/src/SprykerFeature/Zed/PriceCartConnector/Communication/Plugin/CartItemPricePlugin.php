@@ -7,8 +7,6 @@
 namespace SprykerFeature\Zed\PriceCartConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\ChangeTransfer;
-use SprykerEngine\Zed\Kernel\Communication\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\PriceCartConnector\Business\Manager\PriceManagerInterface;
