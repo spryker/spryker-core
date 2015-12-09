@@ -4,16 +4,12 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\System\Communication\Controller;
+namespace SprykerFeature\Zed\Heartbeat\Communication\Controller;
 
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
-use SprykerFeature\Zed\System\Communication\SystemDependencyContainer;
 use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @method SystemDependencyContainer getDependencyContainer()
- */
-class HeartbeatController extends AbstractController
+class IndexController extends AbstractController
 {
 
     const SYSTEM_UP = 'UP';
@@ -23,16 +19,14 @@ class HeartbeatController extends AbstractController
 
     public function indexAction()
     {
-        $heartbeatFacade = $this->getDependencyContainer()->createHeartbeatFacade();
-
-        if ($heartbeatFacade->isSystemAlive()) {
+        if ($this->getFacade()->isSystemAlive()) {
             return $this->jsonResponse(
                 [self::SYSTEM_STATUS => self::SYSTEM_UP],
                 Response::HTTP_OK
             );
         } else {
             return $this->jsonResponse(
-                [self::SYSTEM_STATUS => self::SYSTEM_DOWN, self::STATUS_REPORT => $heartbeatFacade->getReport()->toArray()],
+                [self::SYSTEM_STATUS => self::SYSTEM_DOWN, self::STATUS_REPORT => $this->getFacade()->getReport()->toArray()],
                 Response::HTTP_SERVICE_UNAVAILABLE
             );
         }

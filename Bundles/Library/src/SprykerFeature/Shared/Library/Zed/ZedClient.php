@@ -21,7 +21,6 @@ use SprykerFeature\Shared\Library\System;
 use SprykerFeature\Shared\Library\Communication\Request;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Shared\Library\Zed\Exception\InvalidZedResponseException;
-use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Shared\Application\ApplicationConfig;
 
 class ZedClient
@@ -322,7 +321,7 @@ class ZedClient
             $cookie = new Cookie();
             $cookie->setName(trim(Config::get(ApplicationConfig::TRANSFER_DEBUG_SESSION_NAME)));
             $cookie->setValue($_COOKIE[Config::get(ApplicationConfig::TRANSFER_DEBUG_SESSION_NAME)]);
-            $cookie->setDomain(Config::get(SystemConfig::HOST_ZED_API));
+            $cookie->setDomain(Config::get(ApplicationConfig::HOST_ZED_API));
             $cookieArray = new ArrayCookieJar(true);
             $cookieArray->add($cookie);
 

@@ -21,7 +21,6 @@ use SprykerFeature\Shared\Library\System;
 use SprykerFeature\Shared\Library\Zed\Exception\InvalidZedResponseException;
 use SprykerEngine\Shared\Lumberjack\Model\SharedEventJournal;
 use SprykerEngine\Shared\Lumberjack\Model\Event;
-use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Shared\Application\ApplicationConfig;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Shared\ZedRequest\Client\Exception\RequestException;
@@ -366,7 +365,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
                 $cookie = new Cookie();
                 $cookie->setName(trim(Config::get(ApplicationConfig::TRANSFER_DEBUG_SESSION_NAME)));
                 $cookie->setValue($_COOKIE[Config::get(ApplicationConfig::TRANSFER_DEBUG_SESSION_NAME)]);
-                $cookie->setDomain(Config::get(SystemConfig::HOST_ZED_API));
+                $cookie->setDomain(Config::get(ApplicationConfig::HOST_ZED_API));
                 $cookieArray = new ArrayCookieJar(true);
                 $cookieArray->add($cookie);
 

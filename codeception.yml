@@ -56,7 +56,6 @@ include:
  - Bundles/Stock
  - Bundles/StockSalesConnector
  - Bundles/Storage
- - Bundles/System
  - Bundles/Tax
  - Bundles/TaxProductConnector
  - Bundles/Touch

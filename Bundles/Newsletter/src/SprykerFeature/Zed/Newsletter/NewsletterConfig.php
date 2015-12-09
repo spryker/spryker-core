@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Newsletter;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerFeature\Shared\Newsletter\NewsletterConfig as SharedNewsletterConfig;
-use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Shared\Application\ApplicationConfig;
 
 class NewsletterConfig extends AbstractBundleConfig
 {
@@ -28,7 +28,7 @@ class NewsletterConfig extends AbstractBundleConfig
      */
     public function getHostYves()
     {
-        return $this->get(SystemConfig::HOST_YVES);
+        return $this->get(ApplicationConfig::HOST_YVES);
     }
 
     /**

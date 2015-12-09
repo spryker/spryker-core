@@ -49,7 +49,6 @@
     "spryker/stock": "self.version",
     "spryker/stock-sales-connector": "self.version",
     "spryker/storage": "self.version",
-    "spryker/system": "self.version",
     "spryker/touch": "self.version",
     "spryker/twig": "self.version",
     "spryker/ui": "self.version",

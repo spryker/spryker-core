@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Setup\Communication\Controller;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\Library\Environment;
 use SprykerFeature\Shared\Setup\SetupConfig;
-use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Shared\Application\ApplicationConfig;
 use SprykerFeature\Zed\Application\Communication\Controller\AbstractController;
 
 class IndexController extends AbstractController
@@ -47,7 +47,7 @@ class IndexController extends AbstractController
             ];
         } else {
             $developmentLinks[] = [
-                'href' => 'http://' . Config::get(SystemConfig::HOST_ZED_GUI) . ':9200',
+                'href' => 'http://' . Config::get(ApplicationConfig::HOST_ZED_GUI) . ':9200',
                 'target' => '_blank',
                 'label' => __('Show Elasticsearch'),
             ];
@@ -63,7 +63,7 @@ class IndexController extends AbstractController
             ];
         } else {
             $developmentLinks[] = [
-                'href' => 'http://' . Config::get(SystemConfig::HOST_ZED_GUI) . ':9200/_plugin/head',
+                'href' => 'http://' . Config::get(ApplicationConfig::HOST_ZED_GUI) . ':9200/_plugin/head',
                 'target' => '_blank',
                 'label' => __('Show Elasticsearch Head'),
             ];
@@ -80,7 +80,7 @@ class IndexController extends AbstractController
             ];
         } else {
             $developmentLinks[] = [
-                'href' => 'http://' . Config::get(SystemConfig::HOST_ZED_GUI) . ':9200/_plugin/bigdesk',
+                'href' => 'http://' . Config::get(ApplicationConfig::HOST_ZED_GUI) . ':9200/_plugin/bigdesk',
                 'target' => '_blank',
                 'label' => __('Show Elasticsearch Bigdesk'),
             ];
@@ -96,7 +96,7 @@ class IndexController extends AbstractController
             ];
         } else {
             $developmentLinks[] = [
-                'href' => 'http://' . Config::get(SystemConfig::HOST_ZED_GUI) . ':8091',
+                'href' => 'http://' . Config::get(ApplicationConfig::HOST_ZED_GUI) . ':8091',
                 'target' => '_blank',
                 'label' => __('Show Couchbase'),
             ];

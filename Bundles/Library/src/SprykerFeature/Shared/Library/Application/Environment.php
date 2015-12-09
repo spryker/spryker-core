@@ -12,7 +12,6 @@ use SprykerFeature\Shared\Application\ApplicationConfig;
 use SprykerFeature\Shared\Library\Autoloader;
 use SprykerFeature\Shared\Library\Error\ErrorHandler;
 use SprykerFeature\Shared\Library\TestAutoloader;
-use SprykerFeature\Shared\System\SystemConfig;
 
 class Environment
 {
@@ -84,7 +83,7 @@ class Environment
         Autoloader::register(APPLICATION_VENDOR_DIR . '/spryker/spryker', APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
         TestAutoloader::register(APPLICATION_VENDOR_DIR . '/spryker/spryker', APPLICATION_VENDOR_DIR, $application, $disableApplicationCheck);
 
-        $coreNamespaces = Config::get(SystemConfig::CORE_NAMESPACES);
+        $coreNamespaces = Config::get(ApplicationConfig::CORE_NAMESPACES);
 
         foreach ($coreNamespaces as $namespace) {
             Autoloader::allowNamespace($namespace);

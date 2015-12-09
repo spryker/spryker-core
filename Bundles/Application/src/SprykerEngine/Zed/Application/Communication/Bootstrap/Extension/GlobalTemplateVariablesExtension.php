@@ -11,7 +11,7 @@ use SprykerEngine\Shared\Application\Communication\Bootstrap\Extension\GlobalTem
 use SprykerEngine\Shared\Application\Communication\Application;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Shared\Application\ApplicationConfig;
 use Symfony\Component\HttpFoundation\Request;
 
 class GlobalTemplateVariablesExtension extends LocatorAwareExtension implements GlobalTemplateVariableExtensionInterface
@@ -30,7 +30,7 @@ class GlobalTemplateVariablesExtension extends LocatorAwareExtension implements 
         return [
             'environment' => APPLICATION_ENV,
             'store' => Store::getInstance()->getStoreName(),
-            'title' => Config::get(SystemConfig::PROJECT_NAMESPACE) . ' | Zed | ' . ucfirst(APPLICATION_ENV),
+            'title' => Config::get(ApplicationConfig::PROJECT_NAMESPACE) . ' | Zed | ' . ucfirst(APPLICATION_ENV),
             'currentController' => get_class($this),
             'navigation' => $navigation,
             'breadcrumbs' => $breadcrumbs,

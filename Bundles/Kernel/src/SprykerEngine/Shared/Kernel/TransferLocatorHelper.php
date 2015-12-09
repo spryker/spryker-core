@@ -4,7 +4,7 @@ namespace SprykerEngine\Shared\Kernel;
 
 use SprykerFeature\Shared\Library\Config;
 use SprykerEngine\Shared\Transfer\TransferInterface;
-use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Shared\Application\ApplicationConfig;
 
 class TransferLocatorHelper
 {
@@ -39,7 +39,7 @@ class TransferLocatorHelper
      */
     private function getNamespaces()
     {
-        $projectNamespace = Config::get(SystemConfig::PROJECT_NAMESPACE);
+        $projectNamespace = Config::get(ApplicationConfig::PROJECT_NAMESPACE);
         $namespaces = [
             $projectNamespace . '\\',
             'SprykerFeature\\',

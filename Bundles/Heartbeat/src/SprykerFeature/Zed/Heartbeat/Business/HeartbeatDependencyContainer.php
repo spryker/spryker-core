@@ -18,7 +18,7 @@ use SprykerFeature\Zed\Heartbeat\Business\Assistant\SessionHealthIndicator;
 use SprykerFeature\Zed\Heartbeat\Business\Assistant\StorageHealthIndicator;
 use SprykerFeature\Zed\Heartbeat\HeartbeatConfig;
 use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Shared\Application\ApplicationConfig;
 
 /**
  * @method HeartbeatBusiness getFactory()
@@ -51,9 +51,9 @@ class HeartbeatDependencyContainer extends AbstractBusinessDependencyContainer
     public function createSearchHealthIndicator()
     {
         $client = new ElasticaClient([
-            'protocol' => Config::get(SystemConfig::ELASTICA_PARAMETER__TRANSPORT),
-            'port' => Config::get(SystemConfig::ELASTICA_PARAMETER__PORT),
-            'host' => Config::get(SystemConfig::ELASTICA_PARAMETER__HOST),
+            'protocol' => Config::get(ApplicationConfig::ELASTICA_PARAMETER__TRANSPORT),
+            'port' => Config::get(ApplicationConfig::ELASTICA_PARAMETER__PORT),
+            'host' => Config::get(ApplicationConfig::ELASTICA_PARAMETER__HOST),
         ]);
 
         return new SearchHealthIndicator($client);
@@ -73,9 +73,9 @@ class HeartbeatDependencyContainer extends AbstractBusinessDependencyContainer
     public function createStorageHealthIndicator()
     {
         $config = [
-            'protocol' => Config::get(SystemConfig::ZED_STORAGE_SESSION_REDIS_PROTOCOL),
-            'port' => Config::get(SystemConfig::ZED_STORAGE_SESSION_REDIS_PORT),
-            'host' => Config::get(SystemConfig::ZED_STORAGE_SESSION_REDIS_HOST),
+            'protocol' => Config::get(ApplicationConfig::ZED_STORAGE_SESSION_REDIS_PROTOCOL),
+            'port' => Config::get(ApplicationConfig::ZED_STORAGE_SESSION_REDIS_PORT),
+            'host' => Config::get(ApplicationConfig::ZED_STORAGE_SESSION_REDIS_HOST),
         ];
         $client = new PedicClient($config);
 

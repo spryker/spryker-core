@@ -8,7 +8,7 @@ namespace SprykerEngine\Zed\Propel;
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
-use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Shared\Application\ApplicationConfig;
 
 class PropelConfig extends AbstractBundleConfig
 {
@@ -28,7 +28,7 @@ class PropelConfig extends AbstractBundleConfig
      */
     public function getSchemaDirectory()
     {
-        $config = Config::get(SystemConfig::PROPEL);
+        $config = Config::get(ApplicationConfig::PROPEL);
         $schemaDir = $config['paths']['schemaDir'] . DIRECTORY_SEPARATOR;
 
         return $schemaDir;
