@@ -15,7 +15,7 @@ class AuthMailConnectorDependencyContainer extends AbstractCommunicationDependen
     /**
      * @return MailFacade
      */
-    public function creatMailFacade()
+    public function createMailFacade()
     {
         return $this->getProvidedDependency(AuthMailConnectorDependencyProvider::FACADE_MAIL);
     }

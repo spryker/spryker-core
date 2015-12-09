@@ -8,11 +8,12 @@ namespace SprykerFeature\Zed\Discount\Communication\Plugin\Calculator;
 
 use Generated\Shared\Transfer\DiscountTransfer;
 use SprykerFeature\Shared\Library\Currency\CurrencyManager;
+use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\Business\Model\DiscountableInterface;
 use SprykerFeature\Zed\Discount\Communication\DiscountDependencyContainer;
 
 /**
- * @method DiscountDependencyContainer getDependencyContainer()
+ * @method DiscountFacade getFacade()
  */
 class Fixed extends AbstractCalculator
 {
@@ -25,7 +26,7 @@ class Fixed extends AbstractCalculator
      */
     public function calculate(array $discountableObjects, $number)
     {
-        return $this->getDependencyContainer()->getDiscountFacade()->calculateFixed($discountableObjects, $number);
+        return $this->getFacade()->calculateFixed($discountableObjects, $number);
     }
 
     /**

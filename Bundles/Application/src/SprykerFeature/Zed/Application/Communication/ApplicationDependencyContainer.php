@@ -14,14 +14,6 @@ class ApplicationDependencyContainer extends AbstractCommunicationDependencyCont
 {
 
     /**
-     * @return ApplicationFacade
-     */
-    public function getApplicationFacade()
-    {
-        return $this->getLocator()->application()->facade();
-    }
-
-    /**
      * @return Api
      */
     public function createNewRelicApi()

@@ -119,8 +119,10 @@ class DiscountConfig extends AbstractBundleConfig implements DiscountConfigInter
     /**
      * @return array
      */
-    public function getDecisionPluginNames()
+    public function getDecisionRulePluginNames()
     {
+        //$this->locator->...()
+
         return array_keys($this->getAvailableDecisionRulePlugins());
     }
 

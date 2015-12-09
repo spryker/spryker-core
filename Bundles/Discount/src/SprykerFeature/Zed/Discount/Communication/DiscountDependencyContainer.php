@@ -107,13 +107,15 @@ class DiscountDependencyContainer extends AbstractCommunicationDependencyContain
     }
 
     /**
+     * @param DiscountFacade $discountFacade
+     *
      * @return FormTypeInterface
      */
-    public function createCartRuleForm()
+    public function createCartRuleForm(DiscountFacade $discountFacade)
     {
         $cartRuleForm = new CartRuleForm(
             $this->getConfig(),
-            $this->getDiscountFacade()
+            $discountFacade
         );
 
         return $this->createForm($cartRuleForm);

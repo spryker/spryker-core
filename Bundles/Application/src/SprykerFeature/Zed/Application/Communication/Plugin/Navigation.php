@@ -6,13 +6,13 @@
 
 namespace SprykerFeature\Zed\Application\Communication\Plugin;
 
-use SprykerFeature\Zed\Application\Communication\ApplicationDependencyContainer;
+use SprykerFeature\Zed\Application\Business\ApplicationFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 
 /**
  * Class Navigation
  *
- * @method ApplicationDependencyContainer getDependencyContainer()
+ * @method ApplicationFacade getFacade()
  */
 class Navigation extends AbstractPlugin
 {
@@ -24,8 +24,7 @@ class Navigation extends AbstractPlugin
      */
     public function buildNavigation($pathInfo)
     {
-        return $this->getDependencyContainer()
-            ->getApplicationFacade()
+        return $this->getFacade()
             ->buildNavigation($pathInfo);
     }
 
