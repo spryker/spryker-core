@@ -17,6 +17,7 @@ use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Locale\Business\LocaleDependencyContainer;
 use SprykerFeature\Zed\Product\Business\ProductDependencyContainer;
+use SprykerEngine\Zed\Propel\Communication\Plugin\Connection;
 use SprykerFeature\Zed\Product\Persistence\ProductQueryContainerInterface;
 use SprykerFeature\Zed\ProductOption\Business\ProductOptionDependencyContainer;
 use SprykerFeature\Zed\ProductOption\Business\ProductOptionFacade;
@@ -279,10 +280,9 @@ class ProductOptionReaderTest extends AbstractFunctionalTest
         $container[self::QUERY_CONTAINER_PRODUCT] = function (Container $container) {
             return $this->productQueryContainer;
         };
-        $locator = Locator::getInstance();
-        $container[self::PROPEL_CONNECTION] = function () use ($locator) {
+        $container[self::PROPEL_CONNECTION] = function () {
             /* @var $locator AutoCompletion */
-            return $locator->propel()->pluginConnection()->get();
+            return (new Connection())->get();
         };
         $this->productOptionQueryContainer->setExternalDependencies($container);
         $this->facade->setExternalDependencies($container);

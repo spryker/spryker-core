@@ -9,7 +9,6 @@ namespace Unit\SprykerFeature\Zed\Kernel\Communication\Plugin;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\Repeater;
 use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
-use SprykerFeature\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin;
 use Unit\SprykerFeature\Zed\Kernel\Communication\Plugin\Fixture\FilterControllerEvent;
 use Unit\SprykerFeature\Zed\Kernel\Communication\Plugin\Fixture\GatewayController;
 use Unit\SprykerFeature\Zed\Kernel\Communication\Plugin\Fixture\NotGatewayController;
@@ -152,6 +151,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('errorMessages', $responseContent);
         $this->assertArrayHasKey('successMessages', $responseContent);
         $this->assertArrayHasKey('success', $responseContent);
+
         $this->assertEquals([['message' => 'info']], $responseContent['infoMessages']);
         $this->assertEquals([['message' => 'error']], $responseContent['errorMessages']);
         $this->assertEquals([['message' => 'success']], $responseContent['successMessages']);

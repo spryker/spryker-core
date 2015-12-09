@@ -6,9 +6,9 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\QueueMessageTransfer;
 use Generated\Zed\Ide\AutoCompletion;
-use SprykerFeature\Zed\Glossary\Business\GlossaryDependencyContainer;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Glossary\GlossaryDependencyProvider;
+use SprykerEngine\Zed\Kernel\Business\Factory;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
@@ -52,19 +52,9 @@ class GlossaryTaskWorkerPluginTest extends Test
         parent::setUp();
 
         $this->generateTestLocales();
+
         $this->glossaryFacade = $this->createGlossaryFacade();
-
-        $container = new Container();
-        $container = (new GlossaryDependencyProvider())
-            ->provideBusinessLayerDependencies($container);
-
-        $this->glossaryFacade->setExternalDependencies($container);
-        $this->glossaryFacade->setDependencyContainer(new GlossaryDependencyContainer());
-
-        $glossaryQueueFacade = $this->createGlossaryQueueFacade();
-
-        $this->taskPlugin = new GlossaryTaskWorkerPlugin();
-        $this->taskPlugin->setOwnFacade($glossaryQueueFacade);
+        $this->taskPlugin = $this->createGlossaryTaskWorkerPlugin();
     }
 
     /**
@@ -105,17 +95,9 @@ class GlossaryTaskWorkerPluginTest extends Test
      */
     private function createGlossaryFacade()
     {
-        $container = new Container();
-        $container[GlossaryDependencyProvider::FACADE_TOUCH] = function (Container $container) {
-            return $container->getLocator()->touch()->facade();
-        };
-
-        $container[GlossaryDependencyProvider::FACADE_LOCALE] = function (Container $container) {
-            return $container->getLocator()->locale()->facade();
-        };
-
-        $glossaryFacade = new MockGlossaryFacade();
-        $glossaryFacade->setExternalDependencies($container);
+        $provider = new GlossaryDependencyProvider();
+        $glossaryFacade = new MockGlossaryFacade(new Factory('Glossary'), $this->getLocator());
+        $glossaryFacade->setExternalDependencies($provider->provideBusinessLayerDependencies(new Container()));
         $glossaryFacade->setOwnQueryContainer(
             new GlossaryQueryContainer()
         );
@@ -201,6 +183,18 @@ class GlossaryTaskWorkerPluginTest extends Test
     protected function getQueueMessage()
     {
         return new QueueMessageTransfer();
+    }
+
+    /**
+     * @return GlossaryTaskWorkerPlugin
+     */
+    private function createGlossaryTaskWorkerPlugin()
+    {
+        $glossaryTaskWorkerPluginMock = $this->getMock(GlossaryTaskWorkerPlugin::class, ['getFacade']);
+
+        $glossaryTaskWorkerPluginMock->method('getFacade')->willReturn($this->createGlossaryQueueFacade());
+
+        return $glossaryTaskWorkerPluginMock;
     }
 
 }

@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Search;
 
+use SprykerFeature\Zed\ProductSearch\Communication\Plugin\Installer;
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerFeature\Shared\System\SystemConfig;
 use SprykerFeature\Zed\Installer\Communication\Plugin\AbstractInstallerPlugin;
@@ -19,7 +20,7 @@ class SearchConfig extends AbstractBundleConfig
     public function getInstaller()
     {
         return [
-            $this->getLocator()->productSearch()->pluginInstaller(),
+            new Installer(),
         ];
     }
 

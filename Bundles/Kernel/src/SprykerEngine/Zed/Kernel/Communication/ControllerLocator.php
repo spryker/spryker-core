@@ -6,6 +6,7 @@
 
 namespace SprykerEngine\Zed\Kernel\Communication;
 
+use SprykerFeature\Zed\Application\Communication\Plugin\Pimple;
 use SprykerEngine\Shared\Kernel\Communication\BundleControllerActionInterface;
 use SprykerEngine\Shared\Kernel\Communication\ControllerLocatorInterface;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
@@ -130,7 +131,7 @@ class ControllerLocator implements ControllerLocatorInterface
     protected function addDefaultDependencies(Container $container)
     {
         $container[AbstractCommunicationDependencyContainer::FORM_FACTORY] = function (Container $container) {
-            return $container->getLocator()->application()->pluginPimple()
+            return (new Pimple())
                 ->getApplication()[AbstractCommunicationDependencyContainer::FORM_FACTORY];
         };
 

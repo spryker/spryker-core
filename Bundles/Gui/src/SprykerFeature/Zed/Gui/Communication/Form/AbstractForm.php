@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Gui\Communication\Form;
 
+use SprykerFeature\Zed\Application\Communication\Plugin\Pimple;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Transfer\AbstractTransfer;
 use SprykerEngine\Zed\Kernel\Locator;
@@ -88,7 +89,7 @@ abstract class AbstractForm
     public function getConstraints()
     {
         if ($this->constraintsPlugin === null) {
-            $this->constraintsPlugin = $this->getLocator()->gui()->pluginConstraintsPlugin();
+            $this->constraintsPlugin = new ConstraintsPlugin();
         }
 
         return $this->constraintsPlugin;
@@ -101,9 +102,7 @@ abstract class AbstractForm
      */
     protected function injectDependencies()
     {
-        $app = $this->getLocator()
-            ->application()
-            ->pluginPimple()
+        $app = (new Pimple())
             ->getApplication();
 
         $this->request = $app['request'];

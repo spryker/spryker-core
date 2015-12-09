@@ -38,4 +38,12 @@ class FooPlugin extends AbstractPlugin
         return parent::getQueryContainer();
     }
 
+    /**
+     * @return string
+     */
+    protected function getBundleName()
+    {
+        return 'Kernel';
+    }
+
 }

@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\ProductCategory;
 
+use SprykerEngine\Zed\Propel\Communication\Plugin\Connection;
 use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
 use SprykerEngine\Zed\Kernel\Container;
 
@@ -71,8 +72,8 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->productCategory()->queryContainer();
         };
 
-        $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
-            return $container->getLocator()->propel()->pluginConnection()->get();
+        $container[self::PLUGIN_PROPEL_CONNECTION] = function () {
+            return (new Connection())->get();
         };
 
         return $container;
@@ -117,8 +118,8 @@ class ProductCategoryDependencyProvider extends AbstractBundleDependencyProvider
             return $container->getLocator()->productCategory()->queryContainer();
         };
 
-        $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
-            return $container->getLocator()->propel()->pluginConnection()->get();
+        $container[self::PLUGIN_PROPEL_CONNECTION] = function () {
+            return (new Connection())->get();
         };
 
         return $container;

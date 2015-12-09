@@ -19,6 +19,7 @@ use SprykerEngine\Zed\Kernel\Container;
 use SprykerFeature\Zed\Distributor\DistributorDependencyProvider;
 use SprykerFeature\Zed\Distributor\Persistence\DistributorQueryContainer;
 use Orm\Zed\Distributor\Persistence\SpyDistributorReceiver;
+use SprykerFeature\Zed\GlossaryDistributor\Communication\Plugin\GlossaryQueryExpanderPlugin;
 
 /**
  * @group SprykerFeature
@@ -208,7 +209,7 @@ class GlossaryDistributorTest extends AbstractFunctionalTest
         };
         $container[DistributorDependencyProvider::QUERY_EXPANDERS] = function () {
             return [
-                $this->getLocator()->glossaryDistributor()->pluginGlossaryQueryExpanderPlugin(),
+                new GlossaryQueryExpanderPlugin(),
             ];
         };
         $container[DistributorDependencyProvider::ITEM_PROCESSORS] = function () {

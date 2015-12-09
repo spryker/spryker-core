@@ -6,6 +6,20 @@
 
 namespace SprykerEngine\Zed\Application\Communication\Bootstrap\Extension;
 
+use SprykerFeature\Zed\Session\Communication\Plugin\ServiceProvider\SessionServiceProvider as ServiceProviderSessionServiceProvider;
+use SprykerFeature\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin;
+use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\NewRelicServiceProvider;
+use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\UrlGeneratorServiceProvider;
+use SprykerEngine\Zed\Translation\Communication\Plugin\TranslationServiceProvider;
+use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\EnvironmentInformationServiceProvider;
+use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\TwigServiceProvider as ServiceProviderTwigServiceProvider;
+use SprykerFeature\Zed\Acl\Communication\Plugin\Bootstrap\AclBootstrapProvider;
+use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\RoutingServiceProvider;
+use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\SslServiceProvider;
+use SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider\RequestServiceProvider;
+use SprykerFeature\Zed\Auth\Communication\Plugin\Bootstrap\AuthBootstrapProvider;
+use SprykerFeature\Zed\Auth\Communication\Plugin\ServiceProvider\RedirectAfterLoginProvider;
+use SprykerEngine\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 use Silex\Provider\FormServiceProvider;
 use Silex\Provider\HttpFragmentServiceProvider;
 use Silex\Provider\ServiceControllerServiceProvider;
@@ -32,23 +46,23 @@ class ServiceProviderExtension extends LocatorAwareExtension implements ServiceP
         $providers = [
             new SessionServiceProvider(),
             $this->getSessionServiceProvider(),
-            $this->getLocator()->propel()->pluginServiceProviderPropelServiceProvider(),
-            $this->getLocator()->auth()->pluginServiceProviderRedirectAfterLoginProvider(),
-            $this->getLocator()->auth()->pluginBootstrapAuthBootstrapProvider(),
-            $this->getLocator()->application()->pluginServiceProviderRequestServiceProvider(),
-            $this->getLocator()->application()->pluginServiceProviderSslServiceProvider(),
+            new PropelServiceProvider(),
+            new RedirectAfterLoginProvider(),
+            new AuthBootstrapProvider(),
+            new RequestServiceProvider(),
+            new SslServiceProvider(),
             new ServiceControllerServiceProvider(),
-            $this->getLocator()->application()->pluginServiceProviderRoutingServiceProvider(),
-            $this->getLocator()->acl()->pluginBootstrapAclBootstrapProvider(),
+            new RoutingServiceProvider(),
+            new AclBootstrapProvider(),
             new ValidatorServiceProvider(),
             new FormServiceProvider(),
             new TwigServiceProvider(),
-            $this->getLocator()->application()->pluginServiceProviderTwigServiceProvider(),
-            $this->getLocator()->application()->pluginServiceProviderEnvironmentInformationServiceProvider(),
-            $this->getLocator()->translation()->pluginTranslationServiceProvider(),
+            new ServiceProviderTwigServiceProvider(),
+            new EnvironmentInformationServiceProvider(),
+            new TranslationServiceProvider(),
             $this->getGatewayServiceProvider(),
-            $this->getLocator()->application()->pluginServiceProviderUrlGeneratorServiceProvider(),
-            $this->getLocator()->application()->pluginServiceProviderNewRelicServiceProvider(),
+            new UrlGeneratorServiceProvider(),
+            new NewRelicServiceProvider(),
             new HttpFragmentServiceProvider(),
         ];
 
@@ -64,9 +78,8 @@ class ServiceProviderExtension extends LocatorAwareExtension implements ServiceP
      */
     protected function getGatewayServiceProvider()
     {
-        $locator = $this->getLocator();
-        $controllerListener = $locator->kernel()->pluginGatewayControllerListenerPlugin();
-        $serviceProvider = $locator->kernel()->pluginGatewayServiceProviderPlugin();
+        $controllerListener = new GatewayControllerListenerPlugin();
+        $serviceProvider = new GatewayServiceProviderPlugin();
         $serviceProvider->setControllerListener($controllerListener);
 
         return $serviceProvider;
@@ -77,7 +90,7 @@ class ServiceProviderExtension extends LocatorAwareExtension implements ServiceP
      */
     protected function getSessionServiceProvider()
     {
-        $sessionServiceProvider = $this->getLocator()->session()->pluginServiceProviderSessionServiceProvider();
+        $sessionServiceProvider = new ServiceProviderSessionServiceProvider();
         $sessionServiceProvider->setClient(
             $this->getLocator()->session()->client()
         );

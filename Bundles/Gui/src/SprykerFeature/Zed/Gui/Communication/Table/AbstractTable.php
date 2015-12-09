@@ -6,6 +6,7 @@
 
 namespace SprykerFeature\Zed\Gui\Communication\Table;
 
+use SprykerFeature\Zed\Application\Communication\Plugin\Pimple;
 use Generated\Shared\Transfer\DataTablesTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -130,8 +131,7 @@ abstract class AbstractTable
         if (!$this->initialized) {
             $this->initialized = true;
             $this->locator = Locator::getInstance();
-            $this->request = $this->locator->application()
-                ->pluginPimple()
+            $this->request = (new Pimple())
                 ->getApplication()['request'];
             $config = $this->newTableConfiguration();
             $config->setPageLength($this->getLimit());
@@ -295,8 +295,7 @@ abstract class AbstractTable
     private function getTwig()
     {
         /** @var \Twig_Environment $twig */
-        $twig = $this->locator->application()
-            ->pluginPimple()
+        $twig = (new Pimple())
             ->getApplication()['twig'];
 
         if ($twig === null) {

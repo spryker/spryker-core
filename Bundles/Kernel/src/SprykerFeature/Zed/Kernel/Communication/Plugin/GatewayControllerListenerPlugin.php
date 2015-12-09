@@ -7,30 +7,22 @@
 namespace SprykerFeature\Zed\Kernel\Communication\Plugin;
 
 use SprykerEngine\Shared\Transfer\TransferInterface;
-use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Shared\ZedRequest\Client\Message;
 use SprykerFeature\Zed\Kernel\Communication\Controller\AbstractGatewayController;
 use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\TransferServer;
 use SprykerFeature\Zed\Kernel\Communication\GatewayControllerListenerInterface;
+use SprykerFeature\Zed\Kernel\Communication\KernelDependencyContainer;
 use SprykerFeature\Zed\ZedRequest\Business\Client\Request;
 use SprykerFeature\Zed\ZedRequest\Business\Client\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use SprykerEngine\Zed\FlashMessenger\FlashMessengerConfig;
-use SprykerEngine\Zed\Kernel\Locator;
 
+/**
+ * @method KernelDependencyContainer getDependencyContainer()
+ */
 class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayControllerListenerInterface
 {
-
-    /**
-     * @var Locator
-     */
-    private $locator;
-
-    public function __construct()
-    {
-        $this->locator = Locator::getInstance();
-    }
 
     /**
      * @param FilterControllerEvent $event
@@ -101,7 +93,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      *
      * @return Response
      */
-    private function getResponse(AbstractGatewayController $controller, $result)
+    protected function getResponse(AbstractGatewayController $controller, $result)
     {
         $response = new Response();
 
@@ -123,7 +115,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      *
      * @return void
      */
-    private function setGatewayControllerMessages(AbstractGatewayController $controller, Response $response)
+    protected function setGatewayControllerMessages(AbstractGatewayController $controller, Response $response)
     {
         $response->addSuccessMessages($controller->getSuccessMessages());
         $response->addInfoMessages($controller->getInfoMessages());
@@ -135,13 +127,9 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      *
      * @return void
      */
-    private function setFlashMessengerMessages(Response $response)
+    protected function setFlashMessengerMessages(Response $response)
     {
-        $flashMessengerFacade = $this->createFlashMessengerFacade();
-
-        if ($flashMessengerFacade === null) {
-            return;
-        }
+        $flashMessengerFacade = $this->getDependencyContainer()->createFlashMessengerFacade();
 
         $flashMessengerTransfer = $flashMessengerFacade->getStoredMessages();
         if ($flashMessengerTransfer === null) {
@@ -174,7 +162,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      *
      * @return array|Message[]
      */
-    private function createResponseMessages(\ArrayObject $messages, array $storedMessages = [])
+    protected function createResponseMessages(\ArrayObject $messages, array $storedMessages = [])
     {
         foreach ($messages as $message) {
             $responseMessage = new Message();
@@ -190,7 +178,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      *
      * @return bool
      */
-    private function validateClassIsTransferObject(\ReflectionClass $class)
+    protected function validateClassIsTransferObject(\ReflectionClass $class)
     {
         if (substr($class->getName(), 0, 16) === 'Generated\Shared') {
             return true;
@@ -201,19 +189,6 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
         }
 
         throw new \LogicException('Only transfer classes are allowed in yves action as parameter');
-    }
-
-    /**
-     * @return FlashMessengerFacade|null
-     */
-    private function createFlashMessengerFacade()
-    {
-        $flashMessenger = $this->locator->flashMessenger();
-        if ($flashMessenger !== null) {
-            return $flashMessenger->facade();
-        }
-
-        return null;
     }
 
 }

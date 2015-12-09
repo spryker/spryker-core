@@ -6,6 +6,7 @@
 
 namespace SprykerEngine\Zed\Kernel\Persistence;
 
+use SprykerEngine\Zed\Propel\Communication\Plugin\Connection;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\ClassResolver\ClassNotFoundException;
 use SprykerEngine\Shared\Kernel\Locator\LocatorException;
@@ -62,7 +63,7 @@ class QueryContainerLocator extends AbstractLocator
             $container = new Container();
             $container[self::PROPEL_CONNECTION] = function () use ($locator) {
                 /* @var $locator AutoCompletion */
-                return $locator->propel()->pluginConnection()->get();
+                return (new Connection())->get();
             };
             $bundleBuilder->providePersistenceLayerDependencies($container);
             $queryContainer->setExternalDependencies($container);

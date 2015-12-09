@@ -144,13 +144,7 @@ trait InternalClassBuilderForTests
      */
     public function getPluginByClassName($pluginClassName)
     {
-        $namespace = $this->getNamespaceFromPassedClassName($pluginClassName);
-        $bundle = $this->getBundleFromPassedClassName($pluginClassName);
-
-        /** @var AbstractPlugin $plugin */
         $plugin = new $pluginClassName();
-        $plugin->setExternalDependencies($this->getContainer($namespace, $bundle));
-        $plugin->setOwnFacade($this->getFacade($namespace, $bundle));
 
         return $plugin;
     }
