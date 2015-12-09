@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Country\Business;
 
 use SprykerFeature\Zed\Country\Business\Cldr\JsonFileCldrDataProvider;
-use Generated\Zed\Ide\FactoryAutoCompletion\CountryBusiness;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Country\Business\Cldr\CldrDataProviderInterface;

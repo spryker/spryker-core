@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Customer\Communication;
 
 use SprykerFeature\Zed\Customer\Communication\Form\AddressForm;
 use SprykerFeature\Zed\Customer\Communication\Form\CustomerForm;
-use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Customer\CustomerDependencyProvider;
 use SprykerFeature\Zed\Customer\Persistence\CustomerQueryContainerInterface;

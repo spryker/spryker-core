@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Payolution\Persistence;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\PayolutionPersistence;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolutionTransactionRequestLogQuery;

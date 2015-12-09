@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Acl\Business;
 
 use SprykerFeature\Zed\Acl\Business\Model\Role;
 use SprykerFeature\Zed\Acl\Business\Model\Group;
-use Generated\Zed\Ide\FactoryAutoCompletion\AclBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Acl\AclConfig;
 use SprykerFeature\Zed\Acl\Business\Model\GroupInterface;

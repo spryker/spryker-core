@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\CustomerMailConnector\Business;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\CustomerMailConnectorBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\CustomerMailConnector\Business\Sender\PasswordRestoredConfirmationSender;
 use SprykerFeature\Zed\CustomerMailConnector\Business\Sender\PasswordRestoreTokenSender;

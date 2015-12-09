@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Installer\Business;
 
 use SprykerFeature\Zed\Installer\Business\Model\GlossaryInstaller;
-use Generated\Zed\Ide\FactoryAutoCompletion\InstallerBusiness;
 use SprykerFeature\Zed\Installer\Business\Model\AbstractInstaller;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Installer\InstallerConfig;

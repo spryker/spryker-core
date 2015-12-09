@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\User\Business;
 
 use SprykerFeature\Zed\User\Business\Model\User;
-use Generated\Zed\Ide\FactoryAutoCompletion\UserBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\User\Business\Model\Installer;
 use SprykerFeature\Zed\User\Business\Model\UserInterface;

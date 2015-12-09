@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Storage\Communication;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\StorageCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Client\Storage\Service\StorageClientInterface;
 use SprykerFeature\Zed\Collector\Business\CollectorFacade;

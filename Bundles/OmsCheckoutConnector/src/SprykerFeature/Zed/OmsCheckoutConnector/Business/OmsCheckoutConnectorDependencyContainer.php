@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\OmsCheckoutConnector\Business;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\OmsCheckoutConnectorBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\OmsCheckoutConnector\OmsCheckoutConnectorConfig;
 

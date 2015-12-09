@@ -8,7 +8,6 @@ namespace SprykerFeature\Client\Cart\Service;
 
 use SprykerFeature\Client\Cart\Service\Zed\CartStub;
 use SprykerFeature\Client\Cart\Service\Session\CartSession;
-use Generated\Client\Ide\FactoryAutoCompletion\CartService;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Cart\Service\Zed\CartStubInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;

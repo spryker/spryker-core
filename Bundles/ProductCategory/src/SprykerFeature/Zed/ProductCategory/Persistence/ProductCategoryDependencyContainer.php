@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\ProductCategory\Persistence;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Zed\Ide\FactoryAutoCompletion\ProductCategoryPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 use SprykerFeature\Zed\Category\Persistence\CategoryQueryContainer;
 use Orm\Zed\ProductCategory\Persistence\SpyProductCategoryQuery;

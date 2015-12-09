@@ -14,7 +14,6 @@ use SprykerFeature\Zed\Product\Business\Importer\Writer\ProductWriter;
 use SprykerFeature\Zed\Product\Business\Importer\Builder\ProductBuilder;
 use SprykerFeature\Zed\Product\Business\Importer\Reader\File\CsvReader;
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Zed\Ide\FactoryAutoCompletion\ProductBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Product\Business\Attribute\AttributeManagerInterface;
 use SprykerFeature\Zed\Product\Business\Builder\ProductBuilderInterface;

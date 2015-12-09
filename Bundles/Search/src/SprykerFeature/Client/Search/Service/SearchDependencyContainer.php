@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Client\Search\Service;
 
-use Generated\Client\Ide\FactoryAutoCompletion\SearchService;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Search\Service\Provider\IndexClientProvider;
 use SprykerFeature\Client\ZedRequest\Service\Client\ZedClient;

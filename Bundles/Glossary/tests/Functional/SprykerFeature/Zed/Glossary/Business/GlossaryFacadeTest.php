@@ -5,7 +5,6 @@
 
 namespace Functional\SprykerFeature\Zed\Glossary\Business;
 
-use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\KeyTranslationTransfer;
 use Generated\Shared\Transfer\LocaleTransfer;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;

@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Refund\Communication;
 
 use Generated\Shared\Transfer\OrderTransfer;
-use Generated\Zed\Ide\FactoryAutoCompletion\RefundCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Shared\Library\Context;
 use SprykerFeature\Shared\Library\DateFormatter;

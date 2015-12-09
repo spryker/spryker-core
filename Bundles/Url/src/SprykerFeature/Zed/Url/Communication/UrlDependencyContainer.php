@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Url\Communication;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\UrlCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Url\Communication\Form\UrlForm;
 use SprykerFeature\Zed\Url\Communication\Grid\TranslationGrid;

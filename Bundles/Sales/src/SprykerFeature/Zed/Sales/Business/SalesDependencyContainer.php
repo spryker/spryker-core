@@ -11,7 +11,6 @@ use SprykerFeature\Zed\Sales\Business\Model\Split\Validation\Validator;
 use SprykerFeature\Zed\Sales\Business\Model\Split\Calculator;
 use SprykerFeature\Zed\Sales\Business\Model\Split\OrderItem;
 use SprykerFeature\Zed\Sales\Business\Model\OrderManager;
-use Generated\Zed\Ide\FactoryAutoCompletion\SalesBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Sales\Business\Model\CommentManager;
 use SprykerFeature\Zed\Sales\Business\Model\OrderDetailsManager;

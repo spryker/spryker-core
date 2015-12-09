@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\SearchHeartbeatConnector\Business;
 
 use SprykerFeature\Zed\SearchHeartbeatConnector\Business\Assistant\SearchHealthIndicator;
 use Elastica\Client;
-use Generated\Zed\Ide\FactoryAutoCompletion\SearchHeartbeatConnectorBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Shared\Heartbeat\Code\HealthIndicatorInterface;
 use SprykerFeature\Shared\Library\Config;

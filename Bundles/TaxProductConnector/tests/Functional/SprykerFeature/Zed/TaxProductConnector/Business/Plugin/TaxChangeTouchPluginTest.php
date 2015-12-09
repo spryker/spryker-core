@@ -7,7 +7,6 @@
 namespace Functional\SprykerFeature\Zed\TaxProductConnector\Business\Plugin;
 
 use Codeception\TestCase\Test;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\TaxProductConnector\Business\TaxProductConnectorFacade;
 use Generated\Zed\Ide\AutoCompletion;
 use Orm\Zed\Tax\Persistence\SpyTaxRate;

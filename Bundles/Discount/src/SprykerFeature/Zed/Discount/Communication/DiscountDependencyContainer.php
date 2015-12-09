@@ -16,7 +16,6 @@ use SprykerFeature\Zed\Discount\Communication\Form\VoucherCodesForm;
 use SprykerFeature\Zed\Discount\Communication\Table\DiscountsTable;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\VoucherPoolTransfer;
-use Generated\Zed\Ide\FactoryAutoCompletion\DiscountCommunication;
 use SprykerFeature\Zed\Discount\Business\DiscountFacade;
 use SprykerFeature\Zed\Discount\Communication\Table\DiscountVoucherCodesTable;
 use SprykerFeature\Zed\Discount\DiscountConfig;

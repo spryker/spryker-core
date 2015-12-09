@@ -15,8 +15,6 @@ use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 abstract class AbstractFacade implements FacadeInterface
 {
 
-    const DEPENDENCY_CONTAINER = 'DependencyContainer';
-
     /**
      * @var DependencyContainerInterface
      */

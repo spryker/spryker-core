@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\Lumberjack\Business;
 
 use SprykerFeature\Zed\Lumberjack\Business\Model\EventJournal;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
-use Generated\Zed\Ide\FactoryAutoCompletion\LumberjackBusiness;
 
 class LumberjackDependencyContainer extends AbstractBusinessDependencyContainer
 {

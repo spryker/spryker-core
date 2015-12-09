@@ -50,5 +50,4 @@ class BundleConfigNotFoundException extends \Exception
         return $message;
     }
 
-
 }

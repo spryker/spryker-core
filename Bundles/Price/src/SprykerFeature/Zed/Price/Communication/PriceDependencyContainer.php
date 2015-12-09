@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Price\Communication;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\PriceCommunication;
 use SprykerFeature\Zed\Price\Business\PriceFacade;
 use SprykerFeature\Zed\Price\Communication\Form\PriceForm;
 use SprykerFeature\Zed\Price\Communication\Form\PriceTypeForm;

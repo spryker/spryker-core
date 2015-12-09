@@ -6,7 +6,6 @@
 
 namespace SprykerEngine\Zed\Locale\Business;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\LocaleBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Locale\Business\Internal\Install\LocaleInstaller;

@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\SequenceNumber\Persistence;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\SequenceNumberPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\SequenceNumber\Persistence\SpySequenceNumberQuery;
 

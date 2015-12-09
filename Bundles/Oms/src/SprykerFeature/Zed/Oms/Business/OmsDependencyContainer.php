@@ -19,7 +19,6 @@ use SprykerFeature\Zed\Oms\Business\OrderStateMachine\Finder;
 use SprykerFeature\Zed\Oms\Business\OrderStateMachine\Dummy;
 use SprykerFeature\Zed\Oms\Business\OrderStateMachine\Builder;
 use SprykerFeature\Zed\Oms\Business\OrderStateMachine\OrderStateMachine;
-use Generated\Zed\Ide\FactoryAutoCompletion\OmsBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Oms\Business\OrderStateMachine\BuilderInterface;
 use SprykerFeature\Zed\Oms\Business\OrderStateMachine\DummyInterface;

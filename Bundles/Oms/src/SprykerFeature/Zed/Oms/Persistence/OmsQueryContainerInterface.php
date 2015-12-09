@@ -17,7 +17,6 @@ use Orm\Zed\Sales\Persistence\SpySalesOrder;
 use SprykerFeature\Zed\Oms\Business\Process\StateInterface;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use DateTime;
-use Generated\Zed\Ide\FactoryAutoCompletion\OmsPersistence;
 
 interface OmsQueryContainerInterface
 {

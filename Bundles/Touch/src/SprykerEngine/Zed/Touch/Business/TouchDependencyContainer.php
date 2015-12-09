@@ -8,7 +8,6 @@ namespace SprykerEngine\Zed\Touch\Business;
 
 use SprykerEngine\Zed\Touch\Business\Model\Touch;
 use SprykerEngine\Zed\Touch\Business\Model\TouchRecord;
-use Generated\Zed\Ide\FactoryAutoCompletion\TouchBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerEngine\Zed\Touch\Business\Model\TouchInterface;
 use SprykerEngine\Zed\Touch\Business\Model\TouchRecordInterface;

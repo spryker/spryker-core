@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Sales\Persistence;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\SalesPersistence;
 use Propel\Runtime\ActiveQuery\Criteria;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Sales\Persistence\SpySalesExpenseQuery;

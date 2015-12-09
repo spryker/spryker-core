@@ -10,15 +10,12 @@ use Generated\Shared\Transfer\RedirectTransfer;
 use Generated\Shared\Transfer\UrlTransfer;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
-use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainer;
-use SprykerFeature\Zed\Url\Business\UrlDependencyContainer;
 use SprykerFeature\Zed\Url\Business\UrlFacade;
 use SprykerFeature\Zed\Url\Persistence\UrlQueryContainer;
 use SprykerFeature\Zed\Url\Persistence\UrlQueryContainerInterface;
-use SprykerFeature\Zed\Url\UrlDependencyProvider;
 
 /**
  * @group SprykerFeature

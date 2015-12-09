@@ -35,6 +35,7 @@ class QueryContainerNotFoundException extends \Exception
         ) . PHP_EOL;
 
         $message .= 'You can fix this by adding the missing QueryContainer class to your bundle.' . PHP_EOL;
+
         $message .= sprintf(
             'E.g. %1$s\\Zed\\%2$s\\Persistence\\%2$sQueryContainer',
             Config::getInstance()->get(SystemConfig::PROJECT_NAMESPACE),
@@ -43,6 +44,5 @@ class QueryContainerNotFoundException extends \Exception
 
         return $message;
     }
-
 
 }

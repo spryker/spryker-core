@@ -15,7 +15,6 @@ use SprykerFeature\Zed\Application\Business\Model\Navigation\Extractor\PathExtra
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Collector\NavigationCollector;
 use SprykerFeature\Zed\Application\Business\Model\Navigation\SchemaFinder\NavigationSchemaFinder;
 use SprykerFeature\Zed\Application\Business\Model\Navigation\Formatter\MenuFormatter;
-use Generated\Zed\Ide\FactoryAutoCompletion\ApplicationBusiness;
 use Psr\Log\LoggerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Application\ApplicationConfig;

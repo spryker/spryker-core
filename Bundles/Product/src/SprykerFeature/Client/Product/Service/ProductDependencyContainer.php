@@ -8,7 +8,6 @@ namespace SprykerFeature\Client\Product\Service;
 
 use SprykerFeature\Client\Product\Service\KeyBuilder\ProductResourceKeyBuilder;
 use SprykerFeature\Client\Product\Service\Storage\ProductStorage;
-use Generated\Client\Ide\FactoryAutoCompletion\ProductService;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Product\ProductDependencyProvider;
 use SprykerFeature\Client\Product\Service\Storage\ProductStorageInterface;

@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Mail\Business;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\MailBusiness;
 use SprykerFeature\Shared\Library\Config;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Shared\Mail\MailConfig;

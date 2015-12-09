@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Country\Communication;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\CountryCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Country\Business\CountryFacade;
 use SprykerFeature\Zed\Country\Communication\Form\CountryForm;

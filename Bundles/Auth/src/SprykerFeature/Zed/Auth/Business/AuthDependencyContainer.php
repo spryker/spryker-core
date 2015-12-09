@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Auth\Business;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\AuthBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Auth\AuthConfig;
 use SprykerFeature\Zed\Auth\Business\Client\StaticToken;

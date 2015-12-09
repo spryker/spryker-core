@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Stock\Communication;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\StockCommunication;
 use SprykerFeature\Zed\Stock\Business\StockFacade;
 use SprykerFeature\Zed\Stock\Communication\Form\StockForm;
 use SprykerFeature\Zed\Stock\Communication\Form\StockProductForm;

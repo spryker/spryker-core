@@ -12,7 +12,6 @@ use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\OrderTransfer;
 use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Customer\Business\CustomerDependencyContainer;
 use SprykerFeature\Zed\Customer\CustomerDependencyProvider;
 use Orm\Zed\Customer\Persistence\SpyCustomer;

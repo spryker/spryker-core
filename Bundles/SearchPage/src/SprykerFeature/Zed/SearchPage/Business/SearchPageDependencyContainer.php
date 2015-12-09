@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\SearchPage\Business;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\SearchPageBusiness;
 use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\SearchPage\Business\Installer\DocumentAttributeInstaller;

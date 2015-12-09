@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\TaxProductConnector\Business;
 
 use SprykerFeature\Zed\TaxProductConnector\Business\Plugin\TaxChangeTouchPlugin;
-use Generated\Zed\Ide\FactoryAutoCompletion\TaxProductConnectorBusiness;
 use SprykerFeature\Zed\TaxProductConnector\TaxProductConnectorConfig;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\TaxProductConnector\Persistence\TaxProductConnectorQueryContainerInterface;

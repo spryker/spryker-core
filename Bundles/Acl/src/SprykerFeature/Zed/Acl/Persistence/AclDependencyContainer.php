@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Acl\Persistence;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\AclPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractPersistenceDependencyContainer;
 use SprykerFeature\Zed\Acl\AclDependencyProvider;
 use Orm\Zed\Acl\Persistence\SpyAclGroupQuery;

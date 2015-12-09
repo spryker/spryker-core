@@ -131,7 +131,6 @@ class Console extends SymfonyCommand
         return $classResolver->resolve($this);
     }
 
-
     /**
      * @param AbstractFacade $facade
      *

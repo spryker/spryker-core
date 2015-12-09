@@ -2,7 +2,6 @@
 
 namespace SprykerFeature\Zed\Distributor\Persistence;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\DistributorPersistence;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
 use Propel\Runtime\Exception\PropelException;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;

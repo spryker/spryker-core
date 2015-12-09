@@ -9,7 +9,6 @@ namespace SprykerFeature\Zed\Discount\Business;
 use SprykerFeature\Zed\Discount\Business\Model\VoucherCode;
 use SprykerFeature\Zed\Discount\Business\Model\VoucherPoolCategory;
 use SprykerFeature\Zed\Discount\Business\Model\CartRule;
-use Generated\Zed\Ide\FactoryAutoCompletion\DiscountBusiness;
 use Propel\Runtime\Connection\ConnectionInterface;
 use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;

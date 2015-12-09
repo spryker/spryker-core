@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Search\Communication;
 
 use SprykerFeature\Zed\Search\Communication\Table\SearchTable;
-use Generated\Zed\Ide\FactoryAutoCompletion\SearchCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Client\Search\Service\SearchClient;
 use SprykerFeature\Zed\Collector\Business\CollectorFacade;

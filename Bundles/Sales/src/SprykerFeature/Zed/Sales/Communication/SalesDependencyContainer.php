@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Sales\Communication;
 
 use SprykerFeature\Zed\Sales\Communication\Form\OrderItemSplitForm;
-use Generated\Zed\Ide\FactoryAutoCompletion\SalesCommunication;
 use Propel\Runtime\Collection\ObjectCollection;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Oms\Business\OmsFacade;

@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\ItemGrouperWishlistConnector\Business;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\ItemGrouperWishlistConnectorBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\ItemGrouper\Business\ItemGrouperFacade;
 use SprykerFeature\Zed\ItemGrouperWishlistConnector\ItemGrouperWishlistConnectorDependencyProvider;

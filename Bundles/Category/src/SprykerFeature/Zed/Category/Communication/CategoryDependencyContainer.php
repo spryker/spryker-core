@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Category\Communication;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Generated\Zed\Ide\FactoryAutoCompletion\CategoryCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Category\Business\CategoryFacade;
 use SprykerFeature\Zed\Category\CategoryDependencyProvider;
@@ -94,13 +93,6 @@ class CategoryDependencyContainer extends AbstractCommunicationDependencyContain
             ->queryUrlByIdCategoryNode($idCategoryNode);
 
         return new UrlTable($urlQuery);
-    }
-
-    /**
-     * @param Request $request
-     */
-    public function createCategoryNodeGrid(Request $request)
-    {
     }
 
     /**

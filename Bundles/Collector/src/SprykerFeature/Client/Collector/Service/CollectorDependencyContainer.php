@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Client\Collector\Service;
 
-use Generated\Client\Ide\FactoryAutoCompletion\CollectorService;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Collector\Service\KeyBuilder\UrlKeyBuilder;
 use SprykerFeature\Client\Collector\Service\Matcher\UrlMatcher;

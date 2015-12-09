@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\ProductOption\Persistence;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\ProductOptionPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Product\Persistence\Base\SpyAbstractProductQuery;
 use Orm\Zed\Product\Persistence\Map\SpyAbstractProductTableMap;

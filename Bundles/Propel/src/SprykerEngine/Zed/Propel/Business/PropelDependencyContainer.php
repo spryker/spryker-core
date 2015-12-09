@@ -12,7 +12,6 @@ use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaWriter;
 use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaFinder;
 use SprykerEngine\Zed\Propel\Business\Model\PropelGroupedSchemaFinder;
 use SprykerEngine\Zed\Propel\Business\Model\PropelSchema;
-use Generated\Zed\Ide\FactoryAutoCompletion\PropelBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerEngine\Zed\Propel\Business\Model\DirectoryRemoverInterface;
 use SprykerEngine\Zed\Propel\Business\Model\PropelGroupedSchemaFinderInterface;

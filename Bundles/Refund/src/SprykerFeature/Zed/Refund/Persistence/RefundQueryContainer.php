@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Refund\Persistence;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\RefundPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Refund\Persistence\SpyRefundQuery;
 

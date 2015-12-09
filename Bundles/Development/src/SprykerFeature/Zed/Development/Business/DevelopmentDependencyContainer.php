@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Development\Business;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\DevelopmentBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Development\Business\CodeStyleFixer\CodeStyleFixer;
 use SprykerFeature\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;

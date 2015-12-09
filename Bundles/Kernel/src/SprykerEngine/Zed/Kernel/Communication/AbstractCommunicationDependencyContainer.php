@@ -8,8 +8,6 @@ namespace SprykerEngine\Zed\Kernel\Communication;
 
 use SprykerEngine\Zed\Kernel\AbstractDependencyContainer as BaseDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
-use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;

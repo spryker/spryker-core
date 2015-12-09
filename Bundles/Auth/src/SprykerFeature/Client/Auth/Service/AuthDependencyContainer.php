@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Client\Auth\Service;
 
-use Generated\Client\Ide\FactoryAutoCompletion\AuthService;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Auth\Service\Token\TokenService;
 

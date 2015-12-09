@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\User\Communication;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\UserCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Acl\Business\AclFacade;
 use SprykerFeature\Zed\User\Communication\Form\UserCreateForm;

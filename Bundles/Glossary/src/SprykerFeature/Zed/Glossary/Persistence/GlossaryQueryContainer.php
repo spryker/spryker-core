@@ -5,7 +5,6 @@
 
 namespace SprykerFeature\Zed\Glossary\Persistence;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\GlossaryPersistence;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\Join;
 use Propel\Runtime\ActiveQuery\ModelCriteria;

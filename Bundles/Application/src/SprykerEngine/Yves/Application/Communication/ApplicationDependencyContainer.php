@@ -6,7 +6,6 @@
 
 namespace SprykerEngine\Yves\Application\Communication;
 
-use Generated\Yves\Ide\FactoryAutoCompletion\ApplicationCommunication;
 use SprykerEngine\Yves\Application\Communication\Plugin\ServiceProvider\ExceptionService\ExceptionHandlerDispatcher;
 use SprykerEngine\Yves\Application\Communication\Plugin\ServiceProvider\ExceptionService\ExceptionHandlerInterface;
 use SprykerEngine\Yves\Kernel\Communication\AbstractCommunicationDependencyContainer;

@@ -14,7 +14,6 @@ use SprykerFeature\Zed\Cart\Business\Operator\DecreaseOperator;
 use SprykerFeature\Zed\Cart\Business\Operator\RemoveOperator;
 use SprykerFeature\Zed\Cart\Business\Operator\IncreaseOperator;
 use SprykerFeature\Zed\Cart\Business\Operator\AddOperator;
-use Generated\Zed\Ide\FactoryAutoCompletion\CartBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Calculation\Business\CalculationFacade;
 use SprykerFeature\Zed\Cart\Business\Operator\OperatorInterface;

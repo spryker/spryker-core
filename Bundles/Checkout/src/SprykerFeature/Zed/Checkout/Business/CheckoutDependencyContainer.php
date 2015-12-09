@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Checkout\Business;
 
 use SprykerFeature\Zed\Checkout\Business\Workflow\CheckoutWorkflow;
-use Generated\Zed\Ide\FactoryAutoCompletion\CheckoutBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Checkout\Business\Workflow\CheckoutWorkflowInterface;
 use SprykerFeature\Zed\Checkout\CheckoutDependencyProvider;

@@ -9,22 +9,9 @@ namespace Auth\Module;
 use Codeception\TestCase;
 use Codeception\Module;
 use Propel\Runtime\Propel;
-use Silex\Application;
-use SprykerEngine\Zed\Propel\Communication\Plugin\ServiceProvider\PropelServiceProvider;
 
 class Functional extends Module
 {
-
-    /**
-     * @param array $config
-     */
-    public function __construct($config = null)
-    {
-        parent::__construct($config);
-
-//        $propelServiceProvider = new PropelServiceProvider();
-//        $propelServiceProvider->boot(new Application());
-    }
 
     /**
      * @param TestCase $test

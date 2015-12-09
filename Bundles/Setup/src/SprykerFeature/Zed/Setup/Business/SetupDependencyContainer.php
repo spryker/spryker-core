@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Setup\Business;
 
 use SprykerFeature\Zed\Setup\Business\Model\DirectoryRemover;
-use Generated\Zed\Ide\FactoryAutoCompletion\SetupBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\Repeater;
 use SprykerFeature\Zed\Setup\Business\Model\Cronjobs;

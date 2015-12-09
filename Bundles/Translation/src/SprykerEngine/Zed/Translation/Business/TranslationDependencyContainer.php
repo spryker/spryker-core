@@ -6,7 +6,6 @@
 
 namespace SprykerEngine\Zed\Translation\Business;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\TranslationBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerEngine\Zed\Translation\TranslationConfig;
 

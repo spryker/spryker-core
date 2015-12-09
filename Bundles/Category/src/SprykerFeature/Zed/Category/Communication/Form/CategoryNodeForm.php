@@ -41,7 +41,7 @@ class CategoryNodeForm extends AbstractForm
     /**
      * @var LocaleTransfer
      */
-    protected $locale;
+    protected $localeTransfer;
 
     /**
      * @var CategoryQueryContainer
@@ -49,11 +49,11 @@ class CategoryNodeForm extends AbstractForm
     protected $queryContainer;
 
     /**
-     * @param LocaleTransfer $locale
+     * @param LocaleTransfer $localeTransfer
      */
-    public function __construct(LocaleTransfer $locale)
+    public function __construct(LocaleTransfer $localeTransfer)
     {
-        $this->locale = $locale;
+        $this->localeTransfer = $localeTransfer;
     }
 
     /**
@@ -125,7 +125,7 @@ class CategoryNodeForm extends AbstractForm
     protected function getCategories()
     {
         $categories = $this->queryContainer
-            ->queryCategory($this->locale->getIdLocale())
+            ->queryCategory($this->localeTransfer->getIdLocale())
             ->setFormatter(new PropelArraySetFormatter())
             ->find();
 
@@ -150,7 +150,7 @@ class CategoryNodeForm extends AbstractForm
     protected function getParentCategories()
     {
         $categoryNodes = $this->queryContainer
-            ->queryCategoryNode($this->locale->getIdLocale())
+            ->queryCategoryNode($this->localeTransfer->getIdLocale())
             ->setFormatter(new PropelArraySetFormatter())
             ->find();
 

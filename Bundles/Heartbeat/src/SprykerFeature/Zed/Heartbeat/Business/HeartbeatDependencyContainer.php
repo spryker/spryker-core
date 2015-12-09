@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Heartbeat\Business;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\HeartbeatBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Heartbeat\Business\Ambulance\Doctor;
 use SprykerFeature\Zed\Heartbeat\HeartbeatConfig;

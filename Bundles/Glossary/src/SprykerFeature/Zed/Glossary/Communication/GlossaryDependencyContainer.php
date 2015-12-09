@@ -5,7 +5,6 @@
 
 namespace SprykerFeature\Zed\Glossary\Communication;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\GlossaryCommunication;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Glossary\Communication\Form\TranslationForm;

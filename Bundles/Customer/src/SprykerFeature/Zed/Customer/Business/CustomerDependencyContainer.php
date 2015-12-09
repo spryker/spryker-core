@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Customer\Business;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\CustomerBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Customer\Business\Customer\Customer;
 use SprykerFeature\Zed\Customer\Business\Customer\Address;

@@ -5,7 +5,6 @@
  */
 namespace SprykerFeature\Zed\Payolution\Communication;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\PayolutionCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Payolution\Communication\Table\Payments;

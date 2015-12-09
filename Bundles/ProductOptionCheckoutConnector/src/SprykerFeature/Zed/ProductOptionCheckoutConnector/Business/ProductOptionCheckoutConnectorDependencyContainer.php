@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\ProductOptionCheckoutConnector\Business;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\ProductOptionCheckoutConnectorBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\ProductOptionCheckoutConnector\ProductOptionCheckoutConnectorConfig;
 

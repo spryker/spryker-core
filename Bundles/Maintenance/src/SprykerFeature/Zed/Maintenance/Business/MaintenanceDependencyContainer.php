@@ -6,8 +6,10 @@
 
 namespace SprykerFeature\Zed\Maintenance\Business;
 
+use SprykerFeature\Zed\Maintenance\Business\Model\PropelMigrationCleaner;
+use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorFilter;
+use SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector;
 use Generated\Shared\Transfer\InstalledPackagesTransfer;
-use Generated\Zed\Ide\FactoryAutoCompletion\MaintenanceBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Maintenance\Business\Dependency\BundleParser;
 use SprykerFeature\Zed\Maintenance\Business\Dependency\Graph;
@@ -44,12 +46,12 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
             $this->getConfig()->getPathToSpryker()
         );
 
-        $collector = new \SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollector(
+        $collector = new InstalledPackageCollector(
             $collection,
             $finder
         );
 
-        $collector = new \SprykerFeature\Zed\Maintenance\Business\InstalledPackages\InstalledPackageCollectorFilter($collector);
+        $collector = new InstalledPackageCollectorFilter($collector);
 
         return $collector;
     }
@@ -61,7 +63,7 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
      */
     private function createComposerInstalledPackageFinder(InstalledPackagesTransfer $collection)
     {
-        return new \SprykerFeature\Zed\Maintenance\Business\InstalledPackages\Composer\InstalledPackageFinder(
+        return new ComposerInstalledPackageFinder(
             $collection,
             $this->getConfig()->getPathToComposerLock()
         );
@@ -74,7 +76,7 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
      */
     private function createNodePackageManagerInstalledPackageFinder(InstalledPackagesTransfer $collection, $path)
     {
-        return new \SprykerFeature\Zed\Maintenance\Business\InstalledPackages\NodePackageManager\InstalledPackageFinder(
+        return new NodeInstalledPackageFinder(
             $collection,
             $this->createNpmListProcess(),
             $path
@@ -96,7 +98,7 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createMarkDownWriter(InstalledPackagesTransfer $installedPackages)
     {
-        return new \SprykerFeature\Zed\Maintenance\Business\InstalledPackages\MarkDownWriter(
+        return new MarkDownWriter(
             $installedPackages,
             $this->getConfig()->getPathToFossFile()
         );
@@ -110,7 +112,7 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
         $bundleParser = $this->createDependencyBundleParser();
         $manager = $this->createDependencyManager();
 
-        return new \SprykerFeature\Zed\Maintenance\Business\Dependency\Graph($bundleParser, $manager);
+        return new Graph($bundleParser, $manager);
     }
 
     /**
@@ -120,7 +122,7 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $config = $this->getConfig();
 
-        return new \SprykerFeature\Zed\Maintenance\Business\Dependency\BundleParser($config);
+        return new BundleParser($config);
     }
 
     /**
@@ -130,7 +132,7 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
     {
         $bundleParser = $this->createDependencyBundleParser();
 
-        return new \SprykerFeature\Zed\Maintenance\Business\Dependency\Manager($bundleParser);
+        return new Manager($bundleParser);
     }
 
     /**
@@ -138,7 +140,7 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createPropelMigrationCleaner()
     {
-        return new \SprykerFeature\Zed\Maintenance\Business\Model\PropelMigrationCleaner(
+        return new PropelMigrationCleaner(
             $this->createPropelBaseFolderFinder()
         );
     }
@@ -148,7 +150,7 @@ class MaintenanceDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createPropelBaseFolderFinder()
     {
-        return new \SprykerFeature\Zed\Maintenance\Business\Model\PropelBaseFolderFinder($this->getConfig()->getPathToSpryker());
+        return new PropelBaseFolderFinder($this->getConfig()->getPathToSpryker());
     }
 
 }

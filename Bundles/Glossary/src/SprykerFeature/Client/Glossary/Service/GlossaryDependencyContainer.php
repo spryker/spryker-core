@@ -7,7 +7,6 @@ namespace SprykerFeature\Client\Glossary\Service;
 
 use SprykerFeature\Client\Glossary\Service\KeyBuilder\GlossaryKeyBuilder;
 use SprykerFeature\Client\Glossary\Service\Storage\GlossaryStorage;
-use Generated\Client\Ide\FactoryAutoCompletion\GlossaryService;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Glossary\GlossaryDependencyProvider;
 use SprykerFeature\Client\Storage\Service\StorageClientInterface;

@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Shipment\Communication;
 
 use SprykerFeature\Zed\Shipment\Communication\Form\MethodForm;
-use Generated\Zed\Ide\FactoryAutoCompletion\ShipmentCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Shipment\Communication\Form\CarrierForm;
 use SprykerFeature\Zed\Shipment\Communication\Table\MethodTable;

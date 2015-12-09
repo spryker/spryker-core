@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Cms\Communication;
 
 use SprykerFeature\Zed\Cms\Communication\Form\CmsBlockForm;
-use Generated\Zed\Ide\FactoryAutoCompletion\CmsCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerEngine\Zed\Locale\Business\LocaleFacade;
 use SprykerFeature\Zed\Cms\Business\CmsFacade;

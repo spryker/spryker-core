@@ -8,7 +8,6 @@ namespace SprykerFeature\Zed\ShipmentCheckoutConnector\Business;
 
 use SprykerFeature\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentOrderSaver;
 use SprykerFeature\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentOrderHydrator;
-use Generated\Zed\Ide\FactoryAutoCompletion\ShipmentCheckoutConnectorBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentOrderHydratorInterface;
 use SprykerFeature\Zed\ShipmentCheckoutConnector\Business\Model\ShipmentOrderSaverInterface;

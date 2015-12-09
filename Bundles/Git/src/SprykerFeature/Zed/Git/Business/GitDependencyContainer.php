@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Git\Business;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\GitBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use Symfony\Component\Console\Command\Command;
 

@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Payone\Communication;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\PayoneCommunication;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerFeature\Zed\Oms\Business\OmsFacade;
 use SprykerFeature\Zed\Payone\PayoneConfig;

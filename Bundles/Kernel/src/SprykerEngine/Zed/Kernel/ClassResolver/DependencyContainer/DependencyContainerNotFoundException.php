@@ -37,6 +37,7 @@ class DependencyContainerNotFoundException extends \Exception
         ) . PHP_EOL;
 
         $message .= 'You can fix this by adding the missing DependencyContainer class to your bundle.' . PHP_EOL;
+
         $message .= sprintf(
             'E.g. %s\\%s\\%s\\%s\\%sDependencyContainer',
             Config::getInstance()->get(SystemConfig::PROJECT_NAMESPACE),
@@ -48,6 +49,5 @@ class DependencyContainerNotFoundException extends \Exception
 
         return $message;
     }
-
 
 }

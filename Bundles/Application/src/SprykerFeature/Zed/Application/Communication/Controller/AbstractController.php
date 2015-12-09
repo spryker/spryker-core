@@ -7,7 +7,6 @@
 namespace SprykerFeature\Zed\Application\Communication\Controller;
 
 use Generated\Shared\Transfer\MessageTransfer;
-use Generated\Zed\Ide\AutoCompletion;
 use Silex\Application;
 use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
@@ -64,7 +63,7 @@ abstract class AbstractController
     public function __construct(Application $application)
     {
         $this->application = $application;
-        $this->flashMessengerFacade = $this->getLocator()->flashMessenger()->facade();
+        $this->flashMessengerFacade = Locator::getInstance()->flashMessenger()->facade();
     }
 
     /**
@@ -93,7 +92,7 @@ abstract class AbstractController
     protected function getDependencyContainer()
     {
         if ($this->dependencyContainer === null) {
-            $this->dependencyContainer = $this->findDependencyContainer();
+            $this->dependencyContainer = $this->resolveDependencyContainer();
         }
 
         if ($this->getQueryContainer() !== null) {
@@ -112,7 +111,7 @@ abstract class AbstractController
      *
      * @return AbstractCommunicationDependencyContainer
      */
-    private function findDependencyContainer()
+    private function resolveDependencyContainer()
     {
         $classResolver = new DependencyContainerResolver();
 
@@ -321,14 +320,6 @@ abstract class AbstractController
     protected function setMenuHighlight($uri)
     {
         $this->getTwig()->addGlobal('menu_highlight', $uri);
-    }
-
-    /**
-     * @return AutoCompletion
-     */
-    private function getLocator()
-    {
-        return Locator::getInstance();
     }
 
 }

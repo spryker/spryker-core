@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\CustomerCheckoutConnector\Business;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\CustomerCheckoutConnectorBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\CustomerCheckoutConnector\CustomerCheckoutConnectorConfig;
 use SprykerFeature\Zed\CustomerCheckoutConnector\CustomerCheckoutConnectorDependencyProvider;

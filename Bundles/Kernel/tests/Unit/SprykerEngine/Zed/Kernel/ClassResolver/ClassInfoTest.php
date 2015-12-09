@@ -73,5 +73,4 @@ class ClassInfoTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('ClassResolver', $classInfo->getLayer());
     }
 
-
 }

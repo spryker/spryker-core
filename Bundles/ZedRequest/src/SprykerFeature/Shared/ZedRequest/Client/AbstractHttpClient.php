@@ -63,6 +63,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
 
     /**
      * @var int in seconds
+     *
      * @todo Add ths timeout to config so this could be edited easily and from configuration level #894
      */
     protected static $timeoutInSeconds = 60;

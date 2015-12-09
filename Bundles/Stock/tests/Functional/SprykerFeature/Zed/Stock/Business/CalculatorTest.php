@@ -7,7 +7,6 @@
 namespace Functional\SprykerFeature\Zed\Stock;
 
 use Codeception\TestCase\Test;
-use SprykerEngine\Zed\Kernel\Locator;
 use Orm\Zed\Product\Persistence\SpyAbstractProduct;
 use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
 use Orm\Zed\Product\Persistence\SpyProduct;

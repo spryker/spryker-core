@@ -6,7 +6,6 @@
 
 namespace SprykerFeature\Zed\Shipment\Persistence;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\ShipmentPersistence;
 use Orm\Zed\Shipment\Persistence\SpyShipmentCarrierQuery;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Shipment\Persistence\SpyShipmentMethodQuery;

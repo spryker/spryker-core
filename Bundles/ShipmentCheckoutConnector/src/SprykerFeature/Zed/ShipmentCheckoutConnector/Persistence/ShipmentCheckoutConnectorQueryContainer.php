@@ -5,7 +5,6 @@
 
 namespace SprykerFeature\Zed\ShipmentCheckoutConnector\Persistence;
 
-use Generated\Zed\Ide\FactoryAutoCompletion\ShipmentPersistence;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Orm\Zed\Sales\Persistence\SpySalesOrderQuery;
 use SprykerFeature\Zed\Sales\Persistence\SalesQueryContainerInterface;

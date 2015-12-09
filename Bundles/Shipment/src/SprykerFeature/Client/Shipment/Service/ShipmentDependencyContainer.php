@@ -7,7 +7,6 @@
 namespace SprykerFeature\Client\Shipment\Service;
 
 use SprykerFeature\Client\Shipment\Service\Zed\ShipmentStub;
-use Generated\Client\Ide\FactoryAutoCompletion\ShipmentService;
 use SprykerEngine\Client\Kernel\Service\AbstractServiceDependencyContainer;
 use SprykerFeature\Client\Shipment\Service\Zed\ShipmentStubInterface;
 use SprykerFeature\Client\Shipment\ShipmentDependencyProvider;

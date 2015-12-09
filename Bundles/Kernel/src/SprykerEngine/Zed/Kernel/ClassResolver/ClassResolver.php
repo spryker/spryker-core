@@ -41,7 +41,7 @@ abstract class ClassResolver
     /**
      * @param object $callerClass
      *
-     * @return $this
+     * @return self
      */
     public function setCallerClass($callerClass)
     {
@@ -86,7 +86,7 @@ abstract class ClassResolver
      */
     public function getResolvedClassInstance()
     {
-        return new $this->resolvedClassName;
+        return new $this->resolvedClassName();
     }
 
     /**
@@ -149,6 +149,7 @@ abstract class ClassResolver
 
     /**
      * @throws \Exception
+     *
      * @return array
      */
     private function getProjectNamespaces()
