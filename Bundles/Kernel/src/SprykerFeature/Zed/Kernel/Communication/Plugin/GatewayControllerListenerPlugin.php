@@ -131,10 +131,6 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
     {
         $flashMessengerFacade = $this->getDependencyContainer()->createFlashMessengerFacade();
 
-        if ($flashMessengerFacade === null) {
-            return;
-        }
-
         $flashMessengerTransfer = $flashMessengerFacade->getStoredMessages();
         if ($flashMessengerTransfer === null) {
             return;
