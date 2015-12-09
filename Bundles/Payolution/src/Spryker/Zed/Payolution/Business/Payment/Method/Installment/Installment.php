@@ -165,6 +165,7 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                 ApiConstants::CONTACT_IP => $payolutionTransfer->getClientIp(),
                 ApiConstants::CRITERION_PRE_CHECK => 'TRUE',
                 ApiConstants::CRITERION_CUSTOMER_LANGUAGE => $payolutionTransfer->getLanguageIso2Code(),
+                ApiConstants::CRITERION_CALCULATION_ID => $payolutionTransfer->getInstallmentCalculationId(),
                 ApiConstants::CRITERION_INSTALLMENT_AMOUNT => $this->convertCentsToDecimal($payolutionTransfer->getInstallmentAmount()),
                 ApiConstants::CRITERION_DURATION => $payolutionTransfer->getInstallmentDuration(),
                 ApiConstants::CRITERION_ACCOUNT_HOLDER => $payolutionTransfer->getBankAccountHolder(),
@@ -184,7 +185,8 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
      */
     public function buildPreAuthorizationRequest(SpyPaymentPayolution $paymentEntity)
     {
-        $requestData = $this->getBaseTransactionRequestForPayment($paymentEntity,
+        $requestData = $this->getBaseTransactionRequestForPayment(
+            $paymentEntity,
             ApiConstants::PAYMENT_CODE_PRE_AUTHORIZATION,
             null);
         $this->addRequestData(
@@ -204,7 +206,9 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
                 ApiConstants::CONTACT_MOBILE => $paymentEntity->getCellPhone(),
                 ApiConstants::CONTACT_IP => $paymentEntity->getClientIp(),
                 ApiConstants::IDENTIFICATION_SHOPPERID => $paymentEntity->getSpySalesOrder()->getFkCustomer(),
+                ApiConstants::CRITERION_PRE_CHECK_ID => $paymentEntity->getPreCheckId(),
                 ApiConstants::CRITERION_CUSTOMER_LANGUAGE => $paymentEntity->getLanguageIso2Code(),
+//                ApiConstants::CRITERION_CALCULATION_ID => $paymentEntity->getInstallmentCalculationId(),
                 ApiConstants::CRITERION_INSTALLMENT_AMOUNT => $this->convertCentsToDecimal($paymentEntity->getInstallmentAmount()),
                 ApiConstants::CRITERION_DURATION => $paymentEntity->getInstallmentDuration(),
                 ApiConstants::CRITERION_ACCOUNT_HOLDER => $paymentEntity->getBankAccountHolder(),
@@ -225,7 +229,8 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
      */
     public function buildReAuthorizationRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
-        return $this->getBaseTransactionRequestForPayment($paymentEntity,
+        return $this->getBaseTransactionRequestForPayment(
+            $paymentEntity,
             ApiConstants::PAYMENT_CODE_RE_AUTHORIZATION,
             $uniqueId);
     }
@@ -238,7 +243,8 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
      */
     public function buildRevertRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
-        return $this->getBaseTransactionRequestForPayment($paymentEntity,
+        return $this->getBaseTransactionRequestForPayment(
+            $paymentEntity,
             ApiConstants::PAYMENT_CODE_REVERSAL,
             $uniqueId);
     }
@@ -251,7 +257,8 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
      */
     public function buildCaptureRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
-        return $this->getBaseTransactionRequestForPayment($paymentEntity,
+        return $this->getBaseTransactionRequestForPayment(
+            $paymentEntity,
             ApiConstants::PAYMENT_CODE_CAPTURE,
             $uniqueId);
     }
@@ -264,7 +271,8 @@ class Installment extends AbstractPaymentMethod implements InstallmentInterface
      */
     public function buildRefundRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
-        return $this->getBaseTransactionRequestForPayment($paymentEntity,
+        return $this->getBaseTransactionRequestForPayment(
+            $paymentEntity,
             ApiConstants::PAYMENT_CODE_REFUND,
             $uniqueId);
     }

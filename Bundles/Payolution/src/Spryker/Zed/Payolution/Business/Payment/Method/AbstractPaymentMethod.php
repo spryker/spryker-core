@@ -9,6 +9,7 @@ namespace Spryker\Zed\Payolution\Business\Payment\Method;
 use Generated\Shared\Transfer\AddressTransfer;
 use Orm\Zed\Payolution\Persistence\Map\SpyPaymentPayolutionTableMap;
 use Spryker\Shared\Library\Currency\CurrencyManager;
+use Spryker\Shared\Payolution\PayolutionApiConstants;
 use Spryker\Zed\Payolution\Business\Exception\GenderNotDefinedException;
 use Spryker\Zed\Payolution\PayolutionConfig;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
@@ -82,10 +83,14 @@ abstract class AbstractPaymentMethod
             ApiConstants::SECURITY_SENDER => $this->getConfig()->getTransactionSecuritySender(),
             ApiConstants::USER_LOGIN => $this->getConfig()->getTransactionUserLogin(),
             ApiConstants::USER_PWD => $this->getConfig()->getTransactionUserPassword(),
-            ApiConstants::PRESENTATION_AMOUNT => $grandTotal / 100,
+            ApiConstants::PRESENTATION_AMOUNT => $this->convertCentsToDecimal($grandTotal),
             ApiConstants::PRESENTATION_USAGE => $idOrder,
             ApiConstants::PRESENTATION_CURRENCY => $currency,
-            ApiConstants::IDENTIFICATION_TRANSACTIONID => uniqid('tran_'),
+            ApiConstants::IDENTIFICATION_TRANSACTIONID => $idOrder,
+            ApiConstants::CRITERION_REQUEST_SYSTEM_VENDOR => PayolutionApiConstants::CRITERION_REQUEST_SYSTEM_VENDOR,
+            ApiConstants::CRITERION_REQUEST_SYSTEM_VERSION => PayolutionApiConstants::CRITERION_REQUEST_SYSTEM_VERSION,
+            ApiConstants::CRITERION_REQUEST_SYSTEM_TYPE => PayolutionApiConstants::CRITERION_REQUEST_SYSTEM_TYPE,
+            ApiConstants::CRITERION_WEBSHOP_URL => $this->getConfig()->getWebshopUrl(),
         ];
     }
 

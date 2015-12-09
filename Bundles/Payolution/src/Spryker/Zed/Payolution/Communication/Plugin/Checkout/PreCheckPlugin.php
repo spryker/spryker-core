@@ -44,6 +44,9 @@ class PreCheckPlugin extends BaseAbstractPlugin implements CheckoutPreConditionI
             $checkoutResponse->addError($error);
         }
 
+        $checkoutRequest->getPayolutionPayment()
+            ->setPreCheckId($payolutionResponseTransfer->getIdentificationUniqueid());
+
         return $checkoutResponse;
     }
 

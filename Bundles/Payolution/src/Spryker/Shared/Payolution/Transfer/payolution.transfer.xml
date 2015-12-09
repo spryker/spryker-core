@@ -13,12 +13,14 @@
         <property name="languageIso2Code" type="string"/>
         <property name="currencyIso3Code" type="string"/>
         <property name="address" type="Address"/>
-        <property name="bankAccountHolder" type="string"/>
-        <property name="bankAccountBic" type="string"/>
-        <property name="bankAccountIban" type="string"/>
+        <property name="preCheckId" type="string"/>
+        <property name="installmentCalculationId" type="string"/>
         <property name="installmentAmount" type="int"/>
         <property name="installmentDuration" type="int"/>
         <property name="installmentPaymentDetailIndex" type="int"/>
+        <property name="bankAccountHolder" type="string"/>
+        <property name="bankAccountBic" type="string"/>
+        <property name="bankAccountIban" type="string"/>
     </transfer>
 
     <transfer name="PayolutionTransactionResponse">

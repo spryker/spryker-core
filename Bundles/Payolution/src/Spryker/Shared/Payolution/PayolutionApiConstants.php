@@ -18,4 +18,9 @@ interface PayolutionApiConstants
     const REASON_CODE_SUCCESS = '00';
     const STATUS_REASON_CODE_SUCCESS = self::STATUS_CODE_SUCCESS . '.' . self::REASON_CODE_SUCCESS;
 
+    const CRITERION_REQUEST_SYSTEM_VENDOR = 'Spryker';
+    const CRITERION_REQUEST_SYSTEM_VERSION = '1.0';
+    const CRITERION_REQUEST_SYSTEM_TYPE = 'Webshop';
+    const WEBSHOP_URL = 'HOST_YVES';
+
 }

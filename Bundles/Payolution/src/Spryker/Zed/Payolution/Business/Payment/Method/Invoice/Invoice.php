@@ -115,6 +115,7 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
                 ApiConstants::CONTACT_MOBILE => $paymentEntity->getCellPhone(),
                 ApiConstants::CONTACT_IP => $paymentEntity->getClientIp(),
                 ApiConstants::IDENTIFICATION_SHOPPERID => $paymentEntity->getSpySalesOrder()->getFkCustomer(),
+                ApiConstants::CRITERION_PRE_CHECK_ID => $paymentEntity->getPreCheckId(),
                 ApiConstants::CRITERION_CUSTOMER_LANGUAGE => $paymentEntity->getLanguageIso2Code(),
             ]
         );
@@ -130,7 +131,8 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
      */
     public function buildReAuthorizationRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
-        return $this->getBaseTransactionRequestForPayment($paymentEntity,
+        return $this->getBaseTransactionRequestForPayment(
+            $paymentEntity,
             ApiConstants::PAYMENT_CODE_RE_AUTHORIZATION,
             $uniqueId);
     }
@@ -143,7 +145,8 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
      */
     public function buildRevertRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
-        return $this->getBaseTransactionRequestForPayment($paymentEntity,
+        return $this->getBaseTransactionRequestForPayment(
+            $paymentEntity,
             ApiConstants::PAYMENT_CODE_REVERSAL,
             $uniqueId);
     }
@@ -156,7 +159,8 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
      */
     public function buildCaptureRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
-        return $this->getBaseTransactionRequestForPayment($paymentEntity,
+        return $this->getBaseTransactionRequestForPayment(
+            $paymentEntity,
             ApiConstants::PAYMENT_CODE_CAPTURE,
             $uniqueId);
     }
@@ -169,7 +173,8 @@ class Invoice extends AbstractPaymentMethod implements InvoiceInterface
      */
     public function buildRefundRequest(SpyPaymentPayolution $paymentEntity, $uniqueId)
     {
-        return $this->getBaseTransactionRequestForPayment($paymentEntity,
+        return $this->getBaseTransactionRequestForPayment(
+            $paymentEntity,
             ApiConstants::PAYMENT_CODE_REFUND,
             $uniqueId);
     }
