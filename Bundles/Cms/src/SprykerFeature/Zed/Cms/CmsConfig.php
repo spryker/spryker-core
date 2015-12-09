@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Cms;
 
 use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
 use SprykerFeature\Shared\System\SystemConfig;
-use SprykerFeature\Shared\Yves\YvesConfig;
+use SprykerFeature\Shared\Application\ApplicationConfig;
 
 class CmsConfig extends AbstractBundleConfig
 {
@@ -21,7 +21,7 @@ class CmsConfig extends AbstractBundleConfig
     public function getTemplateRealPath($templateRelativePath)
     {
         $templateRelativePath = substr($templateRelativePath, 4);
-        $physicalAddress = APPLICATION_ROOT_DIR . '/src/' . $this->get(SystemConfig::PROJECT_NAMESPACE) . '/Yves/Cms/Theme/' . $this->get(YvesConfig::YVES_THEME) . $templateRelativePath;
+        $physicalAddress = APPLICATION_ROOT_DIR . '/src/' . $this->get(SystemConfig::PROJECT_NAMESPACE) . '/Yves/Cms/Theme/' . $this->get(ApplicationConfig::YVES_THEME) . $templateRelativePath;
 
         return $physicalAddress;
     }

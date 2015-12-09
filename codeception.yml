@@ -61,7 +61,6 @@ include:
  - Bundles/TaxProductConnector
  - Bundles/Touch
  - Bundles/Transfer
- - Bundles/Translation
  - Bundles/Twig
  - Bundles/Url
  - Bundles/User

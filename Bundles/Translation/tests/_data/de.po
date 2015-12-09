@@ -1,5 +1,0 @@
-msgid "foo"
-msgstr "Foo Text"
-
-msgid "choice"
-msgstr "one|more"

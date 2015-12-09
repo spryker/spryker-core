@@ -1,2 +1,0 @@
-msgid "email"
-msgstr "Email"

@@ -14,6 +14,7 @@ use SprykerFeature\Shared\Library\Twig\DateFormatterTwigExtension;
 use SprykerFeature\Zed\Application\Business\Model\Twig\ZedExtension;
 use SprykerFeature\Zed\Price\Communication\Plugin\Twig\PriceTwigExtensions;
 use Symfony\Bridge\Twig\Extension\TranslationExtension;
+use Symfony\Component\Translation\Translator;
 
 class TwigExtension implements TwigExtensionInterface
 {
@@ -27,7 +28,7 @@ class TwigExtension implements TwigExtensionInterface
     {
         return [
             new ZedExtension(),
-            new TranslationExtension($app['translator']),
+            new TranslationExtension(new Translator($app['locale'])),
             new PriceTwigExtensions(),
             new DateFormatterTwigExtension(new DateFormatter(Context::getInstance())),
         ];

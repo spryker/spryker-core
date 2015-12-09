@@ -8,7 +8,7 @@ namespace SprykerFeature\Shared\ZedRequest\Provider;
 
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\System\SystemConfig;
-use SprykerFeature\Shared\Yves\YvesConfig;
+use SprykerFeature\Shared\Application\ApplicationConfig;
 use SprykerEngine\Shared\Kernel\AbstractClientProvider;
 use SprykerFeature\Shared\ZedRequest\Client\AbstractZedClient;
 
@@ -31,8 +31,8 @@ abstract class AbstractZedClientProvider extends AbstractClientProvider
             $this->factory,
             $this->locator,
             'http://' . Config::get(SystemConfig::HOST_ZED_API),
-            Config::get(YvesConfig::TRANSFER_USERNAME),
-            Config::get(YvesConfig::TRANSFER_PASSWORD)
+            Config::get(ApplicationConfig::TRANSFER_USERNAME),
+            Config::get(ApplicationConfig::TRANSFER_PASSWORD)
         );
 
         return $this->factory->createClientZedClient($httpClient);

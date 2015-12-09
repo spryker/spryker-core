@@ -14,7 +14,6 @@ use SprykerEngine\Shared\Application\Communication\Bootstrap\Extension\ServicePr
 use SprykerEngine\Shared\Application\Communication\Bootstrap\Extension\TwigExtensionInterface;
 use SprykerFeature\Shared\Application\ApplicationConfig;
 use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\Yves\YvesConfig;
 use Silex\ServiceProviderInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -343,14 +342,14 @@ class Bootstrap
      */
     private function addProtocolCheck(Application $application)
     {
-        if (!Config::get(YvesConfig::YVES_SSL_ENABLED) || !Config::get(YvesConfig::YVES_COMPLETE_SSL_ENABLED)) {
+        if (!Config::get(ApplicationConfig::YVES_SSL_ENABLED) || !Config::get(ApplicationConfig::YVES_COMPLETE_SSL_ENABLED)) {
             return;
         }
 
         $application->before(
             function (Request $request) {
                 if (!$request->isSecure()
-                    && !in_array($request->getPathInfo(), Config::get(YvesConfig::YVES_SSL_EXCLUDED))
+                    && !in_array($request->getPathInfo(), Config::get(ApplicationConfig::YVES_SSL_EXCLUDED))
                 ) {
                     $fakeRequest = clone $request;
                     $fakeRequest->server->set('HTTPS', true);

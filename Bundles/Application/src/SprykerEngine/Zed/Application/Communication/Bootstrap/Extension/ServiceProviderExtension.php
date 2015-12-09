@@ -59,7 +59,6 @@ class ServiceProviderExtension extends LocatorAwareExtension implements ServiceP
             new TwigServiceProvider(),
             new ServiceProviderTwigServiceProvider(),
             new EnvironmentInformationServiceProvider(),
-            new TranslationServiceProvider(),
             $this->getGatewayServiceProvider(),
             new UrlGeneratorServiceProvider(),
             new NewRelicServiceProvider(),
