@@ -91,8 +91,6 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function createCartRule()
     {
-        $store = $this->getProvidedDependency(DiscountDependencyProvider::STORE_CONFIG);
-
         return new CartRule(
             $this->getQueryContainer(),
             $this->getStoreConfig(),

@@ -19,17 +19,6 @@ abstract class AbstractDependencyContainer
      */
     private $config;
 
-
-    /**
-     * @deprecated Will be removed soon, please use new instead
-     *
-     * @return FactoryInterface
-     */
-    protected function getFactory()
-    {
-        return $this->factory;
-    }
-
     /**
      * @deprecated Will be removed soon. Use DependencyProvider instead
      *
@@ -60,7 +49,7 @@ abstract class AbstractDependencyContainer
     public function getConfig()
     {
         if ($this->config === null) {
-            $this->config = $this->findBundleConfig();
+            $this->config = $this->resolveBundleConfig();
         }
 
         return $this->config;
@@ -71,19 +60,11 @@ abstract class AbstractDependencyContainer
      *
      * @return mixed
      */
-    private function findBundleConfig()
+    private function resolveBundleConfig()
     {
         $resolver = new BundleConfigResolver();
 
         return $resolver->resolve($this);
-    }
-
-    /**
-     * @return string
-     */
-    public function getClassName()
-    {
-        return static::class;
     }
 
 }

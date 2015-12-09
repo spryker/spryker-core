@@ -7,10 +7,13 @@
 namespace Functional\SprykerEngine\Zed\Touch;
 
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
+use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
+use SprykerEngine\Zed\Touch\Business\TouchDependencyContainer;
 use SprykerEngine\Zed\Touch\Business\TouchFacade;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainer;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
+use SprykerEngine\Zed\Touch\TouchDependencyProvider;
 
 /**
  * @group Zed
@@ -38,6 +41,12 @@ class TouchTest extends AbstractFunctionalTest
     {
         parent::setUp();
         $this->touchFacade = new TouchFacade();
+        $container = new Container();
+        $dependencyProvider = new TouchDependencyProvider();
+        $dependencyProvider->provideBusinessLayerDependencies($container);
+        $dependencyContainer = new TouchDependencyContainer();
+        $dependencyContainer->setContainer($container);
+        $this->touchFacade->setDependencyContainer($dependencyContainer);
         $this->touchQueryContainer = new TouchQueryContainer();
     }
 

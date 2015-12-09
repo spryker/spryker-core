@@ -15,11 +15,6 @@ abstract class AbstractLocator implements LocatorInterface
     /**
      * @var string
      */
-    protected $factoryClassNamePattern;
-
-    /**
-     * @var string
-     */
     protected $bundle;
 
     /**

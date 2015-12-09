@@ -90,7 +90,7 @@ abstract class AbstractFacade implements FacadeInterface
     protected function getDependencyContainer()
     {
         if ($this->dependencyContainer === null) {
-            $this->dependencyContainer = $this->findDependencyContainer();
+            $this->dependencyContainer = $this->resolveDependencyContainer();
         }
 
         if ($this->getQueryContainer() !== null) {
@@ -109,7 +109,7 @@ abstract class AbstractFacade implements FacadeInterface
      *
      * @return AbstractBusinessDependencyContainer
      */
-    private function findDependencyContainer()
+    private function resolveDependencyContainer()
     {
         $classResolver = new DependencyContainerResolver();
 

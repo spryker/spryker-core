@@ -27,11 +27,13 @@ abstract class AbstractBusinessDependencyContainer extends BaseDependencyContain
     /**
      * @param Container $container
      *
-     * @return void
+     * @return self
      */
     public function setContainer(Container $container)
     {
         $this->container = $container;
+
+        return $this;
     }
 
     /**

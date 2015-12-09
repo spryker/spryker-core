@@ -130,9 +130,8 @@ trait InternalClassBuilderForTests
         if (!class_exists($queryContainerClassName)) {
             return false;
         }
-        $factory = new PersistenceFactory($bundle);
         /** @var AbstractQueryContainer $queryContainer */
-        $queryContainer = new $queryContainerClassName($factory, $this->getLocator());
+        $queryContainer = new $queryContainerClassName();
         $queryContainer->setExternalDependencies($this->getContainer($namespace, $bundle));
 
         return $queryContainer;

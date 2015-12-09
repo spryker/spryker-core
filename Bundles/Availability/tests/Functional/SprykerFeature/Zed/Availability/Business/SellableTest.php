@@ -7,7 +7,9 @@
 namespace Functional\SprykerFeature\Zed\Availability;
 
 use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
-use SprykerEngine\Zed\Kernel\Locator;
+use SprykerEngine\Zed\Kernel\Container;
+use SprykerFeature\Zed\Availability\AvailabilityDependencyProvider;
+use SprykerFeature\Zed\Availability\Business\AvailabilityDependencyContainer;
 use SprykerFeature\Zed\Availability\Business\AvailabilityFacade;
 use Orm\Zed\Product\Persistence\SpyAbstractProduct;
 use Orm\Zed\Product\Persistence\SpyAbstractProductQuery;
@@ -40,8 +42,15 @@ class SellableTest extends AbstractFunctionalTest
     {
         parent::setUp();
 
-        $locator = Locator::getInstance();
         $this->availabilityFacade = new AvailabilityFacade();
+
+        $container = new Container();
+        $dependencyContainer = new AvailabilityDependencyContainer();
+        $dependencyProvider = new AvailabilityDependencyProvider();
+        $dependencyProvider->provideBusinessLayerDependencies($container);
+        $dependencyContainer->setContainer($container);
+
+        $this->availabilityFacade->setDependencyContainer($dependencyContainer);
     }
 
     /**
