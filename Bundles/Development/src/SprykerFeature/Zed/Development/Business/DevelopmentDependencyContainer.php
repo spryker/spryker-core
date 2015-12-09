@@ -10,6 +10,7 @@ use Generated\Zed\Ide\FactoryAutoCompletion\DevelopmentBusiness;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
 use SprykerFeature\Zed\Development\Business\CodeStyleFixer\CodeStyleFixer;
 use SprykerFeature\Zed\Development\Business\CodeStyleSniffer\CodeStyleSniffer;
+use SprykerFeature\Zed\Development\Business\CodeTest\CodeTester;
 use SprykerFeature\Zed\Development\DevelopmentConfig;
 
 /**
@@ -36,6 +37,17 @@ class DevelopmentDependencyContainer extends AbstractBusinessDependencyContainer
     public function createCodeStyleSniffer()
     {
         return new CodeStyleSniffer(
+            $this->getConfig()->getPathToRoot(),
+            $this->getConfig()->getBundleDirectory()
+        );
+    }
+
+    /**
+     * @return CodeTester
+     */
+    public function createCodeTester()
+    {
+        return new CodeTester(
             $this->getConfig()->getPathToRoot(),
             $this->getConfig()->getBundleDirectory()
         );
