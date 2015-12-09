@@ -11,8 +11,8 @@ use SprykerFeature\Zed\Payolution\Business\Api\Converter\ConverterInterface;
 use SprykerFeature\Zed\Payolution\Business\Exception\NoMethodMapperException;
 use SprykerFeature\Zed\Payolution\Business\Exception\OrderGrandTotalException;
 use Generated\Shared\Transfer\PayolutionTransactionResponseTransfer;
-use SprykerFeature\Zed\Payolution\Business\Payment\Method\installment\InstallmentInterface;
-use SprykerFeature\Zed\Payolution\Business\Payment\Method\invoice\InvoiceInterface;
+use SprykerFeature\Zed\Payolution\Business\Payment\Method\Installment\InstallmentInterface;
+use SprykerFeature\Zed\Payolution\Business\Payment\Method\Invoice\InvoiceInterface;
 use SprykerFeature\Zed\Payolution\PayolutionConfig;
 
 abstract class AbstractPaymentHandler

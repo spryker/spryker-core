@@ -4,20 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerFeature\Zed\Payolution\Business\Payment\Method\installment;
+namespace SprykerFeature\Zed\Payolution\Business\Payment\Method\Invoice;
 
 use Generated\Shared\Transfer\CheckoutRequestTransfer;
 use Orm\Zed\Payolution\Persistence\SpyPaymentPayolution;
 
-interface InstallmentInterface
+interface InvoiceInterface
 {
-
-    /**
-     * @param CheckoutRequestTransfer $checkoutRequestTransfer
-     *
-     * @return string
-     */
-    public function buildCalculationRequest(CheckoutRequestTransfer $checkoutRequestTransfer);
 
     /**
      * @param CheckoutRequestTransfer $checkoutRequestTransfer
