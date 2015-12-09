@@ -14,6 +14,8 @@ class CodeTester {
 
     const OPTION_INITIALIZE = 'initialize';
 
+    const OPTION_GROUP = 'group';
+
     /**
      * @var string
      */
@@ -109,6 +111,10 @@ class CodeTester {
 
         if ($pathToFiles) {
             $config .= ' -c ' . $pathToFiles;
+        }
+
+        if ($options[self::OPTION_GROUP]) {
+            $config .= ' -g ' . $options[self::OPTION_GROUP];
         }
 
         if ($options[self::OPTION_VERBOSE]) {

@@ -23,7 +23,10 @@ class CodeTestConsole extends Console
     const OPTION_BUNDLE = 'bundle';
 
     const OPTION_BUNDLE_ALL = 'all';
+
     const OPTION_INITIALIZE = 'initialize';
+
+    const OPTION_GROUP = 'group';
 
     /**
      * @return void
@@ -38,6 +41,7 @@ class CodeTestConsole extends Console
             ->setDescription('Run codecept tests for project or core.');
 
         $this->addOption(self::OPTION_BUNDLE, 'b', InputOption::VALUE_OPTIONAL, 'Name of core bundle to run tests for (or "all").');
+        $this->addOption(self::OPTION_GROUP, 'g', InputOption::VALUE_OPTIONAL, 'Groups of tests to be executed (multiple values allowed, comma separated).');
         $this->addOption(self::OPTION_INITIALIZE, 'i', InputOption::VALUE_NONE, 'Initialize test suite by (re)generating required test classes.');
     }
 
