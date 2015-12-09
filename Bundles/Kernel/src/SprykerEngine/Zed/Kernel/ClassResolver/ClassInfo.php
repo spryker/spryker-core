@@ -19,6 +19,11 @@ class ClassInfo
     /**
      * @var string
      */
+    private $callerClassName;
+
+    /**
+     * @var string
+     */
     private $namespace;
 
     /**
@@ -43,32 +48,26 @@ class ClassInfo
      */
     public function setClass($callerClass)
     {
-        if (method_exists($callerClass, 'getClassName')) {
-            $callerClassNameFoo = $callerClass->getClassName();
-            $foo = 'bar';
-        } else {
-        }
         $callerClassName = get_class($callerClass);
-        if (!$callerClassName) {
-            $foo = 'bar';
-        }
+        $this->callerClassName = $callerClassName;
         $callerClassParts = explode('\\', $callerClassName);
-
-        if (!is_array($callerClassParts)) {
-            $foo = 'bar';
-        }
 
         $callerClassParts = $this->removeTestNamespace($callerClassParts);
 
-        if (!is_array($callerClassParts) || empty($callerClassParts)) {
-            $foo = 'bar';
-        }
         $this->namespace = $this->getNamespaceFromCallerClass($callerClassParts);
         $this->application = $this->getApplicationFromCallerClass($callerClassParts);
         $this->bundle = $this->getBundleFromCallerClass($callerClassParts);
         $this->layer = $this->getLayerFromCallerClass($callerClassParts);
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCallerClassName()
+    {
+        return $this->callerClassName;
     }
 
     /**

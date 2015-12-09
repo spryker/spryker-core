@@ -11,7 +11,7 @@ use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\BundleConfigNotFo
 class BundleConfigResolver extends ClassResolver
 {
 
-    const CLASS_NAME_PATTERN = '\\%s\\%s\\%s%s\\%sConfig';
+    const CLASS_NAME_PATTERN = '\\%1$s\\%2$s\\%3$s%4$s\\%3$sConfig';
 
     /**
      * @param object $callerClass
@@ -40,8 +40,7 @@ class BundleConfigResolver extends ClassResolver
             self::KEY_NAMESPACE,
             self::KEY_APPLICATION,
             self::KEY_BUNDLE,
-            self::KEY_STORE,
-            self::KEY_BUNDLE
+            self::KEY_STORE
         );
     }
 
