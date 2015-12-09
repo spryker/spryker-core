@@ -36,4 +36,15 @@ class DevelopmentFacade extends AbstractFacade
         $this->getDependencyContainer()->createCodeStyleSniffer()->checkCodeStyle($bundle, $options);
     }
 
+    /**
+     * @param string|null $bundle
+     * @param array $options
+     *
+     * @return void
+     */
+    public function runTest($bundle, array $options = [])
+    {
+        $this->getDependencyContainer()->createCodeTester()->runTest($bundle, $options);
+    }
+
 }
