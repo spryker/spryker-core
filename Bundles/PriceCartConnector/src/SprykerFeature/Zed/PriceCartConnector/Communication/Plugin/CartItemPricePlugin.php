@@ -7,8 +7,6 @@
 namespace SprykerFeature\Zed\PriceCartConnector\Communication\Plugin;
 
 use Generated\Shared\Transfer\ChangeTransfer;
-use SprykerEngine\Zed\Kernel\Communication\Factory;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerFeature\Zed\Cart\Dependency\ItemExpanderPluginInterface;
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Zed\PriceCartConnector\Business\Manager\PriceManagerInterface;
@@ -25,13 +23,8 @@ class CartItemPricePlugin extends AbstractPlugin implements ItemExpanderPluginIn
      */
     private $priceManager;
 
-    /**
-     * @param Factory $factory
-     * @param Locator $locator
-     */
-    public function __construct(Factory $factory, Locator $locator)
+    public function __construct()
     {
-        parent::__construct($factory, $locator);
         $this->priceManager = $this->getDependencyContainer()->createFacade();
     }
 

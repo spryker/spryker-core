@@ -6,6 +6,21 @@
 
 namespace SprykerFeature\Zed\Application\Business\Model\Twig;
 
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\UrlFunction;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia\EditActionButton;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia\ViewActionButton;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia\CreateActionButton;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Inspinia\BackActionButton;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\StaticPath;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Widget;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Panel;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Modal;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\ListGroup;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\GridConfirmDialog;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Grid;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\FormatPrice;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\ConfirmDialog;
+use SprykerFeature\Zed\Gui\Communication\Plugin\Twig\Button;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Zed\Kernel\Locator;
 
@@ -37,23 +52,22 @@ class ZedExtension extends \Twig_Extension
      */
     public function getFunctions()
     {
-        $locator = $this->getLocator();
         $functions = [
-            $locator->gui()->pluginTwigButton(),
-            $locator->gui()->pluginTwigConfirmDialog(),
-            $locator->gui()->pluginTwigFormatPrice(),
-            $locator->gui()->pluginTwigGrid(),
-            $locator->gui()->pluginTwigGridConfirmDialog(),
-            $locator->gui()->pluginTwigListGroup(),
-            $locator->gui()->pluginTwigModal(),
-            $locator->gui()->pluginTwigPanel(),
-            $locator->gui()->pluginTwigWidget(),
-            $locator->gui()->pluginTwigStaticPath(),
-            $locator->gui()->pluginTwigInspiniaBackActionButton(),
-            $locator->gui()->pluginTwigInspiniaCreateActionButton(),
-            $locator->gui()->pluginTwigInspiniaViewActionButton(),
-            $locator->gui()->pluginTwigInspiniaEditActionButton(),
-            $locator->gui()->pluginTwigUrlFunction(),
+            new Button(),
+            new ConfirmDialog(),
+            new FormatPrice(),
+            new Grid(),
+            new GridConfirmDialog(),
+            new ListGroup(),
+            new Modal(),
+            new Panel(),
+            new Widget(),
+            new StaticPath(),
+            new BackActionButton(),
+            new CreateActionButton(),
+            new ViewActionButton(),
+            new EditActionButton(),
+            new UrlFunction(),
         ];
 
         return $functions;

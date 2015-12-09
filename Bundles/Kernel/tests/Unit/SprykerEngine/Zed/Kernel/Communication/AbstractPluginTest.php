@@ -6,12 +6,10 @@
 
 namespace Unit\SprykerEngine\Zed\Kernel\Communication;
 
+use SprykerEngine\Shared\Kernel\ClassResolver\ClassNotFoundException;
 use SprykerEngine\Zed\Kernel\AbstractUnitTest;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
-use SprykerEngine\Zed\Kernel\Communication\Factory;
-use SprykerEngine\Zed\Kernel\Communication\PluginLocator;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugin;
 
@@ -28,120 +26,97 @@ class AbstractPluginTest extends AbstractUnitTest
     /**
      * @return void
      */
-    public function testGetDependencyContainerShouldReturnNullIfNotSet()
+    public function testGetDependencyContainerShouldThrowExceptionIfDependencyContainerNotFound()
     {
-        $plugin = $this->getPlugin();
+        $this->setExpectedException(ClassNotFoundException::class);
+
+        $plugin = $this->createPlugin('NonExistentBundle');
+        $plugin->getDependencyContainer();
+    }
+
+    /**
+     * @return void
+     */
+    public function testGetDependencyContainerShouldReturnInstanceIfExists()
+    {
+        $plugin = new FooPlugin();
+
+        $pluginReflection = new \ReflectionClass($plugin);
+        $dependencyContainerProperty = $pluginReflection->getParentClass()->getProperty('dependencyContainer');
+        $dependencyContainerProperty->setAccessible(true);
+        $dependencyContainerProperty->setValue($plugin, $this->getMock(AbstractCommunicationDependencyContainer::class, null, [], '', false));
+
         $dependencyContainer = $plugin->getDependencyContainer();
 
-        $this->assertNull($dependencyContainer);
+        $this->assertInstanceOf(AbstractCommunicationDependencyContainer::class, $dependencyContainer);
     }
 
     /**
      * @return void
      */
-    public function testGetDependencyContainerShouldReturnInstanceIfSet()
+    public function testGetFacadeShouldThrowExceptionIfFacadeNotFound()
     {
-        $plugin = $this->getPlugin();
-        $plugin->setDependencyContainer($this->getDependencyContainerMock());
-        $dependencyContainer = $plugin->getDependencyContainer();
+        $this->setExpectedException(ClassNotFoundException::class);
 
-        $this->assertInstanceOf(
-            'SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer',
-            $dependencyContainer
-        );
+        $plugin = $this->createPlugin('NonExistentBundle');
+        $plugin->getFacade();
     }
 
     /**
      * @return void
      */
-    public function testGetFacadeShouldReturnNullIfNotSet()
+    public function testGetFacadeShouldReturnInstanceIfExists()
     {
-        $plugin = $this->getPlugin();
+        $plugin = new FooPlugin();
+
+        $pluginReflection = new \ReflectionClass($plugin);
+        $facadeProperty = $pluginReflection->getParentClass()->getProperty('facade');
+        $facadeProperty->setAccessible(true);
+        $facadeProperty->setValue($plugin, $this->getMock(AbstractFacade::class, null, [], '', false));
+
         $facade = $plugin->getFacade();
 
-        $this->assertNull($facade);
+        $this->assertInstanceOf(AbstractFacade::class, $facade);
     }
 
     /**
      * @return void
      */
-    public function testGetFacadeShouldReturnInstanceIfSet()
+    public function testGetQueryContainerThrowExceptionIfQueryContainerNotFound()
     {
-        $plugin = $this->getPlugin();
-        $plugin->setOwnFacade($this->getFacadeMock());
-        $facade = $plugin->getFacade();
+        $this->setExpectedException(ClassNotFoundException::class);
 
-        $this->assertInstanceOf('SprykerEngine\Zed\Kernel\Business\AbstractFacade', $facade);
+        $plugin = $this->createPlugin('NonExistentBundle');
+        $plugin->getQueryContainer();
     }
 
     /**
      * @return void
      */
-    public function testGetQueryContainerShouldReturnNullIfNoQueryContainerIsSet()
+    public function testGetQueryContainerShouldReturnInstanceIfQueryContainerIfExists()
     {
-        $plugin = $this->getPlugin();
+        $plugin = new FooPlugin();
+
+        $pluginReflection = new \ReflectionClass($plugin);
+        $queryContainerProperty = $pluginReflection->getParentClass()->getProperty('queryContainer');
+        $queryContainerProperty->setAccessible(true);
+        $queryContainerProperty->setValue($plugin, $this->getMock(AbstractQueryContainer::class, null, [], '', false));
+
         $queryContainer = $plugin->getQueryContainer();
 
-        $this->assertNull($queryContainer);
+        $this->assertInstanceOf(AbstractQueryContainer::class, $queryContainer);
     }
 
     /**
-     * @return void
-     */
-    public function testGetQueryContainerShouldReturnInstanceIfQueryContainerIsSet()
-    {
-        $plugin = $this->getPlugin();
-        $plugin->setQueryContainer($this->getQueryContainerMock());
-        $queryContainer = $plugin->getQueryContainer();
-
-        $this->assertInstanceOf('SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer', $queryContainer);
-    }
-
-    /**
-     * @return AbstractCommunicationDependencyContainer
-     */
-    private function getDependencyContainerMock()
-    {
-        return $this->getMock('SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer', [], [],
-            '', false);
-    }
-
-    /**
-     * @return AbstractFacade
-     */
-    private function getFacadeMock()
-    {
-        return $this->getMock('SprykerEngine\Zed\Kernel\Business\AbstractFacade', [], [], '', false);
-    }
-
-    /**
-     * @return AbstractQueryContainer
-     */
-    private function getQueryContainerMock()
-    {
-        return $this->getMock('SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer', [], [], '', false);
-    }
-
-    /**
+     * @param string $bundle
+     *
      * @return FooPlugin
      */
-    private function getPlugin()
+    private function createPlugin($bundle = 'Kernel')
     {
-        $plugin = new FooPlugin(new Factory('Kernel'), Locator::getInstance());
+        $plugin = $this->getMock(FooPlugin::class, ['getBundleName']);
 
-        return $plugin;
-    }
-
-    /**
-     * @return FooPlugin
-     */
-    private function locatePlugin()
-    {
-        $locator = new PluginLocator(
-            '\\Unit\\SprykerEngine\\Zed\\{{bundle}}{{store}}\\Communication\\Fixtures\\AbstractPlugin\\Factory'
-        );
-
-        $plugin = $locator->locate('Kernel', Locator::getInstance(), 'FooPlugin');
+        $plugin->method('getBundleName')->willReturn($bundle);
 
         return $plugin;
     }

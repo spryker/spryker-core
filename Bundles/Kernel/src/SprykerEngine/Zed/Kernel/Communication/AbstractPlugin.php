@@ -6,22 +6,19 @@
 
 namespace SprykerEngine\Zed\Kernel\Communication;
 
-use Psr\Log\AbstractLogger;
-use SprykerEngine\Shared\Kernel\Messenger\MessengerInterface;
+use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
+use SprykerEngine\Zed\Kernel\BundleDependencyProviderLocator;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 
-abstract class AbstractPlugin extends AbstractLogger implements MessengerInterface
+abstract class AbstractPlugin
 {
 
     const DEPENDENCY_CONTAINER = 'DependencyContainer';
 
-    /**
-     * @var MessengerInterface
-     */
-    protected $messenger;
+    const CLASS_PART_BUNDLE = 2;
 
     /**
      * @var AbstractFacade
@@ -39,91 +36,17 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
     private $queryContainer;
 
     /**
-     * @param Factory $factory
-     * @param Locator $locator
-     */
-    public function __construct(Factory $factory, Locator $locator)
-    {
-        if ($factory->exists(self::DEPENDENCY_CONTAINER)) {
-            $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $locator);
-        }
-    }
-
-    /**
-     * @param MessengerInterface $messenger
-     *
-     * @return self
-     */
-    public function setMessenger(MessengerInterface $messenger)
-    {
-        $this->messenger = $messenger;
-
-        return $this;
-    }
-
-    /**
-     * Logs with an arbitrary level.
-     *
-     * @param mixed $level
-     * @param string $message
-     * @param array $context
-     *
-     * @return self
-     */
-    public function log($level, $message, array $context = [])
-    {
-        if ($this->messenger) {
-            $this->messenger->log($level, $message, $context);
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param Container $container
-     *
-     * @return void
-     */
-    public function setExternalDependencies(Container $container)
-    {
-        $dependencyContainer = $this->getDependencyContainer();
-        if (isset($dependencyContainer)) {
-            $this->getDependencyContainer()->setContainer($container);
-        }
-    }
-
-    /**
-     * TODO move to constructor
-     *
-     * @param AbstractFacade $facade
-     *
-     * @return void
-     */
-    public function setOwnFacade(AbstractFacade $facade)
-    {
-        $this->facade = $facade;
-    }
-
-    /**
-     * For autocompletion use typehint in class docblock like this: "@method MyFacade getFacade()"
-     *
      * @return AbstractFacade
      */
     protected function getFacade()
     {
+        if ($this->facade === null) {
+            $bundle = lcfirst($this->getBundleName());
+
+            $this->facade = $this->getLocator()->$bundle()->facade();
+        }
+
         return $this->facade;
-    }
-
-    /**
-     * @param AbstractCommunicationDependencyContainer $dependencyContainer
-     *
-     * @return self
-     */
-    public function setDependencyContainer(AbstractCommunicationDependencyContainer $dependencyContainer)
-    {
-        $this->dependencyContainer = $dependencyContainer;
-
-        return $this;
     }
 
     /**
@@ -131,19 +54,20 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
      */
     protected function getDependencyContainer()
     {
+        if ($this->dependencyContainer === null) {
+            $factory = new Factory($this->getBundleName());
+
+            $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $this->getLocator());
+
+            $bundleConfigLocator = new BundleDependencyProviderLocator();
+            $container = new Container();
+            $bundleBuilder = $bundleConfigLocator->locate($this->getBundleName(), $this->getLocator());
+            $bundleBuilder->provideCommunicationLayerDependencies($container);
+
+            $this->dependencyContainer->setContainer($container);
+        }
+
         return $this->dependencyContainer;
-    }
-
-    /**
-     * @param AbstractQueryContainer $queryContainer
-     *
-     * @return self
-     */
-    public function setQueryContainer(AbstractQueryContainer $queryContainer)
-    {
-        $this->queryContainer = $queryContainer;
-
-        return $this;
     }
 
     /**
@@ -151,7 +75,32 @@ abstract class AbstractPlugin extends AbstractLogger implements MessengerInterfa
      */
     protected function getQueryContainer()
     {
+        if ($this->queryContainer === null) {
+            $bundle = lcfirst($this->getBundleName());
+            $this->queryContainer = $this->getLocator()->$bundle()->queryContainer();
+        }
+
         return $this->queryContainer;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getBundleName()
+    {
+        $className = get_class($this);
+        $classParts = explode('\\', $className);
+        $bundle = $classParts[self::CLASS_PART_BUNDLE];
+
+        return $bundle;
+    }
+
+    /**
+     * @return LocatorLocatorInterface
+     */
+    private function getLocator()
+    {
+        return Locator::getInstance();
     }
 
 }

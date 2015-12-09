@@ -12,6 +12,7 @@ use SprykerEngine\Zed\Kernel\Business\Factory as BusinessFactory;
 use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\Factory as PersistenceFactory;
+use SprykerEngine\Zed\Propel\Communication\Plugin\Connection;
 use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use Generated\Shared\Transfer\TranslationTransfer;
 use SprykerEngine\Zed\Touch\TouchDependencyProvider;
@@ -365,7 +366,7 @@ class GlossaryTest extends AbstractFunctionalTest
 
         $touchContainer = new Container();
         $touchContainer[TouchDependencyProvider::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
-            return $container->getLocator()->propel()->pluginConnection()->get();
+            return (new Connection())->get();
         };
 
         $this->glossaryFacade->setExternalDependencies($container);

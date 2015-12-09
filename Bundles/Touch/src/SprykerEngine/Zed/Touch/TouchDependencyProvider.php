@@ -6,6 +6,7 @@
 
 namespace SprykerEngine\Zed\Touch;
 
+use SprykerEngine\Zed\Propel\Communication\Plugin\Connection;
 use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
 use SprykerEngine\Zed\Kernel\Container;
 
@@ -21,8 +22,8 @@ class TouchDependencyProvider extends AbstractBundleDependencyProvider
      */
     public function provideBusinessLayerDependencies(Container $container)
     {
-        $container[self::PLUGIN_PROPEL_CONNECTION] = function (Container $container) {
-            return $container->getLocator()->propel()->pluginConnection()->get();
+        $container[self::PLUGIN_PROPEL_CONNECTION] = function () {
+            return (new Connection())->get();
         };
 
         return $container;
