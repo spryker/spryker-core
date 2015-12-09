@@ -57,13 +57,13 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
      */
     public function getGrandTotalsCalculator()
     {
-        $subtotalTotalsCalculator = new SubtotalTotalsCalculator();
-        $expenseTotalsCalculator = new ExpenseTotalsCalculator();
+        $subtotalTotalsCalculator = $this->createSubTotalsCalculator();
+        $expenseTotalsCalculator = $this->createExpenseTotalsCalculator();
 
         $grandTotalsCalculator = new GrandTotalTotalsCalculator(
-                $subtotalTotalsCalculator,
-                $expenseTotalsCalculator
-            );
+            $subtotalTotalsCalculator,
+            $expenseTotalsCalculator
+        );
 
         return $grandTotalsCalculator;
     }
@@ -130,8 +130,36 @@ class CalculationDependencyContainer extends AbstractBusinessDependencyContainer
     public function getTaxTotalsCalculator()
     {
         return new TaxTotalsCalculator(
-            new PriceCalculationHelper()
+            $this->createPriceCalculationHelper()
         );
+    }
+
+    /**
+     * @return SubtotalTotalsCalculator
+     */
+    protected function createSubTotalsCalculator()
+    {
+        $subtotalTotalsCalculator = new SubtotalTotalsCalculator();
+
+        return $subtotalTotalsCalculator;
+    }
+
+    /**
+     * @return ExpenseTotalsCalculator
+     */
+    protected function createExpenseTotalsCalculator()
+    {
+        $expenseTotalsCalculator = new ExpenseTotalsCalculator();
+
+        return $expenseTotalsCalculator;
+    }
+
+    /**
+     * @return PriceCalculationHelper
+     */
+    protected function createPriceCalculationHelper()
+    {
+        return new PriceCalculationHelper();
     }
 
 }

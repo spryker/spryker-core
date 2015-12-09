@@ -76,7 +76,7 @@ class SalesDependencyContainer extends AbstractBusinessDependencyContainer
         return new OrderItem(
             $this->createSplitValidator(),
             $this->createSalesQueryContainer(),
-            new Calculator()
+            $this->createCalculator()
         );
     }
 
@@ -107,6 +107,14 @@ class SalesDependencyContainer extends AbstractBusinessDependencyContainer
     protected function createSequenceNumberFacade()
     {
         return $this->getProvidedDependency(SalesDependencyProvider::FACADE_SEQUENCE_NUMBER);
+    }
+
+    /**
+     * @return Calculator
+     */
+    protected function createCalculator()
+    {
+        return new Calculator();
     }
 
 }

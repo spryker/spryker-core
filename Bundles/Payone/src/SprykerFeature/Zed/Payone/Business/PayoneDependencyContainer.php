@@ -52,13 +52,13 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
     public function createPaymentManager()
     {
         $paymentManager = new PaymentManager(
-                $this->createExecutionAdapter(),
-                $this->createQueryContainer(),
-                $this->createStandardParameter(),
-                $this->createKeyHashGenerator(),
-                $this->createSequenceNumberProvider(),
-                $this->createModeDetector()
-            );
+            $this->createExecutionAdapter(),
+            $this->createQueryContainer(),
+            $this->createStandardParameter(),
+            $this->createKeyHashGenerator(),
+            $this->createSequenceNumberProvider(),
+            $this->createModeDetector()
+        );
 
         foreach ($this->getAvailablePaymentMethods() as $paymentMethod) {
             $paymentManager->registerPaymentMethodMapper($paymentMethod);
@@ -81,10 +81,10 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
     public function createTransactionStatusManager()
     {
         return new TransactionStatusUpdateManager(
-                $this->createQueryContainer(),
-                $this->createStandardParameter(),
-                $this->createKeyHashGenerator()
-            );
+            $this->createQueryContainer(),
+            $this->createStandardParameter(),
+            $this->createKeyHashGenerator()
+        );
     }
 
     /**
@@ -111,8 +111,8 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
     protected function createExecutionAdapter()
     {
         return new Guzzle(
-                $this->createStandardParameter()->getPaymentGatewayUrl()
-            );
+            $this->createStandardParameter()->getPaymentGatewayUrl()
+        );
     }
 
     /**
@@ -123,9 +123,9 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
         $defaultEmptySequenceNumber = $this->getConfig()->getEmptySequenceNumber();
 
         return new SequenceNumberProvider(
-                $this->createQueryContainer(),
-                $defaultEmptySequenceNumber
-            );
+            $this->createQueryContainer(),
+            $defaultEmptySequenceNumber
+        );
     }
 
     /**
@@ -141,7 +141,9 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createKeyHashGenerator()
     {
-        return new HashGenerator(new HashProvider());
+        return new HashGenerator(
+            $this->createHashProvider()
+        );
     }
 
     /**
@@ -172,11 +174,11 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
         $storeConfig = $this->getProvidedDependency(PayoneDependencyProvider::STORE_CONFIG);
 
         return [
-            PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO => new CreditCardPseudo($storeConfig),
-            PayoneApiConstants::PAYMENT_METHOD_INVOICE => new Invoice($storeConfig),
-            PayoneApiConstants::PAYMENT_METHOD_ONLINE_BANK_TRANSFER => new OnlineBankTransfer($storeConfig),
-            PayoneApiConstants::PAYMENT_METHOD_E_WALLET => new EWallet($storeConfig),
-            PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT => new Prepayment($storeConfig),
+            PayoneApiConstants::PAYMENT_METHOD_CREDITCARD_PSEUDO => $this->createCreditCardPseudo($storeConfig),
+            PayoneApiConstants::PAYMENT_METHOD_INVOICE => $this->createInvoice($storeConfig),
+            PayoneApiConstants::PAYMENT_METHOD_ONLINE_BANK_TRANSFER => $this->createOnlineBankTransfer($storeConfig),
+            PayoneApiConstants::PAYMENT_METHOD_E_WALLET => $this->createEWallet($storeConfig),
+            PayoneApiConstants::PAYMENT_METHOD_PREPAYMENT => $this->createPrepayment($storeConfig),
         ];
     }
 
@@ -190,6 +192,64 @@ class PayoneDependencyContainer extends AbstractBusinessDependencyContainer
         }
 
         return $this->standardParameter;
+    }
+
+    /**
+     * @return HashProvider
+     */
+    protected function createHashProvider()
+    {
+        return new HashProvider();
+    }
+
+    /**
+     * @param $storeConfig
+     *
+     * @return CreditCardPseudo
+     */
+    protected function createCreditCardPseudo($storeConfig)
+    {
+        return new CreditCardPseudo($storeConfig);
+    }
+
+    /**
+     * @param $storeConfig
+     *
+     * @return Invoice
+     */
+    protected function createInvoice($storeConfig)
+    {
+        return new Invoice($storeConfig);
+    }
+
+    /**
+     * @param $storeConfig
+     *
+     * @return OnlineBankTransfer
+     */
+    protected function createOnlineBankTransfer($storeConfig)
+    {
+        return new OnlineBankTransfer($storeConfig);
+    }
+
+    /**
+     * @param $storeConfig
+     *
+     * @return EWallet
+     */
+    protected function createEWallet($storeConfig)
+    {
+        return new EWallet($storeConfig);
+    }
+
+    /**
+     * @param $storeConfig
+     *
+     * @return Prepayment
+     */
+    protected function createPrepayment($storeConfig)
+    {
+        return new Prepayment($storeConfig);
     }
 
 }

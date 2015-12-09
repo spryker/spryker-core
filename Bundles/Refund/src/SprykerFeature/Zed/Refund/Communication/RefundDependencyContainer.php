@@ -48,7 +48,7 @@ class RefundDependencyContainer extends AbstractCommunicationDependencyContainer
         return new RefundTable(
             $refundQuery,
             $this->getRefundFacade(),
-            new DateFormatter(Context::getInstance())
+            $this->createDateFormatter()
         );
     }
 
@@ -66,6 +66,16 @@ class RefundDependencyContainer extends AbstractCommunicationDependencyContainer
     protected function getRefundFacade()
     {
         return $this->getProvidedDependency(RefundDependencyProvider::FACADE_REFUND);
+    }
+
+    /**
+     * @throws \Exception
+     *
+     * @return DateFormatter
+     */
+    protected function createDateFormatter()
+    {
+        return new DateFormatter(Context::getInstance());
     }
 
 }

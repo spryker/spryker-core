@@ -5,7 +5,6 @@
 
 namespace SprykerEngine\Zed\Propel\Business;
 
-use SprykerEngine\Zed\Kernel\Container;
 use SprykerEngine\Zed\Propel\Business\Model\PostgresqlCompatibilityAdjuster;
 use SprykerEngine\Zed\Propel\Business\Model\DirectoryRemover;
 use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaMerger;
@@ -24,6 +23,7 @@ use SprykerEngine\Zed\Propel\Business\Model\PropelSchemaWriterInterface;
 use SprykerEngine\Zed\Propel\PropelConfig;
 use SprykerEngine\Zed\Propel\PropelDependencyProvider;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\Console\Command\Command;
 
 /**
  * @method PropelConfig getConfig()
@@ -46,7 +46,7 @@ class PropelDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return PropelGroupedSchemaFinderInterface
      */
-    private function createGroupedSchemaFinder()
+    protected function createGroupedSchemaFinder()
     {
         $schemaFinder = new PropelGroupedSchemaFinder(
             $this->createSchemaFinder()
@@ -58,7 +58,7 @@ class PropelDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return PropelSchemaFinderInterface
      */
-    private function createSchemaFinder()
+    protected function createSchemaFinder()
     {
         $schemaFinder = new PropelSchemaFinder(
             $this->getConfig()->getPropelSchemaPathPatterns()
@@ -70,10 +70,10 @@ class PropelDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return PropelSchemaWriterInterface
      */
-    private function createSchemaWriter()
+    protected function createSchemaWriter()
     {
         $schemaWriter = new PropelSchemaWriter(
-            new Filesystem(),
+            $this->createFilesystem(),
             $this->getConfig()->getSchemaDirectory()
         );
 
@@ -83,7 +83,7 @@ class PropelDependencyContainer extends AbstractBusinessDependencyContainer
     /**
      * @return PropelSchemaMergerInterface
      */
-    private function createSchemaMerger()
+    protected function createSchemaMerger()
     {
         return new PropelSchemaMerger();
     }
@@ -109,11 +109,19 @@ class PropelDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return Container[]
+     * @return Command[]
      */
     public function getConsoleCommands()
     {
         return $this->getProvidedDependency(PropelDependencyProvider::COMMANDS);
+    }
+
+    /**
+     * @return Filesystem
+     */
+    protected function createFilesystem()
+    {
+        return new Filesystem();
     }
 
 }
