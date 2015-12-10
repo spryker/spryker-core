@@ -9,7 +9,7 @@ namespace SprykerFeature\Zed\Discount\Business\Model;
 use Generated\Shared\Transfer\DiscountCollectorTransfer;
 use Generated\Shared\Transfer\DiscountTransfer;
 use Generated\Shared\Transfer\MessageTransfer;
-use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
+use SprykerEngine\Zed\Messenger\Business\MessengerFacade;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Distributor\DistributorInterface;
 use SprykerFeature\Zed\Discount\Communication\Plugin\DecisionRule\AbstractDecisionRule;
@@ -69,9 +69,9 @@ class Discount
     protected $distributor;
 
     /**
-     * @var FlashMessengerFacade
+     * @var MessengerFacade
      */
-    protected $flashMessengerFacade;
+    protected $messengerFacade;
 
     /**
      * @param CalculableInterface $discountContainer
@@ -80,7 +80,7 @@ class Discount
      * @param DiscountConfig $discountSettings
      * @param CalculatorInterface $calculator
      * @param DistributorInterface $distributor
-     * @param FlashMessengerFacade $flashMessengerFacade
+     * @param MessengerFacade $messengerFacade
      */
     public function __construct(
         CalculableInterface $discountContainer,
@@ -89,7 +89,7 @@ class Discount
         DiscountConfig $discountSettings,
         CalculatorInterface $calculator,
         DistributorInterface $distributor,
-        FlashMessengerFacade $flashMessengerFacade
+        MessengerFacade $messengerFacade
     ) {
         $this->queryContainer = $queryContainer;
         $this->decisionRule = $decisionRule;
@@ -97,7 +97,7 @@ class Discount
         $this->discountSettings = $discountSettings;
         $this->calculator = $calculator;
         $this->distributor = $distributor;
-        $this->flashMessengerFacade = $flashMessengerFacade;
+        $this->messengerFacade = $messengerFacade;
     }
 
     /**
@@ -244,7 +244,7 @@ class Discount
             $messageTransfer = new MessageTransfer();
             $messageTransfer->setValue($errorMessage);
 
-            $this->flashMessengerFacade->addErrorMessage($messageTransfer);
+            $this->messengerFacade->addErrorMessage($messageTransfer);
         }
     }
 

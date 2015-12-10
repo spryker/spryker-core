@@ -10,7 +10,6 @@ use SprykerEngine\Shared\Kernel\Locale\LocaleNotFoundException;
 use SprykerFeature\Shared\Application\ApplicationConfig;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\NewRelic\Api;
-use SprykerFeature\Shared\System\SystemConfig;
 
 class Store
 {
@@ -293,7 +292,7 @@ class Store
      */
     public function getTimezone()
     {
-        return Config::get(SystemConfig::PROJECT_TIMEZONE);
+        return Config::get(ApplicationConfig::PROJECT_TIMEZONE);
     }
 
     /**

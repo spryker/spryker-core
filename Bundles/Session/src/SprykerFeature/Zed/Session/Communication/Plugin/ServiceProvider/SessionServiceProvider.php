@@ -12,7 +12,7 @@ use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Client\Session\Service\SessionClientInterface;
 use SprykerFeature\Shared\Library\Config;
 use SprykerFeature\Shared\Session\SessionConfig;
-use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Shared\Application\ApplicationConfig;
 use SprykerFeature\Zed\Session\Business\Model\SessionFactory;
 
 class SessionServiceProvider extends AbstractPlugin implements ServiceProviderInterface
@@ -43,8 +43,8 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
         $app['session.test'] = Config::get(SessionConfig::SESSION_IS_TEST, false);
 
         $app['session.storage.options'] = [
-            'cookie_lifetime' => Config::get(SystemConfig::ZED_STORAGE_SESSION_TIME_TO_LIVE),
-            'name' => Config::get(SystemConfig::ZED_STORAGE_SESSION_COOKIE_NAME),
+            'cookie_lifetime' => Config::get(ApplicationConfig::ZED_STORAGE_SESSION_TIME_TO_LIVE),
+            'name' => Config::get(ApplicationConfig::ZED_STORAGE_SESSION_COOKIE_NAME),
         ];
 
         $this->client->setContainer($app['session']);
@@ -61,7 +61,7 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
             return;
         }
 
-        $saveHandler = Config::get(SystemConfig::ZED_SESSION_SAVE_HANDLER);
+        $saveHandler = Config::get(ApplicationConfig::ZED_SESSION_SAVE_HANDLER);
         $savePath = $this->getSavePath($saveHandler);
 
         $sessionHelper = new SessionFactory();
@@ -112,13 +112,13 @@ class SessionServiceProvider extends AbstractPlugin implements ServiceProviderIn
         $path = null;
 
         if (SessionConfig::SESSION_HANDLER_REDIS === $saveHandler) {
-            $path = Config::get(SystemConfig::ZED_STORAGE_SESSION_REDIS_PROTOCOL)
-                . '://' . Config::get(SystemConfig::ZED_STORAGE_SESSION_REDIS_HOST)
-                . ':' . Config::get(SystemConfig::ZED_STORAGE_SESSION_REDIS_PORT);
+            $path = Config::get(ApplicationConfig::ZED_STORAGE_SESSION_REDIS_PROTOCOL)
+                . '://' . Config::get(ApplicationConfig::ZED_STORAGE_SESSION_REDIS_HOST)
+                . ':' . Config::get(ApplicationConfig::ZED_STORAGE_SESSION_REDIS_PORT);
         }
 
         if (SessionConfig::SESSION_HANDLER_FILE === $saveHandler) {
-            $path = Config::get(SystemConfig::ZED_STORAGE_SESSION_FILE_PATH);
+            $path = Config::get(ApplicationConfig::ZED_STORAGE_SESSION_FILE_PATH);
         }
 
         return $path;

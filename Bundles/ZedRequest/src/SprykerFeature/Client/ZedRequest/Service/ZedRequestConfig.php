@@ -8,7 +8,7 @@ namespace SprykerFeature\Client\ZedRequest\Service;
 
 use SprykerEngine\Shared\Config;
 use SprykerFeature\Shared\Auth\AuthConfig;
-use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Shared\Application\ApplicationConfig;
 
 class ZedRequestConfig
 {
@@ -42,12 +42,12 @@ class ZedRequestConfig
      */
     public function getZedRequestBaseUrl()
     {
-        $sslEnabled = $this->config->get(SystemConfig::ZED_API_SSL_ENABLED);
+        $sslEnabled = $this->config->get(ApplicationConfig::ZED_API_SSL_ENABLED);
 
         if ($sslEnabled === true) {
-            return 'https://' . $this->config->get(SystemConfig::HOST_SSL_ZED_API);
+            return 'https://' . $this->config->get(ApplicationConfig::HOST_SSL_ZED_API);
         } else {
-            return 'http://' . $this->config->get(SystemConfig::HOST_ZED_API);
+            return 'http://' . $this->config->get(ApplicationConfig::HOST_ZED_API);
         }
     }
 

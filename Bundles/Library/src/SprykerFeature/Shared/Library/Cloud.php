@@ -6,7 +6,7 @@
 
 namespace SprykerFeature\Shared\Library;
 
-use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Shared\Application\ApplicationConfig;
 
 class Cloud
 {
@@ -37,7 +37,7 @@ class Cloud
      */
     public static function init()
     {
-        static::$cloudConfigEnabled = Config::get(SystemConfig::CLOUD_ENABLED);
+        static::$cloudConfigEnabled = Config::get(ApplicationConfig::CLOUD_ENABLED);
     }
 
     /**
@@ -49,7 +49,7 @@ class Cloud
             return false;
         }
 
-        return Config::get(SystemConfig::CLOUD_OBJECT_STORAGE_ENABLED) === true;
+        return Config::get(ApplicationConfig::CLOUD_OBJECT_STORAGE_ENABLED) === true;
     }
 
     /**
@@ -61,7 +61,7 @@ class Cloud
             return false;
         }
 
-        return Config::get(SystemConfig::CLOUD_CDN_ENABLED) === true;
+        return Config::get(ApplicationConfig::CLOUD_CDN_ENABLED) === true;
     }
 
 }

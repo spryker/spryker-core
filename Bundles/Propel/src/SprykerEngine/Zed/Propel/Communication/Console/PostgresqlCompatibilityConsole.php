@@ -7,7 +7,7 @@
 namespace SprykerEngine\Zed\Propel\Communication\Console;
 
 use SprykerEngine\Shared\Config;
-use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Shared\Application\ApplicationConfig;
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -40,7 +40,7 @@ class PostgresqlCompatibilityConsole extends Console
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if (Config::get(SystemConfig::ZED_DB_ENGINE) === 'pgsql') {
+        if (Config::get(ApplicationConfig::ZED_DB_ENGINE) === 'pgsql') {
             $this->info('Adjust propel config for PostgreSQL and missing functions (group_concat)');
             $this->getFacade()->adjustPropelSchemaFilesForPostgresql();
             $this->getFacade()->adjustPostgresqlFunctions();

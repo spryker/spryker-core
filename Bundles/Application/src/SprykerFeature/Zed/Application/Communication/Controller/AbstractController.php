@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Application\Communication\Controller;
 
 use Generated\Shared\Transfer\MessageTransfer;
 use Silex\Application;
-use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
+use SprykerEngine\Zed\Messenger\Business\MessengerFacade;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException;
 use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
@@ -53,9 +53,9 @@ abstract class AbstractController
     private $container;
 
     /**
-     * @var FlashMessengerFacade
+     * @var MessengerFacade
      */
-    private $flashMessengerFacade;
+    private $messengerFacade;
 
     /**
      * @param Application $application
@@ -63,7 +63,7 @@ abstract class AbstractController
     public function __construct(Application $application)
     {
         $this->application = $application;
-        $this->flashMessengerFacade = Locator::getInstance()->flashMessenger()->facade();
+        $this->messengerFacade = Locator::getInstance()->messenger()->facade();
     }
 
     /**
@@ -215,7 +215,7 @@ abstract class AbstractController
      */
     protected function addSuccessMessage($message, array $data = [])
     {
-        $this->flashMessengerFacade->addSuccessMessage($this->createMessageTransfer($message, $data));
+        $this->messengerFacade->addSuccessMessage($this->createMessageTransfer($message, $data));
     }
 
     /**
@@ -225,7 +225,7 @@ abstract class AbstractController
      */
     protected function addInfoMessage($message, array $data = [])
     {
-        $this->flashMessengerFacade->addInfoMessage($this->createMessageTransfer($message, $data));
+        $this->messengerFacade->addInfoMessage($this->createMessageTransfer($message, $data));
 
         return $this;
     }
@@ -237,7 +237,7 @@ abstract class AbstractController
      */
     protected function addErrorMessage($message, array $data = [])
     {
-        $this->flashMessengerFacade->addErrorMessage($this->createMessageTransfer($message, $data));
+        $this->messengerFacade->addErrorMessage($this->createMessageTransfer($message, $data));
 
         return $this;
     }

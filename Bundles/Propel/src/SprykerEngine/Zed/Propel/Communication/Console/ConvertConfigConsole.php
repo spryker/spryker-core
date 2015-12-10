@@ -7,7 +7,7 @@
 namespace SprykerEngine\Zed\Propel\Communication\Console;
 
 use SprykerEngine\Shared\Config;
-use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Shared\Application\ApplicationConfig;
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -39,15 +39,15 @@ class ConvertConfigConsole extends Console
         $this->info('Write propel config');
 
         $config = [
-            'propel' => Config::get(SystemConfig::PROPEL),
+            'propel' => Config::get(ApplicationConfig::PROPEL),
         ];
 
-        $dsn = Config::get(SystemConfig::ZED_DB_ENGINE) . ':host=' . Config::get(SystemConfig::ZED_DB_HOST)
-            . ';dbname=' . Config::get(SystemConfig::ZED_DB_DATABASE);
+        $dsn = Config::get(ApplicationConfig::ZED_DB_ENGINE) . ':host=' . Config::get(ApplicationConfig::ZED_DB_HOST)
+            . ';dbname=' . Config::get(ApplicationConfig::ZED_DB_DATABASE);
 
         $config['propel']['database']['connections']['default']['dsn'] = $dsn;
-        $config['propel']['database']['connections']['default']['user'] = Config::get(SystemConfig::ZED_DB_USERNAME);
-        $config['propel']['database']['connections']['default']['password'] = Config::get(SystemConfig::ZED_DB_PASSWORD);
+        $config['propel']['database']['connections']['default']['user'] = Config::get(ApplicationConfig::ZED_DB_USERNAME);
+        $config['propel']['database']['connections']['default']['password'] = Config::get(ApplicationConfig::ZED_DB_PASSWORD);
 
         $config['propel']['database']['connections']['zed'] = $config['propel']['database']['connections']['default'];
 

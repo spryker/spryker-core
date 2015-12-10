@@ -7,7 +7,7 @@
 namespace SprykerEngine\Zed\Propel\Communication\Console;
 
 use SprykerEngine\Shared\Config;
-use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Shared\Application\ApplicationConfig;
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -39,7 +39,7 @@ class MigrateConsole extends Console
     {
         $this->info('Run migrations');
 
-        $config = Config::get(SystemConfig::PROPEL);
+        $config = Config::get(ApplicationConfig::PROPEL);
         $command = 'vendor/bin/propel migrate --config-dir '
             . $config['paths']['phpConfDir'];
 

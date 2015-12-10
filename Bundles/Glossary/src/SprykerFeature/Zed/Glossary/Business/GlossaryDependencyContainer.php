@@ -5,7 +5,7 @@
 
 namespace SprykerFeature\Zed\Glossary\Business;
 
-use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
+use SprykerEngine\Zed\Messenger\Business\MessengerFacade;
 use SprykerFeature\Zed\Glossary\Business\Key\KeyManager;
 use SprykerFeature\Zed\Glossary\Business\Translation\TranslationManager;
 use SprykerEngine\Zed\Kernel\Business\AbstractBusinessDependencyContainer;
@@ -34,7 +34,7 @@ class GlossaryDependencyContainer extends AbstractBusinessDependencyContainer
             $this->getTouchFacade(),
             $this->getLocaleFacade(),
             $this->createKeyManager(),
-            $this->getFlashMessagesFacade()
+            $this->getMessagesFacade()
         );
     }
 
@@ -55,11 +55,11 @@ class GlossaryDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return FlashMessengerFacade
+     * @return MessengerFacade
      */
-    protected function getFlashMessagesFacade()
+    protected function getMessagesFacade()
     {
-        return $this->getProvidedDependency(GlossaryDependencyProvider::FLASH_MESSAGES);
+        return $this->getProvidedDependency(GlossaryDependencyProvider::MESSAGES);
     }
 
     /**

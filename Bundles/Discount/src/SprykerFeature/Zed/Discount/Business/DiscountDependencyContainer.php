@@ -10,7 +10,7 @@ use SprykerFeature\Zed\Discount\Business\Model\VoucherCode;
 use SprykerFeature\Zed\Discount\Business\Model\VoucherPoolCategory;
 use SprykerFeature\Zed\Discount\Business\Model\CartRule;
 use Propel\Runtime\Connection\ConnectionInterface;
-use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
+use SprykerEngine\Zed\Messenger\Business\MessengerFacade;
 use SprykerFeature\Zed\Calculation\Business\Model\CalculableInterface;
 use SprykerFeature\Zed\Discount\Business\Calculator\Fixed;
 use SprykerFeature\Zed\Discount\Business\Calculator\Percentage;
@@ -81,7 +81,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
             $this->getConfig(),
             $this->createCalculator(),
             $this->createDistributor(),
-            $this->getFlashMessengerFacade()
+            $this->getMessengerFacade()
         );
     }
 
@@ -227,7 +227,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
      */
     protected function createCalculator()
     {
-        return new Calculator($this->createCollectorResolver(), $this->getFlashMessengerFacade());
+        return new Calculator($this->createCollectorResolver(), $this->getMessengerFacade());
     }
 
     /**
@@ -246,7 +246,7 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
         return new VoucherEngine(
             $this->getConfig(),
             $this->getQueryContainer(),
-            $this->getFlashMessengerFacade(),
+            $this->getMessengerFacade(),
             $this->getPropelConnection()
         );
     }
@@ -314,11 +314,11 @@ class DiscountDependencyContainer extends AbstractBusinessDependencyContainer
     }
 
     /**
-     * @return FlashMessengerFacade
+     * @return MessengerFacade
      */
-    protected function getFlashMessengerFacade()
+    protected function getMessengerFacade()
     {
-        return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_FLASH_MESSENGER);
+        return $this->getProvidedDependency(DiscountDependencyProvider::FACADE_MESSENGER);
     }
 
     /**

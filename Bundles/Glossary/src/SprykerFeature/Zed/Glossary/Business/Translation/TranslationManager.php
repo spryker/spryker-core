@@ -11,7 +11,7 @@ use Generated\Shared\Transfer\MessageTransfer;
 use Generated\Shared\Transfer\TranslationTransfer;
 use Propel\Runtime\Exception\PropelException;
 use Propel\Runtime\Propel;
-use SprykerEngine\Zed\FlashMessenger\Business\FlashMessengerFacade;
+use SprykerEngine\Zed\Messenger\Business\MessengerFacade;
 use SprykerEngine\Zed\Locale\Business\Exception\MissingLocaleException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingKeyException;
 use SprykerFeature\Zed\Glossary\Business\Exception\MissingTranslationException;
@@ -51,28 +51,29 @@ class TranslationManager implements TranslationManagerInterface
     protected $localeFacade;
 
     /**
-     * @var FlashMessengerFacade
+     * @var MessengerFacade
      */
-    protected $flashMessengerFacade;
+    protected $messengerFacade;
 
     /**
      * @param GlossaryQueryContainerInterface $glossaryQueryContainer
      * @param GlossaryToTouchInterface $touchFacade
      * @param GlossaryToLocaleInterface $localeFacade
      * @param KeyManagerInterface $keyManager
+     * @param MessengerFacade $messengerFacade
      */
     public function __construct(
         GlossaryQueryContainerInterface $glossaryQueryContainer,
         GlossaryToTouchInterface $touchFacade,
         GlossaryToLocaleInterface $localeFacade,
         KeyManagerInterface $keyManager,
-        FlashMessengerFacade $flashMessengerFacade
+        MessengerFacade $messengerFacade
     ) {
         $this->glossaryQueryContainer = $glossaryQueryContainer;
         $this->touchFacade = $touchFacade;
         $this->keyManager = $keyManager;
         $this->localeFacade = $localeFacade;
-        $this->flashMessengerFacade = $flashMessengerFacade;
+        $this->messengerFacade = $messengerFacade;
     }
 
     /**
@@ -112,7 +113,7 @@ class TranslationManager implements TranslationManagerInterface
             $messageTransfer = new MessageTransfer();
             $messageTransfer->setValue($error->getMessage());
 
-            $this->flashMessengerFacade->addErrorMessage($messageTransfer);
+            $this->messengerFacade->addErrorMessage($messageTransfer);
 
             return false;
         }

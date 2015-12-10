@@ -14,7 +14,7 @@ use Propel\Runtime\Map\TableMap;
 use Propel\Runtime\Propel;
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\Locator;
-use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Shared\Application\ApplicationConfig;
 use SprykerFeature\Zed\Application\Business\Url\Url;
 use SprykerFeature\Zed\Library\Sanitize\Html;
 use Symfony\Component\HttpFoundation\Request;
@@ -431,7 +431,7 @@ abstract class AbstractTable
                 }
 
                 $filter = '';
-                $sqlDriver = Config::getInstance()->get(SystemConfig::ZED_DB_ENGINE);
+                $sqlDriver = Config::getInstance()->get(ApplicationConfig::ZED_DB_ENGINE);
                 // @todo fix this in CD-412
                 if ($sqlDriver === 'pgsql') {
                     $filter = '::TEXT';

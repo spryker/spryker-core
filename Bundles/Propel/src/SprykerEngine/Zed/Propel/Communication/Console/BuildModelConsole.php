@@ -7,7 +7,7 @@
 namespace SprykerEngine\Zed\Propel\Communication\Console;
 
 use SprykerEngine\Shared\Config;
-use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Shared\Application\ApplicationConfig;
 use SprykerFeature\Zed\Console\Business\Model\Console;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -39,7 +39,7 @@ class BuildModelConsole extends Console
     {
         $this->info('Build propel models');
 
-        $config = Config::get(SystemConfig::PROPEL);
+        $config = Config::get(ApplicationConfig::PROPEL);
         $command = 'vendor/bin/propel model:build --config-dir '
             . $config['paths']['phpConfDir']
             . ' --schema-dir ' . $config['paths']['schemaDir'] . ' --disable-namespace-auto-package';

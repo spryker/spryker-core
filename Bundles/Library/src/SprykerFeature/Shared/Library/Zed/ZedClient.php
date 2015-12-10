@@ -21,8 +21,7 @@ use SprykerFeature\Shared\Library\System;
 use SprykerFeature\Shared\Library\Communication\Request;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Shared\Library\Zed\Exception\InvalidZedResponseException;
-use SprykerFeature\Shared\System\SystemConfig;
-use SprykerFeature\Shared\Yves\YvesConfig;
+use SprykerFeature\Shared\Application\ApplicationConfig;
 
 class ZedClient
 {
@@ -318,11 +317,11 @@ class ZedClient
      */
     protected function forwardDebugSession(EntityEnclosingRequest $request)
     {
-        if (Config::get(YvesConfig::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED)) {
+        if (Config::get(ApplicationConfig::TRANSFER_DEBUG_SESSION_FORWARD_ENABLED)) {
             $cookie = new Cookie();
-            $cookie->setName(trim(Config::get(YvesConfig::TRANSFER_DEBUG_SESSION_NAME)));
-            $cookie->setValue($_COOKIE[Config::get(YvesConfig::TRANSFER_DEBUG_SESSION_NAME)]);
-            $cookie->setDomain(Config::get(SystemConfig::HOST_ZED_API));
+            $cookie->setName(trim(Config::get(ApplicationConfig::TRANSFER_DEBUG_SESSION_NAME)));
+            $cookie->setValue($_COOKIE[Config::get(ApplicationConfig::TRANSFER_DEBUG_SESSION_NAME)]);
+            $cookie->setDomain(Config::get(ApplicationConfig::HOST_ZED_API));
             $cookieArray = new ArrayCookieJar(true);
             $cookieArray->add($cookie);
 

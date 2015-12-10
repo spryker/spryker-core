@@ -16,7 +16,7 @@ use SprykerFeature\Zed\Kernel\Communication\KernelDependencyContainer;
 use SprykerFeature\Zed\ZedRequest\Business\Client\Request;
 use SprykerFeature\Zed\ZedRequest\Business\Client\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use SprykerEngine\Zed\FlashMessenger\FlashMessengerConfig;
+use SprykerEngine\Zed\Messenger\MessengerConfig;
 
 /**
  * @method KernelDependencyContainer getDependencyContainer()
@@ -41,7 +41,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
 
         $newController = function () use ($controller, $action) {
 
-            FlashMessengerConfig::setMessageTray(FlashMessengerConfig::IN_MEMORY_TRAY);
+            MessengerConfig::setMessageTray(MessengerConfig::IN_MEMORY_TRAY);
 
             $requestTransfer = $this->getRequestTransfer($controller, $action);
             $result = $controller->$action($requestTransfer->getTransfer(), $requestTransfer);
@@ -102,7 +102,7 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
         }
 
         $this->setGatewayControllerMessages($controller, $response);
-        $this->setFlashMessengerMessages($response);
+        $this->setMessengerMessages($response);
 
         $response->setSuccess($controller->getSuccess());
 
@@ -127,30 +127,30 @@ class GatewayControllerListenerPlugin extends AbstractPlugin implements GatewayC
      *
      * @return void
      */
-    protected function setFlashMessengerMessages(Response $response)
+    protected function setMessengerMessages(Response $response)
     {
-        $flashMessengerFacade = $this->getDependencyContainer()->createFlashMessengerFacade();
+        $MessengerFacade = $this->getDependencyContainer()->createMessengerFacade();
 
-        $flashMessengerTransfer = $flashMessengerFacade->getStoredMessages();
-        if ($flashMessengerTransfer === null) {
+        $MessengerTransfer = $MessengerFacade->getStoredMessages();
+        if ($MessengerTransfer === null) {
             return;
         }
 
         $response->addErrorMessages(
             $this->createResponseMessages(
-                $flashMessengerTransfer->getErrorMessages(),
+                $MessengerTransfer->getErrorMessages(),
                 $response->getErrorMessages()
             )
         );
         $response->addInfoMessages(
             $this->createResponseMessages(
-                $flashMessengerTransfer->getInfoMessages(),
+                $MessengerTransfer->getInfoMessages(),
                 $response->getInfoMessages()
             )
         );
         $response->addSuccessMessages(
             $this->createResponseMessages(
-                $flashMessengerTransfer->getSuccessMessages(),
+                $MessengerTransfer->getSuccessMessages(),
                 $response->getSuccessMessages()
             )
         );

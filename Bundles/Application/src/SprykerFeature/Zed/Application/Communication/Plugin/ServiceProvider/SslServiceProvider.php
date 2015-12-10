@@ -8,7 +8,7 @@ namespace SprykerFeature\Zed\Application\Communication\Plugin\ServiceProvider;
 
 use SprykerEngine\Zed\Kernel\Communication\AbstractPlugin;
 use SprykerFeature\Shared\Library\Config;
-use SprykerFeature\Shared\System\SystemConfig;
+use SprykerFeature\Shared\Application\ApplicationConfig;
 use Symfony\Component\HttpFoundation\Request;
 use Silex\Application;
 use Silex\ServiceProviderInterface;
@@ -53,10 +53,10 @@ class SslServiceProvider extends AbstractPlugin implements ServiceProviderInterf
      */
     protected function shouldBeSsl(Request $request)
     {
-        return Config::get(SystemConfig::ZED_SSL_ENABLED)
+        return Config::get(ApplicationConfig::ZED_SSL_ENABLED)
             && !$this->isSecure($request)
             && !$this->isYvesRequest($request)
-            && !$this->isExcludedFromRedirection($request, Config::get(SystemConfig::ZED_SSL_EXCLUDED));
+            && !$this->isExcludedFromRedirection($request, Config::get(ApplicationConfig::ZED_SSL_EXCLUDED));
     }
 
     /**

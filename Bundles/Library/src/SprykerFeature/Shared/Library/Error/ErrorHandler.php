@@ -7,8 +7,7 @@
 namespace SprykerFeature\Shared\Library\Error;
 
 use SprykerEngine\Shared\Config;
-use SprykerFeature\Shared\System\SystemConfig;
-use SprykerFeature\Shared\Yves\YvesConfig;
+use SprykerFeature\Shared\Application\ApplicationConfig;
 
 class ErrorHandler
 {
@@ -108,10 +107,10 @@ class ErrorHandler
     protected function showExceptionStackTrace()
     {
         if (APPLICATION === self::YVES) {
-            return Config::get(YvesConfig::YVES_SHOW_EXCEPTION_STACK_TRACE);
+            return Config::get(ApplicationConfig::YVES_SHOW_EXCEPTION_STACK_TRACE);
         }
 
-        return Config::get(SystemConfig::ZED_SHOW_EXCEPTION_STACK_TRACE);
+        return Config::get(ApplicationConfig::ZED_SHOW_EXCEPTION_STACK_TRACE);
     }
 
     /**
@@ -139,10 +138,10 @@ class ErrorHandler
             return;
         }
 
-        $errorPage = Config::get(SystemConfig::ZED_ERROR_PAGE);
+        $errorPage = Config::get(ApplicationConfig::ZED_ERROR_PAGE);
 
         if (APPLICATION === self::YVES) {
-            $errorPage = Config::get(YvesConfig::YVES_ERROR_PAGE);
+            $errorPage = Config::get(ApplicationConfig::YVES_ERROR_PAGE);
         }
 
         require_once $errorPage;
