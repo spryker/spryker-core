@@ -7,10 +7,11 @@
 namespace SprykerFeature\Zed\Collector\Business\Exporter;
 
 use Everon\Component\CriteriaBuilder\CriteriaBuilderInterface;
-use Propel\Runtime\Connection\ConnectionInterface;
+use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainerInterface;
 use SprykerFeature\Zed\Collector\Business\Model\CountableIteratorInterface;
+use SprykerFeature\Zed\Distributor\Business\Distributor\BatchIteratorInterface;
 
-class PdoBatchIterator implements CountableIteratorInterface
+class PdoBatchIterator implements CountableIteratorInterface, BatchIteratorInterface
 {
 
     /**
@@ -24,14 +25,19 @@ class PdoBatchIterator implements CountableIteratorInterface
     protected $chunkSize = 1000;
 
     /**
+     * @var string
+     */
+    protected $touchType;
+
+    /**
      * @var CriteriaBuilderInterface
      */
     protected $criteriaBuilder;
 
     /**
-     * @var ConnectionInterface
+     * @var TouchQueryContainerInterface
      */
-    protected $connection;
+    protected $touchQueryContainer;
 
     /**
      * @var int
@@ -48,14 +54,11 @@ class PdoBatchIterator implements CountableIteratorInterface
      */
     protected $currentDataSet = [];
 
-    /**
-     * @param CriteriaBuilderInterface $criteriaBuilder
-     * @param int $chunkSize
-     */
-    public function __construct(CriteriaBuilderInterface $criteriaBuilder, ConnectionInterface $connection, $chunkSize = 1000)
+    public function __construct(CriteriaBuilderInterface $criteriaBuilder, TouchQueryContainerInterface $touchQueryContainer, $touchType, $chunkSize = 1000)
     {
         $this->criteriaBuilder = $criteriaBuilder;
-        $this->connection = $connection;
+        $this->touchQueryContainer = $touchQueryContainer;
+        $this->touchType = $touchType;
         $this->chunkSize = $chunkSize;
     }
 
@@ -85,7 +88,7 @@ class PdoBatchIterator implements CountableIteratorInterface
 
         $sqlPart = $this->criteriaBuilder->toSqlPart();
 
-        $st = $this->connection->prepare($sqlPart->getSql());
+        $st = $this->touchQueryContainer->getConnection()->prepare($sqlPart->getSql());
         $st->execute($sqlPart->getParameters());
 
         $this->currentDataSet = $st->fetchAll(\PDO::FETCH_ASSOC);
@@ -127,7 +130,7 @@ class PdoBatchIterator implements CountableIteratorInterface
         $sqlPart = $this->criteriaBuilder->toSqlPart();
 
         $countSql = 'SELECT COUNT(*) cnt FROM (' . $sqlPart->getSql() . ') AS v';
-        $st = $this->connection->prepare($countSql);
+        $st = $this->touchQueryContainer->getConnection()->prepare($countSql);
         $st->execute($sqlPart->getParameters());
 
         return $st->fetchColumn();

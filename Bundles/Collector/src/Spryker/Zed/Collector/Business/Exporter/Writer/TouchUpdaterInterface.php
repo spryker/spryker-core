@@ -4,11 +4,14 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Collector\Business\Exporter\Writer;
+namespace SprykerFeature\Zed\Collector\Business\Exporter\Writer;
 
 use Generated\Shared\Transfer\LocaleTransfer;
+use Orm\Zed\Touch\Persistence\Base\SpyTouchStorage;
+use Orm\Zed\Touch\Persistence\SpyTouchSearch;
+use Propel\Runtime\Connection\ConnectionInterface;
 use SprykerFeature\Zed\Collector\Business\Exporter\AbstractPropelCollectorPlugin;
-use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet;
+use SprykerFeature\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet;
 
 interface TouchUpdaterInterface
 {
@@ -16,16 +19,19 @@ interface TouchUpdaterInterface
     const COLLECTOR_TOUCH_ID = AbstractPropelCollectorPlugin::COLLECTOR_TOUCH_ID;
 
     /**
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet $touchUpdaterSet
+     * @param TouchUpdaterSet $touchUpdaterSet
      * @param int $idLocale
+     * @param ConnectionInterface $connection
+     *
+     * @return
      */
-    public function updateMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale);
+    public function updateMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null);
 
     /**
      * @param int $idTouch
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param LocaleTransfer $locale
      *
-     * @return \Orm\Zed\Touch\Persistence\SpyTouchSearch
+     * @return SpyTouchStorage|SpyTouchSearch
      */
     public function getKeyById($idTouch, LocaleTransfer $locale);
 

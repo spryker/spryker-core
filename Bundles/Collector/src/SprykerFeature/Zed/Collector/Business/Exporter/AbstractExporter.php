@@ -4,64 +4,67 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace Spryker\Zed\Collector\Business\Exporter;
+namespace SprykerFeature\Zed\Collector\Business\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
-use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
-use Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface;
-use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
-use Spryker\Zed\Collector\Business\Model\FailedResultInterface;
-use Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface;
-use Spryker\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
+use Orm\Zed\Touch\Persistence\Map\SpyTouchTableMap;
+use Propel\Runtime\Formatter\AbstractFormatter;
+use SprykerEngine\Zed\Touch\Persistence\TouchQueryContainer;
+use SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
+use SprykerFeature\Zed\Collector\Business\Exporter\Writer\WriterInterface;
+use SprykerFeature\Zed\Collector\Business\Model\BatchResultInterface;
+use SprykerFeature\Zed\Collector\Business\Model\FailedResultInterface;
+use SprykerFeature\Zed\Collector\Dependency\Plugin\CollectorPluginInterface;
+use SprykerEngine\Zed\Propel\Business\Formatter\PropelArraySetFormatter;
+use Symfony\Component\Console\Output\OutputInterface;
 
-abstract class AbstractCollector implements ExporterInterface
+abstract class AbstractExporter implements ExporterInterface
 {
 
     const DATE_TIME_FORMAT = 'Y-m-d H:i:s';
 
     /**
-     * @var \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface[]
+     * @var CollectorPluginInterface[]
      */
     protected $collectorPlugins = [];
 
     /**
-     * @var \Spryker\Zed\Collector\Business\Model\FailedResultInterface
+     * @var FailedResultInterface
      */
     protected $failedResultPrototype;
 
     /**
-     * @var \Spryker\Zed\Collector\Business\Model\BatchResultInterface
+     * @var BatchResultInterface
      */
     protected $batchResultPrototype;
 
     /**
-     * @var \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface
+     * @var WriterInterface
      */
     protected $writer;
 
     /**
-     * @var \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface
+     * @var TouchUpdaterInterface
      */
     protected $touchUpdater;
 
     /**
-     * @var \Spryker\Zed\Collector\Business\Exporter\MarkerInterface
+     * @var MarkerInterface
      */
     protected $marker;
 
     /**
-     * @var \Spryker\Zed\Touch\Persistence\TouchQueryContainer
+     * @var TouchQueryContainer
      */
     protected $queryContainer;
 
     /**
-     * @param \Spryker\Zed\Touch\Persistence\TouchQueryContainer $queryContainer
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\WriterInterface $writer
-     * @param \Spryker\Zed\Collector\Business\Exporter\MarkerInterface $marker
-     * @param \Spryker\Zed\Collector\Business\Model\FailedResultInterface $failedResultPrototype
-     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResultPrototype
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface $touchUpdater
+     * @param TouchQueryContainer $queryContainer
+     * @param WriterInterface $writer
+     * @param MarkerInterface $marker
+     * @param FailedResultInterface $failedResultPrototype
+     * @param BatchResultInterface $batchResultPrototype
+     * @param TouchUpdaterInterface $touchUpdater
      */
     public function __construct(
         TouchQueryContainer $queryContainer,
@@ -81,7 +84,7 @@ abstract class AbstractCollector implements ExporterInterface
 
     /**
      * @param string $touchItemType
-     * @param \Spryker\Zed\Collector\Dependency\Plugin\CollectorPluginInterface $plugin
+     * @param CollectorPluginInterface $plugin
      *
      * @return void
      */
@@ -100,11 +103,11 @@ abstract class AbstractCollector implements ExporterInterface
 
     /**
      * @param string $type
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param LocaleTransfer $locale
      *
-     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface
+     * @return BatchResultInterface
      */
-    public function exportByType($type, LocaleTransfer $locale)
+    public function exportByType($type, LocaleTransfer $locale, OutputInterface $output = null)
     {
         $timestamp = $this->createNewTimestamp();
 
@@ -120,32 +123,37 @@ abstract class AbstractCollector implements ExporterInterface
         $lastRunDatetime = $this->marker->getLastExportMarkByTypeAndLocale($type, $locale);
 
         $baseQuery = $this->queryContainer->createBasicExportableQuery($type, $locale, $lastRunDatetime);
+        $baseQuery->withColumn(SpyTouchTableMap::COL_ID_TOUCH, AbstractPdoCollectorPlugin::COLLECTOR_TOUCH_ID);
+        $baseQuery->withColumn(SpyTouchTableMap::COL_ITEM_ID, AbstractPdoCollectorPlugin::COLLECTOR_RESOURCE_ID);
         $baseQuery->setFormatter($this->getFormatter());
 
-        $collector = $this->collectorPlugins[$type];
-        $collector->run($baseQuery, $locale, $result, $this->writer, $this->touchUpdater);
+        $collectorPlugin = $this->collectorPlugins[$type];
+        $collectorPlugin->setOutput($output);
+        $collectorPlugin->setDataWriter($this->writer);
+        $collectorPlugin->setTouchUpdater($this->touchUpdater);
+        $collectorPlugin->run($baseQuery, $locale, $result);
 
-        return $this->finishExport($result, $type, $timestamp);
+        $this->finishExport($result, $type, $timestamp);
+
+        return $result;
     }
 
     /**
-     * @param \Spryker\Zed\Collector\Business\Model\BatchResultInterface $batchResult
-     * @param string $type
+     * @param BatchResultInterface $batchResult
+     * @param $type
      * @param string $timestamp
      *
-     * @return \Spryker\Zed\Collector\Business\Model\BatchResultInterface
+     * @return void
      */
     protected function finishExport(BatchResultInterface $batchResult, $type, $timestamp)
     {
         if (!$batchResult->isFailed()) {
             $this->marker->setLastExportMarkByTypeAndLocale($type, $batchResult->getProcessedLocale(), $timestamp);
         }
-
-        return $batchResult;
     }
 
     /**
-     * @return \Propel\Runtime\Formatter\AbstractFormatter
+     * @return AbstractFormatter
      */
     protected function getFormatter()
     {

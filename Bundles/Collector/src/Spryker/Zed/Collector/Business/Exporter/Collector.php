@@ -7,9 +7,10 @@
 namespace Spryker\Zed\Collector\Business\Exporter;
 
 use Generated\Shared\Transfer\LocaleTransfer;
-use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Spryker\Zed\Collector\Business\Exporter\Exception\BatchResultException;
 use Spryker\Zed\Collector\Business\Model\BatchResultInterface;
+use Symfony\Component\Console\Helper\ProgressBar;
+use Spryker\Zed\Touch\Persistence\TouchQueryContainer;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class Collector
@@ -43,49 +44,35 @@ class Collector
     public function exportForLocale(LocaleTransfer $locale, OutputInterface $output = null)
     {
         $results = [];
-
         $types = array_keys($this->exporter->getCollectorPlugins());
         $availableTypes = $this->queryContainer->queryExportTypes()->find();
 
+        //$progress = new ProgressBar($output, count($availableTypes));
+        //$progress->start();
+
         if (isset($output)) {
-            $output->writeln('');
             $output->writeln(
                 sprintf('<fg=yellow>%d/%d collector(s) executed:</fg=yellow>',
                     count($types),
                     count($availableTypes)
                 )
             );
-            $output->writeln('');
         }
 
         foreach ($availableTypes as $type) {
-            if (isset($output)) {
-                $output->write('<fg=yellow> * </fg=yellow><fg=green>' . $type . '</fg=green><fg=yellow> ');
-            }
-
+            //$progress->advance();
             if (!in_array($type, $types)) {
-                if (isset($output)) {
-                    $output->writeln('<fg=white> N/A </fg=white>');
-                }
+                /*                if (isset($output)) {
+                    $output->writeln('');
+                    $output->write('<fg=yellow> * </fg=yellow><fg=green>' . $type . '</fg=green><fg=yellow> ');
+                    $output->write('<fg=white>N/A </fg=white>');
+                }*/
                 continue;
             }
 
-            $startTime = microtime(true);
-
-            $result = $this->exporter->exportByType($type, $locale);
+            $result = $this->exporter->exportByType($type, $locale, $output);
 
             $this->handleResult($result);
-
-            if (isset($output)) {
-                if ($result instanceof BatchResultInterface) {
-                    $output->write(sprintf(
-                        '[%s]',
-                        $result->getProcessedCount()
-                    ));
-                }
-                $output->write(' ' . number_format(microtime(true) - $startTime, 4) . 's</fg=yellow>');
-                $output->writeln('');
-            }
 
             if ($result instanceof BatchResultInterface) {
                 if ($this->nothingWasProcessed($result)) {
@@ -94,6 +81,8 @@ class Collector
                 $results[$type] = $result;
             }
         }
+
+        //$progress->finish();
 
         return $results;
     }

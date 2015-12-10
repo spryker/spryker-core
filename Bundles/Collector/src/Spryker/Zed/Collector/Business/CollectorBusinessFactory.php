@@ -60,7 +60,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function createKeyValueExporter()
     {
-        $keyValueExporter = new KeyValueCollector(
+        $keyValueExporter = new KeyValueExporter(
             $this->getTouchQueryContainer(),
             $this->createKeyValueWriter(),
             $this->createKeyValueMarker(),
@@ -187,7 +187,7 @@ class CollectorBusinessFactory extends AbstractBusinessFactory
      */
     protected function createElasticsearchExporter(WriterInterface $searchWriter, CollectorConfig $config)
     {
-        $searchExporter = new SearchCollector(
+        $searchExporter = new SearchExporter(
             $this->getTouchQueryContainer(),
             $searchWriter,
             $this->createSearchMarker(),

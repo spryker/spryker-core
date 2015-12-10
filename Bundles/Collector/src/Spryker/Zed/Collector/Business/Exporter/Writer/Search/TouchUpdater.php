@@ -11,17 +11,22 @@ use Orm\Zed\Touch\Persistence\SpyTouchSearch;
 use Orm\Zed\Touch\Persistence\SpyTouchSearchQuery;
 use Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet;
 use Spryker\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
+use Propel\Runtime\Connection\ConnectionInterface;
+use Spryker\Zed\Collector\Business\Exporter\AbstractPropelCollectorPlugin;
 
 class TouchUpdater implements TouchUpdaterInterface
 {
 
+    const COLLECTOR_KEY_ID = AbstractPropelCollectorPlugin::COLLECTOR_SEARCH_KEY_ID;
+
     /**
-     * @param \Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet $touchUpdaterSet
+     * @param TouchUpdaterSet $touchUpdaterSet
      * @param int $idLocale
+     * @param ConnectionInterface $connection
      *
-     * @return void
+     * @throws \Propel\Runtime\Exception\PropelException
      */
-    public function updateMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale)
+    public function updateMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null)
     {
         foreach ($touchUpdaterSet->getData() as $key => $touchData) {
             $query = SpyTouchSearchQuery::create();
@@ -35,9 +40,9 @@ class TouchUpdater implements TouchUpdaterInterface
 
     /**
      * @param int $idTouch
-     * @param \Generated\Shared\Transfer\LocaleTransfer $locale
+     * @param LocaleTransfer $locale
      *
-     * @return \Orm\Zed\Touch\Persistence\SpyTouchSearch
+     * @return SpyTouchSearch
      */
     public function getKeyById($idTouch, LocaleTransfer $locale)
     {

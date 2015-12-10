@@ -8,28 +8,51 @@ namespace SprykerFeature\Zed\Collector\Business\Exporter\Writer\KeyValue;
 
 use Generated\Shared\Transfer\LocaleTransfer;
 use Orm\Zed\Touch\Persistence\Base\SpyTouchStorageQuery;
+use Orm\Zed\Touch\Persistence\Map\SpyTouchStorageTableMap;
 use Orm\Zed\Touch\Persistence\SpyTouchStorage;
+use Propel\Runtime\Connection\ConnectionInterface;
+use SprykerFeature\Zed\Collector\Business\Exporter\AbstractPropelCollectorPlugin;
 use SprykerFeature\Zed\Collector\Business\Exporter\Writer\TouchUpdaterInterface;
 
 class TouchUpdater implements TouchUpdaterInterface
 {
 
+    const COLLECTOR_KEY_ID = AbstractPropelCollectorPlugin::COLLECTOR_STORAGE_KEY_ID;
+
     /**
      * @param \Spryker\Zed\Collector\Business\Exporter\Writer\KeyValue\TouchUpdaterSet $touchUpdaterSet
      * @param int $idLocale
+     * @param ConnectionInterface $connection
      *
-     * @return void
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @internal param $idKey
      */
-    public function updateMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale)
+    public function updateMulti(TouchUpdaterSet $touchUpdaterSet, $idLocale, ConnectionInterface $connection = null)
     {
-        //TODO: make one raw query for whole set
+        $updateSql = '';
         foreach ($touchUpdaterSet->getData() as $key => $touchData) {
-            $query = SpyTouchStorageQuery::create();
-            $query->filterByFkTouch($touchData[self::COLLECTOR_TOUCH_ID]);
-            $query->filterByFkLocale($idLocale);
-            $entity = $query->findOneOrCreate();
-            $entity->setKey($key);
-            $entity->save();
+            $idKey = $this->getCollectorKeyFromData($touchData);
+
+            if ($idKey !== null) {
+                $sql = sprintf("UPDATE %s SET key = '%s' WHERE id_touch_storage = '%d'; \n",
+                    SpyTouchStorageTableMap::TABLE_NAME,
+                    $key,
+                    $idKey
+                );
+
+                $updateSql .= $sql;
+            } else {
+                $entity = new SpyTouchStorage();
+                $entity->setKey($key);
+                $entity->setFkTouch($touchData[self::COLLECTOR_TOUCH_ID]);
+                $entity->setFkLocale($idLocale);
+                $entity->save();
+            }
+        }
+
+        if (trim($updateSql) !== '' &&  $connection !== null) {
+            $connection->exec($updateSql);
         }
     }
 
@@ -46,6 +69,25 @@ class TouchUpdater implements TouchUpdaterInterface
         $query->filterByFkLocale($locale->getIdLocale());
 
         return $query->findOne();
+    }
+
+    /**
+     * @param array $touchData
+     *
+     * @return int
+     */
+    protected function getCollectorKeyFromData(array $touchData)
+    {
+        if (!isset($touchData['data'])) {
+            return null;
+        }
+
+        $data = $touchData['data'];
+        if ($data === null) {
+            return null;
+        }
+
+        return (isset($data[self::COLLECTOR_KEY_ID])) ? $data[self::COLLECTOR_KEY_ID] : null;
     }
 
 }

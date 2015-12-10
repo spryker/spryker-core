@@ -23,7 +23,6 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
 
     const TOUCH_ENTRY_QUERY_KEY = 'search touch entry';
     const TOUCH_ENTRIES_QUERY_KEY = 'search touch entries';
-    const TOUCH_EXPORTER_ID = 'exporter_touch_id';
 
     /**
      * @param string $itemType
@@ -88,8 +87,7 @@ class TouchQueryContainer extends AbstractQueryContainer implements TouchQueryCo
         $query
             ->filterByItemType($itemType)
             ->filterByItemEvent(SpyTouchTableMap::COL_ITEM_EVENT_ACTIVE)
-            ->filterByTouched(['min' => $lastTouchedAt])
-            ->withColumn(SpyTouchTableMap::COL_ID_TOUCH, self::TOUCH_EXPORTER_ID);
+            ->filterByTouched(['min' => $lastTouchedAt]);
 
         return $query;
     }
