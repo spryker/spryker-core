@@ -16,6 +16,7 @@ class ClassMapBuilder
     const CLASS_PART_LAYER = 4;
     const STORE_PLACEHOLDER = '{{STORE}}';
     const PATH_TO_CLASS_MAP = '/../../../../../../.class_map';
+    const APPLICATION_YVES = 'Yves';
 
     /**
      * @return array
@@ -131,7 +132,7 @@ class ClassMapBuilder
     {
         $hasLayer = false;
 
-        if (count($classNameParts) > 5) {
+        if (count($classNameParts) > 5 && $classNameParts[self::CLASS_PART_APPLICATION] !== self::APPLICATION_YVES) {
             $hasLayer = true;
         }
 

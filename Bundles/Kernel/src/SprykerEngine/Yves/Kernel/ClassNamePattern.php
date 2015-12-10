@@ -17,6 +17,6 @@ class ClassNamePattern
      * @var string
      */
     const CONTROLLER =
-        '\\{{namespace}}\\Yves\\{{bundle}}{{store}}\\Communication\\Controller\\{{controller}}Controller';
+        '\\{{namespace}}\\Yves\\{{bundle}}{{store}}\\\Controller\\{{controller}}Controller';
 
 }
