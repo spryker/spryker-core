@@ -6,19 +6,20 @@
 
 namespace SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer;
 
-use SprykerEngine\Zed\Kernel\ClassResolver\ClassResolver;
+use SprykerEngine\Zed\Kernel\AbstractDependencyContainer;
+use SprykerEngine\Zed\Kernel\ClassResolver\AbstractClassResolver;
 
-class DependencyContainerResolver extends ClassResolver
+class DependencyContainerResolver extends AbstractClassResolver
 {
 
     const CLASS_NAME_PATTERN = '\\%1$s\\%2$s\\%3$s%5$s\\%4$s\\%3$sDependencyContainer';
 
     /**
-     * @param object $callerClass
+     * @param object|string $callerClass
      *
-     * @throws \Exception
+     * @throws DependencyContainerNotFoundException
      *
-     * @return object
+     * @return AbstractDependencyContainer
      */
     public function resolve($callerClass)
     {

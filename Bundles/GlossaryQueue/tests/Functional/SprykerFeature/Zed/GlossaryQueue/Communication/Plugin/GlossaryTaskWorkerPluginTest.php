@@ -6,6 +6,7 @@ use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\LocaleTransfer;
 use Generated\Shared\Transfer\QueueMessageTransfer;
 use Generated\Zed\Ide\AutoCompletion;
+use SprykerFeature\Zed\Glossary\Business\GlossaryDependencyContainer;
 use SprykerFeature\Zed\Glossary\Business\GlossaryFacade;
 use SprykerFeature\Zed\Glossary\GlossaryDependencyProvider;
 use SprykerEngine\Zed\Kernel\Business\Factory;
@@ -96,11 +97,13 @@ class GlossaryTaskWorkerPluginTest extends Test
     private function createGlossaryFacade()
     {
         $provider = new GlossaryDependencyProvider();
-        $glossaryFacade = new MockGlossaryFacade(new Factory('Glossary'), $this->getLocator());
+        $glossaryFacade = new MockGlossaryFacade();
         $glossaryFacade->setExternalDependencies($provider->provideBusinessLayerDependencies(new Container()));
         $glossaryFacade->setOwnQueryContainer(
             new GlossaryQueryContainer()
         );
+
+        $glossaryFacade->setDependencyContainer(new GlossaryDependencyContainer());
 
         return $glossaryFacade;
     }

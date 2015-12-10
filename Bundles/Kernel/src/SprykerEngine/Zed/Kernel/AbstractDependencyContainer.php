@@ -9,9 +9,11 @@ namespace SprykerEngine\Zed\Kernel;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
 use SprykerEngine\Zed\Kernel\ClassResolver\Config\BundleConfigResolver;
+use SprykerEngine\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException;
+use SprykerEngine\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
+use SprykerEngine\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException;
 use SprykerEngine\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use SprykerEngine\Zed\Kernel\Exception\Container\ContainerKeyNotFoundException;
-use SprykerEngine\Zed\Kernel\Exception\Container\ContainerNotFoundException;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 abstract class AbstractDependencyContainer
@@ -57,7 +59,6 @@ abstract class AbstractDependencyContainer
     /**
      * @param string $key
      *
-     * @throws ContainerNotFoundException
      * @throws ContainerKeyNotFoundException
      *
      * @return mixed
@@ -65,7 +66,10 @@ abstract class AbstractDependencyContainer
     public function getProvidedDependency($key)
     {
         if ($this->container === null) {
-            throw new ContainerNotFoundException($this);
+            $dependencyProvider = $this->resolveDependencyProvider();
+            $container = new Container();
+            $this->provideExternalDependencies($dependencyProvider, $container);
+            $this->container = $container;
         }
 
         if ($this->container->offsetExists($key) === false) {
@@ -74,6 +78,35 @@ abstract class AbstractDependencyContainer
 
         return $this->container[$key];
     }
+
+    /**
+     * @throws DependencyProviderNotFoundException
+     *
+     * @return AbstractBundleDependencyProvider
+     */
+    protected function resolveDependencyProvider()
+    {
+        return $this->getDependencyProviderResolver()->resolve($this);
+    }
+
+    /**
+     * @return DependencyProviderResolver
+     */
+    protected function getDependencyProviderResolver()
+    {
+        return new DependencyProviderResolver();
+    }
+
+    /**
+     * @param AbstractBundleDependencyProvider $dependencyProvider
+     * @param Container $container
+     *
+     * @return Container
+     */
+    abstract protected function provideExternalDependencies(
+        AbstractBundleDependencyProvider $dependencyProvider,
+        Container $container
+    );
 
     /**
      * @param AbstractQueryContainer $queryContainer
@@ -100,15 +133,13 @@ abstract class AbstractDependencyContainer
     }
 
     /**
-     * @throws \Exception
+     * @throws QueryContainerNotFoundException
      *
      * @return AbstractQueryContainer
      */
     private function resolveQueryContainer()
     {
-        $resolver = new QueryContainerResolver();
-
-        return $resolver->resolve($this);
+        return $this->getQueryContainerResolver()->resolve($this);
     }
 
     /**
@@ -147,6 +178,14 @@ abstract class AbstractDependencyContainer
         $resolver = new BundleConfigResolver();
 
         return $resolver->resolve($this);
+    }
+
+    /**
+     * @return QueryContainerResolver
+     */
+    protected function getQueryContainerResolver()
+    {
+        return new QueryContainerResolver();
     }
 
 }

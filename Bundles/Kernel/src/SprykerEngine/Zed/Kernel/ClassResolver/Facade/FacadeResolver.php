@@ -4,22 +4,22 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\ClassResolver\QueryContainer;
+namespace SprykerEngine\Zed\Kernel\ClassResolver\Facade;
 
+use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
 use SprykerEngine\Zed\Kernel\ClassResolver\AbstractClassResolver;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 
-class QueryContainerResolver extends AbstractClassResolver
+class FacadeResolver extends AbstractClassResolver
 {
 
-    const CLASS_NAME_PATTERN = '\\%1$s\\%2$s\\%3$s%4$s\\Persistence\\%3$sQueryContainer';
+    const CLASS_NAME_PATTERN = '\\%1$s\\%2$s\\%3$s%4$s\\Business\\%3$sFacade';
 
     /**
      * @param object|string $callerClass
      *
-     * @throws QueryContainerNotFoundException
+     * @throws FacadeNotFoundException
      *
-     * @return AbstractQueryContainer
+     * @return AbstractFacade
      */
     public function resolve($callerClass)
     {
@@ -28,7 +28,7 @@ class QueryContainerResolver extends AbstractClassResolver
             return $this->getResolvedClassInstance();
         }
 
-        throw new QueryContainerNotFoundException($this->getClassInfo());
+        throw new FacadeNotFoundException($this->getClassInfo());
     }
 
     /**

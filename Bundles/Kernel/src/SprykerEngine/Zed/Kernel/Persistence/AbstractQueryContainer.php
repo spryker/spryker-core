@@ -62,7 +62,7 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
     protected function getDependencyContainer()
     {
         if ($this->dependencyContainer === null) {
-            $this->dependencyContainer = $this->findDependencyContainer();
+            $this->dependencyContainer = $this->resolveDependencyContainer();
         }
 
         if ($this->container !== null) {
@@ -77,11 +77,17 @@ abstract class AbstractQueryContainer implements QueryContainerInterface
      *
      * @return AbstractPersistenceDependencyContainer
      */
-    private function findDependencyContainer()
+    private function resolveDependencyContainer()
     {
-        $classResolver = new DependencyContainerResolver();
+        return $this->getQueryContainerResolver()->resolve($this);
+    }
 
-        return $classResolver->resolve($this);
+    /**
+     * @return DependencyContainerResolver
+     */
+    protected function getQueryContainerResolver()
+    {
+        return new DependencyContainerResolver();
     }
 
     /**

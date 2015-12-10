@@ -30,21 +30,18 @@ class DependencyContainerNotFoundException extends \Exception
     {
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
-            'Can not resolve DependencyContainer in %s %s layer for your bundle "%s"',
-            $callerClassInfo->getApplication(),
+            'Can not resolve %2$sDependencyContainer in %s layer for your bundle "%s"',
             $callerClassInfo->getLayer(),
             $callerClassInfo->getBundle()
         ) . PHP_EOL;
 
-        $message .= 'You can fix this by adding the missing DependencyContainer class to your bundle.' . PHP_EOL;
+        $message .= 'You can fix this by adding the missing DependencyContainer to your bundle.' . PHP_EOL;
 
         $message .= sprintf(
-            'E.g. %s\\%s\\%s\\%s\\%sDependencyContainer',
+            'E.g. %s\\Zed\\%2$s\\%s\\%2$sDependencyContainer',
             Config::getInstance()->get(SystemConfig::PROJECT_NAMESPACE),
-            $callerClassInfo->getApplication(),
             $callerClassInfo->getBundle(),
-            $callerClassInfo->getLayer(),
-            $callerClassInfo->getBundle()
+            $callerClassInfo->getLayer()
         );
 
         return $message;

@@ -105,7 +105,7 @@ class Console extends SymfonyCommand
     protected function getDependencyContainer()
     {
         if ($this->dependencyContainer === null) {
-            $this->dependencyContainer = $this->findDependencyContainer();
+            $this->dependencyContainer = $this->resolveDependencyContainer();
         }
 
         if ($this->getQueryContainer() !== null) {
@@ -124,7 +124,7 @@ class Console extends SymfonyCommand
      *
      * @return AbstractCommunicationDependencyContainer
      */
-    private function findDependencyContainer()
+    private function resolveDependencyContainer()
     {
         $classResolver = new DependencyContainerResolver();
 

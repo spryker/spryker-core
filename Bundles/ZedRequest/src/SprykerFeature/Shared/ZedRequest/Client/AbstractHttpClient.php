@@ -62,7 +62,7 @@ abstract class AbstractHttpClient implements HttpClientInterface
     protected $baseUrl;
 
     /**
-     * @var int in seconds
+     * @var int
      *
      * @todo Add ths timeout to config so this could be edited easily and from configuration level #894
      */

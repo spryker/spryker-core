@@ -3,22 +3,24 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
+
 namespace SprykerEngine\Zed\Kernel\ClassResolver\Config;
 
-use SprykerEngine\Zed\Kernel\ClassResolver\ClassResolver;
+use SprykerEngine\Zed\Kernel\AbstractBundleConfig;
+use SprykerEngine\Zed\Kernel\ClassResolver\AbstractClassResolver;
 use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\BundleConfigNotFoundException;
 
-class BundleConfigResolver extends ClassResolver
+class BundleConfigResolver extends AbstractClassResolver
 {
 
     const CLASS_NAME_PATTERN = '\\%1$s\\%2$s\\%3$s%4$s\\%3$sConfig';
 
     /**
-     * @param object $callerClass
+     * @param object|string $callerClass
      *
-     * @throws \Exception
+     * @throws BundleConfigNotFoundException
      *
-     * @return object
+     * @return AbstractBundleConfig
      */
     public function resolve($callerClass)
     {

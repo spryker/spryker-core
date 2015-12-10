@@ -4,22 +4,22 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\ClassResolver\QueryContainer;
+namespace SprykerEngine\Zed\Kernel\ClassResolver\DependencyProvider;
 
+use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
 use SprykerEngine\Zed\Kernel\ClassResolver\AbstractClassResolver;
-use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 
-class QueryContainerResolver extends AbstractClassResolver
+class DependencyProviderResolver extends AbstractClassResolver
 {
 
-    const CLASS_NAME_PATTERN = '\\%1$s\\%2$s\\%3$s%4$s\\Persistence\\%3$sQueryContainer';
+    const CLASS_NAME_PATTERN = '\\%1$s\\%2$s\\%3$s%5$s\\%3$sDependencyProvider';
 
     /**
      * @param object|string $callerClass
      *
-     * @throws QueryContainerNotFoundException
+     * @throws DependencyProviderNotFoundException
      *
-     * @return AbstractQueryContainer
+     * @return AbstractBundleDependencyProvider
      */
     public function resolve($callerClass)
     {
@@ -28,7 +28,7 @@ class QueryContainerResolver extends AbstractClassResolver
             return $this->getResolvedClassInstance();
         }
 
-        throw new QueryContainerNotFoundException($this->getClassInfo());
+        throw new DependencyProviderNotFoundException($this->getClassInfo());
     }
 
     /**
@@ -41,6 +41,7 @@ class QueryContainerResolver extends AbstractClassResolver
             self::KEY_NAMESPACE,
             self::KEY_APPLICATION,
             self::KEY_BUNDLE,
+            self::KEY_LAYER,
             self::KEY_STORE
         );
     }

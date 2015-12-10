@@ -6,9 +6,14 @@
 
 namespace Unit\SprykerEngine\Zed\Kernel\Communication;
 
-use SprykerEngine\Shared\Kernel\ClassResolver\ClassNotFoundException;
 use SprykerEngine\Zed\Kernel\AbstractUnitTest;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerEngine\Zed\Kernel\ClassResolver\ClassInfo;
+use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException;
+use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
+use SprykerEngine\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
+use SprykerEngine\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException;
+use SprykerEngine\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use SprykerEngine\Zed\Kernel\Communication\AbstractCommunicationDependencyContainer;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 use Unit\SprykerEngine\Zed\Kernel\Communication\Fixtures\AbstractPlugin\Plugin\FooPlugin;
@@ -28,10 +33,19 @@ class AbstractPluginTest extends AbstractUnitTest
      */
     public function testGetDependencyContainerShouldThrowExceptionIfDependencyContainerNotFound()
     {
-        $this->setExpectedException(ClassNotFoundException::class);
+        $this->setExpectedException(DependencyContainerNotFoundException::class);
 
-        $plugin = $this->createPlugin('NonExistentBundle');
-        $plugin->getDependencyContainer();
+        $dependencyContainerResolverMock = $this->getMock(DependencyContainerResolver::class, ['canResolve', 'getClassInfo']);
+        $dependencyContainerResolverMock->method('canResolve')->willReturn(false);
+
+        $classInfo = new ClassInfo();
+        $classInfo->setClass('\\Namespace\\Application\\Bundle\\Layer\\Foo\\Bar');
+        $dependencyContainerResolverMock->method('getClassInfo')->willReturn($classInfo);
+
+        $pluginMock = $this->getPluginMock(['getDependencyContainerResolver']);
+        $pluginMock->method('getDependencyContainerResolver')->willReturn($dependencyContainerResolverMock);
+
+        $pluginMock->getDependencyContainer();
     }
 
     /**
@@ -56,9 +70,9 @@ class AbstractPluginTest extends AbstractUnitTest
      */
     public function testGetFacadeShouldThrowExceptionIfFacadeNotFound()
     {
-        $this->setExpectedException(ClassNotFoundException::class);
+        $this->setExpectedException(FacadeNotFoundException::class);
 
-        $plugin = $this->createPlugin('NonExistentBundle');
+        $plugin = new FooPlugin();
         $plugin->getFacade();
     }
 
@@ -84,10 +98,19 @@ class AbstractPluginTest extends AbstractUnitTest
      */
     public function testGetQueryContainerThrowExceptionIfQueryContainerNotFound()
     {
-        $this->setExpectedException(ClassNotFoundException::class);
+        $this->setExpectedException(QueryContainerNotFoundException::class);
 
-        $plugin = $this->createPlugin('NonExistentBundle');
-        $plugin->getQueryContainer();
+        $queryContainerResolverMock = $this->getMock(QueryContainerResolver::class, ['canResolve', 'getClassInfo']);
+        $queryContainerResolverMock->method('canResolve')->willReturn(false);
+
+        $classInfo = new ClassInfo();
+        $classInfo->setClass('\\Namespace\\Application\\Bundle\\Layer\\Foo\\Bar');
+        $queryContainerResolverMock->method('getClassInfo')->willReturn($classInfo);
+
+        $pluginMock = $this->getPluginMock(['getQueryContainerResolver']);
+        $pluginMock->method('getQueryContainerResolver')->willReturn($queryContainerResolverMock);
+
+        $pluginMock->getQueryContainer();
     }
 
     /**
@@ -108,17 +131,15 @@ class AbstractPluginTest extends AbstractUnitTest
     }
 
     /**
-     * @param string $bundle
+     * @param array $methods
      *
-     * @return FooPlugin
+     * @return \PHPUnit_Framework_MockObject_MockObject|FooPlugin
      */
-    private function createPlugin($bundle = 'Kernel')
+    protected function getPluginMock(array $methods)
     {
-        $plugin = $this->getMock(FooPlugin::class, ['getBundleName']);
+        $pluginMock = $this->getMock(FooPlugin::class, $methods);
 
-        $plugin->method('getBundleName')->willReturn($bundle);
-
-        return $plugin;
+        return $pluginMock;
     }
 
 }

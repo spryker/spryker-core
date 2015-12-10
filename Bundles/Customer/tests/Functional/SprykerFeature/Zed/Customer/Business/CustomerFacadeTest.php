@@ -1,14 +1,13 @@
 <?php
 
 /**
- * (c) Spryker Systems GmbH copyright protected
+ * (c) Spryker Systems GmbH copyright protected.
  */
-
 namespace Functional\SprykerFeature\Zed\Customer\Business;
 
-use Codeception\TestCase\Test;
 use Generated\Shared\Transfer\AddressTransfer;
 use Generated\Shared\Transfer\CustomerTransfer;
+use SprykerEngine\Zed\Kernel\AbstractFunctionalTest;
 use SprykerEngine\Zed\Kernel\Locator;
 use Generated\Zed\Ide\AutoCompletion;
 use SprykerFeature\Zed\Customer\Business\CustomerFacade;
@@ -20,9 +19,8 @@ use SprykerFeature\Zed\Customer\Business\CustomerFacade;
  * @group Business
  * @group Facade
  */
-class CustomerFacadeTest extends Test
+class CustomerFacadeTest extends AbstractFunctionalTest
 {
-
     const TESTER_EMAIL = 'tester@spryker.com';
     const TESTER_PASSWORD = 'tester';
     const TESTER_NAME = 'Tester';
@@ -37,13 +35,12 @@ class CustomerFacadeTest extends Test
     protected $customerFacade;
 
     /**
-     * @return void
      */
     public function setUp()
     {
         parent::setUp();
         $this->locator = Locator::getInstance();
-        $this->customerFacade = $this->locator->customer()->facade();
+        $this->customerFacade = $this->getFacade();
     }
 
     /**
@@ -115,7 +112,6 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return void
      */
     public function testGetCustomer()
     {
@@ -127,7 +123,6 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return void
      */
     public function testHasEmailReturnsFalseWithoutCustomer()
     {
@@ -135,7 +130,6 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return void
      */
     public function testHasEmailReturnsTrueWithCustomer()
     {
@@ -144,7 +138,6 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return void
      */
     public function testRegisterCustomer()
     {
@@ -154,7 +147,6 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return void
      */
     public function testRegisterCustomerWithAlreadyExistingEmail()
     {
@@ -168,7 +160,6 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return void
      */
     public function testConfirmRegistration()
     {
@@ -179,7 +170,6 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return void
      */
     public function testForgotPassword()
     {
@@ -191,7 +181,6 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return void
      */
     public function testRestorePassword()
     {
@@ -205,7 +194,6 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return void
      */
     public function testUpdateCustomer()
     {
@@ -219,7 +207,6 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return void
      */
     public function testDeleteCustomer()
     {
@@ -229,7 +216,6 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return void
      */
     public function testNewAddress()
     {
@@ -243,7 +229,6 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return void
      */
     public function testUpdateAddress()
     {
@@ -268,7 +253,6 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return void
      */
     public function testSetDefaultShippingAddress()
     {
@@ -290,7 +274,6 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return void
      */
     public function testSetDefaultBillingAddress()
     {
@@ -312,7 +295,6 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return void
      */
     public function testGetDefaultShippingAddress()
     {
@@ -323,7 +305,6 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return void
      */
     public function testGetDefaultBillingAddress()
     {
@@ -334,7 +315,6 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return void
      */
     public function testRenderAddress()
     {
@@ -346,7 +326,6 @@ class CustomerFacadeTest extends Test
     }
 
     /**
-     * @return void
      */
     public function testDeleteAddress()
     {
@@ -366,5 +345,4 @@ class CustomerFacadeTest extends Test
         $deletedAddress = $this->customerFacade->deleteAddress($addressTransfer);
         $this->assertNotNull($deletedAddress);
     }
-
 }

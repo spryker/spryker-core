@@ -48,7 +48,7 @@ class ExpenseTest extends AbstractUnitTest
         $order->getCalculableObject()->addItem($item);
 
         $calculator = new ExpensePriceToPayCalculatorPlugin();
-        $calculator->setOwnFacade(new CalculationFacade());
+        $calculator->setFacade(new CalculationFacade());
         $calculator->recalculate($order);
 
         foreach ($order->getCalculableObject()->getItems() as $item) {
@@ -77,7 +77,7 @@ class ExpenseTest extends AbstractUnitTest
         $order->getCalculableObject()->addItem($item);
 
         $calculator = new ExpensePriceToPayCalculatorPlugin();
-        $calculator->setOwnFacade(new CalculationFacade());
+        $calculator->setFacade(new CalculationFacade());
         $calculator->recalculate($order);
 
         foreach ($order->getCalculableObject()->getItems() as $item) {
@@ -108,7 +108,7 @@ class ExpenseTest extends AbstractUnitTest
         $order->getCalculableObject()->addItem($item);
 
         $calculator = new ExpensePriceToPayCalculatorPlugin();
-        $calculator->setOwnFacade(new CalculationFacade());
+        $calculator->setFacade(new CalculationFacade());
         $calculator->recalculate($order);
 
         foreach ($order->getCalculableObject()->getItems() as $item) {

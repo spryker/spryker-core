@@ -4,13 +4,13 @@
  * (c) Spryker Systems GmbH copyright protected
  */
 
-namespace SprykerEngine\Zed\Kernel\ClassResolver\QueryContainer;
+namespace SprykerEngine\Zed\Kernel\ClassResolver\Facade;
 
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Zed\Kernel\ClassResolver\ClassInfo;
 use SprykerFeature\Shared\System\SystemConfig;
 
-class QueryContainerNotFoundException extends \Exception
+class FacadeNotFoundException extends \Exception
 {
 
     /**
@@ -30,14 +30,14 @@ class QueryContainerNotFoundException extends \Exception
     {
         $message = 'Spryker Kernel Exception' . PHP_EOL;
         $message .= sprintf(
-            'Can not resolve %1$sQueryContainer in persistence layer for your bundle "%1$s"',
+            'Can not resolve $1Facade in Business layer for your bundle "%s"',
             $callerClassInfo->getBundle()
         ) . PHP_EOL;
 
-        $message .= 'You can fix this by adding the missing QueryContainer to your bundle.' . PHP_EOL;
+        $message .= 'You can fix this by adding the missing Facade to your bundle.' . PHP_EOL;
 
         $message .= sprintf(
-            'E.g. %1$s\\Zed\\%2$s\\Persistence\\%2$sQueryContainer',
+            'E.g. %s\\Zed\\%2$s\\Business\\%2$sFacade',
             Config::getInstance()->get(SystemConfig::PROJECT_NAMESPACE),
             $callerClassInfo->getBundle()
         );

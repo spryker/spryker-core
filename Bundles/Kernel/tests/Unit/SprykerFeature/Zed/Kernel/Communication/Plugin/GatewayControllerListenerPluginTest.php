@@ -9,6 +9,7 @@ namespace Unit\SprykerFeature\Zed\Kernel\Communication\Plugin;
 use SprykerEngine\Shared\Transfer\TransferInterface;
 use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\Repeater;
 use SprykerFeature\Zed\Application\Communication\Plugin\TransferObject\TransferServer as CoreTransferServer;
+use SprykerFeature\Zed\Kernel\Communication\Plugin\GatewayControllerListenerPlugin;
 use Unit\SprykerFeature\Zed\Kernel\Communication\Plugin\Fixture\FilterControllerEvent;
 use Unit\SprykerFeature\Zed\Kernel\Communication\Plugin\Fixture\GatewayController;
 use Unit\SprykerFeature\Zed\Kernel\Communication\Plugin\Fixture\NotGatewayController;
@@ -121,7 +122,7 @@ class GatewayControllerListenerPluginTest extends \PHPUnit_Framework_TestCase
     /**
      * @return void
      */
-    public function testWhenControllerIsGAtewayControllerAndOnlyOneTransferObjectIsGivenActionMustReturnRepsonse()
+    public function testWhenControllerIsGatewayControllerAndOnlyOneTransferObjectIsGivenActionMustReturnResponse()
     {
         $transfer = $this->getTransferMock();
         $controllerCallable = $this->executeMockedListenerTest('goodAction', $transfer);

@@ -71,12 +71,9 @@ class GlossaryTest extends AbstractFunctionalTest
 
         $this->localeFacade = $this->getMock(GlossaryToLocaleInterface::class, ['getContainer', 'getQueryContainer', 'getLocale', 'getCurrentLocale', 'getAvailableLocales']);
         $this->touchFacade = $this->getMock(GlossaryToTouchInterface::class, ['getContainer', 'getQueryContainer', 'touchActive', 'touchDeleted']);
-//        $this->localeFacade = new Mock\LocaleFacade(new BusinessFactory('Locale'), $this->locator);
-//        $this->touchFacade = new Mock\TouchFacade(new BusinessFactory('Touch'), $this->locator);
         $container = new Container();
         $touchDependencyProvider = new TouchDependencyProvider();
         $touchDependencyProvider->provideBusinessLayerDependencies($container);
-//        $this->touchFacade->setExternalDependencies($container);
 
         $this->glossaryQueryContainer = new Mock\GlossaryQueryContainer();
         $this->touchQueryContainer = new Mock\TouchQueryContainer();

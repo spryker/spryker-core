@@ -6,8 +6,10 @@
 
 namespace SprykerEngine\Zed\Kernel\Communication;
 
+use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
 use SprykerEngine\Zed\Kernel\AbstractDependencyContainer as BaseDependencyContainer;
 use SprykerEngine\Zed\Kernel\Communication\DependencyContainer\DependencyContainerInterface;
+use SprykerEngine\Zed\Kernel\Container;
 use Symfony\Component\Form\FormFactory;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\Form\FormTypeInterface;
@@ -16,6 +18,19 @@ abstract class AbstractCommunicationDependencyContainer extends BaseDependencyCo
 {
 
     const FORM_FACTORY = 'form.factory';
+
+    /**
+     * @param AbstractBundleDependencyProvider $dependencyProvider
+     * @param Container $container
+     *
+     * @return Container
+     */
+    protected function provideExternalDependencies(
+        AbstractBundleDependencyProvider $dependencyProvider,
+        Container $container
+    ) {
+        $dependencyProvider->provideCommunicationLayerDependencies($container);
+    }
 
     /**
      * @return FormFactory

@@ -3,13 +3,14 @@
 /**
  * (c) Spryker Systems GmbH copyright protected
  */
+
 namespace SprykerEngine\Zed\Kernel\ClassResolver;
 
 use SprykerEngine\Shared\Config;
 use SprykerEngine\Shared\Kernel\Store;
 use SprykerFeature\Shared\System\SystemConfig;
 
-abstract class ClassResolver
+abstract class AbstractClassResolver
 {
 
     const KEY_NAMESPACE = '%namespace%';
@@ -39,9 +40,9 @@ abstract class ClassResolver
     }
 
     /**
-     * @param object $callerClass
+     * @param object|string  $callerClass
      *
-     * @return self
+     * @return AbstractClassResolver
      */
     public function setCallerClass($callerClass)
     {
@@ -66,7 +67,7 @@ abstract class ClassResolver
     /**
      * @return bool
      */
-    public function canResolve()
+    protected function canResolve()
     {
         $classNames = $this->buildClassNames();
 
@@ -84,7 +85,7 @@ abstract class ClassResolver
     /**
      * @return object
      */
-    public function getResolvedClassInstance()
+    protected function getResolvedClassInstance()
     {
         return new $this->resolvedClassName();
     }
@@ -107,8 +108,8 @@ abstract class ClassResolver
     {
         $storeName = Store::getInstance()->getStoreName();
         foreach ($this->getProjectNamespaces() as $namespace) {
-            $this->classNames[] = $this->buildClassName($namespace);
             $this->classNames[] = $this->buildClassName($namespace, $storeName);
+            $this->classNames[] = $this->buildClassName($namespace);
         }
     }
 

@@ -24,40 +24,22 @@ class ClassInfo
     /**
      * @var string
      */
-    private $namespace;
+    private $callerClassParts;
 
     /**
-     * @var string
-     */
-    private $application;
-
-    /**
-     * @var string
-     */
-    private $bundle;
-
-    /**
-     * @var string
-     */
-    private $layer;
-
-    /**
-     * @param object $callerClass
+     * @param object|string  $callerClass
      *
      * @return self
      */
     public function setClass($callerClass)
     {
-        $callerClassName = get_class($callerClass);
-        $this->callerClassName = $callerClassName;
-        $callerClassParts = explode('\\', $callerClassName);
+        if (is_object($callerClass)) {
+            $callerClass = get_class($callerClass);
+        }
+        $this->callerClassName = $callerClass;
+        $callerClassParts = explode('\\', $callerClass);
 
-        $callerClassParts = $this->removeTestNamespace($callerClassParts);
-
-        $this->namespace = $this->getNamespaceFromCallerClass($callerClassParts);
-        $this->application = $this->getApplicationFromCallerClass($callerClassParts);
-        $this->bundle = $this->getBundleFromCallerClass($callerClassParts);
-        $this->layer = $this->getLayerFromCallerClass($callerClassParts);
+        $this->callerClassParts = $this->removeTestNamespace($callerClassParts);
 
         return $this;
     }
@@ -71,51 +53,11 @@ class ClassInfo
     }
 
     /**
-     * @param array $callerClassParts
-     *
-     * @return string
-     */
-    private function getNamespaceFromCallerClass(array $callerClassParts)
-    {
-        return $callerClassParts[self::KEY_NAMESPACE];
-    }
-
-    /**
-     * @param array $callerClassParts
-     *
-     * @return string
-     */
-    private function getApplicationFromCallerClass(array $callerClassParts)
-    {
-        return $callerClassParts[self::KEY_APPLICATION];
-    }
-
-    /**
-     * @param array $callerClassParts
-     *
-     * @return string
-     */
-    private function getBundleFromCallerClass(array $callerClassParts)
-    {
-        return $callerClassParts[self::KEY_BUNDLE];
-    }
-
-    /**
-     * @param array $callerClassParts
-     *
-     * @return string
-     */
-    private function getLayerFromCallerClass(array $callerClassParts)
-    {
-        return $callerClassParts[self::KEY_LAYER];
-    }
-
-    /**
      * @return string
      */
     public function getNamespace()
     {
-        return $this->namespace;
+        return $this->callerClassParts[self::KEY_NAMESPACE];
     }
 
     /**
@@ -123,7 +65,7 @@ class ClassInfo
      */
     public function getApplication()
     {
-        return $this->application;
+        return $this->callerClassParts[self::KEY_APPLICATION];
     }
 
     /**
@@ -131,7 +73,7 @@ class ClassInfo
      */
     public function getBundle()
     {
-        return $this->bundle;
+        return $this->callerClassParts[self::KEY_BUNDLE];
     }
 
     /**
@@ -139,7 +81,7 @@ class ClassInfo
      */
     public function getLayer()
     {
-        return $this->layer;
+        return $this->callerClassParts[self::KEY_LAYER];
     }
 
     /**

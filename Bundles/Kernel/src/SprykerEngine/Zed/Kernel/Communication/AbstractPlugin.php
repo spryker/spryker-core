@@ -6,19 +6,21 @@
 
 namespace SprykerEngine\Zed\Kernel\Communication;
 
-use SprykerEngine\Shared\Kernel\LocatorLocatorInterface;
-use SprykerEngine\Zed\Kernel\BundleDependencyProviderLocator;
+use SprykerEngine\Zed\Kernel\AbstractBundleDependencyProvider;
 use SprykerEngine\Zed\Kernel\Business\AbstractFacade;
+use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerNotFoundException;
+use SprykerEngine\Zed\Kernel\ClassResolver\DependencyContainer\DependencyContainerResolver;
+use SprykerEngine\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderNotFoundException;
+use SprykerEngine\Zed\Kernel\ClassResolver\DependencyProvider\DependencyProviderResolver;
+use SprykerEngine\Zed\Kernel\ClassResolver\Facade\FacadeNotFoundException;
+use SprykerEngine\Zed\Kernel\ClassResolver\Facade\FacadeResolver;
+use SprykerEngine\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerNotFoundException;
+use SprykerEngine\Zed\Kernel\ClassResolver\QueryContainer\QueryContainerResolver;
 use SprykerEngine\Zed\Kernel\Container;
-use SprykerEngine\Zed\Kernel\Locator;
 use SprykerEngine\Zed\Kernel\Persistence\AbstractQueryContainer;
 
 abstract class AbstractPlugin
 {
-
-    const DEPENDENCY_CONTAINER = 'DependencyContainer';
-
-    const CLASS_PART_BUNDLE = 2;
 
     /**
      * @var AbstractFacade
@@ -31,23 +33,55 @@ abstract class AbstractPlugin
     private $dependencyContainer;
 
     /**
+     * @var Container
+     */
+    private $container;
+
+    /**
      * @var AbstractQueryContainer
      */
     private $queryContainer;
 
     /**
+     * @param AbstractFacade $facade
+     *
+     * @return self
+     */
+    public function setFacade(AbstractFacade $facade)
+    {
+        $this->facade = $facade;
 
+        return $this;
+    }
+
+    /**
      * @return AbstractFacade
      */
     protected function getFacade()
     {
         if ($this->facade === null) {
-            $bundle = lcfirst($this->getBundleName());
-
-            $this->facade = $this->getLocator()->$bundle()->facade();
+            $this->facade = $this->resolveFacade();
         }
 
         return $this->facade;
+    }
+
+    /**
+     * @throws FacadeNotFoundException
+     *
+     * @return AbstractFacade
+     */
+    protected function resolveFacade()
+    {
+        return $this->getFacadeResolver()->resolve($this);
+    }
+
+    /**
+     * @return FacadeResolver
+     */
+    protected function getFacadeResolver()
+    {
+        return new FacadeResolver();
     }
 
     /**
@@ -56,19 +90,71 @@ abstract class AbstractPlugin
     protected function getDependencyContainer()
     {
         if ($this->dependencyContainer === null) {
-            $factory = new Factory($this->getBundleName());
+            $this->dependencyContainer = $this->resolveDependencyContainer();
 
-            $this->dependencyContainer = $factory->create(self::DEPENDENCY_CONTAINER, $factory, $this->getLocator());
+            if ($this->container === null) {
+                $dependencyProvider = $this->resolveDependencyProvider();
+                $container = new Container();
+                $dependencyProvider->provideCommunicationLayerDependencies($container);
+                $this->container = $container;
+            }
 
-            $bundleConfigLocator = new BundleDependencyProviderLocator();
-            $container = new Container();
-            $bundleBuilder = $bundleConfigLocator->locate($this->getBundleName(), $this->getLocator());
-            $bundleBuilder->provideCommunicationLayerDependencies($container);
+            $this->dependencyContainer->setContainer($this->container);
 
-            $this->dependencyContainer->setContainer($container);
+            if ($this->queryContainer !== null) {
+                $this->dependencyContainer->setQueryContainer($this->getQueryContainer());
+            }
         }
 
         return $this->dependencyContainer;
+    }
+
+    /**
+     * @throws DependencyContainerNotFoundException
+     *
+     * @return AbstractCommunicationDependencyContainer
+     */
+    protected function resolveDependencyContainer()
+    {
+        return $this->getDependencyContainerResolver()->resolve($this);
+    }
+
+    /**
+     * @return DependencyContainerResolver
+     */
+    protected function getDependencyContainerResolver()
+    {
+        return new DependencyContainerResolver();
+    }
+
+    /**
+     * @throws DependencyProviderNotFoundException
+     *
+     * @return AbstractBundleDependencyProvider
+     */
+    protected function resolveDependencyProvider()
+    {
+        return $this->getDependencyProviderResolver()->resolve($this);
+    }
+
+    /**
+     * @return DependencyProviderResolver
+     */
+    protected function getDependencyProviderResolver()
+    {
+        return new DependencyProviderResolver();
+    }
+
+    /**
+     * @param AbstractQueryContainer $queryContainer
+     *
+     * @return self
+     */
+    public function setQueryContainer(AbstractQueryContainer $queryContainer)
+    {
+        $this->queryContainer = $queryContainer;
+
+        return $this;
     }
 
     /**
@@ -77,31 +163,28 @@ abstract class AbstractPlugin
     protected function getQueryContainer()
     {
         if ($this->queryContainer === null) {
-            $bundle = lcfirst($this->getBundleName());
-            $this->queryContainer = $this->getLocator()->$bundle()->queryContainer();
+            $this->queryContainer = $this->resolveQueryContainer();
         }
 
         return $this->queryContainer;
     }
 
     /**
-     * @return string
+     * @throws QueryContainerNotFoundException
+     *
+     * @return AbstractQueryContainer
      */
-    protected function getBundleName()
+    protected function resolveQueryContainer()
     {
-        $className = get_class($this);
-        $classParts = explode('\\', $className);
-        $bundle = $classParts[self::CLASS_PART_BUNDLE];
-
-        return $bundle;
+        return $this->getQueryContainerResolver()->resolve($this);
     }
 
     /**
-     * @return LocatorLocatorInterface
+     * @return QueryContainerResolver
      */
-    private function getLocator()
+    protected function getQueryContainerResolver()
     {
-        return Locator::getInstance();
+        return new QueryContainerResolver();
     }
 
 }
